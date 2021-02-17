@@ -72,8 +72,8 @@ public class CommerceInventoryWarehousePortlet extends MVCPortlet {
 			commerceInventoryWarehousesDisplayContext =
 				new CommerceInventoryWarehousesDisplayContext(
 					_commerceChannelRelService, _commerceChannelService,
-					_commerceCountryManager, _countryService,
-					_commerceInventoryWarehouseService,
+					_commerceCountryManager, _commerceInventoryWarehouseService,
+					_countryService,
 					_portal.getHttpServletRequest(renderRequest));
 
 		renderRequest.setAttribute(

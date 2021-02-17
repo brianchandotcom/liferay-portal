@@ -57,15 +57,14 @@ public class CommerceInventoryWarehousesDisplayContext {
 		CommerceChannelRelService commerceChannelRelService,
 		CommerceChannelService commerceChannelService,
 		CommerceCountryManager commerceCountryManager,
-		CountryService countryService,
 		CommerceInventoryWarehouseService commerceInventoryWarehouseService,
-		HttpServletRequest httpServletRequest) {
+		CountryService countryService, HttpServletRequest httpServletRequest) {
 
 		_commerceChannelRelService = commerceChannelRelService;
 		_commerceChannelService = commerceChannelService;
 		_commerceCountryManager = commerceCountryManager;
-		_countryService = countryService;
 		_commerceInventoryWarehouseService = commerceInventoryWarehouseService;
+		_countryService = countryService;
 
 		_cpRequestHelper = new CPRequestHelper(httpServletRequest);
 	}

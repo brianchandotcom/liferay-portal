@@ -54,9 +54,10 @@ public class CommerceTaxFixedRatesDisplayContext
 		PercentageFormatter percentageFormatter, RenderRequest renderRequest) {
 
 		super(
-			commerceChannelLocalService, commerceChannelModelResourcePermission,
-			commerceCurrencyLocalService, commerceTaxMethodService,
-			cpTaxCategoryService, percentageFormatter, renderRequest);
+			commerceChannelLocalService, commerceCurrencyLocalService,
+			commerceTaxMethodService, cpTaxCategoryService,
+			commerceChannelModelResourcePermission, percentageFormatter,
+			renderRequest);
 
 		_commerceTaxFixedRateService = commerceTaxFixedRateService;
 	}

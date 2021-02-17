@@ -56,11 +56,11 @@ public class EditCommerceShipmentMVCRenderCommand implements MVCRenderCommand {
 
 		CommerceShipmentDisplayContext commerceShipmentDisplayContext =
 			new CommerceShipmentDisplayContext(
-				_actionHelper, _portal.getHttpServletRequest(renderRequest),
-				_commerceAddressFormatter, _commerceAddressService,
-				_commerceChannelService, _countryService,
+				_actionHelper, _commerceAddressFormatter,
+				_commerceAddressService, _commerceChannelService,
 				_commerceOrderItemService, _commerceOrderLocalService,
-				_regionService, _portletResourcePermission);
+				_countryService, _portal.getHttpServletRequest(renderRequest),
+				_portletResourcePermission, _regionService);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, commerceShipmentDisplayContext);

@@ -53,9 +53,9 @@ public class EditCommerceAddressMVCRenderCommand implements MVCRenderCommand {
 		CommerceAccountAddressAdminDisplayContext
 			commerceAccountUserRelAdminDisplayContext =
 				new CommerceAccountAddressAdminDisplayContext(
-					_commerceAccountModelResourcePermission,
 					_commerceAccountService, _commerceAddressService,
-					_countryService, _regionService, renderRequest);
+					_countryService, _modelResourcePermission, _regionService,
+					renderRequest);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -63,12 +63,6 @@ public class EditCommerceAddressMVCRenderCommand implements MVCRenderCommand {
 
 		return "/edit_commerce_address.jsp";
 	}
-
-	@Reference(
-		target = "(model.class.name=com.liferay.commerce.account.model.CommerceAccount)"
-	)
-	private ModelResourcePermission<CommerceAccount>
-		_commerceAccountModelResourcePermission;
 
 	@Reference
 	private CommerceAccountService _commerceAccountService;
@@ -78,6 +72,11 @@ public class EditCommerceAddressMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private CountryService _countryService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.account.model.CommerceAccount)"
+	)
+	private ModelResourcePermission<CommerceAccount> _modelResourcePermission;
 
 	@Reference
 	private RegionService _regionService;

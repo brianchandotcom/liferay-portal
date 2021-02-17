@@ -61,8 +61,8 @@ public class CommerceAddressContentConfigurationAction
 			CommerceAddressDisplayContext commerceAddressDisplayContext =
 				new CommerceAddressDisplayContext(
 					_actionHelper, _commerceAccountHelper,
-					_commerceAddressService, _countryService, _regionService,
-					httpServletRequest);
+					_commerceAddressService, _countryService,
+					httpServletRequest, _regionService);
 
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT, commerceAddressDisplayContext);

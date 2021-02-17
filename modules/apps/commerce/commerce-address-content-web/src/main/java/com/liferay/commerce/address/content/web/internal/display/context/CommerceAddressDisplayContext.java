@@ -57,16 +57,16 @@ public class CommerceAddressDisplayContext {
 			ActionHelper actionHelper,
 			CommerceAccountHelper commerceAccountHelper,
 			CommerceAddressService commerceAddressService,
-			CountryService countryService, RegionService regionService,
-			HttpServletRequest httpServletRequest)
+			CountryService countryService,
+			HttpServletRequest httpServletRequest, RegionService regionService)
 		throws PortalException {
 
 		_actionHelper = actionHelper;
 		_commerceAccountHelper = commerceAccountHelper;
 		_commerceAddressService = commerceAddressService;
 		_countryService = countryService;
-		_regionService = regionService;
 		_httpServletRequest = httpServletRequest;
+		_regionService = regionService;
 
 		_cpRequestHelper = new CPRequestHelper(httpServletRequest);
 

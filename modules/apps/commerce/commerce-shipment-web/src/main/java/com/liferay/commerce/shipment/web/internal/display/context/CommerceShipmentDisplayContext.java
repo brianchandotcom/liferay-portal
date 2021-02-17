@@ -75,24 +75,24 @@ public class CommerceShipmentDisplayContext
 	extends BaseCommerceShipmentDisplayContext<CommerceShipment> {
 
 	public CommerceShipmentDisplayContext(
-		ActionHelper actionHelper, HttpServletRequest httpServletRequest,
+		ActionHelper actionHelper,
 		CommerceAddressFormatter commerceAddressFormatter,
 		CommerceAddressService commerceAddressService,
 		CommerceChannelService commerceChannelService,
-		CountryService countryService,
 		CommerceOrderItemService commerceOrderItemService,
 		CommerceOrderLocalService commerceOrderLocalService,
-		RegionService regionService,
-		PortletResourcePermission portletResourcePermission) {
+		CountryService countryService, HttpServletRequest httpServletRequest,
+		PortletResourcePermission portletResourcePermission,
+		RegionService regionService) {
 
 		super(actionHelper, httpServletRequest, portletResourcePermission);
 
 		_commerceAddressFormatter = commerceAddressFormatter;
 		_commerceAddressService = commerceAddressService;
 		_commerceChannelService = commerceChannelService;
-		_countryService = countryService;
 		_commerceOrderItemService = commerceOrderItemService;
 		_commerceOrderLocalService = commerceOrderLocalService;
+		_countryService = countryService;
 		_regionService = regionService;
 	}
 

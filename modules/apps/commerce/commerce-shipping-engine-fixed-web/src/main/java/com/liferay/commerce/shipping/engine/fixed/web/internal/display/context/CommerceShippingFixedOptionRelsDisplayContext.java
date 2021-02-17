@@ -60,31 +60,30 @@ public class CommerceShippingFixedOptionRelsDisplayContext
 
 	public CommerceShippingFixedOptionRelsDisplayContext(
 		CommerceChannelLocalService commerceChannelLocalService,
-		CountryService countryService,
 		CommerceCurrencyLocalService commerceCurrencyLocalService,
-		RegionService regionService,
-		CommerceShippingMethodService commerceShippingMethodService,
-		CommerceShippingFixedOptionService commerceShippingFixedOptionService,
 		CommerceInventoryWarehouseService commerceInventoryWarehouseService,
 		CommerceShippingFixedOptionRelService
 			commerceShippingFixedOptionRelService,
+		CommerceShippingFixedOptionService commerceShippingFixedOptionService,
+		CommerceShippingMethodService commerceShippingMethodService,
+		CountryService countryService,
 		CPMeasurementUnitLocalService cpMeasurementUnitLocalService,
-		Portal portal, RenderRequest renderRequest,
+		Portal portal, RegionService regionService, RenderRequest renderRequest,
 		RenderResponse renderResponse) {
 
 		super(
 			commerceChannelLocalService, commerceCurrencyLocalService,
 			commerceShippingMethodService, renderRequest, renderResponse);
 
-		_countryService = countryService;
-		_regionService = regionService;
-		_commerceShippingFixedOptionService =
-			commerceShippingFixedOptionService;
 		_commerceInventoryWarehouseService = commerceInventoryWarehouseService;
 		_commerceShippingFixedOptionRelService =
 			commerceShippingFixedOptionRelService;
+		_commerceShippingFixedOptionService =
+			commerceShippingFixedOptionService;
+		_countryService = countryService;
 		_cpMeasurementUnitLocalService = cpMeasurementUnitLocalService;
 		_portal = portal;
+		_regionService = regionService;
 	}
 
 	public String getAddShippingFixedOptionURL() throws Exception {

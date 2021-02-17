@@ -126,14 +126,13 @@ public class CommerceShippingMethodFixedOptionSettingsScreenNavigationCategory
 		CommerceShippingFixedOptionRelsDisplayContext
 			commerceShippingFixedOptionRelsDisplayContext =
 				new CommerceShippingFixedOptionRelsDisplayContext(
-					_commerceChannelLocalService, _countryService,
-					_commerceCurrencyLocalService, _regionService,
-					_commerceShippingMethodService,
-					_commerceShippingFixedOptionService,
+					_commerceChannelLocalService, _commerceCurrencyLocalService,
 					_commerceInventoryWarehouseService,
 					_commerceShippingFixedOptionRelService,
-					_cpMeasurementUnitLocalService, _portal, renderRequest,
-					renderResponse);
+					_commerceShippingFixedOptionService,
+					_commerceShippingMethodService, _countryService,
+					_cpMeasurementUnitLocalService, _portal, _regionService,
+					renderRequest, renderResponse);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,

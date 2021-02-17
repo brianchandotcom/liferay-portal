@@ -76,9 +76,9 @@ public class CommerceAccountAdminPortlet extends MVCPortlet {
 			CommerceAccountAdminDisplayContext
 				commerceAccountAdminDisplayContext =
 					new CommerceAccountAdminDisplayContext(
-						_commerceAccountModelResourcePermission,
 						_commerceAccountService, _commerceAddressService,
-						renderRequest, _userFileUploadsConfiguration);
+						_modelResourcePermission, renderRequest,
+						_userFileUploadsConfiguration);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -98,17 +98,16 @@ public class CommerceAccountAdminPortlet extends MVCPortlet {
 			UserFileUploadsConfiguration.class, properties);
 	}
 
-	@Reference(
-		target = "(model.class.name=com.liferay.commerce.account.model.CommerceAccount)"
-	)
-	private ModelResourcePermission<CommerceAccount>
-		_commerceAccountModelResourcePermission;
-
 	@Reference
 	private CommerceAccountService _commerceAccountService;
 
 	@Reference
 	private CommerceAddressService _commerceAddressService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.account.model.CommerceAccount)"
+	)
+	private ModelResourcePermission<CommerceAccount> _modelResourcePermission;
 
 	private volatile UserFileUploadsConfiguration _userFileUploadsConfiguration;
 

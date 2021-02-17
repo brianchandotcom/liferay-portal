@@ -86,9 +86,10 @@ public class CommerceChannelPaymentRestrictionsScreenNavigationCategory
 		CommercePaymentMethodGroupRelsDisplayContext
 			commercePaymentMethodGroupRelsDisplayContext =
 				new CommercePaymentMethodGroupRelsDisplayContext(
-					_commerceChannelLocalService, _countryService,
+					_commerceChannelLocalService,
 					_commercePaymentMethodGroupRelService,
-					_commercePaymentMethodRegistry, httpServletRequest);
+					_commercePaymentMethodRegistry, _countryService,
+					httpServletRequest);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,

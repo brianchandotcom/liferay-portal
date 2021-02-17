@@ -109,7 +109,7 @@ public class CommerceCountryRegionsScreenNavigationCategory
 
 		CommerceRegionsDisplayContext commerceRegionsDisplayContext =
 			new CommerceRegionsDisplayContext(
-				_actionHelper, _regionService, _portletResourcePermission,
+				_actionHelper, _portletResourcePermission, _regionService,
 				renderRequest, renderResponse);
 
 		renderRequest.setAttribute(

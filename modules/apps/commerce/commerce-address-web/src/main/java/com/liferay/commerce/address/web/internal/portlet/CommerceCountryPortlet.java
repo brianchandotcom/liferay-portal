@@ -72,9 +72,9 @@ public class CommerceCountryPortlet extends MVCPortlet {
 		CommerceCountriesDisplayContext commerceCountriesDisplayContext =
 			new CommerceCountriesDisplayContext(
 				_actionHelper, _commerceChannelRelService,
-				_commerceChannelService, _countryService,
-				_commerceRegionsStarterRegistry, _portletResourcePermission,
-				renderRequest, renderResponse);
+				_commerceChannelService, _commerceRegionsStarterRegistry,
+				_countryService, _portletResourcePermission, renderRequest,
+				renderResponse);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, commerceCountriesDisplayContext);

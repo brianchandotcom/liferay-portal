@@ -69,10 +69,10 @@ public class CommerceShippingMethodPortlet extends MVCPortlet {
 		CommerceShippingMethodsDisplayContext
 			commerceShippingMethodsDisplayContext =
 				new CommerceShippingMethodsDisplayContext(
-					_commerceChannelLocalService, _countryService,
+					_commerceChannelLocalService,
 					_commerceShippingEngineRegistry,
 					_commerceShippingFixedOptionService,
-					_commerceShippingMethodService,
+					_commerceShippingMethodService, _countryService,
 					_portal.getHttpServletRequest(renderRequest));
 
 		renderRequest.setAttribute(

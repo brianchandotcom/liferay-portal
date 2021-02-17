@@ -61,8 +61,8 @@ public class EditCommerceOrderItemMVCRenderCommand implements MVCRenderCommand {
 				new CommerceOrderEditDisplayContext(
 					_commerceChannelLocalService,
 					_commerceNotificationQueueEntryLocalService,
-					_commerceOrderEngine, _commerceOrderService,
-					_commerceOrderItemService, _commerceOrderNoteService,
+					_commerceOrderEngine, _commerceOrderItemService,
+					_commerceOrderNoteService, _commerceOrderService,
 					_commerceOrderStatusRegistry,
 					_commercePaymentMethodGroupRelLocalService,
 					_commerceShipmentService, renderRequest);

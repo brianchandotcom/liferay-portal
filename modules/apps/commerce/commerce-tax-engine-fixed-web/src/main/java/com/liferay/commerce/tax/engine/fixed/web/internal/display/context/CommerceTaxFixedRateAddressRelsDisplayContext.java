@@ -56,26 +56,25 @@ public class CommerceTaxFixedRateAddressRelsDisplayContext
 
 	public CommerceTaxFixedRateAddressRelsDisplayContext(
 		CommerceChannelLocalService commerceChannelLocalService,
-		ModelResourcePermission<CommerceChannel>
-			commerceChannelModelResourcePermission,
-		CountryService countryService,
 		CommerceCurrencyLocalService commerceCurrencyLocalService,
-		RegionService regionService,
-		CommerceTaxMethodService commerceTaxMethodService,
 		CommerceTaxFixedRateAddressRelService
 			commerceTaxFixedRateAddressRelService,
+		CommerceTaxMethodService commerceTaxMethodService,
+		CountryService countryService,
 		CPTaxCategoryService cpTaxCategoryService,
-		PercentageFormatter percentageFormatter, RenderRequest renderRequest) {
+		ModelResourcePermission<CommerceChannel> modelResourcePermission,
+		PercentageFormatter percentageFormatter, RegionService regionService,
+		RenderRequest renderRequest) {
 
 		super(
-			commerceChannelLocalService, commerceChannelModelResourcePermission,
-			commerceCurrencyLocalService, commerceTaxMethodService,
-			cpTaxCategoryService, percentageFormatter, renderRequest);
+			commerceChannelLocalService, commerceCurrencyLocalService,
+			commerceTaxMethodService, cpTaxCategoryService,
+			modelResourcePermission, percentageFormatter, renderRequest);
 
-		_countryService = countryService;
-		_regionService = regionService;
 		_commerceTaxFixedRateAddressRelService =
 			commerceTaxFixedRateAddressRelService;
+		_countryService = countryService;
+		_regionService = regionService;
 	}
 
 	public String getAddTaxRateSettingURL() throws Exception {

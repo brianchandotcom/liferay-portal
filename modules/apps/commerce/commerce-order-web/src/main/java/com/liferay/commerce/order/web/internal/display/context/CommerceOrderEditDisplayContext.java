@@ -83,9 +83,9 @@ public class CommerceOrderEditDisplayContext {
 			CommerceNotificationQueueEntryLocalService
 				commerceNotificationQueueEntryLocalService,
 			CommerceOrderEngine commerceOrderEngine,
-			CommerceOrderService commerceOrderService,
 			CommerceOrderItemService commerceOrderItemService,
 			CommerceOrderNoteService commerceOrderNoteService,
+			CommerceOrderService commerceOrderService,
 			CommerceOrderStatusRegistry commerceOrderStatusRegistry,
 			CommercePaymentMethodGroupRelLocalService
 				commercePaymentMethodGroupRelLocalService,
@@ -97,9 +97,9 @@ public class CommerceOrderEditDisplayContext {
 		_commerceNotificationQueueEntryLocalService =
 			commerceNotificationQueueEntryLocalService;
 		_commerceOrderEngine = commerceOrderEngine;
-		_commerceOrderService = commerceOrderService;
 		_commerceOrderItemService = commerceOrderItemService;
 		_commerceOrderNoteService = commerceOrderNoteService;
+		_commerceOrderService = commerceOrderService;
 		_commerceOrderStatusRegistry = commerceOrderStatusRegistry;
 		_commercePaymentMethodGroupRelLocalService =
 			commercePaymentMethodGroupRelLocalService;

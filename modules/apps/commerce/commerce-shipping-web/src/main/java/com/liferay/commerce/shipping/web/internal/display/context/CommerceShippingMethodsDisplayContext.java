@@ -38,18 +38,17 @@ public class CommerceShippingMethodsDisplayContext {
 
 	public CommerceShippingMethodsDisplayContext(
 		CommerceChannelLocalService commerceChannelLocalService,
-		CountryService countryService,
 		CommerceShippingEngineRegistry commerceShippingEngineRegistry,
 		CommerceShippingFixedOptionService commerceShippingFixedOptionService,
 		CommerceShippingMethodService commerceShippingMethodService,
-		HttpServletRequest httpServletRequest) {
+		CountryService countryService, HttpServletRequest httpServletRequest) {
 
 		_commerceChannelLocalService = commerceChannelLocalService;
-		_countryService = countryService;
 		_commerceShippingEngineRegistry = commerceShippingEngineRegistry;
 		_commerceShippingFixedOptionService =
 			commerceShippingFixedOptionService;
 		_commerceShippingMethodService = commerceShippingMethodService;
+		_countryService = countryService;
 
 		_commerceShippingMethodRequestHelper =
 			new CommerceShippingMethodRequestHelper(httpServletRequest);

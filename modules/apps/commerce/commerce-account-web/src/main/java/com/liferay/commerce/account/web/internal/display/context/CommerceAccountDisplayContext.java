@@ -62,19 +62,19 @@ public class CommerceAccountDisplayContext {
 	public CommerceAccountDisplayContext(
 		CommerceAccountService commerceAccountService,
 		CommerceAddressService commerceAddressService,
-		CountryService countryService, RegionService regionService,
 		ConfigurationProvider configurationProvider,
-		HttpServletRequest httpServletRequest,
+		CountryService countryService, HttpServletRequest httpServletRequest,
 		ModelResourcePermission<CommerceAccount> modelResourcePermission,
+		RegionService regionService,
 		UserFileUploadsConfiguration userFileUploadsConfiguration,
 		UserLocalService userLocalService) {
 
 		_commerceAccountService = commerceAccountService;
 		_commerceAddressService = commerceAddressService;
-		_countryService = countryService;
-		_regionService = regionService;
 		_configurationProvider = configurationProvider;
+		_countryService = countryService;
 		_modelResourcePermission = modelResourcePermission;
+		_regionService = regionService;
 		_userFileUploadsConfiguration = userFileUploadsConfiguration;
 		_userLocalService = userLocalService;
 

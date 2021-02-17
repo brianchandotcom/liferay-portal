@@ -52,15 +52,12 @@ public class CommerceAccountUserRelAdminDisplayContext
 	extends BaseCommerceAccountAdminDisplayContext<CommerceAccountUserRel> {
 
 	public CommerceAccountUserRelAdminDisplayContext(
-		ModelResourcePermission<CommerceAccount>
-			commerceAccountModelResourcePermission,
 		CommerceAccountService commerceAccountService,
 		CommerceAccountUserRelService commerceAccountUserRelService,
+		ModelResourcePermission<CommerceAccount> modelResourcePermission,
 		ItemSelector itemSelector, RenderRequest renderRequest) {
 
-		super(
-			commerceAccountModelResourcePermission, commerceAccountService,
-			renderRequest);
+		super(commerceAccountService, modelResourcePermission, renderRequest);
 
 		_commerceAccountUserRelService = commerceAccountUserRelService;
 		_itemSelector = itemSelector;

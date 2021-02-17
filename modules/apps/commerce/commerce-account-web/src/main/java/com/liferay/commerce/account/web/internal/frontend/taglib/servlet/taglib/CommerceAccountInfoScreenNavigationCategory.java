@@ -115,8 +115,8 @@ public class CommerceAccountInfoScreenNavigationCategory
 		CommerceAccountDisplayContext commerceAccountDisplayContext =
 			new CommerceAccountDisplayContext(
 				_commerceAccountService, _commerceAddressService,
-				_countryService, _regionService, _configurationProvider,
-				httpServletRequest, _modelResourcePermission,
+				_configurationProvider, _countryService, httpServletRequest,
+				_modelResourcePermission, _regionService,
 				_userFileUploadsConfiguration, _userLocalService);
 
 		httpServletRequest.setAttribute(

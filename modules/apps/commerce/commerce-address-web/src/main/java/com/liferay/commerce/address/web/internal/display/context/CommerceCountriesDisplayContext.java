@@ -52,8 +52,8 @@ public class CommerceCountriesDisplayContext
 		ActionHelper actionHelper,
 		CommerceChannelRelService commerceChannelRelService,
 		CommerceChannelService commerceChannelService,
-		CountryService countryService,
 		CommerceRegionsStarterRegistry commerceRegionsStarterRegistry,
+		CountryService countryService,
 		PortletResourcePermission portletResourcePermission,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
@@ -63,8 +63,8 @@ public class CommerceCountriesDisplayContext
 
 		_commerceChannelRelService = commerceChannelRelService;
 		_commerceChannelService = commerceChannelService;
-		_countryService = countryService;
 		_commerceRegionsStarterRegistry = commerceRegionsStarterRegistry;
+		_countryService = countryService;
 
 		_commerceCountryRequestHelper = new CommerceCountryRequestHelper(
 			renderRequest);

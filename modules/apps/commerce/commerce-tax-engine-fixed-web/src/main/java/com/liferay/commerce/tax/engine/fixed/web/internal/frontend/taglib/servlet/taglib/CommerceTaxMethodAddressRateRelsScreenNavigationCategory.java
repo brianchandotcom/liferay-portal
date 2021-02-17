@@ -121,12 +121,11 @@ public class CommerceTaxMethodAddressRateRelsScreenNavigationCategory
 		CommerceTaxFixedRateAddressRelsDisplayContext
 			commerceTaxFixedRateAddressRelsDisplayContext =
 				new CommerceTaxFixedRateAddressRelsDisplayContext(
-					_commerceChannelLocalService,
-					_commerceChannelModelResourcePermission, _countryService,
-					_commerceCurrencyLocalService, _regionService,
-					_commerceTaxMethodService,
+					_commerceChannelLocalService, _commerceCurrencyLocalService,
 					_commerceTaxFixedRateAddressRelService,
-					_cpTaxCategoryService, _percentageFormatter, renderRequest);
+					_commerceTaxMethodService, _countryService,
+					_cpTaxCategoryService, _modelResourcePermission,
+					_percentageFormatter, _regionService, renderRequest);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -139,12 +138,6 @@ public class CommerceTaxMethodAddressRateRelsScreenNavigationCategory
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;
-
-	@Reference(
-		target = "(model.class.name=com.liferay.commerce.product.model.CommerceChannel)"
-	)
-	private ModelResourcePermission<CommerceChannel>
-		_commerceChannelModelResourcePermission;
 
 	@Reference
 	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
@@ -164,6 +157,11 @@ public class CommerceTaxMethodAddressRateRelsScreenNavigationCategory
 
 	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.product.model.CommerceChannel)"
+	)
+	private ModelResourcePermission<CommerceChannel> _modelResourcePermission;
 
 	@Reference
 	private PercentageFormatter _percentageFormatter;

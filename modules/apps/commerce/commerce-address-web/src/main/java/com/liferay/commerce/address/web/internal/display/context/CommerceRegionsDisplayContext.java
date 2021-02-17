@@ -38,9 +38,10 @@ public class CommerceRegionsDisplayContext
 	extends BaseCommerceCountriesDisplayContext<Region> {
 
 	public CommerceRegionsDisplayContext(
-		ActionHelper actionHelper, RegionService regionService,
+		ActionHelper actionHelper,
 		PortletResourcePermission portletResourcePermission,
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		RegionService regionService, RenderRequest renderRequest,
+		RenderResponse renderResponse) {
 
 		super(
 			actionHelper, portletResourcePermission, renderRequest,

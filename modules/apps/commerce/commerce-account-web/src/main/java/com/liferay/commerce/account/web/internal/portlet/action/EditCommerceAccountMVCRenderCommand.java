@@ -63,10 +63,10 @@ public class EditCommerceAccountMVCRenderCommand implements MVCRenderCommand {
 		CommerceAccountDisplayContext commerceAccountDisplayContext =
 			new CommerceAccountDisplayContext(
 				_commerceAccountService, _commerceAddressService,
-				_countryService, _regionService, _configurationProvider,
+				_configurationProvider, _countryService,
 				_portal.getHttpServletRequest(renderRequest),
-				_modelResourcePermission, _userFileUploadsConfiguration,
-				_userLocalService);
+				_modelResourcePermission, _regionService,
+				_userFileUploadsConfiguration, _userLocalService);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, commerceAccountDisplayContext);

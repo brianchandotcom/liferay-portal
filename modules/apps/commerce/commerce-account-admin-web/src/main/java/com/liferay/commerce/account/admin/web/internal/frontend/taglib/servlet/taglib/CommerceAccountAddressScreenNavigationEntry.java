@@ -105,9 +105,9 @@ public class CommerceAccountAddressScreenNavigationEntry
 		CommerceAccountAddressAdminDisplayContext
 			commerceAccountUserRelAdminDisplayContext =
 				new CommerceAccountAddressAdminDisplayContext(
-					_commerceAccountModelResourcePermission,
 					_commerceAccountService, _commerceAddressService,
-					_countryService, _regionService, renderRequest);
+					_countryService, _modelResourcePermission, _regionService,
+					renderRequest);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -117,12 +117,6 @@ public class CommerceAccountAddressScreenNavigationEntry
 			_servletContext, httpServletRequest, httpServletResponse,
 			"/account/addresses.jsp");
 	}
-
-	@Reference(
-		target = "(model.class.name=com.liferay.commerce.account.model.CommerceAccount)"
-	)
-	private ModelResourcePermission<CommerceAccount>
-		_commerceAccountModelResourcePermission;
 
 	@Reference
 	private CommerceAccountService _commerceAccountService;
@@ -135,6 +129,11 @@ public class CommerceAccountAddressScreenNavigationEntry
 
 	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.account.model.CommerceAccount)"
+	)
+	private ModelResourcePermission<CommerceAccount> _modelResourcePermission;
 
 	@Reference
 	private RegionService _regionService;

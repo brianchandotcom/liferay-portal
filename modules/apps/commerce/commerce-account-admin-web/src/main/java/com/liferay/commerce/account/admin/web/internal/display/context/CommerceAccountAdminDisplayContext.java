@@ -41,16 +41,13 @@ public class CommerceAccountAdminDisplayContext
 	extends BaseCommerceAccountAdminDisplayContext<CommerceAccount> {
 
 	public CommerceAccountAdminDisplayContext(
-		ModelResourcePermission<CommerceAccount>
-			commerceAccountModelResourcePermission,
 		CommerceAccountService commerceAccountService,
 		CommerceAddressService commerceAddressService,
+		ModelResourcePermission<CommerceAccount> modelResourcePermission,
 		RenderRequest renderRequest,
 		UserFileUploadsConfiguration userFileUploadsConfiguration) {
 
-		super(
-			commerceAccountModelResourcePermission, commerceAccountService,
-			renderRequest);
+		super(commerceAccountService, modelResourcePermission, renderRequest);
 
 		_commerceAddressService = commerceAddressService;
 		_userFileUploadsConfiguration = userFileUploadsConfiguration;

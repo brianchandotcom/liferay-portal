@@ -104,9 +104,8 @@ public class CommerceAccountUserRelScreenNavigationEntry
 		CommerceAccountUserRelAdminDisplayContext
 			commerceAccountUserRelAdminDisplayContext =
 				new CommerceAccountUserRelAdminDisplayContext(
-					_commerceAccountModelResourcePermission,
 					_commerceAccountService, _commerceAccountUserRelService,
-					_itemSelector, renderRequest);
+					_modelResourcePermission, _itemSelector, renderRequest);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -116,12 +115,6 @@ public class CommerceAccountUserRelScreenNavigationEntry
 			_servletContext, httpServletRequest, httpServletResponse,
 			"/account/users.jsp");
 	}
-
-	@Reference(
-		target = "(model.class.name=com.liferay.commerce.account.model.CommerceAccount)"
-	)
-	private ModelResourcePermission<CommerceAccount>
-		_commerceAccountModelResourcePermission;
 
 	@Reference
 	private CommerceAccountService _commerceAccountService;
@@ -134,6 +127,11 @@ public class CommerceAccountUserRelScreenNavigationEntry
 
 	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.account.model.CommerceAccount)"
+	)
+	private ModelResourcePermission<CommerceAccount> _modelResourcePermission;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.account.admin.web)"

@@ -68,9 +68,9 @@ public class CommercePaymentMethodPortlet extends MVCPortlet {
 		CommercePaymentMethodGroupRelsDisplayContext
 			commercePaymentMethodGroupRelsDisplayContext =
 				new CommercePaymentMethodGroupRelsDisplayContext(
-					_commerceChannelLocalService, _countryService,
+					_commerceChannelLocalService,
 					_commercePaymentMethodGroupRelService,
-					_commercePaymentMethodRegistry,
+					_commercePaymentMethodRegistry, _countryService,
 					_portal.getHttpServletRequest(renderRequest));
 
 		renderRequest.setAttribute(

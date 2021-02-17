@@ -59,8 +59,9 @@ public class EditCommerceAddressMVCRenderCommand implements MVCRenderCommand {
 			CommerceAddressDisplayContext commerceAddressDisplayContext =
 				new CommerceAddressDisplayContext(
 					_actionHelper, _commerceAccountHelper,
-					_commerceAddressService, _countryService, _regionService,
-					_portal.getHttpServletRequest(renderRequest));
+					_commerceAddressService, _countryService,
+					_portal.getHttpServletRequest(renderRequest),
+					_regionService);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT, commerceAddressDisplayContext);

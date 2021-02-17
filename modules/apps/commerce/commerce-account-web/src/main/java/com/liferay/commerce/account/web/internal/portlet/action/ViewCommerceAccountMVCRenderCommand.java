@@ -56,9 +56,10 @@ public class ViewCommerceAccountMVCRenderCommand implements MVCRenderCommand {
 		CommerceAccountDisplayContext commerceAccountDisplayContext =
 			new CommerceAccountDisplayContext(
 				_commerceAccountService, _commerceAddressService,
-				_countryService, _regionService, _configurationProvider,
+				_configurationProvider, _countryService,
 				_portal.getHttpServletRequest(renderRequest),
-				_modelResourcePermission, null, _userLocalService);
+				_modelResourcePermission, _regionService, null,
+				_userLocalService);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, commerceAccountDisplayContext);

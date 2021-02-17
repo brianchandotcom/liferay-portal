@@ -36,17 +36,16 @@ public class CommercePaymentMethodGroupRelsDisplayContext {
 
 	public CommercePaymentMethodGroupRelsDisplayContext(
 		CommerceChannelLocalService commerceChannelLocalService,
-		CountryService countryService,
 		CommercePaymentMethodGroupRelService
 			commercePaymentMethodGroupRelService,
 		CommercePaymentMethodRegistry commercePaymentMethodRegistry,
-		HttpServletRequest httpServletRequest) {
+		CountryService countryService, HttpServletRequest httpServletRequest) {
 
 		_commerceChannelLocalService = commerceChannelLocalService;
-		_countryService = countryService;
 		_commercePaymentMethodGroupRelService =
 			commercePaymentMethodGroupRelService;
 		_commercePaymentMethodRegistry = commercePaymentMethodRegistry;
+		_countryService = countryService;
 
 		_commercePaymentMethodRequestHelper =
 			new CommercePaymentMethodRequestHelper(httpServletRequest);

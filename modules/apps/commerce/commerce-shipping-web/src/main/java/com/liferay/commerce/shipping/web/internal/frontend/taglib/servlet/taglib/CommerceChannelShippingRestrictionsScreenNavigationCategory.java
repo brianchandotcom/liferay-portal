@@ -87,10 +87,11 @@ public class CommerceChannelShippingRestrictionsScreenNavigationCategory
 		CommerceShippingMethodsDisplayContext
 			commerceShippingMethodsDisplayContext =
 				new CommerceShippingMethodsDisplayContext(
-					_commerceChannelLocalService, _countryService,
+					_commerceChannelLocalService,
 					_commerceShippingEngineRegistry,
 					_commerceShippingFixedOptionService,
-					_commerceShippingMethodService, httpServletRequest);
+					_commerceShippingMethodService, _countryService,
+					httpServletRequest);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,

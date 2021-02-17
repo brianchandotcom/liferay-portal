@@ -21,6 +21,7 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.DataLimitException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -152,6 +153,15 @@ public class AssetVocabularyLocalServiceImpl
 		// Vocabulary
 
 		User user = userLocalService.getUser(userId);
+
+		if ((PropsValues.DATA_LIMIT_MAX_ASSET_VOCABULARY_COUNT > 0) &&
+			(assetVocabularyPersistence.countByCompanyId(user.getCompanyId()) >=
+				PropsValues.DATA_LIMIT_MAX_ASSET_VOCABULARY_COUNT)) {
+
+			throw new DataLimitException(
+				"Unable to exceed maximum number of allowed asset " +
+					"vocabularies");
+		}
 
 		if (Validator.isNull(name)) {
 			name = _generateVocabularyName(

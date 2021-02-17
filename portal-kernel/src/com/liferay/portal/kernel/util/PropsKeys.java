@@ -661,6 +661,9 @@ public interface PropsKeys {
 	public static final String DATA_LIMIT_MAX_ASSET_TAG_COUNT =
 		"data.limit.max.asset.tag.count";
 
+	public static final String DATA_LIMIT_MAX_ASSET_VOCABULARY_COUNT =
+		"data.limit.max.asset.vocabulary.count";
+
 	public static final String DATA_LIMIT_MAX_DL_STORAGE_SIZE =
 		"data.limit.max.dl.storage.size";
 

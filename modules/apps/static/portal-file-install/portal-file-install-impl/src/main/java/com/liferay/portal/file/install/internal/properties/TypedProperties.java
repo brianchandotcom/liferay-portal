@@ -38,8 +38,9 @@ import java.util.regex.Pattern;
 /**
  * @author Matthew Tambara
  */
-public class TypedProperties {
+public class TypedProperties implements ConfigurationProperties {
 
+	@Override
 	public Object get(String key) throws IOException {
 		Map.Entry<String, List<String>> entry = _storage.get(key);
 
@@ -52,10 +53,12 @@ public class TypedProperties {
 		return ConfigurationHandler.read(string);
 	}
 
+	@Override
 	public Set<String> keySet() {
 		return _storage.keySet();
 	}
 
+	@Override
 	public void load(Reader reader) throws IOException {
 		PropertiesReader propertiesReader = new PropertiesReader(reader);
 
@@ -70,6 +73,7 @@ public class TypedProperties {
 		_header = propertiesReader.getComment();
 	}
 
+	@Override
 	public void put(String key, Object value) throws IOException {
 		Map.Entry<String, List<String>> oldEntry = _storage.get(key);
 
@@ -96,10 +100,12 @@ public class TypedProperties {
 				ConfigurationHandler.write(value), values));
 	}
 
+	@Override
 	public void remove(String key) {
 		_storage.remove(key);
 	}
 
+	@Override
 	public void save(Writer writer) throws IOException {
 		if ((_header == null) && _storage.isEmpty()) {
 			return;

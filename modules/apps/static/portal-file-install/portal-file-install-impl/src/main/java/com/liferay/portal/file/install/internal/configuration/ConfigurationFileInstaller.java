@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.file.install.FileInstaller;
 import com.liferay.portal.file.install.internal.DirectoryWatcher;
+import com.liferay.portal.file.install.internal.properties.ConfigurationProperties;
 import com.liferay.portal.file.install.internal.properties.TypedProperties;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -77,12 +78,13 @@ public class ConfigurationFileInstaller implements FileInstaller {
 		try (InputStream inputStream = new FileInputStream(file);
 			Reader reader = new InputStreamReader(inputStream, _encoding)) {
 
-			TypedProperties typedProperties = new TypedProperties();
+			ConfigurationProperties configurationProperties =
+				new TypedProperties();
 
-			typedProperties.load(reader);
+			configurationProperties.load(reader);
 
-			for (String key : typedProperties.keySet()) {
-				dictionary.put(key, typedProperties.get(key));
+			for (String key : configurationProperties.keySet()) {
+				dictionary.put(key, configurationProperties.get(key));
 			}
 		}
 

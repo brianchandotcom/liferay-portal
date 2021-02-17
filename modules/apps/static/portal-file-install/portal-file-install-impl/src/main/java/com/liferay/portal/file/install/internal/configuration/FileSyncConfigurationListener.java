@@ -17,6 +17,7 @@ package com.liferay.portal.file.install.internal.configuration;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.file.install.internal.DirectoryWatcher;
 import com.liferay.portal.file.install.internal.FileInstallImplBundleActivator;
+import com.liferay.portal.file.install.internal.properties.ConfigurationProperties;
 import com.liferay.portal.file.install.internal.properties.TypedProperties;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -119,18 +120,19 @@ public class FileSyncConfigurationListener implements ConfigurationListener {
 
 				if ((file != null) && file.isFile()) {
 					_pidToFile.put(configuration.getPid(), fileName);
-					TypedProperties typedProperties = new TypedProperties();
+					ConfigurationProperties configurationProperties =
+						new TypedProperties();
 
 					try (InputStream inputStream = new FileInputStream(file);
 						Reader reader = new InputStreamReader(
 							inputStream, _encoding)) {
 
-						typedProperties.load(reader);
+						configurationProperties.load(reader);
 					}
 
 					List<String> toRemovePropertyKeys = new ArrayList<>();
 
-					for (String key : typedProperties.keySet()) {
+					for (String key : configurationProperties.keySet()) {
 						if ((dictionary.get(key) == null) &&
 							!Objects.equals(Constants.SERVICE_PID, key) &&
 							!Objects.equals(
@@ -153,19 +155,19 @@ public class FileSyncConfigurationListener implements ConfigurationListener {
 
 							Object value = dictionary.get(key);
 
-							typedProperties.put(key, value);
+							configurationProperties.put(key, value);
 						}
 					}
 
 					for (String key : toRemovePropertyKeys) {
-						typedProperties.remove(key);
+						configurationProperties.remove(key);
 					}
 
 					try (OutputStream outputStream = new FileOutputStream(file);
 						Writer writer = new OutputStreamWriter(
 							outputStream, _encoding)) {
 
-						typedProperties.save(writer);
+						configurationProperties.save(writer);
 					}
 
 					_fileInstallImplBundleActivator.updateChecksum(file);

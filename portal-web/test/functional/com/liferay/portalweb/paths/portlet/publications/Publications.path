@@ -94,6 +94,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LIST_OUT_OF_DATE_STATUS</td>
+	<td>//a[contains(.,'${key_publicationsName}')]//span/span[contains(.,'Out of Date')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LIST_PUBLICATION_ELLIPSIS</td>
 	<td>//li[@data-qa-id='row'][contains(.,'${key_publicationsName}')]//*[contains(@class,'lexicon-icon lexicon-icon-ellipsis-v')]</td>
 	<td></td>
@@ -131,11 +136,6 @@
 <tr>
 	<td>PUBLICATION_NAME_IN_DIFF</td>
 	<td>//td[contains(@class,'publications-diff-td') and contains(.,'${key_publicationsName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PUBLICATION_STATUS</td>
-	<td>//td[contains(.,'${key_publicationsName}')]//following-sibling::td/span/span[contains(.,'${key_publicationStatus}')]</td>
 	<td></td>
 </tr>
 <tr>

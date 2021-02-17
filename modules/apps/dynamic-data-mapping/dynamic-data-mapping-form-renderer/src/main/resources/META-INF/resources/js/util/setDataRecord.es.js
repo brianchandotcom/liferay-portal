@@ -57,7 +57,9 @@ export default (
 			.filter(
 				(languageId) =>
 					!localizedValueEdited?.[languageId] &&
-					localizedValue[languageId] === ''
+					(localizedValue[languageId] === '' ||
+						localizedValue[languageId] === '[]' ||
+						localizedValue[languageId] === '{}')
 			)
 			.forEach((languageId) => {
 				delete localizedValue[languageId];

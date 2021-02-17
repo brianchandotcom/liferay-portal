@@ -12,7 +12,6 @@
  * details.
  */
 
-import {EVENT_TYPES} from 'dynamic-data-mapping-form-renderer';
 import React, {useContext, useEffect} from 'react';
 
 import AppContext from '../AppContext.es';
@@ -25,11 +24,10 @@ import {
 	UPDATE_HOVERED_FIELD,
 	UPDATE_PAGES,
 } from '../actions.es';
-import {getDropHandler} from '../drag-and-drop/getDropHandler.es';
 import DataLayoutBuilderContext from './DataLayoutBuilderContext.es';
 
 export default ({children, dataLayoutBuilder}) => {
-	const [{dataDefinition}, dispatch] = useContext(AppContext);
+	const [, dispatch] = useContext(AppContext);
 
 	useEffect(() => {
 		const provider = dataLayoutBuilder.getLayoutProvider();
@@ -117,15 +115,6 @@ export default ({children, dataLayoutBuilder}) => {
 
 		dispatch({payload: {fieldTypes}, type: UPDATE_FIELD_TYPES});
 	}, [dataLayoutBuilder, dispatch]);
-
-	useEffect(() => {
-		const provider = dataLayoutBuilder.getLayoutProvider();
-		const onDrop = getDropHandler({dataDefinition, dataLayoutBuilder});
-
-		const eventHandler = provider.on(EVENT_TYPES.FIELD_DROP, onDrop);
-
-		return () => eventHandler.removeListener();
-	}, [dataLayoutBuilder, dataDefinition]);
 
 	return (
 		<DataLayoutBuilderContext.Provider

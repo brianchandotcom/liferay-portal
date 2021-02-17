@@ -15,7 +15,6 @@
 import classNames from 'classnames';
 import React from 'react';
 
-import {DRAG_DATA_DEFINITION_FIELD_ADD} from '../../drag-and-drop/dragTypes.es';
 import CollapsablePanel from '../collapsable-panel/CollapsablePanel.es';
 import EmptyState from '../empty-state/EmptyState.es';
 import FieldType from './FieldType.es';
@@ -75,7 +74,6 @@ const FieldTypeList = ({
 				<FieldTypeWrapper
 					dataDefinition={dataDefinition}
 					deleteLabel={deleteLabel}
-					dragType={DRAG_DATA_DEFINITION_FIELD_ADD}
 					expanded={expanded}
 					fieldType={{
 						...fieldType,
@@ -107,9 +105,6 @@ const FieldTypeList = ({
 								(nestedFieldType) => (
 									<FieldTypeWrapper
 										dataDefinition={dataDefinition}
-										dragType={
-											DRAG_DATA_DEFINITION_FIELD_ADD
-										}
 										draggable={false}
 										fieldType={{
 											...nestedFieldType,

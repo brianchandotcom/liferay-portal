@@ -42,9 +42,7 @@ export const useDrop = ({
 	const [{canDrop, overTarget}, drop] = useDndDrop({
 		accept: [
 			DragTypes.DRAG_FIELD_TYPE_ADD,
-			DragTypes.DRAG_DATA_DEFINITION_FIELD_MOVE,
 			DragTypes.DRAG_FIELD_TYPE_MOVE,
-			DragTypes.DRAG_FIELDSET_MOVE,
 			DragTypes.DRAG_DATA_DEFINITION_FIELD_ADD,
 			DragTypes.DRAG_FIELD_TYPE_ADD,
 			DragTypes.DRAG_FIELDSET_ADD,
@@ -108,7 +106,7 @@ export const useDrop = ({
 								pageIndex,
 								rowIndex,
 							},
-							targetParentFieldName: parentField.fieldName,
+							targetParentFieldName: parentField?.fieldName,
 						},
 						type: EVENT_TYPES.FIELD_MOVED,
 					});

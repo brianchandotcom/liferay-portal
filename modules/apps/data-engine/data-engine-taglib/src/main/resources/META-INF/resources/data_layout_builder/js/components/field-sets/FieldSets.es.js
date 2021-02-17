@@ -18,7 +18,7 @@ import React, {useContext, useState} from 'react';
 import AppContext from '../../AppContext.es';
 import {dropFieldSet} from '../../actions.es';
 import DataLayoutBuilderContext from '../../data-layout-builder/DataLayoutBuilderContext.es';
-import {DRAG_FIELDSET} from '../../drag-and-drop/dragTypes.es';
+import {DRAG_FIELDSET_ADD} from '../../drag-and-drop/dragTypes.es';
 import {containsFieldSet} from '../../utils/dataDefinition.es';
 import {getLocalizedValue} from '../../utils/lang.es';
 import EmptyState from '../empty-state/EmptyState.es';
@@ -215,7 +215,7 @@ export default function FieldSets({keywords}) {
 											fieldSet.id
 										)
 									}
-									dragType={DRAG_FIELDSET}
+									dragType={DRAG_FIELDSET_ADD}
 									fieldSet={fieldSet}
 									icon="forms"
 									key={fieldSet.dataDefinitionKey}

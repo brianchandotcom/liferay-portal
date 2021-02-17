@@ -31,6 +31,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.gradle.api.JavaVersion;
 import org.gradle.api.Project;
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
@@ -107,6 +108,19 @@ public class BuildServiceTask extends JavaExec {
 	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getInputFile() {
 		return GradleUtil.toFile(getProject(), _inputFile);
+	}
+
+	@Override
+	public List<String> getJvmArgs() {
+		List<String> jvmArgs = new ArrayList<>();
+
+		JavaVersion javaVersion = getJavaVersion();
+
+		if (javaVersion.isJava9Compatible()) {
+			jvmArgs.add("--illegal-access=permit");
+		}
+
+		return jvmArgs;
 	}
 
 	@Input

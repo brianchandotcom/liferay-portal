@@ -32,7 +32,6 @@ import com.liferay.dynamic.data.mapping.kernel.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.kernel.StructureDefinitionException;
 import com.liferay.dynamic.data.mapping.kernel.StructureDuplicateElementException;
 import com.liferay.dynamic.data.mapping.kernel.StructureNameException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -58,6 +57,7 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -79,65 +79,86 @@ public class EditFileEntryTypeMVCActionCommand
 	extends BaseTransactionalMVCActionCommand {
 
 	@Override
+	public boolean processAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws PortletException {
+
+		try {
+			return super.processAction(actionRequest, actionResponse);
+		}
+		catch (PortletException portletException) {
+			Throwable throwable = portletException.getCause();
+
+			if (throwable instanceof DataDefinitionValidationException ||
+				throwable instanceof DuplicateFileEntryTypeException ||
+				throwable instanceof NoSuchMetadataSetException ||
+				throwable instanceof RequiredStructureException ||
+				throwable instanceof StructureDefinitionException ||
+				throwable instanceof StructureDuplicateElementException ||
+				throwable instanceof StructureNameException) {
+
+				SessionErrors.add(
+					actionRequest, throwable.getClass(), throwable);
+			}
+			else if (throwable instanceof RequiredFileEntryTypeException) {
+				SessionErrors.add(actionRequest, throwable.getClass());
+
+				actionResponse.setRenderParameter(
+					"navigation", "file_entry_types");
+			}
+			else if (throwable instanceof NoSuchFileEntryTypeException ||
+					 throwable instanceof NoSuchStructureException ||
+					 throwable instanceof PrincipalException) {
+
+				SessionErrors.add(actionRequest, throwable.getClass());
+
+				actionResponse.setRenderParameter(
+					"mvcPath", "/document_library/error.jsp");
+			}
+			else {
+				throw portletException;
+			}
+		}
+
+		return false;
+	}
+
+	@Override
 	protected void doTransactionalCommand(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		try {
-			if (cmd.equals(Constants.ADD)) {
-				_addFileEntryType(actionRequest);
-			}
-			else if (cmd.equals(Constants.UPDATE)) {
-				_updateFileEntryType(actionRequest);
-			}
-			else if (cmd.equals(Constants.DELETE)) {
-				_deleteFileEntryType(actionRequest);
-			}
-			else if (cmd.equals(Constants.SUBSCRIBE)) {
-				_subscribeFileEntryType(actionRequest);
-			}
-			else if (cmd.equals(Constants.UNSUBSCRIBE)) {
-				_unsubscribeFileEntryType(actionRequest);
-			}
-
-			if (SessionErrors.isEmpty(actionRequest)) {
-				SessionMessages.add(
-					actionRequest,
-					_portal.getPortletId(actionRequest) +
-						SessionMessages.KEY_SUFFIX_REFRESH_PORTLET,
-					DLPortletKeys.DOCUMENT_LIBRARY);
-
-				String redirect = _portal.escapeRedirect(
-					ParamUtil.getString(actionRequest, "redirect"));
-
-				if (Validator.isNotNull(redirect)) {
-					actionResponse.sendRedirect(redirect);
-				}
-			}
+		if (cmd.equals(Constants.ADD)) {
+			_addFileEntryType(actionRequest);
 		}
-		catch (DataDefinitionValidationException |
-			   DuplicateFileEntryTypeException | NoSuchMetadataSetException |
-			   RequiredStructureException | StructureDefinitionException |
-			   StructureDuplicateElementException | StructureNameException
-				   exception) {
-
-			SessionErrors.add(actionRequest, exception.getClass(), exception);
+		else if (cmd.equals(Constants.UPDATE)) {
+			_updateFileEntryType(actionRequest);
 		}
-		catch (RequiredFileEntryTypeException requiredFileEntryTypeException) {
-			SessionErrors.add(
-				actionRequest, requiredFileEntryTypeException.getClass());
-
-			actionResponse.setRenderParameter("navigation", "file_entry_types");
+		else if (cmd.equals(Constants.DELETE)) {
+			_deleteFileEntryType(actionRequest);
 		}
-		catch (NoSuchFileEntryTypeException | NoSuchStructureException |
-			   PrincipalException exception) {
+		else if (cmd.equals(Constants.SUBSCRIBE)) {
+			_subscribeFileEntryType(actionRequest);
+		}
+		else if (cmd.equals(Constants.UNSUBSCRIBE)) {
+			_unsubscribeFileEntryType(actionRequest);
+		}
 
-			SessionErrors.add(actionRequest, exception.getClass());
+		if (SessionErrors.isEmpty(actionRequest)) {
+			SessionMessages.add(
+				actionRequest,
+				_portal.getPortletId(actionRequest) +
+					SessionMessages.KEY_SUFFIX_REFRESH_PORTLET,
+				DLPortletKeys.DOCUMENT_LIBRARY);
 
-			actionResponse.setRenderParameter(
-				"mvcPath", "/document_library/error.jsp");
+			String redirect = _portal.escapeRedirect(
+				ParamUtil.getString(actionRequest, "redirect"));
+
+			if (Validator.isNotNull(redirect)) {
+				actionResponse.sendRedirect(redirect);
+			}
 		}
 	}
 
@@ -235,7 +256,7 @@ public class EditFileEntryTypeMVCActionCommand
 	}
 
 	private void _subscribeFileEntryType(ActionRequest actionRequest)
-		throws PortalException {
+		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -248,7 +269,7 @@ public class EditFileEntryTypeMVCActionCommand
 	}
 
 	private void _unsubscribeFileEntryType(ActionRequest actionRequest)
-		throws PortalException {
+		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

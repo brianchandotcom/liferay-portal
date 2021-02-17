@@ -70,7 +70,7 @@ public class DLServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"2.0.0", "3.0.0",
 			new UpgradeViewCount(
-				"DlFileEntry", DLFileEntry.class, "fileEntryId", "readCount"));
+				"DLFileEntry", DLFileEntry.class, "fileEntryId", "readCount"));
 
 		registry.register(
 			"3.0.0", "3.0.1",

@@ -28,13 +28,15 @@ export default ({children, dataLayoutBuilder}) => {
 		{
 			config: {allowNestedFields},
 			dataDefinition,
+			dataLayout,
 			editingLanguageId,
 			focusedCustomObjectField,
 			hoveredField,
 		},
 		dispatch,
 	] = useContext(FormViewContext);
-	const {defaultLanguageId} = dataDefinition;
+	const {defaultLanguageId, id: dataDefinitionLoaded} = dataDefinition;
+	const {id: dataLayoutLoaded} = dataLayout;
 
 	const deleteDefinitionField = useDeleteDefinitionField({dataLayoutBuilder});
 	const deleteDefinitionFieldModal = useDeleteDefinitionFieldModal(
@@ -145,6 +147,12 @@ export default ({children, dataLayoutBuilder}) => {
 			type: DataLayoutBuilderActions.SET_FORM_RENDERER_CUSTOM_FIELDS,
 		});
 	}, [dispatch]);
+
+	useEffect(() => {
+		if (dataDefinitionLoaded && dataLayoutLoaded) {
+			dispatch({type: DataLayoutBuilderActions.UPDATE_PAGES});
+		}
+	}, [dispatch, dataDefinitionLoaded, dataLayoutLoaded]);
 
 	return (
 		<DataLayoutBuilderContext.Provider

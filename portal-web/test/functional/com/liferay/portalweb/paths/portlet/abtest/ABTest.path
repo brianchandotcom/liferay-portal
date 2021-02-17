@@ -44,6 +44,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ELEMENT_ID_INPUT</td>
+	<td>//input[@id='clickableElement']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVALID_ID_MESSAGE</td>
+	<td>//*[contains(@class,'form-feedback-item') and contains(text(), 'ID was not found')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>OK_BUTTON</td>
 	<td>//*[contains(@class,'btn btn-primary') and text()='OK']</td>
 	<td></td>
@@ -69,8 +79,28 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_CLICKABLE_ELEMENT</td>
+	<td>//*[contains(@class,'lfr-segments-experiment-click-goal-target-overlay')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_CLICKABLE_ELEMENT_BUTTON</td>
+	<td>//button[contains(@class,'btn-secondary')and contains(text(),'Select Clickable Element')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_GOAL</td>
 	<td>//select[contains(@class,'form-control')]/option[.='${goal}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SET_ELEMENT_AS_CLICK_TARGET_BUTTON</td>
+	<td>//button[contains(@class,'btn-primary')and contains(text(),'Set Element as Click Target')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TARGET_LABEL</td>
+	<td>//*[contains(@class,'mr-2 text-truncate')and contains(text(),'Target')]</td>
 	<td></td>
 </tr>
 <tr>

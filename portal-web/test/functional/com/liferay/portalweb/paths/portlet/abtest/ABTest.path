@@ -69,6 +69,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_GOAL</td>
+	<td>//select[contains(@class,'form-control')]/option[.='${goal}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TERMINATE_TEST_BUTTON</td>
 	<td>//*[contains(@class,'w-100 btn btn-secondary') and contains(text(),'Terminate Test')]</td>
 	<td></td>

@@ -6,7 +6,7 @@ definition {
 		Click(locator1 = "ABTest#VIEW_DATA_ANALYTICS_CLOUD_BUTTON");
 	}
 
-	macro createABTestByBounceRate {
+	macro createABTest {
 		Click(locator1 = "ABTest#AB_TEST_BUTTON");
 
 		Click(locator1 = "ABTest#CREATE_TEST_BUTTON");
@@ -16,6 +16,10 @@ definition {
 		Type(
 			locator1 = "ABTest#AB_TEST_TITLE_FIELD",
 			value1 = "${testTitle}");
+
+		AssertClick(
+			locator1 = "ABTest#SELECT_GOAL",
+			value1 = "${goal}");
 
 		Click(locator1 = "ABTest#SAVE_AB_TEST_BUTTON");
 	}

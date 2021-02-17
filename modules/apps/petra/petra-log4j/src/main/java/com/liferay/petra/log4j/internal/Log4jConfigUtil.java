@@ -19,11 +19,14 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
 
 import org.dom4j.Document;
@@ -74,6 +77,24 @@ public class Log4jConfigUtil {
 		domConfigurator.doConfigure(
 			new UnsyncStringReader(document.asXML()),
 			LogManager.getLoggerRepository());
+
+		return priorities;
+	}
+
+	public static Map<String, String> getPriorities() {
+		Map<String, String> priorities = new HashMap<>();
+
+		Enumeration<Logger> enumeration = LogManager.getCurrentLoggers();
+
+		while (enumeration.hasMoreElements()) {
+			Logger logger = enumeration.nextElement();
+
+			Level level = logger.getLevel();
+
+			if (level != null) {
+				priorities.put(logger.getName(), level.toString());
+			}
+		}
 
 		return priorities;
 	}

@@ -128,10 +128,12 @@ public class TestrayImporter {
 
 		String testrayProjectID = System.getProperty("TESTRAY_PROJECT_ID");
 
+		TestrayServer testrayServer = getTestrayServer();
+
 		TestrayProject testrayProject = null;
 
 		if ((testrayProjectID != null) && testrayProjectID.matches("\\d+")) {
-			testrayProject = _testrayServer.getTestrayProjectByID(
+			testrayProject = testrayServer.getTestrayProjectByID(
 				Integer.parseInt(testrayProjectID));
 		}
 
@@ -140,7 +142,7 @@ public class TestrayImporter {
 		if ((testrayProject == null) &&
 			!JenkinsResultsParserUtil.isNullOrEmpty(testrayProjectName)) {
 
-			testrayProject = _testrayServer.getTestrayProjectByName(
+			testrayProject = testrayServer.getTestrayProjectByName(
 				_replaceEnvVars(testrayProjectName));
 		}
 
@@ -151,7 +153,7 @@ public class TestrayImporter {
 		if ((testrayProject == null) && (testrayProjectID != null) &&
 			testrayProjectID.matches("\\d+")) {
 
-			testrayProject = _testrayServer.getTestrayProjectByID(
+			testrayProject = testrayServer.getTestrayProjectByID(
 				Integer.parseInt(testrayProjectID));
 		}
 
@@ -162,19 +164,19 @@ public class TestrayImporter {
 		if ((testrayProject == null) &&
 			!JenkinsResultsParserUtil.isNullOrEmpty(testrayProjectName)) {
 
-			testrayProject = _testrayServer.getTestrayProjectByName(
+			testrayProject = testrayServer.getTestrayProjectByName(
 				_replaceEnvVars(testrayProjectName));
 		}
 
 		if (testrayProject != null) {
+			_testrayProject = testrayProject;
+
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
-					"Testray Project ", String.valueOf(testrayProject.getURL()),
-					" created in ",
+					"Testray Project ",
+					String.valueOf(_testrayProject.getURL()), " created in ",
 					JenkinsResultsParserUtil.toDurationString(
 						System.currentTimeMillis() - start)));
-
-			_testrayProject = testrayProject;
 
 			return _testrayProject;
 		}
@@ -182,7 +184,80 @@ public class TestrayImporter {
 		return null;
 	}
 
+	public TestrayRoutine getTestrayRoutine() {
+		if (_testrayRoutine != null) {
+			return _testrayRoutine;
+		}
+
+		long start = System.currentTimeMillis();
+
+		Job job = getJob();
+
+		String testrayRoutineID = System.getProperty("TESTRAY_ROUTINE_ID");
+
+		TestrayProject testrayProject = getTestrayProject();
+
+		TestrayRoutine testrayRoutine = null;
+
+		if ((testrayRoutineID != null) && testrayRoutineID.matches("\\d+")) {
+			testrayRoutine = testrayProject.getTestrayRoutineByID(
+				Integer.parseInt(testrayRoutineID));
+		}
+
+		String testrayRoutineName = System.getProperty("TESTRAY_ROUTINE_NAME");
+
+		if ((testrayRoutine == null) &&
+			!JenkinsResultsParserUtil.isNullOrEmpty(testrayRoutineName)) {
+
+			testrayRoutine = testrayProject.getTestrayRoutineByName(
+				_replaceEnvVars(testrayRoutineName));
+		}
+
+		testrayRoutineID = JenkinsResultsParserUtil.getProperty(
+			job.getJobProperties(), "testray.routine.id", job.getJobName(),
+			_topLevelBuild.getTestSuiteName());
+
+		if ((testrayRoutine == null) && (testrayRoutineID != null) &&
+			testrayRoutineID.matches("\\d+")) {
+
+			testrayRoutine = testrayProject.getTestrayRoutineByID(
+				Integer.parseInt(testrayRoutineID));
+		}
+
+		testrayRoutineName = JenkinsResultsParserUtil.getProperty(
+			job.getJobProperties(), "testray.routine.name", job.getJobName(),
+			_topLevelBuild.getTestSuiteName());
+
+		System.out.println("testrayRoutineName=" + testrayRoutineName);
+
+		if ((testrayRoutine == null) &&
+			!JenkinsResultsParserUtil.isNullOrEmpty(testrayRoutineName)) {
+
+			testrayRoutine = testrayProject.getTestrayRoutineByName(
+				_replaceEnvVars(testrayRoutineName));
+		}
+
+		if (testrayRoutine != null) {
+			_testrayRoutine = testrayRoutine;
+
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"Testray Routine ",
+					String.valueOf(_testrayRoutine.getURL()), " created in ",
+					JenkinsResultsParserUtil.toDurationString(
+						System.currentTimeMillis() - start)));
+
+			return _testrayRoutine;
+		}
+
+		return null;
+	}
+
 	public TestrayServer getTestrayServer() {
+		if (_testrayServer != null) {
+			return _testrayServer;
+		}
+
 		long start = System.currentTimeMillis();
 
 		String testrayServerURL = System.getProperty("TESTRAY_SERVER_URL");
@@ -491,6 +566,7 @@ public class TestrayImporter {
 
 	private Job _job;
 	private TestrayProject _testrayProject;
+	private TestrayRoutine _testrayRoutine;
 	private TestrayServer _testrayServer;
 	private final TopLevelBuild _topLevelBuild;
 

@@ -27,6 +27,8 @@ definition {
 			key_navBarTitle = "History",
 			locator1 = "Publications#MANGE_PUBLICATIONS_NAVBAR_TITLE");
 
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
 		var key_publicationsName = "${publicationsName}";
 		var key_publicationStatus = "Published";
 
@@ -259,6 +261,8 @@ definition {
 		AssertTextEquals(
 			locator1 = "Publications#MANGE_PUBLICATIONS_NAVBAR_TITLE",
 			value1 = "History");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		// Workaround LPS-115320
 

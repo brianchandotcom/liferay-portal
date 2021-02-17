@@ -2682,14 +2682,14 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Ongoing");
 
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
 		var key_publicationsName = "Publication 2 Name";
 		var key_publicationStatus = "Out of Date";
 
 		AssertTextEquals(
 			locator1 = "Publications#PUBLICATION_STATUS",
 			value1 = "Out of Date");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		Click(
 			key_publicationsName = "Publication 2 Name",
@@ -2728,6 +2728,8 @@ definition {
 			portlet = "Publications");
 
 		Navigator.gotoNavTab(navTab = "History");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		AssertVisible(
 			key_publicationsName = "Publication 1 Name",

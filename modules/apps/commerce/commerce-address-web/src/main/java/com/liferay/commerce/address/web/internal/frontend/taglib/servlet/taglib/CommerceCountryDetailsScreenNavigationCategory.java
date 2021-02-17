@@ -77,7 +77,7 @@ public class CommerceCountryDetailsScreenNavigationCategory
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
-			"/country/details.jsp");
+			"/commerce_country/details.jsp");
 	}
 
 	@Reference

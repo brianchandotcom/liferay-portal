@@ -139,7 +139,7 @@ CommerceRegionsDisplayContext commerceRegionsDisplayContext = (CommerceRegionsDi
 
 					<liferay-ui:search-container-column-jsp
 						cssClass="entry-action-column"
-						path="/region_action.jsp"
+						path="/commerce_region_action.jsp"
 					/>
 				</liferay-ui:search-container-row>
 

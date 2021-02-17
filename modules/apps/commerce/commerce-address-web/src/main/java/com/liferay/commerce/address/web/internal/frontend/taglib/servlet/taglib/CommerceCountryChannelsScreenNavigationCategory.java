@@ -82,7 +82,7 @@ public class CommerceCountryChannelsScreenNavigationCategory
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
-			"/country/channels.jsp");
+			"/commerce_country/channels.jsp");
 	}
 
 	@Reference

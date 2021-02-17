@@ -188,7 +188,7 @@ CommerceCountriesDisplayContext commerceCountriesDisplayContext = (CommerceCount
 
 					<liferay-ui:search-container-column-jsp
 						cssClass="entry-action-column"
-						path="/country_action.jsp"
+						path="/commerce_country_action.jsp"
 					/>
 				</liferay-ui:search-container-row>
 

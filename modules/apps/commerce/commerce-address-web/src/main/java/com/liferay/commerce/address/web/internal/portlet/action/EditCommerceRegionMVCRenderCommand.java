@@ -69,7 +69,7 @@ public class EditCommerceRegionMVCRenderCommand implements MVCRenderCommand {
 			}
 		}
 
-		return "/edit_region.jsp";
+		return "/edit_commerce_region.jsp";
 	}
 
 	@Reference

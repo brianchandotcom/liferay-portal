@@ -117,7 +117,7 @@ public class CommerceCountryRegionsScreenNavigationCategory
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
-			"/country/regions.jsp");
+			"/commerce_country/commerce_regions.jsp");
 	}
 
 	@Reference

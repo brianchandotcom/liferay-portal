@@ -40,7 +40,7 @@ import java.util.Map;
  */
 public class UpgradeFriendlyURLEntryLocalizations extends UpgradeProcess {
 
-	protected void addMissingFriendlyURLEntryLocalizations() throws Exception {
+	private void _addMissingFriendlyURLEntryLocalizations() throws Exception {
 		StringBundler sb1 = new StringBundler(8);
 
 		sb1.append("select JournalArticle.id_, ");
@@ -128,13 +128,7 @@ public class UpgradeFriendlyURLEntryLocalizations extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		setUpClassNameIds();
-		addMissingFriendlyURLEntryLocalizations();
-	}
-
-	protected void setUpClassNameIds() {
-		_classNameIdJournalArticle = PortalUtil.getClassNameId(
-			"com.liferay.journal.model.JournalArticle");
+		_addMissingFriendlyURLEntryLocalizations();
 	}
 
 	private void _addMissingFriendlyURLEntryLocalization(
@@ -329,6 +323,7 @@ public class UpgradeFriendlyURLEntryLocalizations extends UpgradeProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeFriendlyURLEntryLocalizations.class);
 
-	private long _classNameIdJournalArticle;
+	private final long _classNameIdJournalArticle = PortalUtil.getClassNameId(
+		"com.liferay.journal.model.JournalArticle");
 
 }

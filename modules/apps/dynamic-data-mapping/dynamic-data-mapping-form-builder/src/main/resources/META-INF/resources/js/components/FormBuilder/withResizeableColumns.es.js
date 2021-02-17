@@ -17,7 +17,9 @@ import Component from 'metal-jsx';
 
 import formBuilderProps from './props.es';
 
-const MAX_COLUMNS = 12;
+export const MAX_COLUMNS = 12;
+
+export const MIN_COLUMN_SIZE = 2;
 
 const withResizeableColumns = (ChildComponent) => {
 	class ResizeableColumns extends Component {
@@ -101,34 +103,34 @@ const withResizeableColumns = (ChildComponent) => {
 				container.classList.add('dragging');
 			}
 
-			let column = Math.floor(
-				((event.x - this._currentRow.getBoundingClientRect().left) *
-					(MAX_COLUMNS * 10)) /
-					this._currentRow.clientWidth /
-					10
+			const columnSizeRatio = Math.min(
+				Math.max(
+					(event.x - this._currentRow.getBoundingClientRect().left) /
+						this._currentRow.clientWidth,
+					0
+				),
+				1
 			);
 
-			if (column > MAX_COLUMNS - 1) {
-				column = MAX_COLUMNS - 1;
-			}
+			const column =
+				Math.round((columnSizeRatio * MAX_COLUMNS) / MIN_COLUMN_SIZE) *
+				MIN_COLUMN_SIZE;
 
-			if (column >= 0) {
+			if (column !== this._lastResizeColumn) {
+				this._lastResizeColumn = column;
+
 				const direction = source.classList.contains(
 					'ddm-resize-handle-left'
 				)
 					? 'left'
 					: 'right';
 
-				if (this._lastResizeColumn !== column) {
-					this._lastResizeColumn = column;
-
-					store.emit('columnResized', {
-						column,
-						container,
-						direction,
-						source,
-					});
-				}
+				store.emit('columnResized', {
+					column,
+					container,
+					direction,
+					source,
+				});
 			}
 		}
 	}

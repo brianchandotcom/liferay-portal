@@ -260,7 +260,13 @@ export const createField = (props, event) => {
 		},
 	};
 
-	const {fieldName, fieldReference, name, settingsContext} = newField;
+	const {
+		editorConfig,
+		fieldName,
+		fieldReference,
+		name,
+		settingsContext,
+	} = newField;
 
 	return {
 		...getFieldProperties(
@@ -268,6 +274,7 @@ export const createField = (props, event) => {
 			defaultLanguageId,
 			editingLanguageId
 		),
+		editorConfig,
 		fieldName,
 		fieldReference,
 		instanceId: generateInstanceId(8),

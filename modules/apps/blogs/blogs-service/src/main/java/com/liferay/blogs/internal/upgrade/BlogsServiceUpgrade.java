@@ -25,9 +25,7 @@ import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -36,12 +34,11 @@ import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.subscription.model.Subscription;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
-import java.util.List;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -105,36 +102,24 @@ public class BlogsServiceUpgrade implements UpgradeStepRegistrator {
 		_getUpgradeDiscussionSubscriptionClassNameUnsafeFunction() {
 
 		return className -> {
-			DynamicQuery groupDynamicQuery = _groupLocalService.dynamicQuery();
+			try (Connection con = DataAccess.getConnection()) {
+				try (PreparedStatement ps = con.prepareStatement(
+						"update Subscription set classNameId = ? where " +
+							"classNameId = ? and classPK not in (select " +
+								"groupId from Group_ where site = TRUE)")) {
 
-			groupDynamicQuery.add(RestrictionsFactoryUtil.eq("site", true));
+					ps.setLong(
+						1,
+						_classNameLocalService.getClassNameId(
+							MBDiscussion.class.getName() +
+								StringPool.UNDERLINE +
+									BlogsEntry.class.getName()));
 
-			List<Long> groupIds = ListUtil.toList(
-				_groupLocalService.dynamicQuery(groupDynamicQuery),
-				Group.GROUP_ID_ACCESSOR);
+					ps.setLong(
+						2, _classNameLocalService.getClassNameId(className));
 
-			DynamicQuery subscriptionDynamicQuery =
-				_subscriptionLocalService.dynamicQuery();
-
-			subscriptionDynamicQuery.add(
-				RestrictionsFactoryUtil.eq(
-					"classNameId",
-					_classNameLocalService.getClassNameId(className)));
-
-			List<Subscription> subscriptions =
-				_subscriptionLocalService.dynamicQuery(
-					subscriptionDynamicQuery);
-
-			for (Subscription subscription : subscriptions) {
-				if (groupIds.contains(subscription.getClassPK())) {
-					continue;
+					ps.executeUpdate();
 				}
-
-				subscription.setClassName(
-					MBDiscussion.class.getName() + StringPool.UNDERLINE +
-						BlogsEntry.class.getName());
-
-				_subscriptionLocalService.updateSubscription(subscription);
 			}
 
 			return true;

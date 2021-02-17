@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.usersadmin.search.UserSearchTerms;
+import com.liferay.users.admin.web.internal.util.DisplayStyleUtil;
 
 import java.util.List;
 
@@ -179,6 +180,12 @@ public class ViewFlatUsersManagementToolbarDisplayContext
 
 		return PortalPermissionUtil.contains(
 			themeDisplay.getPermissionChecker(), ActionKeys.ADD_USER);
+	}
+
+	@Override
+	protected String getDisplayStyle() {
+		return DisplayStyleUtil.getDisplayStyle(
+			liferayPortletRequest, getDefaultDisplayStyle());
 	}
 
 	@Override

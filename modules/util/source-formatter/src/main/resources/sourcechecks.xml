@@ -911,6 +911,7 @@
 		<check name="JSPArrowFunctionCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks that there are no array functions." />
+			<property name="enabled" value="false" />
 		</check>
 		<check name="JSPDefineObjectsCheck">
 			<category name="Performance" />

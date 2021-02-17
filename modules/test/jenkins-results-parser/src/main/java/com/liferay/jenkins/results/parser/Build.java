@@ -61,6 +61,9 @@ public interface Build {
 
 	public Job.BuildProfile getBuildProfile();
 
+	public JSONObject getBuildResultsJSONObject(
+		String[] buildResults, String[] testStatuses, String[] dataTypes);
+
 	public String getBuildURL();
 
 	public String getBuildURLRegex();

@@ -29,6 +29,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -352,6 +353,91 @@ public abstract class BaseBuild implements Build {
 		}
 
 		return Job.BuildProfile.PORTAL;
+	}
+
+	@Override
+	public JSONObject getBuildResultsJSONObject(
+		String[] buildResults, String[] testStatuses, String[] dataTypes) {
+
+		JSONObject buildResultsJSONObject = new JSONObject();
+
+		if (buildResults != null) {
+			List<String> buildResultsList = Arrays.asList(buildResults);
+
+			if (!buildResultsList.contains(getResult())) {
+				return buildResultsJSONObject;
+			}
+		}
+
+		JSONArray testResultsJSONArray = new JSONArray();
+
+		List<TestResult> testResults = new ArrayList<>();
+
+		if (testStatuses == null) {
+			testResults = getTestResults(null);
+		}
+		else {
+			for (String testStatus : testStatuses) {
+				try {
+					testResults.addAll(getTestResults(testStatus));
+				}
+				catch (RuntimeException runtimeException) {
+					System.out.println(runtimeException.getMessage());
+				}
+			}
+		}
+
+		if (dataTypes == null) {
+			dataTypes = new String[] {"name", "status"};
+		}
+
+		List<String> dataTypesList = Arrays.asList(dataTypes);
+
+		for (TestResult testResult : testResults) {
+			JSONObject testResultJSONObject = new JSONObject();
+
+			if (dataTypesList.contains("buildURL")) {
+				testResultJSONObject.put("buildURL", getBuildURL());
+			}
+
+			if (dataTypesList.contains("duration")) {
+				testResultJSONObject.put("duration", testResult.getDuration());
+			}
+
+			if (dataTypesList.contains("errorDetails")) {
+				String errorDetails = testResult.getErrorDetails();
+
+				if (errorDetails != null) {
+					if (errorDetails.contains("\n")) {
+						int index = errorDetails.indexOf("\n");
+
+						errorDetails = errorDetails.substring(0, index);
+					}
+
+					if (errorDetails.length() > 200) {
+						errorDetails = errorDetails.substring(0, 200);
+					}
+				}
+
+				testResultJSONObject.put("errorDetails", errorDetails);
+			}
+
+			if (dataTypesList.contains("name")) {
+				testResultJSONObject.put("name", testResult.getDisplayName());
+			}
+
+			if (dataTypesList.contains("status")) {
+				testResultJSONObject.put("status", testResult.getStatus());
+			}
+
+			testResultsJSONArray.put(testResultJSONObject);
+		}
+
+		buildResultsJSONObject.put("jobVariant", getJobVariant());
+		buildResultsJSONObject.put("result", getResult());
+		buildResultsJSONObject.put("testResults", testResultsJSONArray);
+
+		return buildResultsJSONObject;
 	}
 
 	@Override

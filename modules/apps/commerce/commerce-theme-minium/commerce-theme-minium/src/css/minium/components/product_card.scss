@@ -32,15 +32,6 @@
 			}
 		}
 
-		.card-text .flex-row {
-			align-items: baseline;
-
-			.price-value-inactive {
-				font-size: 0.8rem;
-				margin-left: 1.5rem;
-			}
-		}
-
 		.card-text,
 		.card-title {
 			font-weight: 500;
@@ -51,18 +42,6 @@
 			line-height: normal;
 			max-width: 4.5rem;
 			padding-left: 1rem;
-		}
-
-		.price-value {
-			&-big,
-			&-final,
-			&-promo {
-				color: $color-mood-bad;
-
-				&:not(.hide) + .price-value {
-					font-size: 0.8rem;
-				}
-			}
 		}
 	}
 

@@ -151,6 +151,7 @@ CPDefinition cpDefinition = cpDefinitionOptionRelDisplayContext.getCPDefinition(
 				namespace="<%= liferayPortletResponse.getNamespace() %>"
 				pageNumber="<%= 1 %>"
 				portletURL="<%= currentURLObj %>"
+				selectedItemsKey="cpdefinitionOptionRelId"
 			/>
 		</commerce-ui:panel>
 	</div>

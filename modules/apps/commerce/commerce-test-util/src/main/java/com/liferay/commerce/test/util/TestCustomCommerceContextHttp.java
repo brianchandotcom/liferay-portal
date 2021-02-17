@@ -59,11 +59,11 @@ public class TestCustomCommerceContextHttp extends BaseCommerceContextHttp {
 		long companyId = _portal.getCompanyId(_httpServletRequest);
 
 		_commerceCurrency = _commerceCurrencyLocalService.getCommerceCurrency(
-			companyId, "EUR");
+			companyId, "USD");
 
 		if (_commerceCurrency == null) {
 			_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
-				companyId, "EUR");
+				companyId, "USD");
 		}
 
 		return _commerceCurrency;

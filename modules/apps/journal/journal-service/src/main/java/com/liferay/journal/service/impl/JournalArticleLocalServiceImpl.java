@@ -4537,7 +4537,7 @@ public class JournalArticleLocalServiceImpl
 			titles = _customSQL.keywords(keywords);
 			descriptions = _customSQL.keywords(keywords, false);
 
-			if (isdatabaseContentKeywordSearchEnabled(companyId)) {
+			if (isDatabaseContentKeywordSearchEnabled(companyId)) {
 				contents = _customSQL.keywords(keywords, false);
 			}
 		}
@@ -5083,7 +5083,7 @@ public class JournalArticleLocalServiceImpl
 			titles = _customSQL.keywords(keywords);
 			descriptions = _customSQL.keywords(keywords, false);
 
-			if (isdatabaseContentKeywordSearchEnabled(companyId)) {
+			if (isDatabaseContentKeywordSearchEnabled(companyId)) {
 				contents = _customSQL.keywords(keywords, false);
 			}
 		}
@@ -8126,7 +8126,7 @@ public class JournalArticleLocalServiceImpl
 		return journalServiceConfiguration.articleCommentsEnabled();
 	}
 
-	protected boolean isdatabaseContentKeywordSearchEnabled(long companyId) {
+	protected boolean isDatabaseContentKeywordSearchEnabled(long companyId) {
 		JournalServiceConfiguration journalServiceConfiguration = null;
 
 		try {

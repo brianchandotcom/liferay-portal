@@ -391,24 +391,36 @@ renderResponse.setTitle(headerTitle);
 
 							<%
 							List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
+
+							boolean showLanguageSelector = false;
+
+							for (DDMStructure ddmStructure : ddmStructures) {
+								if (dlEditFileEntryDisplayContext.isDDMStructureVisible(ddmStructure)) {
+									showLanguageSelector = true;
+
+									break;
+								}
+							}
 							%>
 
-								<div class="mb-3">
-									<react:component
-										module="document_library/js/LanguageSelector"
-										props='<%=
-											HashMapBuilder.<String, Object>put(
-												"ddmStructureIds", DDMStructureUtil.getDDMStructureIds(ddmStructures)
-											).put(
-												"languageIds", DDMStructureUtil.getAvailableLanguageIds(themeDisplay)
-											).put(
-												"selectedLanguageId", themeDisplay.getLanguageId()
-											).put(
-												"translatedLanguageIds", DDMStructureUtil.getTranslatedLanguageIds(ddmStructures, dlEditFileEntryDisplayContext, fileVersionId)
-											).build()
-										%>'
-									/>
-								</div>
+								<c:if test="<%= showLanguageSelector %>">
+									<div class="mb-3">
+										<react:component
+											module="document_library/js/LanguageSelector"
+											props='<%=
+												HashMapBuilder.<String, Object>put(
+													"ddmStructureIds", DDMStructureUtil.getDDMStructureIds(ddmStructures)
+												).put(
+													"languageIds", DDMStructureUtil.getAvailableLanguageIds(themeDisplay)
+												).put(
+													"selectedLanguageId", themeDisplay.getLanguageId()
+												).put(
+													"translatedLanguageIds", DDMStructureUtil.getTranslatedLanguageIds(ddmStructures, dlEditFileEntryDisplayContext, fileVersionId)
+												).build()
+											%>'
+										/>
+									</div>
+								</c:if>
 
 							<%
 							try {

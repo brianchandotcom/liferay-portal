@@ -17,6 +17,7 @@ package com.liferay.fragment.entry.processor.helper;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
+import com.liferay.info.type.WebImage;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 
@@ -42,6 +43,17 @@ public interface FragmentEntryProcessorHelper {
 	@Deprecated
 	public String getEditableValue(
 		JSONObject jsonObject, Locale locale, long[] segmentsExperienceIds);
+
+	public long getFileEntryId(
+			long classNameId, long classPK, String fieldId, Locale locale)
+		throws PortalException;
+
+	public long getFileEntryId(
+		Object displayObject, String fieldId, Locale locale);
+
+	public long getFileEntryId(String className, long classPK);
+
+	public long getFileEntryId(WebImage webImage);
 
 	public Object getMappedCollectionValue(
 			JSONObject jsonObject,

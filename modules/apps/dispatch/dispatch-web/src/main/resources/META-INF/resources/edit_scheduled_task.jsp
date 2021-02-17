@@ -29,62 +29,64 @@ portletURL.setParameter("tabs1", "scheduled-task");
 	navigationItems="<%= scheduledTaskDispatchTriggerDisplayContext.getNavigationItems() %>"
 />
 
-<div class="closed container">
-	<liferay-ui:search-container
-		id="liferayScheduledTasks"
-		searchContainer="<%= scheduledTaskDispatchTriggerDisplayContext.getSearchContainer() %>"
-	>
-		<liferay-ui:search-container-row
-			className="com.liferay.dispatch.core.scheduler.ScheduledTaskDispatchTrigger"
-			keyProperty="dispatchTriggerId"
-			modelVar="scheduledTaskDispatchTrigger"
+<div id="<portlet:namespace />scheduledTaskContainer">
+	<div class="closed container" id="<portlet:namespace />infoPanelId">
+		<liferay-ui:search-container
+			id="scheduledTasks"
+			searchContainer="<%= scheduledTaskDispatchTriggerDisplayContext.getSearchContainer() %>"
 		>
-			<liferay-ui:search-container-column-text
-				cssClass="important table-cell-expand"
-				name="name"
+			<liferay-ui:search-container-row
+				className="com.liferay.dispatch.core.scheduler.ScheduledTaskDispatchTrigger"
+				keyProperty="dispatchTriggerId"
+				modelVar="scheduledTaskDispatchTrigger"
 			>
-				<liferay-ui:message key="<%= scheduledTaskDispatchTrigger.getSimpleName() %>" />
+				<liferay-ui:search-container-column-text
+					cssClass="important table-cell-expand"
+					name="name"
+				>
+					<liferay-ui:message key="<%= scheduledTaskDispatchTrigger.getSimpleName() %>" />
 
-				<liferay-ui:icon-help message="<%= scheduledTaskDispatchTrigger.getName() %>" />
-			</liferay-ui:search-container-column-text>
+					<liferay-ui:icon-help message="<%= scheduledTaskDispatchTrigger.getName() %>" />
+				</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-text
-				name="system"
-				value='<%= scheduledTaskDispatchTrigger.isSystem() ? LanguageUtil.get(request, "yes") : LanguageUtil.get(request, "no") %>'
+				<liferay-ui:search-container-column-text
+					name="system"
+					value='<%= scheduledTaskDispatchTrigger.isSystem() ? LanguageUtil.get(request, "yes") : LanguageUtil.get(request, "no") %>'
+				/>
+
+				<liferay-ui:search-container-column-text
+					name="next-fire-date"
+					value="<%= scheduledTaskDispatchTriggerDisplayContext.getNextFireDateString(scheduledTaskDispatchTrigger) %>"
+				/>
+
+				<liferay-ui:search-container-column-text
+					name="status"
+				>
+
+					<%
+					TriggerState triggerState = scheduledTaskDispatchTriggerDisplayContext.getTriggerState(scheduledTaskDispatchTrigger);
+					%>
+
+					<h6 class="<%= (triggerState == TriggerState.NORMAL) ? "text-success" : "text-info" %>">
+						<liferay-ui:message key="<%= triggerState.toString() %>" />
+					</h6>
+				</liferay-ui:search-container-column-text>
+
+				<liferay-ui:search-container-column-jsp
+					cssClass="table-cell-expand"
+					path="/scheduled_task_buttons.jsp"
+				/>
+
+				<liferay-ui:search-container-column-jsp
+					cssClass="entry-action-column"
+					path="/scheduled_task_action.jsp"
+				/>
+			</liferay-ui:search-container-row>
+
+			<liferay-ui:search-iterator
+				displayStyle="list"
+				markupView="lexicon"
 			/>
-
-			<liferay-ui:search-container-column-text
-				name="next-fire-date"
-				value="<%= scheduledTaskDispatchTriggerDisplayContext.getNextFireDateString(scheduledTaskDispatchTrigger) %>"
-			/>
-
-			<liferay-ui:search-container-column-text
-				name="status"
-			>
-
-				<%
-				TriggerState triggerState = scheduledTaskDispatchTriggerDisplayContext.getTriggerState(scheduledTaskDispatchTrigger);
-				%>
-
-				<h6 class="<%= (triggerState == TriggerState.NORMAL) ? "text-success" : "text-info" %>">
-					<liferay-ui:message key="<%= triggerState.toString() %>" />
-				</h6>
-			</liferay-ui:search-container-column-text>
-
-			<liferay-ui:search-container-column-jsp
-				cssClass="table-cell-expand"
-				path="/scheduled_task_buttons.jsp"
-			/>
-
-			<liferay-ui:search-container-column-jsp
-				cssClass="entry-action-column"
-				path="/scheduled_task_action.jsp"
-			/>
-		</liferay-ui:search-container-row>
-
-		<liferay-ui:search-iterator
-			displayStyle="list"
-			markupView="lexicon"
-		/>
-	</liferay-ui:search-container>
+		</liferay-ui:search-container>
+	</div>
 </div>

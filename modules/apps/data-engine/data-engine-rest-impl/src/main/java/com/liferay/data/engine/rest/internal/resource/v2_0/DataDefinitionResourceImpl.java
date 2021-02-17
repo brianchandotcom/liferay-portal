@@ -84,6 +84,8 @@ import com.liferay.dynamic.data.mapping.validator.DDMFormValidator;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -92,6 +94,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -100,6 +103,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -114,6 +118,7 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -126,6 +131,7 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -905,7 +911,7 @@ public class DataDefinitionResourceImpl
 			_ddmFormFieldTypeServicesTracker.getDDMFormFieldType(
 				ddmFormFieldName);
 
-		return JSONUtil.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"description",
 			_translate(
 				MapUtil.getString(
@@ -949,6 +955,23 @@ public class DataDefinitionResourceImpl
 			MapUtil.getBoolean(
 				ddmFormFieldTypeProperties, "ddm.form.field.type.system")
 		);
+
+		if (StringUtil.equals(ddmFormFieldType.getName(), "rich_text")) {
+			EditorConfiguration editorConfiguration =
+				EditorConfigurationFactoryUtil.getEditorConfiguration(
+					StringPool.BLANK, ddmFormFieldType.getName(),
+					"ckeditor_classic", new HashMap<String, Object>(),
+					(ThemeDisplay)contextHttpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY),
+					RequestBackedPortletURLFactoryUtil.create(
+						contextHttpServletRequest));
+
+			Map<String, Object> data = editorConfiguration.getData();
+
+			jsonObject.put("editorConfig", data.get("editorConfig"));
+		}
+
+		return jsonObject;
 	}
 
 	private String[] _getRemovedFieldNames(

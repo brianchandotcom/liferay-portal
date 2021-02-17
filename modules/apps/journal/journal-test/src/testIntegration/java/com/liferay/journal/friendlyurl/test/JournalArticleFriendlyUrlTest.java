@@ -15,9 +15,9 @@
 package com.liferay.journal.friendlyurl.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.journal.constants.JournalArticleConstants;
+import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.model.JournalArticleConstants;
-import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -184,7 +184,7 @@ public class JournalArticleFriendlyUrlTest {
 		return JournalTestUtil.addArticle(
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			JournalArticleConstants.CLASSNAME_ID_DEFAULT, titleMap, titleMap,
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, titleMap, titleMap,
 			titleMap, LocaleUtil.US, false, true, serviceContext);
 	}
 

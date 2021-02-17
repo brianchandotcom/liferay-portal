@@ -30,10 +30,9 @@ definition {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		var key_publicationsName = "${publicationsName}";
-		var key_publicationStatus = "Published";
 
 		AssertTextEquals(
-			locator1 = "Publications#PUBLICATION_STATUS",
+			locator1 = "Publications#LIST_PUBLISHED_STATUS",
 			value1 = "Published");
 	}
 
@@ -269,10 +268,9 @@ definition {
 		Refresh();
 
 		var key_publicationsName = "${publicationsName}";
-		var key_publicationStatus = "Published";
 
 		AssertTextEquals(
-			locator1 = "Publications#PUBLICATION_STATUS",
+			locator1 = "Publications#LIST_PUBLISHED_STATUS",
 			value1 = "Published");
 	}
 

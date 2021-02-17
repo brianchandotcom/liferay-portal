@@ -99,6 +99,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LIST_PUBLISHED_STATUS</td>
+	<td>//a[contains(.,'${key_publicationsName}')]//following-sibling::div/span[contains(.,'Published')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MANGE_PUBLICATIONS_PAGE_TITLE</td>
 	<td>//span[contains(@data-qa-id,'headerTitle')]</td>
 	<td></td>

@@ -70,11 +70,36 @@ public class DispatchMessageListenerTest {
 	}
 
 	@Test
+	public void testDoReceiveMissingDispatchTaskExecutor() throws Exception {
+		int executeCount = RandomTestUtil.randomInt(1, 3);
+
+		DispatchTrigger dispatchTrigger = _executeDispatchTrigger(
+			executeCount, 1000, RandomTestUtil.randomBoolean(), "missingType");
+
+		List<DispatchLog> dispatchLogs =
+			_dispatchLogLocalService.getDispatchLogs(
+				dispatchTrigger.getDispatchTriggerId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		Assert.assertTrue(
+			String.format(
+				"Expected no more than %d dispatch logs", executeCount),
+			dispatchLogs.size() <= executeCount);
+
+		for (DispatchLog dispatchLog : dispatchLogs) {
+			Assert.assertEquals(
+				DispatchTaskStatus.CANCELED.getStatus(),
+				dispatchLog.getStatus());
+		}
+	}
+
+	@Test
 	public void testDoReceiveOverlapAllowed() throws Exception {
 		int executeCount = RandomTestUtil.randomInt(4, 10);
 
 		DispatchTrigger dispatchTrigger = _executeDispatchTrigger(
-			executeCount, 1000, true);
+			executeCount, 1000, true,
+			TestDispatchTaskExecutor.DISPATCH_TASK_EXECUTOR_TYPE_TEST);
 
 		_assertExecutionSequence(
 			_dispatchLogLocalService.getDispatchLogs(
@@ -88,7 +113,8 @@ public class DispatchMessageListenerTest {
 		int executeCount = RandomTestUtil.randomInt(4, 10);
 
 		DispatchTrigger dispatchTrigger = _executeDispatchTrigger(
-			executeCount, 750, false);
+			executeCount, 750, false,
+			TestDispatchTaskExecutor.DISPATCH_TASK_EXECUTOR_TYPE_TEST);
 
 		List<DispatchLog> dispatchLogs =
 			_dispatchLogLocalService.getDispatchLogs(
@@ -176,7 +202,7 @@ public class DispatchMessageListenerTest {
 
 	private DispatchTrigger _executeDispatchTrigger(
 			int executeCount, long scheduledExecutionIntervalMillis,
-			boolean overlapAllowed)
+			boolean overlapAllowed, String type)
 		throws Exception {
 
 		Company company = CompanyTestUtil.addCompany();
@@ -185,9 +211,8 @@ public class DispatchMessageListenerTest {
 
 		DispatchTrigger dispatchTrigger =
 			_dispatchTriggerLocalService.addDispatchTrigger(
-				user.getUserId(),
-				TestDispatchTaskExecutor.DISPATCH_TASK_EXECUTOR_TYPE_TEST, null,
-				RandomTestUtil.randomString(), RandomTestUtil.randomBoolean());
+				user.getUserId(), type, null, RandomTestUtil.randomString(),
+				RandomTestUtil.randomBoolean());
 
 		Date now = new Date();
 

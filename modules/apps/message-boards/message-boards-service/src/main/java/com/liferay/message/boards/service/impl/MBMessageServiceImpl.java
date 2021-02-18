@@ -108,6 +108,12 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			parentMessageId, subject, body, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #addMessage(String, long, String, String, String, List,
+	 *             boolean, double, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public MBMessage addMessage(
 			long groupId, long categoryId, String subject, String body,
@@ -141,6 +147,12 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #addMessage(String, long, String, String, String, List,
+	 *             boolean, double, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public MBMessage addMessage(
 			long groupId, long categoryId, String subject, String body,
@@ -164,6 +176,12 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			anonymous, priority, allowPingbacks, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #addMessage(String, long, String, String, String, List,
+	 *             boolean, double, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public MBMessage addMessage(
 			long categoryId, String subject, String body,
@@ -182,7 +200,9 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #addMessage(String, long, String, String, String, List,
+	 *             boolean, double, boolean, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -255,10 +275,11 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		}
 
 		return mbMessageLocalService.addMessage(
-			getGuestOrUserId(), null, parentMessage.getGroupId(),
-			parentMessage.getCategoryId(), parentMessage.getThreadId(),
-			parentMessageId, subject, body, format, inputStreamOVPs, anonymous,
-			priority, allowPingbacks, serviceContext);
+			externalReferenceCode, getGuestOrUserId(), null,
+			parentMessage.getGroupId(), parentMessage.getCategoryId(),
+			parentMessage.getThreadId(), parentMessageId, subject, body, format,
+			inputStreamOVPs, anonymous, priority, allowPingbacks,
+			serviceContext);
 	}
 
 	@Override

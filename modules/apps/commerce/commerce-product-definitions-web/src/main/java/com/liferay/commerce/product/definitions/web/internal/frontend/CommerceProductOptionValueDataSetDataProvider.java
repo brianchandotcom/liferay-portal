@@ -77,17 +77,23 @@ public class CommerceProductOptionValueDataSetDataProvider
 
 		Locale locale = _portal.getLocale(httpServletRequest);
 
-		BaseModelSearchResult<CPDefinitionOptionValueRel>
-			baseModelSearchResult = _getBaseModelSearchResult(
-				cpDefinitionOptionRelId, filter.getKeywords(),
-				pagination.getStartPosition(), pagination.getEndPosition(),
-				sort);
+		CPDefinitionOptionRel cpDefinitionOptionRel =
+			_cpDefinitionOptionRelService.getCPDefinitionOptionRel(
+				cpDefinitionOptionRelId);
 
-		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
-			baseModelSearchResult.getBaseModels();
+		BaseModelSearchResult<CPDefinitionOptionValueRel>
+			cpDefinitionOptionValueRelBaseModelSearchResult =
+				_cpDefinitionOptionValueRelService.
+					searchCPDefinitionOptionValueRels(
+						cpDefinitionOptionRel.getCompanyId(),
+						cpDefinitionOptionRel.getGroupId(),
+						cpDefinitionOptionRelId, filter.getKeywords(),
+						pagination.getStartPosition(),
+						pagination.getEndPosition(), new Sort[] {sort});
 
 		for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
-				cpDefinitionOptionValueRels) {
+				cpDefinitionOptionValueRelBaseModelSearchResult.
+					getBaseModels()) {
 
 			productOptionValues.add(
 				new ProductOptionValue(
@@ -119,28 +125,16 @@ public class CommerceProductOptionValueDataSetDataProvider
 		long cpDefinitionOptionRelId = ParamUtil.getLong(
 			httpServletRequest, "cpDefinitionOptionRelId");
 
-		BaseModelSearchResult<CPDefinitionOptionValueRel>
-			baseModelSearchResult = _getBaseModelSearchResult(
-				cpDefinitionOptionRelId, filter.getKeywords(), 0, 0, null);
-
-		return baseModelSearchResult.getLength();
-	}
-
-	private BaseModelSearchResult<CPDefinitionOptionValueRel>
-			_getBaseModelSearchResult(
-				long cpDefinitionOptionRelId, String keywords, int start,
-				int end, Sort sort)
-		throws PortalException {
-
 		CPDefinitionOptionRel cpDefinitionOptionRel =
 			_cpDefinitionOptionRelService.getCPDefinitionOptionRel(
 				cpDefinitionOptionRelId);
 
 		return _cpDefinitionOptionValueRelService.
-			searchCPDefinitionOptionValueRels(
+			searchCPDefinitionOptionValueRelsCount(
 				cpDefinitionOptionRel.getCompanyId(),
-				cpDefinitionOptionRel.getGroupId(), cpDefinitionOptionRelId,
-				keywords, start, end, sort);
+				cpDefinitionOptionRel.getGroupId(),
+				cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
+				filter.getKeywords());
 	}
 
 	private CommerceCurrency _getCommerceCurrency(long cpDefinitionOptionRelId)

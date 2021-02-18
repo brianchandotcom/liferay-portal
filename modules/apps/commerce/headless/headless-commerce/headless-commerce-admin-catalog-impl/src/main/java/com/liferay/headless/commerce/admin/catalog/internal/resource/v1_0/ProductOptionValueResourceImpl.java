@@ -23,6 +23,8 @@ import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.P
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.ProductOptionValueUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductOptionValueResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -47,25 +49,34 @@ public class ProductOptionValueResourceImpl
 
 	@Override
 	public Page<ProductOptionValue> getProductOptionIdProductOptionValuesPage(
-			Long id, Pagination pagination)
+			Long id, String search, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		CPDefinitionOptionRel cpDefinitionOptionRel =
 			_cpDefinitionOptionRelService.getCPDefinitionOptionRel(id);
 
-		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
-			_cpDefinitionOptionValueRelService.getCPDefinitionOptionValueRels(
-				cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
-				pagination.getStartPosition(), pagination.getEndPosition());
+		BaseModelSearchResult<CPDefinitionOptionValueRel>
+			cpDefinitionOptionValueRelBaseModelSearchResult =
+				_cpDefinitionOptionValueRelService.
+					searchCPDefinitionOptionValueRels(
+						cpDefinitionOptionRel.getCompanyId(),
+						cpDefinitionOptionRel.getGroupId(),
+						cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
+						search, pagination.getStartPosition(),
+						pagination.getEndPosition(), sorts);
 
 		int totalItems =
 			_cpDefinitionOptionValueRelService.
-				getCPDefinitionOptionValueRelsCount(
-					cpDefinitionOptionRel.getCPDefinitionOptionRelId());
+				searchCPDefinitionOptionValueRelsCount(
+					cpDefinitionOptionRel.getCompanyId(),
+					cpDefinitionOptionRel.getGroupId(),
+					cpDefinitionOptionRel.getCPDefinitionOptionRelId(), search);
 
 		return Page.of(
-			_toProductOptionValues(cpDefinitionOptionValueRels), pagination,
-			totalItems);
+			_toProductOptionValues(
+				cpDefinitionOptionValueRelBaseModelSearchResult.
+					getBaseModels()),
+			pagination, totalItems);
 	}
 
 	@Override

@@ -25,7 +25,6 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServices
 import com.liferay.frontend.taglib.clay.data.Filter;
 import com.liferay.frontend.taglib.clay.data.Pagination;
 import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -113,22 +112,15 @@ public class CommerceProductOptionDataSetDataProvider
 			HttpServletRequest httpServletRequest, Filter filter)
 		throws PortalException {
 
-		String keywords = filter.getKeywords();
-
 		long cpDefinitionId = ParamUtil.getLong(
 			httpServletRequest, "cpDefinitionId");
 
-		if (Validator.isNotNull(keywords) || (cpDefinitionId == 0)) {
-			BaseModelSearchResult<CPDefinitionOptionRel> baseModelSearchResult =
-				_getBaseModelSearchResult(
-					cpDefinitionId, keywords, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null);
-
-			return baseModelSearchResult.getLength();
-		}
-
-		return _cpDefinitionOptionRelService.getCPDefinitionOptionRelsCount(
+		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
 			cpDefinitionId);
+
+		return _cpDefinitionOptionRelService.searchCPDefinitionOptionRelsCount(
+			cpDefinition.getCompanyId(), cpDefinition.getGroupId(),
+			cpDefinition.getCPDefinitionId(), filter.getKeywords());
 	}
 
 	private BaseModelSearchResult<CPDefinitionOptionRel>
@@ -142,23 +134,18 @@ public class CommerceProductOptionDataSetDataProvider
 
 		return _cpDefinitionOptionRelService.searchCPDefinitionOptionRels(
 			cpDefinition.getCompanyId(), cpDefinition.getGroupId(),
-			cpDefinitionId, keywords, start, end, sort);
+			cpDefinitionId, keywords, start, end, new Sort[] {sort});
 	}
 
 	private List<CPDefinitionOptionRel> _getCPDefinitionOptionRels(
 			long cpDefinitionId, String keywords, int start, int end, Sort sort)
 		throws PortalException {
 
-		if (Validator.isNotNull(keywords) || (cpDefinitionId == 0)) {
-			BaseModelSearchResult<CPDefinitionOptionRel> baseModelSearchResult =
-				_getBaseModelSearchResult(
-					cpDefinitionId, keywords, start, end, sort);
+		BaseModelSearchResult<CPDefinitionOptionRel> baseModelSearchResult =
+			_getBaseModelSearchResult(
+				cpDefinitionId, keywords, start, end, sort);
 
-			return baseModelSearchResult.getBaseModels();
-		}
-
-		return _cpDefinitionOptionRelService.getCPDefinitionOptionRels(
-			cpDefinitionId, start, end);
+		return baseModelSearchResult.getBaseModels();
 	}
 
 	private String _getDDMFormFieldTypeLabel(

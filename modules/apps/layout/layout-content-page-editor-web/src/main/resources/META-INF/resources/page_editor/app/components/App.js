@@ -83,7 +83,7 @@ const LanguageDirection = () => {
 	const languageId = useSelector(selectLanguageId);
 
 	useEffect(() => {
-		const currentLanguageDirection = config.languageDirection[languageId];
+		const currentLanguageDirection = Liferay.Language.direction[languageId];
 		const wrapper = document.getElementById('wrapper');
 
 		if (wrapper) {

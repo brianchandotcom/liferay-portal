@@ -23,7 +23,6 @@ const Layout = ({
 	getItemChildrenURL,
 	initialBreadcrumbEntries,
 	initialLayoutColumns,
-	languageDirection,
 	languageId,
 	moveItemURL,
 	namespace,
@@ -178,7 +177,7 @@ const Layout = ({
 				onColumnsChange={updateBreadcrumbs}
 				onItemMove={saveData}
 				onItemStayHover={getItemChildren}
-				rtl={languageDirection[languageId] === 'rtl'}
+				rtl={Liferay.Language.direction[languageId] === 'rtl'}
 				searchContainer={searchContainerElement}
 			/>
 		</div>
@@ -190,7 +189,6 @@ export default function ({
 	props: {
 		breadcrumbEntries,
 		getItemChildrenURL,
-		languageDirection,
 		languageId,
 		layoutColumns,
 		moveItemURL,
@@ -202,7 +200,6 @@ export default function ({
 			getItemChildrenURL={getItemChildrenURL}
 			initialBreadcrumbEntries={breadcrumbEntries}
 			initialLayoutColumns={layoutColumns}
-			languageDirection={languageDirection}
 			languageId={languageId}
 			moveItemURL={moveItemURL}
 			namespace={namespace}

@@ -287,7 +287,7 @@ export default function Sidebar() {
 						'page-editor__sidebar__content': true,
 						'page-editor__sidebar__content--open': sidebarOpen,
 						rtl:
-							config.languageDirection[
+							Liferay.Language.direction[
 								themeDisplay?.getLanguageId()
 							] === 'rtl',
 					})}

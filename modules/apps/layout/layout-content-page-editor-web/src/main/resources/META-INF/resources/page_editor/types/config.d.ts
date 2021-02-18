@@ -130,10 +130,6 @@ export interface Config {
 	imageSelectorURL: string;
 	infoItemSelectorURL: string;
 
-	languageDirection: {
-		[key: string]: 'ltr' | 'rtl';
-	};
-
 	layoutItemSelectorURL: String;
 	layoutConversionWarningMessages: string[] | null;
 	layoutType: LayoutTypes[keyof LayoutTypes];

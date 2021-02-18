@@ -42,7 +42,6 @@ export const MenuItem = ({item}) => {
 	const {
 		deleteSiteNavigationMenuItemURL,
 		editSiteNavigationMenuItemParentURL,
-		languageDirection,
 		languageId,
 		portletNamespace,
 	} = useConstants();
@@ -97,7 +96,7 @@ export const MenuItem = ({item}) => {
 	const {handlerRef, isDragging} = useDragItem(item, updateMenuItemParent);
 	const {targetRef} = useDropTarget(item);
 
-	const rtl = languageDirection[languageId] === 'rtl';
+	const rtl = Liferay.Language.direction[languageId] === 'rtl';
 	const itemStyle = rtl
 		? {marginRight: (itemPath.length - 1) * NESTING_MARGIN}
 		: {marginLeft: (itemPath.length - 1) * NESTING_MARGIN};

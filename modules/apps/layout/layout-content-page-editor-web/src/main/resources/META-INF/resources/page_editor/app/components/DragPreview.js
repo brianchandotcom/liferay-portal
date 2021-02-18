@@ -18,7 +18,6 @@ import React, {useRef} from 'react';
 import {useDragLayer} from 'react-dnd';
 
 import {ITEM_ACTIVATION_ORIGINS} from '../config/constants/itemActivationOrigins';
-import {config} from '../config/index';
 import selectLanguageId from '../selectors/selectLanguageId';
 import {useSelector} from '../store/index';
 
@@ -69,7 +68,7 @@ export default function DragPreview() {
 				style={getItemStyles(
 					currentOffset,
 					ref,
-					config.languageDirection[languageId] === 'rtl'
+					Liferay.Language.direction[languageId] === 'rtl'
 				)}
 			>
 				{item?.icon && <ClayIcon symbol={item.icon} />}

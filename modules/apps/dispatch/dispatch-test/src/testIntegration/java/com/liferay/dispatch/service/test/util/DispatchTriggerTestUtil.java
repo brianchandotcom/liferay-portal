@@ -15,6 +15,7 @@
 package com.liferay.dispatch.service.test.util;
 
 import com.liferay.dispatch.executor.DispatchTaskClusterMode;
+import com.liferay.dispatch.executor.DispatchTaskStatus;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -122,6 +123,11 @@ public class DispatchTriggerTestUtil {
 				getDispatchTaskSettingsUnicodeProperties() {
 
 				return _dispatchTaskSettingsUnicodeProperties;
+			}
+
+			@Override
+			public DispatchTaskStatus getDispatchTaskStatus() {
+				return DispatchTaskStatus.NEVER_RAN;
 			}
 
 			@Override

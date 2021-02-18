@@ -228,6 +228,22 @@ public class CPDefinitionOptionRelServiceImpl
 			cpDefinitionId, skuContributor);
 	}
 
+	/**
+	 * @param      companyId
+	 * @param      groupId
+	 * @param      cpDefinitionId
+	 * @param      keywords
+	 * @param      start
+	 * @param      end
+	 * @param      sort
+	 * @return
+	 *
+	 * @throws     PortalException
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 * 			   #searchCPDefinitionOptionRels(long, long, long, String, int,
+	 * 			   int, Sort[])
+	 */
+	@Deprecated
 	@Override
 	public BaseModelSearchResult<CPDefinitionOptionRel>
 			searchCPDefinitionOptionRels(
@@ -235,10 +251,34 @@ public class CPDefinitionOptionRelServiceImpl
 				String keywords, int start, int end, Sort sort)
 		throws PortalException {
 
+		return cpDefinitionOptionRelService.searchCPDefinitionOptionRels(
+			companyId, groupId, cpDefinitionId, keywords, start, end,
+			new Sort[] {sort});
+	}
+
+	@Override
+	public BaseModelSearchResult<CPDefinitionOptionRel>
+			searchCPDefinitionOptionRels(
+				long companyId, long groupId, long cpDefinitionId,
+				String keywords, int start, int end, Sort[] sorts)
+		throws PortalException {
+
 		_checkCommerceCatalog(cpDefinitionId, ActionKeys.VIEW);
 
 		return cpDefinitionOptionRelLocalService.searchCPDefinitionOptionRels(
-			companyId, groupId, cpDefinitionId, keywords, start, end, sort);
+			companyId, groupId, cpDefinitionId, keywords, start, end, sorts);
+	}
+
+	@Override
+	public int searchCPDefinitionOptionRelsCount(
+			long companyId, long groupId, long cpDefinitionId, String keywords)
+		throws PortalException {
+
+		_checkCommerceCatalog(cpDefinitionId, ActionKeys.VIEW);
+
+		return cpDefinitionOptionRelLocalService.
+			searchCPDefinitionOptionRelsCount(
+				companyId, groupId, cpDefinitionId, keywords);
 	}
 
 	@Override

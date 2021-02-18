@@ -229,11 +229,40 @@ public class CPDefinitionOptionValueRelServiceImpl
 				cpDefinitionOptionValueRelId);
 	}
 
+	/**
+	 * @param      companyId
+	 * @param      groupId
+	 * @param      cpDefinitionOptionRelId
+	 * @param      keywords
+	 * @param      start
+	 * @param      end
+	 * @param      sort
+	 * @return
+	 *
+	 * @throws     PortalException
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #searchCPDefinitionOptionValueRels(long, long, long, String,
+	 *             int, int, Sort[])
+	 */
+	@Deprecated
 	@Override
 	public BaseModelSearchResult<CPDefinitionOptionValueRel>
 			searchCPDefinitionOptionValueRels(
 				long companyId, long groupId, long cpDefinitionOptionRelId,
 				String keywords, int start, int end, Sort sort)
+		throws PortalException {
+
+		return cpDefinitionOptionValueRelService.
+			searchCPDefinitionOptionValueRels(
+				companyId, groupId, cpDefinitionOptionRelId, keywords, start,
+				end, new Sort[] {sort});
+	}
+
+	@Override
+	public BaseModelSearchResult<CPDefinitionOptionValueRel>
+			searchCPDefinitionOptionValueRels(
+				long companyId, long groupId, long cpDefinitionOptionRelId,
+				String keywords, int start, int end, Sort[] sorts)
 		throws PortalException {
 
 		CPDefinitionOptionRel cpDefinitionOptionRel =
@@ -246,7 +275,25 @@ public class CPDefinitionOptionValueRelServiceImpl
 		return cpDefinitionOptionValueRelLocalService.
 			searchCPDefinitionOptionValueRels(
 				companyId, groupId, cpDefinitionOptionRelId, keywords, start,
-				end, sort);
+				end, sorts);
+	}
+
+	@Override
+	public int searchCPDefinitionOptionValueRelsCount(
+			long companyId, long groupId, long cpDefinitionOptionRelId,
+			String keywords)
+		throws PortalException {
+
+		CPDefinitionOptionRel cpDefinitionOptionRel =
+			cpDefinitionOptionRelLocalService.getCPDefinitionOptionRel(
+				cpDefinitionOptionRelId);
+
+		_checkCommerceCatalog(
+			cpDefinitionOptionRel.getCPDefinitionId(), ActionKeys.VIEW);
+
+		return cpDefinitionOptionValueRelLocalService.
+			searchCPDefinitionOptionValueRelsCount(
+				companyId, groupId, cpDefinitionOptionRelId, keywords);
 	}
 
 	/**

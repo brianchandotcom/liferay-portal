@@ -13,12 +13,40 @@
  */
 
 import {DataLayoutBuilderActions} from 'data-engine-taglib';
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
+
+/**
+ * Check if contains field inside the FormBuilder
+ * @param {Object} dataLayoutBuilder
+ * @param {Object} state
+ */
+export function containsFieldInsideFormBuilder(dataLayoutBuilder, {fieldName}) {
+	const {pages} = dataLayoutBuilder.getStore();
+	const visitor = new PagesVisitor(pages);
+
+	return visitor.containsField(fieldName);
+}
+
+/**
+ * Get data definition field
+ * @param {Object} state
+ */
+export function getDataDefinitionField({dataDefinitionFields, fieldName}) {
+	return dataDefinitionFields.find(({name}) => name === fieldName);
+}
+
+/**
+ * Get data layout field
+ * @param {Object} state
+ */
+export function getDataLayoutField({dataLayoutFields, fieldName}) {
+	return dataLayoutFields[fieldName];
+}
 
 /**
  * Return the formatted state
  * @param {object} state
  */
-
 export function getFormattedState({
 	dataDefinition: {dataDefinitionFields, defaultLanguageId},
 	dataLayout: {dataLayoutFields},
@@ -36,24 +64,12 @@ export function getFormattedState({
 }
 
 /**
- * Check if exists any value inside dataLayoutFields
- * @param {object} state
- * @returns {boolean} Returns a boolean true, if Label is at FormViewLevel
- */
-
-export function isLabelAtFormViewLevel({dataLayoutFields, fieldName}) {
-	const dataLayoutField = dataLayoutFields[fieldName];
-
-	return !!Object.values(dataLayoutField?.label || {}).filter(Boolean).length;
-}
-
-/**
  * Set propertyValue at object view level
+ * @param {string} propertyName
  * @param {any} propertyValue
  */
-
-export function setPropertyAtObjectViewLevel(propertyValue) {
-	return ({dataDefinitionFields, fieldName, propertyName}, dispatch) => {
+export function setPropertyAtObjectViewLevel(propertyName, propertyValue) {
+	return ({dataDefinitionFields, fieldName}, dispatch) => {
 		dispatch({
 			payload: {
 				dataDefinitionFields: dataDefinitionFields.map((field) => {
@@ -74,11 +90,11 @@ export function setPropertyAtObjectViewLevel(propertyValue) {
 
 /**
  * Set propertyValue at form view level
+ * @param {string} propertyName
  * @param {any} propertyValue
  */
-
-export function setPropertyAtFormViewLevel(propertyValue) {
-	return ({dataLayoutFields, fieldName, propertyName}, dispatch) => {
+export function setPropertyAtFormViewLevel(propertyName, propertyValue) {
+	return ({dataLayoutFields, fieldName}, dispatch) => {
 		dispatch({
 			payload: {
 				dataLayoutFields: {

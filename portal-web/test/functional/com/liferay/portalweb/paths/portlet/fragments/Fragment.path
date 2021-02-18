@@ -219,7 +219,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_CONFIGURATION_MARGIN_BOTTOM</td>
-	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]/following-sibling::div[contains(@class,'page-editor__topper__content')]//div[contains(@class,'mb-${key_marginBottom}')]</td>
+	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]/parent::div[contains(@class,'mb-${key_marginBottom}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -234,7 +234,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_CONFIGURATION_MARGIN_TOP</td>
-	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]/following-sibling::div[contains(@class,'page-editor__topper__content')]//div[contains(@class,'mt-${key_marginTop}')]</td>
+	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]/parent::div[contains(@class,'mt-${key_marginTop}')]</td>
 	<td></td>
 </tr>
 <tr>

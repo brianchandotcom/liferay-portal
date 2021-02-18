@@ -292,7 +292,23 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 
 						<c:choose>
 							<c:when test="<%= ddmFormDisplayContext.isAutosaveEnabled() %>">
-								<portlet:namespace />startAutoSave();
+								var container = document.querySelector(
+									'#<%= ddmFormDisplayContext.getContainerId() %>'
+								);
+
+								container.onclick = function (event) {
+									<portlet:namespace />startAutoSave();
+
+									container.onclick = null;
+									container.onkeypress = null;
+								};
+
+								container.onkeypress = function (event) {
+									<portlet:namespace />startAutoSave();
+
+									container.onclick = null;
+									container.onkeypress = null;
+								};
 							</c:when>
 							<c:otherwise>
 								<portlet:namespace />startAutoExtendSession();

@@ -137,7 +137,8 @@ const PublicationStatus = ({
 											setPercentage(json.percentage);
 										}
 									}
-								});
+								})
+								.catch(() => {});
 						}, 1000);
 
 						return () => clearInterval(interval);

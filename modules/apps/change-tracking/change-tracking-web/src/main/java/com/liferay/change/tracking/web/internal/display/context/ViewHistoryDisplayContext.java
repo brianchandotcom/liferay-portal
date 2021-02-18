@@ -93,6 +93,10 @@ public class ViewHistoryDisplayContext extends BasePublicationsDisplayContext {
 		_userLocalService = userLocalService;
 	}
 
+	public String getFilterByStatus() {
+		return ParamUtil.getString(_renderRequest, "status", "all");
+	}
+
 	public Map<String, Object> getReactProps() {
 		Set<Long> ctCollectionIds = new HashSet<>();
 
@@ -258,7 +262,7 @@ public class ViewHistoryDisplayContext extends BasePublicationsDisplayContext {
 
 		List<CTProcess> results = _ctProcessService.getCTProcesses(
 			_themeDisplay.getCompanyId(), CTWebConstants.USER_FILTER_ALL,
-			displayTerms.getKeywords(), _getStatus(_getFilterByStatus()),
+			displayTerms.getKeywords(), _getStatus(getFilterByStatus()),
 			searchContainer.getStart(), searchContainer.getEnd(),
 			_getOrderByComparator(getOrderByCol(), getOrderByType()));
 
@@ -266,7 +270,7 @@ public class ViewHistoryDisplayContext extends BasePublicationsDisplayContext {
 
 		int count = _ctProcessService.getCTProcessesCount(
 			_themeDisplay.getCompanyId(), CTWebConstants.USER_FILTER_ALL,
-			displayTerms.getKeywords(), _getStatus(_getFilterByStatus()));
+			displayTerms.getKeywords(), _getStatus(getFilterByStatus()));
 
 		searchContainer.setTotal(count);
 
@@ -321,10 +325,6 @@ public class ViewHistoryDisplayContext extends BasePublicationsDisplayContext {
 	@Override
 	protected String getPortalPreferencesPrefix() {
 		return "history";
-	}
-
-	private String _getFilterByStatus() {
-		return ParamUtil.getString(_renderRequest, "status", "all");
 	}
 
 	private OrderByComparator<CTProcess> _getOrderByComparator(

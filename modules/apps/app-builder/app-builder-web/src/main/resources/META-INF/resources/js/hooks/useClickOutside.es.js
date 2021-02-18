@@ -16,7 +16,7 @@ import {useEffect} from 'react';
 
 import isClickOutside from '../utils/clickOutside.es';
 
-export default function useClickOutside(refs = [], setValue) {
+export default function useClickOutside(setValue, ...refs) {
 	useEffect(() => {
 		const handler = ({target}) => {
 			const outside = isClickOutside(

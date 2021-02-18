@@ -12,38 +12,35 @@
  * details.
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
-import ClayForm, {ClayRadio, ClayRadioGroup, ClayToggle} from '@clayui/form';
-import ClayPopover from '@clayui/popover';
-import {ClayTooltipProvider} from '@clayui/tooltip';
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import {ClayToggle} from '@clayui/form';
+import React, {useContext, useEffect, useState} from 'react';
 
-import useClickOutside from '../../hooks/useClickOutside.es';
+import FieldBase from './shared/FieldBase.es';
+import {STRUCTURE_LEVEL, VIEW_LEVEL} from './shared/constants.es';
 import {
+	containsFieldInsideFormBuilder,
+	getDataDefinitionField,
 	getFormattedState,
 	setPropertyAtFormViewLevel,
 	setPropertyAtObjectViewLevel,
-} from './shared/index.es';
+} from './shared/utils.es';
 
-const FORM_VIEW_LEVEL = 'form-view-level';
-const OBJECT_VIEW_LEVEL = 'object-view-level';
+const PROPERTY_NAME = 'required';
 
-const propertyName = 'required';
-
-const VIEW_LEVEL = {
-	[FORM_VIEW_LEVEL]: {
+const LEVEL = {
+	[STRUCTURE_LEVEL]: {
 		fn: (...params) => {
-			setPropertyAtFormViewLevel(true)(...params);
-
-			setPropertyAtObjectViewLevel(false)(...params);
-		},
-		label: Liferay.Language.get('only-for-this-form'),
-	},
-	[OBJECT_VIEW_LEVEL]: {
-		fn: (...params) => {
-			setPropertyAtObjectViewLevel(true)(...params);
+			setPropertyAtObjectViewLevel(PROPERTY_NAME, true)(...params);
 		},
 		label: Liferay.Language.get('for-all-forms-using-this-field'),
+	},
+	[VIEW_LEVEL]: {
+		fn: (...params) => {
+			setPropertyAtFormViewLevel(PROPERTY_NAME, true)(...params);
+
+			setPropertyAtObjectViewLevel(PROPERTY_NAME, false)(...params);
+		},
+		label: Liferay.Language.get('only-for-this-form'),
 	},
 };
 
@@ -63,15 +60,15 @@ function initialToggledValue(state) {
 }
 
 /**
- * Define an initial value to viewSelected state
+ * Define an initial value to selectedValue state
  * @param {object} state
  */
-function initialViewSelectedValue(state) {
+function initialLevelSelected(state) {
 	if (isRequiredAtObjectViewLevel(state)) {
-		return OBJECT_VIEW_LEVEL;
+		return STRUCTURE_LEVEL;
 	}
 
-	return FORM_VIEW_LEVEL;
+	return VIEW_LEVEL;
 }
 
 /**
@@ -79,7 +76,7 @@ function initialViewSelectedValue(state) {
  * @param {object} field
  */
 function isRequiredField(field) {
-	return field?.required ?? false;
+	return !!field?.required;
 }
 
 /**
@@ -94,116 +91,75 @@ function isRequiredAtFormViewLevel({dataLayoutFields, fieldName}) {
  * Check if it is required at object view level
  * @param {object} state
  */
-function isRequiredAtObjectViewLevel({dataDefinitionFields, fieldName}) {
-	const field = dataDefinitionFields.find(({name}) => name === fieldName);
-
-	return isRequiredField(field);
+function isRequiredAtObjectViewLevel(state) {
+	return isRequiredField(getDataDefinitionField(state));
 }
 
-export default ({AppContext, dataLayoutBuilder}) => {
+export default function RequiredField({AppContext, dataLayoutBuilder}) {
 	const [state, dispatch] = useContext(AppContext);
 	const [showPopover, setShowPopover] = useState(false);
-
 	const formattedState = getFormattedState(state);
-
-	const [viewSelected, setViewSelected] = useState(
-		initialViewSelectedValue(formattedState)
+	const [selectedValue, setSelectedValue] = useState(
+		initialLevelSelected(formattedState)
 	);
 	const [toggled, setToggle] = useState(initialToggledValue(formattedState));
 
-	/**
-	 * Set require callback function
-	 * @param {function} fn
-	 */
-	const setRequireCallbackFn = (fn) =>
-		fn({...formattedState, propertyName}, dispatch);
-
-	const [popoverRef, triggerRef] = useClickOutside(
-		[useRef(null), useRef(null)],
-		setShowPopover
-	);
-
 	useEffect(() => {
 		setToggle(initialToggledValue(formattedState));
-		setViewSelected(initialViewSelectedValue(formattedState));
+		setSelectedValue(initialLevelSelected(formattedState));
 
 		if (!initialToggledValue(formattedState)) {
 			setShowPopover(false);
 		}
 	}, [formattedState]);
 
+	const callbackFn = (fn) => fn(formattedState, dispatch);
+
+	const onSelectedValueChange = (level) => {
+		setSelectedValue(level);
+
+		callbackFn(LEVEL[level].fn);
+	};
+
+	const onToggle = (toggle) => {
+		setToggle(toggle);
+
+		if (containsFieldInsideFormBuilder(dataLayoutBuilder, formattedState)) {
+			dataLayoutBuilder.dispatch('fieldEdited', {
+				propertyName: PROPERTY_NAME,
+				propertyValue: toggle,
+			});
+		}
+
+		if (toggle) {
+			setSelectedValue(VIEW_LEVEL);
+
+			callbackFn(LEVEL[VIEW_LEVEL].fn);
+		}
+		else {
+			callbackFn((...params) => {
+				setPropertyAtFormViewLevel(PROPERTY_NAME, false)(...params);
+
+				setPropertyAtObjectViewLevel(PROPERTY_NAME, false)(...params);
+			});
+		}
+	};
+
 	return (
-		<div className="d-flex form-renderer-required-field justify-content-between">
-			<ClayForm.Group className="form-renderer-required-field__toggle">
-				<ClayToggle
-					label={Liferay.Language.get('required-field')}
-					onToggle={(toggle) => {
-						setToggle(toggle);
-
-						dataLayoutBuilder.dispatch('fieldEdited', {
-							propertyName: 'required',
-							propertyValue: toggle,
-						});
-
-						if (toggle) {
-							setViewSelected(FORM_VIEW_LEVEL);
-
-							setRequireCallbackFn(
-								VIEW_LEVEL[FORM_VIEW_LEVEL].fn
-							);
-						}
-						else {
-							setRequireCallbackFn((...params) => {
-								setPropertyAtFormViewLevel(false)(...params);
-
-								setPropertyAtObjectViewLevel(false)(...params);
-							});
-						}
-					}}
-					toggled={toggled}
-				/>
-			</ClayForm.Group>
-
-			<ClayTooltipProvider>
-				<ClayButtonWithIcon
-					borderless
-					disabled={!toggled}
-					displayType="secondary"
-					onClick={() => setShowPopover(!showPopover)}
-					ref={triggerRef}
-					small
-					symbol="ellipsis-v"
-					title={Liferay.Language.get('required-options')}
-				/>
-			</ClayTooltipProvider>
-
-			<ClayPopover
-				alignPosition="bottom-right"
-				className="form-renderer-required-field__popover"
-				header={Liferay.Language.get('required-options')}
-				onShowChange={setShowPopover}
-				ref={popoverRef}
-				show={showPopover}
-			>
-				<div className="mt-2">
-					<ClayRadioGroup
-						onSelectedValueChange={(newValue) => {
-							setViewSelected(newValue);
-
-							setRequireCallbackFn(VIEW_LEVEL[newValue].fn);
-						}}
-						selectedValue={viewSelected}
-					>
-						{Object.keys(VIEW_LEVEL).map((key) => (
-							<ClayRadio
-								key={key}
-								label={VIEW_LEVEL[key].label}
-								value={key}
-							/>
-						))}
-					</ClayRadioGroup>
-				</div>
-			</ClayPopover>
-		</div>
+		<FieldBase
+			className="form-renderer-required-field"
+			disableDropdownButton={!toggled}
+			onSelectedValueChange={onSelectedValueChange}
+			options={LEVEL}
+			selectedValue={selectedValue}
+			showPopover={showPopover}
+			title={Liferay.Language.get('required-options')}
+		>
+			<ClayToggle
+				label={Liferay.Language.get('required-field')}
+				onToggle={onToggle}
+				toggled={toggled}
+			/>
+		</FieldBase>
 	);
-};
+}

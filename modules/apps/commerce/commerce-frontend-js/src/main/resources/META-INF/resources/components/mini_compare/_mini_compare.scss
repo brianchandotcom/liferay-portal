@@ -14,6 +14,7 @@
 	&.active {
 		opacity: 1;
 		transform: translateX(-50%) translateY(0);
+		z-index: 5;
 	}
 
 	body.open & {
@@ -83,9 +84,9 @@
 	}
 
 	&-delete {
-		background-color: white;
+		background-color: $danger-primary;
 		border-color: $gray-400;
-		color: $secondary-text;
+		color: $gray-100;
 		opacity: 0;
 		position: absolute;
 		right: 0;

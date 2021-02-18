@@ -101,6 +101,24 @@ public class CPOptionValueServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult
+		<com.liferay.commerce.product.model.CPOptionValue> searchCPOptionValues(
+				long companyId, long cpOptionId, String keywords, int start,
+				int end, com.liferay.portal.kernel.search.Sort[] sorts)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().searchCPOptionValues(
+			companyId, cpOptionId, keywords, start, end, sorts);
+	}
+
+	public static int searchCPOptionValuesCount(
+			long companyId, long cpOptionId, String keywords)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().searchCPOptionValuesCount(
+			companyId, cpOptionId, keywords);
+	}
+
 	public static com.liferay.commerce.product.model.CPOptionValue
 			updateCPOptionValue(
 				long cpOptionValueId,

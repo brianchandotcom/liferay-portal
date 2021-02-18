@@ -185,6 +185,21 @@ public class CPDefinitionOptionRelServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @param companyId
+	 * @param groupId
+	 * @param cpDefinitionId
+	 * @param keywords
+	 * @param start
+	 * @param end
+	 * @param sort
+	 * @return
+	 * @throws PortalException
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #searchCPDefinitionOptionRels(long, long, long, String, int,
+	 int, Sort[])}
+	 */
+	@Deprecated
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<com.liferay.commerce.product.model.CPDefinitionOptionRel>
 				searchCPDefinitionOptionRels(
@@ -195,6 +210,26 @@ public class CPDefinitionOptionRelServiceUtil {
 
 		return getService().searchCPDefinitionOptionRels(
 			companyId, groupId, cpDefinitionId, keywords, start, end, sort);
+	}
+
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult
+		<com.liferay.commerce.product.model.CPDefinitionOptionRel>
+				searchCPDefinitionOptionRels(
+					long companyId, long groupId, long cpDefinitionId,
+					String keywords, int start, int end,
+					com.liferay.portal.kernel.search.Sort[] sorts)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().searchCPDefinitionOptionRels(
+			companyId, groupId, cpDefinitionId, keywords, start, end, sorts);
+	}
+
+	public static int searchCPDefinitionOptionRelsCount(
+			long companyId, long groupId, long cpDefinitionId, String keywords)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().searchCPDefinitionOptionRelsCount(
+			companyId, groupId, cpDefinitionId, keywords);
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinitionOptionRel

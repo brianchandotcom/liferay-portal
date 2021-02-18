@@ -122,11 +122,39 @@ public interface CPDefinitionOptionValueRelService extends BaseService {
 			long cpDefinitionOptionValueRelId)
 		throws PortalException;
 
+	/**
+	 * @param companyId
+	 * @param groupId
+	 * @param cpDefinitionOptionRelId
+	 * @param keywords
+	 * @param start
+	 * @param end
+	 * @param sort
+	 * @return
+	 * @throws PortalException
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #searchCPDefinitionOptionValueRels(long, long, long, String,
+	 int, int, Sort[])}
+	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CPDefinitionOptionValueRel>
 			searchCPDefinitionOptionValueRels(
 				long companyId, long groupId, long cpDefinitionOptionRelId,
 				String keywords, int start, int end, Sort sort)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<CPDefinitionOptionValueRel>
+			searchCPDefinitionOptionValueRels(
+				long companyId, long groupId, long cpDefinitionOptionRelId,
+				String keywords, int start, int end, Sort[] sorts)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCPDefinitionOptionValueRelsCount(
+			long companyId, long groupId, long cpDefinitionOptionRelId,
+			String keywords)
 		throws PortalException;
 
 	/**

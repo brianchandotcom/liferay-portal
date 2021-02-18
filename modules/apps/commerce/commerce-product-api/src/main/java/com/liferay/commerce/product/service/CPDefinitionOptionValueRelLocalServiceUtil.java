@@ -547,6 +547,21 @@ public class CPDefinitionOptionValueRelLocalServiceUtil {
 		return getService().search(searchContext);
 	}
 
+	/**
+	 * @param companyId
+	 * @param groupId
+	 * @param cpDefinitionOptionRelId
+	 * @param keywords
+	 * @param start
+	 * @param end
+	 * @param sort
+	 * @return
+	 * @throws PortalException
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #searchCPDefinitionOptionValueRels(long, long, long, String,
+	 int, int, Sort[])}
+	 */
+	@Deprecated
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<com.liferay.commerce.product.model.CPDefinitionOptionValueRel>
 				searchCPDefinitionOptionValueRels(
@@ -558,6 +573,28 @@ public class CPDefinitionOptionValueRelLocalServiceUtil {
 		return getService().searchCPDefinitionOptionValueRels(
 			companyId, groupId, cpDefinitionOptionRelId, keywords, start, end,
 			sort);
+	}
+
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult
+		<com.liferay.commerce.product.model.CPDefinitionOptionValueRel>
+				searchCPDefinitionOptionValueRels(
+					long companyId, long groupId, long cpDefinitionOptionRelId,
+					String keywords, int start, int end,
+					com.liferay.portal.kernel.search.Sort[] sorts)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().searchCPDefinitionOptionValueRels(
+			companyId, groupId, cpDefinitionOptionRelId, keywords, start, end,
+			sorts);
+	}
+
+	public static int searchCPDefinitionOptionValueRelsCount(
+			long companyId, long groupId, long cpDefinitionOptionRelId,
+			String keywords)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().searchCPDefinitionOptionValueRelsCount(
+			companyId, groupId, cpDefinitionOptionRelId, keywords);
 	}
 
 	/**

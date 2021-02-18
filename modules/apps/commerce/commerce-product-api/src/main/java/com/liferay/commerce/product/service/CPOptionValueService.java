@@ -18,6 +18,8 @@ import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -97,6 +99,17 @@ public interface CPOptionValueService extends BaseService {
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<CPOptionValue> searchCPOptionValues(
+			long companyId, long cpOptionId, String keywords, int start,
+			int end, Sort[] sorts)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCPOptionValuesCount(
+			long companyId, long cpOptionId, String keywords)
+		throws PortalException;
 
 	public CPOptionValue updateCPOptionValue(
 			long cpOptionValueId, Map<Locale, String> titleMap, double priority,

@@ -196,6 +196,24 @@ public class CPOptionValueServiceSoap {
 		}
 	}
 
+	public static int searchCPOptionValuesCount(
+			long companyId, long cpOptionId, String keywords)
+		throws RemoteException {
+
+		try {
+			int returnValue =
+				CPOptionValueServiceUtil.searchCPOptionValuesCount(
+					companyId, cpOptionId, keywords);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.product.model.CPOptionValueSoap
 			updateCPOptionValue(
 				long cpOptionValueId, String[] titleMapLanguageIds,

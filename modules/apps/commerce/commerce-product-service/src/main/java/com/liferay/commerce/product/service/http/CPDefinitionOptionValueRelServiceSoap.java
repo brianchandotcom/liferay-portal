@@ -306,6 +306,26 @@ public class CPDefinitionOptionValueRelServiceSoap {
 		}
 	}
 
+	public static int searchCPDefinitionOptionValueRelsCount(
+			long companyId, long groupId, long cpDefinitionOptionRelId,
+			String keywords)
+		throws RemoteException {
+
+		try {
+			int returnValue =
+				CPDefinitionOptionValueRelServiceUtil.
+					searchCPDefinitionOptionValueRelsCount(
+						companyId, groupId, cpDefinitionOptionRelId, keywords);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	/**
 	 * @param cpDefinitionOptionValueRelId
 	 * @param nameMap

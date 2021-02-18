@@ -341,6 +341,25 @@ public class CPDefinitionOptionRelServiceSoap {
 		}
 	}
 
+	public static int searchCPDefinitionOptionRelsCount(
+			long companyId, long groupId, long cpDefinitionId, String keywords)
+		throws RemoteException {
+
+		try {
+			int returnValue =
+				CPDefinitionOptionRelServiceUtil.
+					searchCPDefinitionOptionRelsCount(
+						companyId, groupId, cpDefinitionId, keywords);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.product.model.CPDefinitionOptionRelSoap
 			updateCPDefinitionOptionRel(
 				long cpDefinitionOptionRelId, long cpOptionId,

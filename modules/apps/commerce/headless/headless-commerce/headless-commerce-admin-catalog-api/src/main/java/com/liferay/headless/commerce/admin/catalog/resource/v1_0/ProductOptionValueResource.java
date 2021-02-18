@@ -15,6 +15,7 @@
 package com.liferay.headless.commerce.admin.catalog.resource.v1_0;
 
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductOptionValue;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
@@ -50,7 +51,7 @@ public interface ProductOptionValueResource {
 	}
 
 	public Page<ProductOptionValue> getProductOptionIdProductOptionValuesPage(
-			Long id, Pagination pagination)
+			Long id, String search, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public ProductOptionValue postProductOptionIdProductOptionValue(

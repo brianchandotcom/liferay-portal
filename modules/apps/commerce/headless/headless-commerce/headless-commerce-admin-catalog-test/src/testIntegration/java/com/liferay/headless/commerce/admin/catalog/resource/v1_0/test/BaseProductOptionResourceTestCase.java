@@ -28,6 +28,7 @@ import com.liferay.headless.commerce.admin.catalog.client.pagination.Page;
 import com.liferay.headless.commerce.admin.catalog.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.ProductOptionResource;
 import com.liferay.headless.commerce.admin.catalog.client.serdes.v1_0.ProductOptionSerDes;
+import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -55,11 +56,14 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,7 +75,9 @@ import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
+import org.apache.commons.lang.time.DateUtils;
 import org.apache.log4j.Level;
 
 import org.junit.After;
@@ -338,7 +344,7 @@ public abstract class BaseProductOptionResourceTestCase {
 			productOptionResource.
 				getProductByExternalReferenceCodeProductOptionsPage(
 					testGetProductByExternalReferenceCodeProductOptionsPage_getExternalReferenceCode(),
-					Pagination.of(1, 2));
+					RandomTestUtil.randomString(), Pagination.of(1, 2), null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -356,7 +362,8 @@ public abstract class BaseProductOptionResourceTestCase {
 			page =
 				productOptionResource.
 					getProductByExternalReferenceCodeProductOptionsPage(
-						irrelevantExternalReferenceCode, Pagination.of(1, 2));
+						irrelevantExternalReferenceCode, null,
+						Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -377,7 +384,7 @@ public abstract class BaseProductOptionResourceTestCase {
 		page =
 			productOptionResource.
 				getProductByExternalReferenceCodeProductOptionsPage(
-					externalReferenceCode, Pagination.of(1, 2));
+					externalReferenceCode, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -413,7 +420,7 @@ public abstract class BaseProductOptionResourceTestCase {
 		Page<ProductOption> page1 =
 			productOptionResource.
 				getProductByExternalReferenceCodeProductOptionsPage(
-					externalReferenceCode, Pagination.of(1, 2));
+					externalReferenceCode, null, Pagination.of(1, 2), null);
 
 		List<ProductOption> productOptions1 =
 			(List<ProductOption>)page1.getItems();
@@ -424,7 +431,7 @@ public abstract class BaseProductOptionResourceTestCase {
 		Page<ProductOption> page2 =
 			productOptionResource.
 				getProductByExternalReferenceCodeProductOptionsPage(
-					externalReferenceCode, Pagination.of(2, 2));
+					externalReferenceCode, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -437,11 +444,145 @@ public abstract class BaseProductOptionResourceTestCase {
 		Page<ProductOption> page3 =
 			productOptionResource.
 				getProductByExternalReferenceCodeProductOptionsPage(
-					externalReferenceCode, Pagination.of(1, 3));
+					externalReferenceCode, null, Pagination.of(1, 3), null);
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(productOption1, productOption2, productOption3),
 			(List<ProductOption>)page3.getItems());
+	}
+
+	@Test
+	public void testGetProductByExternalReferenceCodeProductOptionsPageWithSortDateTime()
+		throws Exception {
+
+		testGetProductByExternalReferenceCodeProductOptionsPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, productOption1, productOption2) -> {
+				BeanUtils.setProperty(
+					productOption1, entityField.getName(),
+					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetProductByExternalReferenceCodeProductOptionsPageWithSortInteger()
+		throws Exception {
+
+		testGetProductByExternalReferenceCodeProductOptionsPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, productOption1, productOption2) -> {
+				BeanUtils.setProperty(productOption1, entityField.getName(), 0);
+				BeanUtils.setProperty(productOption2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetProductByExternalReferenceCodeProductOptionsPageWithSortString()
+		throws Exception {
+
+		testGetProductByExternalReferenceCodeProductOptionsPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, productOption1, productOption2) -> {
+				Class<?> clazz = productOption1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanUtils.setProperty(
+						productOption1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanUtils.setProperty(
+						productOption2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanUtils.setProperty(
+						productOption1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanUtils.setProperty(
+						productOption2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanUtils.setProperty(
+						productOption1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanUtils.setProperty(
+						productOption2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void
+			testGetProductByExternalReferenceCodeProductOptionsPageWithSort(
+				EntityField.Type type,
+				UnsafeTriConsumer
+					<EntityField, ProductOption, ProductOption, Exception>
+						unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String externalReferenceCode =
+			testGetProductByExternalReferenceCodeProductOptionsPage_getExternalReferenceCode();
+
+		ProductOption productOption1 = randomProductOption();
+		ProductOption productOption2 = randomProductOption();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(
+				entityField, productOption1, productOption2);
+		}
+
+		productOption1 =
+			testGetProductByExternalReferenceCodeProductOptionsPage_addProductOption(
+				externalReferenceCode, productOption1);
+
+		productOption2 =
+			testGetProductByExternalReferenceCodeProductOptionsPage_addProductOption(
+				externalReferenceCode, productOption2);
+
+		for (EntityField entityField : entityFields) {
+			Page<ProductOption> ascPage =
+				productOptionResource.
+					getProductByExternalReferenceCodeProductOptionsPage(
+						externalReferenceCode, null, Pagination.of(1, 2),
+						entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(productOption1, productOption2),
+				(List<ProductOption>)ascPage.getItems());
+
+			Page<ProductOption> descPage =
+				productOptionResource.
+					getProductByExternalReferenceCodeProductOptionsPage(
+						externalReferenceCode, null, Pagination.of(1, 2),
+						entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(productOption2, productOption1),
+				(List<ProductOption>)descPage.getItems());
+		}
 	}
 
 	protected ProductOption
@@ -480,7 +621,7 @@ public abstract class BaseProductOptionResourceTestCase {
 		Page<ProductOption> page =
 			productOptionResource.getProductIdProductOptionsPage(
 				testGetProductIdProductOptionsPage_getId(),
-				Pagination.of(1, 2));
+				RandomTestUtil.randomString(), Pagination.of(1, 2), null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -494,7 +635,7 @@ public abstract class BaseProductOptionResourceTestCase {
 					irrelevantId, randomIrrelevantProductOption());
 
 			page = productOptionResource.getProductIdProductOptionsPage(
-				irrelevantId, Pagination.of(1, 2));
+				irrelevantId, null, Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -513,7 +654,7 @@ public abstract class BaseProductOptionResourceTestCase {
 				id, randomProductOption());
 
 		page = productOptionResource.getProductIdProductOptionsPage(
-			id, Pagination.of(1, 2));
+			id, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -547,7 +688,7 @@ public abstract class BaseProductOptionResourceTestCase {
 
 		Page<ProductOption> page1 =
 			productOptionResource.getProductIdProductOptionsPage(
-				id, Pagination.of(1, 2));
+				id, null, Pagination.of(1, 2), null);
 
 		List<ProductOption> productOptions1 =
 			(List<ProductOption>)page1.getItems();
@@ -557,7 +698,7 @@ public abstract class BaseProductOptionResourceTestCase {
 
 		Page<ProductOption> page2 =
 			productOptionResource.getProductIdProductOptionsPage(
-				id, Pagination.of(2, 2));
+				id, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -569,11 +710,139 @@ public abstract class BaseProductOptionResourceTestCase {
 
 		Page<ProductOption> page3 =
 			productOptionResource.getProductIdProductOptionsPage(
-				id, Pagination.of(1, 3));
+				id, null, Pagination.of(1, 3), null);
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(productOption1, productOption2, productOption3),
 			(List<ProductOption>)page3.getItems());
+	}
+
+	@Test
+	public void testGetProductIdProductOptionsPageWithSortDateTime()
+		throws Exception {
+
+		testGetProductIdProductOptionsPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, productOption1, productOption2) -> {
+				BeanUtils.setProperty(
+					productOption1, entityField.getName(),
+					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetProductIdProductOptionsPageWithSortInteger()
+		throws Exception {
+
+		testGetProductIdProductOptionsPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, productOption1, productOption2) -> {
+				BeanUtils.setProperty(productOption1, entityField.getName(), 0);
+				BeanUtils.setProperty(productOption2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetProductIdProductOptionsPageWithSortString()
+		throws Exception {
+
+		testGetProductIdProductOptionsPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, productOption1, productOption2) -> {
+				Class<?> clazz = productOption1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanUtils.setProperty(
+						productOption1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanUtils.setProperty(
+						productOption2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanUtils.setProperty(
+						productOption1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanUtils.setProperty(
+						productOption2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanUtils.setProperty(
+						productOption1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanUtils.setProperty(
+						productOption2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void testGetProductIdProductOptionsPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer
+				<EntityField, ProductOption, ProductOption, Exception>
+					unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long id = testGetProductIdProductOptionsPage_getId();
+
+		ProductOption productOption1 = randomProductOption();
+		ProductOption productOption2 = randomProductOption();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(
+				entityField, productOption1, productOption2);
+		}
+
+		productOption1 = testGetProductIdProductOptionsPage_addProductOption(
+			id, productOption1);
+
+		productOption2 = testGetProductIdProductOptionsPage_addProductOption(
+			id, productOption2);
+
+		for (EntityField entityField : entityFields) {
+			Page<ProductOption> ascPage =
+				productOptionResource.getProductIdProductOptionsPage(
+					id, null, Pagination.of(1, 2),
+					entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(productOption1, productOption2),
+				(List<ProductOption>)ascPage.getItems());
+
+			Page<ProductOption> descPage =
+				productOptionResource.getProductIdProductOptionsPage(
+					id, null, Pagination.of(1, 2),
+					entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(productOption2, productOption1),
+				(List<ProductOption>)descPage.getItems());
+		}
 	}
 
 	protected ProductOption testGetProductIdProductOptionsPage_addProductOption(

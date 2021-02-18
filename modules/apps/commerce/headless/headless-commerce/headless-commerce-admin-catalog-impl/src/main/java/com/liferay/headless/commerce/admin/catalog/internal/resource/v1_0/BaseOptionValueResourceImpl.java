@@ -266,8 +266,10 @@ public abstract class BaseOptionValueResourceImpl
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode"),
+			@Parameter(in = ParameterIn.QUERY, name = "search"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sort")
 		}
 	)
 	@Path(
@@ -278,7 +280,8 @@ public abstract class BaseOptionValueResourceImpl
 	public Page<OptionValue> getOptionByExternalReferenceCodeOptionValuesPage(
 			@NotNull @Parameter(hidden = true)
 			@PathParam("externalReferenceCode") String externalReferenceCode,
-			@Context Pagination pagination)
+			@Parameter(hidden = true) @QueryParam("search") String search,
+			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -321,8 +324,10 @@ public abstract class BaseOptionValueResourceImpl
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "id"),
+			@Parameter(in = ParameterIn.QUERY, name = "search"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sort")
 		}
 	)
 	@Path("/options/{id}/optionValues")
@@ -330,7 +335,8 @@ public abstract class BaseOptionValueResourceImpl
 	@Tags(value = {@Tag(name = "OptionValue")})
 	public Page<OptionValue> getOptionIdOptionValuesPage(
 			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
-			@Context Pagination pagination)
+			@Parameter(hidden = true) @QueryParam("search") String search,
+			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

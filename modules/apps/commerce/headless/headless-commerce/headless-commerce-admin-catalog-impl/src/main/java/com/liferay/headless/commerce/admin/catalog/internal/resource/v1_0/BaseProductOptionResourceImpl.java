@@ -191,8 +191,10 @@ public abstract class BaseProductOptionResourceImpl
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode"),
+			@Parameter(in = ParameterIn.QUERY, name = "search"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sort")
 		}
 	)
 	@Path(
@@ -205,7 +207,8 @@ public abstract class BaseProductOptionResourceImpl
 				@NotNull @Parameter(hidden = true)
 				@PathParam("externalReferenceCode") String
 					externalReferenceCode,
-				@Context Pagination pagination)
+				@Parameter(hidden = true) @QueryParam("search") String search,
+				@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -250,8 +253,10 @@ public abstract class BaseProductOptionResourceImpl
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "id"),
+			@Parameter(in = ParameterIn.QUERY, name = "search"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sort")
 		}
 	)
 	@Path("/products/{id}/productOptions")
@@ -259,7 +264,8 @@ public abstract class BaseProductOptionResourceImpl
 	@Tags(value = {@Tag(name = "ProductOption")})
 	public Page<ProductOption> getProductIdProductOptionsPage(
 			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
-			@Context Pagination pagination)
+			@Parameter(hidden = true) @QueryParam("search") String search,
+			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

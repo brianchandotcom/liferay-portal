@@ -15,6 +15,7 @@
 package com.liferay.headless.commerce.admin.catalog.resource.v1_0;
 
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.OptionValue;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
@@ -73,7 +74,8 @@ public interface OptionValueResource {
 		throws Exception;
 
 	public Page<OptionValue> getOptionByExternalReferenceCodeOptionValuesPage(
-			String externalReferenceCode, Pagination pagination)
+			String externalReferenceCode, String search, Pagination pagination,
+			Sort[] sorts)
 		throws Exception;
 
 	public OptionValue postOptionByExternalReferenceCodeOptionValue(
@@ -81,7 +83,7 @@ public interface OptionValueResource {
 		throws Exception;
 
 	public Page<OptionValue> getOptionIdOptionValuesPage(
-			Long id, Pagination pagination)
+			Long id, String search, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public OptionValue postOptionIdOptionValue(Long id, OptionValue optionValue)

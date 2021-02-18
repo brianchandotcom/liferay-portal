@@ -91,6 +91,10 @@ if (toolTip) {
 	cssClass += " lfr-portal-tooltip";
 }
 
+if (Validator.isNull(linkCssClass)) {
+	linkCssClass = "dropdown-item";
+}
+
 linkCssClass += " lfr-icon-item taglib-icon";
 %>
 

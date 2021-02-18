@@ -77,6 +77,7 @@ function transformFileEntryProperties({fileEntryTitle, fileEntryURL, value}) {
 }
 
 const DocumentLibrary = ({
+	editingLanguageId,
 	fileEntryTitle = '',
 	fileEntryURL = '',
 	id,
@@ -111,8 +112,10 @@ const DocumentLibrary = ({
 						<ClayInput
 							aria-label={Liferay.Language.get('file')}
 							className="bg-light field"
+							dir={Liferay.Language.direction[editingLanguageId]}
 							disabled={readOnly}
 							id={`${name}inputFile`}
+							lang={editingLanguageId}
 							onClick={onSelectButtonClicked}
 							value={transformedFileEntryTitle || ''}
 						/>
@@ -249,6 +252,7 @@ const GuestUploadFile = ({
 const Main = ({
 	allowGuestUsers,
 	displayErrors: initialDisplayErrors,
+	editingLanguageId,
 	errorMessage: initialErrorMessage,
 	fieldName,
 	fileEntryTitle,
@@ -488,6 +492,7 @@ const Main = ({
 				/>
 			) : (
 				<DocumentLibrary
+					editingLanguageId={editingLanguageId}
 					fileEntryTitle={fileEntryTitle}
 					fileEntryURL={fileEntryURL}
 					id={id}

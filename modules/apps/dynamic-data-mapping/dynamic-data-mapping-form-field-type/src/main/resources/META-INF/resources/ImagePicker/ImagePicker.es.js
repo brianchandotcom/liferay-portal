@@ -24,6 +24,7 @@ import {useSyncValue} from '../hooks/useSyncValue.es';
 const defaultValue = {description: '', title: '', url: ''};
 
 const ImagePicker = ({
+	editingLanguageId,
 	id,
 	inputValue,
 	itemSelectorURL,
@@ -114,8 +115,10 @@ const ImagePicker = ({
 					<ClayInput.GroupItem className="d-none d-sm-block" prepend>
 						<ClayInput
 							className="field"
+							dir={Liferay.Language.direction[editingLanguageId]}
 							disabled={readOnly}
 							id={id}
+							lang={editingLanguageId}
 							onClick={handleItemSelectorTriggerClick}
 							type="text"
 							value={imageValues.title || ''}
@@ -204,7 +207,13 @@ const ImagePicker = ({
 
 						<ClayForm.Group>
 							<ClayInput
+								dir={
+									Liferay.Language.direction[
+										editingLanguageId
+									]
+								}
 								disabled={readOnly}
+								lang={editingLanguageId}
 								name={`${name}-description`}
 								onChange={({event, target: {value}}) =>
 									dispatchValue(
@@ -227,6 +236,7 @@ const ImagePicker = ({
 
 const Main = ({
 	displayErrors,
+	editingLanguageId,
 	errorMessage,
 	id,
 	inputValue,
@@ -280,6 +290,7 @@ const Main = ({
 			valid={isSignedIn ? valid : false}
 		>
 			<ImagePicker
+				editingLanguageId={editingLanguageId}
 				id={id}
 				inputValue={
 					transformValue(inputValue) ??

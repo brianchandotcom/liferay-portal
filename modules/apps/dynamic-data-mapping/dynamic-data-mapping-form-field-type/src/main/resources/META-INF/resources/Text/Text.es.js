@@ -88,8 +88,10 @@ const Text = ({
 	return (
 		<ClayInput
 			className="ddm-field-text"
+			dir={Liferay.Language.direction[editingLanguageId]}
 			disabled={disabled}
 			id={id}
+			lang={editingLanguageId}
 			name={name}
 			onBlur={(event) => {
 				if (fieldName == 'fieldReference') {
@@ -118,6 +120,7 @@ const Text = ({
 
 const Textarea = ({
 	disabled,
+	editingLanguageId,
 	id,
 	name,
 	onBlur,
@@ -132,8 +135,10 @@ const Textarea = ({
 	return (
 		<textarea
 			className="ddm-field-text form-control"
+			dir={Liferay.Language.direction[editingLanguageId]}
 			disabled={disabled}
 			id={id}
+			lang={editingLanguageId}
 			name={name}
 			onBlur={onBlur}
 			onChange={(event) => {
@@ -151,6 +156,7 @@ const Textarea = ({
 
 const Autocomplete = ({
 	disabled,
+	editingLanguageId,
 	id,
 	name,
 	onBlur,
@@ -227,8 +233,10 @@ const Autocomplete = ({
 	return (
 		<ClayAutocomplete>
 			<ClayAutocomplete.Input
+				dir={Liferay.Language.direction[editingLanguageId]}
 				disabled={disabled}
 				id={id}
+				lang={editingLanguageId}
 				name={name}
 				onBlur={onBlur}
 				onChange={(event) => {

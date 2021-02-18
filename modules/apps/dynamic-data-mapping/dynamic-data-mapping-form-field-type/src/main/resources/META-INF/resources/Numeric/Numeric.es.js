@@ -126,7 +126,9 @@ const Numeric = ({
 	return (
 		<ClayInput
 			{...otherProps}
+			dir={Liferay.Language.direction[editingLanguageId]}
 			disabled={disabled}
+			lang={editingLanguageId}
 			onChange={(event) => {
 				const {value: newValue} = event.target;
 

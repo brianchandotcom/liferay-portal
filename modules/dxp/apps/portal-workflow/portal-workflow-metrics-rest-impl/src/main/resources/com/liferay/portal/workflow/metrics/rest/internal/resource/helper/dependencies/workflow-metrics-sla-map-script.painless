@@ -1,22 +1,24 @@
 def instanceId = doc.instanceId.value;
 
+def instanceIdString = instanceId.toString();
+
 if (doc.uid.value.startsWith("WorkflowMetricsSLAInstanceResult") &&
 	(instanceId != 0) && (doc.elapsedTime.value != 0)) {
 
 	state.onTimeMap.merge(
-		instanceId, doc.onTime.value,
+		instanceIdString, doc.onTime.value,
 		(onTime1, onTime2) -> (onTime1 && onTime2));
 }
 else if (doc.uid.value.startsWith("WorkflowMetricsSLATaskResult") &&
 		 (instanceId != 0)) {
 
 	state.onTimeMap.merge(
-		instanceId, doc.onTime.value,
+		instanceIdString, doc.onTime.value,
 		(onTime1, onTime2) -> (onTime1 && onTime2));
 }
 
 if (doc.uid.value.startsWith("WorkflowMetricsSLATaskResult")) {
 	state.breachedMap.merge(
-		instanceId, doc.breached.value,
+		instanceIdString, doc.breached.value,
 		(breached1, breached2) -> (breached1 || breached2));
 }

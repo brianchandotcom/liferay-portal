@@ -1,8 +1,10 @@
 def taskId = doc.taskId.value;
 
+def taskIdString = taskId.toString();
+
 if (doc.uid.value.startsWith("WorkflowMetricsSLATaskResult")) {
 	state.slaStatusMap.compute(
-		taskId,
+		taskIdString,
 		(key, oldSLAStatus) -> {
 			if (((oldSLAStatus == null) || oldSLAStatus.equals("untracked")) &&
 				(doc.status.value.equals("NEW"))) {
@@ -29,7 +31,9 @@ if (doc.uid.value.startsWith("WorkflowMetricsTask") &&
 	  state.assigneeType.equals(doc.assigneeType.value)))) &&
 	((state.taskNames == null) || state.taskNames.contains(doc.name.value))) {
 
-	state.taskIds.add(taskId);
+	state.taskIds.add(taskIdString);
 
-	state.slaStatusMap.compute(taskId, (key, slaStatus) -> (slaStatus == null) ? "untracked" : slaStatus);
+	state.slaStatusMap.compute(
+		taskIdString,
+		(key, slaStatus) -> (slaStatus == null) ? "untracked" : slaStatus);
 }

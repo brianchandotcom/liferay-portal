@@ -1,7 +1,7 @@
 def instanceId = doc.instanceId.value;
 
 def tasksMap = state.map.computeIfAbsent(
-	instanceId, instanceId -> new HashMap());
+	instanceId.toString(), key -> new HashMap());
 
 if (doc.uid.value.startsWith("WorkflowMetricsSLATaskResult")) {
 	tasksMap.merge(

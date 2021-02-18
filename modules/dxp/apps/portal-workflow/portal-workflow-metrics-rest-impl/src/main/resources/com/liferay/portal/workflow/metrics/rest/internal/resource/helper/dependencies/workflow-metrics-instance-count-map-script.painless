@@ -1,5 +1,7 @@
 def instanceId = doc.instanceId.value;
 
+def instanceIdString = instanceId.toString();
+
 if (doc.uid.value.startsWith("WorkflowMetricsTask") &&
 	((state.assigneeIds == null) ||
 	 (((doc.assigneeIds.size() != 0) &&
@@ -7,7 +9,7 @@ if (doc.uid.value.startsWith("WorkflowMetricsTask") &&
 	 (state.assigneeIds.contains(-1L) &&
 	  state.assigneeType.equals(doc.assigneeType.value))))) {
 
-	state.assigneeIdInstanceIds.add(instanceId);
+	state.assigneeIdInstanceIds.add(instanceIdString);
 }
 
 if (doc.uid.value.startsWith("WorkflowMetricsInstance") &&
@@ -18,12 +20,12 @@ if (doc.uid.value.startsWith("WorkflowMetricsInstance") &&
 	  (doc.completionDate.value.getMillis() <= state.endDate) &&
 	  (doc.completionDate.value.getMillis() >= state.startDate)))) {
 
-	state.completedInstanceIds.add(instanceId);
+	state.completedInstanceIds.add(instanceIdString);
 }
 
 if (doc.uid.value.startsWith("WorkflowMetricsTask") &&
 	((state.taskNames == null) ||
 	 state.taskNames.contains(doc.name.value))) {
 
-	state.taskNameInstanceIds.add(instanceId);
+	state.taskNameInstanceIds.add(instanceIdString);
 }

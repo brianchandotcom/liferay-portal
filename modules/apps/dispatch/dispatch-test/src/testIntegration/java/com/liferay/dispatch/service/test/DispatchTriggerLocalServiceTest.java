@@ -19,7 +19,10 @@ import com.liferay.dispatch.exception.DispatchTriggerNameException;
 import com.liferay.dispatch.exception.DispatchTriggerSchedulerException;
 import com.liferay.dispatch.exception.DuplicateDispatchTriggerException;
 import com.liferay.dispatch.executor.DispatchTaskClusterMode;
+import com.liferay.dispatch.executor.DispatchTaskStatus;
+import com.liferay.dispatch.model.DispatchLog;
 import com.liferay.dispatch.model.DispatchTrigger;
+import com.liferay.dispatch.service.DispatchLogLocalService;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.dispatch.service.test.util.CronExpressionUtil;
 import com.liferay.dispatch.service.test.util.DispatchTriggerTestUtil;
@@ -161,6 +164,10 @@ public class DispatchTriggerLocalServiceTest {
 			for (DispatchTrigger dispatchTrigger : userDispatchTriggers) {
 				Assert.assertEquals(
 					user.getUserId(), dispatchTrigger.getUserId());
+
+				Assert.assertEquals(
+					DispatchTaskStatus.NEVER_RAN,
+					dispatchTrigger.getDispatchTaskStatus());
 			}
 		}
 	}
@@ -315,6 +322,20 @@ public class DispatchTriggerLocalServiceTest {
 		Assert.assertEquals(
 			expectedDispatchTrigger.getDispatchTaskClusterMode(),
 			actualDispatchTrigger.getDispatchTaskClusterMode());
+
+		DispatchLog dispatchLog =
+			_dispatchLogLocalService.fetchLatestDispatchLog(
+				actualDispatchTrigger.getDispatchTriggerId());
+
+		DispatchTaskStatus dispatchTaskStatus = DispatchTaskStatus.NEVER_RAN;
+
+		if (dispatchLog != null) {
+			dispatchTaskStatus = DispatchTaskStatus.valueOf(
+				dispatchLog.getStatus());
+		}
+
+		Assert.assertEquals(
+			dispatchTaskStatus, actualDispatchTrigger.getDispatchTaskStatus());
 	}
 
 	private void _basicAssertEquals(
@@ -357,6 +378,9 @@ public class DispatchTriggerLocalServiceTest {
 				expectedDispatchTaskSettingsUnicodeProperties.getProperty(key),
 				value));
 	}
+
+	@Inject
+	private DispatchLogLocalService _dispatchLogLocalService;
 
 	@Inject
 	private DispatchTriggerLocalService _dispatchTriggerLocalService;

@@ -12,11 +12,13 @@
 		<permissions>
 			<supports>
 				<action-key>ADD_APPLICATION</action-key>
+				<action-key>ADD_TRUSTED_APPLICATION</action-key>
 			</supports>
 			<site-member-defaults />
 			<guest-defaults />
 			<guest-unsupported>
 				<action-key>ADD_APPLICATION</action-key>
+				<action-key>ADD_TRUSTED_APPLICATION</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>

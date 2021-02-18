@@ -42,6 +42,8 @@ import java.util.Objects;
  */
 public class TalendProcess {
 
+	public static final String DATE_PATTERN = "yyyy-MM-dd'T'HH:mm:ssZ";
+
 	public String[] getMainMethodArguments() {
 		return _mainMethodArguments.toArray(new String[0]);
 	}
@@ -93,7 +95,7 @@ public class TalendProcess {
 		public Builder lastRunStartDate(Date lastRunStartDate) {
 			if (lastRunStartDate != null) {
 				SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-					"yyyy-MM-dd'T'HH:mm:ss'Z'");
+					DATE_PATTERN);
 
 				_contextParams.add(
 					"--context_param lastRunStartDate=".concat(

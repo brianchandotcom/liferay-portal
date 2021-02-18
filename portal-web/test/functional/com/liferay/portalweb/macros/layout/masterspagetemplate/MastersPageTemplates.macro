@@ -49,9 +49,7 @@ definition {
 	macro selectMasterViaPageDesignOptions {
 		Navigator.gotoNavTab(navTab = "Master");
 
-		MetalComponent.waitForCard(card = "${masterLayoutName}");
-
-		Click(
+		Click.waitForMenuToggleJSClick(
 			key_card = "${masterLayoutName}",
 			locator1 = "Card#CARD_TYPE_ASSET");
 

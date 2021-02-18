@@ -50,9 +50,7 @@ definition {
 	macro selectStyleBookViaPageDesignOptions {
 		Navigator.gotoNavTab(navTab = "Style Book");
 
-		MetalComponent.waitForCard(card = "${styleBookName}");
-
-		Click(
+		Click.waitForMenuToggleJSClick(
 			key_card = "${styleBookName}",
 			locator1 = "Card#CARD_TYPE_ASSET");
 

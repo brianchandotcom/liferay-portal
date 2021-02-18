@@ -54,8 +54,6 @@ definition {
 				var siteTemplateName = "${siteType} Site";
 			}
 
-			MetalComponent.waitForCard(card = "${siteTemplateName}");
-
 			LexiconCard.clickCard(card = "${siteTemplateName}");
 
 			PortletEntry.inputName(name = "${siteName}");
@@ -124,8 +122,6 @@ definition {
 
 	macro addCustomCP {
 		LexiconEntry.gotoAdd();
-
-		MetalComponent.waitForCard(card = "${siteTemplateName}");
 
 		LexiconCard.clickCard(card = "${siteTemplateName}");
 
@@ -1134,7 +1130,7 @@ definition {
 	macro viewCannotAdd {
 		LexiconEntry.gotoAdd();
 
-		MetalComponent.waitForCard(card = "Blank Site");
+		WaitForElementPresent.waitForLastScript();
 
 		LexiconEntry.gotoEntry(rowEntry = "Blank Site");
 

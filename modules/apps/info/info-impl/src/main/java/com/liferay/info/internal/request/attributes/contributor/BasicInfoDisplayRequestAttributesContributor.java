@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.portlet.InvokerPortlet;
 import com.liferay.portal.kernel.portlet.LiferayRenderRequest;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletInstanceFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -80,7 +81,10 @@ public class BasicInfoDisplayRequestAttributesContributor
 					RenderRequestFactory.create(
 						httpServletRequest, portlet, invokerPortlet,
 						portletConfig.getPortletContext(), WindowState.NORMAL,
-						PortletMode.VIEW, null, themeDisplay.getPlid());
+						PortletMode.VIEW,
+						PortletPreferencesFactoryUtil.fromDefaultXML(
+							portlet.getDefaultPreferences()),
+						themeDisplay.getPlid());
 
 				httpServletRequest.setAttribute(
 					JavaConstants.JAVAX_PORTLET_REQUEST, liferayRenderRequest);

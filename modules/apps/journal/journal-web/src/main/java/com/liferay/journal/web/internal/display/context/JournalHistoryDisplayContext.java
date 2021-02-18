@@ -23,10 +23,13 @@ import com.liferay.journal.web.internal.util.JournalPortletUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 
@@ -130,12 +133,23 @@ public class JournalHistoryDisplayContext {
 	}
 
 	public String getOrderByType() {
-		if (_orderByType != null) {
-			return _orderByType;
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(
+				_httpServletRequest);
+
+		_orderByType = ParamUtil.getString(_renderRequest, "orderByType");
+
+		String orderPreferences = portalPreferences.getValue(
+			JournalPortletKeys.JOURNAL, "orderByType", "asc");
+
+		if (Validator.isNull(_orderByType)) {
+			_orderByType = orderPreferences;
 		}
 
-		_orderByType = ParamUtil.getString(
-			_renderRequest, "orderByType", "asc");
+		if (_orderByType != orderPreferences) {
+			portalPreferences.setValue(
+				JournalPortletKeys.JOURNAL, "orderByType", _orderByType);
+		}
 
 		return _orderByType;
 	}

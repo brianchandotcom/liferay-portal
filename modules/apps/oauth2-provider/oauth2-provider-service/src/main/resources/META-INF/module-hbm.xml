@@ -29,6 +29,7 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="privacyPolicyURL" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="redirectURIs" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="trustedApplication" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.liferay.oauth2.provider.model.impl.OAuth2ApplicationScopeAliasesImpl" table="OAuth2ApplicationScopeAliases">
 		<id access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor" column="oA2AScopeAliasesId" name="oAuth2ApplicationScopeAliasesId" type="long">

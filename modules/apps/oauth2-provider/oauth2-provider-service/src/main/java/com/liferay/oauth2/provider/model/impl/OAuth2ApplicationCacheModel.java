@@ -64,7 +64,7 @@ public class OAuth2ApplicationCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("{oAuth2ApplicationId=");
 		sb.append(oAuth2ApplicationId);
@@ -106,6 +106,8 @@ public class OAuth2ApplicationCacheModel
 		sb.append(privacyPolicyURL);
 		sb.append(", redirectURIs=");
 		sb.append(redirectURIs);
+		sb.append(", trustedApplication=");
+		sb.append(trustedApplication);
 		sb.append("}");
 
 		return sb.toString();
@@ -221,6 +223,8 @@ public class OAuth2ApplicationCacheModel
 			oAuth2ApplicationImpl.setRedirectURIs(redirectURIs);
 		}
 
+		oAuth2ApplicationImpl.setTrustedApplication(trustedApplication);
+
 		oAuth2ApplicationImpl.resetOriginalValues();
 
 		return oAuth2ApplicationImpl;
@@ -254,6 +258,8 @@ public class OAuth2ApplicationCacheModel
 		name = objectInput.readUTF();
 		privacyPolicyURL = objectInput.readUTF();
 		redirectURIs = objectInput.readUTF();
+
+		trustedApplication = objectInput.readBoolean();
 	}
 
 	@Override
@@ -351,6 +357,8 @@ public class OAuth2ApplicationCacheModel
 		else {
 			objectOutput.writeUTF(redirectURIs);
 		}
+
+		objectOutput.writeBoolean(trustedApplication);
 	}
 
 	public long oAuth2ApplicationId;
@@ -373,5 +381,6 @@ public class OAuth2ApplicationCacheModel
 	public String name;
 	public String privacyPolicyURL;
 	public String redirectURIs;
+	public boolean trustedApplication;
 
 }

@@ -92,6 +92,10 @@ public class OAuth2ApplicationTable extends BaseTable<OAuth2ApplicationTable> {
 	public final Column<OAuth2ApplicationTable, String> redirectURIs =
 		createColumn(
 			"redirectURIs", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<OAuth2ApplicationTable, Boolean> trustedApplication =
+		createColumn(
+			"trustedApplication", Boolean.class, Types.BOOLEAN,
+			Column.FLAG_DEFAULT);
 
 	private OAuth2ApplicationTable() {
 		super("OAuth2Application", OAuth2ApplicationTable::new);

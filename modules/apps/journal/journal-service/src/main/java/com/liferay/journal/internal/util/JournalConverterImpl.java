@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -137,13 +138,14 @@ public class JournalConverterImpl implements JournalConverter {
 			rootElement.attributeValue("available-locales"));
 		String defaultLanguageId = rootElement.attributeValue("default-locale");
 
-		List<Element> dynamicElementElements = rootElement.elements(
-			"dynamic-element");
+		Map<String, List<Element>> dynamicElementElementsMap = new HashMap<>();
 
-		for (Element dynamicElementElement : dynamicElementElements) {
+		_initDynamicElements(dynamicElementElementsMap, rootElement);
+
+		for (DDMFormField ddmFormField : ddmStructure.getDDMFormFields(true)) {
 			addDDMFields(
-				dynamicElementElement, ddmStructure, ddmFields,
-				availableLanguageIds, defaultLanguageId);
+				availableLanguageIds, defaultLanguageId, ddmFields,
+				ddmFormField, ddmStructure, dynamicElementElementsMap);
 		}
 
 		return ddmFields;
@@ -162,50 +164,47 @@ public class JournalConverterImpl implements JournalConverter {
 	}
 
 	protected void addDDMFields(
-			Element dynamicElementElement, DDMStructure ddmStructure,
-			Fields ddmFields, String[] availableLanguageIds,
-			String defaultLanguageId)
+			String[] availableLanguageIds, String defaultLanguageId,
+			Fields ddmFields, DDMFormField ddmFormField,
+			DDMStructure ddmStructure,
+			Map<String, List<Element>> dynamicElementElementsMap)
 		throws PortalException {
 
-		String name = dynamicElementElement.attributeValue("name");
+		List<Element> dynamicElementElements = dynamicElementElementsMap.get(
+			ddmFormField.getName());
 
-		if (!ddmStructure.hasField(name)) {
+		if (dynamicElementElements == null) {
+			updateFieldsDisplay(
+				ddmFields, ddmFormField.getName(),
+				String.valueOf(ddmStructure.getStructureId()));
+
 			return;
 		}
 
-		if (!ddmStructure.isFieldTransient(name)) {
-			Field ddmField = getField(
-				dynamicElementElement, ddmStructure, availableLanguageIds,
-				defaultLanguageId);
+		for (Element dynamicElementElement : dynamicElementElements) {
+			if (!ddmFormField.isTransient()) {
+				Field ddmField = getField(
+					dynamicElementElement, ddmStructure, availableLanguageIds,
+					defaultLanguageId);
 
-			String fieldName = ddmField.getName();
+				String fieldName = ddmField.getName();
 
-			Field existingDDMField = ddmFields.get(fieldName);
+				Field existingDDMField = ddmFields.get(fieldName);
 
-			if (existingDDMField != null) {
-				for (Locale locale : ddmField.getAvailableLocales()) {
-					existingDDMField.addValues(
-						locale, ddmField.getValues(locale));
+				if (existingDDMField != null) {
+					for (Locale locale : ddmField.getAvailableLocales()) {
+						existingDDMField.addValues(
+							locale, ddmField.getValues(locale));
+					}
+				}
+				else {
+					ddmFields.put(ddmField);
 				}
 			}
-			else {
-				ddmFields.put(ddmField);
-			}
-		}
 
-		String instanceId = dynamicElementElement.attributeValue("instance-id");
-
-		updateFieldsDisplay(ddmFields, name, instanceId);
-
-		List<Element> childrenDynamicElementElements =
-			dynamicElementElement.elements("dynamic-element");
-
-		for (Element childrenDynamicElementElement :
-				childrenDynamicElementElements) {
-
-			addDDMFields(
-				childrenDynamicElementElement, ddmStructure, ddmFields,
-				availableLanguageIds, defaultLanguageId);
+			updateFieldsDisplay(
+				ddmFields, ddmFormField.getName(),
+				dynamicElementElement.attributeValue("instance-id"));
 		}
 	}
 
@@ -649,6 +648,22 @@ public class JournalConverterImpl implements JournalConverter {
 		}
 
 		return jsonArray.toString();
+	}
+
+	private void _initDynamicElements(
+		Map<String, List<Element>> dynamicElementElementsMap,
+		Element rootElement) {
+
+		for (Element dynamicElement : rootElement.elements("dynamic-element")) {
+			_initDynamicElements(dynamicElementElementsMap, dynamicElement);
+
+			List<Element> dynamicElementElements =
+				dynamicElementElementsMap.computeIfAbsent(
+					dynamicElement.attributeValue("name"),
+					key -> new ArrayList<>());
+
+			dynamicElementElements.add(dynamicElement);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

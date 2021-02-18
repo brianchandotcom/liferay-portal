@@ -283,15 +283,22 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Name");
 
-		DataEngine.addFieldsets(
-			createNewFieldset = "true",
-			fieldNameList = "Text,Numeric",
-			fieldsetName = "Fieldset Name");
-
-		DataEngine.addTranslationToFieldset(
+		DataEngine.createNewFieldset(
 			fieldNameList = "Text,Numeric",
 			fieldsetName = "Fieldset Name",
 			localeList = "pt-BR,de-DE,es-ES");
+
+		DataEngine.addFieldsets(fieldsetName = "Fieldset Name");
+
+		AssertVisible(
+			key_fieldsetLabel = "Fieldset Name",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
+
+		for (var fieldLabel : list "Text,Numeric") {
+			AssertVisible(
+				key_fieldFieldLabel = "${fieldLabel}",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+		}
 
 		DataEngine.viewFieldsetTranslation(
 			fieldNameList = "Text,Numeric",

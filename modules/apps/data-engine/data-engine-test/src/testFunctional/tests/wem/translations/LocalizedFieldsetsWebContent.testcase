@@ -136,15 +136,12 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Name");
 
-		DataEngine.addFieldsets(
-			createNewFieldset = "true",
-			fieldNameList = "Text",
-			fieldsetName = "New Fieldset");
-
-		DataEngine.addTranslationToFieldset(
+		DataEngine.createNewFieldset(
 			fieldNameList = "Text",
 			fieldsetName = "New Fieldset",
 			localeList = "pt-BR");
+
+		DataEngine.addFieldsets(fieldsetName = "New Fieldset");
 
 		WebContentStructures.saveCP();
 
@@ -186,17 +183,13 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Name");
 
-		DataEngine.addFieldsets(
-			createNewFieldset = "true",
-			fieldHelp = "true",
-			fieldNameList = "Text",
-			fieldsetName = "New Fieldset");
-
-		DataEngine.addTranslationToFieldset(
+		DataEngine.createNewFieldset(
 			fieldHelp = "true",
 			fieldNameList = "Text",
 			fieldsetName = "New Fieldset",
 			localeList = "pt-BR");
+
+		DataEngine.addFieldsets(fieldsetName = "New Fieldset");
 
 		WebContentStructures.saveCP();
 

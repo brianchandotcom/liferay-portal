@@ -28,25 +28,30 @@ int oAuth2AuthorizationsCount = OAuth2AuthorizationServiceUtil.getApplicationOAu
 OAuth2AuthorizationsManagementToolbarDisplayContext oAuth2AuthorizationsManagementToolbarDisplayContext = new OAuth2AuthorizationsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, currentURLObj);
 %>
 
-<clay:management-toolbar-v2
-	actionDropdownItems="<%= oAuth2AuthorizationsManagementToolbarDisplayContext.getActionDropdownItems() %>"
-	disabled="<%= oAuth2AuthorizationsCount == 0 %>"
-	filterDropdownItems="<%= oAuth2AuthorizationsManagementToolbarDisplayContext.getFilterDropdownItems() %>"
-	itemsTotal="<%= oAuth2AuthorizationsCount %>"
-	namespace="<%= liferayPortletResponse.getNamespace() %>"
-	searchContainerId="oAuth2AuthorizationsSearchContainer"
-	selectable="<%= true %>"
-	showSearch="<%= false %>"
-	sortingOrder="<%= oAuth2AuthorizationsManagementToolbarDisplayContext.getOrderByType() %>"
-	sortingURL="<%= String.valueOf(oAuth2AuthorizationsManagementToolbarDisplayContext.getSortingURL()) %>"
-/>
-
 <portlet:actionURL name="/admin/revoke_oauth2_authorizations" var="revokeOAuth2AuthorizationsURL">
 	<portlet:param name="mvcRenderCommandName" value="/oauth2_provider/view_oauth2_authorizations" />
 	<portlet:param name="navigation" value="application_authorizations" />
 	<portlet:param name="backURL" value="<%= redirect %>" />
 	<portlet:param name="oAuth2ApplicationId" value="<%= String.valueOf(oAuth2ApplicationId) %>" />
 </portlet:actionURL>
+
+<clay:management-toolbar
+	actionDropdownItems="<%= oAuth2AuthorizationsManagementToolbarDisplayContext.getActionDropdownItems() %>"
+	additionalProps='<%=
+		HashMapBuilder.<String, Object>put(
+			"revokeOAuth2AuthorizationsURL", revokeOAuth2AuthorizationsURL.toString()
+		).build()
+	%>'
+	disabled="<%= oAuth2AuthorizationsCount == 0 %>"
+	filterDropdownItems="<%= oAuth2AuthorizationsManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= oAuth2AuthorizationsCount %>"
+	propsTransformer="admin/js/OAuth2AuthorizationsManagementToolbarPropsTransformer"
+	searchContainerId="oAuth2AuthorizationsSearchContainer"
+	selectable="<%= true %>"
+	showSearch="<%= false %>"
+	sortingOrder="<%= oAuth2AuthorizationsManagementToolbarDisplayContext.getOrderByType() %>"
+	sortingURL="<%= String.valueOf(oAuth2AuthorizationsManagementToolbarDisplayContext.getSortingURL()) %>"
+/>
 
 <clay:container-fluid>
 	<aui:form action="<%= revokeOAuth2AuthorizationsURL %>" name="fm">
@@ -121,26 +126,6 @@ OAuth2AuthorizationsManagementToolbarDisplayContext oAuth2AuthorizationsManageme
 </clay:container-fluid>
 
 <aui:script>
-	function <portlet:namespace />revokeOAuth2Authorizations() {
-		if (
-			confirm(
-				'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-revoke-the-selected-authorizations-they-will-be-revoked-immediately") %>'
-			)
-		) {
-			var form = document.<portlet:namespace />fm;
-
-			Liferay.Util.postForm(form, {
-				data: {
-					oAuth2AuthorizationIds: Liferay.Util.listCheckedExcept(
-						form,
-						'<portlet:namespace />allRowIds'
-					),
-				},
-				url: '<%= revokeOAuth2AuthorizationsURL %>',
-			});
-		}
-	}
-
 	function <portlet:namespace />revokeOAuth2Authorization(oAuth2AuthorizationId) {
 		if (
 			confirm(

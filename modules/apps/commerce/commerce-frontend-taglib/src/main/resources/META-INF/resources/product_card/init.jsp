@@ -24,15 +24,14 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.commerce.product.catalog.CPCatalogEntry" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
-page import="com.liferay.portal.kernel.util.PortalUtil" %>
+page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
+page import="com.liferay.portal.kernel.util.Validator" %>
 
 <liferay-theme:defineObjects />
 
 <%
 CPCatalogEntry cpCatalogEntry = (CPCatalogEntry)request.getAttribute("liferay-commerce:product-card:cpCatalogEntry");
-
 CPContentListEntryModel cpContentListEntryModel = (CPContentListEntryModel)request.getAttribute("liferay-commerce:product-card:cpContentListEntryModel");
-
-String productDetailURL = cpContentListEntryModel.getProductDetailURL();
-String spritemap = cpContentListEntryModel.getSpritemap();
+String productDetailURL = (String)request.getAttribute("liferay-commerce:product-card:productDetailURL");
+String sku = (String)request.getAttribute("liferay-commerce:product-card:sku");
 %>

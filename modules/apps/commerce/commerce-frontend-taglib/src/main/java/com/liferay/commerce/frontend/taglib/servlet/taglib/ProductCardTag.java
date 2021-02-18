@@ -17,15 +17,44 @@ package com.liferay.commerce.frontend.taglib.servlet.taglib;
 import com.liferay.commerce.frontend.model.CPContentListEntryModel;
 import com.liferay.commerce.frontend.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
+import com.liferay.commerce.product.catalog.CPSku;
+import com.liferay.commerce.product.content.util.CPContentHelper;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
 /**
  * @author Gianmarco Brunialti Masera
  */
 public class ProductCardTag extends IncludeTag {
+
+	@Override
+	public int doStartTag() throws JspException {
+		try {
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			_productDetailURL = _cpContentHelper.getFriendlyURL(
+				_cpCatalogEntry, themeDisplay);
+
+			CPSku cpSku = _cpContentHelper.getDefaultCPSku(_cpCatalogEntry);
+
+			if (cpSku != null) {
+				_sku = cpSku.getSku();
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+		}
+
+		return super.doStartTag();
+	}
 
 	public CPCatalogEntry getCpCatalogEntry() {
 		return _cpCatalogEntry;
@@ -50,6 +79,9 @@ public class ProductCardTag extends IncludeTag {
 			_cpContentListEntryModel);
 		setNamespacedAttribute(
 			httpServletRequest, "elementClasses", _elementClasses);
+		setNamespacedAttribute(
+			httpServletRequest, "productDetailURL", _productDetailURL);
+		setNamespacedAttribute(httpServletRequest, "sku", _sku);
 	}
 
 	public void setCpCatalogEntry(CPCatalogEntry cpCatalogEntry) {
@@ -68,6 +100,7 @@ public class ProductCardTag extends IncludeTag {
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
 
+		_cpContentHelper = ServletContextUtil.getCPContentHelper();
 		servletContext = ServletContextUtil.getServletContext();
 	}
 
@@ -76,8 +109,11 @@ public class ProductCardTag extends IncludeTag {
 		super.cleanUp();
 
 		_cpCatalogEntry = null;
+		_cpContentHelper = null;
 		_cpContentListEntryModel = null;
 		_elementClasses = null;
+		_productDetailURL = null;
+		_sku = null;
 	}
 
 	@Override
@@ -90,8 +126,13 @@ public class ProductCardTag extends IncludeTag {
 
 	private static final String _PAGE = "/product_card/page.jsp";
 
+	private static final Log _log = LogFactoryUtil.getLog(ProductCardTag.class);
+
 	private CPCatalogEntry _cpCatalogEntry;
+	private CPContentHelper _cpContentHelper;
 	private CPContentListEntryModel _cpContentListEntryModel;
 	private String _elementClasses;
+	private String _productDetailURL;
+	private String _sku;
 
 }

@@ -21,7 +21,7 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib") + Strin
 %>
 
 <%
-if (cpContentListEntryModel.getSkuId() == 0) {
+if (Validator.isNull(sku)) {
 %>
 
 	<div class="add-to-cart d-flex my-2 pt-5" id="<%= randomNamespace + "add_to_cart" %>">
@@ -44,7 +44,7 @@ else {
 		inCart="<%= cpContentListEntryModel.isInCart() %>"
 		orderId="<%= cpContentListEntryModel.getOrderId() %>"
 		skuId="<%= cpContentListEntryModel.getSkuId() %>"
-		spritemap="<%= spritemap %>"
+		spritemap="<%= cpContentListEntryModel.getSpritemap() %>"
 		stockQuantity="<%= cpContentListEntryModel.getStockQuantity() %>"
 	/>
 

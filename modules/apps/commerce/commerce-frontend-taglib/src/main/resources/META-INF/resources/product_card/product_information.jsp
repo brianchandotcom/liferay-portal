@@ -16,11 +16,6 @@
 
 <%@ include file="/product_card/init.jsp" %>
 
-<%
-String name = cpContentListEntryModel.getName();
-String sku = cpContentListEntryModel.getSku();
-%>
-
 <div class="cp-information">
 	<p class="card-subtitle" title="<%= sku %>">
 		<span class="text-truncate-inline">
@@ -28,10 +23,10 @@ String sku = cpContentListEntryModel.getSku();
 		</span>
 	</p>
 
-	<p class="card-title" title="<%= name %>">
+	<p class="card-title" title="<%= cpCatalogEntry.getName() %>">
 		<a href="<%= productDetailURL %>">
 			<span class="text-truncate-inline">
-				<span class="text-truncate"><%= name %></span>
+				<span class="text-truncate"><%= cpCatalogEntry.getName() %></span>
 			</span>
 		</a>
 	</p>
@@ -40,7 +35,7 @@ String sku = cpContentListEntryModel.getSku();
 		<span class="text-truncate-inline">
 			<span class="d-flex flex-row text-truncate">
 				<commerce-ui:price
-					CPDefinitionId='<%= cpContentListEntryModel.getCpDefinitionId() %>'
+					CPDefinitionId='<%= cpCatalogEntry.getCPDefinitionId() %>'
 					displayOneLine="<%= true %>"
 				/>
 			</span>

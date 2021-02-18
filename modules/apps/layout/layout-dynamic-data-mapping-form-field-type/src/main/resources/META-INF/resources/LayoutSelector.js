@@ -35,6 +35,7 @@ function getInputValue(value, predefinedValue) {
 
 const LayoutSelector = ({
 	disabled,
+	editingLanguageId,
 	inputValue,
 	itemSelectorURL,
 	name,
@@ -82,7 +83,9 @@ const LayoutSelector = ({
 
 					<ClayInput
 						className="bg-light"
+						dir={Liferay.Language.direction[editingLanguageId]}
 						disabled={disabled}
+						lang={editingLanguageId}
 						onClick={handleItemSelectorTriggerClick}
 						readOnly
 						type="text"
@@ -119,6 +122,7 @@ const LayoutSelector = ({
 };
 
 const Main = ({
+	editingLanguageId,
 	itemSelectorURL,
 	name,
 	onChange,
@@ -131,6 +135,7 @@ const Main = ({
 	<FieldBase {...otherProps} name={name} readOnly={readOnly}>
 		<LayoutSelector
 			disabled={readOnly}
+			editingLanguageId={editingLanguageId}
 			inputValue={getInputValue(value, predefinedValue)}
 			itemSelectorURL={itemSelectorURL}
 			name={name}

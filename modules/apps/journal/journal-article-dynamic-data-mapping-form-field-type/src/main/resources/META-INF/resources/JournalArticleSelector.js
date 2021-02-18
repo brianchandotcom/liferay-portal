@@ -32,6 +32,7 @@ function parseInputValue(inputValue) {
 
 const JournalArticleSelector = ({
 	disabled,
+	editingLanguageId,
 	inputValue,
 	itemSelectorURL,
 	message,
@@ -80,7 +81,9 @@ const JournalArticleSelector = ({
 
 					<ClayInput
 						className="bg-light"
+						dir={Liferay.Language.direction[editingLanguageId]}
 						disabled={disabled}
+						lang={editingLanguageId}
 						onClick={handleItemSelectorTriggerClick}
 						readOnly
 						type="text"
@@ -119,6 +122,7 @@ const JournalArticleSelector = ({
 };
 
 const Main = ({
+	editingLanguageId,
 	itemSelectorURL,
 	message,
 	name,
@@ -132,6 +136,7 @@ const Main = ({
 	<FieldBase {...otherProps} name={name} readOnly={readOnly}>
 		<JournalArticleSelector
 			disabled={readOnly}
+			editingLanguageId={editingLanguageId}
 			inputValue={value && value !== '' ? value : predefinedValue}
 			itemSelectorURL={itemSelectorURL}
 			message={message}

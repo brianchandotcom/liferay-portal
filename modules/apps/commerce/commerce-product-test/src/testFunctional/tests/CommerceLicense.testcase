@@ -35,9 +35,7 @@ definition {
 
 			Portlet.startServer(deleteLiferayHome = "false");
 
-			AssertConsoleTextNotPresent(value1 = "Unable to install bundle com.liferay.commerce.");
-
-			AssertConsoleTextNotPresent(value1 = "Unable to install bundle webbundle");
+			AssertConsoleTextNotPresent(value1 = "Unable to install bundle");
 
 			Navigator.openURL();
 

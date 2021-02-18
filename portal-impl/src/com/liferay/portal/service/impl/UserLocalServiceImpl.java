@@ -264,6 +264,15 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		boolean sendEmail = false;
 		ServiceContext serviceContext = new ServiceContext();
 
+		Company company = companyLocalService.getCompany(companyId);
+
+		serviceContext.setPathMain(PortalUtil.getPathMain());
+
+		String portalURL = PortalUtil.getPortalURL(
+			company.getVirtualHostname(), -1, false);
+
+		serviceContext.setPortalURL(portalURL);
+
 		User defaultAdminUser = addUser(
 			creatorUserId, companyId, autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, facebookId, openId,

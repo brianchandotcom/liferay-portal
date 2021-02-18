@@ -146,12 +146,48 @@ definition {
 	}
 
 	@description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
-	@ignore = "true"
 	@priority = "5"
 	test FieldsetNameRenamedWhenNameAlreadyExistent {
-		property portal.acceptance = "false";
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		// TODO LPS-107630 FieldsetNameRenamedWhenNameAlreadyExistent pending implementation
+        NavItem.gotoStructures();
+
+        WebContentStructures.addCP(structureName = "WC Structure Name");
+
+        DataEngine.addField(
+            fieldFieldLabel = "Text",
+            fieldName = "Text");
+
+        DataEngine.editFieldReference(
+            assertFieldReference = "Text",
+            fieldFieldLabel = "Text",
+            fieldReference = "Text");
+
+        DataEngine.addField(
+            fieldFieldLabel = "Numeric",
+            fieldName = "Numeric");
+
+        DataEngine.editFieldReference(
+            assertFieldReference = "Text",
+            fieldFieldLabel = "Numeric",
+            fieldReference = "Text");
+
+        WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+        WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
+        AssertClick.assertPartialTextClickAt(
+            key_fieldFieldLabel = "Numeric",
+            locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
+            value1 = "Numeric");
+
+        Navigator.gotoNavTab(navTab = "Advanced");
+		
+        AssertTextNotEquals(
+            key_fieldLabel = "Field Reference",
+            key_fieldName = "fieldReference",
+            locator1 = "Sidebar#TEXT_INPUT",
+            value1 = "Text");
 	}
 
 	@description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"

@@ -83,7 +83,8 @@ public class OAuth2ApplicationModelImpl
 		{"clientSecret", Types.VARCHAR}, {"description", Types.VARCHAR},
 		{"features", Types.VARCHAR}, {"homePageURL", Types.VARCHAR},
 		{"iconFileEntryId", Types.BIGINT}, {"name", Types.VARCHAR},
-		{"privacyPolicyURL", Types.VARCHAR}, {"redirectURIs", Types.VARCHAR}
+		{"privacyPolicyURL", Types.VARCHAR}, {"redirectURIs", Types.VARCHAR},
+		{"trustedApplication", Types.BOOLEAN}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -110,10 +111,11 @@ public class OAuth2ApplicationModelImpl
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("privacyPolicyURL", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("redirectURIs", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("trustedApplication", Types.BOOLEAN);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table OAuth2Application (oAuth2ApplicationId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,oA2AScopeAliasesId LONG,allowedGrantTypes VARCHAR(75) null,clientCredentialUserId LONG,clientCredentialUserName VARCHAR(75) null,clientId VARCHAR(75) null,clientProfile INTEGER,clientSecret VARCHAR(75) null,description STRING null,features STRING null,homePageURL STRING null,iconFileEntryId LONG,name VARCHAR(75) null,privacyPolicyURL STRING null,redirectURIs STRING null)";
+		"create table OAuth2Application (oAuth2ApplicationId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,oA2AScopeAliasesId LONG,allowedGrantTypes VARCHAR(75) null,clientCredentialUserId LONG,clientCredentialUserName VARCHAR(75) null,clientId VARCHAR(75) null,clientProfile INTEGER,clientSecret VARCHAR(75) null,description STRING null,features STRING null,homePageURL STRING null,iconFileEntryId LONG,name VARCHAR(75) null,privacyPolicyURL STRING null,redirectURIs STRING null,trustedApplication BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table OAuth2Application";
 
@@ -199,6 +201,7 @@ public class OAuth2ApplicationModelImpl
 		model.setName(soapModel.getName());
 		model.setPrivacyPolicyURL(soapModel.getPrivacyPolicyURL());
 		model.setRedirectURIs(soapModel.getRedirectURIs());
+		model.setTrustedApplication(soapModel.isTrustedApplication());
 
 		return model;
 	}
@@ -474,6 +477,12 @@ public class OAuth2ApplicationModelImpl
 			"redirectURIs",
 			(BiConsumer<OAuth2Application, String>)
 				OAuth2Application::setRedirectURIs);
+		attributeGetterFunctions.put(
+			"trustedApplication", OAuth2Application::getTrustedApplication);
+		attributeSetterBiConsumers.put(
+			"trustedApplication",
+			(BiConsumer<OAuth2Application, Boolean>)
+				OAuth2Application::setTrustedApplication);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -896,6 +905,27 @@ public class OAuth2ApplicationModelImpl
 		_redirectURIs = redirectURIs;
 	}
 
+	@JSON
+	@Override
+	public boolean getTrustedApplication() {
+		return _trustedApplication;
+	}
+
+	@JSON
+	@Override
+	public boolean isTrustedApplication() {
+		return _trustedApplication;
+	}
+
+	@Override
+	public void setTrustedApplication(boolean trustedApplication) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_trustedApplication = trustedApplication;
+	}
+
 	public long getColumnBitmask() {
 		if (_columnBitmask > 0) {
 			return _columnBitmask;
@@ -974,6 +1004,7 @@ public class OAuth2ApplicationModelImpl
 		oAuth2ApplicationImpl.setName(getName());
 		oAuth2ApplicationImpl.setPrivacyPolicyURL(getPrivacyPolicyURL());
 		oAuth2ApplicationImpl.setRedirectURIs(getRedirectURIs());
+		oAuth2ApplicationImpl.setTrustedApplication(isTrustedApplication());
 
 		oAuth2ApplicationImpl.resetOriginalValues();
 
@@ -1182,6 +1213,8 @@ public class OAuth2ApplicationModelImpl
 			oAuth2ApplicationCacheModel.redirectURIs = null;
 		}
 
+		oAuth2ApplicationCacheModel.trustedApplication = isTrustedApplication();
+
 		return oAuth2ApplicationCacheModel;
 	}
 
@@ -1276,6 +1309,7 @@ public class OAuth2ApplicationModelImpl
 	private String _name;
 	private String _privacyPolicyURL;
 	private String _redirectURIs;
+	private boolean _trustedApplication;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -1329,6 +1363,7 @@ public class OAuth2ApplicationModelImpl
 		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("privacyPolicyURL", _privacyPolicyURL);
 		_columnOriginalValues.put("redirectURIs", _redirectURIs);
+		_columnOriginalValues.put("trustedApplication", _trustedApplication);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -1392,6 +1427,8 @@ public class OAuth2ApplicationModelImpl
 		columnBitmasks.put("privacyPolicyURL", 262144L);
 
 		columnBitmasks.put("redirectURIs", 524288L);
+
+		columnBitmasks.put("trustedApplication", 1048576L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

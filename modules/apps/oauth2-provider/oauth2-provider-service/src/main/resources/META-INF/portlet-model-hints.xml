@@ -34,6 +34,7 @@
 		<field name="redirectURIs" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
+		<field name="trustedApplication" type="boolean" />
 	</model>
 	<model name="com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases">
 		<field name="oAuth2ApplicationScopeAliasesId" type="long" />

@@ -25,7 +25,8 @@ create table OAuth2Application (
 	iconFileEntryId LONG,
 	name VARCHAR(75) null,
 	privacyPolicyURL STRING null,
-	redirectURIs STRING null
+	redirectURIs STRING null,
+	trustedApplication BOOLEAN
 );
 
 create table OAuth2ApplicationScopeAliases (

@@ -235,24 +235,24 @@ definition {
 		WebContentStructures.addCP(structureName = "WC Structure Name");
 
 		DataEngine.addFieldsets(
-				createNewFieldset = "true",
-				fieldHelp = "true",
-				fieldNameList = "Text",
-				fieldsetName = "New Fieldset");
+			createNewFieldset = "true",
+			fieldHelp = "true",
+			fieldNameList = "Text",
+			fieldsetName = "New Fieldset");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		FormViewBuilder.editFieldLabel(
-				fieldLabel = "New Fieldset",
-				label = "New Fieldset pt-BR");
+			fieldLabel = "New Fieldset",
+			label = "New Fieldset pt-BR");
 
 		PortletEntry.changeLocale(locale = "en-US");
 
 		DataEngine.addTranslationToFieldset(
-				fieldHelp = "true",
-				fieldNameList = "Text",
-				fieldsetName = "New Fieldset",
-				localeList = "pt-BR");
+			fieldHelp = "true",
+			fieldNameList = "Text",
+			fieldsetName = "New Fieldset",
+			localeList = "pt-BR");
 
 		WebContentStructures.saveCP();
 
@@ -265,37 +265,36 @@ definition {
 		PortletEntry.viewLocale(locale = "en-US");
 
 		AssertVisible(
-				key_fieldsetLabel = "New Fieldset",
-				locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
+			key_fieldsetLabel = "New Fieldset",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
 
 		AssertVisible(
-				key_fieldFieldLabel = "Text",
-				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+			key_fieldFieldLabel = "Text",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
 		AssertVisible(
-				key_helpText = "Text Help Text",
-				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_HELP_TEXT");
+			key_helpText = "Text Help Text",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_HELP_TEXT");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		PortletEntry.viewLocale(locale = "pt-BR");
 
 		AssertVisible(
-				key_fieldsetLabel = "New Fieldset pt-BR",
-				locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
+			key_fieldsetLabel = "New Fieldset pt-BR",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
 
 		AssertVisible(
-				key_fieldFieldLabel = "Text pt-BR",
-				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+			key_fieldFieldLabel = "Text pt-BR",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
 		AssertVisible(
-				key_helpText = "Text Help Text pt-BR",
-				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_HELP_TEXT");
+			key_helpText = "Text Help Text pt-BR",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_HELP_TEXT");
 
 		DataEngine.deleteFieldsetFromSideBar(
-				siteURLKey = "test-site-name",
-				fieldsetName = "New Fieldset");
-
+			fieldsetName = "New Fieldset",
+			siteURLKey = "test-site-name");
 	}
 
 	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"

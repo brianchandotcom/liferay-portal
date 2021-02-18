@@ -114,9 +114,9 @@ definition {
 			fieldsetModal = "true");
 
 		DataEngine.editFieldTip(
-				fieldFieldLabel = "Text Edit",
-				fieldHelp = "Edited Help Text",
-				fieldsetModal = "true");
+			fieldFieldLabel = "Text Edit",
+			fieldHelp = "Edited Help Text",
+			fieldsetModal = "true");
 
 		Click(locator1 = "Modal#SAVE_BUTTON");
 
@@ -129,20 +129,20 @@ definition {
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
 		AssertVisible(
-				key_helpText = "Edited Help Text",
-				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_HELP_TEXT");
+			key_helpText = "Edited Help Text",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_HELP_TEXT");
 
 		Button.clickSave();
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
 		AssertVisible(
-				key_fieldFieldLabel = "Text Edit",
-				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+			key_fieldFieldLabel = "Text Edit",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
 		AssertVisible(
-				key_helpText = "Edited Help Text",
-				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_HELP_TEXT");
+			key_helpText = "Edited Help Text",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_HELP_TEXT");
 	}
 
 	@description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"

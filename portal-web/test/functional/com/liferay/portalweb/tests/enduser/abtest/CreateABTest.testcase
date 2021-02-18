@@ -52,10 +52,6 @@ definition {
 
 		AnalyticsCloud.teardownAnalyticsCloud();
 
-		SitePages.openPagesAdmin(siteURLKey = "guest");
-
-		SitePages.deletePage(pageName = "Content Page");
-
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}

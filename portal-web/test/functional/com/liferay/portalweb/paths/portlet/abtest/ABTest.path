@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>INVALID_ID_MESSAGE</td>
-	<td>//*[contains(@class,'form-feedback-item') and contains(text(), 'ID was not found')]</td>
+	<td>//*[contains(text(), 'ID was not found')]</td>
 	<td></td>
 </tr>
 <tr>

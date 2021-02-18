@@ -54,6 +54,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANALYTICS_CLOUD_CONNECTED_CONFIRMATION_MESSAGE</td>
+	<td>//*[contains(@class, 'control-label') and contains(text(), 'Your DXP instance is connected to Analytics Cloud.')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONNECT_ANALYTICS_CLOUD_BUTTON</td>
 	<td>//button[contains(@id, '_com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet_tokenButton')]</td>
 	<td></td>

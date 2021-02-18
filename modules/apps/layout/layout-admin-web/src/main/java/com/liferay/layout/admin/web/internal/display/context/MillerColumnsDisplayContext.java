@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -47,9 +46,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -140,8 +137,6 @@ public class MillerColumnsDisplayContext {
 				"breadcrumbEntries", _getBreadcrumbEntriesJSONArray()
 			).put(
 				"getItemChildrenURL", getLayoutChildrenURL()
-			).put(
-				"languageDirection", _getLanguageDirection()
 			).put(
 				"languageId", _themeDisplay.getLanguageId()
 			).put(
@@ -437,21 +432,6 @@ public class MillerColumnsDisplayContext {
 		pagesJSONObject.put("url", pagesURL.toString());
 
 		return pagesJSONObject;
-	}
-
-	private Map<String, String> _getLanguageDirection() {
-		Map<String, String> languageDirection = new HashMap<>();
-
-		for (Locale curLocale :
-				LanguageUtil.getAvailableLocales(
-					_themeDisplay.getScopeGroupId())) {
-
-			languageDirection.put(
-				LocaleUtil.toLanguageId(curLocale),
-				LanguageUtil.get(curLocale, "lang.dir"));
-		}
-
-		return languageDirection;
 	}
 
 	private JSONArray _getLayoutActionsJSONArray(Layout layout)

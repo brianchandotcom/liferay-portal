@@ -162,7 +162,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -452,8 +451,6 @@ public class ContentPageEditorDisplayContext {
 				"infoItemSelectorURL", _getInfoItemSelectorURL()
 			).put(
 				"infoListSelectorURL", _getInfoListSelectorURL()
-			).put(
-				"languageDirection", _getLanguageDirection()
 			).put(
 				"layoutConversionWarningMessages",
 				MultiSessionMessages.get(
@@ -1660,20 +1657,6 @@ public class ContentPageEditorDisplayContext {
 			_getImageItemSelectorCriterion(), _getURLItemSelectorCriterion());
 
 		return itemSelectorURL.toString();
-	}
-
-	private Map<String, String> _getLanguageDirection() {
-		Map<String, String> languageDirection = new HashMap<>();
-
-		for (Locale curLocale :
-				LanguageUtil.getAvailableLocales(getGroupId())) {
-
-			languageDirection.put(
-				LocaleUtil.toLanguageId(curLocale),
-				LanguageUtil.get(curLocale, "lang.dir"));
-		}
-
-		return languageDirection;
 	}
 
 	private String _getLayoutItemSelectorURL() {

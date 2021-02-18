@@ -22,7 +22,7 @@
 	compareCheckbox.default('<%= rootId %>', '<%= rootId %>', {
 		disabled: <%= disabled %>,
 		inCompare: <%= inCompare %>,
-		itemId: '<%= itemId %>',
+		itemId: '<%= cpCatalogEntry.getCPDefinitionId() %>',
 		label: '<%= label %>',
 		pictureUrl: '<%= pictureUrl %>',
 	});

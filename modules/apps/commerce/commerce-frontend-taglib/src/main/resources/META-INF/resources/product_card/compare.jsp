@@ -20,7 +20,10 @@
 	<div class="autofit-section">
 		<div class="custom-checkbox custom-control custom-control-primary">
 			<div class="custom-checkbox custom-control">
-				<commerce-ui:compare-checkbox CPDefinitionId="<%= cpContentListEntryModel.getCpDefinitionId() %>" label="<%= LanguageUtil.get(request, "compare") %>" />
+				<commerce-ui:compare-checkbox
+					cpCatalogEntry="<%= cpCatalogEntry %>"
+					label='<%= LanguageUtil.get(request, "compare") %>'
+				/>
 			</div>
 		</div>
 	</div>

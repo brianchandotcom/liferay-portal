@@ -155,8 +155,8 @@ if (cpSku != null) {
 
 			<div class="mt-3">
 				<commerce-ui:compare-checkbox
-					CPDefinitionId="<%= cpDefinitionId %>"
-					label="<%= LanguageUtil.get(resourceBundle, "compare") %>"
+					cpCatalogEntry="<%= cpCatalogEntry %>"
+					label='<%= LanguageUtil.get(resourceBundle, "compare") %>'
 				/>
 			</div>
 		</div>

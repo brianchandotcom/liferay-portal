@@ -103,7 +103,9 @@ String productContentAuthToken = AuthTokenUtil.getToken(request, plid, CPPortlet
 
 				<div class="row">
 					<div class="col-md-12">
-						<commerce-ui:compare-checkbox CPDefinitionId="<%= cpDefinitionId %>" />
+						<commerce-ui:compare-checkbox
+							cpCatalogEntry="<%= cpCatalogEntry %>"
+						/>
 					</div>
 				</div>
 

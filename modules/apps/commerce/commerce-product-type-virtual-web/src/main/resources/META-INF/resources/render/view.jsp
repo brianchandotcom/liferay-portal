@@ -129,7 +129,9 @@ String sampleURL = virtualCPTypeHelper.getSampleURL(cpDefinitionId, cpInstanceId
 
 				<div class="row">
 					<div class="col-md-12">
-						<commerce-ui:compare-checkbox CPDefinitionId="<%= cpDefinitionId %>" />
+						<commerce-ui:compare-checkbox
+							cpCatalogEntry="<%= cpCatalogEntry %>"
+						/>
 					</div>
 				</div>
 

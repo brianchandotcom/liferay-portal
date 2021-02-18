@@ -17,15 +17,16 @@
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<%@ page import="com.liferay.petra.string.StringPool" %><%@
+<%@ page import="com.liferay.commerce.product.catalog.CPCatalogEntry" %><%@
+page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %>
 
 <liferay-theme:defineObjects />
 
 <%
+CPCatalogEntry cpCatalogEntry = (CPCatalogEntry)request.getAttribute("liferay-commerce:compare-checkbox:cpCatalogEntry");
 Boolean disabled = (Boolean)request.getAttribute("liferay-commerce:compare-checkbox:disabled");
 Boolean inCompare = (Boolean)request.getAttribute("liferay-commerce:compare-checkbox:inCompare");
-long itemId = (long)request.getAttribute("liferay-commerce:compare-checkbox:itemId");
 String label = (String)request.getAttribute("liferay-commerce:compare-checkbox:label");
 String pictureUrl = (String)request.getAttribute("liferay-commerce:compare-checkbox:pictureUrl");
 

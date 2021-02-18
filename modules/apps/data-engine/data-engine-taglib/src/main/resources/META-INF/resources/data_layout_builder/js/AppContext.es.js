@@ -182,7 +182,7 @@ const editFocusedCustomObjectField = (
  * @param {object} dataDefinition
  * @param {object} field
  */
-const getUnformattedDefinitionField = (dataDefinition, {fieldName}) => {
+const getDefinitionField = (dataDefinition, {fieldName}) => {
 	return getDataDefinitionField(dataDefinition, fieldName);
 };
 
@@ -201,19 +201,14 @@ const setDataDefinitionFields = (
 
 	visitor.mapFields((field) => {
 		const formattedDefinitionField = convertFieldToDataDefinition(field);
-		
-		const unformattedDefinitionField = getUnformattedDefinitionField(
-			dataDefinition,
-			field
-		);
 
 		if (dataLayoutBuilder.props.contentType === 'app-builder') {
+			const definitionField = getDefinitionField(dataDefinition, field);
+
 			newFields.push({
 				...formattedDefinitionField,
-				label:
-					unformattedDefinitionField?.label ||
-					formattedDefinitionField?.label,
-				required: !!unformattedDefinitionField?.required,
+				label: definitionField?.label ?? formattedDefinitionField?.label,
+				required: !!definitionField?.required,
 			});
 		}
 		else {

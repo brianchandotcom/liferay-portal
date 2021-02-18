@@ -19,6 +19,8 @@ import java.io.InputStream;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -26,6 +28,20 @@ import java.util.stream.Stream;
  * @author Gregory Amerson
  */
 public class StringUtil {
+
+	public static String getDockerSafeName(String name) {
+		Matcher matcher = _camelCasePattern.matcher(name);
+
+		String dockerSafeName = matcher.replaceAll("-");
+
+		if ((name.charAt(0) != '-') && (dockerSafeName.charAt(0) == '-') &&
+			(dockerSafeName.length() > 1)) {
+
+			dockerSafeName = dockerSafeName.substring(1);
+		}
+
+		return dockerSafeName.toLowerCase();
+	}
 
 	public static String read(InputStream inputStream) throws IOException {
 		byte[] buffer = new byte[8192];
@@ -95,5 +111,8 @@ public class StringUtil {
 
 		return stream.collect(Collectors.joining(", "));
 	}
+
+	private static final Pattern _camelCasePattern = Pattern.compile(
+		"(?<=[a-z])(?=[A-Z])|(?=[A-Z][a-z])");
 
 }

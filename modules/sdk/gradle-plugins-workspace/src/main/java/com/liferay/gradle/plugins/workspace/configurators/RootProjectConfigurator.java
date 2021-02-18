@@ -1382,7 +1382,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 		if (dockerContainerId == null) {
 			workspaceExtension.setDockerContainerId(
-				project.getName() + "-liferay");
+				StringUtil.getDockerSafeName(project.getName()) + "-liferay");
 		}
 
 		String dockerImageId = workspaceExtension.getDockerImageId();
@@ -1403,7 +1403,9 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			}
 
 			workspaceExtension.setDockerImageId(
-				String.format("%s-liferay:%s", project.getName(), version));
+				String.format(
+					"%s-liferay:%s",
+					StringUtil.getDockerSafeName(project.getName()), version));
 		}
 	}
 

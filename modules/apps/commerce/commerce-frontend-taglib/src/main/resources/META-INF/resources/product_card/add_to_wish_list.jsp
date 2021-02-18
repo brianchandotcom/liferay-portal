@@ -19,11 +19,7 @@
 <div class="autofit-col">
 	<div class="autofit-section">
 		<commerce-ui:add-to-wish-list
-			commerceAccountId="<%= cpContentListEntryModel.getAccountId() %>"
-			cpDefinitionId="<%= cpContentListEntryModel.getCpDefinitionId() %>"
-			inWishList="<%= cpContentListEntryModel.isInWishList() %>"
-			skuId="<%= cpContentListEntryModel.getSkuId() %>"
-			spritemap="<%= spritemap %>"
+			cpCatalogEntry="<%= cpCatalogEntry %>"
 		/>
 	</div>
 </div>

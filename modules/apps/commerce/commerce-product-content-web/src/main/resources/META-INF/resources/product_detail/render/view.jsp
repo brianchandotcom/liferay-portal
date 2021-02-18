@@ -149,12 +149,7 @@ if (cpSku != null) {
 				/>
 
 				<commerce-ui:add-to-wish-list
-					commerceAccountId="<%= cpContentModel.getAccountId() %>"
-					cpDefinitionId="<%= cpDefinitionId %>"
-					inWishList="<%= cpContentModel.isInWishList() %>"
-					large="<%= true %>"
-					skuId="<%= skuId %>"
-					spritemap="<%= cpContentModel.getSpritemap() %>"
+					cpCatalogEntry="<%= cpCatalogEntry %>"
 				/>
 			</div>
 

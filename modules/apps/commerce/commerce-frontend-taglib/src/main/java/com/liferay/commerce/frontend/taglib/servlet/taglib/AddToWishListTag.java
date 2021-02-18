@@ -14,13 +14,21 @@
 
 package com.liferay.commerce.frontend.taglib.servlet.taglib;
 
+import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.commerce.constants.CommerceWebKeys;
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.frontend.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.commerce.product.catalog.CPCatalogEntry;
+import com.liferay.commerce.product.catalog.CPSku;
+import com.liferay.commerce.product.content.util.CPContentHelper;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
 /**
@@ -28,24 +36,49 @@ import javax.servlet.jsp.PageContext;
  */
 public class AddToWishListTag extends IncludeTag {
 
-	public long getCommerceAccountId() {
-		return _commerceAccountId;
+	@Override
+	public int doStartTag() throws JspException {
+		try {
+			CommerceContext commerceContext =
+				(CommerceContext)request.getAttribute(
+					CommerceWebKeys.COMMERCE_CONTEXT);
+
+			CommerceAccount commerceAccount =
+				commerceContext.getCommerceAccount();
+
+			if (commerceAccount != null) {
+				_commerceAccountId = commerceAccount.getCommerceAccountId();
+			}
+
+			CPSku cpSku = _cpContentHelper.getDefaultCPSku(_cpCatalogEntry);
+
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			_inWishList = _cpContentHelper.isInWishList(
+				cpSku, _cpCatalogEntry, themeDisplay);
+
+			if (cpSku != null) {
+				_skuId = cpSku.getCPInstanceId();
+			}
+
+			String pathThemeImages = themeDisplay.getPathThemeImages();
+
+			_spritemap = pathThemeImages + "/icons.svg";
+
+			if (pathThemeImages.contains("classic")) {
+				_spritemap = pathThemeImages + "/lexicon/icons.svg";
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+		}
+
+		return super.doStartTag();
 	}
 
-	public long getCpDefinitionId() {
-		return _cpDefinitionId;
-	}
-
-	public long getSkuId() {
-		return _skuId;
-	}
-
-	public String getSpritemap() {
-		return _spritemap;
-	}
-
-	public boolean isInWishList() {
-		return _inWishList;
+	public CPCatalogEntry getCpCatalogEntry() {
+		return _cpCatalogEntry;
 	}
 
 	public boolean isLarge() {
@@ -59,32 +92,15 @@ public class AddToWishListTag extends IncludeTag {
 		setNamespacedAttribute(
 			httpServletRequest, "commerceAccountId", _commerceAccountId);
 		setNamespacedAttribute(
-			httpServletRequest, "cpDefinitionId", _cpDefinitionId);
+			httpServletRequest, "cpCatalogEntry", _cpCatalogEntry);
 		setNamespacedAttribute(httpServletRequest, "inWishList", _inWishList);
 		setNamespacedAttribute(httpServletRequest, "large", _large);
 		setNamespacedAttribute(httpServletRequest, "skuId", _skuId);
-
-		if (Validator.isNull(_spritemap)) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			_spritemap = themeDisplay.getPathThemeImages() + "/clay/icons.svg";
-		}
-
 		setNamespacedAttribute(httpServletRequest, "spritemap", _spritemap);
 	}
 
-	public void setCommerceAccountId(long commerceAccountId) {
-		_commerceAccountId = commerceAccountId;
-	}
-
-	public void setCpDefinitionId(long cpDefinitionId) {
-		_cpDefinitionId = cpDefinitionId;
-	}
-
-	public void setInWishList(boolean inWishList) {
-		_inWishList = inWishList;
+	public void setCpCatalogEntry(CPCatalogEntry cpCatalogEntry) {
+		_cpCatalogEntry = cpCatalogEntry;
 	}
 
 	public void setLarge(boolean large) {
@@ -95,6 +111,7 @@ public class AddToWishListTag extends IncludeTag {
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
 
+		_cpContentHelper = ServletContextUtil.getCPContentHelper();
 		servletContext = ServletContextUtil.getServletContext();
 	}
 
@@ -102,16 +119,13 @@ public class AddToWishListTag extends IncludeTag {
 		_skuId = skuId;
 	}
 
-	public void setSpritemap(String spritemap) {
-		_spritemap = spritemap;
-	}
-
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
 
 		_commerceAccountId = 0;
-		_cpDefinitionId = 0;
+		_cpCatalogEntry = null;
+		_cpContentHelper = null;
 		_inWishList = false;
 		_large = false;
 		_skuId = 0;
@@ -128,8 +142,12 @@ public class AddToWishListTag extends IncludeTag {
 
 	private static final String _PAGE = "/add_to_wish_list/page.jsp";
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		AddToWishListTag.class);
+
 	private long _commerceAccountId;
-	private long _cpDefinitionId;
+	private CPCatalogEntry _cpCatalogEntry;
+	private CPContentHelper _cpContentHelper;
 	private boolean _inWishList;
 	private boolean _large;
 	private long _skuId;

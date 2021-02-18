@@ -19,9 +19,6 @@ import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.frontend.model.CPContentListEntryModel;
-import com.liferay.commerce.frontend.model.PriceModel;
-import com.liferay.commerce.frontend.model.ProductSettingsModel;
-import com.liferay.commerce.frontend.util.ProductHelper;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
@@ -30,18 +27,11 @@ import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.constants.CPContentWebKeys;
 import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRenderer;
 import com.liferay.commerce.product.content.util.CPContentHelper;
-import com.liferay.commerce.product.util.CPCompareHelper;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -122,72 +112,29 @@ public class DefaultCPContentListEntryRenderer
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		long accountId = 0;
-		boolean compareCheckboxVisible = true;
-		boolean compareDeleteButtonVisible = false;
-		JSONObject compareStateJSONObject = _jsonFactory.createJSONObject();
+		long commerceAccountId = 0;
 		boolean inCart = false;
-		long orderId = 0;
-		PriceModel prices = null;
-		ProductSettingsModel productSettingsModel = null;
-		String sku = StringPool.BLANK;
+		long commerceOrderId = 0;
 		long skuId = 0;
 		int stockQuantity = 0;
 
 		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
 
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		String portletName = portletDisplay.getPortletName();
-
-		if (portletName.equals(CPPortletKeys.CP_COMPARE_CONTENT_WEB)) {
-			compareCheckboxVisible = false;
-			compareDeleteButtonVisible = true;
-		}
-		else {
-			if (commerceAccount != null) {
-				accountId = commerceAccount.getCommerceAccountId();
-			}
-
-			HttpServletRequest originalHttpServletRequest =
-				_portal.getOriginalServletRequest(httpServletRequest);
-
-			List<Long> cpDefinitionIds = _cpCompareHelper.getCPDefinitionIds(
-				commerceContext.getCommerceChannelGroupId(), accountId,
-				CookieKeys.getCookie(
-					originalHttpServletRequest,
-					_cpCompareHelper.getCPDefinitionIdsCookieKey(
-						commerceContext.getCommerceChannelGroupId())));
-
-			compareStateJSONObject.put(
-				"checkboxVisible", true
-			).put(
-				"compareAvailable", true
-			).put(
-				"inCompare",
-				cpDefinitionIds.contains(cpCatalogEntry.getCPDefinitionId())
-			);
+		if (commerceAccount != null) {
+			commerceAccountId = commerceAccount.getCommerceAccountId();
 		}
 
 		CommerceOrder commerceOrder = commerceContext.getCommerceOrder();
 
 		if (commerceOrder != null) {
-			orderId = commerceOrder.getCommerceOrderId();
+			commerceOrderId = commerceOrder.getCommerceOrderId();
 		}
 
 		boolean hasChildCPDefinitions = cpContentHelper.hasChildCPDefinitions(
 			cpCatalogEntry.getCPDefinitionId());
 
 		if ((cpSku != null) && !hasChildCPDefinitions) {
-			sku = cpSku.getSku();
 			skuId = cpSku.getCPInstanceId();
-
-			productSettingsModel = _productHelper.getProductSettingsModel(
-				cpSku.getCPInstanceId());
-
-			prices = _productHelper.getPriceModel(
-				cpSku.getCPInstanceId(), productSettingsModel.getMinQuantity(),
-				commerceContext, StringPool.BLANK, themeDisplay.getLocale());
 
 			if (commerceOrder != null) {
 				List<CommerceOrderItem> commerceOrderItems =
@@ -209,11 +156,6 @@ public class DefaultCPContentListEntryRenderer
 					stockQuantities, cpSku.getSku());
 			}
 		}
-		else if (hasChildCPDefinitions) {
-			prices = _productHelper.getMinPrice(
-				cpCatalogEntry.getCPDefinitionId(), commerceContext,
-				themeDisplay.getLocale());
-		}
 
 		CommerceCurrency commerceCurrency =
 			commerceContext.getCommerceCurrency();
@@ -228,17 +170,12 @@ public class DefaultCPContentListEntryRenderer
 
 		CPContentListEntryModel cpContentListEntryModel =
 			new CPContentListEntryModel(
-				accountId, commerceContext.getCommerceChannelId(),
-				compareCheckboxVisible, compareDeleteButtonVisible,
-				compareStateJSONObject, cpCatalogEntry.getCPDefinitionId(),
-				commerceCurrency.getCode(),
-				cpCatalogEntry.getShortDescription(), inCart,
+				commerceAccountId, commerceContext.getCommerceChannelId(),
+				cpCatalogEntry.getCPDefinitionId(), commerceCurrency.getCode(),
+				inCart,
 				cpContentHelper.isInWishList(
 					cpSku, cpCatalogEntry, themeDisplay),
-				cpCatalogEntry.getName(), orderId, prices,
-				cpContentHelper.getFriendlyURL(cpCatalogEntry, themeDisplay),
-				cpCatalogEntry.getDefaultImageFileUrl(), productSettingsModel,
-				sku, skuId, spritemap, stockQuantity);
+				commerceOrderId, skuId, spritemap, stockQuantity);
 
 		httpServletRequest.setAttribute(
 			"cpContentListEntryModel", cpContentListEntryModel);
@@ -252,19 +189,7 @@ public class DefaultCPContentListEntryRenderer
 	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
 
 	@Reference
-	private CPCompareHelper _cpCompareHelper;
-
-	@Reference
-	private JSONFactory _jsonFactory;
-
-	@Reference
 	private JSPRenderer _jspRenderer;
-
-	@Reference
-	private Portal _portal;
-
-	@Reference
-	private ProductHelper _productHelper;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.product.content.web)"

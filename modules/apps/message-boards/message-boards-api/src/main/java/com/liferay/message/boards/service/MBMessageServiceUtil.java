@@ -49,6 +49,12 @@ public class MBMessageServiceUtil {
 			body, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addMessage(String, long, String, String, String, List,
+	 boolean, double, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.message.boards.model.MBMessage addMessage(
 			long groupId, long categoryId, String subject, String body,
 			String format,
@@ -64,6 +70,12 @@ public class MBMessageServiceUtil {
 			anonymous, priority, allowPingbacks, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addMessage(String, long, String, String, String, List,
+	 boolean, double, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.message.boards.model.MBMessage addMessage(
 			long groupId, long categoryId, String subject, String body,
 			String format, String fileName, java.io.File file,
@@ -77,6 +89,12 @@ public class MBMessageServiceUtil {
 			anonymous, priority, allowPingbacks, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addMessage(String, long, String, String, String, List,
+	 boolean, double, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.message.boards.model.MBMessage addMessage(
 			long categoryId, String subject, String body,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -87,7 +105,9 @@ public class MBMessageServiceUtil {
 	}
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addMessage(String, long, String, String, String, List,
+	 boolean, double, boolean, ServiceContext)}
 	 */
 	@Deprecated
 	public static com.liferay.message.boards.model.MBMessage addMessage(

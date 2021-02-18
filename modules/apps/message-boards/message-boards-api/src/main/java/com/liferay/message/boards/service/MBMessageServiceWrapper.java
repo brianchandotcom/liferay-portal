@@ -43,6 +43,12 @@ public class MBMessageServiceWrapper
 			body, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addMessage(String, long, String, String, String, List,
+	 boolean, double, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public MBMessage addMessage(
 			long groupId, long categoryId, String subject, String body,
@@ -59,6 +65,12 @@ public class MBMessageServiceWrapper
 			anonymous, priority, allowPingbacks, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addMessage(String, long, String, String, String, List,
+	 boolean, double, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public MBMessage addMessage(
 			long groupId, long categoryId, String subject, String body,
@@ -73,6 +85,12 @@ public class MBMessageServiceWrapper
 			anonymous, priority, allowPingbacks, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addMessage(String, long, String, String, String, List,
+	 boolean, double, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public MBMessage addMessage(
 			long categoryId, String subject, String body,
@@ -84,7 +102,9 @@ public class MBMessageServiceWrapper
 	}
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addMessage(String, long, String, String, String, List,
+	 boolean, double, boolean, ServiceContext)}
 	 */
 	@Deprecated
 	@Override

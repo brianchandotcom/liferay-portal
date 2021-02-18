@@ -68,6 +68,12 @@ public interface MBMessageService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addMessage(String, long, String, String, String, List,
+	 boolean, double, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	public MBMessage addMessage(
 			long groupId, long categoryId, String subject, String body,
 			String format,
@@ -76,6 +82,12 @@ public interface MBMessageService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addMessage(String, long, String, String, String, List,
+	 boolean, double, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	public MBMessage addMessage(
 			long groupId, long categoryId, String subject, String body,
 			String format, String fileName, File file, boolean anonymous,
@@ -83,13 +95,21 @@ public interface MBMessageService extends BaseService {
 			ServiceContext serviceContext)
 		throws FileNotFoundException, PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addMessage(String, long, String, String, String, List,
+	 boolean, double, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	public MBMessage addMessage(
 			long categoryId, String subject, String body,
 			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addMessage(String, long, String, String, String, List,
+	 boolean, double, boolean, ServiceContext)}
 	 */
 	@Deprecated
 	public MBMessage addMessage(

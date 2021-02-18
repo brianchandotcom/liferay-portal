@@ -86,6 +86,12 @@ public class MBMessageServiceSoap {
 		}
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addMessage(String, long, String, String, String, List,
+	 boolean, double, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.message.boards.model.MBMessageSoap addMessage(
 			long groupId, long categoryId, String subject, String body,
 			String format,
@@ -112,6 +118,12 @@ public class MBMessageServiceSoap {
 		}
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addMessage(String, long, String, String, String, List,
+	 boolean, double, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.message.boards.model.MBMessageSoap addMessage(
 			long categoryId, String subject, String body,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -133,7 +145,9 @@ public class MBMessageServiceSoap {
 	}
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addMessage(String, long, String, String, String, List,
+	 boolean, double, boolean, ServiceContext)}
 	 */
 	@Deprecated
 	public static com.liferay.message.boards.model.MBMessageSoap addMessage(

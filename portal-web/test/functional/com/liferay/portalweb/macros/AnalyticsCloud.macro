@@ -13,6 +13,8 @@ definition {
 			locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_PASSWORD_LOGIN_FIELD",
 			value1 = "${password}");
 
+		Check(locator1 = "AnalyticsCloudConnection#REMEMBER_ME_CHECKBOX");
+
 		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_LOGIN_BUTTON");
 	}
 

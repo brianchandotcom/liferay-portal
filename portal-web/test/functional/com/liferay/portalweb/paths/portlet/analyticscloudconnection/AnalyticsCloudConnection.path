@@ -119,6 +119,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REMEMBER_ME_CHECKBOX</td>
+	<td>//input[(@id='_com_liferay_login_web_portlet_LoginPortlet_rememberMe')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SAVE_AND_NEXT_BUTTON</td>
 	<td>//button[contains(@id, '_com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet_lmfn')]</td>
 	<td></td>

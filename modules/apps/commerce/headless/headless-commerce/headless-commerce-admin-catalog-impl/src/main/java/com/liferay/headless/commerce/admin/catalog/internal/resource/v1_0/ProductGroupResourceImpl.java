@@ -76,7 +76,7 @@ public class ProductGroupResourceImpl
 
 		CommercePricingClass commercePricingClass =
 			_commercePricingClassService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commercePricingClass == null) {
 			throw new NoSuchPricingClassException(
@@ -107,7 +107,7 @@ public class ProductGroupResourceImpl
 
 		CommercePricingClass commercePricingClass =
 			_commercePricingClassService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commercePricingClass == null) {
 			throw new NoSuchPricingClassException(
@@ -163,7 +163,7 @@ public class ProductGroupResourceImpl
 
 		CommercePricingClass commercePricingClass =
 			_commercePricingClassService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commercePricingClass == null) {
 			throw new NoSuchPricingClassException(
@@ -287,10 +287,10 @@ public class ProductGroupResourceImpl
 
 		CommercePricingClass commercePricingClass =
 			_commercePricingClassService.upsertCommercePricingClass(
-				0L, contextUser.getUserId(),
+				productGroup.getExternalReferenceCode(), 0L,
+				contextUser.getUserId(),
 				LanguageUtils.getLocalizedMap(productGroup.getTitle()),
 				LanguageUtils.getLocalizedMap(productGroup.getDescription()),
-				productGroup.getExternalReferenceCode(),
 				_serviceContextHelper.getServiceContext());
 
 		// Update nested resources

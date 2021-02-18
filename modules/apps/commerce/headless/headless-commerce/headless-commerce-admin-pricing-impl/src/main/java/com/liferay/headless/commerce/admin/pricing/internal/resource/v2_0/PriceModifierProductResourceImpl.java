@@ -73,7 +73,7 @@ public class PriceModifierProductResourceImpl
 
 		CommercePriceModifier commercePriceModifier =
 			_commercePriceModifierService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commercePriceModifier == null) {
 			throw new NoSuchPriceModifierException(
@@ -136,7 +136,7 @@ public class PriceModifierProductResourceImpl
 
 		CommercePriceModifier commercePriceModifier =
 			_commercePriceModifierService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commercePriceModifier == null) {
 			throw new NoSuchPriceModifierException(

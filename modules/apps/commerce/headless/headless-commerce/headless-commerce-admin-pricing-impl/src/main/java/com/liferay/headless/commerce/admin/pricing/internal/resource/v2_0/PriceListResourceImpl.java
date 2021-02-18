@@ -417,6 +417,7 @@ public class PriceListResourceImpl extends BasePriceListResourceImpl {
 
 				CommercePriceModifier commercePriceModifier =
 					_commercePriceModifierService.upsertCommercePriceModifier(
+						priceModifier.getExternalReferenceCode(),
 						serviceContext.getUserId(),
 						GetterUtil.getLong(priceModifier.getId()),
 						commercePriceList.getGroupId(),
@@ -435,7 +436,6 @@ public class PriceListResourceImpl extends BasePriceListResourceImpl {
 						expirationDateConfig.getYear(),
 						expirationDateConfig.getHour(),
 						expirationDateConfig.getMinute(),
-						priceModifier.getExternalReferenceCode(),
 						GetterUtil.getBoolean(
 							priceModifier.getNeverExpire(), true),
 						serviceContext);

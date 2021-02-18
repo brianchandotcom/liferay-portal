@@ -54,9 +54,9 @@ public class DiscountProductGroupUtil {
 		else {
 			commercePricingClass =
 				commercePricingClassService.fetchByExternalReferenceCode(
-					serviceContext.getCompanyId(),
 					discountProductGroup.
-						getProductGroupExternalReferenceCode());
+						getProductGroupExternalReferenceCode(),
+					serviceContext.getCompanyId());
 
 			if (commercePricingClass == null) {
 				String productGroupExternalReferenceCode =

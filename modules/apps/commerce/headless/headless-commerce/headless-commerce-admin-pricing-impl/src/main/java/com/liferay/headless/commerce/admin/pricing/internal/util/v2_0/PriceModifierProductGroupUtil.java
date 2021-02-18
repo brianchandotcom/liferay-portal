@@ -55,9 +55,9 @@ public class PriceModifierProductGroupUtil {
 		else {
 			commercePricingClass =
 				commercePricingClassService.fetchByExternalReferenceCode(
-					serviceContext.getCompanyId(),
 					priceModifierProductGroup.
-						getProductGroupExternalReferenceCode());
+						getProductGroupExternalReferenceCode(),
+					serviceContext.getCompanyId());
 
 			if (commercePricingClass == null) {
 				String productGroupExternalReferenceCode =

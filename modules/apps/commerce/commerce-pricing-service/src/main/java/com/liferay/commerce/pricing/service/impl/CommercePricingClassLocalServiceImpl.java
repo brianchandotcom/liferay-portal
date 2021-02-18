@@ -70,14 +70,14 @@ public class CommercePricingClassLocalServiceImpl
 		throws PortalException {
 
 		return addCommercePricingClass(
-			userId, titleMap, descriptionMap, null, serviceContext);
+			null, userId, titleMap, descriptionMap, serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommercePricingClass addCommercePricingClass(
-			long userId, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, String externalReferenceCode,
+			String externalReferenceCode, long userId,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -90,12 +90,12 @@ public class CommercePricingClassLocalServiceImpl
 		CommercePricingClass commercePricingClass =
 			commercePricingClassPersistence.create(commercePricingClassId);
 
+		commercePricingClass.setExternalReferenceCode(externalReferenceCode);
 		commercePricingClass.setCompanyId(serviceContext.getCompanyId());
 		commercePricingClass.setUserId(user.getUserId());
 		commercePricingClass.setUserName(user.getFullName());
 		commercePricingClass.setTitleMap(titleMap);
 		commercePricingClass.setDescriptionMap(descriptionMap);
-		commercePricingClass.setExternalReferenceCode(externalReferenceCode);
 		commercePricingClass.setExpandoBridgeAttributes(serviceContext);
 
 		Date now = new Date();
@@ -172,7 +172,7 @@ public class CommercePricingClassLocalServiceImpl
 
 	@Override
 	public CommercePricingClass fetchByExternalReferenceCode(
-		long companyId, String externalReferenceCode) {
+		String externalReferenceCode, long companyId) {
 
 		if (Validator.isBlank(externalReferenceCode)) {
 			return null;
@@ -286,7 +286,7 @@ public class CommercePricingClassLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommercePricingClass updateCommercePricingClassExternalReferenceCode(
-			long commercePricingClassId, String externalReferenceCode)
+			String externalReferenceCode, long commercePricingClassId)
 		throws PortalException {
 
 		CommercePricingClass commercePricingClass =
@@ -301,9 +301,9 @@ public class CommercePricingClassLocalServiceImpl
 
 	@Override
 	public CommercePricingClass upsertCommercePricingClass(
-			long commercePricingClassId, long userId,
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			String externalReferenceCode, ServiceContext serviceContext)
+			String externalReferenceCode, long commercePricingClassId,
+			long userId, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
 		throws PortalException {
 
 		if (commercePricingClassId > 0) {
@@ -337,7 +337,7 @@ public class CommercePricingClassLocalServiceImpl
 		}
 
 		return commercePricingClassLocalService.addCommercePricingClass(
-			userId, titleMap, descriptionMap, externalReferenceCode,
+			externalReferenceCode, userId, titleMap, descriptionMap,
 			serviceContext);
 	}
 

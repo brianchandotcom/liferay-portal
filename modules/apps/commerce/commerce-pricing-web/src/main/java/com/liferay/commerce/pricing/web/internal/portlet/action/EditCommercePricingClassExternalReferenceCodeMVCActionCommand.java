@@ -89,8 +89,8 @@ public class EditCommercePricingClassExternalReferenceCodeMVCActionCommand
 
 		_commercePricingClassService.
 			updateCommercePricingClassExternalReferenceCode(
-				commercePricingClass.getCommercePricingClassId(),
-				externalReferenceCode);
+				externalReferenceCode,
+				commercePricingClass.getCommercePricingClassId());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

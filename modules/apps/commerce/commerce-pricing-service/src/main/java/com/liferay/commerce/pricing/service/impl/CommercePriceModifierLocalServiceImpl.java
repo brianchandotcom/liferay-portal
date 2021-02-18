@@ -101,23 +101,23 @@ public class CommercePriceModifierLocalServiceImpl
 		throws PortalException {
 
 		return addCommercePriceModifier(
-			groupId, title, target, commercePriceListId, modifierType,
+			null, groupId, title, target, commercePriceListId, modifierType,
 			modifierAmount, priority, active, displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, null, neverExpire,
+			expirationDateHour, expirationDateMinute, neverExpire,
 			serviceContext);
 	}
 
 	@Override
 	public CommercePriceModifier addCommercePriceModifier(
-			long groupId, String title, String target, long commercePriceListId,
-			String modifierType, BigDecimal modifierAmount, double priority,
-			boolean active, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			int expirationDateMonth, int expirationDateDay,
-			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, String externalReferenceCode,
+			String externalReferenceCode, long groupId, String title,
+			String target, long commercePriceListId, String modifierType,
+			BigDecimal modifierAmount, double priority, boolean active,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -126,7 +126,7 @@ public class CommercePriceModifierLocalServiceImpl
 		}
 
 		validateExternalReferenceCode(
-			serviceContext.getCompanyId(), externalReferenceCode);
+			externalReferenceCode, serviceContext.getCompanyId());
 
 		// Commerce price modifier
 
@@ -155,6 +155,7 @@ public class CommercePriceModifierLocalServiceImpl
 		CommercePriceModifier commercePriceModifier =
 			commercePriceModifierPersistence.create(commercePriceModifierId);
 
+		commercePriceModifier.setExternalReferenceCode(externalReferenceCode);
 		commercePriceModifier.setGroupId(groupId);
 		commercePriceModifier.setCompanyId(user.getCompanyId());
 		commercePriceModifier.setUserId(user.getUserId());
@@ -168,7 +169,6 @@ public class CommercePriceModifierLocalServiceImpl
 		commercePriceModifier.setActive(active);
 		commercePriceModifier.setDisplayDate(displayDate);
 		commercePriceModifier.setExpirationDate(expirationDate);
-		commercePriceModifier.setExternalReferenceCode(externalReferenceCode);
 
 		if ((expirationDate == null) || expirationDate.after(now)) {
 			commercePriceModifier.setStatus(WorkflowConstants.STATUS_DRAFT);
@@ -268,7 +268,7 @@ public class CommercePriceModifierLocalServiceImpl
 
 	@Override
 	public CommercePriceModifier fetchByExternalReferenceCode(
-		long companyId, String externalReferenceCode) {
+		String externalReferenceCode, long companyId) {
 
 		if (Validator.isBlank(externalReferenceCode)) {
 			return null;
@@ -437,14 +437,14 @@ public class CommercePriceModifierLocalServiceImpl
 
 	@Override
 	public CommercePriceModifier upsertCommercePriceModifier(
-			long userId, long commercePriceModifierId, long groupId,
-			String title, String target, long commercePriceListId,
-			String modifierType, BigDecimal modifierAmount, double priority,
-			boolean active, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			int expirationDateMonth, int expirationDateDay,
-			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, String externalReferenceCode,
+			String externalReferenceCode, long userId,
+			long commercePriceModifierId, long groupId, String title,
+			String target, long commercePriceListId, String modifierType,
+			BigDecimal modifierAmount, double priority, boolean active,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -493,12 +493,12 @@ public class CommercePriceModifierLocalServiceImpl
 		// Add
 
 		return commercePriceModifierLocalService.addCommercePriceModifier(
-			groupId, title, target, commercePriceListId, modifierType,
-			modifierAmount, priority, active, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
+			externalReferenceCode, groupId, title, target, commercePriceListId,
+			modifierType, modifierAmount, priority, active, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, externalReferenceCode,
-			neverExpire, serviceContext);
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
 	}
 
 	protected CommercePriceModifier startWorkflowInstance(
@@ -547,7 +547,7 @@ public class CommercePriceModifierLocalServiceImpl
 	}
 
 	protected void validateExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+			String externalReferenceCode, long companyId)
 		throws PortalException {
 
 		if (Validator.isNull(externalReferenceCode)) {

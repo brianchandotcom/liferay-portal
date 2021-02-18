@@ -77,7 +77,7 @@ public class PriceModifierResourceImpl extends BasePriceModifierResourceImpl {
 
 		CommercePriceModifier commercePriceModifier =
 			_commercePriceModifierService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commercePriceModifier == null) {
 			throw new NoSuchPriceModifierException(
@@ -153,7 +153,7 @@ public class PriceModifierResourceImpl extends BasePriceModifierResourceImpl {
 
 		CommercePriceModifier commercePriceModifier =
 			_commercePriceModifierService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commercePriceModifier == null) {
 			throw new NoSuchPriceModifierException(
@@ -185,7 +185,7 @@ public class PriceModifierResourceImpl extends BasePriceModifierResourceImpl {
 
 		CommercePriceModifier commercePriceModifier =
 			_commercePriceModifierService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commercePriceModifier == null) {
 			throw new NoSuchPriceModifierException(
@@ -384,6 +384,7 @@ public class PriceModifierResourceImpl extends BasePriceModifierResourceImpl {
 
 		CommercePriceModifier commercePriceModifier =
 			_commercePriceModifierService.upsertCommercePriceModifier(
+				priceModifier.getExternalReferenceCode(),
 				serviceContext.getUserId(),
 				GetterUtil.getLong(priceModifier.getId()),
 				commercePriceList.getGroupId(), priceModifier.getTitle(),
@@ -399,7 +400,6 @@ public class PriceModifierResourceImpl extends BasePriceModifierResourceImpl {
 				expirationDateConfig.getDay(), expirationDateConfig.getYear(),
 				expirationDateConfig.getHour(),
 				expirationDateConfig.getMinute(),
-				priceModifier.getExternalReferenceCode(),
 				GetterUtil.getBoolean(priceModifier.getNeverExpire(), true),
 				serviceContext);
 

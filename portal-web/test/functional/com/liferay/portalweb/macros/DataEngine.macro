@@ -364,7 +364,8 @@ definition {
 						fieldHelp = "${fieldName} Help Text");
 				}
 			}
-			else if (isSet(fieldPlaceholder)) {
+
+			if (isSet(fieldPlaceholder)) {
 				for (var fieldName : list "${fieldNameList}") {
 					DataEngine.editFieldTip(
 						fieldFieldLabel = "${fieldName}",
@@ -537,7 +538,8 @@ definition {
 						fieldFieldLabel = "${fieldName} ${locale}",
 						fieldHelp = "${fieldName} Help Text ${locale}");
 				}
-				else if (isSet(fieldPlaceholder)) {
+
+				if (isSet(fieldPlaceholder)) {
 					DataEngine.editFieldTip(
 						fieldFieldLabel = "${fieldName} ${locale}",
 						fieldPlaceholder = "${fieldName} Placeholder ${locale}");

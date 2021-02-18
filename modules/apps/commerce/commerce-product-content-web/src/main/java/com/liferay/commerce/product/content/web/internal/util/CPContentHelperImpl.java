@@ -97,12 +97,12 @@ import org.osgi.service.component.annotations.Reference;
 public class CPContentHelperImpl implements CPContentHelper {
 
 	@Override
-	public JSONObject getAvailabilityContentContributorValue(
+	public JSONObject getAvailabilityContentContributorValueJSONObject(
 			CPCatalogEntry cpCatalogEntry,
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		return (JSONObject)getCPContentContributorValue(
+		return getCPContentContributorValueJSONObject(
 			CPContentContributorConstants.AVAILABILITY_NAME, cpCatalogEntry,
 			httpServletRequest);
 	}
@@ -113,7 +113,7 @@ public class CPContentHelperImpl implements CPContentHelper {
 		throws Exception {
 
 		JSONObject availabilityEstimateJSONObject =
-			(JSONObject)getCPContentContributorValue(
+			getCPContentContributorValueJSONObject(
 				CPContentContributorConstants.AVAILABILITY_ESTIMATE_NAME,
 				httpServletRequest);
 
@@ -130,7 +130,7 @@ public class CPContentHelperImpl implements CPContentHelper {
 		throws Exception {
 
 		JSONObject availabilityJSONObject =
-			(JSONObject)getCPContentContributorValue(
+			getCPContentContributorValueJSONObject(
 				CPContentContributorConstants.AVAILABILITY_NAME,
 				httpServletRequest);
 
@@ -223,7 +223,7 @@ public class CPContentHelperImpl implements CPContentHelper {
 	}
 
 	@Override
-	public Object getCPContentContributorValue(
+	public JSONObject getCPContentContributorValueJSONObject(
 			String contributorKey, CPCatalogEntry cpCatalogEntry,
 			HttpServletRequest httpServletRequest)
 		throws Exception {
@@ -241,11 +241,11 @@ public class CPContentHelperImpl implements CPContentHelper {
 	}
 
 	@Override
-	public Object getCPContentContributorValue(
+	public JSONObject getCPContentContributorValueJSONObject(
 			String contributorKey, HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		return getCPContentContributorValue(
+		return getCPContentContributorValueJSONObject(
 			contributorKey, getCPCatalogEntry(httpServletRequest),
 			httpServletRequest);
 	}
@@ -407,7 +407,7 @@ public class CPContentHelperImpl implements CPContentHelper {
 		throws Exception {
 
 		JSONObject stockQuantityJSONObject =
-			(JSONObject)getCPContentContributorValue(
+			getCPContentContributorValueJSONObject(
 				CPContentContributorConstants.STOCK_QUANTITY_NAME,
 				httpServletRequest);
 
@@ -424,7 +424,7 @@ public class CPContentHelperImpl implements CPContentHelper {
 		throws Exception {
 
 		JSONObject stockQuantityJSONObject =
-			(JSONObject)getCPContentContributorValue(
+			getCPContentContributorValueJSONObject(
 				CPContentContributorConstants.STOCK_QUANTITY_NAME,
 				httpServletRequest);
 
@@ -444,7 +444,7 @@ public class CPContentHelperImpl implements CPContentHelper {
 		throws Exception {
 
 		JSONObject subscriptionInfoJSONObject =
-			(JSONObject)getCPContentContributorValue(
+			getCPContentContributorValueJSONObject(
 				CPContentContributorConstants.SUBSCRIPTION_INFO,
 				httpServletRequest);
 

@@ -37,16 +37,18 @@ public class AvailabilityLabelTag extends IncludeTag {
 	@Override
 	public int doStartTag() throws JspException {
 		try {
-			JSONObject availabilityJSONObject =
-				_cpContentHelper.getAvailabilityContentContributorValue(
-					_cpCatalogEntry, getRequest());
+			JSONObject availabilityContentContributorValueJSONObject =
+				_cpContentHelper.
+					getAvailabilityContentContributorValueJSONObject(
+						_cpCatalogEntry, getRequest());
 
-			_label = availabilityJSONObject.getString(
+			_label = availabilityContentContributorValueJSONObject.getString(
 				CPContentContributorConstants.AVAILABILITY_NAME,
 				StringPool.BLANK);
-			_labelType = availabilityJSONObject.getString(
-				CPContentContributorConstants.AVAILABILITY_DISPLAY_TYPE,
-				"default");
+			_labelType =
+				availabilityContentContributorValueJSONObject.getString(
+					CPContentContributorConstants.AVAILABILITY_DISPLAY_TYPE,
+					"default");
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

@@ -47,7 +47,7 @@ import javax.servlet.http.HttpServletResponse;
 @ProviderType
 public interface CPContentHelper {
 
-	public JSONObject getAvailabilityContentContributorValue(
+	public JSONObject getAvailabilityContentContributorValueJSONObject(
 			CPCatalogEntry cpCatalogEntry,
 			HttpServletRequest httpServletRequest)
 		throws Exception;
@@ -72,12 +72,12 @@ public interface CPContentHelper {
 			HttpServletRequest httpServletRequest)
 		throws PortalException;
 
-	public Object getCPContentContributorValue(
+	public JSONObject getCPContentContributorValueJSONObject(
 			String contributorKey, CPCatalogEntry cpCatalogEntry,
 			HttpServletRequest httpServletRequest)
 		throws Exception;
 
-	public Object getCPContentContributorValue(
+	public JSONObject getCPContentContributorValueJSONObject(
 			String contributorKey, HttpServletRequest httpServletRequest)
 		throws Exception;
 

@@ -468,19 +468,47 @@ public class FragmentEntryLinkLocalServiceTest {
 
 	@Test
 	public void testUpdateFragmentEntryLinkPosition() throws PortalException {
-		FragmentEntryLink fragmentEntryLink =
+		FragmentEntryLink fragmentEntryLink1 =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				_fragmentEntry.getFragmentEntryId(), 0, _layout.getPlid(),
 				_fragmentEntry.getCss(), _fragmentEntry.getHtml(),
 				_fragmentEntry.getJs(), _fragmentEntry.getConfiguration(),
-				StringPool.BLANK, StringPool.BLANK, 0, null, _serviceContext);
+				StringPool.BLANK, StringPool.BLANK, 1, null, _serviceContext);
 
-		fragmentEntryLink =
+		FragmentEntryLink fragmentEntryLink2 =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				_fragmentEntry.getFragmentEntryId(), 0, _layout.getPlid(),
+				_fragmentEntry.getCss(), _fragmentEntry.getHtml(),
+				_fragmentEntry.getJs(), _fragmentEntry.getConfiguration(),
+				StringPool.BLANK, StringPool.BLANK, 2, null, _serviceContext);
+
+		List<FragmentEntryLink> fragmentEntryLinks =
+			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
+				_group.getGroupId(), _layout.getPlid());
+
+		Assert.assertEquals(
+			fragmentEntryLinks.toString(), 2, fragmentEntryLinks.size());
+
+		Assert.assertEquals(fragmentEntryLink1, fragmentEntryLinks.get(0));
+		Assert.assertEquals(fragmentEntryLink2, fragmentEntryLinks.get(1));
+
+		fragmentEntryLink1 =
 			_fragmentEntryLinkLocalService.updateFragmentEntryLink(
-				fragmentEntryLink.getFragmentEntryLinkId(), 1);
+				fragmentEntryLink1.getFragmentEntryLinkId(), 3);
 
-		Assert.assertEquals(1, fragmentEntryLink.getPosition());
+		Assert.assertEquals(3, fragmentEntryLink1.getPosition());
+
+		fragmentEntryLinks =
+			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
+				_group.getGroupId(), _layout.getPlid());
+
+		Assert.assertEquals(
+			fragmentEntryLinks.toString(), 2, fragmentEntryLinks.size());
+
+		Assert.assertEquals(fragmentEntryLink2, fragmentEntryLinks.get(0));
+		Assert.assertEquals(fragmentEntryLink1, fragmentEntryLinks.get(1));
 	}
 
 	@Test

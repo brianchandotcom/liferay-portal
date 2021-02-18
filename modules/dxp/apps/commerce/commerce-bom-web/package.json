@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"frontend-js-react-web": "*",
+		"@liferay/frontend-js-react-web": "*",
 		"history": "^4.9.0",
 		"react": "16.12.0"
 	},

@@ -12,7 +12,7 @@
  * details.
  */
 
-import {usePrevious} from 'frontend-js-react-web';
+import {usePrevious} from '@liferay/frontend-js-react-web';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';

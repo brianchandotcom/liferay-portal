@@ -16,7 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {useIsMounted} from 'frontend-js-react-web';
+import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {fetch, objectToFormData, runScriptsInElement} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';

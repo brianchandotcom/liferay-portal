@@ -13,11 +13,11 @@
  */
 
 import Loading from 'data-engine-js-components-web/js/components/loading/Loading.es';
+import {usePrevious} from '@liferay/frontend-js-react-web';
 import useQuery from 'data-engine-js-components-web/js/hooks/useQuery.es';
 import {getItem} from 'data-engine-js-components-web/js/utils/client.es';
 import {errorToast} from 'data-engine-js-components-web/js/utils/toast.es';
 import {isEqualObjects} from 'data-engine-js-components-web/js/utils/utils.es';
-import {usePrevious} from 'frontend-js-react-web';
 import React, {useContext, useEffect, useState} from 'react';
 
 import {AppContext} from '../../AppContext.es';

@@ -12,7 +12,7 @@
  * details.
  */
 
-import {useThunk} from 'frontend-js-react-web';
+import {useThunk} from '@liferay/frontend-js-react-web';
 import React, {useContext, useEffect, useReducer} from 'react';
 
 import {EVENT_TYPES} from '../actions/eventTypes.es';

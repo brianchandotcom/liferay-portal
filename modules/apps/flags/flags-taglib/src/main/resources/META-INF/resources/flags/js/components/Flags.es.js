@@ -15,7 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import {useModal} from '@clayui/modal';
-import {useIsMounted} from 'frontend-js-react-web';
+import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {fetch, objectToFormData} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';

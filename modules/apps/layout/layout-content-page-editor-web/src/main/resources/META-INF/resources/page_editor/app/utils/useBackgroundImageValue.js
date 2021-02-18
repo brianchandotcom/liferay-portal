@@ -12,7 +12,7 @@
  * details.
  */
 
-import {useIsMounted} from 'frontend-js-react-web';
+import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {useEffect, useState} from 'react';
 
 import ImageService from '../services/ImageService';

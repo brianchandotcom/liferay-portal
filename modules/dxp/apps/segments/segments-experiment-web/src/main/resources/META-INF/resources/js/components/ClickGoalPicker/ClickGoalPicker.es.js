@@ -14,7 +14,7 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
-import {useEventListener} from 'frontend-js-react-web';
+import {useEventListener} from '@liferay/frontend-js-react-web';
 import {throttle} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React from 'react';

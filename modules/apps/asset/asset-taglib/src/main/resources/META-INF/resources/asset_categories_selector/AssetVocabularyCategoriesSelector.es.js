@@ -18,7 +18,7 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayMultiSelect from '@clayui/multi-select';
 import classNames from 'classnames';
-import {usePrevious} from 'frontend-js-react-web';
+import {usePrevious} from '@liferay/frontend-js-react-web';
 import {ItemSelectorDialog} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';

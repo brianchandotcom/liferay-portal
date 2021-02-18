@@ -35,7 +35,7 @@ import {
 	concatValues,
 	isEqualObjects,
 } from 'data-engine-js-components-web/js/utils/utils.es';
-import {usePrevious, useTimeout} from 'frontend-js-react-web';
+import {usePrevious, useTimeout} from '@liferay/frontend-js-react-web';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 
 import useAppWorkflow from '../../hooks/useAppWorkflow.es';

@@ -18,7 +18,7 @@ import ClayDropDown from '@clayui/drop-down';
 import {ClayCheckbox, ClayRadio, ClayToggle} from '@clayui/form';
 import ClayLabel from '@clayui/label';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {useIsMounted} from 'frontend-js-react-web';
+import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useRef, useState} from 'react';

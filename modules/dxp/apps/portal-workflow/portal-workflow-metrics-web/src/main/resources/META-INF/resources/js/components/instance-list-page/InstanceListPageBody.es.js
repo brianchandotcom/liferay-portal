@@ -10,7 +10,7 @@
  */
 
 import ClayLayout from '@clayui/layout';
-import {usePrevious} from 'frontend-js-react-web';
+import {usePrevious} from '@liferay/frontend-js-react-web';
 import React, {useContext, useMemo} from 'react';
 
 import ContentView from '../../shared/components/content-view/ContentView.es';

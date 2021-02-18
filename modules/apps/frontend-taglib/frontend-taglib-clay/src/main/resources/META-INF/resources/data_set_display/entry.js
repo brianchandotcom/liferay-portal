@@ -12,7 +12,7 @@
  * details.
  */
 
-import {render, useThunk} from 'frontend-js-react-web';
+import {render, useThunk} from '@liferay/frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React, {useReducer} from 'react';
 

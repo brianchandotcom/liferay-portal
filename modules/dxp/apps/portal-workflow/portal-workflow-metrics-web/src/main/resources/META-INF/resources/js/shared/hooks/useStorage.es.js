@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {useEventListener} from 'frontend-js-react-web';
+import {useEventListener} from '@liferay/frontend-js-react-web';
 import {useCallback, useState} from 'react';
 
 import {jsonStorage} from '../util/storage.es';

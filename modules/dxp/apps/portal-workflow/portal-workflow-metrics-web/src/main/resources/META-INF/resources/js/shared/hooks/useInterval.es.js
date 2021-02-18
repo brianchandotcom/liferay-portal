@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {useIsMounted} from 'frontend-js-react-web';
+import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {useCallback} from 'react';
 
 const useInterval = (cancelOnDestroy) => {

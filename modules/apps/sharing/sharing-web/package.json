@@ -11,7 +11,7 @@
 		"@clayui/modal": "3.8.5",
 		"@clayui/multi-select": "3.25.0",
 		"@clayui/sticker": "3.3.0",
-		"frontend-js-react-web": "*",
+		"@liferay/frontend-js-react-web": "*",
 		"frontend-js-web": "*",
 		"prop-types": "15.7.2",
 		"react": "16.12.0"

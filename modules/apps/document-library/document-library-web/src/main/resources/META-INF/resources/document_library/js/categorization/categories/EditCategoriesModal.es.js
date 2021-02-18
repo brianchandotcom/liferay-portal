@@ -18,7 +18,7 @@ import {ClayRadio, ClayRadioGroup} from '@clayui/form';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal from '@clayui/modal';
 import {AssetCategoriesSelector} from 'asset-taglib';
-import {useIsMounted} from 'frontend-js-react-web';
+import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useContext, useEffect, useState} from 'react';

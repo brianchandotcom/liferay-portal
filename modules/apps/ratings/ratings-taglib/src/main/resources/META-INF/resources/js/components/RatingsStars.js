@@ -12,7 +12,7 @@
  * details.
  */
 
-import {useIsMounted} from 'frontend-js-react-web';
+import {useIsMounted} from '@liferay/frontend-js-react-web';
 import PropTypes from 'prop-types';
 import {useCallback, useState} from 'react';
 

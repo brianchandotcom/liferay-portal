@@ -11,7 +11,7 @@
 				"metal-state": ">=2.16.5",
 				"metal-web-component": ">=2.16.5"
 			},
-			"frontend-js-react-web": {
+			"@liferay/frontend-js-react-web": {
 				"/": ">=4.0.11",
 				"react": ">=16.6.3",
 				"react-dom": ">=16.6.3"

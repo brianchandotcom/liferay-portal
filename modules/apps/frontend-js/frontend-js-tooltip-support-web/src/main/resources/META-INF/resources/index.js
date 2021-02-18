@@ -13,7 +13,7 @@
  */
 
 import ClayTooltip from '@clayui/tooltip';
-import {render, useTimeout} from 'frontend-js-react-web';
+import {render, useTimeout} from '@liferay/frontend-js-react-web';
 import {ALIGN_POSITIONS as POSITIONS, align, delegate} from 'frontend-js-web';
 import React, {
 	useEffect,

@@ -13,7 +13,7 @@
  */
 
 import ClayForm from '@clayui/form';
-import {usePrevious} from 'frontend-js-react-web';
+import {usePrevious} from '@liferay/frontend-js-react-web';
 import React, {useEffect, useState} from 'react';
 
 import Checkbox from '../Checkbox/Checkbox.es';

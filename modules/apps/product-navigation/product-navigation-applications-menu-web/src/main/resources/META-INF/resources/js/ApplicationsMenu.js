@@ -20,7 +20,7 @@ import ClayModal, {useModal} from '@clayui/modal';
 import ClaySticker from '@clayui/sticker';
 import ClayTabs from '@clayui/tabs';
 import classNames from 'classnames';
-import {useEventListener} from 'frontend-js-react-web';
+import {useEventListener} from '@liferay/frontend-js-react-web';
 import {fetch, navigate, openSelectionModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useMemo, useRef, useState} from 'react';

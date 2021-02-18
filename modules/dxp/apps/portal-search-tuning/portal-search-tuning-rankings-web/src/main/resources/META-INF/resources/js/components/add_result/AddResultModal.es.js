@@ -19,7 +19,7 @@ import ClayModal from '@clayui/modal';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import getCN from 'classnames';
-import {usePrevious} from 'frontend-js-react-web';
+import {usePrevious} from '@liferay/frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 

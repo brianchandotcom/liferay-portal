@@ -14,7 +14,7 @@
 
 import ClayIcon from '@clayui/icon';
 import ClayTabs from '@clayui/tabs';
-import {useIsMounted, usePrevious} from 'frontend-js-react-web';
+import {useIsMounted, usePrevious} from '@liferay/frontend-js-react-web';
 import {cancelDebounce, debounce, fetch, openToast} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 

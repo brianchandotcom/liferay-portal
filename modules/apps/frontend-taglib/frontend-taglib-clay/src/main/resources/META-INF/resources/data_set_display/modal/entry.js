@@ -12,7 +12,7 @@
  * details.
  */
 
-import {render} from 'frontend-js-react-web';
+import {render} from '@liferay/frontend-js-react-web';
 
 import Modal from './Modal';
 

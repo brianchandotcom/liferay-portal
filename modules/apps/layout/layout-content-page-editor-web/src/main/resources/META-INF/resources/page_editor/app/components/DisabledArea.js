@@ -13,7 +13,7 @@
  */
 
 import ClayPopover from '@clayui/popover';
-import {useEventListener} from 'frontend-js-react-web';
+import {useEventListener} from '@liferay/frontend-js-react-web';
 import {ALIGN_POSITIONS, align, suggestAlignBestRegion} from 'frontend-js-web';
 import React, {
 	useCallback,

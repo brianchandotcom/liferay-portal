@@ -13,7 +13,7 @@
  */
 
 import classNames from 'classnames';
-import {useIsMounted, usePrevious} from 'frontend-js-react-web';
+import {useIsMounted, usePrevious} from '@liferay/frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 

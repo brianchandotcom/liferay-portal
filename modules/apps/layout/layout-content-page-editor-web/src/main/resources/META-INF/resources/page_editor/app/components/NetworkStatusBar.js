@@ -14,7 +14,7 @@
 
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {useEventListener} from 'frontend-js-react-web';
+import {useEventListener} from '@liferay/frontend-js-react-web';
 import {openToast} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 

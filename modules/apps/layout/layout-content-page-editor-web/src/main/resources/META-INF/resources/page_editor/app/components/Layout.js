@@ -14,7 +14,7 @@
 
 import ClayAlert from '@clayui/alert';
 import classNames from 'classnames';
-import {useIsMounted} from 'frontend-js-react-web';
+import {useIsMounted} from '@liferay/frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef} from 'react';
 

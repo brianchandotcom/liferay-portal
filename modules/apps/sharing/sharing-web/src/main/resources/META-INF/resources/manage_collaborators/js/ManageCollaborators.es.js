@@ -20,7 +20,7 @@ import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClaySticker from '@clayui/sticker';
 import classNames from 'classnames';
-import {useTimeout} from 'frontend-js-react-web';
+import {useTimeout} from '@liferay/frontend-js-react-web';
 import {fetch, objectToFormData} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';

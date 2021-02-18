@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {render} from 'frontend-js-react-web';
+import {render} from '@liferay/frontend-js-react-web';
 import React from 'react';
 
 import StatusChart from './StatusChart.es';

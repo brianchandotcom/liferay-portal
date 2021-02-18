@@ -10,7 +10,7 @@
 		"@clayui/popover": "3.5.5",
 		"@clayui/tooltip": "3.4.5",
 		"classnames": "2.2.6",
-		"frontend-js-react-web": "*",
+		"@liferay/frontend-js-react-web": "*",
 		"frontend-js-web": "*",
 		"moment": "2.24.0",
 		"path-to-regexp": "3.0.0"

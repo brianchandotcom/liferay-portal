@@ -12,7 +12,7 @@
  * details.
  */
 
-import {usePrevious} from 'frontend-js-react-web';
+import {usePrevious} from '@liferay/frontend-js-react-web';
 import {useEffect, useState} from 'react';
 
 import {request} from '../utils/client.es';

@@ -19,7 +19,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
-import {useIsMounted, useStateSafe} from 'frontend-js-react-web';
+import {useIsMounted, useStateSafe} from '@liferay/frontend-js-react-web';
 import React, {useRef, useState} from 'react';
 
 import useLoad from '../../hooks/useLoad.es';

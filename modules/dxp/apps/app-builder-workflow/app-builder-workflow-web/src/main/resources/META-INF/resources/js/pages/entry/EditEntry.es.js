@@ -21,7 +21,7 @@ import {
 	errorToast,
 	successToast,
 } from 'data-engine-js-components-web/js/utils/toast.es';
-import {useTimeout} from 'frontend-js-react-web';
+import {useTimeout} from ''@liferay/frontend-js-react-web';
 import {createResourceURL, fetch} from 'frontend-js-web';
 import React, {
 	useCallback,

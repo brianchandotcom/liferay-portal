@@ -12,7 +12,7 @@
  * details.
  */
 
-import {useTimeout} from 'frontend-js-react-web';
+import {useTimeout} from '@liferay/frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useReducer, useRef, useState} from 'react';
 

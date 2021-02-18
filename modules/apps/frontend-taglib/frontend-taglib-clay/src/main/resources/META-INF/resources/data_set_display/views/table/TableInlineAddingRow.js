@@ -15,7 +15,7 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayTable from '@clayui/table';
-import {useIsMounted} from 'frontend-js-react-web';
+import {useIsMounted} from '@liferay/frontend-js-react-web';
 import React, {useContext, useState} from 'react';
 
 import DataSetDisplayContext from '../../DataSetDisplayContext';

@@ -15,7 +15,7 @@
 		"@clayui/tabs": "3.3.5",
 		"@clayui/tooltip": "3.4.5",
 		"classnames": "2.2.6",
-		"frontend-js-react-web": "*",
+		"@liferay/frontend-js-react-web": "*",
 		"lodash.isfunction": "3.0.9",
 		"lodash.times": "^4.3.2",
 		"prop-types": "15.7.2",

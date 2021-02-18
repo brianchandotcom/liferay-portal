@@ -13,7 +13,7 @@
  */
 
 import classNames from 'classnames';
-import {useEventListener} from 'frontend-js-react-web';
+import {useEventListener} from '@liferay/frontend-js-react-web';
 import React, {useMemo, useRef, useState} from 'react';
 
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';

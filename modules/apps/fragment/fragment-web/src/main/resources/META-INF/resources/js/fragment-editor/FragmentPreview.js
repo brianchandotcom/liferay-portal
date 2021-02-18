@@ -18,7 +18,7 @@ import {
 	useEventListener,
 	useIsMounted,
 	usePrevious,
-} from 'frontend-js-react-web';
+} from '@liferay/frontend-js-react-web';
 import {cancelDebounce, debounce, fetch} from 'frontend-js-web';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 

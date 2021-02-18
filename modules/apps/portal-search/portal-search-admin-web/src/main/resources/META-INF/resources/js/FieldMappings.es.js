@@ -15,7 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
-import {useTimeout} from 'frontend-js-react-web';
+import {useTimeout} from '@liferay/frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React, {useRef, useState} from 'react';
 

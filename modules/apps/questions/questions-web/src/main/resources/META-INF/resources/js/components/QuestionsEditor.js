@@ -13,7 +13,7 @@
  */
 
 import {Editor} from 'frontend-editor-ckeditor-web';
-import {useEventListener} from 'frontend-js-react-web';
+import {useEventListener} from '@liferay/frontend-js-react-web';
 import {isPhone, isTablet} from 'frontend-js-web';
 import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
 

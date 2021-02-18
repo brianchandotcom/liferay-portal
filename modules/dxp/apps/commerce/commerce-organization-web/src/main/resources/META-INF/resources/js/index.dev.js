@@ -12,7 +12,7 @@
 import '../css/main.scss';
 
 import 'clay-css/lib/css/atlas.css';
-import {render} from 'frontend-js-react-web';
+import {render} from '@liferay/frontend-js-react-web';
 import React from 'react';
 
 import Container from './Container';

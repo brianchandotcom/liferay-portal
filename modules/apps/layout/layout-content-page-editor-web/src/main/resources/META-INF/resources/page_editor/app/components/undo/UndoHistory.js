@@ -15,7 +15,7 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayDropDownDivider from '@clayui/drop-down/lib/Divider';
-import {useEventListener, useIsMounted} from 'frontend-js-react-web';
+import {useEventListener, useIsMounted} from '@liferay/frontend-js-react-web';
 import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
 

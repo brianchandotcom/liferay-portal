@@ -17,7 +17,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import {useModal} from '@clayui/modal';
-import {useIsMounted} from 'frontend-js-react-web';
+import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {openToast} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 import {createPortal} from 'react-dom';

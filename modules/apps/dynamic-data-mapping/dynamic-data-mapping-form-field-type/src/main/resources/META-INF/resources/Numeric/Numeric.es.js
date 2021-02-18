@@ -13,7 +13,7 @@
  */
 
 import {ClayInput} from '@clayui/form';
-import {usePrevious} from 'frontend-js-react-web';
+import {usePrevious} from '@liferay/frontend-js-react-web';
 import React, {useEffect, useRef, useState} from 'react';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 import vanillaTextMask from 'vanilla-text-mask';

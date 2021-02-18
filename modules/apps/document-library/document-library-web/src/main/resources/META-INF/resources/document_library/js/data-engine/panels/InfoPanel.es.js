@@ -13,7 +13,7 @@
  */
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {useIsMounted} from 'frontend-js-react-web';
+import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {fetch, runScriptsInElement} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 

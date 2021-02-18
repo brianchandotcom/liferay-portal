@@ -10,7 +10,7 @@
  */
 
 import ClayManagementToolbar from '@clayui/management-toolbar';
-import {usePrevious} from 'frontend-js-react-web';
+import {usePrevious} from '@liferay/frontend-js-react-web';
 import React, {useContext, useEffect} from 'react';
 
 import ResultsBar from '../../../../../shared/components/results-bar/ResultsBar.es';

@@ -6,7 +6,7 @@
 		"@clayui/label": "3.4.1",
 		"@clayui/layout": "3.3.0",
 		"@clayui/sticker": "3.3.0",
-		"frontend-js-react-web": "*",
+		"@liferay/frontend-js-react-web": "*",
 		"frontend-js-web": "*",
 		"prop-types": "15.7.2",
 		"react": "16.12.0"

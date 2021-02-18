@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {useStateSafe} from 'frontend-js-react-web';
+import {useStateSafe} from '@liferay/frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect} from 'react';
 

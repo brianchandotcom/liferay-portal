@@ -15,7 +15,7 @@
 import ClayAutocomplete from '@clayui/autocomplete';
 import ClayDropDown from '@clayui/drop-down';
 import {FocusScope} from '@clayui/shared';
-import {useIsMounted} from 'frontend-js-react-web';
+import {useIsMounted} from '@liferay/frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 import {createPortal} from 'react-dom';

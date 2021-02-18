@@ -1,7 +1,7 @@
 {
 	"dependencies": {
 		"@clayui/layout": "3.3.0",
-		"frontend-js-react-web": "*",
+		"@liferay/frontend-js-react-web": "*",
 		"frontend-js-web": "*",
 		"moment": "^2.22.2",
 		"react": "16.12.0",

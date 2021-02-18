@@ -18,7 +18,7 @@
 		"@clayui/table": "3.1.0",
 		"classnames": "2.2.6",
 		"dynamic-data-mapping-form-renderer": "*",
-		"frontend-js-react-web": "*",
+		"@liferay/frontend-js-react-web": "*",
 		"frontend-js-web": "*",
 		"lodash.omit": "^4.5.0",
 		"metal-jsx": "2.16.8",

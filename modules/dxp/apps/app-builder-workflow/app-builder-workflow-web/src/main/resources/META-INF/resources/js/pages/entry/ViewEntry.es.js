@@ -25,7 +25,7 @@ import {
 } from 'data-engine-js-components-web/js/utils/client.es';
 import {errorToast} from 'data-engine-js-components-web/js/utils/toast.es';
 import {isEqualObjects} from 'data-engine-js-components-web/js/utils/utils.es';
-import {usePrevious, useTimeout} from 'frontend-js-react-web';
+import {usePrevious, useTimeout} from '@liferay/frontend-js-react-web';
 import React, {useContext, useEffect, useState} from 'react';
 
 import WorkflowInfoBar from '../../components/workflow-info-bar/WorkflowInfoBar.es';

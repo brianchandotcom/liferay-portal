@@ -14,7 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import {useEventListener, useIsMounted} from 'frontend-js-react-web';
+import {useEventListener, useIsMounted} from '@liferay/frontend-js-react-web';
 import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useLayoutEffect, useRef, useState} from 'react';

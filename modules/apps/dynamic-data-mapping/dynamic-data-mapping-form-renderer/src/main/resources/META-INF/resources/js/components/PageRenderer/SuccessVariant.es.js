@@ -15,7 +15,7 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayLayout from '@clayui/layout';
-import {usePrevious} from 'frontend-js-react-web';
+import {usePrevious} from '@liferay/frontend-js-react-web';
 import React, {useEffect, useState} from 'react';
 
 import {EVENT_TYPES} from '../../actions/eventTypes.es';

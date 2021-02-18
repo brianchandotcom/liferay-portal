@@ -16,7 +16,7 @@ import ClayButton from '@clayui/button';
 import {useResource} from '@clayui/data-provider';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayMultiSelect from '@clayui/multi-select';
-import {usePrevious} from 'frontend-js-react-web';
+import {usePrevious} from '@liferay/frontend-js-react-web';
 import {openSelectionModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect} from 'react';

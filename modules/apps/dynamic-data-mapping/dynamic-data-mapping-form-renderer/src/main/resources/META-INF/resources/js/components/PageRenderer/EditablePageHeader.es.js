@@ -12,7 +12,7 @@
  * details.
  */
 
-import {usePrevious} from 'frontend-js-react-web';
+import {usePrevious} from '@liferay/frontend-js-react-web';
 import React, {useEffect, useState} from 'react';
 
 import {EVENT_TYPES} from '../../actions/eventTypes.es';

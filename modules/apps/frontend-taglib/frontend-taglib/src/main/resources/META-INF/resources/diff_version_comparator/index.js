@@ -14,7 +14,7 @@
 
 import ClayCard from '@clayui/card';
 import {ClayInput} from '@clayui/form';
-import {useIsMounted} from 'frontend-js-react-web';
+import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {fetch} from 'frontend-js-web';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 

@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {usePrevious} from 'frontend-js-react-web';
+import {usePrevious} from '@liferay/frontend-js-react-web';
 import React, {useEffect, useState} from 'react';
 
 import Portal from '../portal/Portal.es';

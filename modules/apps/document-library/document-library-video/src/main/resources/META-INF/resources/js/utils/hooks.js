@@ -12,7 +12,7 @@
  * details.
  */
 
-import {useIsMounted} from 'frontend-js-react-web';
+import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {addParams, cancelDebounce, debounce, fetch} from 'frontend-js-web';
 import {useEffect, useRef, useState} from 'react';
 

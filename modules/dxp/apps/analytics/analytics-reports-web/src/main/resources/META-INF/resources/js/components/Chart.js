@@ -11,7 +11,7 @@
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import className from 'classnames';
-import {useIsMounted} from 'frontend-js-react-web';
+import {useIsMounted} from '@liferay/frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useMemo} from 'react';
 import {

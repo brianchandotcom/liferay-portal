@@ -14,7 +14,7 @@
 		"react-dnd-test-utils": "11.1.1"
 	},
 	"main": "js/index.es.js",
-	"name": "frontend-js-react-web",
+	"name": "@liferay/frontend-js-react-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",

@@ -367,9 +367,9 @@ definition {
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
 
-			AssetListsAdmin.configureAssetEntryType(selectedAsset = "Web Content Article");
-
-			AssetListsAdmin.configureAssetEntrySubtype(selectedSubtype = "WC Structure Name");
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
+				itemSubtype = "WC Structure Name",
+				itemType = "Web Content Article");
 		}
 
 		task ("Add a manual collection with new document entry") {
@@ -2047,7 +2047,7 @@ definition {
 
 		AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
 
-		AssetListsAdmin.configureAssetEntrySubtype(selectedSubtype = "Basic Web Content");
+		AssetListsAdmin.configureItemTypeInDynamicCollection(itemSubtype = "Basic Web Content");
 
 		JSONAssetlist.addManualAssetListEntry(
 			groupName = "Test Site Name",
@@ -2462,9 +2462,9 @@ definition {
 
 			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection 1");
 
-			AssetListsAdmin.configureAssetEntryType(selectedAsset = "Web Content Article");
-
-			AssetListsAdmin.configureAssetEntrySubtype(selectedSubtype = "Basic Web Content");
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
+				itemSubtype = "Basic Web Content",
+				itemType = "Web Content Article");
 		}
 
 		task ("Add a dynamic collection based on Blogs Entry") {

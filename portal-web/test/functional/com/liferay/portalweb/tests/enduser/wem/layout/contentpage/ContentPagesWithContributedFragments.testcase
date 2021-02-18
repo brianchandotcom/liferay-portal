@@ -1054,7 +1054,7 @@ definition {
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
 
-			AssetListsAdmin.configureAssetEntryType(selectedAsset = "All Types");
+			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
 		}
 
 		task ("Add a Collection Display to page") {
@@ -1118,7 +1118,7 @@ definition {
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
 
-			AssetListsAdmin.configureAssetEntryType(selectedAsset = "Select Types...");
+			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "Select Types...");
 
 			for (var key_type : list "Web Content Article,Blogs Entry,Document") {
 				AssertVisible(locator1 = "AssetLists#ASSET_LIST_ENTRY_TYPE_SELECTED");
@@ -1379,9 +1379,9 @@ definition {
 
 			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
 
-			AssetListsAdmin.configureAssetEntryType(selectedAsset = "Web Content Article");
-
-			AssetListsAdmin.configureAssetEntrySubtype(selectedSubtype = "WC Structure Name");
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
+				itemSubtype = "WC Structure Name",
+				itemType = "Web Content Article");
 		}
 
 		task ("Add a Collection Display to page") {

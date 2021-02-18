@@ -545,7 +545,9 @@ definition {
 
 		AssetListsAdmin.editAssetList(assetListTitle = "Depot Dynamic Asset List");
 
-		AssetListsAdmin.configureAssetEntryType(selectedAsset = "Web Content Article");
+		AssetListsAdmin.configureItemTypeInDynamicCollection(
+			itemSubtype = "All Subtypes",
+			itemType = "Web Content Article");
 
 		AssetListsAdmin.addTagsFilter(tagNameList = "tag1");
 
@@ -716,7 +718,7 @@ definition {
 			assetType = "Web Content Folder,Web Content Article,Document,Documents Folder",
 			dynamicSelection = "true");
 
-		AssetListsAdmin.configureAssetEntryType(selectedAsset = "All Types");
+		AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
 
 		for (var i : list "1,2,3") {
 			DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
@@ -738,7 +740,9 @@ definition {
 
 		AssetListsAdmin.editAssetList(assetListTitle = "Depot Dynamic Asset List");
 
-		AssetListsAdmin.configureAssetEntryType(selectedAsset = "Web Content Article");
+		AssetListsAdmin.configureItemTypeInDynamicCollection(
+			itemSubtype = "All Subtypes",
+			itemType = "Web Content Article");
 
 		for (var i : list "1,2,3") {
 			DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");

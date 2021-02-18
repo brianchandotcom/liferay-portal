@@ -96,6 +96,11 @@ import org.osgi.service.component.annotations.Reference;
 public class OAuth2ApplicationLocalServiceImpl
 	extends OAuth2ApplicationLocalServiceBaseImpl {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addOAuth2Application(long, long, String, List, long, String, int, String, String, List, String, long, String, String, List, Consumer, ServiceContext, boolean)}
+	 */
+	@Deprecated
 	@Override
 	public OAuth2Application addOAuth2Application(
 			long companyId, long userId, String userName,
@@ -106,6 +111,25 @@ public class OAuth2ApplicationLocalServiceImpl
 			List<String> redirectURIsList,
 			Consumer<OAuth2ScopeBuilder> builderConsumer,
 			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addOAuth2Application(
+			companyId, userId, userName, allowedGrantTypesList, userId,
+			clientId, clientProfile, clientSecret, description, featuresList,
+			homePageURL, iconFileEntryId, name, privacyPolicyURL,
+			redirectURIsList, builderConsumer, serviceContext, false);
+	}
+
+	@Override
+	public OAuth2Application addOAuth2Application(
+			long companyId, long userId, String userName,
+			List<GrantType> allowedGrantTypesList, long clientCredentialUserId,
+			String clientId, int clientProfile, String clientSecret,
+			String description, List<String> featuresList, String homePageURL,
+			long iconFileEntryId, String name, String privacyPolicyURL,
+			List<String> redirectURIsList,
+			Consumer<OAuth2ScopeBuilder> builderConsumer,
+			ServiceContext serviceContext, boolean trustedApplication)
 		throws PortalException {
 
 		if (allowedGrantTypesList == null) {
@@ -158,6 +182,7 @@ public class OAuth2ApplicationLocalServiceImpl
 		oAuth2Application.setName(name);
 		oAuth2Application.setPrivacyPolicyURL(privacyPolicyURL);
 		oAuth2Application.setRedirectURIsList(redirectURIsList);
+		oAuth2Application.setTrustedApplication(trustedApplication);
 
 		if (builderConsumer != null) {
 			OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases =
@@ -179,6 +204,12 @@ public class OAuth2ApplicationLocalServiceImpl
 		return oAuth2ApplicationPersistence.update(oAuth2Application);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addOAuth2Application(long, long, String, List, long, String, int, String, String, List, String, long, String, String, List, List, ServiceContext, boolean)} (String,
+	 long)}
+	 */
+	@Deprecated
 	@Override
 	public OAuth2Application addOAuth2Application(
 			long companyId, long userId, String userName,
@@ -188,6 +219,24 @@ public class OAuth2ApplicationLocalServiceImpl
 			long iconFileEntryId, String name, String privacyPolicyURL,
 			List<String> redirectURIsList, List<String> scopeAliasesList,
 			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addOAuth2Application(
+			companyId, userId, userName, allowedGrantTypesList, userId,
+			clientId, clientProfile, clientSecret, description, featuresList,
+			homePageURL, iconFileEntryId, name, privacyPolicyURL,
+			redirectURIsList, scopeAliasesList, serviceContext, false);
+	}
+
+	@Override
+	public OAuth2Application addOAuth2Application(
+			long companyId, long userId, String userName,
+			List<GrantType> allowedGrantTypesList, long clientCredentialUserId,
+			String clientId, int clientProfile, String clientSecret,
+			String description, List<String> featuresList, String homePageURL,
+			long iconFileEntryId, String name, String privacyPolicyURL,
+			List<String> redirectURIsList, List<String> scopeAliasesList,
+			ServiceContext serviceContext, boolean trustedApplication)
 		throws PortalException {
 
 		if (allowedGrantTypesList == null) {
@@ -244,6 +293,7 @@ public class OAuth2ApplicationLocalServiceImpl
 		oAuth2Application.setName(name);
 		oAuth2Application.setPrivacyPolicyURL(privacyPolicyURL);
 		oAuth2Application.setRedirectURIsList(redirectURIsList);
+		oAuth2Application.setTrustedApplication(trustedApplication);
 
 		if (ListUtil.isNotEmpty(scopeAliasesList)) {
 			OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases =
@@ -434,6 +484,11 @@ public class OAuth2ApplicationLocalServiceImpl
 		return oAuth2Application;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 * #updateOAuth2Application(long, List, long, String, int, String, String, List, String, long, String, String, List, long, ServiceContext, boolean)}
+	 */
+	@Deprecated
 	@Override
 	public OAuth2Application updateOAuth2Application(
 			long oAuth2ApplicationId, List<GrantType> allowedGrantTypesList,
@@ -442,6 +497,28 @@ public class OAuth2ApplicationLocalServiceImpl
 			String homePageURL, long iconFileEntryId, String name,
 			String privacyPolicyURL, List<String> redirectURIsList,
 			long auth2ApplicationScopeAliasesId, ServiceContext serviceContext)
+		throws PortalException {
+
+		OAuth2Application oAuth2Application =
+			oAuth2ApplicationPersistence.findByPrimaryKey(oAuth2ApplicationId);
+
+		return updateOAuth2Application(
+			oAuth2ApplicationId, allowedGrantTypesList,
+			oAuth2Application.getClientCredentialUserId(), clientId,
+			clientProfile, clientSecret, description, featuresList, homePageURL,
+			iconFileEntryId, name, privacyPolicyURL, redirectURIsList,
+			auth2ApplicationScopeAliasesId, serviceContext, false);
+	}
+
+	@Override
+	public OAuth2Application updateOAuth2Application(
+			long oAuth2ApplicationId, List<GrantType> allowedGrantTypesList,
+			long clientCredentialUserId, String clientId, int clientProfile,
+			String clientSecret, String description, List<String> featuresList,
+			String homePageURL, long iconFileEntryId, String name,
+			String privacyPolicyURL, List<String> redirectURIsList,
+			long auth2ApplicationScopeAliasesId, ServiceContext serviceContext,
+			boolean trustedApplication)
 		throws PortalException {
 
 		OAuth2Application oAuth2Application =
@@ -479,6 +556,7 @@ public class OAuth2ApplicationLocalServiceImpl
 		oAuth2Application.setName(name);
 		oAuth2Application.setPrivacyPolicyURL(privacyPolicyURL);
 		oAuth2Application.setRedirectURIsList(redirectURIsList);
+		oAuth2Application.setTrustedApplication(trustedApplication);
 
 		return oAuth2ApplicationPersistence.update(oAuth2Application);
 	}

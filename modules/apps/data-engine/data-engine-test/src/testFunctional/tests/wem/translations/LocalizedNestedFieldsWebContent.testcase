@@ -646,12 +646,70 @@ definition {
 	}
 
 	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
-	@ignore = "true"
 	@priority = "5"
 	test TranslationsRemainsUponSavingWebContent {
 		property portal.acceptance = "false";
 
-		// TODO LPS-123537 TranslationsRemainsUponSavingWebContent pending implementation
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Test one",
+			fieldName = "Rich Text");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Test two",
+			fieldName = "Rich Text",
+			targetFieldLabel = "Test one");
+
+		WebContentStructures.saveCP();
+
+		Navigator.gotoNavTab(navTab = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(webContentTitle = "WC WebContent Title");
+
+		CKEditor.addContentInWebContent(
+			content = "Hello",
+			fieldLabel = "Test one");
+
+		CKEditor.addContentInWebContent(
+			content = "Hi",
+			fieldLabel = "Test two");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		WebContent.addWithStructureCP(webContentTitle = "Título da Estrutura WC");
+
+		CKEditor.addContentInWebContent(
+			content = "Olá",
+			fieldLabel = "Test one");
+
+		CKEditor.addContentInWebContent(
+			content = "Oi",
+			fieldLabel = "Test two");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "Título da Estrutura WC");
+
+		CKEditor.assertContentIframe(
+			content = "Olá",
+			fieldLabel = "Test one");
+
+		CKEditor.assertContentIframe(
+			content = "Oi",
+			fieldLabel = "Test two");
 	}
 
 	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"

@@ -84,45 +84,30 @@ export const dedupValue = (
 	generateOptionValueUsingOptionLabel,
 	propertyName
 ) => {
-	if (generateOptionValueUsingOptionLabel) {
-		let counter = 0;
+	let counter = 0;
 
-		const recursive = (fields, currentValue) => {
-			const field = fields.find(
-				(field) => field[propertyName] === currentValue
-			);
+	const recursive = (fields, currentValue) => {
+		const field = fields.find(
+			(field) => field[propertyName] === currentValue
+		);
 
-			if (field && field.id !== id) {
+		if (field && field.id !== id) {
+			if (generateOptionValueUsingOptionLabel) {
 				counter += 1;
 				recursive(fields, value + counter);
 			}
 			else {
-				value = currentValue;
-			}
-		};
-
-		recursive(fields, value);
-
-		return value;
-	}
-	else {
-		const recursive = (fields, currentValue) => {
-			const field = fields.find(
-				(field) => field[propertyName] === currentValue
-			);
-
-			if (field && field.id !== id) {
 				recursive(fields, getDefaultFieldName(true));
 			}
-			else {
-				value = currentValue;
-			}
-		};
+		}
+		else {
+			value = currentValue;
+		}
+	};
 
-		recursive(fields, value);
+	recursive(fields, value);
 
-		return value;
-	}
+	return value;
 };
 
 export const getDefaultOptionValue = (

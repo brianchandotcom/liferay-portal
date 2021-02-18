@@ -81,11 +81,22 @@ definition {
 				emailAddress = "test@liferay.com",
 				password = "test");
 		}
+		SelectWindow(locator1 = "title=Tests - Analytics Cloud");
+
 		AssertTextEquals(
+			ABtestTitle = "AB test title",
 			locator1 = "ABTest#AB_TEST_TITLE_AC_SIDE",
 			value1 = "AB test title");
 
 		SelectWindow(locator1 = "title=Content Page - Liferay DXP");
+
+		Refresh();
+
+		if (IsElementNotPresent(locator1 = "ABTest#TERMINATE_TEST_BUTTON")) {
+			User.firstLoginPG();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/content-page");
+		}
 
 		ABTest.terminateTest();
 	}
@@ -117,17 +128,27 @@ definition {
 
 		if (IsElementNotPresent(locator1 = "ABTest#AB_TEST_TITLE_AC_SIDE")) {
 			SelectWindow(locator1 = "title=Analytics Cloud");
-			
+
 			AnalyticsCloud.loginAnalyticsCloud(
 				emailAddress = "test@liferay.com",
 				password = "test");
 		}
+		SelectWindow(locator1 = "title=Tests - Analytics Cloud");
+
 		AssertTextEquals(
 			ABtestTitle = "AB test title",
 			locator1 = "ABTest#AB_TEST_TITLE_AC_SIDE",
 			value1 = "AB test title");
 
 		SelectWindow(locator1 = "title=Content Page - Liferay DXP");
+
+		Refresh();
+
+		if (IsElementNotPresent(locator1 = "ABTest#TERMINATE_TEST_BUTTON")) {
+			User.firstLoginPG();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/content-page");
+		}
 
 		ABTest.terminateTest();
 	}

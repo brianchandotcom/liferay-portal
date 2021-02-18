@@ -55,7 +55,11 @@ definition {
 	macro selectDocument {
 		var key_googleDocName = "${googleDocName}";
 
-		Click.clickAt(
+		if (IsElementNotPresent(locator1 = "GoogleDrive#LIST_VIEW_DOCUMENT_SPECIFIC")) {
+			Click(locator1 = "GoogleDrive#LIST_VIEW_BUTTON");
+		}
+
+		Click(
 			locator1 = "GoogleDrive#LIST_VIEW_DOCUMENT_SPECIFIC",
 			value1 = "${googleDocName}");
 

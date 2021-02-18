@@ -290,6 +290,12 @@ public class CommerceShipmentLocalServiceImpl
 		CommerceShipment commerceShipment =
 			commerceShipmentPersistence.findByPrimaryKey(commerceShipmentId);
 
+		if (commerceShipment.getStatus() ==
+				CommerceShipmentConstants.SHIPMENT_STATUS_DELIVERED) {
+
+			throw new CommerceShipmentStatusException();
+		}
+
 		commerceShipment.setStatus(
 			CommerceShipmentConstants.SHIPMENT_STATUS_PROCESSING);
 

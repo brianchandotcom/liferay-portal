@@ -12,71 +12,22 @@
  * details.
  */
 
-import {createPortletURL, openSelectionModal} from 'frontend-js-web';
+import {ACTIONS} from './actions.es';
 
 export default function propsTransformer({
-	additionalProps: {
-		assignmentsURL,
-		editOrganizationAssignmentURL,
-		selectUsersURL,
-	},
+	additionalProps: {basePortletURL},
 	portletNamespace,
 	...otherProps
 }) {
-	const selectUsers = (organizationId) => {
-		if (!organizationId) {
-			return;
-		}
-
-		const url = createPortletURL(selectUsersURL, {
-			organizationId,
-		});
-
-		openSelectionModal({
-			buttonAddLabel: Liferay.Language.get('done'),
-			multiple: true,
-			onSelect: (data) => {
-				if (data) {
-					const assignmentsRedirectURL = createPortletURL(
-						assignmentsURL,
-						{
-							organizationId,
-						}
-					);
-
-					const editAssignmentParameters = {
-						addUserIds: data.value,
-						assignmentsRedirect: assignmentsRedirectURL.toString(),
-						organizationId,
-					};
-
-					const editAssignmentURL = createPortletURL(
-						editOrganizationAssignmentURL,
-						editAssignmentParameters
-					);
-
-					const form = document.getElementById(
-						`${portletNamespace}fm`
-					);
-
-					if (!form) {
-						return;
-					}
-
-					submitForm(form, editAssignmentURL.toString());
-				}
-			},
-			selectEventName: `${portletNamespace}selectUsers`,
-			title: Liferay.Language.get('assign-users'),
-			url: url.toString(),
-		});
-	};
-
 	return {
 		...otherProps,
 		onCreationMenuItemClick(event, {item}) {
 			if (item.data?.action === 'selectUsers') {
-				selectUsers(item.data?.organizationId);
+				ACTIONS.selectUsers({
+					basePortletURL,
+					organizationId: item.data?.organizationId,
+					portletNamespace,
+				});
 			}
 		},
 	};

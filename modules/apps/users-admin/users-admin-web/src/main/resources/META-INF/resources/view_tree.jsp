@@ -74,27 +74,11 @@ if (organization != null) {
 		SearchContainer<Object> searchContainer = viewTreeManagementToolbarDisplayContext.getSearchContainer();
 		%>
 
-		<portlet:renderURL var="assignmentsURL">
-			<portlet:param name="mvcRenderCommandName" value="/users_admin/view" />
-			<portlet:param name="toolbarItem" value="view-all-organizations" />
-			<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_TREE %>" />
-		</portlet:renderURL>
-
-		<portlet:actionURL name="/users_admin/edit_organization_assignments" var="editOrganizationAssignmentURL" />
-
-		<portlet:renderURL var="selectUsersURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-			<portlet:param name="mvcPath" value="/select_organization_users.jsp" />
-		</portlet:renderURL>
-
 		<clay:management-toolbar
 			actionDropdownItems="<%= viewTreeManagementToolbarDisplayContext.getActionDropdownItems() %>"
 			additionalProps='<%=
 				HashMapBuilder.<String, Object>put(
-					"assignmentsURL", assignmentsURL.toString()
-				).put(
-					"editOrganizationAssignmentURL", editOrganizationAssignmentURL.toString()
-				).put(
-					"selectUsersURL", selectUsersURL.toString()
+					"basePortletURL", String.valueOf(renderResponse.createRenderURL())
 				).build()
 			%>'
 			clearResultsURL="<%= viewTreeManagementToolbarDisplayContext.getClearResultsURL() %>"

@@ -57,7 +57,11 @@ function Item(props) {
 			<ClaySticker className="mini-compare-thumbnail-container" size="lg">
 				<div
 					className="mini-compare-thumbnail"
-					style={{backgroundImage: `url('${props.thumbnail}')`}}
+					style={
+						props.thumbnail
+							? {backgroundImage: `url('${props.thumbnail}')`}
+							: {}
+					}
 				/>
 			</ClaySticker>
 			<ClayButtonWithIcon
@@ -86,7 +90,7 @@ function MiniCompare(props) {
 				thumbnail,
 			};
 
-			return updateItems((items) => {
+			updateItems((items) => {
 				const included = items.find((el) => el.id === id);
 
 				toggleStatus(props.commerceChannelGroupId, id, !included);

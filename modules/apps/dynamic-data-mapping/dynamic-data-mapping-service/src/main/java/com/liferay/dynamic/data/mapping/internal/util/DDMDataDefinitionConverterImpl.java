@@ -545,7 +545,8 @@ public class DDMDataDefinitionConverterImpl
 			_createFieldSetDDMFormField(
 				String.valueOf(parentStructureId),
 				String.valueOf(parentStructureLayoutId),
-				ddmForm.getDefaultLocale(), "parentStructureFieldSet",
+				ddmForm.getDefaultLocale(),
+				"parentStructureFieldSet" + parentStructureId,
 				Collections.emptyList(), false, true));
 
 		ddmForm.setDDMFormFields(ddmFormFields);

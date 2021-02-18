@@ -27,13 +27,39 @@ definition {
 	}
 
 	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
-	@ignore = "true"
 	@priority = "4"
 	test CheckDefaultWebContentTitleOnWebContentList {
+		var defaultStructureName = "WC Structure Name";
+		var translatedWebContentName = "Titulo do WC";
+		var webContentTitle = "WC Title";
+
 		property portal.acceptance = "false";
 
-		// TODO LPS-122317 CheckDefaultWebContentTitleOnWebContentList pending implementation
+		NavItem.gotoStructures();
 
+		WebContentStructures.addCP(structureName = "${defaultStructureName}");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		WebContentStructures.saveCP();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "${defaultStructureName}");
+
+		WebContent.addWithStructureCP(webContentTitle = "${webContentTitle}");
+		
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		WebContent.addWithStructureCP(webContentTitle = "${translatedWebContentName}");
+
+		PortletEntry.publish();
+
+		AssertElementPresent(
+				locator1 = "WC#ENTRY_LIST_TITLE_NAME",
+				key_webContentTitle = "${webContentTitle}");
 	}
 
 	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"

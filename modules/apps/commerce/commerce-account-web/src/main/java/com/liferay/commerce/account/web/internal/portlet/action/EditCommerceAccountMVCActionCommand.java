@@ -247,6 +247,7 @@ public class EditCommerceAccountMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setCompanyId(_portal.getCompanyId(actionRequest));
+		serviceContext.setScopeGroupId(_portal.getScopeGroupId(actionRequest));
 		serviceContext.setUserId(_portal.getUserId(actionRequest));
 
 		if (commerceAccountId > 0) {

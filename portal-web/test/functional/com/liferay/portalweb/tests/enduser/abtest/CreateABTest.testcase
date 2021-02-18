@@ -119,6 +119,7 @@ definition {
 				password = "test");
 		}
 		AssertTextEquals(
+			ABtestTitle = "AB test title",
 			locator1 = "ABTest#AB_TEST_TITLE_AC_SIDE",
 			value1 = "AB test title");
 

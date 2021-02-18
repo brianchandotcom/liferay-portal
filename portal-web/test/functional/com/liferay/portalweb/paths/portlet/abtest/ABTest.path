@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>AB_TEST_TITLE_AC_SIDE</td>
-	<td>//*[contains(@class, 'title text-truncate')]</td>
+	<td>//*[@class= 'text-truncate' and contains(text(),'${ABtestTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -105,7 +105,7 @@
 </tr>
 <tr>
 	<td>TERMINATE_TEST_BUTTON</td>
-	<td>//*[contains(@class,'w-100 btn btn-secondary') and contains(text(),'Terminate Test')]</td>
+	<td>//*[contains(@class,'btn-secondary') and contains(text(),'Terminate Test')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -125,7 +125,7 @@
 </tr>
 <tr>
 	<td>VIEW_DATA_ANALYTICS_CLOUD_BUTTON</td>
-	<td>//*[contains(@class,'btn btn-secondary btn-sm mt-3 w-100 link-secondary')]</td>
+	<td>//*[contains(@class,'btn-secondary') and contains(text(),'View Data in Analytics Cloud')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -157,6 +157,18 @@ export const normalizeValue = (
 	return normalizeFieldName(value);
 };
 
+export const normalizeFieldReference = (currentIndex, fields) => {
+	const duplicateReference = fields
+		.filter((field, index) => index !== currentIndex)
+		.some(({reference}) => reference === fields[currentIndex].reference);
+
+	if (duplicateReference) {
+		fields[currentIndex].reference = getDefaultFieldName(true);
+	}
+
+	return fields;
+};
+
 export const normalizeFields = (
 	fields,
 	generateOptionValueUsingOptionLabel

@@ -31,6 +31,7 @@ import {
 	dedupValue,
 	getDefaultOptionValue,
 	isOptionValueGenerated,
+	normalizeFieldReference,
 	normalizeFields,
 	random,
 } from './util.es';
@@ -429,10 +430,15 @@ const Options = ({
 		return [fields];
 	};
 
-	const normalize = (fields) => {
+	const normalize = (fields, index) => {
 		clearError();
 
-		return [normalizeFields(fields, generateOptionValueUsingOptionLabel)];
+		return [
+			normalizeFields(
+				normalizeFieldReference(index, fields),
+				generateOptionValueUsingOptionLabel
+			),
+		];
 	};
 
 	const composedAdd = compose(clone, dedup, add, set);
@@ -494,7 +500,7 @@ const Options = ({
 						{children({
 							defaultOptionRef,
 							fieldError,
-							handleBlur: composedBlur,
+							handleBlur: composedBlur.bind(this, index),
 							handleField: !(fields.length - 1 === index)
 								? composedChange.bind(this, index)
 								: composedAdd.bind(this, index),

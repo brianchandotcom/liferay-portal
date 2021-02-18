@@ -47,7 +47,11 @@ export default ({dataLayoutBuilder}) => {
 			return Promise.resolve();
 		};
 
-		const deleteField = () => {
+		const deleteField = ({ok}) => {
+			if (!ok) {
+				return Promise.reject();
+			}
+
 			const dataDefinitionField = dataDefinition.dataDefinitionFields.find(
 				({customProperties: {ddmStructureId}}) =>
 					ddmStructureId == fieldSet.id

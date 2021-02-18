@@ -75,6 +75,8 @@ definition {
 		ABTest.checkAnalyticsCloudInfo();
 
 		if (IsElementNotPresent(locator1 = "ABTest#AB_TEST_TITLE_AC_SIDE")) {
+			SelectWindow(locator1 = "title=Analytics Cloud");
+
 			AnalyticsCloud.loginAnalyticsCloud(
 				emailAddress = "test@liferay.com",
 				password = "test");
@@ -114,6 +116,8 @@ definition {
 		ABTest.checkAnalyticsCloudInfo();
 
 		if (IsElementNotPresent(locator1 = "ABTest#AB_TEST_TITLE_AC_SIDE")) {
+			SelectWindow(locator1 = "title=Analytics Cloud");
+			
 			AnalyticsCloud.loginAnalyticsCloud(
 				emailAddress = "test@liferay.com",
 				password = "test");

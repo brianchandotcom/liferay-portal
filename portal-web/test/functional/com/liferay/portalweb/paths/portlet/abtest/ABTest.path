@@ -60,7 +60,7 @@
 </tr>
 <tr>
 	<td>REVIEW_AND_RUN_TEST_BUTTON</td>
-	<td>//*[contains(@class,'w-100 btn btn-primary') and contains(text(),'Review and Run Test')]</td>
+	<td>//button[contains(@class,'btn-primary') and contains(text(),'Review and Run Test')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -118,7 +118,6 @@ definition {
 	@description = "This is a test for LPS-123537. Verify if a pop-up with the flag, label, and translation status is shown up when the user clicks on the language flag"
 	@priority = "4"
 	test CheckLanguageSelector {
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();

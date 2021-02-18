@@ -46,13 +46,13 @@ public class CommerceTierPriceEntryServiceImpl
 		throws PortalException {
 
 		return addCommerceTierPriceEntry(
-			commercePriceEntryId, null, price, promoPrice, minQuantity,
+			null, commercePriceEntryId, price, promoPrice, minQuantity,
 			serviceContext);
 	}
 
 	@Override
 	public CommerceTierPriceEntry addCommerceTierPriceEntry(
-			long commercePriceEntryId, String externalReferenceCode,
+			String externalReferenceCode, long commercePriceEntryId,
 			BigDecimal price, BigDecimal promoPrice, int minQuantity,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -68,13 +68,13 @@ public class CommerceTierPriceEntryServiceImpl
 		}
 
 		return commerceTierPriceEntryLocalService.addCommerceTierPriceEntry(
-			commercePriceEntryId, externalReferenceCode, price, promoPrice,
+			externalReferenceCode, commercePriceEntryId, price, promoPrice,
 			minQuantity, serviceContext);
 	}
 
 	@Override
 	public CommerceTierPriceEntry addCommerceTierPriceEntry(
-			long commercePriceEntryId, String externalReferenceCode,
+			String externalReferenceCode, long commercePriceEntryId,
 			BigDecimal price, int minQuantity, boolean bulkPricing,
 			boolean discountDiscovery, BigDecimal discountLevel1,
 			BigDecimal discountLevel2, BigDecimal discountLevel3,
@@ -95,7 +95,7 @@ public class CommerceTierPriceEntryServiceImpl
 			ActionKeys.UPDATE);
 
 		return commerceTierPriceEntryLocalService.addCommerceTierPriceEntry(
-			commercePriceEntryId, externalReferenceCode, price, minQuantity,
+			externalReferenceCode, commercePriceEntryId, price, minQuantity,
 			bulkPricing, discountDiscovery, discountLevel1, discountLevel2,
 			discountLevel3, discountLevel4, displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute,
@@ -125,12 +125,12 @@ public class CommerceTierPriceEntryServiceImpl
 
 	@Override
 	public CommerceTierPriceEntry fetchByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+			String externalReferenceCode, long companyId)
 		throws PortalException {
 
 		CommerceTierPriceEntry commerceTierPriceEntry =
 			commerceTierPriceEntryLocalService.fetchByExternalReferenceCode(
-				companyId, externalReferenceCode);
+				externalReferenceCode, companyId);
 
 		if (commerceTierPriceEntry != null) {
 			CommercePriceEntry commercePriceEntry =
@@ -374,10 +374,9 @@ public class CommerceTierPriceEntryServiceImpl
 
 	@Override
 	public CommerceTierPriceEntry upsertCommerceTierPriceEntry(
-			long commerceTierPriceEntryId, long commercePriceEntryId,
-			String externalReferenceCode, BigDecimal price,
-			BigDecimal promoPrice, int minQuantity,
-			String priceEntryExternalReferenceCode,
+			String externalReferenceCode, long commerceTierPriceEntryId,
+			long commercePriceEntryId, BigDecimal price, BigDecimal promoPrice,
+			int minQuantity, String priceEntryExternalReferenceCode,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -402,15 +401,15 @@ public class CommerceTierPriceEntryServiceImpl
 		}
 
 		return commerceTierPriceEntryLocalService.upsertCommerceTierPriceEntry(
-			commerceTierPriceEntryId, commercePriceEntryId,
-			externalReferenceCode, price, promoPrice, minQuantity,
+			externalReferenceCode, commerceTierPriceEntryId,
+			commercePriceEntryId, price, promoPrice, minQuantity,
 			priceEntryExternalReferenceCode, serviceContext);
 	}
 
 	@Override
 	public CommerceTierPriceEntry upsertCommerceTierPriceEntry(
-			long commerceTierPriceEntryId, long commercePriceEntryId,
-			String externalReferenceCode, BigDecimal price, int minQuantity,
+			String externalReferenceCode, long commerceTierPriceEntryId,
+			long commercePriceEntryId, BigDecimal price, int minQuantity,
 			boolean bulkPricing, boolean discountDiscovery,
 			BigDecimal discountLevel1, BigDecimal discountLevel2,
 			BigDecimal discountLevel3, BigDecimal discountLevel4,
@@ -443,8 +442,8 @@ public class CommerceTierPriceEntryServiceImpl
 		}
 
 		return commerceTierPriceEntryLocalService.upsertCommerceTierPriceEntry(
-			commerceTierPriceEntryId, commercePriceEntryId,
-			externalReferenceCode, price, minQuantity, bulkPricing,
+			externalReferenceCode, commerceTierPriceEntryId,
+			commercePriceEntryId, price, minQuantity, bulkPricing,
 			discountDiscovery, discountLevel1, discountLevel2, discountLevel3,
 			discountLevel4, displayDateMonth, displayDateDay, displayDateYear,
 			displayDateHour, displayDateMinute, expirationDateMonth,

@@ -72,7 +72,7 @@ public class PriceListAccountGroupResourceImpl
 
 		CommercePriceList commercePriceList =
 			_commercePriceListService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commercePriceList == null) {
 			throw new NoSuchPriceListException(
@@ -142,7 +142,7 @@ public class PriceListAccountGroupResourceImpl
 
 		CommercePriceList commercePriceList =
 			_commercePriceListService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commercePriceList == null) {
 			throw new NoSuchPriceListException(

@@ -116,8 +116,8 @@ public class CommercePriceListLocalServiceTest {
 
 		CommercePriceList commercePriceList =
 			CommercePriceListTestUtil.addCommercePriceList(
-				commerceCatalog.getGroupId(), currency.getCurrencyCode(), name,
-				RandomTestUtil.randomDouble(), true, null, null, null);
+				null, commerceCatalog.getGroupId(), currency.getCurrencyCode(),
+				name, RandomTestUtil.randomDouble(), true, null, null);
 
 		_assertPriceListAttributes(currency, name, commercePriceList);
 	}
@@ -156,9 +156,9 @@ public class CommercePriceListLocalServiceTest {
 
 		CommercePriceList commercePriceList =
 			CommercePriceListTestUtil.addCommercePriceList(
-				commerceCatalog.getGroupId(), currency.getCurrencyCode(), name,
-				RandomTestUtil.randomDouble(), true, null, null,
-				externalReferenceCode);
+				externalReferenceCode, commerceCatalog.getGroupId(),
+				currency.getCurrencyCode(), name, RandomTestUtil.randomDouble(),
+				true, null, null);
 
 		_assertPriceListAttributes(currency, name, commercePriceList);
 
@@ -201,9 +201,9 @@ public class CommercePriceListLocalServiceTest {
 
 		CommercePriceList commercePriceList =
 			CommercePriceListTestUtil.addCommercePriceList(
-				commerceCatalog.getGroupId(), currency.getCurrencyCode(),
+				null, commerceCatalog.getGroupId(), currency.getCurrencyCode(),
 				parentCommercePriceListId, name, RandomTestUtil.randomDouble(),
-				true, null, null, null);
+				true, null, null);
 
 		_assertPriceListAttributes(currency, name, commercePriceList);
 
@@ -251,9 +251,9 @@ public class CommercePriceListLocalServiceTest {
 
 		CommercePriceList commercePriceList =
 			CommercePriceListTestUtil.addCommercePriceList(
-				commerceCatalog.getGroupId(), currency.getCurrencyCode(),
-				parentCommercePriceListId, name, RandomTestUtil.randomDouble(),
-				true, null, null, externalReferenceCode);
+				externalReferenceCode, commerceCatalog.getGroupId(),
+				currency.getCurrencyCode(), parentCommercePriceListId, name,
+				RandomTestUtil.randomDouble(), true, null, null);
 
 		_assertPriceListAttributes(currency, name, commercePriceList);
 
@@ -294,8 +294,8 @@ public class CommercePriceListLocalServiceTest {
 
 		CommercePriceList commercePriceList =
 			CommercePriceListTestUtil.addCommercePriceList(
-				commerceCatalog.getGroupId(), currency.getCurrencyCode(), false,
-				name, RandomTestUtil.randomDouble(), true, null, null, null);
+				null, commerceCatalog.getGroupId(), currency.getCurrencyCode(),
+				false, name, RandomTestUtil.randomDouble(), true, null, null);
 
 		_assertPriceListAttributes(currency, name, commercePriceList);
 
@@ -336,8 +336,8 @@ public class CommercePriceListLocalServiceTest {
 
 		CommercePriceList commercePriceList =
 			CommercePriceListTestUtil.addCommercePriceList(
-				commerceCatalog.getGroupId(), currency.getCurrencyCode(), name,
-				RandomTestUtil.randomDouble(), true, null, null, null);
+				null, commerceCatalog.getGroupId(), currency.getCurrencyCode(),
+				name, RandomTestUtil.randomDouble(), true, null, null);
 
 		currency = Currency.getInstance(LocaleUtil.UK);
 		name = RandomTestUtil.randomString();
@@ -431,8 +431,8 @@ public class CommercePriceListLocalServiceTest {
 
 		CommercePriceList commercePriceList =
 			CommercePriceListTestUtil.addCommercePriceList(
-				commerceCatalog.getGroupId(), currency.getCurrencyCode(), 0,
-				name, RandomTestUtil.randomDouble(), true, null, null, null);
+				null, commerceCatalog.getGroupId(), currency.getCurrencyCode(),
+				0, name, RandomTestUtil.randomDouble(), true, null, null);
 
 		long parentCommercePriceListId = RandomTestUtil.randomLong();
 
@@ -479,8 +479,9 @@ public class CommercePriceListLocalServiceTest {
 
 		CommercePriceList commercePriceList =
 			CommercePriceListTestUtil.upsertCommercePriceList(
-				commerceCatalog.getGroupId(), 0, currency.getCurrencyCode(),
-				name, RandomTestUtil.randomDouble(), true, null, null, null);
+				null, commerceCatalog.getGroupId(), 0,
+				currency.getCurrencyCode(), name, RandomTestUtil.randomDouble(),
+				true, null, null);
 
 		_assertPriceListAttributes(currency, name, commercePriceList);
 	}
@@ -515,21 +516,21 @@ public class CommercePriceListLocalServiceTest {
 		CommerceCatalog commerceCatalog = commerceCatalogs.get(0);
 
 		CommercePriceListTestUtil.addCommercePriceList(
-			commerceCatalog.getGroupId(), currency.getCurrencyCode(), name,
-			RandomTestUtil.randomDouble(), true, null, null,
-			externalReferenceCode);
+			externalReferenceCode, commerceCatalog.getGroupId(),
+			currency.getCurrencyCode(), name, RandomTestUtil.randomDouble(),
+			true, null, null);
 
 		Currency updatedCurrency = Currency.getInstance(LocaleUtil.UK);
 		String updatedName = RandomTestUtil.randomString();
 
 		CommercePriceListTestUtil.upsertCommercePriceList(
-			_group.getGroupId(), 0, updatedCurrency.getCurrencyCode(),
-			updatedName, RandomTestUtil.randomDouble(), true, null, null,
-			externalReferenceCode);
+			externalReferenceCode, _group.getGroupId(), 0,
+			updatedCurrency.getCurrencyCode(), updatedName,
+			RandomTestUtil.randomDouble(), true, null, null);
 
 		CommercePriceList commercePriceList =
 			_commercePriceListLocalService.fetchByExternalReferenceCode(
-				_group.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, _group.getCompanyId());
 
 		_assertPriceListAttributes(
 			updatedCurrency, updatedName, commercePriceList);
@@ -565,16 +566,17 @@ public class CommercePriceListLocalServiceTest {
 
 		CommercePriceList commercePriceList =
 			CommercePriceListTestUtil.addCommercePriceList(
-				commerceCatalog.getGroupId(), currency.getCurrencyCode(), name,
-				RandomTestUtil.randomDouble(), true, null, null, null);
+				null, commerceCatalog.getGroupId(), currency.getCurrencyCode(),
+				name, RandomTestUtil.randomDouble(), true, null, null);
 
 		Currency updatedCurrency = Currency.getInstance(LocaleUtil.UK);
 		String updatedName = RandomTestUtil.randomString();
 
 		CommercePriceListTestUtil.upsertCommercePriceList(
-			_group.getGroupId(), commercePriceList.getCommercePriceListId(),
+			null, _group.getGroupId(),
+			commercePriceList.getCommercePriceListId(),
 			updatedCurrency.getCurrencyCode(), updatedName,
-			RandomTestUtil.randomDouble(), true, null, null, null);
+			RandomTestUtil.randomDouble(), true, null, null);
 
 		CommercePriceList updatedCommercePriceList =
 			_commercePriceListLocalService.getCommercePriceList(
@@ -606,8 +608,8 @@ public class CommercePriceListLocalServiceTest {
 		String name = RandomTestUtil.randomString();
 
 		CommercePriceListTestUtil.upsertCommercePriceList(
-			_group.getGroupId(), 0, currency.getCurrencyCode(), name,
-			RandomTestUtil.randomDouble(), true, null, null, null);
+			null, _group.getGroupId(), 0, currency.getCurrencyCode(), name,
+			RandomTestUtil.randomDouble(), true, null, null);
 	}
 
 	@Test
@@ -640,8 +642,9 @@ public class CommercePriceListLocalServiceTest {
 
 		CommercePriceList commercePriceList =
 			CommercePriceListTestUtil.upsertCommercePriceList(
-				commerceCatalog.getGroupId(), 1, currency.getCurrencyCode(),
-				name, RandomTestUtil.randomDouble(), true, null, null, null);
+				null, commerceCatalog.getGroupId(), 1,
+				currency.getCurrencyCode(), name, RandomTestUtil.randomDouble(),
+				true, null, null);
 
 		_assertPriceListAttributes(currency, name, commercePriceList);
 	}
@@ -679,9 +682,9 @@ public class CommercePriceListLocalServiceTest {
 
 		CommercePriceList commercePriceList =
 			CommercePriceListTestUtil.upsertCommercePriceList(
-				commerceCatalog.getGroupId(), 1, currency.getCurrencyCode(),
-				parentCommercePriceListId, name, RandomTestUtil.randomDouble(),
-				true, null, null, null);
+				null, commerceCatalog.getGroupId(), 1,
+				currency.getCurrencyCode(), parentCommercePriceListId, name,
+				RandomTestUtil.randomDouble(), true, null, null);
 
 		Assert.assertThat(
 			commercePriceList.getParentCommercePriceListId(),
@@ -721,9 +724,9 @@ public class CommercePriceListLocalServiceTest {
 
 		CommercePriceList commercePriceList =
 			CommercePriceListTestUtil.upsertCommercePriceList(
-				commerceCatalog.getGroupId(), 1, currency.getCurrencyCode(),
-				parentCommercePriceListId, name, RandomTestUtil.randomDouble(),
-				true, null, null, null);
+				null, commerceCatalog.getGroupId(), 1,
+				currency.getCurrencyCode(), parentCommercePriceListId, name,
+				RandomTestUtil.randomDouble(), true, null, null);
 
 		Assert.assertThat(
 			commercePriceList.getParentCommercePriceListId(),

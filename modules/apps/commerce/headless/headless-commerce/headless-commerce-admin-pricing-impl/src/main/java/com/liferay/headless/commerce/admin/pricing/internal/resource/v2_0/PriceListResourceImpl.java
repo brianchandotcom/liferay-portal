@@ -115,7 +115,7 @@ public class PriceListResourceImpl extends BasePriceListResourceImpl {
 
 		CommercePriceList commercePriceList =
 			_commercePriceListService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commercePriceList == null) {
 			throw new NoSuchPriceListException(
@@ -146,7 +146,7 @@ public class PriceListResourceImpl extends BasePriceListResourceImpl {
 
 		CommercePriceList commercePriceList =
 			_commercePriceListService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commercePriceList == null) {
 			throw new NoSuchPriceListException(
@@ -199,7 +199,7 @@ public class PriceListResourceImpl extends BasePriceListResourceImpl {
 
 		CommercePriceList commercePriceList =
 			_commercePriceListService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commercePriceList == null) {
 			throw new NoSuchPriceListException(
@@ -581,6 +581,7 @@ public class PriceListResourceImpl extends BasePriceListResourceImpl {
 
 		CommercePriceList commercePriceList =
 			_commercePriceListService.upsertCommercePriceList(
+				priceList.getExternalReferenceCode(),
 				commerceCatalog.getGroupId(), contextUser.getUserId(), 0L,
 				commerceCurrency.getCommerceCurrencyId(),
 				GetterUtil.get(priceList.getNetPrice(), true),
@@ -597,7 +598,6 @@ public class PriceListResourceImpl extends BasePriceListResourceImpl {
 				expirationDateConfig.getDay(), expirationDateConfig.getYear(),
 				expirationDateConfig.getHour(),
 				expirationDateConfig.getMinute(),
-				priceList.getExternalReferenceCode(),
 				GetterUtil.getBoolean(priceList.getNeverExpire(), true),
 				serviceContext);
 

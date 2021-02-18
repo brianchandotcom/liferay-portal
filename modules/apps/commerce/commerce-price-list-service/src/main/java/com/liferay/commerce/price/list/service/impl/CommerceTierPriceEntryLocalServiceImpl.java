@@ -88,7 +88,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 		throws PortalException {
 
 		return addCommerceTierPriceEntry(
-			commercePriceEntryId, null, price, promoPrice, bulkPricing,
+			null, commercePriceEntryId, price, promoPrice, bulkPricing,
 			minQuantity, serviceContext);
 	}
 
@@ -99,14 +99,14 @@ public class CommerceTierPriceEntryLocalServiceImpl
 		throws PortalException {
 
 		return addCommerceTierPriceEntry(
-			commercePriceEntryId, null, price, promoPrice, minQuantity,
+			null, commercePriceEntryId, price, promoPrice, minQuantity,
 			serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceTierPriceEntry addCommerceTierPriceEntry(
-			long commercePriceEntryId, String externalReferenceCode,
+			String externalReferenceCode, long commercePriceEntryId,
 			BigDecimal price, BigDecimal promoPrice, boolean bulkPricing,
 			int minQuantity, ServiceContext serviceContext)
 		throws PortalException {
@@ -114,7 +114,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 		Calendar now = new GregorianCalendar();
 
 		return addCommerceTierPriceEntry(
-			commercePriceEntryId, externalReferenceCode, price, promoPrice,
+			externalReferenceCode, commercePriceEntryId, price, promoPrice,
 			minQuantity, bulkPricing, true, null, null, null, null,
 			now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH),
 			now.get(Calendar.YEAR), now.get(Calendar.HOUR),
@@ -124,7 +124,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceTierPriceEntry addCommerceTierPriceEntry(
-			long commercePriceEntryId, String externalReferenceCode,
+			String externalReferenceCode, long commercePriceEntryId,
 			BigDecimal price, BigDecimal promoPrice, int minQuantity,
 			boolean bulkPricing, boolean discountDiscovery,
 			BigDecimal discountLevel1, BigDecimal discountLevel2,
@@ -147,7 +147,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 		}
 
 		validateExternalReferenceCode(
-			serviceContext.getCompanyId(), externalReferenceCode);
+			externalReferenceCode, serviceContext.getCompanyId());
 
 		Date expirationDate = null;
 		Date now = new Date();
@@ -169,6 +169,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 		CommerceTierPriceEntry commerceTierPriceEntry =
 			commerceTierPriceEntryPersistence.create(commerceTierPriceEntryId);
 
+		commerceTierPriceEntry.setExternalReferenceCode(externalReferenceCode);
 		commerceTierPriceEntry.setCompanyId(user.getCompanyId());
 		commerceTierPriceEntry.setUserId(user.getUserId());
 		commerceTierPriceEntry.setUserName(user.getFullName());
@@ -182,7 +183,6 @@ public class CommerceTierPriceEntryLocalServiceImpl
 		commerceTierPriceEntry.setDiscountLevel4(discountLevel4);
 		commerceTierPriceEntry.setMinQuantity(minQuantity);
 		commerceTierPriceEntry.setExpandoBridgeAttributes(serviceContext);
-		commerceTierPriceEntry.setExternalReferenceCode(externalReferenceCode);
 		commerceTierPriceEntry.setDisplayDate(displayDate);
 
 		if ((expirationDate == null) || expirationDate.after(now)) {
@@ -211,7 +211,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 
 	@Override
 	public CommerceTierPriceEntry addCommerceTierPriceEntry(
-			long commercePriceEntryId, String externalReferenceCode,
+			String externalReferenceCode, long commercePriceEntryId,
 			BigDecimal price, BigDecimal promoPrice, int minQuantity,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -219,7 +219,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 		Calendar now = new GregorianCalendar();
 
 		return addCommerceTierPriceEntry(
-			commercePriceEntryId, externalReferenceCode, price, promoPrice,
+			externalReferenceCode, commercePriceEntryId, price, promoPrice,
 			minQuantity, true, true, null, null, null, null,
 			now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH),
 			now.get(Calendar.YEAR), now.get(Calendar.HOUR),
@@ -228,7 +228,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 
 	@Override
 	public CommerceTierPriceEntry addCommerceTierPriceEntry(
-			long commercePriceEntryId, String externalReferenceCode,
+			String externalReferenceCode, long commercePriceEntryId,
 			BigDecimal price, int minQuantity, boolean bulkPricing,
 			boolean discountDiscovery, BigDecimal discountLevel1,
 			BigDecimal discountLevel2, BigDecimal discountLevel3,
@@ -241,7 +241,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 		throws PortalException {
 
 		return addCommerceTierPriceEntry(
-			commercePriceEntryId, externalReferenceCode, price, null,
+			externalReferenceCode, commercePriceEntryId, price, null,
 			minQuantity, bulkPricing, discountDiscovery, discountLevel1,
 			discountLevel2, discountLevel3, discountLevel4, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
@@ -318,7 +318,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 
 	@Override
 	public CommerceTierPriceEntry fetchByExternalReferenceCode(
-		long companyId, String externalReferenceCode) {
+		String externalReferenceCode, long companyId) {
 
 		if (Validator.isBlank(externalReferenceCode)) {
 			externalReferenceCode = null;
@@ -618,17 +618,16 @@ public class CommerceTierPriceEntryLocalServiceImpl
 
 	@Override
 	public CommerceTierPriceEntry upsertCommerceTierPriceEntry(
-			long commerceTierPriceEntryId, long commercePriceEntryId,
-			String externalReferenceCode, BigDecimal price,
-			BigDecimal promoPrice, int minQuantity, boolean bulkPricing,
-			boolean discountDiscovery, BigDecimal discountLevel1,
-			BigDecimal discountLevel2, BigDecimal discountLevel3,
-			BigDecimal discountLevel4, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			int expirationDateMonth, int expirationDateDay,
-			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, boolean neverExpire,
-			String priceEntryExternalReferenceCode,
+			String externalReferenceCode, long commerceTierPriceEntryId,
+			long commercePriceEntryId, BigDecimal price, BigDecimal promoPrice,
+			int minQuantity, boolean bulkPricing, boolean discountDiscovery,
+			BigDecimal discountLevel1, BigDecimal discountLevel2,
+			BigDecimal discountLevel3, BigDecimal discountLevel4,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, String priceEntryExternalReferenceCode,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -689,14 +688,14 @@ public class CommerceTierPriceEntryLocalServiceImpl
 					commercePriceEntryId);
 
 			return addCommerceTierPriceEntry(
-				commercePriceEntry.getCommercePriceEntryId(),
-				externalReferenceCode, price, promoPrice, minQuantity,
-				bulkPricing, discountDiscovery, discountLevel1, discountLevel2,
-				discountLevel3, discountLevel4, displayDateMonth,
-				displayDateDay, displayDateYear, displayDateHour,
-				displayDateMinute, expirationDateMonth, expirationDateDay,
-				expirationDateYear, expirationDateHour, expirationDateMinute,
-				neverExpire, serviceContext);
+				externalReferenceCode,
+				commercePriceEntry.getCommercePriceEntryId(), price, promoPrice,
+				minQuantity, bulkPricing, discountDiscovery, discountLevel1,
+				discountLevel2, discountLevel3, discountLevel4,
+				displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, expirationDateMonth,
+				expirationDateDay, expirationDateYear, expirationDateHour,
+				expirationDateMinute, neverExpire, serviceContext);
 		}
 
 		if (Validator.isNotNull(priceEntryExternalReferenceCode)) {
@@ -709,14 +708,14 @@ public class CommerceTierPriceEntryLocalServiceImpl
 				0L, commercePriceEntry.getCommercePriceEntryId(), minQuantity);
 
 			return addCommerceTierPriceEntry(
-				commercePriceEntry.getCommercePriceEntryId(),
-				externalReferenceCode, price, promoPrice, minQuantity,
-				bulkPricing, discountDiscovery, discountLevel1, discountLevel2,
-				discountLevel3, discountLevel4, displayDateMonth,
-				displayDateDay, displayDateYear, displayDateHour,
-				displayDateMinute, expirationDateMonth, expirationDateDay,
-				expirationDateYear, expirationDateHour, expirationDateMinute,
-				neverExpire, serviceContext);
+				externalReferenceCode,
+				commercePriceEntry.getCommercePriceEntryId(), price, promoPrice,
+				minQuantity, bulkPricing, discountDiscovery, discountLevel1,
+				discountLevel2, discountLevel3, discountLevel4,
+				displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, expirationDateMonth,
+				expirationDateDay, expirationDateYear, expirationDateHour,
+				expirationDateMinute, neverExpire, serviceContext);
 		}
 
 		StringBundler sb = new StringBundler(6);
@@ -735,13 +734,13 @@ public class CommerceTierPriceEntryLocalServiceImpl
 	 * This method is used to insert a new CommerceTierPriceEntry or update an
 	 * existing one
 	 *
-	 * @param  commerceTierPriceEntryId - <b>Only</b> used when updating an
-	 *         entity; the matching one will be updated
-	 * @param  commercePriceEntryId - <b>Only</b> used when adding a new entity
 	 * @param  externalReferenceCode - The external identifier code from a 3rd
 	 *         party system to be able to locate the same entity in the portal
 	 *         <b>Only</b> used when updating an entity; the first entity with a
 	 *         matching reference code one will be updated
+	 * @param  commerceTierPriceEntryId - <b>Only</b> used when updating an
+	 *         entity; the matching one will be updated
+	 * @param  commercePriceEntryId - <b>Only</b> used when adding a new entity
 	 * @param  price
 	 * @param  promoPrice
 	 * @param  minQuantity
@@ -758,18 +757,17 @@ public class CommerceTierPriceEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceTierPriceEntry upsertCommerceTierPriceEntry(
-			long commerceTierPriceEntryId, long commercePriceEntryId,
-			String externalReferenceCode, BigDecimal price,
-			BigDecimal promoPrice, int minQuantity,
-			String priceEntryExternalReferenceCode,
+			String externalReferenceCode, long commerceTierPriceEntryId,
+			long commercePriceEntryId, BigDecimal price, BigDecimal promoPrice,
+			int minQuantity, String priceEntryExternalReferenceCode,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		Calendar now = new GregorianCalendar();
 
 		return upsertCommerceTierPriceEntry(
-			commerceTierPriceEntryId, commercePriceEntryId,
-			externalReferenceCode, price, promoPrice, minQuantity, true, true,
+			externalReferenceCode, commerceTierPriceEntryId,
+			commercePriceEntryId, price, promoPrice, minQuantity, true, true,
 			null, null, null, null, now.get(Calendar.MONTH),
 			now.get(Calendar.DAY_OF_MONTH), now.get(Calendar.YEAR),
 			now.get(Calendar.HOUR), now.get(Calendar.MINUTE), 0, 0, 0, 0, 0,
@@ -778,8 +776,8 @@ public class CommerceTierPriceEntryLocalServiceImpl
 
 	@Override
 	public CommerceTierPriceEntry upsertCommerceTierPriceEntry(
-			long commerceTierPriceEntryId, long commercePriceEntryId,
-			String externalReferenceCode, BigDecimal price, int minQuantity,
+			String externalReferenceCode, long commerceTierPriceEntryId,
+			long commercePriceEntryId, BigDecimal price, int minQuantity,
 			boolean bulkPricing, boolean discountDiscovery,
 			BigDecimal discountLevel1, BigDecimal discountLevel2,
 			BigDecimal discountLevel3, BigDecimal discountLevel4,
@@ -792,8 +790,8 @@ public class CommerceTierPriceEntryLocalServiceImpl
 		throws PortalException {
 
 		return upsertCommerceTierPriceEntry(
-			commerceTierPriceEntryId, commercePriceEntryId,
-			externalReferenceCode, price, null, minQuantity, bulkPricing,
+			externalReferenceCode, commerceTierPriceEntryId,
+			commercePriceEntryId, price, null, minQuantity, bulkPricing,
 			discountDiscovery, discountLevel1, discountLevel2, discountLevel3,
 			discountLevel4, displayDateMonth, displayDateDay, displayDateYear,
 			displayDateHour, displayDateMinute, expirationDateMonth,
@@ -1027,7 +1025,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 	}
 
 	protected void validateExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+			String externalReferenceCode, long companyId)
 		throws PortalException {
 
 		if (Validator.isNull(externalReferenceCode)) {

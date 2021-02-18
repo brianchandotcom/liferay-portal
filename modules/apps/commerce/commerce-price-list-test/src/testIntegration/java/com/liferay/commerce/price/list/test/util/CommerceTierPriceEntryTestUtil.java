@@ -51,7 +51,7 @@ public class CommerceTierPriceEntryTestUtil {
 				commercePriceList.getGroupId());
 
 		return CommerceTierPriceEntryLocalServiceUtil.addCommerceTierPriceEntry(
-			commercePriceEntryId, externalReferenceCode,
+			externalReferenceCode, commercePriceEntryId,
 			BigDecimal.valueOf(price), BigDecimal.valueOf(promoPrice),
 			minQuantity, serviceContext);
 	}
@@ -68,8 +68,8 @@ public class CommerceTierPriceEntryTestUtil {
 
 		return CommerceTierPriceEntryLocalServiceUtil.
 			upsertCommerceTierPriceEntry(
-				commerceTierPriceEntryId, commercePriceEntryId,
-				externalReferenceCode, BigDecimal.valueOf(price),
+				externalReferenceCode, commerceTierPriceEntryId,
+				commercePriceEntryId, BigDecimal.valueOf(price),
 				BigDecimal.valueOf(promoPrice), minQuantity,
 				priceEntryExternalReferenceCode,
 				ServiceContextTestUtil.getServiceContext(groupId));

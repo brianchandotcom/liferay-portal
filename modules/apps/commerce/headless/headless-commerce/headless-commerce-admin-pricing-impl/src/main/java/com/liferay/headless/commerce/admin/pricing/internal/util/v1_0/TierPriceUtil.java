@@ -34,9 +34,9 @@ public class TierPriceUtil {
 		throws PortalException {
 
 		return commerceTierPriceEntryService.upsertCommerceTierPriceEntry(
+			tierPrice.getExternalReferenceCode(),
 			GetterUtil.getLong(tierPrice.getId()),
-			commercePriceEntry.getCommercePriceEntryId(),
-			tierPrice.getExternalReferenceCode(), tierPrice.getPrice(),
+			commercePriceEntry.getCommercePriceEntryId(), tierPrice.getPrice(),
 			tierPrice.getPromoPrice(), tierPrice.getMinimumQuantity(),
 			tierPrice.getPriceEntryExternalReferenceCode(), serviceContext);
 	}

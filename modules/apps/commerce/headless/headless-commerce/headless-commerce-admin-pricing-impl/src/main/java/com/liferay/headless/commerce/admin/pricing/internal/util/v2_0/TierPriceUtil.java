@@ -52,9 +52,9 @@ public class TierPriceUtil {
 			tierPrice.getExpirationDate(), serviceContext.getTimeZone());
 
 		return commerceTierPriceEntryService.upsertCommerceTierPriceEntry(
+			tierPrice.getExternalReferenceCode(),
 			GetterUtil.getLong(tierPrice.getId()),
 			commercePriceEntry.getCommercePriceEntryId(),
-			tierPrice.getExternalReferenceCode(),
 			BigDecimal.valueOf(tierPrice.getPrice()),
 			tierPrice.getMinimumQuantity(), commercePriceEntry.isBulkPricing(),
 			GetterUtil.getBoolean(tierPrice.getDiscountDiscovery(), true),

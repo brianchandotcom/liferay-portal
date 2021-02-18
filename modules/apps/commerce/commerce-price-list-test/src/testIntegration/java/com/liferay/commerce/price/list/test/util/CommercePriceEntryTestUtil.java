@@ -59,8 +59,8 @@ public class CommercePriceEntryTestUtil {
 
 		CommercePriceList commercePriceList =
 			CommercePriceListTestUtil.addCommercePriceList(
-				commerceCatalog.getGroupId(), currency.getCurrencyCode(), name,
-				RandomTestUtil.randomDouble(), true, null, null, null);
+				null, commerceCatalog.getGroupId(), currency.getCurrencyCode(),
+				name, RandomTestUtil.randomDouble(), true, null, null);
 
 		double price = RandomTestUtil.randomDouble();
 		double promoPrice = RandomTestUtil.randomDouble();

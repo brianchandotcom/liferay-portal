@@ -161,7 +161,7 @@ public class CommercePriceEntriesImporter {
 
 		CommercePriceList commercePriceList =
 			_commercePriceListLocalService.fetchByExternalReferenceCode(
-				serviceContext.getCompanyId(), priceListExternalReferenceCode);
+				priceListExternalReferenceCode, serviceContext.getCompanyId());
 
 		if (commercePriceList == null) {
 			throw new NoSuchPriceListException(

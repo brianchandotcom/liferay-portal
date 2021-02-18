@@ -257,7 +257,7 @@ public class CommerceTierPriceEntryLocalServiceTest {
 
 		CommerceTierPriceEntry commerceTierPriceEntry =
 			_commerceTierPriceEntryLocalService.fetchByExternalReferenceCode(
-				_group.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, _group.getCompanyId());
 
 		_assertTierPriceEntryAttributes(
 			commercePriceEntry, minQuantity, price, promoPrice,

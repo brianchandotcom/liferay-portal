@@ -124,8 +124,8 @@ public class CommercePriceEntryLocalServiceTest {
 
 		CommercePriceList commercePriceList =
 			CommercePriceListTestUtil.addCommercePriceList(
-				commerceCatalog.getGroupId(), _commerceCurrency.getCode(), name,
-				RandomTestUtil.randomDouble(), true, null, null, null);
+				null, commerceCatalog.getGroupId(), _commerceCurrency.getCode(),
+				name, RandomTestUtil.randomDouble(), true, null, null);
 
 		double price = RandomTestUtil.randomDouble();
 		double promoPrice = RandomTestUtil.randomDouble();
@@ -173,8 +173,8 @@ public class CommercePriceEntryLocalServiceTest {
 
 		CommercePriceList commercePriceList =
 			CommercePriceListTestUtil.addCommercePriceList(
-				commerceCatalog.getGroupId(), _commerceCurrency.getCode(), name,
-				RandomTestUtil.randomDouble(), true, null, null, null);
+				null, commerceCatalog.getGroupId(), _commerceCurrency.getCode(),
+				name, RandomTestUtil.randomDouble(), true, null, null);
 
 		String externalReferenceCode = RandomTestUtil.randomString();
 		double price = RandomTestUtil.randomDouble();
@@ -215,9 +215,9 @@ public class CommercePriceEntryLocalServiceTest {
 
 		CommercePriceList commercePriceList =
 			CommercePriceListTestUtil.addCommercePriceList(
-				commerceCatalog.getGroupId(), _commerceCurrency.getCode(),
+				null, commerceCatalog.getGroupId(), _commerceCurrency.getCode(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
-				true, null, null, null);
+				true, null, null);
 
 		CommercePriceEntry commercePriceEntry =
 			CommercePriceEntryTestUtil.addCommercePriceEntry(
@@ -258,9 +258,9 @@ public class CommercePriceEntryLocalServiceTest {
 
 		CommercePriceList commercePriceList =
 			CommercePriceListTestUtil.addCommercePriceList(
-				commerceCatalog.getGroupId(), _commerceCurrency.getCode(),
+				null, commerceCatalog.getGroupId(), _commerceCurrency.getCode(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
-				true, null, null, null);
+				true, null, null);
 
 		CommercePriceEntry commercePriceEntry =
 			_commercePriceEntryLocalService.fetchCommercePriceEntry(
@@ -293,16 +293,16 @@ public class CommercePriceEntryLocalServiceTest {
 
 		CommercePriceList parentCommercePriceList =
 			CommercePriceListTestUtil.addCommercePriceList(
-				_group.getGroupId(), _commerceCurrency.getCode(),
+				null, _group.getGroupId(), _commerceCurrency.getCode(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
-				true, null, null, null);
+				true, null, null);
 
 		CommercePriceList childCommercePriceList =
 			CommercePriceListTestUtil.addCommercePriceList(
-				_group.getGroupId(), _commerceCurrency.getCode(),
+				null, _group.getGroupId(), _commerceCurrency.getCode(),
 				parentCommercePriceList.getCommercePriceListId(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
-				true, null, null, null);
+				true, null, null);
 
 		CommercePriceEntry commercePriceEntry =
 			CommercePriceEntryTestUtil.addCommercePriceEntry(
@@ -347,16 +347,16 @@ public class CommercePriceEntryLocalServiceTest {
 
 		CommercePriceList parentCommercePriceList =
 			CommercePriceListTestUtil.addCommercePriceList(
-				_group.getGroupId(), _commerceCurrency.getCode(),
+				null, _group.getGroupId(), _commerceCurrency.getCode(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
-				true, null, null, null);
+				true, null, null);
 
 		CommercePriceList childCommercePriceList =
 			CommercePriceListTestUtil.addCommercePriceList(
-				_group.getGroupId(), _commerceCurrency.getCode(),
+				null, _group.getGroupId(), _commerceCurrency.getCode(),
 				parentCommercePriceList.getCommercePriceListId(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
-				true, null, null, null);
+				true, null, null);
 
 		CommercePriceEntryTestUtil.addCommercePriceEntry(
 			RandomTestUtil.randomString(), cpInstance.getCPInstanceId(),
@@ -404,16 +404,16 @@ public class CommercePriceEntryLocalServiceTest {
 
 		CommercePriceList parentCommercePriceList =
 			CommercePriceListTestUtil.addCommercePriceList(
-				_group.getGroupId(), _commerceCurrency.getCode(),
+				null, _group.getGroupId(), _commerceCurrency.getCode(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
-				true, null, null, null);
+				true, null, null);
 
 		CommercePriceList childCommercePriceList =
 			CommercePriceListTestUtil.addCommercePriceList(
-				_group.getGroupId(), _commerceCurrency.getCode(),
+				null, _group.getGroupId(), _commerceCurrency.getCode(),
 				parentCommercePriceList.getCommercePriceListId(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
-				true, null, null, null);
+				true, null, null);
 
 		CommercePriceEntryTestUtil.addCommercePriceEntry(
 			RandomTestUtil.randomString(), cpInstance.getCPInstanceId(),
@@ -463,8 +463,8 @@ public class CommercePriceEntryLocalServiceTest {
 
 		CommercePriceList commercePriceList =
 			CommercePriceListTestUtil.addCommercePriceList(
-				_group.getGroupId(), _commerceCurrency.getCode(), name,
-				RandomTestUtil.randomDouble(), true, null, null, null);
+				null, _group.getGroupId(), _commerceCurrency.getCode(), name,
+				RandomTestUtil.randomDouble(), true, null, null);
 
 		double price = RandomTestUtil.randomDouble();
 		double promoPrice = RandomTestUtil.randomDouble();
@@ -515,8 +515,8 @@ public class CommercePriceEntryLocalServiceTest {
 
 		CommercePriceList commercePriceList =
 			CommercePriceListTestUtil.addCommercePriceList(
-				_group.getGroupId(), _commerceCurrency.getCode(), name,
-				RandomTestUtil.randomDouble(), true, null, null, null);
+				null, _group.getGroupId(), _commerceCurrency.getCode(), name,
+				RandomTestUtil.randomDouble(), true, null, null);
 
 		String externalReferenceCode = RandomTestUtil.randomString();
 		double price = RandomTestUtil.randomDouble();
@@ -529,7 +529,7 @@ public class CommercePriceEntryLocalServiceTest {
 
 		CommercePriceEntry commercePriceEntry =
 			_commercePriceEntryLocalService.fetchByExternalReferenceCode(
-				_group.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, _group.getCompanyId());
 
 		_assertPriceEntryAttributes(
 			cpInstance, price, promoPrice, commercePriceEntry);
@@ -571,8 +571,8 @@ public class CommercePriceEntryLocalServiceTest {
 
 		CommercePriceList commercePriceList =
 			CommercePriceListTestUtil.addCommercePriceList(
-				_group.getGroupId(), _commerceCurrency.getCode(), name,
-				RandomTestUtil.randomDouble(), true, null, null, null);
+				null, _group.getGroupId(), _commerceCurrency.getCode(), name,
+				RandomTestUtil.randomDouble(), true, null, null);
 
 		double price = RandomTestUtil.randomDouble();
 		double promoPrice = RandomTestUtil.randomDouble();
@@ -635,8 +635,8 @@ public class CommercePriceEntryLocalServiceTest {
 
 		CommercePriceList commercePriceList =
 			CommercePriceListTestUtil.addCommercePriceList(
-				_group.getGroupId(), _commerceCurrency.getCode(), name,
-				RandomTestUtil.randomDouble(), true, null, null, null);
+				null, _group.getGroupId(), _commerceCurrency.getCode(), name,
+				RandomTestUtil.randomDouble(), true, null, null);
 
 		double price = RandomTestUtil.randomDouble();
 		double promoPrice = RandomTestUtil.randomDouble();
@@ -684,8 +684,8 @@ public class CommercePriceEntryLocalServiceTest {
 
 		CommercePriceList commercePriceList =
 			CommercePriceListTestUtil.addCommercePriceList(
-				_group.getGroupId(), _commerceCurrency.getCode(), name,
-				RandomTestUtil.randomDouble(), true, null, null, null);
+				null, _group.getGroupId(), _commerceCurrency.getCode(), name,
+				RandomTestUtil.randomDouble(), true, null, null);
 
 		double price = RandomTestUtil.randomDouble();
 		double promoPrice = RandomTestUtil.randomDouble();

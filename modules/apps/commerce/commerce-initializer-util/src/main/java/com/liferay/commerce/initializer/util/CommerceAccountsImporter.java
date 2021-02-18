@@ -250,8 +250,8 @@ public class CommerceAccountsImporter {
 					CommercePriceList commercePriceList =
 						_commercePriceListLocalService.
 							fetchByExternalReferenceCode(
-								serviceContext.getCompanyId(),
-								externalReferenceCode);
+								externalReferenceCode,
+								serviceContext.getCompanyId());
 
 					if (commercePriceList != null) {
 						_commercePriceListAccountRelLocalService.

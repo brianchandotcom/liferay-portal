@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>INFO_ICON</td>
-	<td>//nav[contains(@class,'management-bar')]//div[contains(@class,'container-fluid')]//button[contains(@class,'nav-link')]</td>
+	<td>//nav[contains(@class,'management-bar')]//div[contains(@class,'container-fluid')]//button[*[name()='svg'][contains(@class,'info-circle')]]</td>
 	<td></td>
 </tr>
 <tr>

@@ -90,6 +90,8 @@ public class IconDeleteTag extends IconTag {
 					icon = "times-circle";
 				}
 			}
+
+			setLinkCssClass("component-action");
 		}
 
 		setIcon(icon);

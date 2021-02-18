@@ -2159,7 +2159,9 @@ definition {
 			key_title = "Manual Collection",
 			locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
 
-		AssetListsAdmin.configureItemTypeInManualCollection(itemType = "Document");
+		AssetListsAdmin.configureItemTypeInManualCollection(
+			itemSubtype = "All Subtypes",
+			itemType = "Document");
 
 		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 

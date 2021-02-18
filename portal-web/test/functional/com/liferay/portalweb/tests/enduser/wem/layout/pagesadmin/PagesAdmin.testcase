@@ -265,7 +265,9 @@ definition {
 				key_title = "Manual Collection",
 				locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
 
-			AssetListsAdmin.configureItemTypeInManualCollection(itemType = "Web Content Article");
+			AssetListsAdmin.configureItemTypeInManualCollection(
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article");
 		}
 
 		task ("Add a collection page based on maual collection") {

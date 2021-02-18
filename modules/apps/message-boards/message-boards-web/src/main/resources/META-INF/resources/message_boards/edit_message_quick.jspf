@@ -17,6 +17,6 @@
 <div class="card-tab message-container reply-container" id="<portlet:namespace />addReplyToMessage<%= replyToMessageId %>">
 	<span aria-hidden="true" class="hide loading-animation loading-animation-sm"></span>
 
-	<div class="card hide list-group-card panel">
+	<div class="card hide panel">
 	</div>
 </div>

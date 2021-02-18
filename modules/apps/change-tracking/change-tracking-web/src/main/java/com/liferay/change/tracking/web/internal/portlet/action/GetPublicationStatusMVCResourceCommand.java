@@ -33,6 +33,8 @@ import com.liferay.portal.kernel.util.Portal;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -55,13 +57,45 @@ public class GetPublicationStatusMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			resourceRequest);
+
 		long ctProcessId = ParamUtil.getLong(resourceRequest, "ctProcessId");
 
-		CTProcess ctProcess = _ctProcessLocalService.getCTProcess(ctProcessId);
+		CTProcess ctProcess = _ctProcessLocalService.fetchCTProcess(
+			ctProcessId);
+
+		if (ctProcess == null) {
+			JSONPortletResponseUtil.writeJSON(
+				resourceRequest, resourceResponse,
+				JSONUtil.put(
+					"displayType", "danger"
+				).put(
+					"label", _language.get(httpServletRequest, "failed")
+				).put(
+					"published", false
+				));
+
+			return;
+		}
 
 		BackgroundTask backgroundTask =
 			_backgroundTaskLocalService.fetchBackgroundTask(
 				ctProcess.getBackgroundTaskId());
+
+		if (backgroundTask == null) {
+			JSONPortletResponseUtil.writeJSON(
+				resourceRequest, resourceResponse,
+				JSONUtil.put(
+					"displayType", "danger"
+				).put(
+					"label", _language.get(httpServletRequest, "failed")
+				).put(
+					"published", false
+				));
+
+			return;
+		}
 
 		if (backgroundTask.getStatus() ==
 				BackgroundTaskConstants.STATUS_IN_PROGRESS) {
@@ -79,16 +113,14 @@ public class GetPublicationStatusMVCResourceCommand
 		}
 
 		String displayType = "danger";
-		String label = _language.get(
-			_portal.getHttpServletRequest(resourceRequest), "failed");
+		String label = _language.get(httpServletRequest, "failed");
 		boolean published = false;
 
 		if (backgroundTask.getStatus() ==
 				BackgroundTaskConstants.STATUS_SUCCESSFUL) {
 
 			displayType = "success";
-			label = _language.get(
-				_portal.getHttpServletRequest(resourceRequest), "published");
+			label = _language.get(httpServletRequest, "published");
 			published = true;
 		}
 

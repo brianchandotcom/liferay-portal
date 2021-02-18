@@ -28,7 +28,9 @@ export default function propsTransformer({
 				);
 			}
 
-			Liferay.Util.getTop().location.href = addAccountEntryUserURL;
+			const openerWindow = Liferay.Util.getTop();
+
+			openerWindow.Liferay.Util.navigate(addAccountEntryUserURL);
 		},
 	};
 }

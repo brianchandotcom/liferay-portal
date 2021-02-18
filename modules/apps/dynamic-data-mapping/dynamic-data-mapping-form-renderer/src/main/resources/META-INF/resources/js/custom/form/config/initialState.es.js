@@ -53,7 +53,7 @@ export const initState = ({
 	initialSuccessPageSettings,
 	pages,
 	paginationMode,
-	successPage: initialSuccessPage,
+	successPageSettings: initialSuccessPage,
 	...otherProps
 }) => {
 	const successPageSettings = {
@@ -63,7 +63,7 @@ export const initState = ({
 						[themeDisplay.getDefaultLanguageId()]: initialSuccessPage.body,
 				  }
 				: initialSuccessPageSettings.body,
-		enabled: true,
+		enabled: initialSuccessPage?.enabled ?? true,
 		title:
 			initialSuccessPage?.title === 'string'
 				? {
@@ -97,14 +97,16 @@ export const initState = ({
 
 			// Adds the success page enabled by default.
 
-			{
-				contentRenderer: 'success',
-				id: getUid(),
-				paginationItemRenderer: `${paginationMode}_success`,
-				rows: [],
-				successPageSettings,
-			},
-		],
+			successPageSettings.enabled
+				? {
+						contentRenderer: 'success',
+						id: getUid(),
+						paginationItemRenderer: `${paginationMode}_success`,
+						rows: [],
+						successPageSettings,
+				  }
+				: false,
+		].filter(Boolean),
 		paginationMode,
 		successPageSettings,
 		...otherProps,

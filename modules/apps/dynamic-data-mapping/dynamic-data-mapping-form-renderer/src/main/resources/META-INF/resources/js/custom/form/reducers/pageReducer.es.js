@@ -35,12 +35,22 @@ export default (state, action, config) => {
 			const {defaultLanguageId} = config;
 			const {enabled} = action.payload;
 
-			let newPages = [...pages];
+			const lastPage = pages[pages.length - 1];
+
+			let newPages = pages.filter(
+				({contentRenderer}) => contentRenderer !== 'success'
+			);
 
 			if (enabled) {
+				const successPage =
+					lastPage.contentRenderer === 'success'
+						? lastPage
+						: {id: getUid()};
+
 				newPages = [
 					...newPages,
 					{
+						...successPage,
 						contentRenderer: 'success',
 						defaultLanguageId,
 						paginationItemRenderer: `${paginationMode}_success`,
@@ -48,11 +58,6 @@ export default (state, action, config) => {
 						successPageSettings: action.payload,
 					},
 				];
-			}
-			else {
-				newPages = newPages.filter(
-					({contentRenderer}) => contentRenderer !== 'success'
-				);
 			}
 
 			return {

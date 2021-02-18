@@ -41,13 +41,15 @@ const isForbiddenKey = (event, limit) => {
 };
 
 export const FormInfo = () => {
+	const {defaultLanguageId, portletNamespace} = useConfig();
+
 	const {
 		editingLanguageId,
 		localizedDescription,
 		localizedName,
 	} = useFormState();
-	const {defaultLanguageId} = useConfig;
 	const dispatch = useForm();
+
 	const nameRef = useRef(null);
 	const descriptionRef = useRef(null);
 
@@ -73,6 +75,7 @@ export const FormInfo = () => {
 					<ClayForm.Group>
 						<textarea
 							className="ddm-form-name form-control"
+							name={`${portletNamespace}nameEditor`}
 							onChange={(event) =>
 								dispatch({
 									payload: event.target.value,
@@ -94,6 +97,7 @@ export const FormInfo = () => {
 					<ClayForm.Group>
 						<textarea
 							className="ddm-form-description form-control"
+							name={`${portletNamespace}descriptionEditor`}
 							onChange={(event) =>
 								dispatch({
 									payload: event.target.value,

@@ -17,7 +17,7 @@ import {ClayCheckbox} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import {useEventListener} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {
 	Bar,
 	BarChart,
@@ -33,10 +33,15 @@ import {
 import {BAR_CHART, COLORS, DEFAULT_COLOR} from '../utils/constants';
 import {shortenNumber} from '../utils/shortenNumber';
 
-const ESCAPE_KEYS = [
-	'Escape', // Most browsers.
-	'Esc', // IE and Edge.
-];
+const handleKeydown = (event) => {
+	const resetBarsCategoryFiltersURL = new URLSearchParams(
+		window.location.href
+	).get('resetBarsCategoryFiltersURL');
+
+	if (event.key === 'Escape' && resetBarsCategoryFiltersURL) {
+		Liferay.Util.navigate(decodeURIComponent(resetBarsCategoryFiltersURL));
+	}
+};
 
 export default function AuditBarChart({namespace, rtl, vocabularies}) {
 	const auditBarChartData = useMemo(() => {
@@ -214,29 +219,25 @@ export default function AuditBarChart({namespace, rtl, vocabularies}) {
 
 	const onBarClick = (assetCategoryIds) => {
 		if (assetCategoryIds.length) {
+			const params = new URLSearchParams(window.location.search);
+
 			let uri = window.location.href;
 
-			if (!uri.includes('resetBarsCategoryFiltersURL')) {
+			if (!params.get('resetBarsCategoryFiltersURL')) {
 				uri = Liferay.Util.addParams(
 					'resetBarsCategoryFiltersURL=' + encodeURIComponent(uri),
 					uri
 				);
 			}
 
-			const params = new URLSearchParams(window.location.search);
+			params.getAll(namespace + 'assetCategoryId').forEach((category) => {
+				uri = uri.replace(
+					namespace + 'assetCategoryId=' + category,
+					''
+				);
+			});
 
-			const categories = params.getAll(namespace + 'assetCategoryId');
-
-			if (categories.length) {
-				categories.map((category) => {
-					uri = uri.replace(
-						namespace + 'assetCategoryId=' + category,
-						''
-					);
-				});
-			}
-
-			assetCategoryIds.map((assetCategoryId) => {
+			assetCategoryIds.forEach((assetCategoryId) => {
 				if (assetCategoryId !== 'none') {
 					uri = Liferay.Util.addParams(
 						namespace + 'assetCategoryId=' + assetCategoryId,
@@ -248,21 +249,6 @@ export default function AuditBarChart({namespace, rtl, vocabularies}) {
 			Liferay.Util.navigate(uri);
 		}
 	};
-
-	const handleKeydown = useCallback((event) => {
-		const uri = window.location.href;
-
-		if (
-			ESCAPE_KEYS.includes(event.key) &&
-			uri.includes('resetBarsCategoryFiltersURL')
-		) {
-			const params = new URLSearchParams(uri);
-
-			Liferay.Util.navigate(
-				decodeURIComponent(params.get('resetBarsCategoryFiltersURL'))
-			);
-		}
-	}, []);
 
 	useEventListener('keydown', handleKeydown, true, document);
 

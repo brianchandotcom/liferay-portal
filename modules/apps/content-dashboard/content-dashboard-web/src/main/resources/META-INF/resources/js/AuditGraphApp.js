@@ -22,15 +22,13 @@ export default function ({context, props}) {
 	const {languageDirection, namespace} = context;
 	const {learnHowURL, vocabularies} = props;
 
-	const hasBarsCategoryFilters = () => {
-		return new URLSearchParams(window.location.href).get(
-			'resetBarsCategoryFiltersURL'
-		);
-	};
+	const hasBarsCategoryFilters = new URLSearchParams(
+		window.location.href
+	).get('resetBarsCategoryFiltersURL');
 
 	return vocabularies.length ? (
 		<>
-			{hasBarsCategoryFilters() && (
+			{hasBarsCategoryFilters && (
 				<div className="c-mb-3 c-mx-3 small text-info">
 					<ClayAlert displayType="info">
 						<span>

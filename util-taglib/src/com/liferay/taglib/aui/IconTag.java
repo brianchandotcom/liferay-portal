@@ -72,10 +72,15 @@ public class IconTag extends BaseIconTag {
 
 			String cssClass = GetterUtil.getString(getCssClass());
 
+			jspWriter.write("class=\"");
+
 			if (Validator.isNotNull(cssClass)) {
-				jspWriter.write("class=\"");
 				jspWriter.write(cssClass);
 				jspWriter.write("\" ");
+			}
+			else {
+				jspWriter.write("c-inner");
+				jspWriter.write("\" tabindex=\"-1\" ");
 			}
 
 			jspWriter.write(AUIUtil.buildData(getData()));

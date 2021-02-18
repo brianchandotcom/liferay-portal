@@ -126,7 +126,7 @@ public class IconOptionsTag extends IconTag {
 		iconMenuTag.setMessage("options");
 		iconMenuTag.setShowArrow(false);
 		iconMenuTag.setShowWhenSingleIcon(true);
-		iconMenuTag.setTriggerCssClass("icon-monospaced");
+		iconMenuTag.setTriggerCssClass("component-action");
 
 		iconMenuTag.doBodyTag(
 			pageContext, this::_processPortletConfigurationIcons);

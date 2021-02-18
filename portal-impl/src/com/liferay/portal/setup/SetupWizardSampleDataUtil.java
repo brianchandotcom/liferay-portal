@@ -261,7 +261,7 @@ public class SetupWizardSampleDataUtil {
 
 			long regionId = 0;
 
-			if (!regionCode.equals("0")) {
+			if (regionCode != null) {
 				Region region = RegionServiceUtil.getRegion(
 					countryId, regionCode);
 
@@ -339,32 +339,32 @@ public class SetupWizardSampleDataUtil {
 			"ORD"
 		},
 		{"Consulting", "USA", "CA", OrganizationConstants.TYPE_ORGANIZATION},
-		{"Dalian", "CHN", "0", OrganizationConstants.TYPE_ORGANIZATION, "DLC"},
+		{"Dalian", "CHN", null, OrganizationConstants.TYPE_ORGANIZATION, "DLC"},
 		{"Engineering", "USA", "CA", OrganizationConstants.TYPE_ORGANIZATION},
 		{
-			"Frankfurt", "DEU", "0", OrganizationConstants.TYPE_ORGANIZATION,
+			"Frankfurt", "DEU", null, OrganizationConstants.TYPE_ORGANIZATION,
 			"FRA"
 		},
 		{
-			"Hong Kong", "CHN", "0", OrganizationConstants.TYPE_ORGANIZATION,
+			"Hong Kong", "CHN", null, OrganizationConstants.TYPE_ORGANIZATION,
 			"HKG"
 		},
 		{
-			"Kuala Lumpur", "MYS", "0", OrganizationConstants.TYPE_ORGANIZATION,
-			"KUL"
+			"Kuala Lumpur", "MYS", null,
+			OrganizationConstants.TYPE_ORGANIZATION, "KUL"
 		},
 		{
 			"Los Angeles", "USA", "CA", OrganizationConstants.TYPE_ORGANIZATION,
 			"LAX"
 		},
-		{"Madrid", "ESP", "0", OrganizationConstants.TYPE_ORGANIZATION, "MAD"},
+		{"Madrid", "ESP", null, OrganizationConstants.TYPE_ORGANIZATION, "MAD"},
 		{"Marketing", "USA", "CA", OrganizationConstants.TYPE_ORGANIZATION},
 		{
 			"New York", "USA", "NY", OrganizationConstants.TYPE_ORGANIZATION,
 			"NYC"
 		},
 		{
-			"Saint Paulo", "BRA", "0", OrganizationConstants.TYPE_ORGANIZATION,
+			"Saint Paulo", "BRA", null, OrganizationConstants.TYPE_ORGANIZATION,
 			"GRU"
 		},
 		{"Sales", "USA", "CA", OrganizationConstants.TYPE_ORGANIZATION},

@@ -20,6 +20,33 @@ definition {
 		}
 	}
 
+	@description = "This is a test for covering the following LPS-121306 and LPS-128094."
+	@ignore = "true"
+	@priority = "5"
+	test AssertLicensesAppliedOnRestarts {
+		property commerce.enabled = "true";
+
+		CommerceLicense.viewCommerceAvailable();
+
+		var count = "0";
+
+		while ("${count}" != "3") {
+			Portlet.shutdownServer();
+
+			Portlet.startServer(deleteLiferayHome = "false");
+
+			AssertConsoleTextNotPresent(value1 = "Unable to install bundle com.liferay.commerce.");
+
+			AssertConsoleTextNotPresent(value1 = "Unable to install bundle webbundle");
+
+			Navigator.openURL();
+
+			CommerceLicense.viewCommerceAvailable();
+
+			var count = ${count} + 1;
+		}
+	}
+
 	@priority = "3"
 	test DeleteLiferayDXPLicense {
 		property commerce.enabled = "false";

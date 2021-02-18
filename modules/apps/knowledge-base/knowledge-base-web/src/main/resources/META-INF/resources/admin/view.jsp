@@ -51,7 +51,7 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
 <liferay-util:include page="/admin/common/top_tabs.jsp" servletContext="<%= application %>" />
 
-<clay:management-toolbar-v2
+<clay:management-toolbar
 	actionDropdownItems="<%= kbAdminManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= String.valueOf(kbAdminManagementToolbarDisplayContext.getSearchURL()) %>"
 	componentId="kbAdminManagementToolbar"
@@ -60,6 +60,7 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	filterDropdownItems="<%= kbAdminManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	infoPanelId="infoPanelId"
 	itemsTotal="<%= kbAdminManagementToolbarDisplayContext.getTotal() %>"
+	propsTransformer="admin/js/ManagementToolbarPropsTransformer"
 	searchActionURL="<%= String.valueOf(kbAdminManagementToolbarDisplayContext.getSearchURL()) %>"
 	searchContainerId="kbObjects"
 	selectable="<%= true %>"
@@ -319,33 +320,3 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 		</clay:container-fluid>
 	</div>
 </div>
-
-<script>
-	var deleteEntries = function () {
-		if (
-			confirm(
-				'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-entries" />'
-			)
-		) {
-			var form = document.getElementById('<portlet:namespace />fm');
-
-			if (form) {
-				submitForm(form);
-			}
-		}
-	};
-
-	var ACTIONS = {
-		deleteEntries: deleteEntries,
-	};
-
-	Liferay.componentReady('kbAdminManagementToolbar').then((managementToolbar) => {
-		managementToolbar.on('actionItemClicked', (event) => {
-			var itemData = event.data.item.data;
-
-			if (itemData && itemData.action && ACTIONS[itemData.action]) {
-				ACTIONS[itemData.action]();
-			}
-		});
-	});
-</script>

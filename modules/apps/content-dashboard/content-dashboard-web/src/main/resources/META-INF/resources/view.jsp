@@ -195,8 +195,8 @@ ContentDashboardAdminManagementToolbarDisplayContext contentDashboardAdminManage
 						%>
 
 							<clay:label
-								label="<%= StringUtil.toUpperCase(version.getLabel()) %>"
-								style="<%= version.getStyle() %>"
+								displayType="<%= version.getStyle() %>"
+								label="<%= version.getLabel() %>"
 							/>
 
 						<%

@@ -55,7 +55,7 @@
 </tr>
 <tr>
 	<td>SEARCH_RESULT_SUMMARY</td>
-	<td>//div[contains(@id,'ManagementToolbar')]//span[@class='text-truncate']</td>
+	<td>//nav[contains(@class,'subnav-tbar')]//span[@class='text-truncate']</td>
 	<td></td>
 </tr>
 </tbody>

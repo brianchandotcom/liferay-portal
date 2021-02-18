@@ -648,8 +648,6 @@ definition {
 	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
 	@priority = "5"
 	test TranslationsRemainsUponSavingWebContent {
-		property portal.acceptance = "false";
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
@@ -657,13 +655,13 @@ definition {
 		WebContentStructures.addCP(structureName = "WC Structure Name");
 
 		DataEngine.addField(
-			fieldFieldLabel = "Test one",
+			fieldFieldLabel = "First Rich Text",
 			fieldName = "Rich Text");
 
 		DataEngine.addFieldNested(
-			fieldFieldLabel = "Test two",
+			fieldFieldLabel = "Second Rich Text",
 			fieldName = "Rich Text",
-			targetFieldLabel = "Test one");
+			targetFieldLabel = "First Rich Text");
 
 		WebContentStructures.saveCP();
 
@@ -671,31 +669,44 @@ definition {
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
-		WebContent.addWithStructureCP(webContentTitle = "WC WebContent Title");
+		WebContent.addWithStructureCP(
+			webContentRichText = "This is the first Rich Text field",
+			webContentRichTextFieldLabel = "First Rich Text",
+			webContentTitle = "WC WebContent Title");
 
-		CKEditor.addContentInWebContent(
-			content = "Hello",
-			fieldLabel = "Test one");
-
-		CKEditor.addContentInWebContent(
-			content = "Hi",
-			fieldLabel = "Test two");
+		WebContent.addWithStructureCP(
+			webContentRichText = "This is the second Rich Text field",
+			webContentRichTextFieldLabel = "Second Rich Text");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
-		WebContent.addWithStructureCP(webContentTitle = "Título da Estrutura WC");
+		WebContent.addWithStructureCP(
+			webContentRichText = "Este é o primeiro campo Rico Texto",
+			webContentRichTextFieldLabel = "First Rich Text",
+			webContentTitle = "Título da Estrutura WC");
 
-		CKEditor.addContentInWebContent(
-			content = "Olá",
-			fieldLabel = "Test one");
-
-		CKEditor.addContentInWebContent(
-			content = "Oi",
-			fieldLabel = "Test two");
+		WebContent.addWithStructureCP(
+			webContentRichText = "Este é o segundo campo de Rico Texto",
+			webContentRichTextFieldLabel = "Second Rich Text");
 
 		PortletEntry.publish();
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+		WebContent.viewWithStructureCP(
+			webContentRichText = "This is the first Rich Text field",
+			webContentRichTextFieldLabel = "First Rich Text",
+			webContentTitle = "WC WebContent Title");
+
+		WebContent.viewWithStructureCP(
+			predefinedValue = "true",
+			webContentRichText = "This is the second Rich Text field",
+			webContentRichTextFieldLabel = "Second Rich Text");
+
+		for (var fieldFieldLabel : list "First Rich Text,Second Rich Text") {
+			AssertVisible(
+				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldsGroupLabel = "Fields Group",
+				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+		}
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
@@ -703,13 +714,22 @@ definition {
 			locator1 = "TextInput#TITLE",
 			value1 = "Título da Estrutura WC");
 
-		CKEditor.assertContentIframe(
-			content = "Olá",
-			fieldLabel = "Test one");
+		WebContent.viewWithStructureCP(
+			predefinedValue = "true",
+			webContentRichText = "Este é o primeiro campo Rico Texto",
+			webContentRichTextFieldLabel = "First Rich Text");
 
-		CKEditor.assertContentIframe(
-			content = "Oi",
-			fieldLabel = "Test two");
+		WebContent.viewWithStructureCP(
+			predefinedValue = "true",
+			webContentRichText = "Este é o segundo campo de Rico Texto",
+			webContentRichTextFieldLabel = "Second Rich Text");
+
+		for (var fieldFieldLabel : list "First Rich Text,Second Rich Text") {
+			AssertVisible(
+				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldsGroupLabel = "Fields Group",
+				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+		}
 	}
 
 	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"

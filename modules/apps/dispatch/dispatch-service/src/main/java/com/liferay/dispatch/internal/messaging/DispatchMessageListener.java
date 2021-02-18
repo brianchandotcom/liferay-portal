@@ -61,10 +61,12 @@ public class DispatchMessageListener extends BaseMessageListener {
 					dispatchTriggerId, DispatchTaskStatus.IN_PROGRESS);
 
 			if (dispatchLog != null) {
+				Date date = new Date();
+
 				_dispatchLogLocalService.addDispatchLog(
 					dispatchTrigger.getUserId(),
-					dispatchTrigger.getDispatchTriggerId(), null, null, null,
-					new Date(), DispatchTaskStatus.CANCELED);
+					dispatchTrigger.getDispatchTriggerId(), date, null, null,
+					date, DispatchTaskStatus.CANCELED);
 
 				return;
 			}

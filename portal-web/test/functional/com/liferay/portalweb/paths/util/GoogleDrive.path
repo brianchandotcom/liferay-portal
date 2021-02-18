@@ -40,12 +40,12 @@
 </tr>
 <tr>
 	<td>GRID_VIEW_BUTTON</td>
-	<td>//div[contains(@role,'button') and contains(@aria-label,'Grid view') and contains(@aria-hidden,'false')]</td>
+	<td>//div[contains(@role,'button') and contains(@aria-label,'Grid view')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LIST_VIEW_BUTTON</td>
-	<td>//div[contains(@role,'button') and contains(@aria-label,'List view') and contains(@aria-hidden,'false')]</td>
+	<td>//div[contains(@role,'button') and contains(@aria-label,'List view')]</td>
 	<td></td>
 </tr>
 <tr>

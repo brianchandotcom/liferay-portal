@@ -141,14 +141,6 @@ definition {
 			fieldNameList = "Text",
 			fieldsetName = "New Fieldset");
 
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		FormViewBuilder.editFieldLabel(
-				fieldLabel = "New Fieldset",
-				label = "New Fieldset pt-BR");
-
-		PortletEntry.changeLocale(locale = "en-US");
-
 		DataEngine.addTranslationToFieldset(
 			fieldNameList = "Text",
 			fieldsetName = "New Fieldset",
@@ -199,16 +191,6 @@ definition {
 			fieldHelp = "true",
 			fieldNameList = "Text",
 			fieldsetName = "New Fieldset");
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-		Pause(locator1 = "1000");
-
-		FormViewBuilder.editFieldLabel(
-				fieldLabel = "New Fieldset",
-				label = "New Fieldset pt-BR");
-
-		PortletEntry.changeLocale(locale = "en-US");
-		Pause(locator1 = "1000");
 
 		DataEngine.addTranslationToFieldset(
 			fieldHelp = "true",

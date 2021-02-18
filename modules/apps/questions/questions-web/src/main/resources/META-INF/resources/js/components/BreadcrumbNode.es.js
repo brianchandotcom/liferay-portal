@@ -96,7 +96,16 @@ export default ({
 						{ui || section.title}
 					</Link>
 				) : (
-					ui || section.title
+					<Link
+						className="breadcrumb-item questions-breadcrumb-unstyled"
+						to={`/questions/${
+							context.useTopicNamesInURL
+								? section.title
+								: section.id
+						}`}
+					>
+						{ui || section.title}
+					</Link>
 				)}
 			</li>
 		</>

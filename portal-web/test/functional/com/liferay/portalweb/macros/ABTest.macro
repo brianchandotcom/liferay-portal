@@ -65,8 +65,8 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		AssertTextEquals(locator1 = "ABTest#TARGET_LABEL,
-			value1 = ");
+		AssertTextEquals(locator1 = "ABTest#TARGET_LABEL",
+			value1 = "Target");
 		}
 
 		macro terminateTest {

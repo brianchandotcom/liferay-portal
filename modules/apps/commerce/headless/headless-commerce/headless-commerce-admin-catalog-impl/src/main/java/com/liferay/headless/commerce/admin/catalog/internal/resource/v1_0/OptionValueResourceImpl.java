@@ -26,6 +26,8 @@ import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.O
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionValueResource;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -100,7 +102,8 @@ public class OptionValueResourceImpl
 
 	@Override
 	public Page<OptionValue> getOptionByExternalReferenceCodeOptionValuesPage(
-			String externalReferenceCode, Pagination pagination)
+			String externalReferenceCode, String search, Pagination pagination,
+			Sort[] sorts)
 		throws Exception {
 
 		CPOption cpOption = _cpOptionService.fetchByExternalReferenceCode(
@@ -112,34 +115,42 @@ public class OptionValueResourceImpl
 					externalReferenceCode);
 		}
 
-		List<CPOptionValue> cpOptionValues =
-			_cpOptionValueService.getCPOptionValues(
-				cpOption.getCPOptionId(), pagination.getStartPosition(),
-				pagination.getEndPosition());
+		BaseModelSearchResult<CPOptionValue>
+			cpOptionValueBaseModelSearchResult =
+				_cpOptionValueService.searchCPOptionValues(
+					cpOption.getCompanyId(), cpOption.getCPOptionId(), search,
+					pagination.getStartPosition(), pagination.getEndPosition(),
+					sorts);
 
-		int totalItems = _cpOptionValueService.getCPOptionValuesCount(
-			cpOption.getCPOptionId());
+		int totalItems = _cpOptionValueService.searchCPOptionValuesCount(
+			cpOption.getCompanyId(), cpOption.getCPOptionId(), search);
 
-		return Page.of(_toOptionValues(cpOptionValues), pagination, totalItems);
+		return Page.of(
+			_toOptionValues(cpOptionValueBaseModelSearchResult.getBaseModels()),
+			pagination, totalItems);
 	}
 
 	@NestedField(parentClass = Option.class, value = "values")
 	@Override
 	public Page<OptionValue> getOptionIdOptionValuesPage(
-			Long id, Pagination pagination)
+			Long id, String search, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		CPOption cpOption = _cpOptionService.getCPOption(id);
 
-		List<CPOptionValue> cpOptionValues =
-			_cpOptionValueService.getCPOptionValues(
-				cpOption.getCPOptionId(), pagination.getStartPosition(),
-				pagination.getEndPosition());
+		BaseModelSearchResult<CPOptionValue>
+			cpOptionValueBaseModelSearchResult =
+				_cpOptionValueService.searchCPOptionValues(
+					cpOption.getCompanyId(), cpOption.getCPOptionId(), search,
+					pagination.getStartPosition(), pagination.getEndPosition(),
+					sorts);
 
-		int totalItems = _cpOptionValueService.getCPOptionValuesCount(
-			cpOption.getCPOptionId());
+		int totalItems = _cpOptionValueService.searchCPOptionValuesCount(
+			cpOption.getCompanyId(), cpOption.getCPOptionId(), search);
 
-		return Page.of(_toOptionValues(cpOptionValues), pagination, totalItems);
+		return Page.of(
+			_toOptionValues(cpOptionValueBaseModelSearchResult.getBaseModels()),
+			pagination, totalItems);
 	}
 
 	@Override

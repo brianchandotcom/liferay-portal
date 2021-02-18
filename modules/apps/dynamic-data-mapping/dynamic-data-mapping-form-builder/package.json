@@ -1,7 +1,7 @@
 {
 	"dependencies": {
 		"classnames": "2.2.6",
-		"clay-dropdown": "2.22.2",
+		"clay-dropdown": "2.22.3",
 		"clay-icon": "2.22.2",
 		"clay-modal": "2.22.2",
 		"metal-drag-drop": "3.3.1",

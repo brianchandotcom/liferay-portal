@@ -141,7 +141,7 @@ public class TalendProcessTest {
 			talendProcess.getMainMethodArguments());
 
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+			TalendProcess.DATE_PATTERN);
 
 		Assert.assertTrue(
 			processConfigArguments.contains(

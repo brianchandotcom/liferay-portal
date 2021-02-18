@@ -56,6 +56,12 @@ public interface OAuth2ApplicationService extends BaseService {
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.oauth2.provider.service.impl.OAuth2ApplicationServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the o auth2 application remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link OAuth2ApplicationServiceUtil} if injection and service tracking are not available.
 	 */
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addOAuth2Application(List, long, String, int, String, String, List, String, long, String, String, List, List, ServiceContext, boolean)}
+	 */
+	@Deprecated
 	public OAuth2Application addOAuth2Application(
 			List<GrantType> allowedGrantTypesList, long clientCredentialUserId,
 			String clientId, int clientProfile, String clientSecret,
@@ -63,6 +69,15 @@ public interface OAuth2ApplicationService extends BaseService {
 			long iconFileEntryId, String name, String privacyPolicyURL,
 			List<String> redirectURIsList, List<String> scopeAliasesList,
 			ServiceContext serviceContext)
+		throws PortalException;
+
+	public OAuth2Application addOAuth2Application(
+			List<GrantType> allowedGrantTypesList, long clientCredentialUserId,
+			String clientId, int clientProfile, String clientSecret,
+			String description, List<String> featuresList, String homePageURL,
+			long iconFileEntryId, String name, String privacyPolicyURL,
+			List<String> redirectURIsList, List<String> scopeAliasesList,
+			ServiceContext serviceContext, boolean trustedApplication)
 		throws PortalException;
 
 	/**
@@ -113,6 +128,11 @@ public interface OAuth2ApplicationService extends BaseService {
 			long oAuth2ApplicationId, InputStream inputStream)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #updateOAuth2Application(long, List, long, String, int, String, String, List, String, long, String, String, List, long, ServiceContext)}
+	 */
+	@Deprecated
 	public OAuth2Application updateOAuth2Application(
 			long oAuth2ApplicationId, List<GrantType> allowedGrantTypesList,
 			long clientCredentialUserId, String clientId, int clientProfile,
@@ -120,6 +140,16 @@ public interface OAuth2ApplicationService extends BaseService {
 			String homePageURL, long iconFileEntryId, String name,
 			String privacyPolicyURL, List<String> redirectURIsList,
 			long auth2ApplicationScopeAliasesId, ServiceContext serviceContext)
+		throws PortalException;
+
+	public OAuth2Application updateOAuth2Application(
+			long oAuth2ApplicationId, List<GrantType> allowedGrantTypesList,
+			long clientCredentialUserId, String clientId, int clientProfile,
+			String clientSecret, String description, List<String> featuresList,
+			String homePageURL, long iconFileEntryId, String name,
+			String privacyPolicyURL, List<String> redirectURIsList,
+			long auth2ApplicationScopeAliasesId, ServiceContext serviceContext,
+			boolean trustedApplication)
 		throws PortalException;
 
 	/**

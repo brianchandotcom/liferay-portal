@@ -295,59 +295,17 @@ else {
 			'<%= HtmlUtil.escapeJS(showUsersURL.toString()) %>'
 		);
 	}
+</aui:script>
 
+<aui:script require="users-admin-web/js/actions.es as actions">
 	window['<portlet:namespace />openSelectUsersDialog'] = function (
 		organizationId
 	) {
-		<portlet:renderURL var="selectUsersURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-			<portlet:param name="mvcPath" value="/select_organization_users.jsp" />
-		</portlet:renderURL>
-
-		var selectUsersURL = Liferay.Util.PortletURL.createPortletURL(
-			'<%= selectUsersURL.toString() %>',
-			{
-				organizationId: organizationId,
-			}
-		);
-
-		Liferay.Util.openSelectionModal({
-			buttonAddLabel: '<liferay-ui:message key="done" />',
-			multiple: true,
-			onSelect: function (data) {
-				if (data) {
-					<portlet:renderURL var="assignmentsURL">
-						<portlet:param name="mvcRenderCommandName" value="/users_admin/view" />
-						<portlet:param name="toolbarItem" value="view-all-organizations" />
-						<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_TREE %>" />
-					</portlet:renderURL>
-
-					var assignmentsRedirectURL = Liferay.Util.PortletURL.createPortletURL(
-						'<%= assignmentsURL.toString() %>',
-						{
-							organizationId: organizationId,
-						}
-					);
-
-					var editAssignmentParameters = {
-						addUserIds: data.value,
-						assignmentsRedirect: assignmentsRedirectURL.toString(),
-						organizationId: organizationId,
-					};
-
-					var editAssignmentURL = Liferay.Util.PortletURL.createPortletURL(
-						'<portlet:actionURL name="/users_admin/edit_organization_assignments" />',
-						editAssignmentParameters
-					);
-
-					submitForm(
-						document.<portlet:namespace />fm,
-						editAssignmentURL.toString()
-					);
-				}
-			},
-			selectEventName: '<portlet:namespace />selectUsers',
-			title: '<liferay-ui:message key="assign-users" />',
-			url: selectUsersURL.toString(),
+		actions.ACTIONS.selectUsers({
+			basePortletURL:
+				'<%= String.valueOf(renderResponse.createRenderURL()) %>',
+			organizationId,
+			portletNamespace: '<portlet:namespace />',
 		});
 	};
 </aui:script>

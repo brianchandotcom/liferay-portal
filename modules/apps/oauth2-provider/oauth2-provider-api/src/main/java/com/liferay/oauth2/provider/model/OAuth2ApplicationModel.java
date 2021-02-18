@@ -390,4 +390,25 @@ public interface OAuth2ApplicationModel
 	 */
 	public void setRedirectURIs(String redirectURIs);
 
+	/**
+	 * Returns the trusted application of this o auth2 application.
+	 *
+	 * @return the trusted application of this o auth2 application
+	 */
+	public boolean getTrustedApplication();
+
+	/**
+	 * Returns <code>true</code> if this o auth2 application is trusted application.
+	 *
+	 * @return <code>true</code> if this o auth2 application is trusted application; <code>false</code> otherwise
+	 */
+	public boolean isTrustedApplication();
+
+	/**
+	 * Sets whether this o auth2 application is trusted application.
+	 *
+	 * @param trustedApplication the trusted application of this o auth2 application
+	 */
+	public void setTrustedApplication(boolean trustedApplication);
+
 }

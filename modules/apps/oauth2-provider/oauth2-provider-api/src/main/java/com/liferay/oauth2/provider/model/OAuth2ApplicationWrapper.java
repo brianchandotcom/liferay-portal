@@ -65,6 +65,7 @@ public class OAuth2ApplicationWrapper
 		attributes.put("name", getName());
 		attributes.put("privacyPolicyURL", getPrivacyPolicyURL());
 		attributes.put("redirectURIs", getRedirectURIs());
+		attributes.put("trustedApplication", isTrustedApplication());
 
 		return attributes;
 	}
@@ -192,6 +193,13 @@ public class OAuth2ApplicationWrapper
 
 		if (redirectURIs != null) {
 			setRedirectURIs(redirectURIs);
+		}
+
+		Boolean trustedApplication = (Boolean)attributes.get(
+			"trustedApplication");
+
+		if (trustedApplication != null) {
+			setTrustedApplication(trustedApplication);
 		}
 	}
 
@@ -413,6 +421,16 @@ public class OAuth2ApplicationWrapper
 	}
 
 	/**
+	 * Returns the trusted application of this o auth2 application.
+	 *
+	 * @return the trusted application of this o auth2 application
+	 */
+	@Override
+	public boolean getTrustedApplication() {
+		return model.getTrustedApplication();
+	}
+
+	/**
 	 * Returns the user ID of this o auth2 application.
 	 *
 	 * @return the user ID of this o auth2 application
@@ -440,6 +458,16 @@ public class OAuth2ApplicationWrapper
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
+	}
+
+	/**
+	 * Returns <code>true</code> if this o auth2 application is trusted application.
+	 *
+	 * @return <code>true</code> if this o auth2 application is trusted application; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isTrustedApplication() {
+		return model.isTrustedApplication();
 	}
 
 	@Override
@@ -666,6 +694,16 @@ public class OAuth2ApplicationWrapper
 	@Override
 	public void setRedirectURIsList(java.util.List<String> redirectURIsList) {
 		model.setRedirectURIsList(redirectURIsList);
+	}
+
+	/**
+	 * Sets whether this o auth2 application is trusted application.
+	 *
+	 * @param trustedApplication the trusted application of this o auth2 application
+	 */
+	@Override
+	public void setTrustedApplication(boolean trustedApplication) {
+		model.setTrustedApplication(trustedApplication);
 	}
 
 	/**

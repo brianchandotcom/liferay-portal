@@ -40,7 +40,7 @@ public class ${entity.name}${sessionTypeName}ServiceWrapper implements ${entity.
 			@Override
 			public
 
-			${serviceBuilder.getTypeGenericsName(method.returns)} ${method.name}(
+			${serviceBuilder.getTypeParametersDefinition(method.typeParameters)} ${serviceBuilder.getTypeGenericsName(method.returns)} ${method.name}(
 
 			<#list method.parameters as parameter>
 				${serviceBuilder.getTypeGenericsName(parameter.type)} ${parameter.name}

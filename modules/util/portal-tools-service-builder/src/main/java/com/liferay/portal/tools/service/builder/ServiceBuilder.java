@@ -62,6 +62,7 @@ import com.thoughtworks.qdox.model.JavaType;
 import com.thoughtworks.qdox.model.impl.AbstractBaseJavaEntity;
 import com.thoughtworks.qdox.model.impl.DefaultJavaMethod;
 import com.thoughtworks.qdox.model.impl.DefaultJavaParameterizedType;
+import com.thoughtworks.qdox.model.impl.DefaultJavaTypeVariable;
 
 import freemarker.cache.ClassTemplateLoader;
 
@@ -1629,6 +1630,46 @@ public class ServiceBuilder {
 		sb.append(getDimensions(defaultJavaParameterizedType.getDimensions()));
 
 		return sb.toString();
+	}
+
+	public String getTypeParametersDefinition(
+		List<DefaultJavaTypeVariable> typeParameters) {
+
+		if (ListUtil.isEmpty(typeParameters)) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb1 = new StringBundler();
+
+		for (DefaultJavaTypeVariable typeParameter : typeParameters) {
+			sb1.append(typeParameter.getFullyQualifiedName());
+
+			List<DefaultJavaParameterizedType> bounds =
+				typeParameter.getBounds();
+
+			if (ListUtil.isNotEmpty(bounds)) {
+				StringBundler sb2 = new StringBundler();
+
+				sb2.append(" extends ");
+
+				for (DefaultJavaParameterizedType bound : bounds) {
+					sb2.append(bound.getFullyQualifiedName());
+					sb2.append(
+						StringPool.SPACE + StringPool.AMPERSAND +
+							StringPool.SPACE);
+				}
+
+				sb2.setIndex(sb2.index() - 1);
+
+				sb1.append(sb2.toString());
+			}
+
+			sb1.append(StringPool.COMMA_AND_SPACE);
+		}
+
+		sb1.setIndex(sb1.index() - 1);
+
+		return StringPool.LESS_THAN + sb1.toString() + StringPool.GREATER_THAN;
 	}
 
 	public String getVariableName(JavaField field) {

@@ -241,34 +241,73 @@ definition {
 
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(
-			structureDescription = "Structure Description Test",
-			structureName = "Structure Name Test");
+		WebContentStructures.addCP(structureName = "WC Structure Name");
 
 		DataEngine.addField(
-			fieldFieldLabel = "Text Test",
+			fieldFieldLabel = "Text",
 			fieldName = "Text");
 
 		DataEngine.addFieldNested(
-			fieldFieldLabel = "Text Test Second",
-			fieldName = "Text",
-			targetFieldLabel = "Text Test");
+			fieldFieldLabel = "Image",
+			fieldName = "Image",
+			targetFieldLabel = "Text");
 
 		WebContentStructures.addLocalization(
 			locale = "pt-BR",
-			localization1Name = "Nome Estrutura Teste");
+			localization1Name = "Nome da Estrutura WC");
 
-		WebContentStructures.saveCP(structureName = "Structure Name Test");
+		WebContentStructures.saveCP();
 
-		WebContentNavigator.gotoEditStructure(structureName = "Structure Name Test");
-
-		PortletEntry.changeLocale(locale = "pt_BR");
-
-		PortletEntry.changeLocale(locale = "en_US");
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
-			value1 = "Structure Name Test");
+			value1 = "WC Structure Name");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Fields Group",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		for (var fieldFieldLabel : list "Text,Image") {
+			AssertVisible(
+				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldsGroupLabel = "Fields Group",
+				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+		}
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "Nome da Estrutura WC");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Fields Group",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		for (var fieldFieldLabel : list "Text,Image") {
+			AssertVisible(
+				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldsGroupLabel = "Fields Group",
+				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+		}
+
+		PortletEntry.changeLocale(locale = "en-US");
+
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "WC Structure Name");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Fields Group",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		for (var fieldFieldLabel : list "Text,Image") {
+			AssertVisible(
+				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldsGroupLabel = "Fields Group",
+				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+		}
 	}
 
 	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"

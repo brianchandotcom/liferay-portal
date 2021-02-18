@@ -1,0 +1,23 @@
+task runGradleTest
+
+runGradleTest {
+	dependsOn buildDockerImage
+
+	doLast {
+		File inputDir = new File(buildDir, "docker")
+
+		String[] inputDirFileNames = inputDir.list()
+
+		assert inputDirFileNames.length == 7
+
+		assert inputDirFileNames.contains("100_liferay_image_setup.sh")
+		assert inputDirFileNames.contains("Dockerfile")
+		assert inputDirFileNames.contains("configs")
+		assert inputDirFileNames.contains("deploy")
+		assert inputDirFileNames.contains("patching")
+		assert inputDirFileNames.contains("scripts")
+		assert inputDirFileNames.contains("work")
+	}
+
+	finalizedBy cleanDockerImage
+}

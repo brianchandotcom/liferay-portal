@@ -22,7 +22,7 @@ runGradleTest {
 
 		String[] configsDirFileNames = configsDir.list()
 
-		assert configsDirFileNames.length == 2
+		assert configsDirFileNames.length == 3
 
 		assert configsDirFileNames.contains("local")
 		assert configsDirFileNames.contains("other")

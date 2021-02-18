@@ -116,6 +116,11 @@ $product-menu-pages-administration-link-height: 72px;
 	}
 
 	.tree-view {
+		.lfr-root-node.tree-node-content {
+			align-items: center;
+			display: flex;
+		}
+
 		.tree-container {
 			border-left: 1px solid $gray-800;
 			cursor: pointer;
@@ -128,10 +133,6 @@ $product-menu-pages-administration-link-height: 72px;
 				&:hover {
 					color: $dark;
 				}
-			}
-
-			.table-cell-content {
-				max-width: 175px;
 			}
 
 			.tree-node .tree-node-content {
@@ -172,9 +173,11 @@ $product-menu-pages-administration-link-height: 72px;
 				border: 1px solid $gray-800;
 				border-radius: 2px;
 				font-size: 6px;
+				height: 12px;
 				margin-right: 0;
 				padding: 2px 2px 1px;
 				text-align: center;
+				width: 12px;
 
 				& + span {
 					display: none;
@@ -203,11 +206,12 @@ $product-menu-pages-administration-link-height: 72px;
 				}
 
 				color: $gray-500 !important;
-				display: inline-block;
+				display: flex;
 				flex-grow: 1;
 				margin-left: 8px;
 				padding-right: 17px;
 				vertical-align: middle;
+				width: calc(100% - 20px);
 			}
 
 			.tree-node-selected {

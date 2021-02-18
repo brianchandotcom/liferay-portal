@@ -24,6 +24,8 @@ import com.liferay.dispatch.service.DispatchLogLocalService;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
@@ -68,12 +70,41 @@ public class DispatchMessageListener extends BaseMessageListener {
 			}
 		}
 
+		_getAndExecuteDispatchTaskExecutor(dispatchTrigger);
+	}
+
+	private void _getAndExecuteDispatchTaskExecutor(
+			DispatchTrigger dispatchTrigger)
+		throws Exception {
+
 		DispatchTaskExecutor dispatchTaskExecutor =
 			_dispatchTaskExecutorRegistry.getDispatchTaskExecutor(
 				dispatchTrigger.getDispatchTaskExecutorType());
 
-		dispatchTaskExecutor.execute(dispatchTriggerId);
+		if (dispatchTaskExecutor == null) {
+			String message =
+				"Unable to find DispatchTaskExecutor of type " +
+					dispatchTrigger.getDispatchTaskExecutorType();
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(message);
+			}
+
+			Date date = new Date();
+
+			_dispatchLogLocalService.addDispatchLog(
+				dispatchTrigger.getUserId(),
+				dispatchTrigger.getDispatchTriggerId(), date, message, null,
+				date, DispatchTaskStatus.CANCELED);
+
+			return;
+		}
+
+		dispatchTaskExecutor.execute(dispatchTrigger.getDispatchTriggerId());
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DispatchMessageListener.class);
 
 	@Reference
 	private DispatchLogLocalService _dispatchLogLocalService;

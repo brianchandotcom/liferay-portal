@@ -18,6 +18,8 @@ import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.service.base.CPOptionValueServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
@@ -125,6 +127,31 @@ public class CPOptionValueServiceImpl extends CPOptionValueServiceBaseImpl {
 			getPermissionChecker(), cpOptionId, ActionKeys.VIEW);
 
 		return cpOptionValueLocalService.getCPOptionValuesCount(cpOptionId);
+	}
+
+	@Override
+	public BaseModelSearchResult<CPOptionValue> searchCPOptionValues(
+			long companyId, long cpOptionId, String keywords, int start,
+			int end, Sort[] sorts)
+		throws PortalException {
+
+		_cpOptionModelResourcePermission.check(
+			getPermissionChecker(), cpOptionId, ActionKeys.VIEW);
+
+		return cpOptionValueLocalService.searchCPOptionValues(
+			companyId, cpOptionId, keywords, start, end, sorts);
+	}
+
+	@Override
+	public int searchCPOptionValuesCount(
+			long companyId, long cpOptionId, String keywords)
+		throws PortalException {
+
+		_cpOptionModelResourcePermission.check(
+			getPermissionChecker(), cpOptionId, ActionKeys.VIEW);
+
+		return cpOptionValueLocalService.searchCPOptionValuesCount(
+			companyId, cpOptionId, keywords);
 	}
 
 	@Override

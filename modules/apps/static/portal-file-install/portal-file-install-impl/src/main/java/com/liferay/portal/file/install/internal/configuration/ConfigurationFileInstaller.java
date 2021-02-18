@@ -20,17 +20,15 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.file.install.FileInstaller;
 import com.liferay.portal.file.install.internal.DirectoryWatcher;
 import com.liferay.portal.file.install.internal.properties.ConfigurationProperties;
-import com.liferay.portal.file.install.internal.properties.TypedProperties;
+import com.liferay.portal.file.install.internal.properties.ConfigurationPropertiesFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 
 import java.net.URI;
 import java.net.URL;
@@ -62,10 +60,19 @@ public class ConfigurationFileInstaller implements FileInstaller {
 		if (name.endsWith(".config")) {
 			return true;
 		}
-		else if (name.endsWith(".cfg") && _log.isWarnEnabled()) {
-			_log.warn(
-				"Unable to install .cfg file " + file +
-					", please use .config file instead.");
+		else if (name.endsWith(".cfg")) {
+			if (GetterUtil.getBoolean(
+					PropsValues.MODULE_FRAMEWORK_FILE_INSTALL_ENABLE_CFG,
+					true)) {
+
+				return true;
+			}
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to install .cfg file " + file +
+						", please use .config file instead.");
+			}
 		}
 
 		return false;
@@ -75,17 +82,11 @@ public class ConfigurationFileInstaller implements FileInstaller {
 	public URL transformURL(File file) throws Exception {
 		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
 
-		try (InputStream inputStream = new FileInputStream(file);
-			Reader reader = new InputStreamReader(inputStream, _encoding)) {
+		ConfigurationProperties configurationProperties =
+			ConfigurationPropertiesFactory.create(file, _encoding);
 
-			ConfigurationProperties configurationProperties =
-				new TypedProperties();
-
-			configurationProperties.load(reader);
-
-			for (String key : configurationProperties.keySet()) {
-				dictionary.put(key, configurationProperties.get(key));
-			}
+		for (String key : configurationProperties.keySet()) {
+			dictionary.put(key, configurationProperties.get(key));
 		}
 
 		String[] pid = _parsePid(file.getName());

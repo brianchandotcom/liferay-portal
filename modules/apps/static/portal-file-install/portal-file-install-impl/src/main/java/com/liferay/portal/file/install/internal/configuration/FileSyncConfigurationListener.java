@@ -18,19 +18,15 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.file.install.internal.DirectoryWatcher;
 import com.liferay.portal.file.install.internal.FileInstallImplBundleActivator;
 import com.liferay.portal.file.install.internal.properties.ConfigurationProperties;
-import com.liferay.portal.file.install.internal.properties.TypedProperties;
+import com.liferay.portal.file.install.internal.properties.ConfigurationPropertiesFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.io.Reader;
 import java.io.Writer;
 
 import java.net.URI;
@@ -121,14 +117,7 @@ public class FileSyncConfigurationListener implements ConfigurationListener {
 				if ((file != null) && file.isFile()) {
 					_pidToFile.put(configuration.getPid(), fileName);
 					ConfigurationProperties configurationProperties =
-						new TypedProperties();
-
-					try (InputStream inputStream = new FileInputStream(file);
-						Reader reader = new InputStreamReader(
-							inputStream, _encoding)) {
-
-						configurationProperties.load(reader);
-					}
+						ConfigurationPropertiesFactory.create(file, _encoding);
 
 					List<String> toRemovePropertyKeys = new ArrayList<>();
 

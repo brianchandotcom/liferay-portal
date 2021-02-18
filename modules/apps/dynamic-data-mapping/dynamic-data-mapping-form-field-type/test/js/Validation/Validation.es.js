@@ -18,7 +18,10 @@ import React from 'react';
 
 import Validation from '../../../src/main/resources/META-INF/resources/Validation/Validation.es';
 
+const globalLanguageDirection = Liferay.Language.direction;
+
 const spritemap = 'icons.svg';
+
 const defaultValue = {
 	errorMessage: {},
 	expression: {},
@@ -43,11 +46,17 @@ describe('Validation', () => {
 			}
 			originalWarn.call(console, ...args);
 		};
+
+		Liferay.Language.direction = {
+			en_US: 'rtl',
+		};
 	});
 
 	afterAll(() => {
 		// eslint-disable-next-line no-console
 		console.warn = originalWarn;
+
+		Liferay.Language.direction = globalLanguageDirection;
 	});
 
 	afterEach(cleanup);

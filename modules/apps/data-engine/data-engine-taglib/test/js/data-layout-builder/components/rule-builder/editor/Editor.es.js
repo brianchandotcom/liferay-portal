@@ -49,6 +49,8 @@ import {
 
 global.fetch.enableFetchMocks();
 
+const globalLanguageDirection = Liferay.Language.direction;
+
 const pages = [
 	{
 		label: '1 Page title',
@@ -131,6 +133,10 @@ describe('Editor', () => {
 	});
 
 	beforeAll(() => {
+		Liferay.Language.direction = {
+			en_US: 'rtl',
+		};
+
 		window.Liferay = {
 			...window.Liferay,
 			Loader: {
@@ -173,6 +179,8 @@ describe('Editor', () => {
 
 	afterAll(() => {
 		window.Liferay.Loader = originalLiferayLoader;
+
+		Liferay.Language.direction = globalLanguageDirection;
 	});
 
 	describe('Editor', () => {

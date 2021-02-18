@@ -22,6 +22,9 @@ import Options from '../../../src/main/resources/META-INF/resources/Options/Opti
 const DEFAULT_OPTION_NAME_REGEX = /^Option[0-9]{8}$/;
 
 let liferayLanguageSpy;
+
+const globalLanguageDirection = Liferay.Language.direction;
+
 const spritemap = 'icons.svg';
 
 const OptionsWithProvider = (props) => (
@@ -75,11 +78,17 @@ describe('Options', () => {
 			}
 			originalWarn.call(console, ...args);
 		};
+
+		Liferay.Language.direction = {
+			en_US: 'rtl',
+		};
 	});
 
 	afterAll(() => {
 		// eslint-disable-next-line no-console
 		console.warn = originalWarn;
+
+		Liferay.Language.direction = globalLanguageDirection;
 	});
 
 	afterEach(cleanup);

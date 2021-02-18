@@ -77,10 +77,12 @@ public class LayoutSEOEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(45);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", layoutSEOEntryId=");
@@ -131,6 +133,7 @@ public class LayoutSEOEntryCacheModel
 		LayoutSEOEntryImpl layoutSEOEntryImpl = new LayoutSEOEntryImpl();
 
 		layoutSEOEntryImpl.setMvccVersion(mvccVersion);
+		layoutSEOEntryImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			layoutSEOEntryImpl.setUuid("");
@@ -222,6 +225,8 @@ public class LayoutSEOEntryCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		layoutSEOEntryId = objectInput.readLong();
@@ -258,6 +263,8 @@ public class LayoutSEOEntryCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -329,6 +336,7 @@ public class LayoutSEOEntryCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public long layoutSEOEntryId;
 	public long groupId;

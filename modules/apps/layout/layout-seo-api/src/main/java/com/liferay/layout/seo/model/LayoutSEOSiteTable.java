@@ -34,6 +34,8 @@ public class LayoutSEOSiteTable extends BaseTable<LayoutSEOSiteTable> {
 
 	public final Column<LayoutSEOSiteTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<LayoutSEOSiteTable, Long> ctCollectionId = createColumn(
+		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<LayoutSEOSiteTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<LayoutSEOSiteTable, Long> layoutSEOSiteId =

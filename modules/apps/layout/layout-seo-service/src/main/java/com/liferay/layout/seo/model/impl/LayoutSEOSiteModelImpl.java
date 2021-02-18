@@ -81,11 +81,12 @@ public class LayoutSEOSiteModelImpl
 	public static final String TABLE_NAME = "LayoutSEOSite";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"layoutSEOSiteId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"openGraphEnabled", Types.BOOLEAN},
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"layoutSEOSiteId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"openGraphEnabled", Types.BOOLEAN},
 		{"openGraphImageAlt", Types.VARCHAR},
 		{"openGraphImageFileEntryId", Types.BIGINT}
 	};
@@ -95,6 +96,7 @@ public class LayoutSEOSiteModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("layoutSEOSiteId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -109,7 +111,7 @@ public class LayoutSEOSiteModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LayoutSEOSite (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,layoutSEOSiteId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,openGraphEnabled BOOLEAN,openGraphImageAlt STRING null,openGraphImageFileEntryId LONG)";
+		"create table LayoutSEOSite (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,layoutSEOSiteId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,openGraphEnabled BOOLEAN,openGraphImageAlt STRING null,openGraphImageFileEntryId LONG,primary key (layoutSEOSiteId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table LayoutSEOSite";
 
@@ -180,6 +182,7 @@ public class LayoutSEOSiteModelImpl
 		LayoutSEOSite model = new LayoutSEOSiteImpl();
 
 		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setCtCollectionId(soapModel.getCtCollectionId());
 		model.setUuid(soapModel.getUuid());
 		model.setLayoutSEOSiteId(soapModel.getLayoutSEOSiteId());
 		model.setGroupId(soapModel.getGroupId());
@@ -348,6 +351,11 @@ public class LayoutSEOSiteModelImpl
 		attributeSetterBiConsumers.put(
 			"mvccVersion",
 			(BiConsumer<LayoutSEOSite, Long>)LayoutSEOSite::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", LayoutSEOSite::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<LayoutSEOSite, Long>)LayoutSEOSite::setCtCollectionId);
 		attributeGetterFunctions.put("uuid", LayoutSEOSite::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid", (BiConsumer<LayoutSEOSite, String>)LayoutSEOSite::setUuid);
@@ -421,6 +429,21 @@ public class LayoutSEOSiteModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -888,6 +911,7 @@ public class LayoutSEOSiteModelImpl
 		LayoutSEOSiteImpl layoutSEOSiteImpl = new LayoutSEOSiteImpl();
 
 		layoutSEOSiteImpl.setMvccVersion(getMvccVersion());
+		layoutSEOSiteImpl.setCtCollectionId(getCtCollectionId());
 		layoutSEOSiteImpl.setUuid(getUuid());
 		layoutSEOSiteImpl.setLayoutSEOSiteId(getLayoutSEOSiteId());
 		layoutSEOSiteImpl.setGroupId(getGroupId());
@@ -981,6 +1005,8 @@ public class LayoutSEOSiteModelImpl
 			new LayoutSEOSiteCacheModel();
 
 		layoutSEOSiteCacheModel.mvccVersion = getMvccVersion();
+
+		layoutSEOSiteCacheModel.ctCollectionId = getCtCollectionId();
 
 		layoutSEOSiteCacheModel.uuid = getUuid();
 
@@ -1111,6 +1137,7 @@ public class LayoutSEOSiteModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _uuid;
 	private long _layoutSEOSiteId;
 	private long _groupId;
@@ -1155,6 +1182,7 @@ public class LayoutSEOSiteModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put("layoutSEOSiteId", _layoutSEOSiteId);
 		_columnOriginalValues.put("groupId", _groupId);
@@ -1192,27 +1220,29 @@ public class LayoutSEOSiteModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("uuid_", 2L);
+		columnBitmasks.put("ctCollectionId", 2L);
 
-		columnBitmasks.put("layoutSEOSiteId", 4L);
+		columnBitmasks.put("uuid_", 4L);
 
-		columnBitmasks.put("groupId", 8L);
+		columnBitmasks.put("layoutSEOSiteId", 8L);
 
-		columnBitmasks.put("companyId", 16L);
+		columnBitmasks.put("groupId", 16L);
 
-		columnBitmasks.put("userId", 32L);
+		columnBitmasks.put("companyId", 32L);
 
-		columnBitmasks.put("userName", 64L);
+		columnBitmasks.put("userId", 64L);
 
-		columnBitmasks.put("createDate", 128L);
+		columnBitmasks.put("userName", 128L);
 
-		columnBitmasks.put("modifiedDate", 256L);
+		columnBitmasks.put("createDate", 256L);
 
-		columnBitmasks.put("openGraphEnabled", 512L);
+		columnBitmasks.put("modifiedDate", 512L);
 
-		columnBitmasks.put("openGraphImageAlt", 1024L);
+		columnBitmasks.put("openGraphEnabled", 1024L);
 
-		columnBitmasks.put("openGraphImageFileEntryId", 2048L);
+		columnBitmasks.put("openGraphImageAlt", 2048L);
+
+		columnBitmasks.put("openGraphImageFileEntryId", 4096L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

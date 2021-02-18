@@ -126,6 +126,8 @@ public class LayoutSEOSitePersistenceTest {
 
 		newLayoutSEOSite.setMvccVersion(RandomTestUtil.nextLong());
 
+		newLayoutSEOSite.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newLayoutSEOSite.setUuid(RandomTestUtil.randomString());
 
 		newLayoutSEOSite.setGroupId(RandomTestUtil.nextLong());
@@ -155,6 +157,9 @@ public class LayoutSEOSitePersistenceTest {
 		Assert.assertEquals(
 			existingLayoutSEOSite.getMvccVersion(),
 			newLayoutSEOSite.getMvccVersion());
+		Assert.assertEquals(
+			existingLayoutSEOSite.getCtCollectionId(),
+			newLayoutSEOSite.getCtCollectionId());
 		Assert.assertEquals(
 			existingLayoutSEOSite.getUuid(), newLayoutSEOSite.getUuid());
 		Assert.assertEquals(
@@ -246,9 +251,9 @@ public class LayoutSEOSitePersistenceTest {
 
 	protected OrderByComparator<LayoutSEOSite> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"LayoutSEOSite", "mvccVersion", true, "uuid", true,
-			"layoutSEOSiteId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
+			"LayoutSEOSite", "mvccVersion", true, "ctCollectionId", true,
+			"uuid", true, "layoutSEOSiteId", true, "groupId", true, "companyId",
+			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "openGraphEnabled", true, "openGraphImageAlt",
 			true, "openGraphImageFileEntryId", true);
 	}
@@ -541,6 +546,8 @@ public class LayoutSEOSitePersistenceTest {
 		LayoutSEOSite layoutSEOSite = _persistence.create(pk);
 
 		layoutSEOSite.setMvccVersion(RandomTestUtil.nextLong());
+
+		layoutSEOSite.setCtCollectionId(RandomTestUtil.nextLong());
 
 		layoutSEOSite.setUuid(RandomTestUtil.randomString());
 

@@ -126,6 +126,8 @@ public class LayoutSEOEntryPersistenceTest {
 
 		newLayoutSEOEntry.setMvccVersion(RandomTestUtil.nextLong());
 
+		newLayoutSEOEntry.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newLayoutSEOEntry.setUuid(RandomTestUtil.randomString());
 
 		newLayoutSEOEntry.setGroupId(RandomTestUtil.nextLong());
@@ -177,6 +179,9 @@ public class LayoutSEOEntryPersistenceTest {
 		Assert.assertEquals(
 			existingLayoutSEOEntry.getMvccVersion(),
 			newLayoutSEOEntry.getMvccVersion());
+		Assert.assertEquals(
+			existingLayoutSEOEntry.getCtCollectionId(),
+			newLayoutSEOEntry.getCtCollectionId());
 		Assert.assertEquals(
 			existingLayoutSEOEntry.getUuid(), newLayoutSEOEntry.getUuid());
 		Assert.assertEquals(
@@ -298,10 +303,10 @@ public class LayoutSEOEntryPersistenceTest {
 
 	protected OrderByComparator<LayoutSEOEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"LayoutSEOEntry", "mvccVersion", true, "uuid", true,
-			"layoutSEOEntryId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "privateLayout", true, "layoutId", true,
+			"LayoutSEOEntry", "mvccVersion", true, "ctCollectionId", true,
+			"uuid", true, "layoutSEOEntryId", true, "groupId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "privateLayout", true, "layoutId", true,
 			"canonicalURL", true, "canonicalURLEnabled", true, "DDMStorageId",
 			true, "openGraphDescription", true, "openGraphDescriptionEnabled",
 			true, "openGraphImageAlt", true, "openGraphImageFileEntryId", true,
@@ -608,6 +613,8 @@ public class LayoutSEOEntryPersistenceTest {
 		LayoutSEOEntry layoutSEOEntry = _persistence.create(pk);
 
 		layoutSEOEntry.setMvccVersion(RandomTestUtil.nextLong());
+
+		layoutSEOEntry.setCtCollectionId(RandomTestUtil.nextLong());
 
 		layoutSEOEntry.setUuid(RandomTestUtil.randomString());
 

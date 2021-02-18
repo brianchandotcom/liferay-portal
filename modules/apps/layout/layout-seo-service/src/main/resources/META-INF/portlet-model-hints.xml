@@ -3,6 +3,7 @@
 <model-hints>
 	<model name="com.liferay.layout.seo.model.LayoutSEOEntry">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="layoutSEOEntryId" type="long" />
 		<field name="groupId" type="long" />
@@ -31,6 +32,7 @@
 	</model>
 	<model name="com.liferay.layout.seo.model.LayoutSEOSite">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="layoutSEOSiteId" type="long" />
 		<field name="groupId" type="long" />

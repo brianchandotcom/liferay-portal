@@ -35,6 +35,9 @@ public class LayoutSEOEntryTable extends BaseTable<LayoutSEOEntryTable> {
 
 	public final Column<LayoutSEOEntryTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<LayoutSEOEntryTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<LayoutSEOEntryTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<LayoutSEOEntryTable, Long> layoutSEOEntryId =

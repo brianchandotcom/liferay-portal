@@ -142,30 +142,6 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro configureAssetEntrySubtype {
-		Panel.expandPanel(panel = "Source");
-
-		Select(
-			locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_SUBTYPE_SELECT",
-			value1 = "${selectedSubtype}");
-
-		Pause(locator1 = "3000");
-
-		PortletEntry.save();
-	}
-
-	macro configureAssetEntryType {
-		Panel.expandPanel(panel = "Source");
-
-		Select(
-			locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT",
-			value1 = "${selectedAsset}");
-
-		Pause(locator1 = "3000");
-
-		PortletEntry.save();
-	}
-
 	macro configureFilterByField {
 		Check.checkToggleSwitch(locator1 = "APConfiguration#SOURCE_SCOPE_FILTER_BY_FIELD_CHECKBOX");
 

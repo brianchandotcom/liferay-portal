@@ -96,6 +96,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_LIST_TITLE_NAME</td>
+	<td>//li[contains(@data-title,'${key_webContentTitle}')]//*[@data-qa-id='rowItemContent']//a[contains(text(),'${key_webContentTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_LIST_TITLE_ON_LIVE</td>
 	<td>//li[contains(@data-title,'${key_webContentTitle}')]//*[@data-qa-id='rowItemContent']//p</td>
 	<td></td>

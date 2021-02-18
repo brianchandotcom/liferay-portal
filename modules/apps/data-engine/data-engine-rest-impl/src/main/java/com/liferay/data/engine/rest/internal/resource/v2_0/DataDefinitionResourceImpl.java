@@ -956,13 +956,16 @@ public class DataDefinitionResourceImpl
 				ddmFormFieldTypeProperties, "ddm.form.field.type.system")
 		);
 
-		if (StringUtil.equals(ddmFormFieldType.getName(), "rich_text")) {
+		ThemeDisplay themeDisplay = _getThemeDisplay();
+
+		if ((themeDisplay != null) &&
+			StringUtil.equals(ddmFormFieldType.getName(), "rich_text")) {
+
 			EditorConfiguration editorConfiguration =
 				EditorConfigurationFactoryUtil.getEditorConfiguration(
 					StringPool.BLANK, ddmFormFieldType.getName(),
 					"ckeditor_classic", new HashMap<String, Object>(),
-					(ThemeDisplay)contextHttpServletRequest.getAttribute(
-						WebKeys.THEME_DISPLAY),
+					themeDisplay,
 					RequestBackedPortletURLFactoryUtil.create(
 						contextHttpServletRequest));
 
@@ -1049,6 +1052,15 @@ public class DataDefinitionResourceImpl
 			ResourceBundleUtil.getBundle(
 				"content.Language", locale, ddmFormFieldType.getClass()),
 			_portal.getResourceBundle(locale));
+	}
+
+	private ThemeDisplay _getThemeDisplay() {
+		if (contextHttpServletRequest == null) {
+			return null;
+		}
+
+		return (ThemeDisplay)contextHttpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	private void _removeFieldsFromDataLayout(

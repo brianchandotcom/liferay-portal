@@ -664,6 +664,25 @@ definition {
 		MenuItem.click(menuItem = "Delete");
 	}
 
+	macro deleteFieldsetFromSideBar {
+
+		if (isSet(siteURLKey)) {
+			WebContentNavigator.openWebContentAdmin(
+					siteURLKey = "test-site-name");
+		}
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP();
+
+		DataEngine.gotoFieldsetItemEllipsis(fieldsetName = "${fieldsetName}");
+
+		MenuItem.click(menuItem = "Delete");
+
+		Button.clickDelete();
+
+	}
+
 	macro duplicate {
 		if (isSet(fieldFieldLabel)) {
 			Click(

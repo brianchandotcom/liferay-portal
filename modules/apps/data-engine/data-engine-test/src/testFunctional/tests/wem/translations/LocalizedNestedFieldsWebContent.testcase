@@ -657,85 +657,64 @@ definition {
 	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
 	@priority = "4"
 	test VerifyDefaultLanguageIsFirstShown {
-		property portal.acceptance = "false";
-		
-		var structureTitle = "Structure Title";
-
-		var structureTitlePT = "Titulo da Estrutura";
-
-		var webTitle = "WC Title";
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-		
+
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(
-			structureDescription = "I'm a structure test",
-			structureName = "${structureTitle}");
+		WebContentStructures.addCP(structureName = "WC Structure Name");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Image",
 			fieldName = "Image");
 
 		DataEngine.addFieldNested(
-			fieldName = "Numeric",
 			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric",
 			targetFieldLabel = "Image");
 
 		DataEngine.addFieldNested(
-			fieldName = "Text",
 			fieldFieldLabel = "Text",
+			fieldName = "Text",
 			targetFieldLabel = "Numeric");
 
-		Button.clickSave();
-
-		WebContentNavigator.gotoEditStructure(structureName = "${structureTitle}");
-
 		WebContentStructures.addLocalization(
-			locale = "pt_BR",
-			localization1Name = "${structureTitlePT}");
+			locale = "pt-BR",
+			localization1Name = "Nome da Estrutura WC");
 
-		FormViewBuilder.editFieldLabel(
-			fieldLabel = "Fields Group",
-			label = "Grupo de Campos");
+		DataEngine.editFieldsGroupLabel(
+			fieldsGroupLabel = "Fields Group",
+			fieldsGroupLabelEdit = "Grupo de Campos");
 
-		FormViewBuilder.editFieldLabel(
-			fieldLabel = "Image",
-			label = "Imagem");
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Image",
+			fieldFieldLabelEdit = "Imagem");
 
-		FormViewBuilder.editFieldLabel(
-			fieldLabel = "Numeric",
-			label = "Numero");
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Numeric",
+			fieldFieldLabelEdit = "Numérica");
 
-		FormViewBuilder.editFieldLabel(
-			fieldLabel = "Text",
-			label = "Texto");
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "Texto");
 
-		Button.clickSave();
+		WebContentStructures.saveCP();
 
 		Navigator.gotoNavTab(navTab = "Web Content");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "${structureTitle}");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
-		WebContent.addWithStructureCP(
-			structureName = "WC Structure Name",
-			webContentTitle = "WC WebContent Title");
+		PortletEntry.viewLocale(locale = "en-US");
 
-		AssertTextEquals(
-            locator1 = "Button#LOCALIZATION_GENERIC",
-            value1 = "en-US");
+		AssertVisible(
+			key_fieldFieldLabel = "Fields Group",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
-		AssertTextEquals(
-			locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP_FIRST",
-			value1 = "Fields Group");
-
-		AssertTextEquals(
-			locator1 = "DataEngineBuilder#NESTED_NUMERIC_STRUCTURE",
-			value1 = "Numeric");
-
-		AssertTextEquals(
-			locator1 = "DataEngineBuilder#NESTED_TEXT_STRUCTURE",
-			value1 = "Text");
+		for (var fieldFieldLabel : list "Image,Numeric,Text") {
+			AssertVisible(
+				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldsGroupLabel = "Fields Group",
+				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+		}
 	}
 
 }

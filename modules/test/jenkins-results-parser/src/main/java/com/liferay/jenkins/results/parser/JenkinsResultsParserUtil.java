@@ -51,6 +51,7 @@ import java.nio.file.Path;
 import java.nio.file.PathMatcher;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
+import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 import java.nio.file.attribute.BasicFileAttributes;
 
@@ -84,6 +85,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
@@ -3422,6 +3426,39 @@ public class JenkinsResultsParserUtil {
 			httpAuthorization, false);
 	}
 
+	public static void unzip(File zipFile, File destDir) {
+		try (FileInputStream fileInputStream = new FileInputStream(zipFile);
+			ZipInputStream zipInputStream = new ZipInputStream(
+				fileInputStream)) {
+
+			ZipEntry zipEntry = zipInputStream.getNextEntry();
+
+			while (zipEntry != null) {
+				String zipEntryName = zipEntry.getName();
+
+				File destFile = new File(destDir, zipEntryName);
+
+				if (zipEntryName.endsWith(File.separator)) {
+					Files.createDirectories(destFile.toPath());
+				}
+				else {
+					destFile.mkdirs();
+
+					Files.copy(
+						zipInputStream, destFile.toPath(),
+						StandardCopyOption.REPLACE_EXISTING);
+				}
+
+				zipEntry = zipInputStream.getNextEntry();
+			}
+
+			zipInputStream.closeEntry();
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
 	public static void updateBuildDescription(
 		String buildDescription, int buildNumber, String jobName,
 		String masterHostname) {
@@ -3511,6 +3548,54 @@ public class JenkinsResultsParserUtil {
 					"Unable to read properties file " + propertiesFile,
 					ioException);
 			}
+		}
+	}
+
+	public static void zip(final File sourceDir, File zipFile) {
+		try (FileOutputStream fileOutputStream = new FileOutputStream(zipFile);
+			final ZipOutputStream zipOutputStream = new ZipOutputStream(
+				fileOutputStream)) {
+
+			Files.walkFileTree(
+				sourceDir.toPath(),
+				new SimpleFileVisitor<Path>() {
+
+					@Override
+					public FileVisitResult visitFile(
+						Path path, BasicFileAttributes attributes) {
+
+						if (attributes.isSymbolicLink()) {
+							return FileVisitResult.CONTINUE;
+						}
+
+						try (FileInputStream fileInputStream =
+								new FileInputStream(path.toFile())) {
+
+							zipOutputStream.putNextEntry(
+								new ZipEntry(
+									getPathRelativeTo(
+										path.toFile(), sourceDir)));
+
+							byte[] bytes = new byte[1024];
+							int len;
+
+							while ((len = fileInputStream.read(bytes)) > 0) {
+								zipOutputStream.write(bytes, 0, len);
+							}
+
+							zipOutputStream.closeEntry();
+						}
+						catch (IOException ioException) {
+							throw new RuntimeException(ioException);
+						}
+
+						return FileVisitResult.CONTINUE;
+					}
+
+				});
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 

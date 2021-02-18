@@ -2431,20 +2431,44 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 						return;
 					}
 
+					String name = externalModuleDependency.getName();
 					String version = externalModuleDependency.getVersion();
 
-					if (!version.equals("default")) {
+					String newNotation = null;
+
+					if ((Objects.equals(name, "release.dxp.api") ||
+						 Objects.equals(name, "release.portal.api")) &&
+						(version == null)) {
+
+						String releaseAPIVersion = GradleUtil.getProperty(
+							project, name + ".version", (String)null);
+
+						StringBuilder sb = new StringBuilder();
+
+						sb.append(group);
+						sb.append(':');
+						sb.append(name);
+						sb.append(':');
+
+						if (Validator.isNull(releaseAPIVersion)) {
+							sb.append('+');
+						}
+						else {
+							sb.append(releaseAPIVersion);
+						}
+
+						newNotation = sb.toString();
+					}
+					else if ((version == null) || !version.equals("default")) {
 						return;
 					}
-
-					String name = externalModuleDependency.getName();
-
-					String newNotation = null;
 
 					String compatVersion = GradleUtil.getProperty(
 						project, "build.compat.version." + name, (String)null);
 
-					if (Validator.isNotNull(compatVersion)) {
+					if (Validator.isNull(newNotation) &&
+						Validator.isNotNull(compatVersion)) {
+
 						boolean fixDeliveryMethodCore = false;
 
 						if (appBndFile != null) {
@@ -2509,7 +2533,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 					sb.append(':');
 					sb.append(name);
 					sb.append(':');
-					sb.append(version);
+
+					if (Validator.isNotNull(version)) {
+						sb.append(version);
+					}
 
 					String oldNotation = sb.toString();
 

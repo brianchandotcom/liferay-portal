@@ -65,23 +65,25 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		AssertTextEquals(locator1 = "ABTest#TARGET_LABEL",
+		AssertTextEquals(
+			locator1 = "ABTest#TARGET_LABEL",
 			value1 = "Target");
-		}
-
-		macro terminateTest {
-			ClickNoError(locator1 = "ABTest#TERMINATE_TEST_BUTTON");
-
-			AssertConfirm.assertConfirmationNoError(value1 = "Are you sure you want to terminate this test?");
-
-			Alert.viewSuccessMessage();
-		}
-
-		macro writeId {
-			Click(locator1 = "ABTest#ELEMENT_ID_INPUT");
-
-			Type(
-				locator1 = "ABTest#ELEMENT_ID_INPUT",
-				value1 = "${elementId}");
-		}
 	}
+
+	macro terminateTest {
+		ClickNoError(locator1 = "ABTest#TERMINATE_TEST_BUTTON");
+
+		AssertConfirm.assertConfirmationNoError(value1 = "Are you sure you want to terminate this test?");
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro writeId {
+		Click(locator1 = "ABTest#ELEMENT_ID_INPUT");
+
+		Type(
+			locator1 = "ABTest#ELEMENT_ID_INPUT",
+			value1 = "${elementId}");
+	}
+
+}

@@ -53,6 +53,7 @@ definition {
 		//Click(locator1 = "AnalyticsCloudConnection#SAVE_AND_NEXT_BUTTON");
 
 		//Click(locator1 = "Button#SAVE");
+
 	}
 
 	macro takeTokenFromAnalyticsCloud {

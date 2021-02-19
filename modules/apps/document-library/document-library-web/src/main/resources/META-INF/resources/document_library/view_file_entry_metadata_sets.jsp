@@ -18,96 +18,111 @@
 
 <%
 DLViewFileEntryMetadataSetsDisplayContext dLViewFileEntryMetadataSetsDisplayContext = (DLViewFileEntryMetadataSetsDisplayContext)request.getAttribute(DLWebKeys.DOCUMENT_LIBRARY_VIEW_FILE_ENTRY_METADATA_SETS_DISPLAY_CONTEXT);
+
+DLViewFileEntryMetadataSetsManagementToolbarDisplayContext dlViewFileEntryMetadataSetsManagementToolbarDisplayContext = new DLViewFileEntryMetadataSetsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, dLViewFileEntryMetadataSetsDisplayContext);
 %>
 
 <liferay-util:include page="/document_library/navigation.jsp" servletContext="<%= application %>" />
 
 <clay:management-toolbar-v2
-	displayContext="<%= new DLViewFileEntryMetadataSetsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, dLViewFileEntryMetadataSetsDisplayContext) %>"
+	displayContext="<%= dlViewFileEntryMetadataSetsManagementToolbarDisplayContext %>"
 />
 
-<clay:container-fluid>
-	<liferay-ui:error exception="<%= RequiredStructureException.MustNotDeleteStructureReferencedByStructureLinks.class %>" message="the-structure-cannot-be-deleted-because-it-is-required-by-one-or-more-structure-links" />
-	<liferay-ui:error exception="<%= RequiredStructureException.MustNotDeleteStructureReferencedByTemplates.class %>" message="the-structure-cannot-be-deleted-because-it-is-required-by-one-or-more-templates" />
-	<liferay-ui:error exception="<%= RequiredStructureException.MustNotDeleteStructureThatHasChild.class %>" message="the-structure-cannot-be-deleted-because-it-has-one-or-more-substructures" />
+<portlet:actionURL copyCurrentRenderParameters="<%= true %>" name="/document_library/delete_data_definition" var="deleteDataDefinitionURL">
+	<portlet:param name="mvcPath" value="/view_file_entry_metadata_sets.jsp" />
+</portlet:actionURL>
 
-	<liferay-ui:breadcrumb
-		showLayout="<%= false %>"
-	/>
+<aui:form action="<%= deleteDataDefinitionURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
-	<liferay-ui:search-container
-		id="ddmStructures"
-		rowChecker="<%= new DDMStructureRowChecker(renderResponse) %>"
-		searchContainer="<%= dLViewFileEntryMetadataSetsDisplayContext.getStructureSearch() %>"
-	>
-		<liferay-ui:search-container-row
-			className="com.liferay.dynamic.data.mapping.model.DDMStructure"
-			keyProperty="structureId"
-			modelVar="ddmStructure"
-		>
+	<clay:container-fluid>
+		<liferay-ui:error exception="<%= RequiredStructureException.MustNotDeleteStructureReferencedByStructureLinks.class %>" message="the-structure-cannot-be-deleted-because-it-is-required-by-one-or-more-structure-links" />
+		<liferay-ui:error exception="<%= RequiredStructureException.MustNotDeleteStructureReferencedByTemplates.class %>" message="the-structure-cannot-be-deleted-because-it-is-required-by-one-or-more-templates" />
+		<liferay-ui:error exception="<%= RequiredStructureException.MustNotDeleteStructureThatHasChild.class %>" message="the-structure-cannot-be-deleted-because-it-has-one-or-more-substructures" />
 
-			<%
-			String rowHREF = StringPool.BLANK;
-
-			if (DDMStructurePermission.contains(permissionChecker, ddmStructure, ActionKeys.UPDATE)) {
-				PortletURL rowURL = renderResponse.createRenderURL();
-
-				rowURL.setParameter("mvcRenderCommandName", "/document_library/edit_ddm_structure");
-				rowURL.setParameter("redirect", currentURL);
-				rowURL.setParameter("ddmStructureId", String.valueOf(ddmStructure.getStructureId()));
-
-				rowHREF = rowURL.toString();
-			}
-			%>
-
-			<liferay-ui:search-container-column-text
-				href="<%= rowHREF %>"
-				name="id"
-				orderable="<%= true %>"
-				orderableProperty="id"
-				property="structureId"
-			/>
-
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand table-cell-minw-200 table-title"
-				href="<%= rowHREF %>"
-				name="name"
-				value="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>"
-			/>
-
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand table-cell-minw-200"
-				href="<%= rowHREF %>"
-				name="description"
-				value="<%= HtmlUtil.escape(ddmStructure.getDescription(locale)) %>"
-			/>
-
-			<%
-			Group group = GroupLocalServiceUtil.getGroup(ddmStructure.getGroupId());
-			%>
-
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand-smallest table-cell-minw-150"
-				name="scope"
-				value="<%= LanguageUtil.get(request, group.getScopeLabel(themeDisplay)) %>"
-			/>
-
-			<liferay-ui:search-container-column-date
-				cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
-				href="<%= rowHREF %>"
-				name="modified-date"
-				orderable="<%= true %>"
-				orderableProperty="modified-date"
-				value="<%= ddmStructure.getModifiedDate() %>"
-			/>
-
-			<liferay-ui:search-container-column-jsp
-				path="/document_library/ddm/ddm_structure_action.jsp"
-			/>
-		</liferay-ui:search-container-row>
-
-		<liferay-ui:search-iterator
-			markupView="lexicon"
+		<liferay-ui:breadcrumb
+			showLayout="<%= false %>"
 		/>
-	</liferay-ui:search-container>
-</clay:container-fluid>
+
+		<liferay-ui:search-container
+			id="ddmStructures"
+			rowChecker="<%= new DDMStructureRowChecker(renderResponse) %>"
+			searchContainer="<%= dLViewFileEntryMetadataSetsDisplayContext.getStructureSearch() %>"
+		>
+			<liferay-ui:search-container-row
+				className="com.liferay.dynamic.data.mapping.model.DDMStructure"
+				keyProperty="structureId"
+				modelVar="ddmStructure"
+			>
+
+				<%
+				String rowHREF = StringPool.BLANK;
+
+				if (DDMStructurePermission.contains(permissionChecker, ddmStructure, ActionKeys.UPDATE)) {
+					PortletURL rowURL = renderResponse.createRenderURL();
+
+					rowURL.setParameter("mvcRenderCommandName", "/document_library/edit_ddm_structure");
+					rowURL.setParameter("redirect", currentURL);
+					rowURL.setParameter("ddmStructureId", String.valueOf(ddmStructure.getStructureId()));
+
+					rowHREF = rowURL.toString();
+				}
+				%>
+
+				<liferay-ui:search-container-column-text
+					href="<%= rowHREF %>"
+					name="id"
+					orderable="<%= true %>"
+					orderableProperty="id"
+					property="structureId"
+				/>
+
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand table-cell-minw-200 table-title"
+					href="<%= rowHREF %>"
+					name="name"
+					value="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>"
+				/>
+
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand table-cell-minw-200"
+					href="<%= rowHREF %>"
+					name="description"
+					value="<%= HtmlUtil.escape(ddmStructure.getDescription(locale)) %>"
+				/>
+
+				<%
+				Group group = GroupLocalServiceUtil.getGroup(ddmStructure.getGroupId());
+				%>
+
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand-smallest table-cell-minw-150"
+					name="scope"
+					value="<%= LanguageUtil.get(request, group.getScopeLabel(themeDisplay)) %>"
+				/>
+
+				<liferay-ui:search-container-column-date
+					cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
+					href="<%= rowHREF %>"
+					name="modified-date"
+					orderable="<%= true %>"
+					orderableProperty="modified-date"
+					value="<%= ddmStructure.getModifiedDate() %>"
+				/>
+
+				<liferay-ui:search-container-column-jsp
+					path="/document_library/ddm/ddm_structure_action.jsp"
+				/>
+			</liferay-ui:search-container-row>
+
+			<liferay-ui:search-iterator
+				markupView="lexicon"
+			/>
+		</liferay-ui:search-container>
+	</clay:container-fluid>
+</aui:form>
+
+<liferay-frontend:component
+	componentId="<%= dlViewFileEntryMetadataSetsManagementToolbarDisplayContext.getDefaultEventHandler() %>"
+	module="document_library/js/DDMStructuresManagementToolbarDefaultEventHandler.es"
+/>

@@ -28,7 +28,6 @@ import {StoreAPIContextProvider} from '../../../../../../src/main/resources/META
 import {
 	CREATE_SEGMENTS_EXPERIENCE,
 	DELETE_SEGMENTS_EXPERIENCE,
-	DUPLICATE_SEGMENTS_EXPERIENCE,
 	UPDATE_SEGMENTS_EXPERIENCE,
 	UPDATE_SEGMENTS_EXPERIENCES_LIST,
 } from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/experience/actions';
@@ -789,7 +788,7 @@ describe('ExperienceToolbarSection', () => {
 
 		expect(mockDispatch).toHaveBeenCalledWith(
 			expect.objectContaining({
-				type: DUPLICATE_SEGMENTS_EXPERIENCE,
+				type: CREATE_SEGMENTS_EXPERIENCE,
 			})
 		);
 	});

@@ -68,7 +68,7 @@ definition {
 	}
 
 	test CreateNewNotificationTemplate {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CPCommerceChannels#CreateNewNotificationTemplate";
 
 		CommerceNavigator.gotoPortlet(

@@ -187,7 +187,7 @@ definition {
 	}
 
 	test TranslateProductName {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CPCommerceProducts#TranslateProductName";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");

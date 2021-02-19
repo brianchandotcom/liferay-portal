@@ -895,6 +895,10 @@ public class LiferayOAuthDataProvider
 		properties.put(
 			OAuth2ProviderRESTEndpointConstants.PROPERTY_KEY_CLIENT_FEATURES,
 			oAuth2Application.getFeatures());
+		properties.put(
+			OAuth2ProviderRESTEndpointConstants.
+				PROPERTY_KEY_CLIENT_TRUSTED_APPLICATION,
+			String.valueOf(oAuth2Application.isTrustedApplication()));
 
 		for (String feature : oAuth2Application.getFeaturesList()) {
 			properties.put(

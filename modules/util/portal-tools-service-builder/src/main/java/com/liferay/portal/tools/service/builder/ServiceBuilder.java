@@ -1641,6 +1641,8 @@ public class ServiceBuilder {
 
 		StringBundler sb = new StringBundler();
 
+		sb.append(StringPool.LESS_THAN);
+
 		for (DefaultJavaTypeVariable<?> typeParameter : typeParameters) {
 			sb.append(typeParameter.getFullyQualifiedName());
 
@@ -1651,20 +1653,20 @@ public class ServiceBuilder {
 
 				for (JavaType bound : bounds) {
 					sb.append(bound.getFullyQualifiedName());
-					sb.append(
-						StringPool.SPACE + StringPool.AMPERSAND +
-							StringPool.SPACE);
+					sb.append(StringPool.SPACE);
+					sb.append(StringPool.AMPERSAND);
+					sb.append(StringPool.SPACE);
 				}
 
-				sb.setIndex(sb.index() - 1);
+				sb.setIndex(sb.index() - 3);
 			}
 
 			sb.append(StringPool.COMMA_AND_SPACE);
 		}
 
-		sb.setIndex(sb.index() - 1);
+		sb.setStringAt(StringPool.GREATER_THAN, sb.index() - 1);
 
-		return StringPool.LESS_THAN + sb.toString() + StringPool.GREATER_THAN;
+		return sb.toString();
 	}
 
 	public String getVariableName(JavaField field) {

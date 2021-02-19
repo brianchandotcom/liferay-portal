@@ -1633,7 +1633,7 @@ public class ServiceBuilder {
 	}
 
 	public String getTypeParametersDefinition(
-		List<DefaultJavaTypeVariable> typeParameters) {
+		List<DefaultJavaTypeVariable<?>> typeParameters) {
 
 		if (ListUtil.isEmpty(typeParameters)) {
 			return StringPool.BLANK;
@@ -1641,18 +1641,17 @@ public class ServiceBuilder {
 
 		StringBundler sb1 = new StringBundler();
 
-		for (DefaultJavaTypeVariable typeParameter : typeParameters) {
+		for (DefaultJavaTypeVariable<?> typeParameter : typeParameters) {
 			sb1.append(typeParameter.getFullyQualifiedName());
 
-			List<DefaultJavaParameterizedType> bounds =
-				typeParameter.getBounds();
+			List<JavaType> bounds = typeParameter.getBounds();
 
 			if (ListUtil.isNotEmpty(bounds)) {
 				StringBundler sb2 = new StringBundler();
 
 				sb2.append(" extends ");
 
-				for (DefaultJavaParameterizedType bound : bounds) {
+				for (JavaType bound : bounds) {
 					sb2.append(bound.getFullyQualifiedName());
 					sb2.append(
 						StringPool.SPACE + StringPool.AMPERSAND +

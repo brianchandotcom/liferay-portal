@@ -58,7 +58,6 @@ public class EditScheduledTaskDispatchTriggerMVCRenderCommand
 	}
 
 	@Reference
-	private DispatchSchedulerEngineHelper
-		_dispatchSchedulerEngineHelper;
+	private DispatchSchedulerEngineHelper _dispatchSchedulerEngineHelper;
 
 }

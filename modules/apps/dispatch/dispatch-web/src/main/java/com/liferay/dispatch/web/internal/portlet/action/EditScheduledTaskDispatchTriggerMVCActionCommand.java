@@ -68,8 +68,7 @@ public class EditScheduledTaskDispatchTriggerMVCActionCommand
 		StorageType storageType = StorageType.valueOf(
 			ParamUtil.getString(actionRequest, "storageType"));
 
-		_dispatchSchedulerEngineHelper.run(
-			jobName, groupName, storageType);
+		_dispatchSchedulerEngineHelper.run(jobName, groupName, storageType);
 	}
 
 	private void _updateScheduledTask(ActionRequest actionRequest, String cmd)
@@ -81,19 +80,16 @@ public class EditScheduledTaskDispatchTriggerMVCActionCommand
 			ParamUtil.getString(actionRequest, "storageType"));
 
 		if (Objects.equals(cmd, "pause")) {
-			_dispatchSchedulerEngineHelper.
-				pause(
-					jobName, groupName, storageType);
+			_dispatchSchedulerEngineHelper.pause(
+				jobName, groupName, storageType);
 		}
 		else {
-			_dispatchSchedulerEngineHelper.
-				resume(
-					jobName, groupName, storageType);
+			_dispatchSchedulerEngineHelper.resume(
+				jobName, groupName, storageType);
 		}
 	}
 
 	@Reference
-	private DispatchSchedulerEngineHelper
-		_dispatchSchedulerEngineHelper;
+	private DispatchSchedulerEngineHelper _dispatchSchedulerEngineHelper;
 
 }

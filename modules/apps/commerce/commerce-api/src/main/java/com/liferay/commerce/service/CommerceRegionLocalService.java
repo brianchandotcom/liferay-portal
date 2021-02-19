@@ -213,6 +213,11 @@ public interface CommerceRegionLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceRegion fetchCommerceRegion(long commerceRegionId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceRegion fetchCommerceRegion(
+			long commerceCountryId, String code)
+		throws PortalException;
+
 	/**
 	 * Returns the commerce region with the matching UUID and company.
 	 *

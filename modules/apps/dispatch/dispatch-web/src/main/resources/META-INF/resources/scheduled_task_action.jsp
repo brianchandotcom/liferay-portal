@@ -21,9 +21,9 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 
 ScheduledJobDispatchTrigger scheduledJobDispatchTrigger = (ScheduledJobDispatchTrigger)row.getObject();
 
-ScheduledTaskDispatchTriggerDisplayContext scheduledTaskDispatchTriggerDisplayContext = (ScheduledTaskDispatchTriggerDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+ScheduledJobDispatchTriggerDisplayContext scheduledJobDispatchTriggerDisplayContext = (ScheduledJobDispatchTriggerDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-TriggerState triggerState = scheduledTaskDispatchTriggerDisplayContext.getTriggerState(scheduledJobDispatchTrigger);
+TriggerState triggerState = scheduledJobDispatchTriggerDisplayContext.getTriggerState(scheduledJobDispatchTrigger);
 
 String cmd = (triggerState == TriggerState.NORMAL) ? "pause" : "resume";
 %>

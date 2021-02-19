@@ -66,15 +66,15 @@ public class CPOptionValueLocalServiceImpl
 		throws PortalException {
 
 		return addCPOptionValue(
-			cpOptionId, nameMap, priority, key, StringPool.BLANK,
+			StringPool.BLANK, cpOptionId, nameMap, priority, key,
 			serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPOptionValue addCPOptionValue(
-			long cpOptionId, Map<Locale, String> nameMap, double priority,
-			String key, String externalReferenceCode,
+			String externalReferenceCode, long cpOptionId,
+			Map<Locale, String> nameMap, double priority, String key,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -95,6 +95,7 @@ public class CPOptionValueLocalServiceImpl
 		CPOptionValue cpOptionValue = cpOptionValuePersistence.create(
 			cpOptionValueId);
 
+		cpOptionValue.setExternalReferenceCode(externalReferenceCode);
 		cpOptionValue.setCompanyId(user.getCompanyId());
 		cpOptionValue.setUserId(user.getUserId());
 		cpOptionValue.setUserName(user.getFullName());
@@ -103,7 +104,6 @@ public class CPOptionValueLocalServiceImpl
 		cpOptionValue.setPriority(priority);
 		cpOptionValue.setKey(key);
 		cpOptionValue.setExpandoBridgeAttributes(serviceContext);
-		cpOptionValue.setExternalReferenceCode(externalReferenceCode);
 
 		cpOptionValue = cpOptionValuePersistence.update(cpOptionValue);
 
@@ -154,7 +154,7 @@ public class CPOptionValueLocalServiceImpl
 
 	@Override
 	public CPOptionValue fetchByExternalReferenceCode(
-		long companyId, String externalReferenceCode) {
+		String externalReferenceCode, long companyId) {
 
 		if (Validator.isBlank(externalReferenceCode)) {
 			return null;
@@ -250,8 +250,8 @@ public class CPOptionValueLocalServiceImpl
 
 	@Override
 	public CPOptionValue upsertCPOptionValue(
-			long cpOptionId, Map<Locale, String> nameMap, double priority,
-			String key, String externalReferenceCode,
+			String externalReferenceCode, long cpOptionId,
+			Map<Locale, String> nameMap, double priority, String key,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -270,7 +270,7 @@ public class CPOptionValueLocalServiceImpl
 		}
 
 		return addCPOptionValue(
-			cpOptionId, nameMap, priority, key, externalReferenceCode,
+			externalReferenceCode, cpOptionId, nameMap, priority, key,
 			serviceContext);
 	}
 

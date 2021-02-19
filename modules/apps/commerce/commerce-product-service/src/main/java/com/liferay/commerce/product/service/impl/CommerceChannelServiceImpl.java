@@ -36,10 +36,9 @@ public class CommerceChannelServiceImpl extends CommerceChannelServiceBaseImpl {
 
 	@Override
 	public CommerceChannel addCommerceChannel(
-			long siteGroupId, String name, String type,
-			UnicodeProperties typeSettingsUnicodeProperties,
-			String commerceCurrencyCode, String externalReferenceCode,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long siteGroupId, String name,
+			String type, UnicodeProperties typeSettingsUnicodeProperties,
+			String commerceCurrencyCode, ServiceContext serviceContext)
 		throws PortalException {
 
 		PortletResourcePermission portletResourcePermission =
@@ -50,8 +49,9 @@ public class CommerceChannelServiceImpl extends CommerceChannelServiceBaseImpl {
 			getPermissionChecker(), null, CPActionKeys.ADD_COMMERCE_CHANNEL);
 
 		return commerceChannelLocalService.addCommerceChannel(
-			siteGroupId, name, type, typeSettingsUnicodeProperties,
-			commerceCurrencyCode, externalReferenceCode, serviceContext);
+			externalReferenceCode, siteGroupId, name, type,
+			typeSettingsUnicodeProperties, commerceCurrencyCode,
+			serviceContext);
 	}
 
 	@Override
@@ -67,12 +67,12 @@ public class CommerceChannelServiceImpl extends CommerceChannelServiceBaseImpl {
 
 	@Override
 	public CommerceChannel fetchByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+			String externalReferenceCode, long companyId)
 		throws PortalException {
 
 		CommerceChannel commerceChannel =
 			commerceChannelLocalService.fetchByExternalReferenceCode(
-				companyId, externalReferenceCode);
+				externalReferenceCode, companyId);
 
 		if (commerceChannel != null) {
 			_commerceChannelModelResourcePermission.check(
@@ -223,7 +223,7 @@ public class CommerceChannelServiceImpl extends CommerceChannelServiceBaseImpl {
 
 	@Override
 	public CommerceChannel updateCommerceChannelExternalReferenceCode(
-			long commerceChannelId, String externalReferenceCode)
+			String externalReferenceCode, long commerceChannelId)
 		throws PortalException {
 
 		_commerceChannelModelResourcePermission.check(
@@ -231,7 +231,7 @@ public class CommerceChannelServiceImpl extends CommerceChannelServiceBaseImpl {
 
 		return commerceChannelLocalService.
 			updateCommerceChannelExternalReferenceCode(
-				commerceChannelId, externalReferenceCode);
+				externalReferenceCode, commerceChannelId);
 	}
 
 	private static volatile ModelResourcePermission<CommerceChannel>

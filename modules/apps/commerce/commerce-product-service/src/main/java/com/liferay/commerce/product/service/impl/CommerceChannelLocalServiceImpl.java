@@ -59,10 +59,9 @@ public class CommerceChannelLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceChannel addCommerceChannel(
-			long siteGroupId, String name, String type,
-			UnicodeProperties typeSettingsUnicodeProperties,
-			String commerceCurrencyCode, String externalReferenceCode,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long siteGroupId, String name,
+			String type, UnicodeProperties typeSettingsUnicodeProperties,
+			String commerceCurrencyCode, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
@@ -76,6 +75,7 @@ public class CommerceChannelLocalServiceImpl
 		CommerceChannel commerceChannel = commerceChannelPersistence.create(
 			commerceChannelId);
 
+		commerceChannel.setExternalReferenceCode(externalReferenceCode);
 		commerceChannel.setCompanyId(user.getCompanyId());
 		commerceChannel.setUserId(user.getUserId());
 		commerceChannel.setUserName(user.getFullName());
@@ -88,7 +88,6 @@ public class CommerceChannelLocalServiceImpl
 		commerceChannel.setPriceDisplayType(
 			CommercePricingConstants.TAX_EXCLUDED_FROM_PRICE);
 		commerceChannel.setDiscountsTargetNetPrice(true);
-		commerceChannel.setExternalReferenceCode(externalReferenceCode);
 
 		commerceChannel = commerceChannelPersistence.update(commerceChannel);
 
@@ -166,7 +165,7 @@ public class CommerceChannelLocalServiceImpl
 
 	@Override
 	public CommerceChannel fetchByExternalReferenceCode(
-		long companyId, String externalReferenceCode) {
+		String externalReferenceCode, long companyId) {
 
 		if (Validator.isBlank(externalReferenceCode)) {
 			return null;
@@ -319,7 +318,7 @@ public class CommerceChannelLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceChannel updateCommerceChannelExternalReferenceCode(
-			long commerceChannelId, String externalReferenceCode)
+			String externalReferenceCode, long commerceChannelId)
 		throws PortalException {
 
 		CommerceChannel commerceChannel =

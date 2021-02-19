@@ -143,8 +143,9 @@ public class CommercePricingTest {
 
 		CommerceCatalog catalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
-				RandomTestUtil.randomString(), _commerceCurrency.getCode(),
-				LocaleUtil.US.getDisplayLanguage(), null, _serviceContext);
+				null, RandomTestUtil.randomString(),
+				_commerceCurrency.getCode(), LocaleUtil.US.getDisplayLanguage(),
+				_serviceContext);
 
 		CommercePriceList commercePriceList =
 			CommercePriceListTestUtil.addCommercePriceList(
@@ -226,8 +227,9 @@ public class CommercePricingTest {
 
 		CommerceCatalog catalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				LocaleUtil.US.getDisplayLanguage(), null,
+				null, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
+				LocaleUtil.US.getDisplayLanguage(),
 				ServiceContextTestUtil.getServiceContext());
 
 		CommercePriceList commercePriceList1 =
@@ -286,8 +288,9 @@ public class CommercePricingTest {
 
 		CommerceCatalog commerceCatalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
-				RandomTestUtil.randomString(), _commerceCurrency.getCode(),
-				LocaleUtil.US.getDisplayLanguage(), null, _serviceContext);
+				null, RandomTestUtil.randomString(),
+				_commerceCurrency.getCode(), LocaleUtil.US.getDisplayLanguage(),
+				_serviceContext);
 
 		CommercePriceList commercePriceList =
 			CommercePriceListTestUtil.addCommercePriceList(
@@ -375,8 +378,9 @@ public class CommercePricingTest {
 
 		CommerceCatalog commerceCatalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
-				RandomTestUtil.randomString(), _commerceCurrency.getCode(),
-				LocaleUtil.US.getDisplayLanguage(), null, _serviceContext);
+				null, RandomTestUtil.randomString(),
+				_commerceCurrency.getCode(), LocaleUtil.US.getDisplayLanguage(),
+				_serviceContext);
 
 		CommercePriceList commercePriceList =
 			CommercePriceListTestUtil.addCommercePriceList(
@@ -458,8 +462,9 @@ public class CommercePricingTest {
 
 		CommerceCatalog catalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
-				RandomTestUtil.randomString(), _commerceCurrency.getCode(),
-				LocaleUtil.US.getDisplayLanguage(), null, _serviceContext);
+				null, RandomTestUtil.randomString(),
+				_commerceCurrency.getCode(), LocaleUtil.US.getDisplayLanguage(),
+				_serviceContext);
 
 		CommercePriceList commercePriceList =
 			CommercePriceListTestUtil.addCommercePriceList(
@@ -509,8 +514,9 @@ public class CommercePricingTest {
 
 		CommerceCatalog catalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
-				RandomTestUtil.randomString(), _commerceCurrency.getCode(),
-				LocaleUtil.US.getDisplayLanguage(), null, _serviceContext);
+				null, RandomTestUtil.randomString(),
+				_commerceCurrency.getCode(), LocaleUtil.US.getDisplayLanguage(),
+				_serviceContext);
 
 		CommercePriceList commercePriceList =
 			CommercePriceListTestUtil.addCommercePriceList(
@@ -572,8 +578,9 @@ public class CommercePricingTest {
 
 		CommerceCatalog catalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				LocaleUtil.US.getDisplayLanguage(), null,
+				null, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
+				LocaleUtil.US.getDisplayLanguage(),
 				ServiceContextTestUtil.getServiceContext());
 
 		CommercePriceList commercePriceList1 =
@@ -685,8 +692,9 @@ public class CommercePricingTest {
 
 		CommerceCatalog catalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				LocaleUtil.US.getDisplayLanguage(), null,
+				null, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
+				LocaleUtil.US.getDisplayLanguage(),
 				ServiceContextTestUtil.getServiceContext());
 
 		CommercePriceList commercePriceList1 =
@@ -760,8 +768,9 @@ public class CommercePricingTest {
 
 		CommerceCatalog catalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
-				RandomTestUtil.randomString(), _commerceCurrency.getCode(),
-				LocaleUtil.US.getDisplayLanguage(), null, _serviceContext);
+				null, RandomTestUtil.randomString(),
+				_commerceCurrency.getCode(), LocaleUtil.US.getDisplayLanguage(),
+				_serviceContext);
 
 		CommercePriceList commercePriceList =
 			CommercePriceListTestUtil.addCommercePriceList(
@@ -840,8 +849,9 @@ public class CommercePricingTest {
 
 		CommerceCatalog catalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
-				RandomTestUtil.randomString(), _commerceCurrency.getCode(),
-				LocaleUtil.US.getDisplayLanguage(), null, _serviceContext);
+				null, RandomTestUtil.randomString(),
+				_commerceCurrency.getCode(), LocaleUtil.US.getDisplayLanguage(),
+				_serviceContext);
 
 		CommercePriceList commercePriceList =
 			CommercePriceListTestUtil.addCommercePriceList(
@@ -920,8 +930,9 @@ public class CommercePricingTest {
 
 		CommerceCatalog catalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				LocaleUtil.US.getDisplayLanguage(), null,
+				null, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
+				LocaleUtil.US.getDisplayLanguage(),
 				ServiceContextTestUtil.getServiceContext());
 
 		CommercePriceList commercePriceList1 =
@@ -1043,8 +1054,9 @@ public class CommercePricingTest {
 
 		CommerceCatalog catalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				LocaleUtil.US.getDisplayLanguage(), null,
+				null, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
+				LocaleUtil.US.getDisplayLanguage(),
 				ServiceContextTestUtil.getServiceContext());
 
 		CommercePriceList commercePriceList1 =
@@ -1156,8 +1168,9 @@ public class CommercePricingTest {
 
 		CommerceCatalog catalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				LocaleUtil.US.getDisplayLanguage(), null,
+				null, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
+				LocaleUtil.US.getDisplayLanguage(),
 				ServiceContextTestUtil.getServiceContext());
 
 		CommercePriceList commercePriceList1 =

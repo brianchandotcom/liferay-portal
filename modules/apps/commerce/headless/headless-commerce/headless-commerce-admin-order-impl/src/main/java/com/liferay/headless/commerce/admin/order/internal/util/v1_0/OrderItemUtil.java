@@ -58,8 +58,8 @@ public class OrderItemUtil {
 
 		if (orderItem.getSkuExternalReferenceCode() != null) {
 			cpInstance = cpInstanceService.fetchByExternalReferenceCode(
-				serviceContext.getCompanyId(),
-				orderItem.getSkuExternalReferenceCode());
+				orderItem.getSkuExternalReferenceCode(),
+				serviceContext.getCompanyId());
 		}
 
 		CommerceOrderItem commerceOrderItem =

@@ -170,8 +170,8 @@ public class CommerceDiscountUsageTest {
 
 		CommerceCatalog catalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
-				RandomTestUtil.randomString(), _commerceCurrency.getCode(),
-				LocaleUtil.US.getDisplayLanguage(), null,
+				null, RandomTestUtil.randomString(),
+				_commerceCurrency.getCode(), LocaleUtil.US.getDisplayLanguage(),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		CPInstance cpInstance = CPTestUtil.addCPInstanceFromCatalog(
@@ -305,8 +305,8 @@ public class CommerceDiscountUsageTest {
 
 		CommerceCatalog catalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
-				RandomTestUtil.randomString(), _commerceCurrency.getCode(),
-				LocaleUtil.US.getDisplayLanguage(), null,
+				null, RandomTestUtil.randomString(),
+				_commerceCurrency.getCode(), LocaleUtil.US.getDisplayLanguage(),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		CPInstance cpInstance = CPTestUtil.addCPInstanceFromCatalog(
@@ -490,8 +490,8 @@ public class CommerceDiscountUsageTest {
 
 		CommerceCatalog catalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
-				RandomTestUtil.randomString(), _commerceCurrency.getCode(),
-				LocaleUtil.US.getDisplayLanguage(), null,
+				null, RandomTestUtil.randomString(),
+				_commerceCurrency.getCode(), LocaleUtil.US.getDisplayLanguage(),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		CPInstance cpInstance = CPTestUtil.addCPInstanceFromCatalog(

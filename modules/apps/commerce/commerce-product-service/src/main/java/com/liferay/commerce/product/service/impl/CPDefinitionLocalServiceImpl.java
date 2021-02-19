@@ -128,7 +128,8 @@ public class CPDefinitionLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPDefinition addCPDefinition(
-			long groupId, long userId, Map<Locale, String> nameMap,
+			String externalReferenceCode, long groupId, long userId,
+			Map<Locale, String> nameMap,
 			Map<Locale, String> shortDescriptionMap,
 			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
 			Map<Locale, String> metaTitleMap,
@@ -150,8 +151,7 @@ public class CPDefinitionLocalServiceImpl
 			long maxSubscriptionCycles, boolean deliverySubscriptionEnabled,
 			int deliverySubscriptionLength, String deliverySubscriptionType,
 			UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties,
-			long deliveryMaxSubscriptionCycles, String externalReferenceCode,
-			ServiceContext serviceContext)
+			long deliveryMaxSubscriptionCycles, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product definition
@@ -187,7 +187,7 @@ public class CPDefinitionLocalServiceImpl
 			cpDefinitionId);
 
 		CProduct cProduct = cProductLocalService.addCProduct(
-			groupId, userId, externalReferenceCode, new ServiceContext());
+			externalReferenceCode, groupId, userId, new ServiceContext());
 
 		cpDefinition.setGroupId(groupId);
 		cpDefinition.setCompanyId(user.getCompanyId());
@@ -257,11 +257,11 @@ public class CPDefinitionLocalServiceImpl
 			cpInstanceServiceContext.setUserId(userId);
 
 			cpInstanceLocalService.addCPInstance(
-				cpDefinitionId, groupId, defaultSku, null, null, published,
-				null, cpDefinition.getWidth(), cpDefinition.getHeight(),
-				cpDefinition.getDepth(), cpDefinition.getWeight(),
-				BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, published,
-				externalReferenceCode, displayDateMonth, displayDateDay,
+				externalReferenceCode, cpDefinitionId, groupId, defaultSku,
+				null, null, published, null, cpDefinition.getWidth(),
+				cpDefinition.getHeight(), cpDefinition.getDepth(),
+				cpDefinition.getWeight(), BigDecimal.ZERO, BigDecimal.ZERO,
+				BigDecimal.ZERO, published, displayDateMonth, displayDateDay,
 				displayDateYear, displayDateHour, displayDateMinute,
 				expirationDateMonth, expirationDateDay, expirationDateYear,
 				expirationDateHour, expirationDateMinute, neverExpire,
@@ -305,7 +305,8 @@ public class CPDefinitionLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPDefinition addCPDefinition(
-			long groupId, long userId, Map<Locale, String> nameMap,
+			String externalReferenceCode, long groupId, long userId,
+			Map<Locale, String> nameMap,
 			Map<Locale, String> shortDescriptionMap,
 			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
 			Map<Locale, String> metaTitleMap,
@@ -324,23 +325,22 @@ public class CPDefinitionLocalServiceImpl
 			boolean neverExpire, String defaultSku, boolean subscriptionEnabled,
 			int subscriptionLength, String subscriptionType,
 			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
-			long maxSubscriptionCycles, String externalReferenceCode,
-			ServiceContext serviceContext)
+			long maxSubscriptionCycles, ServiceContext serviceContext)
 		throws PortalException {
 
 		return cpDefinitionLocalService.addCPDefinition(
-			groupId, userId, nameMap, shortDescriptionMap, descriptionMap,
-			urlTitleMap, metaTitleMap, metaDescriptionMap, metaKeywordsMap,
-			productTypeName, ignoreSKUCombinations, shippable, freeShipping,
-			shipSeparately, shippingExtraPrice, width, height, depth, weight,
-			cpTaxCategoryId, taxExempt, telcoOrElectronics, ddmStructureKey,
-			published, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, defaultSku, subscriptionEnabled,
-			subscriptionLength, subscriptionType,
-			subscriptionTypeSettingsUnicodeProperties, maxSubscriptionCycles,
-			false, 1, null, null, 0, externalReferenceCode, serviceContext);
+			externalReferenceCode, groupId, userId, nameMap,
+			shortDescriptionMap, descriptionMap, urlTitleMap, metaTitleMap,
+			metaDescriptionMap, metaKeywordsMap, productTypeName,
+			ignoreSKUCombinations, shippable, freeShipping, shipSeparately,
+			shippingExtraPrice, width, height, depth, weight, cpTaxCategoryId,
+			taxExempt, telcoOrElectronics, ddmStructureKey, published,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, defaultSku, subscriptionEnabled, subscriptionLength,
+			subscriptionType, subscriptionTypeSettingsUnicodeProperties,
+			maxSubscriptionCycles, false, 1, null, null, 0, serviceContext);
 	}
 
 	@Override
@@ -794,7 +794,7 @@ public class CPDefinitionLocalServiceImpl
 
 	@Override
 	public CPDefinition fetchCPDefinitionByCProductExternalReferenceCode(
-		long companyId, String externalReferenceCode) {
+		String externalReferenceCode, long companyId) {
 
 		if (Validator.isNull(externalReferenceCode)) {
 			return null;
@@ -1688,14 +1688,14 @@ public class CPDefinitionLocalServiceImpl
 
 	@Override
 	public CPDefinition updateExternalReferenceCode(
-			long cpDefinitionId, String externalReferenceCode)
+			String externalReferenceCode, long cpDefinitionId)
 		throws PortalException {
 
 		CPDefinition cpDefinition = cpDefinitionLocalService.getCPDefinition(
 			cpDefinitionId);
 
 		cProductLocalService.updateCProductExternalReferenceCode(
-			cpDefinition.getCProductId(), externalReferenceCode);
+			externalReferenceCode, cpDefinition.getCProductId());
 
 		return cpDefinitionLocalService.getCPDefinition(cpDefinitionId);
 	}
@@ -1881,7 +1881,8 @@ public class CPDefinitionLocalServiceImpl
 
 	@Override
 	public CPDefinition upsertCPDefinition(
-			long groupId, long userId, Map<Locale, String> nameMap,
+			String externalReferenceCode, long groupId, long userId,
+			Map<Locale, String> nameMap,
 			Map<Locale, String> shortDescriptionMap,
 			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
 			Map<Locale, String> metaTitleMap,
@@ -1903,8 +1904,7 @@ public class CPDefinitionLocalServiceImpl
 			long maxSubscriptionCycles, boolean deliverySubscriptionEnabled,
 			int deliverySubscriptionLength, String deliverySubscriptionType,
 			UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties,
-			long deliveryMaxSubscriptionCycles, String externalReferenceCode,
-			ServiceContext serviceContext)
+			long deliveryMaxSubscriptionCycles, ServiceContext serviceContext)
 		throws PortalException {
 
 		if (Validator.isBlank(externalReferenceCode)) {
@@ -1943,27 +1943,27 @@ public class CPDefinitionLocalServiceImpl
 		}
 
 		return cpDefinitionLocalService.addCPDefinition(
-			groupId, userId, nameMap, shortDescriptionMap, descriptionMap,
-			urlTitleMap, metaTitleMap, metaDescriptionMap, metaKeywordsMap,
-			productTypeName, ignoreSKUCombinations, shippable, freeShipping,
-			shipSeparately, shippingExtraPrice, width, height, depth, weight,
-			cpTaxCategoryId, taxExempt, telcoOrElectronics, ddmStructureKey,
-			published, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, defaultSku, subscriptionEnabled,
-			subscriptionLength, subscriptionType,
-			subscriptionTypeSettingsUnicodeProperties, maxSubscriptionCycles,
-			deliverySubscriptionEnabled, deliverySubscriptionLength,
-			deliverySubscriptionType,
+			externalReferenceCode, groupId, userId, nameMap,
+			shortDescriptionMap, descriptionMap, urlTitleMap, metaTitleMap,
+			metaDescriptionMap, metaKeywordsMap, productTypeName,
+			ignoreSKUCombinations, shippable, freeShipping, shipSeparately,
+			shippingExtraPrice, width, height, depth, weight, cpTaxCategoryId,
+			taxExempt, telcoOrElectronics, ddmStructureKey, published,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, defaultSku, subscriptionEnabled, subscriptionLength,
+			subscriptionType, subscriptionTypeSettingsUnicodeProperties,
+			maxSubscriptionCycles, deliverySubscriptionEnabled,
+			deliverySubscriptionLength, deliverySubscriptionType,
 			deliverySubscriptionTypeSettingsUnicodeProperties,
-			deliveryMaxSubscriptionCycles, externalReferenceCode,
-			serviceContext);
+			deliveryMaxSubscriptionCycles, serviceContext);
 	}
 
 	@Override
 	public CPDefinition upsertCPDefinition(
-			long groupId, long userId, Map<Locale, String> nameMap,
+			String externalReferenceCode, long groupId, long userId,
+			Map<Locale, String> nameMap,
 			Map<Locale, String> shortDescriptionMap,
 			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
 			Map<Locale, String> metaTitleMap,
@@ -1982,23 +1982,22 @@ public class CPDefinitionLocalServiceImpl
 			boolean neverExpire, String defaultSku, boolean subscriptionEnabled,
 			int subscriptionLength, String subscriptionType,
 			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
-			long maxSubscriptionCycles, String externalReferenceCode,
-			ServiceContext serviceContext)
+			long maxSubscriptionCycles, ServiceContext serviceContext)
 		throws PortalException {
 
 		return cpDefinitionLocalService.upsertCPDefinition(
-			groupId, userId, nameMap, shortDescriptionMap, descriptionMap,
-			urlTitleMap, metaTitleMap, metaDescriptionMap, metaKeywordsMap,
-			productTypeName, ignoreSKUCombinations, shippable, freeShipping,
-			shipSeparately, shippingExtraPrice, width, height, depth, weight,
-			cpTaxCategoryId, taxExempt, telcoOrElectronics, ddmStructureKey,
-			published, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, defaultSku, subscriptionEnabled,
-			subscriptionLength, subscriptionType,
-			subscriptionTypeSettingsUnicodeProperties, maxSubscriptionCycles,
-			false, 1, null, null, 0, externalReferenceCode, serviceContext);
+			externalReferenceCode, groupId, userId, nameMap,
+			shortDescriptionMap, descriptionMap, urlTitleMap, metaTitleMap,
+			metaDescriptionMap, metaKeywordsMap, productTypeName,
+			ignoreSKUCombinations, shippable, freeShipping, shipSeparately,
+			shippingExtraPrice, width, height, depth, weight, cpTaxCategoryId,
+			taxExempt, telcoOrElectronics, ddmStructureKey, published,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, defaultSku, subscriptionEnabled, subscriptionLength,
+			subscriptionType, subscriptionTypeSettingsUnicodeProperties,
+			maxSubscriptionCycles, false, 1, null, null, 0, serviceContext);
 	}
 
 	protected SearchContext buildSearchContext(

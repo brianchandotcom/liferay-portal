@@ -158,7 +158,7 @@ public class EditCommerceCatalogMVCActionCommand extends BaseMVCActionCommand {
 				CommerceCatalog.class.getName(), actionRequest);
 
 			commerceCatalog = _commerceCatalogService.addCommerceCatalog(
-				name, commerceCurrencyCode, catalogDefaultLanguageId, null,
+				null, name, commerceCurrencyCode, catalogDefaultLanguageId,
 				serviceContext);
 		}
 		else {

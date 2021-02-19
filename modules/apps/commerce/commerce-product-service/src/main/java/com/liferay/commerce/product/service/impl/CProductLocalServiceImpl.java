@@ -37,7 +37,7 @@ public class CProductLocalServiceImpl extends CProductLocalServiceBaseImpl {
 
 	@Override
 	public CProduct addCProduct(
-			long groupId, long userId, String externalReferenceCode,
+			String externalReferenceCode, long groupId, long userId,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -47,17 +47,17 @@ public class CProductLocalServiceImpl extends CProductLocalServiceBaseImpl {
 			externalReferenceCode = null;
 		}
 
-		validate(user.getCompanyId(), externalReferenceCode);
+		validate(externalReferenceCode, user.getCompanyId());
 
 		CProduct cProduct = cProductLocalService.createCProduct(
 			counterLocalService.increment());
 
+		cProduct.setExternalReferenceCode(externalReferenceCode);
 		cProduct.setGroupId(groupId);
 		cProduct.setCompanyId(user.getCompanyId());
 		cProduct.setUserId(user.getUserId());
 		cProduct.setUserName(user.getFullName());
 
-		cProduct.setExternalReferenceCode(externalReferenceCode);
 		cProduct.setLatestVersion(1);
 
 		return cProductPersistence.update(cProduct);
@@ -117,7 +117,7 @@ public class CProductLocalServiceImpl extends CProductLocalServiceBaseImpl {
 
 	@Override
 	public CProduct updateCProductExternalReferenceCode(
-			long cProductId, String externalReferenceCode)
+			String externalReferenceCode, long cProductId)
 		throws PortalException {
 
 		CProduct cProduct = cProductLocalService.getCProduct(cProductId);
@@ -126,7 +126,7 @@ public class CProductLocalServiceImpl extends CProductLocalServiceBaseImpl {
 			return cProduct;
 		}
 
-		validate(cProduct.getCompanyId(), externalReferenceCode);
+		validate(externalReferenceCode, cProduct.getCompanyId());
 
 		cProduct.setExternalReferenceCode(externalReferenceCode);
 
@@ -170,7 +170,7 @@ public class CProductLocalServiceImpl extends CProductLocalServiceBaseImpl {
 		indexer.reindex(CPDefinition.class.getName(), cpDefinitionId);
 	}
 
-	protected void validate(long companyId, String externalReferenceCode)
+	protected void validate(String externalReferenceCode, long companyId)
 		throws PortalException {
 
 		if (Validator.isNull(externalReferenceCode)) {

@@ -58,7 +58,7 @@ public class ProductSubscriptionConfigurationResourceImpl
 		CPDefinition cpDefinition =
 			_cpDefinitionService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
-					contextCompany.getCompanyId(), externalReferenceCode);
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		return _toProductSubscriptionConfiguration(
 			cpDefinition.getCPDefinitionId());
@@ -96,7 +96,7 @@ public class ProductSubscriptionConfigurationResourceImpl
 		CPDefinition cpDefinition =
 			_cpDefinitionService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
-					contextCompany.getCompanyId(), externalReferenceCode);
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(

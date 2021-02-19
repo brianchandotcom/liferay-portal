@@ -35,8 +35,8 @@ public class CommerceCatalogServiceImpl extends CommerceCatalogServiceBaseImpl {
 
 	@Override
 	public CommerceCatalog addCommerceCatalog(
-			String name, String commerceCurrencyCode,
-			String catalogDefaultLanguageId, String externalReferenceCode,
+			String externalReferenceCode, String name,
+			String commerceCurrencyCode, String catalogDefaultLanguageId,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -48,8 +48,8 @@ public class CommerceCatalogServiceImpl extends CommerceCatalogServiceBaseImpl {
 			getPermissionChecker(), null, CPActionKeys.ADD_COMMERCE_CATALOG);
 
 		return commerceCatalogLocalService.addCommerceCatalog(
-			name, commerceCurrencyCode, catalogDefaultLanguageId,
-			externalReferenceCode, serviceContext);
+			externalReferenceCode, name, commerceCurrencyCode,
+			catalogDefaultLanguageId, serviceContext);
 	}
 
 	@Override
@@ -65,12 +65,12 @@ public class CommerceCatalogServiceImpl extends CommerceCatalogServiceBaseImpl {
 
 	@Override
 	public CommerceCatalog fetchByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+			String externalReferenceCode, long companyId)
 		throws PortalException {
 
 		CommerceCatalog commerceCatalog =
 			commerceCatalogLocalService.fetchByExternalReferenceCode(
-				companyId, externalReferenceCode);
+				externalReferenceCode, companyId);
 
 		if (commerceCatalog != null) {
 			_commerceCatalogModelResourcePermission.check(
@@ -162,7 +162,7 @@ public class CommerceCatalogServiceImpl extends CommerceCatalogServiceBaseImpl {
 
 	@Override
 	public CommerceCatalog updateCommerceCatalogExternalReferenceCode(
-			long commerceCatalogId, String externalReferenceCode)
+			String externalReferenceCode, long commerceCatalogId)
 		throws PortalException {
 
 		_commerceCatalogModelResourcePermission.check(
@@ -170,7 +170,7 @@ public class CommerceCatalogServiceImpl extends CommerceCatalogServiceBaseImpl {
 
 		return commerceCatalogLocalService.
 			updateCommerceCatalogExternalReferenceCode(
-				commerceCatalogId, externalReferenceCode);
+				externalReferenceCode, commerceCatalogId);
 	}
 
 	private static volatile ModelResourcePermission<CommerceCatalog>

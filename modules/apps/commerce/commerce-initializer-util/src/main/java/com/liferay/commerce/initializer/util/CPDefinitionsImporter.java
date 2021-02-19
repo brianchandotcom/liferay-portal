@@ -244,17 +244,17 @@ public class CPDefinitionsImporter {
 			locale, description);
 
 		return _cpDefinitionLocalService.addCPDefinition(
-			catalogGroupId, user.getUserId(), nameMap, shortDescriptionMap,
-			descriptionMap, nameMap, null, null, null, "simple", true,
-			shippable, false, false, 0D, width, height, depth, weight,
-			_getCPTaxCategoryId(taxCategory, serviceContext), false, false,
-			null, true, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, true, sku, subscriptionEnabled,
-			subscriptionLength, subscriptionType,
+			externalReferenceCode, catalogGroupId, user.getUserId(), nameMap,
+			shortDescriptionMap, descriptionMap, nameMap, null, null, null,
+			"simple", true, shippable, false, false, 0D, width, height, depth,
+			weight, _getCPTaxCategoryId(taxCategory, serviceContext), false,
+			false, null, true, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, true, sku,
+			subscriptionEnabled, subscriptionLength, subscriptionType,
 			subscriptionTypeSettingsUnicodeProperties, maxSubscriptionCycles,
-			externalReferenceCode, serviceContext);
+			serviceContext);
 	}
 
 	private void _addWarehouseQuantities(
@@ -376,7 +376,7 @@ public class CPDefinitionsImporter {
 		CPDefinition cpDefinition =
 			_cpDefinitionLocalService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
-					company.getCompanyId(), externalReferenceCode);
+					externalReferenceCode, company.getCompanyId());
 
 		if (cpDefinition != null) {
 			_commerceChannelRelLocalService.addCommerceChannelRel(
@@ -901,20 +901,19 @@ public class CPDefinitionsImporter {
 		}
 
 		CPInstance cpInstance = _cpInstanceLocalService.addCPInstance(
-			cpDefinitionId, cpDefinition.getGroupId(), sku, null,
-			manufacturerPartNumber, true,
+			externalReferenceCode, cpDefinitionId, cpDefinition.getGroupId(),
+			sku, null, manufacturerPartNumber, true,
 			_cpDefinitionOptionRelLocalService.
 				getCPDefinitionOptionRelCPDefinitionOptionValueRelIds(
 					cpDefinitionId, optionsJSON),
 			cpDefinition.getWidth(), cpDefinition.getHeight(),
 			cpDefinition.getDepth(), cpDefinition.getWeight(),
 			BigDecimal.valueOf(price), BigDecimal.valueOf(promoPrice),
-			BigDecimal.valueOf(0), true, externalReferenceCode,
-			calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
-			calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
-			calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true,
-			overrideSubscriptionInfo, subscriptionEnabled, subscriptionLength,
-			subscriptionType,
+			BigDecimal.valueOf(0), true, calendar.get(Calendar.MONTH),
+			calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.YEAR),
+			calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE),
+			0, 0, 0, 0, 0, true, overrideSubscriptionInfo, subscriptionEnabled,
+			subscriptionLength, subscriptionType,
 			_getSubscriptionTypeSettingsUnicodeProperties(
 				subscriptionInfoJSONObject),
 			maxSubscriptionCycles, serviceContext);

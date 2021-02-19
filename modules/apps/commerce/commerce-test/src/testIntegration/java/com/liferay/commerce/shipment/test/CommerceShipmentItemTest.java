@@ -90,9 +90,9 @@ public class CommerceShipmentItemTest {
 			_group.getCompanyId());
 
 		_commerceChannel = CommerceChannelLocalServiceUtil.addCommerceChannel(
-			_group.getGroupId(), "Test Channel",
+			null, _group.getGroupId(), "Test Channel",
 			CommerceChannelConstants.CHANNEL_TYPE_SITE, null,
-			_commerceCurrency.getCode(), null, serviceContext);
+			_commerceCurrency.getCode(), serviceContext);
 
 		_commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
 			_user.getUserId(), _commerceChannel.getGroupId(),

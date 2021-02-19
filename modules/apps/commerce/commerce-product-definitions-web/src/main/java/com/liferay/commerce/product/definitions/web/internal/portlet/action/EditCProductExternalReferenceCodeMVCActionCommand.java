@@ -85,7 +85,7 @@ public class EditCProductExternalReferenceCodeMVCActionCommand
 			actionRequest, "externalReferenceCode");
 
 		_cProductLocalService.updateCProductExternalReferenceCode(
-			cProduct.getCProductId(), externalReferenceCode);
+			externalReferenceCode, cProduct.getCProductId());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

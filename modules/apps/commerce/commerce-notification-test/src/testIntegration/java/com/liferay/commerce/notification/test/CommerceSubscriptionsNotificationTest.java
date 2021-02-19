@@ -107,10 +107,10 @@ public class CommerceSubscriptionsNotificationTest {
 			_company.getCompanyId(), _group.getGroupId(), _user.getUserId());
 
 		_commerceChannel = _commerceChannelLocalService.addCommerceChannel(
-			_group.getGroupId(),
+			StringPool.BLANK, _group.getGroupId(),
 			_group.getName(_serviceContext.getLanguageId()) + " Portal",
 			CommerceChannelConstants.CHANNEL_TYPE_SITE, null,
-			_commerceCurrency.getCode(), StringPool.BLANK, _serviceContext);
+			_commerceCurrency.getCode(), _serviceContext);
 
 		_toUser = UserTestUtil.addUser(
 			_user.getCompanyId(), _user.getUserId(), "businessUser",

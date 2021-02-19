@@ -85,7 +85,7 @@ public class EditCPOptionExternalReferenceCodeMVCActionCommand
 			actionRequest, "externalReferenceCode");
 
 		_cpOptionLocalService.updateCPOptionExternalReferenceCode(
-			cpOption.getCPOptionId(), externalReferenceCode);
+			externalReferenceCode, cpOption.getCPOptionId());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

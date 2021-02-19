@@ -66,7 +66,7 @@ public class AttachmentResourceImpl
 		CPDefinition cpDefinition =
 			_cpDefinitionService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
-					contextCompany.getCompanyId(), externalReferenceCode);
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
@@ -87,7 +87,7 @@ public class AttachmentResourceImpl
 		CPDefinition cpDefinition =
 			_cpDefinitionService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
-					contextCompany.getCompanyId(), externalReferenceCode);
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
@@ -146,7 +146,7 @@ public class AttachmentResourceImpl
 		CPDefinition cpDefinition =
 			_cpDefinitionService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
-					contextCompany.getCompanyId(), externalReferenceCode);
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
@@ -165,7 +165,7 @@ public class AttachmentResourceImpl
 		CPDefinition cpDefinition =
 			_cpDefinitionService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
-					contextCompany.getCompanyId(), externalReferenceCode);
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
@@ -184,7 +184,7 @@ public class AttachmentResourceImpl
 		CPDefinition cpDefinition =
 			_cpDefinitionService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
-					contextCompany.getCompanyId(), externalReferenceCode);
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
@@ -203,7 +203,7 @@ public class AttachmentResourceImpl
 		CPDefinition cpDefinition =
 			_cpDefinitionService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
-					contextCompany.getCompanyId(), externalReferenceCode);
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
@@ -222,7 +222,7 @@ public class AttachmentResourceImpl
 		CPDefinition cpDefinition =
 			_cpDefinitionService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
-					contextCompany.getCompanyId(), externalReferenceCode);
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
@@ -241,7 +241,7 @@ public class AttachmentResourceImpl
 		CPDefinition cpDefinition =
 			_cpDefinitionService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
-					contextCompany.getCompanyId(), externalReferenceCode);
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(

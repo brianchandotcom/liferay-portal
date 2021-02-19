@@ -55,7 +55,7 @@ public class ProductTaxConfigurationResourceImpl
 		CPDefinition cpDefinition =
 			_cpDefinitionService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
-					contextCompany.getCompanyId(), externalReferenceCode);
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		return _toProductTaxConfiguration(cpDefinition.getCPDefinitionId());
 	}
@@ -86,7 +86,7 @@ public class ProductTaxConfigurationResourceImpl
 		CPDefinition cpDefinition =
 			_cpDefinitionService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
-					contextCompany.getCompanyId(), externalReferenceCode);
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(

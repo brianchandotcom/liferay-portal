@@ -120,10 +120,11 @@ public class CPOptionLocalServiceTest {
 		);
 
 		_cpOptionLocalService.addCPOption(
-			_serviceContext.getUserId(), RandomTestUtil.randomLocaleStringMap(),
+			null, _serviceContext.getUserId(),
+			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(), "invalid_type",
 			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),
-			false, RandomTestUtil.randomString(), null, _serviceContext);
+			false, RandomTestUtil.randomString(), _serviceContext);
 	}
 
 	@Test(expected = CPOptionSKUContributorException.class)
@@ -141,10 +142,11 @@ public class CPOptionLocalServiceTest {
 		);
 
 		_cpOptionLocalService.addCPOption(
-			_serviceContext.getUserId(), RandomTestUtil.randomLocaleStringMap(),
+			null, _serviceContext.getUserId(),
+			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(), null,
 			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),
-			false, RandomTestUtil.randomString(), null, _serviceContext);
+			false, RandomTestUtil.randomString(), _serviceContext);
 	}
 
 	@Test
@@ -196,10 +198,11 @@ public class CPOptionLocalServiceTest {
 		);
 
 		_cpOptionLocalService.addCPOption(
-			_serviceContext.getUserId(), RandomTestUtil.randomLocaleStringMap(),
+			null, _serviceContext.getUserId(),
+			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(), "checkbox",
 			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),
-			true, RandomTestUtil.randomString(), null, _serviceContext);
+			true, RandomTestUtil.randomString(), _serviceContext);
 	}
 
 	@Rule
@@ -212,12 +215,11 @@ public class CPOptionLocalServiceTest {
 
 		for (String optionFieldType : optionFieldTypes) {
 			_cpOptionLocalService.addCPOption(
-				_serviceContext.getUserId(),
+				null, _serviceContext.getUserId(),
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomLocaleStringMap(), optionFieldType,
 				RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),
-				skuContributor, RandomTestUtil.randomString(), null,
-				serviceContext);
+				skuContributor, RandomTestUtil.randomString(), serviceContext);
 		}
 	}
 

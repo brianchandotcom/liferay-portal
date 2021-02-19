@@ -174,7 +174,7 @@ public class CommercePriceEntriesImporter {
 
 		CPInstance cpInstance =
 			_cpInstanceLocalService.fetchByExternalReferenceCode(
-				serviceContext.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, serviceContext.getCompanyId());
 
 		if (cpInstance == null) {
 			throw new NoSuchCPInstanceException(

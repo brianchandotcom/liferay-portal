@@ -83,7 +83,7 @@ public class EditCommerceCatalogExternalReferenceCodeMVCActionCommand
 			actionRequest, "externalReferenceCode");
 
 		_commerceCatalogService.updateCommerceCatalogExternalReferenceCode(
-			commerceCatalogId, externalReferenceCode);
+			externalReferenceCode, commerceCatalogId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

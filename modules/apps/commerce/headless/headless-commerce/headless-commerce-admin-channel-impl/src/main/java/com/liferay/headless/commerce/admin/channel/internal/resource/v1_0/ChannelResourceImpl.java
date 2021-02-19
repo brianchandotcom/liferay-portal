@@ -128,9 +128,9 @@ public class ChannelResourceImpl
 	public Channel postChannel(Channel channel) throws Exception {
 		return _toChannel(
 			_commerceChannelService.addCommerceChannel(
+				channel.getExternalReferenceCode(),
 				GetterUtil.get(channel.getSiteGroupId(), 0), channel.getName(),
 				channel.getType(), null, channel.getCurrencyCode(),
-				channel.getExternalReferenceCode(),
 				_serviceContextHelper.getServiceContext(contextUser)));
 	}
 

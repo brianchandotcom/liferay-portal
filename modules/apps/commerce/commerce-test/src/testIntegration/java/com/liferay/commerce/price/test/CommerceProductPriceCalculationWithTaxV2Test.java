@@ -132,8 +132,9 @@ public class CommerceProductPriceCalculationWithTaxV2Test {
 
 		CommerceCatalog catalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
-				RandomTestUtil.randomString(), _commerceCurrency.getCode(),
-				LocaleUtil.US.getDisplayLanguage(), null, _serviceContext);
+				null, RandomTestUtil.randomString(),
+				_commerceCurrency.getCode(), LocaleUtil.US.getDisplayLanguage(),
+				_serviceContext);
 
 		CommercePriceList commercePriceList =
 			CommercePriceListTestUtil.addCommercePriceList(
@@ -219,8 +220,9 @@ public class CommerceProductPriceCalculationWithTaxV2Test {
 
 		CommerceCatalog catalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
-				RandomTestUtil.randomString(), _commerceCurrency.getCode(),
-				LocaleUtil.US.getDisplayLanguage(), null, _serviceContext);
+				null, RandomTestUtil.randomString(),
+				_commerceCurrency.getCode(), LocaleUtil.US.getDisplayLanguage(),
+				_serviceContext);
 
 		CommercePriceList commercePriceList =
 			CommercePriceListTestUtil.addCommercePriceList(

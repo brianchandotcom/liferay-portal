@@ -113,9 +113,9 @@ public class CommerceOrderTest {
 			_group.getGroupId());
 
 		_commerceChannel = _commerceChannelLocalService.addCommerceChannel(
-			_group.getGroupId(), "Test Channel",
+			null, _group.getGroupId(), "Test Channel",
 			CommerceChannelConstants.CHANNEL_TYPE_SITE, null,
-			_commerceCurrency.getCode(), null, _serviceContext);
+			_commerceCurrency.getCode(), _serviceContext);
 
 		Settings settings = _settingsFactory.getSettings(
 			new GroupServiceSettingsLocator(

@@ -158,8 +158,9 @@ public class CommercePaymentEngineTest {
 
 		CommerceCatalog commerceCatalog =
 			CommerceCatalogLocalServiceUtil.addCommerceCatalog(
-				RandomTestUtil.randomString(), _commerceCurrency.getCode(),
-				LocaleUtil.toLanguageId(LocaleUtil.US), null, _serviceContext);
+				null, RandomTestUtil.randomString(),
+				_commerceCurrency.getCode(),
+				LocaleUtil.toLanguageId(LocaleUtil.US), _serviceContext);
 
 		CommercePriceList commercePriceList =
 			_commercePriceListLocalService.fetchCatalogBaseCommercePriceList(
@@ -248,8 +249,9 @@ public class CommercePaymentEngineTest {
 
 		CommerceCatalog commerceCatalog =
 			CommerceCatalogLocalServiceUtil.addCommerceCatalog(
-				RandomTestUtil.randomString(), _commerceCurrency.getCode(),
-				LocaleUtil.toLanguageId(LocaleUtil.US), null,
+				null, RandomTestUtil.randomString(),
+				_commerceCurrency.getCode(),
+				LocaleUtil.toLanguageId(LocaleUtil.US),
 				ServiceContextTestUtil.getServiceContext(_user.getGroupId()));
 
 		CommercePriceList commercePriceList =

@@ -305,8 +305,8 @@ public class CommerceTestUtil {
 		throws Exception {
 
 		return CommerceCatalogLocalServiceUtil.addCommerceCatalog(
-			RandomTestUtil.randomString(), commerceCurrencyCode,
-			LocaleUtil.toLanguageId(LocaleUtil.US), null,
+			null, RandomTestUtil.randomString(), commerceCurrencyCode,
+			LocaleUtil.toLanguageId(LocaleUtil.US),
 			ServiceContextTestUtil.getServiceContext(
 				companyId, groupId, userId));
 	}
@@ -316,9 +316,8 @@ public class CommerceTestUtil {
 		throws Exception {
 
 		return CommerceChannelLocalServiceUtil.addCommerceChannel(
-			groupId, RandomTestUtil.randomString(),
+			StringPool.BLANK, groupId, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), null, commerceCurrencyCode,
-			StringPool.BLANK,
 			ServiceContextTestUtil.getServiceContext(groupId));
 	}
 
@@ -327,9 +326,9 @@ public class CommerceTestUtil {
 		throws Exception {
 
 		return CommerceChannelLocalServiceUtil.addCommerceChannel(
-			RandomTestUtil.nextLong(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), null, commerceCurrencyCode,
-			StringPool.BLANK, ServiceContextTestUtil.getServiceContext());
+			StringPool.BLANK, RandomTestUtil.nextLong(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
+			commerceCurrencyCode, ServiceContextTestUtil.getServiceContext());
 	}
 
 	public static CommerceChannelRel addCommerceChannelRel(

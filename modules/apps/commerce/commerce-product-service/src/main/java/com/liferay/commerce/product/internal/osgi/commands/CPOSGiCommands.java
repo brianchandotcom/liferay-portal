@@ -94,12 +94,12 @@ public class CPOSGiCommands {
 			titleMap.put(LocaleUtil.US, title);
 
 			_cpDefinitionLocalService.addCPDefinition(
-				commerceCatalog.getGroupId(), user.getUserId(), titleMap, null,
-				null, null, null, null, null, "simple", true, false, false,
-				false, 0, 0, 0, 0, 0, 0, false, false, null, true,
+				null, commerceCatalog.getGroupId(), user.getUserId(), titleMap,
+				null, null, null, null, null, null, "simple", true, false,
+				false, false, 0, 0, 0, 0, 0, 0, false, false, null, true,
 				displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, 0, 0, 0, 0, 0, true,
-				CPInstanceConstants.DEFAULT_SKU, false, 0, null, null, 0, null,
+				CPInstanceConstants.DEFAULT_SKU, false, 0, null, null, 0,
 				serviceContext);
 		}
 	}

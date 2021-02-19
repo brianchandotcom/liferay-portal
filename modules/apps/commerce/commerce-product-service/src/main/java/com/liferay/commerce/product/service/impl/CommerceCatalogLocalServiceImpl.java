@@ -59,9 +59,9 @@ public class CommerceCatalogLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceCatalog addCommerceCatalog(
-			String name, String commerceCurrencyCode,
-			String catalogDefaultLanguageId, boolean system,
-			String externalReferenceCode, ServiceContext serviceContext)
+			String externalReferenceCode, String name,
+			String commerceCurrencyCode, String catalogDefaultLanguageId,
+			boolean system, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
@@ -75,6 +75,7 @@ public class CommerceCatalogLocalServiceImpl
 		CommerceCatalog commerceCatalog = commerceCatalogPersistence.create(
 			commerceCatalogId);
 
+		commerceCatalog.setExternalReferenceCode(externalReferenceCode);
 		commerceCatalog.setCompanyId(user.getCompanyId());
 		commerceCatalog.setUserId(user.getUserId());
 		commerceCatalog.setUserName(user.getFullName());
@@ -83,7 +84,6 @@ public class CommerceCatalogLocalServiceImpl
 		commerceCatalog.setCommerceCurrencyCode(commerceCurrencyCode);
 		commerceCatalog.setCatalogDefaultLanguageId(catalogDefaultLanguageId);
 		commerceCatalog.setSystem(system);
-		commerceCatalog.setExternalReferenceCode(externalReferenceCode);
 
 		// Group
 
@@ -106,14 +106,14 @@ public class CommerceCatalogLocalServiceImpl
 
 	@Override
 	public CommerceCatalog addCommerceCatalog(
-			String name, String commerceCurrencyCode,
-			String catalogDefaultLanguageId, String externalReferenceCode,
+			String externalReferenceCode, String name,
+			String commerceCurrencyCode, String catalogDefaultLanguageId,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		return commerceCatalogLocalService.addCommerceCatalog(
-			name, commerceCurrencyCode, catalogDefaultLanguageId, false,
-			externalReferenceCode, serviceContext);
+			externalReferenceCode, name, commerceCurrencyCode,
+			catalogDefaultLanguageId, false, serviceContext);
 	}
 
 	@Override
@@ -131,9 +131,9 @@ public class CommerceCatalogLocalServiceImpl
 		serviceContext.setUuid(PortalUUIDUtil.generate());
 
 		return commerceCatalogLocalService.addCommerceCatalog(
-			CommerceCatalogConstants.MASTER_COMMERCE_CATALOG,
+			null, CommerceCatalogConstants.MASTER_COMMERCE_CATALOG,
 			CommerceCatalogConstants.MASTER_COMMERCE_DEFAULT_CURRENCY,
-			defaultUser.getLanguageId(), true, null, serviceContext);
+			defaultUser.getLanguageId(), true, serviceContext);
 	}
 
 	@Indexable(type = IndexableType.DELETE)
@@ -186,7 +186,7 @@ public class CommerceCatalogLocalServiceImpl
 
 	@Override
 	public CommerceCatalog fetchByExternalReferenceCode(
-		long companyId, String externalReferenceCode) {
+		String externalReferenceCode, long companyId) {
 
 		if (Validator.isBlank(externalReferenceCode)) {
 			return null;
@@ -291,7 +291,7 @@ public class CommerceCatalogLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceCatalog updateCommerceCatalogExternalReferenceCode(
-			long commerceCatalogId, String externalReferenceCode)
+			String externalReferenceCode, long commerceCatalogId)
 		throws PortalException {
 
 		CommerceCatalog commerceCatalog =

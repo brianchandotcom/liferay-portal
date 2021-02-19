@@ -168,14 +168,14 @@ public class CPAttachmentFileEntryCreator {
 		long classPK = GetterUtil.getLong(classedModel.getPrimaryKeyObj());
 
 		return _cpAttachmentFileEntryLocalService.addCPAttachmentFileEntry(
+			_friendlyURLNormalizer.normalize(fileName),
 			serviceContext.getUserId(), fileEntry.getGroupId(),
 			_portal.getClassNameId(classedModel.getModelClass()), classPK,
 			fileEntry.getFileEntryId(), displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, true, titleMap, null,
-			priority, type, _friendlyURLNormalizer.normalize(fileName),
-			serviceContext);
+			priority, type, serviceContext);
 	}
 
 	private static final String _TEMP_FOLDER_NAME =

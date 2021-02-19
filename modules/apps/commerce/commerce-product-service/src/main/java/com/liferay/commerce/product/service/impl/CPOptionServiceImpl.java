@@ -51,8 +51,8 @@ public class CPOptionServiceImpl extends CPOptionServiceBaseImpl {
 			CPActionKeys.ADD_COMMERCE_PRODUCT_OPTION);
 
 		return cpOptionLocalService.addCPOption(
-			getUserId(), nameMap, descriptionMap, ddmFormFieldTypeName,
-			facetable, required, skuContributor, key, null, serviceContext);
+			null, getUserId(), nameMap, descriptionMap, ddmFormFieldTypeName,
+			facetable, required, skuContributor, key, serviceContext);
 	}
 
 	@Override
@@ -65,11 +65,11 @@ public class CPOptionServiceImpl extends CPOptionServiceBaseImpl {
 
 	@Override
 	public CPOption fetchByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+			String externalReferenceCode, long companyId)
 		throws PortalException {
 
 		CPOption cpOption = cpOptionLocalService.fetchByExternalReferenceCode(
-			companyId, externalReferenceCode);
+			externalReferenceCode, companyId);
 
 		if (cpOption != null) {
 			_cpOptionModelResourcePermission.check(
@@ -150,26 +150,26 @@ public class CPOptionServiceImpl extends CPOptionServiceBaseImpl {
 
 	@Override
 	public CPOption updateCPOptionExternalReferenceCode(
-			long cpOptionId, String externalReferenceCode)
+			String externalReferenceCode, long cpOptionId)
 		throws PortalException {
 
 		_cpOptionModelResourcePermission.check(
 			getPermissionChecker(), cpOptionId, ActionKeys.UPDATE);
 
 		return cpOptionLocalService.updateCPOptionExternalReferenceCode(
-			cpOptionId, externalReferenceCode);
+			externalReferenceCode, cpOptionId);
 	}
 
 	@Override
 	public CPOption upsertCPOption(
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			String ddmFormFieldTypeName, boolean facetable, boolean required,
-			boolean skuContributor, String key, String externalReferenceCode,
-			ServiceContext serviceContext)
+			String externalReferenceCode, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, String ddmFormFieldTypeName,
+			boolean facetable, boolean required, boolean skuContributor,
+			String key, ServiceContext serviceContext)
 		throws PortalException {
 
 		CPOption cpOption = cpOptionLocalService.fetchByExternalReferenceCode(
-			serviceContext.getCompanyId(), externalReferenceCode);
+			externalReferenceCode, serviceContext.getCompanyId());
 
 		if (cpOption == null) {
 			PortletResourcePermission portletResourcePermission =
@@ -181,8 +181,8 @@ public class CPOptionServiceImpl extends CPOptionServiceBaseImpl {
 		}
 
 		return cpOptionLocalService.upsertCPOption(
-			getUserId(), nameMap, descriptionMap, ddmFormFieldTypeName,
-			facetable, required, skuContributor, key, externalReferenceCode,
+			externalReferenceCode, getUserId(), nameMap, descriptionMap,
+			ddmFormFieldTypeName, facetable, required, skuContributor, key,
 			serviceContext);
 	}
 

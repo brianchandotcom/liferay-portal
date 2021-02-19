@@ -68,11 +68,11 @@ public class CPAttachmentFileEntryServiceImpl
 			serviceContext.getScopeGroupId(), classNameId, classPK, type);
 
 		return cpAttachmentFileEntryLocalService.addCPAttachmentFileEntry(
-			userId, groupId, classNameId, classPK, fileEntryId,
+			null, userId, groupId, classNameId, classPK, fileEntryId,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, titleMap, json, priority, type, null, serviceContext);
+			neverExpire, titleMap, json, priority, type, serviceContext);
 	}
 
 	@Override
@@ -87,12 +87,12 @@ public class CPAttachmentFileEntryServiceImpl
 
 	@Override
 	public CPAttachmentFileEntry fetchByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+			String externalReferenceCode, long companyId)
 		throws PortalException {
 
 		CPAttachmentFileEntry cpAttachmentFileEntry =
 			cpAttachmentFileEntryLocalService.fetchByExternalReferenceCode(
-				companyId, externalReferenceCode);
+				externalReferenceCode, companyId);
 
 		if (cpAttachmentFileEntry != null) {
 			long cpDefinitionClassNameId = _portal.getClassNameId(
@@ -317,19 +317,19 @@ public class CPAttachmentFileEntryServiceImpl
 	@Deprecated
 	@Override
 	public CPAttachmentFileEntry upsertCPAttachmentFileEntry(
-			long groupId, long classNameId, long classPK, long fileEntryId,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			String externalReferenceCode, long groupId, long classNameId,
+			long classPK, long fileEntryId, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, Map<Locale, String> titleMap, String json,
-			double priority, int type, String externalReferenceCode,
-			ServiceContext serviceContext)
+			double priority, int type, ServiceContext serviceContext)
 		throws PortalException {
 
 		CPAttachmentFileEntry cpAttachmentFileEntry =
 			cpAttachmentFileEntryLocalService.fetchByExternalReferenceCode(
-				serviceContext.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, serviceContext.getCompanyId());
 
 		if (cpAttachmentFileEntry == null) {
 			checkCPAttachmentFileEntryPermissions(
@@ -340,24 +340,24 @@ public class CPAttachmentFileEntryServiceImpl
 		}
 
 		return cpAttachmentFileEntryLocalService.upsertCPAttachmentFileEntry(
-			groupId, classNameId, classPK, 0, fileEntryId, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire, titleMap,
-			json, priority, type, externalReferenceCode, serviceContext);
+			externalReferenceCode, groupId, classNameId, classPK, 0,
+			fileEntryId, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, titleMap, json, priority, type,
+			serviceContext);
 	}
 
 	@Override
 	public CPAttachmentFileEntry upsertCPAttachmentFileEntry(
-			long groupId, long classNameId, long classPK,
-			long cpAttachmentFileEntryId, long fileEntryId,
+			String externalReferenceCode, long groupId, long classNameId,
+			long classPK, long cpAttachmentFileEntryId, long fileEntryId,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, Map<Locale, String> titleMap, String json,
-			double priority, int type, String externalReferenceCode,
-			ServiceContext serviceContext)
+			double priority, int type, ServiceContext serviceContext)
 		throws PortalException {
 
 		CPAttachmentFileEntry cpAttachmentFileEntry = null;
@@ -382,12 +382,12 @@ public class CPAttachmentFileEntryServiceImpl
 		}
 
 		return cpAttachmentFileEntryLocalService.upsertCPAttachmentFileEntry(
-			groupId, classNameId, classPK, cpAttachmentFileEntryId, fileEntryId,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, titleMap, json, priority, type, externalReferenceCode,
-			serviceContext);
+			externalReferenceCode, groupId, classNameId, classPK,
+			cpAttachmentFileEntryId, fileEntryId, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire, titleMap,
+			json, priority, type, serviceContext);
 	}
 
 	protected void checkCPAttachmentFileEntryPermissions(

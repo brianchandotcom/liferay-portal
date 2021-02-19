@@ -82,7 +82,7 @@ public class SkuResourceImpl
 		throws Exception {
 
 		CPInstance cpInstance = _cpInstanceService.fetchByExternalReferenceCode(
-			contextCompany.getCompanyId(), externalReferenceCode);
+			externalReferenceCode, contextCompany.getCompanyId());
 
 		if (cpInstance == null) {
 			throw new NoSuchCPInstanceException(
@@ -110,7 +110,7 @@ public class SkuResourceImpl
 		CPDefinition cpDefinition =
 			_cpDefinitionService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
-					contextCompany.getCompanyId(), externalReferenceCode);
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
@@ -155,7 +155,7 @@ public class SkuResourceImpl
 		throws Exception {
 
 		CPInstance cpInstance = _cpInstanceService.fetchByExternalReferenceCode(
-			contextCompany.getCompanyId(), externalReferenceCode);
+			externalReferenceCode, contextCompany.getCompanyId());
 
 		if (cpInstance == null) {
 			throw new NoSuchCPInstanceException(
@@ -192,7 +192,7 @@ public class SkuResourceImpl
 		throws Exception {
 
 		CPInstance cpInstance = _cpInstanceService.fetchByExternalReferenceCode(
-			contextCompany.getCompanyId(), externalReferenceCode);
+			externalReferenceCode, contextCompany.getCompanyId());
 
 		if (cpInstance == null) {
 			throw new NoSuchCPInstanceException(
@@ -215,7 +215,7 @@ public class SkuResourceImpl
 		CPDefinition cpDefinition =
 			_cpDefinitionService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
-					contextCompany.getCompanyId(), externalReferenceCode);
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(

@@ -417,7 +417,7 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 		}
 		else if (Validator.isNotNull(skuExternalReferenceCode)) {
 			cpInstance = _cpInstanceService.fetchByExternalReferenceCode(
-				serviceContext.getCompanyId(), skuExternalReferenceCode);
+				skuExternalReferenceCode, serviceContext.getCompanyId());
 		}
 
 		if (cpInstance != null) {

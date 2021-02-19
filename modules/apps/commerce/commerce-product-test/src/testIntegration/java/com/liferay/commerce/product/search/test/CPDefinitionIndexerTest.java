@@ -84,8 +84,9 @@ public class CPDefinitionIndexerTest {
 	public void testSearch() throws Exception {
 		CommerceCatalog catalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				LocaleUtil.US.getDisplayLanguage(), null,
+				null, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
+				LocaleUtil.US.getDisplayLanguage(),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		CPInstance cpInstance = CPTestUtil.addCPInstanceFromCatalog(

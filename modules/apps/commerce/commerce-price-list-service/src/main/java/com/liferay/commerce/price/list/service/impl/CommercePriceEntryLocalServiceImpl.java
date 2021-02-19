@@ -1142,7 +1142,7 @@ public class CommercePriceEntryLocalServiceImpl
 		if (Validator.isNotNull(skuExternalReferenceCode)) {
 			cpInstance =
 				_cpInstanceLocalService.getCPInstanceByExternalReferenceCode(
-					serviceContext.getCompanyId(), skuExternalReferenceCode);
+					skuExternalReferenceCode, serviceContext.getCompanyId());
 
 			validate(commercePriceListId, cpInstance.getCPInstanceUuid());
 

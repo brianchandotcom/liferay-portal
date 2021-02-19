@@ -68,8 +68,9 @@ public class SkuUtil {
 		DateConfig expirationDateConfig = new DateConfig(expirationCalendar);
 
 		return cpInstanceService.upsertCPInstance(
-			cpDefinition.getCPDefinitionId(), cpDefinition.getGroupId(),
-			sku.getSku(), sku.getGtin(), sku.getManufacturerPartNumber(),
+			sku.getExternalReferenceCode(), cpDefinition.getCPDefinitionId(),
+			cpDefinition.getGroupId(), sku.getSku(), sku.getGtin(),
+			sku.getManufacturerPartNumber(),
 			GetterUtil.get(sku.getPurchasable(), false), _getOptions(sku),
 			GetterUtil.get(sku.getWidth(), 0.0),
 			GetterUtil.get(sku.getHeight(), 0.0),
@@ -79,12 +80,11 @@ public class SkuUtil {
 			(BigDecimal)GetterUtil.get(sku.getPromoPrice(), BigDecimal.ZERO),
 			(BigDecimal)GetterUtil.get(sku.getCost(), BigDecimal.ZERO),
 			GetterUtil.get(sku.getPublished(), false),
-			sku.getExternalReferenceCode(), displayDateConfig.getMonth(),
-			displayDateConfig.getDay(), displayDateConfig.getYear(),
-			displayDateConfig.getHour(), displayDateConfig.getMinute(),
-			expirationDateConfig.getMonth(), expirationDateConfig.getDay(),
-			expirationDateConfig.getYear(), expirationDateConfig.getHour(),
-			expirationDateConfig.getMinute(),
+			displayDateConfig.getMonth(), displayDateConfig.getDay(),
+			displayDateConfig.getYear(), displayDateConfig.getHour(),
+			displayDateConfig.getMinute(), expirationDateConfig.getMonth(),
+			expirationDateConfig.getDay(), expirationDateConfig.getYear(),
+			expirationDateConfig.getHour(), expirationDateConfig.getMinute(),
 			GetterUtil.get(sku.getNeverExpire(), false), sku.getUnspsc(),
 			serviceContext);
 	}

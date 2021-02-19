@@ -82,7 +82,7 @@ public class CatalogResourceImpl
 
 		CommerceCatalog commerceCatalog =
 			_commerceCatalogService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceCatalog == null) {
 			throw new NoSuchCatalogException(
@@ -115,7 +115,7 @@ public class CatalogResourceImpl
 
 		CommerceCatalog commerceCatalog =
 			_commerceCatalogService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceCatalog == null) {
 			throw new NoSuchCatalogException(
@@ -166,7 +166,7 @@ public class CatalogResourceImpl
 		CPDefinition cpDefinition =
 			_cpDefinitionService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
-					contextCompany.getCompanyId(), externalReferenceCode);
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
@@ -220,7 +220,7 @@ public class CatalogResourceImpl
 
 		CommerceCatalog commerceCatalog =
 			_commerceCatalogService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceCatalog == null) {
 			throw new NoSuchCatalogException(
@@ -237,14 +237,13 @@ public class CatalogResourceImpl
 	public Catalog postCatalog(Catalog catalog) throws Exception {
 		CommerceCatalog commerceCatalog =
 			_commerceCatalogService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(),
-				catalog.getExternalReferenceCode());
+				catalog.getExternalReferenceCode(),
+				contextCompany.getCompanyId());
 
 		if (commerceCatalog == null) {
 			commerceCatalog = _commerceCatalogService.addCommerceCatalog(
-				catalog.getName(), catalog.getCurrencyCode(),
-				catalog.getDefaultLanguageId(),
-				catalog.getExternalReferenceCode(),
+				catalog.getExternalReferenceCode(), catalog.getName(),
+				catalog.getCurrencyCode(), catalog.getDefaultLanguageId(),
 				_serviceContextHelper.getServiceContext());
 		}
 		else {

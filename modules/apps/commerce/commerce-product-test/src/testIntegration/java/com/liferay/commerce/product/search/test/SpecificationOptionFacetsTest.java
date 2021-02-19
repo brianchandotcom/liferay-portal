@@ -87,8 +87,8 @@ public class SpecificationOptionFacetsTest {
 			_company.getCompanyId(), _user.getUserId(), 0);
 
 		_commerceCatalog = _commerceCatalogLocalService.addCommerceCatalog(
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			LocaleUtil.US.getDisplayLanguage(), null,
+			null, RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			LocaleUtil.US.getDisplayLanguage(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 

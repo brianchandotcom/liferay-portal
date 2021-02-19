@@ -113,8 +113,9 @@ public class CommercePriceModifierLocalServiceTest {
 
 		CommerceCatalog catalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
-				RandomTestUtil.randomString(), _commerceCurrency.getCode(),
-				LocaleUtil.US.getDisplayLanguage(), null, _serviceContext);
+				null, RandomTestUtil.randomString(),
+				_commerceCurrency.getCode(), LocaleUtil.US.getDisplayLanguage(),
+				_serviceContext);
 
 		CommercePriceList commercePriceList =
 			CommercePriceModifierTestUtil.addCommercePriceList(
@@ -184,8 +185,9 @@ public class CommercePriceModifierLocalServiceTest {
 
 		CommerceCatalog catalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
-				RandomTestUtil.randomString(), _commerceCurrency.getCode(),
-				LocaleUtil.US.getDisplayLanguage(), null, _serviceContext);
+				null, RandomTestUtil.randomString(),
+				_commerceCurrency.getCode(), LocaleUtil.US.getDisplayLanguage(),
+				_serviceContext);
 
 		CommercePriceList commercePriceList =
 			CommercePriceModifierTestUtil.addCommercePriceList(
@@ -214,8 +216,9 @@ public class CommercePriceModifierLocalServiceTest {
 
 		CommerceCatalog catalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
-				RandomTestUtil.randomString(), _commerceCurrency.getCode(),
-				LocaleUtil.US.getDisplayLanguage(), null, _serviceContext);
+				null, RandomTestUtil.randomString(),
+				_commerceCurrency.getCode(), LocaleUtil.US.getDisplayLanguage(),
+				_serviceContext);
 
 		CommercePriceList commercePriceList =
 			CommercePriceModifierTestUtil.addCommercePriceList(
@@ -244,8 +247,9 @@ public class CommercePriceModifierLocalServiceTest {
 
 		CommerceCatalog catalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
-				RandomTestUtil.randomString(), _commerceCurrency.getCode(),
-				LocaleUtil.US.getDisplayLanguage(), null, _serviceContext);
+				null, RandomTestUtil.randomString(),
+				_commerceCurrency.getCode(), LocaleUtil.US.getDisplayLanguage(),
+				_serviceContext);
 
 		CommercePriceList commercePriceList =
 			CommercePriceModifierTestUtil.addCommercePriceList(
@@ -274,8 +278,9 @@ public class CommercePriceModifierLocalServiceTest {
 
 		CommerceCatalog catalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
-				RandomTestUtil.randomString(), _commerceCurrency.getCode(),
-				LocaleUtil.US.getDisplayLanguage(), null, _serviceContext);
+				null, RandomTestUtil.randomString(),
+				_commerceCurrency.getCode(), LocaleUtil.US.getDisplayLanguage(),
+				_serviceContext);
 
 		CommercePriceList commercePriceList =
 			CommercePriceModifierTestUtil.addCommercePriceList(
@@ -321,8 +326,9 @@ public class CommercePriceModifierLocalServiceTest {
 
 		CommerceCatalog catalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
-				RandomTestUtil.randomString(), _commerceCurrency.getCode(),
-				LocaleUtil.US.getDisplayLanguage(), null, _serviceContext);
+				null, RandomTestUtil.randomString(),
+				_commerceCurrency.getCode(), LocaleUtil.US.getDisplayLanguage(),
+				_serviceContext);
 
 		CommercePriceList commercePriceList =
 			CommercePriceModifierTestUtil.addCommercePriceList(
@@ -356,8 +362,9 @@ public class CommercePriceModifierLocalServiceTest {
 
 		CommerceCatalog catalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
-				RandomTestUtil.randomString(), _commerceCurrency.getCode(),
-				LocaleUtil.US.getDisplayLanguage(), null, _serviceContext);
+				null, RandomTestUtil.randomString(),
+				_commerceCurrency.getCode(), LocaleUtil.US.getDisplayLanguage(),
+				_serviceContext);
 
 		CommercePriceList commercePriceList =
 			CommercePriceModifierTestUtil.addCommercePriceList(
@@ -453,8 +460,9 @@ public class CommercePriceModifierLocalServiceTest {
 
 		CommerceCatalog catalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
-				RandomTestUtil.randomString(), _commerceCurrency.getCode(),
-				LocaleUtil.US.getDisplayLanguage(), null, _serviceContext);
+				null, RandomTestUtil.randomString(),
+				_commerceCurrency.getCode(), LocaleUtil.US.getDisplayLanguage(),
+				_serviceContext);
 
 		CommercePriceList commercePriceList =
 			CommercePriceModifierTestUtil.addCommercePriceList(
@@ -525,8 +533,9 @@ public class CommercePriceModifierLocalServiceTest {
 
 		CommerceCatalog catalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
-				RandomTestUtil.randomString(), _commerceCurrency.getCode(),
-				LocaleUtil.US.getDisplayLanguage(), null, _serviceContext);
+				null, RandomTestUtil.randomString(),
+				_commerceCurrency.getCode(), LocaleUtil.US.getDisplayLanguage(),
+				_serviceContext);
 
 		CommercePriceList commercePriceList =
 			CommercePriceModifierTestUtil.addCommercePriceList(
@@ -594,8 +603,9 @@ public class CommercePriceModifierLocalServiceTest {
 
 		CommerceCatalog catalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
-				RandomTestUtil.randomString(), _commerceCurrency.getCode(),
-				LocaleUtil.US.getDisplayLanguage(), null, _serviceContext);
+				null, RandomTestUtil.randomString(),
+				_commerceCurrency.getCode(), LocaleUtil.US.getDisplayLanguage(),
+				_serviceContext);
 
 		CommercePriceList commercePriceList =
 			CommercePriceModifierTestUtil.addCommercePriceList(

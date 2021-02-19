@@ -123,9 +123,9 @@ public class CommerceOrderEngineTest {
 			_group.getGroupId());
 
 		_commerceChannel = CommerceChannelLocalServiceUtil.addCommerceChannel(
-			_group.getGroupId(), "Test Channel",
+			null, _group.getGroupId(), "Test Channel",
 			CommerceChannelConstants.CHANNEL_TYPE_SITE, null,
-			_commerceCurrency.getCode(), null, _serviceContext);
+			_commerceCurrency.getCode(), _serviceContext);
 
 		_commerceAccount = CommerceAccountTestUtil.addBusinessCommerceAccount(
 			_user.getUserId(), RandomTestUtil.randomString(),

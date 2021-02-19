@@ -90,16 +90,16 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			cpDefinitionId);
 
 		return cpInstanceLocalService.addCPInstance(
-			cpDefinitionId, groupId, sku, gtin, manufacturerPartNumber,
-			purchasable, cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds,
+			StringPool.BLANK, cpDefinitionId, groupId, sku, gtin,
+			manufacturerPartNumber, purchasable,
+			cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds,
 			cpDefinition.getWidth(), cpDefinition.getHeight(),
 			cpDefinition.getDepth(), cpDefinition.getWeight(), BigDecimal.ZERO,
-			BigDecimal.ZERO, BigDecimal.ZERO, published, StringPool.BLANK,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, false, false, 1, StringPool.BLANK, null, 0, unspsc,
-			serviceContext);
+			BigDecimal.ZERO, BigDecimal.ZERO, published, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire, false, false,
+			1, StringPool.BLANK, null, 0, unspsc, serviceContext);
 	}
 
 	/**
@@ -231,12 +231,12 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 
 	@Override
 	public CPInstance fetchByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+			String externalReferenceCode, long companyId)
 		throws PortalException {
 
 		CPInstance cpInstance =
 			cpInstanceLocalService.fetchByExternalReferenceCode(
-				companyId, externalReferenceCode);
+				externalReferenceCode, companyId);
 
 		if (cpInstance != null) {
 			_checkCommerceCatalogByCPDefinitionId(
@@ -530,11 +530,11 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 
 	@Override
 	public CPInstance upsertCPInstance(
-			long cpDefinitionId, long groupId, String sku, String gtin,
-			String manufacturerPartNumber, boolean purchasable, String json,
-			double width, double height, double depth, double weight,
-			BigDecimal price, BigDecimal promoPrice, BigDecimal cost,
-			boolean published, String externalReferenceCode,
+			String externalReferenceCode, long cpDefinitionId, long groupId,
+			String sku, String gtin, String manufacturerPartNumber,
+			boolean purchasable, String json, double width, double height,
+			double depth, double weight, BigDecimal price,
+			BigDecimal promoPrice, BigDecimal cost, boolean published,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
@@ -543,9 +543,9 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 		throws PortalException {
 
 		return upsertCPInstance(
-			cpDefinitionId, groupId, sku, gtin, manufacturerPartNumber,
-			purchasable, json, width, height, depth, weight, price, promoPrice,
-			cost, published, externalReferenceCode, displayDateMonth,
+			externalReferenceCode, cpDefinitionId, groupId, sku, gtin,
+			manufacturerPartNumber, purchasable, json, width, height, depth,
+			weight, price, promoPrice, cost, published, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire, null,
@@ -554,11 +554,11 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 
 	@Override
 	public CPInstance upsertCPInstance(
-			long cpDefinitionId, long groupId, String sku, String gtin,
-			String manufacturerPartNumber, boolean purchasable, String json,
-			double width, double height, double depth, double weight,
-			BigDecimal price, BigDecimal promoPrice, BigDecimal cost,
-			boolean published, String externalReferenceCode,
+			String externalReferenceCode, long cpDefinitionId, long groupId,
+			String sku, String gtin, String manufacturerPartNumber,
+			boolean purchasable, String json, double width, double height,
+			double depth, double weight, BigDecimal price,
+			BigDecimal promoPrice, BigDecimal cost, boolean published,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
@@ -569,9 +569,9 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 		_checkCommerceCatalog(groupId, ActionKeys.UPDATE);
 
 		return cpInstanceLocalService.upsertCPInstance(
-			cpDefinitionId, groupId, sku, gtin, manufacturerPartNumber,
-			purchasable, json, width, height, depth, weight, price, promoPrice,
-			cost, published, externalReferenceCode, displayDateMonth,
+			externalReferenceCode, cpDefinitionId, groupId, sku, gtin,
+			manufacturerPartNumber, purchasable, json, width, height, depth,
+			weight, price, promoPrice, cost, published, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire, unspsc,

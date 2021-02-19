@@ -182,6 +182,7 @@ public class AttachmentUtil {
 		}
 
 		return cpAttachmentFileEntryService.upsertCPAttachmentFileEntry(
+			attachmentBase64.getExternalReferenceCode(),
 			serviceContext.getScopeGroupId(), classNameId, classPK,
 			GetterUtil.getLong(attachmentBase64.getId()), fileEntryId,
 			displayDateConfig.getMonth(), displayDateConfig.getDay(),
@@ -193,7 +194,7 @@ public class AttachmentUtil {
 			getTitleMap(null, attachmentBase64.getTitle()),
 			GetterUtil.getString(attachmentBase64.getOptions()),
 			GetterUtil.getDouble(attachmentBase64.getPriority()), type,
-			attachmentBase64.getExternalReferenceCode(), serviceContext);
+			serviceContext);
 	}
 
 	public static CPAttachmentFileEntry upsertCPAttachmentFileEntry(
@@ -239,6 +240,7 @@ public class AttachmentUtil {
 		}
 
 		return cpAttachmentFileEntryService.upsertCPAttachmentFileEntry(
+			attachmentUrl.getExternalReferenceCode(),
 			serviceContext.getScopeGroupId(), classNameId, classPK,
 			GetterUtil.getLong(attachmentUrl.getId()), fileEntryId,
 			displayDateConfig.getMonth(), displayDateConfig.getDay(),
@@ -250,7 +252,7 @@ public class AttachmentUtil {
 			getTitleMap(null, attachmentUrl.getTitle()),
 			GetterUtil.getString(attachmentUrl.getOptions()),
 			GetterUtil.getDouble(attachmentUrl.getPriority()), type,
-			attachmentUrl.getExternalReferenceCode(), serviceContext);
+			serviceContext);
 	}
 
 	public static CPAttachmentFileEntry upsertCPAttachmentFileEntry(
@@ -297,8 +299,8 @@ public class AttachmentUtil {
 		}
 
 		return cpAttachmentFileEntryService.upsertCPAttachmentFileEntry(
-			groupId, classNameId, classPK,
-			GetterUtil.getLong(attachment.getId()), fileEntryId,
+			attachment.getExternalReferenceCode(), groupId, classNameId,
+			classPK, GetterUtil.getLong(attachment.getId()), fileEntryId,
 			displayDateConfig.getMonth(), displayDateConfig.getDay(),
 			displayDateConfig.getYear(), displayDateConfig.getHour(),
 			displayDateConfig.getMinute(), expirationDateConfig.getMonth(),
@@ -308,7 +310,7 @@ public class AttachmentUtil {
 			getTitleMap(null, attachment.getTitle()),
 			GetterUtil.getString(attachment.getOptions()),
 			GetterUtil.getDouble(attachment.getPriority()), type,
-			attachment.getExternalReferenceCode(), serviceContext);
+			serviceContext);
 	}
 
 	private static FileEntry _addFileEntry(

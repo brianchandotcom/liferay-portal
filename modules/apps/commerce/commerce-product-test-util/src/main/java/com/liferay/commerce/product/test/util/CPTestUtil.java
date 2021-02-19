@@ -194,16 +194,15 @@ public class CPTestUtil {
 		}
 
 		return CPInstanceLocalServiceUtil.addCPInstance(
-			cpDefinition.getCPDefinitionId(), cpDefinition.getGroupId(),
+			null, cpDefinition.getCPDefinitionId(), cpDefinition.getGroupId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), true,
 			cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds, 19.77, 19.77,
 			9.7, 14.55, BigDecimal.TEN, BigDecimal.TEN, BigDecimal.TEN, true,
-			null, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, true, false, false, 1, StringPool.BLANK, null,
-			0, serviceContext);
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute, true,
+			false, false, 1, StringPool.BLANK, null, 0, serviceContext);
 	}
 
 	public static CPInstance addCPDefinitionCPInstanceWithPrice(
@@ -548,11 +547,11 @@ public class CPTestUtil {
 			ServiceContextTestUtil.getServiceContext(groupId);
 
 		return CPOptionLocalServiceUtil.addCPOption(
-			serviceContext.getUserId(), RandomTestUtil.randomLocaleStringMap(),
+			null, serviceContext.getUserId(),
+			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(), ddmFormFieldType,
 			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),
-			skuContributor, RandomTestUtil.randomString(), null,
-			serviceContext);
+			skuContributor, RandomTestUtil.randomString(), serviceContext);
 	}
 
 	public static CPOptionValue addCPOptionValue(CPOption cpOption)
@@ -847,7 +846,7 @@ public class CPTestUtil {
 
 		CPDefinition cpDefinition =
 			CPDefinitionLocalServiceUtil.addCPDefinition(
-				groupId, user.getUserId(), titleMap, shortDescriptionMap,
+				null, groupId, user.getUserId(), titleMap, shortDescriptionMap,
 				descriptionMap, urlTitleMap, metaTitleMap, metaKeywordsMap,
 				metaDescriptionMap, productTypeName, ignoreSKUCombinations,
 				shippable, freeShipping, shipSeparately, shippingExtraPrice,
@@ -857,7 +856,7 @@ public class CPTestUtil {
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
 				expirationDateMinute, false, sku, false, 0, null, null, 0L,
-				null, serviceContext);
+				serviceContext);
 
 		CPDefinitionInventory cpDefinitionInventory =
 			CPDefinitionInventoryLocalServiceUtil.
@@ -960,7 +959,7 @@ public class CPTestUtil {
 		}
 
 		return CPDefinitionLocalServiceUtil.addCPDefinition(
-			commerceCatalog.getGroupId(), user.getUserId(), titleMap,
+			null, commerceCatalog.getGroupId(), user.getUserId(), titleMap,
 			shortDescriptionMap, descriptionMap, urlTitleMap, metaTitleMap,
 			metaKeywordsMap, metaDescriptionMap, productTypeName,
 			ignoreSKUCombinations, shippable, freeShipping, shipSeparately,
@@ -969,7 +968,7 @@ public class CPTestUtil {
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute, false,
-			sku, false, 0, null, null, 0L, null, serviceContext);
+			sku, false, 0, null, null, 0L, serviceContext);
 	}
 
 	private static CPOptionConfiguration _getCPOptionConfiguration()

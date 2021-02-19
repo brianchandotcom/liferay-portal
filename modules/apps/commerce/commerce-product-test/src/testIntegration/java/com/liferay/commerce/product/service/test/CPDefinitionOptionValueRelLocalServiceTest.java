@@ -96,8 +96,8 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 			_group.getGroupId(), _user.getUserId());
 
 		_commerceCatalog = _commerceCatalogLocalService.addCommerceCatalog(
-			RandomTestUtil.randomString(), null,
-			LocaleUtil.US.getDisplayLanguage(), null, _serviceContext);
+			null, RandomTestUtil.randomString(), null,
+			LocaleUtil.US.getDisplayLanguage(), _serviceContext);
 	}
 
 	@After

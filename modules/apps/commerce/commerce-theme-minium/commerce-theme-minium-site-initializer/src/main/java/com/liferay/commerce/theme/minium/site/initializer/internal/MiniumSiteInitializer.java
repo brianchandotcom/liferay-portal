@@ -332,9 +332,9 @@ public class MiniumSiteInitializer implements SiteInitializer {
 				serviceContext.getCompanyId());
 
 		return _commerceCatalogLocalService.addCommerceCatalog(
-			group.getName(serviceContext.getLanguageId()),
+			StringPool.BLANK, group.getName(serviceContext.getLanguageId()),
 			commerceCurrency.getCode(), serviceContext.getLanguageId(),
-			StringPool.BLANK, serviceContext);
+			serviceContext);
 	}
 
 	protected CommerceChannel createChannel(
@@ -344,11 +344,10 @@ public class MiniumSiteInitializer implements SiteInitializer {
 		Group group = serviceContext.getScopeGroup();
 
 		return _commerceChannelLocalService.addCommerceChannel(
-			group.getGroupId(),
+			StringPool.BLANK, group.getGroupId(),
 			group.getName(serviceContext.getLanguageId()) + " Portal",
 			CommerceChannelConstants.CHANNEL_TYPE_SITE, null,
-			commerceCatalog.getCommerceCurrencyCode(), StringPool.BLANK,
-			serviceContext);
+			commerceCatalog.getCommerceCurrencyCode(), serviceContext);
 	}
 
 	protected void createRoles(

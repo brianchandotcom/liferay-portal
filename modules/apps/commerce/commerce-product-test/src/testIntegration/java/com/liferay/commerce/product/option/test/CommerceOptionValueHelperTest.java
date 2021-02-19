@@ -78,8 +78,8 @@ public class CommerceOptionValueHelperTest {
 		_company = CompanyTestUtil.addCompany();
 
 		_commerceCatalog = CommerceCatalogLocalServiceUtil.addCommerceCatalog(
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			LocaleUtil.US.getDisplayLanguage(), null,
+			null, RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			LocaleUtil.US.getDisplayLanguage(),
 			ServiceContextTestUtil.getServiceContext(_company.getGroupId()));
 	}
 

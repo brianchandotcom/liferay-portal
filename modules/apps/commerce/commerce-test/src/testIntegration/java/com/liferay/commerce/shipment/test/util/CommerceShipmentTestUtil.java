@@ -61,9 +61,9 @@ public class CommerceShipmentTestUtil {
 		if (commerceChannel == null) {
 			commerceChannel =
 				CommerceChannelLocalServiceUtil.addCommerceChannel(
-					groupId, "Test Channel",
+					null, groupId, "Test Channel",
 					CommerceChannelConstants.CHANNEL_TYPE_SITE, null,
-					commerceCurrency.getCode(), null, serviceContext);
+					commerceCurrency.getCode(), serviceContext);
 		}
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =

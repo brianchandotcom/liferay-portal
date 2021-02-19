@@ -174,8 +174,8 @@ public class CommerceDiscountTargetGrossV2Test {
 
 		CommerceCatalog catalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
-				RandomTestUtil.randomString(), _commerceCurrency.getCode(),
-				LocaleUtil.US.getDisplayLanguage(), null,
+				null, RandomTestUtil.randomString(),
+				_commerceCurrency.getCode(), LocaleUtil.US.getDisplayLanguage(),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		CPInstance cpInstance = CPTestUtil.addCPInstanceFromCatalog(
@@ -283,8 +283,8 @@ public class CommerceDiscountTargetGrossV2Test {
 
 		CommerceCatalog catalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
-				RandomTestUtil.randomString(), _commerceCurrency.getCode(),
-				LocaleUtil.US.getDisplayLanguage(), null,
+				null, RandomTestUtil.randomString(),
+				_commerceCurrency.getCode(), LocaleUtil.US.getDisplayLanguage(),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		CPInstance cpInstance = CPTestUtil.addCPInstanceFromCatalog(
@@ -375,8 +375,8 @@ public class CommerceDiscountTargetGrossV2Test {
 
 		CommerceCatalog catalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
-				RandomTestUtil.randomString(), _commerceCurrency.getCode(),
-				LocaleUtil.US.getDisplayLanguage(), null,
+				null, RandomTestUtil.randomString(),
+				_commerceCurrency.getCode(), LocaleUtil.US.getDisplayLanguage(),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		CPInstance cpInstance1 = CPTestUtil.addCPInstanceFromCatalog(
@@ -668,8 +668,8 @@ public class CommerceDiscountTargetGrossV2Test {
 
 		CommerceCatalog catalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
-				RandomTestUtil.randomString(), _commerceCurrency.getCode(),
-				LocaleUtil.US.getDisplayLanguage(), null,
+				null, RandomTestUtil.randomString(),
+				_commerceCurrency.getCode(), LocaleUtil.US.getDisplayLanguage(),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		CPInstance cpInstance1 = CPTestUtil.addCPInstanceFromCatalog(
@@ -1029,8 +1029,8 @@ public class CommerceDiscountTargetGrossV2Test {
 
 		CommerceCatalog catalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
-				RandomTestUtil.randomString(), _commerceCurrency.getCode(),
-				LocaleUtil.US.getDisplayLanguage(), null,
+				null, RandomTestUtil.randomString(),
+				_commerceCurrency.getCode(), LocaleUtil.US.getDisplayLanguage(),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		CPInstance cpInstance = CPTestUtil.addCPInstanceFromCatalog(
@@ -1149,8 +1149,9 @@ public class CommerceDiscountTargetGrossV2Test {
 
 		CommerceCatalog catalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				LocaleUtil.US.getDisplayLanguage(), null,
+				null, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
+				LocaleUtil.US.getDisplayLanguage(),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		CommercePriceList commercePriceList1 =
@@ -1283,8 +1284,9 @@ public class CommerceDiscountTargetGrossV2Test {
 
 		CommerceCatalog catalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				LocaleUtil.US.getDisplayLanguage(), null,
+				null, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
+				LocaleUtil.US.getDisplayLanguage(),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		CommercePriceList commercePriceList1 =
@@ -1385,8 +1387,9 @@ public class CommerceDiscountTargetGrossV2Test {
 
 		CommerceCatalog catalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				LocaleUtil.US.getDisplayLanguage(), null,
+				null, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
+				LocaleUtil.US.getDisplayLanguage(),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		CommercePriceList commercePriceList1 =
@@ -1506,8 +1509,8 @@ public class CommerceDiscountTargetGrossV2Test {
 
 		CommerceCatalog catalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
-				RandomTestUtil.randomString(), _commerceCurrency.getCode(),
-				LocaleUtil.US.getDisplayLanguage(), null,
+				null, RandomTestUtil.randomString(),
+				_commerceCurrency.getCode(), LocaleUtil.US.getDisplayLanguage(),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		CommercePriceList commercePriceList =

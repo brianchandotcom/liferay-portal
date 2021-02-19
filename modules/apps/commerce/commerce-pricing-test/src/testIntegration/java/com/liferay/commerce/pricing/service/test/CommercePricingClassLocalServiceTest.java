@@ -97,8 +97,9 @@ public class CommercePricingClassLocalServiceTest {
 
 		CommerceCatalog catalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				LocaleUtil.US.getDisplayLanguage(), null, _serviceContext);
+				null, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
+				LocaleUtil.US.getDisplayLanguage(), _serviceContext);
 
 		CommercePricingClass commercePricingClass =
 			_commercePricingClassLocalService.addCommercePricingClass(
@@ -193,8 +194,9 @@ public class CommercePricingClassLocalServiceTest {
 
 		CommerceCatalog catalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				LocaleUtil.US.getDisplayLanguage(), null, _serviceContext);
+				null, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
+				LocaleUtil.US.getDisplayLanguage(), _serviceContext);
 
 		CommercePricingClass commercePricingClass =
 			_commercePricingClassLocalService.addCommercePricingClass(

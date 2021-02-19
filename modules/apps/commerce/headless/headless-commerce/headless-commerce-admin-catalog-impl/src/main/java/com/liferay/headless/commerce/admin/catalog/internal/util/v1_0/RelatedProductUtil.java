@@ -71,8 +71,8 @@ public class RelatedProductUtil {
 			cpDefinition =
 				cpDefinitionService.
 					fetchCPDefinitionByCProductExternalReferenceCode(
-						serviceContext.getCompanyId(),
-						relatedProduct.getProductExternalReferenceCode());
+						relatedProduct.getProductExternalReferenceCode(),
+						serviceContext.getCompanyId());
 
 			if (cpDefinition == null) {
 				throw new NoSuchCPDefinitionException(

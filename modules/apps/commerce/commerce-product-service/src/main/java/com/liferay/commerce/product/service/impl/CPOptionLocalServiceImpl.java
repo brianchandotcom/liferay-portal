@@ -67,11 +67,10 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPOption addCPOption(
-			long userId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, String ddmFormFieldTypeName,
-			boolean facetable, boolean required, boolean skuContributor,
-			String key, String externalReferenceCode,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long userId,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			String ddmFormFieldTypeName, boolean facetable, boolean required,
+			boolean skuContributor, String key, ServiceContext serviceContext)
 		throws PortalException {
 
 		validateDDMFormFieldTypeName(ddmFormFieldTypeName, skuContributor);
@@ -90,6 +89,7 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 
 		CPOption cpOption = cpOptionPersistence.create(cpOptionId);
 
+		cpOption.setExternalReferenceCode(externalReferenceCode);
 		cpOption.setCompanyId(user.getCompanyId());
 		cpOption.setUserId(user.getUserId());
 		cpOption.setUserName(user.getFullName());
@@ -101,7 +101,6 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 		cpOption.setSkuContributor(skuContributor);
 		cpOption.setKey(key);
 		cpOption.setExpandoBridgeAttributes(serviceContext);
-		cpOption.setExternalReferenceCode(externalReferenceCode);
 
 		cpOption = cpOptionPersistence.update(cpOption);
 
@@ -157,7 +156,7 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 
 	@Override
 	public CPOption fetchByExternalReferenceCode(
-		long companyId, String externalReferenceCode) {
+		String externalReferenceCode, long companyId) {
 
 		if (Validator.isBlank(externalReferenceCode)) {
 			return null;
@@ -239,7 +238,7 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPOption updateCPOptionExternalReferenceCode(
-			long cpOptionId, String externalReferenceCode)
+			String externalReferenceCode, long cpOptionId)
 		throws PortalException {
 
 		CPOption cpOption = cpOptionLocalService.getCPOption(cpOptionId);
@@ -251,11 +250,10 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 
 	@Override
 	public CPOption upsertCPOption(
-			long userId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, String ddmFormFieldTypeName,
-			boolean facetable, boolean required, boolean skuContributor,
-			String key, String externalReferenceCode,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long userId,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			String ddmFormFieldTypeName, boolean facetable, boolean required,
+			boolean skuContributor, String key, ServiceContext serviceContext)
 		throws PortalException {
 
 		if (Validator.isBlank(externalReferenceCode)) {
@@ -274,8 +272,8 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 		}
 
 		return addCPOption(
-			userId, nameMap, descriptionMap, ddmFormFieldTypeName, facetable,
-			required, skuContributor, key, externalReferenceCode,
+			externalReferenceCode, userId, nameMap, descriptionMap,
+			ddmFormFieldTypeName, facetable, required, skuContributor, key,
 			serviceContext);
 	}
 

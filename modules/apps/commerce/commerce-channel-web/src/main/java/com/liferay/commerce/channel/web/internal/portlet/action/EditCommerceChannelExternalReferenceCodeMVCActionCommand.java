@@ -76,7 +76,7 @@ public class EditCommerceChannelExternalReferenceCodeMVCActionCommand
 			actionRequest, "externalReferenceCode");
 
 		_commerceChannelService.updateCommerceChannelExternalReferenceCode(
-			commerceChannelId, externalReferenceCode);
+			externalReferenceCode, commerceChannelId);
 	}
 
 	@Reference

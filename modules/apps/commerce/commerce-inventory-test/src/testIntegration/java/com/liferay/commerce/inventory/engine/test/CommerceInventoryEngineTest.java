@@ -96,10 +96,10 @@ public class CommerceInventoryEngineTest {
 			_company.getCompanyId(), _group.getGroupId(), _user.getUserId());
 
 		_commerceChannel = _commerceChannelLocalService.addCommerceChannel(
-			_group.getGroupId(),
+			StringPool.BLANK, _group.getGroupId(),
 			_group.getName(_serviceContext.getLanguageId()) + " Portal",
 			CommerceChannelConstants.CHANNEL_TYPE_SITE, null, StringPool.BLANK,
-			StringPool.BLANK, _serviceContext);
+			_serviceContext);
 
 		_cpInstance1 = CommerceInventoryTestUtil.addRandomCPInstanceSku(
 			_group.getGroupId());

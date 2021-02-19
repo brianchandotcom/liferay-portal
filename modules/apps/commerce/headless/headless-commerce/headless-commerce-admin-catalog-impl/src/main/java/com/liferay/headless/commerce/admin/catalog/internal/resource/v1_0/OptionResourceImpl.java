@@ -80,7 +80,7 @@ public class OptionResourceImpl
 		throws Exception {
 
 		CPOption cpOption = _cpOptionService.fetchByExternalReferenceCode(
-			contextCompany.getCompanyId(), externalReferenceCode);
+			externalReferenceCode, contextCompany.getCompanyId());
 
 		if (cpOption == null) {
 			throw new NoSuchCPOptionException(
@@ -112,7 +112,7 @@ public class OptionResourceImpl
 		throws Exception {
 
 		CPOption cpOption = _cpOptionService.fetchByExternalReferenceCode(
-			contextCompany.getCompanyId(), externalReferenceCode);
+			externalReferenceCode, contextCompany.getCompanyId());
 
 		return _toOption(cpOption.getCPOptionId());
 	}
@@ -156,7 +156,7 @@ public class OptionResourceImpl
 		throws Exception {
 
 		CPOption cpOption = _cpOptionService.fetchByExternalReferenceCode(
-			contextCompany.getCompanyId(), externalReferenceCode);
+			externalReferenceCode, contextCompany.getCompanyId());
 
 		if (cpOption == null) {
 			throw new NoSuchCPOptionException(
@@ -227,12 +227,12 @@ public class OptionResourceImpl
 		Option.FieldType fieldType = option.getFieldType();
 
 		CPOption cpOption = _cpOptionService.upsertCPOption(
+			option.getExternalReferenceCode(),
 			LanguageUtils.getLocalizedMap(option.getName()),
 			LanguageUtils.getLocalizedMap(option.getDescription()),
 			fieldType.getValue(), GetterUtil.get(option.getFacetable(), false),
 			GetterUtil.get(option.getRequired(), false),
 			GetterUtil.get(option.getSkuContributor(), false), option.getKey(),
-			option.getExternalReferenceCode(),
 			_serviceContextHelper.getServiceContext());
 
 		_upsertOptionValues(cpOption, option.getOptionValues());

@@ -38,7 +38,7 @@ definition {
 	}
 
 	test CreateNewChannel {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CPCommerceChannels#CreateNewChannel";
 
 		CommerceNavigator.gotoPortlet(

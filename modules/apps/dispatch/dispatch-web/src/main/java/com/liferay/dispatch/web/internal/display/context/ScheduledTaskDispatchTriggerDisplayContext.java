@@ -14,8 +14,8 @@
 
 package com.liferay.dispatch.web.internal.display.context;
 
-import com.liferay.dispatch.portal.kernel.scheduler.ScheduledJobDispatchTrigger;
 import com.liferay.dispatch.portal.kernel.scheduler.DispatchSchedulerEngineHelper;
+import com.liferay.dispatch.portal.kernel.scheduler.ScheduledJobDispatchTrigger;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -48,8 +48,7 @@ public class ScheduledTaskDispatchTriggerDisplayContext
 		_dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
 			dispatchRequestHelper.getLocale());
 
-		_dispatchSchedulerEngineHelper =
-			dispatchSchedulerEngineHelper;
+		_dispatchSchedulerEngineHelper = dispatchSchedulerEngineHelper;
 	}
 
 	public String getNextFireDateString(
@@ -57,11 +56,10 @@ public class ScheduledTaskDispatchTriggerDisplayContext
 		throws SchedulerException {
 
 		Date nextFireDate =
-			_dispatchSchedulerEngineHelper.
-				getScheduledJobNextFireDate(
-					scheduledJobDispatchTrigger.getName(),
-					scheduledJobDispatchTrigger.getGroupName(),
-					scheduledJobDispatchTrigger.getStorageType());
+			_dispatchSchedulerEngineHelper.getScheduledJobNextFireDate(
+				scheduledJobDispatchTrigger.getName(),
+				scheduledJobDispatchTrigger.getGroupName(),
+				scheduledJobDispatchTrigger.getStorageType());
 
 		if (nextFireDate != null) {
 			return _dateFormatDateTime.format(nextFireDate);
@@ -131,16 +129,12 @@ public class ScheduledTaskDispatchTriggerDisplayContext
 		_searchContainer.setOrderByComparator(null);
 		_searchContainer.setOrderByType(getOrderByType());
 
-		int total =
-			_dispatchSchedulerEngineHelper.
-				getScheduledJobsCount();
-
-		_searchContainer.setTotal(total);
+		_searchContainer.setTotal(
+			_dispatchSchedulerEngineHelper.getScheduledJobsCount());
 
 		List<ScheduledJobDispatchTrigger> results =
-			_dispatchSchedulerEngineHelper.
-				getScheduledJobDispatchTriggers(
-					_searchContainer.getStart(), _searchContainer.getEnd());
+			_dispatchSchedulerEngineHelper.getScheduledJobDispatchTriggers(
+				_searchContainer.getStart(), _searchContainer.getEnd());
 
 		_searchContainer.setResults(results);
 
@@ -158,8 +152,7 @@ public class ScheduledTaskDispatchTriggerDisplayContext
 	}
 
 	private final Format _dateFormatDateTime;
-	private final DispatchSchedulerEngineHelper
-		_dispatchSchedulerEngineHelper;
+	private final DispatchSchedulerEngineHelper _dispatchSchedulerEngineHelper;
 	private SearchContainer<ScheduledJobDispatchTrigger> _searchContainer;
 
 }

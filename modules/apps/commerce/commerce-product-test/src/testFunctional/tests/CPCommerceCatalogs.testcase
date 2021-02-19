@@ -36,7 +36,7 @@ definition {
 	}
 
 	test CreateNewCatalog {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CPCommerceCatalogs#CreateNewCatalog";
 
 		CommerceNavigator.gotoPortlet(

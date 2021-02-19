@@ -14,7 +14,6 @@
 
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import {DataLayoutBuilderActions} from 'data-engine-taglib';
 import React, {useContext, useEffect, useState} from 'react';
 
 import useDebounce from '../../hooks/useDebounce.es';
@@ -79,34 +78,6 @@ function getInitialValue({editingLanguageId}, {value}) {
 	};
 }
 
-/**
- * Update variable labelAtStructureLevel when change the selectedValue
- * @param {boolean} value
- */
-function updateLabelAtStructureLevel(value) {
-	return ({dataDefinitionFields, fieldName}, dispatch) => {
-		dispatch({
-			payload: {
-				dataDefinitionFields: dataDefinitionFields.map((field) => {
-					if (field.name === fieldName) {
-						return {
-							...field,
-							customProperties: {
-								...field.customProperties,
-								labelAtStructureLevel:
-									value === STRUCTURE_LEVEL ? true : false,
-							},
-						};
-					}
-
-					return field;
-				}),
-			},
-			type: DataLayoutBuilderActions.UPDATE_DATA_DEFINITION_FIELDS,
-		});
-	};
-}
-
 export default function LabelField({AppContext, dataLayoutBuilder, field}) {
 	const [state, dispatch] = useContext(AppContext);
 	const formattedState = getFormattedState(state);
@@ -138,8 +109,6 @@ export default function LabelField({AppContext, dataLayoutBuilder, field}) {
 				getLocalizedValue(dataDefinitionField.label, formattedState)
 			);
 		}
-
-		callbackFn(updateLabelAtStructureLevel(value));
 	};
 
 	const debounce = useDebounce(value);

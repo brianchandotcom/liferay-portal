@@ -215,9 +215,6 @@ describe('normalizers', () => {
 		expect(
 			normalizedDataLayout.dataLayoutFields.Text97181041
 		).toStrictEqual({
-			label: {
-				en_US: 'Text',
-			},
 			placeholder: {
 				en_US: 'Type your name',
 			},
@@ -227,9 +224,6 @@ describe('normalizers', () => {
 		expect(
 			normalizedDataLayout.dataLayoutFields.MultipleSelection22024132
 		).toStrictEqual({
-			label: {
-				en_US: 'Multiple Selection',
-			},
 			placeholder: undefined,
 			required: false,
 		});
@@ -237,9 +231,6 @@ describe('normalizers', () => {
 		expect(
 			normalizedDataLayout.dataLayoutFields.SelectFromList15352821
 		).toStrictEqual({
-			label: {
-				en_US: 'Select from List',
-			},
 			placeholder: undefined,
 			required: false,
 		});

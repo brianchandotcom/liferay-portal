@@ -136,7 +136,7 @@ export default function FormViewUpperToolbar({newCustomObject, popUpWindow}) {
 		setLoading(true);
 
 		DataDefinitionUtils.saveDataDefinition({
-			dataDefinition: normalizeDataDefinition(dataDefinition),
+			dataDefinition: normalizeDataDefinition(dataDefinition, dataLayout),
 			dataDefinitionId,
 			dataLayout: normalizeDataLayout({
 				dataDefinition,

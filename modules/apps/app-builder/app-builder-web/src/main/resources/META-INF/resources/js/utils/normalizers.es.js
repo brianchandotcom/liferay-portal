@@ -35,21 +35,28 @@ export const normalizeNames = ({
 	return name;
 };
 
-export const normalizeDataDefinition = (dataDefinition) => {
-	return {
-		...dataDefinition,
-		dataDefinitionFields: dataDefinition.dataDefinitionFields.map(
-			(dataDefinitionField) => ({
-				...dataDefinitionField,
+export const normalizeDataDefinition = (
+	dataDefinition,
+	{dataLayoutFields}
+) => ({
+	...dataDefinition,
+	dataDefinitionFields: dataDefinition.dataDefinitionFields.map(
+		(dataDefinitionField) => ({
+			...dataDefinitionField,
+			customProperties: {
+				...dataDefinitionField.customProperties,
+				labelAtStructureLevel: !Object.values(
+					dataLayoutFields[dataDefinitionField.name]?.label ?? {}
+				)?.length,
+			},
 
-				// Actually showLabel property will be always true
-				// because the same property can be controlled by dataLayoutFields
+			// Actually showLabel property will be always true
+			// because the same property can be controlled by dataLayoutFields
 
-				showLabel: true,
-			})
-		),
-	};
-};
+			showLabel: true,
+		})
+	),
+});
 
 export const normalizeDataLayout = ({
 	dataDefinition,
@@ -74,6 +81,7 @@ export const normalizeDataLayout = ({
 
 		// Ignore this visual properties because it is treated differently
 
+		delete fieldProperties['label'];
 		delete fieldProperties['required'];
 
 		dataLayoutFields[definitionField.name] = {

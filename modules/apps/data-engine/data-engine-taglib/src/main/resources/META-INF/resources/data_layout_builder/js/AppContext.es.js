@@ -207,7 +207,8 @@ const setDataDefinitionFields = (
 
 			newFields.push({
 				...formattedDefinitionField,
-				label: definitionField?.label ?? formattedDefinitionField?.label,
+				label:
+					definitionField?.label ?? formattedDefinitionField?.label,
 				required: !!definitionField?.required,
 			});
 		}

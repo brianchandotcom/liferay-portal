@@ -16,9 +16,15 @@ package com.liferay.jenkins.results.parser.testray;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
+import java.io.IOException;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -57,6 +63,87 @@ public class TestrayRoutine {
 		return _jsonObject.getString("name");
 	}
 
+	public TestrayBuild getTestrayBuildByID(int buildID) {
+		TestrayServer testrayServer = getTestrayServer();
+
+		String buildAPIURL = JenkinsResultsParserUtil.combine(
+			String.valueOf(testrayServer.getURL()),
+			"/web/guest/home/-/testray/builds/view.json?id=",
+			String.valueOf(buildID));
+
+		try {
+			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
+				buildAPIURL, true);
+
+			if (!jsonObject.has("data")) {
+				return null;
+			}
+
+			JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+			TestrayBuild testrayBuild = new TestrayBuild(this, dataJSONObject);
+
+			_testrayBuildsByName.put(testrayBuild.getName(), testrayBuild);
+
+			return testrayBuild;
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
+	public TestrayBuild getTestrayBuildByName(String buildName) {
+		if (_testrayBuildsByName.containsKey(buildName)) {
+			return _testrayBuildsByName.get(buildName);
+		}
+
+		int current = 1;
+
+		TestrayServer testrayServer = getTestrayServer();
+
+		while (true) {
+			try {
+				String buildAPIURL = JenkinsResultsParserUtil.combine(
+					String.valueOf(testrayServer.getURL()),
+					"/home/-/testray/builds.json?cur=", String.valueOf(current),
+					"&delta=", String.valueOf(_DELTA),
+					"&orderByCol=testrayBuildId&testrayRoutineId=",
+					String.valueOf(getID()));
+
+				JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
+					buildAPIURL, true);
+
+				JSONArray dataJSONArray = jsonObject.getJSONArray("data");
+
+				if (dataJSONArray.length() == 0) {
+					break;
+				}
+
+				for (int i = 0; i < dataJSONArray.length(); i++) {
+					JSONObject dataJSONObject = dataJSONArray.getJSONObject(i);
+
+					TestrayBuild testrayBuild = new TestrayBuild(
+						this, dataJSONObject);
+
+					_testrayBuildsByName.put(
+						testrayBuild.getName(), testrayBuild);
+
+					if (_testrayBuildsByName.containsKey(buildName)) {
+						return _testrayBuildsByName.get(buildName);
+					}
+				}
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
+			finally {
+				current++;
+			}
+		}
+
+		return null;
+	}
+
 	public TestrayProject getTestrayProject() {
 		return _testrayProject;
 	}
@@ -69,7 +156,11 @@ public class TestrayRoutine {
 		return _url;
 	}
 
+	private static final int _DELTA = 25;
+
 	private final JSONObject _jsonObject;
+	private final Map<String, TestrayBuild> _testrayBuildsByName =
+		new HashMap<>();
 	private final TestrayProject _testrayProject;
 	private final TestrayServer _testrayServer;
 	private final URL _url;

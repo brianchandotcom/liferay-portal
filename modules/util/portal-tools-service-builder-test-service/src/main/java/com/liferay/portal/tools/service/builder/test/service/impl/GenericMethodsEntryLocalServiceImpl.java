@@ -31,13 +31,13 @@ public class GenericMethodsEntryLocalServiceImpl
 	extends GenericMethodsEntryLocalServiceBaseImpl {
 
 	@Override
-	public <T> void typeParameterMethod(Consumer<T> consumer) throws Exception {
-	}
-
-	@Override
 	public <E extends Exception> void typeParameterAndBoundMethod(
 			BiConsumer<String, E> biConsumer)
 		throws E {
+	}
+
+	@Override
+	public <T> void typeParameterMethod(Consumer<T> consumer) throws Exception {
 	}
 
 	@Override

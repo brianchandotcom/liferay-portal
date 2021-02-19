@@ -14,6 +14,7 @@
 
 package com.liferay.portal.file.install.internal.properties;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
@@ -23,9 +24,9 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -62,23 +63,9 @@ public class CFGPropertiesTest {
 		CFGProperties cfgProperties = _createCFGProperties(
 			"testKey1=testValue1\ntestKey2=testValue2");
 
-		Set<String> keys = cfgProperties.keySet();
-
-		Assert.assertEquals(keys.toString(), 2, keys.size());
-
-		List<String> expectedKeys = new ArrayList<String>() {
-			{
-				add("testKey1");
-				add("testKey2");
-			}
-		};
-
-		for (String key : keys) {
-			Assert.assertNotEquals(null, cfgProperties.get(key));
-			Assert.assertTrue(expectedKeys.remove(key));
-		}
-
-		Assert.assertTrue(expectedKeys.toString(), expectedKeys.isEmpty());
+		Assert.assertEquals(
+			new HashSet<>(Arrays.asList("testKey1", "testKey2")),
+			cfgProperties.keySet());
 	}
 
 	@Test
@@ -90,6 +77,11 @@ public class CFGPropertiesTest {
 		Assert.assertEquals("testValue", cfgProperties.get("testKey"));
 
 		_assertSave(cfgProperties, line);
+	}
+
+	@Test
+	public void testLoadAndSaveEmpty() throws IOException {
+		_assertSave(new CFGProperties(), StringPool.BLANK);
 	}
 
 	@Test
@@ -195,7 +187,13 @@ public class CFGPropertiesTest {
 	public void testPutAndSaveArray() throws IOException {
 		CFGProperties cfgProperties = new CFGProperties();
 
-		String[] array = {"testValue1", "testValue2"};
+		String[] array = {};
+
+		cfgProperties.put("testKey1", array);
+
+		Assert.assertEquals(StringPool.BLANK, cfgProperties.get("testKey1"));
+
+		array = new String[] {"testValue1", "testValue2"};
 
 		cfgProperties.put("testKey1", array);
 
@@ -210,14 +208,12 @@ public class CFGPropertiesTest {
 	public void testPutAndSaveCollection() throws IOException {
 		CFGProperties cfgProperties = new CFGProperties();
 
-		List<String> list = new ArrayList<String>() {
-			{
-				add("testValue1");
-				add("testValue2");
-			}
-		};
+		cfgProperties.put("testKey1", Collections.emptyList());
 
-		cfgProperties.put("testKey1", list);
+		Assert.assertEquals(StringPool.BLANK, cfgProperties.get("testKey1"));
+
+		cfgProperties.put(
+			"testKey1", Arrays.asList("testValue1", "testValue2"));
 
 		String listString = "testValue1,testValue2";
 

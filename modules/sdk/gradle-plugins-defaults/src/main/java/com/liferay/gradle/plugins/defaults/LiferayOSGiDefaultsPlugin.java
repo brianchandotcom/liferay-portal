@@ -2319,6 +2319,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				project, JavaPlugin.COMPILE_CONFIGURATION_NAME);
 			_configureDependenciesReleaseAPI(
 				project, JavaPlugin.COMPILE_CLASSPATH_CONFIGURATION_NAME);
+			_configureDependenciesReleaseAPI(
+				project, JspCPlugin.CONFIGURATION_NAME);
 
 			_configureDependenciesGroupPortal(
 				project, appBndFile, JavaPlugin.COMPILE_CONFIGURATION_NAME,

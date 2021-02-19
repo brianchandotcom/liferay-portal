@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -673,10 +674,6 @@ public class FragmentLayoutStructureItemImporter
 
 		String fieldKey = (String)map.get("fieldKey");
 
-		if (Validator.isNull(fieldKey)) {
-			return;
-		}
-
 		Map<String, Object> itemReferenceMap = (Map<String, Object>)map.get(
 			"itemReference");
 
@@ -704,11 +701,52 @@ public class FragmentLayoutStructureItemImporter
 			return;
 		}
 
-		jsonObject.put("fieldId", fieldKey);
-
-		String classNameId = null;
+		if (Validator.isNotNull(fieldKey)) {
+			jsonObject.put("fieldId", fieldKey);
+		}
 
 		String className = (String)itemReferenceMap.get("className");
+
+		if (Objects.equals(className, Layout.class.getName())) {
+			if (!Objects.equals(itemReferenceMap.get("fieldName"), "plid")) {
+				return;
+			}
+
+			String fieldValue = (String)itemReferenceMap.get("fieldValue");
+
+			Layout layout = _layoutLocalService.fetchLayout(
+				GetterUtil.getLong(fieldValue));
+
+			if (layout == null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to process mapping because layout could not " +
+							"be obtained for PLID " + fieldValue);
+				}
+
+				return;
+			}
+
+			jsonObject.put(
+				"layout",
+				JSONUtil.put(
+					"groupId", String.valueOf(layout.getGroupId())
+				).put(
+					"id", layout.getUuid()
+				).put(
+					"layoutId", String.valueOf(layout.getLayoutId())
+				).put(
+					"name", layout.getName(LocaleUtil.getMostRelevantLocale())
+				).put(
+					"privateLayout", layout.isPrivateLayout()
+				).put(
+					"value", layout.getFriendlyURL()
+				));
+
+			return;
+		}
+
+		String classNameId = null;
 
 		try {
 			classNameId = String.valueOf(_portal.getClassNameId(className));
@@ -1056,6 +1094,9 @@ public class FragmentLayoutStructureItemImporter
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private Portal _portal;

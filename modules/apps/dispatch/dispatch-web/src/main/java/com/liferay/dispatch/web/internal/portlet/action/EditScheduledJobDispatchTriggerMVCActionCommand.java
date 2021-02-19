@@ -36,11 +36,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + DispatchPortletKeys.DISPATCH,
-		"mvc.command.name=/dispatch/edit_scheduled_task_dispatch_trigger"
+		"mvc.command.name=/dispatch/edit_scheduled_job_dispatch_trigger"
 	},
 	service = MVCActionCommand.class
 )
-public class EditScheduledTaskDispatchTriggerMVCActionCommand
+public class EditScheduledJobDispatchTriggerMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	@Override

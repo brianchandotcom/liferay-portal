@@ -22,6 +22,7 @@ import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.headless.delivery.dto.v1_0.ClassFieldReference;
 import com.liferay.headless.delivery.dto.v1_0.ClassPKReference;
 import com.liferay.headless.delivery.dto.v1_0.ContextReference;
 import com.liferay.headless.delivery.dto.v1_0.Fragment;
@@ -49,6 +50,7 @@ import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -57,7 +59,9 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -338,6 +342,10 @@ public class PageFragmentInstanceDefinitionMapper {
 		}
 
 		if (saveMapping && jsonObject.has("collectionFieldId")) {
+			return true;
+		}
+
+		if (saveMapping && jsonObject.has("layout")) {
 			return true;
 		}
 
@@ -888,10 +896,11 @@ public class PageFragmentInstanceDefinitionMapper {
 	private Object _toItemReference(JSONObject jsonObject) {
 		String collectionFieldId = jsonObject.getString("collectionFieldId");
 		String fieldId = jsonObject.getString("fieldId");
+		JSONObject layoutJSONObject = jsonObject.getJSONObject("layout");
 		String mappedField = jsonObject.getString("mappedField");
 
 		if (Validator.isNull(collectionFieldId) && Validator.isNull(fieldId) &&
-			Validator.isNull(mappedField)) {
+			(layoutJSONObject == null) && Validator.isNull(mappedField)) {
 
 			return null;
 		}
@@ -900,6 +909,35 @@ public class PageFragmentInstanceDefinitionMapper {
 			return new ContextReference() {
 				{
 					contextSource = ContextSource.COLLECTION_ITEM;
+				}
+			};
+		}
+
+		if (layoutJSONObject != null) {
+			final Layout layout;
+
+			try {
+				layout = _layoutLocalService.getLayout(
+					layoutJSONObject.getLong("groupId"),
+					layoutJSONObject.getBoolean("privateLayout"),
+					layoutJSONObject.getLong("layoutId"));
+			}
+			catch (PortalException portalException) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Item reference could not be set since no layout " +
+							"could be obtained",
+						portalException);
+				}
+
+				return null;
+			}
+
+			return new ClassFieldReference() {
+				{
+					className = Layout.class.getName();
+					fieldName = "plid";
+					fieldValue = String.valueOf(layout.getPlid());
 				}
 			};
 		}
@@ -1024,6 +1062,9 @@ public class PageFragmentInstanceDefinitionMapper {
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private Portal _portal;

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.internal.filter;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.filter.ComplexQueryBuilder;
@@ -96,6 +98,9 @@ public class ComplexQueryBuilderImpl implements ComplexQueryBuilder {
 		return _queries.booleanQuery();
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		ComplexQueryBuilderImpl.class);
+
 	private BooleanQuery _booleanQuery;
 	private final List<ComplexQueryPart> _complexQueryParts = new ArrayList<>();
 	private final Queries _queries;
@@ -124,9 +129,20 @@ public class ComplexQueryBuilderImpl implements ComplexQueryBuilder {
 				return null;
 			}
 
+			String occur = complexQueryPart.getOccur();
+
+			if (complexQueryPart.isAdditive() && !occur.equals("should")) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Additive complex query part with " +
+							complexQueryPart.getOccur() +
+								" occur may not behave as expected");
+				}
+			}
+
 			addQueryClause(
-				getParentBooleanQuery(complexQueryPart.getParent()),
-				complexQueryPart.getOccur(), query);
+				getParentBooleanQuery(complexQueryPart.getParent()), occur,
+				query);
 
 			return query;
 		}

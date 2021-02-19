@@ -36,10 +36,10 @@ import javax.portlet.RenderRequest;
 /**
  * @author Matija Petanjek
  */
-public class ScheduledTaskDispatchTriggerDisplayContext
+public class ScheduledJobDispatchTriggerDisplayContext
 	extends BaseDispatchTriggerDisplayContext {
 
-	public ScheduledTaskDispatchTriggerDisplayContext(
+	public ScheduledJobDispatchTriggerDisplayContext(
 		RenderRequest renderRequest,
 		DispatchSchedulerEngineHelper dispatchSchedulerEngineHelper) {
 

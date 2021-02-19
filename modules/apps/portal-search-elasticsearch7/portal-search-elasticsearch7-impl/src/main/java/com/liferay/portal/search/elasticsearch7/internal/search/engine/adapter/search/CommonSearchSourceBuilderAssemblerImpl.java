@@ -214,6 +214,30 @@ public class CommonSearchSourceBuilderAssemblerImpl
 		return queryBuilder;
 	}
 
+	private void _combine(
+		BoolQueryBuilder boolQueryBuilder, ComplexQueryPart complexQueryPart) {
+
+		Query query = _complexQueryBuilderFactory.builder(
+		).buildPart(
+			complexQueryPart
+		);
+
+		String occur = complexQueryPart.getOccur();
+
+		if (occur.equals("filter")) {
+			boolQueryBuilder.filter(_translateQuery(query));
+		}
+		else if (occur.equals("must")) {
+			boolQueryBuilder.must(_translateQuery(query));
+		}
+		else if (occur.equals("must_not")) {
+			boolQueryBuilder.mustNot(_translateQuery(query));
+		}
+		else if (occur.equals("should")) {
+			boolQueryBuilder.should(_translateQuery(query));
+		}
+	}
+
 	private QueryBuilder _combine(
 		BoolQueryBuilder boolQueryBuilder, QueryBuilder queryBuilder,
 		BiConsumer<BoolQueryBuilder, QueryBuilder> biConsumer) {
@@ -240,7 +264,17 @@ public class CommonSearchSourceBuilderAssemblerImpl
 				additiveComplexQueryParts.add(complexQueryPart);
 			}
 			else {
-				nonadditiveComplexQueryParts.add(complexQueryPart);
+				if (complexQueryPart.isRootClause() &&
+					(queryBuilder instanceof BoolQueryBuilder)) {
+
+					BoolQueryBuilder boolQueryBuilder =
+						(BoolQueryBuilder)queryBuilder;
+
+					_combine(boolQueryBuilder, complexQueryPart);
+				}
+				else {
+					nonadditiveComplexQueryParts.add(complexQueryPart);
+				}
 			}
 		}
 

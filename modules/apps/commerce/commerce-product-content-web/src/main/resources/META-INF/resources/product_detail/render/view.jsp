@@ -133,19 +133,19 @@ if (cpSku != null) {
 
 			<div class="align-items-center d-flex mt-3 product-detail-actions">
 				<commerce-ui:add-to-cart
-					cpCatalogEntry="<%= cpCatalogEntry %>"
+					CPCatalogEntry="<%= cpCatalogEntry %>"
 					options='<%= "[]" %>'
 					willUpdate="<%= true %>"
 				/>
 
 				<commerce-ui:add-to-wish-list
-					cpCatalogEntry="<%= cpCatalogEntry %>"
+					CPCatalogEntry="<%= cpCatalogEntry %>"
 				/>
 			</div>
 
 			<div class="mt-3">
 				<commerce-ui:compare-checkbox
-					cpCatalogEntry="<%= cpCatalogEntry %>"
+					CPCatalogEntry="<%= cpCatalogEntry %>"
 					label='<%= LanguageUtil.get(resourceBundle, "compare") %>'
 				/>
 			</div>

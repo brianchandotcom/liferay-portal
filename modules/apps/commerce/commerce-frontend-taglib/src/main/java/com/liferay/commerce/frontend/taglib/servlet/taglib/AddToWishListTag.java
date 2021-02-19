@@ -72,12 +72,14 @@ public class AddToWishListTag extends IncludeTag {
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
+
+			return SKIP_BODY;
 		}
 
 		return super.doStartTag();
 	}
 
-	public CPCatalogEntry getCpCatalogEntry() {
+	public CPCatalogEntry getCPCatalogEntry() {
 		return _cpCatalogEntry;
 	}
 
@@ -99,7 +101,7 @@ public class AddToWishListTag extends IncludeTag {
 		setNamespacedAttribute(httpServletRequest, "spritemap", _spritemap);
 	}
 
-	public void setCpCatalogEntry(CPCatalogEntry cpCatalogEntry) {
+	public void setCPCatalogEntry(CPCatalogEntry cpCatalogEntry) {
 		_cpCatalogEntry = cpCatalogEntry;
 	}
 

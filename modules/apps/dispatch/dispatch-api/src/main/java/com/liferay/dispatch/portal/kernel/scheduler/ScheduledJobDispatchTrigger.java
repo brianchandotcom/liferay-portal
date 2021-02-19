@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.scheduler.StorageType;
 /**
  * @author Matija Petanjek
  */
-public interface ScheduledTaskDispatchTrigger extends DispatchTrigger {
+public interface ScheduledJobDispatchTrigger extends DispatchTrigger {
 
 	public String getDestinationName();
 

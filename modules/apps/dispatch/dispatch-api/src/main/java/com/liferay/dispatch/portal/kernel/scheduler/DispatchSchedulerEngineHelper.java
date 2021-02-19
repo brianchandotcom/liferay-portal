@@ -26,28 +26,28 @@ import java.util.List;
  */
 public interface DispatchSchedulerEngineHelper {
 
-	public int getScheduledTaskDispatchTriggerCount();
+	public int getScheduledJobsCount();
 
-	public Date getScheduledTaskDispatchTriggerNextFireDate(
+	public Date getScheduledJobNextFireDate(
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException;
 
-	public List<ScheduledTaskDispatchTrigger> getScheduledTaskDispatchTriggers(
+	public List<ScheduledJobDispatchTrigger> getScheduledJobDispatchTriggers(
 		int start, int end);
 
 	public TriggerState getTriggerState(
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException;
 
-	public void pauseScheduledTaskDispatchTrigger(
+	public void pause(
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException;
 
-	public void resumeScheduledTaskDispatchTrigger(
+	public void resume(
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException;
 
-	public void runScheduledTaskDispatchTrigger(
+	public void run(
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException;
 

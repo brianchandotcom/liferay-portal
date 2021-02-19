@@ -14,7 +14,7 @@
 
 package com.liferay.dispatch.internal.portal.kernel.scheduler;
 
-import com.liferay.dispatch.portal.kernel.scheduler.ScheduledTaskDispatchTrigger;
+import com.liferay.dispatch.portal.kernel.scheduler.ScheduledJobDispatchTrigger;
 import com.liferay.dispatch.portal.kernel.scheduler.DispatchSchedulerEngineHelper;
 import com.liferay.dispatch.model.DispatchTriggerModel;
 import com.liferay.portal.kernel.log.Log;
@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 public class DispatchSchedulerEngineHelperImpl
 	implements DispatchSchedulerEngineHelper {
 
-	public int getScheduledTaskDispatchTriggerCount() {
+	public int getScheduledJobsCount() {
 		int count = 0;
 
 		List<SchedulerResponse> schedulerResponses = null;
@@ -70,7 +70,7 @@ public class DispatchSchedulerEngineHelperImpl
 		return count;
 	}
 
-	public Date getScheduledTaskDispatchTriggerNextFireDate(
+	public Date getScheduledJobNextFireDate(
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException {
 
@@ -78,11 +78,11 @@ public class DispatchSchedulerEngineHelperImpl
 			jobName, groupName, storageType);
 	}
 
-	public List<ScheduledTaskDispatchTrigger> getScheduledTaskDispatchTriggers(
+	public List<ScheduledJobDispatchTrigger> getScheduledJobDispatchTriggers(
 		int start, int end) {
 
-		List<ScheduledTaskDispatchTrigger>
-			scheduledTaskDispatchTriggerDispatchTriggers = new ArrayList<>();
+		List<ScheduledJobDispatchTrigger>
+			scheduledJobDispatchTriggers = new ArrayList<>();
 
 		List<SchedulerResponse> schedulerResponses = null;
 
@@ -92,7 +92,7 @@ public class DispatchSchedulerEngineHelperImpl
 		catch (SchedulerException schedulerException) {
 			_log.error("Unable to get scheduler entries", schedulerException);
 
-			return scheduledTaskDispatchTriggerDispatchTriggers;
+			return scheduledJobDispatchTriggers;
 		}
 
 		for (SchedulerResponse schedulerResponse : schedulerResponses) {
@@ -102,33 +102,33 @@ public class DispatchSchedulerEngineHelperImpl
 				continue;
 			}
 
-			ScheduledTaskDispatchTriggerImpl scheduledTaskDispatchTriggerImpl =
-				new ScheduledTaskDispatchTriggerImpl(
+			ScheduledJobDispatchTrigger scheduledJobDispatchTrigger =
+				new ScheduledJobDispatchTriggerImpl(
 					schedulerResponse.getDestinationName(),
 					schedulerResponse.getGroupName(),
 					schedulerResponse.getStorageType());
 
-			scheduledTaskDispatchTriggerImpl.setActive(true);
-			scheduledTaskDispatchTriggerImpl.setName(
+			scheduledJobDispatchTrigger.setActive(true);
+			scheduledJobDispatchTrigger.setName(
 				schedulerResponse.getJobName());
-			scheduledTaskDispatchTriggerImpl.setSystem(true);
+			scheduledJobDispatchTrigger.setSystem(true);
 
 			Trigger trigger = schedulerResponse.getTrigger();
 
-			scheduledTaskDispatchTriggerImpl.setStartDate(
+			scheduledJobDispatchTrigger.setStartDate(
 				trigger.getStartDate());
 
-			scheduledTaskDispatchTriggerDispatchTriggers.add(
-				scheduledTaskDispatchTriggerImpl);
+			scheduledJobDispatchTriggers.add(
+				scheduledJobDispatchTrigger);
 		}
 
 		Collections.sort(
-			scheduledTaskDispatchTriggerDispatchTriggers,
+			scheduledJobDispatchTriggers,
 			Comparator.comparing(DispatchTriggerModel::getStartDate));
 
-		return scheduledTaskDispatchTriggerDispatchTriggers.subList(
+		return scheduledJobDispatchTriggers.subList(
 			start,
-			Math.min(end, scheduledTaskDispatchTriggerDispatchTriggers.size()));
+			Math.min(end, scheduledJobDispatchTriggers.size()));
 	}
 
 	public TriggerState getTriggerState(
@@ -140,7 +140,7 @@ public class DispatchSchedulerEngineHelperImpl
 	}
 
 	@Override
-	public void pauseScheduledTaskDispatchTrigger(
+	public void pause(
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException {
 
@@ -148,7 +148,7 @@ public class DispatchSchedulerEngineHelperImpl
 	}
 
 	@Override
-	public void resumeScheduledTaskDispatchTrigger(
+	public void resume(
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException {
 
@@ -156,7 +156,7 @@ public class DispatchSchedulerEngineHelperImpl
 	}
 
 	@Override
-	public void runScheduledTaskDispatchTrigger(
+	public void run(
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException {
 

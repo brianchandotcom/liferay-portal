@@ -14,7 +14,7 @@
 
 package com.liferay.dispatch.internal.portal.kernel.scheduler;
 
-import com.liferay.dispatch.portal.kernel.scheduler.ScheduledTaskDispatchTrigger;
+import com.liferay.dispatch.portal.kernel.scheduler.ScheduledJobDispatchTrigger;
 import com.liferay.dispatch.model.impl.DispatchTriggerImpl;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.scheduler.StorageType;
@@ -22,10 +22,10 @@ import com.liferay.portal.kernel.scheduler.StorageType;
 /**
  * @author Matija Petanjek
  */
-public class ScheduledTaskDispatchTriggerImpl
-	extends DispatchTriggerImpl implements ScheduledTaskDispatchTrigger {
+public class ScheduledJobDispatchTriggerImpl
+	extends DispatchTriggerImpl implements ScheduledJobDispatchTrigger {
 
-	public ScheduledTaskDispatchTriggerImpl(
+	public ScheduledJobDispatchTriggerImpl(
 		String destinationName, String groupName, StorageType storageType) {
 
 		_destinationName = destinationName;

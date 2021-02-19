@@ -1174,13 +1174,65 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"	
-	@ignore = "true"	
-	@priority = "5"	
-	test VerifyDefaultLanguageIsFirstShown {	
-		property portal.acceptance = "false";	
+	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
+	@ignore = "true"
+	@priority = "5"
+	test VerifyDefaultLanguageIsFirstShown {
+		property portal.acceptance = "false";
 
-		// TODO LPS-123538 VerifyDefaultLanguageIsFirstShown pending implementation	
+		var fieldsetLabel = "New Fieldset";
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
+
+		AppBuilderAdmin.switchTab(tabName = "Structures");
+
+		WebContentStructures.addCP(structureName = "WC structure name");
+
+		DataEngine.addFieldsets(
+			createNewFieldset = "true",
+			fieldNameList = "Text",
+			fieldsetLabel = "${fieldsetLabel}",
+			fieldsetName = "${fieldsetLabel}");
+
+		DataEngine.gotoFieldsetItemEllipsis(fieldsetName = "${fieldsetLabel}");
+
+		MenuItem.click(menuItem = "Edit");
+
+		PortletEntry.changeLocaleInModal(locale = "pt-BR");
+
+		Type(
+			locator1 = "FormViewBuilder#FIELD_SET_NAME",
+			value1 = "Nome da Estrutura WC");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "Texto",
+			fieldsetModal = "true");
+
+		Click(locator1 = "Modal#SAVE_BUTTON");
+
+		Click(locator1 = "Modal#PROPAGATE_BUTTON");
+
+		WebContentStructures.addLocalization(
+			locale = "pt-BR",
+			localization1Name = "Nome da Estrutura WC");
+
+		WebContentStructures.saveCP();
+
+		AssertClick(
+			key_ddlDataDefinitionName = "WC structure name",
+			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK",
+			value1 = "WC structure name");
+
+		AssertElementPresent(
+			key_locale = "en-US",
+			locator1 = "Translation#CURRENT_LOCALE_TITLE");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Text",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 	}
 
 	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"

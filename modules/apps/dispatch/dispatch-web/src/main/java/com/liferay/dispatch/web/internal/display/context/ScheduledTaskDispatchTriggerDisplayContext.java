@@ -14,8 +14,8 @@
 
 package com.liferay.dispatch.web.internal.display.context;
 
-import com.liferay.dispatch.core.scheduler.ScheduledTaskDispatchTrigger;
-import com.liferay.dispatch.core.scheduler.ScheduledTaskDispatchTriggerHelper;
+import com.liferay.dispatch.portal.kernel.scheduler.ScheduledJobDispatchTrigger;
+import com.liferay.dispatch.portal.kernel.scheduler.DispatchSchedulerEngineHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -41,27 +41,27 @@ public class ScheduledTaskDispatchTriggerDisplayContext
 
 	public ScheduledTaskDispatchTriggerDisplayContext(
 		RenderRequest renderRequest,
-		ScheduledTaskDispatchTriggerHelper scheduledTaskDispatchTriggerHelper) {
+		DispatchSchedulerEngineHelper dispatchSchedulerEngineHelper) {
 
 		super(renderRequest);
 
 		_dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
 			dispatchRequestHelper.getLocale());
 
-		_scheduledTaskDispatchTriggerHelper =
-			scheduledTaskDispatchTriggerHelper;
+		_dispatchSchedulerEngineHelper =
+			dispatchSchedulerEngineHelper;
 	}
 
 	public String getNextFireDateString(
-			ScheduledTaskDispatchTrigger scheduledTaskDispatchTrigger)
+			ScheduledJobDispatchTrigger scheduledJobDispatchTrigger)
 		throws SchedulerException {
 
 		Date nextFireDate =
-			_scheduledTaskDispatchTriggerHelper.
-				getScheduledTaskDispatchTriggerNextFireDate(
-					scheduledTaskDispatchTrigger.getName(),
-					scheduledTaskDispatchTrigger.getGroupName(),
-					scheduledTaskDispatchTrigger.getStorageType());
+			_dispatchSchedulerEngineHelper.
+				getScheduledJobNextFireDate(
+					scheduledJobDispatchTrigger.getName(),
+					scheduledJobDispatchTrigger.getGroupName(),
+					scheduledJobDispatchTrigger.getStorageType());
 
 		if (nextFireDate != null) {
 			return _dateFormatDateTime.format(nextFireDate);
@@ -118,7 +118,7 @@ public class ScheduledTaskDispatchTriggerDisplayContext
 		return portletURL;
 	}
 
-	public SearchContainer<ScheduledTaskDispatchTrigger> getSearchContainer() {
+	public SearchContainer<ScheduledJobDispatchTrigger> getSearchContainer() {
 		if (_searchContainer != null) {
 			return _searchContainer;
 		}
@@ -132,14 +132,14 @@ public class ScheduledTaskDispatchTriggerDisplayContext
 		_searchContainer.setOrderByType(getOrderByType());
 
 		int total =
-			_scheduledTaskDispatchTriggerHelper.
-				getScheduledTaskDispatchTriggerCount();
+			_dispatchSchedulerEngineHelper.
+				getScheduledJobsCount();
 
 		_searchContainer.setTotal(total);
 
-		List<ScheduledTaskDispatchTrigger> results =
-			_scheduledTaskDispatchTriggerHelper.
-				getScheduledTaskDispatchTriggers(
+		List<ScheduledJobDispatchTrigger> results =
+			_dispatchSchedulerEngineHelper.
+				getScheduledJobDispatchTriggers(
 					_searchContainer.getStart(), _searchContainer.getEnd());
 
 		_searchContainer.setResults(results);
@@ -148,18 +148,18 @@ public class ScheduledTaskDispatchTriggerDisplayContext
 	}
 
 	public TriggerState getTriggerState(
-			ScheduledTaskDispatchTrigger scheduledTaskDispatchTrigger)
+			ScheduledJobDispatchTrigger scheduledJobDispatchTrigger)
 		throws SchedulerException {
 
-		return _scheduledTaskDispatchTriggerHelper.getTriggerState(
-			scheduledTaskDispatchTrigger.getName(),
-			scheduledTaskDispatchTrigger.getGroupName(),
-			scheduledTaskDispatchTrigger.getStorageType());
+		return _dispatchSchedulerEngineHelper.getTriggerState(
+			scheduledJobDispatchTrigger.getName(),
+			scheduledJobDispatchTrigger.getGroupName(),
+			scheduledJobDispatchTrigger.getStorageType());
 	}
 
 	private final Format _dateFormatDateTime;
-	private final ScheduledTaskDispatchTriggerHelper
-		_scheduledTaskDispatchTriggerHelper;
-	private SearchContainer<ScheduledTaskDispatchTrigger> _searchContainer;
+	private final DispatchSchedulerEngineHelper
+		_dispatchSchedulerEngineHelper;
+	private SearchContainer<ScheduledJobDispatchTrigger> _searchContainer;
 
 }

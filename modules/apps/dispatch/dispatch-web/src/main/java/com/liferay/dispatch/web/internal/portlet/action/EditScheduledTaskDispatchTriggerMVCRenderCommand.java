@@ -15,7 +15,7 @@
 package com.liferay.dispatch.web.internal.portlet.action;
 
 import com.liferay.dispatch.constants.DispatchPortletKeys;
-import com.liferay.dispatch.core.scheduler.ScheduledTaskDispatchTriggerHelper;
+import com.liferay.dispatch.portal.kernel.scheduler.DispatchSchedulerEngineHelper;
 import com.liferay.dispatch.web.internal.display.context.ScheduledTaskDispatchTriggerDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -48,7 +48,7 @@ public class EditScheduledTaskDispatchTriggerMVCRenderCommand
 		ScheduledTaskDispatchTriggerDisplayContext
 			scheduledTaskDispatchTriggerDisplayContext =
 				new ScheduledTaskDispatchTriggerDisplayContext(
-					renderRequest, _scheduledTaskDispatchTriggerHelper);
+					renderRequest, _dispatchSchedulerEngineHelper);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -58,7 +58,7 @@ public class EditScheduledTaskDispatchTriggerMVCRenderCommand
 	}
 
 	@Reference
-	private ScheduledTaskDispatchTriggerHelper
-		_scheduledTaskDispatchTriggerHelper;
+	private DispatchSchedulerEngineHelper
+		_dispatchSchedulerEngineHelper;
 
 }

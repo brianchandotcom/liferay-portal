@@ -15,7 +15,7 @@
 package com.liferay.dispatch.web.internal.portlet.action;
 
 import com.liferay.dispatch.constants.DispatchPortletKeys;
-import com.liferay.dispatch.core.scheduler.ScheduledTaskDispatchTriggerHelper;
+import com.liferay.dispatch.portal.kernel.scheduler.DispatchSchedulerEngineHelper;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.scheduler.StorageType;
@@ -68,7 +68,7 @@ public class EditScheduledTaskDispatchTriggerMVCActionCommand
 		StorageType storageType = StorageType.valueOf(
 			ParamUtil.getString(actionRequest, "storageType"));
 
-		_scheduledTaskDispatchTriggerHelper.runScheduledTaskDispatchTrigger(
+		_dispatchSchedulerEngineHelper.run(
 			jobName, groupName, storageType);
 	}
 
@@ -81,19 +81,19 @@ public class EditScheduledTaskDispatchTriggerMVCActionCommand
 			ParamUtil.getString(actionRequest, "storageType"));
 
 		if (Objects.equals(cmd, "pause")) {
-			_scheduledTaskDispatchTriggerHelper.
-				pauseScheduledTaskDispatchTrigger(
+			_dispatchSchedulerEngineHelper.
+				pause(
 					jobName, groupName, storageType);
 		}
 		else {
-			_scheduledTaskDispatchTriggerHelper.
-				resumeScheduledTaskDispatchTrigger(
+			_dispatchSchedulerEngineHelper.
+				resume(
 					jobName, groupName, storageType);
 		}
 	}
 
 	@Reference
-	private ScheduledTaskDispatchTriggerHelper
-		_scheduledTaskDispatchTriggerHelper;
+	private DispatchSchedulerEngineHelper
+		_dispatchSchedulerEngineHelper;
 
 }

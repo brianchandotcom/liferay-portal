@@ -15,6 +15,7 @@
 package com.liferay.portal.file.install.internal.properties;
 
 import com.liferay.petra.io.unsync.UnsyncBufferedReader;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 
@@ -75,7 +76,7 @@ public class CFGProperties implements ConfigurationProperties {
 					continue;
 				}
 
-				int index = line.indexOf(StringPool.EQUAL);
+				int index = line.indexOf(CharPool.EQUAL);
 
 				if (index == -1) {
 					value = value.concat(line.trim());

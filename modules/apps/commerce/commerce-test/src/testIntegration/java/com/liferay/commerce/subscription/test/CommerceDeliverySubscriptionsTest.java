@@ -219,12 +219,11 @@ public class CommerceDeliverySubscriptionsTest {
 		CommerceSubscriptionEntry commerceSubscriptionEntry =
 			commerceSubscriptionEntries.get(0);
 
-		_commerceSubscriptionEngine.activateRecurringDelivery(
-			commerceSubscriptionEntry.getCommerceSubscriptionEntryId());
+		boolean activateRecurringDelivery =
+			_commerceSubscriptionEngine.activateRecurringDelivery(
+				commerceSubscriptionEntry.getCommerceSubscriptionEntryId());
 
-		Assert.assertEquals(
-			CommerceSubscriptionEntryConstants.SUBSCRIPTION_STATUS_ACTIVE,
-			commerceSubscriptionEntry.getDeliverySubscriptionStatus());
+		Assert.assertTrue(activateRecurringDelivery);
 
 		// Set subscription entry to be renewable
 
@@ -232,7 +231,7 @@ public class CommerceDeliverySubscriptionsTest {
 
 		now.add(Calendar.MINUTE, -2);
 
-		commerceSubscriptionEntry.setNextIterationDate(now.getTime());
+		commerceSubscriptionEntry.setDeliveryNextIterationDate(now.getTime());
 
 		_commerceSubscriptionEntryHelper.checkDeliverySubscriptionStatus(
 			commerceSubscriptionEntry);

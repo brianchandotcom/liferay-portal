@@ -21,7 +21,7 @@
 		<div class="custom-checkbox custom-control custom-control-primary">
 			<div class="custom-checkbox custom-control">
 				<commerce-ui:compare-checkbox
-					cpCatalogEntry="<%= cpCatalogEntry %>"
+					CPCatalogEntry="<%= cpCatalogEntry %>"
 					label='<%= LanguageUtil.get(request, "compare") %>'
 				/>
 			</div>

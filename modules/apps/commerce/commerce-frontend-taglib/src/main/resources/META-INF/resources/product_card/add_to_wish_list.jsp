@@ -19,7 +19,7 @@
 <div class="autofit-col">
 	<div class="autofit-section">
 		<commerce-ui:add-to-wish-list
-			cpCatalogEntry="<%= cpCatalogEntry %>"
+			CPCatalogEntry="<%= cpCatalogEntry %>"
 		/>
 	</div>
 </div>

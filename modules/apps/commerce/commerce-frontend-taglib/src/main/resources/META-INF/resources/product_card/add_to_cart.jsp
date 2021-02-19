@@ -31,7 +31,7 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib") + Strin
 	<c:otherwise>
 		<commerce-ui:add-to-cart
 			block="<%= true %>"
-			cpCatalogEntry="<%= cpCatalogEntry %>"
+			CPCatalogEntry="<%= cpCatalogEntry %>"
 		/>
 	</c:otherwise>
 </c:choose>

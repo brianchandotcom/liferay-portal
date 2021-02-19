@@ -55,12 +55,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>cpCatalogEntry</name>
+			<name>CPCatalogEntry</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>cpInstanceId</name>
+			<name>CPInstanceId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -80,7 +80,7 @@
 		<tag-class>com.liferay.commerce.frontend.taglib.servlet.taglib.AddToWishListTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<name>cpCatalogEntry</name>
+			<name>CPCatalogEntry</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -115,7 +115,7 @@
 		<tag-class>com.liferay.commerce.frontend.taglib.servlet.taglib.CompareCheckboxTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<name>cpCatalogEntry</name>
+			<name>CPCatalogEntry</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

@@ -30,7 +30,7 @@ CProduct cProduct = commerceWishListItem.getCProduct();
 <c:choose>
 	<c:when test="<%= cpInstance != null %>">
 		<commerce-ui:add-to-cart
-			cpInstanceId="<%= cpInstance.getCPInstanceId() %>"
+			CPInstanceId="<%= cpInstance.getCPInstanceId() %>"
 		/>
 	</c:when>
 	<c:otherwise>

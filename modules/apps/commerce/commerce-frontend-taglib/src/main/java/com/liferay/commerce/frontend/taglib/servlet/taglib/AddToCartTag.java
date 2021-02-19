@@ -119,6 +119,8 @@ public class AddToCartTag extends IncludeTag {
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
+
+			return SKIP_BODY;
 		}
 
 		return super.doStartTag();
@@ -128,11 +130,11 @@ public class AddToCartTag extends IncludeTag {
 		return _block;
 	}
 
-	public CPCatalogEntry getCpCatalogEntry() {
+	public CPCatalogEntry getCPCatalogEntry() {
 		return _cpCatalogEntry;
 	}
 
-	public long getCpInstanceId() {
+	public long getCPInstanceId() {
 		return _cpInstanceId;
 	}
 
@@ -184,11 +186,11 @@ public class AddToCartTag extends IncludeTag {
 		_block = block;
 	}
 
-	public void setCpCatalogEntry(CPCatalogEntry cpCatalogEntry) {
+	public void setCPCatalogEntry(CPCatalogEntry cpCatalogEntry) {
 		_cpCatalogEntry = cpCatalogEntry;
 	}
 
-	public void setCpInstanceId(long cpInstanceId) {
+	public void setCPInstanceId(long cpInstanceId) {
 		_cpInstanceId = cpInstanceId;
 	}
 

@@ -1410,6 +1410,7 @@ components:
                             type: string
                         itemReference:
                             oneOf:
+                                - $ref: "#/components/schemas/ClassFieldReference"
                                 - $ref: "#/components/schemas/ClassPKReference"
                                 - $ref: "#/components/schemas/ContextReference"
                     type: object

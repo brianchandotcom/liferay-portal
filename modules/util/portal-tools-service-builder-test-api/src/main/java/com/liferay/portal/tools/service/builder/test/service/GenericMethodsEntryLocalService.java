@@ -20,6 +20,14 @@ import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
+import java.io.Serializable;
+
+import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+import java.util.function.Consumer;
+import java.util.function.ObjIntConsumer;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -51,5 +59,24 @@ public interface GenericMethodsEntryLocalService extends BaseLocalService {
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
+
+	public <E extends Exception> void typeParameterAndBoundMethod(
+			BiConsumer<String, E> biConsumer)
+		throws E;
+
+	public <T> void typeParameterMethod(Consumer<T> consumer) throws Exception;
+
+	public <T, E extends Exception> List<T> typeParametersAndBoundMethod(
+		BiFunction<Long, T, E> biFunction, BiConsumer<Long, E> biConsumer);
+
+	public <N extends Number, E extends Exception> List<N>
+		typeParametersAndBoundsMethod(
+			BiFunction<Long, N, E> biFunction, BiConsumer<Long, N> biConsumer);
+
+	public
+		<N extends Number & ObjIntConsumer, E extends Exception & Serializable>
+			List<N> typeParametersAndMultipleBoundsMethod(
+				BiFunction<Long, N, E> biFunction,
+				BiConsumer<Long, N> biConsumer);
 
 }

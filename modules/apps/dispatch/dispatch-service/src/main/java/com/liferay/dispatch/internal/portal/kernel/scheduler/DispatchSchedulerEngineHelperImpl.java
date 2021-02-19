@@ -15,7 +15,7 @@
 package com.liferay.dispatch.internal.portal.kernel.scheduler;
 
 import com.liferay.dispatch.portal.kernel.scheduler.ScheduledTaskDispatchTrigger;
-import com.liferay.dispatch.portal.kernel.scheduler.ScheduledTaskDispatchTriggerHelper;
+import com.liferay.dispatch.portal.kernel.scheduler.DispatchSchedulerEngineHelper;
 import com.liferay.dispatch.model.DispatchTriggerModel;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -39,9 +39,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Matija Petanjek
  */
-@Component(service = ScheduledTaskDispatchTriggerHelper.class)
-public class ScheduledTaskDispatchTriggerHelperImpl
-	implements ScheduledTaskDispatchTriggerHelper {
+@Component(service = DispatchSchedulerEngineHelper.class)
+public class DispatchSchedulerEngineHelperImpl
+	implements DispatchSchedulerEngineHelper {
 
 	public int getScheduledTaskDispatchTriggerCount() {
 		int count = 0;
@@ -170,7 +170,7 @@ public class ScheduledTaskDispatchTriggerHelperImpl
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ScheduledTaskDispatchTriggerHelperImpl.class);
+		DispatchSchedulerEngineHelperImpl.class);
 
 	@Reference
 	private MessageBus _messageBus;

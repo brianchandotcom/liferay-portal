@@ -100,8 +100,8 @@ public class DLViewFileEntryMetadataSetsManagementToolbarDisplayContext
 	}
 
 	@Override
-	public Boolean isSelectable() {
-		return false;
+	public String getSearchContainerId() {
+		return "ddmStructures";
 	}
 
 	@Override

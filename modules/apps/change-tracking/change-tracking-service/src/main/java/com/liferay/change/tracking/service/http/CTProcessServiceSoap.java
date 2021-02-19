@@ -63,23 +63,6 @@ import java.rmi.RemoteException;
 @Deprecated
 public class CTProcessServiceSoap {
 
-	public static int getCTProcessesCount(
-			long companyId, long userId, String keywords, int status)
-		throws RemoteException {
-
-		try {
-			int returnValue = CTProcessServiceUtil.getCTProcessesCount(
-				companyId, userId, keywords, status);
-
-			return returnValue;
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			throw new RemoteException(exception.getMessage());
-		}
-	}
-
 	public static com.liferay.change.tracking.model.CTProcessSoap[]
 			getCTProcesses(
 				long companyId, long userId, String keywords, int status,
@@ -97,6 +80,23 @@ public class CTProcessServiceSoap {
 
 			return com.liferay.change.tracking.model.CTProcessSoap.toSoapModels(
 				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static int getCTProcessesCount(
+			long companyId, long userId, String keywords, int status)
+		throws RemoteException {
+
+		try {
+			int returnValue = CTProcessServiceUtil.getCTProcessesCount(
+				companyId, userId, keywords, status);
+
+			return returnValue;
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

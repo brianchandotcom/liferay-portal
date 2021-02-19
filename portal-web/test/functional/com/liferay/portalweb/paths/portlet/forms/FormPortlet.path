@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUBMIT_BUTTON</td>
+	<td>//button[@type='submit' and @id='ddm-form-submit']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FORM_PAGE</td>
 	<td>//*[contains(@class,'nav-link') and contains(.,'${key_formPageName}')]</td>
 	<td></td>

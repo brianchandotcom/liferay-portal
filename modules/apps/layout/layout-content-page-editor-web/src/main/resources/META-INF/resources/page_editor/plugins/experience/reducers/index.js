@@ -15,7 +15,6 @@
 import {
 	CREATE_SEGMENTS_EXPERIENCE,
 	DELETE_SEGMENTS_EXPERIENCE,
-	DUPLICATE_SEGMENTS_EXPERIENCE,
 	SELECT_SEGMENTS_EXPERIENCE,
 	UPDATE_SEGMENTS_EXPERIENCE,
 	UPDATE_SEGMENTS_EXPERIENCES_LIST,
@@ -40,9 +39,6 @@ const reducer = (state, action) => {
 			break;
 		case DELETE_SEGMENTS_EXPERIENCE:
 			nextState = deleteExperienceReducer(nextState, action.payload);
-			break;
-		case DUPLICATE_SEGMENTS_EXPERIENCE:
-			nextState = createExperienceReducer(nextState, action.payload);
 			break;
 		case SELECT_SEGMENTS_EXPERIENCE:
 			nextState = selectExperienceReducer(nextState, action.payload);

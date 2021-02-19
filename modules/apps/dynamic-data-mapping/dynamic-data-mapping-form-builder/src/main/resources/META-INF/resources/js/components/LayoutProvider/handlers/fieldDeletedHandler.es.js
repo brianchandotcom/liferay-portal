@@ -74,6 +74,13 @@ export const removeField = (
 					nestedFields,
 					rows,
 				};
+			})
+			.filter(({nestedFields = [], type}) => {
+				if (type === FIELD_TYPE_FIELDSET && !nestedFields.length) {
+					return false;
+				}
+
+				return true;
 			});
 
 	return visitor.mapColumns((column) => ({

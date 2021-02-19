@@ -2315,6 +2315,11 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				project, JavaPlugin.COMPILE_CLASSPATH_CONFIGURATION_NAME,
 				false);
 
+			_configureDependenciesReleaseAPI(
+				project, JavaPlugin.COMPILE_CONFIGURATION_NAME);
+			_configureDependenciesReleaseAPI(
+				project, JavaPlugin.COMPILE_CLASSPATH_CONFIGURATION_NAME);
+
 			_configureDependenciesGroupPortal(
 				project, appBndFile, JavaPlugin.COMPILE_CONFIGURATION_NAME,
 				publishing);
@@ -2431,44 +2436,20 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 						return;
 					}
 
-					String name = externalModuleDependency.getName();
 					String version = externalModuleDependency.getVersion();
 
-					String newNotation = null;
-
-					if ((Objects.equals(name, "release.dxp.api") ||
-						 Objects.equals(name, "release.portal.api")) &&
-						(version == null)) {
-
-						String releaseAPIVersion = GradleUtil.getProperty(
-							project, name + ".version", (String)null);
-
-						StringBuilder sb = new StringBuilder();
-
-						sb.append(group);
-						sb.append(':');
-						sb.append(name);
-						sb.append(':');
-
-						if (Validator.isNull(releaseAPIVersion)) {
-							sb.append('+');
-						}
-						else {
-							sb.append(releaseAPIVersion);
-						}
-
-						newNotation = sb.toString();
-					}
-					else if ((version == null) || !version.equals("default")) {
+					if ((version == null) || !version.equals("default")) {
 						return;
 					}
+
+					String name = externalModuleDependency.getName();
+
+					String newNotation = null;
 
 					String compatVersion = GradleUtil.getProperty(
 						project, "build.compat.version." + name, (String)null);
 
-					if (Validator.isNull(newNotation) &&
-						Validator.isNotNull(compatVersion)) {
-
+					if (Validator.isNotNull(compatVersion)) {
 						boolean fixDeliveryMethodCore = false;
 
 						if (appBndFile != null) {
@@ -2528,6 +2509,103 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 					}
 
 					StringBuilder sb = new StringBuilder();
+
+					sb.append(group);
+					sb.append(':');
+					sb.append(name);
+					sb.append(':');
+
+					if (Validator.isNotNull(version)) {
+						sb.append(version);
+					}
+
+					String oldNotation = sb.toString();
+
+					if (logger.isLifecycleEnabled()) {
+						logger.lifecycle(
+							"Compiling files of {} with '{}' in place of '{}'",
+							project, newNotation, oldNotation);
+					}
+
+					ResolutionStrategy resolutionStrategy =
+						configuration.getResolutionStrategy();
+
+					DependencySubstitutions dependencySubstitutions =
+						resolutionStrategy.getDependencySubstitution();
+
+					DependencySubstitutions.Substitution substitution =
+						dependencySubstitutions.substitute(
+							dependencySubstitutions.module(oldNotation));
+
+					substitution.with(
+						dependencySubstitutions.module(newNotation));
+				}
+
+			});
+	}
+
+	private void _configureDependenciesReleaseAPI(
+		final Project project, String configurationName) {
+
+		final Logger logger = project.getLogger();
+
+		final Configuration configuration = GradleUtil.fetchConfiguration(
+			project, configurationName);
+
+		if (configuration == null) {
+			return;
+		}
+
+		DependencySet dependencySet = configuration.getAllDependencies();
+
+		dependencySet.withType(
+			ExternalModuleDependency.class,
+			new Action<ExternalModuleDependency>() {
+
+				@Override
+				public void execute(
+					ExternalModuleDependency externalModuleDependency) {
+
+					String group = externalModuleDependency.getGroup();
+
+					if (!group.equals("com.liferay.portal")) {
+						return;
+					}
+
+					String version = externalModuleDependency.getVersion();
+
+					if (version != null) {
+						return;
+					}
+
+					String name = externalModuleDependency.getName();
+
+					if (!Objects.equals(name, "release.dxp.api") &&
+						!Objects.equals(name, "release.portal.api")) {
+
+						return;
+					}
+
+					String releaseAPIVersion = GradleUtil.getProperty(
+						project, name + ".version", (String)null);
+
+					StringBuilder sb = new StringBuilder();
+
+					sb.append(group);
+					sb.append(':');
+					sb.append(name);
+					sb.append(':');
+
+					if (Validator.isNull(releaseAPIVersion)) {
+						sb.append('+');
+					}
+					else {
+						sb.append(releaseAPIVersion);
+					}
+
+					String newNotation = sb.toString();
+
+					sb.setLength(0);
 
 					sb.append(group);
 					sb.append(':');

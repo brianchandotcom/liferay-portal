@@ -46,6 +46,8 @@ import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.User;
@@ -413,8 +415,21 @@ public class AccountResourceImpl
 			return 0;
 		}
 
-		Region region = _regionLocalService.getRegion(
+		Region region = _regionLocalService.fetchRegion(
 			country.getCountryId(), accountAddress.getRegionISOCode());
+
+		if (region == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					String.format(
+						"Unable to find region with ISO code %s for country " +
+							"ID %d",
+						accountAddress.getRegionISOCode(),
+						country.getCountryId()));
+			}
+
+			return 0;
+		}
 
 		return region.getRegionId();
 	}
@@ -489,9 +504,22 @@ public class AccountResourceImpl
 			}
 
 			for (AccountAddress accountAddress : accountAddresses) {
-				Country country = _countryService.getCountryByA2(
+				Country country = _countryService.fetchCountryByA2(
 					commerceAccount.getCompanyId(),
 					accountAddress.getCountryISOCode());
+
+				if (country == null) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							String.format(
+								"Unable to import account address with " +
+									"country ISO code %s and account name %s",
+								account.getName(),
+								accountAddress.getCountryISOCode()));
+					}
+
+					continue;
+				}
 
 				CommerceAddress commerceAddress =
 					_commerceAddressService.addCommerceAddress(
@@ -586,6 +614,9 @@ public class AccountResourceImpl
 
 		return commerceAccount;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AccountResourceImpl.class);
 
 	private static final EntityModel _entityModel = new AccountEntityModel();
 

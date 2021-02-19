@@ -1174,6 +1174,15 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"	
+	@ignore = "true"	
+	@priority = "5"	
+	test VerifyDefaultLanguageIsFirstShown {	
+		property portal.acceptance = "false";	
+
+		// TODO LPS-123538 VerifyDefaultLanguageIsFirstShown pending implementation	
+	}
+
 	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
 	@priority = "4"
 	test VerifyNestedFieldsetEditionOnStructure {

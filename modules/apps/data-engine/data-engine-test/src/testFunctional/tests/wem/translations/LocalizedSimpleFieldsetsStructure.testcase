@@ -841,6 +841,97 @@ definition {
 	}
 
 	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
+	@priority = "5"
+	test TranslateStructureWithFieldsetAndNested {
+		property portal.acceptance = "false";
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DataEngine.gotoNewFieldset(fieldsetName = "fieldset name");
+
+		DataEngine.addFields(fieldNameList = "Text");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "Text Test",
+			fieldsetModal = "true");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Text Test Second",
+			fieldName = "Text",
+			targetFieldLabel = "Text Test");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Text Test Third",
+			fieldName = "Text",
+			targetFieldLabel = "Text Test Second");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Text Test Fourth",
+			fieldName = "Text",
+			targetFieldLabel = "Text Test Third");
+
+		for (var locale : list "pt-BR,ca-ES,de-DE") {
+			PortletEntry.changeLocale(
+				locale = "${locale}",
+				modal = "true");
+
+			DataEngine.editFieldLabel(
+				fieldFieldLabel = "Text Test",
+				fieldFieldLabelEdit = "Text Test ${locale}",
+				fieldsetModal = "true");
+
+			DataEngine.editFieldLabel(
+				fieldFieldLabel = "Text Test Second",
+				fieldFieldLabelEdit = "Text Test Second ${locale}",
+				fieldsetModal = "true");
+
+			DataEngine.editFieldLabel(
+				fieldFieldLabel = "Text Test Third",
+				fieldFieldLabelEdit = "Text Test Third ${locale}",
+				fieldsetModal = "true");
+
+			DataEngine.editFieldLabel(
+				fieldFieldLabel = "Text Test Fourth",
+				fieldFieldLabelEdit = "Text Test Fourth ${locale}",
+				fieldsetModal = "true");
+		}
+
+		Click(locator1 = "Modal#SAVE_BUTTON");
+
+		DragAndDrop.javaScriptDragAndDropToBottom(
+			key_fieldName = "fieldset name",
+			locator1 = "Sidebar#ADD_FIELD_NAME",
+			locator2 = "DDMEditStructure#FORM_FIELD_DROP_TARGET");
+
+		for (var locale : list "pt-BR,ca-ES,de-DE") {
+			PortletEntry.changeLocale(locale = "${locale}");
+
+			AssertElementPresent(
+				key_fieldLabel = "Text Test ${locale}",
+				locator1 = "FormFields#LABEL");
+
+			AssertElementPresent(
+				key_fieldLabel = "Text Test Second ${locale}",
+				locator1 = "FormFields#LABEL");
+
+			AssertElementPresent(
+				key_fieldLabel = "Text Test Third ${locale}",
+				locator1 = "FormFields#LABEL");
+
+			AssertElementPresent(
+				key_fieldLabel = "Text Test Fourth ${locale}",
+				locator1 = "FormFields#LABEL");
+		}
+	}
+
+	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
 	@priority = "4"
 	test VerifyNestedFieldsetEditionOnStructure {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");

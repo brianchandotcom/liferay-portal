@@ -13,7 +13,7 @@
  */
 
 import {ClassicEditor} from 'frontend-editor-ckeditor-web';
-import React from 'react';
+import React, {useState} from 'react';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 import {useSyncValue} from '../hooks/useSyncValue.es';
@@ -33,6 +33,8 @@ const RichText = ({
 		value ? value : predefinedValue
 	);
 
+	const [dirty, setDirty] = useState(false);
+
 	return (
 		<FieldBase
 			{...otherProps}
@@ -50,8 +52,12 @@ const RichText = ({
 				onChange={(data) => {
 					if (currentValue !== data) {
 						setCurrentValue(data);
+						setDirty(true);
 
 						onChange({}, data);
+					}
+					else if (!dirty) {
+						CKEDITOR.instances[name].resetUndo();
 					}
 				}}
 				onMode={({editor}) => {

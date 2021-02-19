@@ -32,9 +32,10 @@ import com.liferay.portal.tools.service.builder.test.service.base.GenericMethods
 public class GenericMethodsEntryServiceImpl
 	extends GenericMethodsEntryServiceBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use <code>com.liferay.portal.tools.service.builder.test.service.GenericMethodsEntryServiceUtil</code> to access the generic methods entry remote service.
 	 */
+
 }

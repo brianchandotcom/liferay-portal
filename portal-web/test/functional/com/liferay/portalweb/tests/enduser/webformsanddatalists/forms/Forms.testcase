@@ -381,7 +381,7 @@ definition {
 
 	@priority = "5"
 	test AddFormInGlobal {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "Forms#AddFormInGlobal";
 		property testray.component.names = "Training";
@@ -1076,7 +1076,7 @@ definition {
 	@description = "This is a use case for LPS-68418."
 	@priority = "3"
 	test ConfigureAutosave {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "Forms#ConfigureAutosave";
 
@@ -1682,7 +1682,7 @@ definition {
 	@description = "This is a use case for LPS-50757."
 	@priority = "4"
 	test EditAllFormFieldsTypesUsedBySystemSettings {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "Forms#EditAllFormFieldsTypesUsedBySystemSettings";
 
@@ -1872,7 +1872,7 @@ definition {
 	@description = "This is a use case for LPS-59749"
 	@priority = "3"
 	test EditFormsConfigurationViaSystemSettings {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "Forms#EditFormsConfigurationViaSystemSettings";
 
@@ -2017,7 +2017,7 @@ definition {
 	@description = "This is a use case for LPS-78697."
 	@priority = "4"
 	test EditTranslatedGridField {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "Forms#EditTranslatedGridField";
 
@@ -3068,7 +3068,7 @@ definition {
 	@priority = "5"
 	test SubmitFormContainingCaptchaAndViewTextFieldValue {
 		property captcha.enabled = "true";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "Forms#SubmitFormContainingCaptchaAndViewTextFieldValue";
 
@@ -3519,7 +3519,7 @@ definition {
 
 	@priority = "2"
 	test SubmitFormWithCustomizedSubmitLabel {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "Forms#SubmitFormWithCustomizedSubmitLabel";
 
@@ -4463,7 +4463,7 @@ definition {
 
 	@priority = "4"
 	test SubmitFormWithUploadField {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "Forms#SubmitFormWithUploadField";
 
@@ -4533,7 +4533,7 @@ definition {
 
 	@priority = "4"
 	test SubmitFormWithUploadFieldAsGuestUser {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "Forms#SubmitFormWithUploadFieldAsGuestUser";
 
@@ -4612,7 +4612,7 @@ definition {
 	@description = "This is a use case for LPS-125462."
 	@priority = "5"
 	test SubmitFormWithUploadFieldAsNewUser {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property portal.upstream = "true";
 
 		Navigator.openURL();
@@ -4800,7 +4800,7 @@ definition {
 	@description = "This is a use case for LPS-125499."
 	@priority = "2"
 	test UploadFileWithInvalidSizeAsGuestUser {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "Forms#UploadFileWithInvalidSizeAsGuestUser";
 

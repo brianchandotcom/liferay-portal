@@ -38,7 +38,7 @@ definition {
 	@description = "This is a use case for LPS-80771."
 	@priority = "5"
 	test ChangeFieldTypeThatBelongsToARule {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property portal.upstream = "true";
 
 		Navigator.openURL();
@@ -103,7 +103,7 @@ definition {
 	@description = "This is a use case for LPS-80771."
 	@priority = "5"
 	test ChangeFieldTypeThatBelongsToCalculatorExpression {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property portal.upstream = "true";
 
 		Navigator.openURL();
@@ -186,7 +186,7 @@ definition {
 	@description = "This is a use case for LPS-70446."
 	@priority = "5"
 	test ConfigureAutofillRule {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormRules#ConfigureAutofillRule";
 
@@ -307,7 +307,7 @@ definition {
 	@description = "This is a use case for LPS-71592."
 	@priority = "5"
 	test ConfigureCalculateRule {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormRules#ConfigureCalculateRule";
 
@@ -602,7 +602,7 @@ definition {
 
 	@priority = "5"
 	test ConfigureShowRuleUsingAndCondition {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormRules#ConfigureShowRuleUsingAndCondition";
 
@@ -726,7 +726,7 @@ definition {
 
 	@priority = "4"
 	test ConfigureUserBelongsToRule {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormRules#ConfigureUserBelongsToRule";
 
@@ -960,7 +960,7 @@ definition {
 	@description = "This is a use case for LPS-79095."
 	@priority = "5"
 	test EditRule {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormRules#EditRule";
 

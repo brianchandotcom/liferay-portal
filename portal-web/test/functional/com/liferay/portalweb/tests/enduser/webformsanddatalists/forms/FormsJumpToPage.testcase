@@ -34,7 +34,7 @@ definition {
 	@description = "This is a use case for LPS-68227."
 	@priority = "4"
 	test ViewFormRulesSummary {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormsJumpToPage#ViewFormRulesSummary";
 
@@ -621,7 +621,7 @@ definition {
 	@description = "This is a use case for LPS-68227."
 	@priority = "4"
 	test ViewRuleAfterPageNameChange {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormsJumpToPage#ViewRuleAfterPageNameChange";
 

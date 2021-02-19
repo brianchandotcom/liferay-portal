@@ -39,7 +39,7 @@ definition {
 
 	@priority = "5"
 	test ConfigureAutocompleteWithTextField {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormsDataProvider#ConfigureAutocompleteWithTextField";
 
@@ -208,7 +208,7 @@ definition {
 
 	@priority = "5"
 	test ConfigureWithSelectField {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormsDataProvider#ConfigureWithSelectField";
 
@@ -312,7 +312,7 @@ definition {
 	@description = "This is a use case for LPS-75682."
 	@priority = "5"
 	test ViewDataRetrievedForGuestUser {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormsDataProvider#ViewDataRetrievedForGuestUser";
 

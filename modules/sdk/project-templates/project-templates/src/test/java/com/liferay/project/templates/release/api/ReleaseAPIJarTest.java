@@ -100,7 +100,8 @@ public class ReleaseAPIJarTest implements BaseReleaseAPIJarTestCase {
 
 		List<String> missingClassFileStrings = new ArrayList<>();
 
-		List<String> ignoreStrings = getIgnoreStrings(releaseApiJarFile.getName());
+		List<String> ignoreStrings = getIgnoreStrings(
+			releaseApiJarFile.getName());
 
 		for (String classFileString : classFileStrings) {
 			if (!classFileString.contains("$") &&

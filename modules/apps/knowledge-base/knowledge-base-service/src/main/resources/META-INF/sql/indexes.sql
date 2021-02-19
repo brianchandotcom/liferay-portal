@@ -30,6 +30,7 @@ create index IX_FD56A55D on KBComment (userId, classNameId, classPK);
 create index IX_6CB72942 on KBComment (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_791D1844 on KBComment (uuid_[$COLUMN_LENGTH:75$], groupId);
 
+create index IX_F32A081D on KBFolder (companyId);
 create index IX_3FA4415C on KBFolder (groupId, parentKBFolderId, name[$COLUMN_LENGTH:75$]);
 create index IX_729A89FA on KBFolder (groupId, parentKBFolderId, urlTitle[$COLUMN_LENGTH:75$]);
 create index IX_32D1105F on KBFolder (uuid_[$COLUMN_LENGTH:75$], companyId);

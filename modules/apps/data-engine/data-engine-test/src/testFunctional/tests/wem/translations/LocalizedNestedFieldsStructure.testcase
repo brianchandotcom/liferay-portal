@@ -1024,71 +1024,57 @@ definition {
 	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"
 	@priority = "4"
 	test VerifyDefaultLanguageIsFirstShown {
-		property portal.acceptance = "false";
-
-		var structureTitle = "Structure Title";
-		var structureTitlePT = "Titulo da Estrutura";
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(
-			structureDescription = "I'm a structure test",
-			structureName = "${structureTitle}");
+		WebContentStructures.addCP(structureName = "WC Structure Name");
 
 		DataEngine.addField(
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
+			fieldFieldLabel = "Link to Page",
+			fieldName = "Link to Page");
 
 		DataEngine.addFieldNested(
 			fieldFieldLabel = "Numeric",
 			fieldName = "Numeric",
-			targetFieldLabel = "Text");
-
-		Button.clickSave();
-
-		WebContentNavigator.gotoEditStructure(structureName = "${structureTitle}");
+			targetFieldLabel = "Link to Page");
 
 		WebContentStructures.addLocalization(
-			locale = "pt_BR",
-			localization1Name = "${structureTitlePT}");
+			locale = "pt-BR",
+			localization1Name = "Nome da Estrutura WC");
 
-		FormViewBuilder.editFieldLabel(
-			fieldLabel = "Fields Group",
-			label = "Grupo de Campos");
+		DataEngine.editFieldsGroupLabel(
+			fieldsGroupLabel = "Fields Group",
+			fieldsGroupLabelEdit = "Grupo de Campos");
 
-		FormViewBuilder.editFieldLabel(
-			fieldLabel = "Text",
-			label = "Texto");
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Link to Page",
+			fieldFieldLabelEdit = "Link para a página");
 
-		FormViewBuilder.editFieldLabel(
-			fieldLabel = "Numeric",
-			label = "Numero");
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Numeric",
+			fieldFieldLabelEdit = "Numérica");
 
-		Button.clickSave();
+		WebContentStructures.saveCP();
 
-		WebContentNavigator.gotoEditStructure(structureName = "${structureTitle}");
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-		AssertTextEquals(
-			locator1 = "Button#LOCALIZATION_GENERIC",
-			value1 = "en-US");
+		PortletEntry.viewLocale(locale = "en-US");
 
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
-			value1 = "${structureTitle}");
+			value1 = "WC Structure Name");
 
-		AssertTextEquals(
-			locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP_FIRST",
-			value1 = "Fields Group");
+		AssertVisible(
+			key_fieldFieldLabel = "Fields Group",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
-		AssertTextEquals(
-			locator1 = "DataEngineBuilder#NESTED_TEXT_STRUCTURE",
-			value1 = "Text");
-
-		AssertTextEquals(
-			locator1 = "DataEngineBuilder#NESTED_NUMERIC_STRUCTURE",
-			value1 = "Numeric");
+		for (var fieldFieldLabel : list "Link to Page,Numeric") {
+			AssertVisible(
+				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldsGroupLabel = "Fields Group",
+				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+		}
 	}
 
 }

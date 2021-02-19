@@ -67,14 +67,6 @@ public class TestrayServer {
 		return _url;
 	}
 
-	public void setAdminUserName(String adminUserName) {
-		_adminUserName = adminUserName;
-	}
-
-	public void setAdminUserPassword(String adminUserPassword) {
-		_adminUserPassword = adminUserPassword;
-	}
-
 	private synchronized void _initTestrayProjects() {
 		if ((_testrayProjectsByID != null) &&
 			(_testrayProjectsByName != null)) {
@@ -127,8 +119,6 @@ public class TestrayServer {
 
 	private static final int _DELTA = 25;
 
-	private String _adminUserName;
-	private String _adminUserPassword;
 	private Map<Integer, TestrayProject> _testrayProjectsByID;
 	private Map<String, TestrayProject> _testrayProjectsByName;
 	private final URL _url;

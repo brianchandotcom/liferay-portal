@@ -99,7 +99,7 @@ public class TestrayProject {
 
 		while (true) {
 			try {
-				String projectAPIURL = JenkinsResultsParserUtil.combine(
+				String routineAPIURL = JenkinsResultsParserUtil.combine(
 					String.valueOf(testrayServer.getURL()),
 					"/home/-/testray/routines.json?cur=",
 					String.valueOf(current), "&delta=", String.valueOf(_DELTA),
@@ -107,7 +107,7 @@ public class TestrayProject {
 					String.valueOf(getID()));
 
 				JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-					projectAPIURL, true);
+					routineAPIURL, true);
 
 				JSONArray dataJSONArray = jsonObject.getJSONArray("data");
 

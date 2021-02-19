@@ -350,15 +350,6 @@ public class TestrayImporter {
 		if (testrayServer != null) {
 			_testrayServer = testrayServer;
 
-			_testrayServer.setAdminUserName(
-				JenkinsResultsParserUtil.getProperty(
-					job.getJobProperties(), "testray.admin.user.name",
-					job.getJobName(), _topLevelBuild.getTestSuiteName()));
-			_testrayServer.setAdminUserPassword(
-				JenkinsResultsParserUtil.getProperty(
-					job.getJobProperties(), "testray.admin.user.password",
-					job.getJobName(), _topLevelBuild.getTestSuiteName()));
-
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
 					"Testray Server ", String.valueOf(_testrayServer.getURL()),

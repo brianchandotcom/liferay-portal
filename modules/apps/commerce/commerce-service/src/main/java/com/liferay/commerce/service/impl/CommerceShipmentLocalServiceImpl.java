@@ -284,7 +284,7 @@ public class CommerceShipmentLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public CommerceShipment reprocessShipment(long commerceShipmentId)
+	public CommerceShipment reprocessCommerceShipment(long commerceShipmentId)
 		throws PortalException {
 
 		CommerceShipment commerceShipment =

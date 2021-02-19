@@ -294,14 +294,14 @@ public class CommerceShipmentServiceImpl
 	}
 
 	@Override
-	public CommerceShipment reprocessShipment(long commerceShipmentId)
+	public CommerceShipment reprocessCommerceShipment(long commerceShipmentId)
 		throws PortalException {
 
 		_portletResourcePermission.contains(
 			getPermissionChecker(), null,
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
 
-		return commerceShipmentLocalService.reprocessShipment(
+		return commerceShipmentLocalService.reprocessCommerceShipment(
 			commerceShipmentId);
 	}
 

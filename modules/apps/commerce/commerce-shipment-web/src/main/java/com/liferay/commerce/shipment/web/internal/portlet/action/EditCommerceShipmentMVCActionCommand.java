@@ -374,7 +374,7 @@ public class EditCommerceShipmentMVCActionCommand extends BaseMVCActionCommand {
 		int status = ParamUtil.getInteger(actionRequest, "transitionName");
 
 		if (status == CommerceShipmentConstants.SHIPMENT_STATUS_PROCESSING) {
-			return _commerceShipmentService.reprocessShipment(
+			return _commerceShipmentService.reprocessCommerceShipment(
 				commerceShipmentId);
 		}
 

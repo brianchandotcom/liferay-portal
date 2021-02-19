@@ -123,7 +123,7 @@ definition {
 			AssertElementNotPresent(locator1 = "FormFields#FIELD_ADD");
 		}
 		else {
-			AssertElementNotPresent(locator1 = "Button#SUBMIT");
+			AssertElementNotPresent(locator1 = "FormPortlet#SUBMIT_BUTTON");
 
 			AssertElementNotPresent(locator1 = "FormFields#FIELD_ADD");
 		}

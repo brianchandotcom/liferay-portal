@@ -496,7 +496,7 @@ definition {
 			fieldName = "${fieldName}",
 			fieldValue = "${fieldValue}");
 
-		AssertElementNotPresent(locator1 = "Button#SUBMIT");
+		AssertElementNotPresent(locator1 = "FormPortlet#SUBMIT_BUTTON");
 	}
 
 	macro publishForm {

@@ -32,6 +32,41 @@ definition {
 		}
 	}
 
+	@priority = "5"
+	test ActivateStagingForSiteWithTheme {
+		property test.name.skip.portal.instance = "Theme#ActivateStagingForSiteWithTheme";
+
+		FileInstall.deployFileOnServer(liferayDependencyJars = "test-theme.war");
+
+		WaitForConsoleTextPresent(value1 = "STARTED test-theme");
+
+		User.firstLoginPG();
+
+		Page.changeSinglePageTheme(themeName = "test-theme-7-4");
+
+		Navigator.gotoBack();
+
+		Button.clickPublish();
+
+		Staging.openStagingAdmin(siteURLKey = "guest");
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		Staging.activateStagingCP(
+			pageVersioningEnabled = "true",
+			siteName = "${siteName}");
+
+		Navigator.openStagingSiteURL(defaultSite = "true");
+
+		// Workaround for LPS-110206
+
+		//Theme.viewTestThemeBackgroundColor();
+
+		Navigator.openURL();
+
+		Theme.viewTestThemeBackgroundColor();
+	}
+
 	@description = "This is a use case for LPS-98170"
 	@priority = "4"
 	test AssertAssetPriorityNotBeResetAfterPublication {
@@ -796,6 +831,54 @@ definition {
 		Team.viewCP(
 			teamDescription = "Site Team Description",
 			teamName = "Site Team Name");
+	}
+
+	// Ignore test until LPS-126081 is resolved
+
+	@ignore = "true"
+	@priority = "5"
+	test PublishThemeFromStagedToLive {
+		property test.name.skip.portal.instance = "Theme#PublishThemeFromStagedToLive";
+
+		FileInstall.deployFileOnServer(liferayDependencyJars = "test-theme.war");
+
+		WaitForConsoleTextPresent(value1 = "STARTED test-theme");
+
+		User.firstLoginPG();
+
+		Staging.openStagingAdmin(siteURLKey = "guest");
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		Staging.activateStagingCP(
+			pageVersioningEnabled = "true",
+			siteName = "${siteName}");
+
+		Navigator.openStagingSiteURL(defaultSite = "true");
+
+		Page.changeSinglePageTheme(themeName = "test-theme-7-4");
+
+		Navigator.gotoBack();
+
+		Button.clickPublish();
+
+		// Workaround for LPS-110206
+
+		//Theme.viewTestThemeBackgroundColor();
+
+		Navigator.openURL();
+
+		Theme.viewClassicThemeBackgroundColor();
+
+		Navigator.openStagingSiteURL(defaultSite = "true");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.openURL();
+
+		Theme.viewTestThemeBackgroundColor();
 	}
 
 	@description = "This is a use case for LPS-127207."

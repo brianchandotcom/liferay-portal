@@ -16,25 +16,53 @@ package com.liferay.portal.tools.service.builder.test.service.impl;
 
 import com.liferay.portal.tools.service.builder.test.service.base.GenericMethodsEntryLocalServiceBaseImpl;
 
+import java.io.Serializable;
+
+import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+import java.util.function.Consumer;
+import java.util.function.ObjIntConsumer;
+
 /**
- * The implementation of the generic methods entry local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the <code>com.liferay.portal.tools.service.builder.test.service.GenericMethodsEntryLocalService</code> interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
  * @author Brian Wing Shun Chan
- * @see GenericMethodsEntryLocalServiceBaseImpl
  */
 public class GenericMethodsEntryLocalServiceImpl
 	extends GenericMethodsEntryLocalServiceBaseImpl {
 
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Use <code>com.liferay.portal.tools.service.builder.test.service.GenericMethodsEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.tools.service.builder.test.service.GenericMethodsEntryLocalServiceUtil</code>.
-	 */
+	@Override
+	public <T> void typeParameterMethod(Consumer<T> consumer) throws Exception {
+	}
+
+	@Override
+	public <E extends Exception> void typeParameterAndBoundMethod(
+			BiConsumer<String, E> biConsumer)
+		throws E {
+	}
+
+	@Override
+	public <T, E extends Exception> List<T> typeParametersAndBoundMethod(
+		BiFunction<Long, T, E> biFunction, BiConsumer<Long, E> biConsumer) {
+
+		return null;
+	}
+
+	@Override
+	public <N extends Number, E extends Exception> List<N>
+		typeParametersAndBoundsMethod(
+			BiFunction<Long, N, E> biFunction, BiConsumer<Long, N> biConsumer) {
+
+		return null;
+	}
+
+	@Override
+	public
+		<N extends Number & ObjIntConsumer, E extends Exception & Serializable>
+			List<N> typeParametersAndMultipleBoundsMethod(
+				BiFunction<Long, N, E> biFunction,
+				BiConsumer<Long, N> biConsumer) {
+
+		return null;
+	}
+
 }

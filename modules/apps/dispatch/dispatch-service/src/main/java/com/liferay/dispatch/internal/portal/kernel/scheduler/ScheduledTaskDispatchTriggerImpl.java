@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.dispatch.internal.core.scheduler;
+package com.liferay.dispatch.internal.portal.kernel.scheduler;
 
-import com.liferay.dispatch.core.scheduler.ScheduledTaskDispatchTrigger;
+import com.liferay.dispatch.portal.kernel.scheduler.ScheduledTaskDispatchTrigger;
 import com.liferay.dispatch.model.impl.DispatchTriggerImpl;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.scheduler.StorageType;

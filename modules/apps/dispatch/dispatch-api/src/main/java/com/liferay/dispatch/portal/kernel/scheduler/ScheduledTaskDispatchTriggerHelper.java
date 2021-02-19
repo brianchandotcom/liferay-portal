@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dispatch.core.scheduler;
+package com.liferay.dispatch.portal.kernel.scheduler;
 
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;

@@ -210,23 +210,13 @@ definition {
 
 		Button.clickPublish();
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
+		PortletEntry.changeLocale(
+			fieldName = "Name",
+			locale = "es-ES");
 
-		CommerceAcceleratorsInitializer.addPortlet(portletName = "Language Selector");
-
-		LanguagePortlet.selectLanguagePG(
-			locale = "es_ES",
-			textIcon = "español-España");
-
-		CommerceAcceleratorsInitializer.viewMiniumCardName(productName = "Amortiguador");
-
-		CommerceAcceleratorsInitializer.viewMiniumCardName(productName = "U-Joint");
-
-		CommerceAcceleratorsInitializer.viewMiniumCardName(productName = "Transmission Cooler Line Assembly");
-
-		LanguagePortlet.selectLanguagePG(
-			locale = "en_US",
-			textIcon = "english-United States");
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "Amortiguador");
 	}
 
 }

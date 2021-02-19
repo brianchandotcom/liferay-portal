@@ -1639,36 +1639,32 @@ public class ServiceBuilder {
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb1 = new StringBundler();
+		StringBundler sb = new StringBundler();
 
 		for (DefaultJavaTypeVariable<?> typeParameter : typeParameters) {
-			sb1.append(typeParameter.getFullyQualifiedName());
+			sb.append(typeParameter.getFullyQualifiedName());
 
 			List<JavaType> bounds = typeParameter.getBounds();
 
 			if (ListUtil.isNotEmpty(bounds)) {
-				StringBundler sb2 = new StringBundler();
-
-				sb2.append(" extends ");
+				sb.append(" extends ");
 
 				for (JavaType bound : bounds) {
-					sb2.append(bound.getFullyQualifiedName());
-					sb2.append(
+					sb.append(bound.getFullyQualifiedName());
+					sb.append(
 						StringPool.SPACE + StringPool.AMPERSAND +
 							StringPool.SPACE);
 				}
 
-				sb2.setIndex(sb2.index() - 1);
-
-				sb1.append(sb2.toString());
+				sb.setIndex(sb.index() - 1);
 			}
 
-			sb1.append(StringPool.COMMA_AND_SPACE);
+			sb.append(StringPool.COMMA_AND_SPACE);
 		}
 
-		sb1.setIndex(sb1.index() - 1);
+		sb.setIndex(sb.index() - 1);
 
-		return StringPool.LESS_THAN + sb1.toString() + StringPool.GREATER_THAN;
+		return StringPool.LESS_THAN + sb.toString() + StringPool.GREATER_THAN;
 	}
 
 	public String getVariableName(JavaField field) {

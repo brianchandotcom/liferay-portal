@@ -902,10 +902,6 @@ syncAppProperties {
 	group = "releng"
 
 	doLast {
-		if (FileUtil.exists(project, ".releng/dxp")) {
-			assert FileUtil.exists(project, "../release.profile-dxp.properties") : "Please run 'ant setup-profile-dxp'"
-		}
-
 		Properties releaseProperties = GUtil.loadProperties(new File(projectDir.parentFile, "release.properties"))
 
 		FileTree appPropertiesFileTree = fileTree(dir: projectDir, includes: [".releng/apps/**/app.properties"])
@@ -920,7 +916,7 @@ syncAppProperties {
 			}
 		}
 
-		if (FileUtil.exists(project, ".releng/dxp")) {
+		if (FileUtil.exists(project, ".releng/dxp") && FileUtil.exists(project, "../release.profile-dxp.properties")) {
 			releaseProperties = GUtil.loadProperties(new File(projectDir.parentFile, "release.profile-dxp.properties"))
 
 			appPropertiesFileTree = fileTree(dir: projectDir, includes: [".releng/dxp/**/app.properties"])

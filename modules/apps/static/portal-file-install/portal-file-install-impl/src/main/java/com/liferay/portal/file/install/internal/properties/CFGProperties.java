@@ -117,23 +117,31 @@ public class CFGProperties implements ConfigurationProperties {
 		StringBundler sb = new StringBundler();
 
 		if (value instanceof Collection) {
-			for (Object object : (Collection)value) {
+			Collection<?> collection = (Collection<?>)value;
+
+			for (Object object : collection) {
 				sb.append(object.toString());
 				sb.append(StringPool.COMMA);
 			}
 
-			sb.setIndex(sb.index() - 1);
+			if (!collection.isEmpty()) {
+				sb.setIndex(sb.index() - 1);
+			}
 		}
 		else {
 			Class<?> clazz = value.getClass();
 
 			if (clazz.isArray()) {
-				for (Object object : (Object[])value) {
+				Object[] array = (Object[])value;
+
+				for (Object object : array) {
 					sb.append(object.toString());
 					sb.append(StringPool.COMMA);
 				}
 
-				sb.setIndex(sb.index() - 1);
+				if (array.length > 0) {
+					sb.setIndex(sb.index() - 1);
+				}
 			}
 			else {
 				sb.append(value.toString());
@@ -174,7 +182,9 @@ public class CFGProperties implements ConfigurationProperties {
 			}
 		}
 
-		sb.setIndex(sb.index() - 1);
+		if (sb.index() > 0) {
+			sb.setIndex(sb.index() - 1);
+		}
 
 		writer.write(sb.toString());
 	}

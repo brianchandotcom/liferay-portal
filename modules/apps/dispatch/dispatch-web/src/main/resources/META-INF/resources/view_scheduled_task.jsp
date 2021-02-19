@@ -17,23 +17,23 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ScheduledTaskDispatchTriggerDisplayContext scheduledTaskDispatchTriggerDisplayContext = (ScheduledTaskDispatchTriggerDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+ScheduledJobDispatchTriggerDisplayContext scheduledJobDispatchTriggerDisplayContext = (ScheduledJobDispatchTriggerDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-PortletURL portletURL = scheduledTaskDispatchTriggerDisplayContext.getPortletURL();
+PortletURL portletURL = scheduledJobDispatchTriggerDisplayContext.getPortletURL();
 
 portletURL.setParameter("searchContainerId", "liferayScheduledTasks");
 portletURL.setParameter("tabs1", "scheduled-task");
 %>
 
 <clay:navigation-bar
-	navigationItems="<%= scheduledTaskDispatchTriggerDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= scheduledJobDispatchTriggerDisplayContext.getNavigationItems() %>"
 />
 
 <div id="<portlet:namespace />scheduledTaskContainer">
 	<div class="closed container" id="<portlet:namespace />infoPanelId">
 		<liferay-ui:search-container
 			id="scheduledTasks"
-			searchContainer="<%= scheduledTaskDispatchTriggerDisplayContext.getSearchContainer() %>"
+			searchContainer="<%= scheduledJobDispatchTriggerDisplayContext.getSearchContainer() %>"
 		>
 			<liferay-ui:search-container-row
 				className="com.liferay.dispatch.portal.kernel.scheduler.ScheduledJobDispatchTrigger"
@@ -61,7 +61,7 @@ portletURL.setParameter("tabs1", "scheduled-task");
 
 				<liferay-ui:search-container-column-text
 					name="next-fire-date"
-					value="<%= scheduledTaskDispatchTriggerDisplayContext.getNextFireDateString(scheduledJobDispatchTrigger) %>"
+					value="<%= scheduledJobDispatchTriggerDisplayContext.getNextFireDateString(scheduledJobDispatchTrigger) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
@@ -70,7 +70,7 @@ portletURL.setParameter("tabs1", "scheduled-task");
 				>
 
 					<%
-					TriggerState triggerState = scheduledTaskDispatchTriggerDisplayContext.getTriggerState(scheduledJobDispatchTrigger);
+					TriggerState triggerState = scheduledJobDispatchTriggerDisplayContext.getTriggerState(scheduledJobDispatchTrigger);
 					%>
 
 					<h6 class="<%= (triggerState == TriggerState.NORMAL) ? "text-success" : "text-info" %>">

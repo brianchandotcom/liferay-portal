@@ -38,6 +38,9 @@ public class OAuth2ProviderRESTEndpointConstants {
 	public static final String PROPERTY_KEY_CLIENT_REMOTE_HOST =
 		"client.remote.host";
 
+	public static final String PROPERTY_KEY_CLIENT_TRUSTED_APPLICATION =
+		"trusted_application";
+
 	public static final String PROPERTY_KEY_COMPANY_ID = "company.id";
 
 }

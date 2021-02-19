@@ -54,8 +54,8 @@ definition {
 	}
 
 	test CreateNewSpecificationOptions {
-		property environment.acceptance = "quarantine";
-		property portal.acceptance = "quarantine";
+		property environment.acceptance = "true";
+		property portal.acceptance = "true";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

@@ -75,6 +75,13 @@ public class ComplexQueryBuilderImpl implements ComplexQueryBuilder {
 	}
 
 	@Override
+	public Query buildPart(ComplexQueryPart complexQueryPart) {
+		Build build = new Build(null, null);
+
+		return build.getQuery(complexQueryPart);
+	}
+
+	@Override
 	public ComplexQueryBuilder root(BooleanQuery booleanQuery) {
 		_booleanQuery = booleanQuery;
 

@@ -31,6 +31,7 @@ public class ComplexQueryPartImpl implements ComplexQueryPart {
 		_boost = complexQueryPartImpl._boost;
 		_disabled = complexQueryPartImpl._disabled;
 		_field = complexQueryPartImpl._field;
+		_rootClause = complexQueryPartImpl._rootClause;
 		_name = complexQueryPartImpl._name;
 		_occur = complexQueryPartImpl._occur;
 		_parent = complexQueryPartImpl._parent;
@@ -87,6 +88,11 @@ public class ComplexQueryPartImpl implements ComplexQueryPart {
 	@Override
 	public boolean isDisabled() {
 		return _disabled;
+	}
+
+	@Override
+	public boolean isRootClause() {
+		return _rootClause;
 	}
 
 	public static class Builder implements ComplexQueryPartBuilder {
@@ -153,6 +159,13 @@ public class ComplexQueryPartImpl implements ComplexQueryPart {
 		}
 
 		@Override
+		public Builder rootClause(boolean rootClause) {
+			_complexQueryPartImpl._rootClause = rootClause;
+
+			return this;
+		}
+
+		@Override
 		public Builder type(String type) {
 			_complexQueryPartImpl._type = type;
 
@@ -179,6 +192,7 @@ public class ComplexQueryPartImpl implements ComplexQueryPart {
 	private String _occur;
 	private String _parent;
 	private Query _query;
+	private boolean _rootClause;
 	private String _type;
 	private String _value;
 

@@ -241,7 +241,7 @@ public class CPDefinitionOptionRelServiceImpl
 	 * @throws     PortalException
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 * 			   #searchCPDefinitionOptionRels(long, long, long, String, int,
-	 * 			   int, Sort[])
+	 * 			   int, Sort[])}
 	 */
 	@Deprecated
 	@Override

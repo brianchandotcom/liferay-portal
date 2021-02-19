@@ -218,7 +218,7 @@ public class CPOptionValueLocalServiceImpl
 	 *
 	 * @throws     PortalException
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #searchCPOptionValues(long, long, String, int, int, Sort[])
+	 *             #searchCPOptionValues(long, long, String, int, int, Sort[])}
 	 */
 	@Deprecated
 	@Override

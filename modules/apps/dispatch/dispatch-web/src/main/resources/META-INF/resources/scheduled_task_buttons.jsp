@@ -19,15 +19,15 @@
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-ScheduledTaskDispatchTrigger scheduledTaskDispatchTrigger = (ScheduledTaskDispatchTrigger)row.getObject();
+ScheduledJobDispatchTrigger scheduledJobDispatchTrigger = (ScheduledJobDispatchTrigger)row.getObject();
 %>
 
 <portlet:actionURL name="/dispatch/edit_scheduled_task_dispatch_trigger" var="editScheduledTaskURL">
 	<portlet:param name="<%= Constants.CMD %>" value="runScheduledTask" />
 	<portlet:param name="redirect" value="<%= currentURL %>" />
-	<portlet:param name="jobName" value="<%= scheduledTaskDispatchTrigger.getName() %>" />
-	<portlet:param name="groupName" value="<%= scheduledTaskDispatchTrigger.getGroupName() %>" />
-	<portlet:param name="storageType" value="<%= scheduledTaskDispatchTrigger.getStorageType().toString() %>" />
+	<portlet:param name="jobName" value="<%= scheduledJobDispatchTrigger.getName() %>" />
+	<portlet:param name="groupName" value="<%= scheduledJobDispatchTrigger.getGroupName() %>" />
+	<portlet:param name="storageType" value="<%= scheduledJobDispatchTrigger.getStorageType().toString() %>" />
 </portlet:actionURL>
 
 <aui:button href="<%= editScheduledTaskURL %>" name='<%= "runNowButton" + row.getRowId() %>' value="run-now" />

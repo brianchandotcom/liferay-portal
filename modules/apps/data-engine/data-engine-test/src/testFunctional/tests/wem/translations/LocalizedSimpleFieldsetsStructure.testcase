@@ -1175,45 +1175,20 @@ definition {
 	}
 
 	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
-	@ignore = "true"
 	@priority = "5"
 	test VerifyDefaultLanguageIsFirstShown {
-		property portal.acceptance = "false";
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		var fieldsetLabel = "New Fieldset";
+		NavItem.gotoStructures();
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
+		WebContentStructures.addCP(structureName = "WC Structure Name");
 
-		AppBuilderAdmin.switchTab(tabName = "Structures");
-
-		WebContentStructures.addCP(structureName = "WC structure name");
-
-		DataEngine.addFieldsets(
-			createNewFieldset = "true",
+		DataEngine.createNewFieldset(
 			fieldNameList = "Text",
-			fieldsetLabel = "${fieldsetLabel}",
-			fieldsetName = "${fieldsetLabel}");
+			fieldsetName = "Fieldset Name",
+			localeList = "pt-BR");
 
-		DataEngine.gotoFieldsetItemEllipsis(fieldsetName = "${fieldsetLabel}");
-
-		MenuItem.click(menuItem = "Edit");
-
-		PortletEntry.changeLocaleInModal(locale = "pt-BR");
-
-		Type(
-			locator1 = "FormViewBuilder#FIELD_SET_NAME",
-			value1 = "Nome da Estrutura WC");
-
-		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Text",
-			fieldFieldLabelEdit = "Texto",
-			fieldsetModal = "true");
-
-		Click(locator1 = "Modal#SAVE_BUTTON");
-
-		Click(locator1 = "Modal#PROPAGATE_BUTTON");
+		DataEngine.addFieldsets(fieldsetName = "Fieldset Name");
 
 		WebContentStructures.addLocalization(
 			locale = "pt-BR",
@@ -1221,14 +1196,15 @@ definition {
 
 		WebContentStructures.saveCP();
 
-		AssertClick(
-			key_ddlDataDefinitionName = "WC structure name",
-			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK",
-			value1 = "WC structure name");
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-		AssertElementPresent(
-			key_locale = "en-US",
-			locator1 = "Translation#CURRENT_LOCALE_TITLE");
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "WC Structure Name");
+
+		AssertVisible(
+			key_fieldsetLabel = "Fieldset Name",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
 
 		AssertVisible(
 			key_fieldFieldLabel = "Text",

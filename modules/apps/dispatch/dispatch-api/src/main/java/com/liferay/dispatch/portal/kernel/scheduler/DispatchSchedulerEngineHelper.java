@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * @author Matija Petanjek
  */
-public interface ScheduledTaskDispatchTriggerHelper {
+public interface DispatchSchedulerEngineHelper {
 
 	public int getScheduledTaskDispatchTriggerCount();
 

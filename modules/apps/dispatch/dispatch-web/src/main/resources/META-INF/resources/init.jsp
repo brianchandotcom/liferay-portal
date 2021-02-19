@@ -28,7 +28,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.dispatch.constants.DispatchConstants" %><%@
 page import="com.liferay.dispatch.constants.DispatchWebKeys" %><%@
-page import="com.liferay.dispatch.core.scheduler.ScheduledTaskDispatchTrigger" %><%@
+page import="com.liferay.dispatch.portal.kernel.scheduler.ScheduledJobDispatchTrigger" %><%@
 page import="com.liferay.dispatch.exception.NoSuchLogException" %><%@
 page import="com.liferay.dispatch.exception.NoSuchTriggerException" %><%@
 page import="com.liferay.dispatch.executor.DispatchTaskClusterMode" %><%@

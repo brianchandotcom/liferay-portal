@@ -481,3 +481,34 @@ The `frontend-taglib-clay` module is now using components from
 previous attributes.
 
 ---------------------------------------
+### Handling HTML boolean attributes in tags
+- **Date:** 2021-Feb-18
+- **JIRA Ticket:** [LPS-127832](https://issues.liferay.com/browse/LPS-127832)
+
+#### What changed?
+
+Boolean HTML attributes will only be rendered if passed a value of `true`.
+For example, previously, a value such as `false` for a `disabled` attribute
+would be rendered into the DOM as `disabled="false"`; now, it is simply
+omitted.
+
+#### Who is affected?
+
+Anyone passing the following boolean attributes to tag libraries:
+
+"allowfullscreen", "allowpaymentrequest", "async", "autofocus", "autoplay",
+"checked", "controls", "default", "disabled", "formnovalidate", "hidden",
+"ismap", "itemscope", "loop", "multiple", "muted", "nomodule", "novalidate",
+"open", "playsinline", "readonly", "required", "reversed", "selected",
+and "truespeed".
+
+#### How should I update my code?
+
+Ensure that you pass `true` when you want a boolean attribute to
+be present in the DOM.
+
+#### Why was this change made?
+
+This change is being made for better compliance with [the HTML Standard](https://html.spec.whatwg.org/#boolean-attribute),
+which says that "The presence of a boolean attribute on an element represents
+the true value, and the absence of the attribute represents the false value."

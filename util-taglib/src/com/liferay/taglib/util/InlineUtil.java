@@ -17,7 +17,10 @@ package com.liferay.taglib.util;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Shuyang Zhou
@@ -37,14 +40,37 @@ public class InlineUtil {
 			String key = entry.getKey();
 
 			if (!key.equals("class")) {
+				String value = String.valueOf(entry.getValue());
+
+				if (_attributesSet.contains(key)) {
+					Boolean attributeValue = Boolean.valueOf(value);
+
+					if (!attributeValue) {
+						continue;
+					}
+
+					value = key;
+				}
+
 				sb.append(key);
 				sb.append("=\"");
-				sb.append(String.valueOf(entry.getValue()));
+				sb.append(value);
 				sb.append("\" ");
 			}
 		}
 
 		return sb.toString();
 	}
+
+	private static final String[] _HTML_BOOLEAN_ATTRIBUTES = {
+		"allowfullscreen", "allowpaymentrequest", "async", "autofocus",
+		"autoplay", "checked", "controls", "default", "disabled",
+		"formnovalidate", "hidden", "ismap", "itemscope", "loop", "multiple",
+		"muted", "nomodule", "novalidate", "open", "playsinline", "readonly",
+		"required", "reversed", "selected", "truespeed"
+	};
+
+	private static final Set<String> _attributesSet = new HashSet<>(
+		Arrays.asList(_HTML_BOOLEAN_ATTRIBUTES));
 
 }

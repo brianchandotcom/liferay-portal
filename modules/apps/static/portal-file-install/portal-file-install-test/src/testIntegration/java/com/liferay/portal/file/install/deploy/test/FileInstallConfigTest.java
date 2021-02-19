@@ -41,6 +41,7 @@ import org.apache.log4j.spi.LoggingEvent;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -137,6 +138,9 @@ public class FileInstallConfigTest {
 
 	@Test
 	public void testConfigurationDeprecatedFileExtension() throws Exception {
+		Assume.assumeFalse(
+			PropsValues.MODULE_FRAMEWORK_FILE_INSTALL_ENABLE_CFG);
+
 		String configurationPid = _CONFIGURATION_PID_PREFIX.concat(
 			".testDummy");
 		String configurationPidDeprecated = _CONFIGURATION_PID_PREFIX.concat(

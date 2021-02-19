@@ -50,6 +50,8 @@ import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -395,9 +397,22 @@ public class AccountResourceImpl
 		}
 
 		CommerceRegion commerceRegion =
-			_commerceRegionLocalService.getCommerceRegion(
+			_commerceRegionLocalService.fetchCommerceRegion(
 				commerceCountry.getCommerceCountryId(),
 				accountAddress.getRegionISOCode());
+
+		if (commerceRegion == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					String.format(
+						"Unable to import account address region with " +
+							"country region code %s for country ISO code %s",
+						accountAddress.getRegionISOCode(),
+						accountAddress.getCountryISOCode()));
+			}
+
+			return 0;
+		}
 
 		return commerceRegion.getCommerceRegionId();
 	}
@@ -493,9 +508,22 @@ public class AccountResourceImpl
 
 			for (AccountAddress accountAddress : accountAddresses) {
 				CommerceCountry commerceCountry =
-					_commerceCountryService.getCommerceCountry(
+					_commerceCountryService.fetchCommerceCountry(
 						commerceAccount.getCompanyId(),
 						accountAddress.getCountryISOCode());
+
+				if (commerceCountry == null) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							String.format(
+								"Unable to import account address with " +
+									"country ISO code %s for account name %s",
+								account.getName(),
+								accountAddress.getCountryISOCode()));
+					}
+
+					continue;
+				}
 
 				CommerceAddress commerceAddress =
 					_commerceAddressService.addCommerceAddress(
@@ -591,6 +619,9 @@ public class AccountResourceImpl
 
 		return commerceAccount;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AccountResourceImpl.class);
 
 	private static final EntityModel _entityModel = new AccountEntityModel();
 

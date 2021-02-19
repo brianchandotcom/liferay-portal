@@ -49,6 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class CTProcessServiceImpl extends CTProcessServiceBaseImpl {
 
+	@Override
 	public int getCTProcessesCount(
 		long companyId, long userId, String keywords, int status) {
 

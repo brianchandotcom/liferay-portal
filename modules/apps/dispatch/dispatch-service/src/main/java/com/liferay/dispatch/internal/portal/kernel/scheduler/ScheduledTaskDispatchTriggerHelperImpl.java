@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.dispatch.internal.core.scheduler;
+package com.liferay.dispatch.internal.portal.kernel.scheduler;
 
-import com.liferay.dispatch.core.scheduler.ScheduledTaskDispatchTrigger;
-import com.liferay.dispatch.core.scheduler.ScheduledTaskDispatchTriggerHelper;
+import com.liferay.dispatch.portal.kernel.scheduler.ScheduledTaskDispatchTrigger;
+import com.liferay.dispatch.portal.kernel.scheduler.ScheduledTaskDispatchTriggerHelper;
 import com.liferay.dispatch.model.DispatchTriggerModel;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

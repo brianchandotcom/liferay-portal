@@ -241,6 +241,19 @@ components:
                     type: string
                     writeOnly: true
             type: object
+        ClassFieldReference:
+            properties:
+                className:
+                    type: string
+                fieldName:
+                    type: string
+                fieldValue:
+                    type: string
+            required:
+                - className
+                - fieldName
+                - fieldValue
+            type: object
         ClassNameReference:
             properties:
                 className:

@@ -118,6 +118,9 @@ OAuth2Application oAuth2Application = oAuth2AdminPortletDisplayContext.getOAuth2
 								<c:when test="<%= grantType.equals(GrantType.CLIENT_CREDENTIALS) %>">
 									<aui:input checked="<%= checked %>" data="<%= data %>" helpMessage="the-client-will-impersonate-the-selected-client-credential-user-but-will-be-restricted-to-the-selected-scopes" label="<%= grantType.name() %>" name="<%= clientCredentialsCheckboxName %>" onchange='<%= liferayPortletResponse.getNamespace() + "updateClientCredentialsSection();" %>' type="checkbox" />
 								</c:when>
+								<c:when test="<%= grantType.equals(GrantType.AUTHORIZATION_CODE) || grantType.equals(GrantType.AUTHORIZATION_CODE_PKCE) %>">
+									<aui:input checked="<%= checked %>" data="<%= data %>" label="<%= grantType.name() %>" name="<%= name %>" onchange='<%= liferayPortletResponse.getNamespace() + "updateTrustedApplicationSection();" %>' type="checkbox" />
+								</c:when>
 								<c:otherwise>
 									<aui:input checked="<%= checked %>" data="<%= data %>" label="<%= grantType.name() %>" name="<%= name %>" type="checkbox" />
 								</c:otherwise>
@@ -219,6 +222,19 @@ OAuth2Application oAuth2Application = oAuth2AdminPortletDisplayContext.getOAuth2
 						});
 					}
 				</aui:script>
+			</clay:col>
+		</c:if>
+
+		<c:if test="<%= oAuth2AdminPortletDisplayContext.hasAddTrustedApplicationPermission() %>">
+			<clay:col
+				id='<%= liferayPortletResponse.getNamespace() + "trustedApplicationSection" %>'
+				lg="12"
+			>
+				<h3 class="sheet-subtitle"><liferay-ui:message key="trusted-application" /></h3>
+
+				<aui:field-wrapper>
+					<aui:input checked="<%= (oAuth2Application == null) ? false : oAuth2Application.isTrustedApplication() %>" helpMessage="trusted-application-help" id="trustedApplication" label="trusted-application" name="trustedApplication" type="checkbox" />
+				</aui:field-wrapper>
 			</clay:col>
 		</c:if>
 	</clay:row>

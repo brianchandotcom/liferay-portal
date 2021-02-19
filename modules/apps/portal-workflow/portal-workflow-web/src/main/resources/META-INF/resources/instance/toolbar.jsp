@@ -16,11 +16,10 @@
 
 <%@ include file="/instance/init.jsp" %>
 
-<clay:management-toolbar-v2
+<clay:management-toolbar
 	clearResultsURL="<%= workflowInstanceViewDisplayContext.getClearResultsURL() %>"
 	filterDropdownItems="<%= workflowInstanceViewDisplayContext.getFilterOptions(request) %>"
 	itemsTotal="<%= workflowInstanceViewDisplayContext.getTotalItems() %>"
-	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	searchActionURL="<%= workflowInstanceViewDisplayContext.getSearchURL() %>"
 	searchContainerId="workflowInstance"
 	searchFormName="fm1"

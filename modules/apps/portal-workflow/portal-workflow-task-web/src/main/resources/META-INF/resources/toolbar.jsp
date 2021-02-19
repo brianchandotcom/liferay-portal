@@ -48,11 +48,10 @@ portletURL.setParameter("tabs1", tabs1);
 	%>'
 />
 
-<clay:management-toolbar-v2
+<clay:management-toolbar
 	clearResultsURL="<%= workflowTaskDisplayContext.getClearResultsURL() %>"
 	filterDropdownItems="<%= workflowTaskDisplayContext.getFilterOptions() %>"
 	itemsTotal="<%= workflowTaskDisplayContext.getTotalItems() %>"
-	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	searchActionURL="<%= workflowTaskDisplayContext.getSearchURL() %>"
 	searchContainerId="workflowTasks"
 	searchFormName="fm1"

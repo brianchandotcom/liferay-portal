@@ -16,11 +16,10 @@
 
 <%@ include file="/definition_link/init.jsp" %>
 
-<clay:management-toolbar-v2
+<clay:management-toolbar
 	clearResultsURL="<%= workflowDefinitionLinkDisplayContext.getClearResultsURL() %>"
 	filterDropdownItems="<%= workflowDefinitionLinkDisplayContext.getFilterOptions(request) %>"
 	itemsTotal="<%= workflowDefinitionLinkDisplayContext.getTotalItems() %>"
-	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	searchActionURL="<%= workflowDefinitionLinkDisplayContext.getSearchURL() %>"
 	searchContainerId="workflowDefinitionLinks"
 	searchFormName="fm1"

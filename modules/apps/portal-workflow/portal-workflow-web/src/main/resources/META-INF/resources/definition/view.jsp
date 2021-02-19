@@ -33,12 +33,11 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("definitionsNavigation", definitionsNavigation);
 %>
 
-<clay:management-toolbar-v2
+<clay:management-toolbar
 	clearResultsURL="<%= workflowDefinitionDisplayContext.getClearResultsURL(request) %>"
 	creationMenu="<%= workflowDefinitionDisplayContext.getCreationMenu(pageContext) %>"
 	filterDropdownItems="<%= workflowDefinitionDisplayContext.getFilterOptions(request) %>"
 	itemsTotal="<%= workflowDefinitionDisplayContext.getTotalItems(request, renderRequest, displayedStatus) %>"
-	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	searchActionURL="<%= workflowDefinitionDisplayContext.getSearchURL(request) %>"
 	searchContainerId="workflowDefinitions"
 	searchFormName="fm1"

@@ -117,6 +117,73 @@ public class TestrayImporter {
 		return pullRequestBuild.getPullRequest();
 	}
 
+	public TestrayBuild getTestrayBuild() {
+		if (_testrayBuild != null) {
+			return _testrayBuild;
+		}
+
+		long start = System.currentTimeMillis();
+
+		Job job = getJob();
+
+		String testrayBuildID = System.getProperty("TESTRAY_BUILD_ID");
+
+		TestrayRoutine testrayRoutine = getTestrayRoutine();
+
+		TestrayBuild testrayBuild = null;
+
+		if ((testrayBuildID != null) && testrayBuildID.matches("\\d+")) {
+			testrayBuild = testrayRoutine.getTestrayBuildByID(
+				Integer.parseInt(testrayBuildID));
+		}
+
+		String testrayBuildName = System.getProperty("TESTRAY_BUILD_NAME");
+
+		if ((testrayBuild == null) &&
+			!JenkinsResultsParserUtil.isNullOrEmpty(testrayBuildName)) {
+
+			testrayBuild = testrayRoutine.getTestrayBuildByName(
+				_replaceEnvVars(testrayBuildName));
+		}
+
+		testrayBuildID = JenkinsResultsParserUtil.getProperty(
+			job.getJobProperties(), "testray.build.id", job.getJobName(),
+			_topLevelBuild.getTestSuiteName());
+
+		if ((testrayBuild == null) && (testrayBuildID != null) &&
+			testrayBuildID.matches("\\d+")) {
+
+			testrayBuild = testrayRoutine.getTestrayBuildByID(
+				Integer.parseInt(testrayBuildID));
+		}
+
+		testrayBuildName = JenkinsResultsParserUtil.getProperty(
+			job.getJobProperties(), "testray.build.name", job.getJobName(),
+			_topLevelBuild.getTestSuiteName());
+
+		if ((testrayBuild == null) &&
+			!JenkinsResultsParserUtil.isNullOrEmpty(testrayBuildName)) {
+
+			testrayBuild = testrayRoutine.getTestrayBuildByName(
+				_replaceEnvVars(testrayBuildName));
+		}
+
+		if (testrayBuild != null) {
+			_testrayBuild = testrayBuild;
+
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"Testray Build ", String.valueOf(_testrayBuild.getURL()),
+					" created in ",
+					JenkinsResultsParserUtil.toDurationString(
+						System.currentTimeMillis() - start)));
+
+			return _testrayBuild;
+		}
+
+		return null;
+	}
+
 	public TestrayProject getTestrayProject() {
 		if (_testrayProject != null) {
 			return _testrayProject;
@@ -294,7 +361,7 @@ public class TestrayImporter {
 
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
-					"Testray server ", String.valueOf(_testrayServer.getURL()),
+					"Testray Server ", String.valueOf(_testrayServer.getURL()),
 					" created in ",
 					JenkinsResultsParserUtil.toDurationString(
 						System.currentTimeMillis() - start)));
@@ -551,6 +618,7 @@ public class TestrayImporter {
 		"https?://.+/(?<releaseFileName>[^/]+)");
 
 	private Job _job;
+	private TestrayBuild _testrayBuild;
 	private TestrayProject _testrayProject;
 	private TestrayRoutine _testrayRoutine;
 	private TestrayServer _testrayServer;

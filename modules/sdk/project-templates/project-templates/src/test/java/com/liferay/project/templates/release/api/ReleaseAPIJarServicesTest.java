@@ -58,9 +58,9 @@ public class ReleaseAPIJarServicesTest implements BaseReleaseAPIJarTestCase {
 
 					URI relativeURI = folderURI.relativize(path.toUri());
 
-					String relativePath = relativeURI.getPath();
+					String relativeString = relativeURI.getPath();
 
-					if (relativePath.contains("META-INF/services/")) {
+					if (relativeString.contains("META-INF/services/")) {
 						results.add(path);
 					}
 
@@ -78,15 +78,15 @@ public class ReleaseAPIJarServicesTest implements BaseReleaseAPIJarTestCase {
 
 		Path classesDirPath = getClassesDirPath(temporaryFolder);
 
-		Set<String> classFilePaths = getPaths(classesDirPath, ".class");
+		Set<String> classFileStrings = getPaths(classesDirPath, ".class");
 
-		Assert.assertFalse(classFilePaths.isEmpty());
+		Assert.assertFalse(classFileStrings.isEmpty());
 
-		Stream<Path> serviceClassFilesStream = getServicePaths(classesDirPath);
+		Stream<Path> serviceClassPathsStream = getServicePaths(classesDirPath);
 
-		List<String> missingServiceClassFilePaths = new ArrayList<>();
+		List<String> missingServiceClassFileStrings = new ArrayList<>();
 
-		serviceClassFilesStream.map(
+		serviceClassPathsStream.map(
 			filePath -> {
 				try {
 					return Files.readAllLines(filePath);
@@ -99,19 +99,19 @@ public class ReleaseAPIJarServicesTest implements BaseReleaseAPIJarTestCase {
 		).flatMap(
 			services -> services.stream()
 		).map(
-			serviceClassFilePath -> serviceClassFilePath.replace(".", "/")
+			serviceClassPath -> serviceClassPath.replace(".", "/")
 		).forEach(
-			serviceClassFilePath -> {
-				if (!classFilePaths.contains(serviceClassFilePath)) {
-					missingServiceClassFilePaths.add(serviceClassFilePath);
+			serviceClassPath -> {
+				if (!classFileStrings.contains(serviceClassPath)) {
+					missingServiceClassFileStrings.add(serviceClassPath);
 				}
 			}
 		);
 
 		Assert.assertTrue(
 			"Sources jar missing service classes: " +
-				getFileNames(missingServiceClassFilePaths),
-			missingServiceClassFilePaths.isEmpty());
+				getFileNames(missingServiceClassFileStrings),
+			missingServiceClassFileStrings.isEmpty());
 	}
 
 	@Rule

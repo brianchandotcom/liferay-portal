@@ -56,16 +56,16 @@ import org.w3c.dom.NodeList;
 public class ReleaseAPIJarTLDTest implements BaseReleaseAPIJarTestCase {
 
 	public void assertTLDClasses(
-			String filterPath, Path classesPath, Set<String> classes)
+			String filterString, Path classesPath, Set<String> classes)
 		throws Exception {
 
-		Map<String, Set<String>> tldClassPaths = getTLDClassPaths(
-			filterPath, classesPath);
+		Map<String, Set<String>> tldClassStrings = getTLDClassPaths(
+			filterString, classesPath);
 
-		Assert.assertFalse(tldClassPaths.isEmpty());
+		Assert.assertFalse(tldClassStrings.isEmpty());
 
 		Set<Map.Entry<String, Set<String>>> tldEntries =
-			tldClassPaths.entrySet();
+			tldClassStrings.entrySet();
 
 		StringBuilder sb = new StringBuilder("");
 
@@ -95,7 +95,7 @@ public class ReleaseAPIJarTLDTest implements BaseReleaseAPIJarTestCase {
 	}
 
 	public Map<String, Set<String>> getTLDClassPaths(
-			String xpathFilter, Path sourcePath)
+			String xpathFilterString, Path sourcePath)
 		throws Exception {
 
 		Map<String, Set<String>> results = new HashMap<>();
@@ -133,7 +133,7 @@ public class ReleaseAPIJarTLDTest implements BaseReleaseAPIJarTestCase {
 							XPath xPath = xPathFactory.newXPath();
 
 							XPathExpression xPathExpression = xPath.compile(
-								xpathFilter);
+								xpathFilterString);
 
 							NodeList nodeList =
 								(NodeList)xPathExpression.evaluate(
@@ -171,15 +171,15 @@ public class ReleaseAPIJarTLDTest implements BaseReleaseAPIJarTestCase {
 
 		Path classesDirPath = getClassesDirPath(temporaryFolder);
 
-		Set<String> classFilePaths = getPaths(classesDirPath, ".class");
+		Set<String> classFileStrings = getPaths(classesDirPath, ".class");
 
-		Assert.assertFalse(classFilePaths.isEmpty());
-
-		assertTLDClasses(
-			"/taglib/tag/tag-class", classesDirPath, classFilePaths);
+		Assert.assertFalse(classFileStrings.isEmpty());
 
 		assertTLDClasses(
-			"/taglib/tag/tei-class", classesDirPath, classFilePaths);
+			"/taglib/tag/tag-class", classesDirPath, classFileStrings);
+
+		assertTLDClasses(
+			"/taglib/tag/tei-class", classesDirPath, classFileStrings);
 	}
 
 	@Rule

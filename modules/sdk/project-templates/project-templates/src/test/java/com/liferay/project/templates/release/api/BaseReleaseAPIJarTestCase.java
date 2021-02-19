@@ -95,9 +95,9 @@ public interface BaseReleaseAPIJarTestCase {
 
 						URI relativeURI = folderURI.relativize(path.toUri());
 
-						String relativePath = relativeURI.getPath();
+						String relativeString = relativeURI.getPath();
 
-						results.add(relativePath.replace(extension, ""));
+						results.add(relativeString.replace(extension, ""));
 					}
 
 					return FileVisitResult.CONTINUE;

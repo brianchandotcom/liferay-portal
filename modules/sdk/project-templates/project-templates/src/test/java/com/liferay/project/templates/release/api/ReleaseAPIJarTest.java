@@ -41,31 +41,31 @@ public class ReleaseAPIJarTest implements BaseReleaseAPIJarTestCase {
 	public static final String RELEASE_API_JAR_SOURCES_FILE =
 		System.getProperty("releaseApiJarSourcesFile");
 
-	public List<String> getIgnorePaths(String jarName) throws Exception {
-		List<String> ignoredPaths = FileTestUtil.readAllLines(
+	public List<String> getIgnoreStrings(String jarName) throws Exception {
+		List<String> ignoredStrings = FileTestUtil.readAllLines(
 			"com/liferay/project/templates/release/api/dependencies" +
 				"/api-jar-ignore-paths.txt");
 
 		if (jarName.contains("7.0")) {
-			ignoredPaths.addAll(
+			ignoredStrings.addAll(
 				FileTestUtil.readAllLines(
 					"com/liferay/project/templates/release/api/dependencies" +
 						"/api-jar-ignore-paths_7_0.txt"));
 		}
 		else if (jarName.contains("7.1")) {
-			ignoredPaths.addAll(
+			ignoredStrings.addAll(
 				FileTestUtil.readAllLines(
 					"com/liferay/project/templates/release/api/dependencies" +
 						"/api-jar-ignore-paths_7_1.txt"));
 		}
 		else if (jarName.contains("7.2")) {
-			ignoredPaths.addAll(
+			ignoredStrings.addAll(
 				FileTestUtil.readAllLines(
 					"com/liferay/project/templates/release/api/dependencies" +
 						"/api-jar-ignore-paths_7_2.txt"));
 		}
 
-		return ignoredPaths;
+		return ignoredStrings;
 	}
 
 	public Path getSourcesDirPath() throws IOException {
@@ -90,30 +90,30 @@ public class ReleaseAPIJarTest implements BaseReleaseAPIJarTestCase {
 
 		Path sourcesDirPath = getSourcesDirPath();
 
-		Set<String> classFilePaths = getPaths(classesDirPath, ".class");
+		Set<String> classFileStrings = getPaths(classesDirPath, ".class");
 
-		Assert.assertFalse(classFilePaths.isEmpty());
+		Assert.assertFalse(classFileStrings.isEmpty());
 
-		Set<String> javaFilePaths = getPaths(sourcesDirPath, ".java");
+		Set<String> sourceFileStrings = getPaths(sourcesDirPath, ".java");
 
-		Assert.assertFalse(javaFilePaths.isEmpty());
+		Assert.assertFalse(sourceFileStrings.isEmpty());
 
-		List<String> missingClassFilePaths = new ArrayList<>();
+		List<String> missingClassFileStrings = new ArrayList<>();
 
-		List<String> ignorePaths = getIgnorePaths(releaseApiJarFile.getName());
+		List<String> ignoreStrings = getIgnoreStrings(releaseApiJarFile.getName());
 
-		for (String classFilePath : classFilePaths) {
-			if (!classFilePath.contains("$") &&
-				!ignorePaths.contains(classFilePath) &&
-				!javaFilePaths.contains(classFilePath)) {
+		for (String classFileString : classFileStrings) {
+			if (!classFileString.contains("$") &&
+				!ignoreStrings.contains(classFileString) &&
+				!sourceFileStrings.contains(classFileString)) {
 
-				missingClassFilePaths.add(classFilePath);
+				missingClassFileStrings.add(classFileString);
 			}
 		}
 
 		Assert.assertTrue(
-			"Sources jar missing: " + getFileNames(missingClassFilePaths),
-			missingClassFilePaths.isEmpty());
+			"Sources jar missing: " + getFileNames(missingClassFileStrings),
+			missingClassFileStrings.isEmpty());
 	}
 
 	@Rule

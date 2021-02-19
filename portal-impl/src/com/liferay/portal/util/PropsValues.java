@@ -1734,9 +1734,9 @@ public class PropsValues {
 			PropsUtil.get(
 				PropsKeys.MODULE_FRAMEWORK_EXPORT_PASSWORD_ATTRIBUTES));
 
-	public static final boolean MODULE_FRAMEWORK_FILE_INSTALL_ENABLE_CFG =
+	public static final boolean MODULE_FRAMEWORK_FILE_INSTALL_CFG_ENABLED =
 		GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.MODULE_FRAMEWORK_FILE_INSTALL_ENABLE_CFG));
+			PropsUtil.get(PropsKeys.MODULE_FRAMEWORK_FILE_INSTALL_CFG_ENABLED));
 
 	public static final String MODULE_FRAMEWORK_MARKETPLACE_DIR = PropsUtil.get(
 		PropsKeys.MODULE_FRAMEWORK_MARKETPLACE_DIR);

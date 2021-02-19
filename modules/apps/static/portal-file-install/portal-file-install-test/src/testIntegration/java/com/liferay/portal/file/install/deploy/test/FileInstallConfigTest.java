@@ -139,7 +139,7 @@ public class FileInstallConfigTest {
 	@Test
 	public void testConfigurationDeprecatedFileExtension() throws Exception {
 		Assume.assumeFalse(
-			PropsValues.MODULE_FRAMEWORK_FILE_INSTALL_ENABLE_CFG);
+			PropsValues.MODULE_FRAMEWORK_FILE_INSTALL_CFG_ENABLED);
 
 		String configurationPid = _CONFIGURATION_PID_PREFIX.concat(
 			".testDummy");

@@ -62,7 +62,7 @@ public class ConfigurationFileInstaller implements FileInstaller {
 		}
 		else if (name.endsWith(".cfg")) {
 			if (GetterUtil.getBoolean(
-					PropsValues.MODULE_FRAMEWORK_FILE_INSTALL_ENABLE_CFG,
+					PropsValues.MODULE_FRAMEWORK_FILE_INSTALL_CFG_ENABLED,
 					true)) {
 
 				return true;

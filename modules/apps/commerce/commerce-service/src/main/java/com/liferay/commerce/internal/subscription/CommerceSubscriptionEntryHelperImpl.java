@@ -110,7 +110,7 @@ public class CommerceSubscriptionEntryHelperImpl
 		Date now = new Date();
 
 		Date nextIterationDate =
-			commerceSubscriptionEntry.getNextIterationDate();
+			commerceSubscriptionEntry.getDeliveryNextIterationDate();
 
 		CommerceOrderItem commerceOrderItem =
 			commerceSubscriptionEntry.fetchCommerceOrderItem();

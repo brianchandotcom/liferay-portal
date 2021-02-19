@@ -32,6 +32,11 @@ const reducer = (state, action) => {
 	switch (action.type) {
 		case CREATE_SEGMENTS_EXPERIENCE:
 			nextState = createExperienceReducer(nextState, action.payload);
+			nextState = selectExperienceReducer(nextState, {
+				portletIds: action.payload.portletIds,
+				segmentsExperienceId:
+					action.payload.segmentsExperience.segmentsExperienceId,
+			});
 			break;
 		case DELETE_SEGMENTS_EXPERIENCE:
 			nextState = deleteExperienceReducer(nextState, action.payload);

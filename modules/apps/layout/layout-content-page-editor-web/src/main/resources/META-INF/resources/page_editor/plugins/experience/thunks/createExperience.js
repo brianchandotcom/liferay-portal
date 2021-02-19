@@ -14,7 +14,6 @@
 
 import ExperienceService from '../../../app/services/ExperienceService';
 import createExperienceAction from '../actions/createExperience';
-import selectExperienceAction from '../actions/selectExperience';
 
 export default function createExperience({languageIds, name, segmentsEntryId}) {
 	return (dispatch) => {
@@ -26,7 +25,7 @@ export default function createExperience({languageIds, name, segmentsEntryId}) {
 			},
 			dispatch,
 		}).then(({fragmentEntryLinks, layoutData, segmentsExperience}) => {
-			ExperienceService.selectExperience({
+			return ExperienceService.selectExperience({
 				body: {
 					segmentsExperienceId:
 						segmentsExperience.segmentsExperienceId,
@@ -35,24 +34,17 @@ export default function createExperience({languageIds, name, segmentsEntryId}) {
 			})
 				.then((portletIds) => {
 					return dispatch(
-						selectExperienceAction({
+						createExperienceAction({
+							fragmentEntryLinks,
+							layoutData,
 							portletIds,
-							segmentsExperienceId:
-								segmentsExperience.segmentsExperienceId,
+							segmentsExperience,
 						})
 					);
 				})
 				.catch((error) => {
 					return error;
 				});
-
-			return dispatch(
-				createExperienceAction({
-					fragmentEntryLinks,
-					layoutData,
-					segmentsExperience,
-				})
-			);
 		});
 	};
 }

@@ -85,8 +85,8 @@ definition {
 	}
 
 	test PublishSimpleProduct {
-		property environment.acceptance = "quarantine";
-		property portal.acceptance = "quarantine";
+		property environment.acceptance = "true";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CommerceSmoke#PublishSimpleProduct";
 
 		CommerceNavigator.gotoPortlet(

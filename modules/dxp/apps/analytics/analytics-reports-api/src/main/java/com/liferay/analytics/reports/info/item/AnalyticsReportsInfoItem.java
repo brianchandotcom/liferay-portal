@@ -49,4 +49,8 @@ public interface AnalyticsReportsInfoItem<T> {
 
 	public String getTitle(T model, Locale locale);
 
+	public default boolean isShow(T model) {
+		return false;
+	}
+
 }

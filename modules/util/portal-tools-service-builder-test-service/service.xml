@@ -136,6 +136,7 @@
 			<finder-column name="name" />
 		</finder>
 	</entity>
+	<entity local-service="true" name="GenericMethodsEntry" />
 	<entity local-service="true" name="LazyBlobEntry" remote-service="true" uuid="true">
 
 		<!-- PK fields -->

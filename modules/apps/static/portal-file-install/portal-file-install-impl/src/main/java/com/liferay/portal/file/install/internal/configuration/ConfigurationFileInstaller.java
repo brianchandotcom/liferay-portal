@@ -23,7 +23,6 @@ import com.liferay.portal.file.install.internal.properties.ConfigurationProperti
 import com.liferay.portal.file.install.internal.properties.ConfigurationPropertiesFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
@@ -61,10 +60,7 @@ public class ConfigurationFileInstaller implements FileInstaller {
 			return true;
 		}
 		else if (name.endsWith(".cfg")) {
-			if (GetterUtil.getBoolean(
-					PropsValues.MODULE_FRAMEWORK_FILE_INSTALL_CFG_ENABLED,
-					true)) {
-
+			if (PropsValues.MODULE_FRAMEWORK_FILE_INSTALL_CFG_ENABLED) {
 				return true;
 			}
 

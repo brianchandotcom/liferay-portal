@@ -649,12 +649,158 @@ definition {
 	}
 
 	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
-	@ignore = "true"
 	@priority = "5"
 	test TranslateWebContentWithAllFieldsNested {
 		property portal.acceptance = "false";
 
-		// TODO LPS-123537 TranslateWebContentWithAllFieldsNested pending implementation
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Testing",
+			structureName = "Testing");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Select from List",
+			fieldName = "Select from List",
+			targetFieldLabel = "Text");
+
+		var index = "1";
+		for (var optionValue : list "List 1,List 2") {
+			DataEngine.addFieldOption(
+				fieldFieldLabel = "Select from List",
+				index = "${index}",
+				optionValue = "${optionValue}");
+			var index = ${index} + 1;
+		}
+
+		DataEngine.addField(
+			fieldFieldLabel = "Single Selection",
+			fieldName = "Single Selection");
+
+		var index = "1";
+		for (var optionValue : list "Choice 1,Choice 2") {
+			DataEngine.addFieldOption(
+				fieldFieldLabel = "Single Selection",
+				index = "${index}",
+				optionValue = "${optionValue}");
+			var index = ${index} + 1;
+		}
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Multiple Selection",
+			fieldName = "Multiple Selection",
+			targetFieldLabel = "Single Selection");
+
+		var index = "1";
+		for (var optionValue : list "Value 1,Value 2") {
+			DataEngine.addFieldOption(
+				fieldFieldLabel = "Multiple Selection",
+				index = "${index}",
+				optionValue = "${optionValue}");
+			var index = ${index} + 1;
+		}
+
+		DataEngine.addField(
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Date",
+			fieldName = "Date",
+			targetFieldLabel = "Numeric");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Image",
+			fieldName = "Image",
+			targetFieldLabel = "Numeric");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Rich Text",
+			fieldName = "Rich Text");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Upload",
+			fieldName = "Upload",
+			targetFieldLabel = "Rich Text");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Color",
+			fieldName = "Color");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Web Content",
+			fieldName = "Web Content",
+			targetFieldLabel = "Color");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Geolocation",
+			fieldName = "Geolocation");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Link to Page",
+			fieldName = "Link to Page",
+			targetFieldLabel = "Geolocation");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Separator",
+			fieldName = "Separator",
+			targetFieldLabel = "Geolocation");
+
+		WebContentStructures.saveCP(structureName = "Testing");
+
+		NavItem.gotoWebContent();
+
+		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "Testing");
+
+		PortletEntry.inputTitle(title = "Testing");
+
+		WebContent.addWithStructureCP(
+			webContentColor = "FF0D0D",
+			webContentDate = "02/19/2021",
+			webContentMultipleSelection = "Value 1",
+			webContentNumeric = "17",
+			webContentRichText = "This is a Rich Text field",
+			webContentSelectFromList = "List 2",
+			webContentSingleSelection = "Choice 1",
+			webContentText = "This is a Text field",
+			webContentTitle = "Testing");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		WebContent.addWithStructureCP(
+			webContentColor = "000000",
+			webContentMultipleSelection = "Value 2",
+			webContentNumeric = "13",
+			webContentRichText = "Este é um campo de texto completo",
+			webContentSelectFromList = "List 1",
+			webContentSingleSelection = "Choice 2",
+			webContentText = "Este é um campo de texto",
+			webContentTitle = "Testando");
+
+		PortletEntry.publish();
+
+		WebContent.viewWithStructureCP(
+			webContentColor = "000000",
+			webContentDate = "02/19/2021",
+			webContentMultipleSelection = "Value 1,Value 2",
+			webContentNumeric = "13",
+			webContentSelectFromList = "List 1",
+			webContentSingleSelection = "Choice 2",
+			webContentText = "Este é um campo de texto",
+			webContentTitle = "Testando");
+
+		SelectFrame.selectFrameNoLoading(
+			key_fieldLabel = "Rich Text",
+			locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
+		AssertTextEquals(
+			locator1 = "CKEditor#BODY",
+			value1 = "Este é um campo de texto completo");
 	}
 
 	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"

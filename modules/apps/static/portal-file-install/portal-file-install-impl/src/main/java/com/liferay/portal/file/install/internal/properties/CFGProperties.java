@@ -54,9 +54,7 @@ public class CFGProperties implements ConfigurationProperties {
 
 	@Override
 	public void load(Reader reader) throws IOException {
-		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(reader)) {
-
+		try (UnsyncBufferedReader unsyncBufferedReader = _wrap(reader)) {
 			String line = unsyncBufferedReader.readLine();
 
 			List<String> lines = new ArrayList<>();
@@ -187,6 +185,14 @@ public class CFGProperties implements ConfigurationProperties {
 		}
 
 		writer.write(sb.toString());
+	}
+
+	private UnsyncBufferedReader _wrap(Reader reader) {
+		if (reader == null) {
+			return null;
+		}
+
+		return new UnsyncBufferedReader(reader);
 	}
 
 	private static final String _LINE_SEPARATOR = System.getProperty(

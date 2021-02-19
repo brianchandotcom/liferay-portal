@@ -14,6 +14,7 @@
 
 package com.liferay.portal.file.install.internal.properties;
 
+import com.liferay.petra.io.unsync.UnsyncBufferedReader;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
@@ -45,11 +46,21 @@ public class CFGPropertiesTest {
 			CodeCoverageAssertor.INSTANCE, NewEnvTestRule.INSTANCE);
 
 	@Test
-	public void testException() {
+	public void testException() throws IOException {
 		try {
 			CFGProperties cfgProperties = new CFGProperties();
 
 			cfgProperties.load(null);
+
+			Assert.fail();
+		}
+		catch (NullPointerException nullPointerException) {
+		}
+
+		try {
+			CFGProperties cfgProperties = new CFGProperties();
+
+			cfgProperties.load(new UnsyncBufferedReader(null));
 
 			Assert.fail();
 		}

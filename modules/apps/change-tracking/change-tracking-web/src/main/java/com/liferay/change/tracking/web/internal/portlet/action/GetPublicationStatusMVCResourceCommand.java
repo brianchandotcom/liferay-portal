@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
+import java.io.IOException;
+
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -55,7 +57,7 @@ public class GetPublicationStatusMVCResourceCommand
 	@Override
 	protected void doServeResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws Exception {
+		throws IOException {
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			resourceRequest);
@@ -66,15 +68,9 @@ public class GetPublicationStatusMVCResourceCommand
 			ctProcessId);
 
 		if (ctProcess == null) {
-			JSONPortletResponseUtil.writeJSON(
-				resourceRequest, resourceResponse,
-				JSONUtil.put(
-					"displayType", "danger"
-				).put(
-					"label", _language.get(httpServletRequest, "failed")
-				).put(
-					"published", false
-				));
+			_writeJSON(
+				resourceRequest, resourceResponse, "danger",
+				_language.get(httpServletRequest, "failed"), false);
 
 			return;
 		}
@@ -84,15 +80,9 @@ public class GetPublicationStatusMVCResourceCommand
 				ctProcess.getBackgroundTaskId());
 
 		if (backgroundTask == null) {
-			JSONPortletResponseUtil.writeJSON(
-				resourceRequest, resourceResponse,
-				JSONUtil.put(
-					"displayType", "danger"
-				).put(
-					"label", _language.get(httpServletRequest, "failed")
-				).put(
-					"published", false
-				));
+			_writeJSON(
+				resourceRequest, resourceResponse, "danger",
+				_language.get(httpServletRequest, "failed"), false);
 
 			return;
 		}
@@ -123,6 +113,15 @@ public class GetPublicationStatusMVCResourceCommand
 			label = _language.get(httpServletRequest, "published");
 			published = true;
 		}
+
+		_writeJSON(
+			resourceRequest, resourceResponse, displayType, label, published);
+	}
+
+	private void _writeJSON(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
+			String displayType, String label, boolean published)
+		throws IOException {
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,

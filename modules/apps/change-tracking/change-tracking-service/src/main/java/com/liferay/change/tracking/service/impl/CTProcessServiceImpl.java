@@ -50,30 +50,6 @@ import org.osgi.service.component.annotations.Reference;
 public class CTProcessServiceImpl extends CTProcessServiceBaseImpl {
 
 	@Override
-	public int getCTProcessesCount(
-		long companyId, long userId, String keywords, int status) {
-
-		DSLQuery dslQuery = DSLQueryFactoryUtil.count(
-		).from(
-			CTProcessTable.INSTANCE
-		).innerJoinON(
-			CTCollectionTable.INSTANCE,
-			CTCollectionTable.INSTANCE.ctCollectionId.eq(
-				CTProcessTable.INSTANCE.ctCollectionId)
-		).innerJoinON(
-			BackgroundTaskTable.INSTANCE,
-			BackgroundTaskTable.INSTANCE.backgroundTaskId.eq(
-				CTProcessTable.INSTANCE.backgroundTaskId)
-		).where(
-			_getPredicate(companyId, keywords, status, userId)
-		);
-
-		Long count = ctProcessPersistence.dslQuery(dslQuery);
-
-		return count.intValue();
-	}
-
-	@Override
 	public List<CTProcess> getCTProcesses(
 		long companyId, long userId, String keywords, int status, int start,
 		int end, OrderByComparator<CTProcess> orderByComparator) {
@@ -114,6 +90,30 @@ public class CTProcessServiceImpl extends CTProcessServiceBaseImpl {
 		);
 
 		return ctProcessPersistence.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int getCTProcessesCount(
+		long companyId, long userId, String keywords, int status) {
+
+		DSLQuery dslQuery = DSLQueryFactoryUtil.count(
+		).from(
+			CTProcessTable.INSTANCE
+		).innerJoinON(
+			CTCollectionTable.INSTANCE,
+			CTCollectionTable.INSTANCE.ctCollectionId.eq(
+				CTProcessTable.INSTANCE.ctCollectionId)
+		).innerJoinON(
+			BackgroundTaskTable.INSTANCE,
+			BackgroundTaskTable.INSTANCE.backgroundTaskId.eq(
+				CTProcessTable.INSTANCE.backgroundTaskId)
+		).where(
+			_getPredicate(companyId, keywords, status, userId)
+		);
+
+		Long count = ctProcessPersistence.dslQuery(dslQuery);
+
+		return count.intValue();
 	}
 
 	private Predicate _getPredicate(

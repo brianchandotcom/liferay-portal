@@ -843,8 +843,6 @@ definition {
 	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
 	@priority = "5"
 	test TranslateStructureWithFieldsetAndNested {
-		property portal.acceptance = "false";
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
@@ -853,81 +851,326 @@ definition {
 			structureDescription = "WC Structure Description",
 			structureName = "WC Structure Name");
 
-		DataEngine.gotoNewFieldset(fieldsetName = "fieldset name");
+		DataEngine.gotoCreateNewFieldset();
+
+		Type(
+			locator1 = "FormViewBuilder#FIELD_SET_NAME",
+			value1 = "New Fieldset");
 
 		DataEngine.addFields(fieldNameList = "Text");
 
 		DataEngine.editFieldLabel(
 			fieldFieldLabel = "Text",
-			fieldFieldLabelEdit = "Text Test",
+			fieldFieldLabelEdit = "First Text",
 			fieldsetModal = "true");
 
 		DataEngine.addFieldNested(
-			fieldFieldLabel = "Text Test Second",
+			fieldFieldLabel = "Second Text",
 			fieldName = "Text",
-			targetFieldLabel = "Text Test");
+			targetFieldLabel = "First Text");
 
 		DataEngine.addFieldNested(
-			fieldFieldLabel = "Text Test Third",
+			fieldFieldLabel = "Third Text",
 			fieldName = "Text",
-			targetFieldLabel = "Text Test Second");
+			targetFieldLabel = "Second Text");
 
 		DataEngine.addFieldNested(
-			fieldFieldLabel = "Text Test Fourth",
+			fieldFieldLabel = "Fourth Text",
 			fieldName = "Text",
-			targetFieldLabel = "Text Test Third");
+			targetFieldLabel = "Third Text");
 
-		for (var locale : list "pt-BR,ca-ES,de-DE") {
-			PortletEntry.changeLocale(
-				locale = "${locale}",
-				modal = "true");
-
-			DataEngine.editFieldLabel(
-				fieldFieldLabel = "Text Test",
-				fieldFieldLabelEdit = "Text Test ${locale}",
-				fieldsetModal = "true");
-
-			DataEngine.editFieldLabel(
-				fieldFieldLabel = "Text Test Second",
-				fieldFieldLabelEdit = "Text Test Second ${locale}",
-				fieldsetModal = "true");
-
-			DataEngine.editFieldLabel(
-				fieldFieldLabel = "Text Test Third",
-				fieldFieldLabelEdit = "Text Test Third ${locale}",
-				fieldsetModal = "true");
-
-			DataEngine.editFieldLabel(
-				fieldFieldLabel = "Text Test Fourth",
-				fieldFieldLabelEdit = "Text Test Fourth ${locale}",
-				fieldsetModal = "true");
+		for (var prefix : list "First Level,Second Level,Third Level") {
+			DataEngine.editFieldsGroupLabel(
+				fieldsetModal = "true",
+				fieldsGroupLabel = "Fields Group",
+				fieldsGroupLabelEdit = "${prefix} Fields Group");
 		}
+
+		PortletEntry.changeLocale(
+			locale = "pt-BR",
+			modal = "true");
+
+		Type(
+			locator1 = "FormViewBuilder#FIELD_SET_NAME",
+			value1 = "Novo Fieldset");
+
+		DataEngine.editFieldsGroupLabel(
+			fieldsetModal = "true",
+			fieldsGroupLabel = "First Level Fields Group",
+			fieldsGroupLabelEdit = "Grupo de campos de primeiro nível");
+
+		DataEngine.editFieldsGroupLabel(
+			fieldsetModal = "true",
+			fieldsGroupLabel = "Second Level Fields Group",
+			fieldsGroupLabelEdit = "Grupo de Campos de Segundo Nível");
+
+		DataEngine.editFieldsGroupLabel(
+			fieldsetModal = "true",
+			fieldsGroupLabel = "Third Level Fields Group",
+			fieldsGroupLabelEdit = "Grupo de campos de terceiro nível");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "First Text",
+			fieldFieldLabelEdit = "Primeiro Texto",
+			fieldsetModal = "true");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Second Text",
+			fieldFieldLabelEdit = "Segundo Texto",
+			fieldsetModal = "true");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Third Text",
+			fieldFieldLabelEdit = "Terceiro Texto",
+			fieldsetModal = "true");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Fourth Text",
+			fieldFieldLabelEdit = "Quarto Texto",
+			fieldsetModal = "true");
+
+		PortletEntry.changeLocale(
+			locale = "es-ES",
+			modal = "true");
+
+		Type(
+			locator1 = "FormViewBuilder#FIELD_SET_NAME",
+			value1 = "Nueva Fieldset");
+
+		DataEngine.editFieldsGroupLabel(
+			fieldsetModal = "true",
+			fieldsGroupLabel = "First Level Fields Group",
+			fieldsGroupLabelEdit = "Grupo de campos de primer nivel");
+
+		DataEngine.editFieldsGroupLabel(
+			fieldsetModal = "true",
+			fieldsGroupLabel = "Second Level Fields Group",
+			fieldsGroupLabelEdit = "Grupo de campos de segundo nivel");
+
+		DataEngine.editFieldsGroupLabel(
+			fieldsetModal = "true",
+			fieldsGroupLabel = "Third Level Fields Group",
+			fieldsGroupLabelEdit = "Grupo de campos de tercer nivel");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "First Text",
+			fieldFieldLabelEdit = "Primera Texto",
+			fieldsetModal = "true");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Second Text",
+			fieldFieldLabelEdit = "Segunda Texto",
+			fieldsetModal = "true");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Third Text",
+			fieldFieldLabelEdit = "Tercero Texto",
+			fieldsetModal = "true");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Fourth Text",
+			fieldFieldLabelEdit = "Cuarto Texto",
+			fieldsetModal = "true");
+
+		PortletEntry.changeLocale(
+			locale = "de-DE",
+			modal = "true");
+
+		Type(
+			locator1 = "FormViewBuilder#FIELD_SET_NAME",
+			value1 = "Neues Feldset");
+
+		DataEngine.editFieldsGroupLabel(
+			fieldsetModal = "true",
+			fieldsGroupLabel = "First Level Fields Group",
+			fieldsGroupLabelEdit = "Feldgruppe der ersten Ebene");
+
+		DataEngine.editFieldsGroupLabel(
+			fieldsetModal = "true",
+			fieldsGroupLabel = "Second Level Fields Group",
+			fieldsGroupLabelEdit = "Feldgruppe der zweiten Ebene");
+
+		DataEngine.editFieldsGroupLabel(
+			fieldsetModal = "true",
+			fieldsGroupLabel = "Third Level Fields Group",
+			fieldsGroupLabelEdit = "Feldgruppe der dritten Ebene");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "First Text",
+			fieldFieldLabelEdit = "Erster Text",
+			fieldsetModal = "true");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Second Text",
+			fieldFieldLabelEdit = "Zweite Text",
+			fieldsetModal = "true");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Third Text",
+			fieldFieldLabelEdit = "Dritte Text",
+			fieldsetModal = "true");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Fourth Text",
+			fieldFieldLabelEdit = "Vierte Text",
+			fieldsetModal = "true");
 
 		Click(locator1 = "Modal#SAVE_BUTTON");
 
-		DragAndDrop.javaScriptDragAndDropToBottom(
-			key_fieldName = "fieldset name",
-			locator1 = "Sidebar#ADD_FIELD_NAME",
-			locator2 = "DDMEditStructure#FORM_FIELD_DROP_TARGET");
+		Alert.viewSuccessMessage();
 
-		for (var locale : list "pt-BR,ca-ES,de-DE") {
-			PortletEntry.changeLocale(locale = "${locale}");
+		DataEngine.addFieldsets(fieldsetName = "New Fieldset");
 
-			AssertElementPresent(
-				key_fieldLabel = "Text Test ${locale}",
-				locator1 = "FormFields#LABEL");
+		WebContentStructures.saveCP();
 
-			AssertElementPresent(
-				key_fieldLabel = "Text Test Second ${locale}",
-				locator1 = "FormFields#LABEL");
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-			AssertElementPresent(
-				key_fieldLabel = "Text Test Third ${locale}",
-				locator1 = "FormFields#LABEL");
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "WC Structure Name");
 
-			AssertElementPresent(
-				key_fieldLabel = "Text Test Fourth ${locale}",
-				locator1 = "FormFields#LABEL");
+		AssertVisible(
+			key_fieldsetLabel = "New Fieldset",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
+
+		for (var prefix : list "First Level,Second Level,Third Level") {
+			AssertVisible(
+				key_fieldFieldLabel = "${prefix} Fields Group",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+		}
+
+		AssertVisible(
+			key_fieldFieldLabel = "First Text",
+			key_fieldsGroupLabel = "First Level Fields Group",
+			locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Second Text",
+			key_fieldsGroupLabel = "Second Level Fields Group",
+			locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+
+		for (var fieldFieldLabel : list "Third Text,Fourth Text") {
+			AssertVisible(
+				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldsGroupLabel = "Third Level Fields Group",
+				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+		}
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "WC Structure Name");
+
+		AssertVisible(
+			key_fieldsetLabel = "Novo Fieldset",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Grupo de campos de primeiro nível",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Grupo de Campos de Segundo Nível",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Grupo de campos de terceiro nível",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Primeiro Texto",
+			key_fieldsGroupLabel = "Grupo de campos de primeiro nível",
+			locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Segundo Texto",
+			key_fieldsGroupLabel = "Grupo de Campos de Segundo Nível",
+			locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+
+		for (var fieldFieldLabel : list "Terceiro Texto,Quarto Texto") {
+			AssertVisible(
+				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldsGroupLabel = "Grupo de campos de terceiro nível",
+				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+		}
+
+		PortletEntry.changeLocale(locale = "es-ES");
+
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "WC Structure Name");
+
+		AssertVisible(
+			key_fieldsetLabel = "Nueva Fieldset",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Grupo de campos de primer nivel",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Grupo de campos de segundo nivel",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Grupo de campos de tercer nivel",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Primera Texto",
+			key_fieldsGroupLabel = "Grupo de campos de primer nivel",
+			locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Segunda Texto",
+			key_fieldsGroupLabel = "Grupo de campos de segundo nivel",
+			locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+
+		for (var fieldFieldLabel : list "Tercero Texto,Cuarto Texto") {
+			AssertVisible(
+				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldsGroupLabel = "Grupo de campos de tercer nivel",
+				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+		}
+
+		PortletEntry.changeLocale(locale = "de-DE");
+
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "WC Structure Name");
+
+		AssertVisible(
+			key_fieldsetLabel = "Neues Feldset",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Feldgruppe der ersten Ebene",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Feldgruppe der zweiten Ebene",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Feldgruppe der dritten Ebene",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Erster Text",
+			key_fieldsGroupLabel = "Feldgruppe der ersten Ebene",
+			locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Zweite Text",
+			key_fieldsGroupLabel = "Feldgruppe der zweiten Ebene",
+			locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+
+		for (var fieldFieldLabel : list "Dritte Text,Vierte Text") {
+			AssertVisible(
+				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldsGroupLabel = "Feldgruppe der dritten Ebene",
+				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 		}
 	}
 

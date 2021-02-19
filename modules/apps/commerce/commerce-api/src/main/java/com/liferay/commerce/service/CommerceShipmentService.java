@@ -143,7 +143,7 @@ public interface CommerceShipmentService extends BaseService {
 	 */
 	public String getOSGiServiceIdentifier();
 
-	public CommerceShipment reprocessShipment(long commerceShipmentId)
+	public CommerceShipment reprocessCommerceShipment(long commerceShipmentId)
 		throws PortalException;
 
 	public CommerceShipment updateAddress(

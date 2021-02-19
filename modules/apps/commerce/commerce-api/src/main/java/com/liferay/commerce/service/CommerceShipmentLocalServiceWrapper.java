@@ -464,11 +464,11 @@ public class CommerceShipmentLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.model.CommerceShipment reprocessShipment(
-			long commerceShipmentId)
+	public com.liferay.commerce.model.CommerceShipment
+			reprocessCommerceShipment(long commerceShipmentId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceShipmentLocalService.reprocessShipment(
+		return _commerceShipmentLocalService.reprocessCommerceShipment(
 			commerceShipmentId);
 	}
 

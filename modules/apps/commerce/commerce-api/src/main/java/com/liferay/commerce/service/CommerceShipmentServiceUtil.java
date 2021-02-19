@@ -186,11 +186,11 @@ public class CommerceShipmentServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.commerce.model.CommerceShipment reprocessShipment(
-			long commerceShipmentId)
+	public static com.liferay.commerce.model.CommerceShipment
+			reprocessCommerceShipment(long commerceShipmentId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().reprocessShipment(commerceShipmentId);
+		return getService().reprocessCommerceShipment(commerceShipmentId);
 	}
 
 	public static com.liferay.commerce.model.CommerceShipment updateAddress(

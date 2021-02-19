@@ -670,14 +670,15 @@ public class CommerceShipmentServiceHttp {
 		}
 	}
 
-	public static com.liferay.commerce.model.CommerceShipment reprocessShipment(
-			HttpPrincipal httpPrincipal, long commerceShipmentId)
+	public static com.liferay.commerce.model.CommerceShipment
+			reprocessCommerceShipment(
+				HttpPrincipal httpPrincipal, long commerceShipmentId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				CommerceShipmentServiceUtil.class, "reprocessShipment",
-				_reprocessShipmentParameterTypes15);
+				CommerceShipmentServiceUtil.class, "reprocessCommerceShipment",
+				_reprocessCommerceShipmentParameterTypes15);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceShipmentId);
@@ -1092,7 +1093,7 @@ public class CommerceShipmentServiceHttp {
 		_getCommerceShipmentsCountByOrderIdParameterTypes14 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _reprocessShipmentParameterTypes15 =
+	private static final Class<?>[] _reprocessCommerceShipmentParameterTypes15 =
 		new Class[] {long.class};
 	private static final Class<?>[] _updateAddressParameterTypes16 =
 		new Class[] {

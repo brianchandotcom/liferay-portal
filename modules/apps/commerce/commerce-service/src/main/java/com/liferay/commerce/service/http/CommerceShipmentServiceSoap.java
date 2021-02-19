@@ -366,12 +366,12 @@ public class CommerceShipmentServiceSoap {
 	}
 
 	public static com.liferay.commerce.model.CommerceShipmentSoap
-			reprocessShipment(long commerceShipmentId)
+			reprocessCommerceShipment(long commerceShipmentId)
 		throws RemoteException {
 
 		try {
 			com.liferay.commerce.model.CommerceShipment returnValue =
-				CommerceShipmentServiceUtil.reprocessShipment(
+				CommerceShipmentServiceUtil.reprocessCommerceShipment(
 					commerceShipmentId);
 
 			return com.liferay.commerce.model.CommerceShipmentSoap.toSoapModel(

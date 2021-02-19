@@ -120,6 +120,8 @@ public class UpdateOAuth2ApplicationMVCActionCommand
 			}
 		}
 
+		long clientCredentialUserId = ParamUtil.get(
+			request, "clientCredentialUserId", themeDisplay.getUserId());
 		String clientId = ParamUtil.get(request, "clientId", StringPool.BLANK);
 		String clientSecret = ParamUtil.get(
 			request, "clientSecret", StringPool.BLANK);
@@ -134,8 +136,8 @@ public class UpdateOAuth2ApplicationMVCActionCommand
 			StringUtil.splitLines(
 				ParamUtil.get(request, "redirectURIs", StringPool.BLANK)));
 		List<String> scopeAliasesList = Collections.emptyList();
-		long clientCredentialUserId = ParamUtil.get(
-			request, "clientCredentialUserId", themeDisplay.getUserId());
+		boolean trustedApplication = ParamUtil.getBoolean(
+			request, "trustedApplication");
 
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -158,7 +160,8 @@ public class UpdateOAuth2ApplicationMVCActionCommand
 						allowedGrantTypesList, clientCredentialUserId, clientId,
 						clientProfile.id(), clientSecret, description,
 						featuresList, homePageURL, 0, name, privacyPolicyURL,
-						redirectURIsList, scopeAliasesList, serviceContext);
+						redirectURIsList, scopeAliasesList, serviceContext,
+						trustedApplication);
 
 				response.setRenderParameter(
 					"oAuth2ApplicationId",
@@ -176,7 +179,7 @@ public class UpdateOAuth2ApplicationMVCActionCommand
 					oAuth2Application.getIconFileEntryId(), name,
 					privacyPolicyURL, redirectURIsList,
 					oAuth2Application.getOAuth2ApplicationScopeAliasesId(),
-					serviceContext);
+					serviceContext, trustedApplication);
 
 				long fileEntryId = ParamUtil.getLong(request, "fileEntryId");
 

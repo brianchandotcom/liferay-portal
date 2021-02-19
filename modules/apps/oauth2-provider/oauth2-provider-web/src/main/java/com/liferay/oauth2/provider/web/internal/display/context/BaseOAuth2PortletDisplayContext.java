@@ -86,6 +86,16 @@ public abstract class BaseOAuth2PortletDisplayContext {
 			OAuth2ProviderActionKeys.ACTION_ADD_APPLICATION);
 	}
 
+	public boolean hasAddTrustedApplicationPermission() {
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		return permissionChecker.hasPermission(
+			0, OAuth2ProviderConstants.RESOURCE_NAME,
+			OAuth2ProviderConstants.RESOURCE_NAME,
+			OAuth2ProviderActionKeys.ACTION_ADD_TRUSTED_APPLICATION);
+	}
+
 	public boolean hasDeletePermission(OAuth2Application oAuth2Application) {
 		return hasPermission(oAuth2Application, ActionKeys.DELETE);
 	}

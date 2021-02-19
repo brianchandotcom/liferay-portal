@@ -15,7 +15,7 @@
 function updateExperienceReducer(state, payload) {
 	let nextState = state;
 
-	const updatedExperience = payload;
+	const {updatedExperience} = payload;
 
 	const experience =
 		state.availableSegmentsExperiences[

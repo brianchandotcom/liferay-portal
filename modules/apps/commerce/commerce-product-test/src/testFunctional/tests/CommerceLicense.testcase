@@ -21,7 +21,6 @@ definition {
 	}
 
 	@description = "This is a test for covering the following LPS-121306 and LPS-128094."
-	@ignore = "true"
 	@priority = "5"
 	test AssertLicensesAppliedOnRestarts {
 		property commerce.enabled = "true";

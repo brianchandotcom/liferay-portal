@@ -14,9 +14,9 @@
 
 package com.liferay.dispatch.internal.portal.kernel.scheduler;
 
-import com.liferay.dispatch.portal.kernel.scheduler.ScheduledJobDispatchTrigger;
-import com.liferay.dispatch.portal.kernel.scheduler.DispatchSchedulerEngineHelper;
 import com.liferay.dispatch.model.DispatchTriggerModel;
+import com.liferay.dispatch.portal.kernel.scheduler.DispatchSchedulerEngineHelper;
+import com.liferay.dispatch.portal.kernel.scheduler.ScheduledJobDispatchTrigger;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.MessageBus;
@@ -42,6 +42,63 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = DispatchSchedulerEngineHelper.class)
 public class DispatchSchedulerEngineHelperImpl
 	implements DispatchSchedulerEngineHelper {
+
+	public List<ScheduledJobDispatchTrigger> getScheduledJobDispatchTriggers(
+		int start, int end) {
+
+		List<ScheduledJobDispatchTrigger> scheduledJobDispatchTriggers =
+			new ArrayList<>();
+
+		List<SchedulerResponse> schedulerResponses = null;
+
+		try {
+			schedulerResponses = _schedulerEngineHelper.getScheduledJobs();
+		}
+		catch (SchedulerException schedulerException) {
+			_log.error("Unable to get scheduler entries", schedulerException);
+
+			return scheduledJobDispatchTriggers;
+		}
+
+		for (SchedulerResponse schedulerResponse : schedulerResponses) {
+			String jobName = schedulerResponse.getJobName();
+
+			if (jobName.startsWith("DISPATCH_JOB_")) {
+				continue;
+			}
+
+			ScheduledJobDispatchTrigger scheduledJobDispatchTrigger =
+				new ScheduledJobDispatchTriggerImpl(
+					schedulerResponse.getDestinationName(),
+					schedulerResponse.getGroupName(),
+					schedulerResponse.getStorageType());
+
+			scheduledJobDispatchTrigger.setActive(true);
+			scheduledJobDispatchTrigger.setName(schedulerResponse.getJobName());
+			scheduledJobDispatchTrigger.setSystem(true);
+
+			Trigger trigger = schedulerResponse.getTrigger();
+
+			scheduledJobDispatchTrigger.setStartDate(trigger.getStartDate());
+
+			scheduledJobDispatchTriggers.add(scheduledJobDispatchTrigger);
+		}
+
+		Collections.sort(
+			scheduledJobDispatchTriggers,
+			Comparator.comparing(DispatchTriggerModel::getStartDate));
+
+		return scheduledJobDispatchTriggers.subList(
+			start, Math.min(end, scheduledJobDispatchTriggers.size()));
+	}
+
+	public Date getScheduledJobNextFireDate(
+			String jobName, String groupName, StorageType storageType)
+		throws SchedulerException {
+
+		return _schedulerEngineHelper.getNextFireTime(
+			jobName, groupName, storageType);
+	}
 
 	public int getScheduledJobsCount() {
 		int count = 0;
@@ -70,67 +127,6 @@ public class DispatchSchedulerEngineHelperImpl
 		return count;
 	}
 
-	public Date getScheduledJobNextFireDate(
-			String jobName, String groupName, StorageType storageType)
-		throws SchedulerException {
-
-		return _schedulerEngineHelper.getNextFireTime(
-			jobName, groupName, storageType);
-	}
-
-	public List<ScheduledJobDispatchTrigger> getScheduledJobDispatchTriggers(
-		int start, int end) {
-
-		List<ScheduledJobDispatchTrigger>
-			scheduledJobDispatchTriggers = new ArrayList<>();
-
-		List<SchedulerResponse> schedulerResponses = null;
-
-		try {
-			schedulerResponses = _schedulerEngineHelper.getScheduledJobs();
-		}
-		catch (SchedulerException schedulerException) {
-			_log.error("Unable to get scheduler entries", schedulerException);
-
-			return scheduledJobDispatchTriggers;
-		}
-
-		for (SchedulerResponse schedulerResponse : schedulerResponses) {
-			String jobName = schedulerResponse.getJobName();
-
-			if (jobName.startsWith("DISPATCH_JOB_")) {
-				continue;
-			}
-
-			ScheduledJobDispatchTrigger scheduledJobDispatchTrigger =
-				new ScheduledJobDispatchTriggerImpl(
-					schedulerResponse.getDestinationName(),
-					schedulerResponse.getGroupName(),
-					schedulerResponse.getStorageType());
-
-			scheduledJobDispatchTrigger.setActive(true);
-			scheduledJobDispatchTrigger.setName(
-				schedulerResponse.getJobName());
-			scheduledJobDispatchTrigger.setSystem(true);
-
-			Trigger trigger = schedulerResponse.getTrigger();
-
-			scheduledJobDispatchTrigger.setStartDate(
-				trigger.getStartDate());
-
-			scheduledJobDispatchTriggers.add(
-				scheduledJobDispatchTrigger);
-		}
-
-		Collections.sort(
-			scheduledJobDispatchTriggers,
-			Comparator.comparing(DispatchTriggerModel::getStartDate));
-
-		return scheduledJobDispatchTriggers.subList(
-			start,
-			Math.min(end, scheduledJobDispatchTriggers.size()));
-	}
-
 	public TriggerState getTriggerState(
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException {
@@ -140,8 +136,7 @@ public class DispatchSchedulerEngineHelperImpl
 	}
 
 	@Override
-	public void pause(
-			String jobName, String groupName, StorageType storageType)
+	public void pause(String jobName, String groupName, StorageType storageType)
 		throws SchedulerException {
 
 		_schedulerEngineHelper.pause(jobName, groupName, storageType);
@@ -156,8 +151,7 @@ public class DispatchSchedulerEngineHelperImpl
 	}
 
 	@Override
-	public void run(
-			String jobName, String groupName, StorageType storageType)
+	public void run(String jobName, String groupName, StorageType storageType)
 		throws SchedulerException {
 
 		SchedulerResponse schedulerResponse =

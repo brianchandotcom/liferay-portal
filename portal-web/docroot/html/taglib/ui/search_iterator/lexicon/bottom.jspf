@@ -65,6 +65,7 @@
 				{
 					cfg: {
 						keepSelection: rememberCheckBoxState,
+						rowClassNameActive: '<%= displayStyle.equals(SearchIteratorTag.DEFAULT_DISPLAY_STYLE) ? "table-active" : "active" %>',
 						rowSelector: rowSelector
 					},
 					fn: A.Plugin.SearchContainerSelect

@@ -76,7 +76,7 @@ AUI.add(
 
 				rowClassNameActive: {
 					validator: Lang.isString,
-					value: 'active table-active',
+					value: 'active',
 				},
 
 				rowSelector: {

@@ -16,7 +16,7 @@ package com.liferay.dispatch.web.internal.portlet.action;
 
 import com.liferay.dispatch.constants.DispatchPortletKeys;
 import com.liferay.dispatch.portal.kernel.scheduler.DispatchSchedulerEngineHelper;
-import com.liferay.dispatch.web.internal.display.context.ScheduledTaskDispatchTriggerDisplayContext;
+import com.liferay.dispatch.web.internal.display.context.ScheduledJobDispatchTriggerDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -33,11 +33,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + DispatchPortletKeys.DISPATCH,
-		"mvc.command.name=/dispatch/edit_scheduled_task_dispatch_trigger"
+		"mvc.command.name=/dispatch/edit_scheduled_job_dispatch_trigger"
 	},
 	service = MVCRenderCommand.class
 )
-public class EditScheduledTaskDispatchTriggerMVCRenderCommand
+public class EditScheduledJobDispatchTriggerMVCRenderCommand
 	implements MVCRenderCommand {
 
 	@Override
@@ -45,14 +45,14 @@ public class EditScheduledTaskDispatchTriggerMVCRenderCommand
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		ScheduledTaskDispatchTriggerDisplayContext
-			scheduledTaskDispatchTriggerDisplayContext =
-				new ScheduledTaskDispatchTriggerDisplayContext(
+		ScheduledJobDispatchTriggerDisplayContext
+			scheduledJobDispatchTriggerDisplayContext =
+				new ScheduledJobDispatchTriggerDisplayContext(
 					renderRequest, _dispatchSchedulerEngineHelper);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			scheduledTaskDispatchTriggerDisplayContext);
+			scheduledJobDispatchTriggerDisplayContext);
 
 		return "/view_scheduled_task.jsp";
 	}

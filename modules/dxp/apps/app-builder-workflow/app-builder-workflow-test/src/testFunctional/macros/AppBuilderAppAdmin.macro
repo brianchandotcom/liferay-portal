@@ -18,6 +18,10 @@ definition {
 	}
 
 	macro assertWorkflowAppName {
+		WaitForElementPresent(
+			key_workflowAppName = "${workflowAppName}",
+			locator1 = "AppBuilderAppAdmin#WORKFLOW_APP_NAME");
+
 		AssertElementPresent(
 			key_workflowAppName = "${workflowAppName}",
 			locator1 = "AppBuilderAppAdmin#WORKFLOW_APP_NAME");

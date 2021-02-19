@@ -15,25 +15,22 @@
 package com.liferay.portal.kernel.exception;
 
 /**
- * @author     Javier de Arcos
- * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
- *             DataLimitExceededException}
+ * @author Javier de Arcos
  */
-@Deprecated
-public class DataLimitException extends PortalException {
+public class DataLimitExceededException extends SystemException {
 
-	public DataLimitException() {
+	public DataLimitExceededException() {
 	}
 
-	public DataLimitException(String msg) {
+	public DataLimitExceededException(String msg) {
 		super(msg);
 	}
 
-	public DataLimitException(String msg, Throwable throwable) {
+	public DataLimitExceededException(String msg, Throwable throwable) {
 		super(msg, throwable);
 	}
 
-	public DataLimitException(Throwable throwable) {
+	public DataLimitExceededException(Throwable throwable) {
 		super(throwable);
 	}
 

@@ -69,6 +69,11 @@ public class OAuth2ServiceUpgrade implements UpgradeStepRegistrator {
 			UpgradeStepFactory.runSql(
 				"update OAuth2Application set clientCredentialUserId = " +
 					"userId, clientCredentialUserName = userName"));
+
+		registry.register(
+			"3.0.0", "4.0.0",
+			UpgradeStepFactory.addColumns(
+				OAuth2ApplicationTable.class, "trustedApplication BOOLEAN"));
 	}
 
 	@Reference

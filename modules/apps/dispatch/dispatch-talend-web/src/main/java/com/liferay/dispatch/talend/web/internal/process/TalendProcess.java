@@ -95,7 +95,7 @@ public class TalendProcess {
 		public Builder lastRunStartDate(Date lastRunStartDate) {
 			if (lastRunStartDate != null) {
 				SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-					DATE_PATTERN);
+					ISO_8601_PATTERN);
 
 				_contextParams.add(
 					"--context_param lastRunStartDate=".concat(

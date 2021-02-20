@@ -14,13 +14,14 @@
 
 package com.liferay.analytics.reports.web.internal.product.navigation.control.menu;
 
+import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItem;
 import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItemTracker;
+import com.liferay.analytics.reports.info.item.provider.AnalyticsReportsInfoItemObjectProvider;
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPortletKeys;
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsWebKeys;
+import com.liferay.analytics.reports.web.internal.info.item.provider.AnalyticsReportsInfoItemObjectProviderTracker;
 import com.liferay.analytics.reports.web.internal.util.AnalyticsReportsUtil;
 import com.liferay.info.item.InfoItemReference;
-import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
-import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -51,8 +52,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
-import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -135,8 +134,8 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 						infoItemReference.getClassPK(), httpServletRequest,
 						_portal, _portletURLFactory));
 			}
-			catch (WindowStateException windowStateException) {
-				ReflectionUtil.throwException(windowStateException);
+			catch (Exception exception) {
+				ReflectionUtil.throwException(exception);
 			}
 
 			values.put("cssClass", StringPool.BLANK);
@@ -189,19 +188,47 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 	public boolean isShow(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
+		InfoItemReference infoItemReference = _getInfoItemReference(
+			httpServletRequest);
+
+		AnalyticsReportsInfoItemObjectProvider<Object>
+			analyticsReportsInfoItemObjectProvider =
+				(AnalyticsReportsInfoItemObjectProvider<Object>)
+					_analyticsReportsInfoItemObjectProviderTracker.
+						getAnalyticsReportsInfoItemObjectProvider(
+							infoItemReference.getClassName());
+
+		if (analyticsReportsInfoItemObjectProvider == null) {
+			return false;
+		}
+
+		Object analyticsReportsInfoItemObject =
+			analyticsReportsInfoItemObjectProvider.
+				getAnalyticsReportsInfoItemObject(infoItemReference);
+
+		if (analyticsReportsInfoItemObject == null) {
+			return false;
+		}
+
+		AnalyticsReportsInfoItem<Object> analyticsReportsInfoItem =
+			(AnalyticsReportsInfoItem<Object>)
+				_analyticsReportsInfoItemTracker.getAnalyticsReportsInfoItem(
+					infoItemReference.getClassName());
+
+		if (analyticsReportsInfoItem == null) {
+			return false;
+		}
+
+		if (!analyticsReportsInfoItem.isShow(analyticsReportsInfoItemObject)) {
+			return false;
+		}
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
-			(LayoutDisplayPageObjectProvider<?>)httpServletRequest.getAttribute(
-				LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
-
 		if (!AnalyticsReportsUtil.isShowAnalyticsReportsPanel(
-				_analyticsReportsInfoItemTracker, themeDisplay.getCompanyId(),
-				httpServletRequest, themeDisplay.getLayout(),
-				layoutDisplayPageObjectProvider,
-				themeDisplay.getPermissionChecker(), _portal)) {
+				themeDisplay.getCompanyId(), httpServletRequest)) {
 
 			return false;
 		}
@@ -279,6 +306,10 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 
 	private static final String _ICON_TMPL_CONTENT = StringUtil.read(
 		AnalyticsReportsProductNavigationControlMenuEntry.class, "icon.tmpl");
+
+	@Reference
+	private AnalyticsReportsInfoItemObjectProviderTracker
+		_analyticsReportsInfoItemObjectProviderTracker;
 
 	@Reference
 	private AnalyticsReportsInfoItemTracker _analyticsReportsInfoItemTracker;

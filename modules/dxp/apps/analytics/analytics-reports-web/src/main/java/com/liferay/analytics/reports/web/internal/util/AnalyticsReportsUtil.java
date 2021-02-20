@@ -14,31 +14,19 @@
 
 package com.liferay.analytics.reports.web.internal.util;
 
-import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItem;
-import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItemTracker;
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPortletKeys;
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.PortletURL;
@@ -136,33 +124,8 @@ public class AnalyticsReportsUtil {
 	}
 
 	public static boolean isShowAnalyticsReportsPanel(
-			AnalyticsReportsInfoItemTracker analyticsReportsInfoItemTracker,
-			long companyId, HttpServletRequest httpServletRequest,
-			Layout layout,
-			LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider,
-			PermissionChecker permissionChecker, Portal portal)
+			long companyId, HttpServletRequest httpServletRequest)
 		throws PortalException {
-
-		if (!layout.isTypeAssetDisplay()) {
-			return false;
-		}
-
-		if ((layoutDisplayPageObjectProvider == null) ||
-			(layoutDisplayPageObjectProvider.getDisplayObject() == null)) {
-
-			return false;
-		}
-
-		if (!_hasAnalyticsReportsInfoItem(
-				analyticsReportsInfoItemTracker,
-				layoutDisplayPageObjectProvider, portal)) {
-
-			return false;
-		}
-
-		if (_isEmbeddedPersonalApplicationLayout(layout)) {
-			return false;
-		}
 
 		String layoutMode = ParamUtil.getString(
 			httpServletRequest, "p_l_mode", Constants.VIEW);
@@ -183,75 +146,7 @@ public class AnalyticsReportsUtil {
 			return false;
 		}
 
-		if (!_hasEditPermission(
-				layoutDisplayPageObjectProvider.getClassNameId(),
-				layoutDisplayPageObjectProvider.getClassPK(), layout,
-				permissionChecker)) {
-
-			return false;
-		}
-
 		return true;
-	}
-
-	private static boolean _hasAnalyticsReportsInfoItem(
-		AnalyticsReportsInfoItemTracker analyticsReportsInfoItemTracker,
-		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider,
-		Portal portal) {
-
-		AnalyticsReportsInfoItem<?> analyticsReportsInfoItem =
-			analyticsReportsInfoItemTracker.getAnalyticsReportsInfoItem(
-				portal.getClassName(
-					layoutDisplayPageObjectProvider.getClassNameId()));
-
-		if (analyticsReportsInfoItem == null) {
-			return false;
-		}
-
-		return true;
-	}
-
-	private static boolean _hasEditPermission(
-			long classNameId, long classPK, Layout layout,
-			PermissionChecker permissionChecker)
-		throws PortalException {
-
-		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.
-				getAssetRendererFactoryByClassNameId(classNameId);
-
-		AssetRenderer<?> assetRenderer = null;
-
-		if (assetRendererFactory != null) {
-			assetRenderer = assetRendererFactory.getAssetRenderer(classPK);
-		}
-
-		if (((assetRenderer == null) ||
-			 !assetRenderer.hasEditPermission(permissionChecker)) &&
-			!LayoutPermissionUtil.contains(
-				permissionChecker, layout, ActionKeys.UPDATE)) {
-
-			return false;
-		}
-
-		return true;
-	}
-
-	private static boolean _isEmbeddedPersonalApplicationLayout(Layout layout) {
-		if (layout.isTypeControlPanel()) {
-			return false;
-		}
-
-		String layoutFriendlyURL = layout.getFriendlyURL();
-
-		if (layout.isSystem() &&
-			layoutFriendlyURL.equals(
-				PropsUtil.get(PropsKeys.CONTROL_PANEL_LAYOUT_FRIENDLY_URL))) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 }

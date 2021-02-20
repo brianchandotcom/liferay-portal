@@ -317,7 +317,7 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		PortletEntry.inputName(name = "Testing");
+		PortletEntry.inputName(name = "Structure Title");
 
 		DataEngine.addFields(fieldNameList = "Web Content,Date,Rich Text,Single Selection,Grid,Select from List,Numeric,Link to Page,Image,Upload,Color,Text,Multiple Selection,Geolocation,Separator");
 
@@ -398,7 +398,7 @@ definition {
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "Testing");
+			rowEntry = "Structure Title");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 

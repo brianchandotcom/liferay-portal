@@ -88,7 +88,7 @@ public abstract class BaseSearchResultUtilTestCase {
 	protected abstract SearchResultTranslator createSearchResultTranslator();
 
 	protected void setUpClassNameLocalService() {
-		classNameLocalService = new ClassNameLocalServiceWrapper(null) {
+		classNameLocalService = new ClassNameLocalServiceWrapper() {
 
 			@Override
 			public ClassName getClassName(long classNameId) {

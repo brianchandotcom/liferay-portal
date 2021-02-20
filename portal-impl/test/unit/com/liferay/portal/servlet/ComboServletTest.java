@@ -79,7 +79,7 @@ public class ComboServletTest extends PowerMockito {
 
 		ReflectionTestUtil.setFieldValue(
 			PrefsPropsUtil.class, "_portalPreferencesLocalService",
-			new PortalPreferencesLocalServiceWrapper(null) {
+			new PortalPreferencesLocalServiceWrapper() {
 
 				@Override
 				public PortletPreferences getPreferences(
@@ -110,7 +110,7 @@ public class ComboServletTest extends PowerMockito {
 
 		ReflectionTestUtil.setFieldValue(
 			PortletLocalServiceUtil.class, "_service",
-			new PortletLocalServiceWrapper(null) {
+			new PortletLocalServiceWrapper() {
 
 				@Override
 				public Portlet getPortletById(String portletId) {

@@ -35,16 +35,6 @@ import org.osgi.service.component.annotations.Reference;
 public class BlogsReadingTimeEntryLocalServiceWrapper
 	extends BlogsEntryLocalServiceWrapper {
 
-	public BlogsReadingTimeEntryLocalServiceWrapper() {
-		super(null);
-	}
-
-	public BlogsReadingTimeEntryLocalServiceWrapper(
-		BlogsEntryLocalService blogsEntryLocalService) {
-
-		super(blogsEntryLocalService);
-	}
-
 	@Override
 	public BlogsEntry addEntry(
 			String externalReferenceCode, long userId, String title,

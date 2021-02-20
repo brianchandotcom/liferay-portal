@@ -16,7 +16,6 @@ package com.liferay.document.library.opener.onedrive.web.internal.service;
 
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
-import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLAppServiceWrapper;
 import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.document.library.opener.constants.DLOpenerFileEntryReferenceConstants;
@@ -56,14 +55,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ServiceWrapper.class)
 public class DLOpenerOneDriveDLAppServiceWrapper extends DLAppServiceWrapper {
-
-	public DLOpenerOneDriveDLAppServiceWrapper() {
-		super(null);
-	}
-
-	public DLOpenerOneDriveDLAppServiceWrapper(DLAppService dlAppService) {
-		super(dlAppService);
-	}
 
 	@Override
 	public void cancelCheckOut(long fileEntryId) throws PortalException {

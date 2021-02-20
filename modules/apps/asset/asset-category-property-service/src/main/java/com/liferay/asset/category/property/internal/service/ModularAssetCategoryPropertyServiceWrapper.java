@@ -33,17 +33,6 @@ import org.osgi.service.component.annotations.Reference;
 public class ModularAssetCategoryPropertyServiceWrapper
 	extends AssetCategoryPropertyServiceWrapper {
 
-	public ModularAssetCategoryPropertyServiceWrapper() {
-		super(null);
-	}
-
-	public ModularAssetCategoryPropertyServiceWrapper(
-		com.liferay.asset.kernel.service.AssetCategoryPropertyService
-			assetCategoryPropertyService) {
-
-		super(assetCategoryPropertyService);
-	}
-
 	@Override
 	public AssetCategoryProperty addCategoryProperty(
 			long entryId, String key, String value)

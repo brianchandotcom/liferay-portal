@@ -20,7 +20,6 @@ import com.liferay.asset.category.property.service.AssetCategoryPropertyLocalSer
 import com.liferay.asset.kernel.exception.AssetCategoryLimitException;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
-import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceWrapper;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.petra.string.CharPool;
@@ -50,16 +49,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = ServiceWrapper.class)
 public class AssetCategoryPropertyAssetCategoryLocalServiceWrapper
 	extends AssetCategoryLocalServiceWrapper {
-
-	public AssetCategoryPropertyAssetCategoryLocalServiceWrapper() {
-		super(null);
-	}
-
-	public AssetCategoryPropertyAssetCategoryLocalServiceWrapper(
-		AssetCategoryLocalService assetCategoryLocalService) {
-
-		super(assetCategoryLocalService);
-	}
 
 	@Override
 	public AssetCategory addCategory(

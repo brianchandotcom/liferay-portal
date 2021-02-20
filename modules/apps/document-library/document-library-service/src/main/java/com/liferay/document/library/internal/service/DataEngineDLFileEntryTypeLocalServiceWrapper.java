@@ -15,7 +15,6 @@
 package com.liferay.document.library.internal.service;
 
 import com.liferay.document.library.kernel.model.DLFileEntryType;
-import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceWrapper;
 import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -37,16 +36,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = ServiceWrapper.class)
 public class DataEngineDLFileEntryTypeLocalServiceWrapper
 	extends DLFileEntryTypeLocalServiceWrapper {
-
-	public DataEngineDLFileEntryTypeLocalServiceWrapper() {
-		this(null);
-	}
-
-	public DataEngineDLFileEntryTypeLocalServiceWrapper(
-		DLFileEntryTypeLocalService dlFileEntryTypeLocalService) {
-
-		super(dlFileEntryTypeLocalService);
-	}
 
 	@Override
 	public DLFileEntryType addDLFileEntryType(DLFileEntryType dlFileEntryType) {

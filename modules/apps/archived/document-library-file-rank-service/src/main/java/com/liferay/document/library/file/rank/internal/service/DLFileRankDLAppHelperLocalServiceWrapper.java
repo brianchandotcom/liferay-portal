@@ -16,7 +16,6 @@ package com.liferay.document.library.file.rank.internal.service;
 
 import com.liferay.document.library.file.rank.service.DLFileRankLocalService;
 import com.liferay.document.library.kernel.model.DLFolder;
-import com.liferay.document.library.kernel.service.DLAppHelperLocalService;
 import com.liferay.document.library.kernel.service.DLAppHelperLocalServiceWrapper;
 import com.liferay.document.library.kernel.util.DLAppHelperThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,16 +34,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = ServiceWrapper.class)
 public class DLFileRankDLAppHelperLocalServiceWrapper
 	extends DLAppHelperLocalServiceWrapper {
-
-	public DLFileRankDLAppHelperLocalServiceWrapper() {
-		super(null);
-	}
-
-	public DLFileRankDLAppHelperLocalServiceWrapper(
-		DLAppHelperLocalService dlAppHelperLocalService) {
-
-		super(dlAppHelperLocalService);
-	}
 
 	@Override
 	public void deleteFileEntry(FileEntry fileEntry) throws PortalException {

@@ -19,7 +19,6 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.LayoutPrototype;
-import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalServiceWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
@@ -40,16 +39,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = ServiceWrapper.class)
 public class LayoutPageTemplateLayoutPrototypeLocalServiceWrapper
 	extends LayoutPrototypeLocalServiceWrapper {
-
-	public LayoutPageTemplateLayoutPrototypeLocalServiceWrapper() {
-		super(null);
-	}
-
-	public LayoutPageTemplateLayoutPrototypeLocalServiceWrapper(
-		LayoutPrototypeLocalService layoutPrototypeLocalService) {
-
-		super(layoutPrototypeLocalService);
-	}
 
 	@Override
 	public LayoutPrototype addLayoutPrototype(

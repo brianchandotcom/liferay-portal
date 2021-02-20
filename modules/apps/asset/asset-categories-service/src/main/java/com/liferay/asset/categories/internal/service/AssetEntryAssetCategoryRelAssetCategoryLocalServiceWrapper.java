@@ -44,16 +44,6 @@ import org.osgi.service.component.annotations.Reference;
 public class AssetEntryAssetCategoryRelAssetCategoryLocalServiceWrapper
 	extends AssetCategoryLocalServiceWrapper {
 
-	public AssetEntryAssetCategoryRelAssetCategoryLocalServiceWrapper() {
-		super(null);
-	}
-
-	public AssetEntryAssetCategoryRelAssetCategoryLocalServiceWrapper(
-		AssetCategoryLocalService assetCategoryLocalService) {
-
-		super(assetCategoryLocalService);
-	}
-
 	@Override
 	public AssetCategory deleteCategory(
 			AssetCategory category, boolean skipRebuildTree)

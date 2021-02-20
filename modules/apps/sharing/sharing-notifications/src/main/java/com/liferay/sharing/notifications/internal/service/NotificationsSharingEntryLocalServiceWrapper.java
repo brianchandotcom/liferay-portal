@@ -30,7 +30,6 @@ import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.notifications.internal.helper.SharingNotificationHelper;
 import com.liferay.sharing.notifications.internal.util.SharingNotificationSubcriptionSender;
 import com.liferay.sharing.security.permission.SharingEntryAction;
-import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.sharing.service.SharingEntryLocalServiceWrapper;
 
 import java.util.Collection;
@@ -45,16 +44,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = ServiceWrapper.class)
 public class NotificationsSharingEntryLocalServiceWrapper
 	extends SharingEntryLocalServiceWrapper {
-
-	public NotificationsSharingEntryLocalServiceWrapper() {
-		super(null);
-	}
-
-	public NotificationsSharingEntryLocalServiceWrapper(
-		SharingEntryLocalService sharingEntryLocalService) {
-
-		super(sharingEntryLocalService);
-	}
 
 	@Override
 	public SharingEntry addSharingEntry(

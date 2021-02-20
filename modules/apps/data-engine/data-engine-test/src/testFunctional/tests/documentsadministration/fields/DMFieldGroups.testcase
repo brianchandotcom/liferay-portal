@@ -118,7 +118,55 @@ definition {
 	test DeleteFieldGroupOnStructure {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98077 DeleteFieldGroupOnStructure pending implementation
+		var dmDocumentTypeTitle = "DM Document Type";
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Documents and Media");
+
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.add(
+			dmDocumentTypeFieldNames = "Text",
+			dmDocumentTypeName = "${dmDocumentTypeTitle}");
+
+		LexiconEntry.openEntryMenu(rowEntry = "${dmDocumentTypeTitle}");
+
+		MenuItem.clickNoError(menuItem = "Edit");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric",
+			targetFieldLabel = "Text");
+
+		DDLDataDefinition.save();
+
+		LexiconEntry.openEntryMenu(rowEntry = "${dmDocumentTypeTitle}");
+
+		MenuItem.clickNoError(menuItem = "Edit");
+
+		Click(
+			index = "1",
+			locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP_INDEX");
+
+		Click(locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP_VERTICAL_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Delete");
+
+		DDLDataDefinition.save();
+
+		LexiconEntry.openEntryMenu(rowEntry = "${dmDocumentTypeTitle}");
+
+		MenuItem.clickNoError(menuItem = "Edit");
+
+		AssertElementNotPresent(
+			index = "1",
+			locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP_INDEX",
+			value1 = "Field Group");
 	}
 
 	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"

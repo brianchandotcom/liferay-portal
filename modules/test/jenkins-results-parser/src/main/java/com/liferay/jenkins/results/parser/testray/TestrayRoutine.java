@@ -132,12 +132,11 @@ public class TestrayRoutine {
 						return _testrayBuildsByName.get(buildName);
 					}
 				}
+
+				current++;
 			}
 			catch (IOException ioException) {
 				throw new RuntimeException(ioException);
-			}
-			finally {
-				current++;
 			}
 		}
 

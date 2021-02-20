@@ -299,10 +299,8 @@ definition {
 			locator1 = "Wiki#FRONTPAGE_DEFAULT_MESSAGE",
 			value1 = "${emptyPageMessage}");
 
-		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
-
-		Type(
-			locator1 = "CKEditor#BODY",
+		Type.typeCKEditorWaitForCKEditor(
+			locator1 = "CKEditor#BODY_FIELD",
 			value1 = "${wikiPageContent}");
 
 		if ("${rtl}" == "true") {
@@ -311,6 +309,8 @@ definition {
 		else {
 			var textDirection = "ltr";
 		}
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 		AssertElementPresent(locator1 = "//body[contains(@class,'cke_contents_${textDirection}')]");
 

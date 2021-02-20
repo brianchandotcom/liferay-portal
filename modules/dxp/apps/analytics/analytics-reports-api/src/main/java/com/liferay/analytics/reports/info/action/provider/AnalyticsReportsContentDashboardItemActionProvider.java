@@ -16,6 +16,7 @@ package com.liferay.analytics.reports.info.action.provider;
 
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.item.action.exception.ContentDashboardItemActionException;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,11 +26,43 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface AnalyticsReportsContentDashboardItemActionProvider {
 
+	public default ContentDashboardItemAction getContentDashboardItemAction(
+			HttpServletRequest httpServletRequest,
+			InfoItemReference infoItemReference)
+		throws ContentDashboardItemActionException {
+
+		return getContentDashboardItemAction(
+			infoItemReference.getClassName(), infoItemReference.getClassPK(),
+			httpServletRequest);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #getContentDashboardItemAction(
+	 *             HttpServletRequest, InfoItemReference)}
+	 */
+	@Deprecated
 	public ContentDashboardItemAction getContentDashboardItemAction(
 			String className, long classPK,
 			HttpServletRequest httpServletRequest)
 		throws ContentDashboardItemActionException;
 
+	public default boolean isShowContentDashboardItemAction(
+			HttpServletRequest httpServletRequest,
+			InfoItemReference infoItemReference)
+		throws PortalException {
+
+		return isShowContentDashboardItemAction(
+			infoItemReference.getClassName(), infoItemReference.getClassPK(),
+			httpServletRequest);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #isShowContentDashboardItemAction(
+	 *             HttpServletRequest, InfoItemReference)}
+	 */
+	@Deprecated
 	public boolean isShowContentDashboardItemAction(
 			String className, long classPK,
 			HttpServletRequest httpServletRequest)

@@ -50,26 +50,23 @@ public class AnalyticsReportsContentDashboardItemActionProviderImpl
 
 	@Override
 	public ContentDashboardItemAction getContentDashboardItemAction(
-			String className, long classPK,
-			HttpServletRequest httpServletRequest)
+			HttpServletRequest httpServletRequest,
+			InfoItemReference infoItemReference)
 		throws ContentDashboardItemActionException {
 
 		try {
 			if (!isShowContentDashboardItemAction(
-					className, classPK, httpServletRequest)) {
+					httpServletRequest, infoItemReference)) {
 
 				return null;
 			}
 
-			LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
-				_getLayoutDisplayPageObjectProvider(className, classPK);
-
 			return new AnalyticsReportsContentDashboardItemAction(
 				_resourceBundleLoader,
 				AnalyticsReportsUtil.getAnalyticsReportsPanelURL(
-					layoutDisplayPageObjectProvider.getClassNameId(),
-					layoutDisplayPageObjectProvider.getClassPK(),
-					httpServletRequest, _portal, _portletURLFactory));
+					_portal.getClassNameId(infoItemReference.getClassName()),
+					infoItemReference.getClassPK(), httpServletRequest, _portal,
+					_portletURLFactory));
 		}
 		catch (PortalException | WindowStateException exception) {
 			throw new ContentDashboardItemActionException(exception);
@@ -77,13 +74,28 @@ public class AnalyticsReportsContentDashboardItemActionProviderImpl
 	}
 
 	@Override
-	public boolean isShowContentDashboardItemAction(
+	public ContentDashboardItemAction getContentDashboardItemAction(
 			String className, long classPK,
 			HttpServletRequest httpServletRequest)
+		throws ContentDashboardItemActionException {
+
+		try {
+			return getContentDashboardItemAction(
+				httpServletRequest, new InfoItemReference(className, classPK));
+		}
+		catch (PortalException portalException) {
+			throw new ContentDashboardItemActionException(portalException);
+		}
+	}
+
+	@Override
+	public boolean isShowContentDashboardItemAction(
+			HttpServletRequest httpServletRequest,
+			InfoItemReference infoItemReference)
 		throws PortalException {
 
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
-			_getLayoutDisplayPageObjectProvider(className, classPK);
+			_getLayoutDisplayPageObjectProvider(infoItemReference);
 
 		if ((layoutDisplayPageObjectProvider == null) ||
 			(layoutDisplayPageObjectProvider.getDisplayObject() == null)) {
@@ -120,19 +132,31 @@ public class AnalyticsReportsContentDashboardItemActionProviderImpl
 		return false;
 	}
 
+	@Override
+	public boolean isShowContentDashboardItemAction(
+			String className, long classPK,
+			HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		return isShowContentDashboardItemAction(
+			httpServletRequest, new InfoItemReference(className, classPK));
+	}
+
 	private LayoutDisplayPageObjectProvider<?>
-		_getLayoutDisplayPageObjectProvider(String className, long classPK) {
+		_getLayoutDisplayPageObjectProvider(
+			InfoItemReference infoItemReference) {
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			_layoutDisplayPageProviderTracker.
-				getLayoutDisplayPageProviderByClassName(className);
+				getLayoutDisplayPageProviderByClassName(
+					infoItemReference.getClassName());
 
 		if (layoutDisplayPageProvider == null) {
 			return null;
 		}
 
 		return layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
-			new InfoItemReference(className, classPK));
+			infoItemReference);
 	}
 
 	@Reference

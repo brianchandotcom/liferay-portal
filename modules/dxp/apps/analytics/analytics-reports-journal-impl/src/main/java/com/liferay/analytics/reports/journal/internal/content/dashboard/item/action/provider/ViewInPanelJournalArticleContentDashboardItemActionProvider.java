@@ -18,6 +18,7 @@ import com.liferay.analytics.reports.info.action.provider.AnalyticsReportsConten
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.item.action.exception.ContentDashboardItemActionException;
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -47,8 +48,10 @@ public class ViewInPanelJournalArticleContentDashboardItemActionProvider
 
 		return _analyticsReportsContentDashboardItemActionProvider.
 			getContentDashboardItemAction(
-				JournalArticle.class.getName(),
-				journalArticle.getResourcePrimKey(), httpServletRequest);
+				httpServletRequest,
+				new InfoItemReference(
+					JournalArticle.class.getName(),
+					journalArticle.getResourcePrimKey()));
 	}
 
 	@Override
@@ -72,8 +75,10 @@ public class ViewInPanelJournalArticleContentDashboardItemActionProvider
 		try {
 			return _analyticsReportsContentDashboardItemActionProvider.
 				isShowContentDashboardItemAction(
-					JournalArticle.class.getName(),
-					journalArticle.getResourcePrimKey(), httpServletRequest);
+					httpServletRequest,
+					new InfoItemReference(
+						JournalArticle.class.getName(),
+						journalArticle.getResourcePrimKey()));
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException, portalException);

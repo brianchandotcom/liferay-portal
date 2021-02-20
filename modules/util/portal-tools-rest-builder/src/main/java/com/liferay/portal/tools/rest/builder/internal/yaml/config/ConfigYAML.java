@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.rest.builder.internal.yaml.config;
 
+import com.liferay.portal.kernel.util.ReleaseInfo;
+
 /**
  * @author Peter Shin
  */
@@ -91,6 +93,14 @@ public class ConfigYAML {
 		return _generateREST;
 	}
 
+	public boolean isVersionGTE_7_4_0() {
+		if (_buildNumber >= ReleaseInfo.RELEASE_7_4_0_BUILD_NUMBER) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isWarningsEnabled() {
 		return _warningsEnabled;
 	}
@@ -109,6 +119,10 @@ public class ConfigYAML {
 
 	public void setAuthor(String author) {
 		_author = author;
+	}
+
+	public void setBuildNumber(int buildNumber) {
+		_buildNumber = buildNumber;
 	}
 
 	public void setClientDir(String clientDir) {
@@ -185,6 +199,7 @@ public class ConfigYAML {
 	private String _apiPackagePath;
 	private Application _application;
 	private String _author;
+	private int _buildNumber;
 	private String _clientDir;
 	private String _clientMavenGroupId;
 	private boolean _forceClientVersionDescription = true;

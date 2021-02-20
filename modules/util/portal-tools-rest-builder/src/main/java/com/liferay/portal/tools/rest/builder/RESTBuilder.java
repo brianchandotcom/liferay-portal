@@ -55,7 +55,9 @@ import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Schema;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.InputStream;
+import java.io.Reader;
 
 import java.net.URL;
 
@@ -72,6 +74,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Properties;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.stream.Stream;
@@ -149,6 +152,29 @@ public class RESTBuilder {
 				"Error in file \"rest-config.yaml\": " +
 					exception.getMessage());
 		}
+
+		String absolutePath = _configDir.getAbsolutePath();
+
+		File baseDir = new File(
+			absolutePath.substring(0, absolutePath.indexOf("/modules/")));
+
+		Properties properties = new Properties();
+
+		_readProperties(properties, new File(baseDir, "release.properties"));
+
+		for (File file : baseDir.listFiles()) {
+			String fileName = file.getName();
+
+			if (fileName.startsWith("release.") &&
+				fileName.endsWith(".properties") &&
+				!fileName.equals("release.properties")) {
+
+				_readProperties(properties, file);
+			}
+		}
+
+		_configYAML.setBuildNumber(
+			Integer.valueOf(properties.getProperty("release.info.build")));
 	}
 
 	public RESTBuilder(RESTBuilderArgs restBuilderArgs) throws Exception {
@@ -1911,6 +1937,16 @@ public class RESTBuilder {
 			"schemaVarNames", TextFormatter.formatPlural(schemaVarName));
 
 		context.put("relatedSchemaNames", relatedSchemaNames);
+	}
+
+	private void _readProperties(Properties properties, File propertiesFile) {
+		try (Reader reader = new FileReader(propertiesFile)) {
+			properties.load(reader);
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(
+				"Unable to load properties from " + propertiesFile, exception);
+		}
 	}
 
 	private void _validate(String yamlString) {

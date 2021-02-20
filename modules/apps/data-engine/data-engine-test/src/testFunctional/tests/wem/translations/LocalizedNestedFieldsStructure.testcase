@@ -645,7 +645,7 @@ definition {
 
 		WebContentStructures.saveCP();
 
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 

@@ -517,15 +517,11 @@ definition {
 	test TranslateStructureWithAllFieldsNested {
 		property portal.acceptance = "false";
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		NavItem.click(navItem = "Structures");
+		NavItem.gotoStructures();
 
-		LexiconEntry.gotoAdd();
-
-		PortletEntry.inputName(name = "Testing");
+		WebContentStructures.addCP(structureName = "WC Structure Title");
 
 		DataEngine.addFields(fieldNameList = "Web Content,Date,Rich Text,Single Selection,Grid,Select from List");
 
@@ -585,7 +581,7 @@ definition {
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
-		WebContentStructures.addName(structureName = "Testando");
+		WebContentStructures.addName(structureName = "WC Titulo Estrutura");
 
 		FormViewBuilder.editFieldLabel(
 			fieldLabel = "Text",
@@ -647,11 +643,9 @@ definition {
 			fieldLabel = "Color",
 			label = "Cor");
 
-		WebContentStructures.saveCP(structureName = "Testando");
+		WebContentStructures.saveCP();
 
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "Testing");
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 

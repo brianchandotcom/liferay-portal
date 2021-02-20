@@ -393,7 +393,7 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 	protected void mockUserNotificationEventLocalServiceUtil(int count) {
 		ReflectionTestUtil.setFieldValue(
 			UserNotificationEventLocalServiceUtil.class, "_service",
-			new UserNotificationEventLocalServiceWrapper(null) {
+			new UserNotificationEventLocalServiceWrapper() {
 
 				@Override
 				public int getUserNotificationEventsCount(
@@ -456,7 +456,7 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 	private static void _setUpGroupLocalServiceUtil() {
 		ReflectionTestUtil.setFieldValue(
 			GroupLocalServiceUtil.class, "_service",
-			new GroupLocalServiceWrapper(null) {
+			new GroupLocalServiceWrapper() {
 
 				@Override
 				public Group getGroup(long groupId) {

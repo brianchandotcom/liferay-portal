@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.service;
 
+import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -38,6 +40,8 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.stream.Stream;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -119,6 +123,10 @@ public interface CompanyLocalService
 			String webId, String virtualHostname, String mx, boolean system,
 			int maxUsers, boolean active)
 		throws PortalException;
+
+	public <T, E extends Exception> Stream applyForEachCompanyId(
+		UnsafeFunction<Long, T, E> unsafeFunction,
+		BiConsumer<Long, E> biConsumer);
 
 	/**
 	 * Returns the company with the web domain.
@@ -304,6 +312,37 @@ public interface CompanyLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Company fetchCompanyByVirtualHost(String virtualHostname);
+
+	public <E extends Exception> void forEach(
+			UnsafeConsumer<Company, E> unsafeConsumer)
+		throws E;
+
+	public <E extends Exception> void forEach(
+		UnsafeConsumer<Company, E> unsafeConsumer,
+		BiConsumer<Company, E> biConsumer);
+
+	public <E extends Exception> void forEach(
+		UnsafeConsumer<Company, E> unsafeConsumer,
+		BiConsumer<Company, E> biConsumer, List<Company> companies);
+
+	public <E extends Exception> void forEach(
+			UnsafeConsumer<Company, E> unsafeConsumer, List<Company> companies)
+		throws E;
+
+	public <E extends Exception> void forEachCompanyId(
+			UnsafeConsumer<Long, E> unsafeConsumer)
+		throws E;
+
+	public <E extends Exception> void forEachCompanyId(
+		UnsafeConsumer<Long, E> unsafeConsumer, BiConsumer<Long, E> biConsumer);
+
+	public <E extends Exception> void forEachCompanyId(
+		UnsafeConsumer<Long, E> unsafeConsumer, BiConsumer<Long, E> biConsumer,
+		long[] companyIds);
+
+	public <E extends Exception> void forEachCompanyId(
+			UnsafeConsumer<Long, E> unsafeConsumer, long[] companyIds)
+		throws E;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();

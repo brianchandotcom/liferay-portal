@@ -110,6 +110,15 @@ public class CompanyLocalServiceUtil {
 			webId, virtualHostname, mx, system, maxUsers, active);
 	}
 
+	public static <T, E extends Exception> java.util.stream.Stream
+		applyForEachCompanyId(
+			com.liferay.petra.function.UnsafeFunction<Long, T, E>
+				unsafeFunction,
+			java.util.function.BiConsumer<Long, E> biConsumer) {
+
+		return getService().applyForEachCompanyId(unsafeFunction, biConsumer);
+	}
+
 	/**
 	 * Returns the company with the web domain.
 	 *
@@ -326,6 +335,71 @@ public class CompanyLocalServiceUtil {
 	 */
 	public static Company fetchCompanyByVirtualHost(String virtualHostname) {
 		return getService().fetchCompanyByVirtualHost(virtualHostname);
+	}
+
+	public static <E extends Exception> void forEach(
+			com.liferay.petra.function.UnsafeConsumer
+				<com.liferay.portal.kernel.model.Company, E> unsafeConsumer)
+		throws E {
+
+		getService().forEach(unsafeConsumer);
+	}
+
+	public static <E extends Exception> void forEach(
+		com.liferay.petra.function.UnsafeConsumer
+			<com.liferay.portal.kernel.model.Company, E> unsafeConsumer,
+		java.util.function.BiConsumer
+			<com.liferay.portal.kernel.model.Company, E> biConsumer) {
+
+		getService().forEach(unsafeConsumer, biConsumer);
+	}
+
+	public static <E extends Exception> void forEach(
+		com.liferay.petra.function.UnsafeConsumer
+			<com.liferay.portal.kernel.model.Company, E> unsafeConsumer,
+		java.util.function.BiConsumer
+			<com.liferay.portal.kernel.model.Company, E> biConsumer,
+		java.util.List<com.liferay.portal.kernel.model.Company> companies) {
+
+		getService().forEach(unsafeConsumer, biConsumer, companies);
+	}
+
+	public static <E extends Exception> void forEach(
+			com.liferay.petra.function.UnsafeConsumer
+				<com.liferay.portal.kernel.model.Company, E> unsafeConsumer,
+			java.util.List<com.liferay.portal.kernel.model.Company> companies)
+		throws E {
+
+		getService().forEach(unsafeConsumer, companies);
+	}
+
+	public static <E extends Exception> void forEachCompanyId(
+			com.liferay.petra.function.UnsafeConsumer<Long, E> unsafeConsumer)
+		throws E {
+
+		getService().forEachCompanyId(unsafeConsumer);
+	}
+
+	public static <E extends Exception> void forEachCompanyId(
+		com.liferay.petra.function.UnsafeConsumer<Long, E> unsafeConsumer,
+		java.util.function.BiConsumer<Long, E> biConsumer) {
+
+		getService().forEachCompanyId(unsafeConsumer, biConsumer);
+	}
+
+	public static <E extends Exception> void forEachCompanyId(
+		com.liferay.petra.function.UnsafeConsumer<Long, E> unsafeConsumer,
+		java.util.function.BiConsumer<Long, E> biConsumer, long[] companyIds) {
+
+		getService().forEachCompanyId(unsafeConsumer, biConsumer, companyIds);
+	}
+
+	public static <E extends Exception> void forEachCompanyId(
+			com.liferay.petra.function.UnsafeConsumer<Long, E> unsafeConsumer,
+			long[] companyIds)
+		throws E {
+
+		getService().forEachCompanyId(unsafeConsumer, companyIds);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery

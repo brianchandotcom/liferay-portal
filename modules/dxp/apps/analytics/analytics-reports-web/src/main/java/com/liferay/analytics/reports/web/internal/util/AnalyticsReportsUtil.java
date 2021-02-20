@@ -56,7 +56,7 @@ public class AnalyticsReportsUtil {
 		"https://www.liferay.com/products/analytics-cloud/get-started";
 
 	public static String getAnalyticsReportsPanelURL(
-			long classNameId, long classPK, long groupId,
+			long classNameId, long classPK,
 			HttpServletRequest httpServletRequest, Portal portal,
 			PortletURLFactory portletURLFactory)
 		throws WindowStateException {
@@ -70,7 +70,6 @@ public class AnalyticsReportsUtil {
 			"redirect", portal.getCurrentCompleteURL(httpServletRequest));
 		portletURL.setParameter("classNameId", String.valueOf(classNameId));
 		portletURL.setParameter("classPK", String.valueOf(classPK));
-		portletURL.setParameter("groupId", String.valueOf(groupId));
 		portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 
 		return portletURL.toString();

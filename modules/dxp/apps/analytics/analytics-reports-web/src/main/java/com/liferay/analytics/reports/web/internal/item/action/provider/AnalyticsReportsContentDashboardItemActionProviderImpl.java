@@ -69,7 +69,6 @@ public class AnalyticsReportsContentDashboardItemActionProviderImpl
 				AnalyticsReportsUtil.getAnalyticsReportsPanelURL(
 					layoutDisplayPageObjectProvider.getClassNameId(),
 					layoutDisplayPageObjectProvider.getClassPK(),
-					layoutDisplayPageObjectProvider.getGroupId(),
 					httpServletRequest, _portal, _portletURLFactory));
 		}
 		catch (PortalException | WindowStateException exception) {

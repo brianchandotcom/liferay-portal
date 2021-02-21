@@ -17,7 +17,7 @@ package com.liferay.analytics.reports.web.internal.request.attributes.contributo
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsWebKeys;
 import com.liferay.analytics.reports.web.internal.info.display.contributor.util.LayoutDisplayPageProviderUtil;
 import com.liferay.info.display.request.attributes.contributor.InfoDisplayRequestAttributesContributor;
-import com.liferay.info.item.InfoItemClassPKReference;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.portal.kernel.model.ClassName;
@@ -46,8 +46,8 @@ public class AnalyticsReportsInfoDisplayRequestAttributesContributor
 			layoutDisplayPageObjectProvider.getClassNameId());
 
 		httpServletRequest.setAttribute(
-			AnalyticsReportsWebKeys.INFO_ITEM_CLASS_PK_REFERENCE,
-			new InfoItemClassPKReference(
+			AnalyticsReportsWebKeys.INFO_ITEM_REFERENCE,
+			new InfoItemReference(
 				className.getClassName(),
 				layoutDisplayPageObjectProvider.getClassPK()));
 	}

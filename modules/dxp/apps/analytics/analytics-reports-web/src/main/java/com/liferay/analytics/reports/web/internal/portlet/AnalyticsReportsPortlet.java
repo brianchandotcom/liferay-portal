@@ -17,7 +17,7 @@ package com.liferay.analytics.reports.web.internal.portlet;
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPortletKeys;
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsWebKeys;
 import com.liferay.analytics.reports.web.internal.display.context.AnalyticsReportsDisplayContext;
-import com.liferay.info.item.InfoItemClassPKReference;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -85,8 +85,8 @@ public class AnalyticsReportsPortlet extends MVCPortlet {
 			return;
 		}
 
-		InfoItemClassPKReference infoItemClassPKReference =
-			_getInfoItemClassPKReference(httpServletRequest);
+		InfoItemReference infoItemReference = _getInfoItemReference(
+			httpServletRequest);
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -94,9 +94,9 @@ public class AnalyticsReportsPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			AnalyticsReportsWebKeys.ANALYTICS_REPORTS_DISPLAY_CONTEXT,
 			new AnalyticsReportsDisplayContext(
-				_portal.getClassNameId(infoItemClassPKReference.getClassName()),
-				infoItemClassPKReference.getClassPK(), renderRequest,
-				renderResponse, themeDisplay));
+				_portal.getClassNameId(infoItemReference.getClassName()),
+				infoItemReference.getClassPK(), renderRequest, renderResponse,
+				themeDisplay));
 
 		super.doDispatch(renderRequest, renderResponse);
 	}
@@ -125,14 +125,14 @@ public class AnalyticsReportsPortlet extends MVCPortlet {
 		return classPK;
 	}
 
-	private InfoItemClassPKReference _getInfoItemClassPKReference(
+	private InfoItemReference _getInfoItemReference(
 		HttpServletRequest httpServletRequest) {
 
 		return Optional.ofNullable(
-			(InfoItemClassPKReference)httpServletRequest.getAttribute(
-				AnalyticsReportsWebKeys.INFO_ITEM_CLASS_PK_REFERENCE)
+			(InfoItemReference)httpServletRequest.getAttribute(
+				AnalyticsReportsWebKeys.INFO_ITEM_REFERENCE)
 		).orElseGet(
-			() -> new InfoItemClassPKReference(
+			() -> new InfoItemReference(
 				_getClassName(httpServletRequest),
 				_getClassPK(httpServletRequest))
 		);

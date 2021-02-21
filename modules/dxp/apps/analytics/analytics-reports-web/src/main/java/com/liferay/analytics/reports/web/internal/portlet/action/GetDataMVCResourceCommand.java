@@ -23,7 +23,7 @@ import com.liferay.analytics.reports.web.internal.info.item.provider.AnalyticsRe
 import com.liferay.analytics.reports.web.internal.layout.seo.CanonicalURLProvider;
 import com.liferay.analytics.reports.web.internal.model.TimeRange;
 import com.liferay.analytics.reports.web.internal.model.TimeSpan;
-import com.liferay.info.item.InfoItemClassPKReference;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.type.WebImage;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
@@ -97,29 +97,28 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 			resourceRequest);
 
 		try {
-			InfoItemClassPKReference infoItemClassPKReference =
-				_getInfoItemClassPKReference(httpServletRequest);
+			InfoItemReference infoItemReference = _getInfoItemReference(
+				httpServletRequest);
 
 			Object analyticsReportsInfoItemObject = Optional.ofNullable(
 				_analyticsReportsInfoItemObjectProviderTracker.
 					getAnalyticsReportsInfoItemObjectProvider(
-						infoItemClassPKReference.getClassName())
+						infoItemReference.getClassName())
 			).map(
 				analyticsReportsInfoItemObjectProvider ->
 					analyticsReportsInfoItemObjectProvider.
-						getAnalyticsReportsInfoItemObject(
-							infoItemClassPKReference)
+						getAnalyticsReportsInfoItemObject(infoItemReference)
 			).orElseThrow(
 				() -> new NoSuchModelException(
 					"No Analytics Reports Info Item Object Provider found " +
-						"for " + infoItemClassPKReference)
+						"for " + infoItemReference)
 			);
 
 			AnalyticsReportsInfoItem<Object> analyticsReportsInfoItem =
 				(AnalyticsReportsInfoItem<Object>)
 					_analyticsReportsInfoItemTracker.
 						getAnalyticsReportsInfoItem(
-							infoItemClassPKReference.getClassName());
+							infoItemReference.getClassName());
 
 			CanonicalURLProvider canonicalURLProvider =
 				new CanonicalURLProvider(
@@ -137,8 +136,8 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 						analyticsReportsInfoItem,
 						canonicalURLProvider.getCanonicalURL(),
 						_portal.getClassNameId(
-							infoItemClassPKReference.getClassName()),
-						infoItemClassPKReference.getClassPK(),
+							infoItemReference.getClassName()),
+						infoItemReference.getClassPK(),
 						themeDisplay.getCompanyId(), themeDisplay.getLayout(),
 						themeDisplay.getLocale(),
 						_getLocale(
@@ -207,10 +206,10 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 		return classPK;
 	}
 
-	private InfoItemClassPKReference _getInfoItemClassPKReference(
+	private InfoItemReference _getInfoItemReference(
 		HttpServletRequest httpServletRequest) {
 
-		return new InfoItemClassPKReference(
+		return new InfoItemReference(
 			_getClassName(httpServletRequest), _getClassPK(httpServletRequest));
 	}
 

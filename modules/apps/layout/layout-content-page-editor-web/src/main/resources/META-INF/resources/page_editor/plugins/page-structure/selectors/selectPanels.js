@@ -62,7 +62,7 @@ export const PANELS = {
 	[PANEL_IDS.editableLink]: {
 		component: EditableLinkPanel,
 		label: Liferay.Language.get('link'),
-		priority: 2,
+		priority: 0,
 	},
 	[PANEL_IDS.editableMapping]: {
 		component: MappingPanel,

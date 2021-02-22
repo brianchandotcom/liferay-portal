@@ -2510,7 +2510,7 @@ definition {
 
 		Type(
 			key_fieldFieldLabel = "Image",
-			locator1 = "WCEditWebContent#IMAGE_DESCRPTION",
+			locator1 = "WCEditWebContent#IMAGE_DESCRIPTION",
 			value1 = "Spanish (Spain) Image Description");
 
 		PortletEntry.changeLocale(locale = "en-US");
@@ -2521,7 +2521,7 @@ definition {
 
 		AssertTextEquals(
 			key_fieldFieldLabel = "Image",
-			locator1 = "WCEditWebContent#IMAGE_DESCRPTION",
+			locator1 = "WCEditWebContent#IMAGE_DESCRIPTION",
 			value1 = "English (United States) Image Description");
 
 		PortletEntry.changeLocale(locale = "es-ES");
@@ -2532,7 +2532,7 @@ definition {
 
 		AssertTextEquals(
 			key_fieldFieldLabel = "Image",
-			locator1 = "WCEditWebContent#IMAGE_DESCRPTION",
+			locator1 = "WCEditWebContent#IMAGE_DESCRIPTION",
 			value1 = "Spanish (Spain) Image Description");
 
 		PortletEntry.publish();

@@ -46,6 +46,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockActionResponse;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
+import com.liferay.segments.exception.SegmentsExperienceNameException;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceService;
@@ -158,6 +160,74 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 			segmentsExperience.getSegmentsEntryId());
 		Assert.assertEquals(
 			segmentsExperienceId, segmentsExperience.getSegmentsExperienceId());
+	}
+
+	@Test
+	public void testAddSegmentsExperienceWithoutLanguageIds() throws Exception {
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest();
+
+		mockLiferayPortletActionRequest.addParameter(
+			"name", RandomTestUtil.randomString());
+
+		JSONObject responseJSONObject = _addSegmentsExperience(
+			mockLiferayPortletActionRequest);
+
+		JSONObject segmentsExperienceJSONObject =
+			responseJSONObject.getJSONObject("segmentsExperience");
+
+		Assert.assertArrayEquals(
+			new String[0],
+			(String[])segmentsExperienceJSONObject.get("languageIds"));
+	}
+
+	@Test(expected = SegmentsExperienceNameException.class)
+	public void testAddSegmentsExperienceWithoutName() throws Exception {
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId());
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest();
+
+		mockLiferayPortletActionRequest.addParameter(
+			"languageIds",
+			StringUtil.merge(
+				LocaleUtil.toLanguageIds(
+					new Locale[] {LocaleUtil.US, LocaleUtil.BRAZIL}),
+				StringPool.COMMA));
+		mockLiferayPortletActionRequest.addParameter(
+			"segmentsEntryId",
+			String.valueOf(segmentsEntry.getSegmentsEntryId()));
+
+		_addSegmentsExperience(mockLiferayPortletActionRequest);
+	}
+
+	@Test
+	public void testAddSegmentsExperienceWithoutSegmentsEntryId()
+		throws Exception {
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest();
+
+		mockLiferayPortletActionRequest.addParameter(
+			"languageIds",
+			StringUtil.merge(
+				LocaleUtil.toLanguageIds(
+					new Locale[] {LocaleUtil.US, LocaleUtil.BRAZIL}),
+				StringPool.COMMA));
+		mockLiferayPortletActionRequest.addParameter(
+			"name", RandomTestUtil.randomString());
+
+		JSONObject responseJSONObject = _addSegmentsExperience(
+			mockLiferayPortletActionRequest);
+
+		JSONObject segmentsExperienceJSONObject =
+			responseJSONObject.getJSONObject("segmentsExperience");
+
+		Assert.assertEquals(
+			SegmentsExperienceConstants.ID_DEFAULT,
+			GetterUtil.getLong(
+				segmentsExperienceJSONObject.get("segmentsEntryId")));
 	}
 
 	private Layout _addLayout() throws Exception {

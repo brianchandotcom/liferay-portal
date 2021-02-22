@@ -21,10 +21,10 @@ dependencies {
 	compileOnly project(":core:osgi-service-tracker-collections")
 	compileOnly project(":core:petra:petra-concurrent")
 	compileOnly project(":core:petra:petra-executor")
+	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
 
-	testCompile project(":core:petra:petra-function")
 	testCompile project(":core:petra:petra-memory")
 	testCompile project(":core:petra:petra-reflect")
 	testCompile project(":core:petra:petra-sql-dsl-api")

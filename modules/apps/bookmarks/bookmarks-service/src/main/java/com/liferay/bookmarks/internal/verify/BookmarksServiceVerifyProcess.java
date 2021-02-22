@@ -17,9 +17,9 @@ package com.liferay.bookmarks.internal.verify;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksFolderLocalService;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.verify.VerifyProcess;
 
@@ -81,12 +81,8 @@ public class BookmarksServiceVerifyProcess extends VerifyProcess {
 
 	protected void verifyTree() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			long[] companyIds =
-				_portalInstancesLocalService.getCompanyIdsBySQL();
-
-			for (long companyId : companyIds) {
-				_bookmarksFolderLocalService.rebuildTree(companyId);
-			}
+			_companyLocalService.forEachCompanyId(
+				_bookmarksFolderLocalService::rebuildTree);
 		}
 	}
 
@@ -97,6 +93,6 @@ public class BookmarksServiceVerifyProcess extends VerifyProcess {
 	private BookmarksFolderLocalService _bookmarksFolderLocalService;
 
 	@Reference
-	private PortalInstancesLocalService _portalInstancesLocalService;
+	private CompanyLocalService _companyLocalService;
 
 }

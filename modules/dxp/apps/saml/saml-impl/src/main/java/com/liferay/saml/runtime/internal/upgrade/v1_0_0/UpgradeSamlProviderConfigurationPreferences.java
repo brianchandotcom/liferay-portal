@@ -15,7 +15,6 @@
 package com.liferay.saml.runtime.internal.upgrade.v1_0_0;
 
 import com.liferay.portal.kernel.configuration.Filter;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -29,7 +28,6 @@ import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import com.liferay.saml.runtime.internal.constants.LegacySamlPropsKeys;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -189,21 +187,19 @@ public class UpgradeSamlProviderConfigurationPreferences
 	@Override
 	protected void doUpgrade() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			List<Company> companies = _companyLocalService.getCompanies(false);
+			_companyLocalService.forEachCompanyId(
+				companyId -> {
+					Set<String> migratedPrefsPropsKeys =
+						migrateSAMLProviderConfigurationPreferences(companyId);
 
-			for (Company company : companies) {
-				Set<String> migratedPrefsPropsKeys =
-					migrateSAMLProviderConfigurationPreferences(
-						company.getCompanyId());
+					if (migratedPrefsPropsKeys.isEmpty()) {
+						return;
+					}
 
-				if (migratedPrefsPropsKeys.isEmpty()) {
-					continue;
-				}
-
-				_companyLocalService.removePreferences(
-					company.getCompanyId(),
-					migratedPrefsPropsKeys.toArray(new String[0]));
-			}
+					_companyLocalService.removePreferences(
+						companyId,
+						migratedPrefsPropsKeys.toArray(new String[0]));
+				});
 
 			migrateSAMLProviderConfigurationSystemPreferences();
 		}

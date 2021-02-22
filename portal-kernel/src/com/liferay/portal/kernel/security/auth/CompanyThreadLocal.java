@@ -25,6 +25,9 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.TimeZoneThreadLocal;
 
+import java.util.Locale;
+import java.util.TimeZone;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -45,8 +48,45 @@ public class CompanyThreadLocal {
 	}
 
 	public static void setCompanyId(Long companyId) {
+		if (_setCompanyId(companyId)) {
+			CTCollectionThreadLocal.removeCTCollectionId();
+		}
+	}
+
+	public static void setDeleteInProcess(boolean deleteInProcess) {
+		_deleteInProcess.set(deleteInProcess);
+	}
+
+	public static SafeClosable setInitializingCompanyId(long companyId) {
+		if (companyId > 0) {
+			return _companyId.setWithSafeClosable(companyId);
+		}
+
+		return _companyId.setWithSafeClosable(CompanyConstants.SYSTEM);
+	}
+
+	public static SafeClosable setWithSafeClosable(Long companyId) {
+		long currentCompanyId = _companyId.get();
+		Locale defaultLocale = LocaleThreadLocal.getDefaultLocale();
+		TimeZone defaultTimeZone = TimeZoneThreadLocal.getDefaultTimeZone();
+
+		SafeClosable ctCollectionSafeClosable =
+			CTCollectionThreadLocal.setCTCollectionId(0);
+
+		_setCompanyId(companyId);
+
+		return () -> {
+			ctCollectionSafeClosable.close();
+
+			_companyId.set(currentCompanyId);
+			LocaleThreadLocal.setDefaultLocale(defaultLocale);
+			TimeZoneThreadLocal.setDefaultTimeZone(defaultTimeZone);
+		};
+	}
+
+	private static boolean _setCompanyId(Long companyId) {
 		if (companyId.equals(_companyId.get())) {
-			return;
+			return false;
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -84,19 +124,7 @@ public class CompanyThreadLocal {
 			TimeZoneThreadLocal.setDefaultTimeZone(null);
 		}
 
-		CTCollectionThreadLocal.removeCTCollectionId();
-	}
-
-	public static void setDeleteInProcess(boolean deleteInProcess) {
-		_deleteInProcess.set(deleteInProcess);
-	}
-
-	public static SafeClosable setInitializingCompanyId(long companyId) {
-		if (companyId > 0) {
-			return _companyId.setWithSafeClosable(companyId);
-		}
-
-		return _companyId.setWithSafeClosable(CompanyConstants.SYSTEM);
+		return true;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

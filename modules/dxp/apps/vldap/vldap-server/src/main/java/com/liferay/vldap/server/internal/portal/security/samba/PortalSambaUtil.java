@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
@@ -76,33 +76,32 @@ public class PortalSambaUtil {
 	}
 
 	private static void _checkAttribute(String attributeName) {
-		long[] companyIds = PortalUtil.getCompanyIds();
+		CompanyLocalServiceUtil.forEachCompanyId(
+			companyId -> {
+				ExpandoBridge expandoBridge =
+					ExpandoBridgeFactoryUtil.getExpandoBridge(
+						companyId, User.class.getName());
 
-		for (long companyId : companyIds) {
-			ExpandoBridge expandoBridge =
-				ExpandoBridgeFactoryUtil.getExpandoBridge(
-					companyId, User.class.getName());
-
-			if (!expandoBridge.hasAttribute(attributeName)) {
-				try {
-					expandoBridge.addAttribute(attributeName, false);
-				}
-				catch (PortalException portalException) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(portalException, portalException);
+				if (!expandoBridge.hasAttribute(attributeName)) {
+					try {
+						expandoBridge.addAttribute(attributeName, false);
+					}
+					catch (PortalException portalException) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(portalException, portalException);
+						}
 					}
 				}
-			}
 
-			UnicodeProperties unicodeProperties =
-				expandoBridge.getAttributeProperties(attributeName);
+				UnicodeProperties unicodeProperties =
+					expandoBridge.getAttributeProperties(attributeName);
 
-			unicodeProperties.put(
-				ExpandoColumnConstants.PROPERTY_HIDDEN, StringPool.TRUE);
+				unicodeProperties.put(
+					ExpandoColumnConstants.PROPERTY_HIDDEN, StringPool.TRUE);
 
-			expandoBridge.setAttributeProperties(
-				attributeName, unicodeProperties, false);
-		}
+				expandoBridge.setAttributeProperties(
+					attributeName, unicodeProperties, false);
+			});
 	}
 
 	private static String _encryptSambaLMPassword(String password)

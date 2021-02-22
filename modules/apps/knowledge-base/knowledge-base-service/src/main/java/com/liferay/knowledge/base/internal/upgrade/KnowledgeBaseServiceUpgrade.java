@@ -22,6 +22,7 @@ import com.liferay.knowledge.base.internal.upgrade.v3_0_0.util.KBFolderTable;
 import com.liferay.knowledge.base.internal.upgrade.v3_0_0.util.KBTemplateTable;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
@@ -107,7 +108,7 @@ public class KnowledgeBaseServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"1.2.0", "1.3.0",
 			new com.liferay.knowledge.base.internal.upgrade.v1_3_0.
-				KBAttachmentsUpgradeProcess(_store),
+				KBAttachmentsUpgradeProcess(_companyLocalService, _store),
 			new com.liferay.knowledge.base.internal.upgrade.v1_3_0.
 				UpgradePortletPreferences());
 
@@ -196,6 +197,9 @@ public class KnowledgeBaseServiceUpgrade implements UpgradeStepRegistrator {
 	protected void setSettingsFactory(SettingsFactory settingsFactory) {
 		_settingsFactory = settingsFactory;
 	}
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	private SettingsFactory _settingsFactory;
 

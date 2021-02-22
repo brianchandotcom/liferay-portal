@@ -28,9 +28,9 @@ import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -88,13 +88,14 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 	}
 
 	public static void deleteFiles() {
-		long[] companyIds = PortalUtil.getCompanyIds();
+		CompanyLocalServiceUtil.forEachCompanyId(
+			companyId -> {
+				DLStoreUtil.deleteDirectory(
+					companyId, REPOSITORY_ID, PREVIEW_PATH);
 
-		for (long companyId : companyIds) {
-			DLStoreUtil.deleteDirectory(companyId, REPOSITORY_ID, PREVIEW_PATH);
-			DLStoreUtil.deleteDirectory(
-				companyId, REPOSITORY_ID, THUMBNAIL_PATH);
-		}
+				DLStoreUtil.deleteDirectory(
+					companyId, REPOSITORY_ID, THUMBNAIL_PATH);
+			});
 	}
 
 	@Override

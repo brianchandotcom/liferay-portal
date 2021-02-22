@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
@@ -64,10 +63,8 @@ public class MFASystemConfigurationModelListener
 			return;
 		}
 
-		for (Company company : _companyLocalService.getCompanies()) {
-			long companyId = company.getCompanyId();
-
-			try {
+		_companyLocalService.forEachCompanyId(
+			companyId -> {
 				MFAEmailOTPConfiguration mfaEmailOTPConfiguration =
 					_configurationProvider.getCompanyConfiguration(
 						MFAEmailOTPConfiguration.class, companyId);
@@ -76,20 +73,21 @@ public class MFASystemConfigurationModelListener
 					_sendNotificationToInstanceAdministrators(
 						companyId, mfaDisableGlobally);
 				}
-			}
-			catch (ConfigurationException configurationException) {
-				_log.error(
-					"Unable to get multi-factor authentication configuration " +
-						"for company " + companyId,
-					configurationException);
-			}
-			catch (PortalException portalException) {
-				_log.error(
-					"Failed to send notifications to administrators of " +
-						"company " + companyId,
-					portalException);
-			}
-		}
+			},
+			(companyId, exception) -> {
+				if (exception instanceof ConfigurationException) {
+					_log.error(
+						"Unable to get multi-factor authentication " +
+							"configuration for company " + companyId,
+						exception);
+				}
+				else if (exception instanceof PortalException) {
+					_log.error(
+						"Failed to send notifications to administrators of " +
+							"company " + companyId,
+						exception);
+				}
+			});
 
 		_mfaDisableGlobally = mfaDisableGlobally;
 	}

@@ -54,35 +54,15 @@ public class UserPersonalSitePermissions {
 	public void initPermissions(List<Company> companies, Portlet portlet) {
 		String rootPortletId = portlet.getRootPortletId();
 
-		for (Company company : companies) {
-			long companyId = company.getCompanyId();
-
-			Role powerUserRole = getPowerUserRole(companyId);
-
-			if (powerUserRole == null) {
-				continue;
-			}
-
-			Group userPersonalSiteGroup = getUserPersonalSiteGroup(companyId);
-
-			if (userPersonalSiteGroup == null) {
-				continue;
-			}
-
-			try {
-				initPermissions(
-					companyId, powerUserRole.getRoleId(), rootPortletId,
-					userPersonalSiteGroup.getGroupId());
-			}
-			catch (PortalException portalException) {
-				_log.error(
-					StringBundler.concat(
-						"Unable to initialize user personal site permissions ",
-						"for portlet ", portlet.getPortletId(), " in company ",
-						companyId),
-					portalException);
-			}
-		}
+		_companyLocalService.forEach(
+			company -> _initPermissions(company, rootPortletId),
+			(company, portalException) -> _log.error(
+				StringBundler.concat(
+					"Unable to initialize user personal site permissions for ",
+					"portlet ", portlet.getPortletId(), " in company ",
+					company.getCompanyId()),
+				portalException),
+			companies);
 	}
 
 	public void initPermissions(long companyId, List<Portlet> portlets) {
@@ -201,6 +181,28 @@ public class UserPersonalSitePermissions {
 				String.valueOf(userPersonalSiteGroupId), powerUserRoleId,
 				modelActionIds.toArray(new String[0]));
 		}
+	}
+
+	private void _initPermissions(Company company, String rootPortletId)
+		throws PortalException {
+
+		long companyId = company.getCompanyId();
+
+		Role powerUserRole = getPowerUserRole(companyId);
+
+		if (powerUserRole == null) {
+			return;
+		}
+
+		Group userPersonalSiteGroup = getUserPersonalSiteGroup(companyId);
+
+		if (userPersonalSiteGroup == null) {
+			return;
+		}
+
+		initPermissions(
+			companyId, powerUserRole.getRoleId(), rootPortletId,
+			userPersonalSiteGroup.getGroupId());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

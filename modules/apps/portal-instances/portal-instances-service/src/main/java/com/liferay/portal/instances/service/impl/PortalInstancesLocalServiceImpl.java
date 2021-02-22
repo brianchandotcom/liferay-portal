@@ -148,9 +148,9 @@ public class PortalInstancesLocalServiceImpl
 				PortalInstances.initCompany(portalContext, company.getWebId());
 			}
 
-			for (long companyId : removeableCompanyIds) {
-				PortalInstances.removeCompany(companyId);
-			}
+			_companyLocalService.forEachCompanyId(
+				PortalInstances::removeCompany,
+				ArrayUtil.toLongArray(removeableCompanyIds));
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

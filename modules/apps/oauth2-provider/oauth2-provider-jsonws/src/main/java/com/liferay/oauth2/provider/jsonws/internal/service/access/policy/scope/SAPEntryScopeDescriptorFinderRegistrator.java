@@ -22,6 +22,8 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -127,9 +129,9 @@ public class SAPEntryScopeDescriptorFinderRegistrator {
 		_sapEntryOAuth2Prefix =
 			oAuth2JSONWSConfiguration.sapEntryOAuth2Prefix();
 
-		for (long companyId : _scopeFinderServiceRegistrations.keySet()) {
-			register(companyId);
-		}
+		_companyLocalService.forEachCompanyId(
+			this::register,
+			ArrayUtil.toLongArray(_scopeFinderServiceRegistrations.keySet()));
 	}
 
 	@Reference(
@@ -260,6 +262,9 @@ public class SAPEntryScopeDescriptorFinderRegistrator {
 		SAPEntryScopeDescriptorFinderRegistrator.class);
 
 	private BundleContext _bundleContext;
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference(target = "(default=true)")
 	private ScopeDescriptor _defaultScopeDescriptor;

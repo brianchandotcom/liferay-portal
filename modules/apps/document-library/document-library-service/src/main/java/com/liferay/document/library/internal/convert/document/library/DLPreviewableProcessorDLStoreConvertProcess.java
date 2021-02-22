@@ -18,11 +18,9 @@ import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.kernel.util.DLPreviewableProcessor;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.convert.documentlibrary.DLStoreConvertProcess;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.MaintenanceUtil;
@@ -67,13 +65,8 @@ public class DLPreviewableProcessorDLStoreConvertProcess
 
 		MaintenanceUtil.appendStatus("Migrating files from " + path);
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			_companyLocalService.getActionableDynamicQuery();
-
-		actionableDynamicQuery.setPerformActionMethod(
-			(Company company) -> {
-				long companyId = company.getCompanyId();
-
+		_companyLocalService.forEachCompanyId(
+			companyId -> {
 				String[] fileNames = sourceStore.getFileNames(
 					companyId, DLPreviewableProcessor.REPOSITORY_ID, path);
 
@@ -95,8 +88,6 @@ public class DLPreviewableProcessorDLStoreConvertProcess
 					}
 				}
 			});
-
-		actionableDynamicQuery.performActions();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

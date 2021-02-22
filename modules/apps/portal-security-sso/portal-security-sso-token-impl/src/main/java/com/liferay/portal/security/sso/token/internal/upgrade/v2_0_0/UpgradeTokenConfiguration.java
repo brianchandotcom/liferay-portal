@@ -14,7 +14,6 @@
 
 package com.liferay.portal.security.sso.token.internal.upgrade.v2_0_0;
 
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
@@ -30,7 +29,6 @@ import com.liferay.portal.security.sso.token.constants.TokenConfigurationKeys;
 import com.liferay.portal.security.sso.token.constants.TokenConstants;
 
 import java.util.Dictionary;
-import java.util.List;
 
 /**
  * @author Christopher Kian
@@ -74,32 +72,33 @@ public class UpgradeTokenConfiguration extends UpgradeProcess {
 	}
 
 	private void _upgradeConfiguration() throws Exception {
-		List<Company> companies = CompanyLocalServiceUtil.getCompanies();
+		CompanyLocalServiceUtil.forEachCompanyId(
+			companyId -> {
+				Dictionary<String, String> dictionary =
+					new HashMapDictionary<>();
 
-		for (Company company : companies) {
-			Dictionary<String, String> dictionary = new HashMapDictionary<>();
+				for (String[] renamePropertykeys :
+						_RENAME_PROPERTY_KEYS_ARRAY) {
 
-			for (String[] renamePropertykeys : _RENAME_PROPERTY_KEYS_ARRAY) {
-				String propertyValue = PrefsPropsUtil.getString(
-					company.getCompanyId(), renamePropertykeys[0]);
+					String propertyValue = PrefsPropsUtil.getString(
+						companyId, renamePropertykeys[0]);
 
-				if (propertyValue != null) {
-					dictionary.put(renamePropertykeys[1], propertyValue);
+					if (propertyValue != null) {
+						dictionary.put(renamePropertykeys[1], propertyValue);
+					}
 				}
-			}
 
-			if (!dictionary.isEmpty()) {
-				_storeSettings(
-					company.getCompanyId(), TokenConstants.SERVICE_NAME,
-					dictionary);
-			}
+				if (!dictionary.isEmpty()) {
+					_storeSettings(
+						companyId, TokenConstants.SERVICE_NAME, dictionary);
+				}
 
-			CompanyLocalServiceUtil.removePreferences(
-				company.getCompanyId(),
-				ArrayUtil.append(
-					LegacyTokenPropsKeys.SHIBBOLETH_KEYS,
-					LegacyTokenPropsKeys.SITEMINDER_KEYS));
-		}
+				CompanyLocalServiceUtil.removePreferences(
+					companyId,
+					ArrayUtil.append(
+						LegacyTokenPropsKeys.SHIBBOLETH_KEYS,
+						LegacyTokenPropsKeys.SITEMINDER_KEYS));
+			});
 	}
 
 	private static final String[][] _RENAME_PROPERTY_KEYS_ARRAY = {

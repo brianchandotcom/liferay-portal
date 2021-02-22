@@ -17,7 +17,6 @@ package com.liferay.portal.verify;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
@@ -32,7 +31,6 @@ import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import java.io.IOException;
 
 import java.util.Dictionary;
-import java.util.List;
 import java.util.Set;
 
 import javax.portlet.ValidatorException;
@@ -111,29 +109,27 @@ public abstract class BaseCompanySettingsVerifyProcess extends VerifyProcess {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			CompanyLocalService companyLocalService = getCompanyLocalService();
 
-			List<Company> companies = companyLocalService.getCompanies(false);
+			companyLocalService.forEachCompanyId(
+				companyId -> {
+					Dictionary<String, String> dictionary = getPropertyValues(
+						companyId);
 
-			for (Company company : companies) {
-				Dictionary<String, String> dictionary = getPropertyValues(
-					company.getCompanyId());
+					if (!dictionary.isEmpty()) {
+						storeSettings(companyId, getSettingsId(), dictionary);
+					}
 
-				if (!dictionary.isEmpty()) {
-					storeSettings(
-						company.getCompanyId(), getSettingsId(), dictionary);
-				}
+					Set<String> keys = getLegacyPropertyKeys();
 
-				Set<String> keys = getLegacyPropertyKeys();
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							StringBundler.concat(
+								"Removing preference keys ", keys,
+								" for company ", companyId));
+					}
 
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						StringBundler.concat(
-							"Removing preference keys ", keys, " for company ",
-							company.getCompanyId()));
-				}
-
-				companyLocalService.removePreferences(
-					company.getCompanyId(), keys.toArray(new String[0]));
-			}
+					companyLocalService.removePreferences(
+						companyId, keys.toArray(new String[0]));
+				});
 		}
 	}
 

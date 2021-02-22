@@ -24,7 +24,9 @@ import com.liferay.document.library.kernel.store.Store;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.petra.function.UnsafeBiFunction;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -102,9 +104,11 @@ public class BlogsServiceUpgrade implements UpgradeStepRegistrator {
 
 		return (className, connection) -> {
 			try (PreparedStatement ps = connection.prepareStatement(
-					"update Subscription set classNameId = ? where " +
-						"classNameId = ? and classPK not in (select groupId " +
-							"from Group_ where site = TRUE)")) {
+					SQLTransformer.transform(
+						StringBundler.concat(
+							"update Subscription set classNameId = ? where ",
+							"classNameId = ? and classPK not in (select ",
+							"groupId from Group_ where site = [$TRUE$])")))) {
 
 				ps.setLong(
 					1,

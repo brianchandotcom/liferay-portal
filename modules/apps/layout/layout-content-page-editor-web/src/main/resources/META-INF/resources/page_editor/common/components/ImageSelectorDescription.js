@@ -17,6 +17,7 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
 import {useId} from '../../app/utils/useId';
+import CurrentLanguageFlag from './CurrentLanguageFlag';
 
 export const ImageSelectorDescription = ({
 	imageDescription,
@@ -36,20 +37,25 @@ export const ImageSelectorDescription = ({
 	}, [imageDescription, imageDescriptionInputElement]);
 
 	return (
-		<ClayForm.Group>
-			<label htmlFor={imageDescriptionInputId}>
-				{Liferay.Language.get('image-description')}
-			</label>
-			<ClayInput
-				id={imageDescriptionInputId}
-				onBlur={(event) => {
-					onImageDescriptionChanged(event.target.value);
-				}}
-				ref={setImageDescriptionInputElement}
-				sizing="sm"
-				type="text"
-			/>
-		</ClayForm.Group>
+		<div className="autofit-row mb-3">
+			<div className="autofit-col autofit-col-expand">
+				<ClayForm.Group>
+					<label htmlFor={imageDescriptionInputId}>
+						{Liferay.Language.get('image-description')}
+					</label>
+					<ClayInput
+						id={imageDescriptionInputId}
+						onBlur={(event) => {
+							onImageDescriptionChanged(event.target.value);
+						}}
+						ref={setImageDescriptionInputElement}
+						sizing="sm"
+						type="text"
+					/>
+				</ClayForm.Group>
+			</div>
+			<CurrentLanguageFlag />
+		</div>
 	);
 };
 

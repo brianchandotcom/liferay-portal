@@ -20,6 +20,7 @@ import ClayForm, {
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
+import CurrentLanguageFlag from '../../../common/components/CurrentLanguageFlag';
 import {LayoutSelector} from '../../../common/components/LayoutSelector';
 import MappingSelector from '../../../common/components/MappingSelector';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
@@ -135,19 +136,26 @@ export default function LinkField({field, onValueSelect, value}) {
 			</ClayForm.Group>
 
 			{source === SOURCE_OPTIONS.manual.value && (
-				<ClayForm.Group small>
-					<label htmlFor={hrefInputId}>
-						{Liferay.Language.get('url')}
-					</label>
+				<div className="autofit-row mb-3">
+					<div className="autofit-col autofit-col-expand">
+						<ClayForm.Group small>
+							<label htmlFor={hrefInputId}>
+								{Liferay.Language.get('url')}
+							</label>
 
-					<ClayInput
-						id={hrefInputId}
-						onBlur={() => handleChange({href: nextHref})}
-						onChange={(event) => setNextHref(event.target.value)}
-						type="text"
-						value={nextHref || ''}
-					/>
-				</ClayForm.Group>
+							<ClayInput
+								id={hrefInputId}
+								onBlur={() => handleChange({href: nextHref})}
+								onChange={(event) =>
+									setNextHref(event.target.value)
+								}
+								type="text"
+								value={nextHref || ''}
+							/>
+						</ClayForm.Group>
+					</div>
+					<CurrentLanguageFlag />
+				</div>
 			)}
 
 			{source === SOURCE_OPTIONS.fromLayout.value && (

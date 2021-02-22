@@ -100,7 +100,6 @@ export const FragmentGeneralPanel = ({item}) => {
 			{fieldSets.map((fieldSet, index) => {
 				return (
 					<FieldSet
-						availableLanguages={config.availableLanguages}
 						fields={fieldSet.fields}
 						key={index}
 						label={fieldSet.label}

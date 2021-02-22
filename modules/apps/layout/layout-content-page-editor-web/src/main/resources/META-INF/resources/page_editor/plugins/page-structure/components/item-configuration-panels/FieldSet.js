@@ -12,7 +12,6 @@
  * details.
  */
 
-import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -22,7 +21,7 @@ import {LAYOUT_DATA_ITEM_TYPES} from '../../../../app/config/constants/layoutDat
 import {VIEWPORT_SIZES} from '../../../../app/config/constants/viewportSizes';
 import {config} from '../../../../app/config/index';
 import {useSelector} from '../../../../app/store/index';
-import getLanguages from '../../../../app/utils/getLanguages';
+import CurrentLanguageFlag from '../../../../common/components/CurrentLanguageFlag';
 import {ConfigurationFieldPropTypes} from '../../../../prop-types/index';
 
 const DISPLAY_SIZES = {
@@ -35,7 +34,6 @@ const fieldIsDisabled = (item, field) =>
 	(field.name === 'marginRight' || field.name === 'marginLeft');
 
 export const FieldSet = ({
-	availableLanguages,
 	fields,
 	item = {},
 	label,
@@ -45,11 +43,7 @@ export const FieldSet = ({
 }) => {
 	const store = useSelector((state) => state);
 
-	const {
-		availableSegmentsExperiences,
-		segmentsExperienceId,
-		selectedViewportSize,
-	} = store;
+	const {selectedViewportSize} = store;
 
 	const availableFields =
 		selectedViewportSize === VIEWPORT_SIZES.desktop
@@ -58,12 +52,6 @@ export const FieldSet = ({
 					(field) =>
 						field.responsive || field.name === 'backgroundImage'
 			  );
-
-	const languages = getLanguages(
-		availableLanguages,
-		availableSegmentsExperiences,
-		segmentsExperienceId
-	);
 
 	return (
 		availableFields.length > 0 && (
@@ -137,25 +125,7 @@ export const FieldSet = ({
 									</div>
 
 									{field.localizable && (
-										<div
-											className="align-self-end autofit-col ml-1 p-2"
-											data-title={Liferay.Language.get(
-												'localizable'
-											)}
-										>
-											<ClayIcon
-												symbol={
-													languages[languageId]
-														.languageIcon
-												}
-											/>
-											<span className="sr-only">
-												{
-													languages[languageId]
-														.w3cLanguageId
-												}
-											</span>
-										</div>
+										<CurrentLanguageFlag />
 									)}
 								</div>
 							)
@@ -168,15 +138,6 @@ export const FieldSet = ({
 };
 
 FieldSet.propTypes = {
-	availableLanguages: PropTypes.objectOf(
-		PropTypes.shape({
-			default: PropTypes.bool.isRequired,
-			displayName: PropTypes.string.isRequired,
-			languageIcon: PropTypes.string.isRequired,
-			languageId: PropTypes.string.isRequired,
-			w3cLanguageId: PropTypes.string.isRequired,
-		})
-	).isRequired,
 	fields: PropTypes.arrayOf(PropTypes.shape(ConfigurationFieldPropTypes)),
 	item: PropTypes.object,
 	label: PropTypes.string,

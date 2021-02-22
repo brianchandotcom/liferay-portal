@@ -14,6 +14,7 @@
 
 package com.liferay.account.service.impl;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.model.AccountGroupRel;
 import com.liferay.account.service.base.AccountGroupLocalServiceBaseImpl;
@@ -63,6 +64,7 @@ public class AccountGroupLocalServiceImpl
 		accountGroup.setDefaultAccountGroup(false);
 		accountGroup.setDescription(description);
 		accountGroup.setName(name);
+		accountGroup.setType(AccountConstants.ACCOUNT_GROUP_TYPE_STATIC);
 
 		return accountGroupPersistence.update(accountGroup);
 	}

@@ -91,14 +91,22 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 	}
 
 	@Test
-	public void testAddSegmentsExperiment() throws Exception {
+	public void testAddSegmentsExperience() throws Exception {
 		String name = RandomTestUtil.randomString(10);
 
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
 			_group.getGroupId());
 
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest();
+
+		mockLiferayPortletActionRequest.addParameter("name", name);
+		mockLiferayPortletActionRequest.addParameter(
+			"segmentsEntryId",
+			String.valueOf(segmentsEntry.getSegmentsEntryId()));
+
 		JSONObject responseJSONObject = _addSegmentsExperience(
-			name, segmentsEntry.getSegmentsEntryId());
+			mockLiferayPortletActionRequest);
 
 		JSONObject segmentsExperienceJSONObject =
 			responseJSONObject.getJSONObject("segmentsExperience");
@@ -139,28 +147,24 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 			StringPool.BLANK, serviceContext);
 	}
 
-	private JSONObject _addSegmentsExperience(String name, long segmentsEntryId)
+	private JSONObject _addSegmentsExperience(
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest)
 		throws Exception {
-
-		MockLiferayPortletActionRequest mockActionRequest =
-			_getMockLiferayPortletActionRequest(name, segmentsEntryId);
 
 		return ReflectionTestUtil.invoke(
 			_mvcActionCommand, "addSegmentsExperience",
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
-			mockActionRequest, new MockActionResponse());
+			mockLiferayPortletActionRequest,
+			new MockActionResponse());
 	}
 
-	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
-			String name, long segmentsEntryId)
+	private MockLiferayPortletActionRequest
+			_getMockLiferayPortletActionRequest()
 		throws Exception {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
 
-		mockLiferayPortletActionRequest.addParameter("name", name);
-		mockLiferayPortletActionRequest.addParameter(
-			"segmentsEntryId", String.valueOf(segmentsEntryId));
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
 

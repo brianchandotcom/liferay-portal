@@ -13,9 +13,10 @@
  */
 
 import {useEventListener} from 'frontend-js-react-web';
-import {useMemo} from 'react';
+import {useCallback} from 'react';
 
 import {useConfig} from '../../../core/hooks/useConfig.es';
+import {useBack} from '../hooks/useBack.es';
 
 const NAV_ITEMS = {
 	0: '/',
@@ -44,15 +45,13 @@ const setSearchParam = (name, value) => {
 export const NavigationBar = ({history, location}) => {
 	const {portletNamespace} = useConfig();
 
-	const formNavElement = useMemo(
-		() => document.body.querySelector('.forms-navigation-bar'),
-		[]
-	);
+	useBack();
 
-	useEventListener(
-		'click',
+	const onClick = useCallback(
 		(event) => {
 			if (event.target.type === 'button') {
+				event.preventDefault();
+
 				const index = Number(
 					event.target.parentElement.dataset.navItemIndex
 				);
@@ -76,8 +75,14 @@ export const NavigationBar = ({history, location}) => {
 				method(path);
 			}
 		},
+		[portletNamespace, history, location.pathname]
+	);
+
+	useEventListener(
+		'click',
+		onClick,
 		true,
-		formNavElement
+		document.body.querySelector('.forms-navigation-bar')
 	);
 
 	return null;

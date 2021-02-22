@@ -12,7 +12,6 @@
  * details.
  */
 
-import ClayModal from 'clay-modal';
 import {pageStructure} from 'dynamic-data-mapping-form-builder/js/util/config.es';
 import {FormApp, PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 import {delegate} from 'frontend-js-web';
@@ -58,13 +57,6 @@ class Form extends Component {
 			);
 		}
 
-		this._backButtonClickEventHandler = delegate(
-			document.body,
-			'click',
-			`#${namespace}controlMenu .sites-control-group span.lfr-portal-tooltip`,
-			this._handleBackButtonClicked
-		);
-
 		const shareURLButton = document.querySelector(
 			'.lfr-ddm-share-url-button'
 		);
@@ -90,9 +82,6 @@ class Form extends Component {
 		this._handlePublishButtonClicked = this._handlePublishButtonClicked.bind(
 			this
 		);
-		this._handleBackButtonClicked = this._handleBackButtonClicked.bind(
-			this
-		);
 
 		this._createFormURL = this._createFormURL.bind(this);
 		this._handlePaginationModeChanded = this._handlePaginationModeChanded.bind(
@@ -105,8 +94,6 @@ class Form extends Component {
 
 	disposed() {
 		Notifications.closeAlert();
-
-		this._backButtonClickEventHandler.dispose();
 
 		const previewButton = document.querySelector('.lfr-ddm-preview-button');
 
@@ -172,29 +159,6 @@ class Form extends Component {
 				/>
 
 				<div class="container container-fluid-1280">
-					<ClayModal
-						body={Liferay.Language.get(
-							'any-unsaved-changes-will-be-lost-are-you-sure-you-want-to-leave'
-						)}
-						footerButtons={[
-							{
-								alignment: 'right',
-								label: Liferay.Language.get('leave'),
-								style: 'secondary',
-								type: 'close',
-							},
-							{
-								alignment: 'right',
-								label: Liferay.Language.get('stay'),
-								style: 'primary',
-								type: 'button',
-							},
-						]}
-						ref="discardChangesModal"
-						size="sm"
-						spritemap={spritemap}
-						title={Liferay.Language.get('leave-form')}
-					/>
 					{published && (
 						<ShareFormModal
 							autocompleteUserURL={autocompleteUserURL}
@@ -269,30 +233,6 @@ class Form extends Component {
 		}
 
 		return promise;
-	}
-
-	_handleBackButtonClicked(event) {
-		if (this._autoSave.hasUnsavedChanges()) {
-			event.preventDefault();
-			event.stopPropagation();
-
-			const href = event.delegateTarget.firstElementChild.href;
-
-			this.refs.discardChangesModal.visible = true;
-
-			const listener = this.refs.discardChangesModal.addListener(
-				'clickButton',
-				({target}) => {
-					if (target.classList.contains('close-modal')) {
-						window.location.href = href;
-					}
-
-					listener.dispose();
-
-					this.refs.discardChangesModal.emit('hide');
-				}
-			);
-		}
 	}
 
 	_handleCancelButtonClicked(event) {

@@ -7146,10 +7146,9 @@ public class JournalArticleLocalServiceImpl
 					WorkflowConstants.STATUS_APPROVED));
 		}
 
-		for (Company company : companyLocalService.getCompanies(false)) {
-			checkArticlesByCompanyIdAndExpirationDate(
-				company.getCompanyId(), expirationDate, nextExpirationDate);
-		}
+		companyLocalService.forEachCompanyId(
+			companyId -> checkArticlesByCompanyIdAndExpirationDate(
+				companyId, expirationDate, nextExpirationDate));
 
 		if (_previousCheckDate == null) {
 			_previousCheckDate = new Date(

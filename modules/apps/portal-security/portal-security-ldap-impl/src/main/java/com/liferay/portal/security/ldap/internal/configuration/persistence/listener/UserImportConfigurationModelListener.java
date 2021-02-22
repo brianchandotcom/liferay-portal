@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
@@ -38,7 +37,6 @@ import com.liferay.portal.security.ldap.internal.constants.LDAPDestinationNames;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Dictionary;
-import java.util.List;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -92,11 +90,8 @@ public class UserImportConfigurationModelListener
 	protected void doReceive(Message message) throws Exception {
 		long time = _getLastImportTime();
 
-		List<Company> companies = _companyLocalService.getCompanies(false);
-
-		for (Company company : companies) {
-			_importUsers(company.getCompanyId(), time);
-		}
+		_companyLocalService.forEachCompanyId(
+			companyId -> _importUsers(companyId, time));
 	}
 
 	@Override

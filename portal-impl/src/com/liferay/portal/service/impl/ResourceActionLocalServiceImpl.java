@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.NoSuchResourceActionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
@@ -262,35 +261,34 @@ public class ResourceActionLocalServiceImpl
 				dynamicQuery.add(nameProperty.eq(name));
 			};
 
-		for (Company company : companyLocalService.getCompanies()) {
-			ActionableDynamicQuery actionableDynamicQuery =
-				resourcePermissionLocalService.getActionableDynamicQuery();
+		companyLocalService.forEachCompanyId(
+			companyId -> {
+				ActionableDynamicQuery actionableDynamicQuery =
+					resourcePermissionLocalService.getActionableDynamicQuery();
 
-			actionableDynamicQuery.setAddCriteriaMethod(addCriteriaMethod);
-			actionableDynamicQuery.setCompanyId(company.getCompanyId());
-			actionableDynamicQuery.setPerformActionMethod(
-				(ResourcePermission resourcePermission) -> {
-					long actionIds = resourcePermission.getActionIds();
+				actionableDynamicQuery.setAddCriteriaMethod(addCriteriaMethod);
+				actionableDynamicQuery.setCompanyId(companyId);
+				actionableDynamicQuery.setPerformActionMethod(
+					(ResourcePermission resourcePermission) -> {
+						long actionIds = resourcePermission.getActionIds();
 
-					if ((actionIds & bitwiseValue) != 0) {
-						actionIds &= ~bitwiseValue;
+						if ((actionIds & bitwiseValue) != 0) {
+							actionIds &= ~bitwiseValue;
 
-						resourcePermission.setActionIds(actionIds);
-						resourcePermission.setViewActionId(
-							(actionIds % 2) == 1);
+							resourcePermission.setActionIds(actionIds);
+							resourcePermission.setViewActionId(
+								(actionIds % 2) == 1);
 
-						resourcePermissionPersistence.update(
-							resourcePermission);
-					}
-				});
+							resourcePermissionPersistence.update(
+								resourcePermission);
+						}
+					});
 
-			try {
 				actionableDynamicQuery.performActions();
-			}
-			catch (PortalException portalException) {
-				throw new SystemException(portalException);
-			}
-		}
+			},
+			(companyId, exception) -> {
+				throw new SystemException(exception);
+			});
 
 		_resourceActions.remove(
 			encodeKey(resourceAction.getName(), resourceAction.getActionId()));

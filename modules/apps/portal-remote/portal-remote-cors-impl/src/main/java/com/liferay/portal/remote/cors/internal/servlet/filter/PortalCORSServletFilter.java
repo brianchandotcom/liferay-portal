@@ -26,8 +26,10 @@ import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.servlet.HttpMethods;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -328,11 +330,13 @@ public class PortalCORSServletFilter
 				URLPatternMapperFactory.create(corsSupports));
 		}
 
-		for (long companyId : _urlPatternMappers.keySet()) {
-			if (companyId != CompanyConstants.SYSTEM) {
-				_rebuild(companyId);
-			}
-		}
+		_companyLocalService.forEachCompanyId(
+			companyId -> {
+				if (companyId != CompanyConstants.SYSTEM) {
+					_rebuild(companyId);
+				}
+			},
+			ArrayUtil.toLongArray(_urlPatternMappers.keySet()));
 	}
 
 	private void _rebuild(long companyId) {
@@ -354,6 +358,9 @@ public class PortalCORSServletFilter
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalCORSServletFilter.class);
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	private final Map<String, Dictionary<String, ?>>
 		_configurationPidsProperties = Collections.synchronizedMap(

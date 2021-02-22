@@ -25,7 +25,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.xml.XMLUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
@@ -562,11 +561,7 @@ public class JournalUpgradeProcess extends UpgradeProcess {
 
 	protected void updateJournalArticles() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			List<Company> companies = _companyLocalService.getCompanies();
-
-			for (Company company : companies) {
-				updateJournalArticles(company.getCompanyId());
-			}
+			_companyLocalService.forEachCompanyId(this::updateJournalArticles);
 		}
 	}
 

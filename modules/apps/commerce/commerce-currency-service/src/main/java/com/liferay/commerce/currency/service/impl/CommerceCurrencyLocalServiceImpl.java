@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
@@ -407,25 +408,26 @@ public class CommerceCurrencyLocalServiceImpl
 
 	@Override
 	public void updateExchangeRates() throws PortalException {
-		long[] companyIds = ArrayUtil.toLongArray(
-			commerceCurrencyFinder.getCompanyIds());
+		_companyLocalService.forEachCompanyId(
+			companyId -> {
+				CommerceCurrencyConfiguration commerceCurrencyConfiguration =
+					_configurationProvider.getConfiguration(
+						CommerceCurrencyConfiguration.class,
+						new CompanyServiceSettingsLocator(
+							companyId,
+							CommerceCurrencyExchangeRateConstants.
+								SERVICE_NAME));
 
-		for (long companyId : companyIds) {
-			CommerceCurrencyConfiguration commerceCurrencyConfiguration =
-				_configurationProvider.getConfiguration(
-					CommerceCurrencyConfiguration.class,
-					new CompanyServiceSettingsLocator(
-						companyId,
-						CommerceCurrencyExchangeRateConstants.SERVICE_NAME));
+				if (commerceCurrencyConfiguration.enableAutoUpdate()) {
+					String defaultExchangeRateProviderKey =
+						commerceCurrencyConfiguration.
+							defaultExchangeRateProviderKey();
 
-			if (commerceCurrencyConfiguration.enableAutoUpdate()) {
-				String defaultExchangeRateProviderKey =
-					commerceCurrencyConfiguration.
-						defaultExchangeRateProviderKey();
-
-				_updateExchangeRates(companyId, defaultExchangeRateProviderKey);
-			}
-		}
+					_updateExchangeRates(
+						companyId, defaultExchangeRateProviderKey);
+				}
+			},
+			ArrayUtil.toLongArray(commerceCurrencyFinder.getCompanyIds()));
 	}
 
 	protected void validate(
@@ -477,6 +479,9 @@ public class CommerceCurrencyLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceCurrencyLocalServiceImpl.class);
+
+	@ServiceReference(type = CompanyLocalService.class)
+	private CompanyLocalService _companyLocalService;
 
 	@ServiceReference(type = ConfigurationProvider.class)
 	private ConfigurationProvider _configurationProvider;

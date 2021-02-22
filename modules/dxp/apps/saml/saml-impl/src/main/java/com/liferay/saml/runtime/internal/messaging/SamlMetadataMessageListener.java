@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
@@ -28,7 +27,6 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.persistence.model.SamlIdpSpConnection;
@@ -85,15 +83,14 @@ public class SamlMetadataMessageListener extends SamlMessageListener {
 
 	@Override
 	protected void doReceive(Message message) {
-		List<Company> companies = _companyLocalService.getCompanies(false);
+		_companyLocalService.forEachCompany(
+			company -> {
+				if (!company.isActive()) {
+					return;
+				}
 
-		for (Company company : companies) {
-			if (!company.isActive()) {
-				continue;
-			}
-
-			_updateMetadata(company.getCompanyId());
-		}
+				_updateMetadata(company.getCompanyId());
+			});
 	}
 
 	@Override
@@ -169,38 +166,29 @@ public class SamlMetadataMessageListener extends SamlMessageListener {
 	}
 
 	private void _updateMetadata(long companyId) {
-		Long currentCompanyId = CompanyThreadLocal.getCompanyId();
-
-		CompanyThreadLocal.setCompanyId(companyId);
+		if (!_samlProviderConfigurationHelper.isEnabled()) {
+			return;
+		}
 
 		try {
-			if (!_samlProviderConfigurationHelper.isEnabled()) {
-				return;
+			if (_samlProviderConfigurationHelper.isRoleIdp()) {
+				updateSpMetadata(companyId);
 			}
-
-			try {
-				if (_samlProviderConfigurationHelper.isRoleIdp()) {
-					updateSpMetadata(companyId);
-				}
-				else if (_samlProviderConfigurationHelper.isRoleSp()) {
-					updateIdpMetadata(companyId);
-				}
-			}
-			catch (Exception exception) {
-				String msg = StringBundler.concat(
-					"Unable to refresh metadata for company ", companyId, ": ",
-					exception.getMessage());
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(msg, exception);
-				}
-				else if (_log.isWarnEnabled()) {
-					_log.warn(msg);
-				}
+			else if (_samlProviderConfigurationHelper.isRoleSp()) {
+				updateIdpMetadata(companyId);
 			}
 		}
-		finally {
-			CompanyThreadLocal.setCompanyId(currentCompanyId);
+		catch (Exception exception) {
+			String msg = StringBundler.concat(
+				"Unable to refresh metadata for company ", companyId, ": ",
+				exception.getMessage());
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg, exception);
+			}
+			else if (_log.isWarnEnabled()) {
+				_log.warn(msg);
+			}
 		}
 	}
 

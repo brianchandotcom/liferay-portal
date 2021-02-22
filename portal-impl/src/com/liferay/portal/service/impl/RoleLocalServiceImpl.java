@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.exception.RequiredRoleException;
 import com.liferay.portal.kernel.exception.RoleNameException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Organization;
@@ -259,11 +258,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 */
 	@Override
 	public void checkSystemRoles() throws PortalException {
-		List<Company> companies = companyLocalService.getCompanies();
-
-		for (Company company : companies) {
-			checkSystemRoles(company.getCompanyId());
-		}
+		companyLocalService.forEachCompanyId(this::checkSystemRoles);
 	}
 
 	/**

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -49,9 +48,7 @@ public class BaseUpgradeStagingGroupTypeSettings extends UpgradeProcess {
 	}
 
 	protected void updateStagedPortletNames() throws PortalException {
-		for (Company company : _companyLocalService.getCompanies()) {
-			updateStagedPortletNames(company.getCompanyId());
-		}
+		_companyLocalService.forEachCompanyId(this::updateStagedPortletNames);
 	}
 
 	protected void updateStagedPortletNames(Long companyId)

@@ -22,6 +22,7 @@ import selectCanConfigureWidgets from '../../selectors/selectCanConfigureWidgets
 import selectLanguageId from '../../selectors/selectLanguageId';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import {useDispatch, useSelector, useSelectorCallback} from '../../store/index';
+import resolveEditableConfig from '../../utils/editable-value/resolveEditableConfig';
 import resolveEditableValue from '../../utils/editable-value/resolveEditableValue';
 import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
@@ -128,19 +129,20 @@ const FragmentContent = ({
 			fragmentElement.innerHTML = defaultContent;
 
 			Promise.all(
-				getAllEditables(fragmentElement).map((editable) =>
-					Promise.all([
+				getAllEditables(fragmentElement).map((editable) => {
+					const editableValue =
+						editableValues[editable.editableValueNamespace][
+							editable.editableId
+						];
+
+					return Promise.all([
 						resolveEditableValue(
-							editableValues[editable.editableValueNamespace][
-								editable.editableId
-							],
+							editableValue,
 							languageId,
 							getFieldValue
 						),
-						resolveEditableValue(
-							editableValues[editable.editableValueNamespace][
-								editable.editableId
-							]?.config || {},
+						resolveEditableConfig(
+							editableValue?.config || {},
 							languageId,
 							getFieldValue
 						),
@@ -153,8 +155,8 @@ const FragmentContent = ({
 						);
 
 						editable.element.classList.add('page-editor__editable');
-					})
-				)
+					});
+				})
 			).then(() => {
 				if (isMounted() && fragmentElement) {
 					setContent(fragmentElement.innerHTML);

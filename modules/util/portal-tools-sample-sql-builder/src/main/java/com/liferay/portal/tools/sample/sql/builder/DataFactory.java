@@ -613,6 +613,10 @@ public class DataFactory {
 		return BenchmarksPropsValues.MAX_JOURNAL_ARTICLE_VERSION_COUNT;
 	}
 
+	public int getMaxSegmentsEntryCount() {
+		return BenchmarksPropsValues.MAX_SEGMENTS_ENTRY_COUNT;
+	}
+
 	public int getMaxWikiPageCommentCount() {
 		return BenchmarksPropsValues.MAX_WIKI_PAGE_COMMENT_COUNT;
 	}
@@ -3811,17 +3815,63 @@ public class DataFactory {
 			_SAMPLE_USER_NAME, false);
 	}
 
-	public List<SegmentsEntry> newSegmentsEntries(long groupId) {
-		List<SegmentsEntry> segmentsEntries = new ArrayList<>(
-			BenchmarksPropsValues.MAX_SEGMENTS_ENTRY_COUNT);
+	public SegmentsEntry newSegmentsEntry(long groupId, int index) {
+		SegmentsEntry segmentsEntry = new SegmentsEntryImpl();
 
-		for (int i = 0; i < BenchmarksPropsValues.MAX_SEGMENTS_ENTRY_COUNT;
-			 i++) {
+		// UUID
 
-			segmentsEntries.add(newSegmentsEntry(groupId, i));
-		}
+		segmentsEntry.setUuid(SequentialUUID.generate());
 
-		return segmentsEntries;
+		// PK fields
+
+		segmentsEntry.setSegmentsEntryId(_counter.get());
+
+		// Group instance
+
+		segmentsEntry.setGroupId(groupId);
+
+		// Audit fields
+
+		segmentsEntry.setCompanyId(_companyId);
+		segmentsEntry.setUserId(_sampleUserId);
+		segmentsEntry.setUserName(_SAMPLE_USER_NAME);
+		segmentsEntry.setCreateDate(new Date());
+		segmentsEntry.setModifiedDate(new Date());
+
+		// Other fields
+
+		segmentsEntry.setSegmentsEntryKey(_counter.getString());
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("<?xml version=\"1.0\"?><root available-locales=\"en_US\" ");
+		sb.append("default-locale=\"en_US\"><Name language-id=\"en_US\">");
+		sb.append("SampleSegment");
+		sb.append(index);
+		sb.append("</Name></root>");
+
+		segmentsEntry.setName(sb.toString());
+
+		segmentsEntry.setActive(true);
+
+		Criteria criteria = new Criteria();
+
+		String filterString = StringBundler.concat(
+			"(firstName eq ''", _SAMPLE_USER_NAME, index, "'')");
+
+		criteria.addCriterion(
+			"user", Criteria.Type.MODEL, filterString,
+			Criteria.Conjunction.AND);
+
+		criteria.addFilter(
+			Criteria.Type.MODEL, filterString, Criteria.Conjunction.AND);
+
+		segmentsEntry.setCriteria(CriteriaSerializer.serialize(criteria));
+
+		segmentsEntry.setSource(SegmentsEntryConstants.SOURCE_DEFAULT);
+		segmentsEntry.setType(User.class.getName());
+
+		return segmentsEntry;
 	}
 
 	public SocialActivityModel newSocialActivityModel(
@@ -4962,65 +5012,6 @@ public class DataFactory {
 		roleModel.setType(type);
 
 		return roleModel;
-	}
-
-	protected SegmentsEntry newSegmentsEntry(long groupId, int index) {
-		SegmentsEntry segmentsEntry = new SegmentsEntryImpl();
-
-		// UUID
-
-		segmentsEntry.setUuid(SequentialUUID.generate());
-
-		// PK fields
-
-		segmentsEntry.setSegmentsEntryId(_counter.get());
-
-		// Group instance
-
-		segmentsEntry.setGroupId(groupId);
-
-		// Audit fields
-
-		segmentsEntry.setCompanyId(_companyId);
-		segmentsEntry.setUserId(_sampleUserId);
-		segmentsEntry.setUserName(_SAMPLE_USER_NAME);
-		segmentsEntry.setCreateDate(new Date());
-		segmentsEntry.setModifiedDate(new Date());
-
-		// Other fields
-
-		segmentsEntry.setSegmentsEntryKey(_counter.getString());
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append("<?xml version=\"1.0\"?><root available-locales=\"en_US\" ");
-		sb.append("default-locale=\"en_US\"><Name language-id=\"en_US\">");
-		sb.append("SampleSegment");
-		sb.append(index);
-		sb.append("</Name></root>");
-
-		segmentsEntry.setName(sb.toString());
-
-		segmentsEntry.setActive(true);
-
-		Criteria criteria = new Criteria();
-
-		String filterString = StringBundler.concat(
-			"(firstName eq ''", _SAMPLE_USER_NAME, index, "'')");
-
-		criteria.addCriterion(
-			"user", Criteria.Type.MODEL, filterString,
-			Criteria.Conjunction.AND);
-
-		criteria.addFilter(
-			Criteria.Type.MODEL, filterString, Criteria.Conjunction.AND);
-
-		segmentsEntry.setCriteria(CriteriaSerializer.serialize(criteria));
-
-		segmentsEntry.setSource(SegmentsEntryConstants.SOURCE_DEFAULT);
-		segmentsEntry.setType(User.class.getName());
-
-		return segmentsEntry;
 	}
 
 	protected SocialActivityModel newSocialActivityModel(

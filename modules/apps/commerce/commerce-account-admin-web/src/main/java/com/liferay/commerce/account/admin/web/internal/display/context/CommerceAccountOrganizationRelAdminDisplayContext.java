@@ -51,11 +51,12 @@ public class CommerceAccountOrganizationRelAdminDisplayContext
 		<CommerceAccountOrganizationRel> {
 
 	public CommerceAccountOrganizationRelAdminDisplayContext(
-		CommerceAccountService commerceAccountService,
 		CommerceAccountOrganizationRelService
 			commerceAccountOrganizationRelService,
+		CommerceAccountService commerceAccountService,
+		ItemSelector itemSelector,
 		ModelResourcePermission<CommerceAccount> modelResourcePermission,
-		ItemSelector itemSelector, RenderRequest renderRequest) {
+		RenderRequest renderRequest) {
 
 		super(commerceAccountService, modelResourcePermission, renderRequest);
 

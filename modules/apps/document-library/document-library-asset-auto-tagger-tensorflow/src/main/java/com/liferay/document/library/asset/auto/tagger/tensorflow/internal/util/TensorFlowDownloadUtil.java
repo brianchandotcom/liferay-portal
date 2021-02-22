@@ -17,6 +17,7 @@ package com.liferay.document.library.asset.auto.tagger.tensorflow.internal.util;
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.TensorFlowImageAssetAutoTagProviderDownloadConfiguration;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.petra.io.StreamUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -29,8 +30,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.URL;
-
-import java.nio.file.Paths;
 
 /**
  * @author Alejandro Tardín
@@ -117,10 +116,8 @@ public class TensorFlowDownloadUtil {
 	}
 
 	private static String _getFileName(String fileName) {
-		return String.valueOf(
-			Paths.get(
-				"com.liferay.document.library.asset.auto.tagger.tensorflow",
-				fileName));
+		return "com.liferay.document.library.asset.auto.tagger.tensorflow" +
+			StringPool.SLASH + fileName;
 	}
 
 	private static InputStream _getModelFileInputStream(String fileName)

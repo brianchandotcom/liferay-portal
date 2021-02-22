@@ -16,7 +16,7 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {RulesSupport} from 'dynamic-data-mapping-form-builder';
 import {usePage} from 'dynamic-data-mapping-form-renderer';
-import {usePrevious} from 'frontend-js-react-web';
+import {usePrevious} from '@liferay/frontend-js-react-web';
 import {openModal} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 import {DndProvider} from 'react-dnd';

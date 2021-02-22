@@ -104,9 +104,9 @@ public class CommerceAccountOrganizationRelScreenNavigationEntry
 		CommerceAccountOrganizationRelAdminDisplayContext
 			commerceAccountOrganizationRelAdminDisplayContext =
 				new CommerceAccountOrganizationRelAdminDisplayContext(
-					_commerceAccountService,
 					_commerceAccountOrganizationRelService,
-					_modelResourcePermission, _itemSelector, renderRequest);
+					_commerceAccountService, _itemSelector,
+					_modelResourcePermission, renderRequest);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,

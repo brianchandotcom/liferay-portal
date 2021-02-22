@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -177,7 +178,8 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 			responseJSONObject.getJSONObject("segmentsExperience");
 
 		Assert.assertArrayEquals(
-			new String[0],
+			LocaleUtil.toLanguageIds(
+				LanguageUtil.getAvailableLocales(_group.getGroupId())),
 			(String[])segmentsExperienceJSONObject.get("languageIds"));
 	}
 

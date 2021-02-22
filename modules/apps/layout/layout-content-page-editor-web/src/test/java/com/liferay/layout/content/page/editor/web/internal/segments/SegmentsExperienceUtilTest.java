@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.language.LanguageImpl;
 import com.liferay.segments.model.SegmentsExperience;
@@ -90,7 +91,8 @@ public class SegmentsExperienceUtilTest {
 			JSONUtil.put(
 				"active", segmentsExperience.isActive()
 			).put(
-				"languageIds", new String[0]
+				"languageIds",
+				LocaleUtil.toLanguageIds(LanguageUtil.getAvailableLocales())
 			).put(
 				"name", segmentsExperience.getNameCurrentValue()
 			).put(

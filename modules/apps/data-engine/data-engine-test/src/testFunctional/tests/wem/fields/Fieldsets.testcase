@@ -148,38 +148,42 @@ definition {
 	@description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
 	@priority = "5"
 	test FieldsetNameRenamedWhenNameAlreadyExistent {
+		var textValue = "Text";
+		var numericValue = "Numeric";
+		var structureTitle = "WC Structure Name";
+
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(structureName = "WC Structure Name");
+		WebContentStructures.addCP(structureName = "${structureTitle}");
 
 		DataEngine.addField(
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
+			fieldFieldLabel = "${textValue}",
+			fieldName = "${textValue}");
 
 		DataEngine.editFieldReference(
-			assertFieldReference = "Text",
-			fieldFieldLabel = "Text",
-			fieldReference = "Text");
+			assertFieldReference = "${textValue}",
+			fieldFieldLabel = "${textValue}",
+			fieldReference = "${textValue}");
 
 		DataEngine.addField(
-			fieldFieldLabel = "Numeric",
-			fieldName = "Numeric");
+			fieldFieldLabel = "${numericValue}",
+			fieldName = "${numericValue}");
 
 		DataEngine.editFieldReference(
-			assertFieldReference = "Text",
-			fieldFieldLabel = "Numeric",
-			fieldReference = "Text");
+			assertFieldReference = "${textValue}",
+			fieldFieldLabel = "${numericValue}",
+			fieldReference = "${textValue}");
 
-		WebContentStructures.saveCP(structureName = "WC Structure Name");
+		WebContentStructures.saveCP(structureName = "${structureTitle}");
 
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+		WebContentNavigator.gotoEditStructure(structureName = "${structureTitle}");
 
 		AssertClick.assertPartialTextClickAt(
-			key_fieldFieldLabel = "Numeric",
+			key_fieldFieldLabel = "${numericValue}",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = "Numeric");
+			value1 = "${numericValue}");
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 
@@ -187,7 +191,7 @@ definition {
 			key_fieldLabel = "Field Reference",
 			key_fieldName = "fieldReference",
 			locator1 = "Sidebar#TEXT_INPUT",
-			value1 = "Text");
+			value1 = "${textValue}");
 	}
 
 	@description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"

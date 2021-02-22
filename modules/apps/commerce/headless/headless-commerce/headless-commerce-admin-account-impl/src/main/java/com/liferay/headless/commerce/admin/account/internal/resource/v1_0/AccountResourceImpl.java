@@ -30,6 +30,7 @@ import com.liferay.commerce.account.service.CommerceAccountService;
 import com.liferay.commerce.account.service.CommerceAccountUserRelService;
 import com.liferay.commerce.account.service.persistence.CommerceAccountOrganizationRelPK;
 import com.liferay.commerce.account.service.persistence.CommerceAccountUserRelPK;
+import com.liferay.commerce.constants.CommerceAddressConstants;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.Account;
@@ -523,6 +524,8 @@ public class AccountResourceImpl
 
 				CommerceAddress commerceAddress =
 					_commerceAddressService.addCommerceAddress(
+						GetterUtil.getString(
+							accountAddress.getExternalReferenceCode(), null),
 						commerceAccount.getModelClassName(),
 						commerceAccount.getCommerceAccountId(),
 						accountAddress.getName(),
@@ -533,10 +536,10 @@ public class AccountResourceImpl
 						accountAddress.getZip(),
 						_getRegionId(country, accountAddress),
 						country.getCountryId(), accountAddress.getPhoneNumber(),
-						GetterUtil.get(
-							accountAddress.getDefaultBilling(), false),
-						GetterUtil.get(
-							accountAddress.getDefaultShipping(), false),
+						GetterUtil.getInteger(
+							accountAddress.getType(),
+							CommerceAddressConstants.
+								ADDRESS_TYPE_BILLING_AND_SHIPPING),
 						serviceContext);
 
 				if (GetterUtil.get(accountAddress.getDefaultBilling(), false)) {

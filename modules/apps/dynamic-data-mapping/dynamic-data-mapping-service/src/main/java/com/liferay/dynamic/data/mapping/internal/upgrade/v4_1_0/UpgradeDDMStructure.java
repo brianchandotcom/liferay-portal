@@ -78,8 +78,8 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 			PreparedStatement ps2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
-					"update DDMStructure set definition = ? where " +
-						"structureId = ?")) {
+					"update DDMStructure set definition = ?, " +
+						"parentStructureId = 0 where structureId = ?")) {
 
 			ps1.setLong(
 				1,
@@ -190,8 +190,8 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 			PreparedStatement ps2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
-					"update DDMStructureVersion set definition = ? where " +
-						"structureVersionId = ?")) {
+					"update DDMStructureVersion set definition = ?, " +
+						"parentStructureId = 0 where structureVersionId = ?")) {
 
 			ps1.setLong(
 				1,

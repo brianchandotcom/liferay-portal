@@ -6,6 +6,8 @@
 	<target name="build-sample-sql">
 		<gradle-execute dir="../modules/util/portal-tools-sample-sql-builder" task="jar" />
 
+		<property name="sample.sql.properties.file" value="${basedir}/benchmarks.properties" />
+
 		<java
 			classname="com.liferay.portal.tools.sample.sql.builder.SampleSQLBuilderLauncher"
 			dir="."
@@ -19,7 +21,7 @@
 				<path refid="project.classpath" />
 			</classpath>
 			<sysproperty key="external-properties" value="com/liferay/portal/tools/dependencies/portal-tools.properties" />
-			<sysproperty key="sample-sql-properties" value="${basedir}/benchmarks.properties" />
+			<sysproperty key="sample-sql-properties" value="${sample.sql.properties.file}" />
 		</java>
 	</target>
 

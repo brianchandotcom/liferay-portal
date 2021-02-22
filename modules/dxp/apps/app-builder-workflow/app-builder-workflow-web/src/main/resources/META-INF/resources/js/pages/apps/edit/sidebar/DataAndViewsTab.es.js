@@ -95,19 +95,17 @@ export default function DataAndViewsTab({
 		} = {},
 	} = currentStep;
 
-	const availableFormViews = formViews.map((form) => ({
-		...form,
+	const availableFormViews = formViews.map((formView) => ({
+		...formView,
 		disabled:
 			stepFormViews.findIndex(
-				({dataLayoutId}) => dataLayoutId === form.id
+				({dataLayoutId}) => dataLayoutId === formView.id
 			) > -1,
 	}));
 
-	const mainFormViews = formViews.map((form) => ({
-		...form,
-		disabled:
-			form.missingRequiredFields?.customField &&
-			form.missingRequiredFields?.nativeField,
+	const mainFormViews = formViews.map((formView) => ({
+		...formView,
+		disabled: formView.missingRequiredFields?.nativeField,
 	}));
 
 	const addStepFormView = () => {

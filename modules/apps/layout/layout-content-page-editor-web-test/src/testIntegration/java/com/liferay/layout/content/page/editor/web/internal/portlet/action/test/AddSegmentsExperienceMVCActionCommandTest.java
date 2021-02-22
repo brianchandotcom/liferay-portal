@@ -16,6 +16,7 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -38,6 +39,8 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -47,6 +50,8 @@ import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
+
+import java.util.Locale;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -100,6 +105,12 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			_getMockLiferayPortletActionRequest();
 
+		mockLiferayPortletActionRequest.addParameter(
+			"languageIds",
+			StringUtil.merge(
+				LocaleUtil.toLanguageIds(
+					new Locale[] {LocaleUtil.US, LocaleUtil.BRAZIL}),
+				StringPool.COMMA));
 		mockLiferayPortletActionRequest.addParameter("name", name);
 		mockLiferayPortletActionRequest.addParameter(
 			"segmentsEntryId",
@@ -111,6 +122,10 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 		JSONObject segmentsExperienceJSONObject =
 			responseJSONObject.getJSONObject("segmentsExperience");
 
+		Assert.assertArrayEquals(
+			LocaleUtil.toLanguageIds(
+				new Locale[] {LocaleUtil.US, LocaleUtil.BRAZIL}),
+			(String[])segmentsExperienceJSONObject.get("languageIds"));
 		Assert.assertEquals(name, segmentsExperienceJSONObject.get("name"));
 		Assert.assertEquals(
 			segmentsEntry.getSegmentsEntryId(),
@@ -126,7 +141,18 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 
 		Assert.assertTrue(segmentsExperience.isActive());
 		Assert.assertEquals(
-			name, segmentsExperience.getName(LocaleUtil.getDefault()));
+			name, segmentsExperience.getName(LocaleUtil.getSiteDefault()));
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			segmentsExperience.getTypeSettingsUnicodeProperties();
+
+		Assert.assertEquals(
+			StringUtil.merge(
+				LocaleUtil.toLanguageIds(
+					new Locale[] {LocaleUtil.US, LocaleUtil.BRAZIL}),
+				StringPool.COMMA),
+			typeSettingsUnicodeProperties.get(PropsKeys.LOCALES));
+
 		Assert.assertEquals(
 			segmentsEntry.getSegmentsEntryId(),
 			segmentsExperience.getSegmentsEntryId());
@@ -148,14 +174,13 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 	}
 
 	private JSONObject _addSegmentsExperience(
-		MockLiferayPortletActionRequest mockLiferayPortletActionRequest)
+			MockLiferayPortletActionRequest mockLiferayPortletActionRequest)
 		throws Exception {
 
 		return ReflectionTestUtil.invoke(
 			_mvcActionCommand, "addSegmentsExperience",
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
-			mockLiferayPortletActionRequest,
-			new MockActionResponse());
+			mockLiferayPortletActionRequest, new MockActionResponse());
 	}
 
 	private MockLiferayPortletActionRequest

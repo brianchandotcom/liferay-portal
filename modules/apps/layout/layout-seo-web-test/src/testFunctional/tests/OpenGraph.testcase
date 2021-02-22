@@ -625,6 +625,8 @@ definition {
 
 		OpenGraph.configureOpenGraph(customTitle = "This is a custom title");
 
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
+
 		User.logoutPG();
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");

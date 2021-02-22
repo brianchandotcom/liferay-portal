@@ -373,13 +373,18 @@ definition {
 		var publishTimeHours = Time.getUTCHours();
 		var publishTimeMinutes = Time.getUTCMinutes();
 
-		if ("${utcMinutes}" == "59") {
+		if ("${utcMinutes}" == "58") {
 			publishTimeHours = MathUtil.sum("${publishTimeHours}", "1");
 
 			publishTimeMinutes = "00";
 		}
+		else if ("${utcMinutes}" == "59") {
+			publishTimeHours = MathUtil.sum("${publishTimeHours}", "1");
+
+			publishTimeMinutes = "01";
+		}
 		else {
-			publishTimeMinutes = MathUtil.sum("${publishTimeMinutes}", "1");
+			publishTimeMinutes = MathUtil.sum("${publishTimeMinutes}", "2");
 		}
 
 		Click(locator1 = "Publications#PUBLISH_TIME_HOURS");

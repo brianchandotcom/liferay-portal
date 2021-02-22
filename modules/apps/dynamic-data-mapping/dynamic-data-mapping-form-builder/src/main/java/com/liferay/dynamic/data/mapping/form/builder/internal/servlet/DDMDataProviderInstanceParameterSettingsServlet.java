@@ -183,6 +183,8 @@ public class DDMDataProviderInstanceParameterSettingsServlet
 			}
 
 			inputJSONObject.put(
+				"id", name
+			).put(
 				"name", name
 			).put(
 				"required",

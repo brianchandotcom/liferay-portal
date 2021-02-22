@@ -33,8 +33,8 @@
 		<column name="street3" type="String" />
 		<column name="city" type="String" />
 		<column name="zip" type="String" />
-		<column name="commerceRegionId" type="long" />
-		<column name="commerceCountryId" type="long" />
+		<column name="regionId" type="long" />
+		<column name="countryId" type="long" />
 		<column name="latitude" type="double" />
 		<column name="longitude" type="double" />
 		<column name="phoneNumber" type="String" />
@@ -50,11 +50,11 @@
 
 		<!-- Finder methods -->
 
-		<finder name="CommerceRegionId" return-type="Collection">
-			<finder-column name="commerceRegionId" />
+		<finder name="RegionId" return-type="Collection">
+			<finder-column name="regionId" />
 		</finder>
-		<finder name="CommerceCountryId" return-type="Collection">
-			<finder-column name="commerceCountryId" />
+		<finder name="CountryId" return-type="Collection">
+			<finder-column name="countryId" />
 		</finder>
 		<finder name="C_C" return-type="Collection">
 			<finder-column name="classNameId" />
@@ -111,7 +111,7 @@
 
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
-		<column name="commerceCountryId" type="long" />
+		<column name="countryId" type="long" />
 
 		<!-- Order -->
 
@@ -121,8 +121,8 @@
 
 		<!-- Finder methods -->
 
-		<finder name="CommerceCountryId" return-type="Collection">
-			<finder-column name="commerceCountryId" />
+		<finder name="CountryId" return-type="Collection">
+			<finder-column name="countryId" />
 		</finder>
 		<finder name="C_C" return-type="Collection">
 			<finder-column name="classNameId" />
@@ -131,7 +131,7 @@
 		<finder name="C_C_C" return-type="CommerceAddressRestriction" unique="true">
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
-			<finder-column name="commerceCountryId" />
+			<finder-column name="countryId" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="CommerceAvailabilityEstimate" remote-service="true" uuid="true">

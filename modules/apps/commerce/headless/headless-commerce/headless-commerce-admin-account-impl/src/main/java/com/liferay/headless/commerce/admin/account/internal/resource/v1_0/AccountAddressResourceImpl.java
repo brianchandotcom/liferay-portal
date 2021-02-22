@@ -134,7 +134,7 @@ public class AccountAddressResourceImpl
 		return _getAccountAddressesPage(commerceAccount, pagination);
 	}
 
-	@NestedField(parentClass = Account.class, value = "addresses")
+	@NestedField(parentClass = Account.class, value = "accountAddresses")
 	@Override
 	public Page<AccountAddress> getAccountIdAccountAddressesPage(
 			Long id, Pagination pagination)

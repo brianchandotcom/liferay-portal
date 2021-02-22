@@ -11,7 +11,7 @@ buildPluginDescriptor {
 }
 
 dependencies {
-	compile group: "com.puppycrawl.tools", name: "checkstyle", version: "8.11"
+	compile group: "com.puppycrawl.tools", name: "checkstyle", version: "8.29"
 	compile group: "commons-io", name: "commons-io", version: "2.5"
 	compile group: "org.freemarker", name: "freemarker", transitive: false, version: "2.3.28"
 
@@ -22,7 +22,7 @@ dependencies {
 	compileOnly group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.portal.tools.java.parser", version: "1.0.13"
-	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.51.0"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
 	compileOnly group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.15"
@@ -30,7 +30,9 @@ dependencies {
 }
 
 deployDependencies {
-	from configurations.compile
+	from (configurations.compile) {
+		include "checkstyle-*.jar"
+	}
 
 	rename(/animal-sniffer-annotations-(.+)\.jar/, "animal-sniffer-annotations" + renameSuffix)
 	rename(/antlr-(.+)\.jar/, "antlr" + renameSuffix)

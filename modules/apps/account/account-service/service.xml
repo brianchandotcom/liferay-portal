@@ -146,6 +146,7 @@
 		<column name="defaultAccountGroup" type="boolean" />
 		<column name="description" type="String" />
 		<column name="name" type="String" />
+		<column name="type" type="String" />
 
 		<!-- Finder methods -->
 
@@ -155,6 +156,10 @@
 		<finder name="C_D" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="defaultAccountGroup" />
+		</finder>
+		<finder name="C_T" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="type" />
 		</finder>
 
 		<!-- References -->

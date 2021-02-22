@@ -302,12 +302,12 @@ definition {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		AssertElementNotPresent(
-			key_entryStatus = "draft",
+			key_entryStatus = "Draft",
 			key_entryTitle = "Blogs Entry Title",
 			locator1 = "Blogs#ICON_VIEW_ENTRY_TITLE_2");
 
 		AssertVisible(
-			key_entryStatus = "approved",
+			key_entryStatus = "Approved",
 			key_entryTitle = "Blogs Entry Title",
 			locator1 = "Blogs#ICON_VIEW_ENTRY_TITLE_2");
 

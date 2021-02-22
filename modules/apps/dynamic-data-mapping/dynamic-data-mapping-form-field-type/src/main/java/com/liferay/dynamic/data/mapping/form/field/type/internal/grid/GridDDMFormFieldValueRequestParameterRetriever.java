@@ -16,14 +16,12 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.grid;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRequestParameterRetriever;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.dynamic.data.mapping.util.DDMFormFieldValueRequestParameterRetrieverUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 
-import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -48,43 +46,28 @@ public class GridDDMFormFieldValueRequestParameterRetriever
 
 		JSONObject jsonObject = jsonFactory.createJSONObject();
 
-		Map<String, String[]> parameterMap =
-			httpServletRequest.getParameterMap();
+		String[] parameterValues = httpServletRequest.getParameterValues(
+			ddmFormFieldParameterName);
 
-		if (!parameterMap.containsKey(ddmFormFieldParameterName)) {
-			return jsonObject.toString();
-		}
-
-		String[] parameterValues = parameterMap.get(ddmFormFieldParameterName);
-
-		if (parameterValues.length == 1) {
-			try {
-				String value = parameterValues[0];
-
-				if (value.startsWith(StringPool.QUOTE) &&
-					value.endsWith(StringPool.QUOTE)) {
-
-					value = (String)jsonFactory.deserialize(value);
-				}
-
-				jsonObject = jsonFactory.createJSONObject(value);
-
-				return jsonObject.toString();
+		if (ArrayUtil.isNotEmpty(parameterValues)) {
+			if (parameterValues.length == 1) {
+				jsonObject = Optional.ofNullable(
+					DDMFormFieldValueRequestParameterRetrieverUtil.
+						getJSONObject(parameterValues[0])
+				).orElse(
+					jsonObject
+				);
 			}
-			catch (JSONException jsonException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(jsonException, jsonException);
+			else {
+				for (String parameterValue : parameterValues) {
+					if (!parameterValue.isEmpty()) {
+						String[] parameterValueParts = parameterValue.split(
+							";");
+
+						jsonObject.put(
+							parameterValueParts[0], parameterValueParts[1]);
+					}
 				}
-
-				jsonObject = jsonFactory.createJSONObject();
-			}
-		}
-
-		for (String parameterValue : parameterValues) {
-			if (!parameterValue.isEmpty()) {
-				String[] parameterValueParts = parameterValue.split(";");
-
-				jsonObject.put(parameterValueParts[0], parameterValueParts[1]);
 			}
 		}
 
@@ -93,8 +76,5 @@ public class GridDDMFormFieldValueRequestParameterRetriever
 
 	@Reference
 	protected JSONFactory jsonFactory;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		GridDDMFormFieldValueRequestParameterRetriever.class);
 
 }

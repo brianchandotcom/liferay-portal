@@ -12,25 +12,28 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.field.type.internal.document.library;
+package com.liferay.journal.article.dynamic.data.mapping.form.field.type.internal.journal.article;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRequestParameterRetriever;
-import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.util.DDMFormFieldValueRequestParameterRetrieverUtil;
+import com.liferay.journal.article.dynamic.data.mapping.form.field.type.constants.JournalArticleDDMFormFieldTypeConstants;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Pedro Queiroz
+ * @author Rodrigo Paulino
  */
 @Component(
 	immediate = true,
-	property = "ddm.form.field.type.name=" + DDMFormFieldTypeConstants.DOCUMENT_LIBRARY,
+	property = "ddm.form.field.type.name=" + JournalArticleDDMFormFieldTypeConstants.JOURNAL_ARTICLE,
 	service = DDMFormFieldValueRequestParameterRetriever.class
 )
-public class DocumentLibraryDDMFormFieldValueRequestParameterRetriever
+public class JournalArticleDDMFormFieldValueRequestParameterRetriever
 	implements DDMFormFieldValueRequestParameterRetriever {
 
 	@Override
@@ -41,13 +44,17 @@ public class DocumentLibraryDDMFormFieldValueRequestParameterRetriever
 		String parameter = httpServletRequest.getParameter(
 			ddmFormFieldParameterName);
 
-		if (parameter != null) {
+		if (!Validator.isBlank(parameter)) {
 			parameter = String.valueOf(
 				DDMFormFieldValueRequestParameterRetrieverUtil.getJSONObject(
 					parameter));
 		}
 
-		return parameter;
+		return Optional.ofNullable(
+			parameter
+		).orElse(
+			defaultDDMFormFieldParameterValue
+		);
 	}
 
 }

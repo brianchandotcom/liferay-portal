@@ -623,27 +623,55 @@ public class PropsValues {
 		GetterUtil.getLong(
 			PropsUtil.get(PropsKeys.DATA_LIMIT_MAX_DL_STORAGE_SIZE));
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final long DATA_LIMIT_MAX_JOURNAL_ARTICLE_COUNT =
 		GetterUtil.getLong(
 			PropsUtil.get(PropsKeys.DATA_LIMIT_MAX_JOURNAL_ARTICLE_COUNT));
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final long DATA_LIMIT_MAX_JOURNAL_FOLDER_COUNT =
 		GetterUtil.getLong(
 			PropsUtil.get(PropsKeys.DATA_LIMIT_MAX_JOURNAL_FOLDER_COUNT));
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final long DATA_LIMIT_MAX_ORGANIZATION_COUNT =
 		GetterUtil.getLong(
 			PropsUtil.get(PropsKeys.DATA_LIMIT_MAX_ORGANIZATION_COUNT));
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final long DATA_LIMIT_MAX_ROLE_COUNT = GetterUtil.getLong(
 		PropsUtil.get(PropsKeys.DATA_LIMIT_MAX_ROLE_COUNT));
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final long DATA_LIMIT_MAX_SITE_COUNT = GetterUtil.getLong(
 		PropsUtil.get(PropsKeys.DATA_LIMIT_MAX_SITE_COUNT));
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final long DATA_LIMIT_MAX_TEAM_COUNT = GetterUtil.getLong(
 		PropsUtil.get(PropsKeys.DATA_LIMIT_MAX_TEAM_COUNT));
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final long DATA_LIMIT_MAX_USER_COUNT = GetterUtil.getLong(
 		PropsUtil.get(PropsKeys.DATA_LIMIT_MAX_USER_COUNT));
 

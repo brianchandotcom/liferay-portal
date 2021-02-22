@@ -96,10 +96,10 @@ public class SortPortletSharedSearchContributor
 
 		return sortBuilder.field(
 			fieldValue
-		).sortOrder(
-			sortOrder
 		).locale(
 			locale
+		).sortOrder(
+			sortOrder
 		).build();
 	}
 

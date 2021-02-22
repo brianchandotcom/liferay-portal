@@ -71,8 +71,8 @@ public class UpdateSegmentsExperienceMVCActionCommand
 			"segmentsExperience",
 			_segmentsExperienceService.updateSegmentsExperience(
 				segmentsExperienceId, segmentsEntryId,
-				Collections.singletonMap(LocaleUtil.getDefault(), name), true,
-				typeSettingsUnicodeProperties));
+				Collections.singletonMap(LocaleUtil.getSiteDefault(), name),
+				true, typeSettingsUnicodeProperties));
 	}
 
 	@Reference

@@ -148,9 +148,11 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 									infoItemFieldValues.getInfoFieldValue(
 										infoField.getName());
 
-								biConsumer.accept(
-									sourceLocale,
-									infoFieldValue.getValue(sourceLocale));
+								if (infoFieldValue != null) {
+									biConsumer.accept(
+										sourceLocale,
+										infoFieldValue.getValue(sourceLocale));
+								}
 							}
 						).build()));
 			}

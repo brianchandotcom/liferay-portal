@@ -42,9 +42,11 @@ import com.liferay.portal.kernel.service.PortletPreferenceValueLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -186,6 +188,12 @@ public class SegmentsExperienceUtil {
 		String[] languageIds = StringUtil.split(
 			typeSettingsUnicodeProperties.getProperty(
 				PropsKeys.LOCALES, StringPool.BLANK));
+
+		if (ArrayUtil.isEmpty(languageIds)) {
+			languageIds = LocaleUtil.toLanguageIds(
+				LanguageUtil.getAvailableLocales(
+					segmentsExperience.getGroupId()));
+		}
 
 		return JSONUtil.put(
 			"active", segmentsExperience.isActive()

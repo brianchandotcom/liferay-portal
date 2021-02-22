@@ -114,29 +114,31 @@ public class DDMFormBuilderContextFactoryHelper {
 	}
 
 	protected Map<String, Object> createEmptyStateContext() {
-		Map<String, Object> emptyStateContext =
+		return HashMapBuilder.<String, Object>put(
+			"dataEngineSidebar", _isDataEngineSidebar()
+		).put(
+			"pages", new ArrayList<>()
+		).put(
+			"rules", new ArrayList<>()
+		).put(
+			"successPage",
 			HashMapBuilder.<String, Object>put(
-				"dataEngineSidebar", _isDataEngineSidebar()
+				"body", StringPool.BLANK
 			).put(
-				"pages", new ArrayList<>()
+				"enabled", Boolean.FALSE
 			).put(
-				"rules", new ArrayList<>()
-			).put(
-				"successPage",
-				HashMapBuilder.<String, Object>put(
-					"body", StringPool.BLANK
-				).put(
-					"enabled", Boolean.FALSE
-				).put(
-					"title", StringPool.BLANK
-				).build()
-			).build();
+				"title", StringPool.BLANK
+			).build()
+		).put(
+			"sidebarPanels",
+			() -> {
+				if (_isDataEngineSidebar()) {
+					return _getSidebarPanels();
+				}
 
-		if (_isDataEngineSidebar()) {
-			emptyStateContext.put("sidebarPanels", _getSidebarPanels());
-		}
-
-		return emptyStateContext;
+				return null;
+			}
+		).build();
 	}
 
 	protected Map<String, Object> createFormContext(
@@ -372,42 +374,44 @@ public class DDMFormBuilderContextFactoryHelper {
 			DDMForm ddmForm, DDMFormLayout ddmFormLayout)
 		throws PortalException {
 
-		Map<String, Object> fullFormContext =
-			HashMapBuilder.<String, Object>put(
-				"dataEngineSidebar", _isDataEngineSidebar()
-			).put(
-				"pages",
-				() -> {
-					Map<String, Object> formContext = createFormContext(
-						ddmForm, ddmFormLayout);
+		return HashMapBuilder.<String, Object>put(
+			"dataEngineSidebar", _isDataEngineSidebar()
+		).put(
+			"pages",
+			() -> {
+				Map<String, Object> formContext = createFormContext(
+					ddmForm, ddmFormLayout);
 
-					return formContext.get("pages");
+				return formContext.get("pages");
+			}
+		).put(
+			"paginationMode", ddmFormLayout.getPaginationMode()
+		).put(
+			"rules", new ArrayList<>()
+		).put(
+			"sidebarPanels",
+			() -> {
+				if (_isDataEngineSidebar()) {
+					return _getSidebarPanels();
 				}
-			).put(
-				"paginationMode", ddmFormLayout.getPaginationMode()
-			).put(
-				"rules", new ArrayList<>()
-			).put(
-				"successPageSettings",
-				() -> {
-					DDMFormSuccessPageSettings ddmFormSuccessPageSettings =
-						ddmForm.getDDMFormSuccessPageSettings();
 
-					return HashMapBuilder.<String, Object>put(
-						"body", toMap(ddmFormSuccessPageSettings.getBody())
-					).put(
-						"enabled", ddmFormSuccessPageSettings.isEnabled()
-					).put(
-						"title", toMap(ddmFormSuccessPageSettings.getTitle())
-					).build();
-				}
-			).build();
+				return null;
+			}
+		).put(
+			"successPageSettings",
+			() -> {
+				DDMFormSuccessPageSettings ddmFormSuccessPageSettings =
+					ddmForm.getDDMFormSuccessPageSettings();
 
-		if (_isDataEngineSidebar()) {
-			fullFormContext.put("sidebarPanels", _getSidebarPanels());
-		}
-
-		return fullFormContext;
+				return HashMapBuilder.<String, Object>put(
+					"body", toMap(ddmFormSuccessPageSettings.getBody())
+				).put(
+					"enabled", ddmFormSuccessPageSettings.isEnabled()
+				).put(
+					"title", toMap(ddmFormSuccessPageSettings.getTitle())
+				).build();
+			}
+		).build();
 	}
 
 	protected Map<String, Object> doCreateFormContext(DDMStructure ddmStructure)

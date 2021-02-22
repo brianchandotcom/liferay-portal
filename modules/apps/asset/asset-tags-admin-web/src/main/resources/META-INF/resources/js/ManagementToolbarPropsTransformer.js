@@ -12,30 +12,44 @@
  * details.
  */
 
-import {DefaultEventHandler} from 'frontend-js-web';
-
-class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
-	deleteTags() {
+export default function propsTransformer({portletNamespace, ...otherProps}) {
+	const deleteTags = () => {
 		if (
 			confirm(
 				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
 			)
 		) {
-			submitForm(this.one('#fm'));
-		}
-	}
+			const form = document.getElementById(`${portletNamespace}fm`);
 
-	mergeTags(itemData) {
+			if (form) {
+				submitForm(form);
+			}
+		}
+	};
+
+	const mergeTags = (itemData) => {
 		const mergeURL = itemData.mergeTagsURL;
 
 		location.href = mergeURL.replace(
 			escape('[$MERGE_TAGS_IDS$]'),
 			Liferay.Util.listCheckedExcept(
-				this.one('#fm'),
-				this.ns('allRowIds')
+				document.getElementById(`${portletNamespace}fm`),
+				`${portletNamespace}allRowIds`
 			)
 		);
-	}
-}
+	};
 
-export default ManagementToolbarDefaultEventHandler;
+	return {
+		...otherProps,
+		onActionButtonClick(event, {item}) {
+			const action = item.data?.action;
+
+			if (action === 'deleteTags') {
+				deleteTags();
+			}
+			else if (action === 'mergeTags') {
+				mergeTags(item.data);
+			}
+		},
+	};
+}

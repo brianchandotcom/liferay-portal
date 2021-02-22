@@ -110,11 +110,6 @@ public class AssetTagsManagementToolbarDisplayContext
 	}
 
 	@Override
-	public String getDefaultEventHandler() {
-		return "assetTagsManagementToolbarDefaultEventHandler";
-	}
-
-	@Override
 	public String getSearchActionURL() {
 		PortletURL searchTagURL = getPortletURL();
 

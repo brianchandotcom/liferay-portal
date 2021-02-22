@@ -43,6 +43,12 @@ public @interface SPAConfiguration {
 	public String[] navigationExceptionSelectors();
 
 	@Meta.AD(
+		description = "custom-excluded-paths-description",
+		name = "custom-excluded-paths-name", required = false
+	)
+	public String[] customExcludedPaths();
+
+	@Meta.AD(
 		deflt = "0", description = "request-timeout-description",
 		name = "request-timeout-name", required = false
 	)

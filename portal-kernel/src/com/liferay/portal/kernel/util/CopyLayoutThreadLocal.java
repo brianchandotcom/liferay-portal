@@ -31,6 +31,6 @@ public class CopyLayoutThreadLocal {
 
 	private static final ThreadLocal<Boolean> _copyLayout =
 		new CentralizedThreadLocal<>(
-			CopyLayoutThreadLocal.class + "._copyLayout", () -> Boolean.TRUE);
+			CopyLayoutThreadLocal.class + "._copyLayout", () -> Boolean.FALSE);
 
 }

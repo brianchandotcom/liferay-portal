@@ -18,19 +18,24 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.model.AccountGroupRel;
 import com.liferay.account.service.base.AccountGroupLocalServiceBaseImpl;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
-import com.liferay.portal.kernel.dao.orm.Disjunction;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.QueryConfig;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.SortFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -122,12 +127,18 @@ public class AccountGroupLocalServiceImpl
 		long companyId, String keywords, int start, int end,
 		OrderByComparator<AccountGroup> orderByComparator) {
 
-		return new BaseModelSearchResult<>(
-			accountGroupLocalService.dynamicQuery(
-				_getDynamicQuery(companyId, keywords, orderByComparator), start,
-				end, orderByComparator),
-			(int)accountGroupLocalService.dynamicQueryCount(
-				_getDynamicQuery(companyId, keywords, null)));
+		try {
+			SearchContext searchContext = buildSearchContext(
+				companyId, start, end, orderByComparator);
+
+			searchContext.setKeywords(keywords);
+
+			return searchAccountGroups(searchContext);
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(
+				portalException.getMessage(), portalException);
+		}
 	}
 
 	@Override
@@ -144,33 +155,91 @@ public class AccountGroupLocalServiceImpl
 		return accountGroupPersistence.update(accountGroup);
 	}
 
-	private DynamicQuery _getDynamicQuery(
-		long companyId, String keywords,
+	protected SearchContext buildSearchContext(
+		long companyId, int start, int end,
 		OrderByComparator<AccountGroup> orderByComparator) {
 
-		DynamicQuery dynamicQuery = accountGroupLocalService.dynamicQuery();
+		SearchContext searchContext = new SearchContext();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("companyId", companyId));
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq("defaultAccountGroup", false));
+		searchContext.setCompanyId(companyId);
+		searchContext.setEnd(end);
 
-		if (Validator.isNotNull(keywords)) {
-			Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
+		if (orderByComparator != null) {
+			String[] orderByFields = orderByComparator.getOrderByFields();
 
-			disjunction.add(
-				RestrictionsFactoryUtil.ilike(
-					"description",
-					StringUtil.quote(keywords, StringPool.PERCENT)));
-			disjunction.add(
-				RestrictionsFactoryUtil.ilike(
-					"name", StringUtil.quote(keywords, StringPool.PERCENT)));
-
-			dynamicQuery.add(disjunction);
+			if (ArrayUtil.isNotEmpty(orderByFields)) {
+				searchContext.setSorts(
+					SortFactoryUtil.getSort(
+						AccountGroup.class, orderByFields[0],
+						orderByComparator.isAscending() ? "asc" : "desc"));
+			}
 		}
 
-		OrderFactoryUtil.addOrderByComparator(dynamicQuery, orderByComparator);
+		searchContext.setStart(start);
 
-		return dynamicQuery;
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
+
+		return searchContext;
 	}
+
+	protected List<AccountGroup> getAccountGroups(Hits hits)
+		throws PortalException {
+
+		List<Document> documents = hits.toList();
+
+		List<AccountGroup> accountGroups = new ArrayList<>(documents.size());
+
+		for (Document document : documents) {
+			long accountGroupId = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			AccountGroup accountGroup =
+				accountGroupPersistence.fetchByPrimaryKey(accountGroupId);
+
+			if (accountGroup == null) {
+				Indexer<AccountGroup> indexer = IndexerRegistryUtil.getIndexer(
+					AccountGroup.class);
+
+				long companyId = GetterUtil.getLong(
+					document.get(Field.COMPANY_ID));
+
+				indexer.delete(companyId, document.getUID());
+			}
+			else if (accountGroup != null) {
+				accountGroups.add(accountGroup);
+			}
+		}
+
+		return accountGroups;
+	}
+
+	protected BaseModelSearchResult<AccountGroup> searchAccountGroups(
+			SearchContext searchContext)
+		throws PortalException {
+
+		Indexer<AccountGroup> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			AccountGroup.class);
+
+		for (int i = 0; i < 10; i++) {
+			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
+
+			List<AccountGroup> accountGroups = getAccountGroups(hits);
+
+			if (accountGroups != null) {
+				return new BaseModelSearchResult<>(
+					accountGroups, hits.getLength());
+			}
+		}
+
+		throw new SearchException(
+			"Unable to fix the search index after 10 attempts");
+	}
+
+	private static final String[] _SELECTED_FIELD_NAMES = {
+		Field.ENTRY_CLASS_PK, Field.COMPANY_ID
+	};
 
 }

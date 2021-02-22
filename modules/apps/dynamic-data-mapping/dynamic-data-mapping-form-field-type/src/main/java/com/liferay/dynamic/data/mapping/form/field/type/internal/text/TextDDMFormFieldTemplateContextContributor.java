@@ -105,6 +105,10 @@ public class TextDDMFormFieldTemplateContextContributor
 			ddmFormFieldOptionsFactory.create(
 				ddmFormField, ddmFormFieldRenderingContext);
 
+		if (ddmFormFieldOptions == null) {
+			return options;
+		}
+
 		for (String optionValue : ddmFormFieldOptions.getOptionsValues()) {
 			options.add(
 				HashMapBuilder.put(

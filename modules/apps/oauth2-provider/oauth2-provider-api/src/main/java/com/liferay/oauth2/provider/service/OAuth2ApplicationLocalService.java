@@ -67,6 +67,16 @@ public interface OAuth2ApplicationLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.oauth2.provider.service.impl.OAuth2ApplicationLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the o auth2 application local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link OAuth2ApplicationLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	public OAuth2Application addOAuth2Application(
+			long companyId, long userId, String userName,
+			List<GrantType> allowedGrantTypesList, long clientCredentialUserId,
+			String clientId, int clientProfile, String clientSecret,
+			String description, List<String> featuresList, String homePageURL,
+			long iconFileEntryId, String name, String privacyPolicyURL,
+			List<String> redirectURIsList, boolean trustedApplication,
+			Consumer<OAuth2ScopeBuilder> builderConsumer,
+			ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
@@ -90,9 +100,8 @@ public interface OAuth2ApplicationLocalService
 			String clientId, int clientProfile, String clientSecret,
 			String description, List<String> featuresList, String homePageURL,
 			long iconFileEntryId, String name, String privacyPolicyURL,
-			List<String> redirectURIsList,
-			Consumer<OAuth2ScopeBuilder> builderConsumer,
-			ServiceContext serviceContext, boolean trustedApplication)
+			List<String> redirectURIsList, List<String> scopeAliasesList,
+			boolean trustedApplication, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -109,16 +118,6 @@ public interface OAuth2ApplicationLocalService
 			long iconFileEntryId, String name, String privacyPolicyURL,
 			List<String> redirectURIsList, List<String> scopeAliasesList,
 			ServiceContext serviceContext)
-		throws PortalException;
-
-	public OAuth2Application addOAuth2Application(
-			long companyId, long userId, String userName,
-			List<GrantType> allowedGrantTypesList, long clientCredentialUserId,
-			String clientId, int clientProfile, String clientSecret,
-			String description, List<String> featuresList, String homePageURL,
-			long iconFileEntryId, String name, String privacyPolicyURL,
-			List<String> redirectURIsList, List<String> scopeAliasesList,
-			ServiceContext serviceContext, boolean trustedApplication)
 		throws PortalException;
 
 	/**
@@ -343,6 +342,16 @@ public interface OAuth2ApplicationLocalService
 			long oAuth2ApplicationId, InputStream inputStream)
 		throws PortalException;
 
+	public OAuth2Application updateOAuth2Application(
+			long oAuth2ApplicationId, List<GrantType> allowedGrantTypesList,
+			long clientCredentialUserId, String clientId, int clientProfile,
+			String clientSecret, String description, List<String> featuresList,
+			String homePageURL, long iconFileEntryId, String name,
+			String privacyPolicyURL, List<String> redirectURIsList,
+			long auth2ApplicationScopeAliasesId, boolean trustedApplication,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 #updateOAuth2Application(long, List, long, String, int, String, String, List, String, long, String, String, List, long, ServiceContext, boolean)}
@@ -355,16 +364,6 @@ public interface OAuth2ApplicationLocalService
 			String homePageURL, long iconFileEntryId, String name,
 			String privacyPolicyURL, List<String> redirectURIsList,
 			long auth2ApplicationScopeAliasesId, ServiceContext serviceContext)
-		throws PortalException;
-
-	public OAuth2Application updateOAuth2Application(
-			long oAuth2ApplicationId, List<GrantType> allowedGrantTypesList,
-			long clientCredentialUserId, String clientId, int clientProfile,
-			String clientSecret, String description, List<String> featuresList,
-			String homePageURL, long iconFileEntryId, String name,
-			String privacyPolicyURL, List<String> redirectURIsList,
-			long auth2ApplicationScopeAliasesId, ServiceContext serviceContext,
-			boolean trustedApplication)
 		throws PortalException;
 
 	/**

@@ -109,8 +109,8 @@ public class OAuth2ApplicationServiceSoap {
 				long iconFileEntryId, String name, String privacyPolicyURL,
 				java.util.List<String> redirectURIsList,
 				java.util.List<String> scopeAliasesList,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext,
-				boolean trustedApplication)
+				boolean trustedApplication,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 
 		try {
@@ -119,8 +119,8 @@ public class OAuth2ApplicationServiceSoap {
 					allowedGrantTypesList, clientCredentialUserId, clientId,
 					clientProfile, clientSecret, description, featuresList,
 					homePageURL, iconFileEntryId, name, privacyPolicyURL,
-					redirectURIsList, scopeAliasesList, serviceContext,
-					trustedApplication);
+					redirectURIsList, scopeAliasesList, trustedApplication,
+					serviceContext);
 
 			return com.liferay.oauth2.provider.model.OAuth2ApplicationSoap.
 				toSoapModel(returnValue);
@@ -332,9 +332,8 @@ public class OAuth2ApplicationServiceSoap {
 				java.util.List<String> featuresList, String homePageURL,
 				long iconFileEntryId, String name, String privacyPolicyURL,
 				java.util.List<String> redirectURIsList,
-				long auth2ApplicationScopeAliasesId,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext,
-				boolean trustedApplication)
+				long auth2ApplicationScopeAliasesId, boolean trustedApplication,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 
 		try {
@@ -344,8 +343,8 @@ public class OAuth2ApplicationServiceSoap {
 					clientCredentialUserId, clientId, clientProfile,
 					clientSecret, description, featuresList, homePageURL,
 					iconFileEntryId, name, privacyPolicyURL, redirectURIsList,
-					auth2ApplicationScopeAliasesId, serviceContext,
-					trustedApplication);
+					auth2ApplicationScopeAliasesId, trustedApplication,
+					serviceContext);
 
 			return com.liferay.oauth2.provider.model.OAuth2ApplicationSoap.
 				toSoapModel(returnValue);

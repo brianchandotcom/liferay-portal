@@ -37,7 +37,19 @@ jest.mock(
 
 jest.mock(
 	'../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
-	() => ({config: {}})
+	() => ({
+		config: {
+			availableLanguages: {
+				en_US: {
+					default: false,
+					displayName: 'English (United States)',
+					languageIcon: 'en-us',
+					languageId: 'en_US',
+					w3cLanguageId: 'en-US',
+				},
+			},
+		},
+	})
 );
 
 jest.mock(
@@ -63,7 +75,7 @@ function getStateWithConfig(config = {}) {
 				},
 			},
 		},
-		languageId: 'en',
+		languageId: 'en_US',
 		mappedInfoItems: [],
 		segmentsExperienceId: 0,
 	};
@@ -259,7 +271,7 @@ describe('EditableLinkPanel', () => {
 		expect(updateEditableValues).toHaveBeenCalled();
 
 		expect(editableConfig).toEqual({
-			en: {
+			en_US: {
 				href: 'http://google.com',
 			},
 			mapperType: 'link',
@@ -286,7 +298,7 @@ describe('EditableLinkPanel', () => {
 		expect(updateEditableValues).toHaveBeenCalled();
 
 		expect(editableConfig).toEqual({
-			en: {
+			en_US: {
 				href: 'http://google.com',
 			},
 		});

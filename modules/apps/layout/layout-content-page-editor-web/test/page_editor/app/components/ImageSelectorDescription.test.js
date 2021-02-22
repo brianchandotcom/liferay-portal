@@ -16,7 +16,25 @@ import '@testing-library/jest-dom/extend-expect';
 import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
+import {StoreAPIContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
 import {ImageSelectorDescription} from '../../../../src/main/resources/META-INF/resources/page_editor/common/components/ImageSelectorDescription';
+
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/page_editor/app/config',
+	() => ({
+		config: {
+			availableLanguages: {
+				en_US: {
+					default: false,
+					displayName: 'English (United States)',
+					languageIcon: 'en-us',
+					languageId: 'en_US',
+					w3cLanguageId: 'en-US',
+				},
+			},
+		},
+	})
+);
 
 describe('ImageSelectorDescription', () => {
 	afterEach(() => {
@@ -25,10 +43,16 @@ describe('ImageSelectorDescription', () => {
 
 	it('synchronizes imageDescription prop with input value', () => {
 		const {getByLabelText} = render(
-			<ImageSelectorDescription
-				imageDescription="Random description"
-				onImageDescriptionChanged={() => {}}
-			/>
+			<StoreAPIContextProvider
+				getState={() => ({
+					languageId: 'en_US',
+				})}
+			>
+				<ImageSelectorDescription
+					imageDescription="Random description"
+					onImageDescriptionChanged={() => {}}
+				/>
+			</StoreAPIContextProvider>
 		);
 
 		expect(getByLabelText('image-description').value).toBe(
@@ -40,10 +64,16 @@ describe('ImageSelectorDescription', () => {
 		const onImageDescriptionChanged = jest.fn();
 
 		const {getByLabelText} = render(
-			<ImageSelectorDescription
-				imageDescription=""
-				onImageDescriptionChanged={onImageDescriptionChanged}
-			/>
+			<StoreAPIContextProvider
+				getState={() => ({
+					languageId: 'en_US',
+				})}
+			>
+				<ImageSelectorDescription
+					imageDescription=""
+					onImageDescriptionChanged={onImageDescriptionChanged}
+				/>
+			</StoreAPIContextProvider>
 		);
 
 		const input = getByLabelText('image-description');

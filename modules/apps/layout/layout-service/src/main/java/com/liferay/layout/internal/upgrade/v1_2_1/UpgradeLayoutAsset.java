@@ -22,8 +22,10 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
@@ -36,11 +38,13 @@ public class UpgradeLayoutAsset extends UpgradeProcess {
 		AssetCategoryLocalService assetCategoryLocalService,
 		AssetEntryLocalService assetEntryLocalService,
 		AssetTagLocalService assetTagLocalService,
+		GroupLocalService groupLocalService,
 		LayoutLocalService layoutLocalService) {
 
 		_assetCategoryLocalService = assetCategoryLocalService;
 		_assetEntryLocalService = assetEntryLocalService;
 		_assetTagLocalService = assetTagLocalService;
+		_groupLocalService = groupLocalService;
 		_layoutLocalService = layoutLocalService;
 	}
 
@@ -73,6 +77,12 @@ public class UpgradeLayoutAsset extends UpgradeProcess {
 			return;
 		}
 
+		Group group = _groupLocalService.fetchGroup(layout.getGroupId());
+
+		if (group == null) {
+			return;
+		}
+
 		long[] assetCategoryIds = _assetCategoryLocalService.getCategoryIds(
 			Layout.class.getName(), layout.getPlid());
 		String[] assetTagNames = _assetTagLocalService.getTagNames(
@@ -85,6 +95,7 @@ public class UpgradeLayoutAsset extends UpgradeProcess {
 	private final AssetCategoryLocalService _assetCategoryLocalService;
 	private final AssetEntryLocalService _assetEntryLocalService;
 	private final AssetTagLocalService _assetTagLocalService;
+	private final GroupLocalService _groupLocalService;
 	private final LayoutLocalService _layoutLocalService;
 
 }

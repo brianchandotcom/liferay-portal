@@ -23,6 +23,7 @@ import com.liferay.layout.internal.upgrade.v1_0_0.UpgradeLayoutClassedModelUsage
 import com.liferay.layout.internal.upgrade.v1_0_0.UpgradeLayoutPermissions;
 import com.liferay.layout.internal.upgrade.v1_1_0.UpgradeCompanyId;
 import com.liferay.layout.internal.upgrade.v1_2_1.UpgradeLayoutAsset;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeCTModel;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -55,7 +56,8 @@ public class LayoutServiceUpgrade implements UpgradeStepRegistrator {
 			"1.2.0", "1.2.1",
 			new UpgradeLayoutAsset(
 				_assetCategoryLocalService, _assetEntryLocalService,
-				_assetTagLocalService, _layoutLocalService));
+				_assetTagLocalService, _groupLocalService,
+				_layoutLocalService));
 	}
 
 	@Reference
@@ -69,6 +71,9 @@ public class LayoutServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

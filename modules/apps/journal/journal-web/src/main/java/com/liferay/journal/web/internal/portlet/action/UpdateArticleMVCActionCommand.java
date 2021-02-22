@@ -414,9 +414,6 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 				MultiSessionMessages.add(
 					actionRequest, portletResource + "requestProcessed");
 			}
-
-			MultiSessionMessages.add(
-				actionRequest, portletResource + "requestProcessed");
 		}
 
 		sendEditArticleRedirect(actionRequest, article, oldUrlTitle);

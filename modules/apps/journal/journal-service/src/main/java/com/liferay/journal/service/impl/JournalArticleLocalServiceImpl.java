@@ -94,7 +94,6 @@ import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.diff.DiffHtmlUtil;
-import com.liferay.portal.kernel.exception.DataLimitException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -178,7 +177,6 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.validation.ModelValidator;
 import com.liferay.portal.validation.ModelValidatorRegistryUtil;
 import com.liferay.social.kernel.model.SocialActivityConstants;
@@ -350,14 +348,6 @@ public class JournalArticleLocalServiceImpl
 		// Article
 
 		User user = userLocalService.getUser(userId);
-
-		if ((PropsValues.DATA_LIMIT_MAX_JOURNAL_ARTICLE_COUNT > 0) &&
-			(journalArticlePersistence.countByCompanyId(user.getCompanyId()) >=
-				PropsValues.DATA_LIMIT_MAX_JOURNAL_ARTICLE_COUNT)) {
-
-			throw new DataLimitException(
-				"Unable to exceed maximum number of allowed journal articles");
-		}
 
 		articleId = StringUtil.toUpperCase(StringUtil.trim(articleId));
 

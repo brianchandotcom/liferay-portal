@@ -17,7 +17,6 @@ package com.liferay.portal.service.impl;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.DataLimitException;
 import com.liferay.portal.kernel.exception.DuplicateTeamException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.TeamNameException;
@@ -34,7 +33,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.base.TeamLocalServiceBaseImpl;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -53,14 +51,6 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 		// Team
 
 		User user = userPersistence.findByPrimaryKey(userId);
-
-		if ((PropsValues.DATA_LIMIT_MAX_TEAM_COUNT > 0) &&
-			(teamPersistence.countByCompanyId(user.getCompanyId()) >=
-				PropsValues.DATA_LIMIT_MAX_TEAM_COUNT)) {
-
-			throw new DataLimitException(
-				"Unable to exceed maximum number of allowed teams");
-		}
 
 		validate(0, groupId, name);
 

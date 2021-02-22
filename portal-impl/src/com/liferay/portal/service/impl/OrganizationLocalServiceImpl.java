@@ -18,7 +18,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.DataLimitException;
 import com.liferay.portal.kernel.exception.DuplicateOrganizationException;
 import com.liferay.portal.kernel.exception.OrganizationNameException;
 import com.liferay.portal.kernel.exception.OrganizationParentException;
@@ -246,14 +245,6 @@ public class OrganizationLocalServiceImpl
 		// Organization
 
 		User user = userPersistence.findByPrimaryKey(userId);
-
-		if ((PropsValues.DATA_LIMIT_MAX_ORGANIZATION_COUNT > 0) &&
-			(organizationPersistence.countByCompanyId(user.getCompanyId()) >=
-				PropsValues.DATA_LIMIT_MAX_ORGANIZATION_COUNT)) {
-
-			throw new DataLimitException(
-				"Unable to exceed maximum number of allowed organizations");
-		}
 
 		parentOrganizationId = getParentOrganizationId(
 			user.getCompanyId(), parentOrganizationId);

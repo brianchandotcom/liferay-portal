@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.exception.DataLimitException;
 import com.liferay.portal.kernel.exception.DuplicateRoleException;
 import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -129,14 +128,6 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		// Role
 
 		User user = userPersistence.findByPrimaryKey(userId);
-
-		if ((PropsValues.DATA_LIMIT_MAX_ROLE_COUNT > 0) &&
-			(rolePersistence.countByCompanyId(user.getCompanyId()) >=
-				PropsValues.DATA_LIMIT_MAX_ROLE_COUNT)) {
-
-			throw new DataLimitException(
-				"Unable to exceed maximum number of allowed roles");
-		}
 
 		className = GetterUtil.getString(className);
 

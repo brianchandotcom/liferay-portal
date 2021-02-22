@@ -33,7 +33,6 @@ import com.liferay.journal.util.JournalValidator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
-import com.liferay.portal.kernel.exception.DataLimitException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -100,14 +99,6 @@ public class JournalFolderLocalServiceImpl
 		// Folder
 
 		User user = userLocalService.getUser(userId);
-
-		if ((PropsValues.DATA_LIMIT_MAX_JOURNAL_FOLDER_COUNT > 0) &&
-			(journalFolderPersistence.countByCompanyId(user.getCompanyId()) >=
-				PropsValues.DATA_LIMIT_MAX_JOURNAL_FOLDER_COUNT)) {
-
-			throw new DataLimitException(
-				"Unable to exceed maximum number of allowed journal folders");
-		}
 
 		parentFolderId = getParentFolderId(groupId, parentFolderId);
 

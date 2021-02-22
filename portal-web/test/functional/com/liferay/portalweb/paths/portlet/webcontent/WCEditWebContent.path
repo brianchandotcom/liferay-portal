@@ -94,7 +94,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>IMAGE_DESCRPTION</td>
+	<td>IMAGE_DESCRIPTION</td>
 	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']/following-sibling::div[contains(@class,'form-group')]//input[contains(@name,'description')]</td>
 	<td></td>
 </tr>

@@ -195,7 +195,7 @@ definition {
 
 		Type(
 			key_fieldFieldLabel = "Image",
-			locator1 = "WCEditWebContent#IMAGE_DESCRPTION",
+			locator1 = "WCEditWebContent#IMAGE_DESCRIPTION",
 			value1 = "Web Content Image Description");
 
 		PortletEntry.publish();

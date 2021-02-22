@@ -582,7 +582,7 @@ renderResponse.setTitle(headerTitle);
 					</c:if>
 
 					<c:if test="<%= dlEditFileEntryDisplayContext.isCancelCheckoutDocumentButtonVisible() %>">
-						<aui:button disabled="<%= dlEditFileEntryDisplayContext.isCancelCheckoutDocumentButtonDisabled() %>" onClick='<%= liferayPortletResponse.getNamespace() + "cancelCheckOut();" %>' value="cancel-checkout[document]" />
+						<aui:button disabled="<%= dlEditFileEntryDisplayContext.isCancelCheckoutDocumentButtonDisabled() %>" onClick='<%= liferayPortletResponse.getNamespace() + "cancelCheckOut();" %>' primary="<%= false %>" type="submit" value="cancel-checkout[document]" />
 					</c:if>
 
 					<aui:button href="<%= redirect %>" type="cancel" />
@@ -618,10 +618,8 @@ renderResponse.setTitle(headerTitle);
 	}
 
 	function <portlet:namespace />cancelCheckOut() {
-		Liferay.Util.postForm(form, {
-			data: {
-				<%= Constants.CMD %>: '<%= Constants.CANCEL_CHECKOUT %>',
-			},
+		Liferay.Util.setFormValues(form, {
+			<%= Constants.CMD %>: '<%= Constants.CANCEL_CHECKOUT %>',
 		});
 	}
 

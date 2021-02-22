@@ -45,6 +45,16 @@ public class AccountConstants {
 
 	public static final String ACCOUNT_GROUP_NAME_GUEST = "Guest";
 
+	public static final String ACCOUNT_GROUP_TYPE_DYNAMIC = "dynamic";
+
+	public static final String ACCOUNT_GROUP_TYPE_GUEST = "guest";
+
+	public static final String ACCOUNT_GROUP_TYPE_STATIC = "static";
+
+	public static final String[] ACCOUNT_GROUP_TYPES = {
+		ACCOUNT_GROUP_TYPE_STATIC, ACCOUNT_GROUP_TYPE_DYNAMIC
+	};
+
 	public static final long PARENT_ACCOUNT_ENTRY_ID_DEFAULT = 0;
 
 	public static final String RESOURCE_NAME = "com.liferay.account";

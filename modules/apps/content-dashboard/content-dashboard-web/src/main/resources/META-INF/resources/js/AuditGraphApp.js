@@ -33,7 +33,7 @@ export default function ({context, props}) {
 					<ClayAlert displayType="info">
 						<span>
 							{Liferay.Language.get(
-								'press-escape-to-remove-the-bar\'s-category-filters'
+								"press-escape-to-remove-the-bar's-category-filters"
 							)}
 						</span>
 					</ClayAlert>

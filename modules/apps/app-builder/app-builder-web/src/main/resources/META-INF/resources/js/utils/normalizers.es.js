@@ -12,6 +12,8 @@
  * details.
  */
 
+import {DataConverter} from 'data-engine-taglib';
+
 import {getValidName} from '../utils/utils.es';
 
 export const normalizeNames = ({
@@ -67,17 +69,23 @@ export const normalizeDataLayout = ({
 		}
 	});
 
-	dataDefinitionFields.forEach((definitionField) => {
-		const fieldProperties = dataLayoutBuilder.getDDMSettingsContextWithVisualProperties(
-			definitionField
+	dataDefinitionFields.forEach((dataDefinitionField) => {
+		const {editingLanguageId} = dataLayoutBuilder.getState();
+		const fieldTypes = dataLayoutBuilder.getFieldTypes();
+		const fieldProperties = DataConverter.getDDMSettingsContextWithVisualProperties(
+			{
+				dataDefinitionField,
+				editingLanguageId,
+				fieldTypes,
+			}
 		);
 
 		// Ignore this visual properties because it is treated differently
 
 		delete fieldProperties['required'];
 
-		dataLayoutFields[definitionField.name] = {
-			...dataLayoutFields[definitionField.name],
+		dataLayoutFields[dataDefinitionField.name] = {
+			...dataLayoutFields[dataDefinitionField.name],
 			...fieldProperties,
 		};
 	});

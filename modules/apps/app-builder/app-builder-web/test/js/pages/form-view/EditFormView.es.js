@@ -15,7 +15,7 @@
 import {ClayModalProvider} from '@clayui/modal';
 import {act, cleanup, fireEvent, render} from '@testing-library/react';
 import * as toast from 'data-engine-js-components-web/js/utils/toast.es';
-import {DataLayoutVisitor} from 'data-engine-taglib';
+import {DataConverter, DataLayoutVisitor} from 'data-engine-taglib';
 import React from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
@@ -33,11 +33,7 @@ const {
 const setDataLayoutBuilderProps = (props) => {
 	window.Liferay = {
 		...window.Liferay,
-		componentReady: () => {
-			return new Promise((resolve) => {
-				resolve(props);
-			});
-		},
+		componentReady: async () => await props,
 	};
 };
 
@@ -68,6 +64,11 @@ describe('EditFormView', () => {
 		jest.useFakeTimers();
 
 		dataLayoutBuilderProps = getDataLayoutBuilderProps();
+
+		jest.spyOn(
+			DataConverter,
+			'getDDMSettingsContextWithVisualProperties'
+		).mockReturnValue({});
 
 		dataLayoutVisitorSpy = jest
 			.spyOn(DataLayoutVisitor, 'isDataLayoutEmpty')

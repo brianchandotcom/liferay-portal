@@ -243,33 +243,6 @@ class DataLayoutBuilder extends React.Component {
 		});
 	}
 
-	getDDMSettingsContextWithVisualProperties(dataDefinitionField) {
-		const {pages} = this.getDDMFormFieldSettingsContext(
-			dataDefinitionField
-		);
-		const visitor = new PagesVisitor(pages);
-
-		const fieldProperties = {};
-
-		visitor.mapFields(
-			({
-				fieldName,
-				localizable,
-				localizedValue,
-				value,
-				visualProperty,
-			}) => {
-				if (visualProperty) {
-					fieldProperties[fieldName] = localizable
-						? localizedValue
-						: value;
-				}
-			}
-		);
-
-		return fieldProperties;
-	}
-
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by DataConverter.getFieldSetDDMForm()
 	 */

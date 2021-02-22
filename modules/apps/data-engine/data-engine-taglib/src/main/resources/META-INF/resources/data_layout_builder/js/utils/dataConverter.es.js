@@ -262,6 +262,33 @@ export function getDataDefinitionFieldByFieldName({
 	};
 }
 
+export function getDDMSettingsContextWithVisualProperties({
+	dataDefinitionField,
+	editingLanguageId,
+	fieldTypes,
+}) {
+	const {pages} = getDDMFormFieldSettingsContext({
+		dataDefinitionField,
+		editingLanguageId,
+		fieldTypes,
+	});
+	const visitor = new PagesVisitor(pages);
+
+	const fieldProperties = {};
+
+	visitor.mapFields(
+		({fieldName, localizable, localizedValue, value, visualProperty}) => {
+			if (visualProperty) {
+				fieldProperties[fieldName] = localizable
+					? localizedValue
+					: value;
+			}
+		}
+	);
+
+	return fieldProperties;
+}
+
 /**
  * Converts a FieldSet from data-engine to form-builder data definition
  */

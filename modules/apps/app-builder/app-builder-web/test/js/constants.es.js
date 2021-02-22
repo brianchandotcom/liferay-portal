@@ -787,14 +787,6 @@ export const FORM_VIEW = {
 			getDDMFormFieldSettingsContext: jest
 				.fn()
 				.mockImplementation(() => ({pages: []})),
-			getDDMSettingsContextWithVisualProperties: jest
-				.fn()
-				.mockImplementation(() => ({
-					label: dataDefinitionField.label,
-					placeholder:
-						dataDefinitionField.customProperties.placeholder,
-					required: dataDefinitionField.required,
-				})),
 			getFieldTypes: () => {
 				return [
 					{

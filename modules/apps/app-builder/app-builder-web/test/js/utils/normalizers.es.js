@@ -12,6 +12,8 @@
  * details.
  */
 
+import {DataConverter} from 'data-engine-taglib';
+
 import {normalizeDataLayout} from '../../../src/main/resources/META-INF/resources/js/utils/normalizers.es';
 
 const dataDefinition = {
@@ -197,12 +199,14 @@ describe('normalizers', () => {
 		const editingLanguageId = 'en_US';
 
 		const dataLayoutBuilder = {
-			getDDMSettingsContextWithVisualProperties: jest
-				.fn()
-				.mockImplementationOnce(() => fields[0])
-				.mockImplementationOnce(() => fields[1])
-				.mockImplementationOnce(() => fields[2]),
+			getFieldTypes: () => undefined,
+			getState: () => ({}),
 		};
+
+		jest.spyOn(DataConverter, 'getDDMSettingsContextWithVisualProperties')
+			.mockImplementationOnce(() => fields[0])
+			.mockImplementationOnce(() => fields[1])
+			.mockImplementationOnce(() => fields[2]);
 
 		const normalizedDataLayout = normalizeDataLayout({
 			dataDefinition,

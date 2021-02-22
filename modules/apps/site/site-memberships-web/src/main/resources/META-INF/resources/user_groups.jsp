@@ -29,8 +29,9 @@ Role role = userGroupsDisplayContext.getRole();
 	navigationItems="<%= siteMembershipsDisplayContext.getViewNavigationItems() %>"
 />
 
-<clay:management-toolbar-v2
-	displayContext="<%= userGroupsManagementToolbarDisplayContext %>"
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= userGroupsManagementToolbarDisplayContext %>"
+	propsTransformer="js/UserGroupsManagementToolbarPropsTransformer"
 />
 
 <portlet:actionURL name="deleteGroupUserGroups" var="deleteGroupUserGroupsURL">
@@ -94,8 +95,3 @@ Role role = userGroupsDisplayContext.getRole();
 	<aui:input name="tabs1" type="hidden" value="user-groups" />
 	<aui:input name="userGroupId" type="hidden" />
 </aui:form>
-
-<liferay-frontend:component
-	componentId="<%= userGroupsManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/UserGroupsManagementToolbarDefaultEventHandler.es"
-/>

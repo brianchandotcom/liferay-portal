@@ -29,8 +29,9 @@ Role role = usersDisplayContext.getRole();
 	navigationItems="<%= siteMembershipsDisplayContext.getViewNavigationItems() %>"
 />
 
-<clay:management-toolbar-v2
-	displayContext="<%= usersManagementToolbarDisplayContext %>"
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= usersManagementToolbarDisplayContext %>"
+	propsTransformer="js/UserManagementToolbarPropsTransformer"
 />
 
 <liferay-ui:error embed="<%= false %>" exception="<%= RequiredUserException.class %>" message="one-or-more-users-were-not-removed-since-they-belong-to-a-user-group" />
@@ -112,8 +113,3 @@ Role role = usersDisplayContext.getRole();
 <aui:form cssClass="hide" method="post" name="editUserGroupRoleFm">
 	<aui:input name="tabs1" type="hidden" value="users" />
 </aui:form>
-
-<liferay-frontend:component
-	componentId="<%= usersManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/UsersManagementToolbarDefaultEventHandler.es"
-/>

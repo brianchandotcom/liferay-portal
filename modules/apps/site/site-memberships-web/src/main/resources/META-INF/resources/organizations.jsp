@@ -18,8 +18,6 @@
 
 <%
 OrganizationsDisplayContext organizationsDisplayContext = new OrganizationsDisplayContext(request, renderRequest, renderResponse);
-
-OrganizationsManagementToolbarDisplayContext organizationsManagementToolbarDisplayContext = new OrganizationsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, organizationsDisplayContext);
 %>
 
 <clay:navigation-bar
@@ -27,8 +25,9 @@ OrganizationsManagementToolbarDisplayContext organizationsManagementToolbarDispl
 	navigationItems="<%= siteMembershipsDisplayContext.getViewNavigationItems() %>"
 />
 
-<clay:management-toolbar-v2
-	displayContext="<%= organizationsManagementToolbarDisplayContext %>"
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= new OrganizationsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, organizationsDisplayContext) %>"
+	propsTransformer="js/OrganizationsManagementToolbarPropsTransformer"
 />
 
 <div class="closed sidenav-container sidenav-right" id="<%= liferayPortletResponse.getNamespace() + "infoPanelId" %>">
@@ -94,8 +93,3 @@ OrganizationsManagementToolbarDisplayContext organizationsManagementToolbarDispl
 <aui:form action="<%= addGroupOrganizationsURL %>" cssClass="hide" name="addGroupOrganizationsFm">
 	<aui:input name="tabs1" type="hidden" value="organizations" />
 </aui:form>
-
-<liferay-frontend:component
-	componentId="<%= organizationsManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/OrganizationsManagementToolbarDefaultEventHandler.es"
-/>

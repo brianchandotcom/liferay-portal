@@ -225,38 +225,34 @@ public class EditCommerceCountryMVCActionCommand extends BaseMVCActionCommand {
 		long commerceCountryId = ParamUtil.getLong(
 			actionRequest, "commerceCountryId");
 
-		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-			actionRequest, "name");
+		String a2 = ParamUtil.getString(actionRequest, "a2");
+		String a3 = ParamUtil.getString(actionRequest, "a3");
+		boolean active = ParamUtil.getBoolean(actionRequest, "active");
 		boolean billingAllowed = ParamUtil.getBoolean(
 			actionRequest, "billingAllowed");
+		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "name");
+		String number = ParamUtil.getString(actionRequest, "number");
+		double position = ParamUtil.getDouble(actionRequest, "position");
 		boolean shippingAllowed = ParamUtil.getBoolean(
 			actionRequest, "shippingAllowed");
-		String twoLettersISOCode = ParamUtil.getString(
-			actionRequest, "twoLettersISOCode");
-		String threeLettersISOCode = ParamUtil.getString(
-			actionRequest, "threeLettersISOCode");
-		String numericISOCode = ParamUtil.getString(
-			actionRequest, "numericISOCode");
 		boolean subjectToVAT = ParamUtil.getBoolean(
 			actionRequest, "subjectToVAT");
-		double priority = ParamUtil.getDouble(actionRequest, "priority");
-		boolean active = ParamUtil.getBoolean(actionRequest, "active");
 
 		Country country = null;
 
 		if (commerceCountryId <= 0) {
 			country = _countryService.addCountry(
-				twoLettersISOCode, threeLettersISOCode, active, billingAllowed,
-				null, nameMap.get(LocaleUtil.getDefault()), numericISOCode,
-				priority, shippingAllowed, subjectToVAT, false,
+				a2, a3, active, billingAllowed, null,
+				nameMap.get(LocaleUtil.getDefault()), number, position,
+				shippingAllowed, subjectToVAT, false,
 				ServiceContextFactory.getInstance(
 					Country.class.getName(), actionRequest));
 		}
 		else {
 			country = _countryService.updateCountry(
-				commerceCountryId, twoLettersISOCode, threeLettersISOCode,
-				active, billingAllowed, null,
-				nameMap.get(LocaleUtil.getDefault()), numericISOCode, priority,
+				commerceCountryId, a2, a3, active, billingAllowed, null,
+				nameMap.get(LocaleUtil.getDefault()), number, position,
 				shippingAllowed, subjectToVAT);
 		}
 

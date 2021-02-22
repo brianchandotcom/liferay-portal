@@ -706,6 +706,45 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-mac-address">
+		<sequential>
+			<if>
+				<isset property="mac.address" />
+				<then>
+					<var name="mac.address" value="${mac.address}" />
+				</then>
+				<elseif>
+					<os family="unix" />
+					<then>
+						<if>
+							<isset property="env.JENKINS_HOME" />
+							<then>
+								<exec executable="/bin/bash" os="${os.unix}" outputproperty="mac.address">
+									<arg value="-c" />
+									<arg value="ifconfig eth0 | grep -o -E '([[:xdigit:]]{1,2}:){5}[[:xdigit:]]{1,2}'" />
+								</exec>
+							</then>
+							<else>
+								<if>
+									<isset property="network.interface" />
+									<then>
+										<exec executable="/bin/bash" os="${os.unix}" outputproperty="mac.address">
+											<arg value="-c" />
+											<arg value="ifconfig ${network.interface} | grep -o -E '([[:xdigit:]]{1,2}:){5}[[:xdigit:]]{1,2}'" />
+										</exec>
+									</then>
+									<else>
+										<fail message="${network.interface} must be set if running get-mac-address locally" />
+									</else>
+								</if>
+							</else>
+						</if>
+					</then>
+				</elseif>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-master-hostname">
 		<attribute default="${env.JENKINS_URL}" name="jenkins.url" />
 
@@ -4429,12 +4468,21 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					</if>
 
 					<get-testcase-property property.name="commerce.enabled" />
+					<get-testcase-property property.name="custom.commerce.license" />
 
 					<if>
 						<equals arg1="${commerce.enabled}" arg2="false" />
 						<then>
 							<delete failonerror="false" file="${liferay.home}/deploy/portal-commerce-license.xml" verbose="true" />
 						</then>
+						<else>
+							<if>
+								<isset property="custom.commerce.license" />
+								<then>
+									<swap-commerce-license custom.commerce.license="${custom.commerce.license}" />
+								</then>
+							</if>
+						</else>
 					</if>
 
 					<get-testcase-property property.name="deploy.lcs.token.file" />
@@ -5447,6 +5495,69 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					</if>
 				</then>
 			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="swap-commerce-license">
+		<attribute name="custom.commerce.license" />
+
+		<sequential>
+			<delete failonerror="false" file="${liferay.home}/deploy/portal-commerce-license.xml" verbose="true" />
+
+			<copy
+				file="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/license/@{custom.commerce.license}"
+				todir="${liferay.home}/deploy"
+			/>
+
+			<get-ip-address />
+			<get-mac-address />
+
+			<beanshell>
+				<![CDATA[
+					import java.time.format.DateTimeFormatter;
+					import java.time.ZonedDateTime;
+					import java.time.ZoneId;
+
+					DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("EEEE, MMMM dd, yyyy HH:mm:ss a zz");
+
+					ZoneId GMT = ZoneId.of("GMT");
+
+					ZonedDateTime now = ZonedDateTime.now(GMT);
+
+					//License expiration leeway
+					ZonedDateTime expiration = now.minusDays(2);
+
+					//License expiration delay
+					expiration = expiration.plusMinutes(5);
+
+					System.out.println(dateTimeFormatter.format(expiration));
+					project.setProperty("expiration.date", dateTimeFormatter.format(expiration));
+				]]>
+			</beanshell>
+
+			<replace
+				file="${liferay.home}/deploy/@{custom.commerce.license}"
+				token="${host.name}"
+				value="${env.HOSTNAME}"
+			/>
+
+			<replace
+				file="${liferay.home}/deploy/@{custom.commerce.license}"
+				token="${expirationdate}"
+				value="${expiration.date}"
+			/>
+
+			<replace
+				file="${liferay.home}/deploy/@{custom.commerce.license}"
+				token="${ipaddress}"
+				value="${ip.address}"
+			/>
+
+			<replace
+				file="${liferay.home}/deploy/@{custom.commerce.license}"
+				token="${macaddress}"
+				value="${mac.address}"
+			/>
 		</sequential>
 	</macrodef>
 

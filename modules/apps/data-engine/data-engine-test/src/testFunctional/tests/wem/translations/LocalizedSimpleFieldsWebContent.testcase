@@ -30,14 +30,10 @@ definition {
 	@priority = "4"
 	test CheckDefaultWebContentTitleOnWebContentList {
 		property portal.acceptance = "false";
-		
-		var defaultStructureName = "WC Structure Name";
-		var translatedWebContentName = "Titulo do WC";
-		var webContentTitle = "WC Title";
 
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(structureName = "${defaultStructureName}");
+		WebContentStructures.addCP(structureName = "WC Structure Title");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
@@ -47,18 +43,18 @@ definition {
 
 		NavItem.click(navItem = "Web Content");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "${defaultStructureName}");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
 
-		WebContent.addWithStructureCP(webContentTitle = "${webContentTitle}");
+		WebContent.addWithStructureCP(webContentTitle = "WC Title");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
-		WebContent.addWithStructureCP(webContentTitle = "${translatedWebContentName}");
+		WebContent.addWithStructureCP(webContentTitle = "Titulo do WC");
 
 		PortletEntry.publish();
 
 		AssertElementPresent(
-			key_webContentTitle = "${webContentTitle}",
+			key_webContentTitle = "WC Title",
 			locator1 = "WC#ENTRY_LIST_TITLE_NAME");
 	}
 

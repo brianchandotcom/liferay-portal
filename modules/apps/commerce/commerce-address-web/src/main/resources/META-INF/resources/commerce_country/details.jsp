@@ -53,15 +53,15 @@ CommerceRegionsStarter commerceRegionsStarter = commerceCountriesDisplayContext.
 
 				<aui:input checked="<%= (country == null) ? false : country.getShippingAllowed() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="shippingAllowed" type="toggle-switch" />
 
-				<aui:input field="a2" fieldParam="twoLettersISOCode" label="two-letter-iso-code" name="twoLettersISOCode" />
+				<aui:input id="twoLettersISOCode" label="two-letter-iso-code" name="a2" />
 
-				<aui:input field="a3" fieldParam="threeLettersISOCode" label="three-letter-iso-code" name="threeLettersISOCode" />
+				<aui:input id="threeLettersISOCode" label="three-letter-iso-code" name="a3" />
 
-				<aui:input field="number" fieldParam="numericISOCode" name="numericISOCode" />
+				<aui:input id="numericISOCode" name="number" />
 
 				<aui:input checked="<%= (country == null) ? false : country.getSubjectToVAT() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="subjectToVAT" type="toggle-switch" />
 
-				<aui:input field="position" fieldParam="priority" name="priority" />
+				<aui:input id="priority" name="position" />
 
 				<aui:input checked="<%= (country == null) ? false : country.isActive() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="active" type="toggle-switch" />
 

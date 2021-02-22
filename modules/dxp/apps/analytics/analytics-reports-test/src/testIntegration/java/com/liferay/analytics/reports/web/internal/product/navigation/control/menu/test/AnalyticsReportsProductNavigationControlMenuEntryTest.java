@@ -14,45 +14,38 @@
 
 package com.liferay.analytics.reports.web.internal.product.navigation.control.menu.test;
 
+import com.liferay.analytics.reports.test.MockObject;
+import com.liferay.analytics.reports.test.analytics.reports.info.item.MockAnalyticsReportsInfoItem;
+import com.liferay.analytics.reports.test.util.MockContextUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
-import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.info.item.InfoItemReference;
-import com.liferay.journal.constants.JournalFolderConstants;
-import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.service.JournalArticleLocalService;
-import com.liferay.journal.test.util.JournalTestUtil;
-import com.liferay.layout.display.page.LayoutDisplayPageProvider;
-import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
-import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
-import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PrefsProps;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.util.PrefsPropsImpl;
+import com.liferay.portlet.PortalPreferencesImpl;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 
+import java.util.Objects;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -80,92 +73,174 @@ public class AnalyticsReportsProductNavigationControlMenuEntryTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_journalArticle = JournalTestUtil.addArticle(
-			_group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-
-		DDMStructure ddmStructure = _journalArticle.getDDMStructure();
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				_group.getCreatorUserId(), _group.getGroupId(), 0,
-				_portal.getClassNameId(JournalArticle.class.getName()),
-				ddmStructure.getStructureId(), RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE, 0, true,
-				0, 0, 0, 0, serviceContext);
-
-		_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
-			_journalArticle.getUserId(), _group.getGroupId(),
-			_portal.getClassNameId(JournalArticle.class.getName()),
-			_journalArticle.getResourcePrimKey(),
-			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-			AssetDisplayPageConstants.TYPE_DEFAULT, serviceContext);
-
-		_layout = _layoutLocalService.getLayout(
-			layoutPageTemplateEntry.getPlid());
+		_layout = LayoutTestUtil.addLayout(_group.getGroupId());
 	}
 
 	@Test
-	public void testIsShow() throws PortalException {
-		Assert.assertTrue(
-			_productNavigationControlMenuEntry.isShow(
-				_getHttpServletRequest(TestPropsValues.getUser())));
+	public void testIsShow() throws Exception {
+		MockContextUtil.testWithMockContext(
+			new MockContextUtil.MockContext.Builder(
+				_classNameLocalService
+			).analyticsReportsInfoItem(
+				MockAnalyticsReportsInfoItem.builder(
+				).show(
+					true
+				).build()
+			).build(),
+			() -> Assert.assertTrue(
+				_productNavigationControlMenuEntry.isShow(
+					_getHttpServletRequest())));
 	}
 
 	@Test
-	public void testIsShowWithUserWithoutEditPermission() throws Exception {
-		User user = UserTestUtil.addUser();
+	public void testIsShowWithIsNotShowAnalyticsReportsInfoItem()
+		throws Exception {
+
+		MockContextUtil.testWithMockContext(
+			new MockContextUtil.MockContext.Builder(
+				_classNameLocalService
+			).analyticsReportsInfoItem(
+				MockAnalyticsReportsInfoItem.builder(
+				).show(
+					false
+				).build()
+			).build(),
+			() -> Assert.assertFalse(
+				_productNavigationControlMenuEntry.isShow(
+					_getHttpServletRequest())));
+	}
+
+	@Test
+	public void testIsShowWithIsShowAnalyticsReportsInfoItemWithAnalyticsConnected()
+		throws Exception {
+
+		PrefsProps prefsProps = PrefsPropsUtil.getPrefsProps();
+
+		ValidPrefsPropsWrapper validPrefsPropsWrapper =
+			new ValidPrefsPropsWrapper(prefsProps);
+
+		ReflectionTestUtil.setFieldValue(
+			PrefsPropsUtil.class, "_prefsProps", validPrefsPropsWrapper);
 
 		try {
-			Assert.assertFalse(
-				_productNavigationControlMenuEntry.isShow(
-					_getHttpServletRequest(user)));
+			MockContextUtil.testWithMockContext(
+				new MockContextUtil.MockContext.Builder(
+					_classNameLocalService
+				).analyticsReportsInfoItem(
+					MockAnalyticsReportsInfoItem.builder(
+					).show(
+						true
+					).build()
+				).build(),
+				() -> Assert.assertTrue(
+					_productNavigationControlMenuEntry.isShow(
+						_getHttpServletRequest())));
 		}
 		finally {
-			_userLocalService.deleteUser(user);
+			ReflectionTestUtil.setFieldValue(
+				PrefsPropsUtil.class, "_prefsProps", prefsProps);
 		}
 	}
 
-	private HttpServletRequest _getHttpServletRequest(User user)
-		throws PortalException {
+	@Test
+	public void testIsShowWithIsShowAnalyticsReportsInfoItemWithoutAnalyticsConnected()
+		throws Exception {
 
+		PrefsProps prefsProps = PrefsPropsUtil.getPrefsProps();
+
+		InvalidPropsWrapper invalidPropsWrapper = new InvalidPropsWrapper(
+			prefsProps);
+
+		ReflectionTestUtil.setFieldValue(
+			PrefsPropsUtil.class, "_prefsProps", invalidPropsWrapper);
+
+		try {
+			MockContextUtil.testWithMockContext(
+				new MockContextUtil.MockContext.Builder(
+					_classNameLocalService
+				).analyticsReportsInfoItem(
+					MockAnalyticsReportsInfoItem.builder(
+					).show(
+						true
+					).build()
+				).build(),
+				() -> Assert.assertTrue(
+					_productNavigationControlMenuEntry.isShow(
+						_getHttpServletRequest())));
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				PrefsPropsUtil.class, "_prefsProps", prefsProps);
+		}
+	}
+
+	@Test
+	public void testIsShowWithIsShowAnalyticsReportsInfoItemWithoutAnalyticsConnectedAndHidePanel()
+		throws Exception {
+
+		PrefsProps prefsProps = PrefsPropsUtil.getPrefsProps();
+
+		InvalidPropsWrapper invalidPropsWrapper = new InvalidPropsWrapper(
+			prefsProps);
+
+		ReflectionTestUtil.setFieldValue(
+			PrefsPropsUtil.class, "_prefsProps", invalidPropsWrapper);
+
+		HttpServletRequest httpServletRequest = _getHttpServletRequest();
+
+		HttpSession httpSession = httpServletRequest.getSession();
+
+		httpSession.setAttribute(
+			WebKeys.PORTAL_PREFERENCES,
+			new HidePanelPortalPreferencesWrapper());
+
+		try {
+			MockContextUtil.testWithMockContext(
+				new MockContextUtil.MockContext.Builder(
+					_classNameLocalService
+				).analyticsReportsInfoItem(
+					MockAnalyticsReportsInfoItem.builder(
+					).show(
+						true
+					).build()
+				).build(),
+				() -> Assert.assertFalse(
+					_productNavigationControlMenuEntry.isShow(
+						httpServletRequest)));
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				PrefsPropsUtil.class, "_prefsProps", prefsProps);
+		}
+	}
+
+	private HttpServletRequest _getHttpServletRequest() throws PortalException {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
 		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay(user));
+			WebKeys.THEME_DISPLAY, _getThemeDisplay());
 
 		mockHttpServletRequest.setAttribute(
-			LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
-			_layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
-				new InfoItemReference(
-					JournalArticle.class.getName(),
-					_journalArticle.getResourcePrimKey())));
+			"INFO_ITEM_REFERENCE",
+			new InfoItemReference(MockObject.class.getName(), 0));
 
 		return mockHttpServletRequest;
 	}
 
-	private ThemeDisplay _getThemeDisplay(User user) throws PortalException {
+	private ThemeDisplay _getThemeDisplay() throws PortalException {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setCompany(
 			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
 		themeDisplay.setLayout(_layout);
-
-		themeDisplay.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(user));
-
-		themeDisplay.setUser(user);
+		themeDisplay.setUser(TestPropsValues.getUser());
 
 		return themeDisplay;
 	}
 
 	@Inject
-	private AssetDisplayPageEntryLocalService
-		_assetDisplayPageEntryLocalService;
+	private ClassNameLocalService _classNameLocalService;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
@@ -173,26 +248,7 @@ public class AnalyticsReportsProductNavigationControlMenuEntryTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
-	private JournalArticle _journalArticle;
-
-	@Inject
-	private JournalArticleLocalService _journalArticleLocalService;
-
 	private Layout _layout;
-
-	@Inject(filter = "component.name=*.JournalArticleLayoutDisplayPageProvider")
-	private LayoutDisplayPageProvider<JournalArticle>
-		_layoutDisplayPageProvider;
-
-	@Inject
-	private LayoutLocalService _layoutLocalService;
-
-	@Inject
-	private LayoutPageTemplateEntryLocalService
-		_layoutPageTemplateEntryLocalService;
-
-	@Inject
-	private Portal _portal;
 
 	@Inject(
 		filter = "component.name=com.liferay.analytics.reports.web.internal.product.navigation.control.menu.AnalyticsReportsProductNavigationControlMenuEntry"
@@ -202,5 +258,65 @@ public class AnalyticsReportsProductNavigationControlMenuEntryTest {
 
 	@Inject
 	private UserLocalService _userLocalService;
+
+	private class HidePanelPortalPreferencesWrapper
+		extends PortalPreferencesImpl {
+
+		@Override
+		public String getValue(String namespace, String key) {
+			if (Objects.equals("hide-panel", key)) {
+				return String.valueOf(Boolean.TRUE);
+			}
+
+			return null;
+		}
+
+	}
+
+	private class InvalidPropsWrapper extends PrefsPropsImpl {
+
+		public InvalidPropsWrapper(PrefsProps prefsProps) {
+			_prefsProps = prefsProps;
+		}
+
+		@Override
+		public String getString(long companyId, String name) {
+			if (Objects.equals("liferayAnalyticsDataSourceId", name) ||
+				Objects.equals(
+					name, "liferayAnalyticsFaroBackendSecuritySignature") ||
+				Objects.equals("liferayAnalyticsFaroBackendURL", name)) {
+
+				return null;
+			}
+
+			return _prefsProps.getString(companyId, name);
+		}
+
+		private final PrefsProps _prefsProps;
+
+	}
+
+	private class ValidPrefsPropsWrapper extends PrefsPropsImpl {
+
+		public ValidPrefsPropsWrapper(PrefsProps prefsProps) {
+			_prefsProps = prefsProps;
+		}
+
+		@Override
+		public String getString(long companyId, String name) {
+			if (Objects.equals("liferayAnalyticsDataSourceId", name) ||
+				Objects.equals(
+					name, "liferayAnalyticsFaroBackendSecuritySignature") ||
+				Objects.equals("liferayAnalyticsFaroBackendURL", name)) {
+
+				return "test";
+			}
+
+			return _prefsProps.getString(companyId, name);
+		}
+
+		private final PrefsProps _prefsProps;
+
+	}
 
 }

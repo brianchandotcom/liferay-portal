@@ -66,6 +66,11 @@ public class MockAnalyticsReportsInfoItem
 		return _title;
 	}
 
+	@Override
+	public boolean isShow(MockObject mockObject) {
+		return _show;
+	}
+
 	public static class Builder {
 
 		public Builder authorName(String authorName) {
@@ -82,7 +87,7 @@ public class MockAnalyticsReportsInfoItem
 
 		public MockAnalyticsReportsInfoItem build() {
 			return new MockAnalyticsReportsInfoItem(
-				_authorName, _authorProfileImage, _locales, _publishDate,
+				_authorName, _authorProfileImage, _locales, _publishDate, _show,
 				_title);
 		}
 
@@ -98,6 +103,12 @@ public class MockAnalyticsReportsInfoItem
 			return this;
 		}
 
+		public Builder show(boolean show) {
+			_show = show;
+
+			return this;
+		}
+
 		public Builder title(String title) {
 			_title = title;
 
@@ -108,13 +119,14 @@ public class MockAnalyticsReportsInfoItem
 		private String _authorProfileImage;
 		private List<Locale> _locales;
 		private Date _publishDate;
+		private boolean _show;
 		private String _title;
 
 	}
 
 	private MockAnalyticsReportsInfoItem(
 		String authorName, String authorProfileImage, List<Locale> locales,
-		Date publishDate, String title) {
+		Date publishDate, boolean show, String title) {
 
 		if (authorName == null) {
 			_authorName = StringPool.BLANK;
@@ -144,6 +156,7 @@ public class MockAnalyticsReportsInfoItem
 			_publishDate = publishDate;
 		}
 
+		_show = show;
 		_title = title;
 	}
 
@@ -151,6 +164,7 @@ public class MockAnalyticsReportsInfoItem
 	private final String _authorProfileImage;
 	private final List<Locale> _locales;
 	private final Date _publishDate;
+	private final boolean _show;
 	private final String _title;
 
 }

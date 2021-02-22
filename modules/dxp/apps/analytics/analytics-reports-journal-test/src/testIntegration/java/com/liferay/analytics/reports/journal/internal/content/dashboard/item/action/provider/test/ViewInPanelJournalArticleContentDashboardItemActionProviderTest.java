@@ -36,7 +36,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -165,7 +167,13 @@ public class ViewInPanelJournalArticleContentDashboardItemActionProviderTest {
 	public void testGetContentDashboardItemActionWithUserWithoutEditPermission()
 		throws Exception {
 
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
 		User user = UserTestUtil.addUser();
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
 
 		try {
 			Assert.assertNull(
@@ -174,6 +182,8 @@ public class ViewInPanelJournalArticleContentDashboardItemActionProviderTest {
 						_journalArticle, _getHttpServletRequest(user)));
 		}
 		finally {
+			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+
 			_userLocalService.deleteUser(user);
 		}
 	}
@@ -190,7 +200,13 @@ public class ViewInPanelJournalArticleContentDashboardItemActionProviderTest {
 	public void testIsShowContentDashboardItemActionWithUserWithoutEditPermission()
 		throws Exception {
 
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
 		User user = UserTestUtil.addUser();
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
 
 		try {
 			Assert.assertFalse(
@@ -198,6 +214,8 @@ public class ViewInPanelJournalArticleContentDashboardItemActionProviderTest {
 					_journalArticle, _getHttpServletRequest(user)));
 		}
 		finally {
+			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+
 			_userLocalService.deleteUser(user);
 		}
 	}

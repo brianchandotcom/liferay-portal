@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.friendlyurl.test;
+package com.liferay.journal.friendly.url.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.constants.JournalArticleConstants;
@@ -47,7 +47,7 @@ import org.junit.runner.RunWith;
  * @author Ricardo Couso
  */
 @RunWith(Arquillian.class)
-public class JournalArticleFriendlyUrlTest {
+public class JournalArticleFriendlyURLTest {
 
 	@ClassRule
 	@Rule

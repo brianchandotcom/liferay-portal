@@ -488,9 +488,13 @@ previous attributes.
 #### What changed?
 
 Boolean HTML attributes will only be rendered if passed a value of `true`.
-For example, previously, a value such as `false` for a `disabled` attribute
+The value for such attributes will be their canonical name.
+
+Previously, a value such as `false` for a `disabled` attribute
 would be rendered into the DOM as `disabled="false"`; now, it is simply
-omitted.
+omitted. Likewise, a `true` value for a `disabled` attribute was
+formerly rendered into the DOM as `disabled="true"`; now it is rendered
+as `disabled="disabled"`.
 
 #### Who is affected?
 
@@ -504,11 +508,16 @@ and "truespeed".
 
 #### How should I update my code?
 
-Ensure that you pass `true` when you want a boolean attribute to
-be present in the DOM.
+Ensure that you pass `true` when you want a boolean attribute to be
+present in the DOM. If you have any CSS selectors targeting a `true`
+value (e.g., `[disabled="true"]`) update them to instead target presence
+of the attribute (e.g., `[disabled]`) or its canonical name (e.g.,
+`[disabled="disabled"]`).
 
 #### Why was this change made?
 
 This change is being made for better compliance with [the HTML Standard](https://html.spec.whatwg.org/#boolean-attribute),
 which says that "The presence of a boolean attribute on an element represents
-the true value, and the absence of the attribute represents the false value."
+the true value, and the absence of the attribute represents the false value. If
+the attribute is present, its value must either be the empty string or a value
+that is an ASCII case-insensitive match for the attribute's canonical name."

@@ -661,9 +661,17 @@ public interface PropsKeys {
 	public static final String DATA_LIMIT_MAX_DL_STORAGE_SIZE =
 		"data.limit.max.dl.storage.size";
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String DATA_LIMIT_MAX_JOURNAL_ARTICLE_COUNT =
 		"data.limit.max.journal.article.count";
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String DATA_LIMIT_MAX_JOURNAL_FOLDER_COUNT =
 		"data.limit.max.journal.folder.count";
 
@@ -673,18 +681,38 @@ public interface PropsKeys {
 	public static final String DATA_LIMIT_MAX_MAIL_MESSAGE_PERIOD =
 		"data.limit.max.mail.message.period";
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String DATA_LIMIT_MAX_ORGANIZATION_COUNT =
 		"data.limit.max.organization.count";
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String DATA_LIMIT_MAX_ROLE_COUNT =
 		"data.limit.max.role.count";
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String DATA_LIMIT_MAX_SITE_COUNT =
 		"data.limit.max.site.count";
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String DATA_LIMIT_MAX_TEAM_COUNT =
 		"data.limit.max.team.count";
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String DATA_LIMIT_MAX_USER_COUNT =
 		"data.limit.max.user.count";
 

@@ -267,18 +267,4 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 	servletContext="<%= application %>"
 />
 
-<%
-String friendlyURLChangedMessage = GetterUtil.getString(MultiSessionMessages.get(renderRequest, "friendlyURLChanged"));
-%>
-
-<c:if test="<%= Validator.isNotNull(friendlyURLChangedMessage) %>">
-	<aui:script>
-		Liferay.Util.openToast({
-			message: '<%= friendlyURLChangedMessage %>',
-			toastProps: {
-				autoClose: 20000,
-			},
-			type: 'warning',
-		});
-	</aui:script>
-</c:if>
+<%@ include file="/friendly_url_changed_message.jspf" %>

@@ -307,7 +307,7 @@ public abstract class BaseTestPreparatorBundleActivator
 				Collections.singletonList("token_introspection"),
 				"http://localhost:8080", 0, "test application",
 				"http://localhost:8080", redirectUris, availableScopes,
-				new ServiceContext(), trustedApplication);
+				trustedApplication, new ServiceContext());
 
 		autoCloseables.add(
 			() -> oAuth2ApplicationLocalService.deleteOAuth2Application(

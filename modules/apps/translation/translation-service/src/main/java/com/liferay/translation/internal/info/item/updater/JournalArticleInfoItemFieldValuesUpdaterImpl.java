@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.storage.constants.FieldConstants;
+import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemFieldValues;
@@ -26,10 +27,14 @@ import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.util.JournalConverter;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -154,6 +159,26 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 			translatedContent, latestArticle.getLayoutUuid(), serviceContext);
 	}
 
+	private void _addNewTranslatedField(
+			DDMStructure ddmStructure, Locale targetLocale, Fields ddmFields,
+			String fieldName, String entryValue)
+		throws Exception {
+
+		Field field = new Field(
+			ddmStructure.getStructureId(), fieldName, Collections.emptyList(),
+			ddmFields.getDefaultLocale());
+
+		field.setValue(
+			targetLocale,
+			FieldConstants.getSerializable(
+				targetLocale, targetLocale,
+				ddmStructure.getFieldType(fieldName), entryValue));
+
+		ddmFields.put(field);
+
+		_updateFieldsDisplay(ddmFields, fieldName);
+	}
+
 	private Optional<InfoLocalizedValue<Object>> _getInfoLocalizedValueOptional(
 		InfoFieldValue<Object> infoFieldValue) {
 
@@ -192,6 +217,11 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 						targetLocale, targetLocale, field.getDataType(),
 						entry.getValue()));
 			}
+			else if (ddmStructure.hasField(entry.getKey())) {
+				_addNewTranslatedField(
+					ddmStructure, targetLocale, ddmFields, entry.getKey(),
+					entry.getValue());
+			}
 		}
 
 		return _journalConverter.getContent(
@@ -210,6 +240,21 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 		}
 
 		return defaultString;
+	}
+
+	private void _updateFieldsDisplay(Fields ddmFields, String fieldName) {
+		String fieldsDisplayValue = StringBundler.concat(
+			fieldName, DDM.INSTANCE_SEPARATOR, StringUtil.randomString());
+
+		Field fieldsDisplayField = ddmFields.get(DDM.FIELDS_DISPLAY_NAME);
+
+		String[] fieldsDisplayValues = StringUtil.split(
+			(String)fieldsDisplayField.getValue());
+
+		fieldsDisplayValues = ArrayUtil.append(
+			fieldsDisplayValues, fieldsDisplayValue);
+
+		fieldsDisplayField.setValue(StringUtil.merge(fieldsDisplayValues));
 	}
 
 	@Reference

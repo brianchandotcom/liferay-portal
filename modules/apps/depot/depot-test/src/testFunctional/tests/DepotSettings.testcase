@@ -35,23 +35,23 @@ definition {
 	test EditName {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
+			depotName = "Test Depot For Edit Name");
 
 		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepotPortlet(
-			depotName = "Test Depot Name",
+			depotName = "Test Depot For Edit Name",
 			portlet = "Settings");
 
 		Depot.editDepot(
 			depotDescriptionEdit = "This is an edited description of a depot",
-			depotName = "Test Depot Name",
-			depotNameEdit = "Edited Test Depot Name",
+			depotName = "Test Depot For Edit Name",
+			depotNameEdit = "Test Depot For Edited Name",
 			settings = "true");
 
 		DepotNavigator.openDepotAdmin();
 
-		DepotNavigator.gotoDepot(depotName = "Edited Test Depot Name");
+		DepotNavigator.gotoDepot(depotName = "Test Depot For Edited Name");
 	}
 
 	@description = "This ensures that a user can set the depot site connection via settings."

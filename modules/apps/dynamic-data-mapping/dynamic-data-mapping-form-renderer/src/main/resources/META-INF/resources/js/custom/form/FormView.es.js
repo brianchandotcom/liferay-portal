@@ -299,6 +299,10 @@ export const FormView = React.forwardRef((props, ref) => {
 			initialConfig={COMMON_INITIAL_CONFIG_STATE}
 		>
 			<FormProvider
+				init={(props) => ({
+					...props,
+					paginationMode: 'wizard',
+				})}
 				initialState={COMMON_INITIAL_STATE}
 				onAction={(action) => {
 					if (unstable_onEventRef.current) {

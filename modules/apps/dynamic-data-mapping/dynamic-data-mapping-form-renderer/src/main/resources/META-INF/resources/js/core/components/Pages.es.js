@@ -39,10 +39,9 @@ const Pages = React.forwardRef(
 		},
 		ref
 	) => {
-		const {portletNamespace, view} = useConfig();
+		const {containerId, portletNamespace, view} = useConfig();
 		const {
 			activePage,
-			containerId,
 			displayable: initialDisplayableValue,
 			editingLanguageId,
 			focusedField,

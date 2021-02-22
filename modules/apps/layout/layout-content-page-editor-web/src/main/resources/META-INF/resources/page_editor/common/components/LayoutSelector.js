@@ -27,6 +27,7 @@ export const LayoutSelector = ({mappedLayout, onLayoutSelect}) => {
 				itemSelectorURL={config.layoutItemSelectorURL}
 				onItemSelect={(layout) => onLayoutSelect(layout)}
 				selectedItemTitle={mappedLayout?.name || ''}
+				showMappedItems={false}
 			/>
 			<ClayButton
 				className="mt-2"

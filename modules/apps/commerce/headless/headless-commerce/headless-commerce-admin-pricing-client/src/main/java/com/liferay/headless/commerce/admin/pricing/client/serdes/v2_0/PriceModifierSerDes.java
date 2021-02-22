@@ -541,7 +541,7 @@ public class PriceModifierSerDes {
 			else if (Objects.equals(jsonParserFieldName, "modifierAmount")) {
 				if (jsonParserFieldValue != null) {
 					priceModifier.setModifierAmount(
-						(BigDecimal)jsonParserFieldValue);
+						new BigDecimal((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "modifierType")) {

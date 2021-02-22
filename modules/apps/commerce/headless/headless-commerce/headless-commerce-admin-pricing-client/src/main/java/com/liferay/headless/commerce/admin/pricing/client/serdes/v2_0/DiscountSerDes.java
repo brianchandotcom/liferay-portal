@@ -987,7 +987,7 @@ public class DiscountSerDes {
 
 				if (jsonParserFieldValue != null) {
 					discount.setMaximumDiscountAmount(
-						(BigDecimal)jsonParserFieldValue);
+						new BigDecimal((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "neverExpire")) {
@@ -1004,25 +1004,25 @@ public class DiscountSerDes {
 			else if (Objects.equals(jsonParserFieldName, "percentageLevel1")) {
 				if (jsonParserFieldValue != null) {
 					discount.setPercentageLevel1(
-						(BigDecimal)jsonParserFieldValue);
+						new BigDecimal((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "percentageLevel2")) {
 				if (jsonParserFieldValue != null) {
 					discount.setPercentageLevel2(
-						(BigDecimal)jsonParserFieldValue);
+						new BigDecimal((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "percentageLevel3")) {
 				if (jsonParserFieldValue != null) {
 					discount.setPercentageLevel3(
-						(BigDecimal)jsonParserFieldValue);
+						new BigDecimal((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "percentageLevel4")) {
 				if (jsonParserFieldValue != null) {
 					discount.setPercentageLevel4(
-						(BigDecimal)jsonParserFieldValue);
+						new BigDecimal((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "rulesConjunction")) {

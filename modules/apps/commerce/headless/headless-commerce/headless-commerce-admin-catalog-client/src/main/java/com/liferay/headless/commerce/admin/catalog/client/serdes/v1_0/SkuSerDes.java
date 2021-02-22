@@ -513,7 +513,7 @@ public class SkuSerDes {
 
 			if (Objects.equals(jsonParserFieldName, "cost")) {
 				if (jsonParserFieldValue != null) {
-					sku.setCost((BigDecimal)jsonParserFieldValue);
+					sku.setCost(new BigDecimal((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "depth")) {
@@ -579,7 +579,7 @@ public class SkuSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "price")) {
 				if (jsonParserFieldValue != null) {
-					sku.setPrice((BigDecimal)jsonParserFieldValue);
+					sku.setPrice(new BigDecimal((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "productId")) {
@@ -596,7 +596,8 @@ public class SkuSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "promoPrice")) {
 				if (jsonParserFieldValue != null) {
-					sku.setPromoPrice((BigDecimal)jsonParserFieldValue);
+					sku.setPromoPrice(
+						new BigDecimal((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "published")) {

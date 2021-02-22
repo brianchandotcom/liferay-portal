@@ -482,25 +482,25 @@ public class TierPriceSerDes {
 			else if (Objects.equals(jsonParserFieldName, "discountLevel1")) {
 				if (jsonParserFieldValue != null) {
 					tierPrice.setDiscountLevel1(
-						(BigDecimal)jsonParserFieldValue);
+						new BigDecimal((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "discountLevel2")) {
 				if (jsonParserFieldValue != null) {
 					tierPrice.setDiscountLevel2(
-						(BigDecimal)jsonParserFieldValue);
+						new BigDecimal((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "discountLevel3")) {
 				if (jsonParserFieldValue != null) {
 					tierPrice.setDiscountLevel3(
-						(BigDecimal)jsonParserFieldValue);
+						new BigDecimal((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "discountLevel4")) {
 				if (jsonParserFieldValue != null) {
 					tierPrice.setDiscountLevel4(
-						(BigDecimal)jsonParserFieldValue);
+						new BigDecimal((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "displayDate")) {

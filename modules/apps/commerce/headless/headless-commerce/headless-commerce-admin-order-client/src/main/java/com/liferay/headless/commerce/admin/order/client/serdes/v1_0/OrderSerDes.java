@@ -2108,7 +2108,8 @@ public class OrderSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "shippingAmount")) {
 				if (jsonParserFieldValue != null) {
-					order.setShippingAmount((BigDecimal)jsonParserFieldValue);
+					order.setShippingAmount(
+						new BigDecimal((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(
@@ -2248,7 +2249,7 @@ public class OrderSerDes {
 
 				if (jsonParserFieldValue != null) {
 					order.setShippingWithTaxAmount(
-						(BigDecimal)jsonParserFieldValue);
+						new BigDecimal((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(
@@ -2270,7 +2271,8 @@ public class OrderSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "subtotal")) {
 				if (jsonParserFieldValue != null) {
-					order.setSubtotal((BigDecimal)jsonParserFieldValue);
+					order.setSubtotal(
+						new BigDecimal((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "subtotalAmount")) {
@@ -2395,7 +2397,7 @@ public class OrderSerDes {
 
 				if (jsonParserFieldValue != null) {
 					order.setSubtotalWithTaxAmount(
-						(BigDecimal)jsonParserFieldValue);
+						new BigDecimal((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(
@@ -2430,7 +2432,8 @@ public class OrderSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "total")) {
 				if (jsonParserFieldValue != null) {
-					order.setTotal((BigDecimal)jsonParserFieldValue);
+					order.setTotal(
+						new BigDecimal((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "totalAmount")) {
@@ -2550,7 +2553,7 @@ public class OrderSerDes {
 
 				if (jsonParserFieldValue != null) {
 					order.setTotalWithTaxAmount(
-						(BigDecimal)jsonParserFieldValue);
+						new BigDecimal((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(

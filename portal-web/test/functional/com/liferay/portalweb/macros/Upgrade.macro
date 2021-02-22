@@ -2200,10 +2200,9 @@ definition {
 		}
 
 		task ("Assert styles of HTML in edit mode") {
-			AssertElementPresent(
-				key_fragmentName = "html",
-				key_marginBottom = "1",
-				locator1 = "Fragment#FRAGMENT_CONFIGURATION_MARGIN_BOTTOM_IN_VIEW_MODE");
+			PageEditor.viewFragmentStyle(
+				fragmentName = "HTML",
+				marginBottom = "1");
 		}
 
 		task ("Assert styles of Image in edit mode") {
@@ -2249,7 +2248,9 @@ definition {
 				key_width = "300px",
 				locator1 = "Fragment#VIDEO_WIDTH");
 
-			AssertElementPresent(locator1 = "//div[contains(@class,'video')]/parent::div/parent::div/parent::div[contains(@class,'mb-1')]");
+			PageEditor.viewFragmentStyle(
+				fragmentName = "video",
+				marginBottom = "1");
 		}
 	}
 

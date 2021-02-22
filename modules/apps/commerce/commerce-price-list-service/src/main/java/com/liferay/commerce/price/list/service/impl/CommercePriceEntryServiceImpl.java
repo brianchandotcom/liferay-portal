@@ -49,23 +49,8 @@ public class CommercePriceEntryServiceImpl
 		throws PortalException {
 
 		return addCommercePriceEntry(
-			cpInstanceId, commercePriceListId, null, price, promoPrice,
+			null, cpInstanceId, commercePriceListId, price, promoPrice,
 			serviceContext);
-	}
-
-	@Override
-	public CommercePriceEntry addCommercePriceEntry(
-			long cpInstanceId, long commercePriceListId,
-			String externalReferenceCode, BigDecimal price,
-			BigDecimal promoPrice, ServiceContext serviceContext)
-		throws PortalException {
-
-		_commercePriceListModelResourcePermission.check(
-			getPermissionChecker(), commercePriceListId, ActionKeys.UPDATE);
-
-		return commercePriceEntryLocalService.addCommercePriceEntry(
-			cpInstanceId, commercePriceListId, externalReferenceCode, price,
-			promoPrice, serviceContext);
 	}
 
 	/**
@@ -98,6 +83,21 @@ public class CommercePriceEntryServiceImpl
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire,
 			serviceContext);
+	}
+
+	@Override
+	public CommercePriceEntry addCommercePriceEntry(
+			String externalReferenceCode, long cpInstanceId,
+			long commercePriceListId, BigDecimal price, BigDecimal promoPrice,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		_commercePriceListModelResourcePermission.check(
+			getPermissionChecker(), commercePriceListId, ActionKeys.UPDATE);
+
+		return commercePriceEntryLocalService.addCommercePriceEntry(
+			externalReferenceCode, cpInstanceId, commercePriceListId, price,
+			promoPrice, serviceContext);
 	}
 
 	@Override

@@ -54,7 +54,7 @@ public class BillingAddressResourceImpl
 
 		CommerceOrder commerceOrder =
 			_commerceOrderService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceOrder == null) {
 			throw new NoSuchOrderException(
@@ -99,7 +99,7 @@ public class BillingAddressResourceImpl
 
 		CommerceOrder commerceOrder =
 			_commerceOrderService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceOrder == null) {
 			throw new NoSuchOrderException(

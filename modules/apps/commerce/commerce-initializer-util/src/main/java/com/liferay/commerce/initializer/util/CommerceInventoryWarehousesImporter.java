@@ -95,7 +95,7 @@ public class CommerceInventoryWarehousesImporter {
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
 			_commerceInventoryWarehouseLocalService.
 				fetchCommerceInventoryWarehouseByReferenceCode(
-					serviceContext.getCompanyId(), externalReferenceCode);
+					externalReferenceCode, serviceContext.getCompanyId());
 
 		if (Validator.isNotNull(externalReferenceCode) &&
 			(commerceInventoryWarehouse == null)) {

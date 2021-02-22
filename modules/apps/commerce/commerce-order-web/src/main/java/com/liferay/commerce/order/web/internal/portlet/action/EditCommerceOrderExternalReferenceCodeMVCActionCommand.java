@@ -84,7 +84,7 @@ public class EditCommerceOrderExternalReferenceCodeMVCActionCommand
 			actionRequest, "externalReferenceCode");
 
 		_commerceOrderService.updateCommerceOrderExternalReferenceCode(
-			commerceOrder.getCommerceOrderId(), externalReferenceCode);
+			externalReferenceCode, commerceOrder.getCommerceOrderId());
 	}
 
 	@Reference

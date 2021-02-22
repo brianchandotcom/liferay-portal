@@ -103,18 +103,18 @@ public class CommerceAddressLocalServiceImpl
 		throws PortalException {
 
 		return commerceAddressLocalService.addCommerceAddress(
-			className, classPK, name, description, street1, street2, street3,
-			city, zip, commerceRegionId, commerceCountryId, phoneNumber, type,
-			null, serviceContext);
+			null, className, classPK, name, description, street1, street2,
+			street3, city, zip, commerceRegionId, commerceCountryId,
+			phoneNumber, type, serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceAddress addCommerceAddress(
-			String className, long classPK, String name, String description,
-			String street1, String street2, String street3, String city,
-			String zip, long commerceRegionId, long commerceCountryId,
-			String phoneNumber, int type, String externalReferenceCode,
+			String externalReferenceCode, String className, long classPK,
+			String name, String description, String street1, String street2,
+			String street3, String city, String zip, long commerceRegionId,
+			long commerceCountryId, String phoneNumber, int type,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -129,6 +129,7 @@ public class CommerceAddressLocalServiceImpl
 		CommerceAddress commerceAddress = commerceAddressPersistence.create(
 			commerceAddressId);
 
+		commerceAddress.setExternalReferenceCode(externalReferenceCode);
 		commerceAddress.setCompanyId(companyId);
 		commerceAddress.setUserId(user.getUserId());
 		commerceAddress.setUserName(user.getFullName());
@@ -145,7 +146,6 @@ public class CommerceAddressLocalServiceImpl
 		commerceAddress.setCommerceCountryId(commerceCountryId);
 		commerceAddress.setPhoneNumber(phoneNumber);
 		commerceAddress.setType(type);
-		commerceAddress.setExternalReferenceCode(externalReferenceCode);
 
 		return commerceAddressPersistence.update(commerceAddress);
 	}
@@ -261,7 +261,7 @@ public class CommerceAddressLocalServiceImpl
 
 	@Override
 	public CommerceAddress fetchByExternalReferenceCode(
-		long companyId, String externalReferenceCode) {
+		String externalReferenceCode, long companyId) {
 
 		return commerceAddressPersistence.fetchByC_ERC(
 			companyId, externalReferenceCode, true);

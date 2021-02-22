@@ -84,7 +84,7 @@ public class CommercePriceEntryTestUtil {
 				commercePriceList.getGroupId());
 
 		return CommercePriceEntryLocalServiceUtil.addCommercePriceEntry(
-			skuId, commercePriceListId, externalReferenceCode,
+			externalReferenceCode, skuId, commercePriceListId,
 			BigDecimal.valueOf(price), BigDecimal.valueOf(promoPrice),
 			serviceContext);
 	}

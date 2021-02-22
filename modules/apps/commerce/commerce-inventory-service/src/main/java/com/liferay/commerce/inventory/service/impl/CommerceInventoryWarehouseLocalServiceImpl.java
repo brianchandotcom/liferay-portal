@@ -101,7 +101,7 @@ public class CommerceInventoryWarehouseLocalServiceImpl
 		else {
 			CommerceInventoryWarehouse commerceInventoryWarehouse =
 				fetchCommerceInventoryWarehouseByReferenceCode(
-					user.getCompanyId(), externalReferenceCode);
+					externalReferenceCode, user.getCompanyId());
 
 			if (commerceInventoryWarehouse != null) {
 				throw new DuplicateCommerceInventoryWarehouseException(
@@ -184,7 +184,7 @@ public class CommerceInventoryWarehouseLocalServiceImpl
 	@Override
 	public CommerceInventoryWarehouse
 		fetchCommerceInventoryWarehouseByReferenceCode(
-			long companyId, String externalReferenceCode) {
+			String externalReferenceCode, long companyId) {
 
 		if (Validator.isBlank(externalReferenceCode)) {
 			return null;

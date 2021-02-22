@@ -75,7 +75,7 @@ public class AccountAddressResourceImpl
 
 		CommerceAddress commerceAddress =
 			_commerceAddressService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceAddress == null) {
 			throw new NoSuchAddressException(
@@ -104,7 +104,7 @@ public class AccountAddressResourceImpl
 
 		CommerceAddress commerceAddress =
 			_commerceAddressService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceAddress == null) {
 			throw new NoSuchAddressException(
@@ -188,7 +188,7 @@ public class AccountAddressResourceImpl
 
 		CommerceAddress commerceAddress =
 			_commerceAddressService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceAddress == null) {
 			throw new NoSuchAddressException(
@@ -251,8 +251,8 @@ public class AccountAddressResourceImpl
 		else if (accountAddress.getExternalReferenceCode() != null) {
 			commerceAddress =
 				_commerceAddressService.fetchByExternalReferenceCode(
-					contextCompany.getCompanyId(),
-					accountAddress.getExternalReferenceCode());
+					accountAddress.getExternalReferenceCode(),
+					contextCompany.getCompanyId());
 		}
 
 		if (commerceAddress != null) {
@@ -321,6 +321,8 @@ public class AccountAddressResourceImpl
 
 		CommerceAddress commerceAddress =
 			_commerceAddressService.addCommerceAddress(
+				GetterUtil.getString(
+					accountAddress.getExternalReferenceCode(), null),
 				commerceAccount.getModelClassName(),
 				commerceAccount.getCommerceAccountId(),
 				accountAddress.getName(), accountAddress.getDescription(),
@@ -331,8 +333,6 @@ public class AccountAddressResourceImpl
 				GetterUtil.getInteger(
 					accountAddress.getType(),
 					CommerceAddressConstants.ADDRESS_TYPE_BILLING_AND_SHIPPING),
-				GetterUtil.getString(
-					accountAddress.getExternalReferenceCode(), null),
 				_serviceContextHelper.getServiceContext());
 
 		return _accountAddressDTOConverter.toDTO(

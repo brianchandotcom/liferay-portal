@@ -78,12 +78,12 @@ public class CommerceOrderNoteServiceImpl
 
 	@Override
 	public CommerceOrderNote fetchByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+			String externalReferenceCode, long companyId)
 		throws PortalException {
 
 		CommerceOrderNote commerceOrderNote =
 			commerceOrderNoteLocalService.fetchByExternalReferenceCode(
-				companyId, externalReferenceCode);
+				externalReferenceCode, companyId);
 
 		if (commerceOrderNote != null) {
 			_commerceOrderModelResourcePermission.check(
@@ -209,8 +209,8 @@ public class CommerceOrderNoteServiceImpl
 
 	@Override
 	public CommerceOrderNote upsertCommerceOrderNote(
-			long commerceOrderNoteId, long commerceOrderId, String content,
-			boolean restricted, String externalReferenceCode,
+			String externalReferenceCode, long commerceOrderNoteId,
+			long commerceOrderId, String content, boolean restricted,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -225,8 +225,8 @@ public class CommerceOrderNoteServiceImpl
 			getPermissionChecker(), commerceOrderId, actionId);
 
 		return commerceOrderNoteLocalService.upsertCommerceOrderNote(
-			commerceOrderNoteId, commerceOrderId, content, restricted,
-			externalReferenceCode, serviceContext);
+			externalReferenceCode, commerceOrderNoteId, commerceOrderId,
+			content, restricted, serviceContext);
 	}
 
 	protected void checkCommerceOrderNotePermissions(

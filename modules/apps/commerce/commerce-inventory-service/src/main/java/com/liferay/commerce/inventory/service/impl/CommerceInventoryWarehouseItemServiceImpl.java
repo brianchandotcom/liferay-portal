@@ -144,7 +144,7 @@ public class CommerceInventoryWarehouseItemServiceImpl
 	@Override
 	public CommerceInventoryWarehouseItem
 			fetchCommerceInventoryWarehouseItemByReferenceCode(
-				long companyId, String externalReferenceCode)
+				String externalReferenceCode, long companyId)
 		throws PortalException {
 
 		PortletResourcePermission portletResourcePermission =

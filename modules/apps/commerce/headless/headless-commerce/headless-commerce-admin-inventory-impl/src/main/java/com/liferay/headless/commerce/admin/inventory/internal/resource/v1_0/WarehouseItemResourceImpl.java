@@ -74,7 +74,7 @@ public class WarehouseItemResourceImpl
 		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
 			_commerceInventoryWarehouseItemService.
 				fetchCommerceInventoryWarehouseItemByReferenceCode(
-					contextCompany.getCompanyId(), externalReferenceCode);
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceInventoryWarehouseItem == null) {
 			throw new NoSuchInventoryWarehouseItemException(
@@ -142,7 +142,7 @@ public class WarehouseItemResourceImpl
 		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
 			_commerceInventoryWarehouseItemService.
 				fetchCommerceInventoryWarehouseItemByReferenceCode(
-					contextCompany.getCompanyId(), externalReferenceCode);
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceInventoryWarehouseItem == null) {
 			throw new NoSuchInventoryWarehouseItemException(
@@ -239,7 +239,7 @@ public class WarehouseItemResourceImpl
 		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
 			_commerceInventoryWarehouseItemService.
 				fetchCommerceInventoryWarehouseItemByReferenceCode(
-					contextCompany.getCompanyId(), externalReferenceCode);
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceInventoryWarehouseItem == null) {
 			throw new NoSuchInventoryWarehouseItemException(
@@ -331,7 +331,7 @@ public class WarehouseItemResourceImpl
 		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
 			_commerceInventoryWarehouseItemService.
 				fetchCommerceInventoryWarehouseItemByReferenceCode(
-					contextCompany.getCompanyId(), externalReferenceCode);
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceInventoryWarehouseItem != null) {
 			throw new DuplicateCommerceInventoryWarehouseItemException(

@@ -55,7 +55,7 @@ public class OrderNoteResourceImpl extends BaseOrderNoteResourceImpl {
 
 		CommerceOrderNote commerceOrderNote =
 			_commerceOrderNoteService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceOrderNote == null) {
 			throw new NoSuchOrderNoteException(
@@ -75,7 +75,7 @@ public class OrderNoteResourceImpl extends BaseOrderNoteResourceImpl {
 
 		CommerceOrder commerceOrder =
 			_commerceOrderService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceOrder == null) {
 			throw new NoSuchOrderException(
@@ -126,7 +126,7 @@ public class OrderNoteResourceImpl extends BaseOrderNoteResourceImpl {
 
 		CommerceOrderNote commerceOrderNote =
 			_commerceOrderNoteService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceOrderNote == null) {
 			throw new NoSuchOrderNoteException(
@@ -159,7 +159,7 @@ public class OrderNoteResourceImpl extends BaseOrderNoteResourceImpl {
 
 		CommerceOrderNote commerceOrderNote =
 			_commerceOrderNoteService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceOrderNote == null) {
 			throw new NoSuchOrderNoteException(
@@ -181,7 +181,7 @@ public class OrderNoteResourceImpl extends BaseOrderNoteResourceImpl {
 
 		CommerceOrder commerceOrder =
 			_commerceOrderService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceOrder == null) {
 			throw new NoSuchOrderException(
@@ -240,10 +240,10 @@ public class OrderNoteResourceImpl extends BaseOrderNoteResourceImpl {
 
 		CommerceOrderNote commerceOrderNote =
 			_commerceOrderNoteService.upsertCommerceOrderNote(
+				orderNote.getExternalReferenceCode(),
 				GetterUtil.get(orderNote.getId(), 0L),
 				commerceOrder.getCommerceOrderId(), orderNote.getContent(),
 				GetterUtil.get(orderNote.getRestricted(), false),
-				orderNote.getExternalReferenceCode(),
 				_serviceContextHelper.getServiceContext(
 					commerceOrder.getGroupId()));
 

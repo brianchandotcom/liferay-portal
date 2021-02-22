@@ -64,26 +64,26 @@ public class CommerceAddressServiceImpl extends CommerceAddressServiceBaseImpl {
 		throws PortalException {
 
 		return commerceAddressService.addCommerceAddress(
-			className, classPK, name, description, street1, street2, street3,
-			city, zip, commerceRegionId, commerceCountryId, phoneNumber, type,
-			null, serviceContext);
+			null, className, classPK, name, description, street1, street2,
+			street3, city, zip, commerceRegionId, commerceCountryId,
+			phoneNumber, type, serviceContext);
 	}
 
 	@Override
 	public CommerceAddress addCommerceAddress(
-			String className, long classPK, String name, String description,
-			String street1, String street2, String street3, String city,
-			String zip, long commerceRegionId, long commerceCountryId,
-			String phoneNumber, int type, String externalReferenceCode,
+			String externalReferenceCode, String className, long classPK,
+			String name, String description, String street1, String street2,
+			String street3, String city, String zip, long commerceRegionId,
+			long commerceCountryId, String phoneNumber, int type,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		checkPermission(className, classPK);
 
 		return commerceAddressLocalService.addCommerceAddress(
-			className, classPK, name, description, street1, street2, street3,
-			city, zip, commerceRegionId, commerceCountryId, phoneNumber, type,
-			externalReferenceCode, serviceContext);
+			externalReferenceCode, className, classPK, name, description,
+			street1, street2, street3, city, zip, commerceRegionId,
+			commerceCountryId, phoneNumber, type, serviceContext);
 	}
 
 	@Override
@@ -100,12 +100,12 @@ public class CommerceAddressServiceImpl extends CommerceAddressServiceBaseImpl {
 
 	@Override
 	public CommerceAddress fetchByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+			String externalReferenceCode, long companyId)
 		throws PortalException {
 
 		CommerceAddress commerceAddress =
 			commerceAddressLocalService.fetchByExternalReferenceCode(
-				companyId, externalReferenceCode);
+				externalReferenceCode, companyId);
 
 		if (commerceAddress != null) {
 			checkPermission(commerceAddress);

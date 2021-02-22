@@ -134,9 +134,9 @@ public class CartCommentResourceImpl
 
 		CommerceOrderNote commerceOrderNote =
 			_commerceOrderNoteService.upsertCommerceOrderNote(
-				GetterUtil.get(cartComment.getId(), 0L),
+				null, GetterUtil.get(cartComment.getId(), 0L),
 				commerceOrder.getCommerceOrderId(), cartComment.getContent(),
-				GetterUtil.get(cartComment.getRestricted(), false), null,
+				GetterUtil.get(cartComment.getRestricted(), false),
 				_serviceContextHelper.getServiceContext(
 					commerceOrder.getGroupId()));
 

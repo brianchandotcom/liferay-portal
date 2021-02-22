@@ -108,7 +108,7 @@ public class OrderResourceImpl
 
 		CommerceOrder commerceOrder =
 			_commerceOrderService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceOrder == null) {
 			throw new NoSuchOrderException(
@@ -146,7 +146,7 @@ public class OrderResourceImpl
 
 		CommerceOrder commerceOrder =
 			_commerceOrderService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceOrder == null) {
 			throw new NoSuchOrderException(
@@ -197,7 +197,7 @@ public class OrderResourceImpl
 
 		CommerceOrder commerceOrder =
 			_commerceOrderService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (commerceOrder == null) {
 			throw new NoSuchOrderException(
@@ -392,6 +392,9 @@ public class OrderResourceImpl
 		}
 
 		commerceOrder = _commerceOrderService.updateCommerceOrder(
+			GetterUtil.getString(
+				order.getExternalReferenceCode(),
+				commerceOrder.getExternalReferenceCode()),
 			commerceOrder.getCommerceOrderId(),
 			GetterUtil.getLong(
 				order.getBillingAddressId(),
@@ -426,9 +429,6 @@ public class OrderResourceImpl
 				commerceOrder.getTotalWithTaxAmount()),
 			GetterUtil.getString(
 				order.getAdvanceStatus(), commerceOrder.getAdvanceStatus()),
-			GetterUtil.getString(
-				order.getExternalReferenceCode(),
-				commerceOrder.getExternalReferenceCode()),
 			_commerceContextFactory.create(
 				contextCompany.getCompanyId(), commerceOrder.getGroupId(),
 				contextUser.getUserId(), 0,

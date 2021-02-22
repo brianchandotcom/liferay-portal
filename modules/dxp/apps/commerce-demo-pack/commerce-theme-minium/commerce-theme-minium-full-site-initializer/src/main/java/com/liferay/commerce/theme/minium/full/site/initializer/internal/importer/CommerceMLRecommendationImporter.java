@@ -105,8 +105,8 @@ public class CommerceMLRecommendationImporter {
 		CPDefinition cpDefinition =
 			_cpDefinitionLocalService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
-					serviceContext.getCompanyId(),
-					productExternalReferenceCode);
+					productExternalReferenceCode,
+					serviceContext.getCompanyId());
 
 		if (cpDefinition == null) {
 			if (_log.isDebugEnabled()) {
@@ -127,8 +127,8 @@ public class CommerceMLRecommendationImporter {
 		CPDefinition recommendedCPDefinition =
 			_cpDefinitionLocalService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
-					serviceContext.getCompanyId(),
-					recommendedProductExternalReferenceCode);
+					recommendedProductExternalReferenceCode,
+					serviceContext.getCompanyId());
 
 		if (recommendedCPDefinition == null) {
 			if (_log.isDebugEnabled()) {
@@ -177,8 +177,8 @@ public class CommerceMLRecommendationImporter {
 		CPDefinition cpDefinition =
 			_cpDefinitionLocalService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
-					serviceContext.getCompanyId(),
-					productExternalReferenceCode);
+					productExternalReferenceCode,
+					serviceContext.getCompanyId());
 
 		if (cpDefinition == null) {
 			if (_log.isDebugEnabled()) {
@@ -199,8 +199,8 @@ public class CommerceMLRecommendationImporter {
 		CPDefinition recommendedCPDefinition =
 			_cpDefinitionLocalService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
-					serviceContext.getCompanyId(),
-					recommendedProductExternalReferenceCode);
+					recommendedProductExternalReferenceCode,
+					serviceContext.getCompanyId());
 
 		if (recommendedCPDefinition == null) {
 			if (_log.isDebugEnabled()) {
@@ -268,8 +268,8 @@ public class CommerceMLRecommendationImporter {
 		CPDefinition recommendedCPDefinition =
 			_cpDefinitionLocalService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
-					serviceContext.getCompanyId(),
-					recommendedProductExternalReferenceCode);
+					recommendedProductExternalReferenceCode,
+					serviceContext.getCompanyId());
 
 		if (recommendedCPDefinition == null) {
 			if (_log.isDebugEnabled()) {

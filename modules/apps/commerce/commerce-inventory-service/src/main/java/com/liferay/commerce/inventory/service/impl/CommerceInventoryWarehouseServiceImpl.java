@@ -116,7 +116,7 @@ public class CommerceInventoryWarehouseServiceImpl
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
 			commerceInventoryWarehouseLocalService.
 				fetchCommerceInventoryWarehouseByReferenceCode(
-					companyId, externalReferenceCode);
+					externalReferenceCode, companyId);
 
 		if (commerceInventoryWarehouse != null) {
 			_commerceInventoryWarehouseModelResourcePermission.check(

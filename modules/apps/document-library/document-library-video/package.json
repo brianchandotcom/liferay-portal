@@ -5,8 +5,8 @@
 		"@clayui/icon": "3.1.0",
 		"@clayui/loading-indicator": "3.2.0",
 		"@clayui/tooltip": "3.4.5",
-		"classnames": "2.2.6",
 		"@liferay/frontend-js-react-web": "*",
+		"classnames": "2.2.6",
 		"frontend-js-web": "*",
 		"prop-types": "15.7.2",
 		"react": "16.12.0"

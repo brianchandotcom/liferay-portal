@@ -359,6 +359,7 @@
 		let i = moduleName.indexOf('/');
 
 		// Skip first / for scoped packages
+
 		if (moduleName[0] === '@') {
 			i = moduleName.indexOf('/', i + 1);
 		}

@@ -11,6 +11,7 @@
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayLabel from '@clayui/label';
+import {usePrevious, useTimeout} from '@liferay/frontend-js-react-web';
 import {AppContext} from 'app-builder-web/js/AppContext.es';
 import NoPermissionState from 'app-builder-web/js/components/empty-state/NoPermissionState.es';
 import useDataListView from 'app-builder-web/js/hooks/useDataListView.es';
@@ -35,7 +36,6 @@ import {
 	concatValues,
 	isEqualObjects,
 } from 'data-engine-js-components-web/js/utils/utils.es';
-import {usePrevious, useTimeout} from '@liferay/frontend-js-react-web';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 
 import useAppWorkflow from '../../hooks/useAppWorkflow.es';

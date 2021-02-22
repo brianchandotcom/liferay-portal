@@ -9,8 +9,8 @@
 		"@clayui/modal": "3.8.5",
 		"@clayui/popover": "3.5.5",
 		"@clayui/tooltip": "3.4.5",
-		"classnames": "2.2.6",
 		"@liferay/frontend-js-react-web": "*",
+		"classnames": "2.2.6",
 		"frontend-js-web": "*",
 		"moment": "2.24.0",
 		"path-to-regexp": "3.0.0"

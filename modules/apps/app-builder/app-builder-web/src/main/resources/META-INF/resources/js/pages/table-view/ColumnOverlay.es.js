@@ -13,8 +13,8 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import classNames from 'classnames';
 import {useEventListener} from '@liferay/frontend-js-react-web';
+import classNames from 'classnames';
 import React, {useContext, useLayoutEffect, useState} from 'react';
 
 import {useKeyDown} from '../../hooks/index.es';

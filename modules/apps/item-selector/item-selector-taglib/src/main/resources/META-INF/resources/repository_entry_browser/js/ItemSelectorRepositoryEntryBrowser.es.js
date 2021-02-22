@@ -12,8 +12,8 @@
  * details.
  */
 
-import {ClayAlert} from 'clay-alert';
 import {render} from '@liferay/frontend-js-react-web';
+import {ClayAlert} from 'clay-alert';
 import {EventHandler, PortletBase, delegate} from 'frontend-js-web';
 import {Config} from 'metal-state';
 import ReactDOM from 'react-dom';

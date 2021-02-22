@@ -15,8 +15,8 @@
 import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal, {useModal} from '@clayui/modal';
-import classNames from 'classnames';
 import {render} from '@liferay/frontend-js-react-web';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 

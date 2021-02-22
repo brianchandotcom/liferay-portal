@@ -10,8 +10,8 @@
  */
 
 import ClayButton from '@clayui/button';
-import className from 'classnames';
 import {useStateSafe} from '@liferay/frontend-js-react-web';
+import className from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {Cell, Pie, PieChart, Tooltip} from 'recharts';

@@ -11,6 +11,7 @@
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {ClayTooltipProvider} from '@clayui/tooltip';
+import {useTimeout} from '@liferay/frontend-js-react-web';
 import {AppContext} from 'app-builder-web/js/AppContext.es';
 import {ControlMenuBase} from 'app-builder-web/js/components/control-menu/ControlMenu.es';
 import useDataDefinition from 'app-builder-web/js/hooks/useDataDefinition.es';
@@ -21,7 +22,6 @@ import {
 	errorToast,
 	successToast,
 } from 'data-engine-js-components-web/js/utils/toast.es';
-import {useTimeout} from ''@liferay/frontend-js-react-web';
 import {createResourceURL, fetch} from 'frontend-js-web';
 import React, {
 	useCallback,

@@ -14,8 +14,8 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayLayout from '@clayui/layout';
-import classNames from 'classnames';
 import {useTimeout} from '@liferay/frontend-js-react-web';
+import classNames from 'classnames';
 import React, {useContext, useEffect, useState} from 'react';
 
 const SidebarContext = React.createContext();

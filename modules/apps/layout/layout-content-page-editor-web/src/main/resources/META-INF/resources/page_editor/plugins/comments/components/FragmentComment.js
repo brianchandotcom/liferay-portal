@@ -15,8 +15,8 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import classNames from 'classnames';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
+import classNames from 'classnames';
 import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';

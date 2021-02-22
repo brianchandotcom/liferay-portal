@@ -530,21 +530,6 @@
 		</attribute>
 	</tag>
 	<tag>
-		<name>product-card</name>
-		<tag-class>com.liferay.commerce.frontend.taglib.servlet.taglib.ProductCardTag</tag-class>
-		<body-content>empty</body-content>
-		<attribute>
-			<name>cpCatalogEntry</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>elementClasses</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	<tag>
 		<name>product-subscription-info</name>
 		<tag-class>com.liferay.commerce.frontend.taglib.servlet.taglib.ProductSubscriptionInfoTag</tag-class>
 		<body-content>JSP</body-content>

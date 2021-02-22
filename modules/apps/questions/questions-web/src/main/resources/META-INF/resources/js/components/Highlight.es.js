@@ -37,7 +37,7 @@ function Highlight(props) {
 		}
 	};
 
-	useEffect(highlightCode);
+	useEffect(highlightCode, []);
 	const elProps = {ref: el};
 
 	if (innerHTML) {

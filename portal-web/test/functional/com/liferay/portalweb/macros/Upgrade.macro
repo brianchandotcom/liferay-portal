@@ -897,10 +897,19 @@ definition {
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-		for (var fieldFieldLabel : list "Boolean,Color,Date,Decimal,Documents and Media,Geolocation,HTML,Image,Integer,Link to Page,Number,Radio,Select,Separator,Text,Text Box,Web Content") {
-			DataEngine.editFieldLabel(
-				fieldFieldLabel = "${fieldFieldLabel}",
-				fieldFieldLabelEdit = "${fieldFieldLabel} Edit");
+		if ("${webContentColor}" == "false") {
+			for (var fieldFieldLabel : list "Boolean,Date,Decimal,Documents and Media,Geolocation,HTML,Image,Integer,Link to Page,Number,Radio,Select,Separator,Text,Text Box,Web Content") {
+				DataEngine.editFieldLabel(
+					fieldFieldLabel = "${fieldFieldLabel}",
+					fieldFieldLabelEdit = "${fieldFieldLabel} Edit");
+			}
+		}
+		else {
+			for (var fieldFieldLabel : list "Boolean,Color,Date,Decimal,Documents and Media,Geolocation,HTML,Image,Integer,Link to Page,Number,Radio,Select,Separator,Text,Text Box,Web Content") {
+				DataEngine.editFieldLabel(
+					fieldFieldLabel = "${fieldFieldLabel}",
+					fieldFieldLabelEdit = "${fieldFieldLabel} Edit");
+			}
 		}
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
@@ -3361,27 +3370,50 @@ definition {
 	macro ViewWebContentWCStructureWCTemplateWCDandAssetPublisher {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
-		WebContent.viewWithStructureCP(
-			linkedPageName = "Home",
-			linkFieldName = "LinktoPage",
-			menuItem = "Basic Document",
-			structureName = "WC Structure Name",
-			webContentBoolean = "true",
-			webContentColor = "000000",
-			webContentDate = "01/29/2021",
-			webContentDecimal = "0.5",
-			webContentDocumentsAndMedia = "DM Document Title",
-			webContentHTML = "This is a HTML field",
-			webContentImage = "Document_1.jpg",
-			webContentImageDescription = "Image Description",
-			webContentInteger = "9",
-			webContentNumber = "-1",
-			webContentRadio = "option 1",
-			webContentSelect = "option 2",
-			webContentSelectWCFile = "WC WebContent 1 Title",
-			webContentText = "This is a Text field",
-			webContentTextBox = "This is a Text Box field",
-			webContentTitle = "Web Content Title");
+		if ("${webContentColor}" == "false") {
+			WebContent.viewWithStructureCP(
+				linkedPageName = "Home",
+				linkFieldName = "LinktoPage",
+				menuItem = "Basic Document",
+				structureName = "WC Structure Name",
+				webContentBoolean = "true",
+				webContentDate = "01/29/2021",
+				webContentDecimal = "0.5",
+				webContentDocumentsAndMedia = "DM Document Title",
+				webContentHTML = "This is a HTML field",
+				webContentImage = "Document_1.jpg",
+				webContentInteger = "9",
+				webContentNumber = "-1",
+				webContentRadio = "option 1",
+				webContentSelect = "option 2",
+				webContentSelectWCFile = "WC WebContent 1 Title",
+				webContentText = "This is a Text field",
+				webContentTextBox = "This is a Text Box field",
+				webContentTitle = "Web Content Title");
+		}
+		else {
+			WebContent.viewWithStructureCP(
+				linkedPageName = "Home",
+				linkFieldName = "LinktoPage",
+				menuItem = "Basic Document",
+				structureName = "WC Structure Name",
+				webContentBoolean = "true",
+				webContentColor = "000000",
+				webContentDate = "01/29/2021",
+				webContentDecimal = "0.5",
+				webContentDocumentsAndMedia = "DM Document Title",
+				webContentHTML = "This is a HTML field",
+				webContentImage = "Document_1.jpg",
+				webContentImageDescription = "Image Description",
+				webContentInteger = "9",
+				webContentNumber = "-1",
+				webContentRadio = "option 1",
+				webContentSelect = "option 2",
+				webContentSelectWCFile = "WC WebContent 1 Title",
+				webContentText = "This is a Text field",
+				webContentTextBox = "This is a Text Box field",
+				webContentTitle = "Web Content Title");
+		}
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",

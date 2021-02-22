@@ -27,11 +27,11 @@ definition {
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.0.4";
 
-		Upgrade.ViewWebContentWCStructureWCTemplateWCDandAssetPublisher();
+		Upgrade.ViewWebContentWCStructureWCTemplateWCDandAssetPublisher(webContentColor = "false");
 
 		Upgrade.EditWebContentAndViewInWCDandAssetPublisher();
 
-		Upgrade.EditWCStructureAndTemplateAndViewInWCDandAssetPublisher();
+		Upgrade.EditWCStructureAndTemplateAndViewInWCDandAssetPublisher(webContentColor = "false");
 	}
 
 	@description = "This is a test for LPS-126654. Upgrade 7.1 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
@@ -125,11 +125,11 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.0.10.14";
 
-		Upgrade.ViewWebContentWCStructureWCTemplateWCDandAssetPublisher();
+		Upgrade.ViewWebContentWCStructureWCTemplateWCDandAssetPublisher(webContentColor = "false");
 
 		Upgrade.EditWebContentAndViewInWCDandAssetPublisher();
 
-		Upgrade.EditWCStructureAndTemplateAndViewInWCDandAssetPublisher();
+		Upgrade.EditWCStructureAndTemplateAndViewInWCDandAssetPublisher(webContentColor = "false");
 	}
 
 	@description = "This is a use case for LPS-75561."

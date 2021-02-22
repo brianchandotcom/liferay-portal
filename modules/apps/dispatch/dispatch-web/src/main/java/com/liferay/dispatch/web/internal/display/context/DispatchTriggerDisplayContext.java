@@ -66,14 +66,15 @@ public class DispatchTriggerDisplayContext {
 		String dispatchTaskExecutorType, Locale locale) {
 
 		DispatchTaskExecutor dispatchTaskExecutor =
-			_dispatchTaskExecutorRegistry.getDispatchTaskExecutor(
+			_dispatchTaskExecutorRegistry.fetchDispatchTaskExecutor(
 				dispatchTaskExecutorType);
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			locale, dispatchTaskExecutor.getClass());
 
-		String name = _dispatchTaskExecutorRegistry.getDispatchTaskExecutorName(
-			dispatchTaskExecutorType);
+		String name =
+			_dispatchTaskExecutorRegistry.fetchDispatchTaskExecutorName(
+				dispatchTaskExecutorType);
 
 		return LanguageUtil.get(resourceBundle, name);
 	}

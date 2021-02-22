@@ -39,14 +39,16 @@ public class DispatchTaskExecutorRegistryImpl
 	implements DispatchTaskExecutorRegistry {
 
 	@Override
-	public DispatchTaskExecutor getDispatchTaskExecutor(
+	public DispatchTaskExecutor fetchDispatchTaskExecutor(
 		String dispatchTaskExecutorType) {
 
 		return _dispatchTaskExecutors.get(dispatchTaskExecutorType);
 	}
 
 	@Override
-	public String getDispatchTaskExecutorName(String dispatchTaskExecutorType) {
+	public String fetchDispatchTaskExecutorName(
+		String dispatchTaskExecutorType) {
+
 		return _dispatchTaskExecutorNames.get(dispatchTaskExecutorType);
 	}
 

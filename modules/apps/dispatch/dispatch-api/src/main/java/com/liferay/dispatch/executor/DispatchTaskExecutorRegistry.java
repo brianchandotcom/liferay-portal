@@ -24,9 +24,9 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface DispatchTaskExecutorRegistry {
 
-	public DispatchTaskExecutor getDispatchTaskExecutor(String type);
+	public DispatchTaskExecutor fetchDispatchTaskExecutor(String type);
 
-	public String getDispatchTaskExecutorName(String type);
+	public String fetchDispatchTaskExecutorName(String type);
 
 	public Set<String> getDispatchTaskExecutorTypes();
 

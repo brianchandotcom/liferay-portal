@@ -80,7 +80,7 @@ public class DispatchMessageListener extends BaseMessageListener {
 		throws Exception {
 
 		DispatchTaskExecutor dispatchTaskExecutor =
-			_dispatchTaskExecutorRegistry.getDispatchTaskExecutor(
+			_dispatchTaskExecutorRegistry.fetchDispatchTaskExecutor(
 				dispatchTrigger.getDispatchTaskExecutorType());
 
 		if (dispatchTaskExecutor == null) {

@@ -565,7 +565,7 @@ definition {
 
 		Publications.schedulePublication(publicationsName = "Publication Name 1");
 
-		Pause(locator1 = "120000");
+		Pause(locator1 = "240000");
 
 		Publications.assertScheduledPublicationPublished(publicationsName = "Publication Name 1");
 
@@ -589,7 +589,7 @@ definition {
 			gotoManagePublications = "true",
 			publicationsName = "Publication Name 2");
 
-		Pause(locator1 = "120000");
+		Pause(locator1 = "240000");
 
 		Publications.assertScheduledPublicationPublished(publicationsName = "Publication Name 2");
 
@@ -613,7 +613,7 @@ definition {
 			gotoReviewPublications = "true",
 			publicationsName = "Publication Name 3");
 
-		Pause(locator1 = "120000");
+		Pause(locator1 = "240000");
 
 		Publications.assertScheduledPublicationPublished(publicationsName = "Publication Name 3");
 	}

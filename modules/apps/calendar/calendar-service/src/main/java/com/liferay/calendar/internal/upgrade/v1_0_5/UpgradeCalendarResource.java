@@ -163,23 +163,22 @@ public class UpgradeCalendarResource extends UpgradeProcess {
 		}
 	}
 
-	protected void upgradeCalendarResourceUserIds()
-		throws PortalException, SQLException {
-
+	protected void upgradeCalendarResourceUserIds() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			for (Company company : _companyLocalService.getCompanies()) {
-				long classNameId = _classNameLocalService.getClassNameId(
-					Group.class);
-				long defaultUserId = _userLocalService.getDefaultUserId(
-					company.getCompanyId());
-				long companyAdminUserId = getCompanyAdminUserId(company);
+			_companyLocalService.forEachCompany(
+				company -> {
+					long classNameId = _classNameLocalService.getClassNameId(
+						Group.class);
+					long defaultUserId = _userLocalService.getDefaultUserId(
+						company.getCompanyId());
+					long companyAdminUserId = getCompanyAdminUserId(company);
 
-				updateCalendarUserIds(
-					classNameId, defaultUserId, companyAdminUserId);
+					updateCalendarUserIds(
+						classNameId, defaultUserId, companyAdminUserId);
 
-				upgradeCalendarResourceUserId(
-					classNameId, defaultUserId, companyAdminUserId);
-			}
+					upgradeCalendarResourceUserId(
+						classNameId, defaultUserId, companyAdminUserId);
+				});
 		}
 	}
 

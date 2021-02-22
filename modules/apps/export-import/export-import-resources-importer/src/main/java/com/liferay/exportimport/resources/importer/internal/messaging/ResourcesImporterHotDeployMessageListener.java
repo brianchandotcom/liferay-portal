@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Dictionary;
-import java.util.List;
 
 import javax.servlet.ServletContext;
 
@@ -146,17 +145,14 @@ public class ResourcesImporterHotDeployMessageListener
 			return;
 		}
 
-		List<Company> companies = _companyLocalService.getCompanies();
-
 		try {
 			ExportImportThreadLocal.setLayoutImportInProcess(true);
 			ExportImportThreadLocal.setPortletImportInProcess(true);
 
-			for (Company company : companies) {
-				_importResources(
+			_companyLocalService.forEachCompany(
+				company -> _importResources(
 					company, servletContext, pluginPackageProperties,
-					message.getResponseId());
-			}
+					message.getResponseId()));
 		}
 		finally {
 			ExportImportThreadLocal.setLayoutImportInProcess(false);
@@ -167,13 +163,6 @@ public class ResourcesImporterHotDeployMessageListener
 	@Override
 	protected void onDeploy(Message message) throws Exception {
 		initialize(message);
-	}
-
-	@Reference(unbind = "-")
-	protected void setCompanyLocalService(
-		CompanyLocalService companyLocalService) {
-
-		_companyLocalService = companyLocalService;
 	}
 
 	@Reference(
@@ -290,7 +279,10 @@ public class ResourcesImporterHotDeployMessageListener
 		ResourcesImporterHotDeployMessageListener.class);
 
 	private BundleContext _bundleContext;
+
+	@Reference
 	private CompanyLocalService _companyLocalService;
+
 	private Destination _destination;
 
 	@Reference

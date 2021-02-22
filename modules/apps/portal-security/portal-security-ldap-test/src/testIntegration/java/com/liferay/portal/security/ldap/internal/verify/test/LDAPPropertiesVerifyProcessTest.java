@@ -125,15 +125,14 @@ public class LDAPPropertiesVerifyProcessTest extends BaseVerifyProcessTestCase {
 	public void tearDown() throws Exception {
 		super.tearDown();
 
-		List<Company> companies = CompanyLocalServiceUtil.getCompanies(false);
-
-		for (Company company : companies) {
-			deleteConfigurations(company, LDAPAuthConfiguration.class);
-			deleteConfigurations(company, LDAPExportConfiguration.class);
-			deleteConfigurations(company, LDAPImportConfiguration.class);
-			deleteConfigurations(company, LDAPServerConfiguration.class);
-			deleteConfigurations(company, SystemLDAPConfiguration.class);
-		}
+		CompanyLocalServiceUtil.forEachCompany(
+			company -> {
+				deleteConfigurations(company, LDAPAuthConfiguration.class);
+				deleteConfigurations(company, LDAPExportConfiguration.class);
+				deleteConfigurations(company, LDAPImportConfiguration.class);
+				deleteConfigurations(company, LDAPServerConfiguration.class);
+				deleteConfigurations(company, SystemLDAPConfiguration.class);
+			});
 	}
 
 	@Test
@@ -387,13 +386,9 @@ public class LDAPPropertiesVerifyProcessTest extends BaseVerifyProcessTestCase {
 
 			unicodeProperties.put("ldap.server.ids", "0,1");
 
-			List<Company> companies = CompanyLocalServiceUtil.getCompanies(
-				false);
-
-			for (Company company : companies) {
-				CompanyLocalServiceUtil.updatePreferences(
-					company.getCompanyId(), unicodeProperties);
-			}
+			CompanyLocalServiceUtil.forEachCompanyId(
+				companyId -> CompanyLocalServiceUtil.updatePreferences(
+					companyId, unicodeProperties));
 		}
 		catch (Exception exception) {
 			throw new IllegalStateException(exception);
@@ -401,121 +396,129 @@ public class LDAPPropertiesVerifyProcessTest extends BaseVerifyProcessTestCase {
 	}
 
 	protected void verifyConfigurationsNoServers(List<Company> companies) {
-		for (Company company : companies) {
-			Dictionary<String, Object> ldapAuthProperties =
-				getConfigurationProperties(
-					company, LDAPAuthConfiguration.class);
+		CompanyLocalServiceUtil.forEachCompany(
+			company -> {
+				Dictionary<String, Object> ldapAuthProperties =
+					getConfigurationProperties(
+						company, LDAPAuthConfiguration.class);
 
-			Assert.assertNull(ldapAuthProperties);
+				Assert.assertNull(ldapAuthProperties);
 
-			Dictionary<String, Object> ldapExportProperties =
-				getConfigurationProperties(
-					company, LDAPExportConfiguration.class);
+				Dictionary<String, Object> ldapExportProperties =
+					getConfigurationProperties(
+						company, LDAPExportConfiguration.class);
 
-			Assert.assertNull(ldapExportProperties);
+				Assert.assertNull(ldapExportProperties);
 
-			Dictionary<String, Object> ldapImportProperties =
-				getConfigurationProperties(
-					company, LDAPImportConfiguration.class);
+				Dictionary<String, Object> ldapImportProperties =
+					getConfigurationProperties(
+						company, LDAPImportConfiguration.class);
 
-			Assert.assertNull(ldapImportProperties);
+				Assert.assertNull(ldapImportProperties);
 
-			Dictionary<String, Object> ldapServerProperties0 =
-				getConfigurationProperties(
-					company, 0L, LDAPServerConfiguration.class);
+				Dictionary<String, Object> ldapServerProperties0 =
+					getConfigurationProperties(
+						company, 0L, LDAPServerConfiguration.class);
 
-			Assert.assertNull(ldapServerProperties0);
+				Assert.assertNull(ldapServerProperties0);
 
-			Dictionary<String, Object> ldapServerProperties1 =
-				getConfigurationProperties(
-					company, 1L, LDAPServerConfiguration.class);
+				Dictionary<String, Object> ldapServerProperties1 =
+					getConfigurationProperties(
+						company, 1L, LDAPServerConfiguration.class);
 
-			Assert.assertNull(ldapServerProperties1);
+				Assert.assertNull(ldapServerProperties1);
 
-			Dictionary<String, Object> systemLdapProperties =
-				getConfigurationProperties(
-					company, SystemLDAPConfiguration.class);
+				Dictionary<String, Object> systemLdapProperties =
+					getConfigurationProperties(
+						company, SystemLDAPConfiguration.class);
 
-			Assert.assertNull(systemLdapProperties);
-		}
+				Assert.assertNull(systemLdapProperties);
+			},
+			companies);
 	}
 
 	protected void verifyConfigurationsWithServers(List<Company> companies) {
-		for (Company company : companies) {
-			PortletPreferences portletPreferences =
-				PrefsPropsUtil.getPreferences(company.getCompanyId(), true);
+		CompanyLocalServiceUtil.forEachCompany(
+			company -> {
+				PortletPreferences portletPreferences =
+					PrefsPropsUtil.getPreferences(company.getCompanyId(), true);
 
-			Assert.assertTrue(
-				Validator.isNull(
-					portletPreferences.getValue(
-						"ldap.server.ids", StringPool.BLANK)));
-
-			for (String key : LegacyLDAPPropsKeys.LDAP_KEYS_NONPOSTFIXED) {
 				Assert.assertTrue(
 					Validator.isNull(
-						portletPreferences.getValue(key, StringPool.BLANK)));
-			}
+						portletPreferences.getValue(
+							"ldap.server.ids", StringPool.BLANK)));
 
-			Dictionary<String, Object> ldapAuthProperties =
-				getConfigurationProperties(
-					company, LDAPAuthConfiguration.class);
+				for (String key : LegacyLDAPPropsKeys.LDAP_KEYS_NONPOSTFIXED) {
+					Assert.assertTrue(
+						Validator.isNull(
+							portletPreferences.getValue(
+								key, StringPool.BLANK)));
+				}
 
-			Assert.assertNotNull(ldapAuthProperties);
-			Assert.assertEquals(
-				true, ldapAuthProperties.get(LDAPConstants.AUTH_ENABLED));
-			Assert.assertEquals(
-				true, ldapAuthProperties.get(LDAPConstants.AUTH_REQUIRED));
-			Assert.assertEquals(
-				true,
-				ldapAuthProperties.get(LDAPConstants.PASSWORD_POLICY_ENABLED));
+				Dictionary<String, Object> ldapAuthProperties =
+					getConfigurationProperties(
+						company, LDAPAuthConfiguration.class);
 
-			Dictionary<String, Object> ldapExportProperties =
-				getConfigurationProperties(
-					company, LDAPExportConfiguration.class);
+				Assert.assertNotNull(ldapAuthProperties);
+				Assert.assertEquals(
+					true, ldapAuthProperties.get(LDAPConstants.AUTH_ENABLED));
+				Assert.assertEquals(
+					true, ldapAuthProperties.get(LDAPConstants.AUTH_REQUIRED));
+				Assert.assertEquals(
+					true,
+					ldapAuthProperties.get(
+						LDAPConstants.PASSWORD_POLICY_ENABLED));
 
-			Assert.assertNotNull(ldapExportProperties);
+				Dictionary<String, Object> ldapExportProperties =
+					getConfigurationProperties(
+						company, LDAPExportConfiguration.class);
 
-			Assert.assertEquals(
-				true, ldapExportProperties.get(LDAPConstants.EXPORT_ENABLED));
+				Assert.assertNotNull(ldapExportProperties);
 
-			Dictionary<String, Object> ldapImportProperties =
-				getConfigurationProperties(
-					company, LDAPImportConfiguration.class);
+				Assert.assertEquals(
+					true,
+					ldapExportProperties.get(LDAPConstants.EXPORT_ENABLED));
 
-			Assert.assertNotNull(ldapImportProperties);
-			Assert.assertEquals(
-				true, ldapImportProperties.get(LDAPConstants.IMPORT_ENABLED));
-			Assert.assertEquals(
-				true,
-				ldapImportProperties.get(LDAPConstants.IMPORT_ON_STARTUP));
-			Assert.assertEquals(
-				true,
-				ldapImportProperties.get(
-					LDAPConstants.IMPORT_USER_PASSWORD_AUTOGENERATED));
+				Dictionary<String, Object> ldapImportProperties =
+					getConfigurationProperties(
+						company, LDAPImportConfiguration.class);
 
-			Dictionary<String, Object> ldapServerProperties0 =
-				getConfigurationProperties(
-					company, 0L, LDAPServerConfiguration.class);
+				Assert.assertNotNull(ldapImportProperties);
+				Assert.assertEquals(
+					true,
+					ldapImportProperties.get(LDAPConstants.IMPORT_ENABLED));
+				Assert.assertEquals(
+					true,
+					ldapImportProperties.get(LDAPConstants.IMPORT_ON_STARTUP));
+				Assert.assertEquals(
+					true,
+					ldapImportProperties.get(
+						LDAPConstants.IMPORT_USER_PASSWORD_AUTOGENERATED));
 
-			_validateLDAPServerProperties(
-				company.getCompanyId(), 0L, ldapServerProperties0);
+				Dictionary<String, Object> ldapServerProperties0 =
+					getConfigurationProperties(
+						company, 0L, LDAPServerConfiguration.class);
 
-			Dictionary<String, Object> ldapServerProperties1 =
-				getConfigurationProperties(
-					company, 1L, LDAPServerConfiguration.class);
+				_validateLDAPServerProperties(
+					company.getCompanyId(), 0L, ldapServerProperties0);
 
-			_validateLDAPServerProperties(
-				company.getCompanyId(), 1L, ldapServerProperties1);
+				Dictionary<String, Object> ldapServerProperties1 =
+					getConfigurationProperties(
+						company, 1L, LDAPServerConfiguration.class);
 
-			Dictionary<String, Object> systemLdapProperties =
-				getConfigurationProperties(
-					company, SystemLDAPConfiguration.class);
+				_validateLDAPServerProperties(
+					company.getCompanyId(), 1L, ldapServerProperties1);
 
-			Assert.assertNotNull(systemLdapProperties);
-			Assert.assertEquals(
-				"com.sun.jndi.ldap.LdapCtxFactory",
-				systemLdapProperties.get(LDAPConstants.FACTORY_INITIAL));
-		}
+				Dictionary<String, Object> systemLdapProperties =
+					getConfigurationProperties(
+						company, SystemLDAPConfiguration.class);
+
+				Assert.assertNotNull(systemLdapProperties);
+				Assert.assertEquals(
+					"com.sun.jndi.ldap.LdapCtxFactory",
+					systemLdapProperties.get(LDAPConstants.FACTORY_INITIAL));
+			},
+			companies);
 	}
 
 	private void _validateLDAPServerProperties(

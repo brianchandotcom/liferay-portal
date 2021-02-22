@@ -51,17 +51,19 @@ public class KaleoActivatorTest {
 
 		Assert.assertFalse(companies.toString(), companies.isEmpty());
 
-		for (Company company : companies) {
-			ServiceContext serviceContext = new ServiceContext();
+		_companyLocalService.forEachCompany(
+			company -> {
+				ServiceContext serviceContext = new ServiceContext();
 
-			serviceContext.setCompanyId(company.getCompanyId());
+				serviceContext.setCompanyId(company.getCompanyId());
 
-			KaleoDefinition kaleoDefinition =
-				_kaleoDefinitionLocalService.getKaleoDefinition(
-					"Single Approver", serviceContext);
+				KaleoDefinition kaleoDefinition =
+					_kaleoDefinitionLocalService.getKaleoDefinition(
+						"Single Approver", serviceContext);
 
-			Assert.assertNotNull(kaleoDefinition);
-		}
+				Assert.assertNotNull(kaleoDefinition);
+			},
+			companies);
 	}
 
 	@Inject

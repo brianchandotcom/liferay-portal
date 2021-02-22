@@ -24,7 +24,6 @@ import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -43,7 +42,6 @@ import java.sql.ResultSet;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -219,42 +217,42 @@ public class JournalArticleTypeUpgradeProcess extends UpgradeProcess {
 				LocaleThreadLocal.getDefaultLocale();
 
 			try {
-				List<Company> companies = _companyLocalService.getCompanies();
+				_companyLocalService.forEachCompany(
+					company -> {
+						LocaleThreadLocal.setDefaultLocale(company.getLocale());
 
-				for (Company company : companies) {
-					LocaleThreadLocal.setDefaultLocale(company.getLocale());
+						Set<Locale> locales = LanguageUtil.getAvailableLocales(
+							company.getGroupId());
 
-					Set<Locale> locales = LanguageUtil.getAvailableLocales(
-						company.getGroupId());
+						Locale defaultLocale = LocaleUtil.fromLanguageId(
+							UpgradeProcessUtil.getDefaultLanguageId(
+								company.getCompanyId()));
 
-					Locale defaultLocale = LocaleUtil.fromLanguageId(
-						UpgradeProcessUtil.getDefaultLanguageId(
-							company.getCompanyId()));
+						Map<Locale, String> nameMap =
+							LocalizationUtil.getLocalizationMap(
+								locales, defaultLocale, "type");
 
-					Map<Locale, String> nameMap =
-						LocalizationUtil.getLocalizationMap(
-							locales, defaultLocale, "type");
+						AssetVocabulary assetVocabulary = addAssetVocabulary(
+							company.getGroupId(), company.getCompanyId(),
+							"type", nameMap, new HashMap<Locale, String>());
 
-					AssetVocabulary assetVocabulary = addAssetVocabulary(
-						company.getGroupId(), company.getCompanyId(), "type",
-						nameMap, new HashMap<Locale, String>());
+						Map<String, Long>
+							journalArticleTypesToAssetCategoryIds =
+								new HashMap<>();
 
-					Map<String, Long> journalArticleTypesToAssetCategoryIds =
-						new HashMap<>();
+						for (String type : types) {
+							AssetCategory assetCategory = addAssetCategory(
+								company.getGroupId(), company.getCompanyId(),
+								type, assetVocabulary.getVocabularyId());
 
-					for (String type : types) {
-						AssetCategory assetCategory = addAssetCategory(
-							company.getGroupId(), company.getCompanyId(), type,
-							assetVocabulary.getVocabularyId());
+							journalArticleTypesToAssetCategoryIds.put(
+								type, assetCategory.getCategoryId());
+						}
 
-						journalArticleTypesToAssetCategoryIds.put(
-							type, assetCategory.getCategoryId());
-					}
-
-					updateArticles(
-						company.getCompanyId(),
-						journalArticleTypesToAssetCategoryIds);
-				}
+						updateArticles(
+							company.getCompanyId(),
+							journalArticleTypesToAssetCategoryIds);
+					});
 			}
 			finally {
 				LocaleThreadLocal.setDefaultLocale(

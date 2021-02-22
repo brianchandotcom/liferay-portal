@@ -390,11 +390,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 
 	@Override
 	public void importUsers() throws Exception {
-		List<Company> companies = _companyLocalService.getCompanies(false);
-
-		for (Company company : companies) {
-			importUsers(company.getCompanyId());
-		}
+		_companyLocalService.forEachCompanyId(this::importUsers);
 	}
 
 	@Override

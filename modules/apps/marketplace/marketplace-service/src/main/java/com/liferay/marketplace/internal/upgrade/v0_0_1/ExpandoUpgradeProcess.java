@@ -26,9 +26,9 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
-import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.List;
 
@@ -38,10 +38,12 @@ import java.util.List;
 public class ExpandoUpgradeProcess extends UpgradeProcess {
 
 	public ExpandoUpgradeProcess(
+		CompanyLocalService companyLocalService,
 		ExpandoColumnLocalService expandoColumnLocalService,
 		ExpandoTableLocalService expandoTableLocalService,
 		ExpandoValueLocalService expandoValueLocalService) {
 
+		_companyLocalService = companyLocalService;
 		_expandoColumnLocalService = expandoColumnLocalService;
 		_expandoTableLocalService = expandoTableLocalService;
 		_expandoValueLocalService = expandoValueLocalService;
@@ -49,9 +51,7 @@ public class ExpandoUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		for (long companyId : PortalUtil.getCompanyIds()) {
-			updateMPExpandoColumns(companyId);
-		}
+		_companyLocalService.forEachCompanyId(this::updateMPExpandoColumns);
 	}
 
 	protected void updateMPExpandoColumns(long companyId) throws Exception {
@@ -115,6 +115,7 @@ public class ExpandoUpgradeProcess extends UpgradeProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ExpandoUpgradeProcess.class);
 
+	private final CompanyLocalService _companyLocalService;
 	private final ExpandoColumnLocalService _expandoColumnLocalService;
 	private final ExpandoTableLocalService _expandoTableLocalService;
 	private final ExpandoValueLocalService _expandoValueLocalService;

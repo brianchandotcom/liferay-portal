@@ -17,6 +17,7 @@ package com.liferay.marketplace.internal.upgrade;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -36,8 +37,8 @@ public class MarketplaceServiceUpgrade implements UpgradeStepRegistrator {
 			"0.0.1", "1.0.0",
 			new com.liferay.marketplace.internal.upgrade.v0_0_1.
 				ExpandoUpgradeProcess(
-					_expandoColumnLocalService, _expandoTableLocalService,
-					_expandoValueLocalService));
+					_companyLocalService, _expandoColumnLocalService,
+					_expandoTableLocalService, _expandoValueLocalService));
 
 		registry.register(
 			"1.0.0", "1.0.1",
@@ -84,6 +85,9 @@ public class MarketplaceServiceUpgrade implements UpgradeStepRegistrator {
 
 		_expandoValueLocalService = expandoValueLocalService;
 	}
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	private ExpandoColumnLocalService _expandoColumnLocalService;
 	private ExpandoTableLocalService _expandoTableLocalService;

@@ -102,6 +102,7 @@
 
 		<!-- References -->
 
+		<reference entity="AccountGroup" package-path="com.liferay.account" />
 		<reference entity="Role" package-path="com.liferay.portal" />
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>

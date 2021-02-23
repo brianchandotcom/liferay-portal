@@ -31,6 +31,7 @@ ClaySampleManagementToolbarsDisplayContext managementToolbarsDisplayContext = ne
 	filterDropdownItems="<%= managementToolbarsDisplayContext.getFilterDropdownItems() %>"
 	searchActionURL="mySearchActionURL?key1=val1&key2=val2&key3=val3"
 	searchFormName="mySearchName"
+	searchInputAutoFocus="<%= true %>"
 	searchInputName="mySearchInputName"
 	selectable="<%= true %>"
 	sortingOrder="desc"

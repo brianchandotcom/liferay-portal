@@ -59,6 +59,7 @@ exports[`EditFormView renders 1`] = `
                 >
                   <button
                     class="dropdown-toggle btn btn-monospaced btn-unstyled"
+                    style=""
                     type="button"
                   >
                     <svg
@@ -443,6 +444,7 @@ exports[`EditFormView renders 1`] = `
               >
                 <button
                   class="dropdown-toggle btn btn-monospaced btn-secondary"
+                  style=""
                   symbol="en-US"
                   type="button"
                 >

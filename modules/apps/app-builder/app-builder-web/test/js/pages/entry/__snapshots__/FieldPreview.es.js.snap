@@ -129,7 +129,7 @@ exports[`EditEntry renders FieldPreview for Section 1`] = `
   >
     <button
       aria-expanded="true"
-      class="panel-header panel-header-link collapse-icon collapse-icon-middle btn btn-unstyled"
+      class="panel-header panel-header-link collapse-icon collapse-icon-middle show btn btn-unstyled"
       role="tab"
       type="button"
     >

@@ -7,6 +7,7 @@ exports[`DropDownWithSearch renders 1`] = `
   >
     <button
       class="dropdown-toggle btn btn-primary"
+      style=""
       type="button"
     >
       Button

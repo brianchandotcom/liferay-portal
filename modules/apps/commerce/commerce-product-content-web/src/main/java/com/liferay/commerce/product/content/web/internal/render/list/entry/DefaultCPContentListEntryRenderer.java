@@ -14,30 +14,14 @@
 
 package com.liferay.commerce.product.content.web.internal.render.list.entry;
 
-import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.constants.CommerceWebKeys;
-import com.liferay.commerce.context.CommerceContext;
-import com.liferay.commerce.currency.model.CommerceCurrency;
-import com.liferay.commerce.frontend.model.CPContentListEntryModel;
-import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.model.CommerceOrderItem;
-import com.liferay.commerce.product.catalog.CPCatalogEntry;
-import com.liferay.commerce.product.catalog.CPSku;
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.product.content.constants.CPContentWebKeys;
 import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRenderer;
-import com.liferay.commerce.product.content.util.CPContentHelper;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.servlet.ServletContext;
@@ -88,97 +72,6 @@ public class DefaultCPContentListEntryRenderer
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws Exception {
-
-		CommerceContext commerceContext =
-			(CommerceContext)httpServletRequest.getAttribute(
-				CommerceWebKeys.COMMERCE_CONTEXT);
-
-		CPContentHelper cpContentHelper =
-			(CPContentHelper)httpServletRequest.getAttribute(
-				CPContentWebKeys.CP_CONTENT_HELPER);
-
-		CPCatalogEntry cpCatalogEntry = cpContentHelper.getCPCatalogEntry(
-			httpServletRequest);
-
-		List<CPSku> cpSkus = cpCatalogEntry.getCPSkus();
-
-		CPSku cpSku = null;
-
-		if (cpSkus.size() == 1) {
-			cpSku = cpSkus.get(0);
-		}
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		long commerceAccountId = 0;
-		boolean inCart = false;
-		long commerceOrderId = 0;
-		long skuId = 0;
-		int stockQuantity = 0;
-
-		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
-
-		if (commerceAccount != null) {
-			commerceAccountId = commerceAccount.getCommerceAccountId();
-		}
-
-		CommerceOrder commerceOrder = commerceContext.getCommerceOrder();
-
-		if (commerceOrder != null) {
-			commerceOrderId = commerceOrder.getCommerceOrderId();
-		}
-
-		boolean hasChildCPDefinitions = cpContentHelper.hasChildCPDefinitions(
-			cpCatalogEntry.getCPDefinitionId());
-
-		if ((cpSku != null) && !hasChildCPDefinitions) {
-			skuId = cpSku.getCPInstanceId();
-
-			if (commerceOrder != null) {
-				List<CommerceOrderItem> commerceOrderItems =
-					_commerceOrderItemLocalService.getCommerceOrderItems(
-						commerceOrder.getCommerceOrderId(),
-						cpSku.getCPInstanceId(), 0, 1);
-
-				if (!commerceOrderItems.isEmpty()) {
-					inCart = true;
-				}
-			}
-
-			Map<String, Integer> stockQuantities =
-				(Map<String, Integer>)httpServletRequest.getAttribute(
-					"stockQuantities");
-
-			if (MapUtil.isNotEmpty(stockQuantities)) {
-				stockQuantity = MapUtil.getInteger(
-					stockQuantities, cpSku.getSku());
-			}
-		}
-
-		CommerceCurrency commerceCurrency =
-			commerceContext.getCommerceCurrency();
-
-		String pathThemeImages = themeDisplay.getPathThemeImages();
-
-		String spritemap = pathThemeImages + "/icons.svg";
-
-		if (pathThemeImages.contains("classic")) {
-			spritemap = pathThemeImages + "/lexicon/icons.svg";
-		}
-
-		CPContentListEntryModel cpContentListEntryModel =
-			new CPContentListEntryModel(
-				commerceAccountId, commerceContext.getCommerceChannelId(),
-				cpCatalogEntry.getCPDefinitionId(), commerceCurrency.getCode(),
-				inCart,
-				cpContentHelper.isInWishList(
-					cpSku, cpCatalogEntry, themeDisplay),
-				commerceOrderId, skuId, spritemap, stockQuantity);
-
-		httpServletRequest.setAttribute(
-			"cpContentListEntryModel", cpContentListEntryModel);
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,

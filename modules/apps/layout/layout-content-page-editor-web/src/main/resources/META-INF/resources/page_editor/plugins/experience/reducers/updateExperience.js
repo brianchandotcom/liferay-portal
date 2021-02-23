@@ -28,8 +28,8 @@ function updateExperienceReducer(state, payload) {
 			availableSegmentsExperiences: {
 				...nextState.availableSegmentsExperiences,
 				[experience.segmentsExperienceId]: {
+					...experience,
 					...updatedExperience,
-					priority: experience.priority,
 				},
 			},
 		};

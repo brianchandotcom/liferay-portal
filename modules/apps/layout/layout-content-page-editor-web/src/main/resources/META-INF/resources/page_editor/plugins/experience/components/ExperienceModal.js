@@ -28,14 +28,14 @@ import {config} from '../../../app/config/index';
 import Button from '../../../common/components/Button';
 
 const ExperienceModal = ({
+	canUpdateSegments,
 	errorMessage,
 	experienceId,
-	canUpdateSegments,
 	initialName = '',
 	languageIds = [],
 	observer,
-	onErrorDismiss,
 	onClose,
+	onErrorDismiss,
 	onNewSegmentClick,
 	onSubmit,
 	segmentId,

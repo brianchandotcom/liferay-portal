@@ -146,6 +146,19 @@ public interface MessageBoardMessageResource {
 			Long siteId, String friendlyUrlPath)
 		throws Exception;
 
+	public void deleteSiteMessageBoardMessage(
+			Long siteId, String externalReferenceCode)
+		throws Exception;
+
+	public MessageBoardMessage getSiteMessageBoardMessage(
+			Long siteId, String externalReferenceCode)
+		throws Exception;
+
+	public MessageBoardMessage putSiteMessageBoardMessage(
+			Long siteId, String externalReferenceCode,
+			MessageBoardMessage messageBoardMessage)
+		throws Exception;
+
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}

@@ -90,8 +90,8 @@ public class Query {
 	@GraphQLField(description = "Retrieves a display page template of a site")
 	public DisplayPageTemplate displayPageTemplate(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("displayPageTemplateKey") String
-				displayPageTemplateKey)
+			@GraphQLName("displayPageTemplateKey")
+				String displayPageTemplateKey)
 		throws Exception {
 
 		return _applyComponentServiceObjects(

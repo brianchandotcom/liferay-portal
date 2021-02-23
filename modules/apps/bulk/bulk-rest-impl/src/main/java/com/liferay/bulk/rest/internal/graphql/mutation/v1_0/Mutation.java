@@ -88,8 +88,8 @@ public class Mutation {
 
 	@GraphQLField
 	public boolean patchKeywordBatch(
-			@GraphQLName("keywordBulkSelection") KeywordBulkSelection
-				keywordBulkSelection)
+			@GraphQLName("keywordBulkSelection")
+				KeywordBulkSelection keywordBulkSelection)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -103,8 +103,8 @@ public class Mutation {
 
 	@GraphQLField
 	public boolean updateKeywordBatch(
-			@GraphQLName("keywordBulkSelection") KeywordBulkSelection
-				keywordBulkSelection)
+			@GraphQLName("keywordBulkSelection")
+				KeywordBulkSelection keywordBulkSelection)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -118,8 +118,8 @@ public class Mutation {
 
 	@GraphQLField
 	public java.util.Collection<Keyword> createKeywordsCommonPage(
-			@GraphQLName("documentBulkSelection") DocumentBulkSelection
-				documentBulkSelection)
+			@GraphQLName("documentBulkSelection")
+				DocumentBulkSelection documentBulkSelection)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -135,8 +135,8 @@ public class Mutation {
 
 	@GraphQLField
 	public Selection createBulkSelection(
-			@GraphQLName("documentBulkSelection") DocumentBulkSelection
-				documentBulkSelection)
+			@GraphQLName("documentBulkSelection")
+				DocumentBulkSelection documentBulkSelection)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -182,8 +182,8 @@ public class Mutation {
 	public java.util.Collection<TaxonomyVocabulary>
 			createSiteTaxonomyVocabulariesCommonPage(
 				@GraphQLName("siteKey") @NotEmpty String siteKey,
-				@GraphQLName("documentBulkSelection") DocumentBulkSelection
-					documentBulkSelection)
+				@GraphQLName("documentBulkSelection")
+					DocumentBulkSelection documentBulkSelection)
 		throws Exception {
 
 		return _applyComponentServiceObjects(

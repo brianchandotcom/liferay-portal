@@ -206,7 +206,7 @@ public abstract class BaseSegmentResourceTestCase {
 		Long siteId = testGetSiteSegmentsPage_getSiteId();
 		Long irrelevantSiteId = testGetSiteSegmentsPage_getIrrelevantSiteId();
 
-		if ((irrelevantSiteId != null)) {
+		if (irrelevantSiteId != null) {
 			Segment irrelevantSegment = testGetSiteSegmentsPage_addSegment(
 				irrelevantSiteId, randomIrrelevantSegment());
 

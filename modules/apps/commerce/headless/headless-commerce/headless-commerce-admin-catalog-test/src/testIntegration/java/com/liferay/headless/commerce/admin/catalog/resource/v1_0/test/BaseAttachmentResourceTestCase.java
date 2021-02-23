@@ -212,7 +212,7 @@ public abstract class BaseAttachmentResourceTestCase {
 		String irrelevantExternalReferenceCode =
 			testGetProductByExternalReferenceCodeAttachmentsPage_getIrrelevantExternalReferenceCode();
 
-		if ((irrelevantExternalReferenceCode != null)) {
+		if (irrelevantExternalReferenceCode != null) {
 			Attachment irrelevantAttachment =
 				testGetProductByExternalReferenceCodeAttachmentsPage_addAttachment(
 					irrelevantExternalReferenceCode,
@@ -406,7 +406,7 @@ public abstract class BaseAttachmentResourceTestCase {
 		String irrelevantExternalReferenceCode =
 			testGetProductByExternalReferenceCodeImagesPage_getIrrelevantExternalReferenceCode();
 
-		if ((irrelevantExternalReferenceCode != null)) {
+		if (irrelevantExternalReferenceCode != null) {
 			Attachment irrelevantAttachment =
 				testGetProductByExternalReferenceCodeImagesPage_addAttachment(
 					irrelevantExternalReferenceCode,
@@ -590,7 +590,7 @@ public abstract class BaseAttachmentResourceTestCase {
 		Long id = testGetProductIdAttachmentsPage_getId();
 		Long irrelevantId = testGetProductIdAttachmentsPage_getIrrelevantId();
 
-		if ((irrelevantId != null)) {
+		if (irrelevantId != null) {
 			Attachment irrelevantAttachment =
 				testGetProductIdAttachmentsPage_addAttachment(
 					irrelevantId, randomIrrelevantAttachment());
@@ -748,7 +748,7 @@ public abstract class BaseAttachmentResourceTestCase {
 		Long id = testGetProductIdImagesPage_getId();
 		Long irrelevantId = testGetProductIdImagesPage_getIrrelevantId();
 
-		if ((irrelevantId != null)) {
+		if (irrelevantId != null) {
 			Attachment irrelevantAttachment =
 				testGetProductIdImagesPage_addAttachment(
 					irrelevantId, randomIrrelevantAttachment());

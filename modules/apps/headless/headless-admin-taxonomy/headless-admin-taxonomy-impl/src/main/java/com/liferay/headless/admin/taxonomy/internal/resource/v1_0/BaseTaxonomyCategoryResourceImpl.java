@@ -80,7 +80,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseTaxonomyCategoryResourceImpl
-	implements TaxonomyCategoryResource, EntityModelResource,
+	implements EntityModelResource, TaxonomyCategoryResource,
 			   VulcanBatchEngineTaskItemDelegate<TaxonomyCategory> {
 
 	/**
@@ -88,8 +88,8 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-taxonomy/v1.0/taxonomy-categories/ranked'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.QUERY, name = "siteId"),
@@ -113,11 +113,11 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-taxonomy/v1.0/taxonomy-categories/{parentTaxonomyCategoryId}/taxonomy-categories'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(
 		description = "Retrieves a taxonomy category's child taxonomy categories. Results can be paginated, filtered, searched, and sorted."
 	)
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(
@@ -135,8 +135,8 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	@Tags(value = {@Tag(name = "TaxonomyCategory")})
 	public Page<TaxonomyCategory> getTaxonomyCategoryTaxonomyCategoriesPage(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("parentTaxonomyCategoryId") String
-				parentTaxonomyCategoryId,
+			@PathParam("parentTaxonomyCategoryId")
+				String parentTaxonomyCategoryId,
 			@Parameter(hidden = true) @QueryParam("search") String search,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)
@@ -150,22 +150,22 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-taxonomy/v1.0/taxonomy-categories/{parentTaxonomyCategoryId}/taxonomy-categories' -d $'{"description": ___, "description_i18n": ___, "externalReferenceCode": ___, "name": ___, "name_i18n": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(description = "Inserts a new child taxonomy category.")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "parentTaxonomyCategoryId")
 		}
 	)
 	@Path("/taxonomy-categories/{parentTaxonomyCategoryId}/taxonomy-categories")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "TaxonomyCategory")})
 	public TaxonomyCategory postTaxonomyCategoryTaxonomyCategory(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("parentTaxonomyCategoryId") String
-				parentTaxonomyCategoryId,
+			@PathParam("parentTaxonomyCategoryId")
+				String parentTaxonomyCategoryId,
 			TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
@@ -177,11 +177,11 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-taxonomy/v1.0/taxonomy-categories/{taxonomyCategoryId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
 	@Operation(
 		description = "Deletes the taxonomy category and returns a 204 if the operation succeeds."
 	)
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "taxonomyCategoryId")}
 	)
@@ -199,9 +199,9 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-taxonomy/v1.0/taxonomy-categories/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
 	@DELETE
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
@@ -209,8 +209,8 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "TaxonomyCategory")})
 	public Response deleteTaxonomyCategoryBatch(
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -235,9 +235,9 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-taxonomy/v1.0/taxonomy-categories/{taxonomyCategoryId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrieves a taxonomy category.")
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "taxonomyCategoryId")}
 	)
@@ -257,15 +257,15 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-taxonomy/v1.0/taxonomy-categories/{taxonomyCategoryId}' -d $'{"description": ___, "description_i18n": ___, "externalReferenceCode": ___, "name": ___, "name_i18n": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
 		description = "Updates only the fields received in the request body. Other fields are left untouched."
 	)
-	@PATCH
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "taxonomyCategoryId")}
 	)
+	@PATCH
 	@Path("/taxonomy-categories/{taxonomyCategoryId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "TaxonomyCategory")})
@@ -347,17 +347,17 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-taxonomy/v1.0/taxonomy-categories/{taxonomyCategoryId}' -d $'{"description": ___, "description_i18n": ___, "externalReferenceCode": ___, "name": ___, "name_i18n": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
 		description = "Replaces the taxonomy category with the information sent in the request body. Any missing fields are deleted unless they are required."
 	)
-	@PUT
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "taxonomyCategoryId")}
 	)
 	@Path("/taxonomy-categories/{taxonomyCategoryId}")
 	@Produces({"application/json", "application/xml"})
+	@PUT
 	@Tags(value = {@Tag(name = "TaxonomyCategory")})
 	public TaxonomyCategory putTaxonomyCategory(
 			@NotNull @Parameter(hidden = true) @PathParam("taxonomyCategoryId")
@@ -373,18 +373,18 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-taxonomy/v1.0/taxonomy-categories/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@PUT
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
 	@Path("/taxonomy-categories/batch")
 	@Produces("application/json")
+	@PUT
 	@Tags(value = {@Tag(name = "TaxonomyCategory")})
 	public Response putTaxonomyCategoryBatch(
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -409,11 +409,11 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/{taxonomyVocabularyId}/taxonomy-categories'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(
 		description = "Retrieves a vocabulary's taxonomy categories. Results can be paginated, filtered, searched, and sorted."
 	)
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "taxonomyVocabularyId"),
@@ -429,7 +429,8 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	@Tags(value = {@Tag(name = "TaxonomyCategory")})
 	public Page<TaxonomyCategory> getTaxonomyVocabularyTaxonomyCategoriesPage(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("taxonomyVocabularyId") Long taxonomyVocabularyId,
+			@PathParam("taxonomyVocabularyId")
+				Long taxonomyVocabularyId,
 			@Parameter(hidden = true) @QueryParam("search") String search,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)
@@ -443,23 +444,24 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/{taxonomyVocabularyId}/taxonomy-categories' -d $'{"description": ___, "description_i18n": ___, "externalReferenceCode": ___, "name": ___, "name_i18n": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
 		description = "Inserts a new taxonomy category in a taxonomy vocabulary."
 	)
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "taxonomyVocabularyId")
 		}
 	)
 	@Path("/taxonomy-vocabularies/{taxonomyVocabularyId}/taxonomy-categories")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "TaxonomyCategory")})
 	public TaxonomyCategory postTaxonomyVocabularyTaxonomyCategory(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("taxonomyVocabularyId") Long taxonomyVocabularyId,
+			@PathParam("taxonomyVocabularyId")
+				Long taxonomyVocabularyId,
 			TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
@@ -471,9 +473,8 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/{taxonomyVocabularyId}/taxonomy-categories/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "taxonomyVocabularyId"),
@@ -483,13 +484,15 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	@Path(
 		"/taxonomy-vocabularies/{taxonomyVocabularyId}/taxonomy-categories/batch"
 	)
+	@POST
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "TaxonomyCategory")})
 	public Response postTaxonomyVocabularyTaxonomyCategoryBatch(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("taxonomyVocabularyId") Long taxonomyVocabularyId,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@PathParam("taxonomyVocabularyId")
+				Long taxonomyVocabularyId,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -589,7 +592,7 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 		for (TaxonomyCategory taxonomyCategory : taxonomyCategories) {
 			putTaxonomyCategory(
 				taxonomyCategory.getId() != null ? taxonomyCategory.getId() :
-				(String)parameters.get("taxonomyCategoryId"),
+					(String)parameters.get("taxonomyCategoryId"),
 				taxonomyCategory);
 		}
 	}

@@ -208,7 +208,7 @@ public abstract class BaseNodeResourceTestCase {
 		Long irrelevantProcessId =
 			testGetProcessNodesPage_getIrrelevantProcessId();
 
-		if ((irrelevantProcessId != null)) {
+		if (irrelevantProcessId != null) {
 			Node irrelevantNode = testGetProcessNodesPage_addNode(
 				irrelevantProcessId, randomIrrelevantNode());
 

@@ -54,8 +54,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @GraphQLName("StructuredContentFolder")
 @JsonFilter("Liferay.Vulcan")
 @Schema(
-	requiredProperties = {"name"},
-	description = "Represents a folder that can be used to organize structured content."
+	description = "Represents a folder that can be used to organize structured content.",
+	requiredProperties = {"name"}
 )
 @XmlRootElement(name = "StructuredContentFolder")
 public class StructuredContentFolder implements Serializable {

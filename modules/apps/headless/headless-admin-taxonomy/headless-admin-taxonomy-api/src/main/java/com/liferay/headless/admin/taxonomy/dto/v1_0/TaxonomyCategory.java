@@ -54,8 +54,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @GraphQLName("TaxonomyCategory")
 @JsonFilter("Liferay.Vulcan")
 @Schema(
-	requiredProperties = {"name"},
-	description = "Represents a category, which is a hierarchical classification that can be associated with particular asset types. Properties follow the [category](https://schema.org/category) specification."
+	description = "Represents a category, which is a hierarchical classification that can be associated with particular asset types. Properties follow the [category](https://schema.org/category) specification.",
+	requiredProperties = {"name"}
 )
 @XmlRootElement(name = "TaxonomyCategory")
 public class TaxonomyCategory implements Serializable {

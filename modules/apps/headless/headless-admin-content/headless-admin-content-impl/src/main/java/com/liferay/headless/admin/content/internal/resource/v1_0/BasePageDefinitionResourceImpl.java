@@ -65,14 +65,14 @@ public abstract class BasePageDefinitionResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-content/v1.0/sites/{siteId}/page-definitions/preview'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
 		description = "Renders and retrieves HTML for the page definition using the theme of specified site."
 	)
-	@POST
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "siteId")})
 	@Path("/sites/{siteId}/page-definitions/preview")
+	@POST
 	@Produces("text/html")
 	@Tags(value = {@Tag(name = "PageDefinition")})
 	public Response postSitePageDefinitionPreview(

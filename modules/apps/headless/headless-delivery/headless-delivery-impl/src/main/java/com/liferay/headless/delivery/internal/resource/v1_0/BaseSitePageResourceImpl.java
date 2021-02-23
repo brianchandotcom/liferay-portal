@@ -75,7 +75,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseSitePageResourceImpl
-	implements SitePageResource, EntityModelResource,
+	implements EntityModelResource, SitePageResource,
 			   VulcanBatchEngineTaskItemDelegate<SitePage> {
 
 	/**
@@ -83,9 +83,9 @@ public abstract class BaseSitePageResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/site-pages'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrieves the public pages of the site")
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
@@ -102,8 +102,8 @@ public abstract class BaseSitePageResourceImpl
 	public Page<SitePage> getSiteSitePagesPage(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			@Parameter(hidden = true) @QueryParam("search") String search,
-			@Context com.liferay.portal.vulcan.aggregation.Aggregation
-				aggregation,
+			@Context
+				com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)
 		throws Exception {
@@ -116,9 +116,9 @@ public abstract class BaseSitePageResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/site-pages/{friendlyUrlPath}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrieves a specific public page of a site")
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
@@ -142,9 +142,9 @@ public abstract class BaseSitePageResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/site-pages/{friendlyUrlPath}/experiences'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrieves the experiences of a given Page")
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
@@ -168,11 +168,11 @@ public abstract class BaseSitePageResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/site-pages/{friendlyUrlPath}/experiences/{experienceKey}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(
 		description = "Retrieves a specific public page of a site for a given experience"
 	)
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
@@ -201,11 +201,11 @@ public abstract class BaseSitePageResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/site-pages/{friendlyUrlPath}/experiences/{experienceKey}/rendered-page'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(
 		description = "Retrieves the rendered content of a given public page for a given experience."
 	)
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
@@ -234,11 +234,11 @@ public abstract class BaseSitePageResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/site-pages/{friendlyUrlPath}/rendered-page'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(
 		description = "Retrieves the rendered content of a given public page."
 	)
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),

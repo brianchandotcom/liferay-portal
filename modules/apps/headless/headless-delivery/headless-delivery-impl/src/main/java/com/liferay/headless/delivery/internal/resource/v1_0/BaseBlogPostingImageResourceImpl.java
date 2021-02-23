@@ -87,9 +87,9 @@ public abstract class BaseBlogPostingImageResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/blog-posting-images/{blogPostingImageId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
 	@Operation(description = "Deletes the blog post's image.")
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "blogPostingImageId")}
 	)
@@ -107,9 +107,9 @@ public abstract class BaseBlogPostingImageResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/blog-posting-images/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
 	@DELETE
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
@@ -117,8 +117,8 @@ public abstract class BaseBlogPostingImageResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "BlogPostingImage")})
 	public Response deleteBlogPostingImageBatch(
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -143,11 +143,11 @@ public abstract class BaseBlogPostingImageResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/blog-posting-images/{blogPostingImageId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(
 		description = "Retrieves the blog post's image. The binary image is returned as a relative URL to the image itself."
 	)
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "blogPostingImageId")}
 	)
@@ -167,11 +167,11 @@ public abstract class BaseBlogPostingImageResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/blog-posting-images'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(
 		description = "Retrieves the site's blog post images. Results can be paginated, filtered, searched, and sorted."
 	)
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
@@ -188,8 +188,8 @@ public abstract class BaseBlogPostingImageResourceImpl
 	public Page<BlogPostingImage> getSiteBlogPostingImagesPage(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			@Parameter(hidden = true) @QueryParam("search") String search,
-			@Context com.liferay.portal.vulcan.aggregation.Aggregation
-				aggregation,
+			@Context
+				com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)
 		throws Exception {
@@ -202,14 +202,14 @@ public abstract class BaseBlogPostingImageResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/blog-posting-images'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("multipart/form-data")
 	@Operation(
 		description = "Creates a blog post image. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`blogPostingImage`) with the metadata."
 	)
-	@POST
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "siteId")})
 	@Path("/sites/{siteId}/blog-posting-images")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "BlogPostingImage")})
 	public BlogPostingImage postSiteBlogPostingImage(
@@ -225,9 +225,8 @@ public abstract class BaseBlogPostingImageResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/blog-posting-images/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
@@ -235,13 +234,14 @@ public abstract class BaseBlogPostingImageResourceImpl
 		}
 	)
 	@Path("/sites/{siteId}/blog-posting-images/batch")
+	@POST
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "BlogPostingImage")})
 	public Response postSiteBlogPostingImageBatch(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			MultipartBody multipartBody,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 

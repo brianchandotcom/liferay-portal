@@ -78,7 +78,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseProductGroupResourceImpl
-	implements ProductGroupResource, EntityModelResource,
+	implements EntityModelResource, ProductGroupResource,
 			   VulcanBatchEngineTaskItemDelegate<ProductGroup> {
 
 	/**
@@ -86,8 +86,8 @@ public abstract class BaseProductGroupResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/product-groups'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.QUERY, name = "search"),
@@ -114,10 +114,10 @@ public abstract class BaseProductGroupResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/product-groups' -d $'{"description": ___, "externalReferenceCode": ___, "id": ___, "products": ___, "productsCount": ___, "title": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Path("/product-groups")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ProductGroup")})
 	public ProductGroup postProductGroup(ProductGroup productGroup)
@@ -131,18 +131,18 @@ public abstract class BaseProductGroupResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/product-groups/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
 	@Path("/product-groups/batch")
+	@POST
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "ProductGroup")})
 	public Response postProductGroupBatch(
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -167,8 +167,8 @@ public abstract class BaseProductGroupResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/product-groups/by-externalReferenceCode/{externalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
@@ -179,7 +179,8 @@ public abstract class BaseProductGroupResourceImpl
 	@Tags(value = {@Tag(name = "ProductGroup")})
 	public void deleteProductGroupByExternalReferenceCode(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode)
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode)
 		throws Exception {
 	}
 
@@ -188,8 +189,8 @@ public abstract class BaseProductGroupResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/product-groups/by-externalReferenceCode/{externalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
@@ -200,7 +201,8 @@ public abstract class BaseProductGroupResourceImpl
 	@Tags(value = {@Tag(name = "ProductGroup")})
 	public ProductGroup getProductGroupByExternalReferenceCode(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode)
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode)
 		throws Exception {
 
 		return new ProductGroup();
@@ -211,20 +213,21 @@ public abstract class BaseProductGroupResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/product-groups/by-externalReferenceCode/{externalReferenceCode}' -d $'{"description": ___, "externalReferenceCode": ___, "id": ___, "products": ___, "productsCount": ___, "title": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PATCH
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
 		}
 	)
+	@PATCH
 	@Path("/product-groups/by-externalReferenceCode/{externalReferenceCode}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ProductGroup")})
 	public Response patchProductGroupByExternalReferenceCode(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode,
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode,
 			ProductGroup productGroup)
 		throws Exception {
 
@@ -238,8 +241,8 @@ public abstract class BaseProductGroupResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/product-groups/{id}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/product-groups/{id}")
 	@Produces({"application/json", "application/xml"})
@@ -254,9 +257,9 @@ public abstract class BaseProductGroupResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/product-groups/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
 	@DELETE
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "id"),
@@ -268,8 +271,8 @@ public abstract class BaseProductGroupResourceImpl
 	@Tags(value = {@Tag(name = "ProductGroup")})
 	public Response deleteProductGroupBatch(
 			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -294,8 +297,8 @@ public abstract class BaseProductGroupResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/product-groups/{id}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/product-groups/{id}")
 	@Produces({"application/json", "application/xml"})
@@ -312,10 +315,10 @@ public abstract class BaseProductGroupResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/product-groups/{id}' -d $'{"description": ___, "externalReferenceCode": ___, "id": ___, "products": ___, "productsCount": ___, "title": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PATCH
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
+	@PATCH
 	@Path("/product-groups/{id}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ProductGroup")})

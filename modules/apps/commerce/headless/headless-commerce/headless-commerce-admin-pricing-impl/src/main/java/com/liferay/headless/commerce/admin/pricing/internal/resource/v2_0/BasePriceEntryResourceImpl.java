@@ -78,7 +78,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v2.0")
 public abstract class BasePriceEntryResourceImpl
-	implements PriceEntryResource, EntityModelResource,
+	implements EntityModelResource, PriceEntryResource,
 			   VulcanBatchEngineTaskItemDelegate<PriceEntry> {
 
 	/**
@@ -86,8 +86,8 @@ public abstract class BasePriceEntryResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-entries/by-externalReferenceCode/{externalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
@@ -98,7 +98,8 @@ public abstract class BasePriceEntryResourceImpl
 	@Tags(value = {@Tag(name = "PriceEntry")})
 	public void deletePriceEntryByExternalReferenceCode(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode)
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode)
 		throws Exception {
 	}
 
@@ -107,8 +108,8 @@ public abstract class BasePriceEntryResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-entries/by-externalReferenceCode/{externalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
@@ -119,7 +120,8 @@ public abstract class BasePriceEntryResourceImpl
 	@Tags(value = {@Tag(name = "PriceEntry")})
 	public PriceEntry getPriceEntryByExternalReferenceCode(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode)
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode)
 		throws Exception {
 
 		return new PriceEntry();
@@ -130,20 +132,21 @@ public abstract class BasePriceEntryResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-entries/by-externalReferenceCode/{externalReferenceCode}' -d $'{"active": ___, "bulkPricing": ___, "customFields": ___, "discountDiscovery": ___, "discountLevel1": ___, "discountLevel2": ___, "discountLevel3": ___, "discountLevel4": ___, "discountLevelsFormatted": ___, "displayDate": ___, "expirationDate": ___, "externalReferenceCode": ___, "hasTierPrice": ___, "neverExpire": ___, "price": ___, "priceEntryId": ___, "priceFormatted": ___, "priceListExternalReferenceCode": ___, "priceListId": ___, "skuExternalReferenceCode": ___, "skuId": ___, "tierPrices": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PATCH
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
 		}
 	)
+	@PATCH
 	@Path("/price-entries/by-externalReferenceCode/{externalReferenceCode}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "PriceEntry")})
 	public PriceEntry patchPriceEntryByExternalReferenceCode(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode,
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode,
 			PriceEntry priceEntry)
 		throws Exception {
 
@@ -155,8 +158,8 @@ public abstract class BasePriceEntryResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-entries/{priceEntryId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "priceEntryId")}
 	)
@@ -164,8 +167,8 @@ public abstract class BasePriceEntryResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "PriceEntry")})
 	public void deletePriceEntry(
-			@NotNull @Parameter(hidden = true) @PathParam("priceEntryId") Long
-				priceEntryId)
+			@NotNull @Parameter(hidden = true) @PathParam("priceEntryId")
+				Long priceEntryId)
 		throws Exception {
 	}
 
@@ -174,9 +177,9 @@ public abstract class BasePriceEntryResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-entries/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
 	@DELETE
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
@@ -184,8 +187,8 @@ public abstract class BasePriceEntryResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "PriceEntry")})
 	public Response deletePriceEntryBatch(
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -210,8 +213,8 @@ public abstract class BasePriceEntryResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-entries/{priceEntryId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "priceEntryId")}
 	)
@@ -219,8 +222,8 @@ public abstract class BasePriceEntryResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "PriceEntry")})
 	public PriceEntry getPriceEntry(
-			@NotNull @Parameter(hidden = true) @PathParam("priceEntryId") Long
-				priceEntryId)
+			@NotNull @Parameter(hidden = true) @PathParam("priceEntryId")
+				Long priceEntryId)
 		throws Exception {
 
 		return new PriceEntry();
@@ -231,18 +234,18 @@ public abstract class BasePriceEntryResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-entries/{priceEntryId}' -d $'{"active": ___, "bulkPricing": ___, "customFields": ___, "discountDiscovery": ___, "discountLevel1": ___, "discountLevel2": ___, "discountLevel3": ___, "discountLevel4": ___, "discountLevelsFormatted": ___, "displayDate": ___, "expirationDate": ___, "externalReferenceCode": ___, "hasTierPrice": ___, "neverExpire": ___, "price": ___, "priceEntryId": ___, "priceFormatted": ___, "priceListExternalReferenceCode": ___, "priceListId": ___, "skuExternalReferenceCode": ___, "skuId": ___, "tierPrices": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PATCH
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "priceEntryId")}
 	)
+	@PATCH
 	@Path("/price-entries/{priceEntryId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "PriceEntry")})
 	public PriceEntry patchPriceEntry(
-			@NotNull @Parameter(hidden = true) @PathParam("priceEntryId") Long
-				priceEntryId,
+			@NotNull @Parameter(hidden = true) @PathParam("priceEntryId")
+				Long priceEntryId,
 			PriceEntry priceEntry)
 		throws Exception {
 
@@ -254,8 +257,8 @@ public abstract class BasePriceEntryResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-lists/by-externalReferenceCode/{externalReferenceCode}/price-entries'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode"),
@@ -270,7 +273,8 @@ public abstract class BasePriceEntryResourceImpl
 	@Tags(value = {@Tag(name = "PriceEntry")})
 	public Page<PriceEntry> getPriceListByExternalReferenceCodePriceEntriesPage(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode,
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -282,9 +286,8 @@ public abstract class BasePriceEntryResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-lists/by-externalReferenceCode/{externalReferenceCode}/price-entries' -d $'{"active": ___, "bulkPricing": ___, "customFields": ___, "discountDiscovery": ___, "discountLevel1": ___, "discountLevel2": ___, "discountLevel3": ___, "discountLevel4": ___, "discountLevelsFormatted": ___, "displayDate": ___, "expirationDate": ___, "externalReferenceCode": ___, "hasTierPrice": ___, "neverExpire": ___, "price": ___, "priceEntryId": ___, "priceFormatted": ___, "priceListExternalReferenceCode": ___, "priceListId": ___, "skuExternalReferenceCode": ___, "skuId": ___, "tierPrices": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
@@ -293,11 +296,13 @@ public abstract class BasePriceEntryResourceImpl
 	@Path(
 		"/price-lists/by-externalReferenceCode/{externalReferenceCode}/price-entries"
 	)
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "PriceEntry")})
 	public PriceEntry postPriceListByExternalReferenceCodePriceEntry(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode,
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode,
 			PriceEntry priceEntry)
 		throws Exception {
 
@@ -309,8 +314,8 @@ public abstract class BasePriceEntryResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-lists/{id}/price-entries'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "id"),
@@ -339,11 +344,11 @@ public abstract class BasePriceEntryResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-lists/{id}/price-entries' -d $'{"active": ___, "bulkPricing": ___, "customFields": ___, "discountDiscovery": ___, "discountLevel1": ___, "discountLevel2": ___, "discountLevel3": ___, "discountLevel4": ___, "discountLevelsFormatted": ___, "displayDate": ___, "expirationDate": ___, "externalReferenceCode": ___, "hasTierPrice": ___, "neverExpire": ___, "price": ___, "priceEntryId": ___, "priceFormatted": ___, "priceListExternalReferenceCode": ___, "priceListId": ___, "skuExternalReferenceCode": ___, "skuId": ___, "tierPrices": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/price-lists/{id}/price-entries")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "PriceEntry")})
 	public PriceEntry postPriceListIdPriceEntry(
@@ -359,9 +364,8 @@ public abstract class BasePriceEntryResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-lists/price-entries/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "id"),
@@ -369,12 +373,13 @@ public abstract class BasePriceEntryResourceImpl
 		}
 	)
 	@Path("/price-lists/price-entries/batch")
+	@POST
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "PriceEntry")})
 	public Response postPriceListIdPriceEntryBatch(
 			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 

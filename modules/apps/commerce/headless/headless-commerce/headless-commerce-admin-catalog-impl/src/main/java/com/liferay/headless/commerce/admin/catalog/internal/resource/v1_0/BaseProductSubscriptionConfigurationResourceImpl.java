@@ -73,7 +73,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseProductSubscriptionConfigurationResourceImpl
-	implements ProductSubscriptionConfigurationResource, EntityModelResource,
+	implements EntityModelResource, ProductSubscriptionConfigurationResource,
 			   VulcanBatchEngineTaskItemDelegate
 				   <ProductSubscriptionConfiguration> {
 
@@ -82,8 +82,8 @@ public abstract class BaseProductSubscriptionConfigurationResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/subscriptionConfiguration'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
@@ -97,8 +97,8 @@ public abstract class BaseProductSubscriptionConfigurationResourceImpl
 	public ProductSubscriptionConfiguration
 			getProductByExternalReferenceCodeSubscriptionConfiguration(
 				@NotNull @Parameter(hidden = true)
-				@PathParam("externalReferenceCode") String
-					externalReferenceCode)
+				@PathParam("externalReferenceCode")
+					String externalReferenceCode)
 		throws Exception {
 
 		return new ProductSubscriptionConfiguration();
@@ -109,14 +109,14 @@ public abstract class BaseProductSubscriptionConfigurationResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/subscriptionConfiguration' -d $'{"enable": ___, "length": ___, "numberOfLength": ___, "subscriptionType": ___, "subscriptionTypeSettings": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PATCH
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
 		}
 	)
+	@PATCH
 	@Path(
 		"/products/by-externalReferenceCode/{externalReferenceCode}/subscriptionConfiguration"
 	)
@@ -125,8 +125,8 @@ public abstract class BaseProductSubscriptionConfigurationResourceImpl
 	public Response
 			patchProductByExternalReferenceCodeSubscriptionConfiguration(
 				@NotNull @Parameter(hidden = true)
-				@PathParam("externalReferenceCode") String
-					externalReferenceCode,
+				@PathParam("externalReferenceCode")
+					String externalReferenceCode,
 				ProductSubscriptionConfiguration
 					productSubscriptionConfiguration)
 		throws Exception {
@@ -141,8 +141,8 @@ public abstract class BaseProductSubscriptionConfigurationResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}/subscriptionConfiguration'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/products/{id}/subscriptionConfiguration")
 	@Produces({"application/json", "application/xml"})
@@ -160,10 +160,10 @@ public abstract class BaseProductSubscriptionConfigurationResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}/subscriptionConfiguration' -d $'{"enable": ___, "length": ___, "numberOfLength": ___, "subscriptionType": ___, "subscriptionTypeSettings": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PATCH
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
+	@PATCH
 	@Path("/products/{id}/subscriptionConfiguration")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ProductSubscriptionConfiguration")})

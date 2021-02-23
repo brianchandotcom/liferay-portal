@@ -371,7 +371,7 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 		Long irrelevantMessageBoardMessageId =
 			testGetMessageBoardMessageMessageBoardAttachmentsPage_getIrrelevantMessageBoardMessageId();
 
-		if ((irrelevantMessageBoardMessageId != null)) {
+		if (irrelevantMessageBoardMessageId != null) {
 			MessageBoardAttachment irrelevantMessageBoardAttachment =
 				testGetMessageBoardMessageMessageBoardAttachmentsPage_addMessageBoardAttachment(
 					irrelevantMessageBoardMessageId,
@@ -491,7 +491,7 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 		Long irrelevantMessageBoardThreadId =
 			testGetMessageBoardThreadMessageBoardAttachmentsPage_getIrrelevantMessageBoardThreadId();
 
-		if ((irrelevantMessageBoardThreadId != null)) {
+		if (irrelevantMessageBoardThreadId != null) {
 			MessageBoardAttachment irrelevantMessageBoardAttachment =
 				testGetMessageBoardThreadMessageBoardAttachmentsPage_addMessageBoardAttachment(
 					irrelevantMessageBoardThreadId,

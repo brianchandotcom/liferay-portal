@@ -216,7 +216,7 @@ public abstract class BaseWikiNodeResourceTestCase {
 		Long siteId = testGetSiteWikiNodesPage_getSiteId();
 		Long irrelevantSiteId = testGetSiteWikiNodesPage_getIrrelevantSiteId();
 
-		if ((irrelevantSiteId != null)) {
+		if (irrelevantSiteId != null) {
 			WikiNode irrelevantWikiNode = testGetSiteWikiNodesPage_addWikiNode(
 				irrelevantSiteId, randomIrrelevantWikiNode());
 

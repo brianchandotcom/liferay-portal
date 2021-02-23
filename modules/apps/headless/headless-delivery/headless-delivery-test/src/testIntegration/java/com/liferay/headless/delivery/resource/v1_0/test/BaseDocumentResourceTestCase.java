@@ -247,7 +247,7 @@ public abstract class BaseDocumentResourceTestCase {
 		Long irrelevantAssetLibraryId =
 			testGetAssetLibraryDocumentsPage_getIrrelevantAssetLibraryId();
 
-		if ((irrelevantAssetLibraryId != null)) {
+		if (irrelevantAssetLibraryId != null) {
 			Document irrelevantDocument =
 				testGetAssetLibraryDocumentsPage_addDocument(
 					irrelevantAssetLibraryId, randomIrrelevantDocument());
@@ -575,7 +575,7 @@ public abstract class BaseDocumentResourceTestCase {
 		Long irrelevantDocumentFolderId =
 			testGetDocumentFolderDocumentsPage_getIrrelevantDocumentFolderId();
 
-		if ((irrelevantDocumentFolderId != null)) {
+		if (irrelevantDocumentFolderId != null) {
 			Document irrelevantDocument =
 				testGetDocumentFolderDocumentsPage_addDocument(
 					irrelevantDocumentFolderId, randomIrrelevantDocument());
@@ -1113,7 +1113,7 @@ public abstract class BaseDocumentResourceTestCase {
 		Long siteId = testGetSiteDocumentsPage_getSiteId();
 		Long irrelevantSiteId = testGetSiteDocumentsPage_getIrrelevantSiteId();
 
-		if ((irrelevantSiteId != null)) {
+		if (irrelevantSiteId != null) {
 			Document irrelevantDocument = testGetSiteDocumentsPage_addDocument(
 				irrelevantSiteId, randomIrrelevantDocument());
 

@@ -78,7 +78,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseKnowledgeBaseAttachmentResourceImpl
-	implements KnowledgeBaseAttachmentResource, EntityModelResource,
+	implements EntityModelResource, KnowledgeBaseAttachmentResource,
 			   VulcanBatchEngineTaskItemDelegate<KnowledgeBaseAttachment> {
 
 	/**
@@ -86,11 +86,11 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-articles/{knowledgeBaseArticleId}/knowledge-base-attachments'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(
 		description = "Retrieves the knowledge base article's attachments."
 	)
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "knowledgeBaseArticleId")
@@ -104,8 +104,8 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 	public Page<KnowledgeBaseAttachment>
 			getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage(
 				@NotNull @Parameter(hidden = true)
-				@PathParam("knowledgeBaseArticleId") Long
-					knowledgeBaseArticleId)
+				@PathParam("knowledgeBaseArticleId")
+					Long knowledgeBaseArticleId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -116,12 +116,11 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-articles/{knowledgeBaseArticleId}/knowledge-base-attachments'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("multipart/form-data")
 	@Operation(
 		description = "Creates a new attachment for an existing knowledge base article. The request body must be `multipart/form-data` with two parts, a `file` part with the file's bytes, and an optional JSON string (`knowledgeBaseAttachment`) with the metadata."
 	)
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "knowledgeBaseArticleId")
@@ -130,13 +129,14 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 	@Path(
 		"/knowledge-base-articles/{knowledgeBaseArticleId}/knowledge-base-attachments"
 	)
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "KnowledgeBaseAttachment")})
 	public KnowledgeBaseAttachment
 			postKnowledgeBaseArticleKnowledgeBaseAttachment(
 				@NotNull @Parameter(hidden = true)
-				@PathParam("knowledgeBaseArticleId") Long
-					knowledgeBaseArticleId,
+				@PathParam("knowledgeBaseArticleId")
+					Long knowledgeBaseArticleId,
 				MultipartBody multipartBody)
 		throws Exception {
 
@@ -148,9 +148,8 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-articles/{knowledgeBaseArticleId}/knowledge-base-attachments/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "knowledgeBaseArticleId"),
@@ -160,14 +159,16 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 	@Path(
 		"/knowledge-base-articles/{knowledgeBaseArticleId}/knowledge-base-attachments/batch"
 	)
+	@POST
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "KnowledgeBaseAttachment")})
 	public Response postKnowledgeBaseArticleKnowledgeBaseAttachmentBatch(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("knowledgeBaseArticleId") Long knowledgeBaseArticleId,
+			@PathParam("knowledgeBaseArticleId")
+				Long knowledgeBaseArticleId,
 			MultipartBody multipartBody,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -193,11 +194,11 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-attachments/{knowledgeBaseAttachmentId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
 	@Operation(
 		description = "Deletes the knowledge base file attachment and returns a 204 if the operation succeeds."
 	)
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(
@@ -210,8 +211,8 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 	@Tags(value = {@Tag(name = "KnowledgeBaseAttachment")})
 	public void deleteKnowledgeBaseAttachment(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("knowledgeBaseAttachmentId") Long
-				knowledgeBaseAttachmentId)
+			@PathParam("knowledgeBaseAttachmentId")
+				Long knowledgeBaseAttachmentId)
 		throws Exception {
 	}
 
@@ -220,9 +221,9 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-attachments/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
 	@DELETE
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
@@ -230,8 +231,8 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "KnowledgeBaseAttachment")})
 	public Response deleteKnowledgeBaseAttachmentBatch(
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -256,9 +257,9 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-attachments/{knowledgeBaseAttachmentId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrieves the knowledge base attachment.")
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(
@@ -271,8 +272,8 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 	@Tags(value = {@Tag(name = "KnowledgeBaseAttachment")})
 	public KnowledgeBaseAttachment getKnowledgeBaseAttachment(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("knowledgeBaseAttachmentId") Long
-				knowledgeBaseAttachmentId)
+			@PathParam("knowledgeBaseAttachmentId")
+				Long knowledgeBaseAttachmentId)
 		throws Exception {
 
 		return new KnowledgeBaseAttachment();

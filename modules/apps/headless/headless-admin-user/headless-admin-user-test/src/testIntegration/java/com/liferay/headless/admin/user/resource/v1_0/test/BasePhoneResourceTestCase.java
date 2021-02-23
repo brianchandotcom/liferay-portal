@@ -206,7 +206,7 @@ public abstract class BasePhoneResourceTestCase {
 		String irrelevantOrganizationId =
 			testGetOrganizationPhonesPage_getIrrelevantOrganizationId();
 
-		if ((irrelevantOrganizationId != null)) {
+		if (irrelevantOrganizationId != null) {
 			Phone irrelevantPhone = testGetOrganizationPhonesPage_addPhone(
 				irrelevantOrganizationId, randomIrrelevantPhone());
 
@@ -323,7 +323,7 @@ public abstract class BasePhoneResourceTestCase {
 		Long irrelevantUserAccountId =
 			testGetUserAccountPhonesPage_getIrrelevantUserAccountId();
 
-		if ((irrelevantUserAccountId != null)) {
+		if (irrelevantUserAccountId != null) {
 			Phone irrelevantPhone = testGetUserAccountPhonesPage_addPhone(
 				irrelevantUserAccountId, randomIrrelevantPhone());
 

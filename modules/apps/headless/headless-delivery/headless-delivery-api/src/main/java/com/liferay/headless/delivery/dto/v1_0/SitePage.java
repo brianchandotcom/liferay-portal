@@ -54,8 +54,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @GraphQLName("SitePage")
 @JsonFilter("Liferay.Vulcan")
 @Schema(
-	requiredProperties = {"title"},
-	description = "Represents a site page. This is modeled internally as a `Layout`."
+	description = "Represents a site page. This is modeled internally as a `Layout`.",
+	requiredProperties = {"title"}
 )
 @XmlRootElement(name = "SitePage")
 public class SitePage implements Serializable {

@@ -85,9 +85,9 @@ public abstract class BaseAccountRoleResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/account-rest/v1.0/accounts/by-external-reference-code/{accountExternalReferenceCode}/account-roles/{accountRoleId}/account-users/{accountUserExternalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
 	@Operation(description = "Unassigns account users to the account role")
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(
@@ -106,13 +106,13 @@ public abstract class BaseAccountRoleResourceImpl
 	@Tags(value = {@Tag(name = "AccountRole")})
 	public void deleteAccountRoleUserAssociationByExternalReferenceCode(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("accountExternalReferenceCode") String
-				accountExternalReferenceCode,
-			@NotNull @Parameter(hidden = true) @PathParam("accountRoleId") Long
-				accountRoleId,
+			@PathParam("accountExternalReferenceCode")
+				String accountExternalReferenceCode,
+			@NotNull @Parameter(hidden = true) @PathParam("accountRoleId")
+				Long accountRoleId,
 			@NotNull @Parameter(hidden = true)
-			@PathParam("accountUserExternalReferenceCode") String
-				accountUserExternalReferenceCode)
+			@PathParam("accountUserExternalReferenceCode")
+				String accountUserExternalReferenceCode)
 		throws Exception {
 	}
 
@@ -121,9 +121,8 @@ public abstract class BaseAccountRoleResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/account-rest/v1.0/accounts/by-external-reference-code/{accountExternalReferenceCode}/account-roles/{accountRoleId}/account-users/{accountUserExternalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Operation(description = "Assigns account users to the account role")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(
@@ -138,17 +137,18 @@ public abstract class BaseAccountRoleResourceImpl
 	@Path(
 		"/accounts/by-external-reference-code/{accountExternalReferenceCode}/account-roles/{accountRoleId}/account-users/{accountUserExternalReferenceCode}"
 	)
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AccountRole")})
 	public void postAccountRoleUserAssociationByExternalReferenceCode(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("accountExternalReferenceCode") String
-				accountExternalReferenceCode,
-			@NotNull @Parameter(hidden = true) @PathParam("accountRoleId") Long
-				accountRoleId,
+			@PathParam("accountExternalReferenceCode")
+				String accountExternalReferenceCode,
+			@NotNull @Parameter(hidden = true) @PathParam("accountRoleId")
+				Long accountRoleId,
 			@NotNull @Parameter(hidden = true)
-			@PathParam("accountUserExternalReferenceCode") String
-				accountUserExternalReferenceCode)
+			@PathParam("accountUserExternalReferenceCode")
+				String accountUserExternalReferenceCode)
 		throws Exception {
 	}
 
@@ -157,9 +157,9 @@ public abstract class BaseAccountRoleResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/account-rest/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/account-roles'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Gets the account's roles")
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode"),
@@ -176,7 +176,8 @@ public abstract class BaseAccountRoleResourceImpl
 	@Tags(value = {@Tag(name = "AccountRole")})
 	public Page<AccountRole> getAccountRolesByExternalReferenceCodePage(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode,
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode,
 			@Parameter(hidden = true) @QueryParam("keywords") String keywords,
 			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
@@ -189,10 +190,9 @@ public abstract class BaseAccountRoleResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/account-rest/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/account-roles' -d $'{"description": ___, "displayName": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(description = "Adds a role for the account")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
@@ -201,11 +201,13 @@ public abstract class BaseAccountRoleResourceImpl
 	@Path(
 		"/accounts/by-external-reference-code/{externalReferenceCode}/account-roles"
 	)
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AccountRole")})
 	public AccountRole postAccountRoleByExternalReferenceCode(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode,
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode,
 			AccountRole accountRole)
 		throws Exception {
 
@@ -217,9 +219,9 @@ public abstract class BaseAccountRoleResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/account-rest/v1.0/accounts/{accountId}/account-roles'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Gets the account's roles")
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "accountId"),
@@ -233,8 +235,8 @@ public abstract class BaseAccountRoleResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AccountRole")})
 	public Page<AccountRole> getAccountRolesPage(
-			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
-				accountId,
+			@NotNull @Parameter(hidden = true) @PathParam("accountId")
+				Long accountId,
 			@Parameter(hidden = true) @QueryParam("keywords") String keywords,
 			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
@@ -247,17 +249,17 @@ public abstract class BaseAccountRoleResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/account-rest/v1.0/accounts/{accountId}/account-roles' -d $'{"description": ___, "displayName": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(description = "Adds a role for the account")
-	@POST
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "accountId")})
 	@Path("/accounts/{accountId}/account-roles")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AccountRole")})
 	public AccountRole postAccountRole(
-			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
-				accountId,
+			@NotNull @Parameter(hidden = true) @PathParam("accountId")
+				Long accountId,
 			AccountRole accountRole)
 		throws Exception {
 
@@ -269,9 +271,9 @@ public abstract class BaseAccountRoleResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/account-rest/v1.0/accounts/{accountId}/account-roles/{accountRoleId}/account-users/{accountUserId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
 	@Operation(description = "Unassigns account users to the account role")
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "accountId"),
@@ -285,12 +287,12 @@ public abstract class BaseAccountRoleResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AccountRole")})
 	public void deleteAccountRoleUserAssociation(
-			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
-				accountId,
-			@NotNull @Parameter(hidden = true) @PathParam("accountRoleId") Long
-				accountRoleId,
-			@NotNull @Parameter(hidden = true) @PathParam("accountUserId") Long
-				accountUserId)
+			@NotNull @Parameter(hidden = true) @PathParam("accountId")
+				Long accountId,
+			@NotNull @Parameter(hidden = true) @PathParam("accountRoleId")
+				Long accountRoleId,
+			@NotNull @Parameter(hidden = true) @PathParam("accountUserId")
+				Long accountUserId)
 		throws Exception {
 	}
 
@@ -299,9 +301,8 @@ public abstract class BaseAccountRoleResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/account-rest/v1.0/accounts/{accountId}/account-roles/{accountRoleId}/account-users/{accountUserId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Operation(description = "Assigns account users to the account role")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "accountId"),
@@ -312,15 +313,16 @@ public abstract class BaseAccountRoleResourceImpl
 	@Path(
 		"/accounts/{accountId}/account-roles/{accountRoleId}/account-users/{accountUserId}"
 	)
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AccountRole")})
 	public void postAccountRoleUserAssociation(
-			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
-				accountId,
-			@NotNull @Parameter(hidden = true) @PathParam("accountRoleId") Long
-				accountRoleId,
-			@NotNull @Parameter(hidden = true) @PathParam("accountUserId") Long
-				accountUserId)
+			@NotNull @Parameter(hidden = true) @PathParam("accountId")
+				Long accountId,
+			@NotNull @Parameter(hidden = true) @PathParam("accountRoleId")
+				Long accountRoleId,
+			@NotNull @Parameter(hidden = true) @PathParam("accountUserId")
+				Long accountUserId)
 		throws Exception {
 	}
 

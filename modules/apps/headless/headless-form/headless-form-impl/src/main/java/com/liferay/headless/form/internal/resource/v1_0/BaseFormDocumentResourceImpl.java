@@ -75,7 +75,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseFormDocumentResourceImpl
-	implements FormDocumentResource, EntityModelResource,
+	implements EntityModelResource, FormDocumentResource,
 			   VulcanBatchEngineTaskItemDelegate<FormDocument> {
 
 	/**
@@ -83,10 +83,10 @@ public abstract class BaseFormDocumentResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-form/v1.0/form-documents/{formDocumentId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
 	@Deprecated
 	@Operation(deprecated = true)
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "formDocumentId")}
 	)
@@ -94,8 +94,8 @@ public abstract class BaseFormDocumentResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "FormDocument")})
 	public void deleteFormDocument(
-			@NotNull @Parameter(hidden = true) @PathParam("formDocumentId") Long
-				formDocumentId)
+			@NotNull @Parameter(hidden = true) @PathParam("formDocumentId")
+				Long formDocumentId)
 		throws Exception {
 	}
 
@@ -104,9 +104,9 @@ public abstract class BaseFormDocumentResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-form/v1.0/form-documents/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
 	@DELETE
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
@@ -114,8 +114,8 @@ public abstract class BaseFormDocumentResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "FormDocument")})
 	public Response deleteFormDocumentBatch(
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -140,10 +140,10 @@ public abstract class BaseFormDocumentResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-form/v1.0/form-documents/{formDocumentId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Deprecated
 	@GET
 	@Operation(deprecated = true)
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "formDocumentId")}
 	)
@@ -151,8 +151,8 @@ public abstract class BaseFormDocumentResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "FormDocument")})
 	public FormDocument getFormDocument(
-			@NotNull @Parameter(hidden = true) @PathParam("formDocumentId") Long
-				formDocumentId)
+			@NotNull @Parameter(hidden = true) @PathParam("formDocumentId")
+				Long formDocumentId)
 		throws Exception {
 
 		return new FormDocument();

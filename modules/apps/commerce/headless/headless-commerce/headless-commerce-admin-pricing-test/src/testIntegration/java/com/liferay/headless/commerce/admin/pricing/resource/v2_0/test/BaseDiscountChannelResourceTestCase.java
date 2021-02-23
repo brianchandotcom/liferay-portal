@@ -230,7 +230,7 @@ public abstract class BaseDiscountChannelResourceTestCase {
 		String irrelevantExternalReferenceCode =
 			testGetDiscountByExternalReferenceCodeDiscountChannelsPage_getIrrelevantExternalReferenceCode();
 
-		if ((irrelevantExternalReferenceCode != null)) {
+		if (irrelevantExternalReferenceCode != null) {
 			DiscountChannel irrelevantDiscountChannel =
 				testGetDiscountByExternalReferenceCodeDiscountChannelsPage_addDiscountChannel(
 					irrelevantExternalReferenceCode,
@@ -383,7 +383,7 @@ public abstract class BaseDiscountChannelResourceTestCase {
 		Long irrelevantId =
 			testGetDiscountIdDiscountChannelsPage_getIrrelevantId();
 
-		if ((irrelevantId != null)) {
+		if (irrelevantId != null) {
 			DiscountChannel irrelevantDiscountChannel =
 				testGetDiscountIdDiscountChannelsPage_addDiscountChannel(
 					irrelevantId, randomIrrelevantDiscountChannel());

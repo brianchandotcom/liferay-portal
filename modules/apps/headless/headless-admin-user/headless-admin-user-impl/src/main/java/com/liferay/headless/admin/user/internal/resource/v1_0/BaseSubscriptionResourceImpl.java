@@ -74,7 +74,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseSubscriptionResourceImpl
-	implements SubscriptionResource, EntityModelResource,
+	implements EntityModelResource, SubscriptionResource,
 			   VulcanBatchEngineTaskItemDelegate<Subscription> {
 
 	/**
@@ -82,8 +82,8 @@ public abstract class BaseSubscriptionResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/my-user-account/subscriptions'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.QUERY, name = "contentType"),
@@ -95,8 +95,8 @@ public abstract class BaseSubscriptionResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Subscription")})
 	public Page<Subscription> getMyUserAccountSubscriptionsPage(
-			@Parameter(hidden = true) @QueryParam("contentType") String
-				contentType,
+			@Parameter(hidden = true) @QueryParam("contentType")
+				String contentType,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -108,8 +108,8 @@ public abstract class BaseSubscriptionResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-user/v1.0/my-user-account/subscriptions/{subscriptionId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "subscriptionId")}
 	)
@@ -117,8 +117,8 @@ public abstract class BaseSubscriptionResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Subscription")})
 	public void deleteMyUserAccountSubscription(
-			@NotNull @Parameter(hidden = true) @PathParam("subscriptionId") Long
-				subscriptionId)
+			@NotNull @Parameter(hidden = true) @PathParam("subscriptionId")
+				Long subscriptionId)
 		throws Exception {
 	}
 
@@ -127,8 +127,8 @@ public abstract class BaseSubscriptionResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/my-user-account/subscriptions/{subscriptionId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "subscriptionId")}
 	)
@@ -136,8 +136,8 @@ public abstract class BaseSubscriptionResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Subscription")})
 	public Subscription getMyUserAccountSubscription(
-			@NotNull @Parameter(hidden = true) @PathParam("subscriptionId") Long
-				subscriptionId)
+			@NotNull @Parameter(hidden = true) @PathParam("subscriptionId")
+				Long subscriptionId)
 		throws Exception {
 
 		return new Subscription();

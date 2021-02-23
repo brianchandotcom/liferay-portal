@@ -21,6 +21,8 @@ import com.liferay.headless.form.client.http.HttpInvoker;
 import com.liferay.headless.form.client.pagination.Page;
 import com.liferay.headless.form.client.pagination.Pagination;
 import com.liferay.headless.form.client.problem.Problem;
+import com.liferay.headless.form.client.serdes.v1_0.FormContextSerDes;
+import com.liferay.headless.form.client.serdes.v1_0.FormDocumentSerDes;
 import com.liferay.headless.form.client.serdes.v1_0.FormSerDes;
 
 import java.io.File;
@@ -202,8 +204,7 @@ public interface FormResource {
 				"HTTP response status code: " + httpResponse.getStatusCode());
 
 			try {
-				return com.liferay.headless.form.client.serdes.v1_0.
-					FormContextSerDes.toDTO(content);
+				return FormContextSerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -270,8 +271,7 @@ public interface FormResource {
 				"HTTP response status code: " + httpResponse.getStatusCode());
 
 			try {
-				return com.liferay.headless.form.client.serdes.v1_0.
-					FormDocumentSerDes.toDTO(content);
+				return FormDocumentSerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(

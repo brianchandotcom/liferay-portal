@@ -86,8 +86,8 @@ public abstract class BaseAvailabilityEstimateResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/availabilityEstimate/{id}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/availabilityEstimate/{id}")
 	@Produces({"application/json", "application/xml"})
@@ -106,9 +106,9 @@ public abstract class BaseAvailabilityEstimateResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/availabilityEstimate/{id}/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
 	@DELETE
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "id"),
@@ -120,8 +120,8 @@ public abstract class BaseAvailabilityEstimateResourceImpl
 	@Tags(value = {@Tag(name = "AvailabilityEstimate")})
 	public Response deleteAvailabilityEstimateBatch(
 			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -146,8 +146,8 @@ public abstract class BaseAvailabilityEstimateResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/availabilityEstimate/{id}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/availabilityEstimate/{id}")
 	@Produces({"application/json", "application/xml"})
@@ -164,12 +164,12 @@ public abstract class BaseAvailabilityEstimateResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/availabilityEstimate/{id}' -d $'{"id": ___, "priority": ___, "title": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PUT
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/availabilityEstimate/{id}")
 	@Produces({"application/json", "application/xml"})
+	@PUT
 	@Tags(value = {@Tag(name = "AvailabilityEstimate")})
 	public Response putAvailabilityEstimate(
 			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
@@ -186,9 +186,8 @@ public abstract class BaseAvailabilityEstimateResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/availabilityEstimate/{id}/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@PUT
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "id"),
@@ -197,11 +196,12 @@ public abstract class BaseAvailabilityEstimateResourceImpl
 	)
 	@Path("/availabilityEstimate/{id}/batch")
 	@Produces("application/json")
+	@PUT
 	@Tags(value = {@Tag(name = "AvailabilityEstimate")})
 	public Response putAvailabilityEstimateBatch(
 			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -226,8 +226,8 @@ public abstract class BaseAvailabilityEstimateResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/commerceAdminSiteSetting/{groupId}/availabilityEstimate'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "groupId"),
@@ -240,8 +240,8 @@ public abstract class BaseAvailabilityEstimateResourceImpl
 	@Tags(value = {@Tag(name = "AvailabilityEstimate")})
 	public Page<AvailabilityEstimate>
 			getCommerceAdminSiteSettingGroupAvailabilityEstimatePage(
-				@NotNull @Parameter(hidden = true) @PathParam("groupId") Long
-					groupId,
+				@NotNull @Parameter(hidden = true) @PathParam("groupId")
+					Long groupId,
 				@Context Pagination pagination)
 		throws Exception {
 
@@ -253,17 +253,17 @@ public abstract class BaseAvailabilityEstimateResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/commerceAdminSiteSetting/{groupId}/availabilityEstimate' -d $'{"id": ___, "priority": ___, "title": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "groupId")})
 	@Path("/commerceAdminSiteSetting/{groupId}/availabilityEstimate")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AvailabilityEstimate")})
 	public AvailabilityEstimate
 			postCommerceAdminSiteSettingGroupAvailabilityEstimate(
-				@NotNull @Parameter(hidden = true) @PathParam("groupId") Long
-					groupId,
+				@NotNull @Parameter(hidden = true) @PathParam("groupId")
+					Long groupId,
 				AvailabilityEstimate availabilityEstimate)
 		throws Exception {
 
@@ -348,8 +348,8 @@ public abstract class BaseAvailabilityEstimateResourceImpl
 
 			putAvailabilityEstimate(
 				availabilityEstimate.getId() != null ?
-				availabilityEstimate.getId() :
-				(Long)parameters.get("availabilityEstimateId"),
+					availabilityEstimate.getId() :
+						(Long)parameters.get("availabilityEstimateId"),
 				availabilityEstimate);
 		}
 	}

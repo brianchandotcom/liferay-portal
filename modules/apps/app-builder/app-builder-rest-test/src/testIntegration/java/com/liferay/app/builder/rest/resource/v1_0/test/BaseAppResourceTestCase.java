@@ -572,7 +572,7 @@ public abstract class BaseAppResourceTestCase {
 		Long irrelevantDataDefinitionId =
 			testGetDataDefinitionAppsPage_getIrrelevantDataDefinitionId();
 
-		if ((irrelevantDataDefinitionId != null)) {
+		if (irrelevantDataDefinitionId != null) {
 			App irrelevantApp = testGetDataDefinitionAppsPage_addApp(
 				irrelevantDataDefinitionId, randomIrrelevantApp());
 
@@ -809,7 +809,7 @@ public abstract class BaseAppResourceTestCase {
 		Long siteId = testGetSiteAppsPage_getSiteId();
 		Long irrelevantSiteId = testGetSiteAppsPage_getIrrelevantSiteId();
 
-		if ((irrelevantSiteId != null)) {
+		if (irrelevantSiteId != null) {
 			App irrelevantApp = testGetSiteAppsPage_addApp(
 				irrelevantSiteId, randomIrrelevantApp());
 

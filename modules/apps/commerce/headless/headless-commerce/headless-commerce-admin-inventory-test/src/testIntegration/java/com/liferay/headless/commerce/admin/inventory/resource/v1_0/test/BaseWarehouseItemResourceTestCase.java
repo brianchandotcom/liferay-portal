@@ -509,7 +509,7 @@ public abstract class BaseWarehouseItemResourceTestCase {
 		String irrelevantExternalReferenceCode =
 			testGetWarehousByExternalReferenceCodeWarehouseItemsPage_getIrrelevantExternalReferenceCode();
 
-		if ((irrelevantExternalReferenceCode != null)) {
+		if (irrelevantExternalReferenceCode != null) {
 			WarehouseItem irrelevantWarehouseItem =
 				testGetWarehousByExternalReferenceCodeWarehouseItemsPage_addWarehouseItem(
 					irrelevantExternalReferenceCode,
@@ -683,7 +683,7 @@ public abstract class BaseWarehouseItemResourceTestCase {
 		Long irrelevantId =
 			testGetWarehousIdWarehouseItemsPage_getIrrelevantId();
 
-		if ((irrelevantId != null)) {
+		if (irrelevantId != null) {
 			WarehouseItem irrelevantWarehouseItem =
 				testGetWarehousIdWarehouseItemsPage_addWarehouseItem(
 					irrelevantId, randomIrrelevantWarehouseItem());

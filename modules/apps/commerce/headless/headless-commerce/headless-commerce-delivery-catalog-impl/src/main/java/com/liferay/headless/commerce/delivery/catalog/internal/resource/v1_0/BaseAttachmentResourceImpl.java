@@ -80,8 +80,8 @@ public abstract class BaseAttachmentResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-catalog/v1.0/channels/{channelId}/products/{productId}/attachments'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "channelId"),
@@ -94,10 +94,10 @@ public abstract class BaseAttachmentResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Attachment")})
 	public Page<Attachment> getChannelProductAttachmentsPage(
-			@NotNull @Parameter(hidden = true) @PathParam("channelId") Long
-				channelId,
-			@NotNull @Parameter(hidden = true) @PathParam("productId") Long
-				productId,
+			@NotNull @Parameter(hidden = true) @PathParam("channelId")
+				Long channelId,
+			@NotNull @Parameter(hidden = true) @PathParam("productId")
+				Long productId,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -109,8 +109,8 @@ public abstract class BaseAttachmentResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-catalog/v1.0/channels/{channelId}/products/{productId}/images'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "channelId"),
@@ -123,10 +123,10 @@ public abstract class BaseAttachmentResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Attachment")})
 	public Page<Attachment> getChannelProductImagesPage(
-			@NotNull @Parameter(hidden = true) @PathParam("channelId") Long
-				channelId,
-			@NotNull @Parameter(hidden = true) @PathParam("productId") Long
-				productId,
+			@NotNull @Parameter(hidden = true) @PathParam("channelId")
+				Long channelId,
+			@NotNull @Parameter(hidden = true) @PathParam("productId")
+				Long productId,
 			@Context Pagination pagination)
 		throws Exception {
 

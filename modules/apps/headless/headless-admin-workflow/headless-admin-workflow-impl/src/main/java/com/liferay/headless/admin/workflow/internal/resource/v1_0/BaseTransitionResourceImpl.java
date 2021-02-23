@@ -66,8 +66,8 @@ public abstract class BaseTransitionResourceImpl implements TransitionResource {
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-instances/{workflowInstanceId}/next-transitions'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "workflowInstanceId"),
@@ -92,8 +92,8 @@ public abstract class BaseTransitionResourceImpl implements TransitionResource {
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}/next-transitions'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "workflowTaskId"),
@@ -105,8 +105,8 @@ public abstract class BaseTransitionResourceImpl implements TransitionResource {
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Transition")})
 	public Page<Transition> getWorkflowTaskNextTransitionsPage(
-			@NotNull @Parameter(hidden = true) @PathParam("workflowTaskId") Long
-				workflowTaskId,
+			@NotNull @Parameter(hidden = true) @PathParam("workflowTaskId")
+				Long workflowTaskId,
 			@Context Pagination pagination)
 		throws Exception {
 

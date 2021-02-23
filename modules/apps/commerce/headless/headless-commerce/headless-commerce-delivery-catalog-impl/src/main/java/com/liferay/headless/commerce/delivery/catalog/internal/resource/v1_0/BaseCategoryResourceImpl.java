@@ -81,9 +81,9 @@ public abstract class BaseCategoryResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-catalog/v1.0/channels/{channelId}/products/{productId}/categories'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Gets a list of Category related to a Product.")
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "channelId"),
@@ -96,10 +96,10 @@ public abstract class BaseCategoryResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Category")})
 	public Page<Category> getChannelProductCategoriesPage(
-			@NotNull @Parameter(hidden = true) @PathParam("channelId") Long
-				channelId,
-			@NotNull @Parameter(hidden = true) @PathParam("productId") Long
-				productId,
+			@NotNull @Parameter(hidden = true) @PathParam("channelId")
+				Long channelId,
+			@NotNull @Parameter(hidden = true) @PathParam("productId")
+				Long productId,
 			@Context Pagination pagination)
 		throws Exception {
 

@@ -69,7 +69,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/1.0")
 public abstract class BaseProductResourceImpl
-	implements ProductResource, EntityModelResource,
+	implements EntityModelResource, ProductResource,
 			   VulcanBatchEngineTaskItemDelegate<Product> {
 
 	/**
@@ -77,8 +77,8 @@ public abstract class BaseProductResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/commerce-bom/1.0/products'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.QUERY, name = "q")})
 	@Path("/products")
 	@Produces({"application/json", "application/xml"})

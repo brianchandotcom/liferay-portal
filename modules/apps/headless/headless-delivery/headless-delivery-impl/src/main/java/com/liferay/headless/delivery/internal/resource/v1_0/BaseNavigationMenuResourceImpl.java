@@ -79,7 +79,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseNavigationMenuResourceImpl
-	implements NavigationMenuResource, EntityModelResource,
+	implements EntityModelResource, NavigationMenuResource,
 			   VulcanBatchEngineTaskItemDelegate<NavigationMenu> {
 
 	/**
@@ -87,11 +87,11 @@ public abstract class BaseNavigationMenuResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/navigation-menus/{navigationMenuId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
 	@Operation(
 		description = "Deletes the navigation menu and returns a 204 if the operation succeeds"
 	)
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "navigationMenuId")}
 	)
@@ -109,9 +109,9 @@ public abstract class BaseNavigationMenuResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/navigation-menus/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
 	@DELETE
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
@@ -119,8 +119,8 @@ public abstract class BaseNavigationMenuResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "NavigationMenu")})
 	public Response deleteNavigationMenuBatch(
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -145,9 +145,9 @@ public abstract class BaseNavigationMenuResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/navigation-menus/{navigationMenuId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "")
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "navigationMenuId")}
 	)
@@ -167,17 +167,17 @@ public abstract class BaseNavigationMenuResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/navigation-menus/{navigationMenuId}' -d $'{"name": ___, "navigationMenuItems": ___, "navigationType": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
 		description = "Replaces the navigation menu with the information sent in the request body. Any missing fields are deleted, unless they are required."
 	)
-	@PUT
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "navigationMenuId")}
 	)
 	@Path("/navigation-menus/{navigationMenuId}")
 	@Produces({"application/json", "application/xml"})
+	@PUT
 	@Tags(value = {@Tag(name = "NavigationMenu")})
 	public NavigationMenu putNavigationMenu(
 			@NotNull @Parameter(hidden = true) @PathParam("navigationMenuId")
@@ -193,18 +193,18 @@ public abstract class BaseNavigationMenuResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/navigation-menus/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@PUT
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
 	@Path("/navigation-menus/batch")
 	@Produces("application/json")
+	@PUT
 	@Tags(value = {@Tag(name = "NavigationMenu")})
 	public Response putNavigationMenuBatch(
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -229,9 +229,9 @@ public abstract class BaseNavigationMenuResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/navigation-menus'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "")
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
@@ -255,12 +255,12 @@ public abstract class BaseNavigationMenuResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/navigation-menus' -d $'{"name": ___, "navigationMenuItems": ___, "navigationType": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(description = "Creates a new navigation menu.")
-	@POST
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "siteId")})
 	@Path("/sites/{siteId}/navigation-menus")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "NavigationMenu")})
 	public NavigationMenu postSiteNavigationMenu(
@@ -276,9 +276,8 @@ public abstract class BaseNavigationMenuResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/navigation-menus/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
@@ -286,12 +285,13 @@ public abstract class BaseNavigationMenuResourceImpl
 		}
 	)
 	@Path("/sites/{siteId}/navigation-menus/batch")
+	@POST
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "NavigationMenu")})
 	public Response postSiteNavigationMenuBatch(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -391,7 +391,7 @@ public abstract class BaseNavigationMenuResourceImpl
 		for (NavigationMenu navigationMenu : navigationMenus) {
 			putNavigationMenu(
 				navigationMenu.getId() != null ? navigationMenu.getId() :
-				(Long)parameters.get("navigationMenuId"),
+					(Long)parameters.get("navigationMenuId"),
 				navigationMenu);
 		}
 	}

@@ -79,9 +79,9 @@ public abstract class BaseAccountCategoryForecastResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-machine-learning/v1.0/accountCategoryForecasts/by-monthlyRevenue'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Get the forecast points")
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.QUERY, name = "accountIds"),
@@ -98,16 +98,16 @@ public abstract class BaseAccountCategoryForecastResourceImpl
 	@Tags(value = {@Tag(name = "AccountCategoryForecast")})
 	public Page<AccountCategoryForecast>
 			getAccountCategoryForecastsByMonthlyRevenuePage(
-				@Parameter(hidden = true) @QueryParam("accountIds") Long[]
-					accountIds,
-				@Parameter(hidden = true) @QueryParam("categoryIds") Long[]
-					categoryIds,
-				@Parameter(hidden = true) @QueryParam("forecastLength") Integer
-					forecastLength,
+				@Parameter(hidden = true) @QueryParam("accountIds")
+					Long[] accountIds,
+				@Parameter(hidden = true) @QueryParam("categoryIds")
+					Long[] categoryIds,
+				@Parameter(hidden = true) @QueryParam("forecastLength")
+					Integer forecastLength,
 				@Parameter(hidden = true) @QueryParam("forecastStartDate")
 					java.util.Date forecastStartDate,
-				@Parameter(hidden = true) @QueryParam("historyLength") Integer
-					historyLength,
+				@Parameter(hidden = true) @QueryParam("historyLength")
+					Integer historyLength,
 				@Context Pagination pagination)
 		throws Exception {
 

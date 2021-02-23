@@ -55,8 +55,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @GraphQLName("DisplayPageTemplate")
 @JsonFilter("Liferay.Vulcan")
 @Schema(
-	requiredProperties = {"title"},
-	description = "Represents a Display Page Template that has fields and is tied to a content type"
+	description = "Represents a Display Page Template that has fields and is tied to a content type",
+	requiredProperties = {"title"}
 )
 @XmlRootElement(name = "DisplayPageTemplate")
 public class DisplayPageTemplate implements Serializable {

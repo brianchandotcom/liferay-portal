@@ -78,7 +78,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseInstanceResourceImpl
-	implements InstanceResource, EntityModelResource,
+	implements EntityModelResource, InstanceResource,
 			   VulcanBatchEngineTaskItemDelegate<Instance> {
 
 	/**
@@ -86,8 +86,8 @@ public abstract class BaseInstanceResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/instances'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "processId"),
@@ -106,21 +106,21 @@ public abstract class BaseInstanceResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Instance")})
 	public Page<Instance> getProcessInstancesPage(
-			@NotNull @Parameter(hidden = true) @PathParam("processId") Long
-				processId,
-			@Parameter(hidden = true) @QueryParam("assigneeIds") Long[]
-				assigneeIds,
+			@NotNull @Parameter(hidden = true) @PathParam("processId")
+				Long processId,
+			@Parameter(hidden = true) @QueryParam("assigneeIds")
+				Long[] assigneeIds,
 			@Parameter(hidden = true) @QueryParam("classPKs") Long[] classPKs,
-			@Parameter(hidden = true) @QueryParam("completed") Boolean
-				completed,
-			@Parameter(hidden = true) @QueryParam("dateEnd") java.util.Date
-				dateEnd,
-			@Parameter(hidden = true) @QueryParam("dateStart") java.util.Date
-				dateStart,
-			@Parameter(hidden = true) @QueryParam("slaStatuses") String[]
-				slaStatuses,
-			@Parameter(hidden = true) @QueryParam("taskNames") String[]
-				taskNames,
+			@Parameter(hidden = true) @QueryParam("completed")
+				Boolean completed,
+			@Parameter(hidden = true) @QueryParam("dateEnd")
+				java.util.Date dateEnd,
+			@Parameter(hidden = true) @QueryParam("dateStart")
+				java.util.Date dateStart,
+			@Parameter(hidden = true) @QueryParam("slaStatuses")
+				String[] slaStatuses,
+			@Parameter(hidden = true) @QueryParam("taskNames")
+				String[] taskNames,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -132,16 +132,16 @@ public abstract class BaseInstanceResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/instances' -d $'{"assetTitle_i18n": ___, "assetType_i18n": ___, "className": ___, "classPK": ___, "completed": ___, "creator": ___, "dateCompletion": ___, "dateCreated": ___, "dateModified": ___, "duration": ___, "id": ___, "processId": ___, "processVersion": ___, "transitions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "processId")})
 	@Path("/processes/{processId}/instances")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Instance")})
 	public Instance postProcessInstance(
-			@NotNull @Parameter(hidden = true) @PathParam("processId") Long
-				processId,
+			@NotNull @Parameter(hidden = true) @PathParam("processId")
+				Long processId,
 			Instance instance)
 		throws Exception {
 
@@ -153,9 +153,8 @@ public abstract class BaseInstanceResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/instances/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "processId"),
@@ -163,13 +162,14 @@ public abstract class BaseInstanceResourceImpl
 		}
 	)
 	@Path("/processes/{processId}/instances/batch")
+	@POST
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Instance")})
 	public Response postProcessInstanceBatch(
-			@NotNull @Parameter(hidden = true) @PathParam("processId") Long
-				processId,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@NotNull @Parameter(hidden = true) @PathParam("processId")
+				Long processId,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -194,8 +194,8 @@ public abstract class BaseInstanceResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/instances/{instanceId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "processId"),
@@ -206,10 +206,10 @@ public abstract class BaseInstanceResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Instance")})
 	public void deleteProcessInstance(
-			@NotNull @Parameter(hidden = true) @PathParam("processId") Long
-				processId,
-			@NotNull @Parameter(hidden = true) @PathParam("instanceId") Long
-				instanceId)
+			@NotNull @Parameter(hidden = true) @PathParam("processId")
+				Long processId,
+			@NotNull @Parameter(hidden = true) @PathParam("instanceId")
+				Long instanceId)
 		throws Exception {
 	}
 
@@ -218,8 +218,8 @@ public abstract class BaseInstanceResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/instances/{instanceId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "processId"),
@@ -230,10 +230,10 @@ public abstract class BaseInstanceResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Instance")})
 	public Instance getProcessInstance(
-			@NotNull @Parameter(hidden = true) @PathParam("processId") Long
-				processId,
-			@NotNull @Parameter(hidden = true) @PathParam("instanceId") Long
-				instanceId)
+			@NotNull @Parameter(hidden = true) @PathParam("processId")
+				Long processId,
+			@NotNull @Parameter(hidden = true) @PathParam("instanceId")
+				Long instanceId)
 		throws Exception {
 
 		return new Instance();
@@ -244,23 +244,23 @@ public abstract class BaseInstanceResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/instances/{instanceId}' -d $'{"assetTitle_i18n": ___, "assetType_i18n": ___, "className": ___, "classPK": ___, "completed": ___, "creator": ___, "dateCompletion": ___, "dateCreated": ___, "dateModified": ___, "duration": ___, "id": ___, "processId": ___, "processVersion": ___, "transitions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PATCH
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "processId"),
 			@Parameter(in = ParameterIn.PATH, name = "instanceId")
 		}
 	)
+	@PATCH
 	@Path("/processes/{processId}/instances/{instanceId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Instance")})
 	public void patchProcessInstance(
-			@NotNull @Parameter(hidden = true) @PathParam("processId") Long
-				processId,
-			@NotNull @Parameter(hidden = true) @PathParam("instanceId") Long
-				instanceId,
+			@NotNull @Parameter(hidden = true) @PathParam("processId")
+				Long processId,
+			@NotNull @Parameter(hidden = true) @PathParam("instanceId")
+				Long instanceId,
 			Instance instance)
 		throws Exception {
 	}
@@ -270,23 +270,23 @@ public abstract class BaseInstanceResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/instances/{instanceId}/complete' -d $'{"assetTitle_i18n": ___, "assetType_i18n": ___, "className": ___, "classPK": ___, "completed": ___, "creator": ___, "dateCompletion": ___, "dateCreated": ___, "dateModified": ___, "duration": ___, "id": ___, "processId": ___, "processVersion": ___, "transitions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PATCH
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "processId"),
 			@Parameter(in = ParameterIn.PATH, name = "instanceId")
 		}
 	)
+	@PATCH
 	@Path("/processes/{processId}/instances/{instanceId}/complete")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Instance")})
 	public void patchProcessInstanceComplete(
-			@NotNull @Parameter(hidden = true) @PathParam("processId") Long
-				processId,
-			@NotNull @Parameter(hidden = true) @PathParam("instanceId") Long
-				instanceId,
+			@NotNull @Parameter(hidden = true) @PathParam("processId")
+				Long processId,
+			@NotNull @Parameter(hidden = true) @PathParam("instanceId")
+				Long instanceId,
 			Instance instance)
 		throws Exception {
 	}

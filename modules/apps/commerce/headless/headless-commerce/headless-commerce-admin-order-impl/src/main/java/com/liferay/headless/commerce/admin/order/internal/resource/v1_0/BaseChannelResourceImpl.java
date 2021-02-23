@@ -78,8 +78,8 @@ public abstract class BaseChannelResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/by-externalReferenceCode/{externalReferenceCode}/channel'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
@@ -90,7 +90,8 @@ public abstract class BaseChannelResourceImpl
 	@Tags(value = {@Tag(name = "Channel")})
 	public Channel getOrderByExternalReferenceCodeChannel(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode)
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode)
 		throws Exception {
 
 		return new Channel();
@@ -101,8 +102,8 @@ public abstract class BaseChannelResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/{id}/channel'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/orders/{id}/channel")
 	@Produces({"application/json", "application/xml"})

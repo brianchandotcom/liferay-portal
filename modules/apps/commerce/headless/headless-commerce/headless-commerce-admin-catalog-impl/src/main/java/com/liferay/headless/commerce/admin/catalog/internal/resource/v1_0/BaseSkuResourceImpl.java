@@ -78,7 +78,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseSkuResourceImpl
-	implements SkuResource, EntityModelResource,
+	implements EntityModelResource, SkuResource,
 			   VulcanBatchEngineTaskItemDelegate<Sku> {
 
 	/**
@@ -86,8 +86,8 @@ public abstract class BaseSkuResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/skus'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode"),
@@ -100,7 +100,8 @@ public abstract class BaseSkuResourceImpl
 	@Tags(value = {@Tag(name = "Sku")})
 	public Page<Sku> getProductByExternalReferenceCodeSkusPage(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode,
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -112,20 +113,21 @@ public abstract class BaseSkuResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/skus' -d $'{"cost": ___, "depth": ___, "displayDate": ___, "expirationDate": ___, "externalReferenceCode": ___, "gtin": ___, "height": ___, "manufacturerPartNumber": ___, "neverExpire": ___, "options": ___, "price": ___, "promoPrice": ___, "published": ___, "purchasable": ___, "sku": ___, "unspsc": ___, "weight": ___, "width": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
 		}
 	)
 	@Path("/products/by-externalReferenceCode/{externalReferenceCode}/skus")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Sku")})
 	public Sku postProductByExternalReferenceCodeSku(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode,
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode,
 			Sku sku)
 		throws Exception {
 
@@ -137,8 +139,8 @@ public abstract class BaseSkuResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}/skus'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "id"),
@@ -162,11 +164,11 @@ public abstract class BaseSkuResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}/skus' -d $'{"cost": ___, "depth": ___, "displayDate": ___, "expirationDate": ___, "externalReferenceCode": ___, "gtin": ___, "height": ___, "manufacturerPartNumber": ___, "neverExpire": ___, "options": ___, "price": ___, "promoPrice": ___, "published": ___, "purchasable": ___, "sku": ___, "unspsc": ___, "weight": ___, "width": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/products/{id}/skus")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Sku")})
 	public Sku postProductIdSku(
@@ -182,9 +184,8 @@ public abstract class BaseSkuResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}/skus/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "id"),
@@ -192,12 +193,13 @@ public abstract class BaseSkuResourceImpl
 		}
 	)
 	@Path("/products/{id}/skus/batch")
+	@POST
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Sku")})
 	public Response postProductIdSkuBatch(
 			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -222,8 +224,8 @@ public abstract class BaseSkuResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/skus'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.QUERY, name = "search"),
@@ -250,8 +252,8 @@ public abstract class BaseSkuResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/skus/by-externalReferenceCode/{externalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
@@ -262,7 +264,8 @@ public abstract class BaseSkuResourceImpl
 	@Tags(value = {@Tag(name = "Sku")})
 	public Response deleteSkuByExternalReferenceCode(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode)
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode)
 		throws Exception {
 
 		Response.ResponseBuilder responseBuilder = Response.ok();
@@ -275,8 +278,8 @@ public abstract class BaseSkuResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/skus/by-externalReferenceCode/{externalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
@@ -287,7 +290,8 @@ public abstract class BaseSkuResourceImpl
 	@Tags(value = {@Tag(name = "Sku")})
 	public Sku getSkuByExternalReferenceCode(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode)
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode)
 		throws Exception {
 
 		return new Sku();
@@ -298,20 +302,21 @@ public abstract class BaseSkuResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/skus/by-externalReferenceCode/{externalReferenceCode}' -d $'{"cost": ___, "depth": ___, "displayDate": ___, "expirationDate": ___, "externalReferenceCode": ___, "gtin": ___, "height": ___, "manufacturerPartNumber": ___, "neverExpire": ___, "options": ___, "price": ___, "promoPrice": ___, "published": ___, "purchasable": ___, "sku": ___, "unspsc": ___, "weight": ___, "width": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PATCH
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
 		}
 	)
+	@PATCH
 	@Path("/skus/by-externalReferenceCode/{externalReferenceCode}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Sku")})
 	public Response patchSkuByExternalReferenceCode(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode,
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode,
 			Sku sku)
 		throws Exception {
 
@@ -325,8 +330,8 @@ public abstract class BaseSkuResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/skus/{id}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/skus/{id}")
 	@Produces({"application/json", "application/xml"})
@@ -345,9 +350,9 @@ public abstract class BaseSkuResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/skus/{id}/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
 	@DELETE
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "id"),
@@ -359,8 +364,8 @@ public abstract class BaseSkuResourceImpl
 	@Tags(value = {@Tag(name = "Sku")})
 	public Response deleteSkuBatch(
 			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -385,8 +390,8 @@ public abstract class BaseSkuResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/skus/{id}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/skus/{id}")
 	@Produces({"application/json", "application/xml"})
@@ -403,10 +408,10 @@ public abstract class BaseSkuResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/skus/{id}' -d $'{"cost": ___, "depth": ___, "displayDate": ___, "expirationDate": ___, "externalReferenceCode": ___, "gtin": ___, "height": ___, "manufacturerPartNumber": ___, "neverExpire": ___, "options": ___, "price": ___, "promoPrice": ___, "published": ___, "purchasable": ___, "sku": ___, "unspsc": ___, "weight": ___, "width": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PATCH
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
+	@PATCH
 	@Path("/skus/{id}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Sku")})

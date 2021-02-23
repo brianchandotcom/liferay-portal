@@ -72,7 +72,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseShippingMethodResourceImpl
-	implements ShippingMethodResource, EntityModelResource,
+	implements EntityModelResource, ShippingMethodResource,
 			   VulcanBatchEngineTaskItemDelegate<ShippingMethod> {
 
 	/**
@@ -80,9 +80,9 @@ public abstract class BaseShippingMethodResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/carts/{cartId}/shipping-methods'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrive payment methods available for the Cart.")
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "cartId")})
 	@Path("/carts/{cartId}/shipping-methods")
 	@Produces({"application/json", "application/xml"})

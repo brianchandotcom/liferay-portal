@@ -226,7 +226,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		String irrelevantContentType =
 			testGetDataDefinitionByContentTypeContentTypePage_getIrrelevantContentType();
 
-		if ((irrelevantContentType != null)) {
+		if (irrelevantContentType != null) {
 			DataDefinition irrelevantDataDefinition =
 				testGetDataDefinitionByContentTypeContentTypePage_addDataDefinition(
 					irrelevantContentType, randomIrrelevantDataDefinition());

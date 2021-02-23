@@ -204,7 +204,7 @@ public abstract class BaseWebUrlResourceTestCase {
 		String irrelevantOrganizationId =
 			testGetOrganizationWebUrlsPage_getIrrelevantOrganizationId();
 
-		if ((irrelevantOrganizationId != null)) {
+		if (irrelevantOrganizationId != null) {
 			WebUrl irrelevantWebUrl = testGetOrganizationWebUrlsPage_addWebUrl(
 				irrelevantOrganizationId, randomIrrelevantWebUrl());
 
@@ -266,7 +266,7 @@ public abstract class BaseWebUrlResourceTestCase {
 		Long irrelevantUserAccountId =
 			testGetUserAccountWebUrlsPage_getIrrelevantUserAccountId();
 
-		if ((irrelevantUserAccountId != null)) {
+		if (irrelevantUserAccountId != null) {
 			WebUrl irrelevantWebUrl = testGetUserAccountWebUrlsPage_addWebUrl(
 				irrelevantUserAccountId, randomIrrelevantWebUrl());
 

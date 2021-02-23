@@ -54,8 +54,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @GraphQLName("KnowledgeBaseArticle")
 @JsonFilter("Liferay.Vulcan")
 @Schema(
-	requiredProperties = {"articleBody", "title"},
-	description = "Represents a Knowledge Base article (`KBArticle`), the main entity in the Knowledge Base API."
+	description = "Represents a Knowledge Base article (`KBArticle`), the main entity in the Knowledge Base API.",
+	requiredProperties = {"articleBody", "title"}
 )
 @XmlRootElement(name = "KnowledgeBaseArticle")
 public class KnowledgeBaseArticle implements Serializable {

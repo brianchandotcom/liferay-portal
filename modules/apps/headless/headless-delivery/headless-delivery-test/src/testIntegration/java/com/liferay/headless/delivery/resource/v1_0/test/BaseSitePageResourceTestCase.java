@@ -215,7 +215,7 @@ public abstract class BaseSitePageResourceTestCase {
 		Long siteId = testGetSiteSitePagesPage_getSiteId();
 		Long irrelevantSiteId = testGetSiteSitePagesPage_getIrrelevantSiteId();
 
-		if ((irrelevantSiteId != null)) {
+		if (irrelevantSiteId != null) {
 			SitePage irrelevantSitePage = testGetSiteSitePagesPage_addSitePage(
 				irrelevantSiteId, randomIrrelevantSitePage());
 

@@ -215,7 +215,7 @@ public abstract class BaseAccountOrganizationResourceTestCase {
 		String irrelevantExternalReferenceCode =
 			testGetAccountByExternalReferenceCodeAccountOrganizationsPage_getIrrelevantExternalReferenceCode();
 
-		if ((irrelevantExternalReferenceCode != null)) {
+		if (irrelevantExternalReferenceCode != null) {
 			AccountOrganization irrelevantAccountOrganization =
 				testGetAccountByExternalReferenceCodeAccountOrganizationsPage_addAccountOrganization(
 					irrelevantExternalReferenceCode,
@@ -400,7 +400,7 @@ public abstract class BaseAccountOrganizationResourceTestCase {
 		Long irrelevantId =
 			testGetAccountIdAccountOrganizationsPage_getIrrelevantId();
 
-		if ((irrelevantId != null)) {
+		if (irrelevantId != null) {
 			AccountOrganization irrelevantAccountOrganization =
 				testGetAccountIdAccountOrganizationsPage_addAccountOrganization(
 					irrelevantId, randomIrrelevantAccountOrganization());

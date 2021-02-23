@@ -225,7 +225,7 @@ public abstract class BaseSkuResourceTestCase {
 		String irrelevantExternalReferenceCode =
 			testGetProductByExternalReferenceCodeSkusPage_getIrrelevantExternalReferenceCode();
 
-		if ((irrelevantExternalReferenceCode != null)) {
+		if (irrelevantExternalReferenceCode != null) {
 			Sku irrelevantSku =
 				testGetProductByExternalReferenceCodeSkusPage_addSku(
 					irrelevantExternalReferenceCode, randomIrrelevantSku());
@@ -364,7 +364,7 @@ public abstract class BaseSkuResourceTestCase {
 		Long id = testGetProductIdSkusPage_getId();
 		Long irrelevantId = testGetProductIdSkusPage_getIrrelevantId();
 
-		if ((irrelevantId != null)) {
+		if (irrelevantId != null) {
 			Sku irrelevantSku = testGetProductIdSkusPage_addSku(
 				irrelevantId, randomIrrelevantSku());
 

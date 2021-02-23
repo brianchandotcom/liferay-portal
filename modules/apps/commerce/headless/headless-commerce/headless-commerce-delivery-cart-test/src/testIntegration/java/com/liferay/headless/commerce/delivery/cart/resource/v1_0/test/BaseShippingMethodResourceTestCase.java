@@ -205,7 +205,7 @@ public abstract class BaseShippingMethodResourceTestCase {
 		Long irrelevantCartId =
 			testGetCartShippingMethodsPage_getIrrelevantCartId();
 
-		if ((irrelevantCartId != null)) {
+		if (irrelevantCartId != null) {
 			ShippingMethod irrelevantShippingMethod =
 				testGetCartShippingMethodsPage_addShippingMethod(
 					irrelevantCartId, randomIrrelevantShippingMethod());

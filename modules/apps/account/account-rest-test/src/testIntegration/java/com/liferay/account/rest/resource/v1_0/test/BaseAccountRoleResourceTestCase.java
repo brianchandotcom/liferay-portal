@@ -269,7 +269,7 @@ public abstract class BaseAccountRoleResourceTestCase {
 		String irrelevantExternalReferenceCode =
 			testGetAccountRolesByExternalReferenceCodePage_getIrrelevantExternalReferenceCode();
 
-		if ((irrelevantExternalReferenceCode != null)) {
+		if (irrelevantExternalReferenceCode != null) {
 			AccountRole irrelevantAccountRole =
 				testGetAccountRolesByExternalReferenceCodePage_addAccountRole(
 					irrelevantExternalReferenceCode,
@@ -539,7 +539,7 @@ public abstract class BaseAccountRoleResourceTestCase {
 		Long irrelevantAccountId =
 			testGetAccountRolesPage_getIrrelevantAccountId();
 
-		if ((irrelevantAccountId != null)) {
+		if (irrelevantAccountId != null) {
 			AccountRole irrelevantAccountRole =
 				testGetAccountRolesPage_addAccountRole(
 					irrelevantAccountId, randomIrrelevantAccountRole());

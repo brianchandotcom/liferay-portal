@@ -217,7 +217,7 @@ public abstract class BaseDisplayPageTemplateResourceTestCase {
 		Long irrelevantSiteId =
 			testGetSiteDisplayPageTemplatesPage_getIrrelevantSiteId();
 
-		if ((irrelevantSiteId != null)) {
+		if (irrelevantSiteId != null) {
 			DisplayPageTemplate irrelevantDisplayPageTemplate =
 				testGetSiteDisplayPageTemplatesPage_addDisplayPageTemplate(
 					irrelevantSiteId, randomIrrelevantDisplayPageTemplate());

@@ -78,7 +78,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseSpecificationResourceImpl
-	implements SpecificationResource, EntityModelResource,
+	implements EntityModelResource, SpecificationResource,
 			   VulcanBatchEngineTaskItemDelegate<Specification> {
 
 	/**
@@ -86,8 +86,8 @@ public abstract class BaseSpecificationResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/specifications'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.QUERY, name = "search"),
@@ -114,10 +114,10 @@ public abstract class BaseSpecificationResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/specifications' -d $'{"description": ___, "facetable": ___, "key": ___, "optionCategory": ___, "title": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Path("/specifications")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Specification")})
 	public Specification postSpecification(Specification specification)
@@ -131,18 +131,18 @@ public abstract class BaseSpecificationResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/specifications/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
 	@Path("/specifications/batch")
+	@POST
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Specification")})
 	public Response postSpecificationBatch(
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -167,8 +167,8 @@ public abstract class BaseSpecificationResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/specifications/{id}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/specifications/{id}")
 	@Produces({"application/json", "application/xml"})
@@ -187,9 +187,9 @@ public abstract class BaseSpecificationResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/specifications/{id}/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
 	@DELETE
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "id"),
@@ -201,8 +201,8 @@ public abstract class BaseSpecificationResourceImpl
 	@Tags(value = {@Tag(name = "Specification")})
 	public Response deleteSpecificationBatch(
 			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -227,8 +227,8 @@ public abstract class BaseSpecificationResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/specifications/{id}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/specifications/{id}")
 	@Produces({"application/json", "application/xml"})
@@ -245,10 +245,10 @@ public abstract class BaseSpecificationResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/specifications/{id}' -d $'{"description": ___, "facetable": ___, "key": ___, "optionCategory": ___, "title": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PATCH
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
+	@PATCH
 	@Path("/specifications/{id}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Specification")})

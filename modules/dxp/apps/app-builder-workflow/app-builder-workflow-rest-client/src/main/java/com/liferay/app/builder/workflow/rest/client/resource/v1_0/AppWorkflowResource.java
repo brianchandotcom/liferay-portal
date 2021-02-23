@@ -17,6 +17,7 @@ package com.liferay.app.builder.workflow.rest.client.resource.v1_0;
 import com.liferay.app.builder.workflow.rest.client.dto.v1_0.AppWorkflow;
 import com.liferay.app.builder.workflow.rest.client.http.HttpInvoker;
 import com.liferay.app.builder.workflow.rest.client.problem.Problem;
+import com.liferay.app.builder.workflow.rest.client.serdes.v1_0.AppWorkflowSerDes;
 
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -191,8 +192,7 @@ public interface AppWorkflowResource {
 				"HTTP response status code: " + httpResponse.getStatusCode());
 
 			try {
-				return com.liferay.app.builder.workflow.rest.client.serdes.v1_0.
-					AppWorkflowSerDes.toDTO(content);
+				return AppWorkflowSerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -255,8 +255,7 @@ public interface AppWorkflowResource {
 				"HTTP response status code: " + httpResponse.getStatusCode());
 
 			try {
-				return com.liferay.app.builder.workflow.rest.client.serdes.v1_0.
-					AppWorkflowSerDes.toDTO(content);
+				return AppWorkflowSerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -322,8 +321,7 @@ public interface AppWorkflowResource {
 				"HTTP response status code: " + httpResponse.getStatusCode());
 
 			try {
-				return com.liferay.app.builder.workflow.rest.client.serdes.v1_0.
-					AppWorkflowSerDes.toDTO(content);
+				return AppWorkflowSerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(

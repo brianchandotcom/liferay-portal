@@ -54,8 +54,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @GraphQLName("BlogPosting")
 @JsonFilter("Liferay.Vulcan")
 @Schema(
-	requiredProperties = {"articleBody", "headline"},
-	description = "Represents a blog post. See [BlogPosting](https://www.schema.org/BlogPosting) for more information."
+	description = "Represents a blog post. See [BlogPosting](https://www.schema.org/BlogPosting) for more information.",
+	requiredProperties = {"articleBody", "headline"}
 )
 @XmlRootElement(name = "BlogPosting")
 public class BlogPosting implements Serializable {

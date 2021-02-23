@@ -111,8 +111,8 @@ public class Mutation {
 	@GraphQLField
 	public Response updateAvailabilityEstimate(
 			@GraphQLName("id") Long id,
-			@GraphQLName("availabilityEstimate") AvailabilityEstimate
-				availabilityEstimate)
+			@GraphQLName("availabilityEstimate")
+				AvailabilityEstimate availabilityEstimate)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -142,8 +142,8 @@ public class Mutation {
 	public AvailabilityEstimate
 			createCommerceAdminSiteSettingGroupAvailabilityEstimate(
 				@GraphQLName("groupId") Long groupId,
-				@GraphQLName("availabilityEstimate") AvailabilityEstimate
-					availabilityEstimate)
+				@GraphQLName("availabilityEstimate")
+					AvailabilityEstimate availabilityEstimate)
 		throws Exception {
 
 		return _applyComponentServiceObjects(

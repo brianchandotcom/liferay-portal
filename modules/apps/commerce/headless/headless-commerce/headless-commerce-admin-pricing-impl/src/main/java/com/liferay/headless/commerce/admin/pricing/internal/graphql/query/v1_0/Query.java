@@ -194,8 +194,8 @@ public class Query {
 	@GraphQLField
 	public DiscountAccountGroupPage
 			discountByExternalReferenceCodeDiscountAccountGroups(
-				@GraphQLName("externalReferenceCode") String
-					externalReferenceCode,
+				@GraphQLName("externalReferenceCode")
+					String externalReferenceCode,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page)
 		throws Exception {
@@ -237,8 +237,8 @@ public class Query {
 	@GraphQLField
 	public DiscountCategoryPage
 			discountByExternalReferenceCodeDiscountCategories(
-				@GraphQLName("externalReferenceCode") String
-					externalReferenceCode,
+				@GraphQLName("externalReferenceCode")
+					String externalReferenceCode,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page)
 		throws Exception {
@@ -499,8 +499,8 @@ public class Query {
 	@GraphQLField
 	public PriceListAccountGroupPage
 			priceListByExternalReferenceCodePriceListAccountGroup(
-				@GraphQLName("externalReferenceCode") String
-					externalReferenceCode,
+				@GraphQLName("externalReferenceCode")
+					String externalReferenceCode,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page)
 		throws Exception {

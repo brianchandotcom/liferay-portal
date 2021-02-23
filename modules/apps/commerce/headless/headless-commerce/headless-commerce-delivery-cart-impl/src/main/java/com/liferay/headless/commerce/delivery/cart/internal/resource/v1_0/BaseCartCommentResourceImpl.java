@@ -87,8 +87,8 @@ public abstract class BaseCartCommentResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/cart-comments/{cartCommentId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "cartCommentId")}
 	)
@@ -96,8 +96,8 @@ public abstract class BaseCartCommentResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "CartComment")})
 	public Response deleteCartComment(
-			@NotNull @Parameter(hidden = true) @PathParam("cartCommentId") Long
-				cartCommentId)
+			@NotNull @Parameter(hidden = true) @PathParam("cartCommentId")
+				Long cartCommentId)
 		throws Exception {
 
 		Response.ResponseBuilder responseBuilder = Response.ok();
@@ -110,9 +110,9 @@ public abstract class BaseCartCommentResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/cart-comments/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
 	@DELETE
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
@@ -120,8 +120,8 @@ public abstract class BaseCartCommentResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "CartComment")})
 	public Response deleteCartCommentBatch(
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -146,8 +146,8 @@ public abstract class BaseCartCommentResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/cart-comments/{cartCommentId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "cartCommentId")}
 	)
@@ -155,8 +155,8 @@ public abstract class BaseCartCommentResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "CartComment")})
 	public CartComment getCartComment(
-			@NotNull @Parameter(hidden = true) @PathParam("cartCommentId") Long
-				cartCommentId)
+			@NotNull @Parameter(hidden = true) @PathParam("cartCommentId")
+				Long cartCommentId)
 		throws Exception {
 
 		return new CartComment();
@@ -167,18 +167,18 @@ public abstract class BaseCartCommentResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/cart-comments/{cartCommentId}' -d $'{"content": ___, "restricted": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PATCH
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "cartCommentId")}
 	)
+	@PATCH
 	@Path("/cart-comments/{cartCommentId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "CartComment")})
 	public CartComment patchCartComment(
-			@NotNull @Parameter(hidden = true) @PathParam("cartCommentId") Long
-				cartCommentId,
+			@NotNull @Parameter(hidden = true) @PathParam("cartCommentId")
+				Long cartCommentId,
 			CartComment cartComment)
 		throws Exception {
 
@@ -210,18 +210,18 @@ public abstract class BaseCartCommentResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/cart-comments/{cartCommentId}' -d $'{"content": ___, "restricted": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PUT
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "cartCommentId")}
 	)
 	@Path("/cart-comments/{cartCommentId}")
 	@Produces({"application/json", "application/xml"})
+	@PUT
 	@Tags(value = {@Tag(name = "CartComment")})
 	public CartComment putCartComment(
-			@NotNull @Parameter(hidden = true) @PathParam("cartCommentId") Long
-				cartCommentId,
+			@NotNull @Parameter(hidden = true) @PathParam("cartCommentId")
+				Long cartCommentId,
 			CartComment cartComment)
 		throws Exception {
 
@@ -233,18 +233,18 @@ public abstract class BaseCartCommentResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/cart-comments/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@PUT
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
 	@Path("/cart-comments/batch")
 	@Produces("application/json")
+	@PUT
 	@Tags(value = {@Tag(name = "CartComment")})
 	public Response putCartCommentBatch(
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -269,8 +269,8 @@ public abstract class BaseCartCommentResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/carts/{cartId}/comments'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "cartId"),
@@ -294,11 +294,11 @@ public abstract class BaseCartCommentResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/carts/{cartId}/comments' -d $'{"content": ___, "restricted": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "cartId")})
 	@Path("/carts/{cartId}/comments")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "CartComment")})
 	public CartComment postCartComment(
@@ -383,7 +383,7 @@ public abstract class BaseCartCommentResourceImpl
 		for (CartComment cartComment : cartComments) {
 			putCartComment(
 				cartComment.getId() != null ? cartComment.getId() :
-				(Long)parameters.get("cartCommentId"),
+					(Long)parameters.get("cartCommentId"),
 				cartComment);
 		}
 	}

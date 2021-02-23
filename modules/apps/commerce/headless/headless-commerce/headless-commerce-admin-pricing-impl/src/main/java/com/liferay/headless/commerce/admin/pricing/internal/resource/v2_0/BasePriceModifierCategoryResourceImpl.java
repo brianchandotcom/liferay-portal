@@ -77,7 +77,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v2.0")
 public abstract class BasePriceModifierCategoryResourceImpl
-	implements PriceModifierCategoryResource, EntityModelResource,
+	implements EntityModelResource, PriceModifierCategoryResource,
 			   VulcanBatchEngineTaskItemDelegate<PriceModifierCategory> {
 
 	/**
@@ -85,8 +85,8 @@ public abstract class BasePriceModifierCategoryResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-modifier-categories/{priceModifierCategoryId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "priceModifierCategoryId")
@@ -97,7 +97,8 @@ public abstract class BasePriceModifierCategoryResourceImpl
 	@Tags(value = {@Tag(name = "PriceModifierCategory")})
 	public void deletePriceModifierCategory(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("priceModifierCategoryId") Long priceModifierCategoryId)
+			@PathParam("priceModifierCategoryId")
+				Long priceModifierCategoryId)
 		throws Exception {
 	}
 
@@ -106,9 +107,9 @@ public abstract class BasePriceModifierCategoryResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-modifier-categories/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
 	@DELETE
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
@@ -116,8 +117,8 @@ public abstract class BasePriceModifierCategoryResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "PriceModifierCategory")})
 	public Response deletePriceModifierCategoryBatch(
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -142,8 +143,8 @@ public abstract class BasePriceModifierCategoryResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-modifiers/by-externalReferenceCode/{externalReferenceCode}/price-modifier-categories'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode"),
@@ -159,8 +160,8 @@ public abstract class BasePriceModifierCategoryResourceImpl
 	public Page<PriceModifierCategory>
 			getPriceModifierByExternalReferenceCodePriceModifierCategoriesPage(
 				@NotNull @Parameter(hidden = true)
-				@PathParam("externalReferenceCode") String
-					externalReferenceCode,
+				@PathParam("externalReferenceCode")
+					String externalReferenceCode,
 				@Context Pagination pagination)
 		throws Exception {
 
@@ -172,9 +173,8 @@ public abstract class BasePriceModifierCategoryResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-modifiers/by-externalReferenceCode/{externalReferenceCode}/price-modifier-categories' -d $'{"categoryExternalReferenceCode": ___, "categoryId": ___, "priceModifierExternalReferenceCode": ___, "priceModifierId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
@@ -183,13 +183,14 @@ public abstract class BasePriceModifierCategoryResourceImpl
 	@Path(
 		"/price-modifiers/by-externalReferenceCode/{externalReferenceCode}/price-modifier-categories"
 	)
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "PriceModifierCategory")})
 	public PriceModifierCategory
 			postPriceModifierByExternalReferenceCodePriceModifierCategory(
 				@NotNull @Parameter(hidden = true)
-				@PathParam("externalReferenceCode") String
-					externalReferenceCode,
+				@PathParam("externalReferenceCode")
+					String externalReferenceCode,
 				PriceModifierCategory priceModifierCategory)
 		throws Exception {
 
@@ -201,8 +202,8 @@ public abstract class BasePriceModifierCategoryResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-modifiers/{id}/price-modifier-categories'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "id"),
@@ -232,11 +233,11 @@ public abstract class BasePriceModifierCategoryResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-modifiers/{id}/price-modifier-categories' -d $'{"categoryExternalReferenceCode": ___, "categoryId": ___, "priceModifierExternalReferenceCode": ___, "priceModifierId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/price-modifiers/{id}/price-modifier-categories")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "PriceModifierCategory")})
 	public PriceModifierCategory postPriceModifierIdPriceModifierCategory(
@@ -252,9 +253,8 @@ public abstract class BasePriceModifierCategoryResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-modifiers/price-modifier-categories/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "id"),
@@ -262,12 +262,13 @@ public abstract class BasePriceModifierCategoryResourceImpl
 		}
 	)
 	@Path("/price-modifiers/price-modifier-categories/batch")
+	@POST
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "PriceModifierCategory")})
 	public Response postPriceModifierIdPriceModifierCategoryBatch(
 			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 

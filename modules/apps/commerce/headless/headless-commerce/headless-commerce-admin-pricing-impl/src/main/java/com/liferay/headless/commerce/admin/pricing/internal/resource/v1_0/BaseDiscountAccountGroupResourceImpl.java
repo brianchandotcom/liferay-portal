@@ -85,8 +85,8 @@ public abstract class BaseDiscountAccountGroupResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-pricing/v1.0/discountAccountGroups/{id}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/discountAccountGroups/{id}")
 	@Produces({"application/json", "application/xml"})
@@ -105,9 +105,9 @@ public abstract class BaseDiscountAccountGroupResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-pricing/v1.0/discountAccountGroups/{id}/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
 	@DELETE
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "id"),
@@ -119,8 +119,8 @@ public abstract class BaseDiscountAccountGroupResourceImpl
 	@Tags(value = {@Tag(name = "DiscountAccountGroup")})
 	public Response deleteDiscountAccountGroupBatch(
 			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -145,8 +145,8 @@ public abstract class BaseDiscountAccountGroupResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v1.0/discounts/by-externalReferenceCode/{externalReferenceCode}/discountAccountGroups'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode"),
@@ -162,8 +162,8 @@ public abstract class BaseDiscountAccountGroupResourceImpl
 	public Page<DiscountAccountGroup>
 			getDiscountByExternalReferenceCodeDiscountAccountGroupsPage(
 				@NotNull @Parameter(hidden = true)
-				@PathParam("externalReferenceCode") String
-					externalReferenceCode,
+				@PathParam("externalReferenceCode")
+					String externalReferenceCode,
 				@Context Pagination pagination)
 		throws Exception {
 
@@ -175,9 +175,8 @@ public abstract class BaseDiscountAccountGroupResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-pricing/v1.0/discounts/by-externalReferenceCode/{externalReferenceCode}/discountAccountGroups' -d $'{"accountGroupExternalReferenceCode": ___, "accountGroupId": ___, "discountExternalReferenceCode": ___, "discountId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
@@ -186,13 +185,14 @@ public abstract class BaseDiscountAccountGroupResourceImpl
 	@Path(
 		"/discounts/by-externalReferenceCode/{externalReferenceCode}/discountAccountGroups"
 	)
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DiscountAccountGroup")})
 	public DiscountAccountGroup
 			postDiscountByExternalReferenceCodeDiscountAccountGroup(
 				@NotNull @Parameter(hidden = true)
-				@PathParam("externalReferenceCode") String
-					externalReferenceCode,
+				@PathParam("externalReferenceCode")
+					String externalReferenceCode,
 				DiscountAccountGroup discountAccountGroup)
 		throws Exception {
 
@@ -204,8 +204,8 @@ public abstract class BaseDiscountAccountGroupResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v1.0/discounts/{id}/discountAccountGroups'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "id"),
@@ -229,11 +229,11 @@ public abstract class BaseDiscountAccountGroupResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-pricing/v1.0/discounts/{id}/discountAccountGroups' -d $'{"accountGroupExternalReferenceCode": ___, "accountGroupId": ___, "discountExternalReferenceCode": ___, "discountId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/discounts/{id}/discountAccountGroups")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DiscountAccountGroup")})
 	public DiscountAccountGroup postDiscountIdDiscountAccountGroup(
@@ -249,9 +249,8 @@ public abstract class BaseDiscountAccountGroupResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-pricing/v1.0/discounts/{id}/discountAccountGroups/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "id"),
@@ -259,12 +258,13 @@ public abstract class BaseDiscountAccountGroupResourceImpl
 		}
 	)
 	@Path("/discounts/{id}/discountAccountGroups/batch")
+	@POST
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DiscountAccountGroup")})
 	public Response postDiscountIdDiscountAccountGroupBatch(
 			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 

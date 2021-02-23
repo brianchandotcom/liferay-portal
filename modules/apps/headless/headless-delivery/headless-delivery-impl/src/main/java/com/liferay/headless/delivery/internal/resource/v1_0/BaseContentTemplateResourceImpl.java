@@ -81,8 +81,8 @@ public abstract class BaseContentTemplateResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/asset-libraries/{assetLibraryId}/content-templates'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "assetLibraryId"),
@@ -97,11 +97,11 @@ public abstract class BaseContentTemplateResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ContentTemplate")})
 	public Page<ContentTemplate> getAssetLibraryContentTemplatesPage(
-			@NotNull @Parameter(hidden = true) @PathParam("assetLibraryId") Long
-				assetLibraryId,
+			@NotNull @Parameter(hidden = true) @PathParam("assetLibraryId")
+				Long assetLibraryId,
 			@Parameter(hidden = true) @QueryParam("search") String search,
-			@Context com.liferay.portal.vulcan.aggregation.Aggregation
-				aggregation,
+			@Context
+				com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)
 		throws Exception {
@@ -114,8 +114,8 @@ public abstract class BaseContentTemplateResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/content-templates'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
@@ -132,8 +132,8 @@ public abstract class BaseContentTemplateResourceImpl
 	public Page<ContentTemplate> getSiteContentTemplatesPage(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			@Parameter(hidden = true) @QueryParam("search") String search,
-			@Context com.liferay.portal.vulcan.aggregation.Aggregation
-				aggregation,
+			@Context
+				com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)
 		throws Exception {
@@ -146,8 +146,8 @@ public abstract class BaseContentTemplateResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/content-templates/{contentTemplateId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),

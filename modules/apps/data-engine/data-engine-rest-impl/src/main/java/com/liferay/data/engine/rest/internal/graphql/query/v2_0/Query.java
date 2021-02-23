@@ -549,8 +549,8 @@ public class Query {
 	@GraphQLField
 	public DataRecordCollection dataRecordCollectionByDataRecordCollectionKey(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("dataRecordCollectionKey") String
-				dataRecordCollectionKey)
+			@GraphQLName("dataRecordCollectionKey")
+				String dataRecordCollectionKey)
 		throws Exception {
 
 		return _applyComponentServiceObjects(

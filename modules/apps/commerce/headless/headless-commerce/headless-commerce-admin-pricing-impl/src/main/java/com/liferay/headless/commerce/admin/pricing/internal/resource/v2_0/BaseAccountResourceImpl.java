@@ -78,8 +78,8 @@ public abstract class BaseAccountResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discount-accounts/{discountAccountId}/account'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "discountAccountId")}
 	)
@@ -99,8 +99,8 @@ public abstract class BaseAccountResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-list-accounts/{priceListAccountId}/account'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "priceListAccountId")}
 	)

@@ -357,7 +357,7 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 		Long irrelevantWikiPageId =
 			testGetWikiPageWikiPageAttachmentsPage_getIrrelevantWikiPageId();
 
-		if ((irrelevantWikiPageId != null)) {
+		if (irrelevantWikiPageId != null) {
 			WikiPageAttachment irrelevantWikiPageAttachment =
 				testGetWikiPageWikiPageAttachmentsPage_addWikiPageAttachment(
 					irrelevantWikiPageId, randomIrrelevantWikiPageAttachment());

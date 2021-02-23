@@ -423,7 +423,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		Long irrelevantParentKnowledgeBaseFolderId =
 			testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_getIrrelevantParentKnowledgeBaseFolderId();
 
-		if ((irrelevantParentKnowledgeBaseFolderId != null)) {
+		if (irrelevantParentKnowledgeBaseFolderId != null) {
 			KnowledgeBaseFolder irrelevantKnowledgeBaseFolder =
 				testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_addKnowledgeBaseFolder(
 					irrelevantParentKnowledgeBaseFolderId,
@@ -590,7 +590,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		Long irrelevantSiteId =
 			testGetSiteKnowledgeBaseFoldersPage_getIrrelevantSiteId();
 
-		if ((irrelevantSiteId != null)) {
+		if (irrelevantSiteId != null) {
 			KnowledgeBaseFolder irrelevantKnowledgeBaseFolder =
 				testGetSiteKnowledgeBaseFoldersPage_addKnowledgeBaseFolder(
 					irrelevantSiteId, randomIrrelevantKnowledgeBaseFolder());

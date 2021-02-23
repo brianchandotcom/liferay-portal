@@ -58,8 +58,8 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/bulk/v1.0/taxonomy-categories/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
+	@Override
 	@PATCH
 	@Path("/taxonomy-categories/batch")
 	@Tags(value = {@Tag(name = "TaxonomyCategory")})
@@ -73,10 +73,10 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/bulk/v1.0/taxonomy-categories/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PUT
+	@Override
 	@Path("/taxonomy-categories/batch")
+	@PUT
 	@Tags(value = {@Tag(name = "TaxonomyCategory")})
 	public void putTaxonomyCategoryBatch(
 			TaxonomyCategoryBulkSelection taxonomyCategoryBulkSelection)

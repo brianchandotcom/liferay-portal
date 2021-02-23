@@ -214,7 +214,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 		Long irrelevantWorkflowInstanceId =
 			testGetWorkflowInstanceWorkflowTasksPage_getIrrelevantWorkflowInstanceId();
 
-		if ((irrelevantWorkflowInstanceId != null)) {
+		if (irrelevantWorkflowInstanceId != null) {
 			WorkflowTask irrelevantWorkflowTask =
 				testGetWorkflowInstanceWorkflowTasksPage_addWorkflowTask(
 					irrelevantWorkflowInstanceId,
@@ -341,7 +341,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 		Long irrelevantWorkflowInstanceId =
 			testGetWorkflowInstanceWorkflowTasksAssignedToMePage_getIrrelevantWorkflowInstanceId();
 
-		if ((irrelevantWorkflowInstanceId != null)) {
+		if (irrelevantWorkflowInstanceId != null) {
 			WorkflowTask irrelevantWorkflowTask =
 				testGetWorkflowInstanceWorkflowTasksAssignedToMePage_addWorkflowTask(
 					irrelevantWorkflowInstanceId,
@@ -476,7 +476,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 		Long irrelevantWorkflowInstanceId =
 			testGetWorkflowInstanceWorkflowTasksAssignedToUserPage_getIrrelevantWorkflowInstanceId();
 
-		if ((irrelevantWorkflowInstanceId != null)) {
+		if (irrelevantWorkflowInstanceId != null) {
 			WorkflowTask irrelevantWorkflowTask =
 				testGetWorkflowInstanceWorkflowTasksAssignedToUserPage_addWorkflowTask(
 					irrelevantWorkflowInstanceId,

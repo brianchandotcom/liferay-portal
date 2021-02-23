@@ -76,7 +76,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseProductOptionValueResourceImpl
-	implements ProductOptionValueResource, EntityModelResource,
+	implements EntityModelResource, ProductOptionValueResource,
 			   VulcanBatchEngineTaskItemDelegate<ProductOptionValue> {
 
 	/**
@@ -84,8 +84,8 @@ public abstract class BaseProductOptionValueResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/productOptions/{id}/productOptionValues'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "id"),
@@ -109,11 +109,11 @@ public abstract class BaseProductOptionValueResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/productOptions/{id}/productOptionValues' -d $'{"key": ___, "name": ___, "priority": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/productOptions/{id}/productOptionValues")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ProductOptionValue")})
 	public ProductOptionValue postProductOptionIdProductOptionValue(
@@ -129,9 +129,8 @@ public abstract class BaseProductOptionValueResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/productOptions/{id}/productOptionValues/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "id"),
@@ -139,12 +138,13 @@ public abstract class BaseProductOptionValueResourceImpl
 		}
 	)
 	@Path("/productOptions/{id}/productOptionValues/batch")
+	@POST
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "ProductOptionValue")})
 	public Response postProductOptionIdProductOptionValueBatch(
 			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 

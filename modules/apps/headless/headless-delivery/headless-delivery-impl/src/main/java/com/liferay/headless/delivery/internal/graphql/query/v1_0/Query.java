@@ -1227,8 +1227,8 @@ public class Query {
 		description = "Retrieves the parent knowledge base article's child knowledge base articles. Results can be paginated, filtered, searched, and sorted."
 	)
 	public KnowledgeBaseArticlePage knowledgeBaseArticleKnowledgeBaseArticles(
-			@GraphQLName("parentKnowledgeBaseArticleId") Long
-				parentKnowledgeBaseArticleId,
+			@GraphQLName("parentKnowledgeBaseArticleId")
+				Long parentKnowledgeBaseArticleId,
 			@GraphQLName("flatten") Boolean flatten,
 			@GraphQLName("search") String search,
 			@GraphQLName("aggregation") List<String> aggregations,
@@ -1333,8 +1333,8 @@ public class Query {
 	)
 	public KnowledgeBaseAttachmentPage
 			knowledgeBaseArticleKnowledgeBaseAttachments(
-				@GraphQLName("knowledgeBaseArticleId") Long
-					knowledgeBaseArticleId)
+				@GraphQLName("knowledgeBaseArticleId")
+					Long knowledgeBaseArticleId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1353,8 +1353,8 @@ public class Query {
 	 */
 	@GraphQLField(description = "Retrieves the knowledge base attachment.")
 	public KnowledgeBaseAttachment knowledgeBaseAttachment(
-			@GraphQLName("knowledgeBaseAttachmentId") Long
-				knowledgeBaseAttachmentId)
+			@GraphQLName("knowledgeBaseAttachmentId")
+				Long knowledgeBaseAttachmentId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1392,8 +1392,8 @@ public class Query {
 		description = "Retrieves the knowledge base folder's subfolders."
 	)
 	public KnowledgeBaseFolderPage knowledgeBaseFolderKnowledgeBaseFolders(
-			@GraphQLName("parentKnowledgeBaseFolderId") Long
-				parentKnowledgeBaseFolderId,
+			@GraphQLName("parentKnowledgeBaseFolderId")
+				Long parentKnowledgeBaseFolderId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -1472,8 +1472,8 @@ public class Query {
 	 */
 	@GraphQLField(description = "Retrieves the message board attachment.")
 	public MessageBoardAttachment messageBoardAttachment(
-			@GraphQLName("messageBoardAttachmentId") Long
-				messageBoardAttachmentId)
+			@GraphQLName("messageBoardAttachmentId")
+				Long messageBoardAttachmentId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1494,8 +1494,8 @@ public class Query {
 	)
 	public MessageBoardAttachmentPage
 			messageBoardMessageMessageBoardAttachments(
-				@GraphQLName("messageBoardMessageId") Long
-					messageBoardMessageId)
+				@GraphQLName("messageBoardMessageId")
+					Long messageBoardMessageId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1573,8 +1573,8 @@ public class Query {
 		description = "Retrieves the parent message board message's child messages. Results can be paginated, filtered, searched, and sorted."
 	)
 	public MessageBoardMessagePage messageBoardMessageMessageBoardMessages(
-			@GraphQLName("parentMessageBoardMessageId") Long
-				parentMessageBoardMessageId,
+			@GraphQLName("parentMessageBoardMessageId")
+				Long parentMessageBoardMessageId,
 			@GraphQLName("flatten") Boolean flatten,
 			@GraphQLName("search") String search,
 			@GraphQLName("aggregation") List<String> aggregations,
@@ -1713,8 +1713,8 @@ public class Query {
 		description = "Retrieves the parent message board section's subsections. Results can be paginated, filtered, searched, and sorted."
 	)
 	public MessageBoardSectionPage messageBoardSectionMessageBoardSections(
-			@GraphQLName("parentMessageBoardSectionId") Long
-				parentMessageBoardSectionId,
+			@GraphQLName("parentMessageBoardSectionId")
+				Long parentMessageBoardSectionId,
 			@GraphQLName("search") String search,
 			@GraphQLName("aggregation") List<String> aggregations,
 			@GraphQLName("filter") String filterString,
@@ -2260,8 +2260,8 @@ public class Query {
 		description = "Retrieves the folder's structured content. Results can be paginated, filtered, searched, and sorted."
 	)
 	public StructuredContentPage structuredContentFolderStructuredContents(
-			@GraphQLName("structuredContentFolderId") Long
-				structuredContentFolderId,
+			@GraphQLName("structuredContentFolderId")
+				Long structuredContentFolderId,
 			@GraphQLName("flatten") Boolean flatten,
 			@GraphQLName("search") String search,
 			@GraphQLName("aggregation") List<String> aggregations,
@@ -2464,8 +2464,8 @@ public class Query {
 	)
 	public StructuredContentFolderPage
 			structuredContentFolderStructuredContentFolders(
-				@GraphQLName("parentStructuredContentFolderId") Long
-					parentStructuredContentFolderId,
+				@GraphQLName("parentStructuredContentFolderId")
+					Long parentStructuredContentFolderId,
 				@GraphQLName("search") String search,
 				@GraphQLName("aggregation") List<String> aggregations,
 				@GraphQLName("filter") String filterString,
@@ -2497,8 +2497,8 @@ public class Query {
 	 */
 	@GraphQLField(description = "Retrieves the structured content folder.")
 	public StructuredContentFolder structuredContentFolder(
-			@GraphQLName("structuredContentFolderId") Long
-				structuredContentFolderId)
+			@GraphQLName("structuredContentFolderId")
+				Long structuredContentFolderId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -4877,7 +4877,7 @@ public class Query {
 		}
 
 		@GraphQLField(description = "")
-		public NavigationMenu parentNavigationMenu() throws Exception {
+		public NavigationMenu parentNavigationMenuItem() throws Exception {
 			if (_navigationMenuItem.getParentNavigationMenuId() == null) {
 				return null;
 			}

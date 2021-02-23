@@ -70,7 +70,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v2.0")
 public abstract class BaseProductGroupResourceImpl
-	implements ProductGroupResource, EntityModelResource,
+	implements EntityModelResource, ProductGroupResource,
 			   VulcanBatchEngineTaskItemDelegate<ProductGroup> {
 
 	/**
@@ -78,8 +78,8 @@ public abstract class BaseProductGroupResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discount-product-groups/{discountProductGroupId}/product-group'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "discountProductGroupId")
@@ -90,7 +90,8 @@ public abstract class BaseProductGroupResourceImpl
 	@Tags(value = {@Tag(name = "ProductGroup")})
 	public ProductGroup getDiscountProductGroupProductGroup(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("discountProductGroupId") Long discountProductGroupId)
+			@PathParam("discountProductGroupId")
+				Long discountProductGroupId)
 		throws Exception {
 
 		return new ProductGroup();
@@ -101,8 +102,8 @@ public abstract class BaseProductGroupResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-modifier-product-groups/{priceModifierProductGroupId}/product-group'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(
@@ -117,8 +118,8 @@ public abstract class BaseProductGroupResourceImpl
 	@Tags(value = {@Tag(name = "ProductGroup")})
 	public ProductGroup getPriceModifierProductGroupProductGroup(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("priceModifierProductGroupId") Long
-				priceModifierProductGroupId)
+			@PathParam("priceModifierProductGroupId")
+				Long priceModifierProductGroupId)
 		throws Exception {
 
 		return new ProductGroup();

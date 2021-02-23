@@ -780,8 +780,8 @@ public class Query {
 	@GraphQLField
 	public ProductGroupProductPage
 			productGroupByExternalReferenceCodeProductGroupProducts(
-				@GraphQLName("externalReferenceCode") String
-					externalReferenceCode,
+				@GraphQLName("externalReferenceCode")
+					String externalReferenceCode,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page)
 		throws Exception {
@@ -899,8 +899,8 @@ public class Query {
 	@GraphQLField
 	public ProductShippingConfiguration
 			productByExternalReferenceCodeShippingConfiguration(
-				@GraphQLName("externalReferenceCode") String
-					externalReferenceCode)
+				@GraphQLName("externalReferenceCode")
+					String externalReferenceCode)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -958,8 +958,8 @@ public class Query {
 	@GraphQLField
 	public ProductSubscriptionConfiguration
 			productByExternalReferenceCodeSubscriptionConfiguration(
-				@GraphQLName("externalReferenceCode") String
-					externalReferenceCode)
+				@GraphQLName("externalReferenceCode")
+					String externalReferenceCode)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -997,8 +997,8 @@ public class Query {
 	@GraphQLField
 	public ProductTaxConfiguration
 			productByExternalReferenceCodeTaxConfiguration(
-				@GraphQLName("externalReferenceCode") String
-					externalReferenceCode)
+				@GraphQLName("externalReferenceCode")
+					String externalReferenceCode)
 		throws Exception {
 
 		return _applyComponentServiceObjects(

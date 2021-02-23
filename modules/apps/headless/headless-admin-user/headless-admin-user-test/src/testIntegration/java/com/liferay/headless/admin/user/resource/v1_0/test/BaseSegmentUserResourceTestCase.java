@@ -204,7 +204,7 @@ public abstract class BaseSegmentUserResourceTestCase {
 		Long irrelevantSegmentId =
 			testGetSegmentUserAccountsPage_getIrrelevantSegmentId();
 
-		if ((irrelevantSegmentId != null)) {
+		if (irrelevantSegmentId != null) {
 			SegmentUser irrelevantSegmentUser =
 				testGetSegmentUserAccountsPage_addSegmentUser(
 					irrelevantSegmentId, randomIrrelevantSegmentUser());

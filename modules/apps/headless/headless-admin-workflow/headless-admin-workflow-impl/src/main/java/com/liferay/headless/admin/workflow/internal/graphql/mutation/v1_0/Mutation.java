@@ -104,8 +104,8 @@ public class Mutation {
 
 	@GraphQLField
 	public WorkflowDefinition createWorkflowDefinitionDeploy(
-			@GraphQLName("workflowDefinition") WorkflowDefinition
-				workflowDefinition)
+			@GraphQLName("workflowDefinition")
+				WorkflowDefinition workflowDefinition)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -118,8 +118,8 @@ public class Mutation {
 
 	@GraphQLField
 	public WorkflowDefinition createWorkflowDefinitionSave(
-			@GraphQLName("workflowDefinition") WorkflowDefinition
-				workflowDefinition)
+			@GraphQLName("workflowDefinition")
+				WorkflowDefinition workflowDefinition)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -163,8 +163,8 @@ public class Mutation {
 
 	@GraphQLField
 	public WorkflowInstance createWorkflowInstanceSubmit(
-			@GraphQLName("workflowInstanceSubmit") WorkflowInstanceSubmit
-				workflowInstanceSubmit)
+			@GraphQLName("workflowInstanceSubmit")
+				WorkflowInstanceSubmit workflowInstanceSubmit)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -230,8 +230,8 @@ public class Mutation {
 
 	@GraphQLField
 	public boolean patchWorkflowTaskAssignToUser(
-			@GraphQLName("workflowTaskAssignToUsers") WorkflowTaskAssignToUser[]
-				workflowTaskAssignToUsers)
+			@GraphQLName("workflowTaskAssignToUsers")
+				WorkflowTaskAssignToUser[] workflowTaskAssignToUsers)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -246,8 +246,8 @@ public class Mutation {
 
 	@GraphQLField
 	public boolean patchWorkflowTaskChangeTransition(
-			@GraphQLName("changeTransitions") ChangeTransition[]
-				changeTransitions)
+			@GraphQLName("changeTransitions")
+				ChangeTransition[] changeTransitions)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -262,8 +262,8 @@ public class Mutation {
 
 	@GraphQLField
 	public boolean patchWorkflowTaskUpdateDueDate(
-			@GraphQLName("workflowTaskAssignToMes") WorkflowTaskAssignToMe[]
-				workflowTaskAssignToMes)
+			@GraphQLName("workflowTaskAssignToMes")
+				WorkflowTaskAssignToMe[] workflowTaskAssignToMes)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -279,8 +279,8 @@ public class Mutation {
 	@GraphQLField
 	public WorkflowTask createWorkflowTaskAssignToMe(
 			@GraphQLName("workflowTaskId") Long workflowTaskId,
-			@GraphQLName("workflowTaskAssignToMe") WorkflowTaskAssignToMe
-				workflowTaskAssignToMe)
+			@GraphQLName("workflowTaskAssignToMe")
+				WorkflowTaskAssignToMe workflowTaskAssignToMe)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -294,8 +294,8 @@ public class Mutation {
 	@GraphQLField
 	public WorkflowTask createWorkflowTaskAssignToRole(
 			@GraphQLName("workflowTaskId") Long workflowTaskId,
-			@GraphQLName("workflowTaskAssignToRole") WorkflowTaskAssignToRole
-				workflowTaskAssignToRole)
+			@GraphQLName("workflowTaskAssignToRole")
+				WorkflowTaskAssignToRole workflowTaskAssignToRole)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -309,8 +309,8 @@ public class Mutation {
 	@GraphQLField
 	public WorkflowTask createWorkflowTaskAssignToUser(
 			@GraphQLName("workflowTaskId") Long workflowTaskId,
-			@GraphQLName("workflowTaskAssignToUser") WorkflowTaskAssignToUser
-				workflowTaskAssignToUser)
+			@GraphQLName("workflowTaskAssignToUser")
+				WorkflowTaskAssignToUser workflowTaskAssignToUser)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -338,8 +338,8 @@ public class Mutation {
 	@GraphQLField
 	public WorkflowTask createWorkflowTaskUpdateDueDate(
 			@GraphQLName("workflowTaskId") Long workflowTaskId,
-			@GraphQLName("workflowTaskAssignToMe") WorkflowTaskAssignToMe
-				workflowTaskAssignToMe)
+			@GraphQLName("workflowTaskAssignToMe")
+				WorkflowTaskAssignToMe workflowTaskAssignToMe)
 		throws Exception {
 
 		return _applyComponentServiceObjects(

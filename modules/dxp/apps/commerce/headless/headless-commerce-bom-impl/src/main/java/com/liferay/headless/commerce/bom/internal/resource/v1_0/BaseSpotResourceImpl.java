@@ -75,7 +75,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/1.0")
 public abstract class BaseSpotResourceImpl
-	implements SpotResource, EntityModelResource,
+	implements EntityModelResource, SpotResource,
 			   VulcanBatchEngineTaskItemDelegate<Spot> {
 
 	/**
@@ -83,11 +83,11 @@ public abstract class BaseSpotResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/commerce-bom/1.0/areas/{id}/spot' -d $'{"id": ___, "number": ___, "position": ___, "productId": ___, "sku": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/areas/{id}/spot")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Spot")})
 	public Spot postAreaIdSpot(
@@ -103,9 +103,8 @@ public abstract class BaseSpotResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/commerce-bom/1.0/areas/{id}/spot/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "id"),
@@ -113,12 +112,13 @@ public abstract class BaseSpotResourceImpl
 		}
 	)
 	@Path("/areas/{id}/spot/batch")
+	@POST
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Spot")})
 	public Response postAreaIdSpotBatch(
 			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -143,8 +143,8 @@ public abstract class BaseSpotResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/commerce-bom/1.0/areas/{id}/spot/{spotId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "id"),
@@ -169,9 +169,8 @@ public abstract class BaseSpotResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/commerce-bom/1.0/areas/{id}/spot/{spotId}' -d $'{"id": ___, "number": ___, "position": ___, "productId": ___, "sku": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PUT
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "id"),
@@ -180,6 +179,7 @@ public abstract class BaseSpotResourceImpl
 	)
 	@Path("/areas/{id}/spot/{spotId}")
 	@Produces({"application/json", "application/xml"})
+	@PUT
 	@Tags(value = {@Tag(name = "Spot")})
 	public Response putAreaIdSpot(
 			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,

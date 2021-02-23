@@ -206,7 +206,7 @@ public abstract class BasePaymentMethodResourceTestCase {
 		Long irrelevantCartId =
 			testGetCartPaymentMethodsPage_getIrrelevantCartId();
 
-		if ((irrelevantCartId != null)) {
+		if (irrelevantCartId != null) {
 			PaymentMethod irrelevantPaymentMethod =
 				testGetCartPaymentMethodsPage_addPaymentMethod(
 					irrelevantCartId, randomIrrelevantPaymentMethod());

@@ -71,7 +71,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseUserResourceImpl
-	implements UserResource, EntityModelResource,
+	implements EntityModelResource, UserResource,
 			   VulcanBatchEngineTaskItemDelegate<User> {
 
 	/**
@@ -79,9 +79,8 @@ public abstract class BaseUserResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/accounts/by-externalReferenceCode/{externalReferenceCode}/accountMembers/createUser' -d $'{"email": ___, "externalReferenceCode": ___, "firstName": ___, "id": ___, "jobTitle": ___, "lastName": ___, "male": ___, "middleName": ___, "roles": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
@@ -90,11 +89,13 @@ public abstract class BaseUserResourceImpl
 	@Path(
 		"/accounts/by-externalReferenceCode/{externalReferenceCode}/accountMembers/createUser"
 	)
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "User")})
 	public User postAccountByExternalReferenceCodeAccountMemberCreateUser(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode,
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode,
 			User user)
 		throws Exception {
 

@@ -67,8 +67,8 @@ public abstract class BaseAppWorkflowResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/app-builder-workflow/v1.0/apps/{appId}/app-workflows'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "appId")})
 	@Path("/apps/{appId}/app-workflows")
 	@Produces({"application/json", "application/xml"})
@@ -83,8 +83,8 @@ public abstract class BaseAppWorkflowResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/app-builder-workflow/v1.0/apps/{appId}/app-workflows'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "appId")})
 	@Path("/apps/{appId}/app-workflows")
 	@Produces({"application/json", "application/xml"})
@@ -101,11 +101,11 @@ public abstract class BaseAppWorkflowResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/app-builder-workflow/v1.0/apps/{appId}/app-workflows' -d $'{"appId": ___, "appVersion": ___, "appWorkflowDefinitionId": ___, "appWorkflowStates": ___, "appWorkflowTasks": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "appId")})
 	@Path("/apps/{appId}/app-workflows")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AppWorkflow")})
 	public AppWorkflow postAppWorkflow(
@@ -121,12 +121,12 @@ public abstract class BaseAppWorkflowResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/app-builder-workflow/v1.0/apps/{appId}/app-workflows' -d $'{"appId": ___, "appVersion": ___, "appWorkflowDefinitionId": ___, "appWorkflowStates": ___, "appWorkflowTasks": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PUT
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "appId")})
 	@Path("/apps/{appId}/app-workflows")
 	@Produces({"application/json", "application/xml"})
+	@PUT
 	@Tags(value = {@Tag(name = "AppWorkflow")})
 	public AppWorkflow putAppWorkflow(
 			@NotNull @Parameter(hidden = true) @PathParam("appId") Long appId,

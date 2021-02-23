@@ -80,9 +80,9 @@ public abstract class BaseEmailAddressResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/email-addresses/{emailAddressId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrieves the email address.")
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "emailAddressId")}
 	)
@@ -90,8 +90,8 @@ public abstract class BaseEmailAddressResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "EmailAddress")})
 	public EmailAddress getEmailAddress(
-			@NotNull @Parameter(hidden = true) @PathParam("emailAddressId") Long
-				emailAddressId)
+			@NotNull @Parameter(hidden = true) @PathParam("emailAddressId")
+				Long emailAddressId)
 		throws Exception {
 
 		return new EmailAddress();
@@ -102,9 +102,9 @@ public abstract class BaseEmailAddressResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/organizations/{organizationId}/email-addresses'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrieves the organization's email addresses.")
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "organizationId")}
 	)
@@ -124,9 +124,9 @@ public abstract class BaseEmailAddressResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/user-accounts/{userAccountId}/email-addresses'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrieves the user's email addresses.")
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "userAccountId")}
 	)
@@ -134,8 +134,8 @@ public abstract class BaseEmailAddressResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "EmailAddress")})
 	public Page<EmailAddress> getUserAccountEmailAddressesPage(
-			@NotNull @Parameter(hidden = true) @PathParam("userAccountId") Long
-				userAccountId)
+			@NotNull @Parameter(hidden = true) @PathParam("userAccountId")
+				Long userAccountId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

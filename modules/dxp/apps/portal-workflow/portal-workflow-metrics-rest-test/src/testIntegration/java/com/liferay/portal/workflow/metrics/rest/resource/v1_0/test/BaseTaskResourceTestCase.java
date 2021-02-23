@@ -212,7 +212,7 @@ public abstract class BaseTaskResourceTestCase {
 		Long irrelevantProcessId =
 			testGetProcessTasksPage_getIrrelevantProcessId();
 
-		if ((irrelevantProcessId != null)) {
+		if (irrelevantProcessId != null) {
 			Task irrelevantTask = testGetProcessTasksPage_addTask(
 				irrelevantProcessId, randomIrrelevantTask());
 

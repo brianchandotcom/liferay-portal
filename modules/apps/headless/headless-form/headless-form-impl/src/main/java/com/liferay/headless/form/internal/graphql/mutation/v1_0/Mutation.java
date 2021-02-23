@@ -88,7 +88,7 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLName(
-		value = "postFormFormDocumentFormIdMultipartBody", description = "null"
+		description = "null", value = "postFormFormDocumentFormIdMultipartBody"
 	)
 	public FormDocument createFormFormDocument(
 			@GraphQLName("formId") Long formId,

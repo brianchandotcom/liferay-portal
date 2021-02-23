@@ -81,8 +81,8 @@ public abstract class BaseBillingAddressResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/by-externalReferenceCode/{externalReferenceCode}/billingAddress'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
@@ -95,7 +95,8 @@ public abstract class BaseBillingAddressResourceImpl
 	@Tags(value = {@Tag(name = "BillingAddress")})
 	public BillingAddress getOrderByExternalReferenceCodeBillingAddress(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode)
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode)
 		throws Exception {
 
 		return new BillingAddress();
@@ -106,14 +107,14 @@ public abstract class BaseBillingAddressResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/by-externalReferenceCode/{externalReferenceCode}/billingAddress' -d $'{"city": ___, "countryISOCode": ___, "description": ___, "id": ___, "latitude": ___, "longitude": ___, "name": ___, "phoneNumber": ___, "regionISOCode": ___, "street1": ___, "street2": ___, "street3": ___, "vatNumber": ___, "zip": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PATCH
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
 		}
 	)
+	@PATCH
 	@Path(
 		"/orders/by-externalReferenceCode/{externalReferenceCode}/billingAddress"
 	)
@@ -121,7 +122,8 @@ public abstract class BaseBillingAddressResourceImpl
 	@Tags(value = {@Tag(name = "BillingAddress")})
 	public Response patchOrderByExternalReferenceCodeBillingAddress(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode,
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode,
 			BillingAddress billingAddress)
 		throws Exception {
 
@@ -135,8 +137,8 @@ public abstract class BaseBillingAddressResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/{id}/billingAddress'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/orders/{id}/billingAddress")
 	@Produces({"application/json", "application/xml"})
@@ -153,10 +155,10 @@ public abstract class BaseBillingAddressResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/{id}/billingAddress' -d $'{"city": ___, "countryISOCode": ___, "description": ___, "id": ___, "latitude": ___, "longitude": ___, "name": ___, "phoneNumber": ___, "regionISOCode": ___, "street1": ___, "street2": ___, "street3": ___, "vatNumber": ___, "zip": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PATCH
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
+	@PATCH
 	@Path("/orders/{id}/billingAddress")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "BillingAddress")})

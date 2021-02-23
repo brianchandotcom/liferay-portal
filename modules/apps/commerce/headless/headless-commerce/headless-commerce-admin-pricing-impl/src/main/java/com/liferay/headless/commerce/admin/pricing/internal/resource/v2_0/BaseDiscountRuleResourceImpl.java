@@ -86,8 +86,8 @@ public abstract class BaseDiscountRuleResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discount-rules/{id}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/discount-rules/{id}")
 	@Produces({"application/json", "application/xml"})
@@ -102,9 +102,9 @@ public abstract class BaseDiscountRuleResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discount-rules/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
 	@DELETE
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "id"),
@@ -116,8 +116,8 @@ public abstract class BaseDiscountRuleResourceImpl
 	@Tags(value = {@Tag(name = "DiscountRule")})
 	public Response deleteDiscountRuleBatch(
 			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -142,8 +142,8 @@ public abstract class BaseDiscountRuleResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discount-rules/{id}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/discount-rules/{id}")
 	@Produces({"application/json", "application/xml"})
@@ -160,10 +160,10 @@ public abstract class BaseDiscountRuleResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discount-rules/{id}' -d $'{"name": ___, "type": ___, "typeSettings": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PATCH
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
+	@PATCH
 	@Path("/discount-rules/{id}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DiscountRule")})
@@ -180,8 +180,8 @@ public abstract class BaseDiscountRuleResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discounts/by-externalReferenceCode/{externalReferenceCode}/discount-rules'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode"),
@@ -197,8 +197,8 @@ public abstract class BaseDiscountRuleResourceImpl
 	public Page<DiscountRule>
 			getDiscountByExternalReferenceCodeDiscountRulesPage(
 				@NotNull @Parameter(hidden = true)
-				@PathParam("externalReferenceCode") String
-					externalReferenceCode,
+				@PathParam("externalReferenceCode")
+					String externalReferenceCode,
 				@Context Pagination pagination)
 		throws Exception {
 
@@ -210,9 +210,8 @@ public abstract class BaseDiscountRuleResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discounts/by-externalReferenceCode/{externalReferenceCode}/discount-rules' -d $'{"name": ___, "type": ___, "typeSettings": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
@@ -221,11 +220,13 @@ public abstract class BaseDiscountRuleResourceImpl
 	@Path(
 		"/discounts/by-externalReferenceCode/{externalReferenceCode}/discount-rules"
 	)
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DiscountRule")})
 	public DiscountRule postDiscountByExternalReferenceCodeDiscountRule(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode,
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode,
 			DiscountRule discountRule)
 		throws Exception {
 
@@ -237,8 +238,8 @@ public abstract class BaseDiscountRuleResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discounts/{id}/discount-rules'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "id"),
@@ -267,11 +268,11 @@ public abstract class BaseDiscountRuleResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discounts/{id}/discount-rules' -d $'{"name": ___, "type": ___, "typeSettings": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/discounts/{id}/discount-rules")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DiscountRule")})
 	public DiscountRule postDiscountIdDiscountRule(
@@ -287,9 +288,8 @@ public abstract class BaseDiscountRuleResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discounts/discount-rules/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "id"),
@@ -297,12 +297,13 @@ public abstract class BaseDiscountRuleResourceImpl
 		}
 	)
 	@Path("/discounts/discount-rules/batch")
+	@POST
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DiscountRule")})
 	public Response postDiscountIdDiscountRuleBatch(
 			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 

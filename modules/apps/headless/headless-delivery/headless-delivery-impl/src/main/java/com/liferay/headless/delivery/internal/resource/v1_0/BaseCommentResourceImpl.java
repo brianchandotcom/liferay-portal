@@ -87,11 +87,11 @@ public abstract class BaseCommentResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/blog-postings/{blogPostingId}/comments'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(
 		description = "Retrieves the blog post's comments in a list. Results can be paginated, filtered, searched, and sorted."
 	)
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "blogPostingId"),
@@ -106,11 +106,11 @@ public abstract class BaseCommentResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Comment")})
 	public Page<Comment> getBlogPostingCommentsPage(
-			@NotNull @Parameter(hidden = true) @PathParam("blogPostingId") Long
-				blogPostingId,
+			@NotNull @Parameter(hidden = true) @PathParam("blogPostingId")
+				Long blogPostingId,
 			@Parameter(hidden = true) @QueryParam("search") String search,
-			@Context com.liferay.portal.vulcan.aggregation.Aggregation
-				aggregation,
+			@Context
+				com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)
 		throws Exception {
@@ -123,19 +123,19 @@ public abstract class BaseCommentResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/blog-postings/{blogPostingId}/comments' -d $'{"parentCommentId": ___, "text": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(description = "Creates a new comment on the blog post.")
-	@POST
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "blogPostingId")}
 	)
 	@Path("/blog-postings/{blogPostingId}/comments")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Comment")})
 	public Comment postBlogPostingComment(
-			@NotNull @Parameter(hidden = true) @PathParam("blogPostingId") Long
-				blogPostingId,
+			@NotNull @Parameter(hidden = true) @PathParam("blogPostingId")
+				Long blogPostingId,
 			Comment comment)
 		throws Exception {
 
@@ -147,9 +147,8 @@ public abstract class BaseCommentResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/blog-postings/{blogPostingId}/comments/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "blogPostingId"),
@@ -157,13 +156,14 @@ public abstract class BaseCommentResourceImpl
 		}
 	)
 	@Path("/blog-postings/{blogPostingId}/comments/batch")
+	@POST
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Comment")})
 	public Response postBlogPostingCommentBatch(
-			@NotNull @Parameter(hidden = true) @PathParam("blogPostingId") Long
-				blogPostingId,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@NotNull @Parameter(hidden = true) @PathParam("blogPostingId")
+				Long blogPostingId,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -188,18 +188,18 @@ public abstract class BaseCommentResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/comments/{commentId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
 	@Operation(
 		description = "Deletes the comment and returns a 204 if the operation succeeded."
 	)
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "commentId")})
 	@Path("/comments/{commentId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Comment")})
 	public void deleteComment(
-			@NotNull @Parameter(hidden = true) @PathParam("commentId") Long
-				commentId)
+			@NotNull @Parameter(hidden = true) @PathParam("commentId")
+				Long commentId)
 		throws Exception {
 	}
 
@@ -208,9 +208,9 @@ public abstract class BaseCommentResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/comments/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
 	@DELETE
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
@@ -218,8 +218,8 @@ public abstract class BaseCommentResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Comment")})
 	public Response deleteCommentBatch(
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -244,16 +244,16 @@ public abstract class BaseCommentResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/comments/{commentId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrieves the comment.")
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "commentId")})
 	@Path("/comments/{commentId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Comment")})
 	public Comment getComment(
-			@NotNull @Parameter(hidden = true) @PathParam("commentId") Long
-				commentId)
+			@NotNull @Parameter(hidden = true) @PathParam("commentId")
+				Long commentId)
 		throws Exception {
 
 		return new Comment();
@@ -264,19 +264,19 @@ public abstract class BaseCommentResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/comments/{commentId}' -d $'{"parentCommentId": ___, "text": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
 		description = "Replaces the comment with the information sent in the request body. Any missing fields are deleted, unless they are required."
 	)
-	@PUT
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "commentId")})
 	@Path("/comments/{commentId}")
 	@Produces({"application/json", "application/xml"})
+	@PUT
 	@Tags(value = {@Tag(name = "Comment")})
 	public Comment putComment(
-			@NotNull @Parameter(hidden = true) @PathParam("commentId") Long
-				commentId,
+			@NotNull @Parameter(hidden = true) @PathParam("commentId")
+				Long commentId,
 			Comment comment)
 		throws Exception {
 
@@ -288,18 +288,18 @@ public abstract class BaseCommentResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/comments/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@PUT
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
 	@Path("/comments/batch")
 	@Produces("application/json")
+	@PUT
 	@Tags(value = {@Tag(name = "Comment")})
 	public Response putCommentBatch(
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -324,11 +324,11 @@ public abstract class BaseCommentResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/comments/{parentCommentId}/comments'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(
 		description = "Retrieves the parent comment's child comments. Results can be paginated, filtered, searched, and sorted."
 	)
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "parentCommentId"),
@@ -346,8 +346,8 @@ public abstract class BaseCommentResourceImpl
 			@NotNull @Parameter(hidden = true) @PathParam("parentCommentId")
 				Long parentCommentId,
 			@Parameter(hidden = true) @QueryParam("search") String search,
-			@Context com.liferay.portal.vulcan.aggregation.Aggregation
-				aggregation,
+			@Context
+				com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)
 		throws Exception {
@@ -360,16 +360,16 @@ public abstract class BaseCommentResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/comments/{parentCommentId}/comments' -d $'{"parentCommentId": ___, "text": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
 		description = "Creates a new child comment of the existing comment."
 	)
-	@POST
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "parentCommentId")}
 	)
 	@Path("/comments/{parentCommentId}/comments")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Comment")})
 	public Comment postCommentComment(
@@ -386,11 +386,11 @@ public abstract class BaseCommentResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/documents/{documentId}/comments'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(
 		description = "Retrieves the document's comments. Results can be paginated, filtered, searched, and sorted."
 	)
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "documentId"),
@@ -405,11 +405,11 @@ public abstract class BaseCommentResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Comment")})
 	public Page<Comment> getDocumentCommentsPage(
-			@NotNull @Parameter(hidden = true) @PathParam("documentId") Long
-				documentId,
+			@NotNull @Parameter(hidden = true) @PathParam("documentId")
+				Long documentId,
 			@Parameter(hidden = true) @QueryParam("search") String search,
-			@Context com.liferay.portal.vulcan.aggregation.Aggregation
-				aggregation,
+			@Context
+				com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)
 		throws Exception {
@@ -422,19 +422,19 @@ public abstract class BaseCommentResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/documents/{documentId}/comments' -d $'{"parentCommentId": ___, "text": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(description = "Creates a new comment on the document.")
-	@POST
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "documentId")}
 	)
 	@Path("/documents/{documentId}/comments")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Comment")})
 	public Comment postDocumentComment(
-			@NotNull @Parameter(hidden = true) @PathParam("documentId") Long
-				documentId,
+			@NotNull @Parameter(hidden = true) @PathParam("documentId")
+				Long documentId,
 			Comment comment)
 		throws Exception {
 
@@ -446,9 +446,8 @@ public abstract class BaseCommentResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/documents/{documentId}/comments/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "documentId"),
@@ -456,13 +455,14 @@ public abstract class BaseCommentResourceImpl
 		}
 	)
 	@Path("/documents/{documentId}/comments/batch")
+	@POST
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Comment")})
 	public Response postDocumentCommentBatch(
-			@NotNull @Parameter(hidden = true) @PathParam("documentId") Long
-				documentId,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@NotNull @Parameter(hidden = true) @PathParam("documentId")
+				Long documentId,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -487,11 +487,11 @@ public abstract class BaseCommentResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/structured-contents/{structuredContentId}/comments'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(
 		description = "Retrieves the structured content's comments. Results can be paginated, filtered, searched, and sorted."
 	)
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "structuredContentId"),
@@ -509,8 +509,8 @@ public abstract class BaseCommentResourceImpl
 			@NotNull @Parameter(hidden = true) @PathParam("structuredContentId")
 				Long structuredContentId,
 			@Parameter(hidden = true) @QueryParam("search") String search,
-			@Context com.liferay.portal.vulcan.aggregation.Aggregation
-				aggregation,
+			@Context
+				com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)
 		throws Exception {
@@ -523,16 +523,16 @@ public abstract class BaseCommentResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/structured-contents/{structuredContentId}/comments' -d $'{"parentCommentId": ___, "text": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(description = "Creates a new comment on the structured content.")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "structuredContentId")
 		}
 	)
 	@Path("/structured-contents/{structuredContentId}/comments")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Comment")})
 	public Comment postStructuredContentComment(
@@ -549,9 +549,8 @@ public abstract class BaseCommentResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/structured-contents/{structuredContentId}/comments/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "structuredContentId"),
@@ -559,13 +558,14 @@ public abstract class BaseCommentResourceImpl
 		}
 	)
 	@Path("/structured-contents/{structuredContentId}/comments/batch")
+	@POST
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Comment")})
 	public Response postStructuredContentCommentBatch(
 			@NotNull @Parameter(hidden = true) @PathParam("structuredContentId")
 				Long structuredContentId,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -666,7 +666,7 @@ public abstract class BaseCommentResourceImpl
 		for (Comment comment : comments) {
 			putComment(
 				comment.getId() != null ? comment.getId() :
-				(Long)parameters.get("commentId"),
+					(Long)parameters.get("commentId"),
 				comment);
 		}
 	}

@@ -238,7 +238,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 		Long irrelevantDataDefinitionId =
 			testGetDataDefinitionDataLayoutsPage_getIrrelevantDataDefinitionId();
 
-		if ((irrelevantDataDefinitionId != null)) {
+		if (irrelevantDataDefinitionId != null) {
 			DataLayout irrelevantDataLayout =
 				testGetDataDefinitionDataLayoutsPage_addDataLayout(
 					irrelevantDataDefinitionId, randomIrrelevantDataLayout());

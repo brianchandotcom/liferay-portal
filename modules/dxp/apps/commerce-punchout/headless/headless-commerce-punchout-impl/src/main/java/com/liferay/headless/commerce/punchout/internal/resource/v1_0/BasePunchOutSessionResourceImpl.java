@@ -67,7 +67,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BasePunchOutSessionResourceImpl
-	implements PunchOutSessionResource, EntityModelResource,
+	implements EntityModelResource, PunchOutSessionResource,
 			   VulcanBatchEngineTaskItemDelegate<PunchOutSession> {
 
 	/**
@@ -75,11 +75,11 @@ public abstract class BasePunchOutSessionResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/oheadless-commerce-punchout/v1.0/punchout/session/request' -d $'{"buyerAccountReferenceCode": ___, "buyerGroup": ___, "buyerOrganization": ___, "buyerUser": ___, "cart": ___, "punchOutReturnURL": ___, "punchOutSessionType": ___, "punchOutStartURL": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(description = "Create a punch out session.")
-	@POST
+	@Override
 	@Path("/punchout/session/request")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "PunchOutSession")})
 	public PunchOutSession postPunchOutSessionRequest(

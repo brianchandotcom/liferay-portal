@@ -215,7 +215,7 @@ public abstract class BaseTierPriceResourceTestCase {
 		String irrelevantExternalReferenceCode =
 			testGetPriceEntryByExternalReferenceCodeTierPricesPage_getIrrelevantExternalReferenceCode();
 
-		if ((irrelevantExternalReferenceCode != null)) {
+		if (irrelevantExternalReferenceCode != null) {
 			TierPrice irrelevantTierPrice =
 				testGetPriceEntryByExternalReferenceCodeTierPricesPage_addTierPrice(
 					irrelevantExternalReferenceCode,
@@ -380,7 +380,7 @@ public abstract class BaseTierPriceResourceTestCase {
 		Long id = testGetPriceEntryIdTierPricesPage_getId();
 		Long irrelevantId = testGetPriceEntryIdTierPricesPage_getIrrelevantId();
 
-		if ((irrelevantId != null)) {
+		if (irrelevantId != null) {
 			TierPrice irrelevantTierPrice =
 				testGetPriceEntryIdTierPricesPage_addTierPrice(
 					irrelevantId, randomIrrelevantTierPrice());

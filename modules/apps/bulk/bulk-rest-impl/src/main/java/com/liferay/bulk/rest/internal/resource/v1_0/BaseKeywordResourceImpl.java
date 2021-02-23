@@ -63,8 +63,8 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/bulk/v1.0/keywords/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
+	@Override
 	@PATCH
 	@Path("/keywords/batch")
 	@Tags(value = {@Tag(name = "Keyword")})
@@ -77,10 +77,10 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/bulk/v1.0/keywords/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PUT
+	@Override
 	@Path("/keywords/batch")
+	@PUT
 	@Tags(value = {@Tag(name = "Keyword")})
 	public void putKeywordBatch(KeywordBulkSelection keywordBulkSelection)
 		throws Exception {
@@ -91,10 +91,10 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/bulk/v1.0/keywords/common' -d $'{"documentIds": ___, "selectionScope": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Path("/keywords/common")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Keyword")})
 	public Page<Keyword> postKeywordsCommonPage(

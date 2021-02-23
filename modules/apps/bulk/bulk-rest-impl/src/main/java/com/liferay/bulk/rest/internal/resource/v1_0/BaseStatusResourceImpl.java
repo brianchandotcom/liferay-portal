@@ -56,8 +56,8 @@ public abstract class BaseStatusResourceImpl implements StatusResource {
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/bulk/v1.0/status'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Path("/status")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Status")})

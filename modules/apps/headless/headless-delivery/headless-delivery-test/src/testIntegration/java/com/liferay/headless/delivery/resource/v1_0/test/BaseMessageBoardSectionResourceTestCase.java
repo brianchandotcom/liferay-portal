@@ -482,7 +482,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		Long irrelevantParentMessageBoardSectionId =
 			testGetMessageBoardSectionMessageBoardSectionsPage_getIrrelevantParentMessageBoardSectionId();
 
-		if ((irrelevantParentMessageBoardSectionId != null)) {
+		if (irrelevantParentMessageBoardSectionId != null) {
 			MessageBoardSection irrelevantMessageBoardSection =
 				testGetMessageBoardSectionMessageBoardSectionsPage_addMessageBoardSection(
 					irrelevantParentMessageBoardSectionId,
@@ -862,7 +862,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		Long irrelevantSiteId =
 			testGetSiteMessageBoardSectionsPage_getIrrelevantSiteId();
 
-		if ((irrelevantSiteId != null)) {
+		if (irrelevantSiteId != null) {
 			MessageBoardSection irrelevantMessageBoardSection =
 				testGetSiteMessageBoardSectionsPage_addMessageBoardSection(
 					irrelevantSiteId, randomIrrelevantMessageBoardSection());

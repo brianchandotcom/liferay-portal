@@ -279,7 +279,7 @@ public abstract class BaseFormRecordResourceTestCase {
 		Long irrelevantFormId =
 			testGetFormFormRecordsPage_getIrrelevantFormId();
 
-		if ((irrelevantFormId != null)) {
+		if (irrelevantFormId != null) {
 			FormRecord irrelevantFormRecord =
 				testGetFormFormRecordsPage_addFormRecord(
 					irrelevantFormId, randomIrrelevantFormRecord());

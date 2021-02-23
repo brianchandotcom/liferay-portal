@@ -710,7 +710,7 @@ public abstract class BaseOrganizationResourceTestCase {
 		String irrelevantParentOrganizationId =
 			testGetOrganizationOrganizationsPage_getIrrelevantParentOrganizationId();
 
-		if ((irrelevantParentOrganizationId != null)) {
+		if (irrelevantParentOrganizationId != null) {
 			Organization irrelevantOrganization =
 				testGetOrganizationOrganizationsPage_addOrganization(
 					irrelevantParentOrganizationId,

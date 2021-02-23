@@ -79,9 +79,9 @@ public abstract class BaseAddressResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/carts/{cartId}/billing-address'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrive cart billing address.")
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "cartId")})
 	@Path("/carts/{cartId}/billing-address")
 	@Produces({"application/json", "application/xml"})
@@ -98,9 +98,9 @@ public abstract class BaseAddressResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/carts/{cartId}/shipping-address'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrive cart billing address.")
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "cartId")})
 	@Path("/carts/{cartId}/shipping-address")
 	@Produces({"application/json", "application/xml"})

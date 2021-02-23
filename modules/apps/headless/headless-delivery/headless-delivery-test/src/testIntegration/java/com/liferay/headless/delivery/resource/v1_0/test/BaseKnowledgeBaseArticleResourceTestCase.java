@@ -526,7 +526,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		Long irrelevantParentKnowledgeBaseArticleId =
 			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getIrrelevantParentKnowledgeBaseArticleId();
 
-		if ((irrelevantParentKnowledgeBaseArticleId != null)) {
+		if (irrelevantParentKnowledgeBaseArticleId != null) {
 			KnowledgeBaseArticle irrelevantKnowledgeBaseArticle =
 				testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
 					irrelevantParentKnowledgeBaseArticleId,
@@ -915,7 +915,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		Long irrelevantKnowledgeBaseFolderId =
 			testGetKnowledgeBaseFolderKnowledgeBaseArticlesPage_getIrrelevantKnowledgeBaseFolderId();
 
-		if ((irrelevantKnowledgeBaseFolderId != null)) {
+		if (irrelevantKnowledgeBaseFolderId != null) {
 			KnowledgeBaseArticle irrelevantKnowledgeBaseArticle =
 				testGetKnowledgeBaseFolderKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
 					irrelevantKnowledgeBaseFolderId,
@@ -1300,7 +1300,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		Long irrelevantSiteId =
 			testGetSiteKnowledgeBaseArticlesPage_getIrrelevantSiteId();
 
-		if ((irrelevantSiteId != null)) {
+		if (irrelevantSiteId != null) {
 			KnowledgeBaseArticle irrelevantKnowledgeBaseArticle =
 				testGetSiteKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
 					irrelevantSiteId, randomIrrelevantKnowledgeBaseArticle());

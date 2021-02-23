@@ -238,7 +238,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		Long irrelevantAssetLibraryId =
 			testGetAssetLibraryTaxonomyVocabulariesPage_getIrrelevantAssetLibraryId();
 
-		if ((irrelevantAssetLibraryId != null)) {
+		if (irrelevantAssetLibraryId != null) {
 			TaxonomyVocabulary irrelevantTaxonomyVocabulary =
 				testGetAssetLibraryTaxonomyVocabulariesPage_addTaxonomyVocabulary(
 					irrelevantAssetLibraryId,
@@ -601,7 +601,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		Long irrelevantSiteId =
 			testGetSiteTaxonomyVocabulariesPage_getIrrelevantSiteId();
 
-		if ((irrelevantSiteId != null)) {
+		if (irrelevantSiteId != null) {
 			TaxonomyVocabulary irrelevantTaxonomyVocabulary =
 				testGetSiteTaxonomyVocabulariesPage_addTaxonomyVocabulary(
 					irrelevantSiteId, randomIrrelevantTaxonomyVocabulary());

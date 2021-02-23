@@ -71,7 +71,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseHistogramMetricResourceImpl
-	implements HistogramMetricResource, EntityModelResource,
+	implements EntityModelResource, HistogramMetricResource,
 			   VulcanBatchEngineTaskItemDelegate<HistogramMetric> {
 
 	/**
@@ -79,8 +79,8 @@ public abstract class BaseHistogramMetricResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/histograms/metrics'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "processId"),
@@ -93,12 +93,12 @@ public abstract class BaseHistogramMetricResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "HistogramMetric")})
 	public HistogramMetric getProcessHistogramMetric(
-			@NotNull @Parameter(hidden = true) @PathParam("processId") Long
-				processId,
-			@Parameter(hidden = true) @QueryParam("dateEnd") java.util.Date
-				dateEnd,
-			@Parameter(hidden = true) @QueryParam("dateStart") java.util.Date
-				dateStart,
+			@NotNull @Parameter(hidden = true) @PathParam("processId")
+				Long processId,
+			@Parameter(hidden = true) @QueryParam("dateEnd")
+				java.util.Date dateEnd,
+			@Parameter(hidden = true) @QueryParam("dateStart")
+				java.util.Date dateStart,
 			@NotNull @Parameter(hidden = true) @QueryParam("unit") String unit)
 		throws Exception {
 

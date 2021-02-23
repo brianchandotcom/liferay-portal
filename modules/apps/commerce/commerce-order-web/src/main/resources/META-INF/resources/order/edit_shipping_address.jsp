@@ -83,7 +83,7 @@ long regionId = BeanParamUtil.getLong(shippingAddress, request, "regionId");
 				}
 
 				Liferay.Service(
-					'/commerce.commercecountry/get-shipping-commerce-countries',
+					'/commerce.commercecountrymanagerimpl/get-shipping-countries',
 					{
 						active: true,
 						companyId: <%= company.getCompanyId() %>,
@@ -119,7 +119,7 @@ long regionId = BeanParamUtil.getLong(shippingAddress, request, "regionId");
 				}
 
 				Liferay.Service(
-					'/commerce.commerceregion/get-commerce-regions',
+					'/region/get-regions',
 					{
 						active: true,
 						countryId: Number(selectKey),

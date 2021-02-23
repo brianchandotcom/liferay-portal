@@ -90,7 +90,7 @@ CommerceAddress shippingAddress = commerceShipmentDisplayContext.getShippingAddr
 			select: '<portlet:namespace />countryId',
 			selectData: function (callback) {
 				Liferay.Service(
-					'/commerce.commercecountry/get-shipping-commerce-countries',
+					'/commerce.commercecountrymanagerimpl/get-shipping-countries',
 					{
 						active: true,
 						companyId: <%= company.getCompanyId() %>,
@@ -108,7 +108,7 @@ CommerceAddress shippingAddress = commerceShipmentDisplayContext.getShippingAddr
 			select: '<portlet:namespace />regionId',
 			selectData: function (callback, selectKey) {
 				Liferay.Service(
-					'/commerce.commerceregion/get-commerce-regions',
+					'/region/get-regions',
 					{
 						active: true,
 						countryId: Number(selectKey),

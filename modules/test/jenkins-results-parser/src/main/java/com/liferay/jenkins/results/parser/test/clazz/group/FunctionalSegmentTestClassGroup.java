@@ -62,6 +62,15 @@ public class FunctionalSegmentTestClassGroup extends SegmentTestClassGroup {
 	public Integer getMinimumSlaveRAM() {
 		Properties poshiProperties = getPoshiProperties();
 
+		String analyticsCloudEnabled = poshiProperties.getProperty(
+			"analytics.cloud.enabled");
+
+		if ((analyticsCloudEnabled != null) &&
+			analyticsCloudEnabled.equals("true")) {
+
+			return 32;
+		}
+
 		String minimumSlaveRAM = poshiProperties.getProperty(
 			"minimum.slave.ram");
 

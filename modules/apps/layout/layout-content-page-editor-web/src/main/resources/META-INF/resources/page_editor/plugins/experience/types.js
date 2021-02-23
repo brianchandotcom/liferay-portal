@@ -20,7 +20,7 @@ export const ExperimentStatusType = {
 };
 
 export const ExperienceType = {
-	hasLockedSegmentsExperiment: PropTypes.bool,
+	hasLockedSegmentsExperiment: PropTypes.bool.isRequired,
 	name: PropTypes.string.isRequired,
 	priority: PropTypes.number.isRequired,
 	segmentsEntryId: PropTypes.string.isRequired,

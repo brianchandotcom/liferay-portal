@@ -135,10 +135,8 @@ public class EditCommerceAddressMVCActionCommand extends BaseMVCActionCommand {
 		String street3 = ParamUtil.getString(actionRequest, "street3");
 		String city = ParamUtil.getString(actionRequest, "city");
 		String zip = ParamUtil.getString(actionRequest, "zip");
-		long commerceCountryId = ParamUtil.getLong(
-			actionRequest, "commerceCountryId");
-		long commerceRegionId = ParamUtil.getLong(
-			actionRequest, "commerceRegionId");
+		long regionId = ParamUtil.getLong(actionRequest, "regionId");
+		long countryId = ParamUtil.getLong(actionRequest, "countryId");
 		String phoneNumber = ParamUtil.getString(actionRequest, "phoneNumber");
 		int type = ParamUtil.getInteger(actionRequest, "type");
 
@@ -148,15 +146,14 @@ public class EditCommerceAddressMVCActionCommand extends BaseMVCActionCommand {
 		if (commerceAddressId <= 0) {
 			_commerceAddressService.addCommerceAddress(
 				CommerceAccount.class.getName(), commerceAccountId, name,
-				description, street1, street2, street3, city, zip,
-				commerceRegionId, commerceCountryId, phoneNumber, type,
-				serviceContext);
+				description, street1, street2, street3, city, zip, regionId,
+				countryId, phoneNumber, type, serviceContext);
 		}
 		else {
 			_commerceAddressService.updateCommerceAddress(
 				commerceAddressId, name, description, street1, street2, street3,
-				city, zip, commerceRegionId, commerceCountryId, phoneNumber,
-				type, serviceContext);
+				city, zip, regionId, countryId, phoneNumber, type,
+				serviceContext);
 		}
 
 		CommerceAccount commerceAccount =

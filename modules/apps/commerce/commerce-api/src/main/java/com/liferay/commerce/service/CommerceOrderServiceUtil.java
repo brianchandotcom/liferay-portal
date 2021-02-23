@@ -343,15 +343,13 @@ public class CommerceOrderServiceUtil {
 	public static com.liferay.commerce.model.CommerceOrder updateBillingAddress(
 			long commerceOrderId, String name, String description,
 			String street1, String street2, String street3, String city,
-			String zip, long commerceRegionId, long commerceCountryId,
-			String phoneNumber,
+			String zip, long regionId, long countryId, String phoneNumber,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateBillingAddress(
 			commerceOrderId, name, description, street1, street2, street3, city,
-			zip, commerceRegionId, commerceCountryId, phoneNumber,
-			serviceContext);
+			zip, regionId, countryId, phoneNumber, serviceContext);
 	}
 
 	public static com.liferay.commerce.model.CommerceOrder updateCommerceOrder(
@@ -644,15 +642,13 @@ public class CommerceOrderServiceUtil {
 			updateShippingAddress(
 				long commerceOrderId, String name, String description,
 				String street1, String street2, String street3, String city,
-				String zip, long commerceRegionId, long commerceCountryId,
-				String phoneNumber,
+				String zip, long regionId, long countryId, String phoneNumber,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateShippingAddress(
 			commerceOrderId, name, description, street1, street2, street3, city,
-			zip, commerceRegionId, commerceCountryId, phoneNumber,
-			serviceContext);
+			zip, regionId, countryId, phoneNumber, serviceContext);
 	}
 
 	public static com.liferay.commerce.model.CommerceOrder updateTransactionId(

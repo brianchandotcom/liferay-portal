@@ -79,8 +79,8 @@ public interface CommerceTaxFixedRateAddressRelLocalService
 
 	public CommerceTaxFixedRateAddressRel addCommerceTaxFixedRateAddressRel(
 			long userId, long groupId, long commerceTaxMethodId,
-			long cpTaxCategoryId, long commerceCountryId, long commerceRegionId,
-			String zip, double rate)
+			long cpTaxCategoryId, long countryId, long regionId, String zip,
+			double rate)
 		throws PortalException;
 
 	/**
@@ -88,9 +88,9 @@ public interface CommerceTaxFixedRateAddressRelLocalService
 	 */
 	@Deprecated
 	public CommerceTaxFixedRateAddressRel addCommerceTaxFixedRateAddressRel(
-			long commerceTaxMethodId, long cpTaxCategoryId,
-			long commerceCountryId, long commerceRegionId, String zip,
-			double rate, ServiceContext serviceContext)
+			long commerceTaxMethodId, long cpTaxCategoryId, long countryId,
+			long regionId, String zip, double rate,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -139,11 +139,11 @@ public interface CommerceTaxFixedRateAddressRelLocalService
 			long commerceTaxFixedRateAddressRelId)
 		throws PortalException;
 
-	public void deleteCommerceTaxFixedRateAddressRelsByCommerceCountryId(
-		long commerceCountryId);
-
 	public void deleteCommerceTaxFixedRateAddressRelsByCommerceTaxMethodId(
 		long commerceTaxMethodId);
+
+	public void deleteCommerceTaxFixedRateAddressRelsByCountryId(
+		long countryId);
 
 	public void deleteCommerceTaxFixedRateAddressRelsByCPTaxCategoryId(
 		long cpTaxCategoryId);
@@ -230,13 +230,12 @@ public interface CommerceTaxFixedRateAddressRelLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceTaxFixedRateAddressRel fetchCommerceTaxFixedRateAddressRel(
-		long commerceTaxMethodId, long cpTaxCategoryId, long commerceCountryId,
-		long commerceRegionId, String zip);
+		long commerceTaxMethodId, long cpTaxCategoryId, long countryId,
+		long regionId, String zip);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceTaxFixedRateAddressRel fetchCommerceTaxFixedRateAddressRel(
-		long commerceTaxMethodId, long commerceCountryId, long commerceRegionId,
-		String zip);
+		long commerceTaxMethodId, long countryId, long regionId, String zip);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -340,8 +339,8 @@ public interface CommerceTaxFixedRateAddressRelLocalService
 		CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel);
 
 	public CommerceTaxFixedRateAddressRel updateCommerceTaxFixedRateAddressRel(
-			long commerceTaxFixedRateAddressRelId, long commerceCountryId,
-			long commerceRegionId, String zip, double rate)
+			long commerceTaxFixedRateAddressRelId, long countryId,
+			long regionId, String zip, double rate)
 		throws PortalException;
 
 }

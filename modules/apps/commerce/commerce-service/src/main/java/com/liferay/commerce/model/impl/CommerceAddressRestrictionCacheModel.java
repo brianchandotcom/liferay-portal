@@ -86,8 +86,8 @@ public class CommerceAddressRestrictionCacheModel
 		sb.append(classNameId);
 		sb.append(", classPK=");
 		sb.append(classPK);
-		sb.append(", commerceCountryId=");
-		sb.append(commerceCountryId);
+		sb.append(", countryId=");
+		sb.append(countryId);
 		sb.append("}");
 
 		return sb.toString();
@@ -128,7 +128,7 @@ public class CommerceAddressRestrictionCacheModel
 
 		commerceAddressRestrictionImpl.setClassNameId(classNameId);
 		commerceAddressRestrictionImpl.setClassPK(classPK);
-		commerceAddressRestrictionImpl.setCommerceCountryId(commerceCountryId);
+		commerceAddressRestrictionImpl.setCountryId(countryId);
 
 		commerceAddressRestrictionImpl.resetOriginalValues();
 
@@ -152,7 +152,7 @@ public class CommerceAddressRestrictionCacheModel
 
 		classPK = objectInput.readLong();
 
-		commerceCountryId = objectInput.readLong();
+		countryId = objectInput.readLong();
 	}
 
 	@Override
@@ -179,7 +179,7 @@ public class CommerceAddressRestrictionCacheModel
 
 		objectOutput.writeLong(classPK);
 
-		objectOutput.writeLong(commerceCountryId);
+		objectOutput.writeLong(countryId);
 	}
 
 	public long commerceAddressRestrictionId;
@@ -191,6 +191,6 @@ public class CommerceAddressRestrictionCacheModel
 	public long modifiedDate;
 	public long classNameId;
 	public long classPK;
-	public long commerceCountryId;
+	public long countryId;
 
 }

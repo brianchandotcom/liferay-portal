@@ -147,8 +147,7 @@ public class CommerceAddressRestrictionPersistenceTest {
 
 		newCommerceAddressRestriction.setClassPK(RandomTestUtil.nextLong());
 
-		newCommerceAddressRestriction.setCommerceCountryId(
-			RandomTestUtil.nextLong());
+		newCommerceAddressRestriction.setCountryId(RandomTestUtil.nextLong());
 
 		_commerceAddressRestrictions.add(
 			_persistence.update(newCommerceAddressRestriction));
@@ -190,15 +189,15 @@ public class CommerceAddressRestrictionPersistenceTest {
 			existingCommerceAddressRestriction.getClassPK(),
 			newCommerceAddressRestriction.getClassPK());
 		Assert.assertEquals(
-			existingCommerceAddressRestriction.getCommerceCountryId(),
-			newCommerceAddressRestriction.getCommerceCountryId());
+			existingCommerceAddressRestriction.getCountryId(),
+			newCommerceAddressRestriction.getCountryId());
 	}
 
 	@Test
-	public void testCountByCommerceCountryId() throws Exception {
-		_persistence.countByCommerceCountryId(RandomTestUtil.nextLong());
+	public void testCountByCountryId() throws Exception {
+		_persistence.countByCountryId(RandomTestUtil.nextLong());
 
-		_persistence.countByCommerceCountryId(0L);
+		_persistence.countByCountryId(0L);
 	}
 
 	@Test
@@ -251,7 +250,7 @@ public class CommerceAddressRestrictionPersistenceTest {
 			"CommerceAddressRestriction", "commerceAddressRestrictionId", true,
 			"groupId", true, "companyId", true, "userId", true, "userName",
 			true, "createDate", true, "modifiedDate", true, "classNameId", true,
-			"classPK", true, "commerceCountryId", true);
+			"classPK", true, "countryId", true);
 	}
 
 	@Test
@@ -568,10 +567,10 @@ public class CommerceAddressRestrictionPersistenceTest {
 				commerceAddressRestriction, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "classPK"));
 		Assert.assertEquals(
-			Long.valueOf(commerceAddressRestriction.getCommerceCountryId()),
+			Long.valueOf(commerceAddressRestriction.getCountryId()),
 			ReflectionTestUtil.<Long>invoke(
 				commerceAddressRestriction, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "commerceCountryId"));
+				new Class<?>[] {String.class}, "countryId"));
 	}
 
 	protected CommerceAddressRestriction addCommerceAddressRestriction()
@@ -598,8 +597,7 @@ public class CommerceAddressRestrictionPersistenceTest {
 
 		commerceAddressRestriction.setClassPK(RandomTestUtil.nextLong());
 
-		commerceAddressRestriction.setCommerceCountryId(
-			RandomTestUtil.nextLong());
+		commerceAddressRestriction.setCountryId(RandomTestUtil.nextLong());
 
 		_commerceAddressRestrictions.add(
 			_persistence.update(commerceAddressRestriction));

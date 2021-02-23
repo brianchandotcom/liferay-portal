@@ -75,8 +75,8 @@ public class CommerceShippingFixedOptionRelImpl
 
 	@Override
 	public Country getCountry() throws PortalException {
-		if (getCommerceCountryId() > 0) {
-			return CountryLocalServiceUtil.getCountry(getCommerceCountryId());
+		if (getCountryId() > 0) {
+			return CountryLocalServiceUtil.getCountry(getCountryId());
 		}
 
 		return null;
@@ -84,8 +84,8 @@ public class CommerceShippingFixedOptionRelImpl
 
 	@Override
 	public Region getRegion() throws PortalException {
-		if (getCommerceRegionId() > 0) {
-			return RegionLocalServiceUtil.getRegion(getCommerceRegionId());
+		if (getRegionId() > 0) {
+			return RegionLocalServiceUtil.getRegion(getRegionId());
 		}
 
 		return null;

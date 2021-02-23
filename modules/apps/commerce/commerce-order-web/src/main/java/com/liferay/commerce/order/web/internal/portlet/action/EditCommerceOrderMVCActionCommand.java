@@ -84,10 +84,8 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		String street3 = ParamUtil.getString(actionRequest, "street3");
 		String city = ParamUtil.getString(actionRequest, "city");
 		String zip = ParamUtil.getString(actionRequest, "zip");
-		long commerceRegionId = ParamUtil.getLong(
-			actionRequest, "commerceRegionId");
-		long commerceCountryId = ParamUtil.getLong(
-			actionRequest, "commerceCountryId");
+		long regionId = ParamUtil.getLong(actionRequest, "regionId");
+		long countryId = ParamUtil.getLong(actionRequest, "countryId");
 		String phoneNumber = ParamUtil.getString(actionRequest, "phoneNumber");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -97,9 +95,9 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			_commerceAddressService.addCommerceAddress(
 				CommerceAccount.class.getName(),
 				commerceOrder.getCommerceAccountId(), name, description,
-				street1, street2, street3, city, zip, commerceRegionId,
-				commerceCountryId, phoneNumber,
-				CommerceAddressConstants.ADDRESS_TYPE_BILLING, serviceContext);
+				street1, street2, street3, city, zip, regionId, countryId,
+				phoneNumber, CommerceAddressConstants.ADDRESS_TYPE_BILLING,
+				serviceContext);
 
 		_commerceOrderService.updateBillingAddress(
 			commerceOrder.getCommerceOrderId(),
@@ -133,10 +131,8 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		String street3 = ParamUtil.getString(actionRequest, "street3");
 		String city = ParamUtil.getString(actionRequest, "city");
 		String zip = ParamUtil.getString(actionRequest, "zip");
-		long commerceRegionId = ParamUtil.getLong(
-			actionRequest, "commerceRegionId");
-		long commerceCountryId = ParamUtil.getLong(
-			actionRequest, "commerceCountryId");
+		long regionId = ParamUtil.getLong(actionRequest, "regionId");
+		long countryId = ParamUtil.getLong(actionRequest, "countryId");
 		String phoneNumber = ParamUtil.getString(actionRequest, "phoneNumber");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -146,9 +142,9 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			_commerceAddressService.addCommerceAddress(
 				CommerceAccount.class.getName(),
 				commerceOrder.getCommerceAccountId(), name, description,
-				street1, street2, street3, city, zip, commerceRegionId,
-				commerceCountryId, phoneNumber,
-				CommerceAddressConstants.ADDRESS_TYPE_SHIPPING, serviceContext);
+				street1, street2, street3, city, zip, regionId, countryId,
+				phoneNumber, CommerceAddressConstants.ADDRESS_TYPE_SHIPPING,
+				serviceContext);
 
 		_commerceOrderService.updateShippingAddress(
 			commerceOrder.getCommerceOrderId(),
@@ -378,10 +374,8 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		String street3 = ParamUtil.getString(actionRequest, "street3");
 		String city = ParamUtil.getString(actionRequest, "city");
 		String zip = ParamUtil.getString(actionRequest, "zip");
-		long commerceRegionId = ParamUtil.getLong(
-			actionRequest, "commerceRegionId");
-		long commerceCountryId = ParamUtil.getLong(
-			actionRequest, "commerceCountryId");
+		long regionId = ParamUtil.getLong(actionRequest, "regionId");
+		long countryId = ParamUtil.getLong(actionRequest, "countryId");
 		String phoneNumber = ParamUtil.getString(actionRequest, "phoneNumber");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -389,8 +383,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 
 		_commerceOrderService.updateBillingAddress(
 			commerceOrderId, name, description, street1, street2, street3, city,
-			zip, commerceRegionId, commerceCountryId, phoneNumber,
-			serviceContext);
+			zip, regionId, countryId, phoneNumber, serviceContext);
 	}
 
 	protected void updateCustomFields(ActionRequest actionRequest)
@@ -548,10 +541,8 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		String street3 = ParamUtil.getString(actionRequest, "street3");
 		String city = ParamUtil.getString(actionRequest, "city");
 		String zip = ParamUtil.getString(actionRequest, "zip");
-		long commerceRegionId = ParamUtil.getLong(
-			actionRequest, "commerceRegionId");
-		long commerceCountryId = ParamUtil.getLong(
-			actionRequest, "commerceCountryId");
+		long regionId = ParamUtil.getLong(actionRequest, "regionId");
+		long countryId = ParamUtil.getLong(actionRequest, "countryId");
 		String phoneNumber = ParamUtil.getString(actionRequest, "phoneNumber");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -559,8 +550,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 
 		_commerceOrderService.updateShippingAddress(
 			commerceOrderId, name, description, street1, street2, street3, city,
-			zip, commerceRegionId, commerceCountryId, phoneNumber,
-			serviceContext);
+			zip, regionId, countryId, phoneNumber, serviceContext);
 	}
 
 	protected void updateTotals(ActionRequest actionRequest)

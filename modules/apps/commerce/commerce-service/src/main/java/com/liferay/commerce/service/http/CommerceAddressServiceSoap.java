@@ -71,9 +71,8 @@ public class CommerceAddressServiceSoap {
 			addCommerceAddress(
 				String className, long classPK, String name, String description,
 				String street1, String street2, String street3, String city,
-				String zip, long commerceRegionId, long commerceCountryId,
-				String phoneNumber, boolean defaultBilling,
-				boolean defaultShipping,
+				String zip, long regionId, long countryId, String phoneNumber,
+				boolean defaultBilling, boolean defaultShipping,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 
@@ -81,8 +80,33 @@ public class CommerceAddressServiceSoap {
 			com.liferay.commerce.model.CommerceAddress returnValue =
 				CommerceAddressServiceUtil.addCommerceAddress(
 					className, classPK, name, description, street1, street2,
-					street3, city, zip, commerceRegionId, commerceCountryId,
-					phoneNumber, defaultBilling, defaultShipping,
+					street3, city, zip, regionId, countryId, phoneNumber,
+					defaultBilling, defaultShipping, serviceContext);
+
+			return com.liferay.commerce.model.CommerceAddressSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceAddressSoap
+			addCommerceAddress(
+				String className, long classPK, String name, String description,
+				String street1, String street2, String street3, String city,
+				String zip, long regionId, long countryId, String phoneNumber,
+				int type,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.commerce.model.CommerceAddress returnValue =
+				CommerceAddressServiceUtil.addCommerceAddress(
+					className, classPK, name, description, street1, street2,
+					street3, city, zip, regionId, countryId, phoneNumber, type,
 					serviceContext);
 
 			return com.liferay.commerce.model.CommerceAddressSoap.toSoapModel(
@@ -99,8 +123,8 @@ public class CommerceAddressServiceSoap {
 			addCommerceAddress(
 				String className, long classPK, String name, String description,
 				String street1, String street2, String street3, String city,
-				String zip, long commerceRegionId, long commerceCountryId,
-				String phoneNumber, int type,
+				String zip, long regionId, long countryId, String phoneNumber,
+				int type, String externalReferenceCode,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 
@@ -108,34 +132,8 @@ public class CommerceAddressServiceSoap {
 			com.liferay.commerce.model.CommerceAddress returnValue =
 				CommerceAddressServiceUtil.addCommerceAddress(
 					className, classPK, name, description, street1, street2,
-					street3, city, zip, commerceRegionId, commerceCountryId,
-					phoneNumber, type, serviceContext);
-
-			return com.liferay.commerce.model.CommerceAddressSoap.toSoapModel(
-				returnValue);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			throw new RemoteException(exception.getMessage());
-		}
-	}
-
-	public static com.liferay.commerce.model.CommerceAddressSoap
-			addCommerceAddress(
-				String className, long classPK, String name, String description,
-				String street1, String street2, String street3, String city,
-				String zip, long commerceRegionId, long commerceCountryId,
-				String phoneNumber, int type, String externalReferenceCode,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-
-		try {
-			com.liferay.commerce.model.CommerceAddress returnValue =
-				CommerceAddressServiceUtil.addCommerceAddress(
-					className, classPK, name, description, street1, street2,
-					street3, city, zip, commerceRegionId, commerceCountryId,
-					phoneNumber, type, externalReferenceCode, serviceContext);
+					street3, city, zip, regionId, countryId, phoneNumber, type,
+					externalReferenceCode, serviceContext);
 
 			return com.liferay.commerce.model.CommerceAddressSoap.toSoapModel(
 				returnValue);
@@ -528,9 +526,8 @@ public class CommerceAddressServiceSoap {
 			updateCommerceAddress(
 				long commerceAddressId, String name, String description,
 				String street1, String street2, String street3, String city,
-				String zip, long commerceRegionId, long commerceCountryId,
-				String phoneNumber, boolean defaultBilling,
-				boolean defaultShipping,
+				String zip, long regionId, long countryId, String phoneNumber,
+				boolean defaultBilling, boolean defaultShipping,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 
@@ -538,9 +535,8 @@ public class CommerceAddressServiceSoap {
 			com.liferay.commerce.model.CommerceAddress returnValue =
 				CommerceAddressServiceUtil.updateCommerceAddress(
 					commerceAddressId, name, description, street1, street2,
-					street3, city, zip, commerceRegionId, commerceCountryId,
-					phoneNumber, defaultBilling, defaultShipping,
-					serviceContext);
+					street3, city, zip, regionId, countryId, phoneNumber,
+					defaultBilling, defaultShipping, serviceContext);
 
 			return com.liferay.commerce.model.CommerceAddressSoap.toSoapModel(
 				returnValue);
@@ -556,8 +552,8 @@ public class CommerceAddressServiceSoap {
 			updateCommerceAddress(
 				long commerceAddressId, String name, String description,
 				String street1, String street2, String street3, String city,
-				String zip, long commerceRegionId, long commerceCountryId,
-				String phoneNumber, int type,
+				String zip, long regionId, long countryId, String phoneNumber,
+				int type,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 
@@ -565,8 +561,8 @@ public class CommerceAddressServiceSoap {
 			com.liferay.commerce.model.CommerceAddress returnValue =
 				CommerceAddressServiceUtil.updateCommerceAddress(
 					commerceAddressId, name, description, street1, street2,
-					street3, city, zip, commerceRegionId, commerceCountryId,
-					phoneNumber, type, serviceContext);
+					street3, city, zip, regionId, countryId, phoneNumber, type,
+					serviceContext);
 
 			return com.liferay.commerce.model.CommerceAddressSoap.toSoapModel(
 				returnValue);

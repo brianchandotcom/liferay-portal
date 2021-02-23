@@ -123,7 +123,7 @@ public class FixedCommerceShippingEngine implements CommerceShippingEngine {
 		CommerceAddress commerceAddress = commerceOrder.getShippingAddress();
 
 		if (commerceAddress != null) {
-			commerceCountryId = commerceAddress.getCommerceCountryId();
+			commerceCountryId = commerceAddress.getCountryId();
 		}
 
 		List<CommerceShippingFixedOption> commerceShippingFixedOptions =

@@ -24,27 +24,27 @@ import java.util.List;
 public class PaymentRestriction {
 
 	public PaymentRestriction(
-		long commerceCountryId, String country, List<RestrictionField> fields) {
+		long countryId, String country, List<RestrictionField> fields) {
 
-		_commerceCountryId = commerceCountryId;
+		_countryId = countryId;
 		_country = country;
 		_fields = fields;
-	}
-
-	public long getCommerceCountryId() {
-		return _commerceCountryId;
 	}
 
 	public String getCountry() {
 		return _country;
 	}
 
+	public long getCountryId() {
+		return _countryId;
+	}
+
 	public List<RestrictionField> getFields() {
 		return _fields;
 	}
 
-	private final long _commerceCountryId;
 	private final String _country;
+	private final long _countryId;
 	private final List<RestrictionField> _fields;
 
 }

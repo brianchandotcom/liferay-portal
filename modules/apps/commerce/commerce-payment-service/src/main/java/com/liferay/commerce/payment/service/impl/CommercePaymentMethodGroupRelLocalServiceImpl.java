@@ -47,13 +47,13 @@ public class CommercePaymentMethodGroupRelLocalServiceImpl
 	@Override
 	public CommerceAddressRestriction addCommerceAddressRestriction(
 			long userId, long groupId, long commercePaymentMethodGroupRelId,
-			long commerceCountryId)
+			long countryId)
 		throws PortalException {
 
 		return _commerceAddressRestrictionLocalService.
 			addCommerceAddressRestriction(
 				userId, groupId, CommercePaymentMethodGroupRel.class.getName(),
-				commercePaymentMethodGroupRelId, commerceCountryId);
+				commercePaymentMethodGroupRelId, countryId);
 	}
 
 	/**
@@ -62,14 +62,14 @@ public class CommercePaymentMethodGroupRelLocalServiceImpl
 	@Deprecated
 	@Override
 	public CommerceAddressRestriction addCommerceAddressRestriction(
-			long commercePaymentMethodGroupRelId, long commerceCountryId,
+			long commercePaymentMethodGroupRelId, long countryId,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		return commercePaymentMethodGroupRelLocalService.
 			addCommerceAddressRestriction(
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-				commercePaymentMethodGroupRelId, commerceCountryId);
+				commercePaymentMethodGroupRelId, countryId);
 	}
 
 	@Override
@@ -278,7 +278,7 @@ public class CommercePaymentMethodGroupRelLocalServiceImpl
 	@Override
 	public List<CommercePaymentMethodGroupRel>
 		getCommercePaymentMethodGroupRels(
-			long groupId, long commerceCountryId, boolean active) {
+			long groupId, long countryId, boolean active) {
 
 		List<CommercePaymentMethodGroupRel>
 			filteredCommercePaymentMethodGroupRels = new ArrayList<>();
@@ -295,7 +295,7 @@ public class CommercePaymentMethodGroupRelLocalServiceImpl
 						CommercePaymentMethodGroupRel.class.getName(),
 						commercePaymentMethodGroupRel.
 							getCommercePaymentMethodGroupRelId(),
-						commerceCountryId);
+						countryId);
 
 			if (!restricted) {
 				filteredCommercePaymentMethodGroupRels.add(

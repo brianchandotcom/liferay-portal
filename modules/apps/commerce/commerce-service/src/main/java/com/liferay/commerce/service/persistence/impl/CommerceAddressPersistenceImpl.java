@@ -92,71 +92,70 @@ public class CommerceAddressPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
-	private FinderPath _finderPathWithPaginationFindByCommerceRegionId;
-	private FinderPath _finderPathWithoutPaginationFindByCommerceRegionId;
-	private FinderPath _finderPathCountByCommerceRegionId;
+	private FinderPath _finderPathWithPaginationFindByRegionId;
+	private FinderPath _finderPathWithoutPaginationFindByRegionId;
+	private FinderPath _finderPathCountByRegionId;
 
 	/**
-	 * Returns all the commerce addresses where commerceRegionId = &#63;.
+	 * Returns all the commerce addresses where regionId = &#63;.
 	 *
-	 * @param commerceRegionId the commerce region ID
+	 * @param regionId the region ID
 	 * @return the matching commerce addresses
 	 */
 	@Override
-	public List<CommerceAddress> findByCommerceRegionId(long commerceRegionId) {
-		return findByCommerceRegionId(
-			commerceRegionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	public List<CommerceAddress> findByRegionId(long regionId) {
+		return findByRegionId(
+			regionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the commerce addresses where commerceRegionId = &#63;.
+	 * Returns a range of all the commerce addresses where regionId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceAddressModelImpl</code>.
 	 * </p>
 	 *
-	 * @param commerceRegionId the commerce region ID
+	 * @param regionId the region ID
 	 * @param start the lower bound of the range of commerce addresses
 	 * @param end the upper bound of the range of commerce addresses (not inclusive)
 	 * @return the range of matching commerce addresses
 	 */
 	@Override
-	public List<CommerceAddress> findByCommerceRegionId(
-		long commerceRegionId, int start, int end) {
+	public List<CommerceAddress> findByRegionId(
+		long regionId, int start, int end) {
 
-		return findByCommerceRegionId(commerceRegionId, start, end, null);
+		return findByRegionId(regionId, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the commerce addresses where commerceRegionId = &#63;.
+	 * Returns an ordered range of all the commerce addresses where regionId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceAddressModelImpl</code>.
 	 * </p>
 	 *
-	 * @param commerceRegionId the commerce region ID
+	 * @param regionId the region ID
 	 * @param start the lower bound of the range of commerce addresses
 	 * @param end the upper bound of the range of commerce addresses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching commerce addresses
 	 */
 	@Override
-	public List<CommerceAddress> findByCommerceRegionId(
-		long commerceRegionId, int start, int end,
+	public List<CommerceAddress> findByRegionId(
+		long regionId, int start, int end,
 		OrderByComparator<CommerceAddress> orderByComparator) {
 
-		return findByCommerceRegionId(
-			commerceRegionId, start, end, orderByComparator, true);
+		return findByRegionId(regionId, start, end, orderByComparator, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the commerce addresses where commerceRegionId = &#63;.
+	 * Returns an ordered range of all the commerce addresses where regionId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceAddressModelImpl</code>.
 	 * </p>
 	 *
-	 * @param commerceRegionId the commerce region ID
+	 * @param regionId the region ID
 	 * @param start the lower bound of the range of commerce addresses
 	 * @param end the upper bound of the range of commerce addresses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -164,8 +163,8 @@ public class CommerceAddressPersistenceImpl
 	 * @return the ordered range of matching commerce addresses
 	 */
 	@Override
-	public List<CommerceAddress> findByCommerceRegionId(
-		long commerceRegionId, int start, int end,
+	public List<CommerceAddress> findByRegionId(
+		long regionId, int start, int end,
 		OrderByComparator<CommerceAddress> orderByComparator,
 		boolean useFinderCache) {
 
@@ -176,15 +175,13 @@ public class CommerceAddressPersistenceImpl
 			(orderByComparator == null)) {
 
 			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByCommerceRegionId;
-				finderArgs = new Object[] {commerceRegionId};
+				finderPath = _finderPathWithoutPaginationFindByRegionId;
+				finderArgs = new Object[] {regionId};
 			}
 		}
 		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByCommerceRegionId;
-			finderArgs = new Object[] {
-				commerceRegionId, start, end, orderByComparator
-			};
+			finderPath = _finderPathWithPaginationFindByRegionId;
+			finderArgs = new Object[] {regionId, start, end, orderByComparator};
 		}
 
 		List<CommerceAddress> list = null;
@@ -195,9 +192,7 @@ public class CommerceAddressPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceAddress commerceAddress : list) {
-					if (commerceRegionId !=
-							commerceAddress.getCommerceRegionId()) {
-
+					if (regionId != commerceAddress.getRegionId()) {
 						list = null;
 
 						break;
@@ -219,7 +214,7 @@ public class CommerceAddressPersistenceImpl
 
 			sb.append(_SQL_SELECT_COMMERCEADDRESS_WHERE);
 
-			sb.append(_FINDER_COLUMN_COMMERCEREGIONID_COMMERCEREGIONID_2);
+			sb.append(_FINDER_COLUMN_REGIONID_REGIONID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
@@ -240,7 +235,7 @@ public class CommerceAddressPersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(commerceRegionId);
+				queryPos.add(regionId);
 
 				list = (List<CommerceAddress>)QueryUtil.list(
 					query, getDialect(), start, end);
@@ -263,21 +258,20 @@ public class CommerceAddressPersistenceImpl
 	}
 
 	/**
-	 * Returns the first commerce address in the ordered set where commerceRegionId = &#63;.
+	 * Returns the first commerce address in the ordered set where regionId = &#63;.
 	 *
-	 * @param commerceRegionId the commerce region ID
+	 * @param regionId the region ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching commerce address
 	 * @throws NoSuchAddressException if a matching commerce address could not be found
 	 */
 	@Override
-	public CommerceAddress findByCommerceRegionId_First(
-			long commerceRegionId,
-			OrderByComparator<CommerceAddress> orderByComparator)
+	public CommerceAddress findByRegionId_First(
+			long regionId, OrderByComparator<CommerceAddress> orderByComparator)
 		throws NoSuchAddressException {
 
-		CommerceAddress commerceAddress = fetchByCommerceRegionId_First(
-			commerceRegionId, orderByComparator);
+		CommerceAddress commerceAddress = fetchByRegionId_First(
+			regionId, orderByComparator);
 
 		if (commerceAddress != null) {
 			return commerceAddress;
@@ -287,8 +281,8 @@ public class CommerceAddressPersistenceImpl
 
 		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		sb.append("commerceRegionId=");
-		sb.append(commerceRegionId);
+		sb.append("regionId=");
+		sb.append(regionId);
 
 		sb.append("}");
 
@@ -296,19 +290,18 @@ public class CommerceAddressPersistenceImpl
 	}
 
 	/**
-	 * Returns the first commerce address in the ordered set where commerceRegionId = &#63;.
+	 * Returns the first commerce address in the ordered set where regionId = &#63;.
 	 *
-	 * @param commerceRegionId the commerce region ID
+	 * @param regionId the region ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching commerce address, or <code>null</code> if a matching commerce address could not be found
 	 */
 	@Override
-	public CommerceAddress fetchByCommerceRegionId_First(
-		long commerceRegionId,
-		OrderByComparator<CommerceAddress> orderByComparator) {
+	public CommerceAddress fetchByRegionId_First(
+		long regionId, OrderByComparator<CommerceAddress> orderByComparator) {
 
-		List<CommerceAddress> list = findByCommerceRegionId(
-			commerceRegionId, 0, 1, orderByComparator);
+		List<CommerceAddress> list = findByRegionId(
+			regionId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -318,21 +311,20 @@ public class CommerceAddressPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce address in the ordered set where commerceRegionId = &#63;.
+	 * Returns the last commerce address in the ordered set where regionId = &#63;.
 	 *
-	 * @param commerceRegionId the commerce region ID
+	 * @param regionId the region ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching commerce address
 	 * @throws NoSuchAddressException if a matching commerce address could not be found
 	 */
 	@Override
-	public CommerceAddress findByCommerceRegionId_Last(
-			long commerceRegionId,
-			OrderByComparator<CommerceAddress> orderByComparator)
+	public CommerceAddress findByRegionId_Last(
+			long regionId, OrderByComparator<CommerceAddress> orderByComparator)
 		throws NoSuchAddressException {
 
-		CommerceAddress commerceAddress = fetchByCommerceRegionId_Last(
-			commerceRegionId, orderByComparator);
+		CommerceAddress commerceAddress = fetchByRegionId_Last(
+			regionId, orderByComparator);
 
 		if (commerceAddress != null) {
 			return commerceAddress;
@@ -342,8 +334,8 @@ public class CommerceAddressPersistenceImpl
 
 		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		sb.append("commerceRegionId=");
-		sb.append(commerceRegionId);
+		sb.append("regionId=");
+		sb.append(regionId);
 
 		sb.append("}");
 
@@ -351,25 +343,24 @@ public class CommerceAddressPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce address in the ordered set where commerceRegionId = &#63;.
+	 * Returns the last commerce address in the ordered set where regionId = &#63;.
 	 *
-	 * @param commerceRegionId the commerce region ID
+	 * @param regionId the region ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching commerce address, or <code>null</code> if a matching commerce address could not be found
 	 */
 	@Override
-	public CommerceAddress fetchByCommerceRegionId_Last(
-		long commerceRegionId,
-		OrderByComparator<CommerceAddress> orderByComparator) {
+	public CommerceAddress fetchByRegionId_Last(
+		long regionId, OrderByComparator<CommerceAddress> orderByComparator) {
 
-		int count = countByCommerceRegionId(commerceRegionId);
+		int count = countByRegionId(regionId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CommerceAddress> list = findByCommerceRegionId(
-			commerceRegionId, count - 1, count, orderByComparator);
+		List<CommerceAddress> list = findByRegionId(
+			regionId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -379,17 +370,17 @@ public class CommerceAddressPersistenceImpl
 	}
 
 	/**
-	 * Returns the commerce addresses before and after the current commerce address in the ordered set where commerceRegionId = &#63;.
+	 * Returns the commerce addresses before and after the current commerce address in the ordered set where regionId = &#63;.
 	 *
 	 * @param commerceAddressId the primary key of the current commerce address
-	 * @param commerceRegionId the commerce region ID
+	 * @param regionId the region ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next commerce address
 	 * @throws NoSuchAddressException if a commerce address with the primary key could not be found
 	 */
 	@Override
-	public CommerceAddress[] findByCommerceRegionId_PrevAndNext(
-			long commerceAddressId, long commerceRegionId,
+	public CommerceAddress[] findByRegionId_PrevAndNext(
+			long commerceAddressId, long regionId,
 			OrderByComparator<CommerceAddress> orderByComparator)
 		throws NoSuchAddressException {
 
@@ -402,15 +393,13 @@ public class CommerceAddressPersistenceImpl
 
 			CommerceAddress[] array = new CommerceAddressImpl[3];
 
-			array[0] = getByCommerceRegionId_PrevAndNext(
-				session, commerceAddress, commerceRegionId, orderByComparator,
-				true);
+			array[0] = getByRegionId_PrevAndNext(
+				session, commerceAddress, regionId, orderByComparator, true);
 
 			array[1] = commerceAddress;
 
-			array[2] = getByCommerceRegionId_PrevAndNext(
-				session, commerceAddress, commerceRegionId, orderByComparator,
-				false);
+			array[2] = getByRegionId_PrevAndNext(
+				session, commerceAddress, regionId, orderByComparator, false);
 
 			return array;
 		}
@@ -422,8 +411,8 @@ public class CommerceAddressPersistenceImpl
 		}
 	}
 
-	protected CommerceAddress getByCommerceRegionId_PrevAndNext(
-		Session session, CommerceAddress commerceAddress, long commerceRegionId,
+	protected CommerceAddress getByRegionId_PrevAndNext(
+		Session session, CommerceAddress commerceAddress, long regionId,
 		OrderByComparator<CommerceAddress> orderByComparator,
 		boolean previous) {
 
@@ -440,7 +429,7 @@ public class CommerceAddressPersistenceImpl
 
 		sb.append(_SQL_SELECT_COMMERCEADDRESS_WHERE);
 
-		sb.append(_FINDER_COLUMN_COMMERCEREGIONID_COMMERCEREGIONID_2);
+		sb.append(_FINDER_COLUMN_REGIONID_REGIONID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields =
@@ -511,7 +500,7 @@ public class CommerceAddressPersistenceImpl
 
 		QueryPos queryPos = QueryPos.getInstance(query);
 
-		queryPos.add(commerceRegionId);
+		queryPos.add(regionId);
 
 		if (orderByComparator != null) {
 			for (Object orderByConditionValue :
@@ -533,32 +522,31 @@ public class CommerceAddressPersistenceImpl
 	}
 
 	/**
-	 * Removes all the commerce addresses where commerceRegionId = &#63; from the database.
+	 * Removes all the commerce addresses where regionId = &#63; from the database.
 	 *
-	 * @param commerceRegionId the commerce region ID
+	 * @param regionId the region ID
 	 */
 	@Override
-	public void removeByCommerceRegionId(long commerceRegionId) {
+	public void removeByRegionId(long regionId) {
 		for (CommerceAddress commerceAddress :
-				findByCommerceRegionId(
-					commerceRegionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
+				findByRegionId(
+					regionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 
 			remove(commerceAddress);
 		}
 	}
 
 	/**
-	 * Returns the number of commerce addresses where commerceRegionId = &#63;.
+	 * Returns the number of commerce addresses where regionId = &#63;.
 	 *
-	 * @param commerceRegionId the commerce region ID
+	 * @param regionId the region ID
 	 * @return the number of matching commerce addresses
 	 */
 	@Override
-	public int countByCommerceRegionId(long commerceRegionId) {
-		FinderPath finderPath = _finderPathCountByCommerceRegionId;
+	public int countByRegionId(long regionId) {
+		FinderPath finderPath = _finderPathCountByRegionId;
 
-		Object[] finderArgs = new Object[] {commerceRegionId};
+		Object[] finderArgs = new Object[] {regionId};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
@@ -567,7 +555,7 @@ public class CommerceAddressPersistenceImpl
 
 			sb.append(_SQL_COUNT_COMMERCEADDRESS_WHERE);
 
-			sb.append(_FINDER_COLUMN_COMMERCEREGIONID_COMMERCEREGIONID_2);
+			sb.append(_FINDER_COLUMN_REGIONID_REGIONID_2);
 
 			String sql = sb.toString();
 
@@ -580,7 +568,7 @@ public class CommerceAddressPersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(commerceRegionId);
+				queryPos.add(regionId);
 
 				count = (Long)query.uniqueResult();
 
@@ -597,77 +585,73 @@ public class CommerceAddressPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String
-		_FINDER_COLUMN_COMMERCEREGIONID_COMMERCEREGIONID_2 =
-			"commerceAddress.commerceRegionId = ?";
+	private static final String _FINDER_COLUMN_REGIONID_REGIONID_2 =
+		"commerceAddress.regionId = ?";
 
-	private FinderPath _finderPathWithPaginationFindByCommerceCountryId;
-	private FinderPath _finderPathWithoutPaginationFindByCommerceCountryId;
-	private FinderPath _finderPathCountByCommerceCountryId;
+	private FinderPath _finderPathWithPaginationFindByCountryId;
+	private FinderPath _finderPathWithoutPaginationFindByCountryId;
+	private FinderPath _finderPathCountByCountryId;
 
 	/**
-	 * Returns all the commerce addresses where commerceCountryId = &#63;.
+	 * Returns all the commerce addresses where countryId = &#63;.
 	 *
-	 * @param commerceCountryId the commerce country ID
+	 * @param countryId the country ID
 	 * @return the matching commerce addresses
 	 */
 	@Override
-	public List<CommerceAddress> findByCommerceCountryId(
-		long commerceCountryId) {
-
-		return findByCommerceCountryId(
-			commerceCountryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	public List<CommerceAddress> findByCountryId(long countryId) {
+		return findByCountryId(
+			countryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the commerce addresses where commerceCountryId = &#63;.
+	 * Returns a range of all the commerce addresses where countryId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceAddressModelImpl</code>.
 	 * </p>
 	 *
-	 * @param commerceCountryId the commerce country ID
+	 * @param countryId the country ID
 	 * @param start the lower bound of the range of commerce addresses
 	 * @param end the upper bound of the range of commerce addresses (not inclusive)
 	 * @return the range of matching commerce addresses
 	 */
 	@Override
-	public List<CommerceAddress> findByCommerceCountryId(
-		long commerceCountryId, int start, int end) {
+	public List<CommerceAddress> findByCountryId(
+		long countryId, int start, int end) {
 
-		return findByCommerceCountryId(commerceCountryId, start, end, null);
+		return findByCountryId(countryId, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the commerce addresses where commerceCountryId = &#63;.
+	 * Returns an ordered range of all the commerce addresses where countryId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceAddressModelImpl</code>.
 	 * </p>
 	 *
-	 * @param commerceCountryId the commerce country ID
+	 * @param countryId the country ID
 	 * @param start the lower bound of the range of commerce addresses
 	 * @param end the upper bound of the range of commerce addresses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching commerce addresses
 	 */
 	@Override
-	public List<CommerceAddress> findByCommerceCountryId(
-		long commerceCountryId, int start, int end,
+	public List<CommerceAddress> findByCountryId(
+		long countryId, int start, int end,
 		OrderByComparator<CommerceAddress> orderByComparator) {
 
-		return findByCommerceCountryId(
-			commerceCountryId, start, end, orderByComparator, true);
+		return findByCountryId(countryId, start, end, orderByComparator, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the commerce addresses where commerceCountryId = &#63;.
+	 * Returns an ordered range of all the commerce addresses where countryId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceAddressModelImpl</code>.
 	 * </p>
 	 *
-	 * @param commerceCountryId the commerce country ID
+	 * @param countryId the country ID
 	 * @param start the lower bound of the range of commerce addresses
 	 * @param end the upper bound of the range of commerce addresses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -675,8 +659,8 @@ public class CommerceAddressPersistenceImpl
 	 * @return the ordered range of matching commerce addresses
 	 */
 	@Override
-	public List<CommerceAddress> findByCommerceCountryId(
-		long commerceCountryId, int start, int end,
+	public List<CommerceAddress> findByCountryId(
+		long countryId, int start, int end,
 		OrderByComparator<CommerceAddress> orderByComparator,
 		boolean useFinderCache) {
 
@@ -687,15 +671,14 @@ public class CommerceAddressPersistenceImpl
 			(orderByComparator == null)) {
 
 			if (useFinderCache) {
-				finderPath =
-					_finderPathWithoutPaginationFindByCommerceCountryId;
-				finderArgs = new Object[] {commerceCountryId};
+				finderPath = _finderPathWithoutPaginationFindByCountryId;
+				finderArgs = new Object[] {countryId};
 			}
 		}
 		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByCommerceCountryId;
+			finderPath = _finderPathWithPaginationFindByCountryId;
 			finderArgs = new Object[] {
-				commerceCountryId, start, end, orderByComparator
+				countryId, start, end, orderByComparator
 			};
 		}
 
@@ -707,9 +690,7 @@ public class CommerceAddressPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceAddress commerceAddress : list) {
-					if (commerceCountryId !=
-							commerceAddress.getCommerceCountryId()) {
-
+					if (countryId != commerceAddress.getCountryId()) {
 						list = null;
 
 						break;
@@ -731,7 +712,7 @@ public class CommerceAddressPersistenceImpl
 
 			sb.append(_SQL_SELECT_COMMERCEADDRESS_WHERE);
 
-			sb.append(_FINDER_COLUMN_COMMERCECOUNTRYID_COMMERCECOUNTRYID_2);
+			sb.append(_FINDER_COLUMN_COUNTRYID_COUNTRYID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
@@ -752,7 +733,7 @@ public class CommerceAddressPersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(commerceCountryId);
+				queryPos.add(countryId);
 
 				list = (List<CommerceAddress>)QueryUtil.list(
 					query, getDialect(), start, end);
@@ -775,21 +756,21 @@ public class CommerceAddressPersistenceImpl
 	}
 
 	/**
-	 * Returns the first commerce address in the ordered set where commerceCountryId = &#63;.
+	 * Returns the first commerce address in the ordered set where countryId = &#63;.
 	 *
-	 * @param commerceCountryId the commerce country ID
+	 * @param countryId the country ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching commerce address
 	 * @throws NoSuchAddressException if a matching commerce address could not be found
 	 */
 	@Override
-	public CommerceAddress findByCommerceCountryId_First(
-			long commerceCountryId,
+	public CommerceAddress findByCountryId_First(
+			long countryId,
 			OrderByComparator<CommerceAddress> orderByComparator)
 		throws NoSuchAddressException {
 
-		CommerceAddress commerceAddress = fetchByCommerceCountryId_First(
-			commerceCountryId, orderByComparator);
+		CommerceAddress commerceAddress = fetchByCountryId_First(
+			countryId, orderByComparator);
 
 		if (commerceAddress != null) {
 			return commerceAddress;
@@ -799,8 +780,8 @@ public class CommerceAddressPersistenceImpl
 
 		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		sb.append("commerceCountryId=");
-		sb.append(commerceCountryId);
+		sb.append("countryId=");
+		sb.append(countryId);
 
 		sb.append("}");
 
@@ -808,19 +789,18 @@ public class CommerceAddressPersistenceImpl
 	}
 
 	/**
-	 * Returns the first commerce address in the ordered set where commerceCountryId = &#63;.
+	 * Returns the first commerce address in the ordered set where countryId = &#63;.
 	 *
-	 * @param commerceCountryId the commerce country ID
+	 * @param countryId the country ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching commerce address, or <code>null</code> if a matching commerce address could not be found
 	 */
 	@Override
-	public CommerceAddress fetchByCommerceCountryId_First(
-		long commerceCountryId,
-		OrderByComparator<CommerceAddress> orderByComparator) {
+	public CommerceAddress fetchByCountryId_First(
+		long countryId, OrderByComparator<CommerceAddress> orderByComparator) {
 
-		List<CommerceAddress> list = findByCommerceCountryId(
-			commerceCountryId, 0, 1, orderByComparator);
+		List<CommerceAddress> list = findByCountryId(
+			countryId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -830,21 +810,21 @@ public class CommerceAddressPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce address in the ordered set where commerceCountryId = &#63;.
+	 * Returns the last commerce address in the ordered set where countryId = &#63;.
 	 *
-	 * @param commerceCountryId the commerce country ID
+	 * @param countryId the country ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching commerce address
 	 * @throws NoSuchAddressException if a matching commerce address could not be found
 	 */
 	@Override
-	public CommerceAddress findByCommerceCountryId_Last(
-			long commerceCountryId,
+	public CommerceAddress findByCountryId_Last(
+			long countryId,
 			OrderByComparator<CommerceAddress> orderByComparator)
 		throws NoSuchAddressException {
 
-		CommerceAddress commerceAddress = fetchByCommerceCountryId_Last(
-			commerceCountryId, orderByComparator);
+		CommerceAddress commerceAddress = fetchByCountryId_Last(
+			countryId, orderByComparator);
 
 		if (commerceAddress != null) {
 			return commerceAddress;
@@ -854,8 +834,8 @@ public class CommerceAddressPersistenceImpl
 
 		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		sb.append("commerceCountryId=");
-		sb.append(commerceCountryId);
+		sb.append("countryId=");
+		sb.append(countryId);
 
 		sb.append("}");
 
@@ -863,25 +843,24 @@ public class CommerceAddressPersistenceImpl
 	}
 
 	/**
-	 * Returns the last commerce address in the ordered set where commerceCountryId = &#63;.
+	 * Returns the last commerce address in the ordered set where countryId = &#63;.
 	 *
-	 * @param commerceCountryId the commerce country ID
+	 * @param countryId the country ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching commerce address, or <code>null</code> if a matching commerce address could not be found
 	 */
 	@Override
-	public CommerceAddress fetchByCommerceCountryId_Last(
-		long commerceCountryId,
-		OrderByComparator<CommerceAddress> orderByComparator) {
+	public CommerceAddress fetchByCountryId_Last(
+		long countryId, OrderByComparator<CommerceAddress> orderByComparator) {
 
-		int count = countByCommerceCountryId(commerceCountryId);
+		int count = countByCountryId(countryId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CommerceAddress> list = findByCommerceCountryId(
-			commerceCountryId, count - 1, count, orderByComparator);
+		List<CommerceAddress> list = findByCountryId(
+			countryId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -891,17 +870,17 @@ public class CommerceAddressPersistenceImpl
 	}
 
 	/**
-	 * Returns the commerce addresses before and after the current commerce address in the ordered set where commerceCountryId = &#63;.
+	 * Returns the commerce addresses before and after the current commerce address in the ordered set where countryId = &#63;.
 	 *
 	 * @param commerceAddressId the primary key of the current commerce address
-	 * @param commerceCountryId the commerce country ID
+	 * @param countryId the country ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next commerce address
 	 * @throws NoSuchAddressException if a commerce address with the primary key could not be found
 	 */
 	@Override
-	public CommerceAddress[] findByCommerceCountryId_PrevAndNext(
-			long commerceAddressId, long commerceCountryId,
+	public CommerceAddress[] findByCountryId_PrevAndNext(
+			long commerceAddressId, long countryId,
 			OrderByComparator<CommerceAddress> orderByComparator)
 		throws NoSuchAddressException {
 
@@ -914,15 +893,13 @@ public class CommerceAddressPersistenceImpl
 
 			CommerceAddress[] array = new CommerceAddressImpl[3];
 
-			array[0] = getByCommerceCountryId_PrevAndNext(
-				session, commerceAddress, commerceCountryId, orderByComparator,
-				true);
+			array[0] = getByCountryId_PrevAndNext(
+				session, commerceAddress, countryId, orderByComparator, true);
 
 			array[1] = commerceAddress;
 
-			array[2] = getByCommerceCountryId_PrevAndNext(
-				session, commerceAddress, commerceCountryId, orderByComparator,
-				false);
+			array[2] = getByCountryId_PrevAndNext(
+				session, commerceAddress, countryId, orderByComparator, false);
 
 			return array;
 		}
@@ -934,9 +911,8 @@ public class CommerceAddressPersistenceImpl
 		}
 	}
 
-	protected CommerceAddress getByCommerceCountryId_PrevAndNext(
-		Session session, CommerceAddress commerceAddress,
-		long commerceCountryId,
+	protected CommerceAddress getByCountryId_PrevAndNext(
+		Session session, CommerceAddress commerceAddress, long countryId,
 		OrderByComparator<CommerceAddress> orderByComparator,
 		boolean previous) {
 
@@ -953,7 +929,7 @@ public class CommerceAddressPersistenceImpl
 
 		sb.append(_SQL_SELECT_COMMERCEADDRESS_WHERE);
 
-		sb.append(_FINDER_COLUMN_COMMERCECOUNTRYID_COMMERCECOUNTRYID_2);
+		sb.append(_FINDER_COLUMN_COUNTRYID_COUNTRYID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields =
@@ -1024,7 +1000,7 @@ public class CommerceAddressPersistenceImpl
 
 		QueryPos queryPos = QueryPos.getInstance(query);
 
-		queryPos.add(commerceCountryId);
+		queryPos.add(countryId);
 
 		if (orderByComparator != null) {
 			for (Object orderByConditionValue :
@@ -1046,32 +1022,31 @@ public class CommerceAddressPersistenceImpl
 	}
 
 	/**
-	 * Removes all the commerce addresses where commerceCountryId = &#63; from the database.
+	 * Removes all the commerce addresses where countryId = &#63; from the database.
 	 *
-	 * @param commerceCountryId the commerce country ID
+	 * @param countryId the country ID
 	 */
 	@Override
-	public void removeByCommerceCountryId(long commerceCountryId) {
+	public void removeByCountryId(long countryId) {
 		for (CommerceAddress commerceAddress :
-				findByCommerceCountryId(
-					commerceCountryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
+				findByCountryId(
+					countryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 
 			remove(commerceAddress);
 		}
 	}
 
 	/**
-	 * Returns the number of commerce addresses where commerceCountryId = &#63;.
+	 * Returns the number of commerce addresses where countryId = &#63;.
 	 *
-	 * @param commerceCountryId the commerce country ID
+	 * @param countryId the country ID
 	 * @return the number of matching commerce addresses
 	 */
 	@Override
-	public int countByCommerceCountryId(long commerceCountryId) {
-		FinderPath finderPath = _finderPathCountByCommerceCountryId;
+	public int countByCountryId(long countryId) {
+		FinderPath finderPath = _finderPathCountByCountryId;
 
-		Object[] finderArgs = new Object[] {commerceCountryId};
+		Object[] finderArgs = new Object[] {countryId};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
@@ -1080,7 +1055,7 @@ public class CommerceAddressPersistenceImpl
 
 			sb.append(_SQL_COUNT_COMMERCEADDRESS_WHERE);
 
-			sb.append(_FINDER_COLUMN_COMMERCECOUNTRYID_COMMERCECOUNTRYID_2);
+			sb.append(_FINDER_COLUMN_COUNTRYID_COUNTRYID_2);
 
 			String sql = sb.toString();
 
@@ -1093,7 +1068,7 @@ public class CommerceAddressPersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(commerceCountryId);
+				queryPos.add(countryId);
 
 				count = (Long)query.uniqueResult();
 
@@ -1110,9 +1085,8 @@ public class CommerceAddressPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String
-		_FINDER_COLUMN_COMMERCECOUNTRYID_COMMERCECOUNTRYID_2 =
-			"commerceAddress.commerceCountryId = ?";
+	private static final String _FINDER_COLUMN_COUNTRYID_COUNTRYID_2 =
+		"commerceAddress.countryId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByC_C;
 	private FinderPath _finderPathWithoutPaginationFindByC_C;
@@ -5545,41 +5519,41 @@ public class CommerceAddressPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_finderPathWithPaginationFindByCommerceRegionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCommerceRegionId",
+		_finderPathWithPaginationFindByRegionId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByRegionId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
 			},
-			new String[] {"commerceRegionId"}, true);
+			new String[] {"regionId"}, true);
 
-		_finderPathWithoutPaginationFindByCommerceRegionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCommerceRegionId",
-			new String[] {Long.class.getName()},
-			new String[] {"commerceRegionId"}, true);
+		_finderPathWithoutPaginationFindByRegionId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByRegionId",
+			new String[] {Long.class.getName()}, new String[] {"regionId"},
+			true);
 
-		_finderPathCountByCommerceRegionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCommerceRegionId", new String[] {Long.class.getName()},
-			new String[] {"commerceRegionId"}, false);
+		_finderPathCountByRegionId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByRegionId",
+			new String[] {Long.class.getName()}, new String[] {"regionId"},
+			false);
 
-		_finderPathWithPaginationFindByCommerceCountryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCommerceCountryId",
+		_finderPathWithPaginationFindByCountryId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCountryId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
 			},
-			new String[] {"commerceCountryId"}, true);
+			new String[] {"countryId"}, true);
 
-		_finderPathWithoutPaginationFindByCommerceCountryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByCommerceCountryId", new String[] {Long.class.getName()},
-			new String[] {"commerceCountryId"}, true);
+		_finderPathWithoutPaginationFindByCountryId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCountryId",
+			new String[] {Long.class.getName()}, new String[] {"countryId"},
+			true);
 
-		_finderPathCountByCommerceCountryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCommerceCountryId", new String[] {Long.class.getName()},
-			new String[] {"commerceCountryId"}, false);
+		_finderPathCountByCountryId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCountryId",
+			new String[] {Long.class.getName()}, new String[] {"countryId"},
+			false);
 
 		_finderPathWithPaginationFindByC_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",

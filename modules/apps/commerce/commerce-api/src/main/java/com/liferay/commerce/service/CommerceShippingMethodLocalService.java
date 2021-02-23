@@ -68,7 +68,7 @@ public interface CommerceShippingMethodLocalService
 	 */
 	public CommerceAddressRestriction addCommerceAddressRestriction(
 			long userId, long groupId, long commerceShippingMethodId,
-			long commerceCountryId)
+			long countryId)
 		throws PortalException;
 
 	/**
@@ -76,7 +76,7 @@ public interface CommerceShippingMethodLocalService
 	 */
 	@Deprecated
 	public CommerceAddressRestriction addCommerceAddressRestriction(
-			long commerceShippingMethodId, long commerceCountryId,
+			long commerceShippingMethodId, long countryId,
 			ServiceContext serviceContext)
 		throws PortalException;
 
@@ -288,7 +288,7 @@ public interface CommerceShippingMethodLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceShippingMethod> getCommerceShippingMethods(
-		long groupId, long commerceCountryId, boolean active);
+		long groupId, long countryId, boolean active);
 
 	/**
 	 * Returns the number of commerce shipping methods.

@@ -50,8 +50,8 @@ public class CommerceAddressSoap implements Serializable {
 		soapModel.setStreet3(model.getStreet3());
 		soapModel.setCity(model.getCity());
 		soapModel.setZip(model.getZip());
-		soapModel.setCommerceRegionId(model.getCommerceRegionId());
-		soapModel.setCommerceCountryId(model.getCommerceCountryId());
+		soapModel.setRegionId(model.getRegionId());
+		soapModel.setCountryId(model.getCountryId());
 		soapModel.setLatitude(model.getLatitude());
 		soapModel.setLongitude(model.getLongitude());
 		soapModel.setPhoneNumber(model.getPhoneNumber());
@@ -253,20 +253,20 @@ public class CommerceAddressSoap implements Serializable {
 		_zip = zip;
 	}
 
-	public long getCommerceRegionId() {
-		return _commerceRegionId;
+	public long getRegionId() {
+		return _regionId;
 	}
 
-	public void setCommerceRegionId(long commerceRegionId) {
-		_commerceRegionId = commerceRegionId;
+	public void setRegionId(long regionId) {
+		_regionId = regionId;
 	}
 
-	public long getCommerceCountryId() {
-		return _commerceCountryId;
+	public long getCountryId() {
+		return _countryId;
 	}
 
-	public void setCommerceCountryId(long commerceCountryId) {
-		_commerceCountryId = commerceCountryId;
+	public void setCountryId(long countryId) {
+		_countryId = countryId;
 	}
 
 	public double getLatitude() {
@@ -342,8 +342,8 @@ public class CommerceAddressSoap implements Serializable {
 	private String _street3;
 	private String _city;
 	private String _zip;
-	private long _commerceRegionId;
-	private long _commerceCountryId;
+	private long _regionId;
+	private long _countryId;
 	private double _latitude;
 	private double _longitude;
 	private String _phoneNumber;

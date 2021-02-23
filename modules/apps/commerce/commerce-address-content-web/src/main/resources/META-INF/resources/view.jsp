@@ -85,7 +85,7 @@ CommerceAddressDisplayContext commerceAddressDisplayContext = (CommerceAddressDi
 
 								<liferay-ui:search-container-column-text
 									name="country"
-									property="commerceCountry.name"
+									property="country.name"
 								/>
 
 								<%

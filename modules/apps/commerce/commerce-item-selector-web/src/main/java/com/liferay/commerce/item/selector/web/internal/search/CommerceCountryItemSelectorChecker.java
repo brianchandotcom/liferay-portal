@@ -28,11 +28,11 @@ import javax.portlet.RenderResponse;
 public class CommerceCountryItemSelectorChecker extends EmptyOnClickRowChecker {
 
 	public CommerceCountryItemSelectorChecker(
-		RenderResponse renderResponse, long[] checkedCommerceCountryIds) {
+		RenderResponse renderResponse, long[] checkedCountryIds) {
 
 		super(renderResponse);
 
-		_checkedCountryIds = SetUtil.fromArray(checkedCommerceCountryIds);
+		_checkedCountryIds = SetUtil.fromArray(checkedCountryIds);
 	}
 
 	@Override

@@ -71,12 +71,10 @@ public class CommerceAddressTable extends BaseTable<CommerceAddressTable> {
 		"city", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CommerceAddressTable, String> zip = createColumn(
 		"zip", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<CommerceAddressTable, Long> commerceRegionId =
-		createColumn(
-			"commerceRegionId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<CommerceAddressTable, Long> commerceCountryId =
-		createColumn(
-			"commerceCountryId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<CommerceAddressTable, Long> regionId = createColumn(
+		"regionId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<CommerceAddressTable, Long> countryId = createColumn(
+		"countryId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<CommerceAddressTable, Double> latitude = createColumn(
 		"latitude", Double.class, Types.DOUBLE, Column.FLAG_DEFAULT);
 	public final Column<CommerceAddressTable, Double> longitude = createColumn(

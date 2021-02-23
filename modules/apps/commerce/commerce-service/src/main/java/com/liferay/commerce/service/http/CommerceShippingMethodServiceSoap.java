@@ -66,14 +66,13 @@ public class CommerceShippingMethodServiceSoap {
 	public static com.liferay.commerce.model.CommerceAddressRestrictionSoap
 			addCommerceAddressRestriction(
 				long userId, long groupId, long commerceShippingMethodId,
-				long commerceCountryId)
+				long countryId)
 		throws RemoteException {
 
 		try {
 			com.liferay.commerce.model.CommerceAddressRestriction returnValue =
 				CommerceShippingMethodServiceUtil.addCommerceAddressRestriction(
-					userId, groupId, commerceShippingMethodId,
-					commerceCountryId);
+					userId, groupId, commerceShippingMethodId, countryId);
 
 			return com.liferay.commerce.model.CommerceAddressRestrictionSoap.
 				toSoapModel(returnValue);
@@ -91,15 +90,14 @@ public class CommerceShippingMethodServiceSoap {
 	@Deprecated
 	public static com.liferay.commerce.model.CommerceAddressRestrictionSoap
 			addCommerceAddressRestriction(
-				long commerceShippingMethodId, long commerceCountryId,
+				long commerceShippingMethodId, long countryId,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 
 		try {
 			com.liferay.commerce.model.CommerceAddressRestriction returnValue =
 				CommerceShippingMethodServiceUtil.addCommerceAddressRestriction(
-					commerceShippingMethodId, commerceCountryId,
-					serviceContext);
+					commerceShippingMethodId, countryId, serviceContext);
 
 			return com.liferay.commerce.model.CommerceAddressRestrictionSoap.
 				toSoapModel(returnValue);
@@ -301,15 +299,14 @@ public class CommerceShippingMethodServiceSoap {
 
 	public static com.liferay.commerce.model.CommerceShippingMethodSoap[]
 			getCommerceShippingMethods(
-				long groupId, long commerceCountryId, boolean active)
+				long groupId, long countryId, boolean active)
 		throws RemoteException {
 
 		try {
 			java.util.List<com.liferay.commerce.model.CommerceShippingMethod>
 				returnValue =
 					CommerceShippingMethodServiceUtil.
-						getCommerceShippingMethods(
-							groupId, commerceCountryId, active);
+						getCommerceShippingMethods(groupId, countryId, active);
 
 			return com.liferay.commerce.model.CommerceShippingMethodSoap.
 				toSoapModels(returnValue);

@@ -44,14 +44,13 @@ public class CommercePaymentMethodGroupRelServiceImpl
 
 	@Override
 	public CommerceAddressRestriction addCommerceAddressRestriction(
-			long userId, long groupId, long classPK, long commerceCountryId)
+			long userId, long groupId, long classPK, long countryId)
 		throws PortalException {
 
 		_checkCommerceChannel(groupId);
 
 		return commercePaymentMethodGroupRelLocalService.
-			addCommerceAddressRestriction(
-				userId, groupId, classPK, commerceCountryId);
+			addCommerceAddressRestriction(userId, groupId, classPK, countryId);
 	}
 
 	/**
@@ -60,13 +59,13 @@ public class CommercePaymentMethodGroupRelServiceImpl
 	@Deprecated
 	@Override
 	public CommerceAddressRestriction addCommerceAddressRestriction(
-			long classPK, long commerceCountryId, ServiceContext serviceContext)
+			long classPK, long countryId, ServiceContext serviceContext)
 		throws PortalException {
 
 		return commercePaymentMethodGroupRelService.
 			addCommerceAddressRestriction(
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-				classPK, commerceCountryId);
+				classPK, countryId);
 	}
 
 	@Override
@@ -284,14 +283,13 @@ public class CommercePaymentMethodGroupRelServiceImpl
 	@Override
 	public List<CommercePaymentMethodGroupRel>
 			getCommercePaymentMethodGroupRels(
-				long groupId, long commerceCountryId, boolean active)
+				long groupId, long countryId, boolean active)
 		throws PortalException {
 
 		_checkCommerceChannel(groupId);
 
 		return commercePaymentMethodGroupRelLocalService.
-			getCommercePaymentMethodGroupRels(
-				groupId, commerceCountryId, active);
+			getCommercePaymentMethodGroupRels(groupId, countryId, active);
 	}
 
 	@Override

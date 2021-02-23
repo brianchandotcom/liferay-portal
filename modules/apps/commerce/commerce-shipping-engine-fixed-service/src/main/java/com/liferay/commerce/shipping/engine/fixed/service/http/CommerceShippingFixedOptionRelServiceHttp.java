@@ -56,9 +56,9 @@ public class CommerceShippingFixedOptionRelServiceHttp {
 				HttpPrincipal httpPrincipal, long userId, long groupId,
 				long commerceShippingMethodId,
 				long commerceShippingFixedOptionId,
-				long commerceInventoryWarehouseId, long commerceCountryId,
-				long commerceRegionId, String zip, double weightFrom,
-				double weightTo, java.math.BigDecimal fixedPrice,
+				long commerceInventoryWarehouseId, long countryId,
+				long regionId, String zip, double weightFrom, double weightTo,
+				java.math.BigDecimal fixedPrice,
 				java.math.BigDecimal rateUnitWeightPrice, double ratePercentage)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -71,8 +71,8 @@ public class CommerceShippingFixedOptionRelServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, groupId, commerceShippingMethodId,
 				commerceShippingFixedOptionId, commerceInventoryWarehouseId,
-				commerceCountryId, commerceRegionId, zip, weightFrom, weightTo,
-				fixedPrice, rateUnitWeightPrice, ratePercentage);
+				countryId, regionId, zip, weightFrom, weightTo, fixedPrice,
+				rateUnitWeightPrice, ratePercentage);
 
 			Object returnObj = null;
 
@@ -107,9 +107,9 @@ public class CommerceShippingFixedOptionRelServiceHttp {
 		CommerceShippingFixedOptionRel addCommerceShippingFixedOptionRel(
 				HttpPrincipal httpPrincipal, long commerceShippingMethodId,
 				long commerceShippingFixedOptionId,
-				long commerceInventoryWarehouseId, long commerceCountryId,
-				long commerceRegionId, String zip, double weightFrom,
-				double weightTo, java.math.BigDecimal fixedPrice,
+				long commerceInventoryWarehouseId, long countryId,
+				long regionId, String zip, double weightFrom, double weightTo,
+				java.math.BigDecimal fixedPrice,
 				java.math.BigDecimal rateUnitWeightPrice, double ratePercentage,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 			throws com.liferay.portal.kernel.exception.PortalException {
@@ -123,9 +123,8 @@ public class CommerceShippingFixedOptionRelServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceShippingMethodId,
 				commerceShippingFixedOptionId, commerceInventoryWarehouseId,
-				commerceCountryId, commerceRegionId, zip, weightFrom, weightTo,
-				fixedPrice, rateUnitWeightPrice, ratePercentage,
-				serviceContext);
+				countryId, regionId, zip, weightFrom, weightTo, fixedPrice,
+				rateUnitWeightPrice, ratePercentage, serviceContext);
 
 			Object returnObj = null;
 
@@ -334,9 +333,9 @@ public class CommerceShippingFixedOptionRelServiceHttp {
 		CommerceShippingFixedOptionRel updateCommerceShippingFixedOptionRel(
 				HttpPrincipal httpPrincipal,
 				long commerceShippingFixedOptionRelId,
-				long commerceInventoryWarehouseId, long commerceCountryId,
-				long commerceRegionId, String zip, double weightFrom,
-				double weightTo, java.math.BigDecimal fixedPrice,
+				long commerceInventoryWarehouseId, long countryId,
+				long regionId, String zip, double weightFrom, double weightTo,
+				java.math.BigDecimal fixedPrice,
 				java.math.BigDecimal rateUnitWeightPrice, double ratePercentage)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -348,9 +347,9 @@ public class CommerceShippingFixedOptionRelServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceShippingFixedOptionRelId,
-				commerceInventoryWarehouseId, commerceCountryId,
-				commerceRegionId, zip, weightFrom, weightTo, fixedPrice,
-				rateUnitWeightPrice, ratePercentage);
+				commerceInventoryWarehouseId, countryId, regionId, zip,
+				weightFrom, weightTo, fixedPrice, rateUnitWeightPrice,
+				ratePercentage);
 
 			Object returnObj = null;
 

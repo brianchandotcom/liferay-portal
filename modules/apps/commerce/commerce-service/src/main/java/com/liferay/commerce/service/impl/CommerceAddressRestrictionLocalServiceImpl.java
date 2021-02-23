@@ -33,7 +33,7 @@ public class CommerceAddressRestrictionLocalServiceImpl
 	@Override
 	public CommerceAddressRestriction addCommerceAddressRestriction(
 			long userId, long groupId, String className, long classPK,
-			long commerceCountryId)
+			long countryId)
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
@@ -50,7 +50,7 @@ public class CommerceAddressRestrictionLocalServiceImpl
 		commerceAddressRestriction.setUserName(user.getFullName());
 		commerceAddressRestriction.setClassName(className);
 		commerceAddressRestriction.setClassPK(classPK);
-		commerceAddressRestriction.setCommerceCountryId(commerceCountryId);
+		commerceAddressRestriction.setCountryId(countryId);
 
 		return commerceAddressRestrictionPersistence.update(
 			commerceAddressRestriction);
@@ -62,20 +62,19 @@ public class CommerceAddressRestrictionLocalServiceImpl
 	@Deprecated
 	@Override
 	public CommerceAddressRestriction addCommerceAddressRestriction(
-			String className, long classPK, long commerceCountryId,
+			String className, long classPK, long countryId,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		return commerceAddressRestrictionLocalService.
 			addCommerceAddressRestriction(
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-				className, classPK, commerceCountryId);
+				className, classPK, countryId);
 	}
 
 	@Override
-	public void deleteCommerceAddressRestrictions(long commerceCountryId) {
-		commerceAddressRestrictionPersistence.removeByCommerceCountryId(
-			commerceCountryId);
+	public void deleteCommerceAddressRestrictions(long countryId) {
+		commerceAddressRestrictionPersistence.removeByCountryId(countryId);
 	}
 
 	@Override
@@ -88,11 +87,11 @@ public class CommerceAddressRestrictionLocalServiceImpl
 
 	@Override
 	public CommerceAddressRestriction fetchCommerceAddressRestriction(
-		String className, long classPK, long commerceCountryId) {
+		String className, long classPK, long countryId) {
 
 		return commerceAddressRestrictionPersistence.fetchByC_C_C(
 			classNameLocalService.getClassNameId(className), classPK,
-			commerceCountryId);
+			countryId);
 	}
 
 	@Override
@@ -115,12 +114,11 @@ public class CommerceAddressRestrictionLocalServiceImpl
 
 	@Override
 	public boolean isCommerceAddressRestricted(
-		String className, long classPK, long commerceCountryId) {
+		String className, long classPK, long countryId) {
 
 		CommerceAddressRestriction commerceAddressRestriction =
 			commerceAddressRestrictionLocalService.
-				fetchCommerceAddressRestriction(
-					className, classPK, commerceCountryId);
+				fetchCommerceAddressRestriction(className, classPK, countryId);
 
 		if (commerceAddressRestriction != null) {
 			return true;
@@ -131,11 +129,11 @@ public class CommerceAddressRestrictionLocalServiceImpl
 
 	@Override
 	public boolean isCommerceShippingMethodRestricted(
-		long commerceShippingMethodId, long commerceCountryId) {
+		long commerceShippingMethodId, long countryId) {
 
 		return isCommerceAddressRestricted(
 			CommerceShippingMethod.class.getName(), commerceShippingMethodId,
-			commerceCountryId);
+			countryId);
 	}
 
 }

@@ -90,10 +90,10 @@ public class CommerceShippingFixedOptionRelCacheModel
 		sb.append(commerceShippingFixedOptionId);
 		sb.append(", commerceInventoryWarehouseId=");
 		sb.append(commerceInventoryWarehouseId);
-		sb.append(", commerceCountryId=");
-		sb.append(commerceCountryId);
-		sb.append(", commerceRegionId=");
-		sb.append(commerceRegionId);
+		sb.append(", countryId=");
+		sb.append(countryId);
+		sb.append(", regionId=");
+		sb.append(regionId);
 		sb.append(", zip=");
 		sb.append(zip);
 		sb.append(", weightFrom=");
@@ -151,10 +151,8 @@ public class CommerceShippingFixedOptionRelCacheModel
 			commerceShippingFixedOptionId);
 		commerceShippingFixedOptionRelImpl.setCommerceInventoryWarehouseId(
 			commerceInventoryWarehouseId);
-		commerceShippingFixedOptionRelImpl.setCommerceCountryId(
-			commerceCountryId);
-		commerceShippingFixedOptionRelImpl.setCommerceRegionId(
-			commerceRegionId);
+		commerceShippingFixedOptionRelImpl.setCountryId(countryId);
+		commerceShippingFixedOptionRelImpl.setRegionId(regionId);
 
 		if (zip == null) {
 			commerceShippingFixedOptionRelImpl.setZip("");
@@ -196,9 +194,9 @@ public class CommerceShippingFixedOptionRelCacheModel
 
 		commerceInventoryWarehouseId = objectInput.readLong();
 
-		commerceCountryId = objectInput.readLong();
+		countryId = objectInput.readLong();
 
-		commerceRegionId = objectInput.readLong();
+		regionId = objectInput.readLong();
 		zip = objectInput.readUTF();
 
 		weightFrom = objectInput.readDouble();
@@ -236,9 +234,9 @@ public class CommerceShippingFixedOptionRelCacheModel
 
 		objectOutput.writeLong(commerceInventoryWarehouseId);
 
-		objectOutput.writeLong(commerceCountryId);
+		objectOutput.writeLong(countryId);
 
-		objectOutput.writeLong(commerceRegionId);
+		objectOutput.writeLong(regionId);
 
 		if (zip == null) {
 			objectOutput.writeUTF("");
@@ -266,8 +264,8 @@ public class CommerceShippingFixedOptionRelCacheModel
 	public long commerceShippingMethodId;
 	public long commerceShippingFixedOptionId;
 	public long commerceInventoryWarehouseId;
-	public long commerceCountryId;
-	public long commerceRegionId;
+	public long countryId;
+	public long regionId;
 	public String zip;
 	public double weightFrom;
 	public double weightTo;

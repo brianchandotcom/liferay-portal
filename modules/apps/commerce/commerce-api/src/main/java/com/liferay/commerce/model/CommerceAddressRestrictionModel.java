@@ -231,17 +231,17 @@ public interface CommerceAddressRestrictionModel
 	public void setClassPK(long classPK);
 
 	/**
-	 * Returns the commerce country ID of this commerce address restriction.
+	 * Returns the country ID of this commerce address restriction.
 	 *
-	 * @return the commerce country ID of this commerce address restriction
+	 * @return the country ID of this commerce address restriction
 	 */
-	public long getCommerceCountryId();
+	public long getCountryId();
 
 	/**
-	 * Sets the commerce country ID of this commerce address restriction.
+	 * Sets the country ID of this commerce address restriction.
 	 *
-	 * @param commerceCountryId the commerce country ID of this commerce address restriction
+	 * @param countryId the country ID of this commerce address restriction
 	 */
-	public void setCommerceCountryId(long commerceCountryId);
+	public void setCountryId(long countryId);
 
 }

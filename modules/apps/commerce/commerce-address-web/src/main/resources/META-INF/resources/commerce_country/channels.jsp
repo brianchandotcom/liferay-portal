@@ -30,7 +30,7 @@ long[] commerceChannelIds = commerceCountriesDisplayContext.getCommerceChannelRe
 <aui:form action="<%= editCommerceCountryActionURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="updateChannels" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="commerceCountryId" type="hidden" value="<%= country.getCountryId() %>" />
+	<aui:input name="countryId" type="hidden" value="<%= country.getCountryId() %>" />
 	<aui:input name="commerceChannelIds" type="hidden" />
 
 	<div class="lfr-form-content">

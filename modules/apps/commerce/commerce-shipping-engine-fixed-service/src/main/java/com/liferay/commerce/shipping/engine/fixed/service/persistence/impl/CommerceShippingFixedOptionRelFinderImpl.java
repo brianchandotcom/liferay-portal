@@ -40,13 +40,13 @@ public class CommerceShippingFixedOptionRelFinderImpl
 
 	@Override
 	public CommerceShippingFixedOptionRel fetchByC_C_C_Z_W_First(
-		long commerceShippingFixedOptionId, long commerceCountryId,
-		long commerceRegionId, String zip, double weight) {
+		long commerceShippingFixedOptionId, long countryId, long regionId,
+		String zip, double weight) {
 
 		List<CommerceShippingFixedOptionRel> commerceShippingFixedOptionRels =
 			findByC_C_C_Z_W(
-				commerceShippingFixedOptionId, commerceCountryId,
-				commerceRegionId, zip, weight);
+				commerceShippingFixedOptionId, countryId, regionId, zip,
+				weight);
 
 		if (!commerceShippingFixedOptionRels.isEmpty()) {
 			return commerceShippingFixedOptionRels.get(0);
@@ -57,18 +57,18 @@ public class CommerceShippingFixedOptionRelFinderImpl
 
 	@Override
 	public List<CommerceShippingFixedOptionRel> findByC_C_C_Z_W(
-		long commerceShippingFixedOptionId, long commerceCountryId,
-		long commerceRegionId, String zip, double weight) {
+		long commerceShippingFixedOptionId, long countryId, long regionId,
+		String zip, double weight) {
 
 		return findByC_C_C_Z_W(
-			commerceShippingFixedOptionId, commerceCountryId, commerceRegionId,
-			zip, weight, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			commerceShippingFixedOptionId, countryId, regionId, zip, weight,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 	@Override
 	public List<CommerceShippingFixedOptionRel> findByC_C_C_Z_W(
-		long commerceShippingFixedOptionId, long commerceCountryId,
-		long commerceRegionId, String zip, double weight, int start, int end) {
+		long commerceShippingFixedOptionId, long countryId, long regionId,
+		String zip, double weight, int start, int end) {
 
 		Session session = null;
 
@@ -86,8 +86,8 @@ public class CommerceShippingFixedOptionRelFinderImpl
 			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
 			queryPos.add(commerceShippingFixedOptionId);
-			queryPos.add(commerceCountryId);
-			queryPos.add(commerceRegionId);
+			queryPos.add(countryId);
+			queryPos.add(regionId);
 			queryPos.add(zip);
 			queryPos.add(weight);
 			queryPos.add(weight);

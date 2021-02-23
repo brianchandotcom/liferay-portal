@@ -284,7 +284,7 @@ public class CommerceInventoryWarehousesDisplayContext {
 	}
 
 	protected ManagementBarFilterItem getManagementBarFilterItem(
-			long commerceCountryId, String label)
+			long countryId, String label)
 		throws PortalException, PortletException {
 
 		boolean active = false;
@@ -292,9 +292,9 @@ public class CommerceInventoryWarehousesDisplayContext {
 		PortletURL portletURL = PortletURLUtil.clone(
 			getPortletURL(), _cpRequestHelper.getRenderResponse());
 
-		if (commerceCountryId > 0) {
+		if (countryId > 0) {
 			String countryTwoLettersIsoCode = getCountryTwoLettersIsoCode();
-			Country country = getCountry(commerceCountryId);
+			Country country = getCountry(countryId);
 
 			if (Validator.isNotNull(countryTwoLettersIsoCode) &&
 				countryTwoLettersIsoCode.equals(country.getA2())) {
@@ -311,8 +311,7 @@ public class CommerceInventoryWarehousesDisplayContext {
 		}
 
 		return new ManagementBarFilterItem(
-			active, String.valueOf(commerceCountryId), label,
-			portletURL.toString());
+			active, String.valueOf(countryId), label, portletURL.toString());
 	}
 
 	protected String getNavigation() {

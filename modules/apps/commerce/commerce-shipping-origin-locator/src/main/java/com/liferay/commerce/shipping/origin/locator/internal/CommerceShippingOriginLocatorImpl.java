@@ -177,9 +177,9 @@ public class CommerceShippingOriginLocatorImpl
 			country.getCountryId(),
 			commerceInventoryWarehouse.getCommerceRegionCode());
 
-		commerceAddress.setCommerceRegionId(region.getRegionId());
+		commerceAddress.setRegionId(region.getRegionId());
 
-		commerceAddress.setCommerceCountryId(country.getCountryId());
+		commerceAddress.setCountryId(country.getCountryId());
 
 		commerceAddress.setLatitude(commerceInventoryWarehouse.getLatitude());
 		commerceAddress.setLongitude(commerceInventoryWarehouse.getLongitude());

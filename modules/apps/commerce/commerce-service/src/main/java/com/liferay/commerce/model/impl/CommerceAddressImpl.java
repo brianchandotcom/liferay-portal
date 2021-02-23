@@ -33,20 +33,20 @@ public class CommerceAddressImpl extends CommerceAddressBaseImpl {
 
 	@Override
 	public Country fetchCountry() {
-		return CountryLocalServiceUtil.fetchCountry(getCommerceCountryId());
+		return CountryLocalServiceUtil.fetchCountry(getCountryId());
 	}
 
 	@Override
 	public Country getCountry() throws PortalException {
-		return CountryLocalServiceUtil.getCountry(getCommerceCountryId());
+		return CountryLocalServiceUtil.getCountry(getCountryId());
 	}
 
 	@Override
 	public Region getRegion() throws PortalException {
-		long commerceRegionId = getCommerceRegionId();
+		long regionId = getRegionId();
 
-		if (commerceRegionId > 0) {
-			return RegionLocalServiceUtil.getRegion(commerceRegionId);
+		if (regionId > 0) {
+			return RegionLocalServiceUtil.getRegion(regionId);
 		}
 
 		return null;
@@ -69,9 +69,8 @@ public class CommerceAddressImpl extends CommerceAddressBaseImpl {
 			Objects.equals(getStreet3(), commerceAddress.getStreet3()) &&
 			Objects.equals(getCity(), commerceAddress.getCity()) &&
 			Objects.equals(getZip(), commerceAddress.getZip()) &&
-			(getCommerceRegionId() == commerceAddress.getCommerceRegionId()) &&
-			(getCommerceCountryId() ==
-				commerceAddress.getCommerceCountryId()) &&
+			(getRegionId() == commerceAddress.getRegionId()) &&
+			(getCountryId() == commerceAddress.getCountryId()) &&
 			Objects.equals(
 				getPhoneNumber(), commerceAddress.getPhoneNumber())) {
 

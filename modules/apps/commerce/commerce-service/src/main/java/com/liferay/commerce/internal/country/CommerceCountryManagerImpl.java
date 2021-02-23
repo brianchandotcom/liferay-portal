@@ -48,6 +48,29 @@ import org.osgi.service.component.annotations.Reference;
 @JSONWebService
 public class CommerceCountryManagerImpl implements CommerceCountryManager {
 
+	public List<Country> getBillingCountries(
+		long companyId, boolean active, boolean billingAllowed) {
+
+		return _countryLocalService.dslQuery(
+			DSLQueryFactoryUtil.selectDistinct(
+				CountryTable.INSTANCE
+			).from(
+				CountryTable.INSTANCE
+			).where(
+				() -> {
+					Predicate predicate = CountryTable.INSTANCE.companyId.eq(
+						companyId);
+
+					predicate = predicate.and(
+						CountryTable.INSTANCE.active.eq(active));
+
+					return predicate.and(
+						CountryTable.INSTANCE.billingAllowed.eq(
+							billingAllowed));
+				}
+			));
+	}
+
 	public List<Country> getBillingCountriesByChannelId(
 		long channelId, int start, int end) {
 
@@ -60,6 +83,29 @@ public class CommerceCountryManagerImpl implements CommerceCountryManager {
 				OrderByComparatorFactoryUtil.create("Country", "position", true)
 			).limit(
 				start, end
+			));
+	}
+
+	public List<Country> getShippingCountries(
+		long companyId, boolean active, boolean shippingAllowed) {
+
+		return _countryLocalService.dslQuery(
+			DSLQueryFactoryUtil.selectDistinct(
+				CountryTable.INSTANCE
+			).from(
+				CountryTable.INSTANCE
+			).where(
+				() -> {
+					Predicate predicate = CountryTable.INSTANCE.companyId.eq(
+						companyId);
+
+					predicate = predicate.and(
+						CountryTable.INSTANCE.active.eq(active));
+
+					return predicate.and(
+						CountryTable.INSTANCE.shippingAllowed.eq(
+							shippingAllowed));
+				}
 			));
 	}
 

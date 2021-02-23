@@ -97,6 +97,14 @@ definition {
 		CommerceLicense.executeSmoke();
 	}
 
+	@priority = "4"
+	test DeployToOSGIDirectory {
+		property commerce.enabled = "true";
+		property deploy.license.osgi.directory = "true";
+
+		CommerceLicense.executeSmoke();
+	}
+
 	@priority = "5"
 	test ViewCommerceDisabled {
 		property commerce.enabled = "false";

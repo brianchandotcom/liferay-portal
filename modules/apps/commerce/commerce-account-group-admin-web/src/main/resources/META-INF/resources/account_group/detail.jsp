@@ -44,7 +44,7 @@ long commerceAccountGroupId = commerceAccountGroupAdminDisplayContext.getCommerc
 			<c:if test="<%= commerceAccountGroupAdminDisplayContext.hasCustomAttributesAvailable() %>">
 				<aui:fieldset collapsible="<%= true %>" label="custom-attribute">
 					<liferay-expando:custom-attribute-list
-						className="<%= CommerceAccountGroup.class.getName() %>"
+						className="<%= AccountGroup.class.getName() %>"
 						classPK="<%= commerceAccountGroupId %>"
 						editable="<%= true %>"
 						label="<%= true %>"

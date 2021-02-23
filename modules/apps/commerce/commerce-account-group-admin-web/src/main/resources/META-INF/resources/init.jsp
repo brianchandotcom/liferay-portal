@@ -25,7 +25,8 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.commerce.account.constants.CommerceAccountActionKeys" %><%@
+<%@ page import="com.liferay.account.model.AccountGroup" %><%@
+page import="com.liferay.commerce.account.constants.CommerceAccountActionKeys" %><%@
 page import="com.liferay.commerce.account.exception.CommerceAccountGroupNameException" %><%@
 page import="com.liferay.commerce.account.exception.NoSuchAccountGroupCommerceAccountRelException" %><%@
 page import="com.liferay.commerce.account.exception.NoSuchAccountGroupException" %><%@

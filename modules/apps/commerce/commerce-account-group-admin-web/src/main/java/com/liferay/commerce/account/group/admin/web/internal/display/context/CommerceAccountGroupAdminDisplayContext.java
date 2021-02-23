@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.account.group.admin.web.internal.display.context;
 
+import com.liferay.account.model.AccountGroup;
 import com.liferay.commerce.account.group.admin.web.internal.display.context.util.CommerceAccountGroupAdminRequestHelper;
 import com.liferay.commerce.account.group.admin.web.internal.search.CommerceAccountGroupChecker;
 import com.liferay.commerce.account.item.selector.criterion.CommerceAccountGroupAccountItemSelectorCriterion;
@@ -264,8 +265,7 @@ public class CommerceAccountGroupAdminDisplayContext {
 	public boolean hasCustomAttributesAvailable() throws Exception {
 		return CustomAttributesUtil.hasCustomAttributes(
 			_commerceAccountGroupAdminRequestHelper.getCompanyId(),
-			CommerceAccountGroup.class.getName(), getCommerceAccountGroupId(),
-			null);
+			AccountGroup.class.getName(), getCommerceAccountGroupId(), null);
 	}
 
 	public boolean hasPermission(long commerceAccountGroupId, String actionId)

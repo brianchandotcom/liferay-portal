@@ -632,7 +632,7 @@ renderResponse.setTitle(headerTitle);
 			<portlet:namespace />showVersionDetailsDialog(form);
 		}
 		else {
-			submitForm(form);
+			form.submit();
 		}
 	}
 
@@ -672,13 +672,12 @@ renderResponse.setTitle(headerTitle);
 			'<portlet:namespace />DocumentLibraryCheckinModal'
 		).then((documentLibraryCheckinModal) => {
 			documentLibraryCheckinModal.open((versionIncrease, changeLog) => {
-				Liferay.Util.postForm(form, {
-					data: {
-						changeLog: changeLog,
-						updateVersionDetails: true,
-						versionIncrease: versionIncrease,
-					},
+				Liferay.Util.setFormValues(form, {
+					changeLog: changeLog,
+					updateVersionDetails: true,
+					versionIncrease: versionIncrease,
 				});
+				form.submit();
 			});
 		});
 	}

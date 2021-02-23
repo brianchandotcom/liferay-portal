@@ -267,11 +267,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		Company company = companyLocalService.getCompany(companyId);
 
 		serviceContext.setPathMain(PortalUtil.getPathMain());
-
-		String portalURL = PortalUtil.getPortalURL(
-			company.getVirtualHostname(), -1, false);
-
-		serviceContext.setPortalURL(portalURL);
+		serviceContext.setPortalURL(company.getPortalURL(0));
 
 		User defaultAdminUser = addUser(
 			creatorUserId, companyId, autoPassword, password1, password2,

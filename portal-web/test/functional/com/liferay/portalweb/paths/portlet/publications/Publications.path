@@ -115,7 +115,7 @@
 </tr>
 <tr>
 	<td>LIST_REVERT_DISABLED</td>
-	<td>//div[contains(.,'${key_publicationsName}')]//following-sibling::div/a[contains(@class, 'btn-sm disabled') and contains(.,'Revert')]</td>
+	<td>//div[contains(.,'${key_publicationsName}')]//following-sibling::div//a[contains(@class, 'disabled btn') and contains(.,'Revert')]</td>
 	<td></td>
 </tr>
 <tr>

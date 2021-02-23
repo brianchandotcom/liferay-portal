@@ -35,6 +35,8 @@ public class StyleBookEntryVersionSoap implements Serializable {
 
 		StyleBookEntryVersionSoap soapModel = new StyleBookEntryVersionSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
+		soapModel.setCtCollectionId(model.getCtCollectionId());
 		soapModel.setStyleBookEntryVersionId(
 			model.getStyleBookEntryVersionId());
 		soapModel.setVersion(model.getVersion());
@@ -111,6 +113,22 @@ public class StyleBookEntryVersionSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setStyleBookEntryVersionId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	public long getStyleBookEntryVersionId() {
@@ -237,6 +255,8 @@ public class StyleBookEntryVersionSoap implements Serializable {
 		_styleBookEntryKey = styleBookEntryKey;
 	}
 
+	private long _mvccVersion;
+	private long _ctCollectionId;
 	private long _styleBookEntryVersionId;
 	private int _version;
 	private String _uuid;

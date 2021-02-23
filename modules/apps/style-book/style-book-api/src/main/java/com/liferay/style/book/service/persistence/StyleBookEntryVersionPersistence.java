@@ -15,6 +15,7 @@
 package com.liferay.style.book.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.style.book.exception.NoSuchEntryVersionException;
 import com.liferay.style.book.model.StyleBookEntryVersion;
 
@@ -33,7 +34,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface StyleBookEntryVersionPersistence
-	extends BasePersistence<StyleBookEntryVersion> {
+	extends BasePersistence<StyleBookEntryVersion>,
+			CTPersistence<StyleBookEntryVersion> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

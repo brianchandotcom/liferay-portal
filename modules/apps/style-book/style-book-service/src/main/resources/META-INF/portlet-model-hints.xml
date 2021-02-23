@@ -3,6 +3,7 @@
 <model-hints>
 	<model name="com.liferay.style.book.model.StyleBookEntry">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="headId" type="long" />
 		<field name="styleBookEntryId" type="long" />
@@ -21,6 +22,8 @@
 		<field name="styleBookEntryKey" type="String" />
 	</model>
 	<model name="com.liferay.style.book.model.StyleBookEntryVersion">
+		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="styleBookEntryVersionId" type="long" />
 		<field name="version" type="int" />
 		<field name="uuid" type="String" />

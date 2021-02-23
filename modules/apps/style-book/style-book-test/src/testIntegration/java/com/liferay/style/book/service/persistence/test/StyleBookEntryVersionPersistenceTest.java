@@ -125,6 +125,10 @@ public class StyleBookEntryVersionPersistenceTest {
 		StyleBookEntryVersion newStyleBookEntryVersion = _persistence.create(
 			pk);
 
+		newStyleBookEntryVersion.setMvccVersion(RandomTestUtil.nextLong());
+
+		newStyleBookEntryVersion.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newStyleBookEntryVersion.setVersion(RandomTestUtil.nextInt());
 
 		newStyleBookEntryVersion.setUuid(RandomTestUtil.randomString());
@@ -164,6 +168,12 @@ public class StyleBookEntryVersionPersistenceTest {
 			_persistence.findByPrimaryKey(
 				newStyleBookEntryVersion.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingStyleBookEntryVersion.getMvccVersion(),
+			newStyleBookEntryVersion.getMvccVersion());
+		Assert.assertEquals(
+			existingStyleBookEntryVersion.getCtCollectionId(),
+			newStyleBookEntryVersion.getCtCollectionId());
 		Assert.assertEquals(
 			existingStyleBookEntryVersion.getStyleBookEntryVersionId(),
 			newStyleBookEntryVersion.getStyleBookEntryVersionId());
@@ -382,11 +392,12 @@ public class StyleBookEntryVersionPersistenceTest {
 
 	protected OrderByComparator<StyleBookEntryVersion> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"StyleBookEntryVersion", "styleBookEntryVersionId", true, "version",
-			true, "uuid", true, "styleBookEntryId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "defaultStyleBookEntry", true, "name",
-			true, "previewFileEntryId", true, "styleBookEntryKey", true);
+			"StyleBookEntryVersion", "mvccVersion", true, "ctCollectionId",
+			true, "styleBookEntryVersionId", true, "version", true, "uuid",
+			true, "styleBookEntryId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "defaultStyleBookEntry", true, "name", true,
+			"previewFileEntryId", true, "styleBookEntryKey", true);
 	}
 
 	@Test
@@ -705,6 +716,10 @@ public class StyleBookEntryVersionPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		StyleBookEntryVersion styleBookEntryVersion = _persistence.create(pk);
+
+		styleBookEntryVersion.setMvccVersion(RandomTestUtil.nextLong());
+
+		styleBookEntryVersion.setCtCollectionId(RandomTestUtil.nextLong());
 
 		styleBookEntryVersion.setVersion(RandomTestUtil.nextInt());
 

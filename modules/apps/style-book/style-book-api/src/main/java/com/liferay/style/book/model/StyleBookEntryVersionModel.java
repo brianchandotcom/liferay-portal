@@ -17,7 +17,9 @@ package com.liferay.style.book.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.GroupedModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.model.version.VersionModel;
 
 import java.util.Date;
@@ -37,7 +39,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface StyleBookEntryVersionModel
-	extends BaseModel<StyleBookEntryVersion>, GroupedModel, ShardedModel,
+	extends BaseModel<StyleBookEntryVersion>, CTModel<StyleBookEntryVersion>,
+			GroupedModel, MVCCModel, ShardedModel,
 			VersionModel<StyleBookEntry> {
 
 	/*
@@ -61,6 +64,38 @@ public interface StyleBookEntryVersionModel
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this style book entry version.
+	 *
+	 * @return the mvcc version of this style book entry version
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this style book entry version.
+	 *
+	 * @param mvccVersion the mvcc version of this style book entry version
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this style book entry version.
+	 *
+	 * @return the ct collection ID of this style book entry version
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this style book entry version.
+	 *
+	 * @param ctCollectionId the ct collection ID of this style book entry version
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the style book entry version ID of this style book entry version.

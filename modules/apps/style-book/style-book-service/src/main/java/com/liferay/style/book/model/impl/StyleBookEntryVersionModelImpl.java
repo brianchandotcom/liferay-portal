@@ -69,6 +69,7 @@ public class StyleBookEntryVersionModelImpl
 	public static final String TABLE_NAME = "StyleBookEntryVersion";
 
 	public static final Object[][] TABLE_COLUMNS = {
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
 		{"styleBookEntryVersionId", Types.BIGINT}, {"version", Types.INTEGER},
 		{"uuid_", Types.VARCHAR}, {"styleBookEntryId", Types.BIGINT},
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
@@ -84,6 +85,8 @@ public class StyleBookEntryVersionModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("styleBookEntryVersionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("version", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
@@ -102,7 +105,7 @@ public class StyleBookEntryVersionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table StyleBookEntryVersion (styleBookEntryVersionId LONG not null primary key,version INTEGER,uuid_ VARCHAR(75) null,styleBookEntryId LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,defaultStyleBookEntry BOOLEAN,frontendTokensValues TEXT null,name VARCHAR(75) null,previewFileEntryId LONG,styleBookEntryKey VARCHAR(75) null)";
+		"create table StyleBookEntryVersion (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,styleBookEntryVersionId LONG not null,version INTEGER,uuid_ VARCHAR(75) null,styleBookEntryId LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,defaultStyleBookEntry BOOLEAN,frontendTokensValues TEXT null,name VARCHAR(75) null,previewFileEntryId LONG,styleBookEntryKey VARCHAR(75) null,primary key (styleBookEntryVersionId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table StyleBookEntryVersion";
@@ -311,6 +314,18 @@ public class StyleBookEntryVersionModelImpl
 					<String, BiConsumer<StyleBookEntryVersion, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", StyleBookEntryVersion::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<StyleBookEntryVersion, Long>)
+				StyleBookEntryVersion::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", StyleBookEntryVersion::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<StyleBookEntryVersion, Long>)
+				StyleBookEntryVersion::setCtCollectionId);
+		attributeGetterFunctions.put(
 			"styleBookEntryVersionId",
 			StyleBookEntryVersion::getStyleBookEntryVersionId);
 		attributeSetterBiConsumers.put(
@@ -415,6 +430,7 @@ public class StyleBookEntryVersionModelImpl
 
 	@Override
 	public void populateVersionedModel(StyleBookEntry styleBookEntry) {
+		styleBookEntry.setCtCollectionId(getCtCollectionId());
 		styleBookEntry.setUuid(getUuid());
 		styleBookEntry.setGroupId(getGroupId());
 		styleBookEntry.setCompanyId(getCompanyId());
@@ -444,6 +460,34 @@ public class StyleBookEntryVersionModelImpl
 		populateVersionedModel(styleBookEntry);
 
 		return styleBookEntry;
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_mvccVersion = mvccVersion;
+	}
+
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@Override
@@ -840,6 +884,8 @@ public class StyleBookEntryVersionModelImpl
 		StyleBookEntryVersionImpl styleBookEntryVersionImpl =
 			new StyleBookEntryVersionImpl();
 
+		styleBookEntryVersionImpl.setMvccVersion(getMvccVersion());
+		styleBookEntryVersionImpl.setCtCollectionId(getCtCollectionId());
 		styleBookEntryVersionImpl.setStyleBookEntryVersionId(
 			getStyleBookEntryVersionId());
 		styleBookEntryVersionImpl.setVersion(getVersion());
@@ -947,6 +993,10 @@ public class StyleBookEntryVersionModelImpl
 	public CacheModel<StyleBookEntryVersion> toCacheModel() {
 		StyleBookEntryVersionCacheModel styleBookEntryVersionCacheModel =
 			new StyleBookEntryVersionCacheModel();
+
+		styleBookEntryVersionCacheModel.mvccVersion = getMvccVersion();
+
+		styleBookEntryVersionCacheModel.ctCollectionId = getCtCollectionId();
 
 		styleBookEntryVersionCacheModel.styleBookEntryVersionId =
 			getStyleBookEntryVersionId();
@@ -1108,6 +1158,8 @@ public class StyleBookEntryVersionModelImpl
 
 	}
 
+	private long _mvccVersion;
+	private long _ctCollectionId;
 	private long _styleBookEntryVersionId;
 	private int _version;
 	private String _uuid;
@@ -1154,6 +1206,8 @@ public class StyleBookEntryVersionModelImpl
 	private void _setColumnOriginalValues() {
 		_columnOriginalValues = new HashMap<String, Object>();
 
+		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put(
 			"styleBookEntryVersionId", _styleBookEntryVersionId);
 		_columnOriginalValues.put("version", _version);
@@ -1195,35 +1249,39 @@ public class StyleBookEntryVersionModelImpl
 	static {
 		Map<String, Long> columnBitmasks = new HashMap<>();
 
-		columnBitmasks.put("styleBookEntryVersionId", 1L);
+		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("version", 2L);
+		columnBitmasks.put("ctCollectionId", 2L);
 
-		columnBitmasks.put("uuid_", 4L);
+		columnBitmasks.put("styleBookEntryVersionId", 4L);
 
-		columnBitmasks.put("styleBookEntryId", 8L);
+		columnBitmasks.put("version", 8L);
 
-		columnBitmasks.put("groupId", 16L);
+		columnBitmasks.put("uuid_", 16L);
 
-		columnBitmasks.put("companyId", 32L);
+		columnBitmasks.put("styleBookEntryId", 32L);
 
-		columnBitmasks.put("userId", 64L);
+		columnBitmasks.put("groupId", 64L);
 
-		columnBitmasks.put("userName", 128L);
+		columnBitmasks.put("companyId", 128L);
 
-		columnBitmasks.put("createDate", 256L);
+		columnBitmasks.put("userId", 256L);
 
-		columnBitmasks.put("modifiedDate", 512L);
+		columnBitmasks.put("userName", 512L);
 
-		columnBitmasks.put("defaultStyleBookEntry", 1024L);
+		columnBitmasks.put("createDate", 1024L);
 
-		columnBitmasks.put("frontendTokensValues", 2048L);
+		columnBitmasks.put("modifiedDate", 2048L);
 
-		columnBitmasks.put("name", 4096L);
+		columnBitmasks.put("defaultStyleBookEntry", 4096L);
 
-		columnBitmasks.put("previewFileEntryId", 8192L);
+		columnBitmasks.put("frontendTokensValues", 8192L);
 
-		columnBitmasks.put("styleBookEntryKey", 16384L);
+		columnBitmasks.put("name", 16384L);
+
+		columnBitmasks.put("previewFileEntryId", 32768L);
+
+		columnBitmasks.put("styleBookEntryKey", 65536L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

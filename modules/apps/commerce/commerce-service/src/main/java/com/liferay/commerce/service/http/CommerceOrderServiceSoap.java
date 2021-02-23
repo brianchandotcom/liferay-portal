@@ -1049,6 +1049,31 @@ public class CommerceOrderServiceSoap {
 	}
 
 	public static com.liferay.commerce.model.CommerceOrderSoap
+			updateCommerceShippingMethod(
+				long commerceOrderId, long commerceShippingMethodId,
+				String commerceShippingOptionName,
+				com.liferay.commerce.context.CommerceContext commerceContext,
+				String locale)
+		throws RemoteException {
+
+		try {
+			com.liferay.commerce.model.CommerceOrder returnValue =
+				CommerceOrderServiceUtil.updateCommerceShippingMethod(
+					commerceOrderId, commerceShippingMethodId,
+					commerceShippingOptionName, commerceContext,
+					LocaleUtil.fromLanguageId(locale));
+
+			return com.liferay.commerce.model.CommerceOrderSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceOrderSoap
 			updateCustomFields(
 				long commerceOrderId,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -1240,31 +1265,6 @@ public class CommerceOrderServiceSoap {
 					commerceOrderId, name, description, street1, street2,
 					street3, city, zip, commerceRegionId, commerceCountryId,
 					phoneNumber, serviceContext);
-
-			return com.liferay.commerce.model.CommerceOrderSoap.toSoapModel(
-				returnValue);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			throw new RemoteException(exception.getMessage());
-		}
-	}
-
-	public static com.liferay.commerce.model.CommerceOrderSoap
-			updateShippingMethod(
-				long commerceOrderId, long commerceShippingMethodId,
-				String shippingOptionName,
-				com.liferay.commerce.context.CommerceContext commerceContext,
-				String locale)
-		throws RemoteException {
-
-		try {
-			com.liferay.commerce.model.CommerceOrder returnValue =
-				CommerceOrderServiceUtil.updateShippingMethod(
-					commerceOrderId, commerceShippingMethodId,
-					shippingOptionName, commerceContext,
-					LocaleUtil.fromLanguageId(locale));
 
 			return com.liferay.commerce.model.CommerceOrderSoap.toSoapModel(
 				returnValue);

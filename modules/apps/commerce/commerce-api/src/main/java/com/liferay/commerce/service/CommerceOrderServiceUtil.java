@@ -543,6 +543,19 @@ public class CommerceOrderServiceUtil {
 			commerceOrderId, commercePaymentMethodKey);
 	}
 
+	public static com.liferay.commerce.model.CommerceOrder
+			updateCommerceShippingMethod(
+				long commerceOrderId, long commerceShippingMethodId,
+				String commerceShippingOptionName,
+				com.liferay.commerce.context.CommerceContext commerceContext,
+				java.util.Locale locale)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateCommerceShippingMethod(
+			commerceOrderId, commerceShippingMethodId,
+			commerceShippingOptionName, commerceContext, locale);
+	}
+
 	public static com.liferay.commerce.model.CommerceOrder updateCustomFields(
 			long commerceOrderId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -640,18 +653,6 @@ public class CommerceOrderServiceUtil {
 			commerceOrderId, name, description, street1, street2, street3, city,
 			zip, commerceRegionId, commerceCountryId, phoneNumber,
 			serviceContext);
-	}
-
-	public static com.liferay.commerce.model.CommerceOrder updateShippingMethod(
-			long commerceOrderId, long commerceShippingMethodId,
-			String shippingOptionName,
-			com.liferay.commerce.context.CommerceContext commerceContext,
-			java.util.Locale locale)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().updateShippingMethod(
-			commerceOrderId, commerceShippingMethodId, shippingOptionName,
-			commerceContext, locale);
 	}
 
 	public static com.liferay.commerce.model.CommerceOrder updateTransactionId(

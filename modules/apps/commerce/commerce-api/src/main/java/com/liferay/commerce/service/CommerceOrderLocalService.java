@@ -660,6 +660,20 @@ public interface CommerceOrderLocalService
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
+	public CommerceOrder updateCommerceShippingMethod(
+			long commerceOrderId, long commerceShippingMethodId,
+			String commerceShippingOptionName, BigDecimal shippingAmount,
+			CommerceContext commerceContext)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceOrder updateCommerceShippingMethod(
+			long commerceOrderId, long commerceShippingMethodId,
+			String commerceShippingOptionName, CommerceContext commerceContext,
+			Locale locale)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder updateCustomFields(
 			long commerceOrderId, ServiceContext serviceContext)
 		throws PortalException;
@@ -716,20 +730,6 @@ public interface CommerceOrderLocalService
 			String street1, String street2, String street3, String city,
 			String zip, long commerceRegionId, long commerceCountryId,
 			String phoneNumber, ServiceContext serviceContext)
-		throws PortalException;
-
-	@Indexable(type = IndexableType.REINDEX)
-	public CommerceOrder updateShippingMethod(
-			long commerceOrderId, long commerceShippingMethodId,
-			String shippingOptionName, BigDecimal shippingAmount,
-			CommerceContext commerceContext)
-		throws PortalException;
-
-	@Indexable(type = IndexableType.REINDEX)
-	public CommerceOrder updateShippingMethod(
-			long commerceOrderId, long commerceShippingMethodId,
-			String shippingOptionName, CommerceContext commerceContext,
-			Locale locale)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)

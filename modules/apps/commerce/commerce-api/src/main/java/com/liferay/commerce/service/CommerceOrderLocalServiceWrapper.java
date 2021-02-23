@@ -1032,6 +1032,34 @@ public class CommerceOrderLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.model.CommerceOrder
+			updateCommerceShippingMethod(
+				long commerceOrderId, long commerceShippingMethodId,
+				String commerceShippingOptionName,
+				java.math.BigDecimal shippingAmount,
+				com.liferay.commerce.context.CommerceContext commerceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderLocalService.updateCommerceShippingMethod(
+			commerceOrderId, commerceShippingMethodId,
+			commerceShippingOptionName, shippingAmount, commerceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceOrder
+			updateCommerceShippingMethod(
+				long commerceOrderId, long commerceShippingMethodId,
+				String commerceShippingOptionName,
+				com.liferay.commerce.context.CommerceContext commerceContext,
+				java.util.Locale locale)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderLocalService.updateCommerceShippingMethod(
+			commerceOrderId, commerceShippingMethodId,
+			commerceShippingOptionName, commerceContext, locale);
+	}
+
+	@Override
 	public com.liferay.commerce.model.CommerceOrder updateCustomFields(
 			long commerceOrderId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -1138,31 +1166,6 @@ public class CommerceOrderLocalServiceWrapper
 			commerceOrderId, name, description, street1, street2, street3, city,
 			zip, commerceRegionId, commerceCountryId, phoneNumber,
 			serviceContext);
-	}
-
-	@Override
-	public com.liferay.commerce.model.CommerceOrder updateShippingMethod(
-			long commerceOrderId, long commerceShippingMethodId,
-			String shippingOptionName, java.math.BigDecimal shippingAmount,
-			com.liferay.commerce.context.CommerceContext commerceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commerceOrderLocalService.updateShippingMethod(
-			commerceOrderId, commerceShippingMethodId, shippingOptionName,
-			shippingAmount, commerceContext);
-	}
-
-	@Override
-	public com.liferay.commerce.model.CommerceOrder updateShippingMethod(
-			long commerceOrderId, long commerceShippingMethodId,
-			String shippingOptionName,
-			com.liferay.commerce.context.CommerceContext commerceContext,
-			java.util.Locale locale)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commerceOrderLocalService.updateShippingMethod(
-			commerceOrderId, commerceShippingMethodId, shippingOptionName,
-			commerceContext, locale);
 	}
 
 	@Override

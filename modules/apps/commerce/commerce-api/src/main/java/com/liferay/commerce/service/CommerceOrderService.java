@@ -338,6 +338,12 @@ public interface CommerceOrderService extends BaseService {
 			long commerceOrderId, String commercePaymentMethodKey)
 		throws PortalException;
 
+	public CommerceOrder updateCommerceShippingMethod(
+			long commerceOrderId, long commerceShippingMethodId,
+			String commerceShippingOptionName, CommerceContext commerceContext,
+			Locale locale)
+		throws PortalException;
+
 	public CommerceOrder updateCustomFields(
 			long commerceOrderId, ServiceContext serviceContext)
 		throws PortalException;
@@ -390,12 +396,6 @@ public interface CommerceOrderService extends BaseService {
 			String street1, String street2, String street3, String city,
 			String zip, long commerceRegionId, long commerceCountryId,
 			String phoneNumber, ServiceContext serviceContext)
-		throws PortalException;
-
-	public CommerceOrder updateShippingMethod(
-			long commerceOrderId, long commerceShippingMethodId,
-			String shippingOptionName, CommerceContext commerceContext,
-			Locale locale)
 		throws PortalException;
 
 	public CommerceOrder updateTransactionId(

@@ -76,6 +76,10 @@ public class AccountDTOConverter
 				customFields = expandoBridge.getAttributes();
 				dateCreated = commerceAccount.getCreateDate();
 				dateModified = commerceAccount.getModifiedDate();
+				defaultBillingAddressId =
+					commerceAccount.getDefaultBillingAddressId();
+				defaultShippingAddressId =
+					commerceAccount.getDefaultShippingAddressId();
 				emailAddresses = new String[] {commerceAccount.getEmail()};
 				externalReferenceCode =
 					commerceAccount.getExternalReferenceCode();

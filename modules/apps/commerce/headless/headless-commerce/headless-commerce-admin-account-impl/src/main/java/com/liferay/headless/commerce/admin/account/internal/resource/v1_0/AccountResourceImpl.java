@@ -270,6 +270,18 @@ public class AccountResourceImpl
 				true, account.getExternalReferenceCode(),
 				_serviceContextHelper.getServiceContext());
 
+		if (account.getDefaultBillingAddressId() > 0) {
+			_commerceAccountService.updateDefaultBillingAddress(
+				commerceAccount.getCommerceAccountId(),
+				account.getDefaultBillingAddressId());
+		}
+
+		if (account.getDefaultShippingAddressId() > 0) {
+			_commerceAccountService.updateDefaultShippingAddress(
+				commerceAccount.getCommerceAccountId(),
+				account.getDefaultShippingAddressId());
+		}
+
 		// Expando
 
 		Map<String, ?> customFields = account.getCustomFields();
@@ -445,9 +457,8 @@ public class AccountResourceImpl
 			commerceAccount.getCommerceAccountId(), account.getName(), true,
 			null, _getEmailAddress(account, commerceAccount),
 			GetterUtil.get(account.getTaxId(), commerceAccount.getTaxId()),
-			commerceAccount.isActive(),
-			commerceAccount.getDefaultBillingAddressId(),
-			commerceAccount.getDefaultShippingAddressId(),
+			commerceAccount.isActive(), account.getDefaultBillingAddressId(),
+			account.getDefaultShippingAddressId(),
 			account.getExternalReferenceCode(), serviceContext);
 
 		// Expando

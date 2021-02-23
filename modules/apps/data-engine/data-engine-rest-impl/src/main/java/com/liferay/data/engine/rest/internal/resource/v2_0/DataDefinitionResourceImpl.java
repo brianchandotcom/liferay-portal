@@ -894,6 +894,13 @@ public class DataDefinitionResourceImpl
 			return ddmForm.getDefaultLocale();
 		}
 
+		String i18nLanguageId = (String)contextHttpServletRequest.getAttribute(
+			WebKeys.I18N_LANGUAGE_ID);
+
+		if (Validator.isNotNull(i18nLanguageId)) {
+			return LocaleUtil.fromLanguageId(i18nLanguageId);
+		}
+
 		return Optional.ofNullable(
 			LocaleThreadLocal.getSiteDefaultLocale()
 		).orElse(

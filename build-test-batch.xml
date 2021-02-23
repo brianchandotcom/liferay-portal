@@ -4187,6 +4187,10 @@ log.sanitizer.enabled=false</echo>
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
 
+	<target name="functional-jboss72-mysql57-jdk8">
+		<run-functional-test app.server.type="jboss" database.type="mysql" database.version="5.7" />
+	</target>
+
 	<target name="functional-orcllinux6-tomcat90-mysql57-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
@@ -4777,6 +4781,12 @@ log.sanitizer.enabled=false</echo>
 
 	<target name="functional-wildfly140-mysql57-jdk8">
 		<run-functional-test app.server.type="wildfly" database.type="mysql" />
+	</target>
+
+	<target name="functional-wildfly170-mariadb104-jdk8">
+		<set-app-server-version-number app.server.type="wildfly" app.server.version="17.0.0" />
+
+		<run-functional-test app.server.type="wildfly" app.server.version="17.0.0" database.type="mariadb" />
 	</target>
 
 	<target name="gogo-shell-client-jdk8">

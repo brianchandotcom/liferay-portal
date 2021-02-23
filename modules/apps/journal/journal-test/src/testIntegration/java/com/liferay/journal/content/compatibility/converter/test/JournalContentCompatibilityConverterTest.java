@@ -16,7 +16,18 @@ package com.liferay.journal.content.compatibility.converter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.content.compatibility.converter.JournalContentCompatibilityConverter;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -26,6 +37,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.io.InputStream;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -41,6 +53,11 @@ public class JournalContentCompatibilityConverterTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Before
+	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
+	}
 
 	@Test
 	public void testAllFieldsCompatibilityLayer() throws Exception {
@@ -80,6 +97,80 @@ public class JournalContentCompatibilityConverterTest {
 		Assert.assertEquals(
 			_getFormattedString(expectedDocument),
 			_getFormattedString(document));
+	}
+
+	@Test
+	public void testLinkToPageFieldCompatibilityLayer() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		Layout layout1 = LayoutLocalServiceUtil.addLayout(
+			TestPropsValues.getUserId(), _group.getGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "layout1",
+			RandomTestUtil.randomString(), StringPool.BLANK,
+			LayoutConstants.TYPE_CONTENT, false, "/layout1", serviceContext);
+
+		Layout layout2 = LayoutLocalServiceUtil.addLayout(
+			TestPropsValues.getUserId(), _group.getGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "layout2",
+			RandomTestUtil.randomString(), StringPool.BLANK,
+			LayoutConstants.TYPE_CONTENT, false, "/layout2", serviceContext);
+
+		Layout layout3 = LayoutLocalServiceUtil.addLayout(
+			TestPropsValues.getUserId(), _group.getGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "layout3",
+			RandomTestUtil.randomString(), StringPool.BLANK,
+			LayoutConstants.TYPE_CONTENT, false, "/layout3", serviceContext);
+
+		Layout layout4 = LayoutLocalServiceUtil.addLayout(
+			TestPropsValues.getUserId(), _group.getGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "layout4",
+			RandomTestUtil.randomString(), StringPool.BLANK,
+			LayoutConstants.TYPE_CONTENT, false, "/layout4", serviceContext);
+
+		String content = StringUtil.replace(
+			read("test-journal-content-link-to-page-field-compatibility.xml"),
+			new String[] {
+				"$GROUP_ID", "$LAYOUT_ID_1", "$LAYOUT_ID_2", "$LAYOUT_ID_3",
+				"$LAYOUT_ID_4"
+			},
+			new String[] {
+				String.valueOf(_group.getGroupId()),
+				String.valueOf(layout1.getLayoutId()),
+				String.valueOf(layout2.getLayoutId()),
+				String.valueOf(layout3.getLayoutId()),
+				String.valueOf(layout4.getLayoutId())
+			});
+
+		Document document = SAXReaderUtil.read(content);
+
+		_journalContentCompatibilityConverter.convert(document);
+
+		String expectedContent = StringUtil.replace(
+			read(
+				"test-journal-content-link-to-page-field-compatibility-" +
+					"expected-results.xml"),
+			new String[] {
+				"$GROUP_ID", "$LAYOUT_ID_1", "$LAYOUT_ID_2", "$LAYOUT_ID_3",
+				"$LAYOUT_ID_4", "$UUID_1", "$UUID_2", "$UUID_3", "$UUID_4"
+			},
+			new String[] {
+				String.valueOf(_group.getGroupId()),
+				String.valueOf(layout1.getLayoutId()),
+				String.valueOf(layout2.getLayoutId()),
+				String.valueOf(layout3.getLayoutId()),
+				String.valueOf(layout4.getLayoutId()),
+				String.valueOf(layout1.getUuid()),
+				String.valueOf(layout2.getUuid()),
+				String.valueOf(layout3.getUuid()),
+				String.valueOf(layout4.getUuid())
+			});
+
+		Document expectedDocument = SAXReaderUtil.read(expectedContent);
+
+		Assert.assertEquals(
+			expectedDocument.formattedString(), document.formattedString());
 	}
 
 	@Test
@@ -158,6 +249,9 @@ public class JournalContentCompatibilityConverterTest {
 
 		return formattedString.replaceAll("instance-id=\"[a-zA-Z0-9]+\"", "");
 	}
+
+	@DeleteAfterTestRun
+	private Group _group;
 
 	@Inject
 	private JournalContentCompatibilityConverter

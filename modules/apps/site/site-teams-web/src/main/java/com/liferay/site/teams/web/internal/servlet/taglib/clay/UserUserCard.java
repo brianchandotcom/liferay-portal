@@ -18,7 +18,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseUserCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.site.teams.web.internal.constants.SiteTeamsWebKeys;
 import com.liferay.site.teams.web.internal.servlet.taglib.util.UserActionDropdownItemsProvider;
 
 import java.util.List;
@@ -48,11 +47,6 @@ public class UserUserCard extends BaseUserCard {
 				user, _teamId, renderRequest, _renderResponse);
 
 		return userActionDropdownItemsProvider.getActionDropdownItems();
-	}
-
-	@Override
-	public String getDefaultEventHandler() {
-		return SiteTeamsWebKeys.USER_DROPDOWN_DEFAULT_EVENT_HANDLER;
 	}
 
 	private final RenderResponse _renderResponse;

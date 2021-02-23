@@ -135,11 +135,6 @@ public class EditSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext
 	}
 
 	@Override
-	public String getDefaultEventHandler() {
-		return "editTeamAssignmentsUserGroupsManagementToolbarDefaultEventHandler";
-	}
-
-	@Override
 	public String getSearchActionURL() {
 		PortletURL searchActionURL = getPortletURL();
 

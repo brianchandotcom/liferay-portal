@@ -22,8 +22,9 @@ SiteTeamsDisplayContext siteTeamsDisplayContext = new SiteTeamsDisplayContext(re
 SiteTeamsManagementToolbarDisplayContext siteTeamsManagementToolbarDisplayContext = new SiteTeamsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, siteTeamsDisplayContext);
 %>
 
-<clay:management-toolbar-v2
-	displayContext="<%= siteTeamsManagementToolbarDisplayContext %>"
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= siteTeamsManagementToolbarDisplayContext %>"
+	propsTransformer="js/SiteTeamsManagementToolbarPropsTransformer"
 />
 
 <portlet:actionURL name="deleteTeams" var="deleteTeamsURL">
@@ -108,8 +109,3 @@ SiteTeamsManagementToolbarDisplayContext siteTeamsManagementToolbarDisplayContex
 		/>
 	</liferay-ui:search-container>
 </aui:form>
-
-<liferay-frontend:component
-	componentId="<%= siteTeamsManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/SiteTeamsManagementToolbarDefaultEventHandler.es"
-/>

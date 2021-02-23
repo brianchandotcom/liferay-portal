@@ -111,11 +111,6 @@ public class SiteTeamsManagementToolbarDisplayContext
 	}
 
 	@Override
-	public String getDefaultEventHandler() {
-		return "siteTeamsManagementToolbarDefaultEventHandler";
-	}
-
-	@Override
 	public String getSearchActionURL() {
 		PortletURL searchActionURL = getPortletURL();
 

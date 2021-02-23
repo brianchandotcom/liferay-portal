@@ -12,14 +12,29 @@
  * details.
  */
 
-package com.liferay.site.teams.web.internal.constants;
+export default function propsTransformer({portletNamespace, ...otherProps}) {
+	return {
+		...otherProps,
+		onActionButtonClick(event, {item}) {
+			const action = item.data?.action;
 
-/**
- * @author Eudaldo Alonso
- */
-public class SiteTeamsWebKeys {
+			if (action === 'deleteSelectedTeams') {
+				if (
+					confirm(
+						Liferay.Language.get(
+							'are-you-sure-you-want-to-delete-this'
+						)
+					)
+				) {
+					const form = document.getElementById(
+						`${portletNamespace}fm`
+					);
 
-	public static final String USER_DROPDOWN_DEFAULT_EVENT_HANDLER =
-		"USER_DROPDOWN_DEFAULT_EVENT_HANDLER";
-
+					if (form) {
+						submitForm(form);
+					}
+				}
+			}
+		},
+	};
 }

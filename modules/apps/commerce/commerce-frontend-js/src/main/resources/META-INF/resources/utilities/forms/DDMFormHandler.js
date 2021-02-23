@@ -28,9 +28,11 @@ class DDMFormHandler {
 	}
 
 	_attachFormListener() {
-		this.DDMFormInstance.on('fieldEdited', (field) => {
-			this.fields = updateFields(this.fields, field);
-			this.checkCPInstance();
+		this.DDMFormInstance.unstable_onEvent(({payload, type}) => {
+			if (type === 'fieldEdited') {
+				this.fields = updateFields(this.fields, payload);
+				this.checkCPInstance();
+			}
 		});
 	}
 

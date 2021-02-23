@@ -258,6 +258,8 @@ const FormEditor = React.forwardRef(
 
 		const defaultRef = useRef(null);
 
+		const unstable_onEventRef = useRef(null);
+
 		const reactComponentRef = ref ?? defaultRef;
 
 		useEffect(() => {
@@ -265,16 +267,30 @@ const FormEditor = React.forwardRef(
 				containerId,
 				{
 					reactComponentRef,
+
+					// unstable_onEvent allows listening to internal events of the
+					// FormProvider through the public instance of the form. This
+					// is still unstable and can change at any time.
+
+					unstable_onEvent: (callback) => {
+						unstable_onEventRef.current = callback;
+					},
 				},
 				{
 					destroyOnNavigate: true,
 				}
 			);
-		}, [containerId, reactComponentRef]);
+		}, [unstable_onEventRef, containerId, reactComponentRef]);
 
 		return (
 			<FormProvider
-				onEvent={onEvent}
+				onEvent={(type, payload) => {
+					onEvent(type, payload);
+
+					if (unstable_onEventRef.current) {
+						unstable_onEventRef.current({payload, type});
+					}
+				}}
 				value={{...otherProps, activePage, defaultLanguageId}}
 			>
 				{(props) => <Form {...props} ref={reactComponentRef} />}

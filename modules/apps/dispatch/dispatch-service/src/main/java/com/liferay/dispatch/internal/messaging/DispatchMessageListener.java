@@ -65,8 +65,9 @@ public class DispatchMessageListener extends BaseMessageListener {
 
 				_dispatchLogLocalService.addDispatchLog(
 					dispatchTrigger.getUserId(),
-					dispatchTrigger.getDispatchTriggerId(), date, null, null,
-					date, DispatchTaskStatus.CANCELED);
+					dispatchTrigger.getDispatchTriggerId(), date,
+					"Only one instance in PROGRESS is allowed", null, date,
+					DispatchTaskStatus.CANCELED);
 
 				return;
 			}

@@ -397,7 +397,9 @@ public abstract class BaseBuild implements Build {
 			JSONObject testResultJSONObject = new JSONObject();
 
 			if (dataTypesList.contains("buildURL")) {
-				testResultJSONObject.put("buildURL", getBuildURL());
+				Build build = testResult.getBuild();
+
+				testResultJSONObject.put("buildURL", build.getBuildURL());
 			}
 
 			if (dataTypesList.contains("duration")) {

@@ -34,7 +34,7 @@ import '../../../../css/EditApp.scss';
 import ApplyAppChangesModal from './ApplyAppChangesModal.es';
 import DeployAppModal from './DeployAppModal.es';
 import EditAppToolbar from './EditAppToolbar.es';
-import MissingFieldsModal from './MissingFieldsModal.es';
+import MissingRequiredFieldsModal from './MissingRequiredFieldsModal.es';
 import {
 	getAssigneeRoles,
 	getDataDefinition,
@@ -90,9 +90,10 @@ export default ({
 		false
 	);
 	const [isDeployModalVisible, setDeployModalVisible] = useState(false);
-	const [missingFieldsModalVisible, setMissingFieldsModalVisible] = useState(
-		false
-	);
+	const [
+		missingRequiredFieldsVisible,
+		setMissingRequiredFieldsVisible,
+	] = useState(false);
 	const [isLoading, setLoading] = useState(false);
 	const [isSaving, setSaving] = useState(false);
 
@@ -182,7 +183,7 @@ export default ({
 		openFormViewModal,
 		setAppChangesModalVisible,
 		setDeployModalVisible,
-		setMissingFieldsModalVisible,
+		setMissingRequiredFieldsVisible,
 		state: {app},
 		updateFormView,
 	};
@@ -344,6 +345,9 @@ export default ({
 		history.push(`/${scope}`);
 	};
 
+	const onCloseMissingRequiredFieldsModal = () =>
+		setMissingRequiredFieldsVisible(false);
+
 	const onSave = (callback = () => {}, deployed) => {
 		const workflowAppSteps = [...config.steps];
 
@@ -427,17 +431,15 @@ export default ({
 
 					<DeployAppModal onSave={onSave} />
 
-					<MissingFieldsModal
-						dataObjectName={config.dataObject.name}
-						missingFieldsModalVisible={missingFieldsModalVisible}
-						onDeploy={() => {
+					<MissingRequiredFieldsModal
+						customActionOnClick={() => {
 							setDeployModalVisible(true);
 
-							setMissingFieldsModalVisible(false);
+							onCloseMissingRequiredFieldsModal();
 						}}
-						setMissingFieldsModalVisible={
-							setMissingFieldsModalVisible
-						}
+						dataObjectName={config.dataObject.name}
+						onCloseModal={onCloseMissingRequiredFieldsModal}
+						visible={missingRequiredFieldsVisible}
 					/>
 				</EditAppContext.Provider>
 			</Loading>

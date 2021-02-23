@@ -34,7 +34,7 @@ import {
 	STATUSES,
 } from './constants.es';
 
-export const Actions = (validateFormViewMissingRequiredFields) => {
+export const Actions = (validateMissingRequiredFieldsModal) => {
 	const {getStandaloneURL} = useContext(AppContext);
 	const {deployApp, undeployApp} = useDeployApp();
 
@@ -45,8 +45,8 @@ export const Actions = (validateFormViewMissingRequiredFields) => {
 					return undeployApp(app);
 				}
 
-				if (validateFormViewMissingRequiredFields) {
-					return validateFormViewMissingRequiredFields(app).then(
+				if (validateMissingRequiredFieldsModal) {
+					return validateMissingRequiredFieldsModal(app).then(
 						(callback) => callback ?? deployApp(app)
 					);
 				}

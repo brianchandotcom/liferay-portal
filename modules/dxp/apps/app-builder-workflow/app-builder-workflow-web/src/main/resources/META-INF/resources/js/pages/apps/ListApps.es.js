@@ -12,10 +12,14 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayPopover from '@clayui/popover';
 import {AppContext} from 'app-builder-web/js/AppContext.es';
+import useBackUrl from 'app-builder-web/js/hooks/useBackUrl.es';
 import useDeployApp from 'app-builder-web/js/hooks/useDeployApp.es';
 import ListApps, {Actions} from 'app-builder-web/js/pages/apps/ListApps.es';
 import {COLUMNS, FILTERS} from 'app-builder-web/js/pages/apps/constants.es';
-import {parseResponse} from 'data-engine-js-components-web/js/utils/client.es';
+import {
+	getItem,
+	parseResponse,
+} from 'data-engine-js-components-web/js/utils/client.es';
 import {
 	errorToast,
 	successToast,
@@ -24,20 +28,22 @@ import {createResourceURL, fetch} from 'frontend-js-web';
 import {compile} from 'path-to-regexp';
 import React, {useContext, useState} from 'react';
 
-import MissingFieldsModal from './edit/MissingFieldsModal.es';
-import {getDataDefinition, getFormViews} from './edit/actions.es';
-import {checkRequiredFields} from './edit/utils.es';
+import MissingRequiredFieldsModal from './edit/MissingRequiredFieldsModal.es';
+import {getDataDefinition} from './edit/actions.es';
+import {checkRequiredFields, getFormViewFields} from './edit/utils.es';
 
 export default ({history, scope, ...props}) => {
-	const {userId} = useContext(AppContext);
+	const {baseResourceURL, namespace, userId} = useContext(AppContext);
+	const withBackUrl = useBackUrl();
 	const {deployApp} = useDeployApp();
 	const [currentApp, setCurrentApp] = useState({dataDefinitionName: ''});
 	const [showTooltip, setShowTooltip] = useState(false);
 	const [deployCallback, setDeployCallback] = useState({});
-	const [missingFieldsModalVisible, setMissingFieldsModalVisible] = useState(
-		false
-	);
-	const {baseResourceURL, namespace} = useContext(AppContext);
+	const [
+		missingRequiredFieldsVisible,
+		setMissingRequiredFieldsVisible,
+	] = useState(false);
+	const [fieldType, setFieldType] = useState('');
 
 	const [firstColumn, ...otherColumns] = COLUMNS;
 	const lastColumn = otherColumns.pop();
@@ -88,6 +94,16 @@ export default ({history, scope, ...props}) => {
 		},
 	];
 
+	const getEditAppUrl = ({dataDefinitionId, id}) => {
+		return withBackUrl(
+			compile(props.editPath[1])({
+				appId: id,
+				dataDefinitionId,
+				objectType: props.match.params.objectType,
+			})
+		);
+	};
+
 	const confirmDelete = ({id}) => {
 		return new Promise((resolve) => {
 			const confirmed = confirm(
@@ -131,39 +147,52 @@ export default ({history, scope, ...props}) => {
 		});
 	};
 
-	function validateFormViewMissingRequiredFields(app) {
-		const isFormViewMissingRequiredFields = (app) => {
+	const onCloseMissingRequiredFieldsModal = () =>
+		setMissingRequiredFieldsVisible(false);
+
+	function validateMissingRequiredFieldsModal(app) {
+		const formViewMissingRequiredFields = (app) => {
 			return getDataDefinition(app.dataDefinitionId).then(
 				(dataDefinition) => {
 					setCurrentApp(app);
 
-					return getFormViews(
-						dataDefinition.id,
-						dataDefinition.defaultLanguageId
-					).then((formViews) => {
-						formViews = checkRequiredFields(
-							formViews,
-							dataDefinition
-						);
+					return getItem(
+						`/o/data-engine/v2.0/data-layouts/${app.dataLayoutId}`
+					).then((formView) => {
+						formView.fields = getFormViewFields(formView);
 
-						return formViews.find(({id}) => id === app.dataLayoutId)
-							.missingRequiredFields?.customField;
+						formView = checkRequiredFields(
+							[formView],
+							dataDefinition
+						)[0];
+
+						return formView.missingRequiredFields;
 					});
 				}
 			);
 		};
 
-		return isFormViewMissingRequiredFields(app).then((missing) => {
-			if (missing) {
-				return new Promise((resolve, reject) => {
+		return formViewMissingRequiredFields(app).then((missing) => {
+			const openMissingRequiredFieldsModal = (fieldType) =>
+				new Promise((resolve, reject) => {
 					setDeployCallback({reject, resolve});
-					setMissingFieldsModalVisible(true);
+					setFieldType(fieldType);
+					setMissingRequiredFieldsVisible(true);
 				});
+
+			if (missing.nativeField) {
+				return openMissingRequiredFieldsModal('nativeField');
 			}
+
+			if (missing.customField) {
+				return openMissingRequiredFieldsModal('customField');
+			}
+
+			return undefined;
 		});
 	}
 
-	const actions = [...Actions(validateFormViewMissingRequiredFields)];
+	const actions = [...Actions(validateMissingRequiredFieldsModal)];
 
 	actions.splice(-1, 1, {
 		action: confirmDelete,
@@ -207,18 +236,22 @@ export default ({history, scope, ...props}) => {
 				{...props}
 			/>
 
-			<MissingFieldsModal
-				dataObjectName={currentApp.dataDefinitionName}
-				missingFieldsModalVisible={missingFieldsModalVisible}
-				onDeploy={() =>
+			<MissingRequiredFieldsModal
+				customActionOnClick={() =>
 					deployApp(currentApp)
 						.then((result) => {
-							setMissingFieldsModalVisible(false);
+							onCloseMissingRequiredFieldsModal();
 							deployCallback.resolve(result);
 						})
 						.catch(deployCallback.reject)
 				}
-				setMissingFieldsModalVisible={setMissingFieldsModalVisible}
+				dataObjectName={currentApp.dataDefinitionName}
+				fieldType={fieldType}
+				nativeActionOnClick={() =>
+					history.push(getEditAppUrl(currentApp))
+				}
+				onCloseModal={onCloseMissingRequiredFieldsModal}
+				visible={missingRequiredFieldsVisible}
 			/>
 		</>
 	);

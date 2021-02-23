@@ -126,6 +126,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>persisted</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<name>readOnly</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

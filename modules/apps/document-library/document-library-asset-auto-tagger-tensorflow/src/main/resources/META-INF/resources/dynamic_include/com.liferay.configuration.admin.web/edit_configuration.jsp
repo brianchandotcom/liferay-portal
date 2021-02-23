@@ -18,15 +18,19 @@
 
 <%
 TensorFlowImageAssetAutoTagProviderCompanyConfiguration tensorFlowImageAssetAutoTagProviderCompanyConfiguration = (TensorFlowImageAssetAutoTagProviderCompanyConfiguration)request.getAttribute(TensorFlowImageAssetAutoTagProviderCompanyConfiguration.class.getName());
+
+boolean isTensorFlowImageAssetAutoTagProviderEnabled = (tensorFlowImageAssetAutoTagProviderCompanyConfiguration != null) && tensorFlowImageAssetAutoTagProviderCompanyConfiguration.enabled();
+
+boolean isDownloadFailed = isTensorFlowImageAssetAutoTagProviderEnabled && TensorFlowDownloadUtil.isDownloadFailed();
 %>
 
 <c:if test="<%= !TensorFlowDownloadUtil.isDownloaded() %>">
-	<aui:alert closeable="<%= false %>" type='<%= TensorFlowDownloadUtil.isDownloadFailed() ? "danger" : "info" %>'>
+	<aui:alert closeable="<%= false %>" type='<%= isDownloadFailed ? "danger" : "info" %>'>
 		<c:choose>
-			<c:when test="<%= TensorFlowDownloadUtil.isDownloadFailed() %>">
+			<c:when test="<%= isDownloadFailed %>">
 				<liferay-ui:message key="the-tensorflow-model-could-not-be-downloaded.-please-contact-your-administrator" />
 			</c:when>
-			<c:when test="<%= (tensorFlowImageAssetAutoTagProviderCompanyConfiguration != null) && tensorFlowImageAssetAutoTagProviderCompanyConfiguration.enabled() %>">
+			<c:when test="<%= isTensorFlowImageAssetAutoTagProviderEnabled %>">
 				<liferay-ui:message key="the-tensorflow-model-is-being-downloaded-in-the-background.-no-tags-will-be-created-until-the-model-is-fully-downloaded" />
 			</c:when>
 			<c:otherwise>

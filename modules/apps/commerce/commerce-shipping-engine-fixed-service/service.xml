@@ -65,8 +65,8 @@
 		<column name="commerceShippingMethodId" type="long" />
 		<column name="commerceShippingFixedOptionId" type="long" />
 		<column name="commerceInventoryWarehouseId" type="long" />
-		<column name="commerceCountryId" type="long" />
-		<column name="commerceRegionId" type="long" />
+		<column name="countryId" type="long" />
+		<column name="regionId" type="long" />
 		<column name="zip" type="String" />
 		<column name="weightFrom" type="double" />
 		<column name="weightTo" type="double" />
@@ -77,7 +77,7 @@
 		<!-- Order -->
 
 		<order by="asc">
-			<order-column name="commerceCountryId" />
+			<order-column name="countryId" />
 		</order>
 
 		<!-- Finder methods -->

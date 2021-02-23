@@ -528,9 +528,9 @@ definition {
 			dmDocumentFile = "${dmDocumentFile}",
 			dmDocumentTitle = "${dmDocumentTitle}");
 
-		AssertElementPresent(locator1 = "Button#CANCEL_GIVEN_POSITION");
+		AssertVisible(locator1 = "Button#PUBLISH");
 
-		AssertElementPresent(locator1 = "Button#PUBLISH_GIVEN_POSITION");
+		AssertVisible(locator1 = "Button#CANCEL");
 
 		Button.clickPublish();
 

@@ -167,6 +167,56 @@ public class Account implements Cloneable, Serializable {
 
 	protected Date dateModified;
 
+	public Long getDefaultBillingAccountAddressId() {
+		return defaultBillingAccountAddressId;
+	}
+
+	public void setDefaultBillingAccountAddressId(
+		Long defaultBillingAccountAddressId) {
+
+		this.defaultBillingAccountAddressId = defaultBillingAccountAddressId;
+	}
+
+	public void setDefaultBillingAccountAddressId(
+		UnsafeSupplier<Long, Exception>
+			defaultBillingAccountAddressIdUnsafeSupplier) {
+
+		try {
+			defaultBillingAccountAddressId =
+				defaultBillingAccountAddressIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long defaultBillingAccountAddressId;
+
+	public Long getDefaultShippingAccountAddressId() {
+		return defaultShippingAccountAddressId;
+	}
+
+	public void setDefaultShippingAccountAddressId(
+		Long defaultShippingAccountAddressId) {
+
+		this.defaultShippingAccountAddressId = defaultShippingAccountAddressId;
+	}
+
+	public void setDefaultShippingAccountAddressId(
+		UnsafeSupplier<Long, Exception>
+			defaultShippingAccountAddressIdUnsafeSupplier) {
+
+		try {
+			defaultShippingAccountAddressId =
+				defaultShippingAccountAddressIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long defaultShippingAccountAddressId;
+
 	public String[] getEmailAddresses() {
 		return emailAddresses;
 	}

@@ -162,6 +162,26 @@ public class AccountSerDes {
 			sb.append("\"");
 		}
 
+		if (account.getDefaultBillingAccountAddressId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"defaultBillingAccountAddressId\": ");
+
+			sb.append(account.getDefaultBillingAccountAddressId());
+		}
+
+		if (account.getDefaultShippingAccountAddressId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"defaultShippingAccountAddressId\": ");
+
+			sb.append(account.getDefaultShippingAccountAddressId());
+		}
+
 		if (account.getEmailAddresses() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -354,6 +374,24 @@ public class AccountSerDes {
 				liferayToJSONDateFormat.format(account.getDateModified()));
 		}
 
+		if (account.getDefaultBillingAccountAddressId() == null) {
+			map.put("defaultBillingAccountAddressId", null);
+		}
+		else {
+			map.put(
+				"defaultBillingAccountAddressId",
+				String.valueOf(account.getDefaultBillingAccountAddressId()));
+		}
+
+		if (account.getDefaultShippingAccountAddressId() == null) {
+			map.put("defaultShippingAccountAddressId", null);
+		}
+		else {
+			map.put(
+				"defaultShippingAccountAddressId",
+				String.valueOf(account.getDefaultShippingAccountAddressId()));
+		}
+
 		if (account.getEmailAddresses() == null) {
 			map.put("emailAddresses", null);
 		}
@@ -495,6 +533,24 @@ public class AccountSerDes {
 				if (jsonParserFieldValue != null) {
 					account.setDateModified(
 						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"defaultBillingAccountAddressId")) {
+
+				if (jsonParserFieldValue != null) {
+					account.setDefaultBillingAccountAddressId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"defaultShippingAccountAddressId")) {
+
+				if (jsonParserFieldValue != null) {
+					account.setDefaultShippingAccountAddressId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "emailAddresses")) {

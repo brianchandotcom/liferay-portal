@@ -872,6 +872,28 @@ public abstract class BaseAccountResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"defaultBillingAccountAddressId",
+					additionalAssertFieldName)) {
+
+				if (account.getDefaultBillingAccountAddressId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"defaultShippingAccountAddressId",
+					additionalAssertFieldName)) {
+
+				if (account.getDefaultShippingAccountAddressId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("emailAddresses", additionalAssertFieldName)) {
 				if (account.getEmailAddresses() == null) {
 					valid = false;
@@ -1088,6 +1110,34 @@ public abstract class BaseAccountResourceTestCase {
 				if (!Objects.deepEquals(
 						account1.getDateModified(),
 						account2.getDateModified())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"defaultBillingAccountAddressId",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						account1.getDefaultBillingAccountAddressId(),
+						account2.getDefaultBillingAccountAddressId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"defaultShippingAccountAddressId",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						account1.getDefaultShippingAccountAddressId(),
+						account2.getDefaultShippingAccountAddressId())) {
 
 					return false;
 				}
@@ -1353,6 +1403,16 @@ public abstract class BaseAccountResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("defaultBillingAccountAddressId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("defaultShippingAccountAddressId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("emailAddresses")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1456,6 +1516,8 @@ public abstract class BaseAccountResourceTestCase {
 			{
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
+				defaultBillingAccountAddressId = RandomTestUtil.randomLong();
+				defaultShippingAccountAddressId = RandomTestUtil.randomLong();
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();

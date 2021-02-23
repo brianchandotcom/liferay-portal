@@ -369,9 +369,7 @@ renderResponse.setTitle(headerTitle);
 										%>
 
 											<c:if test="<%= (curDLFileEntryType.getFileEntryTypeId() == DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) || (fileEntryTypeId == curDLFileEntryType.getFileEntryTypeId()) || DLFileEntryTypePermission.contains(permissionChecker, curDLFileEntryType, ActionKeys.VIEW) %>">
-
-											<aui:option label="<%= HtmlUtil.escape(curDLFileEntryType.getName(locale)) %>" selected="<%= fileEntryTypeId == curDLFileEntryType.getPrimaryKey() %>" value="<%= curDLFileEntryType.getPrimaryKey() %>" />
-
+												<aui:option label="<%= HtmlUtil.escape(curDLFileEntryType.getName(locale)) %>" selected="<%= fileEntryTypeId == curDLFileEntryType.getPrimaryKey() %>" value="<%= curDLFileEntryType.getPrimaryKey() %>" />
 											</c:if>
 
 										<%
@@ -389,19 +387,19 @@ renderResponse.setTitle(headerTitle);
 
 							<c:if test="<%= fileEntryTypeId > 0 %>">
 
-							<%
-							List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
+								<%
+								List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
 
-							boolean showLanguageSelector = false;
+								boolean showLanguageSelector = false;
 
-							for (DDMStructure ddmStructure : ddmStructures) {
-								if (dlEditFileEntryDisplayContext.isDDMStructureVisible(ddmStructure)) {
-									showLanguageSelector = true;
+								for (DDMStructure ddmStructure : ddmStructures) {
+									if (dlEditFileEntryDisplayContext.isDDMStructureVisible(ddmStructure)) {
+										showLanguageSelector = true;
 
-									break;
+										break;
+									}
 								}
-							}
-							%>
+								%>
 
 								<c:if test="<%= showLanguageSelector %>">
 									<div class="mb-3">
@@ -422,35 +420,35 @@ renderResponse.setTitle(headerTitle);
 									</div>
 								</c:if>
 
-							<%
-							try {
-								boolean localizable = true;
+								<%
+								try {
+									boolean localizable = true;
 
-								for (DDMStructure ddmStructure : dlFileEntryType.getDDMStructures()) {
-									com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues = null;
+									for (DDMStructure ddmStructure : dlFileEntryType.getDDMStructures()) {
+										com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues = null;
 
-									try {
-										DLFileEntryMetadata fileEntryMetadata = DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(ddmStructure.getStructureId(), fileVersionId);
+										try {
+											DLFileEntryMetadata fileEntryMetadata = DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(ddmStructure.getStructureId(), fileVersionId);
 
-										ddmFormValues = dlEditFileEntryDisplayContext.getDDMFormValues(fileEntryMetadata.getDDMStorageId());
-									}
-									catch (Exception e) {
-									}
-							%>
+											ddmFormValues = dlEditFileEntryDisplayContext.getDDMFormValues(fileEntryMetadata.getDDMStorageId());
+										}
+										catch (Exception e) {
+										}
+								%>
 
-								<div class="<%= !dlEditFileEntryDisplayContext.isDDMStructureVisible(ddmStructure) ? "hide" : "" %> file-entry-type-fields">
+										<div class="<%= !dlEditFileEntryDisplayContext.isDDMStructureVisible(ddmStructure) ? "hide" : "" %> file-entry-type-fields">
 
-									<%
-									DDMFormValuesToMapConverter ddmFormValuesToMapConverter = (DDMFormValuesToMapConverter)request.getAttribute(DDMFormValuesToMapConverter.class.getName());
-									%>
+											<%
+											DDMFormValuesToMapConverter ddmFormValuesToMapConverter = (DDMFormValuesToMapConverter)request.getAttribute(DDMFormValuesToMapConverter.class.getName());
+											%>
 
-									<liferay-data-engine:data-layout-renderer
-										containerId='<%= liferayPortletResponse.getNamespace() + "dataEngineLayoutRenderer" + ddmStructure.getStructureId() %>'
-										dataDefinitionId="<%= ddmStructure.getStructureId() %>"
-										dataRecordValues="<%= ddmFormValuesToMapConverter.convert(ddmFormValues, DDMStructureLocalServiceUtil.getStructure(ddmStructure.getStructureId())) %>"
-										namespace="<%= liferayPortletResponse.getNamespace() + ddmStructure.getStructureId() + StringPool.UNDERLINE %>"
-									/>
-								</div>
+											<liferay-data-engine:data-layout-renderer
+												containerId='<%= liferayPortletResponse.getNamespace() + "dataEngineLayoutRenderer" + ddmStructure.getStructureId() %>'
+												dataDefinitionId="<%= ddmStructure.getStructureId() %>"
+												dataRecordValues="<%= ddmFormValuesToMapConverter.convert(ddmFormValues, DDMStructureLocalServiceUtil.getStructure(ddmStructure.getStructureId())) %>"
+												namespace="<%= liferayPortletResponse.getNamespace() + ddmStructure.getStructureId() + StringPool.UNDERLINE %>"
+											/>
+										</div>
 
 								<%
 										localizable = false;

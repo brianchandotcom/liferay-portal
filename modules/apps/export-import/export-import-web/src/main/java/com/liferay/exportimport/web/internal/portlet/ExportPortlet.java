@@ -15,7 +15,10 @@
 package com.liferay.exportimport.web.internal.portlet;
 
 import com.liferay.exportimport.constants.ExportImportPortletKeys;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.TrashHelper;
 import com.liferay.trash.util.TrashWebKeys;
 
@@ -64,6 +67,22 @@ public class ExportPortlet extends MVCPortlet {
 	public void render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Group group = themeDisplay.getSiteGroup();
+
+		if ((!group.hasPublicLayouts() && group.hasPrivateLayouts()) ||
+			group.isLayoutSetPrototype()) {
+
+			renderRequest.setAttribute(
+				WebKeys.PRIVATE_LAYOUT, Boolean.TRUE.toString());
+		}
+		else {
+			renderRequest.setAttribute(
+				WebKeys.PRIVATE_LAYOUT, Boolean.FALSE.toString());
+		}
 
 		renderRequest.setAttribute(TrashWebKeys.TRASH_HELPER, _trashHelper);
 

@@ -204,7 +204,7 @@ public class Query {
 			}
 
 			${freeMarkerTool.getGraphQLMethodAnnotations(javaMethodSignature)}
-			public ${javaMethodSignature.returnType} parent${javaMethodSignature.returnType}(${freeMarkerTool.getGraphQLParameters(javaMethodSignature.javaMethodParameters[1..*(javaMethodSignature.javaMethodParameters?size - 1)], javaMethodSignature.operation, true)}) throws Exception {
+			public ${javaMethodSignature.returnType} parent${javaMethodSignature.parentSchemaName}(${freeMarkerTool.getGraphQLParameters(javaMethodSignature.javaMethodParameters[1..*(javaMethodSignature.javaMethodParameters?size - 1)], javaMethodSignature.operation, true)}) throws Exception {
 				<#assign arguments = freeMarkerTool.getGraphQLArguments(javaMethodSignature.javaMethodParameters[1..*(javaMethodSignature.javaMethodParameters?size - 1)], freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)) />
 
 				if (_${javaMethodSignature.parentSchemaName?uncap_first}.getParent${javaMethodSignature.javaMethodParameters[0].parameterName?cap_first}() == null) {

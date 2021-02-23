@@ -21,8 +21,11 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.portal.kernel.model.ClassName;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -41,6 +44,19 @@ public class AnalyticsReportsInfoDisplayRequestAttributesContributor
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
 			LayoutDisplayPageProviderUtil.initLayoutDisplayPageObjectProvider(
 				httpServletRequest, _layoutDisplayPageProviderTracker, _portal);
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (layoutDisplayPageObjectProvider == null) {
+			httpServletRequest.setAttribute(
+				AnalyticsReportsWebKeys.INFO_ITEM_REFERENCE,
+				new InfoItemReference(
+					Layout.class.getName(), themeDisplay.getPlid()));
+
+			return;
+		}
 
 		ClassName className = _classNameLocalService.fetchClassName(
 			layoutDisplayPageObjectProvider.getClassNameId());

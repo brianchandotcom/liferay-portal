@@ -45,8 +45,13 @@ public class LayoutDisplayPageProviderUtil {
 			return layoutDisplayPageObjectProvider;
 		}
 
-		String className = portal.getClassName(
-			ParamUtil.getLong(httpServletRequest, "classNameId"));
+		long classNameId = ParamUtil.getLong(httpServletRequest, "classNameId");
+
+		if (classNameId == 0) {
+			return null;
+		}
+
+		String className = portal.getClassName(classNameId);
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			layoutDisplayPageProviderTracker.

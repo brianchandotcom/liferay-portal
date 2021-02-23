@@ -70,7 +70,7 @@ public class ShipmentResourceImpl extends BaseShipmentResourceImpl {
 	}
 
 	@Override
-	public Shipment getShipment(@NotNull Long shipmentId) throws Exception {
+	public Shipment getShipment(Long shipmentId) throws Exception {
 		return _toShipment(shipmentId);
 	}
 

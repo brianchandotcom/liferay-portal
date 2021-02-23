@@ -33,6 +33,7 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.BlogPostingEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.BlogPostingResource;
 import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Field;
@@ -116,7 +117,8 @@ public class BlogPostingResourceImpl
 			BlogsEntry.class.getName(), 0, displayPageKey,
 			blogsEntry.getGroupId(), contextHttpServletRequest,
 			contextHttpServletResponse, blogsEntry, _infoItemServiceTracker,
-			_layoutLocalService, _layoutPageTemplateEntryService);
+			_layoutDisplayPageProviderTracker, _layoutLocalService,
+			_layoutPageTemplateEntryService);
 	}
 
 	@Override
@@ -390,6 +392,9 @@ public class BlogPostingResourceImpl
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Reference
+	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

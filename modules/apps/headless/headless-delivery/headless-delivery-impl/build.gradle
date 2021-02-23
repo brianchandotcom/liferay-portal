@@ -38,6 +38,7 @@ dependencies {
 	compileOnly project(":apps:journal:journal-article-dynamic-data-mapping-form-field-type-api")
 	compileOnly project(":apps:knowledge-base:knowledge-base-api")
 	compileOnly project(":apps:layout:layout-api")
+	compileOnly project(":apps:layout:layout-display-page-api")
 	compileOnly project(":apps:layout:layout-dynamic-data-mapping-form-field-type-api")
 	compileOnly project(":apps:layout:layout-page-template-api")
 	compileOnly project(":apps:layout:layout-seo-api")

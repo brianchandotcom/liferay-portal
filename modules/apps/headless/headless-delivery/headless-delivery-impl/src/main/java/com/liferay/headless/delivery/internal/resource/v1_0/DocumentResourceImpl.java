@@ -49,6 +49,7 @@ import com.liferay.headless.delivery.internal.search.sort.SortUtil;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.journal.service.JournalArticleService;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
@@ -210,7 +211,8 @@ public class DocumentResourceImpl
 			FileEntry.class.getName(), _getDDMStructureId(fileEntry),
 			displayPageKey, fileEntry.getGroupId(), contextHttpServletRequest,
 			contextHttpServletResponse, fileEntry, _infoItemServiceTracker,
-			_layoutLocalService, _layoutPageTemplateEntryService);
+			_layoutDisplayPageProviderTracker, _layoutLocalService,
+			_layoutPageTemplateEntryService);
 	}
 
 	@Override
@@ -784,6 +786,9 @@ public class DocumentResourceImpl
 
 	@Reference
 	private JournalArticleService _journalArticleService;
+
+	@Reference
+	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

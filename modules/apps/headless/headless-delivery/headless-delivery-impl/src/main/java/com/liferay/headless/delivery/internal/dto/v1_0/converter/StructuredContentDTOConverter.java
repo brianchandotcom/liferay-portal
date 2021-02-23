@@ -44,6 +44,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalConverter;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.CommentManager;
@@ -306,8 +307,8 @@ public class StructuredContentDTOConverter
 				journalArticle.getResourcePrimKey(),
 				ddmStructure.getStructureId(), dtoConverterContext,
 				journalArticle.getGroupId(), journalArticle,
-				_infoItemServiceTracker, _layoutLocalService,
-				_layoutPageTemplateEntryService,
+				_infoItemServiceTracker, _layoutDisplayPageProviderTracker,
+				_layoutLocalService, _layoutPageTemplateEntryService,
 				"getStructuredContentRenderedContentByDisplayPageDisplayPage" +
 					"Key");
 
@@ -358,6 +359,9 @@ public class StructuredContentDTOConverter
 
 	@Reference
 	private JournalConverter _journalConverter;
+
+	@Reference
+	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

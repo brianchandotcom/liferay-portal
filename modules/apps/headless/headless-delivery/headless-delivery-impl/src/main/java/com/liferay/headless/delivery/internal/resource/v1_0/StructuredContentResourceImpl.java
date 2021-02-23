@@ -63,6 +63,7 @@ import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.service.JournalFolderService;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalConverter;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
@@ -368,7 +369,8 @@ public class StructuredContentResourceImpl
 			JournalArticle.class.getName(), ddmStructure.getStructureId(),
 			displayPageKey, journalArticle.getGroupId(),
 			contextHttpServletRequest, contextHttpServletResponse,
-			journalArticle, _infoItemServiceTracker, _layoutLocalService,
+			journalArticle, _infoItemServiceTracker,
+			_layoutDisplayPageProviderTracker, _layoutLocalService,
 			_layoutPageTemplateEntryService);
 	}
 
@@ -1217,6 +1219,9 @@ public class StructuredContentResourceImpl
 
 	@Reference(target = "(ddm.form.values.serializer.type=json)")
 	private DDMFormValuesSerializer _jsonDDMFormValuesSerializer;
+
+	@Reference
+	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

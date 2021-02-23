@@ -16,9 +16,15 @@ package com.liferay.headless.delivery.internal.dto.v1_0.util;
 
 import com.liferay.headless.delivery.dto.v1_0.RenderedContent;
 import com.liferay.info.constants.InfoDisplayWebKeys;
+import com.liferay.info.item.InfoItemDetails;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
+import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.exception.NoSuchPageTemplateEntryException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -64,6 +70,7 @@ public class DisplayPageRendererUtil {
 		long itemClassTypeId, DTOConverterContext dtoConverterContext,
 		long groupId, Object item,
 		InfoItemServiceTracker infoItemServiceTracker,
+		LayoutDisplayPageProviderTracker layoutDisplayPageProviderTracker,
 		LayoutLocalService layoutLocalService,
 		LayoutPageTemplateEntryService layoutPageTemplateEntryService,
 		String methodName) {
@@ -125,7 +132,9 @@ public class DisplayPageRendererUtil {
 								groupId,
 								dtoConverterContext.getHttpServletRequest(),
 								httpServletResponse, item,
-								infoItemServiceTracker, layoutLocalService,
+								infoItemServiceTracker,
+								layoutDisplayPageProviderTracker,
+								layoutLocalService,
 								layoutPageTemplateEntryService);
 						});
 				}
@@ -138,6 +147,7 @@ public class DisplayPageRendererUtil {
 			long groupId, HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, Object item,
 			InfoItemServiceTracker infoItemServiceTracker,
+			LayoutDisplayPageProviderTracker layoutDisplayPageProviderTracker,
 			LayoutLocalService layoutLocalService,
 			LayoutPageTemplateEntryService layoutPageTemplateEntryService)
 		throws Exception {
@@ -167,14 +177,22 @@ public class DisplayPageRendererUtil {
 			infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemDetailsProvider.class, itemClassName);
 
+		InfoItemDetails infoItemDetails =
+			infoItemDetailsProvider.getInfoItemDetails(item);
+
 		httpServletRequest.setAttribute(
-			InfoDisplayWebKeys.INFO_ITEM_DETAILS,
-			infoItemDetailsProvider.getInfoItemDetails(item));
+			InfoDisplayWebKeys.INFO_ITEM_DETAILS, infoItemDetails);
 
 		httpServletRequest.setAttribute(
 			InfoDisplayWebKeys.INFO_ITEM_FIELD_VALUES_PROVIDER,
 			infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemFieldValuesProvider.class, itemClassName));
+
+		httpServletRequest.setAttribute(
+			LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
+			_getLayoutDisplayPageObjectProvider(
+				infoItemDetails.getInfoItemReference(),
+				layoutDisplayPageProviderTracker));
 
 		httpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY,
@@ -204,6 +222,20 @@ public class DisplayPageRendererUtil {
 		bodyElement.html(sb.toString());
 
 		return document.html();
+	}
+
+	private static LayoutDisplayPageObjectProvider<?>
+		_getLayoutDisplayPageObjectProvider(
+			InfoItemReference infoItemReference,
+			LayoutDisplayPageProviderTracker layoutDisplayPageProviderTracker) {
+
+		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
+			layoutDisplayPageProviderTracker.
+				getLayoutDisplayPageProviderByClassName(
+					infoItemReference.getClassName());
+
+		return layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
+			infoItemReference);
 	}
 
 	private static ThemeDisplay _getThemeDisplay(

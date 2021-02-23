@@ -35,6 +35,7 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.RelatedContentUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.TaxonomyCategoryBriefUtil;
 import com.liferay.headless.delivery.internal.resource.v1_0.BaseBlogPostingResourceImpl;
 import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -122,7 +123,8 @@ public class BlogPostingDTOConverter
 						BlogsEntry.class.getName(), blogsEntry.getEntryId(), 0,
 						dtoConverterContext, blogsEntry.getGroupId(),
 						blogsEntry, _infoItemServiceTracker,
-						_layoutLocalService, _layoutPageTemplateEntryService,
+						_layoutDisplayPageProviderTracker, _layoutLocalService,
+						_layoutPageTemplateEntryService,
 						"getBlogPostingRenderedContentByDisplayPageDisplay" +
 							"PageKey"));
 			}
@@ -181,6 +183,9 @@ public class BlogPostingDTOConverter
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Reference
+	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

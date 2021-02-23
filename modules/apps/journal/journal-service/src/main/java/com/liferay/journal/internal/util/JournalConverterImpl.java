@@ -24,10 +24,7 @@ import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.storage.constants.FieldConstants;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMFieldsCounter;
-import com.liferay.journal.article.dynamic.data.mapping.form.field.type.constants.JournalArticleDDMFormFieldTypeConstants;
 import com.liferay.journal.exception.ArticleContentException;
-import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -36,7 +33,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -63,7 +59,6 @@ import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -361,7 +356,7 @@ public class JournalConverterImpl implements JournalConverter {
 			}
 
 			Serializable serializable = getFieldValue(
-				ddmFormField, dynamicContentElement, defaultLocale);
+				ddmFormField, dynamicContentElement);
 
 			ddmField.addValue(locale, serializable);
 		}
@@ -396,8 +391,7 @@ public class JournalConverterImpl implements JournalConverter {
 	}
 
 	protected Serializable getFieldValue(
-		DDMFormField ddmFormField, Element dynamicContentElement,
-		Locale defaultLocale) {
+		DDMFormField ddmFormField, Element dynamicContentElement) {
 
 		if (Objects.equals(
 				DDMFormFieldTypeConstants.CHECKBOX_MULTIPLE,
@@ -405,14 +399,6 @@ public class JournalConverterImpl implements JournalConverter {
 
 			return _getCheckboxMultipleValue(
 				ddmFormField, dynamicContentElement);
-		}
-
-		if (Objects.equals(
-				JournalArticleDDMFormFieldTypeConstants.JOURNAL_ARTICLE,
-				ddmFormField.getType())) {
-
-			return _getJournalArticleValue(
-				defaultLocale, dynamicContentElement);
 		}
 
 		if (Objects.equals(
@@ -648,41 +634,6 @@ public class JournalConverterImpl implements JournalConverter {
 			ddmFormField.getDataType(), dynamicContentElement.getText());
 	}
 
-	private String _getJournalArticleValue(
-		Locale defaultLocale, Element dynamicContentElement) {
-
-		try {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				dynamicContentElement.getText());
-
-			long classPK = jsonObject.getLong("classPK");
-
-			if (classPK <= 0) {
-				return jsonObject.toString();
-			}
-
-			JournalArticle article =
-				_journalArticleLocalService.fetchLatestArticle(classPK);
-
-			if (article != null) {
-				jsonObject.put(
-					"groupId", article.getGroupId()
-				).put(
-					"title", article.getTitle(defaultLocale)
-				).put(
-					"titleMap", article.getTitleMap()
-				).put(
-					"uuid", article.getUuid()
-				);
-			}
-
-			return jsonObject.toString();
-		}
-		catch (JSONException jsonException) {
-			return StringPool.BLANK;
-		}
-	}
-
 	private String _getSelectValue(Element dynamicContentElement) {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -702,8 +653,5 @@ public class JournalConverterImpl implements JournalConverter {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalConverterImpl.class);
-
-	@Reference
-	private JournalArticleLocalService _journalArticleLocalService;
 
 }

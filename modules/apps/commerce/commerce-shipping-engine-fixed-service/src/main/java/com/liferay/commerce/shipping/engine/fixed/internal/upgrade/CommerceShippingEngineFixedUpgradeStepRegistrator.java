@@ -42,6 +42,11 @@ public class CommerceShippingEngineFixedUpgradeStepRegistrator
 			"1.0.0", "1.1.0",
 			new CommerceShippingFixedOptionRelUpgradeProcess());
 
+		registry.register(
+			"1.1.0", "2.0.0",
+			new com.liferay.commerce.shipping.engine.fixed.internal.upgrade.
+				v2_0_0.CommerceShippingFixedOptionRelUpgradeProcess());
+
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				"Commerce shipping engine fixed upgrade step registrator " +

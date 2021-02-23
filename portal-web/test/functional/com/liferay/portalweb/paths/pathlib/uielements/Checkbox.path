@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>ALLOW_DICTIONARY_WORDS</td>
-	<td>//label[contains(.,'Allow Dictionary Words')]/input[@type='checkbox']</td>
+	<td>//label[contains(.,'Allow Dictionary Words')]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

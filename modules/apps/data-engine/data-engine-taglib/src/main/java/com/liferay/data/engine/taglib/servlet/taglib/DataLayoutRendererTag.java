@@ -76,6 +76,7 @@ public class DataLayoutRendererTag extends BaseDataLayoutRendererTag {
 				PortalUtil.getHttpServletResponse(
 					(PortletResponse)httpServletRequest.getAttribute(
 						JavaConstants.JAVAX_PORTLET_RESPONSE)));
+			dataLayoutRendererContext.setPersisted(getPersisted());
 			dataLayoutRendererContext.setPortletNamespace(getNamespace());
 			dataLayoutRendererContext.setReadOnly(getReadOnly());
 

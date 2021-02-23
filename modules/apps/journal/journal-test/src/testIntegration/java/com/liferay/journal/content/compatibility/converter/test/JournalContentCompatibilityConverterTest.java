@@ -16,18 +16,24 @@ package com.liferay.journal.content.compatibility.converter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.content.compatibility.converter.JournalContentCompatibilityConverter;
+import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -35,6 +41,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.InputStream;
+
+import java.util.Locale;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -97,6 +105,33 @@ public class JournalContentCompatibilityConverterTest {
 		Assert.assertEquals(
 			_getFormattedString(expectedDocument),
 			_getFormattedString(document));
+	}
+
+	@Test
+	public void testGetLinkToLayoutValue() throws Exception {
+		Layout layout = LayoutTestUtil.addLayout(_group);
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(layout.getLayoutId());
+		sb.append(StringPool.AT);
+		sb.append(layout.isPublicLayout() ? "public" : "private");
+		sb.append(StringPool.AT);
+		sb.append(layout.getGroupId());
+
+		String value = ReflectionTestUtil.invoke(
+			_journalContentCompatibilityConverter, "_convertLinkToLayoutValue",
+			new Class<?>[] {Locale.class, String.class}, LocaleUtil.US,
+			sb.toString());
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
+
+		Assert.assertEquals(layout.getGroupId(), jsonObject.getLong("groupId"));
+		Assert.assertEquals(
+			layout.getLayoutId(), jsonObject.getLong("layoutId"));
+		Assert.assertEquals(
+			layout.getName(LocaleUtil.US), jsonObject.getString("name"));
+		Assert.assertFalse(jsonObject.getBoolean("privateLayout"));
 	}
 
 	@Test

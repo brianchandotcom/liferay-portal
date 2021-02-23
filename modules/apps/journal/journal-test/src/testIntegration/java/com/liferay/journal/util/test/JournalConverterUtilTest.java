@@ -31,14 +31,8 @@ import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.util.JournalConverter;
-import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -47,7 +41,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -296,39 +289,6 @@ public class JournalConverterUtilTest {
 			_ddmStructure, content);
 
 		Assert.assertEquals(expectedFields, actualFields);
-	}
-
-	@Test
-	public void testGetLinkToLayoutValue() throws Exception {
-		Document document = SAXReaderUtil.createDocument();
-
-		Element element = document.addElement("dynamic-element");
-
-		Layout layout = LayoutTestUtil.addLayout(_group);
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(layout.getLayoutId());
-		sb.append(StringPool.AT);
-		sb.append(layout.isPublicLayout() ? "public" : "private");
-		sb.append(StringPool.AT);
-		sb.append(layout.getGroupId());
-
-		element.addText(sb.toString());
-
-		String value = ReflectionTestUtil.invoke(
-			_journalConverter, "_getLinkToLayoutValue",
-			new Class<?>[] {Locale.class, Element.class}, LocaleUtil.US,
-			element);
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
-
-		Assert.assertEquals(layout.getGroupId(), jsonObject.getLong("groupId"));
-		Assert.assertEquals(
-			layout.getLayoutId(), jsonObject.getLong("layoutId"));
-		Assert.assertEquals(
-			layout.getName(LocaleUtil.US), jsonObject.getString("name"));
-		Assert.assertFalse(jsonObject.getBoolean("privateLayout"));
 	}
 
 	protected void assertEquals(

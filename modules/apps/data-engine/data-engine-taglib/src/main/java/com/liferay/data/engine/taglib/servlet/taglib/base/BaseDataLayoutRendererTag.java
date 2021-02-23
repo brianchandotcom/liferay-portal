@@ -62,6 +62,10 @@ public abstract class BaseDataLayoutRendererTag extends com.liferay.taglib.util.
 		return _namespace;
 	}
 
+	public boolean getPersisted() {
+		return _persisted;
+	}
+
 	public boolean getReadOnly() {
 		return _readOnly;
 	}
@@ -94,6 +98,10 @@ public abstract class BaseDataLayoutRendererTag extends com.liferay.taglib.util.
 		_namespace = namespace;
 	}
 
+	public void setPersisted(boolean persisted) {
+		_persisted = persisted;
+	}
+
 	public void setReadOnly(boolean readOnly) {
 		_readOnly = readOnly;
 	}
@@ -116,6 +124,7 @@ public abstract class BaseDataLayoutRendererTag extends com.liferay.taglib.util.
 		_dataRecordValues = null;
 		_defaultLanguageId = null;
 		_namespace = null;
+		_persisted = false;
 		_readOnly = false;
 	}
 
@@ -133,6 +142,7 @@ public abstract class BaseDataLayoutRendererTag extends com.liferay.taglib.util.
 		setNamespacedAttribute(request, "dataRecordValues", _dataRecordValues);
 		setNamespacedAttribute(request, "defaultLanguageId", _defaultLanguageId);
 		setNamespacedAttribute(request, "namespace", _namespace);
+		setNamespacedAttribute(request, "persisted", _persisted);
 		setNamespacedAttribute(request, "readOnly", _readOnly);
 	}
 
@@ -148,6 +158,7 @@ public abstract class BaseDataLayoutRendererTag extends com.liferay.taglib.util.
 	private java.util.Map<java.lang.String, java.lang.Object> _dataRecordValues = null;
 	private java.lang.String _defaultLanguageId = null;
 	private java.lang.String _namespace = null;
+	private boolean _persisted = false;
 	private boolean _readOnly = false;
 
 }

@@ -15,6 +15,7 @@
 package com.liferay.commerce.frontend.taglib.internal.servlet;
 
 import com.liferay.commerce.frontend.util.ProductHelper;
+import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
 import com.liferay.commerce.product.content.util.CPContentHelper;
@@ -23,6 +24,7 @@ import com.liferay.commerce.product.util.CPCompareHelper;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.product.util.CPSubscriptionTypeRegistry;
+import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 
@@ -48,8 +50,18 @@ public class ServletContextUtil {
 		return _servletContextUtil._getCommerceChannelLocalService();
 	}
 
+	public static CommerceInventoryEngine getCommerceInventoryEngine() {
+		return _servletContextUtil._getCommerceInventoryEngine();
+	}
+
 	public static final CommerceOrderHttpHelper getCommerceOrderHttpHelper() {
 		return _servletContextUtil._getCommerceOrderHttpHelper();
+	}
+
+	public static CommerceOrderItemLocalService
+		getCommerceOrderItemLocalService() {
+
+		return _servletContextUtil._getCommerceOrderItemLocalService();
 	}
 
 	public static final CommerceProductPriceCalculation
@@ -94,6 +106,20 @@ public class ServletContextUtil {
 
 	public static final ServletContext getServletContext() {
 		return _servletContextUtil._getServletContext();
+	}
+
+	@Reference(unbind = "-")
+	public void setCommerceInventoryEngine(
+		CommerceInventoryEngine commerceInventoryEngine) {
+
+		_commerceInventoryEngine = commerceInventoryEngine;
+	}
+
+	@Reference(unbind = "-")
+	public void setCommerceOrderItemLocalService(
+		CommerceOrderItemLocalService commerceOrderItemLocalService) {
+
+		_commerceOrderItemLocalService = commerceOrderItemLocalService;
 	}
 
 	@Activate
@@ -185,8 +211,16 @@ public class ServletContextUtil {
 		return _commerceChannelLocalService;
 	}
 
+	private CommerceInventoryEngine _getCommerceInventoryEngine() {
+		return _commerceInventoryEngine;
+	}
+
 	private CommerceOrderHttpHelper _getCommerceOrderHttpHelper() {
 		return _commerceOrderHttpHelper;
+	}
+
+	private CommerceOrderItemLocalService _getCommerceOrderItemLocalService() {
+		return _commerceOrderItemLocalService;
 	}
 
 	private CommerceProductPriceCalculation
@@ -234,7 +268,9 @@ public class ServletContextUtil {
 	private static ServletContextUtil _servletContextUtil;
 
 	private CommerceChannelLocalService _commerceChannelLocalService;
+	private CommerceInventoryEngine _commerceInventoryEngine;
 	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
+	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
 	private CommerceProductPriceCalculation _commerceProductPriceCalculation;
 	private ConfigurationProvider _configurationProvider;
 	private CPCompareHelper _cpCompareHelper;

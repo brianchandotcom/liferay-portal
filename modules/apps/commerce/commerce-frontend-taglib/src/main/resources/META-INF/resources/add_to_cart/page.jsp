@@ -14,29 +14,49 @@
  */
 --%>
 
-<%@ include file="/add_to_order/init.jsp" %>
+<%@ include file="/add_to_cart/init.jsp" %>
+
+<%
+String buttonCssClasses = "btn btn-add-to-cart";
+String selectorCssClasses = "form-control quantity-selector";
+String wrapperCssClasses = "add-to-cart-wrapper align-items-center d-flex";
+
+if (GetterUtil.getBoolean(block)) {
+	buttonCssClasses = buttonCssClasses.concat(" btn-block");
+	wrapperCssClasses = wrapperCssClasses.concat(" flex-column");
+}
+else {
+	buttonCssClasses = buttonCssClasses.concat(" btn-lg");
+	selectorCssClasses = selectorCssClasses.concat(" form-control-lg");
+}
+%>
 
 <div class="add-to-cart mb-2" id="<%= addToCartId %>">
-	<liferay-util:include page="/add_to_order/skeleton.jsp" servletContext="<%= application %>" />
+	<div class="<%= wrapperCssClasses %>">
+		<div class="<%= selectorCssClasses %> skeleton"></div>
+
+		<button class="<%= buttonCssClasses %> skeleton">
+			<liferay-ui:message key="add-to-cart" />
+		</button>
+	</div>
 </div>
 
 <aui:script require="commerce-frontend-js/components/add_to_cart/entry as AddToCart">
 	const initialProps = {
 		channel: {
-			currencyCode: '<%= currencyCode %>',
-			id: <%= channelId %>,
+			currencyCode: '<%= commerceCurrencyCode %>',
+			id: <%= commerceChannelId %>,
 		},
 		cpInstance: {
 			accountId: <%= commerceAccountId %>,
 			inCart: <%= inCart %>,
 			options: '<%= options %>',
-			skuId: <%= skuId %>,
+			skuId: <%= cpInstanceId %>,
 			stockQuantity: <%= stockQuantity %>,
 		},
-		orderId: <%= orderId %>,
+		orderId: <%= commerceOrderId %>,
 		settings: {
 			block: <%= block %>,
-			disabled: <%= disabled %>,
 			willUpdate: <%= willUpdate %>,
 			withQuantity: {
 				forceDropdown: true,

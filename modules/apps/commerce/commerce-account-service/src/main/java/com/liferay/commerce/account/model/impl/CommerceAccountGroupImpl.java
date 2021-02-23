@@ -18,6 +18,8 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountGroup;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.model.CommerceAccountGroup;
+import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
 import java.util.Map;
 import java.util.function.BiConsumer;
@@ -108,6 +110,12 @@ public class CommerceAccountGroupImpl extends CommerceAccountGroupBaseImpl {
 	}
 
 	public CommerceAccountGroupImpl() {
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(
+			getCompanyId(), AccountGroup.class.getName(), getPrimaryKey());
 	}
 
 }

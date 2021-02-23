@@ -23,8 +23,14 @@ import java.util.List;
  */
 public interface CommerceCountryManager {
 
+	public List<Country> getBillingCountries(
+		long companyId, boolean active, boolean billingAllowed);
+
 	public List<Country> getBillingCountriesByChannelId(
 		long channelId, int start, int end);
+
+	public List<Country> getShippingCountries(
+		long companyId, boolean active, boolean shippingAllowed);
 
 	public List<Country> getShippingCountriesByChannelId(
 		long channelId, int start, int end);

@@ -81,6 +81,7 @@ public class DataLayoutRendererTag extends BaseDataLayoutRendererTag {
 				dataLayoutRendererContext.setLanguageId(getLanguageId());
 			}
 
+			dataLayoutRendererContext.setPersisted(getPersisted());
 			dataLayoutRendererContext.setPortletNamespace(getNamespace());
 			dataLayoutRendererContext.setReadOnly(getReadOnly());
 

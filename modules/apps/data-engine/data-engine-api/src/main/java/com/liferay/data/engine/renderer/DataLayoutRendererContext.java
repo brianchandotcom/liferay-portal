@@ -52,6 +52,10 @@ public class DataLayoutRendererContext {
 		return _portletNamespace;
 	}
 
+	public boolean isPersisted() {
+		return _persisted;
+	}
+
 	public boolean isReadOnly() {
 		return _readOnly;
 	}
@@ -82,6 +86,10 @@ public class DataLayoutRendererContext {
 		_languageId = languageId;
 	}
 
+	public void setPersisted(boolean persisted) {
+		_persisted = persisted;
+	}
+
 	public void setPortletNamespace(String portletNamespace) {
 		_portletNamespace = portletNamespace;
 	}
@@ -96,6 +104,7 @@ public class DataLayoutRendererContext {
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
 	private String _languageId;
+	private boolean _persisted;
 	private String _portletNamespace;
 	private boolean _readOnly;
 

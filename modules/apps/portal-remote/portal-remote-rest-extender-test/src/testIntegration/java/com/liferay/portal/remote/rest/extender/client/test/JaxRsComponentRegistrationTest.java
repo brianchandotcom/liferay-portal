@@ -167,6 +167,13 @@ public class JaxRsComponentRegistrationTest {
 		Assert.assertEquals("Hello.", StringUtil.read(url.openStream()));
 	}
 
+	@Test(expected = Exception.class)
+	public void testServiceListIsNotAvailable() throws Exception {
+		URL url = new URL("http://localhost:8080/o/rest-test/services");
+
+		StringUtil.read(url.openStream());
+	}
+
 	private void _cleanUp() throws Exception {
 		final CountDownLatch countDownLatch = new CountDownLatch(1);
 

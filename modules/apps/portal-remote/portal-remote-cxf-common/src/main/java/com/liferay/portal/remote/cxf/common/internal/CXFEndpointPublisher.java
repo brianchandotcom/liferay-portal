@@ -191,6 +191,13 @@ public class CXFEndpointPublisher {
 			properties.put(
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN, "/*");
 
+			Object property = properties.get(
+				"servlet.init.hide-service-list-page");
+
+			if (property == null) {
+				properties.put("servlet.init.hide-service-list-page", "true");
+			}
+
 			cxfNonSpringServlet.setBus(bus);
 
 			_servletServiceRegistration = _bundleContext.registerService(

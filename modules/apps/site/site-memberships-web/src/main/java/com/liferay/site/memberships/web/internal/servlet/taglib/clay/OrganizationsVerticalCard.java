@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
-import com.liferay.site.memberships.web.internal.constants.SiteMembershipWebKeys;
 import com.liferay.site.memberships.web.internal.servlet.taglib.util.OrganizationActionDropdownItemsProvider;
 
 import java.util.List;
@@ -80,12 +79,6 @@ public class OrganizationsVerticalCard
 		}
 
 		return null;
-	}
-
-	@Override
-	public String getDefaultEventHandler() {
-		return SiteMembershipWebKeys.
-			ORGANIZATION_DROPDOWN_DEFAULT_EVENT_HANDLER;
 	}
 
 	@Override

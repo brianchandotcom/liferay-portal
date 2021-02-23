@@ -237,11 +237,6 @@ public class UserGroupsManagementToolbarDisplayContext
 	}
 
 	@Override
-	public String getDefaultEventHandler() {
-		return "userGroupsManagementToolbarDefaultEventHandler";
-	}
-
-	@Override
 	public List<LabelItem> getFilterLabelItems() {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(

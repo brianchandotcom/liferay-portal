@@ -147,11 +147,6 @@ public class OrganizationsManagementToolbarDisplayContext
 	}
 
 	@Override
-	public String getDefaultEventHandler() {
-		return "organizationsManagementToolbarDefaultEventHandler";
-	}
-
-	@Override
 	public String getInfoPanelId() {
 		return "infoPanelId";
 	}

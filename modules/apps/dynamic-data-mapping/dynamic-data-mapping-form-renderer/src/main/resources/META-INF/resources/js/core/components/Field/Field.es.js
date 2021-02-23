@@ -158,9 +158,9 @@ const FieldLazy = ({
 				focusDurationRef.current.start = new Date();
 				onFocus(mountStruct(event, field));
 			}}
-			visible
 			{...field}
 			readOnly={editable ? true : field.readOnly}
+			visible={editable ? true : field.visible ?? true}
 			{...otherProps}
 			{...configuration}
 		/>

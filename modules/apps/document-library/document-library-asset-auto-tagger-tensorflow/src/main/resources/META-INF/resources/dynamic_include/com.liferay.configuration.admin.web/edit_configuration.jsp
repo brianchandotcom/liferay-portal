@@ -16,15 +16,16 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-TensorFlowImageAssetAutoTagProviderCompanyConfiguration tensorFlowImageAssetAutoTagProviderCompanyConfiguration = (TensorFlowImageAssetAutoTagProviderCompanyConfiguration)request.getAttribute(TensorFlowImageAssetAutoTagProviderCompanyConfiguration.class.getName());
-
-boolean isTensorFlowImageAssetAutoTagProviderEnabled = (tensorFlowImageAssetAutoTagProviderCompanyConfiguration != null) && tensorFlowImageAssetAutoTagProviderCompanyConfiguration.enabled();
-
-boolean isDownloadFailed = isTensorFlowImageAssetAutoTagProviderEnabled && TensorFlowDownloadUtil.isDownloadFailed();
-%>
-
 <c:if test="<%= !TensorFlowDownloadUtil.isDownloaded() %>">
+
+	<%
+	TensorFlowImageAssetAutoTagProviderCompanyConfiguration tensorFlowImageAssetAutoTagProviderCompanyConfiguration = (TensorFlowImageAssetAutoTagProviderCompanyConfiguration)request.getAttribute(TensorFlowImageAssetAutoTagProviderCompanyConfiguration.class.getName());
+
+	boolean isTensorFlowImageAssetAutoTagProviderEnabled = (tensorFlowImageAssetAutoTagProviderCompanyConfiguration != null) && tensorFlowImageAssetAutoTagProviderCompanyConfiguration.enabled();
+
+	boolean isDownloadFailed = isTensorFlowImageAssetAutoTagProviderEnabled && TensorFlowDownloadUtil.isDownloadFailed();
+	%>
+
 	<aui:alert closeable="<%= false %>" type='<%= isDownloadFailed ? "danger" : "info" %>'>
 		<c:choose>
 			<c:when test="<%= isDownloadFailed %>">

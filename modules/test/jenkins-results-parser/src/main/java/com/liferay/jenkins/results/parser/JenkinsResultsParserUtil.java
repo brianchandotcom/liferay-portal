@@ -921,9 +921,7 @@ public class JenkinsResultsParserUtil {
 			boolean checkCache, String propertyName)
 		throws IOException {
 
-		Properties buildProperties = getBuildProperties(checkCache);
-
-		return buildProperties.getProperty(propertyName);
+		return getProperty(getBuildProperties(checkCache), propertyName);
 	}
 
 	public static String getBuildProperty(String propertyName)
@@ -936,9 +934,8 @@ public class JenkinsResultsParserUtil {
 			boolean checkCache, String key)
 		throws IOException {
 
-		Properties buildProperties = getBuildProperties(checkCache);
-
-		String propertyContent = buildProperties.getProperty(key);
+		String propertyContent = getProperty(
+			getBuildProperties(checkCache), key);
 
 		if (propertyContent == null) {
 			return Collections.emptyList();

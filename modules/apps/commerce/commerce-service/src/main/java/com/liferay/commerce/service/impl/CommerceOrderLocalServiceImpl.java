@@ -1609,7 +1609,7 @@ public class CommerceOrderLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public CommerceOrder updateShippingMethod(
+	public CommerceOrder updateCommerceShippingMethod(
 			long commerceOrderId, long commerceShippingMethodId,
 			String shippingOptionName, BigDecimal shippingAmount,
 			CommerceContext commerceContext)
@@ -1630,7 +1630,7 @@ public class CommerceOrderLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public CommerceOrder updateShippingMethod(
+	public CommerceOrder updateCommerceShippingMethod(
 			long commerceOrderId, long commerceShippingMethodId,
 			String shippingOptionName, CommerceContext commerceContext,
 			Locale locale)

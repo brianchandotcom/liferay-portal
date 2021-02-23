@@ -883,7 +883,7 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 	}
 
 	@Override
-	public CommerceOrder updateShippingMethod(
+	public CommerceOrder updateCommerceShippingMethod(
 			long commerceOrderId, long commerceShippingMethodId,
 			String shippingOptionName, CommerceContext commerceContext,
 			Locale locale)

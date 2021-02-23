@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+
+<root available-locales="es_ES,en_US" default-locale="en_US" version="1.0">
+	<dynamic-element index-type="keyword" instance-id="loye" name="LinkToPage8186" type="link_to_layout">
+		<dynamic-content language-id="es_ES">
+			<![CDATA[
+				{
+					"groupId": "$GROUP_ID",
+					"id": "$UUID_1",
+					"layoutId": "$LAYOUT_ID_1",
+					"name": "layout1",
+					"privateLayout": false,
+					"value": "/layout1"
+				}
+			]]>
+		</dynamic-content>
+		<dynamic-content language-id="en_US">
+			<![CDATA[
+				{
+					"groupId": "$GROUP_ID",
+					"id": "$UUID_2",
+					"layoutId": "$LAYOUT_ID_2",
+					"name": "layout2",
+					"privateLayout": false,
+					"value": "/layout2"
+				}
+			]]>
+		</dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="bvee" name="LinkToPage8186" type="link_to_layout">
+		<dynamic-content language-id="es_ES">
+			<![CDATA[
+				{
+					"groupId": "$GROUP_ID",
+					"id": "$UUID_3",
+					"layoutId": "$LAYOUT_ID_3",
+					"name": "layout3",
+					"privateLayout": false,
+					"value": "/layout3"
+				}
+			]]>
+		</dynamic-content>
+		<dynamic-content language-id="en_US">
+			<![CDATA[
+				{
+					"groupId": "$GROUP_ID",
+					"id": "$UUID_4",
+					"layoutId": "$LAYOUT_ID_4",
+					"name": "layout4",
+					"privateLayout": false,
+					"value": "/layout4"
+				}
+			]]>
+		</dynamic-content>
+	</dynamic-element>
+</root>

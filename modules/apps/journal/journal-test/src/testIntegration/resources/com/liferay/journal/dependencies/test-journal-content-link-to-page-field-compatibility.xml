@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<root available-locales="es_ES,en_US" default-locale="en_US">
+	<dynamic-element index-type="keyword" instance-id="loye" name="LinkToPage8186" type="link_to_layout">
+		<dynamic-content language-id="es_ES"><![CDATA[$LAYOUT_ID_1@public@$GROUP_ID]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[$LAYOUT_ID_2@public@$GROUP_ID]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="bvee" name="LinkToPage8186" type="link_to_layout">
+		<dynamic-content language-id="es_ES"><![CDATA[$LAYOUT_ID_3@public@$GROUP_ID]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[$LAYOUT_ID_4@public@$GROUP_ID]]></dynamic-content>
+	</dynamic-element>
+</root>

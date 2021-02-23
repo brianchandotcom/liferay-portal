@@ -15,6 +15,7 @@
 package com.liferay.site.navigation.internal.upgrade;
 
 import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
+import com.liferay.portal.kernel.upgrade.UpgradeCTModel;
 import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.site.navigation.internal.upgrade.v2_0_0.util.SiteNavigationMenuItemTable;
@@ -50,6 +51,10 @@ public class SiteNavigationServiceUpgrade implements UpgradeStepRegistrator {
 				}
 
 			});
+
+		registry.register(
+			"2.1.0", "2.2.0",
+			new UpgradeCTModel("SiteNavigationMenu", "SiteNavigationMenuItem"));
 	}
 
 }

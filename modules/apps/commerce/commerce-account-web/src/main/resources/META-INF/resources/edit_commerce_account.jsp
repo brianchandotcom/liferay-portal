@@ -136,8 +136,8 @@ if (commerceAddress != null) {
 				Liferay.Service(
 					'/country/get-company-countries',
 					{
-						companyId: <%= company.getCompanyId() %>,
 						active: true,
+						companyId: <%= company.getCompanyId() %>,
 					},
 					callback
 				);
@@ -153,8 +153,8 @@ if (commerceAddress != null) {
 				Liferay.Service(
 					'/region/get-regions',
 					{
-						countryId: Number(selectKey),
 						active: true,
+						countryId: Number(selectKey),
 					},
 					callback
 				);

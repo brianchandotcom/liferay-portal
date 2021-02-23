@@ -134,11 +134,11 @@ long regionId = commerceAccountAddressAdminDisplayContext.getRegionId();
 			select: '<portlet:namespace />countryId',
 			selectData: function (callback) {
 				Liferay.Service(
-					'/country/get-billing-commerce-countries',
+					'/commerce.commercecountrymanagerimpl/get-billing-countries',
 					{
+						active: true,
+						billingAllowed: true,
 						companyId: <%= company.getCompanyId() %>,
-						end: -1,
-						start: -1,
 					},
 					callback
 				);

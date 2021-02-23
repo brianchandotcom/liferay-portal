@@ -55,7 +55,7 @@ public class ShippingAddressCheckoutStepDisplayContext
 
 	@Override
 	public String getCommerceCountrySelectionMethodName() {
-		return "get-shipping-commerce-countries";
+		return "get-shipping-countries";
 	}
 
 	@Override

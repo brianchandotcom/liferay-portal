@@ -2,7 +2,7 @@
 definition {
 
 	property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
-	property database.types = "db2,mariadb,mysql,postgresql,sqlserver,sybase";
+	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 	property dummy.socket.proxy.disabled = "true";
 	property osgi.app.includes = "multi-factor-authentication";
 	property portal.release = "true";
@@ -20,7 +20,6 @@ definition {
 	@priority = "5"
 	test ViewMFAConfigurationInInstanceLevelAfterUpgrade7310 {
 		property data.archive.type = "data-archive-mfa-instance-level";
-		property database.types = "db2,mariadb,mysql,postgresql,sybase";
 		property portal.version = "7.3.10";
 
 		SignIn.signInSpecificURL(
@@ -49,7 +48,6 @@ definition {
 	@priority = "5"
 	test ViewMFAConfigurationInSystemLevelAfterUpgrade7310 {
 		property data.archive.type = "data-archive-mfa-system-level";
-		property database.types = "db2,mariadb,mysql,postgresql,sybase";
 		property portal.version = "7.3.10";
 
 		var portalURL = PropsUtil.get("portal.url");

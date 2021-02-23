@@ -103,6 +103,10 @@ public class MiniumFullSiteInitializer implements SiteInitializer {
 
 			throw new InitializationException(exception);
 		}
+		finally {
+			SiteInitializerDependencyResolverThreadLocal.
+				removeSiteInitializerDependencyResolver();
+		}
 	}
 
 	@Override

@@ -59,6 +59,7 @@ import com.liferay.portal.kernel.model.ThemeSetting;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryConstants;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.resource.bundle.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ClassResourceBundleLoader;
@@ -697,6 +698,11 @@ public class CPFileImporterImpl implements CPFileImporter {
 				).put(
 					"type", "document"
 				).put(
+					"url",
+					_portletFileRepository.getDownloadPortletFileEntryURL(
+						serviceContext.getThemeDisplay(), fileEntry,
+						StringPool.BLANK)
+				).put(
 					"uuid", fileEntry.getUuid()
 				);
 
@@ -1040,6 +1046,9 @@ public class CPFileImporterImpl implements CPFileImporter {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletFileRepository _portletFileRepository;
 
 	@Reference
 	private PortletPreferencesLocalService _portletPreferencesLocalService;

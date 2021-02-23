@@ -27,6 +27,10 @@ public class SiteInitializerDependencyResolverThreadLocal {
 		return _siteInitializerDependencyResolver.get();
 	}
 
+	public static void removeSiteInitializerDependencyResolver() {
+		_siteInitializerDependencyResolver.remove();
+	}
+
 	public static void setSiteInitializerDependencyResolver(
 		SiteInitializerDependencyResolver siteInitializerDependencyResolver) {
 

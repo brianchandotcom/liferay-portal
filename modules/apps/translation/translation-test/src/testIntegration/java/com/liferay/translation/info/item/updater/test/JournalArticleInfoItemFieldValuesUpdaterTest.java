@@ -357,7 +357,7 @@ public class JournalArticleInfoItemFieldValuesUpdaterTest {
 				"name", StringPool.BLANK);
 
 			if (!Objects.equals(attribute, fieldName)) {
-				return StringPool.BLANK;
+				continue;
 			}
 
 			for (Element element :

@@ -382,15 +382,6 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 			DDMFormRendererConstants.DDM_FORM_FIELD_LANGUAGE_ID_SEPARATOR);
 		sb.append(LocaleUtil.toLanguageId(locale));
 
-		if (ArrayUtil.isEmpty(
-				ParamUtil.getParameterValues(
-					httpServletRequest, sb.toString()))) {
-
-			sb.setIndex(sb.index() - 1);
-
-			sb.append(LanguageUtil.getLanguageId(LocaleUtil.getSiteDefault()));
-		}
-
 		DDMFormFieldValueRequestParameterRetriever
 			ddmFormFieldValueRequestParameterRetriever =
 				getDDMFormFieldValueRequestParameterRetriever(fieldType);

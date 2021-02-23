@@ -126,6 +126,13 @@ public class JaxRsComponentRegistrationTest {
 		Assert.assertEquals("addon", StringUtil.read(url.openStream()));
 	}
 
+	@Test(expected = Exception.class)
+	public void testServiceListIsNotAvailable() throws Exception {
+		URL url = new URL("http://localhost:8080/o/soap-test/services");
+
+		StringUtil.read(url.openStream());
+	}
+
 	public static class Addon {
 
 		@GET

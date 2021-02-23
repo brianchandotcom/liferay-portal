@@ -248,6 +248,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 					defaultLanguageId="<%= journalEditArticleDisplayContext.getDefaultArticleLanguageId() %>"
 					languageId="<%= journalEditArticleDisplayContext.getSelectedLanguageId() %>"
 					namespace="<%= liferayPortletResponse.getNamespace() %>"
+					persisted="<%= article != null %>"
 				/>
 
 				<liferay-frontend:component

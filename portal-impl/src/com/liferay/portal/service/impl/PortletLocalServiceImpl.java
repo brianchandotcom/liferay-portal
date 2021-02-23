@@ -16,12 +16,14 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.admin.kernel.util.PortalMyAccountApplicationType;
 import com.liferay.expando.kernel.model.CustomAttributesDisplay;
+import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.petra.content.ContentUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.ConfigurationFactoryImpl;
 import com.liferay.portal.kernel.application.type.ApplicationType;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
@@ -66,6 +68,7 @@ import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.servlet.ServletContextClassLoaderPool;
 import com.liferay.portal.kernel.servlet.ServletContextUtil;
@@ -259,8 +262,12 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 					portletPreferences.getPortletId(), plid);
 			}
 
-			portletPreferencesLocalService.deletePortletPreferences(
-				portletPreferences.getPortletPreferencesId());
+			if (!LayoutStagingUtil.isBranchingLayout(
+					_layoutLocalService.getLayout(plid))) {
+
+				portletPreferencesLocalService.deletePortletPreferences(
+					portletPreferences.getPortletPreferencesId());
+			}
 		}
 	}
 
@@ -2799,6 +2806,10 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 	private final AtomicReference<String[]> _friendlyURLMapperRootPortletIds =
 		new AtomicReference<>(new String[0]);
+
+	@BeanReference(type = LayoutLocalService.class)
+	private LayoutLocalService _layoutLocalService;
+
 	private ServiceTracker<FriendlyURLMapper, String[]> _serviceTracker;
 
 	private class FriendlyURLMapperServiceTrackerCustomizer

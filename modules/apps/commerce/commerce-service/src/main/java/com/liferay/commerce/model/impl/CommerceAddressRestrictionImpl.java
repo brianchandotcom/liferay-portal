@@ -29,7 +29,7 @@ public class CommerceAddressRestrictionImpl
 
 	@Override
 	public Country getCountry() throws PortalException {
-		return CountryLocalServiceUtil.getCountry(getCommerceCountryId());
+		return CountryLocalServiceUtil.getCountry(getCountryId());
 	}
 
 }

@@ -71,23 +71,23 @@ public interface CommerceAddressService extends BaseService {
 	public CommerceAddress addCommerceAddress(
 			String className, long classPK, String name, String description,
 			String street1, String street2, String street3, String city,
-			String zip, long commerceRegionId, long commerceCountryId,
-			String phoneNumber, boolean defaultBilling, boolean defaultShipping,
+			String zip, long regionId, long countryId, String phoneNumber,
+			boolean defaultBilling, boolean defaultShipping,
 			ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommerceAddress addCommerceAddress(
 			String className, long classPK, String name, String description,
 			String street1, String street2, String street3, String city,
-			String zip, long commerceRegionId, long commerceCountryId,
-			String phoneNumber, int type, ServiceContext serviceContext)
+			String zip, long regionId, long countryId, String phoneNumber,
+			int type, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommerceAddress addCommerceAddress(
 			String externalReferenceCode, String className, long classPK,
 			String name, String description, String street1, String street2,
-			String street3, String city, String zip, long commerceRegionId,
-			long commerceCountryId, String phoneNumber, int type,
+			String street3, String city, String zip, long regionId,
+			long countryId, String phoneNumber, int type,
 			ServiceContext serviceContext)
 		throws PortalException;
 
@@ -223,16 +223,16 @@ public interface CommerceAddressService extends BaseService {
 	public CommerceAddress updateCommerceAddress(
 			long commerceAddressId, String name, String description,
 			String street1, String street2, String street3, String city,
-			String zip, long commerceRegionId, long commerceCountryId,
-			String phoneNumber, boolean defaultBilling, boolean defaultShipping,
+			String zip, long regionId, long countryId, String phoneNumber,
+			boolean defaultBilling, boolean defaultShipping,
 			ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommerceAddress updateCommerceAddress(
 			long commerceAddressId, String name, String description,
 			String street1, String street2, String street3, String city,
-			String zip, long commerceRegionId, long commerceCountryId,
-			String phoneNumber, int type, ServiceContext serviceContext)
+			String zip, long regionId, long countryId, String phoneNumber,
+			int type, ServiceContext serviceContext)
 		throws PortalException;
 
 }

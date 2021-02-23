@@ -79,7 +79,7 @@ public interface CommerceAddressRestrictionLocalService
 
 	public CommerceAddressRestriction addCommerceAddressRestriction(
 			long userId, long groupId, String className, long classPK,
-			long commerceCountryId)
+			long countryId)
 		throws PortalException;
 
 	/**
@@ -87,7 +87,7 @@ public interface CommerceAddressRestrictionLocalService
 	 */
 	@Deprecated
 	public CommerceAddressRestriction addCommerceAddressRestriction(
-			String className, long classPK, long commerceCountryId,
+			String className, long classPK, long countryId,
 			ServiceContext serviceContext)
 		throws PortalException;
 
@@ -137,7 +137,7 @@ public interface CommerceAddressRestrictionLocalService
 			long commerceAddressRestrictionId)
 		throws PortalException;
 
-	public void deleteCommerceAddressRestrictions(long commerceCountryId);
+	public void deleteCommerceAddressRestrictions(long countryId);
 
 	public void deleteCommerceAddressRestrictions(
 		String className, long classPK);
@@ -224,7 +224,7 @@ public interface CommerceAddressRestrictionLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceAddressRestriction fetchCommerceAddressRestriction(
-		String className, long classPK, long commerceCountryId);
+		String className, long classPK, long countryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -293,11 +293,11 @@ public interface CommerceAddressRestrictionLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean isCommerceAddressRestricted(
-		String className, long classPK, long commerceCountryId);
+		String className, long classPK, long countryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean isCommerceShippingMethodRestricted(
-		long commerceShippingMethodId, long commerceCountryId);
+		long commerceShippingMethodId, long countryId);
 
 	/**
 	 * Updates the commerce address restriction in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

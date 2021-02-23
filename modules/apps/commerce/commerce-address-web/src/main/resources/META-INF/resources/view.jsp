@@ -70,7 +70,7 @@ CommerceCountriesDisplayContext commerceCountriesDisplayContext = (CommerceCount
 
 		<liferay-frontend:management-bar-action-buttons>
 			<liferay-frontend:management-bar-button
-				href='<%= "javascript:" + liferayPortletResponse.getNamespace() + "deleteCommerceCountries();" %>'
+				href='<%= "javascript:" + liferayPortletResponse.getNamespace() + "deleteCountries();" %>'
 				icon="times"
 				label="delete"
 			/>
@@ -83,7 +83,7 @@ CommerceCountriesDisplayContext commerceCountriesDisplayContext = (CommerceCount
 		<aui:form action="<%= editCommerceCountryActionURL %>" method="post" name="fm">
 			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.DELETE %>" />
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-			<aui:input name="deleteCommerceCountryIds" type="hidden" />
+			<aui:input name="deleteCountryIds" type="hidden" />
 
 			<liferay-ui:search-container
 				id="commerceCountries"
@@ -100,7 +100,7 @@ CommerceCountriesDisplayContext commerceCountriesDisplayContext = (CommerceCount
 
 					rowURL.setParameter("mvcRenderCommandName", "/commerce_country/edit_commerce_country");
 					rowURL.setParameter("redirect", currentURL);
-					rowURL.setParameter("commerceCountryId", String.valueOf(country.getCountryId()));
+					rowURL.setParameter("countryId", String.valueOf(country.getCountryId()));
 					%>
 
 					<liferay-ui:search-container-column-text
@@ -209,7 +209,7 @@ CommerceCountriesDisplayContext commerceCountriesDisplayContext = (CommerceCount
 				var form = window.document['<portlet:namespace />fm'];
 
 				form[
-					'<portlet:namespace />deleteCommerceCountryIds'
+					'<portlet:namespace />deleteCountryIds'
 				].value = Liferay.Util.listCheckedExcept(
 					form,
 					'<portlet:namespace />allRowIds'

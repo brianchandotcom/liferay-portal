@@ -72,8 +72,7 @@ public class ShippingMethodCheckoutStepDisplayContext {
 		CommerceAddress shippingAddress = _commerceOrder.getShippingAddress();
 
 		return _commerceShippingMethodLocalService.getCommerceShippingMethods(
-			_commerceOrder.getGroupId(), shippingAddress.getCommerceCountryId(),
-			true);
+			_commerceOrder.getGroupId(), shippingAddress.getCountryId(), true);
 	}
 
 	public String getCommerceShippingOptionKey(

@@ -94,34 +94,6 @@ public class CommerceTaxFixedRateAddressRelsDisplayContext
 		return portletURL.toString();
 	}
 
-	public long getCommerceCountryId() throws PortalException {
-		long commerceCountryId = 0;
-
-		CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel =
-			getCommerceTaxFixedRateAddressRel();
-
-		if (commerceTaxFixedRateAddressRel != null) {
-			commerceCountryId =
-				commerceTaxFixedRateAddressRel.getCommerceCountryId();
-		}
-
-		return commerceCountryId;
-	}
-
-	public long getCommerceRegionId() throws PortalException {
-		long commerceRegionId = 0;
-
-		CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel =
-			getCommerceTaxFixedRateAddressRel();
-
-		if (commerceTaxFixedRateAddressRel != null) {
-			commerceRegionId =
-				commerceTaxFixedRateAddressRel.getCommerceRegionId();
-		}
-
-		return commerceRegionId;
-	}
-
 	public CommerceTaxFixedRateAddressRel getCommerceTaxFixedRateAddressRel()
 		throws PortalException {
 
@@ -137,6 +109,19 @@ public class CommerceTaxFixedRateAddressRelsDisplayContext
 	public List<Country> getCountries() {
 		return _countryService.getCompanyCountries(
 			commerceTaxFixedRateRequestHelper.getCompanyId(), true);
+	}
+
+	public long getCountryId() throws PortalException {
+		long countryId = 0;
+
+		CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel =
+			getCommerceTaxFixedRateAddressRel();
+
+		if (commerceTaxFixedRateAddressRel != null) {
+			countryId = commerceTaxFixedRateAddressRel.getCountryId();
+		}
+
+		return countryId;
 	}
 
 	public CreationMenu getCreationMenu() throws Exception {
@@ -169,8 +154,21 @@ public class CommerceTaxFixedRateAddressRelsDisplayContext
 			COMMERCE_DATA_SET_KEY_TAX_RATE_SETTING;
 	}
 
+	public long getRegionId() throws PortalException {
+		long regionId = 0;
+
+		CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel =
+			getCommerceTaxFixedRateAddressRel();
+
+		if (commerceTaxFixedRateAddressRel != null) {
+			regionId = commerceTaxFixedRateAddressRel.getRegionId();
+		}
+
+		return regionId;
+	}
+
 	public List<Region> getRegions() throws PortalException {
-		return _regionService.getRegions(getCommerceCountryId(), true);
+		return _regionService.getRegions(getCountryId(), true);
 	}
 
 	@Override

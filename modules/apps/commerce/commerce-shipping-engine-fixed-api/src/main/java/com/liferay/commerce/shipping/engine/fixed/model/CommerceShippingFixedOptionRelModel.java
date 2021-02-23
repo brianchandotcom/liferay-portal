@@ -234,32 +234,32 @@ public interface CommerceShippingFixedOptionRelModel
 		long commerceInventoryWarehouseId);
 
 	/**
-	 * Returns the commerce country ID of this commerce shipping fixed option rel.
+	 * Returns the country ID of this commerce shipping fixed option rel.
 	 *
-	 * @return the commerce country ID of this commerce shipping fixed option rel
+	 * @return the country ID of this commerce shipping fixed option rel
 	 */
-	public long getCommerceCountryId();
+	public long getCountryId();
 
 	/**
-	 * Sets the commerce country ID of this commerce shipping fixed option rel.
+	 * Sets the country ID of this commerce shipping fixed option rel.
 	 *
-	 * @param commerceCountryId the commerce country ID of this commerce shipping fixed option rel
+	 * @param countryId the country ID of this commerce shipping fixed option rel
 	 */
-	public void setCommerceCountryId(long commerceCountryId);
+	public void setCountryId(long countryId);
 
 	/**
-	 * Returns the commerce region ID of this commerce shipping fixed option rel.
+	 * Returns the region ID of this commerce shipping fixed option rel.
 	 *
-	 * @return the commerce region ID of this commerce shipping fixed option rel
+	 * @return the region ID of this commerce shipping fixed option rel
 	 */
-	public long getCommerceRegionId();
+	public long getRegionId();
 
 	/**
-	 * Sets the commerce region ID of this commerce shipping fixed option rel.
+	 * Sets the region ID of this commerce shipping fixed option rel.
 	 *
-	 * @param commerceRegionId the commerce region ID of this commerce shipping fixed option rel
+	 * @param regionId the region ID of this commerce shipping fixed option rel
 	 */
-	public void setCommerceRegionId(long commerceRegionId);
+	public void setRegionId(long regionId);
 
 	/**
 	 * Returns the zip of this commerce shipping fixed option rel.

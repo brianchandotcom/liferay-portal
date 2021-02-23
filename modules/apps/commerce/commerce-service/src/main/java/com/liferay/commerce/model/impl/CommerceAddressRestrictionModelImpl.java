@@ -81,7 +81,7 @@ public class CommerceAddressRestrictionModelImpl
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"commerceCountryId", Types.BIGINT}
+		{"countryId", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -97,11 +97,11 @@ public class CommerceAddressRestrictionModelImpl
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("commerceCountryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("countryId", Types.BIGINT);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceAddressRestriction (commerceAddressRestrictionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,commerceCountryId LONG)";
+		"create table CommerceAddressRestriction (commerceAddressRestrictionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,countryId LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceAddressRestriction";
@@ -152,7 +152,7 @@ public class CommerceAddressRestrictionModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
 	 */
 	@Deprecated
-	public static final long COMMERCECOUNTRYID_COLUMN_BITMASK = 4L;
+	public static final long COUNTRYID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
@@ -188,7 +188,7 @@ public class CommerceAddressRestrictionModelImpl
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setClassNameId(soapModel.getClassNameId());
 		model.setClassPK(soapModel.getClassPK());
-		model.setCommerceCountryId(soapModel.getCommerceCountryId());
+		model.setCountryId(soapModel.getCountryId());
 
 		return model;
 	}
@@ -410,12 +410,11 @@ public class CommerceAddressRestrictionModelImpl
 			(BiConsumer<CommerceAddressRestriction, Long>)
 				CommerceAddressRestriction::setClassPK);
 		attributeGetterFunctions.put(
-			"commerceCountryId",
-			CommerceAddressRestriction::getCommerceCountryId);
+			"countryId", CommerceAddressRestriction::getCountryId);
 		attributeSetterBiConsumers.put(
-			"commerceCountryId",
+			"countryId",
 			(BiConsumer<CommerceAddressRestriction, Long>)
-				CommerceAddressRestriction::setCommerceCountryId);
+				CommerceAddressRestriction::setCountryId);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -628,17 +627,17 @@ public class CommerceAddressRestrictionModelImpl
 
 	@JSON
 	@Override
-	public long getCommerceCountryId() {
-		return _commerceCountryId;
+	public long getCountryId() {
+		return _countryId;
 	}
 
 	@Override
-	public void setCommerceCountryId(long commerceCountryId) {
+	public void setCountryId(long countryId) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_commerceCountryId = commerceCountryId;
+		_countryId = countryId;
 	}
 
 	/**
@@ -646,9 +645,9 @@ public class CommerceAddressRestrictionModelImpl
 	 *             #getColumnOriginalValue(String)}
 	 */
 	@Deprecated
-	public long getOriginalCommerceCountryId() {
+	public long getOriginalCountryId() {
 		return GetterUtil.getLong(
-			this.<Long>getColumnOriginalValue("commerceCountryId"));
+			this.<Long>getColumnOriginalValue("countryId"));
 	}
 
 	public long getColumnBitmask() {
@@ -717,8 +716,7 @@ public class CommerceAddressRestrictionModelImpl
 		commerceAddressRestrictionImpl.setModifiedDate(getModifiedDate());
 		commerceAddressRestrictionImpl.setClassNameId(getClassNameId());
 		commerceAddressRestrictionImpl.setClassPK(getClassPK());
-		commerceAddressRestrictionImpl.setCommerceCountryId(
-			getCommerceCountryId());
+		commerceAddressRestrictionImpl.setCountryId(getCountryId());
 
 		commerceAddressRestrictionImpl.resetOriginalValues();
 
@@ -845,8 +843,7 @@ public class CommerceAddressRestrictionModelImpl
 
 		commerceAddressRestrictionCacheModel.classPK = getClassPK();
 
-		commerceAddressRestrictionCacheModel.commerceCountryId =
-			getCommerceCountryId();
+		commerceAddressRestrictionCacheModel.countryId = getCountryId();
 
 		return commerceAddressRestrictionCacheModel;
 	}
@@ -937,7 +934,7 @@ public class CommerceAddressRestrictionModelImpl
 	private boolean _setModifiedDate;
 	private long _classNameId;
 	private long _classPK;
-	private long _commerceCountryId;
+	private long _countryId;
 
 	public <T> T getColumnValue(String columnName) {
 		Function<CommerceAddressRestriction, Object> function =
@@ -976,7 +973,7 @@ public class CommerceAddressRestrictionModelImpl
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
 		_columnOriginalValues.put("classNameId", _classNameId);
 		_columnOriginalValues.put("classPK", _classPK);
-		_columnOriginalValues.put("commerceCountryId", _commerceCountryId);
+		_columnOriginalValues.put("countryId", _countryId);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;
@@ -1008,7 +1005,7 @@ public class CommerceAddressRestrictionModelImpl
 
 		columnBitmasks.put("classPK", 256L);
 
-		columnBitmasks.put("commerceCountryId", 512L);
+		columnBitmasks.put("countryId", 512L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

@@ -88,7 +88,7 @@ public abstract class BaseCommerceCountriesDisplayContext<T> {
 
 		if (getCountryId() > 0) {
 			portletURL.setParameter(
-				"commerceCountryId", String.valueOf(getCountryId()));
+				"countryId", String.valueOf(getCountryId()));
 		}
 
 		String delta = ParamUtil.getString(renderRequest, "delta");

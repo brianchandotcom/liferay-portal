@@ -54,7 +54,7 @@ public class CommerceShippingMethodServiceHttp {
 	public static com.liferay.commerce.model.CommerceAddressRestriction
 			addCommerceAddressRestriction(
 				HttpPrincipal httpPrincipal, long userId, long groupId,
-				long commerceShippingMethodId, long commerceCountryId)
+				long commerceShippingMethodId, long countryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -65,7 +65,7 @@ public class CommerceShippingMethodServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, groupId, commerceShippingMethodId,
-				commerceCountryId);
+				countryId);
 
 			Object returnObj = null;
 
@@ -99,7 +99,7 @@ public class CommerceShippingMethodServiceHttp {
 	public static com.liferay.commerce.model.CommerceAddressRestriction
 			addCommerceAddressRestriction(
 				HttpPrincipal httpPrincipal, long commerceShippingMethodId,
-				long commerceCountryId,
+				long countryId,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -110,8 +110,7 @@ public class CommerceShippingMethodServiceHttp {
 				_addCommerceAddressRestrictionParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, commerceShippingMethodId, commerceCountryId,
-				serviceContext);
+				methodKey, commerceShippingMethodId, countryId, serviceContext);
 
 			Object returnObj = null;
 
@@ -607,8 +606,8 @@ public class CommerceShippingMethodServiceHttp {
 	public static java.util.List
 		<com.liferay.commerce.model.CommerceShippingMethod>
 				getCommerceShippingMethods(
-					HttpPrincipal httpPrincipal, long groupId,
-					long commerceCountryId, boolean active)
+					HttpPrincipal httpPrincipal, long groupId, long countryId,
+					boolean active)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -618,7 +617,7 @@ public class CommerceShippingMethodServiceHttp {
 				_getCommerceShippingMethodsParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, commerceCountryId, active);
+				methodKey, groupId, countryId, active);
 
 			Object returnObj = null;
 

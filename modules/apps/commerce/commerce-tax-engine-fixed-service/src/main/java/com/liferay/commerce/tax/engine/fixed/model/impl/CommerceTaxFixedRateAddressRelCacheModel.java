@@ -86,10 +86,10 @@ public class CommerceTaxFixedRateAddressRelCacheModel
 		sb.append(commerceTaxMethodId);
 		sb.append(", CPTaxCategoryId=");
 		sb.append(CPTaxCategoryId);
-		sb.append(", commerceCountryId=");
-		sb.append(commerceCountryId);
-		sb.append(", commerceRegionId=");
-		sb.append(commerceRegionId);
+		sb.append(", countryId=");
+		sb.append(countryId);
+		sb.append(", regionId=");
+		sb.append(regionId);
 		sb.append(", zip=");
 		sb.append(zip);
 		sb.append(", rate=");
@@ -136,10 +136,8 @@ public class CommerceTaxFixedRateAddressRelCacheModel
 		commerceTaxFixedRateAddressRelImpl.setCommerceTaxMethodId(
 			commerceTaxMethodId);
 		commerceTaxFixedRateAddressRelImpl.setCPTaxCategoryId(CPTaxCategoryId);
-		commerceTaxFixedRateAddressRelImpl.setCommerceCountryId(
-			commerceCountryId);
-		commerceTaxFixedRateAddressRelImpl.setCommerceRegionId(
-			commerceRegionId);
+		commerceTaxFixedRateAddressRelImpl.setCountryId(countryId);
+		commerceTaxFixedRateAddressRelImpl.setRegionId(regionId);
 
 		if (zip == null) {
 			commerceTaxFixedRateAddressRelImpl.setZip("");
@@ -172,9 +170,9 @@ public class CommerceTaxFixedRateAddressRelCacheModel
 
 		CPTaxCategoryId = objectInput.readLong();
 
-		commerceCountryId = objectInput.readLong();
+		countryId = objectInput.readLong();
 
-		commerceRegionId = objectInput.readLong();
+		regionId = objectInput.readLong();
 		zip = objectInput.readUTF();
 
 		rate = objectInput.readDouble();
@@ -204,9 +202,9 @@ public class CommerceTaxFixedRateAddressRelCacheModel
 
 		objectOutput.writeLong(CPTaxCategoryId);
 
-		objectOutput.writeLong(commerceCountryId);
+		objectOutput.writeLong(countryId);
 
-		objectOutput.writeLong(commerceRegionId);
+		objectOutput.writeLong(regionId);
 
 		if (zip == null) {
 			objectOutput.writeUTF("");
@@ -227,8 +225,8 @@ public class CommerceTaxFixedRateAddressRelCacheModel
 	public long modifiedDate;
 	public long commerceTaxMethodId;
 	public long CPTaxCategoryId;
-	public long commerceCountryId;
-	public long commerceRegionId;
+	public long countryId;
+	public long regionId;
 	public String zip;
 	public double rate;
 

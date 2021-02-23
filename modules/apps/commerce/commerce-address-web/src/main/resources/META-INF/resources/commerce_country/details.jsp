@@ -30,7 +30,7 @@ CommerceRegionsStarter commerceRegionsStarter = commerceCountriesDisplayContext.
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (country == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="backURL" type="hidden" value="<%= redirect %>" />
-	<aui:input name="commerceCountryId" type="hidden" value="<%= String.valueOf(countryId) %>" />
+	<aui:input name="countryId" type="hidden" value="<%= String.valueOf(countryId) %>" />
 
 	<liferay-ui:error exception="<%= CountryA2Exception.class %>" message="please-enter-a-valid-two-letter-iso-code" />
 	<liferay-ui:error exception="<%= CountryA3Exception.class %>" message="please-enter-a-valid-three-letter-iso-code" />

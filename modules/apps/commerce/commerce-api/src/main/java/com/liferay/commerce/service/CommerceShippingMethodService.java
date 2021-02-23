@@ -68,7 +68,7 @@ public interface CommerceShippingMethodService extends BaseService {
 	 */
 	public CommerceAddressRestriction addCommerceAddressRestriction(
 			long userId, long groupId, long commerceShippingMethodId,
-			long commerceCountryId)
+			long countryId)
 		throws PortalException;
 
 	/**
@@ -76,7 +76,7 @@ public interface CommerceShippingMethodService extends BaseService {
 	 */
 	@Deprecated
 	public CommerceAddressRestriction addCommerceAddressRestriction(
-			long commerceShippingMethodId, long commerceCountryId,
+			long commerceShippingMethodId, long countryId,
 			ServiceContext serviceContext)
 		throws PortalException;
 
@@ -132,7 +132,7 @@ public interface CommerceShippingMethodService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceShippingMethod> getCommerceShippingMethods(
-			long groupId, long commerceCountryId, boolean active)
+			long groupId, long countryId, boolean active)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

@@ -42,8 +42,8 @@ if (commerceOrder.isGuestOrder()) {
 
 CommerceAddress currentCommerceAddress = baseAddressCheckoutStepDisplayContext.getCommerceAddress(commerceAddressId);
 
-long commerceCountryId = BeanParamUtil.getLong(currentCommerceAddress, request, "commerceCountryId", 0);
-long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "commerceRegionId", 0);
+long countryId = BeanParamUtil.getLong(currentCommerceAddress, request, "countryId", 0);
+long regionId = BeanParamUtil.getLong(currentCommerceAddress, request, "regionId", 0);
 %>
 
 <div class="form-group-autofit">
@@ -62,7 +62,7 @@ long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "
 				}
 			%>
 
-				<aui:option data-city="<%= HtmlUtil.escapeAttribute(commerceAddress.getCity()) %>" data-country="<%= HtmlUtil.escapeAttribute(String.valueOf(commerceAddress.getCommerceCountryId())) %>" data-name="<%= HtmlUtil.escapeAttribute(commerceAddress.getName()) %>" data-phone-number="<%= HtmlUtil.escapeAttribute(commerceAddress.getPhoneNumber()) %>" data-region="<%= HtmlUtil.escapeAttribute(String.valueOf(commerceAddress.getCommerceRegionId())) %>" data-street-1="<%= HtmlUtil.escapeAttribute(commerceAddress.getStreet1()) %>" data-street-2="<%= Validator.isNotNull(commerceAddress.getStreet2()) ? HtmlUtil.escapeAttribute(commerceAddress.getStreet2()) : StringPool.BLANK %>" data-street-3="<%= Validator.isNotNull(commerceAddress.getStreet3()) ? HtmlUtil.escapeAttribute(commerceAddress.getStreet3()) : StringPool.BLANK %>" data-zip="<%= HtmlUtil.escapeAttribute(commerceAddress.getZip()) %>" label="<%= commerceAddress.getName() %>" selected="<%= selectedAddress %>" value="<%= commerceAddress.getCommerceAddressId() %>" />
+				<aui:option data-city="<%= HtmlUtil.escapeAttribute(commerceAddress.getCity()) %>" data-country="<%= HtmlUtil.escapeAttribute(String.valueOf(commerceAddress.getCountryId())) %>" data-name="<%= HtmlUtil.escapeAttribute(commerceAddress.getName()) %>" data-phone-number="<%= HtmlUtil.escapeAttribute(commerceAddress.getPhoneNumber()) %>" data-region="<%= HtmlUtil.escapeAttribute(String.valueOf(commerceAddress.getRegionId())) %>" data-street-1="<%= HtmlUtil.escapeAttribute(commerceAddress.getStreet1()) %>" data-street-2="<%= Validator.isNotNull(commerceAddress.getStreet2()) ? HtmlUtil.escapeAttribute(commerceAddress.getStreet2()) : StringPool.BLANK %>" data-street-3="<%= Validator.isNotNull(commerceAddress.getStreet3()) ? HtmlUtil.escapeAttribute(commerceAddress.getStreet3()) : StringPool.BLANK %>" data-zip="<%= HtmlUtil.escapeAttribute(commerceAddress.getZip()) %>" label="<%= commerceAddress.getName() %>" selected="<%= selectedAddress %>" value="<%= commerceAddress.getCommerceAddressId() %>" />
 
 			<%
 			}
@@ -99,7 +99,7 @@ long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "
 	<div class="form-group-autofit">
 		<aui:input disabled="<%= commerceAddressId > 0 %>" label="" name="street1" placeholder="address" wrapperCssClass="form-group-item" />
 
-		<aui:select disabled="<%= commerceAddressId > 0 %>" label="" name="commerceCountryId" placeholder="country" title="country" wrapperCssClass="form-group-item">
+		<aui:select disabled="<%= commerceAddressId > 0 %>" label="" name="countryId" placeholder="country" title="country" wrapperCssClass="form-group-item">
 			<aui:validator errorMessage='<%= LanguageUtil.get(request, "please-enter-a-valid-country") %>' name="min">1</aui:validator>
 		</aui:select>
 	</div>
@@ -119,11 +119,11 @@ long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "
 
 		<aui:input disabled="<%= commerceAddressId > 0 %>" label="" name="city" placeholder="city" wrapperCssClass="form-group-item" />
 
-		<aui:select disabled="<%= commerceAddressId > 0 %>" label="" name="commerceRegionId" placeholder="region" title="region" wrapperCssClass="form-group-item" />
+		<aui:select disabled="<%= commerceAddressId > 0 %>" label="" name="regionId" placeholder="region" title="region" wrapperCssClass="form-group-item" />
 
-		<aui:input disabled="<%= commerceAddressId > 0 %>" id="commerceRegionIdInput" label="" name="commerceRegionId" placeholder="regionId" title="region" wrapperCssClass="d-none form-group-item" />
+		<aui:input disabled="<%= commerceAddressId > 0 %>" id="commerceRegionIdInput" label="" name="regionId" placeholder="regionId" title="region" wrapperCssClass="d-none form-group-item" />
 
-		<aui:input disabled="<%= commerceAddressId > 0 %>" id="commerceRegionIdName" label="" name="commerceRegionId" placeholder="regionName" title="region" wrapperCssClass="d-none form-group-item" />
+		<aui:input disabled="<%= commerceAddressId > 0 %>" id="commerceRegionIdName" label="" name="regionId" placeholder="regionName" title="region" wrapperCssClass="d-none form-group-item" />
 	</div>
 
 	<div class="form-group-autofit">
@@ -228,7 +228,7 @@ long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "
 			Liferay.Util.toggleDisabled(A.all('.address-fields select'), state);
 
 			var commerceRegionIdSelect = A.one(
-				'#<portlet:namespace />commerceRegionId'
+				'#<portlet:namespace />regionId'
 			).getDOMNode();
 			var commerceRegionIdInput = A.one(
 				'#<portlet:namespace />commerceRegionIdInput'
@@ -239,7 +239,7 @@ long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "
 
 			commerceRegionIdSelect.setAttribute(
 				'name',
-				'<portlet:namespace />commerceRegionId'
+				'<portlet:namespace />regionId'
 			);
 			commerceRegionIdSelect.parentElement.classList.remove('d-none');
 
@@ -274,9 +274,7 @@ long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "
 				<portlet:namespace />toggleAddressFields(true);
 
 				var city = A.one('#<portlet:namespace />city');
-				var commerceCountryId = A.one(
-					'#<portlet:namespace />commerceCountryId'
-				);
+				var countryId = A.one('#<portlet:namespace />countryId');
 				var commerceRegionIdInput = A.one(
 					'#<portlet:namespace />commerceRegionIdInput'
 				).getDOMNode();
@@ -284,7 +282,7 @@ long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "
 					'#<portlet:namespace />commerceRegionIdName'
 				).getDOMNode();
 				var commerceRegionIdSelect = A.one(
-					'#<portlet:namespace />commerceRegionId'
+					'#<portlet:namespace />regionId'
 				).getDOMNode();
 				var name = A.one('#<portlet:namespace />name');
 				var phoneNumber = A.one('#<portlet:namespace />phoneNumber');
@@ -295,7 +293,7 @@ long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "
 
 				if (
 					city &&
-					commerceCountryId &&
+					countryId &&
 					commerceRegionIdInput &&
 					commerceRegionIdSelect &&
 					commerceRegionIdName &&
@@ -311,7 +309,7 @@ long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "
 						.item(selectedVal);
 
 					city.val(selectedOption.getData('city'));
-					commerceCountryId.val(selectedOption.getData('country'));
+					countryId.val(selectedOption.getData('country'));
 					name.val(selectedOption.getData('name'));
 					phoneNumber.val(selectedOption.getData('phone-number'));
 					street1.val(selectedOption.getData('street-1'));
@@ -328,7 +326,7 @@ long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "
 					commerceRegionIdInput.value = selectedOption.getData('region');
 					commerceRegionIdInput.setAttribute(
 						'name',
-						'<portlet:namespace />commerceRegionId'
+						'<portlet:namespace />regionId'
 					);
 					commerceRegionIdInput.parentElement.classList.add('d-none');
 
@@ -341,7 +339,7 @@ long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "
 					Liferay.Service(
 						'/commerce.commerceregion/get-commerce-regions',
 						{
-							commerceCountryId: parseInt(
+							countryId: parseInt(
 								selectedOption.getData('country'),
 								10
 							),
@@ -350,7 +348,7 @@ long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "
 						function setUIOnlyInputRegionName(regions) {
 							for (var i = 0; i < regions.length; i++) {
 								if (
-									regions[i].commerceRegionId ===
+									regions[i].regionId ===
 									selectedOption.getData('region')
 								) {
 									commerceRegionIdName.value = regions[i].name;
@@ -372,12 +370,12 @@ long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "
 		'<portlet:namespace />countrySelects',
 		new Liferay.DynamicSelect([
 			{
-				select: '<portlet:namespace />commerceCountryId',
+				select: '<portlet:namespace />countryId',
 				selectData: function (callback) {
 					function injectCountryPlaceholder(list) {
 						var callbackList = [
 							{
-								commerceCountryId: '0',
+								countryId: '0',
 								nameCurrentValue:
 									'- <liferay-ui:message key="select-country" />',
 							},
@@ -401,18 +399,18 @@ long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "
 					);
 				},
 				selectDesc: 'nameCurrentValue',
-				selectId: 'commerceCountryId',
+				selectId: 'countryId',
 				selectNullable: <%= false %>,
 				selectSort: '<%= true %>',
-				selectVal: '<%= commerceCountryId %>',
+				selectVal: '<%= countryId %>',
 			},
 			{
-				select: '<portlet:namespace />commerceRegionId',
+				select: '<portlet:namespace />regionId',
 				selectData: function (callback, selectKey) {
 					function injectRegionPlaceholder(list) {
 						var callbackList = [
 							{
-								commerceRegionId: '0',
+								regionId: '0',
 								name:
 									'- <liferay-ui:message key="select-region" />',
 								nameCurrentValue:
@@ -430,16 +428,16 @@ long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "
 					Liferay.Service(
 						'/commerce.commerceregion/get-commerce-regions',
 						{
-							commerceCountryId: Number(selectKey),
+							countryId: Number(selectKey),
 							active: true,
 						},
 						injectRegionPlaceholder
 					);
 				},
 				selectDesc: 'name',
-				selectId: 'commerceRegionId',
+				selectId: 'regionId',
 				selectNullable: <%= false %>,
-				selectVal: '<%= commerceRegionId %>',
+				selectVal: '<%= regionId %>',
 			},
 		])
 	);

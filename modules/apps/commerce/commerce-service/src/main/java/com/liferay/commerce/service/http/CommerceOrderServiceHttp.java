@@ -1468,8 +1468,8 @@ public class CommerceOrderServiceHttp {
 	public static com.liferay.commerce.model.CommerceOrder updateBillingAddress(
 			HttpPrincipal httpPrincipal, long commerceOrderId, String name,
 			String description, String street1, String street2, String street3,
-			String city, String zip, long commerceRegionId,
-			long commerceCountryId, String phoneNumber,
+			String city, String zip, long regionId, long countryId,
+			String phoneNumber,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -1480,8 +1480,8 @@ public class CommerceOrderServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceOrderId, name, description, street1, street2,
-				street3, city, zip, commerceRegionId, commerceCountryId,
-				phoneNumber, serviceContext);
+				street3, city, zip, regionId, countryId, phoneNumber,
+				serviceContext);
 
 			Object returnObj = null;
 
@@ -2363,8 +2363,8 @@ public class CommerceOrderServiceHttp {
 			updateShippingAddress(
 				HttpPrincipal httpPrincipal, long commerceOrderId, String name,
 				String description, String street1, String street2,
-				String street3, String city, String zip, long commerceRegionId,
-				long commerceCountryId, String phoneNumber,
+				String street3, String city, String zip, long regionId,
+				long countryId, String phoneNumber,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -2375,8 +2375,8 @@ public class CommerceOrderServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceOrderId, name, description, street1, street2,
-				street3, city, zip, commerceRegionId, commerceCountryId,
-				phoneNumber, serviceContext);
+				street3, city, zip, regionId, countryId, phoneNumber,
+				serviceContext);
 
 			Object returnObj = null;
 

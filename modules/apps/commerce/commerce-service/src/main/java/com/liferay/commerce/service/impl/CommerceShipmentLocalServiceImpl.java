@@ -70,8 +70,7 @@ public class CommerceShipmentLocalServiceImpl
 	public CommerceShipment addCommerceDeliverySubscriptionShipment(
 			long userId, long commerceOrderId, String name, String description,
 			String street1, String street2, String street3, String city,
-			String zip, long commerceRegionId, long commerceCountryId,
-			String phoneNumber)
+			String zip, long regionId, long countryId, String phoneNumber)
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
@@ -101,7 +100,7 @@ public class CommerceShipmentLocalServiceImpl
 
 		CommerceAddress commerceAddress = updateCommerceShipmentAddress(
 			commerceShipment, name, description, street1, street2, street3,
-			city, zip, commerceRegionId, commerceCountryId, phoneNumber);
+			city, zip, regionId, countryId, phoneNumber);
 
 		commerceShipment.setCommerceAddressId(
 			commerceAddress.getCommerceAddressId());
@@ -350,8 +349,7 @@ public class CommerceShipmentLocalServiceImpl
 	public CommerceShipment updateAddress(
 			long commerceShipmentId, String name, String description,
 			String street1, String street2, String street3, String city,
-			String zip, long commerceRegionId, long commerceCountryId,
-			String phoneNumber)
+			String zip, long regionId, long countryId, String phoneNumber)
 		throws PortalException {
 
 		CommerceShipment commerceShipment =
@@ -359,7 +357,7 @@ public class CommerceShipmentLocalServiceImpl
 
 		CommerceAddress commerceAddress = updateCommerceShipmentAddress(
 			commerceShipment, name, description, street1, street2, street3,
-			city, zip, commerceRegionId, commerceCountryId, phoneNumber);
+			city, zip, regionId, countryId, phoneNumber);
 
 		commerceShipment.setCommerceAddressId(
 			commerceAddress.getCommerceAddressId());
@@ -398,8 +396,8 @@ public class CommerceShipmentLocalServiceImpl
 		String street3 = null;
 		String city = null;
 		String zip = null;
-		long commerceRegionId = 0;
-		long commerceCountryId = 0;
+		long regionId = 0;
+		long countryId = 0;
 		String phoneNumber = null;
 
 		CommerceShipment commerceShipment =
@@ -416,15 +414,15 @@ public class CommerceShipmentLocalServiceImpl
 			street3 = commerceAddress.getStreet3();
 			city = commerceAddress.getCity();
 			zip = commerceAddress.getZip();
-			commerceRegionId = commerceAddress.getCommerceRegionId();
-			commerceCountryId = commerceAddress.getCommerceCountryId();
+			regionId = commerceAddress.getRegionId();
+			countryId = commerceAddress.getCountryId();
 			phoneNumber = commerceAddress.getPhoneNumber();
 		}
 
 		return commerceShipmentLocalService.updateCommerceShipment(
 			commerceShipmentId, name, description, street1, street2, street3,
-			city, zip, commerceRegionId, commerceCountryId, phoneNumber,
-			carrier, trackingNumber, status, shippingDateMonth, shippingDateDay,
+			city, zip, regionId, countryId, phoneNumber, carrier,
+			trackingNumber, status, shippingDateMonth, shippingDateDay,
 			shippingDateYear, shippingDateHour, shippingDateMinute,
 			expectedDateMonth, expectedDateDay, expectedDateYear,
 			expectedDateHour, expectedDateMinute);
@@ -435,12 +433,12 @@ public class CommerceShipmentLocalServiceImpl
 	public CommerceShipment updateCommerceShipment(
 			long commerceShipmentId, String name, String description,
 			String street1, String street2, String street3, String city,
-			String zip, long commerceRegionId, long commerceCountryId,
-			String phoneNumber, String carrier, String trackingNumber,
-			int status, int shippingDateMonth, int shippingDateDay,
-			int shippingDateYear, int shippingDateHour, int shippingDateMinute,
-			int expectedDateMonth, int expectedDateDay, int expectedDateYear,
-			int expectedDateHour, int expectedDateMinute)
+			String zip, long regionId, long countryId, String phoneNumber,
+			String carrier, String trackingNumber, int status,
+			int shippingDateMonth, int shippingDateDay, int shippingDateYear,
+			int shippingDateHour, int shippingDateMinute, int expectedDateMonth,
+			int expectedDateDay, int expectedDateYear, int expectedDateHour,
+			int expectedDateMinute)
 		throws PortalException {
 
 		// Commerce shipment
@@ -466,7 +464,7 @@ public class CommerceShipmentLocalServiceImpl
 
 		CommerceAddress commerceAddress = updateCommerceShipmentAddress(
 			commerceShipment, name, description, street1, street2, street3,
-			city, zip, commerceRegionId, commerceCountryId, phoneNumber);
+			city, zip, regionId, countryId, phoneNumber);
 
 		commerceShipment.setCommerceAddressId(
 			commerceAddress.getCommerceAddressId());
@@ -650,8 +648,7 @@ public class CommerceShipmentLocalServiceImpl
 	protected CommerceAddress updateCommerceShipmentAddress(
 			CommerceShipment commerceShipment, String name, String description,
 			String street1, String street2, String street3, String city,
-			String zip, long commerceRegionId, long commerceCountryId,
-			String phoneNumber)
+			String zip, long regionId, long countryId, String phoneNumber)
 		throws PortalException {
 
 		CommerceAddress commerceAddress =
@@ -664,10 +661,8 @@ public class CommerceShipmentLocalServiceImpl
 			Objects.equals(street3, commerceAddress.getStreet3()) &&
 			Objects.equals(city, commerceAddress.getCity()) &&
 			Objects.equals(zip, commerceAddress.getZip()) &&
-			Objects.equals(
-				commerceRegionId, commerceAddress.getCommerceRegionId()) &&
-			Objects.equals(
-				commerceCountryId, commerceAddress.getCommerceCountryId()) &&
+			Objects.equals(regionId, commerceAddress.getRegionId()) &&
+			Objects.equals(countryId, commerceAddress.getCountryId()) &&
 			Objects.equals(phoneNumber, commerceAddress.getPhoneNumber())) {
 
 			return commerceAddress;
@@ -676,8 +671,8 @@ public class CommerceShipmentLocalServiceImpl
 		return commerceAddressLocalService.addCommerceAddress(
 			commerceShipment.getModelClassName(),
 			commerceShipment.getCommerceShipmentId(), name, description,
-			street1, street2, street3, city, zip, commerceRegionId,
-			commerceCountryId, phoneNumber, false, false,
+			street1, street2, street3, city, zip, regionId, countryId,
+			phoneNumber, false, false,
 			ServiceContextThreadLocal.getServiceContext());
 	}
 

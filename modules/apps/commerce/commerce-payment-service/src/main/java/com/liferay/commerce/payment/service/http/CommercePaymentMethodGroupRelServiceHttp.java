@@ -54,7 +54,7 @@ public class CommercePaymentMethodGroupRelServiceHttp {
 	public static com.liferay.commerce.model.CommerceAddressRestriction
 			addCommerceAddressRestriction(
 				HttpPrincipal httpPrincipal, long userId, long groupId,
-				long classPK, long commerceCountryId)
+				long classPK, long countryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -64,7 +64,7 @@ public class CommercePaymentMethodGroupRelServiceHttp {
 				_addCommerceAddressRestrictionParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, userId, groupId, classPK, commerceCountryId);
+				methodKey, userId, groupId, classPK, countryId);
 
 			Object returnObj = null;
 
@@ -97,8 +97,7 @@ public class CommercePaymentMethodGroupRelServiceHttp {
 
 	public static com.liferay.commerce.model.CommerceAddressRestriction
 			addCommerceAddressRestriction(
-				HttpPrincipal httpPrincipal, long classPK,
-				long commerceCountryId,
+				HttpPrincipal httpPrincipal, long classPK, long countryId,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -109,7 +108,7 @@ public class CommercePaymentMethodGroupRelServiceHttp {
 				_addCommerceAddressRestrictionParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, classPK, commerceCountryId, serviceContext);
+				methodKey, classPK, countryId, serviceContext);
 
 			Object returnObj = null;
 
@@ -758,8 +757,8 @@ public class CommercePaymentMethodGroupRelServiceHttp {
 	public static java.util.List
 		<com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel>
 				getCommercePaymentMethodGroupRels(
-					HttpPrincipal httpPrincipal, long groupId,
-					long commerceCountryId, boolean active)
+					HttpPrincipal httpPrincipal, long groupId, long countryId,
+					boolean active)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -769,7 +768,7 @@ public class CommercePaymentMethodGroupRelServiceHttp {
 				_getCommercePaymentMethodGroupRelsParameterTypes16);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, commerceCountryId, active);
+				methodKey, groupId, countryId, active);
 
 			Object returnObj = null;
 

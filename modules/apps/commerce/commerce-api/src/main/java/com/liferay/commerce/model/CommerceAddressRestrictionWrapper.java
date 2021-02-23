@@ -55,7 +55,7 @@ public class CommerceAddressRestrictionWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
-		attributes.put("commerceCountryId", getCommerceCountryId());
+		attributes.put("countryId", getCountryId());
 
 		return attributes;
 	}
@@ -117,10 +117,10 @@ public class CommerceAddressRestrictionWrapper
 			setClassPK(classPK);
 		}
 
-		Long commerceCountryId = (Long)attributes.get("commerceCountryId");
+		Long countryId = (Long)attributes.get("countryId");
 
-		if (commerceCountryId != null) {
-			setCommerceCountryId(commerceCountryId);
+		if (countryId != null) {
+			setCountryId(countryId);
 		}
 	}
 
@@ -165,16 +165,6 @@ public class CommerceAddressRestrictionWrapper
 	}
 
 	/**
-	 * Returns the commerce country ID of this commerce address restriction.
-	 *
-	 * @return the commerce country ID of this commerce address restriction
-	 */
-	@Override
-	public long getCommerceCountryId() {
-		return model.getCommerceCountryId();
-	}
-
-	/**
 	 * Returns the company ID of this commerce address restriction.
 	 *
 	 * @return the company ID of this commerce address restriction
@@ -189,6 +179,16 @@ public class CommerceAddressRestrictionWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return model.getCountry();
+	}
+
+	/**
+	 * Returns the country ID of this commerce address restriction.
+	 *
+	 * @return the country ID of this commerce address restriction
+	 */
+	@Override
+	public long getCountryId() {
+		return model.getCountryId();
 	}
 
 	/**
@@ -304,16 +304,6 @@ public class CommerceAddressRestrictionWrapper
 	}
 
 	/**
-	 * Sets the commerce country ID of this commerce address restriction.
-	 *
-	 * @param commerceCountryId the commerce country ID of this commerce address restriction
-	 */
-	@Override
-	public void setCommerceCountryId(long commerceCountryId) {
-		model.setCommerceCountryId(commerceCountryId);
-	}
-
-	/**
 	 * Sets the company ID of this commerce address restriction.
 	 *
 	 * @param companyId the company ID of this commerce address restriction
@@ -321,6 +311,16 @@ public class CommerceAddressRestrictionWrapper
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
+	}
+
+	/**
+	 * Sets the country ID of this commerce address restriction.
+	 *
+	 * @param countryId the country ID of this commerce address restriction
+	 */
+	@Override
+	public void setCountryId(long countryId) {
+		model.setCountryId(countryId);
 	}
 
 	/**

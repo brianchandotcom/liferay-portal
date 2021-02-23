@@ -85,8 +85,8 @@ public interface CommerceAddressLocalService
 	public CommerceAddress addCommerceAddress(
 			String className, long classPK, String name, String description,
 			String street1, String street2, String street3, String city,
-			String zip, long commerceRegionId, long commerceCountryId,
-			String phoneNumber, boolean defaultBilling, boolean defaultShipping,
+			String zip, long regionId, long countryId, String phoneNumber,
+			boolean defaultBilling, boolean defaultShipping,
 			ServiceContext serviceContext)
 		throws PortalException;
 
@@ -94,16 +94,16 @@ public interface CommerceAddressLocalService
 	public CommerceAddress addCommerceAddress(
 			String className, long classPK, String name, String description,
 			String street1, String street2, String street3, String city,
-			String zip, long commerceRegionId, long commerceCountryId,
-			String phoneNumber, int type, ServiceContext serviceContext)
+			String zip, long regionId, long countryId, String phoneNumber,
+			int type, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceAddress addCommerceAddress(
 			String externalReferenceCode, String className, long classPK,
 			String name, String description, String street1, String street2,
-			String street3, String city, String zip, long commerceRegionId,
-			long commerceCountryId, String phoneNumber, int type,
+			String street3, String city, String zip, long regionId,
+			long countryId, String phoneNumber, int type,
 			ServiceContext serviceContext)
 		throws PortalException;
 
@@ -161,7 +161,7 @@ public interface CommerceAddressLocalService
 	public void deleteCommerceAddresses(String className, long classPK)
 		throws PortalException;
 
-	public void deleteCountryCommerceAddresses(long commerceCountryId)
+	public void deleteCountryCommerceAddresses(long countryId)
 		throws PortalException;
 
 	/**
@@ -171,7 +171,7 @@ public interface CommerceAddressLocalService
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public void deleteRegionCommerceAddresses(long commerceRegionId)
+	public void deleteRegionCommerceAddresses(long regionId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -438,8 +438,8 @@ public interface CommerceAddressLocalService
 	public CommerceAddress updateCommerceAddress(
 			long commerceAddressId, String name, String description,
 			String street1, String street2, String street3, String city,
-			String zip, long commerceRegionId, long commerceCountryId,
-			String phoneNumber, boolean defaultBilling, boolean defaultShipping,
+			String zip, long regionId, long countryId, String phoneNumber,
+			boolean defaultBilling, boolean defaultShipping,
 			ServiceContext serviceContext)
 		throws PortalException;
 
@@ -447,8 +447,8 @@ public interface CommerceAddressLocalService
 	public CommerceAddress updateCommerceAddress(
 			long commerceAddressId, String name, String description,
 			String street1, String street2, String street3, String city,
-			String zip, long commerceRegionId, long commerceCountryId,
-			String phoneNumber, int type, ServiceContext serviceContext)
+			String zip, long regionId, long countryId, String phoneNumber,
+			int type, ServiceContext serviceContext)
 		throws PortalException;
 
 }

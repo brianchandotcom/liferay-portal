@@ -43,13 +43,13 @@ public class CommerceShippingMethodServiceImpl
 	@Override
 	public CommerceAddressRestriction addCommerceAddressRestriction(
 			long userId, long groupId, long commerceShippingMethodId,
-			long commerceCountryId)
+			long countryId)
 		throws PortalException {
 
 		_checkCommerceChannel(groupId);
 
 		return commerceShippingMethodLocalService.addCommerceAddressRestriction(
-			userId, groupId, commerceShippingMethodId, commerceCountryId);
+			userId, groupId, commerceShippingMethodId, countryId);
 	}
 
 	/**
@@ -58,13 +58,13 @@ public class CommerceShippingMethodServiceImpl
 	@Deprecated
 	@Override
 	public CommerceAddressRestriction addCommerceAddressRestriction(
-			long commerceShippingMethodId, long commerceCountryId,
+			long commerceShippingMethodId, long countryId,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		return commerceShippingMethodService.addCommerceAddressRestriction(
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-			commerceShippingMethodId, commerceCountryId);
+			commerceShippingMethodId, countryId);
 	}
 
 	@Override
@@ -228,13 +228,13 @@ public class CommerceShippingMethodServiceImpl
 
 	@Override
 	public List<CommerceShippingMethod> getCommerceShippingMethods(
-			long groupId, long commerceCountryId, boolean active)
+			long groupId, long countryId, boolean active)
 		throws PortalException {
 
 		_checkCommerceChannel(groupId);
 
 		return commerceShippingMethodLocalService.getCommerceShippingMethods(
-			groupId, commerceCountryId, active);
+			groupId, countryId, active);
 	}
 
 	@Override

@@ -51,8 +51,8 @@ create table CommerceAddress (
 	street3 VARCHAR(255) null,
 	city VARCHAR(75) null,
 	zip VARCHAR(75) null,
-	commerceRegionId LONG,
-	commerceCountryId LONG,
+	regionId LONG,
+	countryId LONG,
 	latitude DOUBLE,
 	longitude DOUBLE,
 	phoneNumber VARCHAR(75) null,
@@ -71,7 +71,7 @@ create table CommerceAddressRestriction (
 	modifiedDate DATE null,
 	classNameId LONG,
 	classPK LONG,
-	commerceCountryId LONG
+	countryId LONG
 );
 
 create table CommerceAvailabilityEstimate (

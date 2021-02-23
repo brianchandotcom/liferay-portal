@@ -85,7 +85,7 @@ CommerceInventoryWarehousesDisplayContext commerceInventoryWarehousesDisplayCont
 			<portlet:renderURL var="addCommerceInventoryWarehouseURL">
 				<portlet:param name="mvcRenderCommandName" value="/commerce_inventory_warehouse/edit_commerce_inventory_warehouse" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="commerceCountryId" value="<%= String.valueOf(countryTwoLettersIsoCode) %>" />
+				<portlet:param name="countryId" value="<%= String.valueOf(countryTwoLettersIsoCode) %>" />
 			</portlet:renderURL>
 
 			<liferay-frontend:add-menu

@@ -43,13 +43,13 @@ public class CommerceShippingMethodLocalServiceImpl
 	@Override
 	public CommerceAddressRestriction addCommerceAddressRestriction(
 			long userId, long groupId, long commerceShippingMethodId,
-			long commerceCountryId)
+			long countryId)
 		throws PortalException {
 
 		return commerceAddressRestrictionLocalService.
 			addCommerceAddressRestriction(
 				userId, groupId, CommerceShippingMethod.class.getName(),
-				commerceShippingMethodId, commerceCountryId);
+				commerceShippingMethodId, countryId);
 	}
 
 	/**
@@ -58,13 +58,13 @@ public class CommerceShippingMethodLocalServiceImpl
 	@Deprecated
 	@Override
 	public CommerceAddressRestriction addCommerceAddressRestriction(
-			long commerceShippingMethodId, long commerceCountryId,
+			long commerceShippingMethodId, long countryId,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		return commerceShippingMethodLocalService.addCommerceAddressRestriction(
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-			commerceShippingMethodId, commerceCountryId);
+			commerceShippingMethodId, countryId);
 	}
 
 	@Override
@@ -223,7 +223,7 @@ public class CommerceShippingMethodLocalServiceImpl
 
 	@Override
 	public List<CommerceShippingMethod> getCommerceShippingMethods(
-		long groupId, long commerceCountryId, boolean active) {
+		long groupId, long countryId, boolean active) {
 
 		List<CommerceShippingMethod> filteredCommerceShippingMethods =
 			new ArrayList<>();
@@ -239,7 +239,7 @@ public class CommerceShippingMethodLocalServiceImpl
 					isCommerceAddressRestricted(
 						CommerceShippingMethod.class.getName(),
 						commerceShippingMethod.getCommerceShippingMethodId(),
-						commerceCountryId);
+						countryId);
 
 			if (!restricted) {
 				filteredCommerceShippingMethods.add(commerceShippingMethod);

@@ -286,10 +286,10 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 		return _countryLocalService.getCountryByA2(companyId, countryCode);
 	}
 
-	private Region _getRegion(long commerceCountryId, String regionCode)
+	private Region _getRegion(long countryId, String regionCode)
 		throws PortalException {
 
-		return _regionLocalService.getRegion(commerceCountryId, regionCode);
+		return _regionLocalService.getRegion(countryId, regionCode);
 	}
 
 	private static final TransactionConfig _transactionConfig =

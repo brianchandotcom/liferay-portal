@@ -208,9 +208,8 @@ public class CommerceSubscriptionEntryHelperImpl
 			shippingAddress.getName(), shippingAddress.getDescription(),
 			shippingAddress.getStreet1(), shippingAddress.getStreet2(),
 			shippingAddress.getStreet3(), shippingAddress.getCity(),
-			shippingAddress.getZip(), shippingAddress.getCommerceRegionId(),
-			shippingAddress.getCommerceCountryId(),
-			shippingAddress.getPhoneNumber());
+			shippingAddress.getZip(), shippingAddress.getRegionId(),
+			shippingAddress.getCountryId(), shippingAddress.getPhoneNumber());
 	}
 
 	private boolean _isNewSubscription(CommerceOrderItem commerceOrderItem) {

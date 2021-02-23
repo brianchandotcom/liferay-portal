@@ -59,12 +59,12 @@ public class CommerceAddressRestrictionLocalServiceWrapper
 	public com.liferay.commerce.model.CommerceAddressRestriction
 			addCommerceAddressRestriction(
 				long userId, long groupId, String className, long classPK,
-				long commerceCountryId)
+				long countryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceAddressRestrictionLocalService.
 			addCommerceAddressRestriction(
-				userId, groupId, className, classPK, commerceCountryId);
+				userId, groupId, className, classPK, countryId);
 	}
 
 	/**
@@ -74,13 +74,13 @@ public class CommerceAddressRestrictionLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.model.CommerceAddressRestriction
 			addCommerceAddressRestriction(
-				String className, long classPK, long commerceCountryId,
+				String className, long classPK, long countryId,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceAddressRestrictionLocalService.
 			addCommerceAddressRestriction(
-				className, classPK, commerceCountryId, serviceContext);
+				className, classPK, countryId, serviceContext);
 	}
 
 	/**
@@ -150,9 +150,9 @@ public class CommerceAddressRestrictionLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteCommerceAddressRestrictions(long commerceCountryId) {
+	public void deleteCommerceAddressRestrictions(long countryId) {
 		_commerceAddressRestrictionLocalService.
-			deleteCommerceAddressRestrictions(commerceCountryId);
+			deleteCommerceAddressRestrictions(countryId);
 	}
 
 	@Override
@@ -284,11 +284,10 @@ public class CommerceAddressRestrictionLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.model.CommerceAddressRestriction
 		fetchCommerceAddressRestriction(
-			String className, long classPK, long commerceCountryId) {
+			String className, long classPK, long countryId) {
 
 		return _commerceAddressRestrictionLocalService.
-			fetchCommerceAddressRestriction(
-				className, classPK, commerceCountryId);
+			fetchCommerceAddressRestriction(className, classPK, countryId);
 	}
 
 	@Override
@@ -399,19 +398,19 @@ public class CommerceAddressRestrictionLocalServiceWrapper
 
 	@Override
 	public boolean isCommerceAddressRestricted(
-		String className, long classPK, long commerceCountryId) {
+		String className, long classPK, long countryId) {
 
 		return _commerceAddressRestrictionLocalService.
-			isCommerceAddressRestricted(className, classPK, commerceCountryId);
+			isCommerceAddressRestricted(className, classPK, countryId);
 	}
 
 	@Override
 	public boolean isCommerceShippingMethodRestricted(
-		long commerceShippingMethodId, long commerceCountryId) {
+		long commerceShippingMethodId, long countryId) {
 
 		return _commerceAddressRestrictionLocalService.
 			isCommerceShippingMethodRestricted(
-				commerceShippingMethodId, commerceCountryId);
+				commerceShippingMethodId, countryId);
 	}
 
 	/**

@@ -73,7 +73,7 @@ public class FedExCommerceShippingEngine implements CommerceShippingEngine {
 				_commerceAddressRestrictionLocalService.
 					isCommerceShippingMethodRestricted(
 						_getCommerceShippingMethodId(commerceOrder),
-						commerceAddress.getCommerceCountryId());
+						commerceAddress.getCountryId());
 
 			if (restricted) {
 				return Collections.emptyList();

@@ -124,355 +124,343 @@ public class CommerceAddressUtil {
 	}
 
 	/**
-	 * Returns all the commerce addresses where commerceRegionId = &#63;.
+	 * Returns all the commerce addresses where regionId = &#63;.
 	 *
-	 * @param commerceRegionId the commerce region ID
+	 * @param regionId the region ID
 	 * @return the matching commerce addresses
 	 */
-	public static List<CommerceAddress> findByCommerceRegionId(
-		long commerceRegionId) {
-
-		return getPersistence().findByCommerceRegionId(commerceRegionId);
+	public static List<CommerceAddress> findByRegionId(long regionId) {
+		return getPersistence().findByRegionId(regionId);
 	}
 
 	/**
-	 * Returns a range of all the commerce addresses where commerceRegionId = &#63;.
+	 * Returns a range of all the commerce addresses where regionId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceAddressModelImpl</code>.
 	 * </p>
 	 *
-	 * @param commerceRegionId the commerce region ID
+	 * @param regionId the region ID
 	 * @param start the lower bound of the range of commerce addresses
 	 * @param end the upper bound of the range of commerce addresses (not inclusive)
 	 * @return the range of matching commerce addresses
 	 */
-	public static List<CommerceAddress> findByCommerceRegionId(
-		long commerceRegionId, int start, int end) {
+	public static List<CommerceAddress> findByRegionId(
+		long regionId, int start, int end) {
 
-		return getPersistence().findByCommerceRegionId(
-			commerceRegionId, start, end);
+		return getPersistence().findByRegionId(regionId, start, end);
 	}
 
 	/**
-	 * Returns an ordered range of all the commerce addresses where commerceRegionId = &#63;.
+	 * Returns an ordered range of all the commerce addresses where regionId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceAddressModelImpl</code>.
 	 * </p>
 	 *
-	 * @param commerceRegionId the commerce region ID
+	 * @param regionId the region ID
 	 * @param start the lower bound of the range of commerce addresses
 	 * @param end the upper bound of the range of commerce addresses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching commerce addresses
 	 */
-	public static List<CommerceAddress> findByCommerceRegionId(
-		long commerceRegionId, int start, int end,
+	public static List<CommerceAddress> findByRegionId(
+		long regionId, int start, int end,
 		OrderByComparator<CommerceAddress> orderByComparator) {
 
-		return getPersistence().findByCommerceRegionId(
-			commerceRegionId, start, end, orderByComparator);
+		return getPersistence().findByRegionId(
+			regionId, start, end, orderByComparator);
 	}
 
 	/**
-	 * Returns an ordered range of all the commerce addresses where commerceRegionId = &#63;.
+	 * Returns an ordered range of all the commerce addresses where regionId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceAddressModelImpl</code>.
 	 * </p>
 	 *
-	 * @param commerceRegionId the commerce region ID
+	 * @param regionId the region ID
 	 * @param start the lower bound of the range of commerce addresses
 	 * @param end the upper bound of the range of commerce addresses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching commerce addresses
 	 */
-	public static List<CommerceAddress> findByCommerceRegionId(
-		long commerceRegionId, int start, int end,
+	public static List<CommerceAddress> findByRegionId(
+		long regionId, int start, int end,
 		OrderByComparator<CommerceAddress> orderByComparator,
 		boolean useFinderCache) {
 
-		return getPersistence().findByCommerceRegionId(
-			commerceRegionId, start, end, orderByComparator, useFinderCache);
+		return getPersistence().findByRegionId(
+			regionId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
-	 * Returns the first commerce address in the ordered set where commerceRegionId = &#63;.
+	 * Returns the first commerce address in the ordered set where regionId = &#63;.
 	 *
-	 * @param commerceRegionId the commerce region ID
+	 * @param regionId the region ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching commerce address
 	 * @throws NoSuchAddressException if a matching commerce address could not be found
 	 */
-	public static CommerceAddress findByCommerceRegionId_First(
-			long commerceRegionId,
-			OrderByComparator<CommerceAddress> orderByComparator)
+	public static CommerceAddress findByRegionId_First(
+			long regionId, OrderByComparator<CommerceAddress> orderByComparator)
 		throws com.liferay.commerce.exception.NoSuchAddressException {
 
-		return getPersistence().findByCommerceRegionId_First(
-			commerceRegionId, orderByComparator);
+		return getPersistence().findByRegionId_First(
+			regionId, orderByComparator);
 	}
 
 	/**
-	 * Returns the first commerce address in the ordered set where commerceRegionId = &#63;.
+	 * Returns the first commerce address in the ordered set where regionId = &#63;.
 	 *
-	 * @param commerceRegionId the commerce region ID
+	 * @param regionId the region ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching commerce address, or <code>null</code> if a matching commerce address could not be found
 	 */
-	public static CommerceAddress fetchByCommerceRegionId_First(
-		long commerceRegionId,
-		OrderByComparator<CommerceAddress> orderByComparator) {
+	public static CommerceAddress fetchByRegionId_First(
+		long regionId, OrderByComparator<CommerceAddress> orderByComparator) {
 
-		return getPersistence().fetchByCommerceRegionId_First(
-			commerceRegionId, orderByComparator);
+		return getPersistence().fetchByRegionId_First(
+			regionId, orderByComparator);
 	}
 
 	/**
-	 * Returns the last commerce address in the ordered set where commerceRegionId = &#63;.
+	 * Returns the last commerce address in the ordered set where regionId = &#63;.
 	 *
-	 * @param commerceRegionId the commerce region ID
+	 * @param regionId the region ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching commerce address
 	 * @throws NoSuchAddressException if a matching commerce address could not be found
 	 */
-	public static CommerceAddress findByCommerceRegionId_Last(
-			long commerceRegionId,
-			OrderByComparator<CommerceAddress> orderByComparator)
+	public static CommerceAddress findByRegionId_Last(
+			long regionId, OrderByComparator<CommerceAddress> orderByComparator)
 		throws com.liferay.commerce.exception.NoSuchAddressException {
 
-		return getPersistence().findByCommerceRegionId_Last(
-			commerceRegionId, orderByComparator);
+		return getPersistence().findByRegionId_Last(
+			regionId, orderByComparator);
 	}
 
 	/**
-	 * Returns the last commerce address in the ordered set where commerceRegionId = &#63;.
+	 * Returns the last commerce address in the ordered set where regionId = &#63;.
 	 *
-	 * @param commerceRegionId the commerce region ID
+	 * @param regionId the region ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching commerce address, or <code>null</code> if a matching commerce address could not be found
 	 */
-	public static CommerceAddress fetchByCommerceRegionId_Last(
-		long commerceRegionId,
-		OrderByComparator<CommerceAddress> orderByComparator) {
+	public static CommerceAddress fetchByRegionId_Last(
+		long regionId, OrderByComparator<CommerceAddress> orderByComparator) {
 
-		return getPersistence().fetchByCommerceRegionId_Last(
-			commerceRegionId, orderByComparator);
+		return getPersistence().fetchByRegionId_Last(
+			regionId, orderByComparator);
 	}
 
 	/**
-	 * Returns the commerce addresses before and after the current commerce address in the ordered set where commerceRegionId = &#63;.
+	 * Returns the commerce addresses before and after the current commerce address in the ordered set where regionId = &#63;.
 	 *
 	 * @param commerceAddressId the primary key of the current commerce address
-	 * @param commerceRegionId the commerce region ID
+	 * @param regionId the region ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next commerce address
 	 * @throws NoSuchAddressException if a commerce address with the primary key could not be found
 	 */
-	public static CommerceAddress[] findByCommerceRegionId_PrevAndNext(
-			long commerceAddressId, long commerceRegionId,
+	public static CommerceAddress[] findByRegionId_PrevAndNext(
+			long commerceAddressId, long regionId,
 			OrderByComparator<CommerceAddress> orderByComparator)
 		throws com.liferay.commerce.exception.NoSuchAddressException {
 
-		return getPersistence().findByCommerceRegionId_PrevAndNext(
-			commerceAddressId, commerceRegionId, orderByComparator);
+		return getPersistence().findByRegionId_PrevAndNext(
+			commerceAddressId, regionId, orderByComparator);
 	}
 
 	/**
-	 * Removes all the commerce addresses where commerceRegionId = &#63; from the database.
+	 * Removes all the commerce addresses where regionId = &#63; from the database.
 	 *
-	 * @param commerceRegionId the commerce region ID
+	 * @param regionId the region ID
 	 */
-	public static void removeByCommerceRegionId(long commerceRegionId) {
-		getPersistence().removeByCommerceRegionId(commerceRegionId);
+	public static void removeByRegionId(long regionId) {
+		getPersistence().removeByRegionId(regionId);
 	}
 
 	/**
-	 * Returns the number of commerce addresses where commerceRegionId = &#63;.
+	 * Returns the number of commerce addresses where regionId = &#63;.
 	 *
-	 * @param commerceRegionId the commerce region ID
+	 * @param regionId the region ID
 	 * @return the number of matching commerce addresses
 	 */
-	public static int countByCommerceRegionId(long commerceRegionId) {
-		return getPersistence().countByCommerceRegionId(commerceRegionId);
+	public static int countByRegionId(long regionId) {
+		return getPersistence().countByRegionId(regionId);
 	}
 
 	/**
-	 * Returns all the commerce addresses where commerceCountryId = &#63;.
+	 * Returns all the commerce addresses where countryId = &#63;.
 	 *
-	 * @param commerceCountryId the commerce country ID
+	 * @param countryId the country ID
 	 * @return the matching commerce addresses
 	 */
-	public static List<CommerceAddress> findByCommerceCountryId(
-		long commerceCountryId) {
-
-		return getPersistence().findByCommerceCountryId(commerceCountryId);
+	public static List<CommerceAddress> findByCountryId(long countryId) {
+		return getPersistence().findByCountryId(countryId);
 	}
 
 	/**
-	 * Returns a range of all the commerce addresses where commerceCountryId = &#63;.
+	 * Returns a range of all the commerce addresses where countryId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceAddressModelImpl</code>.
 	 * </p>
 	 *
-	 * @param commerceCountryId the commerce country ID
+	 * @param countryId the country ID
 	 * @param start the lower bound of the range of commerce addresses
 	 * @param end the upper bound of the range of commerce addresses (not inclusive)
 	 * @return the range of matching commerce addresses
 	 */
-	public static List<CommerceAddress> findByCommerceCountryId(
-		long commerceCountryId, int start, int end) {
+	public static List<CommerceAddress> findByCountryId(
+		long countryId, int start, int end) {
 
-		return getPersistence().findByCommerceCountryId(
-			commerceCountryId, start, end);
+		return getPersistence().findByCountryId(countryId, start, end);
 	}
 
 	/**
-	 * Returns an ordered range of all the commerce addresses where commerceCountryId = &#63;.
+	 * Returns an ordered range of all the commerce addresses where countryId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceAddressModelImpl</code>.
 	 * </p>
 	 *
-	 * @param commerceCountryId the commerce country ID
+	 * @param countryId the country ID
 	 * @param start the lower bound of the range of commerce addresses
 	 * @param end the upper bound of the range of commerce addresses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching commerce addresses
 	 */
-	public static List<CommerceAddress> findByCommerceCountryId(
-		long commerceCountryId, int start, int end,
+	public static List<CommerceAddress> findByCountryId(
+		long countryId, int start, int end,
 		OrderByComparator<CommerceAddress> orderByComparator) {
 
-		return getPersistence().findByCommerceCountryId(
-			commerceCountryId, start, end, orderByComparator);
+		return getPersistence().findByCountryId(
+			countryId, start, end, orderByComparator);
 	}
 
 	/**
-	 * Returns an ordered range of all the commerce addresses where commerceCountryId = &#63;.
+	 * Returns an ordered range of all the commerce addresses where countryId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceAddressModelImpl</code>.
 	 * </p>
 	 *
-	 * @param commerceCountryId the commerce country ID
+	 * @param countryId the country ID
 	 * @param start the lower bound of the range of commerce addresses
 	 * @param end the upper bound of the range of commerce addresses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching commerce addresses
 	 */
-	public static List<CommerceAddress> findByCommerceCountryId(
-		long commerceCountryId, int start, int end,
+	public static List<CommerceAddress> findByCountryId(
+		long countryId, int start, int end,
 		OrderByComparator<CommerceAddress> orderByComparator,
 		boolean useFinderCache) {
 
-		return getPersistence().findByCommerceCountryId(
-			commerceCountryId, start, end, orderByComparator, useFinderCache);
+		return getPersistence().findByCountryId(
+			countryId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
-	 * Returns the first commerce address in the ordered set where commerceCountryId = &#63;.
+	 * Returns the first commerce address in the ordered set where countryId = &#63;.
 	 *
-	 * @param commerceCountryId the commerce country ID
+	 * @param countryId the country ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching commerce address
 	 * @throws NoSuchAddressException if a matching commerce address could not be found
 	 */
-	public static CommerceAddress findByCommerceCountryId_First(
-			long commerceCountryId,
+	public static CommerceAddress findByCountryId_First(
+			long countryId,
 			OrderByComparator<CommerceAddress> orderByComparator)
 		throws com.liferay.commerce.exception.NoSuchAddressException {
 
-		return getPersistence().findByCommerceCountryId_First(
-			commerceCountryId, orderByComparator);
+		return getPersistence().findByCountryId_First(
+			countryId, orderByComparator);
 	}
 
 	/**
-	 * Returns the first commerce address in the ordered set where commerceCountryId = &#63;.
+	 * Returns the first commerce address in the ordered set where countryId = &#63;.
 	 *
-	 * @param commerceCountryId the commerce country ID
+	 * @param countryId the country ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching commerce address, or <code>null</code> if a matching commerce address could not be found
 	 */
-	public static CommerceAddress fetchByCommerceCountryId_First(
-		long commerceCountryId,
-		OrderByComparator<CommerceAddress> orderByComparator) {
+	public static CommerceAddress fetchByCountryId_First(
+		long countryId, OrderByComparator<CommerceAddress> orderByComparator) {
 
-		return getPersistence().fetchByCommerceCountryId_First(
-			commerceCountryId, orderByComparator);
+		return getPersistence().fetchByCountryId_First(
+			countryId, orderByComparator);
 	}
 
 	/**
-	 * Returns the last commerce address in the ordered set where commerceCountryId = &#63;.
+	 * Returns the last commerce address in the ordered set where countryId = &#63;.
 	 *
-	 * @param commerceCountryId the commerce country ID
+	 * @param countryId the country ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching commerce address
 	 * @throws NoSuchAddressException if a matching commerce address could not be found
 	 */
-	public static CommerceAddress findByCommerceCountryId_Last(
-			long commerceCountryId,
+	public static CommerceAddress findByCountryId_Last(
+			long countryId,
 			OrderByComparator<CommerceAddress> orderByComparator)
 		throws com.liferay.commerce.exception.NoSuchAddressException {
 
-		return getPersistence().findByCommerceCountryId_Last(
-			commerceCountryId, orderByComparator);
+		return getPersistence().findByCountryId_Last(
+			countryId, orderByComparator);
 	}
 
 	/**
-	 * Returns the last commerce address in the ordered set where commerceCountryId = &#63;.
+	 * Returns the last commerce address in the ordered set where countryId = &#63;.
 	 *
-	 * @param commerceCountryId the commerce country ID
+	 * @param countryId the country ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching commerce address, or <code>null</code> if a matching commerce address could not be found
 	 */
-	public static CommerceAddress fetchByCommerceCountryId_Last(
-		long commerceCountryId,
-		OrderByComparator<CommerceAddress> orderByComparator) {
+	public static CommerceAddress fetchByCountryId_Last(
+		long countryId, OrderByComparator<CommerceAddress> orderByComparator) {
 
-		return getPersistence().fetchByCommerceCountryId_Last(
-			commerceCountryId, orderByComparator);
+		return getPersistence().fetchByCountryId_Last(
+			countryId, orderByComparator);
 	}
 
 	/**
-	 * Returns the commerce addresses before and after the current commerce address in the ordered set where commerceCountryId = &#63;.
+	 * Returns the commerce addresses before and after the current commerce address in the ordered set where countryId = &#63;.
 	 *
 	 * @param commerceAddressId the primary key of the current commerce address
-	 * @param commerceCountryId the commerce country ID
+	 * @param countryId the country ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next commerce address
 	 * @throws NoSuchAddressException if a commerce address with the primary key could not be found
 	 */
-	public static CommerceAddress[] findByCommerceCountryId_PrevAndNext(
-			long commerceAddressId, long commerceCountryId,
+	public static CommerceAddress[] findByCountryId_PrevAndNext(
+			long commerceAddressId, long countryId,
 			OrderByComparator<CommerceAddress> orderByComparator)
 		throws com.liferay.commerce.exception.NoSuchAddressException {
 
-		return getPersistence().findByCommerceCountryId_PrevAndNext(
-			commerceAddressId, commerceCountryId, orderByComparator);
+		return getPersistence().findByCountryId_PrevAndNext(
+			commerceAddressId, countryId, orderByComparator);
 	}
 
 	/**
-	 * Removes all the commerce addresses where commerceCountryId = &#63; from the database.
+	 * Removes all the commerce addresses where countryId = &#63; from the database.
 	 *
-	 * @param commerceCountryId the commerce country ID
+	 * @param countryId the country ID
 	 */
-	public static void removeByCommerceCountryId(long commerceCountryId) {
-		getPersistence().removeByCommerceCountryId(commerceCountryId);
+	public static void removeByCountryId(long countryId) {
+		getPersistence().removeByCountryId(countryId);
 	}
 
 	/**
-	 * Returns the number of commerce addresses where commerceCountryId = &#63;.
+	 * Returns the number of commerce addresses where countryId = &#63;.
 	 *
-	 * @param commerceCountryId the commerce country ID
+	 * @param countryId the country ID
 	 * @return the number of matching commerce addresses
 	 */
-	public static int countByCommerceCountryId(long commerceCountryId) {
-		return getPersistence().countByCommerceCountryId(commerceCountryId);
+	public static int countByCountryId(long countryId) {
+		return getPersistence().countByCountryId(countryId);
 	}
 
 	/**

@@ -125,30 +125,6 @@ public class CommerceAddressDisplayContext {
 		return commerceAddress.getCommerceAddressId();
 	}
 
-	public long getCommerceCountryId() throws PortalException {
-		long commerceCountryId = 0;
-
-		CommerceAddress commerceAddress = getCommerceAddress();
-
-		if (commerceAddress != null) {
-			commerceCountryId = commerceAddress.getCommerceCountryId();
-		}
-
-		return commerceCountryId;
-	}
-
-	public long getCommerceRegionId() throws PortalException {
-		long commerceRegionId = 0;
-
-		CommerceAddress commerceAddress = getCommerceAddress();
-
-		if (commerceAddress != null) {
-			commerceRegionId = commerceAddress.getCommerceRegionId();
-		}
-
-		return commerceRegionId;
-	}
-
 	public List<Country> getCountries() {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
@@ -156,6 +132,18 @@ public class CommerceAddressDisplayContext {
 
 		return _countryService.getCompanyCountries(
 			themeDisplay.getCompanyId(), true);
+	}
+
+	public long getCountryId() throws PortalException {
+		long countryId = 0;
+
+		CommerceAddress commerceAddress = getCommerceAddress();
+
+		if (commerceAddress != null) {
+			countryId = commerceAddress.getCountryId();
+		}
+
+		return countryId;
 	}
 
 	public String getDeleteCommerceAddressURL(long commerceAddressId) {
@@ -248,8 +236,20 @@ public class CommerceAddressDisplayContext {
 		return portletURL;
 	}
 
+	public long getRegionId() throws PortalException {
+		long regionId = 0;
+
+		CommerceAddress commerceAddress = getCommerceAddress();
+
+		if (commerceAddress != null) {
+			regionId = commerceAddress.getRegionId();
+		}
+
+		return regionId;
+	}
+
 	public List<Region> getRegions() throws PortalException {
-		return _regionService.getRegions(getCommerceCountryId(), true);
+		return _regionService.getRegions(getCountryId(), true);
 	}
 
 	public SearchContainer<CommerceAddress> getSearchContainer()

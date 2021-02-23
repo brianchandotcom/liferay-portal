@@ -69,7 +69,7 @@ public interface CommercePaymentMethodGroupRelLocalService
 	 */
 	public CommerceAddressRestriction addCommerceAddressRestriction(
 			long userId, long groupId, long commercePaymentMethodGroupRelId,
-			long commerceCountryId)
+			long countryId)
 		throws PortalException;
 
 	/**
@@ -77,7 +77,7 @@ public interface CommercePaymentMethodGroupRelLocalService
 	 */
 	@Deprecated
 	public CommerceAddressRestriction addCommerceAddressRestriction(
-			long commercePaymentMethodGroupRelId, long commerceCountryId,
+			long commercePaymentMethodGroupRelId, long countryId,
 			ServiceContext serviceContext)
 		throws PortalException;
 
@@ -312,7 +312,7 @@ public interface CommercePaymentMethodGroupRelLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommercePaymentMethodGroupRel>
 		getCommercePaymentMethodGroupRels(
-			long groupId, long commerceCountryId, boolean active);
+			long groupId, long countryId, boolean active);
 
 	/**
 	 * Returns the number of commerce payment method group rels.

@@ -20,20 +20,20 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 /**
  * @author Alessio Antonio Rendina
  */
-public class CommerceShippingFixedOptionRelCommerceCountryIdComparator
+public class CommerceShippingFixedOptionRelCountryIdComparator
 	extends OrderByComparator<CommerceShippingFixedOptionRel> {
 
-	public static final String ORDER_BY_ASC = "commerceCountryId ASC";
+	public static final String ORDER_BY_ASC = "countryId ASC";
 
-	public static final String ORDER_BY_DESC = "commerceCountryId DESC";
+	public static final String ORDER_BY_DESC = "countryId DESC";
 
-	public static final String[] ORDER_BY_FIELDS = {"commerceCountryId"};
+	public static final String[] ORDER_BY_FIELDS = {"countryId"};
 
-	public CommerceShippingFixedOptionRelCommerceCountryIdComparator() {
+	public CommerceShippingFixedOptionRelCountryIdComparator() {
 		this(false);
 	}
 
-	public CommerceShippingFixedOptionRelCommerceCountryIdComparator(
+	public CommerceShippingFixedOptionRelCountryIdComparator(
 		boolean ascending) {
 
 		_ascending = ascending;
@@ -45,8 +45,8 @@ public class CommerceShippingFixedOptionRelCommerceCountryIdComparator
 		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel2) {
 
 		int value = Long.compare(
-			commerceShippingFixedOptionRel1.getCommerceCountryId(),
-			commerceShippingFixedOptionRel2.getCommerceCountryId());
+			commerceShippingFixedOptionRel1.getCountryId(),
+			commerceShippingFixedOptionRel2.getCountryId());
 
 		if (_ascending) {
 			return value;

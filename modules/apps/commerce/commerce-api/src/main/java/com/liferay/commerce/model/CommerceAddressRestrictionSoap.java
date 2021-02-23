@@ -46,7 +46,7 @@ public class CommerceAddressRestrictionSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
-		soapModel.setCommerceCountryId(model.getCommerceCountryId());
+		soapModel.setCountryId(model.getCountryId());
 
 		return soapModel;
 	}
@@ -184,12 +184,12 @@ public class CommerceAddressRestrictionSoap implements Serializable {
 		_classPK = classPK;
 	}
 
-	public long getCommerceCountryId() {
-		return _commerceCountryId;
+	public long getCountryId() {
+		return _countryId;
 	}
 
-	public void setCommerceCountryId(long commerceCountryId) {
-		_commerceCountryId = commerceCountryId;
+	public void setCountryId(long countryId) {
+		_countryId = countryId;
 	}
 
 	private long _commerceAddressRestrictionId;
@@ -201,6 +201,6 @@ public class CommerceAddressRestrictionSoap implements Serializable {
 	private Date _modifiedDate;
 	private long _classNameId;
 	private long _classPK;
-	private long _commerceCountryId;
+	private long _countryId;
 
 }

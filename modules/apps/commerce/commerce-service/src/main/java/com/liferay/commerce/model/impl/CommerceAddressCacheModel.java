@@ -98,10 +98,10 @@ public class CommerceAddressCacheModel
 		sb.append(city);
 		sb.append(", zip=");
 		sb.append(zip);
-		sb.append(", commerceRegionId=");
-		sb.append(commerceRegionId);
-		sb.append(", commerceCountryId=");
-		sb.append(commerceCountryId);
+		sb.append(", regionId=");
+		sb.append(regionId);
+		sb.append(", countryId=");
+		sb.append(countryId);
 		sb.append(", latitude=");
 		sb.append(latitude);
 		sb.append(", longitude=");
@@ -208,8 +208,8 @@ public class CommerceAddressCacheModel
 			commerceAddressImpl.setZip(zip);
 		}
 
-		commerceAddressImpl.setCommerceRegionId(commerceRegionId);
-		commerceAddressImpl.setCommerceCountryId(commerceCountryId);
+		commerceAddressImpl.setRegionId(regionId);
+		commerceAddressImpl.setCountryId(countryId);
 		commerceAddressImpl.setLatitude(latitude);
 		commerceAddressImpl.setLongitude(longitude);
 
@@ -255,9 +255,9 @@ public class CommerceAddressCacheModel
 		city = objectInput.readUTF();
 		zip = objectInput.readUTF();
 
-		commerceRegionId = objectInput.readLong();
+		regionId = objectInput.readLong();
 
-		commerceCountryId = objectInput.readLong();
+		countryId = objectInput.readLong();
 
 		latitude = objectInput.readDouble();
 
@@ -351,9 +351,9 @@ public class CommerceAddressCacheModel
 			objectOutput.writeUTF(zip);
 		}
 
-		objectOutput.writeLong(commerceRegionId);
+		objectOutput.writeLong(regionId);
 
-		objectOutput.writeLong(commerceCountryId);
+		objectOutput.writeLong(countryId);
 
 		objectOutput.writeDouble(latitude);
 
@@ -390,8 +390,8 @@ public class CommerceAddressCacheModel
 	public String street3;
 	public String city;
 	public String zip;
-	public long commerceRegionId;
-	public long commerceCountryId;
+	public long regionId;
+	public long countryId;
 	public double latitude;
 	public double longitude;
 	public String phoneNumber;

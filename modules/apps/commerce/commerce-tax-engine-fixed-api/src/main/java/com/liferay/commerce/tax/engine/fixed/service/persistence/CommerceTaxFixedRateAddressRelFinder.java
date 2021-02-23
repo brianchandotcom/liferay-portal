@@ -25,33 +25,32 @@ public interface CommerceTaxFixedRateAddressRelFinder {
 
 	public
 		com.liferay.commerce.tax.engine.fixed.model.
-			CommerceTaxFixedRateAddressRel fetchByC_C_C_C_Z_First(
-				long commerceTaxMethodId, long cpTaxCategoryId,
-				long commerceCountryId, long commerceRegionId, String zip);
+			CommerceTaxFixedRateAddressRel fetchByC_C_C_R_Z_First(
+				long commerceTaxMethodId, long cpTaxCategoryId, long countryId,
+				long regionId, String zip);
 
 	public
 		com.liferay.commerce.tax.engine.fixed.model.
-			CommerceTaxFixedRateAddressRel fetchByC_C_C_Z_First(
-				long commerceTaxMethodId, long commerceCountryId,
-				long commerceRegionId, String zip);
+			CommerceTaxFixedRateAddressRel fetchByC_C_R_Z_First(
+				long commerceTaxMethodId, long countryId, long regionId,
+				String zip);
 
 	public java.util.List
 		<com.liferay.commerce.tax.engine.fixed.model.
-			CommerceTaxFixedRateAddressRel> findByC_C_C_Z(
-				long commerceTaxMethodId, long commerceCountryId,
-				long commerceRegionId, String zip);
+			CommerceTaxFixedRateAddressRel> findByC_C_R_Z(
+				long commerceTaxMethodId, long countryId, long regionId,
+				String zip);
 
 	public java.util.List
 		<com.liferay.commerce.tax.engine.fixed.model.
-			CommerceTaxFixedRateAddressRel> findByC_C_C_Z(
-				long commerceTaxMethodId, long commerceCountryId,
-				long commerceRegionId, String zip, int start, int end);
+			CommerceTaxFixedRateAddressRel> findByC_C_R_Z(
+				long commerceTaxMethodId, long countryId, long regionId,
+				String zip, int start, int end);
 
 	public java.util.List
 		<com.liferay.commerce.tax.engine.fixed.model.
-			CommerceTaxFixedRateAddressRel> findByC_C_C_C_Z(
-				long commerceTaxMethodId, long cpTaxCategoryId,
-				long commerceCountryId, long commerceRegionId, String zip,
-				int start, int end);
+			CommerceTaxFixedRateAddressRel> findByC_C_C_R_Z(
+				long commerceTaxMethodId, long cpTaxCategoryId, long countryId,
+				long regionId, String zip, int start, int end);
 
 }

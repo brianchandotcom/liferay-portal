@@ -41,14 +41,13 @@ public class CommerceShipmentLocalServiceUtil {
 			addCommerceDeliverySubscriptionShipment(
 				long userId, long commerceOrderId, String name,
 				String description, String street1, String street2,
-				String street3, String city, String zip, long commerceRegionId,
-				long commerceCountryId, String phoneNumber)
+				String street3, String city, String zip, long regionId,
+				long countryId, String phoneNumber)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addCommerceDeliverySubscriptionShipment(
 			userId, commerceOrderId, name, description, street1, street2,
-			street3, city, zip, commerceRegionId, commerceCountryId,
-			phoneNumber);
+			street3, city, zip, regionId, countryId, phoneNumber);
 	}
 
 	/**
@@ -452,13 +451,12 @@ public class CommerceShipmentLocalServiceUtil {
 	public static com.liferay.commerce.model.CommerceShipment updateAddress(
 			long commerceShipmentId, String name, String description,
 			String street1, String street2, String street3, String city,
-			String zip, long commerceRegionId, long commerceCountryId,
-			String phoneNumber)
+			String zip, long regionId, long countryId, String phoneNumber)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateAddress(
 			commerceShipmentId, name, description, street1, street2, street3,
-			city, zip, commerceRegionId, commerceCountryId, phoneNumber);
+			city, zip, regionId, countryId, phoneNumber);
 	}
 
 	public static com.liferay.commerce.model.CommerceShipment
@@ -509,9 +507,9 @@ public class CommerceShipmentLocalServiceUtil {
 			updateCommerceShipment(
 				long commerceShipmentId, String name, String description,
 				String street1, String street2, String street3, String city,
-				String zip, long commerceRegionId, long commerceCountryId,
-				String phoneNumber, String carrier, String trackingNumber,
-				int status, int shippingDateMonth, int shippingDateDay,
+				String zip, long regionId, long countryId, String phoneNumber,
+				String carrier, String trackingNumber, int status,
+				int shippingDateMonth, int shippingDateDay,
 				int shippingDateYear, int shippingDateHour,
 				int shippingDateMinute, int expectedDateMonth,
 				int expectedDateDay, int expectedDateYear, int expectedDateHour,
@@ -520,8 +518,8 @@ public class CommerceShipmentLocalServiceUtil {
 
 		return getService().updateCommerceShipment(
 			commerceShipmentId, name, description, street1, street2, street3,
-			city, zip, commerceRegionId, commerceCountryId, phoneNumber,
-			carrier, trackingNumber, status, shippingDateMonth, shippingDateDay,
+			city, zip, regionId, countryId, phoneNumber, carrier,
+			trackingNumber, status, shippingDateMonth, shippingDateDay,
 			shippingDateYear, shippingDateHour, shippingDateMinute,
 			expectedDateMonth, expectedDateDay, expectedDateYear,
 			expectedDateHour, expectedDateMinute);

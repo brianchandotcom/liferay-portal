@@ -122,7 +122,7 @@ public class CommercePaymentRestrictionsPageClayTable
 					country.getCountryId(),
 					country.getName(themeDisplay.getLocale()),
 					_getFields(
-						country.getCountryId(), commercePaymentMethodGroupRels,
+						commercePaymentMethodGroupRels, country.getCountryId(),
 						themeDisplay.getLanguageId())));
 		}
 
@@ -143,9 +143,8 @@ public class CommercePaymentRestrictionsPageClayTable
 	}
 
 	private List<RestrictionField> _getFields(
-		long commerceCountryId,
 		List<CommercePaymentMethodGroupRel> commercePaymentMethodGroupRels,
-		String languageId) {
+		long countryId, String languageId) {
 
 		List<RestrictionField> restrictionFields = new ArrayList<>();
 
@@ -163,7 +162,7 @@ public class CommercePaymentRestrictionsPageClayTable
 							CommercePaymentMethodGroupRel.class.getName(),
 							commercePaymentMethodGroupRel.
 								getCommercePaymentMethodGroupRelId(),
-							commerceCountryId)));
+							countryId)));
 		}
 
 		return restrictionFields;

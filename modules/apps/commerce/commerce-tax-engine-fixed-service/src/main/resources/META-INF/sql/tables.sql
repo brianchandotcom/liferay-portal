@@ -21,8 +21,8 @@ create table CommerceTaxFixedRateAddressRel (
 	modifiedDate DATE null,
 	commerceTaxMethodId LONG,
 	CPTaxCategoryId LONG,
-	commerceCountryId LONG,
-	commerceRegionId LONG,
+	countryId LONG,
+	regionId LONG,
 	zip VARCHAR(75) null,
 	rate DOUBLE
 );

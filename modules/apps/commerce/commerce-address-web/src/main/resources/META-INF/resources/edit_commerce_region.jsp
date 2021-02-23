@@ -40,8 +40,8 @@ else {
 <aui:form action="<%= editCommerceRegionActionURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveCommerceRegion();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (region == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="commerceCountryId" type="hidden" value="<%= String.valueOf(countryId) %>" />
-	<aui:input name="commerceRegionId" type="hidden" value="<%= String.valueOf(regionId) %>" />
+	<aui:input name="countryId" type="hidden" value="<%= String.valueOf(countryId) %>" />
+	<aui:input name="regionId" type="hidden" value="<%= String.valueOf(regionId) %>" />
 
 	<div class="lfr-form-content">
 		<liferay-ui:error exception="<%= RegionNameException.class %>" message="please-enter-a-valid-name" />

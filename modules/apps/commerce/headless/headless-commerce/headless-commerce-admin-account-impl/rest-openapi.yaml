@@ -148,6 +148,16 @@ components:
                     format: date-time
                     readOnly: true
                     type: string
+                defaultBillingAddressId:
+                    example: 10130
+                    format: int64
+                    minimum: 0
+                    type: integer
+                defaultShippingAddressId:
+                    example: 10131
+                    format: int64
+                    minimum: 0
+                    type: integer
                 emailAddresses:
                     example:
                         - joe.1@commerce.com

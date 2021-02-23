@@ -26,15 +26,15 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 
-import org.apache.log4j.Appender;
 import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
-import org.apache.log4j.varia.NullAppender;
+import org.apache.log4j.WriterAppender;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.Appender;
+import org.apache.logging.log4j.core.Logger;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -56,7 +56,7 @@ public class Log4jConfigUtilTest {
 	public void testConfigureLog4J() {
 		String loggerName = StringUtil.randomString();
 
-		Logger logger = Logger.getLogger(loggerName);
+		Logger logger = (Logger)LogManager.getLogger(loggerName);
 
 		Map<String, String> priorities = Log4jConfigUtil.configureLog4J(
 			_generateXMLConfigurationContent(loggerName, _ALL));
@@ -104,7 +104,7 @@ public class Log4jConfigUtilTest {
 		Log4jConfigUtil.configureLog4J(
 			_generateXMLConfigurationContent(loggerName, "FAKE_LEVEL"));
 
-		_assertPriority(logger, _DEBUG);
+		_assertPriority(logger, _ERROR);
 	}
 
 	@Test
@@ -114,41 +114,93 @@ public class Log4jConfigUtilTest {
 		Log4jConfigUtil.configureLog4J(
 			_generateXMLConfigurationContent(loggerName, _ERROR));
 
-		Logger logger = Logger.getLogger(loggerName);
+		Logger logger = (Logger)LogManager.getLogger(loggerName);
 
 		_assertAppenders(logger);
 
 		Log4jConfigUtil.configureLog4J(
+			_generateXMLConfigurationContent(loggerName, _ERROR, _CONSOLE));
+
+		_assertAppenders(logger, _CONSOLE);
+
+		Log4jConfigUtil.configureLog4J(
+			_generateXMLConfigurationContent(loggerName, _ERROR, _NULL));
+
+		_assertAppenders(logger, _CONSOLE, _NULL);
+
+		Log4jConfigUtil.configureLog4J(
+			_generateXMLConfigurationContent(loggerName, _ERROR, _CONSOLE));
+
+		_assertAppenders(logger, _CONSOLE, _NULL);
+
+		Log4jConfigUtil.configureLog4J(
 			_generateXMLConfigurationContent(
+				loggerName, _ERROR, _CONSOLE, _NULL));
+
+		_assertAppenders(logger, _CONSOLE, _NULL);
+
+		Log4jConfigUtil.configureLog4J(
+			_generateXMLConfigurationContent(
+				loggerName, _ERROR, _CONSOLE, _NULL),
+			_NULL);
+
+		_assertAppenders(logger, _CONSOLE, _NULL);
+	}
+
+	@Test
+	public void testConfigureLog4JWithCompatibility() {
+		String loggerName = StringUtil.randomString();
+
+		Logger logger = (Logger)LogManager.getLogger(loggerName);
+
+		Log4jConfigUtil.configureLog4J(
+			_generateLog4j1XMLConfigurationContent(loggerName, _DEBUG));
+
+		_assertPriority(logger, _DEBUG);
+
+		Log4jConfigUtil.configureLog4J(
+			_generateLog4j1XMLConfigurationContent(loggerName, _ERROR));
+
+		_assertPriority(logger, _ERROR);
+
+		Log4jConfigUtil.configureLog4J(
+			_generateLog4j1XMLConfigurationContent(
 				loggerName, _ERROR, ConsoleAppender.class));
 
-		_assertAppenders(logger, ConsoleAppender.class);
+		_assertAppenders(logger, ConsoleAppender.class.getName());
 
 		Log4jConfigUtil.configureLog4J(
-			_generateXMLConfigurationContent(
-				loggerName, _ERROR, NullAppender.class));
+			_generateLog4j1XMLConfigurationContent(
+				loggerName, _ERROR, WriterAppender.class));
 
-		_assertAppenders(logger, NullAppender.class);
-
-		Log4jConfigUtil.configureLog4J(
-			_generateXMLConfigurationContent(
-				loggerName, _ERROR, ConsoleAppender.class, NullAppender.class));
-
-		_assertAppenders(logger, ConsoleAppender.class, NullAppender.class);
+		_assertAppenders(
+			logger, ConsoleAppender.class.getName(),
+			WriterAppender.class.getName());
 
 		Log4jConfigUtil.configureLog4J(
-			_generateXMLConfigurationContent(
-				loggerName, _ERROR, ConsoleAppender.class, NullAppender.class),
-			NullAppender.class.getName());
+			_generateLog4j1XMLConfigurationContent(
+				loggerName, _ERROR, ConsoleAppender.class,
+				WriterAppender.class));
 
-		_assertAppenders(logger, ConsoleAppender.class);
+		_assertAppenders(
+			logger, ConsoleAppender.class.getName(),
+			WriterAppender.class.getName());
+
+		Log4jConfigUtil.configureLog4J(
+			_generateLog4j1XMLConfigurationContent(
+				loggerName, _ERROR, ConsoleAppender.class,
+				WriterAppender.class),
+			ConsoleAppender.class.getName());
+
+		_assertAppenders(
+			logger, ConsoleAppender.class.getName(),
+			WriterAppender.class.getName());
 	}
 
 	@Test
 	public void testConfigureLog4JWithException() {
 		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
-				Log4jConfigUtil.class.getName(),
-				java.util.logging.Level.SEVERE)) {
+				Log4jConfigUtil.class.getName(), Level.SEVERE)) {
 
 			Log4jConfigUtil.configureLog4J(null);
 
@@ -160,6 +212,23 @@ public class Log4jConfigUtilTest {
 
 			Assert.assertEquals(
 				"java.lang.NullPointerException", logEntry.getMessage());
+
+			String xmlContent = _generateXMLConfigurationContent(
+				StringUtil.randomString(), _INFO);
+
+			xmlContent = StringUtil.removeSubstring(
+				xmlContent, "strict=\"true\"");
+
+			Log4jConfigUtil.configureLog4J(xmlContent);
+
+			Assert.assertEquals(logEntries.toString(), 2, logEntries.size());
+
+			logEntry = logEntries.get(1);
+
+			Assert.assertEquals(
+				"java.lang.Exception: <Configuration> strict attribute " +
+					"requires true",
+				logEntry.getMessage());
 		}
 	}
 
@@ -184,12 +253,12 @@ public class Log4jConfigUtilTest {
 		Assert.assertFalse(priorities.containsKey(loggerName));
 
 		Log4jConfigUtil.configureLog4J(
-			_generateXMLConfigurationContent(loggerName, _ERROR));
+			_generateXMLConfigurationContent(loggerName, _WARN));
 
 		priorities = Log4jConfigUtil.getPriorities();
 
 		Assert.assertEquals(
-			"The priority should be ERROR by configuration", _ERROR,
+			"The priority should be WARN by configuration", _WARN,
 			priorities.get(loggerName));
 
 		Log4jConfigUtil.configureLog4J(
@@ -197,7 +266,9 @@ public class Log4jConfigUtilTest {
 
 		priorities = Log4jConfigUtil.getPriorities();
 
-		Assert.assertFalse(priorities.containsKey(loggerName));
+		Assert.assertEquals(
+			"The level should use its parent level(root logger level is Error)",
+			_ERROR, priorities.get(loggerName));
 	}
 
 	@Test
@@ -209,15 +280,15 @@ public class Log4jConfigUtilTest {
 	public void testSetLevel() {
 		String loggerName = StringUtil.randomString();
 
-		Logger logger = Logger.getLogger(loggerName);
+		Logger logger = (Logger)LogManager.getLogger(loggerName);
 
-		_assertPriority(logger, _INFO);
+		_assertPriority(logger, _ERROR);
 
 		String childLoggerName = loggerName + ".child";
 
-		Logger childLogger = Logger.getLogger(childLoggerName);
+		Logger childLogger = (Logger)LogManager.getLogger(childLoggerName);
 
-		_assertPriority(childLogger, _INFO);
+		_assertPriority(childLogger, _ERROR);
 
 		Log4jConfigUtil.configureLog4J(
 			_generateXMLConfigurationContent(loggerName, _WARN));
@@ -239,38 +310,35 @@ public class Log4jConfigUtilTest {
 	@NewEnv(type = NewEnv.Type.JVM)
 	@Test
 	public void testShutdownLog4J() {
-		Logger logger = Logger.getRootLogger();
+		Logger logger = (Logger)LogManager.getRootLogger();
 
-		Enumeration<Appender> appendersEnumeration = logger.getAllAppenders();
+		Map<String, Appender> appenders = logger.getAppenders();
 
 		Assert.assertTrue(
-			"The root logger should include appenders",
-			appendersEnumeration.hasMoreElements());
+			"The root logger should include appenders", !appenders.isEmpty());
 
 		Log4jConfigUtil.shutdownLog4J();
 
 		Assert.assertFalse(
 			"The root logger should not own appenders after shutting down",
-			appendersEnumeration.hasMoreElements());
+			appenders.isEmpty());
 	}
 
-	private void _assertAppenders(Logger logger, Class<?>... appenderTypes) {
-		Enumeration<Appender> enumeration = logger.getAllAppenders();
+	private void _assertAppenders(Logger logger, String... appenderTypes) {
+		Map<String, Appender> appenders = logger.getAppenders();
 
 		List<String> targetAppenderNames = new ArrayList<>();
 
-		while (enumeration.hasMoreElements()) {
-			Appender appender = enumeration.nextElement();
-
-			targetAppenderNames.add(appender.getName());
+		for (String appenderName : appenders.keySet()) {
+			targetAppenderNames.add(appenderName);
 		}
 
 		Assert.assertEquals(targetAppenderNames.size(), appenderTypes.length);
 
-		for (Class<?> appenderType : appenderTypes) {
+		for (String appenderType : appenderTypes) {
 			Assert.assertTrue(
-				"Missing appender " + appenderType.getName(),
-				targetAppenderNames.contains(appenderType.getName()));
+				"Missing appender " + appenderType,
+				targetAppenderNames.contains(appenderType));
 		}
 	}
 
@@ -292,13 +360,13 @@ public class Log4jConfigUtilTest {
 		else if (logger.isInfoEnabled()) {
 			Assert.assertEquals("Logging priority is wrong", priority, _INFO);
 		}
-		else if (logger.isEnabledFor(Level.WARN)) {
+		else if (logger.isWarnEnabled()) {
 			Assert.assertEquals("Logging priority is wrong", priority, _WARN);
 		}
-		else if (logger.isEnabledFor(Level.ERROR)) {
+		else if (logger.isErrorEnabled()) {
 			Assert.assertEquals("Logging priority is wrong", priority, _ERROR);
 		}
-		else if (logger.isEnabledFor(Level.FATAL)) {
+		else if (logger.isFatalEnabled()) {
 			Assert.assertEquals("Logging priority is wrong", priority, _FATAL);
 		}
 		else {
@@ -306,7 +374,7 @@ public class Log4jConfigUtilTest {
 		}
 	}
 
-	private String _generateXMLConfigurationContent(
+	private String _generateLog4j1XMLConfigurationContent(
 		String loggerName, String priority, Class<?>... appenderTypes) {
 
 		StringBundler sb = new StringBundler(10 + (8 * appenderTypes.length));
@@ -341,7 +409,50 @@ public class Log4jConfigUtilTest {
 		return sb.toString();
 	}
 
+	private String _generateXMLConfigurationContent(
+		String loggerName, String priority, String... appenderTypes) {
+
+		int initialCapacity =
+			(appenderTypes.length == 0) ? 7 : (9 + (8 * appenderTypes.length));
+
+		StringBundler sb = new StringBundler(initialCapacity);
+
+		sb.append("<?xml version=\"1.0\"?><Configuration strict=\"true\">");
+
+		if (appenderTypes.length > 0) {
+			sb.append("<Appenders>");
+
+			for (String appenderType : appenderTypes) {
+				sb.append("<Appender name=\"");
+				sb.append(appenderType);
+				sb.append("\" type=\"");
+				sb.append(appenderType);
+				sb.append("\"></Appender>");
+			}
+
+			sb.append("</Appenders>");
+		}
+
+		sb.append("<Loggers><Logger level= \"");
+		sb.append(priority);
+		sb.append("\" name=\"");
+		sb.append(loggerName);
+		sb.append("\">");
+
+		for (String appenderType : appenderTypes) {
+			sb.append("<AppenderRef ref=\"");
+			sb.append(appenderType);
+			sb.append("\" />");
+		}
+
+		sb.append("</Logger></Loggers></Configuration>");
+
+		return sb.toString();
+	}
+
 	private static final String _ALL = "ALL";
+
+	private static final String _CONSOLE = "CONSOLE";
 
 	private static final String _DEBUG = "DEBUG";
 
@@ -350,6 +461,8 @@ public class Log4jConfigUtilTest {
 	private static final String _FATAL = "FATAL";
 
 	private static final String _INFO = "INFO";
+
+	private static final String _NULL = "NULL";
 
 	private static final String _OFF = "OFF";
 

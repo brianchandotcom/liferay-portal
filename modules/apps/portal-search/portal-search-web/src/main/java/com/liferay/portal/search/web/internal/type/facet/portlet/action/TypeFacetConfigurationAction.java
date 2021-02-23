@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.asset.SearchableAssetClassNamesProvider;
 import com.liferay.portal.search.web.internal.facet.display.builder.AssetEntriesSearchFacetDisplayBuilder;
 import com.liferay.portal.search.web.internal.type.facet.constants.TypeFacetPortletKeys;
 
@@ -29,6 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Lino Alves
@@ -63,6 +65,10 @@ public class TypeFacetConfigurationAction extends DefaultConfigurationAction {
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			assetEntriesSearchFacetDisplayBuilder.build());
 
+		httpServletRequest.setAttribute(
+			SearchableAssetClassNamesProvider.class.getName(),
+			searchableAssetClassNamesProvider);
+
 		super.include(portletConfig, httpServletRequest, httpServletResponse);
 	}
 
@@ -77,5 +83,9 @@ public class TypeFacetConfigurationAction extends DefaultConfigurationAction {
 			throw new RuntimeException(configurationException);
 		}
 	}
+
+	@Reference
+	protected SearchableAssetClassNamesProvider
+		searchableAssetClassNamesProvider;
 
 }

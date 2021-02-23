@@ -4448,6 +4448,10 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 						</then>
 					</if>
 
+					<get-testcase-property property.name="deploy.license.osgi.directory" />
+
+					<antcall target="deploy-license-xml-to-osgi-directory" />
+
 					<get-testcase-property property.name="portal.version" />
 
 					<if>
@@ -7258,6 +7262,29 @@ virtualHostname="localhost"
 					dest="${liferay.home}/deploy/license.xml"
 					src="${test.build.license.xml.zip.url}"
 				/>
+			</then>
+		</if>
+	</target>
+
+	<target name="deploy-license-xml-to-osgi-directory">
+		<get-testcase-property property.name="deploy.license.osgi.directory" />
+
+		<if>
+			<equals arg1="${deploy.license.osgi.directory}" arg2="true" />
+			<then>
+				<copy
+					file="${liferay.home}/deploy/portal-commerce-license.xml"
+					todir="${liferay.home}/osgi/modules"
+				/>
+
+				<copy
+					file="${liferay.home}/deploy/license.xml"
+					todir="${liferay.home}/osgi/modules"
+				/>
+
+				<delete failonerror="false" file="${liferay.home}/deploy/portal-commerce-license.xml" verbose="true" />
+
+				<delete failonerror="false" file="${liferay.home}/deploy/license.xml" verbose="true" />
 			</then>
 		</if>
 	</target>

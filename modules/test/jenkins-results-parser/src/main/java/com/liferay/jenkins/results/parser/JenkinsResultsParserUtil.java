@@ -1094,6 +1094,25 @@ public class JenkinsResultsParserUtil {
 		return matcher.group("cohortName");
 	}
 
+	public static long getCurrentTimeMillis() {
+		if (_currentTimeMillisDelta == null) {
+			if (!isCINode()) {
+				_currentTimeMillisDelta = 0L;
+			}
+			else {
+				long remoteCurrentTimeSeconds = getRemoteCurrentTimeSeconds(
+					getJenkinsMasterName(getHostName(null)));
+
+				long remoteCurrentTimeMillis = remoteCurrentTimeSeconds * 1000;
+
+				_currentTimeMillisDelta =
+					System.currentTimeMillis() - remoteCurrentTimeMillis;
+			}
+		}
+
+		return System.currentTimeMillis() - _currentTimeMillisDelta;
+	}
+
 	public static List<File> getDirectoriesContainingFiles(
 		List<File> directories, List<File> files) {
 
@@ -4169,6 +4188,7 @@ public class JenkinsResultsParserUtil {
 	private static String[] _buildPropertiesURLs;
 	private static final Pattern _curlyBraceExpansionPattern = Pattern.compile(
 		"\\{.*?\\}");
+	private static Long _currentTimeMillisDelta;
 	private static final DateFormat _gitHubDateFormat = new SimpleDateFormat(
 		"yyyy-MM-dd'T'HH:mm:ss");
 	private static final Pattern _javaVersionPattern = Pattern.compile(

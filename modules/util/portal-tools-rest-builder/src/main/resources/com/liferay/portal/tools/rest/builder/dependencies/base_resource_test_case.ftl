@@ -66,8 +66,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
-import com.liferay.portal.test.log.CaptureAppender;
-import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -98,7 +96,6 @@ import javax.ws.rs.core.MultivaluedHashMap;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.lang.time.DateUtils;
-import org.apache.log4j.Level;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -1309,32 +1306,30 @@ public abstract class Base${schemaName}ResourceTestCase {
 							"Object/delete${schemaName}"));
 
 					<#if freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "get" + javaMethodSignature.methodName?remove_beginning("delete"))>
-						try (CaptureAppender captureAppender = Log4JLoggerTestUtil.configureLog4JLogger("graphql.execution.SimpleDataFetcherExceptionHandler", Level.WARN)) {
-							JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
-								invokeGraphQLQuery(
-									new GraphQLField(
-										"${schemaName?uncap_first}",
-										new HashMap<String, Object>() {
-											{
-												put(
-													<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
-														<#if stringUtil.equals(javaMethodParameter.parameterName, "id") || stringUtil.equals(javaMethodParameter.parameterName, "${schemaVarName}Id")>
-															"${javaMethodParameter.parameterName}",
-															<#if stringUtil.equals(properties.id, "String")>
-																"\"" + ${schemaVarName}.getId() + "\""
-															<#else>
-																${schemaVarName}.getId()
-															</#if>
+						JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+							invokeGraphQLQuery(
+								new GraphQLField(
+									"${schemaName?uncap_first}",
+									new HashMap<String, Object>() {
+										{
+											put(
+												<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
+													<#if stringUtil.equals(javaMethodParameter.parameterName, "id") || stringUtil.equals(javaMethodParameter.parameterName, "${schemaVarName}Id")>
+														"${javaMethodParameter.parameterName}",
+														<#if stringUtil.equals(properties.id, "String")>
+															"\"" + ${schemaVarName}.getId() + "\""
+														<#else>
+															${schemaVarName}.getId()
 														</#if>
-													</#list>
-												);
-											}
-										},
-										new GraphQLField("id"))),
-								"JSONArray/errors");
+													</#if>
+												</#list>
+											);
+										}
+									},
+									new GraphQLField("id"))),
+							"JSONArray/errors");
 
-							Assert.assertTrue(errorsJSONArray.length() > 0);
-						}
+						Assert.assertTrue(errorsJSONArray.length() > 0);
 					</#if>
 				</#if>
 			}

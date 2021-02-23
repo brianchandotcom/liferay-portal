@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -44,6 +46,7 @@ public class SiteNavigationMenuWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("uuid", getUuid());
 		attributes.put("siteNavigationMenuId", getSiteNavigationMenuId());
 		attributes.put("groupId", getGroupId());
@@ -66,6 +69,12 @@ public class SiteNavigationMenuWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
+		}
+
+		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
+
+		if (ctCollectionId != null) {
+			setCtCollectionId(ctCollectionId);
 		}
 
 		String uuid = (String)attributes.get("uuid");
@@ -170,6 +179,16 @@ public class SiteNavigationMenuWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	/**
+	 * Returns the ct collection ID of this site navigation menu.
+	 *
+	 * @return the ct collection ID of this site navigation menu
+	 */
+	@Override
+	public long getCtCollectionId() {
+		return model.getCtCollectionId();
 	}
 
 	/**
@@ -348,6 +367,16 @@ public class SiteNavigationMenuWrapper
 	}
 
 	/**
+	 * Sets the ct collection ID of this site navigation menu.
+	 *
+	 * @param ctCollectionId the ct collection ID of this site navigation menu
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
 	 * Sets the group ID of this site navigation menu.
 	 *
 	 * @param groupId the group ID of this site navigation menu
@@ -465,6 +494,20 @@ public class SiteNavigationMenuWrapper
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
+	}
+
+	@Override
+	public Map<String, Function<SiteNavigationMenu, Object>>
+		getAttributeGetterFunctions() {
+
+		return model.getAttributeGetterFunctions();
+	}
+
+	@Override
+	public Map<String, BiConsumer<SiteNavigationMenu, Object>>
+		getAttributeSetterBiConsumers() {
+
+		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

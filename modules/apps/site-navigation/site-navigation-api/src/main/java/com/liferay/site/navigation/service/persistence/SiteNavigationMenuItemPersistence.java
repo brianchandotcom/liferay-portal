@@ -15,6 +15,7 @@
 package com.liferay.site.navigation.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.site.navigation.exception.NoSuchMenuItemException;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 
@@ -33,7 +34,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface SiteNavigationMenuItemPersistence
-	extends BasePersistence<SiteNavigationMenuItem> {
+	extends BasePersistence<SiteNavigationMenuItem>,
+			CTPersistence<SiteNavigationMenuItem> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

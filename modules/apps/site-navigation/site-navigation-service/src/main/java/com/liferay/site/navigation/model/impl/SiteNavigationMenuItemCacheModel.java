@@ -78,10 +78,12 @@ public class SiteNavigationMenuItemCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", siteNavigationMenuItemId=");
@@ -123,6 +125,7 @@ public class SiteNavigationMenuItemCacheModel
 			new SiteNavigationMenuItemImpl();
 
 		siteNavigationMenuItemImpl.setMvccVersion(mvccVersion);
+		siteNavigationMenuItemImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			siteNavigationMenuItemImpl.setUuid("");
@@ -204,6 +207,8 @@ public class SiteNavigationMenuItemCacheModel
 		throws ClassNotFoundException, IOException {
 
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		siteNavigationMenuItemId = objectInput.readLong();
@@ -231,6 +236,8 @@ public class SiteNavigationMenuItemCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -287,6 +294,7 @@ public class SiteNavigationMenuItemCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public long siteNavigationMenuItemId;
 	public long groupId;

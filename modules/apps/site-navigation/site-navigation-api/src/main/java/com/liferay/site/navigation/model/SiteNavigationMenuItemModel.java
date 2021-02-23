@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -37,8 +38,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface SiteNavigationMenuItemModel
-	extends BaseModel<SiteNavigationMenuItem>, MVCCModel, ShardedModel,
-			StagedGroupedModel {
+	extends BaseModel<SiteNavigationMenuItem>, CTModel<SiteNavigationMenuItem>,
+			MVCCModel, ShardedModel, StagedGroupedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -51,6 +52,7 @@ public interface SiteNavigationMenuItemModel
 	 *
 	 * @return the primary key of this site navigation menu item
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -58,6 +60,7 @@ public interface SiteNavigationMenuItemModel
 	 *
 	 * @param primaryKey the primary key of this site navigation menu item
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -75,6 +78,22 @@ public interface SiteNavigationMenuItemModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this site navigation menu item.
+	 *
+	 * @return the ct collection ID of this site navigation menu item
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this site navigation menu item.
+	 *
+	 * @param ctCollectionId the ct collection ID of this site navigation menu item
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this site navigation menu item.

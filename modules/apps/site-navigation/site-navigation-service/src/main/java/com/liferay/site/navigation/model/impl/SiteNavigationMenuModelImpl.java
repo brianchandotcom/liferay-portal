@@ -75,13 +75,13 @@ public class SiteNavigationMenuModelImpl
 	public static final String TABLE_NAME = "SiteNavigationMenu";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"siteNavigationMenuId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"name", Types.VARCHAR},
-		{"type_", Types.INTEGER}, {"auto_", Types.BOOLEAN},
-		{"lastPublishDate", Types.TIMESTAMP}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"siteNavigationMenuId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"name", Types.VARCHAR}, {"type_", Types.INTEGER},
+		{"auto_", Types.BOOLEAN}, {"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -89,6 +89,7 @@ public class SiteNavigationMenuModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("siteNavigationMenuId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -104,7 +105,7 @@ public class SiteNavigationMenuModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SiteNavigationMenu (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,siteNavigationMenuId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,type_ INTEGER,auto_ BOOLEAN,lastPublishDate DATE null)";
+		"create table SiteNavigationMenu (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,siteNavigationMenuId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,type_ INTEGER,auto_ BOOLEAN,lastPublishDate DATE null,primary key (siteNavigationMenuId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table SiteNavigationMenu";
 
@@ -193,6 +194,7 @@ public class SiteNavigationMenuModelImpl
 		SiteNavigationMenu model = new SiteNavigationMenuImpl();
 
 		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setCtCollectionId(soapModel.getCtCollectionId());
 		model.setUuid(soapModel.getUuid());
 		model.setSiteNavigationMenuId(soapModel.getSiteNavigationMenuId());
 		model.setGroupId(soapModel.getGroupId());
@@ -367,6 +369,12 @@ public class SiteNavigationMenuModelImpl
 			"mvccVersion",
 			(BiConsumer<SiteNavigationMenu, Long>)
 				SiteNavigationMenu::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", SiteNavigationMenu::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<SiteNavigationMenu, Long>)
+				SiteNavigationMenu::setCtCollectionId);
 		attributeGetterFunctions.put("uuid", SiteNavigationMenu::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -454,6 +462,21 @@ public class SiteNavigationMenuModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -799,6 +822,7 @@ public class SiteNavigationMenuModelImpl
 			new SiteNavigationMenuImpl();
 
 		siteNavigationMenuImpl.setMvccVersion(getMvccVersion());
+		siteNavigationMenuImpl.setCtCollectionId(getCtCollectionId());
 		siteNavigationMenuImpl.setUuid(getUuid());
 		siteNavigationMenuImpl.setSiteNavigationMenuId(
 			getSiteNavigationMenuId());
@@ -893,6 +917,8 @@ public class SiteNavigationMenuModelImpl
 			new SiteNavigationMenuCacheModel();
 
 		siteNavigationMenuCacheModel.mvccVersion = getMvccVersion();
+
+		siteNavigationMenuCacheModel.ctCollectionId = getCtCollectionId();
 
 		siteNavigationMenuCacheModel.uuid = getUuid();
 
@@ -1033,6 +1059,7 @@ public class SiteNavigationMenuModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _uuid;
 	private long _siteNavigationMenuId;
 	private long _groupId;
@@ -1077,6 +1104,7 @@ public class SiteNavigationMenuModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put(
 			"siteNavigationMenuId", _siteNavigationMenuId);
@@ -1117,29 +1145,31 @@ public class SiteNavigationMenuModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("uuid_", 2L);
+		columnBitmasks.put("ctCollectionId", 2L);
 
-		columnBitmasks.put("siteNavigationMenuId", 4L);
+		columnBitmasks.put("uuid_", 4L);
 
-		columnBitmasks.put("groupId", 8L);
+		columnBitmasks.put("siteNavigationMenuId", 8L);
 
-		columnBitmasks.put("companyId", 16L);
+		columnBitmasks.put("groupId", 16L);
 
-		columnBitmasks.put("userId", 32L);
+		columnBitmasks.put("companyId", 32L);
 
-		columnBitmasks.put("userName", 64L);
+		columnBitmasks.put("userId", 64L);
 
-		columnBitmasks.put("createDate", 128L);
+		columnBitmasks.put("userName", 128L);
 
-		columnBitmasks.put("modifiedDate", 256L);
+		columnBitmasks.put("createDate", 256L);
 
-		columnBitmasks.put("name", 512L);
+		columnBitmasks.put("modifiedDate", 512L);
 
-		columnBitmasks.put("type_", 1024L);
+		columnBitmasks.put("name", 1024L);
 
-		columnBitmasks.put("auto_", 2048L);
+		columnBitmasks.put("type_", 2048L);
 
-		columnBitmasks.put("lastPublishDate", 4096L);
+		columnBitmasks.put("auto_", 4096L);
+
+		columnBitmasks.put("lastPublishDate", 8192L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

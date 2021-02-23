@@ -130,6 +130,8 @@ public class SiteNavigationMenuItemPersistenceTest {
 
 		newSiteNavigationMenuItem.setMvccVersion(RandomTestUtil.nextLong());
 
+		newSiteNavigationMenuItem.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newSiteNavigationMenuItem.setUuid(RandomTestUtil.randomString());
 
 		newSiteNavigationMenuItem.setGroupId(RandomTestUtil.nextLong());
@@ -171,6 +173,9 @@ public class SiteNavigationMenuItemPersistenceTest {
 		Assert.assertEquals(
 			existingSiteNavigationMenuItem.getMvccVersion(),
 			newSiteNavigationMenuItem.getMvccVersion());
+		Assert.assertEquals(
+			existingSiteNavigationMenuItem.getCtCollectionId(),
+			newSiteNavigationMenuItem.getCtCollectionId());
 		Assert.assertEquals(
 			existingSiteNavigationMenuItem.getUuid(),
 			newSiteNavigationMenuItem.getUuid());
@@ -317,12 +322,12 @@ public class SiteNavigationMenuItemPersistenceTest {
 
 	protected OrderByComparator<SiteNavigationMenuItem> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"SiteNavigationMenuItem", "mvccVersion", true, "uuid", true,
-			"siteNavigationMenuItemId", true, "groupId", true, "companyId",
-			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "siteNavigationMenuId", true,
-			"parentSiteNavigationMenuItemId", true, "name", true, "type", true,
-			"order", true, "lastPublishDate", true);
+			"SiteNavigationMenuItem", "mvccVersion", true, "ctCollectionId",
+			true, "uuid", true, "siteNavigationMenuItemId", true, "groupId",
+			true, "companyId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "siteNavigationMenuId",
+			true, "parentSiteNavigationMenuItemId", true, "name", true, "type",
+			true, "order", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -638,6 +643,8 @@ public class SiteNavigationMenuItemPersistenceTest {
 		SiteNavigationMenuItem siteNavigationMenuItem = _persistence.create(pk);
 
 		siteNavigationMenuItem.setMvccVersion(RandomTestUtil.nextLong());
+
+		siteNavigationMenuItem.setCtCollectionId(RandomTestUtil.nextLong());
 
 		siteNavigationMenuItem.setUuid(RandomTestUtil.randomString());
 

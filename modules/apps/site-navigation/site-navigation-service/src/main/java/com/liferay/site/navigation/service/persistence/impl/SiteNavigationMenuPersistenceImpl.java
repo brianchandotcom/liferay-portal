@@ -15,6 +15,7 @@
 package com.liferay.site.navigation.service.persistence.impl;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -55,8 +57,13 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.EnumMap;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -183,25 +190,28 @@ public class SiteNavigationMenuPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			SiteNavigationMenu.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByUuid;
 				finderArgs = new Object[] {uuid};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByUuid;
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
 		List<SiteNavigationMenu> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<SiteNavigationMenu>)finderCache.getResult(
 				finderPath, finderArgs);
 
@@ -268,7 +278,7 @@ public class SiteNavigationMenuPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
@@ -587,11 +597,21 @@ public class SiteNavigationMenuPersistenceImpl
 	public int countByUuid(String uuid) {
 		uuid = Objects.toString(uuid, "");
 
-		FinderPath finderPath = _finderPathCountByUuid;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			SiteNavigationMenu.class);
 
-		Object[] finderArgs = new Object[] {uuid};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByUuid;
+
+			finderArgs = new Object[] {uuid};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -626,7 +646,9 @@ public class SiteNavigationMenuPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
 				throw processException(exception);
@@ -711,15 +733,18 @@ public class SiteNavigationMenuPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			SiteNavigationMenu.class);
+
 		Object[] finderArgs = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {uuid, groupId};
 		}
 
 		Object result = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
 				_finderPathFetchByUUID_G, finderArgs);
 		}
@@ -772,7 +797,7 @@ public class SiteNavigationMenuPersistenceImpl
 				List<SiteNavigationMenu> list = query.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
+					if (useFinderCache && productionMode) {
 						finderCache.putResult(
 							_finderPathFetchByUUID_G, finderArgs, list);
 					}
@@ -828,11 +853,21 @@ public class SiteNavigationMenuPersistenceImpl
 	public int countByUUID_G(String uuid, long groupId) {
 		uuid = Objects.toString(uuid, "");
 
-		FinderPath finderPath = _finderPathCountByUUID_G;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			SiteNavigationMenu.class);
 
-		Object[] finderArgs = new Object[] {uuid, groupId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByUUID_G;
+
+			finderArgs = new Object[] {uuid, groupId};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -871,7 +906,9 @@ public class SiteNavigationMenuPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
 				throw processException(exception);
@@ -976,18 +1013,21 @@ public class SiteNavigationMenuPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			SiteNavigationMenu.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByUuid_C;
 				finderArgs = new Object[] {uuid, companyId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
 				uuid, companyId, start, end, orderByComparator
@@ -996,7 +1036,7 @@ public class SiteNavigationMenuPersistenceImpl
 
 		List<SiteNavigationMenu> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<SiteNavigationMenu>)finderCache.getResult(
 				finderPath, finderArgs);
 
@@ -1069,7 +1109,7 @@ public class SiteNavigationMenuPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
@@ -1411,11 +1451,21 @@ public class SiteNavigationMenuPersistenceImpl
 	public int countByUuid_C(String uuid, long companyId) {
 		uuid = Objects.toString(uuid, "");
 
-		FinderPath finderPath = _finderPathCountByUuid_C;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			SiteNavigationMenu.class);
 
-		Object[] finderArgs = new Object[] {uuid, companyId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByUuid_C;
+
+			finderArgs = new Object[] {uuid, companyId};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1454,7 +1504,9 @@ public class SiteNavigationMenuPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
 				throw processException(exception);
@@ -1553,25 +1605,28 @@ public class SiteNavigationMenuPersistenceImpl
 		OrderByComparator<SiteNavigationMenu> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			SiteNavigationMenu.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByGroupId;
 				finderArgs = new Object[] {groupId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByGroupId;
 			finderArgs = new Object[] {groupId, start, end, orderByComparator};
 		}
 
 		List<SiteNavigationMenu> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<SiteNavigationMenu>)finderCache.getResult(
 				finderPath, finderArgs);
 
@@ -1627,7 +1682,7 @@ public class SiteNavigationMenuPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
@@ -2471,16 +2526,19 @@ public class SiteNavigationMenuPersistenceImpl
 			return findByGroupId(groupIds[0], start, end, orderByComparator);
 		}
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			SiteNavigationMenu.class);
+
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderArgs = new Object[] {StringUtil.merge(groupIds)};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {
 				StringUtil.merge(groupIds), start, end, orderByComparator
 			};
@@ -2488,7 +2546,7 @@ public class SiteNavigationMenuPersistenceImpl
 
 		List<SiteNavigationMenu> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<SiteNavigationMenu>)finderCache.getResult(
 				_finderPathWithPaginationFindByGroupId, finderArgs);
 
@@ -2547,7 +2605,7 @@ public class SiteNavigationMenuPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(
 						_finderPathWithPaginationFindByGroupId, finderArgs,
 						list);
@@ -2587,11 +2645,21 @@ public class SiteNavigationMenuPersistenceImpl
 	 */
 	@Override
 	public int countByGroupId(long groupId) {
-		FinderPath finderPath = _finderPathCountByGroupId;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			SiteNavigationMenu.class);
 
-		Object[] finderArgs = new Object[] {groupId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByGroupId;
+
+			finderArgs = new Object[] {groupId};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -2615,7 +2683,9 @@ public class SiteNavigationMenuPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
 				throw processException(exception);
@@ -2643,10 +2713,19 @@ public class SiteNavigationMenuPersistenceImpl
 			groupIds = ArrayUtil.sortedUnique(groupIds);
 		}
 
-		Object[] finderArgs = new Object[] {StringUtil.merge(groupIds)};
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			SiteNavigationMenu.class);
 
-		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByGroupId, finderArgs);
+		Object[] finderArgs = null;
+
+		Long count = null;
+
+		if (productionMode) {
+			finderArgs = new Object[] {StringUtil.merge(groupIds)};
+
+			count = (Long)finderCache.getResult(
+				_finderPathWithPaginationCountByGroupId, finderArgs);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler();
@@ -2679,8 +2758,11 @@ public class SiteNavigationMenuPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				finderCache.putResult(
-					_finderPathWithPaginationCountByGroupId, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(
+						_finderPathWithPaginationCountByGroupId, finderArgs,
+						count);
+				}
 			}
 			catch (Exception exception) {
 				throw processException(exception);
@@ -2887,18 +2969,21 @@ public class SiteNavigationMenuPersistenceImpl
 		OrderByComparator<SiteNavigationMenu> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			SiteNavigationMenu.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByCompanyId;
 				finderArgs = new Object[] {companyId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByCompanyId;
 			finderArgs = new Object[] {
 				companyId, start, end, orderByComparator
@@ -2907,7 +2992,7 @@ public class SiteNavigationMenuPersistenceImpl
 
 		List<SiteNavigationMenu> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<SiteNavigationMenu>)finderCache.getResult(
 				finderPath, finderArgs);
 
@@ -2963,7 +3048,7 @@ public class SiteNavigationMenuPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
@@ -3272,11 +3357,21 @@ public class SiteNavigationMenuPersistenceImpl
 	 */
 	@Override
 	public int countByCompanyId(long companyId) {
-		FinderPath finderPath = _finderPathCountByCompanyId;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			SiteNavigationMenu.class);
 
-		Object[] finderArgs = new Object[] {companyId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByCompanyId;
+
+			finderArgs = new Object[] {companyId};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -3300,7 +3395,9 @@ public class SiteNavigationMenuPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
 				throw processException(exception);
@@ -3382,15 +3479,18 @@ public class SiteNavigationMenuPersistenceImpl
 
 		name = Objects.toString(name, "");
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			SiteNavigationMenu.class);
+
 		Object[] finderArgs = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {groupId, name};
 		}
 
 		Object result = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(_finderPathFetchByG_N, finderArgs);
 		}
 
@@ -3442,7 +3542,7 @@ public class SiteNavigationMenuPersistenceImpl
 				List<SiteNavigationMenu> list = query.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
+					if (useFinderCache && productionMode) {
 						finderCache.putResult(
 							_finderPathFetchByG_N, finderArgs, list);
 					}
@@ -3498,11 +3598,21 @@ public class SiteNavigationMenuPersistenceImpl
 	public int countByG_N(long groupId, String name) {
 		name = Objects.toString(name, "");
 
-		FinderPath finderPath = _finderPathCountByG_N;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			SiteNavigationMenu.class);
 
-		Object[] finderArgs = new Object[] {groupId, name};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByG_N;
+
+			finderArgs = new Object[] {groupId, name};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -3541,7 +3651,9 @@ public class SiteNavigationMenuPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
 				throw processException(exception);
@@ -3645,6 +3757,9 @@ public class SiteNavigationMenuPersistenceImpl
 
 		name = Objects.toString(name, "");
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			SiteNavigationMenu.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
@@ -3655,7 +3770,7 @@ public class SiteNavigationMenuPersistenceImpl
 
 		List<SiteNavigationMenu> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<SiteNavigationMenu>)finderCache.getResult(
 				finderPath, finderArgs);
 
@@ -3730,7 +3845,7 @@ public class SiteNavigationMenuPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
@@ -4684,16 +4799,19 @@ public class SiteNavigationMenuPersistenceImpl
 				groupIds[0], name, start, end, orderByComparator);
 		}
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			SiteNavigationMenu.class);
+
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderArgs = new Object[] {StringUtil.merge(groupIds), name};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {
 				StringUtil.merge(groupIds), name, start, end, orderByComparator
 			};
@@ -4701,7 +4819,7 @@ public class SiteNavigationMenuPersistenceImpl
 
 		List<SiteNavigationMenu> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<SiteNavigationMenu>)finderCache.getResult(
 				_finderPathWithPaginationFindByG_LikeN, finderArgs);
 
@@ -4782,7 +4900,7 @@ public class SiteNavigationMenuPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(
 						_finderPathWithPaginationFindByG_LikeN, finderArgs,
 						list);
@@ -4827,11 +4945,21 @@ public class SiteNavigationMenuPersistenceImpl
 	public int countByG_LikeN(long groupId, String name) {
 		name = Objects.toString(name, "");
 
-		FinderPath finderPath = _finderPathWithPaginationCountByG_LikeN;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			SiteNavigationMenu.class);
 
-		Object[] finderArgs = new Object[] {groupId, name};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathWithPaginationCountByG_LikeN;
+
+			finderArgs = new Object[] {groupId, name};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -4870,7 +4998,9 @@ public class SiteNavigationMenuPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
 				throw processException(exception);
@@ -4901,10 +5031,19 @@ public class SiteNavigationMenuPersistenceImpl
 
 		name = Objects.toString(name, "");
 
-		Object[] finderArgs = new Object[] {StringUtil.merge(groupIds), name};
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			SiteNavigationMenu.class);
 
-		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByG_LikeN, finderArgs);
+		Object[] finderArgs = null;
+
+		Long count = null;
+
+		if (productionMode) {
+			finderArgs = new Object[] {StringUtil.merge(groupIds), name};
+
+			count = (Long)finderCache.getResult(
+				_finderPathWithPaginationCountByG_LikeN, finderArgs);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler();
@@ -4956,8 +5095,11 @@ public class SiteNavigationMenuPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				finderCache.putResult(
-					_finderPathWithPaginationCountByG_LikeN, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(
+						_finderPathWithPaginationCountByG_LikeN, finderArgs,
+						count);
+				}
 			}
 			catch (Exception exception) {
 				throw processException(exception);
@@ -5214,18 +5356,21 @@ public class SiteNavigationMenuPersistenceImpl
 		OrderByComparator<SiteNavigationMenu> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			SiteNavigationMenu.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByG_T;
 				finderArgs = new Object[] {groupId, type};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByG_T;
 			finderArgs = new Object[] {
 				groupId, type, start, end, orderByComparator
@@ -5234,7 +5379,7 @@ public class SiteNavigationMenuPersistenceImpl
 
 		List<SiteNavigationMenu> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<SiteNavigationMenu>)finderCache.getResult(
 				finderPath, finderArgs);
 
@@ -5296,7 +5441,7 @@ public class SiteNavigationMenuPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
@@ -5972,11 +6117,21 @@ public class SiteNavigationMenuPersistenceImpl
 	 */
 	@Override
 	public int countByG_T(long groupId, int type) {
-		FinderPath finderPath = _finderPathCountByG_T;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			SiteNavigationMenu.class);
 
-		Object[] finderArgs = new Object[] {groupId, type};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByG_T;
+
+			finderArgs = new Object[] {groupId, type};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -6004,7 +6159,9 @@ public class SiteNavigationMenuPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
 				throw processException(exception);
@@ -6159,18 +6316,21 @@ public class SiteNavigationMenuPersistenceImpl
 		OrderByComparator<SiteNavigationMenu> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			SiteNavigationMenu.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByG_A;
 				finderArgs = new Object[] {groupId, auto};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByG_A;
 			finderArgs = new Object[] {
 				groupId, auto, start, end, orderByComparator
@@ -6179,7 +6339,7 @@ public class SiteNavigationMenuPersistenceImpl
 
 		List<SiteNavigationMenu> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<SiteNavigationMenu>)finderCache.getResult(
 				finderPath, finderArgs);
 
@@ -6241,7 +6401,7 @@ public class SiteNavigationMenuPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
@@ -6919,11 +7079,21 @@ public class SiteNavigationMenuPersistenceImpl
 	 */
 	@Override
 	public int countByG_A(long groupId, boolean auto) {
-		FinderPath finderPath = _finderPathCountByG_A;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			SiteNavigationMenu.class);
 
-		Object[] finderArgs = new Object[] {groupId, auto};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByG_A;
+
+			finderArgs = new Object[] {groupId, auto};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -6951,7 +7121,9 @@ public class SiteNavigationMenuPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
 				throw processException(exception);
@@ -7050,6 +7222,10 @@ public class SiteNavigationMenuPersistenceImpl
 	 */
 	@Override
 	public void cacheResult(SiteNavigationMenu siteNavigationMenu) {
+		if (siteNavigationMenu.getCtCollectionId() != 0) {
+			return;
+		}
+
 		entityCache.putResult(
 			SiteNavigationMenuImpl.class, siteNavigationMenu.getPrimaryKey(),
 			siteNavigationMenu);
@@ -7077,6 +7253,10 @@ public class SiteNavigationMenuPersistenceImpl
 	@Override
 	public void cacheResult(List<SiteNavigationMenu> siteNavigationMenus) {
 		for (SiteNavigationMenu siteNavigationMenu : siteNavigationMenus) {
+			if (siteNavigationMenu.getCtCollectionId() != 0) {
+				continue;
+			}
+
 			if (entityCache.getResult(
 					SiteNavigationMenuImpl.class,
 					siteNavigationMenu.getPrimaryKey()) == null) {
@@ -7245,7 +7425,9 @@ public class SiteNavigationMenuPersistenceImpl
 					siteNavigationMenu.getPrimaryKeyObj());
 			}
 
-			if (siteNavigationMenu != null) {
+			if ((siteNavigationMenu != null) &&
+				ctPersistenceHelper.isRemove(siteNavigationMenu)) {
+
 				session.delete(siteNavigationMenu);
 			}
 		}
@@ -7325,7 +7507,13 @@ public class SiteNavigationMenuPersistenceImpl
 		try {
 			session = openSession();
 
-			if (isNew) {
+			if (ctPersistenceHelper.isInsert(siteNavigationMenu)) {
+				if (!isNew) {
+					session.evict(
+						SiteNavigationMenuImpl.class,
+						siteNavigationMenu.getPrimaryKeyObj());
+				}
+
 				session.save(siteNavigationMenu);
 			}
 			else {
@@ -7338,6 +7526,16 @@ public class SiteNavigationMenuPersistenceImpl
 		}
 		finally {
 			closeSession(session);
+		}
+
+		if (siteNavigationMenu.getCtCollectionId() != 0) {
+			if (isNew) {
+				siteNavigationMenu.setNew(false);
+			}
+
+			siteNavigationMenu.resetOriginalValues();
+
+			return siteNavigationMenu;
 		}
 
 		entityCache.putResult(
@@ -7397,12 +7595,123 @@ public class SiteNavigationMenuPersistenceImpl
 	/**
 	 * Returns the site navigation menu with the primary key or returns <code>null</code> if it could not be found.
 	 *
+	 * @param primaryKey the primary key of the site navigation menu
+	 * @return the site navigation menu, or <code>null</code> if a site navigation menu with the primary key could not be found
+	 */
+	@Override
+	public SiteNavigationMenu fetchByPrimaryKey(Serializable primaryKey) {
+		if (ctPersistenceHelper.isProductionMode(SiteNavigationMenu.class)) {
+			return super.fetchByPrimaryKey(primaryKey);
+		}
+
+		SiteNavigationMenu siteNavigationMenu = null;
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			siteNavigationMenu = (SiteNavigationMenu)session.get(
+				SiteNavigationMenuImpl.class, primaryKey);
+
+			if (siteNavigationMenu != null) {
+				cacheResult(siteNavigationMenu);
+			}
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return siteNavigationMenu;
+	}
+
+	/**
+	 * Returns the site navigation menu with the primary key or returns <code>null</code> if it could not be found.
+	 *
 	 * @param siteNavigationMenuId the primary key of the site navigation menu
 	 * @return the site navigation menu, or <code>null</code> if a site navigation menu with the primary key could not be found
 	 */
 	@Override
 	public SiteNavigationMenu fetchByPrimaryKey(long siteNavigationMenuId) {
 		return fetchByPrimaryKey((Serializable)siteNavigationMenuId);
+	}
+
+	@Override
+	public Map<Serializable, SiteNavigationMenu> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+
+		if (ctPersistenceHelper.isProductionMode(SiteNavigationMenu.class)) {
+			return super.fetchByPrimaryKeys(primaryKeys);
+		}
+
+		if (primaryKeys.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Map<Serializable, SiteNavigationMenu> map =
+			new HashMap<Serializable, SiteNavigationMenu>();
+
+		if (primaryKeys.size() == 1) {
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			Serializable primaryKey = iterator.next();
+
+			SiteNavigationMenu siteNavigationMenu = fetchByPrimaryKey(
+				primaryKey);
+
+			if (siteNavigationMenu != null) {
+				map.put(primaryKey, siteNavigationMenu);
+			}
+
+			return map;
+		}
+
+		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
+
+		sb.append(getSelectSQL());
+		sb.append(" WHERE ");
+		sb.append(getPKDBName());
+		sb.append(" IN (");
+
+		for (Serializable primaryKey : primaryKeys) {
+			sb.append((long)primaryKey);
+
+			sb.append(",");
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		sb.append(")");
+
+		String sql = sb.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query query = session.createQuery(sql);
+
+			for (SiteNavigationMenu siteNavigationMenu :
+					(List<SiteNavigationMenu>)query.list()) {
+
+				map.put(
+					siteNavigationMenu.getPrimaryKeyObj(), siteNavigationMenu);
+
+				cacheResult(siteNavigationMenu);
+			}
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return map;
 	}
 
 	/**
@@ -7470,25 +7779,28 @@ public class SiteNavigationMenuPersistenceImpl
 		OrderByComparator<SiteNavigationMenu> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			SiteNavigationMenu.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindAll;
 				finderArgs = FINDER_ARGS_EMPTY;
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<SiteNavigationMenu> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<SiteNavigationMenu>)finderCache.getResult(
 				finderPath, finderArgs);
 		}
@@ -7526,7 +7838,7 @@ public class SiteNavigationMenuPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
@@ -7559,8 +7871,15 @@ public class SiteNavigationMenuPersistenceImpl
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			SiteNavigationMenu.class);
+
+		Long count = null;
+
+		if (productionMode) {
+			count = (Long)finderCache.getResult(
+				_finderPathCountAll, FINDER_ARGS_EMPTY);
+		}
 
 		if (count == null) {
 			Session session = null;
@@ -7573,8 +7892,10 @@ public class SiteNavigationMenuPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				finderCache.putResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
+				if (productionMode) {
+					finderCache.putResult(
+						_finderPathCountAll, FINDER_ARGS_EMPTY, count);
+				}
 			}
 			catch (Exception exception) {
 				throw processException(exception);
@@ -7608,8 +7929,74 @@ public class SiteNavigationMenuPersistenceImpl
 	}
 
 	@Override
-	protected Map<String, Integer> getTableColumnsMap() {
+	public Set<String> getCTColumnNames(
+		CTColumnResolutionType ctColumnResolutionType) {
+
+		return _ctColumnNamesMap.get(ctColumnResolutionType);
+	}
+
+	@Override
+	public List<String> getMappingTableNames() {
+		return _mappingTableNames;
+	}
+
+	@Override
+	public Map<String, Integer> getTableColumnsMap() {
 		return SiteNavigationMenuModelImpl.TABLE_COLUMNS_MAP;
+	}
+
+	@Override
+	public String getTableName() {
+		return "SiteNavigationMenu";
+	}
+
+	@Override
+	public List<String[]> getUniqueIndexColumnNames() {
+		return _uniqueIndexColumnNames;
+	}
+
+	private static final Map<CTColumnResolutionType, Set<String>>
+		_ctColumnNamesMap = new EnumMap<CTColumnResolutionType, Set<String>>(
+			CTColumnResolutionType.class);
+	private static final List<String> _mappingTableNames =
+		new ArrayList<String>();
+	private static final List<String[]> _uniqueIndexColumnNames =
+		new ArrayList<String[]>();
+
+	static {
+		Set<String> ctControlColumnNames = new HashSet<String>();
+		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
+		Set<String> ctStrictColumnNames = new HashSet<String>();
+
+		ctControlColumnNames.add("mvccVersion");
+		ctControlColumnNames.add("ctCollectionId");
+		ctStrictColumnNames.add("uuid_");
+		ctStrictColumnNames.add("groupId");
+		ctStrictColumnNames.add("companyId");
+		ctStrictColumnNames.add("userId");
+		ctStrictColumnNames.add("userName");
+		ctStrictColumnNames.add("createDate");
+		ctIgnoreColumnNames.add("modifiedDate");
+		ctStrictColumnNames.add("name");
+		ctStrictColumnNames.add("type_");
+		ctStrictColumnNames.add("auto_");
+		ctStrictColumnNames.add("lastPublishDate");
+
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.CONTROL, ctControlColumnNames);
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.PK,
+			Collections.singleton("siteNavigationMenuId"));
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.STRICT, ctStrictColumnNames);
+
+		_uniqueIndexColumnNames.add(new String[] {"uuid_", "groupId"});
+
+		_uniqueIndexColumnNames.add(new String[] {"groupId", "name"});
 	}
 
 	/**
@@ -7821,6 +8208,9 @@ public class SiteNavigationMenuPersistenceImpl
 	}
 
 	private BundleContext _bundleContext;
+
+	@Reference
+	protected CTPersistenceHelper ctPersistenceHelper;
 
 	@Reference
 	protected EntityCache entityCache;

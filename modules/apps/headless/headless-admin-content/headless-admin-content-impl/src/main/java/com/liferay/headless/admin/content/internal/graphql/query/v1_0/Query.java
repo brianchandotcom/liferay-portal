@@ -16,6 +16,7 @@ package com.liferay.headless.admin.content.internal.graphql.query.v1_0;
 
 import com.liferay.headless.admin.content.dto.v1_0.DisplayPageTemplate;
 import com.liferay.headless.admin.content.resource.v1_0.DisplayPageTemplateResource;
+import com.liferay.headless.admin.content.resource.v1_0.StructuredContentResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;
@@ -23,11 +24,14 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.aggregation.Aggregation;
+import com.liferay.portal.vulcan.aggregation.Facet;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
 
@@ -55,6 +59,14 @@ public class Query {
 
 		_displayPageTemplateResourceComponentServiceObjects =
 			displayPageTemplateResourceComponentServiceObjects;
+	}
+
+	public static void setStructuredContentResourceComponentServiceObjects(
+		ComponentServiceObjects<StructuredContentResource>
+			structuredContentResourceComponentServiceObjects) {
+
+		_structuredContentResourceComponentServiceObjects =
+			structuredContentResourceComponentServiceObjects;
 	}
 
 	/**
@@ -102,11 +114,47 @@ public class Query {
 					Long.valueOf(siteKey), displayPageTemplateKey));
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {structuredContents(aggregation: ___, filter: ___, flatten: ___, page: ___, pageSize: ___, search: ___, siteKey: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieves the site's structured contents latest version. Results can be paginated, filtered, searched, flattened, and sorted."
+	)
+	public StructuredContentPage structuredContents(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("flatten") Boolean flatten,
+			@GraphQLName("search") String search,
+			@GraphQLName("aggregation") List<String> aggregations,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource -> new StructuredContentPage(
+				structuredContentResource.getSiteStructuredContentsPage(
+					Long.valueOf(siteKey), flatten, search,
+					_aggregationBiFunction.apply(
+						structuredContentResource, aggregations),
+					_filterBiFunction.apply(
+						structuredContentResource, filterString),
+					Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(
+						structuredContentResource, sortsString))));
+	}
+
 	@GraphQLName("DisplayPageTemplatePage")
 	public class DisplayPageTemplatePage {
 
 		public DisplayPageTemplatePage(Page displayPageTemplatePage) {
 			actions = displayPageTemplatePage.getActions();
+
+			facets = displayPageTemplatePage.getFacets();
 
 			items = displayPageTemplatePage.getItems();
 			lastPage = displayPageTemplatePage.getLastPage();
@@ -119,7 +167,49 @@ public class Query {
 		protected Map<String, Map> actions;
 
 		@GraphQLField
+		protected List<Facet> facets;
+
+		@GraphQLField
 		protected java.util.Collection<DisplayPageTemplate> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("StructuredContentPage")
+	public class StructuredContentPage {
+
+		public StructuredContentPage(Page structuredContentPage) {
+			actions = structuredContentPage.getActions();
+
+			facets = structuredContentPage.getFacets();
+
+			items = structuredContentPage.getItems();
+			lastPage = structuredContentPage.getLastPage();
+			page = structuredContentPage.getPage();
+			pageSize = structuredContentPage.getPageSize();
+			totalCount = structuredContentPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
+
+		@GraphQLField
+		protected java.util.Collection
+			<com.liferay.headless.delivery.dto.v1_0.StructuredContent> items;
 
 		@GraphQLField
 		protected long lastPage;
@@ -170,10 +260,30 @@ public class Query {
 		displayPageTemplateResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(
+			StructuredContentResource structuredContentResource)
+		throws Exception {
+
+		structuredContentResource.setContextAcceptLanguage(_acceptLanguage);
+		structuredContentResource.setContextCompany(_company);
+		structuredContentResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		structuredContentResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		structuredContentResource.setContextUriInfo(_uriInfo);
+		structuredContentResource.setContextUser(_user);
+		structuredContentResource.setGroupLocalService(_groupLocalService);
+		structuredContentResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private static ComponentServiceObjects<DisplayPageTemplateResource>
 		_displayPageTemplateResourceComponentServiceObjects;
+	private static ComponentServiceObjects<StructuredContentResource>
+		_structuredContentResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
+	private BiFunction<Object, List<String>, Aggregation>
+		_aggregationBiFunction;
 	private com.liferay.portal.kernel.model.Company _company;
 	private BiFunction<Object, String, Filter> _filterBiFunction;
 	private GroupLocalService _groupLocalService;

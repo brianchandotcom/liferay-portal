@@ -102,24 +102,24 @@ definition {
 			value1 = "Press escape to remove the bar's category filters.");
 
 		AssertTextPresent(
+			categoryName = "Audience 1",
 			locator1 = "ContentDashboard#FILTER_CATEGORY_NAME",
-			value1 = "Category:Audience 1",
-			categoryName = "Audience 1");
+			value1 = "Category:Audience 1");
 
 		AssertTextPresent(
+			categoryName = "Stage 1",
 			locator1 = "ContentDashboard#FILTER_CATEGORY_NAME",
-			value1 = "Category:Stage 1",
-			categoryName = "Stage 1");
+			value1 = "Category:Stage 1");
 
 		ContentDashboard.clearFilters();
 
 		AssertElementNotPresent(
-			locator1 = "ContentDashboard#FILTER_CATEGORY_NAME",
-			categoryName = "Audience 1");
+			categoryName = "Audience 1",
+			locator1 = "ContentDashboard#FILTER_CATEGORY_NAME");
 
 		AssertElementNotPresent(
-			locator1 = "ContentDashboard#FILTER_CATEGORY_NAME",
-			categoryName = "Stage 1");
+			categoryName = "Stage 1",
+			locator1 = "ContentDashboard#FILTER_CATEGORY_NAME");
 
 		AssertElementNotPresent(locator1 = "ContentDashboard#BAR_SELECTED_MESSAGE");
 	}
@@ -193,25 +193,25 @@ definition {
 			value1 = "Press escape to remove the bar's category filters.");
 
 		AssertTextPresent(
+			categoryName = "Audience 1",
 			locator1 = "ContentDashboard#FILTER_CATEGORY_NAME",
-			value1 = "Category:Audience 1",
-			categoryName = "Audience 1");
+			value1 = "Category:Audience 1");
 
 		AssertTextPresent(
+			categoryName = "Stage 1",
 			locator1 = "ContentDashboard#FILTER_CATEGORY_NAME",
-			value1 = "Category:Stage 1",
-			categoryName = "Stage 1");
+			value1 = "Category:Stage 1");
 
 		ContentDashboard.deleteSecondCategoryFilter();
 
 		AssertTextPresent(
+			categoryName = "Audience 1",
 			locator1 = "ContentDashboard#FILTER_CATEGORY_NAME",
-			value1 = "Category:Audience 1",
-			categoryName = "Audience 1");
+			value1 = "Category:Audience 1");
 
 		AssertElementNotPresent(
-			locator1 = "ContentDashboard#FILTER_CATEGORY_NAME",
-			categoryName = "Stage 1");
+			categoryName = "Stage 1",
+			locator1 = "ContentDashboard#FILTER_CATEGORY_NAME");
 
 		AssertElementNotPresent(locator1 = "ContentDashboard#BAR_SELECTED_MESSAGE");
 	}

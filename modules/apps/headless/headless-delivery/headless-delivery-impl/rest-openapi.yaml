@@ -7303,6 +7303,7 @@ paths:
             # @review
             description:
                 Delete the message board thread's message board message by external reference code.
+            operationId: deleteMessageBoardThreadMessageBoardMessage
             parameters:
                 - in: path
                   name: messageBoardThreadId
@@ -7327,6 +7328,7 @@ paths:
             # @review
             description:
                 Retrieves the message board thread's message board message by external reference code.
+            operationId: getMessageBoardThreadMessageBoardMessage
             parameters:
                 - in: path
                   name: messageBoardThreadId
@@ -7356,6 +7358,7 @@ paths:
             description:
                 Update the message board thread's message board message by external reference code, or creates it if it
                 not exists.
+            operationId: putMessageBoardThreadMessageBoardMessage
             parameters:
                 - in: path
                   name: messageBoardThreadId

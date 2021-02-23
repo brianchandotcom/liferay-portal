@@ -196,6 +196,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 
 		messageBoardMessage.setArticleBody(regex);
 		messageBoardMessage.setEncodingFormat(regex);
+		messageBoardMessage.setExternalReferenceCode(regex);
 		messageBoardMessage.setFriendlyUrlPath(regex);
 		messageBoardMessage.setHeadline(regex);
 
@@ -207,6 +208,8 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 
 		Assert.assertEquals(regex, messageBoardMessage.getArticleBody());
 		Assert.assertEquals(regex, messageBoardMessage.getEncodingFormat());
+		Assert.assertEquals(
+			regex, messageBoardMessage.getExternalReferenceCode());
 		Assert.assertEquals(regex, messageBoardMessage.getFriendlyUrlPath());
 		Assert.assertEquals(regex, messageBoardMessage.getHeadline());
 	}
@@ -1269,6 +1272,170 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteMessageBoardThreadMessageBoardMessage()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		MessageBoardMessage messageBoardMessage =
+			testDeleteMessageBoardThreadMessageBoardMessage_addMessageBoardMessage();
+
+		assertHttpResponseStatusCode(
+			204,
+			messageBoardMessageResource.
+				deleteMessageBoardThreadMessageBoardMessageHttpResponse(
+					messageBoardMessage.getMessageBoardThreadId(),
+					messageBoardMessage.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			messageBoardMessageResource.
+				getMessageBoardThreadMessageBoardMessageHttpResponse(
+					messageBoardMessage.getMessageBoardThreadId(),
+					messageBoardMessage.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			messageBoardMessageResource.
+				getMessageBoardThreadMessageBoardMessageHttpResponse(
+					messageBoardMessage.getMessageBoardThreadId(),
+					messageBoardMessage.getExternalReferenceCode()));
+	}
+
+	protected MessageBoardMessage
+			testDeleteMessageBoardThreadMessageBoardMessage_addMessageBoardMessage()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetMessageBoardThreadMessageBoardMessage()
+		throws Exception {
+
+		MessageBoardMessage postMessageBoardMessage =
+			testGetMessageBoardThreadMessageBoardMessage_addMessageBoardMessage();
+
+		MessageBoardMessage getMessageBoardMessage =
+			messageBoardMessageResource.
+				getMessageBoardThreadMessageBoardMessage(
+					postMessageBoardMessage.getMessageBoardThreadId(),
+					postMessageBoardMessage.getExternalReferenceCode());
+
+		assertEquals(postMessageBoardMessage, getMessageBoardMessage);
+		assertValid(getMessageBoardMessage);
+	}
+
+	protected MessageBoardMessage
+			testGetMessageBoardThreadMessageBoardMessage_addMessageBoardMessage()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetMessageBoardThreadMessageBoardMessage()
+		throws Exception {
+
+		MessageBoardMessage messageBoardMessage =
+			testGraphQLMessageBoardMessage_addMessageBoardMessage();
+
+		Assert.assertTrue(
+			equals(
+				messageBoardMessage,
+				MessageBoardMessageSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"messageBoardThreadMessageBoardMessage",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"messageBoardThreadId",
+											messageBoardMessage.
+												getMessageBoardThreadId());
+										put(
+											"externalReferenceCode",
+											"\"" +
+												messageBoardMessage.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/messageBoardThreadMessageBoardMessage"))));
+	}
+
+	@Test
+	public void testGraphQLGetMessageBoardThreadMessageBoardMessageNotFound()
+		throws Exception {
+
+		Long irrelevantMessageBoardThreadId = RandomTestUtil.randomLong();
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"messageBoardThreadMessageBoardMessage",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"messageBoardThreadId",
+									irrelevantMessageBoardThreadId);
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Test
+	public void testPutMessageBoardThreadMessageBoardMessage()
+		throws Exception {
+
+		MessageBoardMessage postMessageBoardMessage =
+			testPutMessageBoardThreadMessageBoardMessage_addMessageBoardMessage();
+
+		MessageBoardMessage randomMessageBoardMessage =
+			randomMessageBoardMessage();
+
+		MessageBoardMessage putMessageBoardMessage =
+			messageBoardMessageResource.
+				putMessageBoardThreadMessageBoardMessage(
+					postMessageBoardMessage.getMessageBoardThreadId(),
+					postMessageBoardMessage.getExternalReferenceCode(),
+					randomMessageBoardMessage);
+
+		assertEquals(randomMessageBoardMessage, putMessageBoardMessage);
+		assertValid(putMessageBoardMessage);
+
+		MessageBoardMessage getMessageBoardMessage =
+			messageBoardMessageResource.
+				getMessageBoardThreadMessageBoardMessage(
+					putMessageBoardMessage.getMessageBoardThreadId(),
+					putMessageBoardMessage.getExternalReferenceCode());
+
+		assertEquals(randomMessageBoardMessage, getMessageBoardMessage);
+		assertValid(getMessageBoardMessage);
+	}
+
+	protected MessageBoardMessage
+			testPutMessageBoardThreadMessageBoardMessage_addMessageBoardMessage()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetSiteMessageBoardMessagesPage() throws Exception {
 		Page<MessageBoardMessage> page =
 			messageBoardMessageResource.getSiteMessageBoardMessagesPage(
@@ -1952,6 +2119,16 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (messageBoardMessage.getExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("friendlyUrlPath", additionalAssertFieldName)) {
 				if (messageBoardMessage.getFriendlyUrlPath() == null) {
 					valid = false;
@@ -2344,6 +2521,19 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				if (!Objects.deepEquals(
 						messageBoardMessage1.getEncodingFormat(),
 						messageBoardMessage2.getEncodingFormat())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						messageBoardMessage1.getExternalReferenceCode(),
+						messageBoardMessage2.getExternalReferenceCode())) {
 
 					return false;
 				}
@@ -2803,6 +2993,15 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("externalReferenceCode")) {
+			sb.append("'");
+			sb.append(
+				String.valueOf(messageBoardMessage.getExternalReferenceCode()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("friendlyUrlPath")) {
 			sb.append("'");
 			sb.append(String.valueOf(messageBoardMessage.getFriendlyUrlPath()));
@@ -2929,6 +3128,8 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				encodingFormat = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				friendlyUrlPath = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

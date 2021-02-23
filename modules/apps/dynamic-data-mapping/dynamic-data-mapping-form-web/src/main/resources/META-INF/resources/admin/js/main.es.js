@@ -20,8 +20,6 @@ import {Config} from 'metal-state';
 
 import ShareFormModal from './components/ShareFormModal/ShareFormModal.es';
 import FormURL from './util/FormURL.es';
-import Notifications from './util/Notifications.es';
-
 /**
  * Form.
  * @extends Component
@@ -29,18 +27,7 @@ import Notifications from './util/Notifications.es';
 
 class Form extends Component {
 	attached() {
-		const {namespace, published, showPublishAlert} = this.props;
-
 		this.store = this.refs.app.reactComponentRef;
-
-		if (showPublishAlert) {
-			if (published) {
-				this._showPublishedAlert(this._createFormURL());
-			}
-			else {
-				this._showUnpublishedAlert();
-			}
-		}
 	}
 
 	created() {
@@ -48,10 +35,6 @@ class Form extends Component {
 		this._handlePaginationModeChanded = this._handlePaginationModeChanded.bind(
 			this
 		);
-	}
-
-	disposed() {
-		Notifications.closeAlert();
 	}
 
 	isFormBuilderView() {
@@ -230,25 +213,6 @@ class Form extends Component {
 				};
 			}),
 		};
-	}
-
-	_showPublishedAlert(publishURL) {
-		const message = Liferay.Language.get(
-			'the-form-was-published-successfully-access-it-with-this-url-x'
-		);
-
-		Notifications.showAlert(
-			message.replace(
-				/\{0\}/gim,
-				`<span style="font-weight: 500"><a href=${publishURL} target="_blank">${publishURL}</a></span>`
-			)
-		);
-	}
-
-	_showUnpublishedAlert() {
-		Notifications.showAlert(
-			Liferay.Language.get('the-form-was-unpublished-successfully')
-		);
 	}
 }
 

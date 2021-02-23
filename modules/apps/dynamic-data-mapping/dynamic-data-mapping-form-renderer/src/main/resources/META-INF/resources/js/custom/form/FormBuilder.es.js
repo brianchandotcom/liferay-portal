@@ -12,7 +12,7 @@
  * details.
  */
 
-import {openToast} from 'frontend-js-web';
+import ClayButton from '@clayui/button';
 import React, {useCallback, useEffect, useRef} from 'react';
 
 import Pages from '../../core/components/Pages.es';
@@ -24,6 +24,7 @@ import {ManagementToolbar} from './components/ManagementToolbar.es';
 import {MetalSidebarAdapter} from './components/MetalSidebarAdapter.es';
 import {TranslationManager} from './components/TranslationManager.es';
 import {useAutoSave} from './hooks/useAutoSave.es';
+import {useToast} from './hooks/useToast.es';
 
 export const FormBuilder = () => {
 	const {
@@ -43,6 +44,8 @@ export const FormBuilder = () => {
 	} = useFormState();
 
 	const {doSave, doSyncInput} = useAutoSave();
+
+	const addToast = useToast();
 
 	const sidebarRef = useRef(null);
 
@@ -65,6 +68,52 @@ export const FormBuilder = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [pages.length, activePage]);
 
+	const getFormUrl = useCallback(
+		async (path) => {
+			const settingsDDMForm = await Liferay.componentReady(
+				'settingsDDMForm'
+			);
+
+			const fields = settingsDDMForm.reactComponentRef.current.getFields();
+
+			const {value: requireAuthentication} = fields.find(
+				({fieldName}) => fieldName === 'requireAuthentication'
+			);
+
+			return createFormURL(path, {
+				formInstanceId,
+				requireAuthentication,
+				restrictedFormURL,
+				sharedFormURL,
+			});
+		},
+		[formInstanceId, restrictedFormURL, sharedFormURL]
+	);
+
+	useEffect(() => {
+		if (showPublishAlert && published) {
+			addToast({
+				action: (
+					<ClayButton
+						alert
+						onClick={async () => {
+							const url = await getFormUrl();
+
+							window.open(url, '_blank');
+						}}
+					>
+						{Liferay.Language.get('open-form')}
+					</ClayButton>
+				),
+				displayType: 'success',
+				message: Liferay.Language.get(
+					'the-form-was-published-successfully'
+				),
+				title: Liferay.Language.get('success'),
+			});
+		}
+	}, [showPublishAlert, published, getFormUrl]);
+
 	const onOpenSidebar = useCallback(() => {
 		if (sidebarRef.current) {
 			sidebarRef.current.current.open();
@@ -76,38 +125,23 @@ export const FormBuilder = () => {
 			event.preventDefault();
 
 			try {
-				const settingsDDMForm = await Liferay.componentReady(
-					'settingsDDMForm'
-				);
-
-				const fields = settingsDDMForm.reactComponentRef.current.getFields();
-
-				const {value: requireAuthentication} = fields.find(
-					({fieldName}) => fieldName === 'requireAuthentication'
-				);
+				const url = await getFormUrl('/preview');
 
 				await doSave(true);
 
-				window.open(
-					createFormURL('/preview', {
-						formInstanceId,
-						requireAuthentication,
-						restrictedFormURL,
-						sharedFormURL,
-					}),
-					'_blank'
-				);
+				window.open(url, '_blank');
 			}
 			catch (_) {
-				openToast({
+				addToast({
+					displayType: 'danger',
 					message: Liferay.Language.get(
 						'your-request-failed-to-complete'
 					),
-					type: 'danger',
+					title: Liferay.Language.get('error'),
 				});
 			}
 		},
-		[doSave, formInstanceId, sharedFormURL, restrictedFormURL]
+		[doSave, getFormUrl]
 	);
 
 	const onPublishClick = useCallback(

@@ -13,7 +13,7 @@
  */
 
 export const createFormURL = (
-	path,
+	path = '',
 	{
 		formInstanceId,
 		requireAuthentication = false,

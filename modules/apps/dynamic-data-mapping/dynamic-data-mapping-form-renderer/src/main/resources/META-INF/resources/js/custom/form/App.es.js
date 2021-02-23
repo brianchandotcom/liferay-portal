@@ -14,13 +14,13 @@
 
 import {ClayIconSpriteContext} from '@clayui/icon';
 import {ClayModalProvider} from '@clayui/modal';
-import React, {useImperativeHandle} from 'react';
+import React from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 import {HashRouter as Router, Route, Switch} from 'react-router-dom';
 
-import {ConfigProvider, useConfig} from '../../core/hooks/useConfig.es';
-import {FormProvider, useFormState} from '../../core/hooks/useForm.es';
+import {ConfigProvider} from '../../core/hooks/useConfig.es';
+import {FormProvider} from '../../core/hooks/useForm.es';
 import dragAndDropReducer from '../../core/reducers/dragAndDropReducer.es';
 import fieldEditableReducer from '../../core/reducers/fieldEditableReducer.es';
 import languageReducer from '../../core/reducers/languageReducer.es';
@@ -33,6 +33,7 @@ import {NavigationBar} from './components/NavigationBar.es';
 import {BUILDER_INITIAL_CONFIG_STATE} from './config/initialConfigState.es';
 import {BUILDER_INITIAL_STATE, initState} from './config/initialState.es';
 import {AutoSaveProvider} from './hooks/useAutoSave.es';
+import {ToastProvider} from './hooks/useToast.es';
 import {
 	elementSetReducer,
 	formInfoReducer,
@@ -43,27 +44,11 @@ import {
 import {parseProps} from './util/parseProps.es';
 
 /**
- * Expose the internal state of the Form Provider accessible through
- * ref. Only a temporary compatibility layer for the main application
- * of ddm-form-web in Metal.js.
- */
-const ProviderCompatibilityLayer = React.forwardRef((props, ref) => {
-	const state = useFormState();
-	const config = useConfig();
-
-	useImperativeHandle(ref, () => ({...state, ...config}), [state, config]);
-
-	return null;
-});
-
-ProviderCompatibilityLayer.displayName = 'ProviderCompatibilityLayer';
-
-/**
  * Exporting default application to Forms Admin. Only Providers and
  * routing must be defined.
  */
 export const App = React.forwardRef(
-	({autosaveInterval, autosaveURL, spritemap, ...otherProps}, ref) => {
+	({autosaveInterval, autosaveURL, spritemap, ...otherProps}) => {
 		const {config, state} = parseProps({spritemap, ...otherProps});
 
 		return (
@@ -94,30 +79,31 @@ export const App = React.forwardRef(
 									interval={autosaveInterval}
 									url={autosaveURL}
 								>
-									<ProviderCompatibilityLayer ref={ref} />
-									<Router>
-										<Switch>
-											<Route
-												component={NavigationBar}
-												path="/"
-											/>
-										</Switch>
-										<Switch>
-											<Route
-												component={FormBuilder}
-												exact
-												path="/"
-											/>
-											<Route
-												component={RuleBuilder}
-												path="/rules"
-											/>
-											<Route
-												component={Report}
-												path="/report"
-											/>
-										</Switch>
-									</Router>
+									<ToastProvider>
+										<Router>
+											<Switch>
+												<Route
+													component={NavigationBar}
+													path="/"
+												/>
+											</Switch>
+											<Switch>
+												<Route
+													component={FormBuilder}
+													exact
+													path="/"
+												/>
+												<Route
+													component={RuleBuilder}
+													path="/rules"
+												/>
+												<Route
+													component={Report}
+													path="/report"
+												/>
+											</Switch>
+										</Router>
+									</ToastProvider>
 								</AutoSaveProvider>
 							</FormProvider>
 						</ClayModalProvider>

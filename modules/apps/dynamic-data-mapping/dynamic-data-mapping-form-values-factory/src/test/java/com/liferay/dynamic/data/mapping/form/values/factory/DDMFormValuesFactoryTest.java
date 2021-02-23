@@ -44,6 +44,7 @@ import com.liferay.portal.util.PropsImpl;
 
 import java.lang.reflect.Field;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -172,7 +173,8 @@ public class DDMFormValuesFactoryTest extends PowerMockito {
 			LocaleUtil.BRAZIL
 		);
 
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			new HashSet<Locale>(), LocaleUtil.getSiteDefault());
 
 		ddmForm.addDDMFormField(
 			DDMFormTestUtil.createTextDDMFormField(

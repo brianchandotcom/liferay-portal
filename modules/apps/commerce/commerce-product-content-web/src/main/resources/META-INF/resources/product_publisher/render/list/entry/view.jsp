@@ -23,6 +23,5 @@ CPContentHelper cpContentHelper = (CPContentHelper)request.getAttribute(CPConten
 <div class="cp-renderer">
 	<commerce-ui:product-card
 		cpCatalogEntry="<%= cpContentHelper.getCPCatalogEntry(request) %>"
-		cpContentListEntryModel='<%= (CPContentListEntryModel)request.getAttribute("cpContentListEntryModel") %>'
 	/>
 </div>

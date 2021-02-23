@@ -142,10 +142,10 @@ class AddressModal extends Component {
 					address: data.street1,
 					addressType: data.type,
 					city: data.city,
-					country: data.commerceCountryId,
+					country: data.countryId,
 					id,
 					referent: data.name,
-					region: data.commerceRegionId,
+					region: data.regionId,
 					telephone: data.phoneNumber,
 					zipCode: data.zip,
 				};

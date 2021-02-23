@@ -63,8 +63,8 @@ public interface CommerceTaxFixedRateAddressRelService extends BaseService {
 	 */
 	public CommerceTaxFixedRateAddressRel addCommerceTaxFixedRateAddressRel(
 			long userId, long groupId, long commerceTaxMethodId,
-			long cpTaxCategoryId, long commerceCountryId, long commerceRegionId,
-			String zip, double rate)
+			long cpTaxCategoryId, long countryId, long regionId, String zip,
+			double rate)
 		throws PortalException;
 
 	/**
@@ -72,9 +72,9 @@ public interface CommerceTaxFixedRateAddressRelService extends BaseService {
 	 */
 	@Deprecated
 	public CommerceTaxFixedRateAddressRel addCommerceTaxFixedRateAddressRel(
-			long commerceTaxMethodId, long cpTaxCategoryId,
-			long commerceCountryId, long commerceRegionId, String zip,
-			double rate, ServiceContext serviceContext)
+			long commerceTaxMethodId, long cpTaxCategoryId, long countryId,
+			long regionId, String zip, double rate,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteCommerceTaxFixedRateAddressRel(
@@ -107,8 +107,8 @@ public interface CommerceTaxFixedRateAddressRelService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 	public CommerceTaxFixedRateAddressRel updateCommerceTaxFixedRateAddressRel(
-			long commerceTaxFixedRateAddressRelId, long commerceCountryId,
-			long commerceRegionId, String zip, double rate)
+			long commerceTaxFixedRateAddressRelId, long countryId,
+			long regionId, String zip, double rate)
 		throws PortalException;
 
 }

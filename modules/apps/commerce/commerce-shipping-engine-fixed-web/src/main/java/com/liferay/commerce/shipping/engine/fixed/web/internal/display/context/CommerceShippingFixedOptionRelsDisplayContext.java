@@ -105,20 +105,6 @@ public class CommerceShippingFixedOptionRelsDisplayContext
 		return editCommerceChannelPortletURL.toString();
 	}
 
-	public long getCommerceCountryId() throws PortalException {
-		long commerceCountryId = 0;
-
-		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel =
-			getCommerceShippingFixedOptionRel();
-
-		if (commerceShippingFixedOptionRel != null) {
-			commerceCountryId =
-				commerceShippingFixedOptionRel.getCommerceCountryId();
-		}
-
-		return commerceCountryId;
-	}
-
 	public List<CommerceInventoryWarehouse> getCommerceInventoryWarehouses()
 		throws PortalException {
 
@@ -129,20 +115,6 @@ public class CommerceShippingFixedOptionRelsDisplayContext
 			getCommerceInventoryWarehouses(
 				commerceShippingMethod.getCompanyId(),
 				commerceShippingMethod.getGroupId(), true);
-	}
-
-	public long getCommerceRegionId() throws PortalException {
-		long commerceRegionId = 0;
-
-		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel =
-			getCommerceShippingFixedOptionRel();
-
-		if (commerceShippingFixedOptionRel != null) {
-			commerceRegionId =
-				commerceShippingFixedOptionRel.getCommerceRegionId();
-		}
-
-		return commerceRegionId;
 	}
 
 	public CommerceShippingFixedOptionRel getCommerceShippingFixedOptionRel()
@@ -194,6 +166,19 @@ public class CommerceShippingFixedOptionRelsDisplayContext
 			themeDisplay.getCompanyId(), true);
 	}
 
+	public long getCountryId() throws PortalException {
+		long countryId = 0;
+
+		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel =
+			getCommerceShippingFixedOptionRel();
+
+		if (commerceShippingFixedOptionRel != null) {
+			countryId = commerceShippingFixedOptionRel.getCountryId();
+		}
+
+		return countryId;
+	}
+
 	public String getCPMeasurementUnitName(int type) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -225,8 +210,21 @@ public class CommerceShippingFixedOptionRelsDisplayContext
 		).build();
 	}
 
+	public long getRegionId() throws PortalException {
+		long regionId = 0;
+
+		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel =
+			getCommerceShippingFixedOptionRel();
+
+		if (commerceShippingFixedOptionRel != null) {
+			regionId = commerceShippingFixedOptionRel.getRegionId();
+		}
+
+		return regionId;
+	}
+
 	public List<Region> getRegions() throws PortalException {
-		return _regionService.getRegions(getCommerceCountryId(), true);
+		return _regionService.getRegions(getCountryId(), true);
 	}
 
 	@Override

@@ -64,11 +64,11 @@ public class CommerceAddressRestrictionLocalServiceUtil {
 
 	public static CommerceAddressRestriction addCommerceAddressRestriction(
 			long userId, long groupId, String className, long classPK,
-			long commerceCountryId)
+			long countryId)
 		throws PortalException {
 
 		return getService().addCommerceAddressRestriction(
-			userId, groupId, className, classPK, commerceCountryId);
+			userId, groupId, className, classPK, countryId);
 	}
 
 	/**
@@ -76,12 +76,12 @@ public class CommerceAddressRestrictionLocalServiceUtil {
 	 */
 	@Deprecated
 	public static CommerceAddressRestriction addCommerceAddressRestriction(
-			String className, long classPK, long commerceCountryId,
+			String className, long classPK, long countryId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addCommerceAddressRestriction(
-			className, classPK, commerceCountryId, serviceContext);
+			className, classPK, countryId, serviceContext);
 	}
 
 	/**
@@ -143,10 +143,8 @@ public class CommerceAddressRestrictionLocalServiceUtil {
 			commerceAddressRestrictionId);
 	}
 
-	public static void deleteCommerceAddressRestrictions(
-		long commerceCountryId) {
-
-		getService().deleteCommerceAddressRestrictions(commerceCountryId);
+	public static void deleteCommerceAddressRestrictions(long countryId) {
+		getService().deleteCommerceAddressRestrictions(countryId);
 	}
 
 	public static void deleteCommerceAddressRestrictions(
@@ -254,10 +252,10 @@ public class CommerceAddressRestrictionLocalServiceUtil {
 	}
 
 	public static CommerceAddressRestriction fetchCommerceAddressRestriction(
-		String className, long classPK, long commerceCountryId) {
+		String className, long classPK, long countryId) {
 
 		return getService().fetchCommerceAddressRestriction(
-			className, classPK, commerceCountryId);
+			className, classPK, countryId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
@@ -349,17 +347,17 @@ public class CommerceAddressRestrictionLocalServiceUtil {
 	}
 
 	public static boolean isCommerceAddressRestricted(
-		String className, long classPK, long commerceCountryId) {
+		String className, long classPK, long countryId) {
 
 		return getService().isCommerceAddressRestricted(
-			className, classPK, commerceCountryId);
+			className, classPK, countryId);
 	}
 
 	public static boolean isCommerceShippingMethodRestricted(
-		long commerceShippingMethodId, long commerceCountryId) {
+		long commerceShippingMethodId, long countryId) {
 
 		return getService().isCommerceShippingMethodRestricted(
-			commerceShippingMethodId, commerceCountryId);
+			commerceShippingMethodId, countryId);
 	}
 
 	/**

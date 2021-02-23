@@ -79,8 +79,8 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP},
 		{"commerceTaxMethodId", Types.BIGINT},
-		{"CPTaxCategoryId", Types.BIGINT}, {"commerceCountryId", Types.BIGINT},
-		{"commerceRegionId", Types.BIGINT}, {"zip", Types.VARCHAR},
+		{"CPTaxCategoryId", Types.BIGINT}, {"countryId", Types.BIGINT},
+		{"regionId", Types.BIGINT}, {"zip", Types.VARCHAR},
 		{"rate", Types.DOUBLE}
 	};
 
@@ -97,14 +97,14 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("commerceTaxMethodId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("CPTaxCategoryId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("commerceCountryId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("commerceRegionId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("countryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("regionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("zip", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("rate", Types.DOUBLE);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceTaxFixedRateAddressRel (CTaxFixedRateAddressRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceTaxMethodId LONG,CPTaxCategoryId LONG,commerceCountryId LONG,commerceRegionId LONG,zip VARCHAR(75) null,rate DOUBLE)";
+		"create table CommerceTaxFixedRateAddressRel (CTaxFixedRateAddressRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceTaxMethodId LONG,CPTaxCategoryId LONG,countryId LONG,regionId LONG,zip VARCHAR(75) null,rate DOUBLE)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceTaxFixedRateAddressRel";
@@ -149,13 +149,13 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
 	 */
 	@Deprecated
-	public static final long COMMERCECOUNTRYID_COLUMN_BITMASK = 2L;
+	public static final long COMMERCETAXMETHODID_COLUMN_BITMASK = 2L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
 	 */
 	@Deprecated
-	public static final long COMMERCETAXMETHODID_COLUMN_BITMASK = 4L;
+	public static final long COUNTRYID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
@@ -192,8 +192,8 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setCommerceTaxMethodId(soapModel.getCommerceTaxMethodId());
 		model.setCPTaxCategoryId(soapModel.getCPTaxCategoryId());
-		model.setCommerceCountryId(soapModel.getCommerceCountryId());
-		model.setCommerceRegionId(soapModel.getCommerceRegionId());
+		model.setCountryId(soapModel.getCountryId());
+		model.setRegionId(soapModel.getRegionId());
 		model.setZip(soapModel.getZip());
 		model.setRate(soapModel.getRate());
 
@@ -422,19 +422,17 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 			(BiConsumer<CommerceTaxFixedRateAddressRel, Long>)
 				CommerceTaxFixedRateAddressRel::setCPTaxCategoryId);
 		attributeGetterFunctions.put(
-			"commerceCountryId",
-			CommerceTaxFixedRateAddressRel::getCommerceCountryId);
+			"countryId", CommerceTaxFixedRateAddressRel::getCountryId);
 		attributeSetterBiConsumers.put(
-			"commerceCountryId",
+			"countryId",
 			(BiConsumer<CommerceTaxFixedRateAddressRel, Long>)
-				CommerceTaxFixedRateAddressRel::setCommerceCountryId);
+				CommerceTaxFixedRateAddressRel::setCountryId);
 		attributeGetterFunctions.put(
-			"commerceRegionId",
-			CommerceTaxFixedRateAddressRel::getCommerceRegionId);
+			"regionId", CommerceTaxFixedRateAddressRel::getRegionId);
 		attributeSetterBiConsumers.put(
-			"commerceRegionId",
+			"regionId",
 			(BiConsumer<CommerceTaxFixedRateAddressRel, Long>)
-				CommerceTaxFixedRateAddressRel::setCommerceRegionId);
+				CommerceTaxFixedRateAddressRel::setRegionId);
 		attributeGetterFunctions.put(
 			"zip", CommerceTaxFixedRateAddressRel::getZip);
 		attributeSetterBiConsumers.put(
@@ -640,17 +638,17 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 
 	@JSON
 	@Override
-	public long getCommerceCountryId() {
-		return _commerceCountryId;
+	public long getCountryId() {
+		return _countryId;
 	}
 
 	@Override
-	public void setCommerceCountryId(long commerceCountryId) {
+	public void setCountryId(long countryId) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_commerceCountryId = commerceCountryId;
+		_countryId = countryId;
 	}
 
 	/**
@@ -658,24 +656,24 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 	 *             #getColumnOriginalValue(String)}
 	 */
 	@Deprecated
-	public long getOriginalCommerceCountryId() {
+	public long getOriginalCountryId() {
 		return GetterUtil.getLong(
-			this.<Long>getColumnOriginalValue("commerceCountryId"));
+			this.<Long>getColumnOriginalValue("countryId"));
 	}
 
 	@JSON
 	@Override
-	public long getCommerceRegionId() {
-		return _commerceRegionId;
+	public long getRegionId() {
+		return _regionId;
 	}
 
 	@Override
-	public void setCommerceRegionId(long commerceRegionId) {
+	public void setRegionId(long regionId) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_commerceRegionId = commerceRegionId;
+		_regionId = regionId;
 	}
 
 	@JSON
@@ -781,10 +779,8 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 			getCommerceTaxMethodId());
 		commerceTaxFixedRateAddressRelImpl.setCPTaxCategoryId(
 			getCPTaxCategoryId());
-		commerceTaxFixedRateAddressRelImpl.setCommerceCountryId(
-			getCommerceCountryId());
-		commerceTaxFixedRateAddressRelImpl.setCommerceRegionId(
-			getCommerceRegionId());
+		commerceTaxFixedRateAddressRelImpl.setCountryId(getCountryId());
+		commerceTaxFixedRateAddressRelImpl.setRegionId(getRegionId());
 		commerceTaxFixedRateAddressRelImpl.setZip(getZip());
 		commerceTaxFixedRateAddressRelImpl.setRate(getRate());
 
@@ -918,11 +914,9 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 		commerceTaxFixedRateAddressRelCacheModel.CPTaxCategoryId =
 			getCPTaxCategoryId();
 
-		commerceTaxFixedRateAddressRelCacheModel.commerceCountryId =
-			getCommerceCountryId();
+		commerceTaxFixedRateAddressRelCacheModel.countryId = getCountryId();
 
-		commerceTaxFixedRateAddressRelCacheModel.commerceRegionId =
-			getCommerceRegionId();
+		commerceTaxFixedRateAddressRelCacheModel.regionId = getRegionId();
 
 		commerceTaxFixedRateAddressRelCacheModel.zip = getZip();
 
@@ -1023,8 +1017,8 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 	private boolean _setModifiedDate;
 	private long _commerceTaxMethodId;
 	private long _CPTaxCategoryId;
-	private long _commerceCountryId;
-	private long _commerceRegionId;
+	private long _countryId;
+	private long _regionId;
 	private String _zip;
 	private double _rate;
 
@@ -1067,8 +1061,8 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
 		_columnOriginalValues.put("commerceTaxMethodId", _commerceTaxMethodId);
 		_columnOriginalValues.put("CPTaxCategoryId", _CPTaxCategoryId);
-		_columnOriginalValues.put("commerceCountryId", _commerceCountryId);
-		_columnOriginalValues.put("commerceRegionId", _commerceRegionId);
+		_columnOriginalValues.put("countryId", _countryId);
+		_columnOriginalValues.put("regionId", _regionId);
 		_columnOriginalValues.put("zip", _zip);
 		_columnOriginalValues.put("rate", _rate);
 	}
@@ -1113,9 +1107,9 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 
 		columnBitmasks.put("CPTaxCategoryId", 256L);
 
-		columnBitmasks.put("commerceCountryId", 512L);
+		columnBitmasks.put("countryId", 512L);
 
-		columnBitmasks.put("commerceRegionId", 1024L);
+		columnBitmasks.put("regionId", 1024L);
 
 		columnBitmasks.put("zip", 2048L);
 

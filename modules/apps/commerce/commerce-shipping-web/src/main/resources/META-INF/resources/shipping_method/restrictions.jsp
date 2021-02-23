@@ -41,7 +41,7 @@ long commerceChannelId = commerceShippingMethodsDisplayContext.getCommerceChanne
 		namespace="<%= liferayPortletResponse.getNamespace() %>"
 		pageNumber="<%= 1 %>"
 		portletURL="<%= currentURLObj %>"
-		selectedItemsKey="commerceCountryId"
+		selectedItemsKey="countryId"
 		showPagination="<%= false %>"
 	/>
 </aui:form>

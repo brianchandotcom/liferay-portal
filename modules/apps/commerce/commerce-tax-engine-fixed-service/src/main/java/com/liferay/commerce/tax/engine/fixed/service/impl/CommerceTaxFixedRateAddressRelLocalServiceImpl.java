@@ -32,8 +32,8 @@ public class CommerceTaxFixedRateAddressRelLocalServiceImpl
 	@Override
 	public CommerceTaxFixedRateAddressRel addCommerceTaxFixedRateAddressRel(
 			long userId, long groupId, long commerceTaxMethodId,
-			long cpTaxCategoryId, long commerceCountryId, long commerceRegionId,
-			String zip, double rate)
+			long cpTaxCategoryId, long countryId, long regionId, String zip,
+			double rate)
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
@@ -51,8 +51,8 @@ public class CommerceTaxFixedRateAddressRelLocalServiceImpl
 		commerceTaxFixedRateAddressRel.setCommerceTaxMethodId(
 			commerceTaxMethodId);
 		commerceTaxFixedRateAddressRel.setCPTaxCategoryId(cpTaxCategoryId);
-		commerceTaxFixedRateAddressRel.setCommerceCountryId(commerceCountryId);
-		commerceTaxFixedRateAddressRel.setCommerceRegionId(commerceRegionId);
+		commerceTaxFixedRateAddressRel.setCountryId(countryId);
+		commerceTaxFixedRateAddressRel.setRegionId(regionId);
 		commerceTaxFixedRateAddressRel.setZip(zip);
 		commerceTaxFixedRateAddressRel.setRate(rate);
 
@@ -66,24 +66,16 @@ public class CommerceTaxFixedRateAddressRelLocalServiceImpl
 	@Deprecated
 	@Override
 	public CommerceTaxFixedRateAddressRel addCommerceTaxFixedRateAddressRel(
-			long commerceTaxMethodId, long cpTaxCategoryId,
-			long commerceCountryId, long commerceRegionId, String zip,
-			double rate, ServiceContext serviceContext)
+			long commerceTaxMethodId, long cpTaxCategoryId, long countryId,
+			long regionId, String zip, double rate,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		return commerceTaxFixedRateAddressRelLocalService.
 			addCommerceTaxFixedRateAddressRel(
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-				commerceTaxMethodId, cpTaxCategoryId, commerceCountryId,
-				commerceRegionId, zip, rate);
-	}
-
-	@Override
-	public void deleteCommerceTaxFixedRateAddressRelsByCommerceCountryId(
-		long commerceCountryId) {
-
-		commerceTaxFixedRateAddressRelPersistence.removeByCommerceCountryId(
-			commerceCountryId);
+				commerceTaxMethodId, cpTaxCategoryId, countryId, regionId, zip,
+				rate);
 	}
 
 	@Override
@@ -92,6 +84,13 @@ public class CommerceTaxFixedRateAddressRelLocalServiceImpl
 
 		commerceTaxFixedRateAddressRelPersistence.removeByCommerceTaxMethodId(
 			commerceTaxMethodId);
+	}
+
+	@Override
+	public void deleteCommerceTaxFixedRateAddressRelsByCountryId(
+		long countryId) {
+
+		commerceTaxFixedRateAddressRelPersistence.removeByCountryId(countryId);
 	}
 
 	@Override
@@ -104,21 +103,19 @@ public class CommerceTaxFixedRateAddressRelLocalServiceImpl
 
 	@Override
 	public CommerceTaxFixedRateAddressRel fetchCommerceTaxFixedRateAddressRel(
-		long commerceTaxMethodId, long cpTaxCategoryId, long commerceCountryId,
-		long commerceRegionId, String zip) {
+		long commerceTaxMethodId, long cpTaxCategoryId, long countryId,
+		long regionId, String zip) {
 
-		return commerceTaxFixedRateAddressRelFinder.fetchByC_C_C_C_Z_First(
-			commerceTaxMethodId, cpTaxCategoryId, commerceCountryId,
-			commerceRegionId, zip);
+		return commerceTaxFixedRateAddressRelFinder.fetchByC_C_C_R_Z_First(
+			commerceTaxMethodId, cpTaxCategoryId, countryId, regionId, zip);
 	}
 
 	@Override
 	public CommerceTaxFixedRateAddressRel fetchCommerceTaxFixedRateAddressRel(
-		long commerceTaxMethodId, long commerceCountryId, long commerceRegionId,
-		String zip) {
+		long commerceTaxMethodId, long countryId, long regionId, String zip) {
 
-		return commerceTaxFixedRateAddressRelFinder.fetchByC_C_C_Z_First(
-			commerceTaxMethodId, commerceCountryId, commerceRegionId, zip);
+		return commerceTaxFixedRateAddressRelFinder.fetchByC_C_R_Z_First(
+			commerceTaxMethodId, countryId, regionId, zip);
 	}
 
 	@Override
@@ -178,16 +175,16 @@ public class CommerceTaxFixedRateAddressRelLocalServiceImpl
 
 	@Override
 	public CommerceTaxFixedRateAddressRel updateCommerceTaxFixedRateAddressRel(
-			long commerceTaxFixedRateAddressRelId, long commerceCountryId,
-			long commerceRegionId, String zip, double rate)
+			long commerceTaxFixedRateAddressRelId, long countryId,
+			long regionId, String zip, double rate)
 		throws PortalException {
 
 		CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel =
 			commerceTaxFixedRateAddressRelPersistence.findByPrimaryKey(
 				commerceTaxFixedRateAddressRelId);
 
-		commerceTaxFixedRateAddressRel.setCommerceCountryId(commerceCountryId);
-		commerceTaxFixedRateAddressRel.setCommerceRegionId(commerceRegionId);
+		commerceTaxFixedRateAddressRel.setCountryId(countryId);
+		commerceTaxFixedRateAddressRel.setRegionId(regionId);
 		commerceTaxFixedRateAddressRel.setZip(zip);
 		commerceTaxFixedRateAddressRel.setRate(rate);
 

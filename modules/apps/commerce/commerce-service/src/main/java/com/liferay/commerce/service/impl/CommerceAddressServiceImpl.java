@@ -42,8 +42,8 @@ public class CommerceAddressServiceImpl extends CommerceAddressServiceBaseImpl {
 	public CommerceAddress addCommerceAddress(
 			String className, long classPK, String name, String description,
 			String street1, String street2, String street3, String city,
-			String zip, long commerceRegionId, long commerceCountryId,
-			String phoneNumber, boolean defaultBilling, boolean defaultShipping,
+			String zip, long regionId, long countryId, String phoneNumber,
+			boolean defaultBilling, boolean defaultShipping,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -51,30 +51,30 @@ public class CommerceAddressServiceImpl extends CommerceAddressServiceBaseImpl {
 
 		return commerceAddressLocalService.addCommerceAddress(
 			className, classPK, name, description, street1, street2, street3,
-			city, zip, commerceRegionId, commerceCountryId, phoneNumber,
-			defaultBilling, defaultShipping, serviceContext);
+			city, zip, regionId, countryId, phoneNumber, defaultBilling,
+			defaultShipping, serviceContext);
 	}
 
 	@Override
 	public CommerceAddress addCommerceAddress(
 			String className, long classPK, String name, String description,
 			String street1, String street2, String street3, String city,
-			String zip, long commerceRegionId, long commerceCountryId,
-			String phoneNumber, int type, ServiceContext serviceContext)
+			String zip, long regionId, long countryId, String phoneNumber,
+			int type, ServiceContext serviceContext)
 		throws PortalException {
 
 		return commerceAddressService.addCommerceAddress(
 			null, className, classPK, name, description, street1, street2,
-			street3, city, zip, commerceRegionId, commerceCountryId,
-			phoneNumber, type, serviceContext);
+			street3, city, zip, regionId, countryId, phoneNumber, type,
+			serviceContext);
 	}
 
 	@Override
 	public CommerceAddress addCommerceAddress(
 			String externalReferenceCode, String className, long classPK,
 			String name, String description, String street1, String street2,
-			String street3, String city, String zip, long commerceRegionId,
-			long commerceCountryId, String phoneNumber, int type,
+			String street3, String city, String zip, long regionId,
+			long countryId, String phoneNumber, int type,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -82,8 +82,8 @@ public class CommerceAddressServiceImpl extends CommerceAddressServiceBaseImpl {
 
 		return commerceAddressLocalService.addCommerceAddress(
 			externalReferenceCode, className, classPK, name, description,
-			street1, street2, street3, city, zip, commerceRegionId,
-			commerceCountryId, phoneNumber, type, serviceContext);
+			street1, street2, street3, city, zip, regionId, countryId,
+			phoneNumber, type, serviceContext);
 	}
 
 	@Override
@@ -346,8 +346,8 @@ public class CommerceAddressServiceImpl extends CommerceAddressServiceBaseImpl {
 	public CommerceAddress updateCommerceAddress(
 			long commerceAddressId, String name, String description,
 			String street1, String street2, String street3, String city,
-			String zip, long commerceRegionId, long commerceCountryId,
-			String phoneNumber, boolean defaultBilling, boolean defaultShipping,
+			String zip, long regionId, long countryId, String phoneNumber,
+			boolean defaultBilling, boolean defaultShipping,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -358,16 +358,16 @@ public class CommerceAddressServiceImpl extends CommerceAddressServiceBaseImpl {
 
 		return commerceAddressLocalService.updateCommerceAddress(
 			commerceAddress.getCommerceAddressId(), name, description, street1,
-			street2, street3, city, zip, commerceRegionId, commerceCountryId,
-			phoneNumber, defaultBilling, defaultShipping, serviceContext);
+			street2, street3, city, zip, regionId, countryId, phoneNumber,
+			defaultBilling, defaultShipping, serviceContext);
 	}
 
 	@Override
 	public CommerceAddress updateCommerceAddress(
 			long commerceAddressId, String name, String description,
 			String street1, String street2, String street3, String city,
-			String zip, long commerceRegionId, long commerceCountryId,
-			String phoneNumber, int type, ServiceContext serviceContext)
+			String zip, long regionId, long countryId, String phoneNumber,
+			int type, ServiceContext serviceContext)
 		throws PortalException {
 
 		CommerceAddress commerceAddress =
@@ -377,8 +377,8 @@ public class CommerceAddressServiceImpl extends CommerceAddressServiceBaseImpl {
 
 		return commerceAddressLocalService.updateCommerceAddress(
 			commerceAddress.getCommerceAddressId(), name, description, street1,
-			street2, street3, city, zip, commerceRegionId, commerceCountryId,
-			phoneNumber, type, serviceContext);
+			street2, street3, city, zip, regionId, countryId, phoneNumber, type,
+			serviceContext);
 	}
 
 	protected void checkPermission(CommerceAddress commerceAddress)

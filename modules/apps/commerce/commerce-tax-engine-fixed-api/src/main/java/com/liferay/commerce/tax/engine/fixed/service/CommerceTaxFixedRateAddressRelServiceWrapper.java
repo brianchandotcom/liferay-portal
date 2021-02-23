@@ -40,14 +40,14 @@ public class CommerceTaxFixedRateAddressRelServiceWrapper
 		com.liferay.commerce.tax.engine.fixed.model.
 			CommerceTaxFixedRateAddressRel addCommerceTaxFixedRateAddressRel(
 					long userId, long groupId, long commerceTaxMethodId,
-					long cpTaxCategoryId, long commerceCountryId,
-					long commerceRegionId, String zip, double rate)
+					long cpTaxCategoryId, long countryId, long regionId,
+					String zip, double rate)
 				throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceTaxFixedRateAddressRelService.
 			addCommerceTaxFixedRateAddressRel(
 				userId, groupId, commerceTaxMethodId, cpTaxCategoryId,
-				commerceCountryId, commerceRegionId, zip, rate);
+				countryId, regionId, zip, rate);
 	}
 
 	/**
@@ -59,16 +59,15 @@ public class CommerceTaxFixedRateAddressRelServiceWrapper
 		com.liferay.commerce.tax.engine.fixed.model.
 			CommerceTaxFixedRateAddressRel addCommerceTaxFixedRateAddressRel(
 					long commerceTaxMethodId, long cpTaxCategoryId,
-					long commerceCountryId, long commerceRegionId, String zip,
-					double rate,
+					long countryId, long regionId, String zip, double rate,
 					com.liferay.portal.kernel.service.ServiceContext
 						serviceContext)
 				throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceTaxFixedRateAddressRelService.
 			addCommerceTaxFixedRateAddressRel(
-				commerceTaxMethodId, cpTaxCategoryId, commerceCountryId,
-				commerceRegionId, zip, rate, serviceContext);
+				commerceTaxMethodId, cpTaxCategoryId, countryId, regionId, zip,
+				rate, serviceContext);
 	}
 
 	@Override
@@ -136,15 +135,14 @@ public class CommerceTaxFixedRateAddressRelServiceWrapper
 	public
 		com.liferay.commerce.tax.engine.fixed.model.
 			CommerceTaxFixedRateAddressRel updateCommerceTaxFixedRateAddressRel(
-					long commerceTaxFixedRateAddressRelId,
-					long commerceCountryId, long commerceRegionId, String zip,
-					double rate)
+					long commerceTaxFixedRateAddressRelId, long countryId,
+					long regionId, String zip, double rate)
 				throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceTaxFixedRateAddressRelService.
 			updateCommerceTaxFixedRateAddressRel(
-				commerceTaxFixedRateAddressRelId, commerceCountryId,
-				commerceRegionId, zip, rate);
+				commerceTaxFixedRateAddressRelId, countryId, regionId, zip,
+				rate);
 	}
 
 	@Override

@@ -201,11 +201,11 @@ public class CommerceInventoryTestUtil {
 	}
 
 	public static Region addRegion(
-			long commerceCountryId, ServiceContext serviceContext)
+			long countryId, ServiceContext serviceContext)
 		throws PortalException {
 
 		return RegionLocalServiceUtil.addRegion(
-			commerceCountryId, true, RandomTestUtil.randomString(), 0,
+			countryId, true, RandomTestUtil.randomString(), 0,
 			RandomTestUtil.randomString(), serviceContext);
 	}
 

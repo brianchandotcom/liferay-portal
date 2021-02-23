@@ -43,11 +43,11 @@ public class CommerceShippingMethodServiceUtil {
 	public static com.liferay.commerce.model.CommerceAddressRestriction
 			addCommerceAddressRestriction(
 				long userId, long groupId, long commerceShippingMethodId,
-				long commerceCountryId)
+				long countryId)
 		throws PortalException {
 
 		return getService().addCommerceAddressRestriction(
-			userId, groupId, commerceShippingMethodId, commerceCountryId);
+			userId, groupId, commerceShippingMethodId, countryId);
 	}
 
 	/**
@@ -56,12 +56,12 @@ public class CommerceShippingMethodServiceUtil {
 	@Deprecated
 	public static com.liferay.commerce.model.CommerceAddressRestriction
 			addCommerceAddressRestriction(
-				long commerceShippingMethodId, long commerceCountryId,
+				long commerceShippingMethodId, long countryId,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addCommerceAddressRestriction(
-			commerceShippingMethodId, commerceCountryId, serviceContext);
+			commerceShippingMethodId, countryId, serviceContext);
 	}
 
 	public static CommerceShippingMethod addCommerceShippingMethod(
@@ -156,11 +156,11 @@ public class CommerceShippingMethodServiceUtil {
 	}
 
 	public static List<CommerceShippingMethod> getCommerceShippingMethods(
-			long groupId, long commerceCountryId, boolean active)
+			long groupId, long countryId, boolean active)
 		throws PortalException {
 
 		return getService().getCommerceShippingMethods(
-			groupId, commerceCountryId, active);
+			groupId, countryId, active);
 	}
 
 	public static int getCommerceShippingMethodsCount(

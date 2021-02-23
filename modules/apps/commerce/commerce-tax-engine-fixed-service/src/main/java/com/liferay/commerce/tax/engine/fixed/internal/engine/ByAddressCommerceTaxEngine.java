@@ -59,8 +59,8 @@ public class ByAddressCommerceTaxEngine implements CommerceTaxEngine {
 			CommerceTaxCalculateRequest commerceTaxCalculateRequest)
 		throws CommerceTaxEngineException {
 
-		long commerceCountryId = 0;
-		long commerceRegionId = 0;
+		long countryId = 0;
+		long regionId = 0;
 		String zip = StringPool.BLANK;
 
 		long commerceAddressId =
@@ -78,8 +78,8 @@ public class ByAddressCommerceTaxEngine implements CommerceTaxEngine {
 				commerceAddressId);
 
 		if (commerceAddress != null) {
-			commerceCountryId = commerceAddress.getCommerceCountryId();
-			commerceRegionId = commerceAddress.getCommerceRegionId();
+			countryId = commerceAddress.getCountryId();
+			regionId = commerceAddress.getRegionId();
 			zip = commerceAddress.getZip();
 		}
 
@@ -87,8 +87,8 @@ public class ByAddressCommerceTaxEngine implements CommerceTaxEngine {
 			_commerceTaxFixedRateAddressRelLocalService.
 				fetchCommerceTaxFixedRateAddressRel(
 					commerceTaxCalculateRequest.getCommerceTaxMethodId(),
-					commerceTaxCalculateRequest.getTaxCategoryId(),
-					commerceCountryId, commerceRegionId, zip);
+					commerceTaxCalculateRequest.getTaxCategoryId(), countryId,
+					regionId, zip);
 
 		if (commerceTaxFixedRateAddressRel == null) {
 			return null;

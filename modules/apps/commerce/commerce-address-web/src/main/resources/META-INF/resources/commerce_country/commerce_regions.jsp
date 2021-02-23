@@ -49,7 +49,7 @@ CommerceRegionsDisplayContext commerceRegionsDisplayContext = (CommerceRegionsDi
 			<portlet:renderURL var="addCommerceRegionURL">
 				<portlet:param name="mvcRenderCommandName" value="/commerce_country/edit_commerce_region" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="commerceCountryId" value="<%= String.valueOf(commerceRegionsDisplayContext.getCountryId()) %>" />
+				<portlet:param name="countryId" value="<%= String.valueOf(commerceRegionsDisplayContext.getCountryId()) %>" />
 			</portlet:renderURL>
 
 			<liferay-frontend:add-menu
@@ -64,7 +64,7 @@ CommerceRegionsDisplayContext commerceRegionsDisplayContext = (CommerceRegionsDi
 
 		<liferay-frontend:management-bar-action-buttons>
 			<liferay-frontend:management-bar-button
-				href='<%= "javascript:" + liferayPortletResponse.getNamespace() + "deleteCommerceRegions();" %>'
+				href='<%= "javascript:" + liferayPortletResponse.getNamespace() + "deleteRegions();" %>'
 				icon="times"
 				label="delete"
 			/>
@@ -77,7 +77,7 @@ CommerceRegionsDisplayContext commerceRegionsDisplayContext = (CommerceRegionsDi
 		<aui:form action="<%= editCommerceRegionActionURL %>" method="post" name="fm">
 			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.DELETE %>" />
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-			<aui:input name="deleteCommerceRegionIds" type="hidden" />
+			<aui:input name="deleteRegionIds" type="hidden" />
 
 			<liferay-ui:search-container
 				id="commerceRegions"
@@ -94,8 +94,8 @@ CommerceRegionsDisplayContext commerceRegionsDisplayContext = (CommerceRegionsDi
 
 					rowURL.setParameter("mvcRenderCommandName", "/commerce_country/edit_commerce_region");
 					rowURL.setParameter("redirect", currentURL);
-					rowURL.setParameter("commerceCountryId", String.valueOf(region.getCountryId()));
-					rowURL.setParameter("commerceRegionId", String.valueOf(region.getRegionId()));
+					rowURL.setParameter("countryId", String.valueOf(region.getCountryId()));
+					rowURL.setParameter("regionId", String.valueOf(region.getRegionId()));
 					%>
 
 					<liferay-ui:search-container-column-text
@@ -160,7 +160,7 @@ CommerceRegionsDisplayContext commerceRegionsDisplayContext = (CommerceRegionsDi
 				var form = window.document['<portlet:namespace />fm'];
 
 				form[
-					'<portlet:namespace />deleteCommerceRegionIds'
+					'<portlet:namespace />deleteRegionIds'
 				].value = Liferay.Util.listCheckedExcept(
 					form,
 					'<portlet:namespace />allRowIds'

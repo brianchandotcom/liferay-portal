@@ -56,8 +56,8 @@ public class CommerceTaxFixedRateAddressRelWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("commerceTaxMethodId", getCommerceTaxMethodId());
 		attributes.put("CPTaxCategoryId", getCPTaxCategoryId());
-		attributes.put("commerceCountryId", getCommerceCountryId());
-		attributes.put("commerceRegionId", getCommerceRegionId());
+		attributes.put("countryId", getCountryId());
+		attributes.put("regionId", getRegionId());
 		attributes.put("zip", getZip());
 		attributes.put("rate", getRate());
 
@@ -122,16 +122,16 @@ public class CommerceTaxFixedRateAddressRelWrapper
 			setCPTaxCategoryId(CPTaxCategoryId);
 		}
 
-		Long commerceCountryId = (Long)attributes.get("commerceCountryId");
+		Long countryId = (Long)attributes.get("countryId");
 
-		if (commerceCountryId != null) {
-			setCommerceCountryId(commerceCountryId);
+		if (countryId != null) {
+			setCountryId(countryId);
 		}
 
-		Long commerceRegionId = (Long)attributes.get("commerceRegionId");
+		Long regionId = (Long)attributes.get("regionId");
 
-		if (commerceRegionId != null) {
-			setCommerceRegionId(commerceRegionId);
+		if (regionId != null) {
+			setRegionId(regionId);
 		}
 
 		String zip = (String)attributes.get("zip");
@@ -145,26 +145,6 @@ public class CommerceTaxFixedRateAddressRelWrapper
 		if (rate != null) {
 			setRate(rate);
 		}
-	}
-
-	/**
-	 * Returns the commerce country ID of this commerce tax fixed rate address rel.
-	 *
-	 * @return the commerce country ID of this commerce tax fixed rate address rel
-	 */
-	@Override
-	public long getCommerceCountryId() {
-		return model.getCommerceCountryId();
-	}
-
-	/**
-	 * Returns the commerce region ID of this commerce tax fixed rate address rel.
-	 *
-	 * @return the commerce region ID of this commerce tax fixed rate address rel
-	 */
-	@Override
-	public long getCommerceRegionId() {
-		return model.getCommerceRegionId();
 	}
 
 	/**
@@ -210,6 +190,16 @@ public class CommerceTaxFixedRateAddressRelWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return model.getCountry();
+	}
+
+	/**
+	 * Returns the country ID of this commerce tax fixed rate address rel.
+	 *
+	 * @return the country ID of this commerce tax fixed rate address rel
+	 */
+	@Override
+	public long getCountryId() {
+		return model.getCountryId();
 	}
 
 	@Override
@@ -287,6 +277,16 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	}
 
 	/**
+	 * Returns the region ID of this commerce tax fixed rate address rel.
+	 *
+	 * @return the region ID of this commerce tax fixed rate address rel
+	 */
+	@Override
+	public long getRegionId() {
+		return model.getRegionId();
+	}
+
+	/**
 	 * Returns the user ID of this commerce tax fixed rate address rel.
 	 *
 	 * @return the user ID of this commerce tax fixed rate address rel
@@ -332,26 +332,6 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	}
 
 	/**
-	 * Sets the commerce country ID of this commerce tax fixed rate address rel.
-	 *
-	 * @param commerceCountryId the commerce country ID of this commerce tax fixed rate address rel
-	 */
-	@Override
-	public void setCommerceCountryId(long commerceCountryId) {
-		model.setCommerceCountryId(commerceCountryId);
-	}
-
-	/**
-	 * Sets the commerce region ID of this commerce tax fixed rate address rel.
-	 *
-	 * @param commerceRegionId the commerce region ID of this commerce tax fixed rate address rel
-	 */
-	@Override
-	public void setCommerceRegionId(long commerceRegionId) {
-		model.setCommerceRegionId(commerceRegionId);
-	}
-
-	/**
 	 * Sets the commerce tax fixed rate address rel ID of this commerce tax fixed rate address rel.
 	 *
 	 * @param commerceTaxFixedRateAddressRelId the commerce tax fixed rate address rel ID of this commerce tax fixed rate address rel
@@ -382,6 +362,16 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
+	}
+
+	/**
+	 * Sets the country ID of this commerce tax fixed rate address rel.
+	 *
+	 * @param countryId the country ID of this commerce tax fixed rate address rel
+	 */
+	@Override
+	public void setCountryId(long countryId) {
+		model.setCountryId(countryId);
 	}
 
 	/**
@@ -442,6 +432,16 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	@Override
 	public void setRate(double rate) {
 		model.setRate(rate);
+	}
+
+	/**
+	 * Sets the region ID of this commerce tax fixed rate address rel.
+	 *
+	 * @param regionId the region ID of this commerce tax fixed rate address rel
+	 */
+	@Override
+	public void setRegionId(long regionId) {
+		model.setRegionId(regionId);
 	}
 
 	/**

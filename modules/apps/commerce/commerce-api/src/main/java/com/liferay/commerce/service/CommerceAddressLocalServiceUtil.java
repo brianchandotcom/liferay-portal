@@ -68,43 +68,42 @@ public class CommerceAddressLocalServiceUtil {
 	public static CommerceAddress addCommerceAddress(
 			String className, long classPK, String name, String description,
 			String street1, String street2, String street3, String city,
-			String zip, long commerceRegionId, long commerceCountryId,
-			String phoneNumber, boolean defaultBilling, boolean defaultShipping,
+			String zip, long regionId, long countryId, String phoneNumber,
+			boolean defaultBilling, boolean defaultShipping,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addCommerceAddress(
 			className, classPK, name, description, street1, street2, street3,
-			city, zip, commerceRegionId, commerceCountryId, phoneNumber,
-			defaultBilling, defaultShipping, serviceContext);
+			city, zip, regionId, countryId, phoneNumber, defaultBilling,
+			defaultShipping, serviceContext);
 	}
 
 	public static CommerceAddress addCommerceAddress(
 			String className, long classPK, String name, String description,
 			String street1, String street2, String street3, String city,
-			String zip, long commerceRegionId, long commerceCountryId,
-			String phoneNumber, int type,
+			String zip, long regionId, long countryId, String phoneNumber,
+			int type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addCommerceAddress(
 			className, classPK, name, description, street1, street2, street3,
-			city, zip, commerceRegionId, commerceCountryId, phoneNumber, type,
-			serviceContext);
+			city, zip, regionId, countryId, phoneNumber, type, serviceContext);
 	}
 
 	public static CommerceAddress addCommerceAddress(
 			String externalReferenceCode, String className, long classPK,
 			String name, String description, String street1, String street2,
-			String street3, String city, String zip, long commerceRegionId,
-			long commerceCountryId, String phoneNumber, int type,
+			String street3, String city, String zip, long regionId,
+			long countryId, String phoneNumber, int type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addCommerceAddress(
 			externalReferenceCode, className, classPK, name, description,
-			street1, street2, street3, city, zip, commerceRegionId,
-			commerceCountryId, phoneNumber, type, serviceContext);
+			street1, street2, street3, city, zip, regionId, countryId,
+			phoneNumber, type, serviceContext);
 	}
 
 	public static CommerceAddress copyCommerceAddress(
@@ -179,10 +178,10 @@ public class CommerceAddressLocalServiceUtil {
 		getService().deleteCommerceAddresses(className, classPK);
 	}
 
-	public static void deleteCountryCommerceAddresses(long commerceCountryId)
+	public static void deleteCountryCommerceAddresses(long countryId)
 		throws PortalException {
 
-		getService().deleteCountryCommerceAddresses(commerceCountryId);
+		getService().deleteCountryCommerceAddresses(countryId);
 	}
 
 	/**
@@ -195,10 +194,10 @@ public class CommerceAddressLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static void deleteRegionCommerceAddresses(long commerceRegionId)
+	public static void deleteRegionCommerceAddresses(long regionId)
 		throws PortalException {
 
-		getService().deleteRegionCommerceAddresses(commerceRegionId);
+		getService().deleteRegionCommerceAddresses(regionId);
 	}
 
 	public static <T> T dslQuery(DSLQuery dslQuery) {
@@ -558,29 +557,28 @@ public class CommerceAddressLocalServiceUtil {
 	public static CommerceAddress updateCommerceAddress(
 			long commerceAddressId, String name, String description,
 			String street1, String street2, String street3, String city,
-			String zip, long commerceRegionId, long commerceCountryId,
-			String phoneNumber, boolean defaultBilling, boolean defaultShipping,
+			String zip, long regionId, long countryId, String phoneNumber,
+			boolean defaultBilling, boolean defaultShipping,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateCommerceAddress(
 			commerceAddressId, name, description, street1, street2, street3,
-			city, zip, commerceRegionId, commerceCountryId, phoneNumber,
-			defaultBilling, defaultShipping, serviceContext);
+			city, zip, regionId, countryId, phoneNumber, defaultBilling,
+			defaultShipping, serviceContext);
 	}
 
 	public static CommerceAddress updateCommerceAddress(
 			long commerceAddressId, String name, String description,
 			String street1, String street2, String street3, String city,
-			String zip, long commerceRegionId, long commerceCountryId,
-			String phoneNumber, int type,
+			String zip, long regionId, long countryId, String phoneNumber,
+			int type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateCommerceAddress(
 			commerceAddressId, name, description, street1, street2, street3,
-			city, zip, commerceRegionId, commerceCountryId, phoneNumber, type,
-			serviceContext);
+			city, zip, regionId, countryId, phoneNumber, type, serviceContext);
 	}
 
 	public static CommerceAddressLocalService getService() {

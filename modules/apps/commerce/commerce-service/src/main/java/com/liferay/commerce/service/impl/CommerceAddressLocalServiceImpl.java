@@ -73,8 +73,8 @@ public class CommerceAddressLocalServiceImpl
 	public CommerceAddress addCommerceAddress(
 			String className, long classPK, String name, String description,
 			String street1, String street2, String street3, String city,
-			String zip, long commerceRegionId, long commerceCountryId,
-			String phoneNumber, boolean defaultBilling, boolean defaultShipping,
+			String zip, long regionId, long countryId, String phoneNumber,
+			boolean defaultBilling, boolean defaultShipping,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -89,8 +89,7 @@ public class CommerceAddressLocalServiceImpl
 
 		return commerceAddressLocalService.addCommerceAddress(
 			className, classPK, name, description, street1, street2, street3,
-			city, zip, commerceRegionId, commerceCountryId, phoneNumber, type,
-			serviceContext);
+			city, zip, regionId, countryId, phoneNumber, type, serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -98,14 +97,14 @@ public class CommerceAddressLocalServiceImpl
 	public CommerceAddress addCommerceAddress(
 			String className, long classPK, String name, String description,
 			String street1, String street2, String street3, String city,
-			String zip, long commerceRegionId, long commerceCountryId,
-			String phoneNumber, int type, ServiceContext serviceContext)
+			String zip, long regionId, long countryId, String phoneNumber,
+			int type, ServiceContext serviceContext)
 		throws PortalException {
 
 		return commerceAddressLocalService.addCommerceAddress(
 			null, className, classPK, name, description, street1, street2,
-			street3, city, zip, commerceRegionId, commerceCountryId,
-			phoneNumber, type, serviceContext);
+			street3, city, zip, regionId, countryId, phoneNumber, type,
+			serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -113,8 +112,8 @@ public class CommerceAddressLocalServiceImpl
 	public CommerceAddress addCommerceAddress(
 			String externalReferenceCode, String className, long classPK,
 			String name, String description, String street1, String street2,
-			String street3, String city, String zip, long commerceRegionId,
-			long commerceCountryId, String phoneNumber, int type,
+			String street3, String city, String zip, long regionId,
+			long countryId, String phoneNumber, int type,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -122,7 +121,7 @@ public class CommerceAddressLocalServiceImpl
 
 		long companyId = user.getCompanyId();
 
-		validate(name, street1, city, zip, commerceCountryId, type);
+		validate(name, street1, city, zip, countryId, type);
 
 		long commerceAddressId = counterLocalService.increment();
 
@@ -142,8 +141,8 @@ public class CommerceAddressLocalServiceImpl
 		commerceAddress.setStreet3(street3);
 		commerceAddress.setCity(city);
 		commerceAddress.setZip(zip);
-		commerceAddress.setCommerceRegionId(commerceRegionId);
-		commerceAddress.setCommerceCountryId(commerceCountryId);
+		commerceAddress.setRegionId(regionId);
+		commerceAddress.setCountryId(countryId);
 		commerceAddress.setPhoneNumber(phoneNumber);
 		commerceAddress.setType(type);
 
@@ -165,8 +164,7 @@ public class CommerceAddressLocalServiceImpl
 				commerceAddress.getDescription(), commerceAddress.getStreet1(),
 				commerceAddress.getStreet2(), commerceAddress.getStreet3(),
 				commerceAddress.getCity(), commerceAddress.getZip(),
-				commerceAddress.getCommerceRegionId(),
-				commerceAddress.getCommerceCountryId(),
+				commerceAddress.getRegionId(), commerceAddress.getCountryId(),
 				commerceAddress.getPhoneNumber(), false, false, serviceContext);
 
 		if (Validator.isNotNull(commerceAddress.getExternalReferenceCode())) {
@@ -235,12 +233,11 @@ public class CommerceAddressLocalServiceImpl
 	}
 
 	@Override
-	public void deleteCountryCommerceAddresses(long commerceCountryId)
+	public void deleteCountryCommerceAddresses(long countryId)
 		throws PortalException {
 
 		List<CommerceAddress> commerceAddresses =
-			commerceAddressPersistence.findByCommerceCountryId(
-				commerceCountryId);
+			commerceAddressPersistence.findByCountryId(countryId);
 
 		for (CommerceAddress commerceAddress : commerceAddresses) {
 			commerceAddressLocalService.deleteCommerceAddress(commerceAddress);
@@ -248,11 +245,11 @@ public class CommerceAddressLocalServiceImpl
 	}
 
 	@Override
-	public void deleteRegionCommerceAddresses(long commerceRegionId)
+	public void deleteRegionCommerceAddresses(long regionId)
 		throws PortalException {
 
 		List<CommerceAddress> commerceAddresses =
-			commerceAddressPersistence.findByCommerceRegionId(commerceRegionId);
+			commerceAddressPersistence.findByRegionId(regionId);
 
 		for (CommerceAddress commerceAddress : commerceAddresses) {
 			commerceAddressLocalService.deleteCommerceAddress(commerceAddress);
@@ -526,8 +523,8 @@ public class CommerceAddressLocalServiceImpl
 	public CommerceAddress updateCommerceAddress(
 			long commerceAddressId, String name, String description,
 			String street1, String street2, String street3, String city,
-			String zip, long commerceRegionId, long commerceCountryId,
-			String phoneNumber, boolean defaultBilling, boolean defaultShipping,
+			String zip, long regionId, long countryId, String phoneNumber,
+			boolean defaultBilling, boolean defaultShipping,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -542,8 +539,7 @@ public class CommerceAddressLocalServiceImpl
 
 		return updateCommerceAddress(
 			commerceAddressId, name, description, street1, street2, street3,
-			city, zip, commerceRegionId, commerceCountryId, phoneNumber, type,
-			serviceContext);
+			city, zip, regionId, countryId, phoneNumber, type, serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -551,8 +547,8 @@ public class CommerceAddressLocalServiceImpl
 	public CommerceAddress updateCommerceAddress(
 			long commerceAddressId, String name, String description,
 			String street1, String street2, String street3, String city,
-			String zip, long commerceRegionId, long commerceCountryId,
-			String phoneNumber, int type, ServiceContext serviceContext)
+			String zip, long regionId, long countryId, String phoneNumber,
+			int type, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce address
@@ -560,7 +556,7 @@ public class CommerceAddressLocalServiceImpl
 		CommerceAddress commerceAddress =
 			commerceAddressPersistence.findByPrimaryKey(commerceAddressId);
 
-		validate(name, street1, city, zip, commerceCountryId, type);
+		validate(name, street1, city, zip, countryId, type);
 
 		commerceAddress.setName(name);
 		commerceAddress.setDescription(description);
@@ -569,8 +565,8 @@ public class CommerceAddressLocalServiceImpl
 		commerceAddress.setStreet3(street3);
 		commerceAddress.setCity(city);
 		commerceAddress.setZip(zip);
-		commerceAddress.setCommerceRegionId(commerceRegionId);
-		commerceAddress.setCommerceCountryId(commerceCountryId);
+		commerceAddress.setRegionId(regionId);
+		commerceAddress.setCountryId(countryId);
 		commerceAddress.setLatitude(0);
 		commerceAddress.setLongitude(0);
 		commerceAddress.setPhoneNumber(phoneNumber);
@@ -755,7 +751,7 @@ public class CommerceAddressLocalServiceImpl
 
 	protected void validate(
 			String name, String street1, String city, String zip,
-			long commerceCountryId, int type)
+			long countryId, int type)
 		throws PortalException {
 
 		if (Validator.isNull(name)) {
@@ -774,7 +770,7 @@ public class CommerceAddressLocalServiceImpl
 			throw new CommerceAddressZipException();
 		}
 
-		if (commerceCountryId <= 0) {
+		if (countryId <= 0) {
 			throw new CommerceAddressCountryException();
 		}
 

@@ -63,9 +63,9 @@ public class CommerceInventoryWarehouseItemSelectorViewDisplayContext
 		_search = search;
 	}
 
-	public long getCommerceCountryId() {
+	public long getCountryId() {
 		return ParamUtil.getLong(
-			cpRequestHelper.getRenderRequest(), "commerceCountryId", -1);
+			cpRequestHelper.getRenderRequest(), "countryId", -1);
 	}
 
 	public List<ManagementBarFilterItem> getManagementBarFilterItems()
@@ -94,8 +94,7 @@ public class CommerceInventoryWarehouseItemSelectorViewDisplayContext
 	public PortletURL getPortletURL() {
 		PortletURL portletURL = super.getPortletURL();
 
-		portletURL.setParameter(
-			"commerceCountryId", String.valueOf(getCommerceCountryId()));
+		portletURL.setParameter("countryId", String.valueOf(getCountryId()));
 
 		return portletURL;
 	}
@@ -108,7 +107,7 @@ public class CommerceInventoryWarehouseItemSelectorViewDisplayContext
 			return searchContainer;
 		}
 
-		long commerceCountryId = getCommerceCountryId();
+		long countryId = getCountryId();
 
 		String emptyResultsMessage = "there-are-no-warehouses";
 
@@ -118,10 +117,10 @@ public class CommerceInventoryWarehouseItemSelectorViewDisplayContext
 
 		Country country = null;
 
-		if (commerceCountryId > 0) {
+		if (countryId > 0) {
 			emptyResultsMessage += "-in-x";
 
-			country = _countryService.getCountry(commerceCountryId);
+			country = _countryService.getCountry(countryId);
 
 			Locale locale = cpRequestHelper.getLocale();
 
@@ -206,24 +205,22 @@ public class CommerceInventoryWarehouseItemSelectorViewDisplayContext
 	}
 
 	protected ManagementBarFilterItem getManagementBarFilterItem(
-			long commerceCountryId, String label)
+			long countryId, String label)
 		throws PortletException {
 
 		boolean active = false;
 
-		if (getCommerceCountryId() == commerceCountryId) {
+		if (getCountryId() == countryId) {
 			active = true;
 		}
 
 		PortletURL portletURL = PortletURLUtil.clone(
 			getPortletURL(), cpRequestHelper.getRenderResponse());
 
-		portletURL.setParameter(
-			"commerceCountryId", String.valueOf(commerceCountryId));
+		portletURL.setParameter("countryId", String.valueOf(countryId));
 
 		return new ManagementBarFilterItem(
-			active, String.valueOf(commerceCountryId), label,
-			portletURL.toString());
+			active, String.valueOf(countryId), label, portletURL.toString());
 	}
 
 	private final CommerceCountryManager _commerceCountryManager;

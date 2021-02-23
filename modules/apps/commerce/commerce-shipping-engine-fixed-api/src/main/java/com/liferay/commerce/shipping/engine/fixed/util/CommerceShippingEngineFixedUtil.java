@@ -17,7 +17,7 @@ package com.liferay.commerce.shipping.engine.fixed.util;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel;
 import com.liferay.commerce.shipping.engine.fixed.util.comparator.CommerceShippingFixedOptionPriorityComparator;
-import com.liferay.commerce.shipping.engine.fixed.util.comparator.CommerceShippingFixedOptionRelCommerceCountryIdComparator;
+import com.liferay.commerce.shipping.engine.fixed.util.comparator.CommerceShippingFixedOptionRelCountryIdComparator;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
@@ -60,7 +60,7 @@ public class CommerceShippingEngineFixedUtil {
 
 		if (orderByCol.equals("country")) {
 			orderByComparator =
-				new CommerceShippingFixedOptionRelCommerceCountryIdComparator(
+				new CommerceShippingFixedOptionRelCountryIdComparator(
 					orderByAsc);
 		}
 

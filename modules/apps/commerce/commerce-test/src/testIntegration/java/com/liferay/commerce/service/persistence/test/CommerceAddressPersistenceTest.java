@@ -158,9 +158,9 @@ public class CommerceAddressPersistenceTest {
 
 		newCommerceAddress.setZip(RandomTestUtil.randomString());
 
-		newCommerceAddress.setCommerceRegionId(RandomTestUtil.nextLong());
+		newCommerceAddress.setRegionId(RandomTestUtil.nextLong());
 
-		newCommerceAddress.setCommerceCountryId(RandomTestUtil.nextLong());
+		newCommerceAddress.setCountryId(RandomTestUtil.nextLong());
 
 		newCommerceAddress.setLatitude(RandomTestUtil.nextDouble());
 
@@ -228,11 +228,11 @@ public class CommerceAddressPersistenceTest {
 		Assert.assertEquals(
 			existingCommerceAddress.getZip(), newCommerceAddress.getZip());
 		Assert.assertEquals(
-			existingCommerceAddress.getCommerceRegionId(),
-			newCommerceAddress.getCommerceRegionId());
+			existingCommerceAddress.getRegionId(),
+			newCommerceAddress.getRegionId());
 		Assert.assertEquals(
-			existingCommerceAddress.getCommerceCountryId(),
-			newCommerceAddress.getCommerceCountryId());
+			existingCommerceAddress.getCountryId(),
+			newCommerceAddress.getCountryId());
 		AssertUtils.assertEquals(
 			existingCommerceAddress.getLatitude(),
 			newCommerceAddress.getLatitude());
@@ -253,17 +253,17 @@ public class CommerceAddressPersistenceTest {
 	}
 
 	@Test
-	public void testCountByCommerceRegionId() throws Exception {
-		_persistence.countByCommerceRegionId(RandomTestUtil.nextLong());
+	public void testCountByRegionId() throws Exception {
+		_persistence.countByRegionId(RandomTestUtil.nextLong());
 
-		_persistence.countByCommerceRegionId(0L);
+		_persistence.countByRegionId(0L);
 	}
 
 	@Test
-	public void testCountByCommerceCountryId() throws Exception {
-		_persistence.countByCommerceCountryId(RandomTestUtil.nextLong());
+	public void testCountByCountryId() throws Exception {
+		_persistence.countByCountryId(RandomTestUtil.nextLong());
 
-		_persistence.countByCommerceCountryId(0L);
+		_persistence.countByCountryId(0L);
 	}
 
 	@Test
@@ -360,10 +360,10 @@ public class CommerceAddressPersistenceTest {
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "classNameId", true, "classPK", true, "name",
 			true, "description", true, "street1", true, "street2", true,
-			"street3", true, "city", true, "zip", true, "commerceRegionId",
-			true, "commerceCountryId", true, "latitude", true, "longitude",
-			true, "phoneNumber", true, "defaultBilling", true,
-			"defaultShipping", true, "type", true);
+			"street3", true, "city", true, "zip", true, "regionId", true,
+			"countryId", true, "latitude", true, "longitude", true,
+			"phoneNumber", true, "defaultBilling", true, "defaultShipping",
+			true, "type", true);
 	}
 
 	@Test
@@ -682,9 +682,9 @@ public class CommerceAddressPersistenceTest {
 
 		commerceAddress.setZip(RandomTestUtil.randomString());
 
-		commerceAddress.setCommerceRegionId(RandomTestUtil.nextLong());
+		commerceAddress.setRegionId(RandomTestUtil.nextLong());
 
-		commerceAddress.setCommerceCountryId(RandomTestUtil.nextLong());
+		commerceAddress.setCountryId(RandomTestUtil.nextLong());
 
 		commerceAddress.setLatitude(RandomTestUtil.nextDouble());
 

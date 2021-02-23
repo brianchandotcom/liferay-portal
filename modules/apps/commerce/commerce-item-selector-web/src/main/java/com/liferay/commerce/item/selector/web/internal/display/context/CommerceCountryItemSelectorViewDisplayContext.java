@@ -55,11 +55,9 @@ public class CommerceCountryItemSelectorViewDisplayContext
 	public PortletURL getPortletURL() {
 		PortletURL portletURL = super.getPortletURL();
 
-		String checkedCommerceCountryIds = StringUtil.merge(
-			getCheckedCommerceCountryIds());
+		String checkedCountryIds = StringUtil.merge(getCheckedCountryIds());
 
-		portletURL.setParameter(
-			"checkedCommerceCountryIds", checkedCommerceCountryIds);
+		portletURL.setParameter("checkedCountryIds", checkedCountryIds);
 
 		return portletURL;
 	}
@@ -92,8 +90,7 @@ public class CommerceCountryItemSelectorViewDisplayContext
 		searchContainer.setOrderByType(getOrderByType());
 
 		RowChecker rowChecker = new CommerceCountryItemSelectorChecker(
-			cpRequestHelper.getRenderResponse(),
-			getCheckedCommerceCountryIds());
+			cpRequestHelper.getRenderResponse(), getCheckedCountryIds());
 
 		searchContainer.setRowChecker(rowChecker);
 
@@ -111,9 +108,9 @@ public class CommerceCountryItemSelectorViewDisplayContext
 		return searchContainer;
 	}
 
-	protected long[] getCheckedCommerceCountryIds() {
+	protected long[] getCheckedCountryIds() {
 		return ParamUtil.getLongValues(
-			cpRequestHelper.getRenderRequest(), "checkedCommerceCountryIds");
+			cpRequestHelper.getRenderRequest(), "checkedCountryIds");
 	}
 
 	private final CountryService _countryService;

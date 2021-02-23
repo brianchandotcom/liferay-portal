@@ -251,16 +251,16 @@ public class PunchOut2GoReturnServiceImpl implements PunchOutReturnService {
 		}
 	}
 
-	private JSONObject _buildCountryJSONObject(long commerceCountryId) {
+	private JSONObject _buildCountryJSONObject(long countryId) {
 		JSONObject countryJSONObject = _jsonFactory.createJSONObject();
 
-		countryJSONObject.put("id", commerceCountryId);
+		countryJSONObject.put("id", countryId);
 
-		if (commerceCountryId < 1) {
+		if (countryId < 1) {
 			return countryJSONObject;
 		}
 
-		Country country = _countryLocalService.fetchCountry(commerceCountryId);
+		Country country = _countryLocalService.fetchCountry(countryId);
 
 		if (country == null) {
 			return countryJSONObject;
@@ -279,16 +279,16 @@ public class PunchOut2GoReturnServiceImpl implements PunchOutReturnService {
 		return countryJSONObject;
 	}
 
-	private JSONObject _buildRegionJSONObject(long commerceRegionId) {
+	private JSONObject _buildRegionJSONObject(long regionId) {
 		JSONObject regionJSONObject = _jsonFactory.createJSONObject();
 
-		regionJSONObject.put("id", commerceRegionId);
+		regionJSONObject.put("id", regionId);
 
-		if (commerceRegionId < 1) {
+		if (regionId < 1) {
 			return regionJSONObject;
 		}
 
-		Region region = _regionLocalService.fetchRegion(commerceRegionId);
+		Region region = _regionLocalService.fetchRegion(regionId);
 
 		if (region == null) {
 			return regionJSONObject;
@@ -335,7 +335,7 @@ public class PunchOut2GoReturnServiceImpl implements PunchOutReturnService {
 		);
 
 		JSONObject regionJSONObject = _buildRegionJSONObject(
-			shippingAddress.getCommerceRegionId());
+			shippingAddress.getRegionId());
 
 		shippingAddressJSONObject.put(
 			"region", regionJSONObject
@@ -344,7 +344,7 @@ public class PunchOut2GoReturnServiceImpl implements PunchOutReturnService {
 		);
 
 		JSONObject countryJSONObject = _buildCountryJSONObject(
-			shippingAddress.getCommerceCountryId());
+			shippingAddress.getCountryId());
 
 		shippingAddressJSONObject.put(
 			"companyId", shippingAddress.getCompanyId()

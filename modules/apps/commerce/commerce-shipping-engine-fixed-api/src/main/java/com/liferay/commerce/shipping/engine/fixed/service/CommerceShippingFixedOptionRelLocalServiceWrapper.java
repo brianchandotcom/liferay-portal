@@ -60,9 +60,9 @@ public class CommerceShippingFixedOptionRelLocalServiceWrapper
 		CommerceShippingFixedOptionRel addCommerceShippingFixedOptionRel(
 				long userId, long groupId, long commerceShippingMethodId,
 				long commerceShippingFixedOptionId,
-				long commerceInventoryWarehouseId, long commerceCountryId,
-				long commerceRegionId, String zip, double weightFrom,
-				double weightTo, java.math.BigDecimal fixedPrice,
+				long commerceInventoryWarehouseId, long countryId,
+				long regionId, String zip, double weightFrom, double weightTo,
+				java.math.BigDecimal fixedPrice,
 				java.math.BigDecimal rateUnitWeightPrice, double ratePercentage)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -70,8 +70,8 @@ public class CommerceShippingFixedOptionRelLocalServiceWrapper
 			addCommerceShippingFixedOptionRel(
 				userId, groupId, commerceShippingMethodId,
 				commerceShippingFixedOptionId, commerceInventoryWarehouseId,
-				commerceCountryId, commerceRegionId, zip, weightFrom, weightTo,
-				fixedPrice, rateUnitWeightPrice, ratePercentage);
+				countryId, regionId, zip, weightFrom, weightTo, fixedPrice,
+				rateUnitWeightPrice, ratePercentage);
 	}
 
 	/**
@@ -83,9 +83,9 @@ public class CommerceShippingFixedOptionRelLocalServiceWrapper
 		CommerceShippingFixedOptionRel addCommerceShippingFixedOptionRel(
 				long commerceShippingMethodId,
 				long commerceShippingFixedOptionId,
-				long commerceInventoryWarehouseId, long commerceCountryId,
-				long commerceRegionId, String zip, double weightFrom,
-				double weightTo, java.math.BigDecimal fixedPrice,
+				long commerceInventoryWarehouseId, long countryId,
+				long regionId, String zip, double weightFrom, double weightTo,
+				java.math.BigDecimal fixedPrice,
 				java.math.BigDecimal rateUnitWeightPrice, double ratePercentage,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 			throws com.liferay.portal.kernel.exception.PortalException {
@@ -93,9 +93,9 @@ public class CommerceShippingFixedOptionRelLocalServiceWrapper
 		return _commerceShippingFixedOptionRelLocalService.
 			addCommerceShippingFixedOptionRel(
 				commerceShippingMethodId, commerceShippingFixedOptionId,
-				commerceInventoryWarehouseId, commerceCountryId,
-				commerceRegionId, zip, weightFrom, weightTo, fixedPrice,
-				rateUnitWeightPrice, ratePercentage, serviceContext);
+				commerceInventoryWarehouseId, countryId, regionId, zip,
+				weightFrom, weightTo, fixedPrice, rateUnitWeightPrice,
+				ratePercentage, serviceContext);
 	}
 
 	/**
@@ -301,13 +301,13 @@ public class CommerceShippingFixedOptionRelLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.shipping.engine.fixed.model.
 		CommerceShippingFixedOptionRel fetchCommerceShippingFixedOptionRel(
-			long commerceShippingFixedOptionId, long commerceCountryId,
-			long commerceRegionId, String zip, double weight) {
+			long commerceShippingFixedOptionId, long countryId, long regionId,
+			String zip, double weight) {
 
 		return _commerceShippingFixedOptionRelLocalService.
 			fetchCommerceShippingFixedOptionRel(
-				commerceShippingFixedOptionId, commerceCountryId,
-				commerceRegionId, zip, weight);
+				commerceShippingFixedOptionId, countryId, regionId, zip,
+				weight);
 	}
 
 	@Override
@@ -493,17 +493,17 @@ public class CommerceShippingFixedOptionRelLocalServiceWrapper
 	public com.liferay.commerce.shipping.engine.fixed.model.
 		CommerceShippingFixedOptionRel updateCommerceShippingFixedOptionRel(
 				long commerceShippingFixedOptionRelId,
-				long commerceInventoryWarehouseId, long commerceCountryId,
-				long commerceRegionId, String zip, double weightFrom,
-				double weightTo, java.math.BigDecimal fixedPrice,
+				long commerceInventoryWarehouseId, long countryId,
+				long regionId, String zip, double weightFrom, double weightTo,
+				java.math.BigDecimal fixedPrice,
 				java.math.BigDecimal rateUnitWeightPrice, double ratePercentage)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceShippingFixedOptionRelLocalService.
 			updateCommerceShippingFixedOptionRel(
 				commerceShippingFixedOptionRelId, commerceInventoryWarehouseId,
-				commerceCountryId, commerceRegionId, zip, weightFrom, weightTo,
-				fixedPrice, rateUnitWeightPrice, ratePercentage);
+				countryId, regionId, zip, weightFrom, weightTo, fixedPrice,
+				rateUnitWeightPrice, ratePercentage);
 	}
 
 	@Override

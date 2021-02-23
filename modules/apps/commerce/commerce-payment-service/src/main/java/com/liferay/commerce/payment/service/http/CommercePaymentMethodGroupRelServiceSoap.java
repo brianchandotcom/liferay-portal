@@ -65,14 +65,14 @@ public class CommercePaymentMethodGroupRelServiceSoap {
 
 	public static com.liferay.commerce.model.CommerceAddressRestriction
 			addCommerceAddressRestriction(
-				long userId, long groupId, long classPK, long commerceCountryId)
+				long userId, long groupId, long classPK, long countryId)
 		throws RemoteException {
 
 		try {
 			com.liferay.commerce.model.CommerceAddressRestriction returnValue =
 				CommercePaymentMethodGroupRelServiceUtil.
 					addCommerceAddressRestriction(
-						userId, groupId, classPK, commerceCountryId);
+						userId, groupId, classPK, countryId);
 
 			return returnValue;
 		}
@@ -89,7 +89,7 @@ public class CommercePaymentMethodGroupRelServiceSoap {
 	@Deprecated
 	public static com.liferay.commerce.model.CommerceAddressRestriction
 			addCommerceAddressRestriction(
-				long classPK, long commerceCountryId,
+				long classPK, long countryId,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 
@@ -97,7 +97,7 @@ public class CommercePaymentMethodGroupRelServiceSoap {
 			com.liferay.commerce.model.CommerceAddressRestriction returnValue =
 				CommercePaymentMethodGroupRelServiceUtil.
 					addCommerceAddressRestriction(
-						classPK, commerceCountryId, serviceContext);
+						classPK, countryId, serviceContext);
 
 			return returnValue;
 		}
@@ -389,7 +389,7 @@ public class CommercePaymentMethodGroupRelServiceSoap {
 	public static
 		com.liferay.commerce.payment.model.CommercePaymentMethodGroupRelSoap[]
 				getCommercePaymentMethodGroupRels(
-					long groupId, long commerceCountryId, boolean active)
+					long groupId, long countryId, boolean active)
 			throws RemoteException {
 
 		try {
@@ -398,7 +398,7 @@ public class CommercePaymentMethodGroupRelServiceSoap {
 					CommercePaymentMethodGroupRel> returnValue =
 						CommercePaymentMethodGroupRelServiceUtil.
 							getCommercePaymentMethodGroupRels(
-								groupId, commerceCountryId, active);
+								groupId, countryId, active);
 
 			return com.liferay.commerce.payment.model.
 				CommercePaymentMethodGroupRelSoap.toSoapModels(returnValue);

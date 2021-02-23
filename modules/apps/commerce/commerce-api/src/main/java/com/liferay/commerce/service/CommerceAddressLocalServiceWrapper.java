@@ -58,45 +58,44 @@ public class CommerceAddressLocalServiceWrapper
 	public com.liferay.commerce.model.CommerceAddress addCommerceAddress(
 			String className, long classPK, String name, String description,
 			String street1, String street2, String street3, String city,
-			String zip, long commerceRegionId, long commerceCountryId,
-			String phoneNumber, boolean defaultBilling, boolean defaultShipping,
+			String zip, long regionId, long countryId, String phoneNumber,
+			boolean defaultBilling, boolean defaultShipping,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceAddressLocalService.addCommerceAddress(
 			className, classPK, name, description, street1, street2, street3,
-			city, zip, commerceRegionId, commerceCountryId, phoneNumber,
-			defaultBilling, defaultShipping, serviceContext);
+			city, zip, regionId, countryId, phoneNumber, defaultBilling,
+			defaultShipping, serviceContext);
 	}
 
 	@Override
 	public com.liferay.commerce.model.CommerceAddress addCommerceAddress(
 			String className, long classPK, String name, String description,
 			String street1, String street2, String street3, String city,
-			String zip, long commerceRegionId, long commerceCountryId,
-			String phoneNumber, int type,
+			String zip, long regionId, long countryId, String phoneNumber,
+			int type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceAddressLocalService.addCommerceAddress(
 			className, classPK, name, description, street1, street2, street3,
-			city, zip, commerceRegionId, commerceCountryId, phoneNumber, type,
-			serviceContext);
+			city, zip, regionId, countryId, phoneNumber, type, serviceContext);
 	}
 
 	@Override
 	public com.liferay.commerce.model.CommerceAddress addCommerceAddress(
 			String externalReferenceCode, String className, long classPK,
 			String name, String description, String street1, String street2,
-			String street3, String city, String zip, long commerceRegionId,
-			long commerceCountryId, String phoneNumber, int type,
+			String street3, String city, String zip, long regionId,
+			long countryId, String phoneNumber, int type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceAddressLocalService.addCommerceAddress(
 			externalReferenceCode, className, classPK, name, description,
-			street1, street2, street3, city, zip, commerceRegionId,
-			commerceCountryId, phoneNumber, type, serviceContext);
+			street1, street2, street3, city, zip, regionId, countryId,
+			phoneNumber, type, serviceContext);
 	}
 
 	@Override
@@ -183,11 +182,10 @@ public class CommerceAddressLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteCountryCommerceAddresses(long commerceCountryId)
+	public void deleteCountryCommerceAddresses(long countryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		_commerceAddressLocalService.deleteCountryCommerceAddresses(
-			commerceCountryId);
+		_commerceAddressLocalService.deleteCountryCommerceAddresses(countryId);
 	}
 
 	/**
@@ -203,11 +201,10 @@ public class CommerceAddressLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteRegionCommerceAddresses(long commerceRegionId)
+	public void deleteRegionCommerceAddresses(long regionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		_commerceAddressLocalService.deleteRegionCommerceAddresses(
-			commerceRegionId);
+		_commerceAddressLocalService.deleteRegionCommerceAddresses(regionId);
 	}
 
 	@Override
@@ -638,30 +635,29 @@ public class CommerceAddressLocalServiceWrapper
 	public com.liferay.commerce.model.CommerceAddress updateCommerceAddress(
 			long commerceAddressId, String name, String description,
 			String street1, String street2, String street3, String city,
-			String zip, long commerceRegionId, long commerceCountryId,
-			String phoneNumber, boolean defaultBilling, boolean defaultShipping,
+			String zip, long regionId, long countryId, String phoneNumber,
+			boolean defaultBilling, boolean defaultShipping,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceAddressLocalService.updateCommerceAddress(
 			commerceAddressId, name, description, street1, street2, street3,
-			city, zip, commerceRegionId, commerceCountryId, phoneNumber,
-			defaultBilling, defaultShipping, serviceContext);
+			city, zip, regionId, countryId, phoneNumber, defaultBilling,
+			defaultShipping, serviceContext);
 	}
 
 	@Override
 	public com.liferay.commerce.model.CommerceAddress updateCommerceAddress(
 			long commerceAddressId, String name, String description,
 			String street1, String street2, String street3, String city,
-			String zip, long commerceRegionId, long commerceCountryId,
-			String phoneNumber, int type,
+			String zip, long regionId, long countryId, String phoneNumber,
+			int type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceAddressLocalService.updateCommerceAddress(
 			commerceAddressId, name, description, street1, street2, street3,
-			city, zip, commerceRegionId, commerceCountryId, phoneNumber, type,
-			serviceContext);
+			city, zip, regionId, countryId, phoneNumber, type, serviceContext);
 	}
 
 	@Override

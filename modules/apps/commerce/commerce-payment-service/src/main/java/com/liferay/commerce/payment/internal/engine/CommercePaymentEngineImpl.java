@@ -269,7 +269,7 @@ public class CommercePaymentEngineImpl implements CommercePaymentEngine {
 			return _getCommercePaymentMethodsList(
 				_commercePaymentMethodGroupRelLocalService.
 					getCommercePaymentMethodGroupRels(
-						groupId, commerceAddress.getCommerceCountryId(), true),
+						groupId, commerceAddress.getCountryId(), true),
 				subscriptionOrder);
 		}
 

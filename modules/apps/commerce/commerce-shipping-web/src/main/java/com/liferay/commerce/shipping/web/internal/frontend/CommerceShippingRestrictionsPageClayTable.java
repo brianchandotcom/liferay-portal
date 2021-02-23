@@ -118,8 +118,8 @@ public class CommerceShippingRestrictionsPageClayTable
 		for (Country country : baseModelSearchResult.getBaseModels()) {
 			shippingRestrictions.add(
 				new ShippingRestriction(
-					country.getCountryId(),
 					country.getName(themeDisplay.getLocale()),
+					country.getCountryId(),
 					_getFields(
 						country.getCountryId(), commerceShippingMethods,
 						themeDisplay.getLanguageId())));
@@ -142,8 +142,7 @@ public class CommerceShippingRestrictionsPageClayTable
 	}
 
 	private List<RestrictionField> _getFields(
-		long commerceCountryId,
-		List<CommerceShippingMethod> commerceShippingMethods,
+		long countryId, List<CommerceShippingMethod> commerceShippingMethods,
 		String languageId) {
 
 		List<RestrictionField> restrictionFields = new ArrayList<>();
@@ -160,7 +159,7 @@ public class CommerceShippingRestrictionsPageClayTable
 						isCommerceShippingMethodRestricted(
 							commerceShippingMethod.
 								getCommerceShippingMethodId(),
-							commerceCountryId)));
+							countryId)));
 		}
 
 		return restrictionFields;

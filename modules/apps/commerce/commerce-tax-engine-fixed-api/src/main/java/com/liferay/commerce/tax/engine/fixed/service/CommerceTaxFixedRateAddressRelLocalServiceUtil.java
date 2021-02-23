@@ -66,13 +66,13 @@ public class CommerceTaxFixedRateAddressRelLocalServiceUtil {
 	public static CommerceTaxFixedRateAddressRel
 			addCommerceTaxFixedRateAddressRel(
 				long userId, long groupId, long commerceTaxMethodId,
-				long cpTaxCategoryId, long commerceCountryId,
-				long commerceRegionId, String zip, double rate)
+				long cpTaxCategoryId, long countryId, long regionId, String zip,
+				double rate)
 		throws PortalException {
 
 		return getService().addCommerceTaxFixedRateAddressRel(
-			userId, groupId, commerceTaxMethodId, cpTaxCategoryId,
-			commerceCountryId, commerceRegionId, zip, rate);
+			userId, groupId, commerceTaxMethodId, cpTaxCategoryId, countryId,
+			regionId, zip, rate);
 	}
 
 	/**
@@ -81,15 +81,14 @@ public class CommerceTaxFixedRateAddressRelLocalServiceUtil {
 	@Deprecated
 	public static CommerceTaxFixedRateAddressRel
 			addCommerceTaxFixedRateAddressRel(
-				long commerceTaxMethodId, long cpTaxCategoryId,
-				long commerceCountryId, long commerceRegionId, String zip,
-				double rate,
+				long commerceTaxMethodId, long cpTaxCategoryId, long countryId,
+				long regionId, String zip, double rate,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addCommerceTaxFixedRateAddressRel(
-			commerceTaxMethodId, cpTaxCategoryId, commerceCountryId,
-			commerceRegionId, zip, rate, serviceContext);
+			commerceTaxMethodId, cpTaxCategoryId, countryId, regionId, zip,
+			rate, serviceContext);
 	}
 
 	/**
@@ -154,19 +153,19 @@ public class CommerceTaxFixedRateAddressRelLocalServiceUtil {
 			commerceTaxFixedRateAddressRelId);
 	}
 
-	public static void deleteCommerceTaxFixedRateAddressRelsByCommerceCountryId(
-		long commerceCountryId) {
-
-		getService().deleteCommerceTaxFixedRateAddressRelsByCommerceCountryId(
-			commerceCountryId);
-	}
-
 	public static void
 		deleteCommerceTaxFixedRateAddressRelsByCommerceTaxMethodId(
 			long commerceTaxMethodId) {
 
 		getService().deleteCommerceTaxFixedRateAddressRelsByCommerceTaxMethodId(
 			commerceTaxMethodId);
+	}
+
+	public static void deleteCommerceTaxFixedRateAddressRelsByCountryId(
+		long countryId) {
+
+		getService().deleteCommerceTaxFixedRateAddressRelsByCountryId(
+			countryId);
 	}
 
 	public static void deleteCommerceTaxFixedRateAddressRelsByCPTaxCategoryId(
@@ -277,21 +276,20 @@ public class CommerceTaxFixedRateAddressRelLocalServiceUtil {
 
 	public static CommerceTaxFixedRateAddressRel
 		fetchCommerceTaxFixedRateAddressRel(
-			long commerceTaxMethodId, long cpTaxCategoryId,
-			long commerceCountryId, long commerceRegionId, String zip) {
+			long commerceTaxMethodId, long cpTaxCategoryId, long countryId,
+			long regionId, String zip) {
 
 		return getService().fetchCommerceTaxFixedRateAddressRel(
-			commerceTaxMethodId, cpTaxCategoryId, commerceCountryId,
-			commerceRegionId, zip);
+			commerceTaxMethodId, cpTaxCategoryId, countryId, regionId, zip);
 	}
 
 	public static CommerceTaxFixedRateAddressRel
 		fetchCommerceTaxFixedRateAddressRel(
-			long commerceTaxMethodId, long commerceCountryId,
-			long commerceRegionId, String zip) {
+			long commerceTaxMethodId, long countryId, long regionId,
+			String zip) {
 
 		return getService().fetchCommerceTaxFixedRateAddressRel(
-			commerceTaxMethodId, commerceCountryId, commerceRegionId, zip);
+			commerceTaxMethodId, countryId, regionId, zip);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
@@ -437,13 +435,12 @@ public class CommerceTaxFixedRateAddressRelLocalServiceUtil {
 
 	public static CommerceTaxFixedRateAddressRel
 			updateCommerceTaxFixedRateAddressRel(
-				long commerceTaxFixedRateAddressRelId, long commerceCountryId,
-				long commerceRegionId, String zip, double rate)
+				long commerceTaxFixedRateAddressRelId, long countryId,
+				long regionId, String zip, double rate)
 		throws PortalException {
 
 		return getService().updateCommerceTaxFixedRateAddressRel(
-			commerceTaxFixedRateAddressRelId, commerceCountryId,
-			commerceRegionId, zip, rate);
+			commerceTaxFixedRateAddressRelId, countryId, regionId, zip, rate);
 	}
 
 	public static CommerceTaxFixedRateAddressRelLocalService getService() {

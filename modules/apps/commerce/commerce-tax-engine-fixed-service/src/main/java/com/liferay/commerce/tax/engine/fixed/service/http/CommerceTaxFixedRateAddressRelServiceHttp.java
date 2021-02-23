@@ -56,8 +56,7 @@ public class CommerceTaxFixedRateAddressRelServiceHttp {
 			CommerceTaxFixedRateAddressRel addCommerceTaxFixedRateAddressRel(
 					HttpPrincipal httpPrincipal, long userId, long groupId,
 					long commerceTaxMethodId, long cpTaxCategoryId,
-					long commerceCountryId, long commerceRegionId, String zip,
-					double rate)
+					long countryId, long regionId, String zip, double rate)
 				throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -68,8 +67,7 @@ public class CommerceTaxFixedRateAddressRelServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, groupId, commerceTaxMethodId,
-				cpTaxCategoryId, commerceCountryId, commerceRegionId, zip,
-				rate);
+				cpTaxCategoryId, countryId, regionId, zip, rate);
 
 			Object returnObj = null;
 
@@ -104,8 +102,8 @@ public class CommerceTaxFixedRateAddressRelServiceHttp {
 		com.liferay.commerce.tax.engine.fixed.model.
 			CommerceTaxFixedRateAddressRel addCommerceTaxFixedRateAddressRel(
 					HttpPrincipal httpPrincipal, long commerceTaxMethodId,
-					long cpTaxCategoryId, long commerceCountryId,
-					long commerceRegionId, String zip, double rate,
+					long cpTaxCategoryId, long countryId, long regionId,
+					String zip, double rate,
 					com.liferay.portal.kernel.service.ServiceContext
 						serviceContext)
 				throws com.liferay.portal.kernel.exception.PortalException {
@@ -117,8 +115,8 @@ public class CommerceTaxFixedRateAddressRelServiceHttp {
 				_addCommerceTaxFixedRateAddressRelParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, commerceTaxMethodId, cpTaxCategoryId,
-				commerceCountryId, commerceRegionId, zip, rate, serviceContext);
+				methodKey, commerceTaxMethodId, cpTaxCategoryId, countryId,
+				regionId, zip, rate, serviceContext);
 
 			Object returnObj = null;
 
@@ -328,9 +326,8 @@ public class CommerceTaxFixedRateAddressRelServiceHttp {
 		com.liferay.commerce.tax.engine.fixed.model.
 			CommerceTaxFixedRateAddressRel updateCommerceTaxFixedRateAddressRel(
 					HttpPrincipal httpPrincipal,
-					long commerceTaxFixedRateAddressRelId,
-					long commerceCountryId, long commerceRegionId, String zip,
-					double rate)
+					long commerceTaxFixedRateAddressRelId, long countryId,
+					long regionId, String zip, double rate)
 				throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -340,8 +337,8 @@ public class CommerceTaxFixedRateAddressRelServiceHttp {
 				_updateCommerceTaxFixedRateAddressRelParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, commerceTaxFixedRateAddressRelId, commerceCountryId,
-				commerceRegionId, zip, rate);
+				methodKey, commerceTaxFixedRateAddressRelId, countryId,
+				regionId, zip, rate);
 
 			Object returnObj = null;
 

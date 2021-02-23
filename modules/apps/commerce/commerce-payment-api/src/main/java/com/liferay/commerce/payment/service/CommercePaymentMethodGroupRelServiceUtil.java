@@ -42,11 +42,11 @@ public class CommercePaymentMethodGroupRelServiceUtil {
 	 */
 	public static com.liferay.commerce.model.CommerceAddressRestriction
 			addCommerceAddressRestriction(
-				long userId, long groupId, long classPK, long commerceCountryId)
+				long userId, long groupId, long classPK, long countryId)
 		throws PortalException {
 
 		return getService().addCommerceAddressRestriction(
-			userId, groupId, classPK, commerceCountryId);
+			userId, groupId, classPK, countryId);
 	}
 
 	/**
@@ -55,12 +55,12 @@ public class CommercePaymentMethodGroupRelServiceUtil {
 	@Deprecated
 	public static com.liferay.commerce.model.CommerceAddressRestriction
 			addCommerceAddressRestriction(
-				long classPK, long commerceCountryId,
+				long classPK, long countryId,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addCommerceAddressRestriction(
-			classPK, commerceCountryId, serviceContext);
+			classPK, countryId, serviceContext);
 	}
 
 	public static CommercePaymentMethodGroupRel
@@ -191,11 +191,11 @@ public class CommercePaymentMethodGroupRelServiceUtil {
 
 	public static List<CommercePaymentMethodGroupRel>
 			getCommercePaymentMethodGroupRels(
-				long groupId, long commerceCountryId, boolean active)
+				long groupId, long countryId, boolean active)
 		throws PortalException {
 
 		return getService().getCommercePaymentMethodGroupRels(
-			groupId, commerceCountryId, active);
+			groupId, countryId, active);
 	}
 
 	public static int getCommercePaymentMethodGroupRelsCount(long groupId)

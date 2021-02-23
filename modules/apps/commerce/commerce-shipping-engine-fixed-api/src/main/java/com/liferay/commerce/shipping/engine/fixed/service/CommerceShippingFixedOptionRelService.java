@@ -66,10 +66,10 @@ public interface CommerceShippingFixedOptionRelService extends BaseService {
 	public CommerceShippingFixedOptionRel addCommerceShippingFixedOptionRel(
 			long userId, long groupId, long commerceShippingMethodId,
 			long commerceShippingFixedOptionId,
-			long commerceInventoryWarehouseId, long commerceCountryId,
-			long commerceRegionId, String zip, double weightFrom,
-			double weightTo, BigDecimal fixedPrice,
-			BigDecimal rateUnitWeightPrice, double ratePercentage)
+			long commerceInventoryWarehouseId, long countryId, long regionId,
+			String zip, double weightFrom, double weightTo,
+			BigDecimal fixedPrice, BigDecimal rateUnitWeightPrice,
+			double ratePercentage)
 		throws PortalException;
 
 	/**
@@ -78,11 +78,10 @@ public interface CommerceShippingFixedOptionRelService extends BaseService {
 	@Deprecated
 	public CommerceShippingFixedOptionRel addCommerceShippingFixedOptionRel(
 			long commerceShippingMethodId, long commerceShippingFixedOptionId,
-			long commerceInventoryWarehouseId, long commerceCountryId,
-			long commerceRegionId, String zip, double weightFrom,
-			double weightTo, BigDecimal fixedPrice,
-			BigDecimal rateUnitWeightPrice, double ratePercentage,
-			ServiceContext serviceContext)
+			long commerceInventoryWarehouseId, long countryId, long regionId,
+			String zip, double weightFrom, double weightTo,
+			BigDecimal fixedPrice, BigDecimal rateUnitWeightPrice,
+			double ratePercentage, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteCommerceShippingFixedOptionRel(
@@ -116,10 +115,10 @@ public interface CommerceShippingFixedOptionRelService extends BaseService {
 
 	public CommerceShippingFixedOptionRel updateCommerceShippingFixedOptionRel(
 			long commerceShippingFixedOptionRelId,
-			long commerceInventoryWarehouseId, long commerceCountryId,
-			long commerceRegionId, String zip, double weightFrom,
-			double weightTo, BigDecimal fixedPrice,
-			BigDecimal rateUnitWeightPrice, double ratePercentage)
+			long commerceInventoryWarehouseId, long countryId, long regionId,
+			String zip, double weightFrom, double weightTo,
+			BigDecimal fixedPrice, BigDecimal rateUnitWeightPrice,
+			double ratePercentage)
 		throws PortalException;
 
 }

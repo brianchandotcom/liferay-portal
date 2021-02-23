@@ -59,8 +59,8 @@ public class CommerceAddressWrapper
 		attributes.put("street3", getStreet3());
 		attributes.put("city", getCity());
 		attributes.put("zip", getZip());
-		attributes.put("commerceRegionId", getCommerceRegionId());
-		attributes.put("commerceCountryId", getCommerceCountryId());
+		attributes.put("regionId", getRegionId());
+		attributes.put("countryId", getCountryId());
 		attributes.put("latitude", getLatitude());
 		attributes.put("longitude", getLongitude());
 		attributes.put("phoneNumber", getPhoneNumber());
@@ -176,16 +176,16 @@ public class CommerceAddressWrapper
 			setZip(zip);
 		}
 
-		Long commerceRegionId = (Long)attributes.get("commerceRegionId");
+		Long regionId = (Long)attributes.get("regionId");
 
-		if (commerceRegionId != null) {
-			setCommerceRegionId(commerceRegionId);
+		if (regionId != null) {
+			setRegionId(regionId);
 		}
 
-		Long commerceCountryId = (Long)attributes.get("commerceCountryId");
+		Long countryId = (Long)attributes.get("countryId");
 
-		if (commerceCountryId != null) {
-			setCommerceCountryId(commerceCountryId);
+		if (countryId != null) {
+			setCountryId(countryId);
 		}
 
 		Double latitude = (Double)attributes.get("latitude");
@@ -281,26 +281,6 @@ public class CommerceAddressWrapper
 	}
 
 	/**
-	 * Returns the commerce country ID of this commerce address.
-	 *
-	 * @return the commerce country ID of this commerce address
-	 */
-	@Override
-	public long getCommerceCountryId() {
-		return model.getCommerceCountryId();
-	}
-
-	/**
-	 * Returns the commerce region ID of this commerce address.
-	 *
-	 * @return the commerce region ID of this commerce address
-	 */
-	@Override
-	public long getCommerceRegionId() {
-		return model.getCommerceRegionId();
-	}
-
-	/**
 	 * Returns the company ID of this commerce address.
 	 *
 	 * @return the company ID of this commerce address
@@ -315,6 +295,16 @@ public class CommerceAddressWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return model.getCountry();
+	}
+
+	/**
+	 * Returns the country ID of this commerce address.
+	 *
+	 * @return the country ID of this commerce address
+	 */
+	@Override
+	public long getCountryId() {
+		return model.getCountryId();
 	}
 
 	/**
@@ -442,6 +432,16 @@ public class CommerceAddressWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return model.getRegion();
+	}
+
+	/**
+	 * Returns the region ID of this commerce address.
+	 *
+	 * @return the region ID of this commerce address
+	 */
+	@Override
+	public long getRegionId() {
+		return model.getRegionId();
 	}
 
 	/**
@@ -605,26 +605,6 @@ public class CommerceAddressWrapper
 	}
 
 	/**
-	 * Sets the commerce country ID of this commerce address.
-	 *
-	 * @param commerceCountryId the commerce country ID of this commerce address
-	 */
-	@Override
-	public void setCommerceCountryId(long commerceCountryId) {
-		model.setCommerceCountryId(commerceCountryId);
-	}
-
-	/**
-	 * Sets the commerce region ID of this commerce address.
-	 *
-	 * @param commerceRegionId the commerce region ID of this commerce address
-	 */
-	@Override
-	public void setCommerceRegionId(long commerceRegionId) {
-		model.setCommerceRegionId(commerceRegionId);
-	}
-
-	/**
 	 * Sets the company ID of this commerce address.
 	 *
 	 * @param companyId the company ID of this commerce address
@@ -632,6 +612,16 @@ public class CommerceAddressWrapper
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
+	}
+
+	/**
+	 * Sets the country ID of this commerce address.
+	 *
+	 * @param countryId the country ID of this commerce address
+	 */
+	@Override
+	public void setCountryId(long countryId) {
+		model.setCountryId(countryId);
 	}
 
 	/**
@@ -752,6 +742,16 @@ public class CommerceAddressWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the region ID of this commerce address.
+	 *
+	 * @param regionId the region ID of this commerce address
+	 */
+	@Override
+	public void setRegionId(long regionId) {
+		model.setRegionId(regionId);
 	}
 
 	/**

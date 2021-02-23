@@ -82,7 +82,7 @@ public class CommerceShippingFixedOptionRelModelImpl
 		{"commerceShippingMethodId", Types.BIGINT},
 		{"commerceShippingFixedOptionId", Types.BIGINT},
 		{"commerceInventoryWarehouseId", Types.BIGINT},
-		{"commerceCountryId", Types.BIGINT}, {"commerceRegionId", Types.BIGINT},
+		{"countryId", Types.BIGINT}, {"regionId", Types.BIGINT},
 		{"zip", Types.VARCHAR}, {"weightFrom", Types.DOUBLE},
 		{"weightTo", Types.DOUBLE}, {"fixedPrice", Types.DECIMAL},
 		{"rateUnitWeightPrice", Types.DECIMAL}, {"ratePercentage", Types.DOUBLE}
@@ -102,8 +102,8 @@ public class CommerceShippingFixedOptionRelModelImpl
 		TABLE_COLUMNS_MAP.put("commerceShippingMethodId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commerceShippingFixedOptionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commerceInventoryWarehouseId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("commerceCountryId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("commerceRegionId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("countryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("regionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("zip", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("weightFrom", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("weightTo", Types.DOUBLE);
@@ -113,16 +113,16 @@ public class CommerceShippingFixedOptionRelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CShippingFixedOptionRel (CShippingFixedOptionRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceShippingMethodId LONG,commerceShippingFixedOptionId LONG,commerceInventoryWarehouseId LONG,commerceCountryId LONG,commerceRegionId LONG,zip VARCHAR(75) null,weightFrom DOUBLE,weightTo DOUBLE,fixedPrice DECIMAL(30, 16) null,rateUnitWeightPrice DECIMAL(30, 16) null,ratePercentage DOUBLE)";
+		"create table CShippingFixedOptionRel (CShippingFixedOptionRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceShippingMethodId LONG,commerceShippingFixedOptionId LONG,commerceInventoryWarehouseId LONG,countryId LONG,regionId LONG,zip VARCHAR(75) null,weightFrom DOUBLE,weightTo DOUBLE,fixedPrice DECIMAL(30, 16) null,rateUnitWeightPrice DECIMAL(30, 16) null,ratePercentage DOUBLE)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CShippingFixedOptionRel";
 
 	public static final String ORDER_BY_JPQL =
-		" ORDER BY commerceShippingFixedOptionRel.commerceCountryId ASC";
+		" ORDER BY commerceShippingFixedOptionRel.countryId ASC";
 
 	public static final String ORDER_BY_SQL =
-		" ORDER BY CShippingFixedOptionRel.commerceCountryId ASC";
+		" ORDER BY CShippingFixedOptionRel.countryId ASC";
 
 	public static final String DATA_SOURCE = "liferayDataSource";
 
@@ -165,7 +165,7 @@ public class CommerceShippingFixedOptionRelModelImpl
 	 *		#getColumnBitmask(String)
 	 */
 	@Deprecated
-	public static final long COMMERCECOUNTRYID_COLUMN_BITMASK = 4L;
+	public static final long COUNTRYID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -199,8 +199,8 @@ public class CommerceShippingFixedOptionRelModelImpl
 			soapModel.getCommerceShippingFixedOptionId());
 		model.setCommerceInventoryWarehouseId(
 			soapModel.getCommerceInventoryWarehouseId());
-		model.setCommerceCountryId(soapModel.getCommerceCountryId());
-		model.setCommerceRegionId(soapModel.getCommerceRegionId());
+		model.setCountryId(soapModel.getCountryId());
+		model.setRegionId(soapModel.getRegionId());
 		model.setZip(soapModel.getZip());
 		model.setWeightFrom(soapModel.getWeightFrom());
 		model.setWeightTo(soapModel.getWeightTo());
@@ -443,19 +443,17 @@ public class CommerceShippingFixedOptionRelModelImpl
 				CommerceShippingFixedOptionRel::
 					setCommerceInventoryWarehouseId);
 		attributeGetterFunctions.put(
-			"commerceCountryId",
-			CommerceShippingFixedOptionRel::getCommerceCountryId);
+			"countryId", CommerceShippingFixedOptionRel::getCountryId);
 		attributeSetterBiConsumers.put(
-			"commerceCountryId",
+			"countryId",
 			(BiConsumer<CommerceShippingFixedOptionRel, Long>)
-				CommerceShippingFixedOptionRel::setCommerceCountryId);
+				CommerceShippingFixedOptionRel::setCountryId);
 		attributeGetterFunctions.put(
-			"commerceRegionId",
-			CommerceShippingFixedOptionRel::getCommerceRegionId);
+			"regionId", CommerceShippingFixedOptionRel::getRegionId);
 		attributeSetterBiConsumers.put(
-			"commerceRegionId",
+			"regionId",
 			(BiConsumer<CommerceShippingFixedOptionRel, Long>)
-				CommerceShippingFixedOptionRel::setCommerceRegionId);
+				CommerceShippingFixedOptionRel::setRegionId);
 		attributeGetterFunctions.put(
 			"zip", CommerceShippingFixedOptionRel::getZip);
 		attributeSetterBiConsumers.put(
@@ -706,32 +704,32 @@ public class CommerceShippingFixedOptionRelModelImpl
 
 	@JSON
 	@Override
-	public long getCommerceCountryId() {
-		return _commerceCountryId;
+	public long getCountryId() {
+		return _countryId;
 	}
 
 	@Override
-	public void setCommerceCountryId(long commerceCountryId) {
+	public void setCountryId(long countryId) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_commerceCountryId = commerceCountryId;
+		_countryId = countryId;
 	}
 
 	@JSON
 	@Override
-	public long getCommerceRegionId() {
-		return _commerceRegionId;
+	public long getRegionId() {
+		return _regionId;
 	}
 
 	@Override
-	public void setCommerceRegionId(long commerceRegionId) {
+	public void setRegionId(long regionId) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_commerceRegionId = commerceRegionId;
+		_regionId = regionId;
 	}
 
 	@JSON
@@ -899,10 +897,8 @@ public class CommerceShippingFixedOptionRelModelImpl
 			getCommerceShippingFixedOptionId());
 		commerceShippingFixedOptionRelImpl.setCommerceInventoryWarehouseId(
 			getCommerceInventoryWarehouseId());
-		commerceShippingFixedOptionRelImpl.setCommerceCountryId(
-			getCommerceCountryId());
-		commerceShippingFixedOptionRelImpl.setCommerceRegionId(
-			getCommerceRegionId());
+		commerceShippingFixedOptionRelImpl.setCountryId(getCountryId());
+		commerceShippingFixedOptionRelImpl.setRegionId(getRegionId());
 		commerceShippingFixedOptionRelImpl.setZip(getZip());
 		commerceShippingFixedOptionRelImpl.setWeightFrom(getWeightFrom());
 		commerceShippingFixedOptionRelImpl.setWeightTo(getWeightTo());
@@ -923,13 +919,11 @@ public class CommerceShippingFixedOptionRelModelImpl
 
 		int value = 0;
 
-		if (getCommerceCountryId() <
-				commerceShippingFixedOptionRel.getCommerceCountryId()) {
-
+		if (getCountryId() < commerceShippingFixedOptionRel.getCountryId()) {
 			value = -1;
 		}
-		else if (getCommerceCountryId() >
-					commerceShippingFixedOptionRel.getCommerceCountryId()) {
+		else if (getCountryId() >
+					commerceShippingFixedOptionRel.getCountryId()) {
 
 			value = 1;
 		}
@@ -1054,11 +1048,9 @@ public class CommerceShippingFixedOptionRelModelImpl
 		commerceShippingFixedOptionRelCacheModel.commerceInventoryWarehouseId =
 			getCommerceInventoryWarehouseId();
 
-		commerceShippingFixedOptionRelCacheModel.commerceCountryId =
-			getCommerceCountryId();
+		commerceShippingFixedOptionRelCacheModel.countryId = getCountryId();
 
-		commerceShippingFixedOptionRelCacheModel.commerceRegionId =
-			getCommerceRegionId();
+		commerceShippingFixedOptionRelCacheModel.regionId = getRegionId();
 
 		commerceShippingFixedOptionRelCacheModel.zip = getZip();
 
@@ -1170,8 +1162,8 @@ public class CommerceShippingFixedOptionRelModelImpl
 	private long _commerceShippingMethodId;
 	private long _commerceShippingFixedOptionId;
 	private long _commerceInventoryWarehouseId;
-	private long _commerceCountryId;
-	private long _commerceRegionId;
+	private long _countryId;
+	private long _regionId;
 	private String _zip;
 	private double _weightFrom;
 	private double _weightTo;
@@ -1222,8 +1214,8 @@ public class CommerceShippingFixedOptionRelModelImpl
 			"commerceShippingFixedOptionId", _commerceShippingFixedOptionId);
 		_columnOriginalValues.put(
 			"commerceInventoryWarehouseId", _commerceInventoryWarehouseId);
-		_columnOriginalValues.put("commerceCountryId", _commerceCountryId);
-		_columnOriginalValues.put("commerceRegionId", _commerceRegionId);
+		_columnOriginalValues.put("countryId", _countryId);
+		_columnOriginalValues.put("regionId", _regionId);
 		_columnOriginalValues.put("zip", _zip);
 		_columnOriginalValues.put("weightFrom", _weightFrom);
 		_columnOriginalValues.put("weightTo", _weightTo);
@@ -1274,9 +1266,9 @@ public class CommerceShippingFixedOptionRelModelImpl
 
 		columnBitmasks.put("commerceInventoryWarehouseId", 512L);
 
-		columnBitmasks.put("commerceCountryId", 1024L);
+		columnBitmasks.put("countryId", 1024L);
 
-		columnBitmasks.put("commerceRegionId", 2048L);
+		columnBitmasks.put("regionId", 2048L);
 
 		columnBitmasks.put("zip", 4096L);
 

@@ -35,10 +35,10 @@ public class CommerceShippingFixedOptionRelLocalServiceImpl
 	public CommerceShippingFixedOptionRel addCommerceShippingFixedOptionRel(
 			long userId, long groupId, long commerceShippingMethodId,
 			long commerceShippingFixedOptionId,
-			long commerceInventoryWarehouseId, long commerceCountryId,
-			long commerceRegionId, String zip, double weightFrom,
-			double weightTo, BigDecimal fixedPrice,
-			BigDecimal rateUnitWeightPrice, double ratePercentage)
+			long commerceInventoryWarehouseId, long countryId, long regionId,
+			String zip, double weightFrom, double weightTo,
+			BigDecimal fixedPrice, BigDecimal rateUnitWeightPrice,
+			double ratePercentage)
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
@@ -59,8 +59,8 @@ public class CommerceShippingFixedOptionRelLocalServiceImpl
 			commerceShippingFixedOptionId);
 		commerceShippingFixedOptionRel.setCommerceInventoryWarehouseId(
 			commerceInventoryWarehouseId);
-		commerceShippingFixedOptionRel.setCommerceCountryId(commerceCountryId);
-		commerceShippingFixedOptionRel.setCommerceRegionId(commerceRegionId);
+		commerceShippingFixedOptionRel.setCountryId(countryId);
+		commerceShippingFixedOptionRel.setRegionId(regionId);
 		commerceShippingFixedOptionRel.setZip(zip);
 		commerceShippingFixedOptionRel.setWeightFrom(weightFrom);
 		commerceShippingFixedOptionRel.setWeightTo(weightTo);
@@ -80,20 +80,19 @@ public class CommerceShippingFixedOptionRelLocalServiceImpl
 	@Override
 	public CommerceShippingFixedOptionRel addCommerceShippingFixedOptionRel(
 			long commerceShippingMethodId, long commerceShippingFixedOptionId,
-			long commerceInventoryWarehouseId, long commerceCountryId,
-			long commerceRegionId, String zip, double weightFrom,
-			double weightTo, BigDecimal fixedPrice,
-			BigDecimal rateUnitWeightPrice, double ratePercentage,
-			ServiceContext serviceContext)
+			long commerceInventoryWarehouseId, long countryId, long regionId,
+			String zip, double weightFrom, double weightTo,
+			BigDecimal fixedPrice, BigDecimal rateUnitWeightPrice,
+			double ratePercentage, ServiceContext serviceContext)
 		throws PortalException {
 
 		return commerceShippingFixedOptionRelLocalService.
 			addCommerceShippingFixedOptionRel(
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 				commerceShippingMethodId, commerceShippingFixedOptionId,
-				commerceInventoryWarehouseId, commerceCountryId,
-				commerceRegionId, zip, weightFrom, weightTo, fixedPrice,
-				rateUnitWeightPrice, ratePercentage);
+				commerceInventoryWarehouseId, countryId, regionId, zip,
+				weightFrom, weightTo, fixedPrice, rateUnitWeightPrice,
+				ratePercentage);
 	}
 
 	@Override
@@ -107,12 +106,11 @@ public class CommerceShippingFixedOptionRelLocalServiceImpl
 
 	@Override
 	public CommerceShippingFixedOptionRel fetchCommerceShippingFixedOptionRel(
-		long commerceShippingFixedOptionId, long commerceCountryId,
-		long commerceRegionId, String zip, double weight) {
+		long commerceShippingFixedOptionId, long countryId, long regionId,
+		String zip, double weight) {
 
 		return commerceShippingFixedOptionRelFinder.fetchByC_C_C_Z_W_First(
-			commerceShippingFixedOptionId, commerceCountryId, commerceRegionId,
-			zip, weight);
+			commerceShippingFixedOptionId, countryId, regionId, zip, weight);
 	}
 
 	@Override
@@ -178,10 +176,10 @@ public class CommerceShippingFixedOptionRelLocalServiceImpl
 	@Override
 	public CommerceShippingFixedOptionRel updateCommerceShippingFixedOptionRel(
 			long commerceShippingFixedOptionRelId,
-			long commerceInventoryWarehouseId, long commerceCountryId,
-			long commerceRegionId, String zip, double weightFrom,
-			double weightTo, BigDecimal fixedPrice,
-			BigDecimal rateUnitWeightPrice, double ratePercentage)
+			long commerceInventoryWarehouseId, long countryId, long regionId,
+			String zip, double weightFrom, double weightTo,
+			BigDecimal fixedPrice, BigDecimal rateUnitWeightPrice,
+			double ratePercentage)
 		throws PortalException {
 
 		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel =
@@ -190,8 +188,8 @@ public class CommerceShippingFixedOptionRelLocalServiceImpl
 
 		commerceShippingFixedOptionRel.setCommerceInventoryWarehouseId(
 			commerceInventoryWarehouseId);
-		commerceShippingFixedOptionRel.setCommerceCountryId(commerceCountryId);
-		commerceShippingFixedOptionRel.setCommerceRegionId(commerceRegionId);
+		commerceShippingFixedOptionRel.setCountryId(countryId);
+		commerceShippingFixedOptionRel.setRegionId(regionId);
 		commerceShippingFixedOptionRel.setZip(zip);
 		commerceShippingFixedOptionRel.setWeightFrom(weightFrom);
 		commerceShippingFixedOptionRel.setWeightTo(weightTo);

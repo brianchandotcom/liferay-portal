@@ -29,8 +29,8 @@ if ((commerceOrder != null) && Validator.isNull(cmd)) {
 	shippingAddress = commerceOrder.getShippingAddress();
 }
 
-long commerceCountryId = BeanParamUtil.getLong(shippingAddress, request, "commerceCountryId");
-long commerceRegionId = BeanParamUtil.getLong(shippingAddress, request, "commerceRegionId");
+long countryId = BeanParamUtil.getLong(shippingAddress, request, "countryId");
+long regionId = BeanParamUtil.getLong(shippingAddress, request, "regionId");
 %>
 
 <portlet:actionURL name="/commerce_order/edit_commerce_order" var="editCommerceOrderShippingAddressActionURL" />
@@ -51,25 +51,25 @@ long commerceRegionId = BeanParamUtil.getLong(shippingAddress, request, "commerc
 
 		<aui:input name="street1" wrapperCssClass="form-group-item" />
 
-		<aui:select label="country" name="commerceCountryId" wrapperCssClass="form-group-item" />
+		<aui:select label="country" name="countryId" wrapperCssClass="form-group-item" />
 
 		<aui:input name="zip" wrapperCssClass="form-group-item" />
 
 		<aui:input name="city" wrapperCssClass="form-group-item" />
 
-		<aui:select label="region" name="commerceRegionId" wrapperCssClass="form-group-item" />
+		<aui:select label="region" name="regionId" wrapperCssClass="form-group-item" />
 	</aui:form>
 </commerce-ui:modal-content>
 
 <aui:script use="liferay-dynamic-select">
 	new Liferay.DynamicSelect([
 		{
-			select: '<portlet:namespace />commerceCountryId',
+			select: '<portlet:namespace />countryId',
 			selectData: function (callback) {
 				function injectCountryPlaceholder(list) {
 					var callbackList = [
 						{
-							commerceCountryId: '0',
+							countryId: '0',
 							nameCurrentValue:
 								'- <liferay-ui:message key="select-country" />',
 						},
@@ -93,18 +93,18 @@ long commerceRegionId = BeanParamUtil.getLong(shippingAddress, request, "commerc
 				);
 			},
 			selectDesc: 'nameCurrentValue',
-			selectId: 'commerceCountryId',
+			selectId: 'countryId',
 			selectNullable: <%= false %>,
 			selectSort: '<%= true %>',
-			selectVal: '<%= commerceCountryId %>',
+			selectVal: '<%= countryId %>',
 		},
 		{
-			select: '<portlet:namespace />commerceRegionId',
+			select: '<portlet:namespace />regionId',
 			selectData: function (callback, selectKey) {
 				function injectRegionPlaceholder(list) {
 					var callbackList = [
 						{
-							commerceRegionId: '0',
+							regionId: '0',
 							name: '- <liferay-ui:message key="select-region" />',
 							nameCurrentValue:
 								'- <liferay-ui:message key="select-region" />',
@@ -122,15 +122,15 @@ long commerceRegionId = BeanParamUtil.getLong(shippingAddress, request, "commerc
 					'/commerce.commerceregion/get-commerce-regions',
 					{
 						active: true,
-						commerceCountryId: Number(selectKey),
+						countryId: Number(selectKey),
 					},
 					injectRegionPlaceholder
 				);
 			},
 			selectDesc: 'name',
-			selectId: 'commerceRegionId',
+			selectId: 'regionId',
 			selectNullable: <%= false %>,
-			selectVal: '<%= commerceRegionId %>',
+			selectVal: '<%= regionId %>',
 		},
 	]);
 </aui:script>

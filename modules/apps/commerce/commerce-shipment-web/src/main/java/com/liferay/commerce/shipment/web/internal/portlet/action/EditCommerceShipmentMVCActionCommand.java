@@ -196,15 +196,13 @@ public class EditCommerceShipmentMVCActionCommand extends BaseMVCActionCommand {
 		String street3 = ParamUtil.getString(actionRequest, "street3");
 		String city = ParamUtil.getString(actionRequest, "city");
 		String zip = ParamUtil.getString(actionRequest, "zip");
-		long commerceCountryId = ParamUtil.getLong(
-			actionRequest, "commerceCountryId");
-		long commerceRegionId = ParamUtil.getLong(
-			actionRequest, "commerceRegionId");
+		long regionId = ParamUtil.getLong(actionRequest, "regionId");
+		long countryId = ParamUtil.getLong(actionRequest, "countryId");
 		String phoneNumber = ParamUtil.getString(actionRequest, "phoneNumber");
 
 		return _commerceShipmentService.updateAddress(
 			commerceShipmentId, name, description, street1, street2, street3,
-			city, zip, commerceRegionId, commerceCountryId, phoneNumber);
+			city, zip, regionId, countryId, phoneNumber);
 	}
 
 	protected CommerceShipment updateCarrierDetails(ActionRequest actionRequest)
@@ -239,10 +237,8 @@ public class EditCommerceShipmentMVCActionCommand extends BaseMVCActionCommand {
 			String street3 = ParamUtil.getString(actionRequest, "street3");
 			String city = ParamUtil.getString(actionRequest, "city");
 			String zip = ParamUtil.getString(actionRequest, "zip");
-			long commerceRegionId = ParamUtil.getLong(
-				actionRequest, "commerceRegionId");
-			long commerceCountryId = ParamUtil.getLong(
-				actionRequest, "commerceCountryId");
+			long regionId = ParamUtil.getLong(actionRequest, "regionId");
+			long countryId = ParamUtil.getLong(actionRequest, "countryId");
 			String phoneNumber = ParamUtil.getString(
 				actionRequest, "phoneNumber");
 			String carrier = ParamUtil.getString(actionRequest, "carrier");
@@ -286,11 +282,11 @@ public class EditCommerceShipmentMVCActionCommand extends BaseMVCActionCommand {
 
 			commerceShipment = _commerceShipmentService.updateCommerceShipment(
 				commerceShipmentId, name, description, street1, street2,
-				street3, city, zip, commerceRegionId, commerceCountryId,
-				phoneNumber, carrier, trackingNumber, status, shippingDateMonth,
-				shippingDateDay, shippingDateYear, shippingDateHour,
-				shippingDateMinute, expectedDateMonth, expectedDateDay,
-				expectedDateYear, expectedDateHour, expectedDateMinute);
+				street3, city, zip, regionId, countryId, phoneNumber, carrier,
+				trackingNumber, status, shippingDateMonth, shippingDateDay,
+				shippingDateYear, shippingDateHour, shippingDateMinute,
+				expectedDateMonth, expectedDateDay, expectedDateYear,
+				expectedDateHour, expectedDateMinute);
 		}
 		else {
 			long commerceOrderId = ParamUtil.getLong(

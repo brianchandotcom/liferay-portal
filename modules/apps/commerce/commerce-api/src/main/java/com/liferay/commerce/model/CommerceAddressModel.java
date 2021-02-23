@@ -350,32 +350,32 @@ public interface CommerceAddressModel
 	public void setZip(String zip);
 
 	/**
-	 * Returns the commerce region ID of this commerce address.
+	 * Returns the region ID of this commerce address.
 	 *
-	 * @return the commerce region ID of this commerce address
+	 * @return the region ID of this commerce address
 	 */
-	public long getCommerceRegionId();
+	public long getRegionId();
 
 	/**
-	 * Sets the commerce region ID of this commerce address.
+	 * Sets the region ID of this commerce address.
 	 *
-	 * @param commerceRegionId the commerce region ID of this commerce address
+	 * @param regionId the region ID of this commerce address
 	 */
-	public void setCommerceRegionId(long commerceRegionId);
+	public void setRegionId(long regionId);
 
 	/**
-	 * Returns the commerce country ID of this commerce address.
+	 * Returns the country ID of this commerce address.
 	 *
-	 * @return the commerce country ID of this commerce address
+	 * @return the country ID of this commerce address
 	 */
-	public long getCommerceCountryId();
+	public long getCountryId();
 
 	/**
-	 * Sets the commerce country ID of this commerce address.
+	 * Sets the country ID of this commerce address.
 	 *
-	 * @param commerceCountryId the commerce country ID of this commerce address
+	 * @param countryId the country ID of this commerce address
 	 */
-	public void setCommerceCountryId(long commerceCountryId);
+	public void setCountryId(long countryId);
 
 	/**
 	 * Returns the latitude of this commerce address.

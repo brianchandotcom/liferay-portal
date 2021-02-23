@@ -504,185 +504,181 @@ public class CommerceTaxFixedRateAddressRelUtil {
 	}
 
 	/**
-	 * Returns all the commerce tax fixed rate address rels where commerceCountryId = &#63;.
+	 * Returns all the commerce tax fixed rate address rels where countryId = &#63;.
 	 *
-	 * @param commerceCountryId the commerce country ID
+	 * @param countryId the country ID
 	 * @return the matching commerce tax fixed rate address rels
 	 */
-	public static List<CommerceTaxFixedRateAddressRel> findByCommerceCountryId(
-		long commerceCountryId) {
+	public static List<CommerceTaxFixedRateAddressRel> findByCountryId(
+		long countryId) {
 
-		return getPersistence().findByCommerceCountryId(commerceCountryId);
+		return getPersistence().findByCountryId(countryId);
 	}
 
 	/**
-	 * Returns a range of all the commerce tax fixed rate address rels where commerceCountryId = &#63;.
+	 * Returns a range of all the commerce tax fixed rate address rels where countryId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTaxFixedRateAddressRelModelImpl</code>.
 	 * </p>
 	 *
-	 * @param commerceCountryId the commerce country ID
+	 * @param countryId the country ID
 	 * @param start the lower bound of the range of commerce tax fixed rate address rels
 	 * @param end the upper bound of the range of commerce tax fixed rate address rels (not inclusive)
 	 * @return the range of matching commerce tax fixed rate address rels
 	 */
-	public static List<CommerceTaxFixedRateAddressRel> findByCommerceCountryId(
-		long commerceCountryId, int start, int end) {
+	public static List<CommerceTaxFixedRateAddressRel> findByCountryId(
+		long countryId, int start, int end) {
 
-		return getPersistence().findByCommerceCountryId(
-			commerceCountryId, start, end);
+		return getPersistence().findByCountryId(countryId, start, end);
 	}
 
 	/**
-	 * Returns an ordered range of all the commerce tax fixed rate address rels where commerceCountryId = &#63;.
+	 * Returns an ordered range of all the commerce tax fixed rate address rels where countryId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTaxFixedRateAddressRelModelImpl</code>.
 	 * </p>
 	 *
-	 * @param commerceCountryId the commerce country ID
+	 * @param countryId the country ID
 	 * @param start the lower bound of the range of commerce tax fixed rate address rels
 	 * @param end the upper bound of the range of commerce tax fixed rate address rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching commerce tax fixed rate address rels
 	 */
-	public static List<CommerceTaxFixedRateAddressRel> findByCommerceCountryId(
-		long commerceCountryId, int start, int end,
+	public static List<CommerceTaxFixedRateAddressRel> findByCountryId(
+		long countryId, int start, int end,
 		OrderByComparator<CommerceTaxFixedRateAddressRel> orderByComparator) {
 
-		return getPersistence().findByCommerceCountryId(
-			commerceCountryId, start, end, orderByComparator);
+		return getPersistence().findByCountryId(
+			countryId, start, end, orderByComparator);
 	}
 
 	/**
-	 * Returns an ordered range of all the commerce tax fixed rate address rels where commerceCountryId = &#63;.
+	 * Returns an ordered range of all the commerce tax fixed rate address rels where countryId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTaxFixedRateAddressRelModelImpl</code>.
 	 * </p>
 	 *
-	 * @param commerceCountryId the commerce country ID
+	 * @param countryId the country ID
 	 * @param start the lower bound of the range of commerce tax fixed rate address rels
 	 * @param end the upper bound of the range of commerce tax fixed rate address rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching commerce tax fixed rate address rels
 	 */
-	public static List<CommerceTaxFixedRateAddressRel> findByCommerceCountryId(
-		long commerceCountryId, int start, int end,
+	public static List<CommerceTaxFixedRateAddressRel> findByCountryId(
+		long countryId, int start, int end,
 		OrderByComparator<CommerceTaxFixedRateAddressRel> orderByComparator,
 		boolean useFinderCache) {
 
-		return getPersistence().findByCommerceCountryId(
-			commerceCountryId, start, end, orderByComparator, useFinderCache);
+		return getPersistence().findByCountryId(
+			countryId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
-	 * Returns the first commerce tax fixed rate address rel in the ordered set where commerceCountryId = &#63;.
+	 * Returns the first commerce tax fixed rate address rel in the ordered set where countryId = &#63;.
 	 *
-	 * @param commerceCountryId the commerce country ID
+	 * @param countryId the country ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching commerce tax fixed rate address rel
 	 * @throws NoSuchTaxFixedRateAddressRelException if a matching commerce tax fixed rate address rel could not be found
 	 */
-	public static CommerceTaxFixedRateAddressRel findByCommerceCountryId_First(
-			long commerceCountryId,
+	public static CommerceTaxFixedRateAddressRel findByCountryId_First(
+			long countryId,
 			OrderByComparator<CommerceTaxFixedRateAddressRel> orderByComparator)
 		throws com.liferay.commerce.tax.engine.fixed.exception.
 			NoSuchTaxFixedRateAddressRelException {
 
-		return getPersistence().findByCommerceCountryId_First(
-			commerceCountryId, orderByComparator);
+		return getPersistence().findByCountryId_First(
+			countryId, orderByComparator);
 	}
 
 	/**
-	 * Returns the first commerce tax fixed rate address rel in the ordered set where commerceCountryId = &#63;.
+	 * Returns the first commerce tax fixed rate address rel in the ordered set where countryId = &#63;.
 	 *
-	 * @param commerceCountryId the commerce country ID
+	 * @param countryId the country ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching commerce tax fixed rate address rel, or <code>null</code> if a matching commerce tax fixed rate address rel could not be found
 	 */
-	public static CommerceTaxFixedRateAddressRel fetchByCommerceCountryId_First(
-		long commerceCountryId,
+	public static CommerceTaxFixedRateAddressRel fetchByCountryId_First(
+		long countryId,
 		OrderByComparator<CommerceTaxFixedRateAddressRel> orderByComparator) {
 
-		return getPersistence().fetchByCommerceCountryId_First(
-			commerceCountryId, orderByComparator);
+		return getPersistence().fetchByCountryId_First(
+			countryId, orderByComparator);
 	}
 
 	/**
-	 * Returns the last commerce tax fixed rate address rel in the ordered set where commerceCountryId = &#63;.
+	 * Returns the last commerce tax fixed rate address rel in the ordered set where countryId = &#63;.
 	 *
-	 * @param commerceCountryId the commerce country ID
+	 * @param countryId the country ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching commerce tax fixed rate address rel
 	 * @throws NoSuchTaxFixedRateAddressRelException if a matching commerce tax fixed rate address rel could not be found
 	 */
-	public static CommerceTaxFixedRateAddressRel findByCommerceCountryId_Last(
-			long commerceCountryId,
+	public static CommerceTaxFixedRateAddressRel findByCountryId_Last(
+			long countryId,
 			OrderByComparator<CommerceTaxFixedRateAddressRel> orderByComparator)
 		throws com.liferay.commerce.tax.engine.fixed.exception.
 			NoSuchTaxFixedRateAddressRelException {
 
-		return getPersistence().findByCommerceCountryId_Last(
-			commerceCountryId, orderByComparator);
+		return getPersistence().findByCountryId_Last(
+			countryId, orderByComparator);
 	}
 
 	/**
-	 * Returns the last commerce tax fixed rate address rel in the ordered set where commerceCountryId = &#63;.
+	 * Returns the last commerce tax fixed rate address rel in the ordered set where countryId = &#63;.
 	 *
-	 * @param commerceCountryId the commerce country ID
+	 * @param countryId the country ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching commerce tax fixed rate address rel, or <code>null</code> if a matching commerce tax fixed rate address rel could not be found
 	 */
-	public static CommerceTaxFixedRateAddressRel fetchByCommerceCountryId_Last(
-		long commerceCountryId,
+	public static CommerceTaxFixedRateAddressRel fetchByCountryId_Last(
+		long countryId,
 		OrderByComparator<CommerceTaxFixedRateAddressRel> orderByComparator) {
 
-		return getPersistence().fetchByCommerceCountryId_Last(
-			commerceCountryId, orderByComparator);
+		return getPersistence().fetchByCountryId_Last(
+			countryId, orderByComparator);
 	}
 
 	/**
-	 * Returns the commerce tax fixed rate address rels before and after the current commerce tax fixed rate address rel in the ordered set where commerceCountryId = &#63;.
+	 * Returns the commerce tax fixed rate address rels before and after the current commerce tax fixed rate address rel in the ordered set where countryId = &#63;.
 	 *
 	 * @param commerceTaxFixedRateAddressRelId the primary key of the current commerce tax fixed rate address rel
-	 * @param commerceCountryId the commerce country ID
+	 * @param countryId the country ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next commerce tax fixed rate address rel
 	 * @throws NoSuchTaxFixedRateAddressRelException if a commerce tax fixed rate address rel with the primary key could not be found
 	 */
-	public static CommerceTaxFixedRateAddressRel[]
-			findByCommerceCountryId_PrevAndNext(
-				long commerceTaxFixedRateAddressRelId, long commerceCountryId,
-				OrderByComparator<CommerceTaxFixedRateAddressRel>
-					orderByComparator)
+	public static CommerceTaxFixedRateAddressRel[] findByCountryId_PrevAndNext(
+			long commerceTaxFixedRateAddressRelId, long countryId,
+			OrderByComparator<CommerceTaxFixedRateAddressRel> orderByComparator)
 		throws com.liferay.commerce.tax.engine.fixed.exception.
 			NoSuchTaxFixedRateAddressRelException {
 
-		return getPersistence().findByCommerceCountryId_PrevAndNext(
-			commerceTaxFixedRateAddressRelId, commerceCountryId,
-			orderByComparator);
+		return getPersistence().findByCountryId_PrevAndNext(
+			commerceTaxFixedRateAddressRelId, countryId, orderByComparator);
 	}
 
 	/**
-	 * Removes all the commerce tax fixed rate address rels where commerceCountryId = &#63; from the database.
+	 * Removes all the commerce tax fixed rate address rels where countryId = &#63; from the database.
 	 *
-	 * @param commerceCountryId the commerce country ID
+	 * @param countryId the country ID
 	 */
-	public static void removeByCommerceCountryId(long commerceCountryId) {
-		getPersistence().removeByCommerceCountryId(commerceCountryId);
+	public static void removeByCountryId(long countryId) {
+		getPersistence().removeByCountryId(countryId);
 	}
 
 	/**
-	 * Returns the number of commerce tax fixed rate address rels where commerceCountryId = &#63;.
+	 * Returns the number of commerce tax fixed rate address rels where countryId = &#63;.
 	 *
-	 * @param commerceCountryId the commerce country ID
+	 * @param countryId the country ID
 	 * @return the number of matching commerce tax fixed rate address rels
 	 */
-	public static int countByCommerceCountryId(long commerceCountryId) {
-		return getPersistence().countByCommerceCountryId(commerceCountryId);
+	public static int countByCountryId(long countryId) {
+		return getPersistence().countByCountryId(countryId);
 	}
 
 	/**

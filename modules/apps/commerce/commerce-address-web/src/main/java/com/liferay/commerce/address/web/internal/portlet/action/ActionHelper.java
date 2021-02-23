@@ -53,7 +53,7 @@ public class ActionHelper {
 	public Country getCountry(RenderRequest renderRequest)
 		throws PortalException {
 
-		long countryId = ParamUtil.getLong(renderRequest, "commerceCountryId");
+		long countryId = ParamUtil.getLong(renderRequest, "countryId");
 
 		if (countryId > 0) {
 			return _countryService.getCountry(countryId);
@@ -65,7 +65,7 @@ public class ActionHelper {
 	public Region getRegion(RenderRequest renderRequest)
 		throws PortalException {
 
-		long regionId = ParamUtil.getLong(renderRequest, "commerceRegionId");
+		long regionId = ParamUtil.getLong(renderRequest, "regionId");
 
 		if (regionId > 0) {
 			return _regionService.getRegion(regionId);

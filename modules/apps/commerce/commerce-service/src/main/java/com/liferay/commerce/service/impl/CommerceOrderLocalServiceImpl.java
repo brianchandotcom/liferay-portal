@@ -1029,13 +1029,13 @@ public class CommerceOrderLocalServiceImpl
 	public CommerceOrder updateBillingAddress(
 			long commerceOrderId, String name, String description,
 			String street1, String street2, String street3, String city,
-			String zip, long commerceRegionId, long commerceCountryId,
-			String phoneNumber, ServiceContext serviceContext)
+			String zip, long regionId, long countryId, String phoneNumber,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		return updateAddress(
 			commerceOrderId, name, description, street1, street2, street3, city,
-			zip, commerceRegionId, commerceCountryId, phoneNumber,
+			zip, regionId, countryId, phoneNumber,
 			CommerceOrder::getBillingAddressId,
 			CommerceOrder::setBillingAddressId, serviceContext);
 	}
@@ -1666,13 +1666,13 @@ public class CommerceOrderLocalServiceImpl
 	public CommerceOrder updateShippingAddress(
 			long commerceOrderId, String name, String description,
 			String street1, String street2, String street3, String city,
-			String zip, long commerceRegionId, long commerceCountryId,
-			String phoneNumber, ServiceContext serviceContext)
+			String zip, long regionId, long countryId, String phoneNumber,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		return updateAddress(
 			commerceOrderId, name, description, street1, street2, street3, city,
-			zip, commerceRegionId, commerceCountryId, phoneNumber,
+			zip, regionId, countryId, phoneNumber,
 			CommerceOrder::getShippingAddressId,
 			CommerceOrder::setShippingAddressId, serviceContext);
 	}
@@ -2041,8 +2041,7 @@ public class CommerceOrderLocalServiceImpl
 	protected CommerceOrder updateAddress(
 			long commerceOrderId, String name, String description,
 			String street1, String street2, String street3, String city,
-			String zip, long commerceRegionId, long commerceCountryId,
-			String phoneNumber,
+			String zip, long regionId, long countryId, String phoneNumber,
 			Function<CommerceOrder, Long> commerceAddressIdGetter,
 			BiConsumer<CommerceOrder, Long> commerceAddressIdSetter,
 			ServiceContext serviceContext)
@@ -2058,15 +2057,15 @@ public class CommerceOrderLocalServiceImpl
 		if (commerceAddressId > 0) {
 			commerceAddress = commerceAddressLocalService.updateCommerceAddress(
 				commerceAddressId, name, description, street1, street2, street3,
-				city, zip, commerceRegionId, commerceCountryId, phoneNumber,
-				false, false, serviceContext);
+				city, zip, regionId, countryId, phoneNumber, false, false,
+				serviceContext);
 		}
 		else {
 			commerceAddress = commerceAddressLocalService.addCommerceAddress(
 				commerceOrder.getModelClassName(),
 				commerceOrder.getCommerceOrderId(), name, description, street1,
-				street2, street3, city, zip, commerceRegionId,
-				commerceCountryId, phoneNumber, false, false, serviceContext);
+				street2, street3, city, zip, regionId, countryId, phoneNumber,
+				false, false, serviceContext);
 		}
 
 		commerceAddressIdSetter.accept(

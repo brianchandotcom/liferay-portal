@@ -22,12 +22,12 @@ CommerceAccountDisplayContext commerceAccountDisplayContext = (CommerceAccountDi
 CommerceAccount commerceAccount = commerceAccountDisplayContext.getCurrentCommerceAccount();
 CommerceAddress commerceAddress = commerceAccountDisplayContext.getDefaultBillingCommerceAddress();
 
-long commerceCountryId = 0;
-long commerceRegionId = 0;
+long countryId = 0;
+long regionId = 0;
 
 if (commerceAddress != null) {
-	commerceCountryId = commerceAddress.getCommerceCountryId();
-	commerceRegionId = commerceAddress.getCommerceRegionId();
+	countryId = commerceAddress.getCountryId();
+	regionId = commerceAddress.getRegionId();
 }
 %>
 
@@ -131,10 +131,10 @@ if (commerceAddress != null) {
 <aui:script use="liferay-dynamic-select">
 	new Liferay.DynamicSelect([
 		{
-			select: '<portlet:namespace />commerceCountryId',
+			select: '<portlet:namespace />countryId',
 			selectData: function (callback) {
 				Liferay.Service(
-					'/commerce.commercecountry/get-commerce-countries',
+					'/country/get-company-countries',
 					{
 						companyId: <%= company.getCompanyId() %>,
 						active: true,
@@ -143,25 +143,25 @@ if (commerceAddress != null) {
 				);
 			},
 			selectDesc: 'nameCurrentValue',
-			selectId: 'commerceCountryId',
+			selectId: 'countryId',
 			selectSort: true,
-			selectVal: '<%= commerceCountryId %>',
+			selectVal: '<%= countryId %>',
 		},
 		{
-			select: '<portlet:namespace />commerceRegionId',
+			select: '<portlet:namespace />regionId',
 			selectData: function (callback, selectKey) {
 				Liferay.Service(
-					'/commerce.commerceregion/get-commerce-regions',
+					'/region/get-regions',
 					{
-						commerceCountryId: Number(selectKey),
+						countryId: Number(selectKey),
 						active: true,
 					},
 					callback
 				);
 			},
 			selectDesc: 'name',
-			selectId: 'commerceRegionId',
-			selectVal: '<%= commerceRegionId %>',
+			selectId: 'regionId',
+			selectVal: '<%= regionId %>',
 		},
 	]);
 </aui:script>

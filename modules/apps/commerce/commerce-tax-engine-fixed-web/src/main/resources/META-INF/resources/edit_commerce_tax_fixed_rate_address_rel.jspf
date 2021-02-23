@@ -59,7 +59,7 @@ if (commerceTaxFixedRateAddressRel != null) {
 
 <div class="row">
 	<div class="col-md-4">
-		<aui:select label="country" name="commerceCountryId" showEmptyOption="<%= true %>">
+		<aui:select label="country" name="countryId" showEmptyOption="<%= true %>">
 
 			<%
 			List<Country> countries = commerceTaxFixedRateAddressRelsDisplayContext.getCountries();
@@ -67,7 +67,7 @@ if (commerceTaxFixedRateAddressRel != null) {
 			for (Country country : countries) {
 			%>
 
-				<aui:option label="<%= country.getName(locale) %>" selected="<%= (commerceTaxFixedRateAddressRel != null) && (commerceTaxFixedRateAddressRel.getCommerceCountryId() == country.getCountryId()) %>" value="<%= country.getCountryId() %>" />
+				<aui:option label="<%= country.getName(locale) %>" selected="<%= (commerceTaxFixedRateAddressRel != null) && (commerceTaxFixedRateAddressRel.getCountryId() == country.getCountryId()) %>" value="<%= country.getCountryId() %>" />
 
 			<%
 			}
@@ -77,7 +77,7 @@ if (commerceTaxFixedRateAddressRel != null) {
 	</div>
 
 	<div class="col-md-4">
-		<aui:select label="region" name="commerceRegionId" showEmptyOption="<%= true %>">
+		<aui:select label="region" name="regionId" showEmptyOption="<%= true %>">
 
 			<%
 			List<Region> regions = commerceTaxFixedRateAddressRelsDisplayContext.getRegions();
@@ -85,7 +85,7 @@ if (commerceTaxFixedRateAddressRel != null) {
 			for (Region region : regions) {
 			%>
 
-				<aui:option label="<%= region.getName() %>" selected="<%= (commerceTaxFixedRateAddressRel != null) && (commerceTaxFixedRateAddressRel.getCommerceRegionId() == region.getRegionId()) %>" value="<%= region.getRegionId() %>" />
+				<aui:option label="<%= region.getName() %>" selected="<%= (commerceTaxFixedRateAddressRel != null) && (commerceTaxFixedRateAddressRel.getRegionId() == region.getRegionId()) %>" value="<%= region.getRegionId() %>" />
 
 			<%
 			}

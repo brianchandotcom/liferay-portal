@@ -872,6 +872,26 @@ public abstract class BaseAccountResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"defaultBillingAddressId", additionalAssertFieldName)) {
+
+				if (account.getDefaultBillingAddressId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"defaultShippingAddressId", additionalAssertFieldName)) {
+
+				if (account.getDefaultShippingAddressId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("emailAddresses", additionalAssertFieldName)) {
 				if (account.getEmailAddresses() == null) {
 					valid = false;
@@ -1088,6 +1108,32 @@ public abstract class BaseAccountResourceTestCase {
 				if (!Objects.deepEquals(
 						account1.getDateModified(),
 						account2.getDateModified())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"defaultBillingAddressId", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						account1.getDefaultBillingAddressId(),
+						account2.getDefaultBillingAddressId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"defaultShippingAddressId", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						account1.getDefaultShippingAddressId(),
+						account2.getDefaultShippingAddressId())) {
 
 					return false;
 				}
@@ -1353,6 +1399,16 @@ public abstract class BaseAccountResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("defaultBillingAddressId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("defaultShippingAddressId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("emailAddresses")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1456,6 +1512,8 @@ public abstract class BaseAccountResourceTestCase {
 			{
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
+				defaultBillingAddressId = RandomTestUtil.randomLong();
+				defaultShippingAddressId = RandomTestUtil.randomLong();
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();

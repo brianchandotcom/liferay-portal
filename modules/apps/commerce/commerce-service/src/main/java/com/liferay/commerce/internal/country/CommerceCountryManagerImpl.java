@@ -22,6 +22,7 @@ import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.petra.sql.dsl.query.JoinStep;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.CountryTable;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -37,8 +38,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pei-Jung Lan
  */
 @Component(
-	enabled = false, immediate = true, service = CommerceCountryManager.class
+	enabled = false, immediate = true,
+	property = {
+		"json.web.service.context.name=commerce",
+		"json.web.service.context.path=CommerceCountryManager"
+	},
+	service = CommerceCountryManager.class
 )
+@JSONWebService
 public class CommerceCountryManagerImpl implements CommerceCountryManager {
 
 	public List<Country> getBillingCountriesByChannelId(

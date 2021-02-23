@@ -157,3 +157,64 @@ Update any explicit reference to commerce destinations with the new names.
 This change was introduced to follow the Liferay naming pattern.
 
 ---------------------------------------
+
+### Destination Names Changed
+- **Date:** 2021-Feb-22
+- **JIRA Ticket:** [COMMERCE-4762](https://issues.liferay.com/browse/COMMERCE-5788)
+
+#### What changed?
+
+Any methods that references `externalReferenceCode` has been rearranged.
+
+Classes that have methods that were updated:
+
+- `com.liferay.commerce.inventory.service.CommerceInventoryWarehouseLocalService`
+- `com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService`
+- `com.liferay.commerce.price.list.service.CommercePriceEntryLocalService`
+- `com.liferay.commerce.price.list.service.CommercePriceEntryService`
+- `com.liferay.commerce.price.list.service.CommercePriceListLocalService`
+- `com.liferay.commerce.price.list.service.CommercePriceListService`
+- `com.liferay.commerce.price.list.service.CommerceTierPriceEntryLocalService`
+- `com.liferay.commerce.price.list.service.CommerceTierPriceEntryService`
+- `com.liferay.commerce.pricing.service.CommercePriceModifierLocalService`
+- `com.liferay.commerce.pricing.service.CommercePriceModifierService`
+- `com.liferay.commerce.pricing.service.CommercePricingClassLocalService`
+- `com.liferay.commerce.pricing.service.CommercePricingClassService`
+- `com.liferay.commerce.product.service.CommerceCatalogLocalService`
+- `com.liferay.commerce.product.service.CommerceCatalogService`
+- `com.liferay.commerce.product.service.CommerceChannelLocalService`
+- `com.liferay.commerce.product.service.CommerceChannelService`
+- `com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService`
+- `com.liferay.commerce.product.service.CPAttachmentFileEntryService`
+- `com.liferay.commerce.product.service.CPDefinitionLocalService`
+- `com.liferay.commerce.product.service.CPDefinitionService`
+- `com.liferay.commerce.product.service.CPInstanceLocalService`
+- `com.liferay.commerce.product.service.CPInstanceService`
+- `com.liferay.commerce.product.service.CPOptionLocalService`
+- `com.liferay.commerce.product.service.CPOptionService`
+- `com.liferay.commerce.product.service.CPOptionValueLocalService`
+- `com.liferay.commerce.product.service.CPOptionValueService`
+- `com.liferay.commerce.product.service.CProductLocalService`
+- `com.liferay.commerce.product.service.CProductService`
+- `com.liferay.commerce.service.CommerceAddressLocalService`
+- `com.liferay.commerce.service.CommerceAddressService`
+- `com.liferay.commerce.service.CommerceOrderItemLocalService`
+- `com.liferay.commerce.service.CommerceOrderItemService`
+- `com.liferay.commerce.service.CommerceOrderLocalService`
+- `com.liferay.commerce.service.CommerceOrderNoteLocalService`
+- `com.liferay.commerce.service.CommerceOrderNoteService`
+- `com.liferay.commerce.service.CommerceOrderService`
+
+#### Who is affected?
+
+Anyone who references or uses methods from these classes.
+
+#### How should I update my code?
+
+Update methods to use the new corresponding method.
+
+#### Why was this change made?
+
+This change was introduced to follow Liferay source formatting.
+
+---------------------------------------

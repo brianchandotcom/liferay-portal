@@ -22,7 +22,10 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
 import {useConstants} from '../contexts/ConstantsContext';
-import {useSelectedMenuItemId} from '../contexts/SelectedMenuItemIdContext';
+import {
+	useSelectedMenuItemId,
+	useSetSelectedMenuItemId,
+} from '../contexts/SelectedMenuItemIdContext';
 import {useSetSidebarPanelId} from '../contexts/SidebarPanelIdContext';
 
 export const SidebarPanelContent = ({
@@ -36,6 +39,7 @@ export const SidebarPanelContent = ({
 
 	const isMounted = useIsMounted();
 	const selectedMenuItemId = useSelectedMenuItemId();
+	const setSelectedMenuItemId = useSetSelectedMenuItemId();
 	const setSidebarPanelId = useSetSidebarPanelId();
 
 	const {portletId, redirect} = useConstants();
@@ -97,6 +101,7 @@ export const SidebarPanelContent = ({
 									confirmUnsavedChanges();
 								}
 
+								setSelectedMenuItemId(null);
 								setSidebarPanelId(null);
 							}}
 						>

@@ -266,3 +266,5 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 	module="js/JournalPortlet.es"
 	servletContext="<%= application %>"
 />
+
+<%@ include file="/friendly_url_changed_message.jspf" %>

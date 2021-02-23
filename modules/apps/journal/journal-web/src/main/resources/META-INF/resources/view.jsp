@@ -152,3 +152,5 @@ else {
 		/>
 	</div>
 </div>
+
+<%@ include file="/friendly_url_changed_message.jspf" %>

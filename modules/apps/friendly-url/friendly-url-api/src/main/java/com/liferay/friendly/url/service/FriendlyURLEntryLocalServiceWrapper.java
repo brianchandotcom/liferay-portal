@@ -566,12 +566,26 @@ public class FriendlyURLEntryLocalServiceWrapper
 		return _friendlyURLEntryLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #getUniqueUrlTitle(long, long, long, String, String)}
+	 */
+	@Deprecated
 	@Override
 	public String getUniqueUrlTitle(
 		long groupId, long classNameId, long classPK, String urlTitle) {
 
 		return _friendlyURLEntryLocalService.getUniqueUrlTitle(
 			groupId, classNameId, classPK, urlTitle);
+	}
+
+	@Override
+	public String getUniqueUrlTitle(
+		long groupId, long classNameId, long classPK, String languageId,
+		String urlTitle) {
+
+		return _friendlyURLEntryLocalService.getUniqueUrlTitle(
+			groupId, classNameId, classPK, languageId, urlTitle);
 	}
 
 	@Override

@@ -6055,7 +6055,8 @@ public class JournalArticleLocalServiceImpl
 			String urlTitle = friendlyURLEntryLocalService.getUniqueUrlTitle(
 				groupId,
 				classNameLocalService.getClassNameId(JournalArticle.class),
-				article.getResourcePrimKey(), title);
+				article.getResourcePrimKey(),
+				LanguageUtil.getLanguageId(entry.getKey()), title);
 
 			friendlyURLMap.put(entry.getKey(), urlTitle);
 		}
@@ -9061,12 +9062,14 @@ public class JournalArticleLocalServiceImpl
 				}
 			}
 
+			String languageId = LanguageUtil.getLanguageId(entry.getKey());
+
 			String urlTitle = friendlyURLEntryLocalService.getUniqueUrlTitle(
 				groupId,
 				classNameLocalService.getClassNameId(JournalArticle.class),
-				resourcePrimKey, friendlyURL);
+				resourcePrimKey, languageId, friendlyURL);
 
-			urlTitleMap.put(LocaleUtil.toLanguageId(entry.getKey()), urlTitle);
+			urlTitleMap.put(languageId, urlTitle);
 		}
 
 		for (Map.Entry<Locale, String> entry : friendlyURLMap.entrySet()) {
@@ -9074,14 +9077,16 @@ public class JournalArticleLocalServiceImpl
 			String value = entry.getValue();
 
 			if (!urlTitleMap.containsKey(key) && Validator.isNotNull(value)) {
+				String languageId = LocaleUtil.toLanguageId(key);
+
 				String urlTitle =
 					friendlyURLEntryLocalService.getUniqueUrlTitle(
 						groupId,
 						classNameLocalService.getClassNameId(
 							JournalArticle.class),
-						resourcePrimKey, value);
+						resourcePrimKey, languageId, value);
 
-				urlTitleMap.put(LocaleUtil.toLanguageId(key), urlTitle);
+				urlTitleMap.put(languageId, urlTitle);
 			}
 		}
 

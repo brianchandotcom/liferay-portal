@@ -388,6 +388,8 @@ public abstract class Base${schemaName}ResourceImpl
 								${schemaVarName}.getId() != null ? ${schemaVarName}.getId() :
 								<#if stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String")>
 									(String)
+								<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.lang.Integer")>
+									(Integer)
 								<#else>
 									(Long)
 								</#if>
@@ -395,6 +397,8 @@ public abstract class Base${schemaName}ResourceImpl
 							<#elseif putBatchJavaMethodSignature.parentSchemaName?? && stringUtil.equals(javaMethodParameter.parameterName, putBatchJavaMethodSignature.parentSchemaName?uncap_first + "Id")>
 								<#if stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String")>
 									(String)
+								<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.lang.Integer")>
+									(Integer)
 								<#else>
 									(Long)
 								</#if>

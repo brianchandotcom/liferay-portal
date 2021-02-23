@@ -130,6 +130,12 @@
 				<required>true</required>
 			</attribute>
 			<attribute>
+				<name>persisted</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+				<required>false</required>
+			</attribute>
+			<attribute>
 				<name>readOnly</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>

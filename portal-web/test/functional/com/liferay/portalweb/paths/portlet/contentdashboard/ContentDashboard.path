@@ -79,7 +79,7 @@
 </tr>
 <tr>
 	<td>CLEAR_FILTERS_BUTTON</td>
-	<td>//*[contains(@class, ' component-link tbar-link') and contains(text(),'Clear')]</td>
+	<td>//*[contains(@class, 'component-link tbar-link') and contains(text(),'Clear')]</td>
 	<td></td>
 </tr>
 <tr>

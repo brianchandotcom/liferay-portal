@@ -99,7 +99,7 @@ page import="javax.portlet.PortletURL" %>
 <%
 group = (Group)renderRequest.getAttribute(WebKeys.GROUP);
 layout = (Layout)renderRequest.getAttribute(WebKeys.LAYOUT);
-privateLayout = (boolean)renderRequest.getAttribute(WebKeys.PRIVATE_LAYOUT);
+privateLayout = GetterUtil.getBoolean((String)renderRequest.getAttribute(WebKeys.PRIVATE_LAYOUT));
 
 LayoutBranchDisplayContext layoutBranchDisplayContext = new LayoutBranchDisplayContext(request);
 LayoutSetBranchDisplayContext layoutSetBranchDisplayContext = new LayoutSetBranchDisplayContext(request);

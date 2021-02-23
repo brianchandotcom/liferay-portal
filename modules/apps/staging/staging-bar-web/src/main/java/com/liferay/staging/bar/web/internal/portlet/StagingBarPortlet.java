@@ -333,7 +333,8 @@ public class StagingBarPortlet extends MVCPortlet {
 		renderRequest.setAttribute(WebKeys.GROUP, group);
 		renderRequest.setAttribute(WebKeys.LAYOUT, layout);
 		renderRequest.setAttribute(WebKeys.LAYOUT_REVISION, layoutRevision);
-		renderRequest.setAttribute(WebKeys.PRIVATE_LAYOUT, privateLayout);
+		renderRequest.setAttribute(
+			WebKeys.PRIVATE_LAYOUT, String.valueOf(privateLayout));
 
 		renderRequest.setAttribute(
 			StagingProcessesWebKeys.BRANCHING_ENABLED,

@@ -68,20 +68,20 @@ public class JaxRsComponentRegistrationTest {
 
 		properties.put("liferay.auth.verifier", false);
 		properties.put("liferay.oauth2", false);
-		properties.put("osgi.jaxrs.application.base", "/test-rest/greeter1");
+		properties.put("osgi.jaxrs.application.base", "/rest-test/greeter1");
 
 		_serviceRegistrations.add(
 			bundleContext.registerService(
 				Application.class, new Greeter(), properties));
 
-		properties.put("osgi.jaxrs.application.base", "/test-rest/greeter2");
+		properties.put("osgi.jaxrs.application.base", "/rest-test/greeter2");
 
 		_serviceRegistrations.add(
 			bundleContext.registerService(
 				Application.class, new Greeter(), properties));
 
 		properties.put("addonable", Boolean.TRUE);
-		properties.put("osgi.jaxrs.application.base", "/test-rest/greeter3");
+		properties.put("osgi.jaxrs.application.base", "/rest-test/greeter3");
 
 		_serviceRegistrations.add(
 			bundleContext.registerService(
@@ -109,19 +109,19 @@ public class JaxRsComponentRegistrationTest {
 	@Test
 	public void testIsRegistered() throws Exception {
 		URL url = new URL(
-			"http://localhost:8080/o/test-rest/greeter1/sayHello");
+			"http://localhost:8080/o/rest-test/greeter1/sayHello");
 
 		Assert.assertEquals("Hello.", StringUtil.read(url.openStream()));
 
-		url = new URL("http://localhost:8080/o/test-rest/greeter2/sayHello");
+		url = new URL("http://localhost:8080/o/rest-test/greeter2/sayHello");
 
 		Assert.assertEquals("Hello.", StringUtil.read(url.openStream()));
 
-		url = new URL("http://localhost:8080/o/test-rest/greeter3/sayHello");
+		url = new URL("http://localhost:8080/o/rest-test/greeter3/sayHello");
 
 		Assert.assertEquals("Hello.", StringUtil.read(url.openStream()));
 
-		url = new URL("http://localhost:8080/o/test-rest/greeter3/addon");
+		url = new URL("http://localhost:8080/o/rest-test/greeter3/addon");
 
 		Assert.assertEquals("addon", StringUtil.read(url.openStream()));
 	}

@@ -1895,6 +1895,156 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				"Object/code"));
 	}
 
+	@Test
+	public void testDeleteSiteMessageBoardMessage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		MessageBoardMessage messageBoardMessage =
+			testDeleteSiteMessageBoardMessage_addMessageBoardMessage();
+
+		assertHttpResponseStatusCode(
+			204,
+			messageBoardMessageResource.
+				deleteSiteMessageBoardMessageHttpResponse(
+					messageBoardMessage.getSiteId(),
+					messageBoardMessage.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			messageBoardMessageResource.getSiteMessageBoardMessageHttpResponse(
+				messageBoardMessage.getSiteId(),
+				messageBoardMessage.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			messageBoardMessageResource.getSiteMessageBoardMessageHttpResponse(
+				messageBoardMessage.getSiteId(),
+				messageBoardMessage.getExternalReferenceCode()));
+	}
+
+	protected MessageBoardMessage
+			testDeleteSiteMessageBoardMessage_addMessageBoardMessage()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetSiteMessageBoardMessage() throws Exception {
+		MessageBoardMessage postMessageBoardMessage =
+			testGetSiteMessageBoardMessage_addMessageBoardMessage();
+
+		MessageBoardMessage getMessageBoardMessage =
+			messageBoardMessageResource.getSiteMessageBoardMessage(
+				postMessageBoardMessage.getSiteId(),
+				postMessageBoardMessage.getExternalReferenceCode());
+
+		assertEquals(postMessageBoardMessage, getMessageBoardMessage);
+		assertValid(getMessageBoardMessage);
+	}
+
+	protected MessageBoardMessage
+			testGetSiteMessageBoardMessage_addMessageBoardMessage()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetSiteMessageBoardMessage() throws Exception {
+		MessageBoardMessage messageBoardMessage =
+			testGraphQLMessageBoardMessage_addMessageBoardMessage();
+
+		Assert.assertTrue(
+			equals(
+				messageBoardMessage,
+				MessageBoardMessageSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"siteMessageBoardMessage",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"siteKey",
+											"\"" +
+												messageBoardMessage.
+													getSiteId() + "\"");
+										put(
+											"externalReferenceCode",
+											"\"" +
+												messageBoardMessage.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/siteMessageBoardMessage"))));
+	}
+
+	@Test
+	public void testGraphQLGetSiteMessageBoardMessageNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"siteMessageBoardMessage",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteKey",
+									"\"" + irrelevantGroup.getGroupId() + "\"");
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Test
+	public void testPutSiteMessageBoardMessage() throws Exception {
+		MessageBoardMessage postMessageBoardMessage =
+			testPutSiteMessageBoardMessage_addMessageBoardMessage();
+
+		MessageBoardMessage randomMessageBoardMessage =
+			randomMessageBoardMessage();
+
+		MessageBoardMessage putMessageBoardMessage =
+			messageBoardMessageResource.putSiteMessageBoardMessage(
+				postMessageBoardMessage.getSiteId(),
+				postMessageBoardMessage.getExternalReferenceCode(),
+				randomMessageBoardMessage);
+
+		assertEquals(randomMessageBoardMessage, putMessageBoardMessage);
+		assertValid(putMessageBoardMessage);
+
+		MessageBoardMessage getMessageBoardMessage =
+			messageBoardMessageResource.getSiteMessageBoardMessage(
+				putMessageBoardMessage.getSiteId(),
+				putMessageBoardMessage.getExternalReferenceCode());
+
+		assertEquals(randomMessageBoardMessage, getMessageBoardMessage);
+		assertValid(getMessageBoardMessage);
+	}
+
+	protected MessageBoardMessage
+			testPutSiteMessageBoardMessage_addMessageBoardMessage()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 

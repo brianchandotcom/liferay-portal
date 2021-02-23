@@ -1711,6 +1711,27 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {siteMessageBoardMessage(externalReferenceCode: ___, siteKey: ___){actions, aggregateRating, anonymous, articleBody, creator, creatorStatistics, customFields, dateCreated, dateModified, encodingFormat, externalReferenceCode, friendlyUrlPath, headline, id, keywords, messageBoardSectionId, messageBoardThreadId, numberOfMessageBoardAttachments, numberOfMessageBoardMessages, parentMessageBoardMessageId, relatedContents, showAsAnswer, siteId, subscribed, viewableBy}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieves the site's message board message by external reference code."
+	)
+	public MessageBoardMessage siteMessageBoardMessage(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardMessageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardMessageResource ->
+				messageBoardMessageResource.getSiteMessageBoardMessage(
+					Long.valueOf(siteKey), externalReferenceCode));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {messageBoardSection(messageBoardSectionId: ___){actions, creator, customFields, dateCreated, dateModified, description, id, numberOfMessageBoardSections, numberOfMessageBoardThreads, parentMessageBoardSectionId, siteId, subscribed, title, viewableBy}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieves the message board section.")

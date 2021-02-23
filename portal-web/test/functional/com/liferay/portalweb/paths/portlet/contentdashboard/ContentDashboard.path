@@ -88,6 +88,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DELETE_SECOND_FILTER_SELECTED</td>
+	<td>//*[contains(@class, 'tbar-item-expand')]//*[contains(@class, 'close')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DISPLAY_PAGE_TITLE</td>
 	<td>//*[@data-qa-id='headerTitle']</td>
 	<td></td>
@@ -114,7 +119,7 @@
 </tr>
 <tr>
 	<td>FILTER_CATEGORY_NAME</td>
-	<td>//*[@class='label-section' and contains(text(),'Category:${categoryName}')]</td>
+	<td>//*[contains(@class,'label') and contains(text(),'Category:${categoryName}')]</td>
 	<td></td>
 </tr>
 <tr>

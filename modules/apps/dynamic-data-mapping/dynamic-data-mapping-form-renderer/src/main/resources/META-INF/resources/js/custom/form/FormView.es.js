@@ -33,6 +33,7 @@ import pagesStructureReducer from '../../core/reducers/pagesStructureReducer.es'
 import formValidate from '../../core/thunks/formValidate.es';
 import pageLanguageUpdate from '../../core/thunks/pageLanguageUpdate.es';
 import {evaluate} from '../../util/evaluation.es';
+import * as Fields from '../../util/fields.es';
 import {getFormId, getFormNode} from '../../util/formId.es';
 import {COMMON_INITIAL_CONFIG_STATE} from './config/initialConfigState.es';
 import {COMMON_INITIAL_STATE} from './config/initialState.es';
@@ -232,6 +233,7 @@ const usePublicAPI = ({apiRef, containerRef, unstable_onEventRef}) => {
 
 			return props[key];
 		},
+		getFields: () => Fields.getFields(pages),
 		getFormNode: () =>
 			containerRef.current && getFormNode(containerRef.current),
 		toJSON: () => ({

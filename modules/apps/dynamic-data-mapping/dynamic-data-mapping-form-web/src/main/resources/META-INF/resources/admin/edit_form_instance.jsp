@@ -212,7 +212,8 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 							autocompleteUserURL:
 								'<%= ddmFormAdminDisplayContext.getAutocompleteUserURL() %>',
 							autosaveInterval: <%= ddmFormAdminDisplayContext.getAutosaveInterval() %>,
-							autosaveURL: '<%= autoSaveFormInstanceURL.toString() %>',
+							autosaveURL:
+								'<%= autoSaveFormInstanceURL.toString() %>',
 							context: context,
 							dataProviderInstanceParameterSettingsURL:
 								'<%= dataProviderInstanceParameterSettingsURL %>',
@@ -232,9 +233,13 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 							localizedName: <%= ddmFormAdminDisplayContext.getFormLocalizedName(formInstance) %>,
 							namespace: '<portlet:namespace />',
 							published: <%= ddmFormAdminDisplayContext.isFormPublished() %>,
+							publishFormInstanceURL:
+								'<%= publishFormInstanceURL.toString() %>',
+							restrictedFormURL: '<%= ddmFormAdminDisplayContext.getRestrictedFormURL() %>',
 							rolesURL: '<%= rolesURL %>',
 							rules: <%= serializedDDMFormRules %>,
 							saved: <%= formInstance != null %>,
+							sharedFormURL: '<%= ddmFormAdminDisplayContext.getSharedFormURL() %>',
 							shareFormInstanceURL:
 								'<%= ddmFormAdminDisplayContext.getShareFormInstanceURL(formInstance) %>',
 							showPublishAlert: <%= ddmFormAdminDisplayContext.isShowPublishAlert() %>,

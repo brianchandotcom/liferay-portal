@@ -12,18 +12,27 @@
  * details.
  */
 
+import {openToast} from 'frontend-js-web';
 import React, {useCallback, useEffect, useRef} from 'react';
 
 import Pages from '../../core/components/Pages.es';
 import {useConfig} from '../../core/hooks/useConfig.es';
 import {useFormState} from '../../core/hooks/useForm.es';
+import {createFormURL} from '../../util/form.es';
 import {FormInfo} from './components/FormInfo.es';
 import {ManagementToolbar} from './components/ManagementToolbar.es';
 import {MetalSidebarAdapter} from './components/MetalSidebarAdapter.es';
 import {TranslationManager} from './components/TranslationManager.es';
+import {useAutoSave} from './hooks/useAutoSave.es';
 
 export const FormBuilder = () => {
-	const {portletNamespace} = useConfig();
+	const {
+		formInstanceId,
+		portletNamespace,
+		publishFormInstanceURL,
+		restrictedFormURL,
+		sharedFormURL,
+	} = useConfig();
 	const {
 		activePage,
 		editingLanguageId,
@@ -32,6 +41,8 @@ export const FormBuilder = () => {
 		pages,
 		rules,
 	} = useFormState();
+
+	const {doSave, doSyncInput} = useAutoSave();
 
 	const sidebarRef = useRef(null);
 
@@ -60,10 +71,85 @@ export const FormBuilder = () => {
 		}
 	}, []);
 
+	const onPreviewClick = useCallback(
+		async (event) => {
+			event.preventDefault();
+
+			try {
+				const settingsDDMForm = await Liferay.componentReady(
+					'settingsDDMForm'
+				);
+
+				const fields = settingsDDMForm.reactComponentRef.current.getFields();
+
+				const {value: requireAuthentication} = fields.find(
+					({fieldName}) => fieldName === 'requireAuthentication'
+				);
+
+				await doSave(true);
+
+				window.open(
+					createFormURL('/preview', {
+						formInstanceId,
+						requireAuthentication,
+						restrictedFormURL,
+						sharedFormURL,
+					}),
+					'_blank'
+				);
+			}
+			catch (_) {
+				openToast({
+					message: Liferay.Language.get(
+						'your-request-failed-to-complete'
+					),
+					type: 'danger',
+				});
+			}
+		},
+		[doSave, formInstanceId, sharedFormURL, restrictedFormURL]
+	);
+
+	const onPublishClick = useCallback(
+		(event) => {
+			event.preventDefault();
+
+			const form = document.getElementById(`${portletNamespace}editForm`);
+
+			if (form) {
+				form.setAttribute('action', publishFormInstanceURL);
+			}
+
+			doSyncInput();
+
+			window.submitForm(form);
+		},
+		[doSyncInput, portletNamespace, publishFormInstanceURL]
+	);
+
+	const onSaveClick = useCallback(
+		(event) => {
+			event.preventDefault();
+
+			doSyncInput();
+
+			window.submitForm(
+				document.getElementById(`${portletNamespace}editForm`)
+			);
+		},
+		[portletNamespace, doSyncInput]
+	);
+
+	const onShareClick = useCallback(() => {}, []);
+
 	return (
 		<>
 			<ManagementToolbar
 				onPlusClick={onOpenSidebar}
+				onPreviewClick={onPreviewClick}
+				onPublishClick={onPublishClick}
+				onSaveClick={onSaveClick}
+				onShareClick={onShareClick}
 				portletNamespace={portletNamespace}
 			/>
 			<TranslationManager />

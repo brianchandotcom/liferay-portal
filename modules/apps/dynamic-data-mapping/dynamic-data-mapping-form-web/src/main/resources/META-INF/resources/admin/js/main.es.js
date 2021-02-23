@@ -33,38 +33,9 @@ class Form extends Component {
 
 		this.store = this.refs.app.reactComponentRef;
 
-		const previewButton = document.querySelector('.lfr-ddm-preview-button');
-
-		if (previewButton) {
-			previewButton.addEventListener(
-				'click',
-				this._handlePreviewButtonClicked
-			);
-		}
-
-		const saveButton = document.querySelector('.lfr-ddm-save-button');
-
-		if (saveButton) {
-			saveButton.addEventListener('click', this._handleSaveButtonClicked);
-		}
-
-		const publishButton = document.querySelector('.lfr-ddm-publish-button');
-
-		if (publishButton) {
-			publishButton.addEventListener(
-				'click',
-				this._handlePublishButtonClicked
-			);
-		}
-
-		const shareURLButton = document.querySelector(
-			'.lfr-ddm-share-url-button'
-		);
-
 		if (showPublishAlert) {
 			if (published) {
 				this._showPublishedAlert(this._createFormURL());
-				shareURLButton.removeAttribute('title');
 			}
 			else {
 				this._showUnpublishedAlert();
@@ -73,66 +44,20 @@ class Form extends Component {
 	}
 
 	created() {
-		this._handlePreviewButtonClicked = this._handlePreviewButtonClicked.bind(
-			this
-		);
-		this._handleSaveButtonClicked = this._handleSaveButtonClicked.bind(
-			this
-		);
-		this._handlePublishButtonClicked = this._handlePublishButtonClicked.bind(
-			this
-		);
-
 		this._createFormURL = this._createFormURL.bind(this);
 		this._handlePaginationModeChanded = this._handlePaginationModeChanded.bind(
 			this
 		);
-		this._resolvePreviewURL = this._resolvePreviewURL.bind(this);
-		this._updateAutoSaveMessage = this._updateAutoSaveMessage.bind(this);
-		this.submitForm = this.submitForm.bind(this);
 	}
 
 	disposed() {
 		Notifications.closeAlert();
-
-		const previewButton = document.querySelector('.lfr-ddm-preview-button');
-
-		if (previewButton) {
-			previewButton.removeEventListener(
-				'click',
-				this._handlePreviewButtonClicked
-			);
-		}
-
-		const saveButton = document.querySelector('.lfr-ddm-save-button');
-
-		if (saveButton) {
-			saveButton.removeEventListener(
-				'click',
-				this._handleSaveButtonClicked
-			);
-		}
-
-		const publishButton = document.querySelector('.lfr-ddm-publish-button');
-
-		if (publishButton) {
-			publishButton.removeEventListener(
-				'click',
-				this._handlePublishButtonClicked
-			);
-		}
 	}
 
 	isFormBuilderView() {
 		const {view} = this.props;
 
 		return view !== 'fieldSets';
-	}
-
-	publish(event) {
-		this.props.published = true;
-
-		return this._savePublished(event, true);
 	}
 
 	render() {
@@ -174,20 +99,6 @@ class Form extends Component {
 		);
 	}
 
-	submitForm() {
-		const {namespace} = this.props;
-
-		this._stateSyncronizer.syncInputs();
-
-		submitForm(document.querySelector(`#${namespace}editForm`));
-	}
-
-	unpublish(event) {
-		this.props.published = false;
-
-		return this._savePublished(event, false);
-	}
-
 	_createFormURL() {
 		const settingsDDMForm = Liferay.component('settingsDDMForm');
 
@@ -220,21 +131,6 @@ class Form extends Component {
 		return document.querySelector(`#${namespace}formInstanceId`).value;
 	}
 
-	_getSettingsDDMForm() {
-		let promise;
-
-		const settingsDDMForm = Liferay.component('settingsDDMForm');
-
-		if (settingsDDMForm) {
-			promise = Promise.resolve(settingsDDMForm);
-		}
-		else {
-			promise = Liferay.componentReady('settingsDDMForm');
-		}
-
-		return promise;
-	}
-
 	_handleCancelButtonClicked(event) {
 		const href = event.delegateTarget.href;
 
@@ -250,45 +146,6 @@ class Form extends Component {
 		});
 	}
 
-	_handlePreviewButtonClicked() {
-		return this._resolvePreviewURL()
-			.then((previewURL) => {
-				window.open(previewURL, '_blank');
-
-				return previewURL;
-			})
-			.catch(() => {
-				Notifications.showError(
-					Liferay.Language.get('your-request-failed-to-complete')
-				);
-			});
-	}
-
-	_handlePublishButtonClicked(event) {
-		const {published} = this.props;
-		let promise;
-
-		if (published) {
-			promise = this.unpublish(event);
-		}
-		else {
-			promise = this.publish(event);
-		}
-
-		return promise;
-	}
-
-
-	_handleSaveButtonClicked(event) {
-		event.preventDefault();
-
-		this.setState({
-			saveButtonLabel: Liferay.Language.get('saving'),
-		});
-
-		this.submitForm();
-	}
-
 	_pagesValueFn() {
 		const {context} = this.props;
 
@@ -301,12 +158,6 @@ class Form extends Component {
 		return context.paginationMode;
 	}
 
-	_resolvePreviewURL() {
-		return this._autoSave.save(true).then(() => {
-			return `${this._createFormURL()}/preview`;
-		});
-	}
-
 	_saveButtonLabelValueFn() {
 		let label = Liferay.Language.get('save');
 
@@ -315,21 +166,6 @@ class Form extends Component {
 		}
 
 		return label;
-	}
-
-	_savePublished(event) {
-		const {namespace} = this.props;
-		const url = Liferay.DDM.FormSettings.publishFormInstanceURL;
-
-		event.preventDefault();
-
-		const form = document.querySelector(`#${namespace}editForm`);
-
-		if (form) {
-			form.setAttribute('action', url);
-		}
-
-		return Promise.resolve(this.submitForm());
 	}
 
 	_setContext(context) {

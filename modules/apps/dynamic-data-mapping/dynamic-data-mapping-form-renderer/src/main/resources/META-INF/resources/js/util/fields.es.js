@@ -12,6 +12,8 @@
  * details.
  */
 
+import {PagesVisitor} from './visitors.es';
+
 export const checkValidFieldNameCharacter = (character) => {
 	return /[A-Za-z0-9_]/g.test(character);
 };
@@ -49,6 +51,22 @@ export function normalizeFieldName(fieldName) {
 
 	return normalizedFieldName;
 }
+
+export const getFields = (pages) => {
+	const fields = [];
+	const visitor = new PagesVisitor(pages);
+
+	visitor.visitFields(
+		(field) => {
+			fields.push(field);
+		},
+		true,
+		true,
+		true
+	);
+
+	return fields;
+};
 
 export const hasFieldSet = (field) =>
 	field && field.type === 'fieldset' && field.ddmStructureId;

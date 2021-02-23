@@ -12,7 +12,10 @@
  * details.
  */
 
-import {useEffect, useRef} from 'react';
+import {useEventListener} from 'frontend-js-react-web';
+import {useEffect} from 'react';
+
+import {useConfig} from '../../../core/hooks/useConfig.es';
 
 const toggleFormBuilder = (managementToolbar) => {
 	const formBuilderButtons = document.querySelectorAll(
@@ -44,7 +47,15 @@ const toggleFormBuilder = (managementToolbar) => {
 };
 
 const toggleRules = (managementToolbar) => {
+	const formBuilderButtons = document.querySelectorAll(
+		'.toolbar-group-field .nav-item .lfr-ddm-button'
+	);
+
 	managementToolbar.classList.remove('hide');
+
+	formBuilderButtons.forEach((formBuilderButton) => {
+		formBuilderButton.classList.add('hide');
+	});
 
 	return () => {
 		managementToolbar.classList.add('hide');
@@ -61,11 +72,15 @@ const toggleRules = (managementToolbar) => {
  */
 export const ManagementToolbar = ({
 	onPlusClick,
+	onPreviewClick,
+	onPublishClick,
+	onSaveClick,
+	onShareClick,
 	portletNamespace,
 	variant = 'builder',
 	visiblePlus = true,
 }) => {
-	const buttonRef = useRef(null);
+	const {published, showPublishAlert} = useConfig();
 
 	useEffect(() => {
 		const managementToolbar = document.querySelector(
@@ -80,31 +95,58 @@ export const ManagementToolbar = ({
 	}, []);
 
 	useEffect(() => {
-		buttonRef.current = document.getElementById('addFieldButton');
-
-		if (buttonRef.current) {
-			buttonRef.current.addEventListener('click', onPlusClick);
-		}
-
-		return () => {
-			if (buttonRef.current) {
-				buttonRef.current.removeEventListener('click', onPlusClick);
-			}
-		};
-	}, [onPlusClick]);
-
-	useEffect(() => {
-		if (!buttonRef.current) {
-			return;
-		}
+		const button = document.getElementById('addFieldButton');
 
 		if (visiblePlus) {
-			buttonRef.current.classList.remove('hide');
+			button.classList.remove('hide');
 		}
 		else {
-			buttonRef.current.classList.add('hide');
+			button.classList.add('hide');
 		}
 	}, [visiblePlus]);
+
+	useEffect(() => {
+		const shareButton = document.querySelector('.lfr-ddm-share-url-button');
+
+		if (showPublishAlert && published) {
+			shareButton.removeAttribute('title');
+		}
+	}, [showPublishAlert, published]);
+
+	useEventListener(
+		'click',
+		onPlusClick,
+		true,
+		document.getElementById('addFieldButton')
+	);
+
+	useEventListener(
+		'click',
+		onPreviewClick,
+		true,
+		document.querySelector('.lfr-ddm-preview-button')
+	);
+
+	useEventListener(
+		'click',
+		onPublishClick,
+		true,
+		document.querySelector('.lfr-ddm-publish-button')
+	);
+
+	useEventListener(
+		'click',
+		onSaveClick,
+		true,
+		document.querySelector('.lfr-ddm-save-button')
+	);
+
+	useEventListener(
+		'click',
+		onShareClick,
+		true,
+		document.querySelector('.lfr-ddm-save-button')
+	);
 
 	return null;
 };

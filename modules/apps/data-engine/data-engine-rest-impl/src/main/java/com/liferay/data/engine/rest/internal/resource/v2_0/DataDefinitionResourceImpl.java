@@ -696,10 +696,10 @@ public class DataDefinitionResourceImpl
 		throws Exception {
 
 		for (DDMFormField ddmFormField : ddmFormFields) {
-			Long fieldSetDDMStructureId = GetterUtil.getLong(
+			long fieldSetDDMStructureId = GetterUtil.getLong(
 				ddmFormField.getProperty("ddmStructureId"));
 
-			if (Validator.isNotNull(fieldSetDDMStructureId)) {
+			if (fieldSetDDMStructureId != 0) {
 				_deDataDefinitionFieldLinkLocalService.
 					addDEDataDefinitionFieldLink(
 						groupId, _portal.getClassNameId(DDMStructure.class),

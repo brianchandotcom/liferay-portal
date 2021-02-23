@@ -18,8 +18,16 @@ import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTy
 import com.liferay.journal.article.dynamic.data.mapping.form.field.type.constants.JournalArticleDDMFormFieldTypeConstants;
 import com.liferay.journal.content.compatibility.converter.JournalContentCompatibilityConverter;
 import com.liferay.layout.dynamic.data.mapping.form.field.type.constants.LayoutDDMFormFieldTypeConstants;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.xml.XMLUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Attribute;
@@ -28,9 +36,11 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -55,7 +65,18 @@ public class JournalContentCompatibilityConverterImpl
 
 		rootElement.addAttribute("version", _LATEST_CONTENT_VERSION);
 
-		_convertDDMFields(rootElement);
+		Locale defaultLocale = null;
+
+		String defaultLanguageId = rootElement.attributeValue("default-locale");
+
+		if (defaultLanguageId == null) {
+			defaultLocale = LocaleUtil.getSiteDefault();
+		}
+		else {
+			defaultLocale = LocaleUtil.fromLanguageId(defaultLanguageId);
+		}
+
+		_convertDDMFields(defaultLocale, rootElement);
 
 		if (_hasNestedFields(rootElement)) {
 			_convertNestedFields(rootElement);
@@ -76,17 +97,19 @@ public class JournalContentCompatibilityConverterImpl
 		}
 	}
 
-	private void _convertDDMFields(Element element) {
+	private void _convertDDMFields(Locale defaultLocale, Element element) {
 		String type = element.attributeValue("type");
 
 		if (Validator.isNotNull(type)) {
 			element.addAttribute("type", _convertDDMFieldType(type));
 		}
 
+		_convertDDMFieldValue(element, type, defaultLocale);
+
 		List<Element> dynamicElements = element.elements("dynamic-element");
 
 		for (Element dynamicElement : dynamicElements) {
-			_convertDDMFields(dynamicElement);
+			_convertDDMFields(defaultLocale, dynamicElement);
 		}
 	}
 
@@ -158,6 +181,76 @@ public class JournalContentCompatibilityConverterImpl
 		return ddmFieldType;
 	}
 
+	private void _convertDDMFieldValue(
+		Element element, String ddmFieldType, Locale defaultLocale) {
+
+		List<Element> dynamicContentElements = element.elements(
+			"dynamic-content");
+
+		for (Element dynamicContentElement : dynamicContentElements) {
+			String text = dynamicContentElement.getText();
+
+			dynamicContentElement.clearContent();
+
+			dynamicContentElement.addCDATA(
+				_convertDDMFieldValue(defaultLocale, ddmFieldType, text));
+		}
+	}
+
+	private String _convertDDMFieldValue(
+		Locale defaultLocale, String ddmFieldType, String value) {
+
+		if (Objects.equals(ddmFieldType, "ddm-link-to-page") ||
+			Objects.equals(
+				ddmFieldType, LayoutDDMFormFieldTypeConstants.LINK_TO_LAYOUT)) {
+
+			return _convertLinkToLayoutValue(defaultLocale, value);
+		}
+
+		return value;
+	}
+
+	private String _convertLinkToLayoutValue(
+		Locale defaultLocale, String value) {
+
+		if (JSONUtil.isValid(value)) {
+			return value;
+		}
+
+		String[] values = StringUtil.split(value, CharPool.AT);
+
+		if (ArrayUtil.isEmpty(values) || (values.length <= 2)) {
+			return StringPool.BLANK;
+		}
+
+		long groupId = GetterUtil.getLong(values[2]);
+		boolean privateLayout = !Objects.equals(values[1], "public");
+		long layoutId = GetterUtil.getLong(values[0]);
+
+		Layout layout = _layoutLocalService.fetchLayout(
+			groupId, privateLayout, layoutId);
+
+		if (layout == null) {
+			return StringPool.BLANK;
+		}
+
+		JSONObject jsonObject = JSONUtil.put(
+			"groupId", groupId
+		).put(
+			"id", layout.getUuid()
+		).put(
+			"layoutId", layoutId
+		).put(
+			"name", layout.getName(defaultLocale)
+		).put(
+			"privateLayout", privateLayout
+		).put(
+			"value", layout.getFriendlyURL(defaultLocale)
+		);
+
+		return jsonObject.toJSONString();
+	}
+
 	private void _convertNestedFields(Element element) {
 		for (Element dynamicElement : element.elements("dynamic-element")) {
 			List<Element> nestedFieldsElements = dynamicElement.elements(
@@ -209,5 +302,8 @@ public class JournalContentCompatibilityConverterImpl
 	}
 
 	private static final String _LATEST_CONTENT_VERSION = "1.0";
+
+	@Reference(unbind = "-")
+	private LayoutLocalService _layoutLocalService;
 
 }

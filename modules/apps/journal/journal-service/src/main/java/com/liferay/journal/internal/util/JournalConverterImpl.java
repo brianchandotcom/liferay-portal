@@ -29,8 +29,6 @@ import com.liferay.journal.exception.ArticleContentException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.util.JournalConverter;
-import com.liferay.layout.dynamic.data.mapping.form.field.type.constants.LayoutDDMFormFieldTypeConstants;
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.xml.XMLUtil;
@@ -43,8 +41,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -420,13 +416,6 @@ public class JournalConverterImpl implements JournalConverter {
 		}
 
 		if (Objects.equals(
-				LayoutDDMFormFieldTypeConstants.LINK_TO_LAYOUT,
-				ddmFormField.getType())) {
-
-			return _getLinkToLayoutValue(defaultLocale, dynamicContentElement);
-		}
-
-		if (Objects.equals(
 				DDMFormFieldTypeConstants.SELECT, ddmFormField.getType())) {
 
 			return _getSelectValue(dynamicContentElement);
@@ -694,49 +683,6 @@ public class JournalConverterImpl implements JournalConverter {
 		}
 	}
 
-	private String _getLinkToLayoutValue(
-		Locale defaultLocale, Element dynamicContentElement) {
-
-		String value = dynamicContentElement.getText();
-
-		if (JSONUtil.isValid(value)) {
-			return value;
-		}
-
-		String[] values = StringUtil.split(
-			dynamicContentElement.getText(), CharPool.AT);
-
-		if (ArrayUtil.isEmpty(values)) {
-			return StringPool.BLANK;
-		}
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		long layoutId = GetterUtil.getLong(values[0]);
-		boolean privateLayout = !Objects.equals(values[1], "public");
-
-		if (values.length > 2) {
-			long groupId = GetterUtil.getLong(values[2]);
-
-			jsonObject.put("groupId", groupId);
-
-			Layout layout = _layoutLocalService.fetchLayout(
-				groupId, privateLayout, layoutId);
-
-			if (layout != null) {
-				jsonObject.put("name", layout.getName(defaultLocale));
-			}
-		}
-
-		jsonObject.put(
-			"layoutId", layoutId
-		).put(
-			"privateLayout", privateLayout
-		);
-
-		return jsonObject.toString();
-	}
-
 	private String _getSelectValue(Element dynamicContentElement) {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -759,8 +705,5 @@ public class JournalConverterImpl implements JournalConverter {
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
-
-	@Reference(unbind = "-")
-	private LayoutLocalService _layoutLocalService;
 
 }

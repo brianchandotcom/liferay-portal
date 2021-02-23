@@ -24,14 +24,14 @@ String eventName = liferayPortletResponse.getNamespace() + "assignSiteRoles";
 request.setAttribute("view.jsp-eventName", eventName);
 %>
 
-<clay:management-toolbar-v2
+<clay:management-toolbar
 	actionDropdownItems="<%= segmentsDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= segmentsDisplayContext.getClearResultsURL() %>"
-	componentId="segmentsEntriesManagementToolbar"
 	creationMenu="<%= segmentsDisplayContext.getCreationMenu() %>"
 	disabled="<%= segmentsDisplayContext.isDisabledManagementBar() %>"
 	filterDropdownItems="<%= segmentsDisplayContext.getFilterItemsDropdownItems() %>"
 	itemsTotal="<%= segmentsDisplayContext.getTotalItems() %>"
+	propsTransformer="js/SegmentsManagementToolbarPropsTransformer"
 	searchActionURL="<%= segmentsDisplayContext.getSearchActionURL() %>"
 	searchContainerId="segmentsEntries"
 	searchFormName="searchFm"
@@ -131,36 +131,6 @@ request.setAttribute("view.jsp-eventName", eventName);
 		/>
 	</liferay-ui:search-container>
 </aui:form>
-
-<aui:script sandbox="<%= true %>">
-	var deleteSegmentsEntries = function () {
-		if (
-			confirm(
-				'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>'
-			)
-		) {
-			submitForm(
-				document.querySelector('#<portlet:namespace />fmSegmentsEntries')
-			);
-		}
-	};
-
-	var ACTIONS = {
-		deleteSegmentsEntries: deleteSegmentsEntries,
-	};
-
-	Liferay.componentReady('segmentsEntriesManagementToolbar').then(
-		(managementToolbar) => {
-			managementToolbar.on('actionItemClicked', (event) => {
-				var itemData = event.data.item.data;
-
-				if (itemData && itemData.action && ACTIONS[itemData.action]) {
-					ACTIONS[itemData.action]();
-				}
-			});
-		}
-	);
-</aui:script>
 
 <portlet:actionURL name="/segments/update_segments_entry_site_roles" var="updateSegmentsEntrySiteRolesURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />

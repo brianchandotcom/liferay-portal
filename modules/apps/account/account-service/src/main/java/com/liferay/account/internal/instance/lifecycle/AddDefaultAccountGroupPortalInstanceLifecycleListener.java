@@ -14,15 +14,10 @@
 
 package com.liferay.account.internal.instance.lifecycle;
 
-import com.liferay.account.constants.AccountConstants;
-import com.liferay.account.model.AccountGroup;
 import com.liferay.account.service.AccountGroupLocalService;
-import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.UserLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -36,38 +31,11 @@ public class AddDefaultAccountGroupPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
-		if (_accountGroupLocalService.hasDefaultAccountGroup(
-				company.getCompanyId())) {
-
-			return;
-		}
-
-		AccountGroup accountGroup =
-			_accountGroupLocalService.createAccountGroup(
-				_counterLocalService.increment());
-
-		accountGroup.setCompanyId(company.getCompanyId());
-
-		User user = _userLocalService.getDefaultUser(company.getCompanyId());
-
-		accountGroup.setUserId(user.getUserId());
-		accountGroup.setUserName(user.getFullName());
-
-		accountGroup.setDefaultAccountGroup(true);
-		accountGroup.setDescription(
-			"This account group is used for guest users.");
-		accountGroup.setName(AccountConstants.ACCOUNT_GROUP_NAME_GUEST);
-
-		_accountGroupLocalService.addAccountGroup(accountGroup);
+		_accountGroupLocalService.checkGuestAccountGroup(
+			company.getCompanyId());
 	}
 
 	@Reference
 	private AccountGroupLocalService _accountGroupLocalService;
-
-	@Reference
-	private CounterLocalService _counterLocalService;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

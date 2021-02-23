@@ -29,13 +29,8 @@ CProduct cProduct = commerceWishListItem.getCProduct();
 
 <c:choose>
 	<c:when test="<%= cpInstance != null %>">
-		<commerce-ui:add-to-order
-			channelId="<%= commerceWishListDisplayContext.getCommerceChannelId() %>"
-			commerceAccountId="<%= commerceWishListDisplayContext.getCommerceAccountId() %>"
-			currencyCode="<%= commerceWishListDisplayContext.getCommerceCurrencyCode() %>"
-			orderId="<%= commerceWishListDisplayContext.getCommerceOrderId() %>"
-			skuId="<%= cpInstance.getCPInstanceId() %>"
-			spritemap='<%= themeDisplay.getPathThemeImages() + "/icons.svg" %>'
+		<commerce-ui:add-to-cart
+			cpInstanceId="<%= cpInstance.getCPInstanceId() %>"
 		/>
 	</c:when>
 	<c:otherwise>

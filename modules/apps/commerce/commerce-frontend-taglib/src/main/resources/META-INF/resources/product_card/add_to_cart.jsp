@@ -29,17 +29,9 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib") + Strin
 		</div>
 	</c:when>
 	<c:otherwise>
-		<commerce-ui:add-to-order
+		<commerce-ui:add-to-cart
 			block="<%= true %>"
-			channelId="<%= cpContentListEntryModel.getChannelId() %>"
-			commerceAccountId="<%= cpContentListEntryModel.getAccountId() %>"
-			currencyCode="<%= cpContentListEntryModel.getCurrencyCode() %>"
-			disabled="<%= cpContentListEntryModel.getStockQuantity() == 0 %>"
-			inCart="<%= cpContentListEntryModel.isInCart() %>"
-			orderId="<%= cpContentListEntryModel.getOrderId() %>"
-			skuId="<%= cpContentListEntryModel.getSkuId() %>"
-			spritemap="<%= cpContentListEntryModel.getSpritemap() %>"
-			stockQuantity="<%= cpContentListEntryModel.getStockQuantity() %>"
+			cpCatalogEntry="<%= cpCatalogEntry %>"
 		/>
 	</c:otherwise>
 </c:choose>

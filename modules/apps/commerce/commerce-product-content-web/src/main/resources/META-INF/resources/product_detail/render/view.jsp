@@ -25,8 +25,6 @@ CPSku cpSku = cpContentHelper.getDefaultCPSku(cpCatalogEntry);
 
 long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 
-CPContentModel cpContentModel = (CPContentModel)request.getAttribute("cpContentModel");
-
 String hideCssClass = "hide";
 long skuId = 0;
 
@@ -134,17 +132,9 @@ if (cpSku != null) {
 			</c:if>
 
 			<div class="align-items-center d-flex mt-3 product-detail-actions">
-				<commerce-ui:add-to-order
-					channelId="<%= cpContentModel.getChannelId() %>"
-					commerceAccountId="<%= cpContentModel.getAccountId() %>"
-					currencyCode="<%= cpContentModel.getCurrencyCode() %>"
-					disabled="<%= skuId == 0 %>"
-					inCart="<%= cpContentModel.isInCart() %>"
+				<commerce-ui:add-to-cart
+					cpCatalogEntry="<%= cpCatalogEntry %>"
 					options='<%= "[]" %>'
-					orderId="<%= cpContentModel.getOrderId() %>"
-					skuId="<%= skuId %>"
-					spritemap="<%= cpContentModel.getSpritemap() %>"
-					stockQuantity="<%= cpContentModel.getStockQuantity() %>"
 					willUpdate="<%= true %>"
 				/>
 

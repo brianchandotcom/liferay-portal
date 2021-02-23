@@ -15,8 +15,8 @@
 import classnames from 'classnames';
 import React from 'react';
 
+import {EVENT_TYPES as CORE_EVENT_TYPES} from '../../../core/actions/eventTypes.es';
 import {useForm} from '../../../core/hooks/useForm.es';
-import {EVENT_TYPES} from '../eventTypes.es';
 
 export const MultiStep = ({activePage, editable, pages}) => {
 	const dispatch = useForm();
@@ -35,8 +35,8 @@ export const MultiStep = ({activePage, editable, pages}) => {
 						key={index}
 						onClick={() =>
 							dispatch({
-								payload: index,
-								type: EVENT_TYPES.PAGE.CHANGE,
+								payload: {activePage: index},
+								type: CORE_EVENT_TYPES.PAGE.CHANGE,
 							})
 						}
 					>

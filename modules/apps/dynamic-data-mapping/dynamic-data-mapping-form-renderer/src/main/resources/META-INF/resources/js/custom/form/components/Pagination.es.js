@@ -16,11 +16,11 @@ import ClayPagination from '@clayui/pagination';
 import classnames from 'classnames';
 import React from 'react';
 
+import {EVENT_TYPES as CORE_EVENT_TYPES} from '../../../core/actions/eventTypes.es';
 import {useEvaluate} from '../../../core/hooks/useEvaluate.es';
 import {useForm} from '../../../core/hooks/useForm.es';
 import {usePage} from '../../../core/hooks/usePage.es';
 import {getFormId, getFormNode} from '../../../util/formId.es';
-import {EVENT_TYPES} from '../eventTypes.es';
 import nextPage from '../thunks/nextPage.es';
 import previousPage from '../thunks/previousPage.es';
 
@@ -66,8 +66,8 @@ export const Pagination = ({activePage, pages}) => {
 					key={index}
 					onClick={() =>
 						dispatch({
-							payload: index,
-							type: EVENT_TYPES.PAGE.CHANGE,
+							payload: {activePage: index},
+							type: CORE_EVENT_TYPES.PAGE.CHANGE,
 						})
 					}
 				>

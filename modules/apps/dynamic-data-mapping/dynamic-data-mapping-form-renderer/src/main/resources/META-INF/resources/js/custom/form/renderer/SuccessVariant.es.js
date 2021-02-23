@@ -18,6 +18,7 @@ import ClayLayout from '@clayui/layout';
 import {usePrevious} from '@liferay/frontend-js-react-web';
 import React, {useEffect, useState} from 'react';
 
+import {EVENT_TYPES as CORE_EVENT_TYPES} from '../../../core/actions/eventTypes.es';
 import {useConfig} from '../../../core/hooks/useConfig.es';
 import {useForm, useFormState} from '../../../core/hooks/useForm.es';
 import {setValue} from '../../../util/i18n.es';
@@ -57,7 +58,7 @@ export const Container = ({children, pages, strings = {}}) => {
 								});
 								dispatch({
 									payload: {activePage: pages.length - 1},
-									type: EVENT_TYPES.PAGE.CHANGE,
+									type: CORE_EVENT_TYPES.PAGE.CHANGE,
 								});
 							},
 						},

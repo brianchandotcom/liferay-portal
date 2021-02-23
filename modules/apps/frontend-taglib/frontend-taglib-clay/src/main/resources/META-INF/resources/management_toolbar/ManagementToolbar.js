@@ -53,6 +53,7 @@ function ManagementToolbar({
 	searchData,
 	searchFormMethod,
 	searchFormName,
+	searchInputAutoFocus,
 	searchInputName,
 	searchValue,
 	selectAllURL,
@@ -116,6 +117,7 @@ function ManagementToolbar({
 						searchData={searchData}
 						searchFormMethod={searchFormMethod}
 						searchFormName={searchFormName}
+						searchInputAutoFocus={searchInputAutoFocus}
 						searchInputName={searchInputName}
 						searchMobile={searchMobile}
 						searchValue={searchValue}

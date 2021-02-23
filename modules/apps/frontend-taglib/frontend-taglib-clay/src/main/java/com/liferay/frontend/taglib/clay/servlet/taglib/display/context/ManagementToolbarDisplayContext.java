@@ -138,6 +138,10 @@ public interface ManagementToolbarDisplayContext {
 		return false;
 	}
 
+	public default Boolean isSearchInputAutoFocus() {
+		return ManagementToolbarDefaults.isSearchInputAutoFocus();
+	}
+
 	public default Boolean isSelectable() {
 		return true;
 	}

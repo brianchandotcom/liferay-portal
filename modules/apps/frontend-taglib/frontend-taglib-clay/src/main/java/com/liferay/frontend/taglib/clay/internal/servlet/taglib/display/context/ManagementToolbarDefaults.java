@@ -47,6 +47,10 @@ public class ManagementToolbarDefaults {
 		return false;
 	}
 
+	public static Boolean isSearchInputAutoFocus() {
+		return false;
+	}
+
 	public static Boolean isSelectable() {
 		return true;
 	}

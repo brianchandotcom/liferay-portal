@@ -23,6 +23,7 @@ const SearchControls = ({
 	searchData,
 	searchFormMethod,
 	searchFormName,
+	searchInputAutoFocus,
 	searchInputName,
 	searchMobile,
 	searchValue,
@@ -39,6 +40,7 @@ const SearchControls = ({
 				<ClayInput.Group>
 					<ClayInput.GroupItem>
 						<ClayInput
+							autoFocus={searchInputAutoFocus}
 							className="form-control input-group-inset input-group-inset-after"
 							defaultValue={searchValue}
 							disabled={disabled}

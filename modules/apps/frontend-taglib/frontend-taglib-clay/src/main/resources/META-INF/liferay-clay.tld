@@ -1757,6 +1757,12 @@
 		</attribute>
 		<attribute>
 			<description></description>
+			<name>searchInputAutoFocus</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
 			<name>searchInputName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

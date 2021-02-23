@@ -69,8 +69,8 @@
 
 		<column name="commerceTaxMethodId" type="long" />
 		<column name="CPTaxCategoryId" type="long" />
-		<column name="commerceCountryId" type="long" />
-		<column name="commerceRegionId" type="long" />
+		<column name="countryId" type="long" />
+		<column name="regionId" type="long" />
 		<column name="zip" type="String" />
 		<column name="rate" type="double" />
 
@@ -88,8 +88,8 @@
 		<finder name="CPTaxCategoryId" return-type="Collection">
 			<finder-column name="CPTaxCategoryId" />
 		</finder>
-		<finder name="CommerceCountryId" return-type="Collection">
-			<finder-column name="commerceCountryId" />
+		<finder name="CountryId" return-type="Collection">
+			<finder-column name="countryId" />
 		</finder>
 	</entity>
 	<exceptions>

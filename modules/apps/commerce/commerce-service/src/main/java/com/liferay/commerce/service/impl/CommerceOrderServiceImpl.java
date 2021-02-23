@@ -759,6 +759,21 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 	}
 
 	@Override
+	public CommerceOrder updateCommerceShippingMethod(
+			long commerceOrderId, long commerceShippingMethodId,
+			String commerceShippingOptionName, CommerceContext commerceContext,
+			Locale locale)
+		throws PortalException {
+
+		_commerceOrderModelResourcePermission.check(
+			getPermissionChecker(), commerceOrderId, ActionKeys.UPDATE);
+
+		return commerceOrderLocalService.updateCommerceShippingMethod(
+			commerceOrderId, commerceShippingMethodId,
+			commerceShippingOptionName, commerceContext, locale);
+	}
+
+	@Override
 	public CommerceOrder updateCustomFields(
 			long commerceOrderId, ServiceContext serviceContext)
 		throws PortalException {
@@ -880,21 +895,6 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			commerceOrderId, name, description, street1, street2, street3, city,
 			zip, commerceRegionId, commerceCountryId, phoneNumber,
 			serviceContext);
-	}
-
-	@Override
-	public CommerceOrder updateCommerceShippingMethod(
-			long commerceOrderId, long commerceShippingMethodId,
-			String commerceShippingOptionName, CommerceContext commerceContext,
-			Locale locale)
-		throws PortalException {
-
-		_commerceOrderModelResourcePermission.check(
-			getPermissionChecker(), commerceOrderId, ActionKeys.UPDATE);
-
-		return commerceOrderLocalService.updateCommerceShippingMethod(
-			commerceOrderId, commerceShippingMethodId,
-			commerceShippingOptionName, commerceContext, locale);
 	}
 
 	@Override

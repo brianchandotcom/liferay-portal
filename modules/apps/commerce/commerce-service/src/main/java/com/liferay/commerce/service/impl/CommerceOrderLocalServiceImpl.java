@@ -1418,6 +1418,75 @@ public class CommerceOrderLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
+	public CommerceOrder updateCommerceShippingMethod(
+			long commerceOrderId, long commerceShippingMethodId,
+			String commerceShippingOptionName, BigDecimal shippingAmount,
+			CommerceContext commerceContext)
+		throws PortalException {
+
+		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
+			commerceOrderId);
+
+		commerceOrder.setCommerceShippingMethodId(commerceShippingMethodId);
+		commerceOrder.setShippingOptionName(commerceShippingOptionName);
+		commerceOrder.setShippingAmount(shippingAmount);
+
+		commerceOrder = commerceOrderPersistence.update(commerceOrder);
+
+		return commerceOrderLocalService.recalculatePrice(
+			commerceOrder.getCommerceOrderId(), commerceContext);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public CommerceOrder updateCommerceShippingMethod(
+			long commerceOrderId, long commerceShippingMethodId,
+			String commerceShippingOptionName, CommerceContext commerceContext,
+			Locale locale)
+		throws PortalException {
+
+		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
+			commerceOrderId);
+
+		CommerceShippingMethod commerceShippingMethod =
+			commerceShippingMethodLocalService.getCommerceShippingMethod(
+				commerceShippingMethodId);
+
+		commerceOrder.setCommerceShippingMethodId(
+			commerceShippingMethod.getCommerceShippingMethodId());
+
+		commerceOrder.setShippingOptionName(commerceShippingOptionName);
+
+		CommerceShippingEngine commerceShippingEngine =
+			_commerceShippingEngineRegistry.getCommerceShippingEngine(
+				commerceShippingMethod.getEngineKey());
+
+		List<CommerceShippingOption> commerceShippingOptions =
+			commerceShippingEngine.getCommerceShippingOptions(
+				commerceContext, commerceOrder, locale);
+
+		for (CommerceShippingOption commerceShippingOption :
+				commerceShippingOptions) {
+
+			if (Validator.isNotNull(commerceShippingOptionName) &&
+				commerceShippingOptionName.equals(
+					commerceShippingOption.getName())) {
+
+				commerceOrder.setShippingAmount(
+					commerceShippingOption.getAmount());
+
+				break;
+			}
+		}
+
+		commerceOrder = commerceOrderPersistence.update(commerceOrder);
+
+		return commerceOrderLocalService.recalculatePrice(
+			commerceOrder.getCommerceOrderId(), commerceContext);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public CommerceOrder updateCustomFields(
 			long commerceOrderId, ServiceContext serviceContext)
 		throws PortalException {
@@ -1605,74 +1674,6 @@ public class CommerceOrderLocalServiceImpl
 			zip, commerceRegionId, commerceCountryId, phoneNumber,
 			CommerceOrder::getShippingAddressId,
 			CommerceOrder::setShippingAddressId, serviceContext);
-	}
-
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
-	public CommerceOrder updateCommerceShippingMethod(
-			long commerceOrderId, long commerceShippingMethodId,
-			String commerceShippingOptionName, BigDecimal shippingAmount,
-			CommerceContext commerceContext)
-		throws PortalException {
-
-		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
-			commerceOrderId);
-
-		commerceOrder.setCommerceShippingMethodId(commerceShippingMethodId);
-		commerceOrder.setShippingOptionName(commerceShippingOptionName);
-		commerceOrder.setShippingAmount(shippingAmount);
-
-		commerceOrder = commerceOrderPersistence.update(commerceOrder);
-
-		return commerceOrderLocalService.recalculatePrice(
-			commerceOrder.getCommerceOrderId(), commerceContext);
-	}
-
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
-	public CommerceOrder updateCommerceShippingMethod(
-			long commerceOrderId, long commerceShippingMethodId,
-			String commerceShippingOptionName, CommerceContext commerceContext,
-			Locale locale)
-		throws PortalException {
-
-		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
-			commerceOrderId);
-
-		CommerceShippingMethod commerceShippingMethod =
-			commerceShippingMethodLocalService.getCommerceShippingMethod(
-				commerceShippingMethodId);
-
-		commerceOrder.setCommerceShippingMethodId(
-			commerceShippingMethod.getCommerceShippingMethodId());
-
-		commerceOrder.setShippingOptionName(commerceShippingOptionName);
-
-		CommerceShippingEngine commerceShippingEngine =
-			_commerceShippingEngineRegistry.getCommerceShippingEngine(
-				commerceShippingMethod.getEngineKey());
-
-		List<CommerceShippingOption> commerceShippingOptions =
-			commerceShippingEngine.getCommerceShippingOptions(
-				commerceContext, commerceOrder, locale);
-
-		for (CommerceShippingOption commerceShippingOption :
-				commerceShippingOptions) {
-
-			if (Validator.isNotNull(commerceShippingOptionName) &&
-				commerceShippingOptionName.equals(commerceShippingOption.getName())) {
-
-				commerceOrder.setShippingAmount(
-					commerceShippingOption.getAmount());
-
-				break;
-			}
-		}
-
-		commerceOrder = commerceOrderPersistence.update(commerceOrder);
-
-		return commerceOrderLocalService.recalculatePrice(
-			commerceOrder.getCommerceOrderId(), commerceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

@@ -89,7 +89,7 @@ import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
 import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DataGuard;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -149,7 +149,6 @@ import org.osgi.service.cm.ConfigurationAdmin;
 /**
  * @author Inácio Nery
  */
-@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class WorkflowTaskManagerImplTest {
 
@@ -1839,7 +1838,9 @@ public class WorkflowTaskManagerImplTest {
 	@Inject
 	private BlogsEntryLocalService _blogsEntryLocalService;
 
+	@DeleteAfterTestRun
 	private Company _company;
+
 	private User _companyAdminUser;
 
 	@Inject

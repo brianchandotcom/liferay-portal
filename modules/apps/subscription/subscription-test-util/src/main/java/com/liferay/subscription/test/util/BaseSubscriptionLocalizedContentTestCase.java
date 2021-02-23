@@ -17,6 +17,7 @@ package com.liferay.subscription.test.util;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
@@ -67,14 +68,12 @@ public abstract class BaseSubscriptionLocalizedContentTestCase
 			localizedContents
 		).build();
 
-		localizedContents.put(LocaleUtil.GERMANY, GERMAN_BODY);
+		_initializeLocale(LocaleUtil.GERMANY, GERMAN_BODY);
 
 		setBaseModelSubscriptionBodyPreferences(
 			getSubscriptionAddedBodyPreferenceName());
 
 		addSubscriptionContainerModel(getDefaultContainerModelId());
-
-		LocaleThreadLocal.setDefaultLocale(LocaleUtil.GERMANY);
 
 		addBaseModel(creatorUser.getUserId(), getDefaultContainerModelId());
 
@@ -94,12 +93,10 @@ public abstract class BaseSubscriptionLocalizedContentTestCase
 			localizedContents
 		).build();
 
-		localizedContents.put(LocaleUtil.SPAIN, SPANISH_BODY);
+		_initializeLocale(LocaleUtil.SPAIN, SPANISH_BODY);
 
 		setBaseModelSubscriptionBodyPreferences(
 			getSubscriptionUpdatedBodyPreferenceName());
-
-		LocaleThreadLocal.setDefaultLocale(LocaleUtil.SPAIN);
 
 		long baseModelId = addBaseModel(
 			creatorUser.getUserId(), getDefaultContainerModelId());
@@ -165,7 +162,18 @@ public abstract class BaseSubscriptionLocalizedContentTestCase
 	protected Layout layout;
 	protected Map<Locale, String> localizedContents = new HashMap<>();
 
+	private void _initializeLocale(Locale locale, String body) {
+		user.setLanguageId(locale.toString());
+
+		user = _userLocalService.updateUser(user);
+
+		localizedContents.put(locale, body);
+	}
+
 	@Inject
 	private SettingsFactory _settingsFactory;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

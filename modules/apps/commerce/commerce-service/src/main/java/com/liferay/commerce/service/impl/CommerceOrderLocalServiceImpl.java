@@ -1611,7 +1611,7 @@ public class CommerceOrderLocalServiceImpl
 	@Override
 	public CommerceOrder updateCommerceShippingMethod(
 			long commerceOrderId, long commerceShippingMethodId,
-			String shippingOptionName, BigDecimal shippingAmount,
+			String commerceShippingOptionName, BigDecimal shippingAmount,
 			CommerceContext commerceContext)
 		throws PortalException {
 
@@ -1619,7 +1619,7 @@ public class CommerceOrderLocalServiceImpl
 			commerceOrderId);
 
 		commerceOrder.setCommerceShippingMethodId(commerceShippingMethodId);
-		commerceOrder.setShippingOptionName(shippingOptionName);
+		commerceOrder.setShippingOptionName(commerceShippingOptionName);
 		commerceOrder.setShippingAmount(shippingAmount);
 
 		commerceOrder = commerceOrderPersistence.update(commerceOrder);
@@ -1632,7 +1632,7 @@ public class CommerceOrderLocalServiceImpl
 	@Override
 	public CommerceOrder updateCommerceShippingMethod(
 			long commerceOrderId, long commerceShippingMethodId,
-			String shippingOptionName, CommerceContext commerceContext,
+			String commerceShippingOptionName, CommerceContext commerceContext,
 			Locale locale)
 		throws PortalException {
 
@@ -1646,7 +1646,7 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrder.setCommerceShippingMethodId(
 			commerceShippingMethod.getCommerceShippingMethodId());
 
-		commerceOrder.setShippingOptionName(shippingOptionName);
+		commerceOrder.setShippingOptionName(commerceShippingOptionName);
 
 		CommerceShippingEngine commerceShippingEngine =
 			_commerceShippingEngineRegistry.getCommerceShippingEngine(
@@ -1659,8 +1659,8 @@ public class CommerceOrderLocalServiceImpl
 		for (CommerceShippingOption commerceShippingOption :
 				commerceShippingOptions) {
 
-			if (Validator.isNotNull(shippingOptionName) &&
-				shippingOptionName.equals(commerceShippingOption.getName())) {
+			if (Validator.isNotNull(commerceShippingOptionName) &&
+				commerceShippingOptionName.equals(commerceShippingOption.getName())) {
 
 				commerceOrder.setShippingAmount(
 					commerceShippingOption.getAmount());

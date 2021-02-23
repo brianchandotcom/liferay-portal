@@ -885,7 +885,7 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 	@Override
 	public CommerceOrder updateCommerceShippingMethod(
 			long commerceOrderId, long commerceShippingMethodId,
-			String shippingOptionName, CommerceContext commerceContext,
+			String commerceShippingOptionName, CommerceContext commerceContext,
 			Locale locale)
 		throws PortalException {
 
@@ -893,8 +893,8 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			getPermissionChecker(), commerceOrderId, ActionKeys.UPDATE);
 
 		return commerceOrderLocalService.updateShippingMethod(
-			commerceOrderId, commerceShippingMethodId, shippingOptionName,
-			commerceContext, locale);
+			commerceOrderId, commerceShippingMethodId,
+			commerceShippingOptionName, commerceContext, locale);
 	}
 
 	@Override

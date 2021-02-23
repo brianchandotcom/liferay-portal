@@ -15,7 +15,6 @@
 package com.liferay.analytics.reports.layout.internal.info.item.provider;
 
 import com.liferay.analytics.reports.info.item.provider.AnalyticsReportsInfoItemObjectProvider;
-import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -34,12 +33,7 @@ public class LayoutAnalyticsReportsInfoItemObjectProvider
 	public Layout getAnalyticsReportsInfoItemObject(
 		InfoItemReference infoItemReference) {
 
-		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-			(ClassPKInfoItemIdentifier)
-				infoItemReference.getInfoItemIdentifier();
-
-		return _layoutLocalService.fetchLayout(
-			classPKInfoItemIdentifier.getClassPK());
+		return _layoutLocalService.fetchLayout(infoItemReference.getClassPK());
 	}
 
 	@Override

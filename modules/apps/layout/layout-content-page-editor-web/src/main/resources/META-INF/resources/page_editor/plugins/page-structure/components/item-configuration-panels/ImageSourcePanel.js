@@ -178,16 +178,9 @@ function DirectImagePanel({item}) {
 			config: {
 				alt: {[languageId]: ''},
 				imageConfiguration: {},
-				imageTitle: nextImage.title,
 			},
-			[languageId]: nextImage.url,
+			[languageId]: nextImage,
 		};
-
-		if (config.adaptiveMediaEnabled) {
-			delete nextEditableValue.config.imageTitle;
-
-			nextEditableValue[languageId] = nextImage;
-		}
 
 		delete nextEditableValue.classNameId;
 		delete nextEditableValue.classPK;
@@ -347,10 +340,9 @@ function ImagePanelSizeSelector({item}) {
 		);
 	};
 
-	return config.adaptiveMediaEnabled &&
-		(editableContent?.fileEntryId ||
-			isMappedToInfoItem(editableContent) ||
-			isMappedToCollection(editableContent)) ? (
+	return editableContent?.fileEntryId ||
+		isMappedToInfoItem(editableContent) ||
+		isMappedToCollection(editableContent) ? (
 		<ImageSelectorSize
 			editableElement={editableElement}
 			fieldValue={editableContent}

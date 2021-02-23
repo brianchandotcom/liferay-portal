@@ -22,7 +22,6 @@ import MappingSelector from '../../../common/components/MappingSelector';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
 import {VIEWPORT_SIZES} from '../../config/constants/viewportSizes';
-import {config} from '../../config/index';
 import {useSelector} from '../../store/index';
 import isMapped from '../../utils/editable-value/isMapped';
 import isMappedToCollection from '../../utils/editable-value/isMappedToCollection';
@@ -92,7 +91,7 @@ export const ImageSelectorField = ({field, onValueSelect, value = {}}) => {
 						onImageSelected={handleImageChanged}
 					/>
 
-					{config.adaptiveMediaEnabled && value?.fileEntryId && (
+					{value?.fileEntryId && (
 						<ImageSelectorSize
 							fieldValue={{fileEntryId: value.fileEntryId}}
 							imageSizeId="auto"
@@ -109,15 +108,14 @@ export const ImageSelectorField = ({field, onValueSelect, value = {}}) => {
 						/>
 					) : null}
 
-					{config.adaptiveMediaEnabled &&
-						(value?.fileEntryId ||
-							isMappedToInfoItem(value) ||
-							isMappedToCollection(value)) && (
-							<ImageSelectorSize
-								fieldValue={value}
-								imageSizeId="auto"
-							/>
-						)}
+					{(value?.fileEntryId ||
+						isMappedToInfoItem(value) ||
+						isMappedToCollection(value)) && (
+						<ImageSelectorSize
+							fieldValue={value}
+							imageSizeId="auto"
+						/>
+					)}
 				</>
 			)}
 		</>

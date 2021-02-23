@@ -337,13 +337,13 @@ long regionId = BeanParamUtil.getLong(currentCommerceAddress, request, "regionId
 					commerceRegionIdName.parentElement.classList.remove('d-none');
 
 					Liferay.Service(
-						'/commerce.commerceregion/get-commerce-regions',
+						'/region/get-regions',
 						{
+							active: true,
 							countryId: parseInt(
 								selectedOption.getData('country'),
 								10
 							),
-							active: true,
 						},
 						function setUIOnlyInputRegionName(regions) {
 							for (var i = 0; i < regions.length; i++) {
@@ -389,11 +389,11 @@ long regionId = BeanParamUtil.getLong(currentCommerceAddress, request, "regionId
 					}
 
 					Liferay.Service(
-						'/commerce.commercecountry/<%= baseAddressCheckoutStepDisplayContext.getCommerceCountrySelectionMethodName() %>-by-channel-id',
+						'/commerce.commercecountrymanagerimpl/<%= baseAddressCheckoutStepDisplayContext.getCommerceCountrySelectionMethodName() %>-by-channel-id',
 						{
-							commerceChannelId: <%= commerceContext.getCommerceChannelId() %>,
-							start: -1,
+							channelId: <%= commerceContext.getCommerceChannelId() %>,
 							end: -1,
+							start: -1,
 						},
 						injectCountryPlaceholder
 					);
@@ -426,10 +426,10 @@ long regionId = BeanParamUtil.getLong(currentCommerceAddress, request, "regionId
 					}
 
 					Liferay.Service(
-						'/commerce.commerceregion/get-commerce-regions',
+						'/region/get-regions',
 						{
-							countryId: Number(selectKey),
 							active: true,
+							countryId: Number(selectKey),
 						},
 						injectRegionPlaceholder
 					);

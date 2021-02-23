@@ -167,10 +167,10 @@ if (commerceShippingFixedOptionRel != null) {
 			select: '<portlet:namespace />countryId',
 			selectData: function (callback) {
 				Liferay.Service(
-					'/commerce.commercecountry/get-commerce-countries',
+					'/country/get-company-countries',
 					{
-						companyId: <%= company.getCompanyId() %>,
 						active: true,
+						companyId: <%= company.getCompanyId() %>,
 					},
 					callback
 				);
@@ -184,10 +184,10 @@ if (commerceShippingFixedOptionRel != null) {
 			select: '<portlet:namespace />regionId',
 			selectData: function (callback, selectKey) {
 				Liferay.Service(
-					'/commerce.commerceregion/get-commerce-regions',
+					'/region/get-regions',
 					{
-						countryId: Number(selectKey),
 						active: true,
+						countryId: Number(selectKey),
 					},
 					callback
 				);

@@ -123,9 +123,9 @@ CommerceAccount commerceAccount = commerceAddressDisplayContext.getCommerceAccou
 			select: '<portlet:namespace />countryId',
 			selectData: function (callback) {
 				Liferay.Service(
-					'/commerce.commercecountry/get-billing-commerce-countries-by-channel-id',
+					'/commerce.commercecountrymanagerimpl/get-billing-countries-by-channel-id',
 					{
-						commerceChannelId: <%= commerceContext.getCommerceChannelId() %>,
+						channelId: <%= commerceContext.getCommerceChannelId() %>,
 						end: -1,
 						start: -1,
 					},

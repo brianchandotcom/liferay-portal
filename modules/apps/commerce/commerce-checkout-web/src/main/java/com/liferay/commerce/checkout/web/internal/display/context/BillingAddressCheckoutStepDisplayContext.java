@@ -54,7 +54,7 @@ public class BillingAddressCheckoutStepDisplayContext
 
 	@Override
 	public String getCommerceCountrySelectionMethodName() {
-		return "get-billing-commerce-countries";
+		return "get-billing-countries";
 	}
 
 	@Override

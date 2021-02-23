@@ -64,6 +64,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -753,6 +754,35 @@ public class DDMFormFieldTemplateContextFactory {
 		ddmFormFieldTemplateContext.put("localizedValue", localizedValues);
 	}
 
+	protected void setDDMFormFieldTemplateContextValueLocalizableValueEdited(
+		Map<String, Object> ddmFormFieldTemplateContext,
+		DDMFormFieldValue ddmFormFieldValue) {
+
+		boolean persisted = GetterUtil.getBoolean(
+			(Object)_ddmFormRenderingContext.getProperty("persisted"));
+
+		if (!persisted || (ddmFormFieldValue == null)) {
+			return;
+		}
+
+		Value value = ddmFormFieldValue.getValue();
+
+		if (!(value instanceof LocalizedValue)) {
+			return;
+		}
+
+		Set<Locale> availableLocales = value.getAvailableLocales();
+
+		Map<String, Object> localizedValueEdited = new HashMap<>();
+
+		availableLocales.forEach(
+			availableLocale -> localizedValueEdited.put(
+				LanguageUtil.getLanguageId(availableLocale), true));
+
+		ddmFormFieldTemplateContext.put(
+			"localizedValueEdited", localizedValueEdited);
+	}
+
 	protected void setDDMFormFieldTemplateContextVisibilityExpression(
 		Map<String, Object> ddmFormFieldTemplateContext,
 		String visibilityExpression) {
@@ -845,6 +875,8 @@ public class DDMFormFieldTemplateContextFactory {
 			changedProperties, ddmFormFieldTemplateContext,
 			ddmFormFieldValue.getValue());
 		setDDMFormFieldTemplateContextValueLocalizableValue(
+			ddmFormFieldTemplateContext, ddmFormFieldValue);
+		setDDMFormFieldTemplateContextValueLocalizableValueEdited(
 			ddmFormFieldTemplateContext, ddmFormFieldValue);
 		setDDMFormFieldTemplateContextValidation(
 			ddmFormFieldTemplateContext, changedProperties,

@@ -105,7 +105,7 @@
 </tr>
 <tr>
 	<td>LIST_PUBLISHED_STATUS</td>
-	<td>//a[contains(.,'${key_publicationsName}')]//following-sibling::div/span[contains(.,'Published')]</td>
+	<td>//p[contains(.,'${key_publicationsName}')]//following-sibling::p/span[contains(.,'Published')]</td>
 	<td></td>
 </tr>
 <tr>

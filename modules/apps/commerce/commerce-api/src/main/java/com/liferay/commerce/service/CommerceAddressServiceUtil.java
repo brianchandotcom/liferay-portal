@@ -71,17 +71,17 @@ public class CommerceAddressServiceUtil {
 	}
 
 	public static com.liferay.commerce.model.CommerceAddress addCommerceAddress(
-			String className, long classPK, String name, String description,
-			String street1, String street2, String street3, String city,
-			String zip, long commerceRegionId, long commerceCountryId,
-			String phoneNumber, int type, String externalReferenceCode,
+			String externalReferenceCode, String className, long classPK,
+			String name, String description, String street1, String street2,
+			String street3, String city, String zip, long commerceRegionId,
+			long commerceCountryId, String phoneNumber, int type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addCommerceAddress(
-			className, classPK, name, description, street1, street2, street3,
-			city, zip, commerceRegionId, commerceCountryId, phoneNumber, type,
-			externalReferenceCode, serviceContext);
+			externalReferenceCode, className, classPK, name, description,
+			street1, street2, street3, city, zip, commerceRegionId,
+			commerceCountryId, phoneNumber, type, serviceContext);
 	}
 
 	public static void deleteCommerceAddress(long commerceAddressId)
@@ -92,11 +92,11 @@ public class CommerceAddressServiceUtil {
 
 	public static com.liferay.commerce.model.CommerceAddress
 			fetchByExternalReferenceCode(
-				long companyId, String externalReferenceCode)
+				String externalReferenceCode, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().fetchByExternalReferenceCode(
-			companyId, externalReferenceCode);
+			externalReferenceCode, companyId);
 	}
 
 	public static com.liferay.commerce.model.CommerceAddress

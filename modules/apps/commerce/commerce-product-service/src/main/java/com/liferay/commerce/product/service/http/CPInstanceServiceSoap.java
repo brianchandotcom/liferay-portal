@@ -217,13 +217,13 @@ public class CPInstanceServiceSoap {
 
 	public static com.liferay.commerce.product.model.CPInstanceSoap
 			fetchByExternalReferenceCode(
-				long companyId, String externalReferenceCode)
+				String externalReferenceCode, long companyId)
 		throws RemoteException {
 
 		try {
 			com.liferay.commerce.product.model.CPInstance returnValue =
 				CPInstanceServiceUtil.fetchByExternalReferenceCode(
-					companyId, externalReferenceCode);
+					externalReferenceCode, companyId);
 
 			return com.liferay.commerce.product.model.CPInstanceSoap.
 				toSoapModel(returnValue);
@@ -480,26 +480,25 @@ public class CPInstanceServiceSoap {
 
 	public static com.liferay.commerce.product.model.CPInstanceSoap
 			upsertCPInstance(
-				long cpDefinitionId, long groupId, String sku, String gtin,
-				String manufacturerPartNumber, boolean purchasable, String json,
-				double width, double height, double depth, double weight,
-				java.math.BigDecimal price, java.math.BigDecimal promoPrice,
-				java.math.BigDecimal cost, boolean published,
-				String externalReferenceCode, int displayDateMonth,
-				int displayDateDay, int displayDateYear, int displayDateHour,
-				int displayDateMinute, int expirationDateMonth,
-				int expirationDateDay, int expirationDateYear,
-				int expirationDateHour, int expirationDateMinute,
-				boolean neverExpire,
+				String externalReferenceCode, long cpDefinitionId, long groupId,
+				String sku, String gtin, String manufacturerPartNumber,
+				boolean purchasable, String json, double width, double height,
+				double depth, double weight, java.math.BigDecimal price,
+				java.math.BigDecimal promoPrice, java.math.BigDecimal cost,
+				boolean published, int displayDateMonth, int displayDateDay,
+				int displayDateYear, int displayDateHour, int displayDateMinute,
+				int expirationDateMonth, int expirationDateDay,
+				int expirationDateYear, int expirationDateHour,
+				int expirationDateMinute, boolean neverExpire,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 
 		try {
 			com.liferay.commerce.product.model.CPInstance returnValue =
 				CPInstanceServiceUtil.upsertCPInstance(
-					cpDefinitionId, groupId, sku, gtin, manufacturerPartNumber,
-					purchasable, json, width, height, depth, weight, price,
-					promoPrice, cost, published, externalReferenceCode,
+					externalReferenceCode, cpDefinitionId, groupId, sku, gtin,
+					manufacturerPartNumber, purchasable, json, width, height,
+					depth, weight, price, promoPrice, cost, published,
 					displayDateMonth, displayDateDay, displayDateYear,
 					displayDateHour, displayDateMinute, expirationDateMonth,
 					expirationDateDay, expirationDateYear, expirationDateHour,
@@ -517,26 +516,25 @@ public class CPInstanceServiceSoap {
 
 	public static com.liferay.commerce.product.model.CPInstanceSoap
 			upsertCPInstance(
-				long cpDefinitionId, long groupId, String sku, String gtin,
-				String manufacturerPartNumber, boolean purchasable, String json,
-				double width, double height, double depth, double weight,
-				java.math.BigDecimal price, java.math.BigDecimal promoPrice,
-				java.math.BigDecimal cost, boolean published,
-				String externalReferenceCode, int displayDateMonth,
-				int displayDateDay, int displayDateYear, int displayDateHour,
-				int displayDateMinute, int expirationDateMonth,
-				int expirationDateDay, int expirationDateYear,
-				int expirationDateHour, int expirationDateMinute,
-				boolean neverExpire, String unspsc,
+				String externalReferenceCode, long cpDefinitionId, long groupId,
+				String sku, String gtin, String manufacturerPartNumber,
+				boolean purchasable, String json, double width, double height,
+				double depth, double weight, java.math.BigDecimal price,
+				java.math.BigDecimal promoPrice, java.math.BigDecimal cost,
+				boolean published, int displayDateMonth, int displayDateDay,
+				int displayDateYear, int displayDateHour, int displayDateMinute,
+				int expirationDateMonth, int expirationDateDay,
+				int expirationDateYear, int expirationDateHour,
+				int expirationDateMinute, boolean neverExpire, String unspsc,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 
 		try {
 			com.liferay.commerce.product.model.CPInstance returnValue =
 				CPInstanceServiceUtil.upsertCPInstance(
-					cpDefinitionId, groupId, sku, gtin, manufacturerPartNumber,
-					purchasable, json, width, height, depth, weight, price,
-					promoPrice, cost, published, externalReferenceCode,
+					externalReferenceCode, cpDefinitionId, groupId, sku, gtin,
+					manufacturerPartNumber, purchasable, json, width, height,
+					depth, weight, price, promoPrice, cost, published,
 					displayDateMonth, displayDateDay, displayDateYear,
 					displayDateHour, displayDateMinute, expirationDateMonth,
 					expirationDateDay, expirationDateYear, expirationDateHour,

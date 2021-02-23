@@ -133,8 +133,8 @@ public class CommerceOrderNoteServiceHttp {
 
 	public static com.liferay.commerce.model.CommerceOrderNote
 			fetchByExternalReferenceCode(
-				HttpPrincipal httpPrincipal, long companyId,
-				String externalReferenceCode)
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -144,7 +144,7 @@ public class CommerceOrderNoteServiceHttp {
 				_fetchByExternalReferenceCodeParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, externalReferenceCode);
+				methodKey, externalReferenceCode, companyId);
 
 			Object returnObj = null;
 
@@ -469,9 +469,9 @@ public class CommerceOrderNoteServiceHttp {
 
 	public static com.liferay.commerce.model.CommerceOrderNote
 			upsertCommerceOrderNote(
-				HttpPrincipal httpPrincipal, long commerceOrderNoteId,
-				long commerceOrderId, String content, boolean restricted,
-				String externalReferenceCode,
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long commerceOrderNoteId, long commerceOrderId, String content,
+				boolean restricted,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -481,8 +481,8 @@ public class CommerceOrderNoteServiceHttp {
 				_upsertCommerceOrderNoteParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, commerceOrderNoteId, commerceOrderId, content,
-				restricted, externalReferenceCode, serviceContext);
+				methodKey, externalReferenceCode, commerceOrderNoteId,
+				commerceOrderId, content, restricted, serviceContext);
 
 			Object returnObj = null;
 
@@ -524,7 +524,7 @@ public class CommerceOrderNoteServiceHttp {
 		new Class[] {long.class};
 	private static final Class<?>[]
 		_fetchByExternalReferenceCodeParameterTypes2 = new Class[] {
-			long.class, String.class
+			String.class, long.class
 		};
 	private static final Class<?>[] _fetchCommerceOrderNoteParameterTypes3 =
 		new Class[] {long.class};
@@ -542,7 +542,7 @@ public class CommerceOrderNoteServiceHttp {
 		new Class[] {long.class, String.class, boolean.class};
 	private static final Class<?>[] _upsertCommerceOrderNoteParameterTypes10 =
 		new Class[] {
-			long.class, long.class, String.class, boolean.class, String.class,
+			String.class, long.class, long.class, String.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 

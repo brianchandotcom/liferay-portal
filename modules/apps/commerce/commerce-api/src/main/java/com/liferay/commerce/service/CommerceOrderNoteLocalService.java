@@ -83,8 +83,8 @@ public interface CommerceOrderNoteLocalService
 		throws PortalException;
 
 	public CommerceOrderNote addCommerceOrderNote(
-			long commerceOrderId, String content, boolean restricted,
-			String externalReferenceCode, ServiceContext serviceContext)
+			String externalReferenceCode, long commerceOrderId, String content,
+			boolean restricted, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -211,7 +211,7 @@ public interface CommerceOrderNoteLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceOrderNote fetchByExternalReferenceCode(
-		long companyId, String externalReferenceCode);
+		String externalReferenceCode, long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceOrderNote fetchCommerceOrderNote(long commerceOrderNoteId);
@@ -315,13 +315,13 @@ public interface CommerceOrderNoteLocalService
 		throws PortalException;
 
 	public CommerceOrderNote updateCommerceOrderNote(
-			long commerceOrderNoteId, String content, boolean restricted,
-			String externalReferenceCode)
+			String externalReferenceCode, long commerceOrderNoteId,
+			String content, boolean restricted)
 		throws PortalException;
 
 	public CommerceOrderNote upsertCommerceOrderNote(
-			long commerceOrderNoteId, long commerceOrderId, String content,
-			boolean restricted, String externalReferenceCode,
+			String externalReferenceCode, long commerceOrderNoteId,
+			long commerceOrderId, String content, boolean restricted,
 			ServiceContext serviceContext)
 		throws PortalException;
 

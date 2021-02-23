@@ -70,24 +70,6 @@ public class CommercePriceEntryLocalServiceWrapper
 			serviceContext);
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.commerce.price.list.model.CommercePriceEntry
-			addCommercePriceEntry(
-				long cpInstanceId, long commercePriceListId,
-				String externalReferenceCode, java.math.BigDecimal price,
-				java.math.BigDecimal promoPrice,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commercePriceEntryLocalService.addCommercePriceEntry(
-			cpInstanceId, commercePriceListId, externalReferenceCode, price,
-			promoPrice, serviceContext);
-	}
-
 	@Override
 	public com.liferay.commerce.price.list.model.CommercePriceEntry
 			addCommercePriceEntry(
@@ -192,6 +174,24 @@ public class CommercePriceEntryLocalServiceWrapper
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire,
 			serviceContext);
+	}
+
+	/**
+	 * @deprecated As of Mueller (7.2.x)
+	 */
+	@Deprecated
+	@Override
+	public com.liferay.commerce.price.list.model.CommercePriceEntry
+			addCommercePriceEntry(
+				String externalReferenceCode, long cpInstanceId,
+				long commercePriceListId, java.math.BigDecimal price,
+				java.math.BigDecimal promoPrice,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commercePriceEntryLocalService.addCommercePriceEntry(
+			externalReferenceCode, cpInstanceId, commercePriceListId, price,
+			promoPrice, serviceContext);
 	}
 
 	@Override

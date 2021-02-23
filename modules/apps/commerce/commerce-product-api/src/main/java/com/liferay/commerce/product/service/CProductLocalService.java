@@ -81,7 +81,7 @@ public interface CProductLocalService
 	public CProduct addCProduct(CProduct cProduct);
 
 	public CProduct addCProduct(
-			long groupId, long userId, String externalReferenceCode,
+			String externalReferenceCode, long groupId, long userId,
 			ServiceContext serviceContext)
 		throws PortalException;
 
@@ -344,7 +344,7 @@ public interface CProductLocalService
 	public CProduct updateCProduct(CProduct cProduct);
 
 	public CProduct updateCProductExternalReferenceCode(
-			long cProductId, String externalReferenceCode)
+			String externalReferenceCode, long cProductId)
 		throws PortalException;
 
 	public CProduct updatePublishedCPDefinitionId(

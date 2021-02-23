@@ -71,13 +71,13 @@ public interface CommerceTierPriceEntryService extends BaseService {
 		throws PortalException;
 
 	public CommerceTierPriceEntry addCommerceTierPriceEntry(
-			long commercePriceEntryId, String externalReferenceCode,
+			String externalReferenceCode, long commercePriceEntryId,
 			BigDecimal price, BigDecimal promoPrice, int minQuantity,
 			ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommerceTierPriceEntry addCommerceTierPriceEntry(
-			long commercePriceEntryId, String externalReferenceCode,
+			String externalReferenceCode, long commercePriceEntryId,
 			BigDecimal price, int minQuantity, boolean bulkPricing,
 			boolean discountDiscovery, BigDecimal discountLevel1,
 			BigDecimal discountLevel2, BigDecimal discountLevel3,
@@ -94,7 +94,7 @@ public interface CommerceTierPriceEntryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceTierPriceEntry fetchByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+			String externalReferenceCode, long companyId)
 		throws PortalException;
 
 	/**
@@ -182,16 +182,15 @@ public interface CommerceTierPriceEntryService extends BaseService {
 		throws PortalException;
 
 	public CommerceTierPriceEntry upsertCommerceTierPriceEntry(
-			long commerceTierPriceEntryId, long commercePriceEntryId,
-			String externalReferenceCode, BigDecimal price,
-			BigDecimal promoPrice, int minQuantity,
-			String priceEntryExternalReferenceCode,
+			String externalReferenceCode, long commerceTierPriceEntryId,
+			long commercePriceEntryId, BigDecimal price, BigDecimal promoPrice,
+			int minQuantity, String priceEntryExternalReferenceCode,
 			ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommerceTierPriceEntry upsertCommerceTierPriceEntry(
-			long commerceTierPriceEntryId, long commercePriceEntryId,
-			String externalReferenceCode, BigDecimal price, int minQuantity,
+			String externalReferenceCode, long commerceTierPriceEntryId,
+			long commercePriceEntryId, BigDecimal price, int minQuantity,
 			boolean bulkPricing, boolean discountDiscovery,
 			BigDecimal discountLevel1, BigDecimal discountLevel2,
 			BigDecimal discountLevel3, BigDecimal discountLevel4,

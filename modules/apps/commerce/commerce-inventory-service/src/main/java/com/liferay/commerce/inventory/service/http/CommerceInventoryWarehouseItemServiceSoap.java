@@ -201,7 +201,7 @@ public class CommerceInventoryWarehouseItemServiceSoap {
 	public static
 		com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItemSoap
 				fetchCommerceInventoryWarehouseItemByReferenceCode(
-					long companyId, String externalReferenceCode)
+					String externalReferenceCode, long companyId)
 			throws RemoteException {
 
 		try {
@@ -209,7 +209,7 @@ public class CommerceInventoryWarehouseItemServiceSoap {
 				returnValue =
 					CommerceInventoryWarehouseItemServiceUtil.
 						fetchCommerceInventoryWarehouseItemByReferenceCode(
-							companyId, externalReferenceCode);
+							externalReferenceCode, companyId);
 
 			return com.liferay.commerce.inventory.model.
 				CommerceInventoryWarehouseItemSoap.toSoapModel(returnValue);

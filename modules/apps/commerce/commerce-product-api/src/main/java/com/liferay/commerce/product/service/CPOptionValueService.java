@@ -72,7 +72,7 @@ public interface CPOptionValueService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPOptionValue fetchByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+			String externalReferenceCode, long companyId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -104,8 +104,8 @@ public interface CPOptionValueService extends BaseService {
 		throws PortalException;
 
 	public CPOptionValue upsertCPOptionValue(
-			long cpOptionId, Map<Locale, String> nameMap, double priority,
-			String key, String externalReferenceCode,
+			String externalReferenceCode, long cpOptionId,
+			Map<Locale, String> nameMap, double priority, String key,
 			ServiceContext serviceContext)
 		throws PortalException;
 

@@ -53,11 +53,11 @@ public class CommerceChannelServiceHttp {
 
 	public static com.liferay.commerce.product.model.CommerceChannel
 			addCommerceChannel(
-				HttpPrincipal httpPrincipal, long siteGroupId, String name,
-				String type,
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long siteGroupId, String name, String type,
 				com.liferay.portal.kernel.util.UnicodeProperties
 					typeSettingsUnicodeProperties,
-				String commerceCurrencyCode, String externalReferenceCode,
+				String commerceCurrencyCode,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -67,9 +67,9 @@ public class CommerceChannelServiceHttp {
 				_addCommerceChannelParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, siteGroupId, name, type,
+				methodKey, externalReferenceCode, siteGroupId, name, type,
 				typeSettingsUnicodeProperties, commerceCurrencyCode,
-				externalReferenceCode, serviceContext);
+				serviceContext);
 
 			Object returnObj = null;
 
@@ -144,8 +144,8 @@ public class CommerceChannelServiceHttp {
 
 	public static com.liferay.commerce.product.model.CommerceChannel
 			fetchByExternalReferenceCode(
-				HttpPrincipal httpPrincipal, long companyId,
-				String externalReferenceCode)
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -155,7 +155,7 @@ public class CommerceChannelServiceHttp {
 				_fetchByExternalReferenceCodeParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, externalReferenceCode);
+				methodKey, externalReferenceCode, companyId);
 
 			Object returnObj = null;
 
@@ -623,8 +623,8 @@ public class CommerceChannelServiceHttp {
 
 	public static com.liferay.commerce.product.model.CommerceChannel
 			updateCommerceChannelExternalReferenceCode(
-				HttpPrincipal httpPrincipal, long commerceChannelId,
-				String externalReferenceCode)
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long commerceChannelId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -634,7 +634,7 @@ public class CommerceChannelServiceHttp {
 				_updateCommerceChannelExternalReferenceCodeParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, commerceChannelId, externalReferenceCode);
+				methodKey, externalReferenceCode, commerceChannelId);
 
 			Object returnObj = null;
 
@@ -670,16 +670,15 @@ public class CommerceChannelServiceHttp {
 
 	private static final Class<?>[] _addCommerceChannelParameterTypes0 =
 		new Class[] {
-			long.class, String.class, String.class,
+			String.class, long.class, String.class, String.class,
 			com.liferay.portal.kernel.util.UnicodeProperties.class,
-			String.class, String.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			String.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCommerceChannelParameterTypes1 =
 		new Class[] {long.class};
 	private static final Class<?>[]
 		_fetchByExternalReferenceCodeParameterTypes2 = new Class[] {
-			long.class, String.class
+			String.class, long.class
 		};
 	private static final Class<?>[] _fetchCommerceChannelParameterTypes3 =
 		new Class[] {long.class};
@@ -717,6 +716,6 @@ public class CommerceChannelServiceHttp {
 		};
 	private static final Class<?>[]
 		_updateCommerceChannelExternalReferenceCodeParameterTypes13 =
-			new Class[] {long.class, String.class};
+			new Class[] {String.class, long.class};
 
 }

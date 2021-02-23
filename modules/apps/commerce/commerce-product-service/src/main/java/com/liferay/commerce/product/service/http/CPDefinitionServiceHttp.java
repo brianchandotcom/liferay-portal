@@ -53,7 +53,8 @@ public class CPDefinitionServiceHttp {
 
 	public static com.liferay.commerce.product.model.CPDefinition
 			addCPDefinition(
-				HttpPrincipal httpPrincipal, long groupId, long userId,
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long groupId, long userId,
 				java.util.Map<java.util.Locale, String> nameMap,
 				java.util.Map<java.util.Locale, String> shortDescriptionMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,
@@ -81,7 +82,6 @@ public class CPDefinitionServiceHttp {
 				com.liferay.portal.kernel.util.UnicodeProperties
 					deliverySubscriptionTypeSettingsUnicodeProperties,
 				long deliveryMaxSubscriptionCycles,
-				String externalReferenceCode,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -91,13 +91,13 @@ public class CPDefinitionServiceHttp {
 				_addCPDefinitionParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, userId, nameMap, shortDescriptionMap,
-				descriptionMap, urlTitleMap, metaTitleMap, metaDescriptionMap,
-				metaKeywordsMap, productTypeName, ignoreSKUCombinations,
-				shippable, freeShipping, shipSeparately, shippingExtraPrice,
-				width, height, depth, weight, cpTaxCategoryId, taxExempt,
-				telcoOrElectronics, ddmStructureKey, published,
-				displayDateMonth, displayDateDay, displayDateYear,
+				methodKey, externalReferenceCode, groupId, userId, nameMap,
+				shortDescriptionMap, descriptionMap, urlTitleMap, metaTitleMap,
+				metaDescriptionMap, metaKeywordsMap, productTypeName,
+				ignoreSKUCombinations, shippable, freeShipping, shipSeparately,
+				shippingExtraPrice, width, height, depth, weight,
+				cpTaxCategoryId, taxExempt, telcoOrElectronics, ddmStructureKey,
+				published, displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
 				expirationDateMinute, neverExpire, defaultSku,
@@ -106,8 +106,7 @@ public class CPDefinitionServiceHttp {
 				maxSubscriptionCycles, deliverySubscriptionEnabled,
 				deliverySubscriptionLength, deliverySubscriptionType,
 				deliverySubscriptionTypeSettingsUnicodeProperties,
-				deliveryMaxSubscriptionCycles, externalReferenceCode,
-				serviceContext);
+				deliveryMaxSubscriptionCycles, serviceContext);
 
 			Object returnObj = null;
 
@@ -139,7 +138,8 @@ public class CPDefinitionServiceHttp {
 
 	public static com.liferay.commerce.product.model.CPDefinition
 			addCPDefinition(
-				HttpPrincipal httpPrincipal, long groupId, long userId,
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long groupId, long userId,
 				java.util.Map<java.util.Locale, String> nameMap,
 				java.util.Map<java.util.Locale, String> shortDescriptionMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,
@@ -162,7 +162,7 @@ public class CPDefinitionServiceHttp {
 				String subscriptionType,
 				com.liferay.portal.kernel.util.UnicodeProperties
 					subscriptionTypeSettingsUnicodeProperties,
-				long maxSubscriptionCycles, String externalReferenceCode,
+				long maxSubscriptionCycles,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -172,19 +172,19 @@ public class CPDefinitionServiceHttp {
 				_addCPDefinitionParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, userId, nameMap, shortDescriptionMap,
-				descriptionMap, urlTitleMap, metaTitleMap, metaDescriptionMap,
-				metaKeywordsMap, productTypeName, ignoreSKUCombinations,
-				shippable, freeShipping, shipSeparately, shippingExtraPrice,
-				width, height, depth, weight, cpTaxCategoryId, taxExempt,
-				telcoOrElectronics, ddmStructureKey, published,
-				displayDateMonth, displayDateDay, displayDateYear,
+				methodKey, externalReferenceCode, groupId, userId, nameMap,
+				shortDescriptionMap, descriptionMap, urlTitleMap, metaTitleMap,
+				metaDescriptionMap, metaKeywordsMap, productTypeName,
+				ignoreSKUCombinations, shippable, freeShipping, shipSeparately,
+				shippingExtraPrice, width, height, depth, weight,
+				cpTaxCategoryId, taxExempt, telcoOrElectronics, ddmStructureKey,
+				published, displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
 				expirationDateMinute, neverExpire, defaultSku,
 				subscriptionEnabled, subscriptionLength, subscriptionType,
 				subscriptionTypeSettingsUnicodeProperties,
-				maxSubscriptionCycles, externalReferenceCode, serviceContext);
+				maxSubscriptionCycles, serviceContext);
 
 			Object returnObj = null;
 
@@ -371,8 +371,8 @@ public class CPDefinitionServiceHttp {
 
 	public static com.liferay.commerce.product.model.CPDefinition
 			fetchCPDefinitionByCProductExternalReferenceCode(
-				HttpPrincipal httpPrincipal, long companyId,
-				String externalReferenceCode)
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -382,7 +382,7 @@ public class CPDefinitionServiceHttp {
 				_fetchCPDefinitionByCProductExternalReferenceCodeParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, externalReferenceCode);
+				methodKey, externalReferenceCode, companyId);
 
 			Object returnObj = null;
 
@@ -977,8 +977,8 @@ public class CPDefinitionServiceHttp {
 
 	public static com.liferay.commerce.product.model.CPDefinition
 			updateExternalReferenceCode(
-				HttpPrincipal httpPrincipal, long cpDefinitionId,
-				String externalReferenceCode)
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long cpDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -987,7 +987,7 @@ public class CPDefinitionServiceHttp {
 				_updateExternalReferenceCodeParameterTypes20);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, cpDefinitionId, externalReferenceCode);
+				methodKey, externalReferenceCode, cpDefinitionId);
 
 			Object returnObj = null;
 
@@ -1260,7 +1260,8 @@ public class CPDefinitionServiceHttp {
 
 	public static com.liferay.commerce.product.model.CPDefinition
 			upsertCPDefinition(
-				HttpPrincipal httpPrincipal, long groupId, long userId,
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long groupId, long userId,
 				java.util.Map<java.util.Locale, String> nameMap,
 				java.util.Map<java.util.Locale, String> shortDescriptionMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,
@@ -1288,7 +1289,6 @@ public class CPDefinitionServiceHttp {
 				com.liferay.portal.kernel.util.UnicodeProperties
 					deliverySubscriptionTypeSettingsUnicodeProperties,
 				long deliveryMaxSubscriptionCycles,
-				String externalReferenceCode,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -1298,13 +1298,13 @@ public class CPDefinitionServiceHttp {
 				_upsertCPDefinitionParameterTypes26);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, userId, nameMap, shortDescriptionMap,
-				descriptionMap, urlTitleMap, metaTitleMap, metaDescriptionMap,
-				metaKeywordsMap, productTypeName, ignoreSKUCombinations,
-				shippable, freeShipping, shipSeparately, shippingExtraPrice,
-				width, height, depth, weight, cpTaxCategoryId, taxExempt,
-				telcoOrElectronics, ddmStructureKey, published,
-				displayDateMonth, displayDateDay, displayDateYear,
+				methodKey, externalReferenceCode, groupId, userId, nameMap,
+				shortDescriptionMap, descriptionMap, urlTitleMap, metaTitleMap,
+				metaDescriptionMap, metaKeywordsMap, productTypeName,
+				ignoreSKUCombinations, shippable, freeShipping, shipSeparately,
+				shippingExtraPrice, width, height, depth, weight,
+				cpTaxCategoryId, taxExempt, telcoOrElectronics, ddmStructureKey,
+				published, displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
 				expirationDateMinute, neverExpire, defaultSku,
@@ -1313,8 +1313,7 @@ public class CPDefinitionServiceHttp {
 				maxSubscriptionCycles, deliverySubscriptionEnabled,
 				deliverySubscriptionLength, deliverySubscriptionType,
 				deliverySubscriptionTypeSettingsUnicodeProperties,
-				deliveryMaxSubscriptionCycles, externalReferenceCode,
-				serviceContext);
+				deliveryMaxSubscriptionCycles, serviceContext);
 
 			Object returnObj = null;
 
@@ -1346,7 +1345,8 @@ public class CPDefinitionServiceHttp {
 
 	public static com.liferay.commerce.product.model.CPDefinition
 			upsertCPDefinition(
-				HttpPrincipal httpPrincipal, long groupId, long userId,
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long groupId, long userId,
 				java.util.Map<java.util.Locale, String> nameMap,
 				java.util.Map<java.util.Locale, String> shortDescriptionMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,
@@ -1369,7 +1369,7 @@ public class CPDefinitionServiceHttp {
 				String subscriptionType,
 				com.liferay.portal.kernel.util.UnicodeProperties
 					subscriptionTypeSettingsUnicodeProperties,
-				long maxSubscriptionCycles, String externalReferenceCode,
+				long maxSubscriptionCycles,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -1379,19 +1379,19 @@ public class CPDefinitionServiceHttp {
 				_upsertCPDefinitionParameterTypes27);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, userId, nameMap, shortDescriptionMap,
-				descriptionMap, urlTitleMap, metaTitleMap, metaDescriptionMap,
-				metaKeywordsMap, productTypeName, ignoreSKUCombinations,
-				shippable, freeShipping, shipSeparately, shippingExtraPrice,
-				width, height, depth, weight, cpTaxCategoryId, taxExempt,
-				telcoOrElectronics, ddmStructureKey, published,
-				displayDateMonth, displayDateDay, displayDateYear,
+				methodKey, externalReferenceCode, groupId, userId, nameMap,
+				shortDescriptionMap, descriptionMap, urlTitleMap, metaTitleMap,
+				metaDescriptionMap, metaKeywordsMap, productTypeName,
+				ignoreSKUCombinations, shippable, freeShipping, shipSeparately,
+				shippingExtraPrice, width, height, depth, weight,
+				cpTaxCategoryId, taxExempt, telcoOrElectronics, ddmStructureKey,
+				published, displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
 				expirationDateMinute, neverExpire, defaultSku,
 				subscriptionEnabled, subscriptionLength, subscriptionType,
 				subscriptionTypeSettingsUnicodeProperties,
-				maxSubscriptionCycles, externalReferenceCode, serviceContext);
+				maxSubscriptionCycles, serviceContext);
 
 			Object returnObj = null;
 
@@ -1426,35 +1426,35 @@ public class CPDefinitionServiceHttp {
 
 	private static final Class<?>[] _addCPDefinitionParameterTypes0 =
 		new Class[] {
-			long.class, long.class, java.util.Map.class, java.util.Map.class,
+			String.class, long.class, long.class, java.util.Map.class,
 			java.util.Map.class, java.util.Map.class, java.util.Map.class,
-			java.util.Map.class, java.util.Map.class, String.class,
-			boolean.class, boolean.class, boolean.class, boolean.class,
-			double.class, double.class, double.class, double.class,
-			double.class, long.class, boolean.class, boolean.class,
-			String.class, boolean.class, int.class, int.class, int.class,
+			java.util.Map.class, java.util.Map.class, java.util.Map.class,
+			String.class, boolean.class, boolean.class, boolean.class,
+			boolean.class, double.class, double.class, double.class,
+			double.class, double.class, long.class, boolean.class,
+			boolean.class, String.class, boolean.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, boolean.class, String.class, boolean.class, int.class,
-			String.class,
+			int.class, int.class, boolean.class, String.class, boolean.class,
+			int.class, String.class,
 			com.liferay.portal.kernel.util.UnicodeProperties.class, long.class,
 			boolean.class, int.class, String.class,
 			com.liferay.portal.kernel.util.UnicodeProperties.class, long.class,
-			String.class, com.liferay.portal.kernel.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addCPDefinitionParameterTypes1 =
 		new Class[] {
-			long.class, long.class, java.util.Map.class, java.util.Map.class,
+			String.class, long.class, long.class, java.util.Map.class,
 			java.util.Map.class, java.util.Map.class, java.util.Map.class,
-			java.util.Map.class, java.util.Map.class, String.class,
-			boolean.class, boolean.class, boolean.class, boolean.class,
-			double.class, double.class, double.class, double.class,
-			double.class, long.class, boolean.class, boolean.class,
-			String.class, boolean.class, int.class, int.class, int.class,
+			java.util.Map.class, java.util.Map.class, java.util.Map.class,
+			String.class, boolean.class, boolean.class, boolean.class,
+			boolean.class, double.class, double.class, double.class,
+			double.class, double.class, long.class, boolean.class,
+			boolean.class, String.class, boolean.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, boolean.class, String.class, boolean.class, int.class,
-			String.class,
+			int.class, int.class, boolean.class, String.class, boolean.class,
+			int.class, String.class,
 			com.liferay.portal.kernel.util.UnicodeProperties.class, long.class,
-			String.class, com.liferay.portal.kernel.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _copyCPDefinitionParameterTypes2 =
 		new Class[] {long.class, long.class};
@@ -1469,7 +1469,7 @@ public class CPDefinitionServiceHttp {
 		new Class[] {long.class};
 	private static final Class<?>[]
 		_fetchCPDefinitionByCProductExternalReferenceCodeParameterTypes6 =
-			new Class[] {long.class, String.class};
+			new Class[] {String.class, long.class};
 	private static final Class<?>[]
 		_fetchCPDefinitionByCProductIdParameterTypes7 = new Class[] {
 			long.class
@@ -1526,7 +1526,7 @@ public class CPDefinitionServiceHttp {
 		};
 	private static final Class<?>[]
 		_updateExternalReferenceCodeParameterTypes20 = new Class[] {
-			long.class, String.class
+			String.class, long.class
 		};
 	private static final Class<?>[] _updateShippingInfoParameterTypes21 =
 		new Class[] {
@@ -1557,35 +1557,35 @@ public class CPDefinitionServiceHttp {
 		new Class[] {long.class, long.class, boolean.class, boolean.class};
 	private static final Class<?>[] _upsertCPDefinitionParameterTypes26 =
 		new Class[] {
-			long.class, long.class, java.util.Map.class, java.util.Map.class,
+			String.class, long.class, long.class, java.util.Map.class,
 			java.util.Map.class, java.util.Map.class, java.util.Map.class,
-			java.util.Map.class, java.util.Map.class, String.class,
-			boolean.class, boolean.class, boolean.class, boolean.class,
-			double.class, double.class, double.class, double.class,
-			double.class, long.class, boolean.class, boolean.class,
-			String.class, boolean.class, int.class, int.class, int.class,
+			java.util.Map.class, java.util.Map.class, java.util.Map.class,
+			String.class, boolean.class, boolean.class, boolean.class,
+			boolean.class, double.class, double.class, double.class,
+			double.class, double.class, long.class, boolean.class,
+			boolean.class, String.class, boolean.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, boolean.class, String.class, boolean.class, int.class,
-			String.class,
+			int.class, int.class, boolean.class, String.class, boolean.class,
+			int.class, String.class,
 			com.liferay.portal.kernel.util.UnicodeProperties.class, long.class,
 			boolean.class, int.class, String.class,
 			com.liferay.portal.kernel.util.UnicodeProperties.class, long.class,
-			String.class, com.liferay.portal.kernel.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _upsertCPDefinitionParameterTypes27 =
 		new Class[] {
-			long.class, long.class, java.util.Map.class, java.util.Map.class,
+			String.class, long.class, long.class, java.util.Map.class,
 			java.util.Map.class, java.util.Map.class, java.util.Map.class,
-			java.util.Map.class, java.util.Map.class, String.class,
-			boolean.class, boolean.class, boolean.class, boolean.class,
-			double.class, double.class, double.class, double.class,
-			double.class, long.class, boolean.class, boolean.class,
-			String.class, boolean.class, int.class, int.class, int.class,
+			java.util.Map.class, java.util.Map.class, java.util.Map.class,
+			String.class, boolean.class, boolean.class, boolean.class,
+			boolean.class, double.class, double.class, double.class,
+			double.class, double.class, long.class, boolean.class,
+			boolean.class, String.class, boolean.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, boolean.class, String.class, boolean.class, int.class,
-			String.class,
+			int.class, int.class, boolean.class, String.class, boolean.class,
+			int.class, String.class,
 			com.liferay.portal.kernel.util.UnicodeProperties.class, long.class,
-			String.class, com.liferay.portal.kernel.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 
 }

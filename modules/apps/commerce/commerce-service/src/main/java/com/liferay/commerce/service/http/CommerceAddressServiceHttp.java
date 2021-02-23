@@ -146,11 +146,11 @@ public class CommerceAddressServiceHttp {
 	}
 
 	public static com.liferay.commerce.model.CommerceAddress addCommerceAddress(
-			HttpPrincipal httpPrincipal, String className, long classPK,
-			String name, String description, String street1, String street2,
-			String street3, String city, String zip, long commerceRegionId,
-			long commerceCountryId, String phoneNumber, int type,
-			String externalReferenceCode,
+			HttpPrincipal httpPrincipal, String externalReferenceCode,
+			String className, long classPK, String name, String description,
+			String street1, String street2, String street3, String city,
+			String zip, long commerceRegionId, long commerceCountryId,
+			String phoneNumber, int type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -160,9 +160,9 @@ public class CommerceAddressServiceHttp {
 				_addCommerceAddressParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, className, classPK, name, description, street1,
-				street2, street3, city, zip, commerceRegionId,
-				commerceCountryId, phoneNumber, type, externalReferenceCode,
+				methodKey, externalReferenceCode, className, classPK, name,
+				description, street1, street2, street3, city, zip,
+				commerceRegionId, commerceCountryId, phoneNumber, type,
 				serviceContext);
 
 			Object returnObj = null;
@@ -231,8 +231,8 @@ public class CommerceAddressServiceHttp {
 
 	public static com.liferay.commerce.model.CommerceAddress
 			fetchByExternalReferenceCode(
-				HttpPrincipal httpPrincipal, long companyId,
-				String externalReferenceCode)
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -242,7 +242,7 @@ public class CommerceAddressServiceHttp {
 				_fetchByExternalReferenceCodeParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, externalReferenceCode);
+				methodKey, externalReferenceCode, companyId);
 
 			Object returnObj = null;
 
@@ -1171,16 +1171,16 @@ public class CommerceAddressServiceHttp {
 		};
 	private static final Class<?>[] _addCommerceAddressParameterTypes2 =
 		new Class[] {
-			String.class, long.class, String.class, String.class, String.class,
-			String.class, String.class, String.class, String.class, long.class,
-			long.class, String.class, int.class, String.class,
+			String.class, String.class, long.class, String.class, String.class,
+			String.class, String.class, String.class, String.class,
+			String.class, long.class, long.class, String.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCommerceAddressParameterTypes3 =
 		new Class[] {long.class};
 	private static final Class<?>[]
 		_fetchByExternalReferenceCodeParameterTypes4 = new Class[] {
-			long.class, String.class
+			String.class, long.class
 		};
 	private static final Class<?>[] _fetchCommerceAddressParameterTypes5 =
 		new Class[] {long.class};

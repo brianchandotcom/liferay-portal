@@ -153,8 +153,8 @@ public class CommercePriceModifierServiceHttp {
 
 	public static com.liferay.commerce.pricing.model.CommercePriceModifier
 			fetchByExternalReferenceCode(
-				HttpPrincipal httpPrincipal, long companyId,
-				String externalReferenceCode)
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -164,7 +164,7 @@ public class CommercePriceModifierServiceHttp {
 				_fetchByExternalReferenceCodeParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, externalReferenceCode);
+				methodKey, externalReferenceCode, companyId);
 
 			Object returnObj = null;
 
@@ -562,15 +562,15 @@ public class CommercePriceModifierServiceHttp {
 
 	public static com.liferay.commerce.pricing.model.CommercePriceModifier
 			upsertCommercePriceModifier(
-				HttpPrincipal httpPrincipal, long userId,
-				long commercePriceModifierId, long groupId, String title,
-				String target, long commercePriceListId, String modifierType,
-				java.math.BigDecimal modifierAmount, double priority,
-				boolean active, int displayDateMonth, int displayDateDay,
-				int displayDateYear, int displayDateHour, int displayDateMinute,
-				int expirationDateMonth, int expirationDateDay,
-				int expirationDateYear, int expirationDateHour,
-				int expirationDateMinute, String externalReferenceCode,
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long userId, long commercePriceModifierId, long groupId,
+				String title, String target, long commercePriceListId,
+				String modifierType, java.math.BigDecimal modifierAmount,
+				double priority, boolean active, int displayDateMonth,
+				int displayDateDay, int displayDateYear, int displayDateHour,
+				int displayDateMinute, int expirationDateMonth,
+				int expirationDateDay, int expirationDateYear,
+				int expirationDateHour, int expirationDateMinute,
 				boolean neverExpire,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -582,13 +582,13 @@ public class CommercePriceModifierServiceHttp {
 				_upsertCommercePriceModifierParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, userId, commercePriceModifierId, groupId, title,
-				target, commercePriceListId, modifierType, modifierAmount,
-				priority, active, displayDateMonth, displayDateDay,
-				displayDateYear, displayDateHour, displayDateMinute,
-				expirationDateMonth, expirationDateDay, expirationDateYear,
-				expirationDateHour, expirationDateMinute, externalReferenceCode,
-				neverExpire, serviceContext);
+				methodKey, externalReferenceCode, userId,
+				commercePriceModifierId, groupId, title, target,
+				commercePriceListId, modifierType, modifierAmount, priority,
+				active, displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, expirationDateMonth,
+				expirationDateDay, expirationDateYear, expirationDateHour,
+				expirationDateMinute, neverExpire, serviceContext);
 
 			Object returnObj = null;
 
@@ -635,7 +635,7 @@ public class CommercePriceModifierServiceHttp {
 		_deleteCommercePriceModifierParameterTypes1 = new Class[] {long.class};
 	private static final Class<?>[]
 		_fetchByExternalReferenceCodeParameterTypes2 = new Class[] {
-			long.class, String.class
+			String.class, long.class
 		};
 	private static final Class<?>[] _fetchCommercePriceModifierParameterTypes3 =
 		new Class[] {long.class};
@@ -670,11 +670,11 @@ public class CommercePriceModifierServiceHttp {
 		};
 	private static final Class<?>[]
 		_upsertCommercePriceModifierParameterTypes11 = new Class[] {
-			long.class, long.class, long.class, String.class, String.class,
-			long.class, String.class, java.math.BigDecimal.class, double.class,
-			boolean.class, int.class, int.class, int.class, int.class,
+			String.class, long.class, long.class, long.class, String.class,
+			String.class, long.class, String.class, java.math.BigDecimal.class,
+			double.class, boolean.class, int.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			String.class, boolean.class,
+			int.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 

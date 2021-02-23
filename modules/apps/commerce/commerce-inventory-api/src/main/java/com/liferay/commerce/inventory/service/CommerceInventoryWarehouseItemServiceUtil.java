@@ -106,11 +106,11 @@ public class CommerceInventoryWarehouseItemServiceUtil {
 	public static
 		com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
 				fetchCommerceInventoryWarehouseItemByReferenceCode(
-					long companyId, String externalReferenceCode)
+					String externalReferenceCode, long companyId)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().fetchCommerceInventoryWarehouseItemByReferenceCode(
-			companyId, externalReferenceCode);
+			externalReferenceCode, companyId);
 	}
 
 	public static

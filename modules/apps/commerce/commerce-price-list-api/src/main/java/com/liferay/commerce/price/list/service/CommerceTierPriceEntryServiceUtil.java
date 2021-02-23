@@ -51,20 +51,20 @@ public class CommerceTierPriceEntryServiceUtil {
 
 	public static com.liferay.commerce.price.list.model.CommerceTierPriceEntry
 			addCommerceTierPriceEntry(
-				long commercePriceEntryId, String externalReferenceCode,
+				String externalReferenceCode, long commercePriceEntryId,
 				java.math.BigDecimal price, java.math.BigDecimal promoPrice,
 				int minQuantity,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addCommerceTierPriceEntry(
-			commercePriceEntryId, externalReferenceCode, price, promoPrice,
+			externalReferenceCode, commercePriceEntryId, price, promoPrice,
 			minQuantity, serviceContext);
 	}
 
 	public static com.liferay.commerce.price.list.model.CommerceTierPriceEntry
 			addCommerceTierPriceEntry(
-				long commercePriceEntryId, String externalReferenceCode,
+				String externalReferenceCode, long commercePriceEntryId,
 				java.math.BigDecimal price, int minQuantity,
 				boolean bulkPricing, boolean discountDiscovery,
 				java.math.BigDecimal discountLevel1,
@@ -80,7 +80,7 @@ public class CommerceTierPriceEntryServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addCommerceTierPriceEntry(
-			commercePriceEntryId, externalReferenceCode, price, minQuantity,
+			externalReferenceCode, commercePriceEntryId, price, minQuantity,
 			bulkPricing, discountDiscovery, discountLevel1, discountLevel2,
 			discountLevel3, discountLevel4, displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute,
@@ -98,11 +98,11 @@ public class CommerceTierPriceEntryServiceUtil {
 
 	public static com.liferay.commerce.price.list.model.CommerceTierPriceEntry
 			fetchByExternalReferenceCode(
-				long companyId, String externalReferenceCode)
+				String externalReferenceCode, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().fetchByExternalReferenceCode(
-			companyId, externalReferenceCode);
+			externalReferenceCode, companyId);
 	}
 
 	/**
@@ -256,23 +256,23 @@ public class CommerceTierPriceEntryServiceUtil {
 
 	public static com.liferay.commerce.price.list.model.CommerceTierPriceEntry
 			upsertCommerceTierPriceEntry(
-				long commerceTierPriceEntryId, long commercePriceEntryId,
-				String externalReferenceCode, java.math.BigDecimal price,
+				String externalReferenceCode, long commerceTierPriceEntryId,
+				long commercePriceEntryId, java.math.BigDecimal price,
 				java.math.BigDecimal promoPrice, int minQuantity,
 				String priceEntryExternalReferenceCode,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().upsertCommerceTierPriceEntry(
-			commerceTierPriceEntryId, commercePriceEntryId,
-			externalReferenceCode, price, promoPrice, minQuantity,
+			externalReferenceCode, commerceTierPriceEntryId,
+			commercePriceEntryId, price, promoPrice, minQuantity,
 			priceEntryExternalReferenceCode, serviceContext);
 	}
 
 	public static com.liferay.commerce.price.list.model.CommerceTierPriceEntry
 			upsertCommerceTierPriceEntry(
-				long commerceTierPriceEntryId, long commercePriceEntryId,
-				String externalReferenceCode, java.math.BigDecimal price,
+				String externalReferenceCode, long commerceTierPriceEntryId,
+				long commercePriceEntryId, java.math.BigDecimal price,
 				int minQuantity, boolean bulkPricing, boolean discountDiscovery,
 				java.math.BigDecimal discountLevel1,
 				java.math.BigDecimal discountLevel2,
@@ -287,8 +287,8 @@ public class CommerceTierPriceEntryServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().upsertCommerceTierPriceEntry(
-			commerceTierPriceEntryId, commercePriceEntryId,
-			externalReferenceCode, price, minQuantity, bulkPricing,
+			externalReferenceCode, commerceTierPriceEntryId,
+			commercePriceEntryId, price, minQuantity, bulkPricing,
 			discountDiscovery, discountLevel1, discountLevel2, discountLevel3,
 			discountLevel4, displayDateMonth, displayDateDay, displayDateYear,
 			displayDateHour, displayDateMinute, expirationDateMonth,

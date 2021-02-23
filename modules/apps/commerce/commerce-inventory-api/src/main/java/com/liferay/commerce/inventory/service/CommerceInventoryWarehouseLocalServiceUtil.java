@@ -298,6 +298,15 @@ public class CommerceInventoryWarehouseLocalServiceUtil {
 
 	public static
 		com.liferay.commerce.inventory.model.CommerceInventoryWarehouse
+			fetchCommerceInventoryWarehouseByReferenceCode(
+				String externalReferenceCode, long companyId) {
+
+		return getService().fetchCommerceInventoryWarehouseByReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
+	public static
+		com.liferay.commerce.inventory.model.CommerceInventoryWarehouse
 				geolocateCommerceInventoryWarehouse(
 					long commerceInventoryWarehouseId, double latitude,
 					double longitude)

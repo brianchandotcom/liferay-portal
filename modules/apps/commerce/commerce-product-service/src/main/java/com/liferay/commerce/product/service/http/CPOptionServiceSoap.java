@@ -110,13 +110,13 @@ public class CPOptionServiceSoap {
 
 	public static com.liferay.commerce.product.model.CPOptionSoap
 			fetchByExternalReferenceCode(
-				long companyId, String externalReferenceCode)
+				String externalReferenceCode, long companyId)
 		throws RemoteException {
 
 		try {
 			com.liferay.commerce.product.model.CPOption returnValue =
 				CPOptionServiceUtil.fetchByExternalReferenceCode(
-					companyId, externalReferenceCode);
+					externalReferenceCode, companyId);
 
 			return com.liferay.commerce.product.model.CPOptionSoap.toSoapModel(
 				returnValue);
@@ -239,13 +239,13 @@ public class CPOptionServiceSoap {
 
 	public static com.liferay.commerce.product.model.CPOptionSoap
 			updateCPOptionExternalReferenceCode(
-				long cpOptionId, String externalReferenceCode)
+				String externalReferenceCode, long cpOptionId)
 		throws RemoteException {
 
 		try {
 			com.liferay.commerce.product.model.CPOption returnValue =
 				CPOptionServiceUtil.updateCPOptionExternalReferenceCode(
-					cpOptionId, externalReferenceCode);
+					externalReferenceCode, cpOptionId);
 
 			return com.liferay.commerce.product.model.CPOptionSoap.toSoapModel(
 				returnValue);
@@ -259,11 +259,11 @@ public class CPOptionServiceSoap {
 
 	public static com.liferay.commerce.product.model.CPOptionSoap
 			upsertCPOption(
-				String[] nameMapLanguageIds, String[] nameMapValues,
-				String[] descriptionMapLanguageIds,
+				String externalReferenceCode, String[] nameMapLanguageIds,
+				String[] nameMapValues, String[] descriptionMapLanguageIds,
 				String[] descriptionMapValues, String ddmFormFieldTypeName,
 				boolean facetable, boolean required, boolean skuContributor,
-				String key, String externalReferenceCode,
+				String key,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 
@@ -276,9 +276,9 @@ public class CPOptionServiceSoap {
 
 			com.liferay.commerce.product.model.CPOption returnValue =
 				CPOptionServiceUtil.upsertCPOption(
-					nameMap, descriptionMap, ddmFormFieldTypeName, facetable,
-					required, skuContributor, key, externalReferenceCode,
-					serviceContext);
+					externalReferenceCode, nameMap, descriptionMap,
+					ddmFormFieldTypeName, facetable, required, skuContributor,
+					key, serviceContext);
 
 			return com.liferay.commerce.product.model.CPOptionSoap.toSoapModel(
 				returnValue);

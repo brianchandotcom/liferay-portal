@@ -55,16 +55,18 @@ public class CommerceChannelLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.product.model.CommerceChannel
 			addCommerceChannel(
-				long siteGroupId, String name, String type,
+				String externalReferenceCode, long siteGroupId, String name,
+				String type,
 				com.liferay.portal.kernel.util.UnicodeProperties
 					typeSettingsUnicodeProperties,
-				String commerceCurrencyCode, String externalReferenceCode,
+				String commerceCurrencyCode,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceChannelLocalService.addCommerceChannel(
-			siteGroupId, name, type, typeSettingsUnicodeProperties,
-			commerceCurrencyCode, externalReferenceCode, serviceContext);
+			externalReferenceCode, siteGroupId, name, type,
+			typeSettingsUnicodeProperties, commerceCurrencyCode,
+			serviceContext);
 	}
 
 	/**
@@ -252,10 +254,10 @@ public class CommerceChannelLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.product.model.CommerceChannel
 		fetchByExternalReferenceCode(
-			long companyId, String externalReferenceCode) {
+			String externalReferenceCode, long companyId) {
 
 		return _commerceChannelLocalService.fetchByExternalReferenceCode(
-			companyId, externalReferenceCode);
+			externalReferenceCode, companyId);
 	}
 
 	@Override
@@ -494,12 +496,12 @@ public class CommerceChannelLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.product.model.CommerceChannel
 			updateCommerceChannelExternalReferenceCode(
-				long commerceChannelId, String externalReferenceCode)
+				String externalReferenceCode, long commerceChannelId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceChannelLocalService.
 			updateCommerceChannelExternalReferenceCode(
-				commerceChannelId, externalReferenceCode);
+				externalReferenceCode, commerceChannelId);
 	}
 
 	@Override

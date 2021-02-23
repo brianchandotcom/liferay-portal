@@ -247,6 +247,11 @@ public interface CommerceInventoryWarehouseLocalService
 		fetchCommerceInventoryWarehouseByReferenceCode(
 			long companyId, String externalReferenceCode);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceInventoryWarehouse
+		fetchCommerceInventoryWarehouseByReferenceCode(
+			String externalReferenceCode, long companyId);
+
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceInventoryWarehouse geolocateCommerceInventoryWarehouse(
 			long commerceInventoryWarehouseId, double latitude,

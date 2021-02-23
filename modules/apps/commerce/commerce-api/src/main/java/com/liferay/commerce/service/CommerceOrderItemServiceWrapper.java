@@ -81,11 +81,11 @@ public class CommerceOrderItemServiceWrapper
 	@Override
 	public com.liferay.commerce.model.CommerceOrderItem
 			fetchByExternalReferenceCode(
-				long companyId, String externalReferenceCode)
+				String externalReferenceCode, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceOrderItemService.fetchByExternalReferenceCode(
-			companyId, externalReferenceCode);
+			externalReferenceCode, companyId);
 	}
 
 	@Override

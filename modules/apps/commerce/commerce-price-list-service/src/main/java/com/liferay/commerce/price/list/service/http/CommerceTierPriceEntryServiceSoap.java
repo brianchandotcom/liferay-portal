@@ -92,7 +92,7 @@ public class CommerceTierPriceEntryServiceSoap {
 	public static
 		com.liferay.commerce.price.list.model.CommerceTierPriceEntrySoap
 				addCommerceTierPriceEntry(
-					long commercePriceEntryId, String externalReferenceCode,
+					String externalReferenceCode, long commercePriceEntryId,
 					java.math.BigDecimal price, java.math.BigDecimal promoPrice,
 					int minQuantity,
 					com.liferay.portal.kernel.service.ServiceContext
@@ -103,7 +103,7 @@ public class CommerceTierPriceEntryServiceSoap {
 			com.liferay.commerce.price.list.model.CommerceTierPriceEntry
 				returnValue =
 					CommerceTierPriceEntryServiceUtil.addCommerceTierPriceEntry(
-						commercePriceEntryId, externalReferenceCode, price,
+						externalReferenceCode, commercePriceEntryId, price,
 						promoPrice, minQuantity, serviceContext);
 
 			return com.liferay.commerce.price.list.model.
@@ -119,7 +119,7 @@ public class CommerceTierPriceEntryServiceSoap {
 	public static
 		com.liferay.commerce.price.list.model.CommerceTierPriceEntrySoap
 				addCommerceTierPriceEntry(
-					long commercePriceEntryId, String externalReferenceCode,
+					String externalReferenceCode, long commercePriceEntryId,
 					java.math.BigDecimal price, int minQuantity,
 					boolean bulkPricing, boolean discountDiscovery,
 					java.math.BigDecimal discountLevel1,
@@ -139,7 +139,7 @@ public class CommerceTierPriceEntryServiceSoap {
 			com.liferay.commerce.price.list.model.CommerceTierPriceEntry
 				returnValue =
 					CommerceTierPriceEntryServiceUtil.addCommerceTierPriceEntry(
-						commercePriceEntryId, externalReferenceCode, price,
+						externalReferenceCode, commercePriceEntryId, price,
 						minQuantity, bulkPricing, discountDiscovery,
 						discountLevel1, discountLevel2, discountLevel3,
 						discountLevel4, displayDateMonth, displayDateDay,
@@ -176,7 +176,7 @@ public class CommerceTierPriceEntryServiceSoap {
 	public static
 		com.liferay.commerce.price.list.model.CommerceTierPriceEntrySoap
 				fetchByExternalReferenceCode(
-					long companyId, String externalReferenceCode)
+					String externalReferenceCode, long companyId)
 			throws RemoteException {
 
 		try {
@@ -184,7 +184,7 @@ public class CommerceTierPriceEntryServiceSoap {
 				returnValue =
 					CommerceTierPriceEntryServiceUtil.
 						fetchByExternalReferenceCode(
-							companyId, externalReferenceCode);
+							externalReferenceCode, companyId);
 
 			return com.liferay.commerce.price.list.model.
 				CommerceTierPriceEntrySoap.toSoapModel(returnValue);
@@ -478,8 +478,8 @@ public class CommerceTierPriceEntryServiceSoap {
 	public static
 		com.liferay.commerce.price.list.model.CommerceTierPriceEntrySoap
 				upsertCommerceTierPriceEntry(
-					long commerceTierPriceEntryId, long commercePriceEntryId,
-					String externalReferenceCode, java.math.BigDecimal price,
+					String externalReferenceCode, long commerceTierPriceEntryId,
+					long commercePriceEntryId, java.math.BigDecimal price,
 					java.math.BigDecimal promoPrice, int minQuantity,
 					String priceEntryExternalReferenceCode,
 					com.liferay.portal.kernel.service.ServiceContext
@@ -491,8 +491,8 @@ public class CommerceTierPriceEntryServiceSoap {
 				returnValue =
 					CommerceTierPriceEntryServiceUtil.
 						upsertCommerceTierPriceEntry(
-							commerceTierPriceEntryId, commercePriceEntryId,
-							externalReferenceCode, price, promoPrice,
+							externalReferenceCode, commerceTierPriceEntryId,
+							commercePriceEntryId, price, promoPrice,
 							minQuantity, priceEntryExternalReferenceCode,
 							serviceContext);
 
@@ -509,8 +509,8 @@ public class CommerceTierPriceEntryServiceSoap {
 	public static
 		com.liferay.commerce.price.list.model.CommerceTierPriceEntrySoap
 				upsertCommerceTierPriceEntry(
-					long commerceTierPriceEntryId, long commercePriceEntryId,
-					String externalReferenceCode, java.math.BigDecimal price,
+					String externalReferenceCode, long commerceTierPriceEntryId,
+					long commercePriceEntryId, java.math.BigDecimal price,
 					int minQuantity, boolean bulkPricing,
 					boolean discountDiscovery,
 					java.math.BigDecimal discountLevel1,
@@ -532,8 +532,8 @@ public class CommerceTierPriceEntryServiceSoap {
 				returnValue =
 					CommerceTierPriceEntryServiceUtil.
 						upsertCommerceTierPriceEntry(
-							commerceTierPriceEntryId, commercePriceEntryId,
-							externalReferenceCode, price, minQuantity,
+							externalReferenceCode, commerceTierPriceEntryId,
+							commercePriceEntryId, price, minQuantity,
 							bulkPricing, discountDiscovery, discountLevel1,
 							discountLevel2, discountLevel3, discountLevel4,
 							displayDateMonth, displayDateDay, displayDateYear,

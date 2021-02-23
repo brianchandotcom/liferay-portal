@@ -99,10 +99,9 @@ public class CommercePricingClassServiceHttp {
 
 	public static com.liferay.commerce.pricing.model.CommercePricingClass
 			addCommercePricingClass(
-				HttpPrincipal httpPrincipal, long userId,
-				java.util.Map<java.util.Locale, String> titleMap,
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long userId, java.util.Map<java.util.Locale, String> titleMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,
-				String externalReferenceCode,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -113,8 +112,8 @@ public class CommercePricingClassServiceHttp {
 				_addCommercePricingClassParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, userId, titleMap, descriptionMap,
-				externalReferenceCode, serviceContext);
+				methodKey, externalReferenceCode, userId, titleMap,
+				descriptionMap, serviceContext);
 
 			Object returnObj = null;
 
@@ -190,8 +189,8 @@ public class CommercePricingClassServiceHttp {
 
 	public static com.liferay.commerce.pricing.model.CommercePricingClass
 			fetchByExternalReferenceCode(
-				HttpPrincipal httpPrincipal, long companyId,
-				String externalReferenceCode)
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -201,7 +200,7 @@ public class CommercePricingClassServiceHttp {
 				_fetchByExternalReferenceCodeParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, externalReferenceCode);
+				methodKey, externalReferenceCode, companyId);
 
 			Object returnObj = null;
 
@@ -635,8 +634,8 @@ public class CommercePricingClassServiceHttp {
 
 	public static com.liferay.commerce.pricing.model.CommercePricingClass
 			updateCommercePricingClassExternalReferenceCode(
-				HttpPrincipal httpPrincipal, long commercePricingClassId,
-				String externalReferenceCode)
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long commercePricingClassId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -646,7 +645,7 @@ public class CommercePricingClassServiceHttp {
 				_updateCommercePricingClassExternalReferenceCodeParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, commercePricingClassId, externalReferenceCode);
+				methodKey, externalReferenceCode, commercePricingClassId);
 
 			Object returnObj = null;
 
@@ -679,10 +678,10 @@ public class CommercePricingClassServiceHttp {
 
 	public static com.liferay.commerce.pricing.model.CommercePricingClass
 			upsertCommercePricingClass(
-				HttpPrincipal httpPrincipal, long commercePricingClassId,
-				long userId, java.util.Map<java.util.Locale, String> titleMap,
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long commercePricingClassId, long userId,
+				java.util.Map<java.util.Locale, String> titleMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,
-				String externalReferenceCode,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -693,8 +692,8 @@ public class CommercePricingClassServiceHttp {
 				_upsertCommercePricingClassParameterTypes14);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, commercePricingClassId, userId, titleMap,
-				descriptionMap, externalReferenceCode, serviceContext);
+				methodKey, externalReferenceCode, commercePricingClassId,
+				userId, titleMap, descriptionMap, serviceContext);
 
 			Object returnObj = null;
 
@@ -735,14 +734,14 @@ public class CommercePricingClassServiceHttp {
 		};
 	private static final Class<?>[] _addCommercePricingClassParameterTypes1 =
 		new Class[] {
-			long.class, java.util.Map.class, java.util.Map.class, String.class,
+			String.class, long.class, java.util.Map.class, java.util.Map.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCommercePricingClassParameterTypes2 =
 		new Class[] {long.class};
 	private static final Class<?>[]
 		_fetchByExternalReferenceCodeParameterTypes3 = new Class[] {
-			long.class, String.class
+			String.class, long.class
 		};
 	private static final Class<?>[] _fetchCommercePricingClassParameterTypes4 =
 		new Class[] {long.class};
@@ -779,11 +778,12 @@ public class CommercePricingClassServiceHttp {
 		};
 	private static final Class<?>[]
 		_updateCommercePricingClassExternalReferenceCodeParameterTypes13 =
-			new Class[] {long.class, String.class};
+			new Class[] {String.class, long.class};
 	private static final Class<?>[]
 		_upsertCommercePricingClassParameterTypes14 = new Class[] {
-			long.class, long.class, java.util.Map.class, java.util.Map.class,
-			String.class, com.liferay.portal.kernel.service.ServiceContext.class
+			String.class, long.class, long.class, java.util.Map.class,
+			java.util.Map.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 
 }

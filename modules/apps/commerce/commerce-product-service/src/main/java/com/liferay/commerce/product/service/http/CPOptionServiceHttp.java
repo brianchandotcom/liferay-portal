@@ -135,8 +135,8 @@ public class CPOptionServiceHttp {
 
 	public static com.liferay.commerce.product.model.CPOption
 			fetchByExternalReferenceCode(
-				HttpPrincipal httpPrincipal, long companyId,
-				String externalReferenceCode)
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -145,7 +145,7 @@ public class CPOptionServiceHttp {
 				_fetchByExternalReferenceCodeParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, externalReferenceCode);
+				methodKey, externalReferenceCode, companyId);
 
 			Object returnObj = null;
 
@@ -432,8 +432,8 @@ public class CPOptionServiceHttp {
 
 	public static com.liferay.commerce.product.model.CPOption
 			updateCPOptionExternalReferenceCode(
-				HttpPrincipal httpPrincipal, long cpOptionId,
-				String externalReferenceCode)
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long cpOptionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -443,7 +443,7 @@ public class CPOptionServiceHttp {
 				_updateCPOptionExternalReferenceCodeParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, cpOptionId, externalReferenceCode);
+				methodKey, externalReferenceCode, cpOptionId);
 
 			Object returnObj = null;
 
@@ -474,11 +474,11 @@ public class CPOptionServiceHttp {
 	}
 
 	public static com.liferay.commerce.product.model.CPOption upsertCPOption(
-			HttpPrincipal httpPrincipal,
+			HttpPrincipal httpPrincipal, String externalReferenceCode,
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
 			String ddmFormFieldTypeName, boolean facetable, boolean required,
-			boolean skuContributor, String key, String externalReferenceCode,
+			boolean skuContributor, String key,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -488,8 +488,8 @@ public class CPOptionServiceHttp {
 				_upsertCPOptionParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, nameMap, descriptionMap, ddmFormFieldTypeName,
-				facetable, required, skuContributor, key, externalReferenceCode,
+				methodKey, externalReferenceCode, nameMap, descriptionMap,
+				ddmFormFieldTypeName, facetable, required, skuContributor, key,
 				serviceContext);
 
 			Object returnObj = null;
@@ -531,7 +531,7 @@ public class CPOptionServiceHttp {
 		new Class[] {long.class};
 	private static final Class<?>[]
 		_fetchByExternalReferenceCodeParameterTypes2 = new Class[] {
-			long.class, String.class
+			String.class, long.class
 		};
 	private static final Class<?>[] _fetchCPOptionParameterTypes3 =
 		new Class[] {long.class};
@@ -558,12 +558,12 @@ public class CPOptionServiceHttp {
 		};
 	private static final Class<?>[]
 		_updateCPOptionExternalReferenceCodeParameterTypes9 = new Class[] {
-			long.class, String.class
+			String.class, long.class
 		};
 	private static final Class<?>[] _upsertCPOptionParameterTypes10 =
 		new Class[] {
-			java.util.Map.class, java.util.Map.class, String.class,
-			boolean.class, boolean.class, boolean.class, String.class,
+			String.class, java.util.Map.class, java.util.Map.class,
+			String.class, boolean.class, boolean.class, boolean.class,
 			String.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 

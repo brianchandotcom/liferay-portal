@@ -49,19 +49,6 @@ public class CommercePriceEntryServiceUtil {
 			serviceContext);
 	}
 
-	public static com.liferay.commerce.price.list.model.CommercePriceEntry
-			addCommercePriceEntry(
-				long cpInstanceId, long commercePriceListId,
-				String externalReferenceCode, java.math.BigDecimal price,
-				java.math.BigDecimal promoPrice,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().addCommercePriceEntry(
-			cpInstanceId, commercePriceListId, externalReferenceCode, price,
-			promoPrice, serviceContext);
-	}
-
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 #addCommercePriceEntry(String, long, String, long,
@@ -95,6 +82,19 @@ public class CommercePriceEntryServiceUtil {
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire,
 			serviceContext);
+	}
+
+	public static com.liferay.commerce.price.list.model.CommercePriceEntry
+			addCommercePriceEntry(
+				String externalReferenceCode, long cpInstanceId,
+				long commercePriceListId, java.math.BigDecimal price,
+				java.math.BigDecimal promoPrice,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addCommercePriceEntry(
+			externalReferenceCode, cpInstanceId, commercePriceListId, price,
+			promoPrice, serviceContext);
 	}
 
 	public static com.liferay.commerce.price.list.model.CommercePriceEntry

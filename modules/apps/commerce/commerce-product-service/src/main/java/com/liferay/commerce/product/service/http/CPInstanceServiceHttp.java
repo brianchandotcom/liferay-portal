@@ -344,8 +344,8 @@ public class CPInstanceServiceHttp {
 
 	public static com.liferay.commerce.product.model.CPInstance
 			fetchByExternalReferenceCode(
-				HttpPrincipal httpPrincipal, long companyId,
-				String externalReferenceCode)
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -354,7 +354,7 @@ public class CPInstanceServiceHttp {
 				_fetchByExternalReferenceCodeParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, externalReferenceCode);
+				methodKey, externalReferenceCode, companyId);
 
 			Object returnObj = null;
 
@@ -1162,12 +1162,12 @@ public class CPInstanceServiceHttp {
 
 	public static com.liferay.commerce.product.model.CPInstance
 			upsertCPInstance(
-				HttpPrincipal httpPrincipal, long cpDefinitionId, long groupId,
-				String sku, String gtin, String manufacturerPartNumber,
-				boolean purchasable, String json, double width, double height,
-				double depth, double weight, java.math.BigDecimal price,
-				java.math.BigDecimal promoPrice, java.math.BigDecimal cost,
-				boolean published, String externalReferenceCode,
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long cpDefinitionId, long groupId, String sku, String gtin,
+				String manufacturerPartNumber, boolean purchasable, String json,
+				double width, double height, double depth, double weight,
+				java.math.BigDecimal price, java.math.BigDecimal promoPrice,
+				java.math.BigDecimal cost, boolean published,
 				int displayDateMonth, int displayDateDay, int displayDateYear,
 				int displayDateHour, int displayDateMinute,
 				int expirationDateMonth, int expirationDateDay,
@@ -1182,14 +1182,13 @@ public class CPInstanceServiceHttp {
 				_upsertCPInstanceParameterTypes24);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, cpDefinitionId, groupId, sku, gtin,
-				manufacturerPartNumber, purchasable, json, width, height, depth,
-				weight, price, promoPrice, cost, published,
-				externalReferenceCode, displayDateMonth, displayDateDay,
-				displayDateYear, displayDateHour, displayDateMinute,
-				expirationDateMonth, expirationDateDay, expirationDateYear,
-				expirationDateHour, expirationDateMinute, neverExpire,
-				serviceContext);
+				methodKey, externalReferenceCode, cpDefinitionId, groupId, sku,
+				gtin, manufacturerPartNumber, purchasable, json, width, height,
+				depth, weight, price, promoPrice, cost, published,
+				displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, expirationDateMonth,
+				expirationDateDay, expirationDateYear, expirationDateHour,
+				expirationDateMinute, neverExpire, serviceContext);
 
 			Object returnObj = null;
 
@@ -1221,12 +1220,12 @@ public class CPInstanceServiceHttp {
 
 	public static com.liferay.commerce.product.model.CPInstance
 			upsertCPInstance(
-				HttpPrincipal httpPrincipal, long cpDefinitionId, long groupId,
-				String sku, String gtin, String manufacturerPartNumber,
-				boolean purchasable, String json, double width, double height,
-				double depth, double weight, java.math.BigDecimal price,
-				java.math.BigDecimal promoPrice, java.math.BigDecimal cost,
-				boolean published, String externalReferenceCode,
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long cpDefinitionId, long groupId, String sku, String gtin,
+				String manufacturerPartNumber, boolean purchasable, String json,
+				double width, double height, double depth, double weight,
+				java.math.BigDecimal price, java.math.BigDecimal promoPrice,
+				java.math.BigDecimal cost, boolean published,
 				int displayDateMonth, int displayDateDay, int displayDateYear,
 				int displayDateHour, int displayDateMinute,
 				int expirationDateMonth, int expirationDateDay,
@@ -1241,14 +1240,13 @@ public class CPInstanceServiceHttp {
 				_upsertCPInstanceParameterTypes25);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, cpDefinitionId, groupId, sku, gtin,
-				manufacturerPartNumber, purchasable, json, width, height, depth,
-				weight, price, promoPrice, cost, published,
-				externalReferenceCode, displayDateMonth, displayDateDay,
-				displayDateYear, displayDateHour, displayDateMinute,
-				expirationDateMonth, expirationDateDay, expirationDateYear,
-				expirationDateHour, expirationDateMinute, neverExpire, unspsc,
-				serviceContext);
+				methodKey, externalReferenceCode, cpDefinitionId, groupId, sku,
+				gtin, manufacturerPartNumber, purchasable, json, width, height,
+				depth, weight, price, promoPrice, cost, published,
+				displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, expirationDateMonth,
+				expirationDateDay, expirationDateYear, expirationDateHour,
+				expirationDateMinute, neverExpire, unspsc, serviceContext);
 
 			Object returnObj = null;
 
@@ -1321,7 +1319,7 @@ public class CPInstanceServiceHttp {
 		new Class[] {long.class};
 	private static final Class<?>[]
 		_fetchByExternalReferenceCodeParameterTypes6 = new Class[] {
-			long.class, String.class
+			String.class, long.class
 		};
 	private static final Class<?>[] _fetchCPInstanceParameterTypes7 =
 		new Class[] {long.class};
@@ -1407,24 +1405,24 @@ public class CPInstanceServiceHttp {
 		};
 	private static final Class<?>[] _upsertCPInstanceParameterTypes24 =
 		new Class[] {
-			long.class, long.class, String.class, String.class, String.class,
-			boolean.class, String.class, double.class, double.class,
-			double.class, double.class, java.math.BigDecimal.class,
+			String.class, long.class, long.class, String.class, String.class,
+			String.class, boolean.class, String.class, double.class,
+			double.class, double.class, double.class,
 			java.math.BigDecimal.class, java.math.BigDecimal.class,
-			boolean.class, String.class, int.class, int.class, int.class,
+			java.math.BigDecimal.class, boolean.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, boolean.class,
+			int.class, int.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _upsertCPInstanceParameterTypes25 =
 		new Class[] {
-			long.class, long.class, String.class, String.class, String.class,
-			boolean.class, String.class, double.class, double.class,
-			double.class, double.class, java.math.BigDecimal.class,
+			String.class, long.class, long.class, String.class, String.class,
+			String.class, boolean.class, String.class, double.class,
+			double.class, double.class, double.class,
 			java.math.BigDecimal.class, java.math.BigDecimal.class,
-			boolean.class, String.class, int.class, int.class, int.class,
+			java.math.BigDecimal.class, boolean.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, boolean.class, String.class,
+			int.class, int.class, boolean.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 

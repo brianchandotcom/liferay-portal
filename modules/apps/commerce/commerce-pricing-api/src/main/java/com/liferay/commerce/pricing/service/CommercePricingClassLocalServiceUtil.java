@@ -69,14 +69,14 @@ public class CommercePricingClassLocalServiceUtil {
 
 	public static com.liferay.commerce.pricing.model.CommercePricingClass
 			addCommercePricingClass(
-				long userId, java.util.Map<java.util.Locale, String> titleMap,
+				String externalReferenceCode, long userId,
+				java.util.Map<java.util.Locale, String> titleMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,
-				String externalReferenceCode,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addCommercePricingClass(
-			userId, titleMap, descriptionMap, externalReferenceCode,
+			externalReferenceCode, userId, titleMap, descriptionMap,
 			serviceContext);
 	}
 
@@ -250,10 +250,10 @@ public class CommercePricingClassLocalServiceUtil {
 
 	public static com.liferay.commerce.pricing.model.CommercePricingClass
 		fetchByExternalReferenceCode(
-			long companyId, String externalReferenceCode) {
+			String externalReferenceCode, long companyId) {
 
 		return getService().fetchByExternalReferenceCode(
-			companyId, externalReferenceCode);
+			externalReferenceCode, companyId);
 	}
 
 	public static com.liferay.commerce.pricing.model.CommercePricingClass
@@ -480,25 +480,24 @@ public class CommercePricingClassLocalServiceUtil {
 
 	public static com.liferay.commerce.pricing.model.CommercePricingClass
 			updateCommercePricingClassExternalReferenceCode(
-				long commercePricingClassId, String externalReferenceCode)
+				String externalReferenceCode, long commercePricingClassId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateCommercePricingClassExternalReferenceCode(
-			commercePricingClassId, externalReferenceCode);
+			externalReferenceCode, commercePricingClassId);
 	}
 
 	public static com.liferay.commerce.pricing.model.CommercePricingClass
 			upsertCommercePricingClass(
-				long commercePricingClassId, long userId,
-				java.util.Map<java.util.Locale, String> titleMap,
+				String externalReferenceCode, long commercePricingClassId,
+				long userId, java.util.Map<java.util.Locale, String> titleMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,
-				String externalReferenceCode,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().upsertCommercePricingClass(
-			commercePricingClassId, userId, titleMap, descriptionMap,
-			externalReferenceCode, serviceContext);
+			externalReferenceCode, commercePricingClassId, userId, titleMap,
+			descriptionMap, serviceContext);
 	}
 
 	public static CommercePricingClassLocalService getService() {

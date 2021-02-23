@@ -84,10 +84,10 @@ public interface CommerceAddressService extends BaseService {
 		throws PortalException;
 
 	public CommerceAddress addCommerceAddress(
-			String className, long classPK, String name, String description,
-			String street1, String street2, String street3, String city,
-			String zip, long commerceRegionId, long commerceCountryId,
-			String phoneNumber, int type, String externalReferenceCode,
+			String externalReferenceCode, String className, long classPK,
+			String name, String description, String street1, String street2,
+			String street3, String city, String zip, long commerceRegionId,
+			long commerceCountryId, String phoneNumber, int type,
 			ServiceContext serviceContext)
 		throws PortalException;
 
@@ -96,7 +96,7 @@ public interface CommerceAddressService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceAddress fetchByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+			String externalReferenceCode, long companyId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

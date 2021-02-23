@@ -54,11 +54,11 @@ public class CPOptionServiceWrapper
 	@Override
 	public com.liferay.commerce.product.model.CPOption
 			fetchByExternalReferenceCode(
-				long companyId, String externalReferenceCode)
+				String externalReferenceCode, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpOptionService.fetchByExternalReferenceCode(
-			companyId, externalReferenceCode);
+			externalReferenceCode, companyId);
 	}
 
 	@Override
@@ -136,25 +136,27 @@ public class CPOptionServiceWrapper
 	@Override
 	public com.liferay.commerce.product.model.CPOption
 			updateCPOptionExternalReferenceCode(
-				long cpOptionId, String externalReferenceCode)
+				String externalReferenceCode, long cpOptionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpOptionService.updateCPOptionExternalReferenceCode(
-			cpOptionId, externalReferenceCode);
+			externalReferenceCode, cpOptionId);
 	}
 
 	@Override
 	public com.liferay.commerce.product.model.CPOption upsertCPOption(
+			String externalReferenceCode,
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
 			String ddmFormFieldTypeName, boolean facetable, boolean required,
-			boolean skuContributor, String key, String externalReferenceCode,
+			boolean skuContributor, String key,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpOptionService.upsertCPOption(
-			nameMap, descriptionMap, ddmFormFieldTypeName, facetable, required,
-			skuContributor, key, externalReferenceCode, serviceContext);
+			externalReferenceCode, nameMap, descriptionMap,
+			ddmFormFieldTypeName, facetable, required, skuContributor, key,
+			serviceContext);
 	}
 
 	@Override

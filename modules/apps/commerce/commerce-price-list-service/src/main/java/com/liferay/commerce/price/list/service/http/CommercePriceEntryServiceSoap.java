@@ -87,32 +87,6 @@ public class CommercePriceEntryServiceSoap {
 		}
 	}
 
-	public static com.liferay.commerce.price.list.model.CommercePriceEntrySoap
-			addCommercePriceEntry(
-				long cpInstanceId, long commercePriceListId,
-				String externalReferenceCode, java.math.BigDecimal price,
-				java.math.BigDecimal promoPrice,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-
-		try {
-			com.liferay.commerce.price.list.model.CommercePriceEntry
-				returnValue =
-					CommercePriceEntryServiceUtil.addCommercePriceEntry(
-						cpInstanceId, commercePriceListId,
-						externalReferenceCode, price, promoPrice,
-						serviceContext);
-
-			return com.liferay.commerce.price.list.model.CommercePriceEntrySoap.
-				toSoapModel(returnValue);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			throw new RemoteException(exception.getMessage());
-		}
-	}
-
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 #addCommercePriceEntry(String, long, String, long,
@@ -150,6 +124,31 @@ public class CommercePriceEntryServiceSoap {
 						expirationDateMonth, expirationDateDay,
 						expirationDateYear, expirationDateHour,
 						expirationDateMinute, neverExpire, serviceContext);
+
+			return com.liferay.commerce.price.list.model.CommercePriceEntrySoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.price.list.model.CommercePriceEntrySoap
+			addCommercePriceEntry(
+				String externalReferenceCode, long cpInstanceId,
+				long commercePriceListId, java.math.BigDecimal price,
+				java.math.BigDecimal promoPrice,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.commerce.price.list.model.CommercePriceEntry
+				returnValue =
+					CommercePriceEntryServiceUtil.addCommercePriceEntry(
+						externalReferenceCode, cpInstanceId,
+						commercePriceListId, price, promoPrice, serviceContext);
 
 			return com.liferay.commerce.price.list.model.CommercePriceEntrySoap.
 				toSoapModel(returnValue);

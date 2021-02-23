@@ -55,11 +55,11 @@ public class CommerceOrderNoteServiceUtil {
 
 	public static com.liferay.commerce.model.CommerceOrderNote
 			fetchByExternalReferenceCode(
-				long companyId, String externalReferenceCode)
+				String externalReferenceCode, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().fetchByExternalReferenceCode(
-			companyId, externalReferenceCode);
+			externalReferenceCode, companyId);
 	}
 
 	public static com.liferay.commerce.model.CommerceOrderNote
@@ -124,14 +124,14 @@ public class CommerceOrderNoteServiceUtil {
 
 	public static com.liferay.commerce.model.CommerceOrderNote
 			upsertCommerceOrderNote(
-				long commerceOrderNoteId, long commerceOrderId, String content,
-				boolean restricted, String externalReferenceCode,
+				String externalReferenceCode, long commerceOrderNoteId,
+				long commerceOrderId, String content, boolean restricted,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().upsertCommerceOrderNote(
-			commerceOrderNoteId, commerceOrderId, content, restricted,
-			externalReferenceCode, serviceContext);
+			externalReferenceCode, commerceOrderNoteId, commerceOrderId,
+			content, restricted, serviceContext);
 	}
 
 	public static CommerceOrderNoteService getService() {

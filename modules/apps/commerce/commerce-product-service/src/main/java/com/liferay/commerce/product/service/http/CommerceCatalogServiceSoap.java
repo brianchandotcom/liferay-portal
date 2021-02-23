@@ -65,16 +65,16 @@ public class CommerceCatalogServiceSoap {
 
 	public static com.liferay.commerce.product.model.CommerceCatalogSoap
 			addCommerceCatalog(
-				String name, String commerceCurrencyCode,
-				String catalogDefaultLanguageId, String externalReferenceCode,
+				String externalReferenceCode, String name,
+				String commerceCurrencyCode, String catalogDefaultLanguageId,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 
 		try {
 			com.liferay.commerce.product.model.CommerceCatalog returnValue =
 				CommerceCatalogServiceUtil.addCommerceCatalog(
-					name, commerceCurrencyCode, catalogDefaultLanguageId,
-					externalReferenceCode, serviceContext);
+					externalReferenceCode, name, commerceCurrencyCode,
+					catalogDefaultLanguageId, serviceContext);
 
 			return com.liferay.commerce.product.model.CommerceCatalogSoap.
 				toSoapModel(returnValue);
@@ -107,13 +107,13 @@ public class CommerceCatalogServiceSoap {
 
 	public static com.liferay.commerce.product.model.CommerceCatalogSoap
 			fetchByExternalReferenceCode(
-				long companyId, String externalReferenceCode)
+				String externalReferenceCode, long companyId)
 		throws RemoteException {
 
 		try {
 			com.liferay.commerce.product.model.CommerceCatalog returnValue =
 				CommerceCatalogServiceUtil.fetchByExternalReferenceCode(
-					companyId, externalReferenceCode);
+					externalReferenceCode, companyId);
 
 			return com.liferay.commerce.product.model.CommerceCatalogSoap.
 				toSoapModel(returnValue);
@@ -264,14 +264,14 @@ public class CommerceCatalogServiceSoap {
 
 	public static com.liferay.commerce.product.model.CommerceCatalogSoap
 			updateCommerceCatalogExternalReferenceCode(
-				long commerceCatalogId, String externalReferenceCode)
+				String externalReferenceCode, long commerceCatalogId)
 		throws RemoteException {
 
 		try {
 			com.liferay.commerce.product.model.CommerceCatalog returnValue =
 				CommerceCatalogServiceUtil.
 					updateCommerceCatalogExternalReferenceCode(
-						commerceCatalogId, externalReferenceCode);
+						externalReferenceCode, commerceCatalogId);
 
 			return com.liferay.commerce.product.model.CommerceCatalogSoap.
 				toSoapModel(returnValue);

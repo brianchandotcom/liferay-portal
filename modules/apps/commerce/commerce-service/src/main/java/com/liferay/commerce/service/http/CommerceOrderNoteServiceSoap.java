@@ -100,13 +100,13 @@ public class CommerceOrderNoteServiceSoap {
 
 	public static com.liferay.commerce.model.CommerceOrderNoteSoap
 			fetchByExternalReferenceCode(
-				long companyId, String externalReferenceCode)
+				String externalReferenceCode, long companyId)
 		throws RemoteException {
 
 		try {
 			com.liferay.commerce.model.CommerceOrderNote returnValue =
 				CommerceOrderNoteServiceUtil.fetchByExternalReferenceCode(
-					companyId, externalReferenceCode);
+					externalReferenceCode, companyId);
 
 			return com.liferay.commerce.model.CommerceOrderNoteSoap.toSoapModel(
 				returnValue);
@@ -253,16 +253,16 @@ public class CommerceOrderNoteServiceSoap {
 
 	public static com.liferay.commerce.model.CommerceOrderNoteSoap
 			upsertCommerceOrderNote(
-				long commerceOrderNoteId, long commerceOrderId, String content,
-				boolean restricted, String externalReferenceCode,
+				String externalReferenceCode, long commerceOrderNoteId,
+				long commerceOrderId, String content, boolean restricted,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 
 		try {
 			com.liferay.commerce.model.CommerceOrderNote returnValue =
 				CommerceOrderNoteServiceUtil.upsertCommerceOrderNote(
-					commerceOrderNoteId, commerceOrderId, content, restricted,
-					externalReferenceCode, serviceContext);
+					externalReferenceCode, commerceOrderNoteId, commerceOrderId,
+					content, restricted, serviceContext);
 
 			return com.liferay.commerce.model.CommerceOrderNoteSoap.toSoapModel(
 				returnValue);

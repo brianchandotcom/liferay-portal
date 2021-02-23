@@ -81,7 +81,7 @@ public interface CPAttachmentFileEntryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPAttachmentFileEntry fetchByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+			String externalReferenceCode, long companyId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -158,26 +158,25 @@ public interface CPAttachmentFileEntryService extends BaseService {
 	 */
 	@Deprecated
 	public CPAttachmentFileEntry upsertCPAttachmentFileEntry(
-			long groupId, long classNameId, long classPK, long fileEntryId,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			String externalReferenceCode, long groupId, long classNameId,
+			long classPK, long fileEntryId, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, Map<Locale, String> titleMap, String json,
-			double priority, int type, String externalReferenceCode,
-			ServiceContext serviceContext)
+			double priority, int type, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CPAttachmentFileEntry upsertCPAttachmentFileEntry(
-			long groupId, long classNameId, long classPK,
-			long cpAttachmentFileEntryId, long fileEntryId,
+			String externalReferenceCode, long groupId, long classNameId,
+			long classPK, long cpAttachmentFileEntryId, long fileEntryId,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, Map<Locale, String> titleMap, String json,
-			double priority, int type, String externalReferenceCode,
-			ServiceContext serviceContext)
+			double priority, int type, ServiceContext serviceContext)
 		throws PortalException;
 
 }

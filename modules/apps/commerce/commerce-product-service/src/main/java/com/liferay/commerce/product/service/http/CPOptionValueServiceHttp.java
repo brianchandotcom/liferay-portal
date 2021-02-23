@@ -133,8 +133,8 @@ public class CPOptionValueServiceHttp {
 
 	public static com.liferay.commerce.product.model.CPOptionValue
 			fetchByExternalReferenceCode(
-				HttpPrincipal httpPrincipal, long companyId,
-				String externalReferenceCode)
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -143,7 +143,7 @@ public class CPOptionValueServiceHttp {
 				_fetchByExternalReferenceCodeParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, externalReferenceCode);
+				methodKey, externalReferenceCode, companyId);
 
 			Object returnObj = null;
 
@@ -384,9 +384,10 @@ public class CPOptionValueServiceHttp {
 
 	public static com.liferay.commerce.product.model.CPOptionValue
 			upsertCPOptionValue(
-				HttpPrincipal httpPrincipal, long cpOptionId,
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long cpOptionId,
 				java.util.Map<java.util.Locale, String> nameMap,
-				double priority, String key, String externalReferenceCode,
+				double priority, String key,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -396,8 +397,8 @@ public class CPOptionValueServiceHttp {
 				_upsertCPOptionValueParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, cpOptionId, nameMap, priority, key,
-				externalReferenceCode, serviceContext);
+				methodKey, externalReferenceCode, cpOptionId, nameMap, priority,
+				key, serviceContext);
 
 			Object returnObj = null;
 
@@ -439,7 +440,7 @@ public class CPOptionValueServiceHttp {
 		new Class[] {long.class};
 	private static final Class<?>[]
 		_fetchByExternalReferenceCodeParameterTypes2 = new Class[] {
-			long.class, String.class
+			String.class, long.class
 		};
 	private static final Class<?>[] _fetchCPOptionValueParameterTypes3 =
 		new Class[] {long.class};
@@ -456,7 +457,7 @@ public class CPOptionValueServiceHttp {
 		};
 	private static final Class<?>[] _upsertCPOptionValueParameterTypes8 =
 		new Class[] {
-			long.class, java.util.Map.class, double.class, String.class,
+			String.class, long.class, java.util.Map.class, double.class,
 			String.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 

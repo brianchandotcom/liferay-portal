@@ -123,19 +123,20 @@ public class CommerceAddressServiceSoap {
 
 	public static com.liferay.commerce.model.CommerceAddressSoap
 			addCommerceAddress(
-				String className, long classPK, String name, String description,
-				String street1, String street2, String street3, String city,
-				String zip, long commerceRegionId, long commerceCountryId,
-				String phoneNumber, int type, String externalReferenceCode,
+				String externalReferenceCode, String className, long classPK,
+				String name, String description, String street1, String street2,
+				String street3, String city, String zip, long commerceRegionId,
+				long commerceCountryId, String phoneNumber, int type,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 
 		try {
 			com.liferay.commerce.model.CommerceAddress returnValue =
 				CommerceAddressServiceUtil.addCommerceAddress(
-					className, classPK, name, description, street1, street2,
-					street3, city, zip, commerceRegionId, commerceCountryId,
-					phoneNumber, type, externalReferenceCode, serviceContext);
+					externalReferenceCode, className, classPK, name,
+					description, street1, street2, street3, city, zip,
+					commerceRegionId, commerceCountryId, phoneNumber, type,
+					serviceContext);
 
 			return com.liferay.commerce.model.CommerceAddressSoap.toSoapModel(
 				returnValue);
@@ -162,13 +163,13 @@ public class CommerceAddressServiceSoap {
 
 	public static com.liferay.commerce.model.CommerceAddressSoap
 			fetchByExternalReferenceCode(
-				long companyId, String externalReferenceCode)
+				String externalReferenceCode, long companyId)
 		throws RemoteException {
 
 		try {
 			com.liferay.commerce.model.CommerceAddress returnValue =
 				CommerceAddressServiceUtil.fetchByExternalReferenceCode(
-					companyId, externalReferenceCode);
+					externalReferenceCode, companyId);
 
 			return com.liferay.commerce.model.CommerceAddressSoap.toSoapModel(
 				returnValue);

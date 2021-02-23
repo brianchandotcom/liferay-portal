@@ -302,6 +302,16 @@ public class CommerceInventoryWarehouseLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouse
+		fetchCommerceInventoryWarehouseByReferenceCode(
+			String externalReferenceCode, long companyId) {
+
+		return _commerceInventoryWarehouseLocalService.
+			fetchCommerceInventoryWarehouseByReferenceCode(
+				externalReferenceCode, companyId);
+	}
+
+	@Override
+	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouse
 			geolocateCommerceInventoryWarehouse(
 				long commerceInventoryWarehouseId, double latitude,
 				double longitude)

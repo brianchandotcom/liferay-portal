@@ -135,14 +135,14 @@ public class CPDefinitionServiceSoap {
 
 	public static com.liferay.commerce.product.model.CPDefinitionSoap
 			fetchCPDefinitionByCProductExternalReferenceCode(
-				long companyId, String externalReferenceCode)
+				String externalReferenceCode, long companyId)
 		throws RemoteException {
 
 		try {
 			com.liferay.commerce.product.model.CPDefinition returnValue =
 				CPDefinitionServiceUtil.
 					fetchCPDefinitionByCProductExternalReferenceCode(
-						companyId, externalReferenceCode);
+						externalReferenceCode, companyId);
 
 			return com.liferay.commerce.product.model.CPDefinitionSoap.
 				toSoapModel(returnValue);
@@ -405,13 +405,13 @@ public class CPDefinitionServiceSoap {
 
 	public static com.liferay.commerce.product.model.CPDefinitionSoap
 			updateExternalReferenceCode(
-				long cpDefinitionId, String externalReferenceCode)
+				String externalReferenceCode, long cpDefinitionId)
 		throws RemoteException {
 
 		try {
 			com.liferay.commerce.product.model.CPDefinition returnValue =
 				CPDefinitionServiceUtil.updateExternalReferenceCode(
-					cpDefinitionId, externalReferenceCode);
+					externalReferenceCode, cpDefinitionId);
 
 			return com.liferay.commerce.product.model.CPDefinitionSoap.
 				toSoapModel(returnValue);

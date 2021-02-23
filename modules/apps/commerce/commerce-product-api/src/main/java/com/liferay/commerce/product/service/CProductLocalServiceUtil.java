@@ -55,12 +55,12 @@ public class CProductLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.product.model.CProduct addCProduct(
-			long groupId, long userId, String externalReferenceCode,
+			String externalReferenceCode, long groupId, long userId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addCProduct(
-			groupId, userId, externalReferenceCode, serviceContext);
+			externalReferenceCode, groupId, userId, serviceContext);
 	}
 
 	/**
@@ -417,11 +417,11 @@ public class CProductLocalServiceUtil {
 
 	public static com.liferay.commerce.product.model.CProduct
 			updateCProductExternalReferenceCode(
-				long cProductId, String externalReferenceCode)
+				String externalReferenceCode, long cProductId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateCProductExternalReferenceCode(
-			cProductId, externalReferenceCode);
+			externalReferenceCode, cProductId);
 	}
 
 	public static com.liferay.commerce.product.model.CProduct

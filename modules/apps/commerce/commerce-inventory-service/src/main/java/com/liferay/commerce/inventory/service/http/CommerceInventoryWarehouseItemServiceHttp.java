@@ -312,8 +312,8 @@ public class CommerceInventoryWarehouseItemServiceHttp {
 	public static
 		com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
 				fetchCommerceInventoryWarehouseItemByReferenceCode(
-					HttpPrincipal httpPrincipal, long companyId,
-					String externalReferenceCode)
+					HttpPrincipal httpPrincipal, String externalReferenceCode,
+					long companyId)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -323,7 +323,7 @@ public class CommerceInventoryWarehouseItemServiceHttp {
 				_fetchCommerceInventoryWarehouseItemByReferenceCodeParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, externalReferenceCode);
+				methodKey, externalReferenceCode, companyId);
 
 			Object returnObj = null;
 
@@ -1234,7 +1234,7 @@ public class CommerceInventoryWarehouseItemServiceHttp {
 		};
 	private static final Class<?>[]
 		_fetchCommerceInventoryWarehouseItemByReferenceCodeParameterTypes6 =
-			new Class[] {long.class, String.class};
+			new Class[] {String.class, long.class};
 	private static final Class<?>[]
 		_getCommerceInventoryWarehouseItemParameterTypes7 = new Class[] {
 			long.class

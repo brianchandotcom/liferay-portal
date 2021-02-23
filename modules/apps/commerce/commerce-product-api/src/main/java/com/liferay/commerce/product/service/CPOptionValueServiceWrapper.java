@@ -53,11 +53,11 @@ public class CPOptionValueServiceWrapper
 	@Override
 	public com.liferay.commerce.product.model.CPOptionValue
 			fetchByExternalReferenceCode(
-				long companyId, String externalReferenceCode)
+				String externalReferenceCode, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpOptionValueService.fetchByExternalReferenceCode(
-			companyId, externalReferenceCode);
+			externalReferenceCode, companyId);
 	}
 
 	@Override
@@ -115,13 +115,14 @@ public class CPOptionValueServiceWrapper
 
 	@Override
 	public com.liferay.commerce.product.model.CPOptionValue upsertCPOptionValue(
-			long cpOptionId, java.util.Map<java.util.Locale, String> nameMap,
-			double priority, String key, String externalReferenceCode,
+			String externalReferenceCode, long cpOptionId,
+			java.util.Map<java.util.Locale, String> nameMap, double priority,
+			String key,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpOptionValueService.upsertCPOptionValue(
-			cpOptionId, nameMap, priority, key, externalReferenceCode,
+			externalReferenceCode, cpOptionId, nameMap, priority, key,
 			serviceContext);
 	}
 

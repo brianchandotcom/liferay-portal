@@ -22,25 +22,28 @@ import DragLayer from '../../drag-and-drop/DragLayer.es';
 import MultiPanelSidebar from './MultiPanelSidebar.es';
 
 const MultiPanelSidebarFormsProxy = React.forwardRef(
-	({
-		activePage,
-		dataProviderInstanceParameterSettingsURL,
-		dataProviderInstancesURL,
-		defaultLanguageId,
-		editingLanguageId,
-		fieldTypes,
-		focusedField,
-		functionsMetadata,
-		functionsURL,
-		instance,
-		onChange,
-		pages,
-		panels,
-		rules,
-		sidebarPanels,
-		sidebarVariant,
-		spritemap,
-	}) => {
+	(
+		{
+			activePage,
+			dataProviderInstanceParameterSettingsURL,
+			dataProviderInstancesURL,
+			defaultLanguageId,
+			editingLanguageId,
+			fieldTypes,
+			focusedField,
+			functionsMetadata,
+			functionsURL,
+			instance,
+			onChange,
+			pages,
+			panels,
+			rules,
+			sidebarPanels,
+			sidebarVariant,
+			spritemap,
+		},
+		forwardRef
+	) => {
 		const [{currentPanelId, open}, setStatus] = useState({
 			currentPanelId: 'fields',
 			open: true,
@@ -89,6 +92,7 @@ const MultiPanelSidebarFormsProxy = React.forwardRef(
 							}}
 							open={open}
 							panels={panels}
+							ref={forwardRef}
 							sidebarPanels={sidebarPanels}
 							variant={sidebarVariant}
 						/>

@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.frontend.taglib.servlet.taglib;
 
-import com.liferay.commerce.frontend.model.CPContentListEntryModel;
 import com.liferay.commerce.frontend.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPSku;
@@ -60,10 +59,6 @@ public class ProductCardTag extends IncludeTag {
 		return _cpCatalogEntry;
 	}
 
-	public CPContentListEntryModel getCpContentListEntryModel() {
-		return _cpContentListEntryModel;
-	}
-
 	public String getElementClasses() {
 		return _elementClasses;
 	}
@@ -75,9 +70,6 @@ public class ProductCardTag extends IncludeTag {
 		setNamespacedAttribute(
 			httpServletRequest, "cpCatalogEntry", _cpCatalogEntry);
 		setNamespacedAttribute(
-			httpServletRequest, "cpContentListEntryModel",
-			_cpContentListEntryModel);
-		setNamespacedAttribute(
 			httpServletRequest, "elementClasses", _elementClasses);
 		setNamespacedAttribute(
 			httpServletRequest, "productDetailURL", _productDetailURL);
@@ -86,10 +78,6 @@ public class ProductCardTag extends IncludeTag {
 
 	public void setCpCatalogEntry(CPCatalogEntry cpCatalogEntry) {
 		_cpCatalogEntry = cpCatalogEntry;
-	}
-
-	public void setCpContentListEntryModel(CPContentListEntryModel model) {
-		_cpContentListEntryModel = model;
 	}
 
 	public void setElementClasses(String elementClasses) {
@@ -110,7 +98,6 @@ public class ProductCardTag extends IncludeTag {
 
 		_cpCatalogEntry = null;
 		_cpContentHelper = null;
-		_cpContentListEntryModel = null;
 		_elementClasses = null;
 		_productDetailURL = null;
 		_sku = null;
@@ -130,7 +117,6 @@ public class ProductCardTag extends IncludeTag {
 
 	private CPCatalogEntry _cpCatalogEntry;
 	private CPContentHelper _cpContentHelper;
-	private CPContentListEntryModel _cpContentListEntryModel;
 	private String _elementClasses;
 	private String _productDetailURL;
 	private String _sku;

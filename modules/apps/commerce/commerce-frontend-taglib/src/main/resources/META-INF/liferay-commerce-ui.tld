@@ -539,11 +539,6 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>cpContentListEntryModel</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<name>elementClasses</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

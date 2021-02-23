@@ -892,7 +892,7 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 		_commerceOrderModelResourcePermission.check(
 			getPermissionChecker(), commerceOrderId, ActionKeys.UPDATE);
 
-		return commerceOrderLocalService.updateShippingMethod(
+		return commerceOrderLocalService.updateCommerceShippingMethod(
 			commerceOrderId, commerceShippingMethodId,
 			commerceShippingOptionName, commerceContext, locale);
 	}

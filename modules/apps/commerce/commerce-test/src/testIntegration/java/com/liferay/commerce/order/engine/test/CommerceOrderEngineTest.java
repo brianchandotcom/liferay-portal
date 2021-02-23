@@ -660,9 +660,10 @@ public class CommerceOrderEngineTest {
 				_commerceOrder.getOrderStatus(),
 				OpenCommerceOrderStatusImpl.KEY);
 
-			_commerceOrder = _commerceOrderLocalService.updateShippingMethod(
-				_commerceOrder.getCommerceOrderId(), 0, null, BigDecimal.ZERO,
-				_commerceContext);
+			_commerceOrder = _commerceOrderLocalService.
+				updateCommerceShippingMethod(
+					_commerceOrder.getCommerceOrderId(), 0, null, BigDecimal.ZERO,
+					_commerceContext);
 
 			_commerceOrderEngine.checkoutCommerceOrder(
 				_commerceOrder, _user.getUserId());

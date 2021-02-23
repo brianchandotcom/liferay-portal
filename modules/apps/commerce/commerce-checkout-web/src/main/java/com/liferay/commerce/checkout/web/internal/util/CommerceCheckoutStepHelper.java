@@ -222,7 +222,7 @@ public class CommerceCheckoutStepHelper {
 			return;
 		}
 
-		commerceOrder = _commerceOrderService.updateShippingMethod(
+		commerceOrder = _commerceOrderService.updateCommerceShippingMethod(
 			commerceOrder.getCommerceOrderId(), commerceShippingMethodId,
 			commerceShippingOption.getName(), commerceContext,
 			_portal.getLocale(httpServletRequest));

@@ -265,16 +265,16 @@ public class ShippingMethodCommerceCheckoutStep
 
 		long commerceShippingMethodId = GetterUtil.getLong(
 			commerceShippingOptionKey.substring(0, pos));
-		String shippingOptionName = commerceShippingOptionKey.substring(
+		String commerceShippingOptionName = commerceShippingOptionKey.substring(
 			pos + 1);
 
 		BigDecimal shippingAmount = getShippingAmount(
 			commerceContext, commerceOrder, commerceShippingMethodId,
-			shippingOptionName, themeDisplay.getLocale());
+			commerceShippingOptionName, themeDisplay.getLocale());
 
-		_commerceOrderLocalService.updateShippingMethod(
+		_commerceOrderLocalService.updateCommerceShippingMethod(
 			commerceOrder.getCommerceOrderId(), commerceShippingMethodId,
-			shippingOptionName, shippingAmount, commerceContext);
+			commerceShippingOptionName, shippingAmount, commerceContext);
 	}
 
 	@Reference

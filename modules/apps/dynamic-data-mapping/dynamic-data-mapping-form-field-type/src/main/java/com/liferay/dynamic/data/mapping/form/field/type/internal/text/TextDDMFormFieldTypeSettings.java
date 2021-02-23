@@ -93,8 +93,8 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 							value = {
 								"name", "fieldReference", "predefinedValue",
 								"visibilityExpression", "fieldNamespace",
-								"indexType", "localizable", "nativeField",
-								"readOnly", "dataType", "type", "showLabel",
+								"indexType", "nativeField", "readOnly",
+								"dataType", "type", "showLabel", "localizable",
 								"repeatable", "validation", "tooltip"
 							}
 						)

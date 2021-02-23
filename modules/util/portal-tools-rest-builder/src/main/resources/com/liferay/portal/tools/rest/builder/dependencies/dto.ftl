@@ -97,7 +97,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 				</#list>
 			}
 		<#if schema.description??>
-			, description = "${schema.description}"
+			, description = "${schema.description?j_string}"
 		</#if>
 	)
 </#if>
@@ -136,7 +136,7 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 				<#if propertySchema.deprecated>
 					,
 				</#if>
-				description = "${propertySchema.description}"
+				description = "${propertySchema.description?j_string}"
 			</#if>
 
 			<#if propertySchema.example??>
@@ -195,7 +195,7 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 		</#if>
 		@GraphQLField(
 			<#if propertySchema.description??>
-				description = "${propertySchema.description}"
+				description = "${propertySchema.description?j_string}"
 			</#if>
 		)
 		@JsonProperty(

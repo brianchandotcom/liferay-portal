@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" srcLang="en-US" trgLang="es-ES" version="2.0">
+	<file id="com.liferay.journal.model.JournalArticle:[$JOURNAL_ARTICLE_ID$]">
+		<unit id="NewText">
+			<segment>
+				<source></source>
+				<target><![CDATA[Este campo es nuevo]]></target>
+			</segment>
+		</unit>
+	</file>
+</xliff>

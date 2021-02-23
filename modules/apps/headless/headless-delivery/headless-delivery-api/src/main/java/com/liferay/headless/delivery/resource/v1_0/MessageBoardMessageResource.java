@@ -123,6 +123,19 @@ public interface MessageBoardMessageResource {
 			Long messageBoardThreadId, String callbackURL, Object object)
 		throws Exception;
 
+	public void deleteMessageBoardThreadMessageBoardMessage(
+			Long messageBoardThreadId, String externalReferenceCode)
+		throws Exception;
+
+	public MessageBoardMessage getMessageBoardThreadMessageBoardMessage(
+			Long messageBoardThreadId, String externalReferenceCode)
+		throws Exception;
+
+	public MessageBoardMessage putMessageBoardThreadMessageBoardMessage(
+			Long messageBoardThreadId, String externalReferenceCode,
+			MessageBoardMessage messageBoardMessage)
+		throws Exception;
+
 	public Page<MessageBoardMessage> getSiteMessageBoardMessagesPage(
 			Long siteId, Boolean flatten, String search,
 			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,

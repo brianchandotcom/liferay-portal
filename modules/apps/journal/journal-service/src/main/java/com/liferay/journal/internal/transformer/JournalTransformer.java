@@ -48,7 +48,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
@@ -94,43 +93,6 @@ public class JournalTransformer {
 	}
 
 	public String transform(
-			ThemeDisplay themeDisplay, Map<String, Object> contextObjects,
-			Map<String, String> tokens, String viewMode, String languageId,
-			Document document, PortletRequestModel portletRequestModel,
-			String script, String langType, boolean propagateException)
-		throws Exception {
-
-		return doTransform(
-			themeDisplay, contextObjects, tokens, viewMode, languageId,
-			document, portletRequestModel, script, langType,
-			propagateException);
-	}
-
-	public String transform(
-			ThemeDisplay themeDisplay, Map<String, String> tokens,
-			String viewMode, String languageId, Document document,
-			PortletRequestModel portletRequestModel, String script,
-			String langType)
-		throws Exception {
-
-		return doTransform(
-			themeDisplay, null, tokens, viewMode, languageId, document,
-			portletRequestModel, script, langType, false);
-	}
-
-	public String transform(
-			ThemeDisplay themeDisplay, Map<String, String> tokens,
-			String viewMode, String languageId, Document document,
-			PortletRequestModel portletRequestModel, String script,
-			String langType, boolean propagateException)
-		throws Exception {
-
-		return doTransform(
-			themeDisplay, null, tokens, viewMode, languageId, document,
-			portletRequestModel, script, langType, propagateException);
-	}
-
-	protected String doTransform(
 			ThemeDisplay themeDisplay, Map<String, Object> contextObjects,
 			Map<String, String> tokens, String viewMode, String languageId,
 			Document document, PortletRequestModel portletRequestModel,
@@ -512,19 +474,6 @@ public class JournalTransformer {
 		sb.append(templateId);
 
 		return sb.toString();
-	}
-
-	protected List<TemplateNode> getTemplateNodes(
-			ThemeDisplay themeDisplay, Element element, long ddmStructureId)
-		throws Exception {
-
-		Locale locale = LocaleThreadLocal.getSiteDefaultLocale();
-
-		if ((themeDisplay != null) && (themeDisplay.getLocale() != null)) {
-			locale = themeDisplay.getLocale();
-		}
-
-		return getTemplateNodes(themeDisplay, element, ddmStructureId, locale);
 	}
 
 	protected List<TemplateNode> getTemplateNodes(

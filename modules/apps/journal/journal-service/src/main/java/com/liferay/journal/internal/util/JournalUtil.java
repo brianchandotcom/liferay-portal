@@ -15,14 +15,10 @@
 package com.liferay.journal.internal.util;
 
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.constants.JournalStructureConstants;
 import com.liferay.journal.internal.transformer.JournalTransformer;
-import com.liferay.journal.internal.transformer.JournalTransformerListenerRegistryUtil;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.petra.string.CharPool;
@@ -49,11 +45,9 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
-import com.liferay.portal.kernel.templateparser.TransformerListener;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -62,16 +56,11 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.Node;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.kernel.xml.XPath;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -398,18 +387,6 @@ public class JournalUtil {
 			ThemeDisplay themeDisplay, Map<String, String> tokens,
 			String viewMode, String languageId, Document document,
 			PortletRequestModel portletRequestModel, String script,
-			String langType)
-		throws Exception {
-
-		return transform(
-			themeDisplay, tokens, viewMode, languageId, document,
-			portletRequestModel, script, langType, false, new HashMap<>());
-	}
-
-	public static String transform(
-			ThemeDisplay themeDisplay, Map<String, String> tokens,
-			String viewMode, String languageId, Document document,
-			PortletRequestModel portletRequestModel, String script,
 			String langType, boolean propagateException,
 			Map<String, Object> contextObjects)
 		throws Exception {
@@ -424,20 +401,6 @@ public class JournalUtil {
 			themeDisplay, contextObjects, tokens, viewMode, languageId,
 			document, portletRequestModel, script, langType,
 			propagateException);
-	}
-
-	private static void _addElementOptions(
-		Element curContentElement, Element newContentElement) {
-
-		List<Element> newElementOptions = newContentElement.elements("option");
-
-		for (Element newElementOption : newElementOptions) {
-			Element curElementOption = SAXReaderUtil.createElement("option");
-
-			curElementOption.addCDATA(newElementOption.getText());
-
-			curContentElement.add(curElementOption);
-		}
 	}
 
 	private static void _addReservedEl(
@@ -500,231 +463,6 @@ public class JournalUtil {
 		}
 
 		return null;
-	}
-
-	private static Element _getElementByInstanceId(
-		Document document, String instanceId) {
-
-		if (Validator.isNull(instanceId)) {
-			return null;
-		}
-
-		XPath xPathSelector = SAXReaderUtil.createXPath(
-			"//dynamic-element[@instance-id=" +
-				HtmlUtil.escapeXPathAttribute(instanceId) + "]");
-
-		List<Node> nodes = xPathSelector.selectNodes(document);
-
-		if (nodes.size() == 1) {
-			return (Element)nodes.get(0);
-		}
-
-		return null;
-	}
-
-	private static String _getTemplateScript(
-		DDMTemplate ddmTemplate, Map<String, String> tokens, String languageId,
-		boolean transform) {
-
-		String script = ddmTemplate.getScript();
-
-		if (!transform) {
-			return script;
-		}
-
-		for (TransformerListener transformerListener :
-				JournalTransformerListenerRegistryUtil.
-					getTransformerListeners()) {
-
-			script = transformerListener.onScript(
-				script, (Document)null, languageId, tokens);
-		}
-
-		return script;
-	}
-
-	private static String _getTemplateScript(
-			long groupId, String ddmTemplateKey, Map<String, String> tokens,
-			String languageId, boolean transform)
-		throws PortalException {
-
-		DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
-			groupId, PortalUtil.getClassNameId(DDMStructure.class),
-			ddmTemplateKey, true);
-
-		return _getTemplateScript(ddmTemplate, tokens, languageId, transform);
-	}
-
-	private static void _mergeArticleContentUpdate(
-			Document curDocument, Element newParentElement, Element newElement,
-			int pos, String defaultLocale)
-		throws Exception {
-
-		_mergeArticleContentUpdate(curDocument, newElement, defaultLocale);
-
-		String instanceId = newElement.attributeValue("instance-id");
-
-		Element curElement = _getElementByInstanceId(curDocument, instanceId);
-
-		if (curElement != null) {
-			_mergeArticleContentUpdate(curElement, newElement, defaultLocale);
-		}
-		else {
-			String parentInstanceId = newParentElement.attributeValue(
-				"instance-id");
-
-			if (Validator.isNull(parentInstanceId)) {
-				Element curRoot = curDocument.getRootElement();
-
-				List<Element> curRootElements = curRoot.elements();
-
-				curRootElements.add(pos, newElement.createCopy());
-			}
-			else {
-				Element curParentElement = _getElementByInstanceId(
-					curDocument, parentInstanceId);
-
-				if (curParentElement != null) {
-					List<Element> curParentElements =
-						curParentElement.elements();
-
-					curParentElements.add(pos, newElement.createCopy());
-				}
-			}
-		}
-	}
-
-	private static void _mergeArticleContentUpdate(
-			Document curDocument, Element newParentElement,
-			String defaultLocale)
-		throws Exception {
-
-		List<Element> newElements = newParentElement.elements(
-			"dynamic-element");
-
-		for (int i = 0; i < newElements.size(); i++) {
-			Element newElement = newElements.get(i);
-
-			_mergeArticleContentUpdate(
-				curDocument, newParentElement, newElement, i, defaultLocale);
-		}
-	}
-
-	private static void _mergeArticleContentUpdate(
-		Element curElement, Element newElement, String defaultLocale) {
-
-		Attribute curTypeAttribute = curElement.attribute("type");
-		Attribute newTypeAttribute = newElement.attribute("type");
-
-		curTypeAttribute.setValue(newTypeAttribute.getValue());
-
-		Attribute newIndexTypeAttribute = newElement.attribute("index-type");
-
-		if (newIndexTypeAttribute != null) {
-			Attribute curIndexTypeAttribute = curElement.attribute(
-				"index-type");
-
-			if (curIndexTypeAttribute == null) {
-				curElement.addAttribute(
-					"index-type", newIndexTypeAttribute.getValue());
-			}
-			else {
-				curIndexTypeAttribute.setValue(
-					newIndexTypeAttribute.getValue());
-			}
-		}
-
-		List<Element> elements = newElement.elements("dynamic-content");
-
-		if ((elements == null) || elements.isEmpty()) {
-			return;
-		}
-
-		Element newContentElement = elements.get(0);
-
-		String newLanguageId = newContentElement.attributeValue("language-id");
-		String newValue = newContentElement.getText();
-
-		String indexType = newElement.attributeValue("index-type");
-
-		if (Validator.isNotNull(indexType)) {
-			curElement.addAttribute("index-type", indexType);
-		}
-
-		List<Element> curContentElements = curElement.elements(
-			"dynamic-content");
-
-		if (Validator.isNull(newLanguageId)) {
-			for (Element curContentElement : curContentElements) {
-				curContentElement.detach();
-			}
-
-			Element curContentElement = SAXReaderUtil.createElement(
-				"dynamic-content");
-
-			if (newContentElement.element("option") != null) {
-				_addElementOptions(curContentElement, newContentElement);
-			}
-			else {
-				curContentElement.addCDATA(newValue);
-			}
-
-			curElement.add(curContentElement);
-		}
-		else {
-			boolean alreadyExists = false;
-
-			for (Element curContentElement : curContentElements) {
-				String curLanguageId = curContentElement.attributeValue(
-					"language-id");
-
-				if (newLanguageId.equals(curLanguageId)) {
-					alreadyExists = true;
-
-					curContentElement.clearContent();
-
-					if (newContentElement.element("option") != null) {
-						_addElementOptions(
-							curContentElement, newContentElement);
-					}
-					else {
-						curContentElement.addCDATA(newValue);
-					}
-
-					break;
-				}
-			}
-
-			if (!alreadyExists) {
-				Element curContentElement = curContentElements.get(0);
-
-				String curLanguageId = curContentElement.attributeValue(
-					"language-id");
-
-				if (Validator.isNull(curLanguageId)) {
-					if (newLanguageId.equals(defaultLocale)) {
-						curContentElement.clearContent();
-
-						if (newContentElement.element("option") != null) {
-							_addElementOptions(
-								curContentElement, newContentElement);
-						}
-						else {
-							curContentElement.addCDATA(newValue);
-						}
-					}
-					else {
-						curElement.add(newContentElement.createCopy());
-					}
-
-					curContentElement.addAttribute(
-						"language-id", defaultLocale);
-				}
-				else {
-					curElement.add(newContentElement.createCopy());
-				}
-			}
-		}
 	}
 
 	private static void _populateCustomTokens(

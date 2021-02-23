@@ -32,7 +32,6 @@ import com.liferay.journal.web.internal.portlet.JournalPortlet;
 import com.liferay.journal.web.internal.security.permission.resource.JournalPermission;
 import com.liferay.journal.web.internal.util.JournalHelperUtil;
 import com.liferay.journal.web.internal.util.JournalUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.diff.CompareVersionsException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -46,7 +45,6 @@ import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -55,11 +53,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.Node;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.kernel.xml.XPath;
 
 import java.io.File;
 
@@ -403,12 +396,6 @@ public class ActionUtil {
 		return feed;
 	}
 
-	public static JournalFeed getFeed(PortletRequest portletRequest)
-		throws Exception {
-
-		return getFeed(PortalUtil.getHttpServletRequest(portletRequest));
-	}
-
 	public static JournalFolder getFolder(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
@@ -453,23 +440,6 @@ public class ActionUtil {
 		}
 
 		return folders;
-	}
-
-	public static JournalArticle getPreviewArticle(
-			PortletRequest portletRequest)
-		throws Exception {
-
-		long groupId = ParamUtil.getLong(portletRequest, "groupId");
-		String articleId = ParamUtil.getString(portletRequest, "articleId");
-		double version = ParamUtil.getDouble(
-			portletRequest, "version", JournalArticleConstants.VERSION_DEFAULT);
-
-		JournalArticle article = JournalArticleServiceUtil.getArticle(
-			groupId, articleId, version);
-
-		JournalUtil.addRecentArticle(portletRequest, article);
-
-		return article;
 	}
 
 	public static String getScript(UploadPortletRequest uploadPortletRequest)
@@ -517,29 +487,6 @@ public class ActionUtil {
 		}
 
 		return true;
-	}
-
-	protected static String getElementInstanceId(
-			String content, String fieldName, int index)
-		throws Exception {
-
-		Document document = SAXReaderUtil.read(content);
-
-		String xPathExpression =
-			"//dynamic-element[@name = " +
-				HtmlUtil.escapeXPathAttribute(fieldName) + "]";
-
-		XPath xPath = SAXReaderUtil.createXPath(xPathExpression);
-
-		List<Node> nodes = xPath.selectNodes(document);
-
-		if (index > nodes.size()) {
-			return StringPool.BLANK;
-		}
-
-		Element dynamicElementElement = (Element)nodes.get(index);
-
-		return dynamicElementElement.attributeValue("instance-id");
 	}
 
 	protected static String getLanguageId(

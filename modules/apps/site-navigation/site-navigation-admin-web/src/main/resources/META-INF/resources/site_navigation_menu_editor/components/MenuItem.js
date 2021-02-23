@@ -118,7 +118,6 @@ export const MenuItem = ({item}) => {
 					dragging: isDragging,
 					'site_navigation_menu_editor_MenuItem--selected': selected,
 				})}
-				horizontal
 				selectable
 				style={itemStyle}
 			>

@@ -8,6 +8,10 @@
 		opacity: 0.4;
 	}
 
+	.card-row {
+		align-items: center;
+	}
+
 	&--selected .card {
 		background: $primary-l3;
 	}

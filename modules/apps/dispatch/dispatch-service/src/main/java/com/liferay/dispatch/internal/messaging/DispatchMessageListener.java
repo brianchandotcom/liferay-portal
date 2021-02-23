@@ -72,37 +72,34 @@ public class DispatchMessageListener extends BaseMessageListener {
 			}
 		}
 
-		_getAndExecuteDispatchTaskExecutor(dispatchTrigger);
+		_execute(dispatchTrigger);
 	}
 
-	private void _getAndExecuteDispatchTaskExecutor(
-			DispatchTrigger dispatchTrigger)
-		throws Exception {
-
+	private void _execute(DispatchTrigger dispatchTrigger) throws Exception {
 		DispatchTaskExecutor dispatchTaskExecutor =
 			_dispatchTaskExecutorRegistry.fetchDispatchTaskExecutor(
 				dispatchTrigger.getDispatchTaskExecutorType());
 
-		if (dispatchTaskExecutor == null) {
-			String message =
-				"Unable to find DispatchTaskExecutor of type " +
-					dispatchTrigger.getDispatchTaskExecutorType();
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(message);
-			}
-
-			Date date = new Date();
-
-			_dispatchLogLocalService.addDispatchLog(
-				dispatchTrigger.getUserId(),
-				dispatchTrigger.getDispatchTriggerId(), date, message, null,
-				date, DispatchTaskStatus.CANCELED);
+		if (dispatchTaskExecutor != null) {
+			dispatchTaskExecutor.execute(
+				dispatchTrigger.getDispatchTriggerId());
 
 			return;
 		}
 
-		dispatchTaskExecutor.execute(dispatchTrigger.getDispatchTriggerId());
+		String message =
+			"Unable to find DispatchTaskExecutor of type " +
+				dispatchTrigger.getDispatchTaskExecutorType();
+
+		if (_log.isWarnEnabled()) {
+			_log.warn(message);
+		}
+
+		Date date = new Date();
+
+		_dispatchLogLocalService.addDispatchLog(
+			dispatchTrigger.getUserId(), dispatchTrigger.getDispatchTriggerId(),
+			date, message, null, date, DispatchTaskStatus.CANCELED);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

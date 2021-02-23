@@ -502,6 +502,27 @@ public class LayoutRevisionLocalServiceImpl
 			copyPortletPreferences(
 				layoutRevision, layoutRevision.getParentLayoutRevisionId());
 
+			String command = serviceContext.getCommand();
+
+			if (command.equals("delete")) {
+				List<PortletPreferences> portletPreferencesList =
+					portletPreferencesLocalService.getPortletPreferencesByPlid(
+						layoutRevision.getLayoutRevisionId());
+
+				for (PortletPreferences portletPreferences :
+						portletPreferencesList) {
+
+					String portletId = portletPreferences.getPortletId();
+
+					if (portletId.equals(
+							serviceContext.getAttribute("p_p_id"))) {
+
+						portletPreferencesLocalService.deletePortletPreferences(
+							portletPreferences.getPortletPreferencesId());
+					}
+				}
+			}
+
 			StagingUtil.setRecentLayoutBranchId(
 				user, layoutRevision.getLayoutSetBranchId(),
 				layoutRevision.getPlid(), layoutRevision.getLayoutBranchId());

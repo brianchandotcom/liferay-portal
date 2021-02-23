@@ -610,11 +610,11 @@ renderResponse.setTitle(headerTitle);
 	var form = document.<portlet:namespace />fm;
 
 	function <portlet:namespace />changeFileEntryType() {
-		var uri = '<%= themeDisplay.getURLCurrent() %>';
+		Liferay.Util.setFormValues(form, {
+			<%= Constants.CMD %>: '<%= Constants.PREVIEW %>',
+		});
 
-		form.<portlet:namespace />cmd.value = '<%= Constants.PREVIEW %>';
-
-		submitForm(form, uri, false, false);
+		form.submit();
 	}
 
 	function <portlet:namespace />cancelCheckOut() {

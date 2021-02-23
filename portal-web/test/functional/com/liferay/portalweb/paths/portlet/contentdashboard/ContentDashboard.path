@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>AUDIT_GRAPH_FIRST_BAR</td>
+	<td>//*[contains(@class, 'recharts-rectangle') and @fill='#4B9FFF']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>AUDIT_GRAPH_TITLE</td>
 	<td>//*[contains(@class, 'autofit-col autofit-col-expand') and contains(text(),'${auditGraphTitle}')]</td>
 	<td></td>
@@ -60,6 +65,11 @@
 <tr>
 	<td>AUTHOR_TABLE_DISPLAY_OPTION</td>
 	<td>//*[contains(@class, 'dropdown-item') and contains(text(),'Table')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BAR_SELECTED_MESSAGE</td>
+	<td>//span[contains(text(),'Press escape')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -100,6 +110,11 @@
 <tr>
 	<td>FILTER_BY_OPTION</td>
 	<td>//*[contains(@class, 'dropdown-item') and contains(text(),'${filterOption}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_CATEGORY_NAME</td>
+	<td>//*[@class='label-section' and contains(text(),'Category:${categoryName}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -4,6 +4,10 @@ definition {
 		Click(locator1 = "ContentDashboard#CLEAR_FILTERS_BUTTON");
 	}
 
+	macro clickOnFirstBar {
+		Click(locator1 = "ContentDashboard#AUDIT_GRAPH_FIRST_BAR");
+	}
+
 	macro editWebContent {
 		Click(locator1 = "ContentDashboard#WEB_CONTENT_MENU_DROPDOWN_BUTTON");
 

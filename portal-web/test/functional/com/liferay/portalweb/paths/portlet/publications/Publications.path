@@ -110,7 +110,7 @@
 </tr>
 <tr>
 	<td>LIST_REVERT_BUTTON</td>
-	<td>//div[contains(.,'${key_publicationsName}')]//following-sibling::div/a[contains(.,'Revert')]</td>
+	<td>//div[contains(.,'${key_publicationsName}')]//following-sibling::div//a[contains(.,'Revert')]</td>
 	<td></td>
 </tr>
 <tr>

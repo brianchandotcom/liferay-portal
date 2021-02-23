@@ -568,6 +568,7 @@ const createReducer = (dataLayoutBuilder) => {
 								editingLanguageId: state.editingLanguageId,
 							},
 						},
+						sidebarOpen: true,
 						sidebarPanelId: 'fields',
 					};
 				}

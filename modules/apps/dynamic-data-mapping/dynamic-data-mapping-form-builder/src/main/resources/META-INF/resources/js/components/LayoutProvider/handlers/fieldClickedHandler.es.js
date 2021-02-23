@@ -12,9 +12,9 @@
  * details.
  */
 
-import {FormSupport, PagesVisitor} from 'dynamic-data-mapping-form-renderer';
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 
-import {getParentFieldSet, localizeField} from '../../../util/fieldSupport.es';
+import {localizeField} from '../../../util/fieldSupport.es';
 
 const handleFieldClicked = (props, state, event) => {
 	const {defaultLanguageId, editingLanguageId} = props;

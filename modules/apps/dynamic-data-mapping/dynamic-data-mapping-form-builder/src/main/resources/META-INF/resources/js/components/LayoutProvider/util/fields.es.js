@@ -19,7 +19,10 @@ import {
 	normalizeFieldName,
 } from 'dynamic-data-mapping-form-renderer';
 
-import {getDefaultFieldName, localizeField} from '../../../util/fieldSupport.es';
+import {
+	getDefaultFieldName,
+	localizeField,
+} from '../../../util/fieldSupport.es';
 import {sub} from '../../../util/strings.es';
 import {
 	getSettingsContextProperty,

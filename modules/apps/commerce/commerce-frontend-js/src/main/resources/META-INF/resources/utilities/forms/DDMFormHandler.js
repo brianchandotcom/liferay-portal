@@ -21,17 +21,23 @@ class DDMFormHandler {
 		this.actionURL = actionURL;
 		this.DDMFormInstance = DDMFormInstance;
 		this.portletId = portletId;
-		this.fields = getDefaultFieldsShape(DDMFormInstance);
+		this.fields = getDefaultFieldsShape(
+			DDMFormInstance.reactComponentRef.current.toJSON()
+		);
 
 		this._attachFormListener();
 		this.checkCPInstance();
 	}
 
 	_attachFormListener() {
-		this.DDMFormInstance.on('fieldEdited', (field) => {
-			this.fields = updateFields(this.fields, field);
-			this.checkCPInstance();
-		});
+		this.DDMFormInstance.unstable_onEvent(
+			({payload: field, type: eventName}) => {
+				if (eventName === 'fieldEdited') {
+					this.fields = updateFields(this.fields, field);
+					this.checkCPInstance();
+				}
+			}
+		);
 	}
 
 	checkCPInstance() {

@@ -13,7 +13,9 @@
  */
 
 export const parseProps = ({
+	allowInvalidAvailableLocalesForProperty,
 	autocompleteUserURL,
+	cancelLabel,
 	containerId,
 	dataProviderInstanceParameterSettingsURL,
 	dataProviderInstancesURL,
@@ -29,16 +31,22 @@ export const parseProps = ({
 	portletNamespace,
 	publishFormInstanceURL,
 	published,
+	redirectURL,
 	restrictedFormURL,
 	rolesURL,
 	sharedFormURL,
+	showCancelButton,
 	showPublishAlert,
+	showSubmitButton,
 	spritemap,
+	submitLabel,
 	view,
 	...otherProps
 }) => ({
 	config: {
+		allowInvalidAvailableLocalesForProperty,
 		autocompleteUserURL,
+		cancelLabel,
 		containerId,
 		dataProviderInstanceParameterSettingsURL,
 		dataProviderInstancesURL,
@@ -53,11 +61,15 @@ export const parseProps = ({
 		portletNamespace: namespace ?? portletNamespace,
 		publishFormInstanceURL,
 		published,
+		redirectURL,
 		restrictedFormURL,
 		rolesURL,
 		sharedFormURL,
+		showCancelButton,
 		showPublishAlert,
+		showSubmitButton,
 		spritemap,
+		submitLabel,
 		view,
 	},
 	state: otherProps,

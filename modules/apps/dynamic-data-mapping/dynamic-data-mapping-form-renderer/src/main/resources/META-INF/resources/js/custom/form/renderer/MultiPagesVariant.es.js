@@ -23,9 +23,8 @@ import {useForm, useFormState} from '../../../core/hooks/useForm.es';
 import {usePage} from '../../../core/hooks/usePage.es';
 import {EVENT_TYPES} from '../eventTypes.es';
 
-/* eslint-disable react/jsx-fragments */
 export const Container = ({children, empty, pageIndex, pages}) => {
-	const {editingLanguageId, successPageSettings} = usePage();
+	const {editingLanguageId, successPageSettings} = useFormState();
 	const dispatch = useForm();
 
 	const pageSettingsItems = [
@@ -76,7 +75,7 @@ export const Container = ({children, empty, pageIndex, pages}) => {
 	};
 
 	return (
-		<React.Fragment>
+		<>
 			{pageIndex === 0 && <div className="horizontal-line" />}
 
 			<div className="page">
@@ -188,7 +187,7 @@ export const Container = ({children, empty, pageIndex, pages}) => {
 					</div>
 				)}
 			</div>
-		</React.Fragment>
+		</>
 	);
 };
 

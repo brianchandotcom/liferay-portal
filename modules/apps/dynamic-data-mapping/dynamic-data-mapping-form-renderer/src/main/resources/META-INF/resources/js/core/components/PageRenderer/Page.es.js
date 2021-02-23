@@ -154,9 +154,7 @@ const Page = ({
 	paginationMode,
 	portletNamespace,
 	readOnly,
-	showSubmitButton,
 	strings,
-	submitLabel,
 }) => {
 	const empty = isEmptyPage(defaultPage);
 	const page = normalizePage(defaultPage, editingLanguageId);
@@ -198,9 +196,7 @@ const Page = ({
 				pageIndex={pageIndex}
 				pages={pages}
 				readOnly={readOnly}
-				showSubmitButton={showSubmitButton}
 				strings={strings}
-				submitLabel={submitLabel}
 			>
 				<Components.Page
 					activePage={activePage}

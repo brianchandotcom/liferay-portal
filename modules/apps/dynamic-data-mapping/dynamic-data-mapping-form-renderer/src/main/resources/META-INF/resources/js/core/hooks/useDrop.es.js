@@ -32,11 +32,8 @@ export const useDrop = ({
 	parentField,
 	rowIndex,
 }) => {
-	const {
-		allowInvalidAvailableLocalesForProperty,
-		editingLanguageId,
-	} = useFormState();
-	const {fieldTypes} = useConfig();
+	const {editingLanguageId} = useFormState();
+	const {allowInvalidAvailableLocalesForProperty, fieldTypes} = useConfig();
 
 	const dispatch = useForm();
 

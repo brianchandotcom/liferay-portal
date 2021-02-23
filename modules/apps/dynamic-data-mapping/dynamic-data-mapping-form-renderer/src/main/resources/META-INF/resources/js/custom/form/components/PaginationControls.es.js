@@ -16,6 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import React from 'react';
 
+import {useConfig} from '../../../core/hooks/useConfig.es';
 import {useEvaluate} from '../../../core/hooks/useEvaluate.es';
 import {useForm} from '../../../core/hooks/useForm.es';
 import {usePage} from '../../../core/hooks/usePage.es';
@@ -26,19 +27,21 @@ import previousPage from '../thunks/previousPage.es';
 export const PaginationControls = ({
 	activePage,
 	readOnly,
-	showSubmitButton,
 	strings = null,
-	submitLabel,
 	total,
 }) => {
 	const {
 		cancelLabel,
-		containerElement,
 		redirectURL,
 		showCancelButton,
-	} = usePage();
+		showSubmitButton,
+		submitLabel,
+	} = useConfig();
+	const {containerElement} = usePage();
+
 	const createPreviousPage = useEvaluate(previousPage);
 	const createNextPage = useEvaluate(nextPage);
+
 	const dispatch = useForm();
 
 	return (

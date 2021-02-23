@@ -25,10 +25,11 @@ import nextPage from '../thunks/nextPage.es';
 import previousPage from '../thunks/previousPage.es';
 
 export const Pagination = ({activePage, pages}) => {
-	const createPreviousPage = useEvaluate(previousPage);
-	const createNextPage = useEvaluate(nextPage);
 	const {containerElement} = usePage();
 	const dispatch = useForm();
+
+	const createPreviousPage = useEvaluate(previousPage);
+	const createNextPage = useEvaluate(nextPage);
 
 	return (
 		<ClayPagination className="ddm-pagination justify-content-center">

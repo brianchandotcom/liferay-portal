@@ -16,53 +16,58 @@ import ClayButton from '@clayui/button';
 import React from 'react';
 
 import * as DefaultVariant from '../../../core/components/PageRenderer/DefaultVariant.es';
+import {useConfig} from '../../../core/hooks/useConfig.es';
 import {Pagination} from '../components/Pagination.es';
 import {PaginationControls} from '../components/PaginationControls.es';
 
-/* eslint-disable react/jsx-fragments */
 export const Container = ({
 	activePage,
 	children,
 	pageIndex,
 	pages,
 	readOnly,
-	showSubmitButton,
 	strings,
-	submitLabel,
-}) => (
-	<div className="ddm-form-page-container paginated">
-		<DefaultVariant.Container activePage={activePage} pageIndex={pageIndex}>
-			{children}
-		</DefaultVariant.Container>
+}) => {
+	const {showSubmitButton, submitLabel} = useConfig();
 
-		{pageIndex === activePage && (
-			<React.Fragment>
-				{pages.length > 0 && (
-					<React.Fragment>
-						<Pagination activePage={activePage} pages={pages} />
-						<PaginationControls
-							activePage={activePage}
-							readOnly={readOnly}
-							showSubmitButton={showSubmitButton}
-							strings={strings}
-							submitLabel={submitLabel}
-							total={pages.length}
-						/>
-					</React.Fragment>
-				)}
+	return (
+		<div className="ddm-form-page-container paginated">
+			<DefaultVariant.Container
+				activePage={activePage}
+				pageIndex={pageIndex}
+			>
+				{children}
+			</DefaultVariant.Container>
 
-				{!pages.length && showSubmitButton && (
-					<ClayButton
-						className="float-right lfr-ddm-form-submit"
-						id="ddm-form-submit"
-						type="submit"
-					>
-						{submitLabel}
-					</ClayButton>
-				)}
-			</React.Fragment>
-		)}
-	</div>
-);
+			{pageIndex === activePage && (
+				<>
+					{pages.length > 0 && (
+						<>
+							<Pagination activePage={activePage} pages={pages} />
+							<PaginationControls
+								activePage={activePage}
+								readOnly={readOnly}
+								showSubmitButton={showSubmitButton}
+								strings={strings}
+								submitLabel={submitLabel}
+								total={pages.length}
+							/>
+						</>
+					)}
+
+					{!pages.length && showSubmitButton && (
+						<ClayButton
+							className="float-right lfr-ddm-form-submit"
+							id="ddm-form-submit"
+							type="submit"
+						>
+							{submitLabel}
+						</ClayButton>
+					)}
+				</>
+			)}
+		</div>
+	);
+};
 
 Container.displayName = 'PaginatedVariant.Container';

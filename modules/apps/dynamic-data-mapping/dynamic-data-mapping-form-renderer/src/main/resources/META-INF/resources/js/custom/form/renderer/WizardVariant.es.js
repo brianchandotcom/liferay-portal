@@ -16,6 +16,7 @@ import ClayButton from '@clayui/button';
 import classnames from 'classnames';
 import React from 'react';
 
+import {useConfig} from '../../../core/hooks/useConfig.es';
 import {MultiStep} from '../components/MultiStep.es';
 import {PaginationControls} from '../components/PaginationControls.es';
 
@@ -26,55 +27,57 @@ export const Container = ({
 	pageIndex,
 	pages,
 	readOnly,
-	showSubmitButton,
 	strings = null,
-	submitLabel,
-}) => (
-	<div className="ddm-form-page-container wizard">
-		{pages.length > 1 && pageIndex === activePage && (
-			<MultiStep
-				activePage={activePage}
-				editable={editable}
-				pages={pages}
-			/>
-		)}
+}) => {
+	const {showSubmitButton, submitLabel} = useConfig();
 
-		<div
-			className={classnames(
-				'ddm-layout-builder ddm-page-container-layout',
-				{
-					hide: activePage !== pageIndex,
-				}
+	return (
+		<div className="ddm-form-page-container wizard">
+			{pages.length > 1 && pageIndex === activePage && (
+				<MultiStep
+					activePage={activePage}
+					editable={editable}
+					pages={pages}
+				/>
 			)}
-		>
-			<div className="form-builder-layout">{children}</div>
+
+			<div
+				className={classnames(
+					'ddm-layout-builder ddm-page-container-layout',
+					{
+						hide: activePage !== pageIndex,
+					}
+				)}
+			>
+				<div className="form-builder-layout">{children}</div>
+			</div>
+
+			{pageIndex === activePage && (
+				<>
+					{pages.length > 0 && (
+						<PaginationControls
+							activePage={activePage}
+							readOnly={readOnly}
+							showSubmitButton={showSubmitButton}
+							strings={strings}
+							submitLabel={submitLabel}
+							total={pages.length}
+						/>
+					)}
+
+					{!pages.length && showSubmitButton && (
+						<ClayButton
+							className="float-right lfr-ddm-form-submit"
+							id="ddm-form-submit"
+							type="submit"
+						>
+							{submitLabel}
+						</ClayButton>
+					)}
+				</>
+			)}
 		</div>
-
-		{pageIndex === activePage && (
-			<>
-				{pages.length > 0 && (
-					<PaginationControls
-						activePage={activePage}
-						readOnly={readOnly}
-						showSubmitButton={showSubmitButton}
-						strings={strings}
-						submitLabel={submitLabel}
-						total={pages.length}
-					/>
-				)}
-
-				{!pages.length && showSubmitButton && (
-					<ClayButton
-						className="float-right lfr-ddm-form-submit"
-						id="ddm-form-submit"
-						type="submit"
-					>
-						{submitLabel}
-					</ClayButton>
-				)}
-			</>
-		)}
-	</div>
-);
+	);
+};
 
 Container.displayName = 'WizardVariant.Container';

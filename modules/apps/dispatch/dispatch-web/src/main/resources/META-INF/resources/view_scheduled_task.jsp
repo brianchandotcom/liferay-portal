@@ -36,7 +36,7 @@ portletURL.setParameter("tabs1", "scheduled-task");
 			searchContainer="<%= scheduledJobDispatchTriggerDisplayContext.getSearchContainer() %>"
 		>
 			<liferay-ui:search-container-row
-				className="com.liferay.dispatch.portal.kernel.scheduler.ScheduledJobDispatchTrigger"
+				className="com.liferay.dispatch.scheduler.ScheduledJobDispatchTrigger"
 				keyProperty="dispatchTriggerId"
 				modelVar="scheduledJobDispatchTrigger"
 			>

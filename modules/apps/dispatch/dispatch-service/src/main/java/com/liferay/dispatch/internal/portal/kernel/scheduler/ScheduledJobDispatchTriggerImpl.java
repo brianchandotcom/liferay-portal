@@ -15,7 +15,7 @@
 package com.liferay.dispatch.internal.portal.kernel.scheduler;
 
 import com.liferay.dispatch.model.impl.DispatchTriggerImpl;
-import com.liferay.dispatch.portal.kernel.scheduler.ScheduledJobDispatchTrigger;
+import com.liferay.dispatch.scheduler.ScheduledJobDispatchTrigger;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.scheduler.StorageType;
 

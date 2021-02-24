@@ -14,8 +14,8 @@
 
 package com.liferay.dispatch.web.internal.display.context;
 
-import com.liferay.dispatch.portal.kernel.scheduler.DispatchSchedulerEngineHelper;
-import com.liferay.dispatch.portal.kernel.scheduler.ScheduledJobDispatchTrigger;
+import com.liferay.dispatch.scheduler.DispatchSchedulerEngineHelper;
+import com.liferay.dispatch.scheduler.ScheduledJobDispatchTrigger;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;

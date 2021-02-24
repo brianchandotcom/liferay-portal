@@ -61,7 +61,7 @@
 </tr>
 <tr>
 	<td>BASE_LANGUAGE_FIELD</td>
-	<td>//div[contains(@class,'form-group')]//input[contains(@name,'${key_fieldName}') and contains(@value,'${key_fieldValue}') and @readonly='true']</td>
+	<td>//div[contains(@class,'form-group')]//input[contains(@name,'${key_fieldName}') and contains(@value,'${key_fieldValue}') and @readonly='readonly']</td>
 	<td></td>
 </tr>
 <tr>

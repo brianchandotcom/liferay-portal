@@ -62,7 +62,7 @@
 </tr>
 <tr>
 	<td>TRANSLATIONS_PREVIEW_TITLE</td>
-	<td>//div[contains(@class,'form-group')]//input[contains(@id,'MyWorkflowTaskPortlet_Title') and contains(@value,'${key_titleValue}') and @readonly='true'] </td>
+	<td>//div[contains(@class,'form-group')]//input[contains(@id,'MyWorkflowTaskPortlet_Title') and contains(@value,'${key_titleValue}') and @readonly='readonly'] </td>
 	<td></td>
 </tr>
 </tbody>

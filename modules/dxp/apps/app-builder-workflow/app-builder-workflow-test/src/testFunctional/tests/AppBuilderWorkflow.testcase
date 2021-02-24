@@ -306,6 +306,72 @@ definition {
 		AppBuilderWorkflow.assertButtonDisabled(buttonName = "Save");
 	}
 
+	@description = "LRQA-63963 Automate LPS-121226: As an App User, I want to see all the past activities of a Workflow App instance"
+	@priority = "4"
+	test CheckActivityWorkflowApp {
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Text",
+			formViewName = "My Form View",
+			tableViewName = "My Table View");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Apps");
+
+		AppBuilderAppAdmin.goToWorkflowPoweredTab();
+
+		AppBuilderAppAdmin.clickOnCreateNewAppButton();
+
+		AppBuilderWorkflow.selectStartStepDataAndViews(
+			formViewName = "My Form View",
+			objectName = "my custom object",
+			tableViewName = "My Table View");
+
+		AppBuilderWorkflow.addNewStep();
+
+		AppBuilderWorkflow.selectStepAssignee(
+			assignee = "Administrator",
+			step = "1");
+
+		AppBuilderWorkflow.addWorkflowAppName(workflowAppName = "My Workflow App");
+		Button.click(button = "Deploy");
+		App.toggleDeploy(deployOption = "Product Menu");
+		Button.click(button = "Done");
+		AppBuilderWorkflow.waitForButtonNotPresent(buttonName = "Done");
+
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "My Workflow App");
+		AppBuilderAdmin.addEntry();
+		FormViewBuilder.editText(
+			fieldName = "Text",
+			fieldValue = "Content 1");
+
+		AppBuilderWorkflow.submit();
+
+		AppBuilderAdmin.openItem(itemName = "Content 1");
+
+		AppBuilderWorkflow.collapseOrExpandActivity();
+
+		AppBuilderWorkflow.validateCollapsedActivity(description = "Task initially assigned to the Administrator role.");
+
+		AppBuilderWorkflow.collapseOrExpandActivity();
+
+		AppBuilderWorkflow.validateActivity(description = "Task initially assigned to the Administrator role.");
+
+		AppBuilderWorkflow.validateActivityDate();
+
+		AppBuilderWorkflow.assignEntryAndCommentThroughDetailsView(
+			assignee = "Test Test",
+			comment = "Test Comment");
+
+		AppBuilderWorkflow.validateActivity(description = "Test Comment");
+	}
+
 	@description = "Create a Basic Workflow App"
 	@priority = "5"
 	test CreateBasicWorkflowApp {

@@ -179,12 +179,6 @@ class DataLayoutBuilder extends React.Component {
 		});
 	}
 
-	getFieldTypes() {
-		const {fieldTypes} = this.props;
-
-		return fieldTypes;
-	}
-
 	getFormData() {
 		const {availableLanguageIds, defaultLanguageId} = this.props;
 		const {availableLanguageIds: availableLanguageIdsState} = this.state;

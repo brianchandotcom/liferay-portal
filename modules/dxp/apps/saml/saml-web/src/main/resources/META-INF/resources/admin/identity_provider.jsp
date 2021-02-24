@@ -16,6 +16,10 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+SamlProviderConfiguration samlProviderConfiguration = samlProviderConfigurationHelper.getSamlProviderConfiguration();
+%>
+
 <portlet:actionURL name="/admin/update_identity_provider" var="updateIdentityProviderURL">
 	<portlet:param name="tabs1" value="identity-provider" />
 </portlet:actionURL>

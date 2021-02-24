@@ -17,6 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <%
+GeneralTabDefaultViewDisplayContext generalTabDefaultViewDisplayContext = (GeneralTabDefaultViewDisplayContext)renderRequest.getAttribute(GeneralTabDefaultViewDisplayContext.class.getName());
+
+LocalEntityManager localEntityManager = (LocalEntityManager)request.getAttribute(LocalEntityManager.class.getName());
+
 UnicodeProperties properties = PropertiesParamUtil.getProperties(request, "settings--");
 
 String entityId = properties.getProperty(PortletPropsKeys.SAML_ENTITY_ID, (String)request.getAttribute(SamlWebKeys.SAML_ENTITY_ID));
@@ -30,6 +34,8 @@ if (Validator.isNotNull(entityId)) {
 	keystoreException = x509CertificateStatus.getStatus() == GeneralTabDefaultViewDisplayContext.X509CertificateStatus.Status.SAML_KEYSTORE_EXCEPTION;
 	keystoreIncorrectPassword = x509CertificateStatus.getStatus() == GeneralTabDefaultViewDisplayContext.X509CertificateStatus.Status.SAML_KEYSTORE_PASSWORD_INCORRECT;
 }
+
+SamlProviderConfiguration samlProviderConfiguration = samlProviderConfigurationHelper.getSamlProviderConfiguration();
 
 String samlRole = properties.getProperty(PortletPropsKeys.SAML_ROLE, samlProviderConfiguration.role());
 boolean samlRoleIdpOptionDisabled = StringUtil.equalsIgnoreCase(samlProviderConfiguration.role(), SamlProviderConfigurationKeys.SAML_ROLE_SP) && !generalTabDefaultViewDisplayContext.isRoleIdPAvailable();

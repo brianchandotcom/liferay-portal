@@ -63,6 +63,22 @@ public class TestrayProject {
 		return _jsonObject.getString("name");
 	}
 
+	public TestrayProductVersion getTestrayProductVersionByID(
+		int productVersionID) {
+
+		_initTestrayProductVersions();
+
+		return _testrayProductVersionsByID.get(productVersionID);
+	}
+
+	public TestrayProductVersion getTestrayProductVersionByName(
+		String productVersionName) {
+
+		_initTestrayProductVersions();
+
+		return _testrayProductVersionsByName.get(productVersionName);
+	}
+
 	public TestrayRoutine getTestrayRoutineByID(int routineID) {
 		_initTestrayRoutines();
 
@@ -81,6 +97,46 @@ public class TestrayProject {
 
 	public URL getURL() {
 		return _url;
+	}
+
+	private synchronized void _initTestrayProductVersions() {
+		if ((_testrayProductVersionsByID != null) &&
+			(_testrayProductVersionsByName != null)) {
+
+			return;
+		}
+
+		_testrayProductVersionsByID = new HashMap<>();
+		_testrayProductVersionsByName = new HashMap<>();
+
+		TestrayServer testrayServer = getTestrayServer();
+
+		try {
+			String productVersionAPIURL = JenkinsResultsParserUtil.combine(
+				String.valueOf(testrayServer.getURL()),
+				"/home/-/testray/product_versions/index.json?",
+				"testrayProjectId=", String.valueOf(getID()));
+
+			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
+				productVersionAPIURL, true);
+
+			JSONArray dataJSONArray = jsonObject.getJSONArray("data");
+
+			for (int i = 0; i < dataJSONArray.length(); i++) {
+				JSONObject dataJSONObject = dataJSONArray.getJSONObject(i);
+
+				TestrayProductVersion testrayProductVersion =
+					new TestrayProductVersion(this, dataJSONObject);
+
+				_testrayProductVersionsByID.put(
+					testrayProductVersion.getID(), testrayProductVersion);
+				_testrayProductVersionsByName.put(
+					testrayProductVersion.getName(), testrayProductVersion);
+			}
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	private synchronized void _initTestrayRoutines() {
@@ -139,6 +195,8 @@ public class TestrayProject {
 	private static final int _DELTA = 25;
 
 	private final JSONObject _jsonObject;
+	private Map<Integer, TestrayProductVersion> _testrayProductVersionsByID;
+	private Map<String, TestrayProductVersion> _testrayProductVersionsByName;
 	private Map<Integer, TestrayRoutine> _testrayRoutinesByID;
 	private Map<String, TestrayRoutine> _testrayRoutinesByName;
 	private final TestrayServer _testrayServer;

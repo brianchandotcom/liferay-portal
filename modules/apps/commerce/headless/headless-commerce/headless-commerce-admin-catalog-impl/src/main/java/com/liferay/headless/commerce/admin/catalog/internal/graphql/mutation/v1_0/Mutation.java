@@ -41,6 +41,7 @@ import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CategoryResourc
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionCategoryResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionValueResource;
+import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductChannelResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductConfigurationResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductGroupProductResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductGroupResource;
@@ -137,6 +138,14 @@ public class Mutation {
 
 		_productResourceComponentServiceObjects =
 			productResourceComponentServiceObjects;
+	}
+
+	public static void setProductChannelResourceComponentServiceObjects(
+		ComponentServiceObjects<ProductChannelResource>
+			productChannelResourceComponentServiceObjects) {
+
+		_productChannelResourceComponentServiceObjects =
+			productChannelResourceComponentServiceObjects;
 	}
 
 	public static void setProductConfigurationResourceComponentServiceObjects(
@@ -892,6 +901,34 @@ public class Mutation {
 			_productResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			productResource -> productResource.postProductClone(id, catalogId));
+	}
+
+	@GraphQLField
+	public boolean deleteProductChannel(@GraphQLName("id") Long id)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_productChannelResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			productChannelResource ->
+				productChannelResource.deleteProductChannel(id));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteProductChannelBatch(
+			@GraphQLName("id") Long id,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_productChannelResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			productChannelResource ->
+				productChannelResource.deleteProductChannelBatch(
+					id, callbackURL, object));
 	}
 
 	@GraphQLField
@@ -1696,6 +1733,22 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
+			ProductChannelResource productChannelResource)
+		throws Exception {
+
+		productChannelResource.setContextAcceptLanguage(_acceptLanguage);
+		productChannelResource.setContextCompany(_company);
+		productChannelResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		productChannelResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		productChannelResource.setContextUriInfo(_uriInfo);
+		productChannelResource.setContextUser(_user);
+		productChannelResource.setGroupLocalService(_groupLocalService);
+		productChannelResource.setRoleLocalService(_roleLocalService);
+	}
+
+	private void _populateResourceContext(
 			ProductConfigurationResource productConfigurationResource)
 		throws Exception {
 
@@ -1905,6 +1958,8 @@ public class Mutation {
 		_optionValueResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ProductResource>
 		_productResourceComponentServiceObjects;
+	private static ComponentServiceObjects<ProductChannelResource>
+		_productChannelResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ProductConfigurationResource>
 		_productConfigurationResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ProductGroupResource>

@@ -502,6 +502,49 @@ public class Product implements Cloneable, Serializable {
 
 	protected Boolean neverExpire;
 
+	public Boolean getProductChannelFilter() {
+		return productChannelFilter;
+	}
+
+	public void setProductChannelFilter(Boolean productChannelFilter) {
+		this.productChannelFilter = productChannelFilter;
+	}
+
+	public void setProductChannelFilter(
+		UnsafeSupplier<Boolean, Exception> productChannelFilterUnsafeSupplier) {
+
+		try {
+			productChannelFilter = productChannelFilterUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean productChannelFilter;
+
+	public ProductChannel[] getProductChannels() {
+		return productChannels;
+	}
+
+	public void setProductChannels(ProductChannel[] productChannels) {
+		this.productChannels = productChannels;
+	}
+
+	public void setProductChannels(
+		UnsafeSupplier<ProductChannel[], Exception>
+			productChannelsUnsafeSupplier) {
+
+		try {
+			productChannels = productChannelsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected ProductChannel[] productChannels;
+
 	public Long getProductId() {
 		return productId;
 	}

@@ -699,6 +699,64 @@ public class Product implements Serializable {
 	protected Boolean neverExpire;
 
 	@Schema
+	public Boolean getProductChannelFilter() {
+		return productChannelFilter;
+	}
+
+	public void setProductChannelFilter(Boolean productChannelFilter) {
+		this.productChannelFilter = productChannelFilter;
+	}
+
+	@JsonIgnore
+	public void setProductChannelFilter(
+		UnsafeSupplier<Boolean, Exception> productChannelFilterUnsafeSupplier) {
+
+		try {
+			productChannelFilter = productChannelFilterUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean productChannelFilter;
+
+	@Schema
+	@Valid
+	public ProductChannel[] getProductChannels() {
+		return productChannels;
+	}
+
+	public void setProductChannels(ProductChannel[] productChannels) {
+		this.productChannels = productChannels;
+	}
+
+	@JsonIgnore
+	public void setProductChannels(
+		UnsafeSupplier<ProductChannel[], Exception>
+			productChannelsUnsafeSupplier) {
+
+		try {
+			productChannels = productChannelsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected ProductChannel[] productChannels;
+
+	@Schema
 	public Long getProductId() {
 		return productId;
 	}
@@ -1499,6 +1557,36 @@ public class Product implements Serializable {
 			sb.append("\"neverExpire\": ");
 
 			sb.append(neverExpire);
+		}
+
+		if (productChannelFilter != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"productChannelFilter\": ");
+
+			sb.append(productChannelFilter);
+		}
+
+		if (productChannels != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"productChannels\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < productChannels.length; i++) {
+				sb.append(String.valueOf(productChannels[i]));
+
+				if ((i + 1) < productChannels.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (productId != null) {

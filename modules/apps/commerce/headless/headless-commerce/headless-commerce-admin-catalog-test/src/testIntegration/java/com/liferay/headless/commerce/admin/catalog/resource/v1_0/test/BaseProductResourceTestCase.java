@@ -1029,6 +1029,24 @@ public abstract class BaseProductResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"productChannelFilter", additionalAssertFieldName)) {
+
+				if (product.getProductChannelFilter() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("productChannels", additionalAssertFieldName)) {
+				if (product.getProductChannels() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("productId", additionalAssertFieldName)) {
 				if (product.getProductId() == null) {
 					valid = false;
@@ -1484,6 +1502,30 @@ public abstract class BaseProductResourceTestCase {
 			if (Objects.equals("neverExpire", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						product1.getNeverExpire(), product2.getNeverExpire())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"productChannelFilter", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						product1.getProductChannelFilter(),
+						product2.getProductChannelFilter())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("productChannels", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						product1.getProductChannels(),
+						product2.getProductChannels())) {
 
 					return false;
 				}
@@ -1982,6 +2024,16 @@ public abstract class BaseProductResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("productChannelFilter")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("productChannels")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("productId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2135,6 +2187,7 @@ public abstract class BaseProductResourceTestCase {
 				id = RandomTestUtil.randomLong();
 				modifiedDate = RandomTestUtil.nextDate();
 				neverExpire = RandomTestUtil.randomBoolean();
+				productChannelFilter = RandomTestUtil.randomBoolean();
 				productId = RandomTestUtil.randomLong();
 				productStatus = RandomTestUtil.randomInt();
 				productType = StringUtil.toLowerCase(

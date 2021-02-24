@@ -240,9 +240,8 @@ public class TestrayImporter {
 			!JenkinsResultsParserUtil.isNullOrEmpty(
 				testrayProductVersionName)) {
 
-			testrayProductVersion =
-				testrayProject.getTestrayProductVersionByName(
-					_replaceEnvVars(testrayProductVersionName));
+			testrayProductVersion = testrayProject.createTestrayProductVersion(
+				_replaceEnvVars(testrayProductVersionName));
 		}
 
 		testrayProductVersionID = _getBuildParameter(
@@ -263,9 +262,8 @@ public class TestrayImporter {
 			!JenkinsResultsParserUtil.isNullOrEmpty(
 				testrayProductVersionName)) {
 
-			testrayProductVersion =
-				testrayProject.getTestrayProductVersionByName(
-					_replaceEnvVars(testrayProductVersionName));
+			testrayProductVersion = testrayProject.createTestrayProductVersion(
+				_replaceEnvVars(testrayProductVersionName));
 		}
 
 		Job job = getJob();
@@ -290,9 +288,8 @@ public class TestrayImporter {
 			!JenkinsResultsParserUtil.isNullOrEmpty(
 				testrayProductVersionName)) {
 
-			testrayProductVersion =
-				testrayProject.getTestrayProductVersionByName(
-					_replaceEnvVars(testrayProductVersionName));
+			testrayProductVersion = testrayProject.createTestrayProductVersion(
+				_replaceEnvVars(testrayProductVersionName));
 		}
 
 		if (testrayProductVersion != null) {

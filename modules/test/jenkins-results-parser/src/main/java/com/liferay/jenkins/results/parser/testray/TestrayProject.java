@@ -51,6 +51,48 @@ public class TestrayProject {
 		}
 	}
 
+	public TestrayProductVersion createTestrayProductVersion(
+		String testrayProductVersionName) {
+
+		if (testrayProductVersionName == null) {
+			throw new RuntimeException(
+				"Please set a testray product version name");
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("name=");
+		sb.append(testrayProductVersionName);
+		sb.append("&testrayProjectId=");
+		sb.append(getID());
+
+		String productVersionAddURL = JenkinsResultsParserUtil.combine(
+			String.valueOf(_testrayServer.getURL()),
+			"/home/-/testray/product_versions/add.json");
+
+		try {
+			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
+				productVersionAddURL, sb.toString());
+
+			if (jsonObject.has("data")) {
+				return new TestrayProductVersion(
+					this, jsonObject.getJSONObject("data"));
+			}
+
+			String message = jsonObject.optString("message", "");
+
+			if (!message.equals("The product version name already exists.")) {
+				throw new RuntimeException(
+					"Failed to create a product version");
+			}
+
+			return getTestrayProductVersionByName(testrayProductVersionName);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
 	public String getDescription() {
 		return _jsonObject.getString("description");
 	}

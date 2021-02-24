@@ -21,7 +21,9 @@ import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
  * @param {object} state
  */
 export function containsFieldInsideFormBuilder(dataLayoutBuilder, {fieldName}) {
-	const {pages} = dataLayoutBuilder.getLayoutProvider().state;
+	const {
+		pages,
+	} = dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider.state;
 	const visitor = new PagesVisitor(pages);
 
 	return visitor.containsField(fieldName);

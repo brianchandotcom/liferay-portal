@@ -199,7 +199,10 @@ const CustomObjectFieldsList = ({keywords}) => {
 		});
 	};
 	const onDoubleClick = ({name}) => {
-		const {activePage, pages} = dataLayoutBuilder.getLayoutProvider().state;
+		const {
+			activePage,
+			pages,
+		} = dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider.state;
 		const indexes = {
 			columnIndex: 0,
 			pageIndex: activePage,

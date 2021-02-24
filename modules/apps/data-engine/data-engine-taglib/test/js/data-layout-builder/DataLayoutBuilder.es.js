@@ -119,15 +119,6 @@ describe('DataLayoutBuilder', () => {
 		expect(props.fieldTypes).toBe(component.props.fieldTypes);
 	});
 
-	it('is getting layoutProvider', () => {
-		component = new DataLayoutBuilder(props);
-		component.componentDidMount();
-
-		expect(component.getLayoutProvider()).toMatchObject({
-			...{ref: 'layoutProvider'},
-		});
-	});
-
 	it('is removing listener after dispatching event', () => {
 		component = new DataLayoutBuilder(props);
 		component.componentDidMount();

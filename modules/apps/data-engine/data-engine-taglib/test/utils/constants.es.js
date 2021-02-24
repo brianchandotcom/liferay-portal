@@ -571,22 +571,26 @@ export const FORM_VIEW = {
 			...dataLayoutBuilder,
 			dispatch: jest.fn(),
 			dispatchAction: jest.fn(),
+			formBuilderWithLayoutProvider: {
+				refs: {
+					layoutProvider: {
+						getEvents: () => ({
+							fieldHovered: jest.fn(),
+						}),
+						on: () => ({
+							removeListener: jest.fn(),
+						}),
+						state: {
+							activePage: 0,
+							pages,
+						},
+					},
+				},
+			},
 			getDDMForm: () => ({pages}),
 			getDDMFormFieldSettingsContext: jest.fn(),
 			getDefaultDataLayout: () => ({dataLayoutPages: pages}),
 			getFieldSetDDMForm: ({fieldSet: {name}}) => ({name, pages}),
-			getLayoutProvider: () => ({
-				getEvents: () => ({
-					fieldHovered: jest.fn(),
-				}),
-				on: () => ({
-					removeListener: jest.fn(),
-				}),
-				state: {
-					activePage: 0,
-					pages,
-				},
-			}),
 			on: jest.fn(),
 			onEditingLanguageIdChange: jest.fn(),
 			removeEventListener: jest.fn(),

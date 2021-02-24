@@ -30,7 +30,8 @@ export default ({children, dataLayoutBuilder}) => {
 	const [, dispatch] = useContext(AppContext);
 
 	useEffect(() => {
-		const provider = dataLayoutBuilder.getLayoutProvider();
+		const provider =
+			dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider;
 
 		const eventHandler = provider.on(
 			'editingLanguageIdChanged',
@@ -48,7 +49,8 @@ export default ({children, dataLayoutBuilder}) => {
 	}, [dataLayoutBuilder, dispatch]);
 
 	useEffect(() => {
-		const provider = dataLayoutBuilder.getLayoutProvider();
+		const provider =
+			dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider;
 
 		const eventHandler = provider.on('focusedFieldChanged', ({newVal}) => {
 			dispatch({
@@ -61,7 +63,8 @@ export default ({children, dataLayoutBuilder}) => {
 	}, [dataLayoutBuilder, dispatch]);
 
 	useEffect(() => {
-		const provider = dataLayoutBuilder.getLayoutProvider();
+		const provider =
+			dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider;
 
 		const eventHandler = provider.on('fieldHovered', (newVal) => {
 			dispatch({
@@ -74,7 +77,8 @@ export default ({children, dataLayoutBuilder}) => {
 	}, [dataLayoutBuilder, dispatch]);
 
 	useEffect(() => {
-		const provider = dataLayoutBuilder.getLayoutProvider();
+		const provider =
+			dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider;
 
 		const eventHandler = provider.on('pagesChanged', ({newVal}) => {
 			dispatch({payload: {pages: newVal}, type: UPDATE_PAGES});
@@ -84,7 +88,8 @@ export default ({children, dataLayoutBuilder}) => {
 	}, [dataLayoutBuilder, dispatch]);
 
 	useEffect(() => {
-		const provider = dataLayoutBuilder.getLayoutProvider();
+		const provider =
+			dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider;
 
 		const ruleAddedEventHandler = provider.on('ruleAdded', (dataRule) => {
 			provider.once('rendered', () => {

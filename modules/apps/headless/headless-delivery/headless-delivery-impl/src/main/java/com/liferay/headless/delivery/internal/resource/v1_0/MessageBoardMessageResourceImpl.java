@@ -591,44 +591,6 @@ public class MessageBoardMessageResourceImpl
 			contextUser);
 	}
 
-	private MessageBoardMessage _updateMessageBoardMessage(
-			Long messageBoardMessageId, MessageBoardMessage messageBoardMessage)
-		throws Exception {
-
-		if ((messageBoardMessage.getArticleBody() == null) &&
-			(messageBoardMessage.getHeadline() == null)) {
-
-			throw new BadRequestException(
-				"Headline and article body are both null");
-		}
-
-		MBMessage mbMessage = _mbMessageService.getMessage(
-			messageBoardMessageId);
-
-		String headline = messageBoardMessage.getHeadline();
-
-		if (headline == null) {
-			MBMessage parentMBMessage = _mbMessageService.getMessage(
-				mbMessage.getParentMessageId());
-
-			headline =
-				MBMessageConstants.MESSAGE_SUBJECT_PREFIX_RE +
-					parentMBMessage.getSubject();
-		}
-
-		mbMessage = _mbMessageService.updateDiscussionMessage(
-			mbMessage.getClassName(), mbMessage.getClassPK(),
-			messageBoardMessageId, headline,
-			messageBoardMessage.getArticleBody(),
-			_getServiceContext(messageBoardMessage, mbMessage.getGroupId()));
-
-		if (messageBoardMessage.getShowAsAnswer() != mbMessage.isAnswer()) {
-			_updateAnswer(mbMessage, messageBoardMessage);
-		}
-
-		return _toMessageBoardMessage(mbMessage);
-	}
-
 	private MessageBoardMessage _toMessageBoardMessage(MBMessage mbMessage)
 		throws Exception {
 
@@ -682,6 +644,44 @@ public class MessageBoardMessageResourceImpl
 
 			mbMessage.setAnswer(showAsAnswer);
 		}
+	}
+
+	private MessageBoardMessage _updateMessageBoardMessage(
+			Long messageBoardMessageId, MessageBoardMessage messageBoardMessage)
+		throws Exception {
+
+		if ((messageBoardMessage.getArticleBody() == null) &&
+			(messageBoardMessage.getHeadline() == null)) {
+
+			throw new BadRequestException(
+				"Headline and article body are both null");
+		}
+
+		MBMessage mbMessage = _mbMessageService.getMessage(
+			messageBoardMessageId);
+
+		String headline = messageBoardMessage.getHeadline();
+
+		if (headline == null) {
+			MBMessage parentMBMessage = _mbMessageService.getMessage(
+				mbMessage.getParentMessageId());
+
+			headline =
+				MBMessageConstants.MESSAGE_SUBJECT_PREFIX_RE +
+					parentMBMessage.getSubject();
+		}
+
+		mbMessage = _mbMessageService.updateDiscussionMessage(
+			mbMessage.getClassName(), mbMessage.getClassPK(),
+			messageBoardMessageId, headline,
+			messageBoardMessage.getArticleBody(),
+			_getServiceContext(messageBoardMessage, mbMessage.getGroupId()));
+
+		if (messageBoardMessage.getShowAsAnswer() != mbMessage.isAnswer()) {
+			_updateAnswer(mbMessage, messageBoardMessage);
+		}
+
+		return _toMessageBoardMessage(mbMessage);
 	}
 
 	private MessageBoardMessage

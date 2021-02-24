@@ -348,13 +348,13 @@ public interface OAuth2ApplicationLocalService
 			String clientSecret, String description, List<String> featuresList,
 			String homePageURL, long iconFileEntryId, String name,
 			String privacyPolicyURL, List<String> redirectURIsList,
-			long auth2ApplicationScopeAliasesId, boolean trustedApplication,
+			long oAuth2ApplicationScopeAliasesId, boolean trustedApplication,
 			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #updateOAuth2Application(long, List, long, String, int, String, String, List, String, long, String, String, List, long, ServiceContext, boolean)}
+	 #updateOAuth2Application(long, List, long, String, int, String, String, List, String, long, String, String, List, long, boolean, ServiceContext)}
 	 */
 	@Deprecated
 	public OAuth2Application updateOAuth2Application(
@@ -363,7 +363,7 @@ public interface OAuth2ApplicationLocalService
 			String clientSecret, String description, List<String> featuresList,
 			String homePageURL, long iconFileEntryId, String name,
 			String privacyPolicyURL, List<String> redirectURIsList,
-			long auth2ApplicationScopeAliasesId, ServiceContext serviceContext)
+			long oAuth2ApplicationScopeAliasesId, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -375,7 +375,7 @@ public interface OAuth2ApplicationLocalService
 			String clientId, int clientProfile, String clientSecret,
 			String description, List<String> featuresList, String homePageURL,
 			long iconFileEntryId, String name, String privacyPolicyURL,
-			List<String> redirectURIsList, long auth2ApplicationScopeAliasesId,
+			List<String> redirectURIsList, long oAuth2ApplicationScopeAliasesId,
 			ServiceContext serviceContext)
 		throws PortalException;
 

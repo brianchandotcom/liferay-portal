@@ -25,6 +25,10 @@ public class EmailAddressLocalServiceWrapper
 	implements EmailAddressLocalService,
 			   ServiceWrapper<EmailAddressLocalService> {
 
+	public EmailAddressLocalServiceWrapper() {
+		this(null);
+	}
+
 	public EmailAddressLocalServiceWrapper(
 		EmailAddressLocalService emailAddressLocalService) {
 

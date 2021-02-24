@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class CPDefinitionServiceWrapper
 	implements CPDefinitionService, ServiceWrapper<CPDefinitionService> {
 
+	public CPDefinitionServiceWrapper() {
+		this(null);
+	}
+
 	public CPDefinitionServiceWrapper(CPDefinitionService cpDefinitionService) {
 		_cpDefinitionService = cpDefinitionService;
 	}

@@ -27,6 +27,10 @@ public class CommerceBOMEntryServiceWrapper
 	implements CommerceBOMEntryService,
 			   ServiceWrapper<CommerceBOMEntryService> {
 
+	public CommerceBOMEntryServiceWrapper() {
+		this(null);
+	}
+
 	public CommerceBOMEntryServiceWrapper(
 		CommerceBOMEntryService commerceBOMEntryService) {
 

@@ -30,6 +30,10 @@ public class DDMFormInstanceRecordLocalServiceWrapper
 	implements DDMFormInstanceRecordLocalService,
 			   ServiceWrapper<DDMFormInstanceRecordLocalService> {
 
+	public DDMFormInstanceRecordLocalServiceWrapper() {
+		this(null);
+	}
+
 	public DDMFormInstanceRecordLocalServiceWrapper(
 		DDMFormInstanceRecordLocalService ddmFormInstanceRecordLocalService) {
 

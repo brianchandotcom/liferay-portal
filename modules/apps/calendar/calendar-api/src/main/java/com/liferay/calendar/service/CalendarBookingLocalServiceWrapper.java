@@ -27,6 +27,10 @@ public class CalendarBookingLocalServiceWrapper
 	implements CalendarBookingLocalService,
 			   ServiceWrapper<CalendarBookingLocalService> {
 
+	public CalendarBookingLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CalendarBookingLocalServiceWrapper(
 		CalendarBookingLocalService calendarBookingLocalService) {
 

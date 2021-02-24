@@ -27,6 +27,10 @@ public class CommerceApplicationBrandLocalServiceWrapper
 	implements CommerceApplicationBrandLocalService,
 			   ServiceWrapper<CommerceApplicationBrandLocalService> {
 
+	public CommerceApplicationBrandLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CommerceApplicationBrandLocalServiceWrapper(
 		CommerceApplicationBrandLocalService
 			commerceApplicationBrandLocalService) {

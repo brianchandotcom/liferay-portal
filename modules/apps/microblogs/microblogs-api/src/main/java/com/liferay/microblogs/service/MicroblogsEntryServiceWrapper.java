@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class MicroblogsEntryServiceWrapper
 	implements MicroblogsEntryService, ServiceWrapper<MicroblogsEntryService> {
 
+	public MicroblogsEntryServiceWrapper() {
+		this(null);
+	}
+
 	public MicroblogsEntryServiceWrapper(
 		MicroblogsEntryService microblogsEntryService) {
 

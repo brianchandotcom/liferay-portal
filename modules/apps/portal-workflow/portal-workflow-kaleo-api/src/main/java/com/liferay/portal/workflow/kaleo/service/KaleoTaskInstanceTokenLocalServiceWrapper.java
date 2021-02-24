@@ -27,6 +27,10 @@ public class KaleoTaskInstanceTokenLocalServiceWrapper
 	implements KaleoTaskInstanceTokenLocalService,
 			   ServiceWrapper<KaleoTaskInstanceTokenLocalService> {
 
+	public KaleoTaskInstanceTokenLocalServiceWrapper() {
+		this(null);
+	}
+
 	public KaleoTaskInstanceTokenLocalServiceWrapper(
 		KaleoTaskInstanceTokenLocalService kaleoTaskInstanceTokenLocalService) {
 

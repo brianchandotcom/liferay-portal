@@ -27,6 +27,10 @@ public class KaleoTaskAssignmentLocalServiceWrapper
 	implements KaleoTaskAssignmentLocalService,
 			   ServiceWrapper<KaleoTaskAssignmentLocalService> {
 
+	public KaleoTaskAssignmentLocalServiceWrapper() {
+		this(null);
+	}
+
 	public KaleoTaskAssignmentLocalServiceWrapper(
 		KaleoTaskAssignmentLocalService kaleoTaskAssignmentLocalService) {
 

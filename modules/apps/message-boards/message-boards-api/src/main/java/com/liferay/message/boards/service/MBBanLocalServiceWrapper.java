@@ -29,6 +29,10 @@ import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersisten
 public class MBBanLocalServiceWrapper
 	implements MBBanLocalService, ServiceWrapper<MBBanLocalService> {
 
+	public MBBanLocalServiceWrapper() {
+		this(null);
+	}
+
 	public MBBanLocalServiceWrapper(MBBanLocalService mbBanLocalService) {
 		_mbBanLocalService = mbBanLocalService;
 	}

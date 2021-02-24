@@ -27,6 +27,10 @@ public class ERAssetCategoryLocalServiceWrapper
 	implements ERAssetCategoryLocalService,
 			   ServiceWrapper<ERAssetCategoryLocalService> {
 
+	public ERAssetCategoryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public ERAssetCategoryLocalServiceWrapper(
 		ERAssetCategoryLocalService erAssetCategoryLocalService) {
 

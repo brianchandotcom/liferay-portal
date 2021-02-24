@@ -27,6 +27,10 @@ public class ReadingTimeEntryLocalServiceWrapper
 	implements ReadingTimeEntryLocalService,
 			   ServiceWrapper<ReadingTimeEntryLocalService> {
 
+	public ReadingTimeEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public ReadingTimeEntryLocalServiceWrapper(
 		ReadingTimeEntryLocalService readingTimeEntryLocalService) {
 

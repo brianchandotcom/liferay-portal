@@ -29,6 +29,10 @@ import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersisten
 public class DDLRecordLocalServiceWrapper
 	implements DDLRecordLocalService, ServiceWrapper<DDLRecordLocalService> {
 
+	public DDLRecordLocalServiceWrapper() {
+		this(null);
+	}
+
 	public DDLRecordLocalServiceWrapper(
 		DDLRecordLocalService ddlRecordLocalService) {
 

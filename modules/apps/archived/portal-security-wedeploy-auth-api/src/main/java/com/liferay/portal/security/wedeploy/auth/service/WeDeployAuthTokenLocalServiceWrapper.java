@@ -27,6 +27,10 @@ public class WeDeployAuthTokenLocalServiceWrapper
 	implements ServiceWrapper<WeDeployAuthTokenLocalService>,
 			   WeDeployAuthTokenLocalService {
 
+	public WeDeployAuthTokenLocalServiceWrapper() {
+		this(null);
+	}
+
 	public WeDeployAuthTokenLocalServiceWrapper(
 		WeDeployAuthTokenLocalService weDeployAuthTokenLocalService) {
 

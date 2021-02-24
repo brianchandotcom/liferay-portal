@@ -27,6 +27,10 @@ public class CommerceAvailabilityEstimateServiceWrapper
 	implements CommerceAvailabilityEstimateService,
 			   ServiceWrapper<CommerceAvailabilityEstimateService> {
 
+	public CommerceAvailabilityEstimateServiceWrapper() {
+		this(null);
+	}
+
 	public CommerceAvailabilityEstimateServiceWrapper(
 		CommerceAvailabilityEstimateService
 			commerceAvailabilityEstimateService) {

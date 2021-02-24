@@ -27,6 +27,10 @@ public class CommerceWishListLocalServiceWrapper
 	implements CommerceWishListLocalService,
 			   ServiceWrapper<CommerceWishListLocalService> {
 
+	public CommerceWishListLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CommerceWishListLocalServiceWrapper(
 		CommerceWishListLocalService commerceWishListLocalService) {
 

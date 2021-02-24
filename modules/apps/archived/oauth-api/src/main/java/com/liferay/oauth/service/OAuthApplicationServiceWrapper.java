@@ -27,6 +27,10 @@ public class OAuthApplicationServiceWrapper
 	implements OAuthApplicationService,
 			   ServiceWrapper<OAuthApplicationService> {
 
+	public OAuthApplicationServiceWrapper() {
+		this(null);
+	}
+
 	public OAuthApplicationServiceWrapper(
 		OAuthApplicationService oAuthApplicationService) {
 

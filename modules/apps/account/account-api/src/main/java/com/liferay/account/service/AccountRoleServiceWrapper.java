@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class AccountRoleServiceWrapper
 	implements AccountRoleService, ServiceWrapper<AccountRoleService> {
 
+	public AccountRoleServiceWrapper() {
+		this(null);
+	}
+
 	public AccountRoleServiceWrapper(AccountRoleService accountRoleService) {
 		_accountRoleService = accountRoleService;
 	}

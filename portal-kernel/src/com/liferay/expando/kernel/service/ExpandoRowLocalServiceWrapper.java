@@ -29,6 +29,10 @@ import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersisten
 public class ExpandoRowLocalServiceWrapper
 	implements ExpandoRowLocalService, ServiceWrapper<ExpandoRowLocalService> {
 
+	public ExpandoRowLocalServiceWrapper() {
+		this(null);
+	}
+
 	public ExpandoRowLocalServiceWrapper(
 		ExpandoRowLocalService expandoRowLocalService) {
 

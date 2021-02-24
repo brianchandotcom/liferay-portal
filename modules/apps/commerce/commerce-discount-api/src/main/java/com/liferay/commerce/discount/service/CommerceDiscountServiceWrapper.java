@@ -27,6 +27,10 @@ public class CommerceDiscountServiceWrapper
 	implements CommerceDiscountService,
 			   ServiceWrapper<CommerceDiscountService> {
 
+	public CommerceDiscountServiceWrapper() {
+		this(null);
+	}
+
 	public CommerceDiscountServiceWrapper(
 		CommerceDiscountService commerceDiscountService) {
 

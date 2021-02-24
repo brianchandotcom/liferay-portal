@@ -30,6 +30,10 @@ public class SocialActivityLocalServiceWrapper
 	implements ServiceWrapper<SocialActivityLocalService>,
 			   SocialActivityLocalService {
 
+	public SocialActivityLocalServiceWrapper() {
+		this(null);
+	}
+
 	public SocialActivityLocalServiceWrapper(
 		SocialActivityLocalService socialActivityLocalService) {
 

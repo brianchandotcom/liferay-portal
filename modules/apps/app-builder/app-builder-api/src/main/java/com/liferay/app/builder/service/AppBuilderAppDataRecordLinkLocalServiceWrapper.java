@@ -27,6 +27,10 @@ public class AppBuilderAppDataRecordLinkLocalServiceWrapper
 	implements AppBuilderAppDataRecordLinkLocalService,
 			   ServiceWrapper<AppBuilderAppDataRecordLinkLocalService> {
 
+	public AppBuilderAppDataRecordLinkLocalServiceWrapper() {
+		this(null);
+	}
+
 	public AppBuilderAppDataRecordLinkLocalServiceWrapper(
 		AppBuilderAppDataRecordLinkLocalService
 			appBuilderAppDataRecordLinkLocalService) {

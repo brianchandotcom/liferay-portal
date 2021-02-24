@@ -24,6 +24,10 @@ package com.liferay.portal.kernel.service;
 public class LayoutBranchServiceWrapper
 	implements LayoutBranchService, ServiceWrapper<LayoutBranchService> {
 
+	public LayoutBranchServiceWrapper() {
+		this(null);
+	}
+
 	public LayoutBranchServiceWrapper(LayoutBranchService layoutBranchService) {
 		_layoutBranchService = layoutBranchService;
 	}

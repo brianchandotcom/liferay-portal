@@ -28,6 +28,10 @@ public class SegmentsEntryRelServiceWrapper
 	implements SegmentsEntryRelService,
 			   ServiceWrapper<SegmentsEntryRelService> {
 
+	public SegmentsEntryRelServiceWrapper() {
+		this(null);
+	}
+
 	public SegmentsEntryRelServiceWrapper(
 		SegmentsEntryRelService segmentsEntryRelService) {
 

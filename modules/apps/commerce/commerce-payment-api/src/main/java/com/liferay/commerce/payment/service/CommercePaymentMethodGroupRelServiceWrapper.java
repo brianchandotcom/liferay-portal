@@ -27,6 +27,10 @@ public class CommercePaymentMethodGroupRelServiceWrapper
 	implements CommercePaymentMethodGroupRelService,
 			   ServiceWrapper<CommercePaymentMethodGroupRelService> {
 
+	public CommercePaymentMethodGroupRelServiceWrapper() {
+		this(null);
+	}
+
 	public CommercePaymentMethodGroupRelServiceWrapper(
 		CommercePaymentMethodGroupRelService
 			commercePaymentMethodGroupRelService) {

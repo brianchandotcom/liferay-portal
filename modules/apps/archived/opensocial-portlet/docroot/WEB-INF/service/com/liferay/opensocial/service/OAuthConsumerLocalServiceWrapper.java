@@ -27,6 +27,10 @@ public class OAuthConsumerLocalServiceWrapper
 	implements OAuthConsumerLocalService,
 			   ServiceWrapper<OAuthConsumerLocalService> {
 
+	public OAuthConsumerLocalServiceWrapper() {
+		this(null);
+	}
+
 	public OAuthConsumerLocalServiceWrapper(
 		OAuthConsumerLocalService oAuthConsumerLocalService) {
 

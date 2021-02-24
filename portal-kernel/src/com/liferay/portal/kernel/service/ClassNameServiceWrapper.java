@@ -24,6 +24,10 @@ package com.liferay.portal.kernel.service;
 public class ClassNameServiceWrapper
 	implements ClassNameService, ServiceWrapper<ClassNameService> {
 
+	public ClassNameServiceWrapper() {
+		this(null);
+	}
+
 	public ClassNameServiceWrapper(ClassNameService classNameService) {
 		_classNameService = classNameService;
 	}

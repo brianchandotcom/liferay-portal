@@ -27,6 +27,10 @@ public class ERCGroupEntryLocalServiceWrapper
 	implements ERCGroupEntryLocalService,
 			   ServiceWrapper<ERCGroupEntryLocalService> {
 
+	public ERCGroupEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public ERCGroupEntryLocalServiceWrapper(
 		ERCGroupEntryLocalService ercGroupEntryLocalService) {
 

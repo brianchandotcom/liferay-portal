@@ -27,6 +27,10 @@ public class RedirectEntryLocalServiceWrapper
 	implements RedirectEntryLocalService,
 			   ServiceWrapper<RedirectEntryLocalService> {
 
+	public RedirectEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public RedirectEntryLocalServiceWrapper(
 		RedirectEntryLocalService redirectEntryLocalService) {
 

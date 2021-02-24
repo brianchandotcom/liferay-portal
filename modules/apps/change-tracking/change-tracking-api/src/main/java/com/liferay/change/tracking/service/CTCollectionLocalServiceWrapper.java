@@ -27,6 +27,10 @@ public class CTCollectionLocalServiceWrapper
 	implements CTCollectionLocalService,
 			   ServiceWrapper<CTCollectionLocalService> {
 
+	public CTCollectionLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CTCollectionLocalServiceWrapper(
 		CTCollectionLocalService ctCollectionLocalService) {
 

@@ -27,6 +27,10 @@ public class MDRRuleGroupInstanceServiceWrapper
 	implements MDRRuleGroupInstanceService,
 			   ServiceWrapper<MDRRuleGroupInstanceService> {
 
+	public MDRRuleGroupInstanceServiceWrapper() {
+		this(null);
+	}
+
 	public MDRRuleGroupInstanceServiceWrapper(
 		MDRRuleGroupInstanceService mdrRuleGroupInstanceService) {
 

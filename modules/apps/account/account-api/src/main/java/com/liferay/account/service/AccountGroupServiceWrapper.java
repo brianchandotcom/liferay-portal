@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class AccountGroupServiceWrapper
 	implements AccountGroupService, ServiceWrapper<AccountGroupService> {
 
+	public AccountGroupServiceWrapper() {
+		this(null);
+	}
+
 	public AccountGroupServiceWrapper(AccountGroupService accountGroupService) {
 		_accountGroupService = accountGroupService;
 	}

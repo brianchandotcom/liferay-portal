@@ -24,6 +24,10 @@ package com.liferay.portal.kernel.service;
 public class PasswordPolicyServiceWrapper
 	implements PasswordPolicyService, ServiceWrapper<PasswordPolicyService> {
 
+	public PasswordPolicyServiceWrapper() {
+		this(null);
+	}
+
 	public PasswordPolicyServiceWrapper(
 		PasswordPolicyService passwordPolicyService) {
 

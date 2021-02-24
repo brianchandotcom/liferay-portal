@@ -27,6 +27,10 @@ public class CommerceApplicationModelServiceWrapper
 	implements CommerceApplicationModelService,
 			   ServiceWrapper<CommerceApplicationModelService> {
 
+	public CommerceApplicationModelServiceWrapper() {
+		this(null);
+	}
+
 	public CommerceApplicationModelServiceWrapper(
 		CommerceApplicationModelService commerceApplicationModelService) {
 

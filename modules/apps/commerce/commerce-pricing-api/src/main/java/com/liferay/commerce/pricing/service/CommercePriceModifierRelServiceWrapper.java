@@ -27,6 +27,10 @@ public class CommercePriceModifierRelServiceWrapper
 	implements CommercePriceModifierRelService,
 			   ServiceWrapper<CommercePriceModifierRelService> {
 
+	public CommercePriceModifierRelServiceWrapper() {
+		this(null);
+	}
+
 	public CommercePriceModifierRelServiceWrapper(
 		CommercePriceModifierRelService commercePriceModifierRelService) {
 

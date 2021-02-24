@@ -28,6 +28,10 @@ public class CPDefinitionSpecificationOptionValueLocalServiceWrapper
 			   ServiceWrapper
 				   <CPDefinitionSpecificationOptionValueLocalService> {
 
+	public CPDefinitionSpecificationOptionValueLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CPDefinitionSpecificationOptionValueLocalServiceWrapper(
 		CPDefinitionSpecificationOptionValueLocalService
 			cpDefinitionSpecificationOptionValueLocalService) {

@@ -27,6 +27,10 @@ public class DispatchTriggerLocalServiceWrapper
 	implements DispatchTriggerLocalService,
 			   ServiceWrapper<DispatchTriggerLocalService> {
 
+	public DispatchTriggerLocalServiceWrapper() {
+		this(null);
+	}
+
 	public DispatchTriggerLocalServiceWrapper(
 		DispatchTriggerLocalService dispatchTriggerLocalService) {
 

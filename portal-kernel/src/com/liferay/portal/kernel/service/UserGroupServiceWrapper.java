@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.model.UserGroup;
 public class UserGroupServiceWrapper
 	implements ServiceWrapper<UserGroupService>, UserGroupService {
 
+	public UserGroupServiceWrapper() {
+		this(null);
+	}
+
 	public UserGroupServiceWrapper(UserGroupService userGroupService) {
 		_userGroupService = userGroupService;
 	}

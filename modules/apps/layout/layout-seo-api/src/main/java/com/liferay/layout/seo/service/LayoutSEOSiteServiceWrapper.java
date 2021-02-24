@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class LayoutSEOSiteServiceWrapper
 	implements LayoutSEOSiteService, ServiceWrapper<LayoutSEOSiteService> {
 
+	public LayoutSEOSiteServiceWrapper() {
+		this(null);
+	}
+
 	public LayoutSEOSiteServiceWrapper(
 		LayoutSEOSiteService layoutSEOSiteService) {
 

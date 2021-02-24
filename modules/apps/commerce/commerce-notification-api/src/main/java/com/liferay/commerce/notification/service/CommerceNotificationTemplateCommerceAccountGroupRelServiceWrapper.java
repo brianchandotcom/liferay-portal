@@ -28,6 +28,10 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelServiceWrapper
 			   ServiceWrapper
 				   <CommerceNotificationTemplateCommerceAccountGroupRelService> {
 
+	public CommerceNotificationTemplateCommerceAccountGroupRelServiceWrapper() {
+		this(null);
+	}
+
 	public CommerceNotificationTemplateCommerceAccountGroupRelServiceWrapper(
 		CommerceNotificationTemplateCommerceAccountGroupRelService
 			commerceNotificationTemplateCommerceAccountGroupRelService) {

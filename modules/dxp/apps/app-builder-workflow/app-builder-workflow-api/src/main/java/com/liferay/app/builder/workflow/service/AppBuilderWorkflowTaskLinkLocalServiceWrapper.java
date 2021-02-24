@@ -27,6 +27,10 @@ public class AppBuilderWorkflowTaskLinkLocalServiceWrapper
 	implements AppBuilderWorkflowTaskLinkLocalService,
 			   ServiceWrapper<AppBuilderWorkflowTaskLinkLocalService> {
 
+	public AppBuilderWorkflowTaskLinkLocalServiceWrapper() {
+		this(null);
+	}
+
 	public AppBuilderWorkflowTaskLinkLocalServiceWrapper(
 		AppBuilderWorkflowTaskLinkLocalService
 			appBuilderWorkflowTaskLinkLocalService) {

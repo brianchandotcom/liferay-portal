@@ -27,6 +27,10 @@ public class AppBuilderAppDeploymentLocalServiceWrapper
 	implements AppBuilderAppDeploymentLocalService,
 			   ServiceWrapper<AppBuilderAppDeploymentLocalService> {
 
+	public AppBuilderAppDeploymentLocalServiceWrapper() {
+		this(null);
+	}
+
 	public AppBuilderAppDeploymentLocalServiceWrapper(
 		AppBuilderAppDeploymentLocalService
 			appBuilderAppDeploymentLocalService) {

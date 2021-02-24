@@ -27,6 +27,10 @@ public class SyncDLObjectLocalServiceWrapper
 	implements ServiceWrapper<SyncDLObjectLocalService>,
 			   SyncDLObjectLocalService {
 
+	public SyncDLObjectLocalServiceWrapper() {
+		this(null);
+	}
+
 	public SyncDLObjectLocalServiceWrapper(
 		SyncDLObjectLocalService syncDLObjectLocalService) {
 

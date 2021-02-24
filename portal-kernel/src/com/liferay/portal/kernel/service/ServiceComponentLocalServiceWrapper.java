@@ -25,6 +25,10 @@ public class ServiceComponentLocalServiceWrapper
 	implements ServiceComponentLocalService,
 			   ServiceWrapper<ServiceComponentLocalService> {
 
+	public ServiceComponentLocalServiceWrapper() {
+		this(null);
+	}
+
 	public ServiceComponentLocalServiceWrapper(
 		ServiceComponentLocalService serviceComponentLocalService) {
 

@@ -24,6 +24,10 @@ package com.liferay.portal.kernel.service;
 public class AddressServiceWrapper
 	implements AddressService, ServiceWrapper<AddressService> {
 
+	public AddressServiceWrapper() {
+		this(null);
+	}
+
 	public AddressServiceWrapper(AddressService addressService) {
 		_addressService = addressService;
 	}

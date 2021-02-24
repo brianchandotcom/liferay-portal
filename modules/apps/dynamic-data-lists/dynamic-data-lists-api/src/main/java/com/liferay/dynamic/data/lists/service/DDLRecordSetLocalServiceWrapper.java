@@ -30,6 +30,10 @@ public class DDLRecordSetLocalServiceWrapper
 	implements DDLRecordSetLocalService,
 			   ServiceWrapper<DDLRecordSetLocalService> {
 
+	public DDLRecordSetLocalServiceWrapper() {
+		this(null);
+	}
+
 	public DDLRecordSetLocalServiceWrapper(
 		DDLRecordSetLocalService ddlRecordSetLocalService) {
 

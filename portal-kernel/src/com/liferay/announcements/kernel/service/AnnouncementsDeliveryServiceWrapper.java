@@ -27,6 +27,10 @@ public class AnnouncementsDeliveryServiceWrapper
 	implements AnnouncementsDeliveryService,
 			   ServiceWrapper<AnnouncementsDeliveryService> {
 
+	public AnnouncementsDeliveryServiceWrapper() {
+		this(null);
+	}
+
 	public AnnouncementsDeliveryServiceWrapper(
 		AnnouncementsDeliveryService announcementsDeliveryService) {
 

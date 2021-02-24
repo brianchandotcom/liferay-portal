@@ -24,6 +24,10 @@ package com.liferay.portal.kernel.service;
 public class RegionServiceWrapper
 	implements RegionService, ServiceWrapper<RegionService> {
 
+	public RegionServiceWrapper() {
+		this(null);
+	}
+
 	public RegionServiceWrapper(RegionService regionService) {
 		_regionService = regionService;
 	}

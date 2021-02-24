@@ -27,6 +27,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class ExpandoColumnServiceWrapper
 	implements ExpandoColumnService, ServiceWrapper<ExpandoColumnService> {
 
+	public ExpandoColumnServiceWrapper() {
+		this(null);
+	}
+
 	public ExpandoColumnServiceWrapper(
 		ExpandoColumnService expandoColumnService) {
 

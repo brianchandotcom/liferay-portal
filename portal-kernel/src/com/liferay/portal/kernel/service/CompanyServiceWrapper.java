@@ -24,6 +24,10 @@ package com.liferay.portal.kernel.service;
 public class CompanyServiceWrapper
 	implements CompanyService, ServiceWrapper<CompanyService> {
 
+	public CompanyServiceWrapper() {
+		this(null);
+	}
+
 	public CompanyServiceWrapper(CompanyService companyService) {
 		_companyService = companyService;
 	}

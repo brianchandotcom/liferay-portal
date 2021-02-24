@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class CPInstanceServiceWrapper
 	implements CPInstanceService, ServiceWrapper<CPInstanceService> {
 
+	public CPInstanceServiceWrapper() {
+		this(null);
+	}
+
 	public CPInstanceServiceWrapper(CPInstanceService cpInstanceService) {
 		_cpInstanceService = cpInstanceService;
 	}

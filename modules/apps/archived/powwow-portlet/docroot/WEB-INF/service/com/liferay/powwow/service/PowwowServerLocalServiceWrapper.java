@@ -27,6 +27,10 @@ public class PowwowServerLocalServiceWrapper
 	implements PowwowServerLocalService,
 			   ServiceWrapper<PowwowServerLocalService> {
 
+	public PowwowServerLocalServiceWrapper() {
+		this(null);
+	}
+
 	public PowwowServerLocalServiceWrapper(
 		PowwowServerLocalService powwowServerLocalService) {
 

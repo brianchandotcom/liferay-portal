@@ -27,6 +27,10 @@ public class ManyColumnsEntryServiceWrapper
 	implements ManyColumnsEntryService,
 			   ServiceWrapper<ManyColumnsEntryService> {
 
+	public ManyColumnsEntryServiceWrapper() {
+		this(null);
+	}
+
 	public ManyColumnsEntryServiceWrapper(
 		ManyColumnsEntryService manyColumnsEntryService) {
 

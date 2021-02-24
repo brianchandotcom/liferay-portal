@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class MDRActionServiceWrapper
 	implements MDRActionService, ServiceWrapper<MDRActionService> {
 
+	public MDRActionServiceWrapper() {
+		this(null);
+	}
+
 	public MDRActionServiceWrapper(MDRActionService mdrActionService) {
 		_mdrActionService = mdrActionService;
 	}

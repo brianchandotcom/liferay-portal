@@ -27,6 +27,10 @@ public class ReadingTimeEntryServiceWrapper
 	implements ReadingTimeEntryService,
 			   ServiceWrapper<ReadingTimeEntryService> {
 
+	public ReadingTimeEntryServiceWrapper() {
+		this(null);
+	}
+
 	public ReadingTimeEntryServiceWrapper(
 		ReadingTimeEntryService readingTimeEntryService) {
 

@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class LVEntryLocalServiceWrapper
 	implements LVEntryLocalService, ServiceWrapper<LVEntryLocalService> {
 
+	public LVEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public LVEntryLocalServiceWrapper(LVEntryLocalService lvEntryLocalService) {
 		_lvEntryLocalService = lvEntryLocalService;
 	}

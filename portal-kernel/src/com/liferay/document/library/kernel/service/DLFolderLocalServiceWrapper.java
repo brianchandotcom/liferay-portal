@@ -29,6 +29,10 @@ import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersisten
 public class DLFolderLocalServiceWrapper
 	implements DLFolderLocalService, ServiceWrapper<DLFolderLocalService> {
 
+	public DLFolderLocalServiceWrapper() {
+		this(null);
+	}
+
 	public DLFolderLocalServiceWrapper(
 		DLFolderLocalService dlFolderLocalService) {
 

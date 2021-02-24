@@ -27,6 +27,10 @@ public class DEDataDefinitionFieldLinkLocalServiceWrapper
 	implements DEDataDefinitionFieldLinkLocalService,
 			   ServiceWrapper<DEDataDefinitionFieldLinkLocalService> {
 
+	public DEDataDefinitionFieldLinkLocalServiceWrapper() {
+		this(null);
+	}
+
 	public DEDataDefinitionFieldLinkLocalServiceWrapper(
 		DEDataDefinitionFieldLinkLocalService
 			deDataDefinitionFieldLinkLocalService) {

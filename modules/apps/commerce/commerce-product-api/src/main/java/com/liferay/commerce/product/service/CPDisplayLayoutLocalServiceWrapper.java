@@ -27,6 +27,10 @@ public class CPDisplayLayoutLocalServiceWrapper
 	implements CPDisplayLayoutLocalService,
 			   ServiceWrapper<CPDisplayLayoutLocalService> {
 
+	public CPDisplayLayoutLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CPDisplayLayoutLocalServiceWrapper(
 		CPDisplayLayoutLocalService cpDisplayLayoutLocalService) {
 

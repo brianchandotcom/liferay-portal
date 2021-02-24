@@ -29,6 +29,10 @@ import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersisten
 public class MBThreadLocalServiceWrapper
 	implements MBThreadLocalService, ServiceWrapper<MBThreadLocalService> {
 
+	public MBThreadLocalServiceWrapper() {
+		this(null);
+	}
+
 	public MBThreadLocalServiceWrapper(
 		MBThreadLocalService mbThreadLocalService) {
 

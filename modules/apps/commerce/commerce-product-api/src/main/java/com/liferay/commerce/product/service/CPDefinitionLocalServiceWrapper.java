@@ -27,6 +27,10 @@ public class CPDefinitionLocalServiceWrapper
 	implements CPDefinitionLocalService,
 			   ServiceWrapper<CPDefinitionLocalService> {
 
+	public CPDefinitionLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CPDefinitionLocalServiceWrapper(
 		CPDefinitionLocalService cpDefinitionLocalService) {
 

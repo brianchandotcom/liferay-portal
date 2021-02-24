@@ -27,6 +27,10 @@ public class RemoteAppEntryLocalServiceWrapper
 	implements RemoteAppEntryLocalService,
 			   ServiceWrapper<RemoteAppEntryLocalService> {
 
+	public RemoteAppEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public RemoteAppEntryLocalServiceWrapper(
 		RemoteAppEntryLocalService remoteAppEntryLocalService) {
 

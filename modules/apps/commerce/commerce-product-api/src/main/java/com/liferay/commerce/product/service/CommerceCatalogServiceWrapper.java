@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class CommerceCatalogServiceWrapper
 	implements CommerceCatalogService, ServiceWrapper<CommerceCatalogService> {
 
+	public CommerceCatalogServiceWrapper() {
+		this(null);
+	}
+
 	public CommerceCatalogServiceWrapper(
 		CommerceCatalogService commerceCatalogService) {
 

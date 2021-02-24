@@ -30,6 +30,10 @@ public class DDMStructureVersionLocalServiceWrapper
 	implements DDMStructureVersionLocalService,
 			   ServiceWrapper<DDMStructureVersionLocalService> {
 
+	public DDMStructureVersionLocalServiceWrapper() {
+		this(null);
+	}
+
 	public DDMStructureVersionLocalServiceWrapper(
 		DDMStructureVersionLocalService ddmStructureVersionLocalService) {
 

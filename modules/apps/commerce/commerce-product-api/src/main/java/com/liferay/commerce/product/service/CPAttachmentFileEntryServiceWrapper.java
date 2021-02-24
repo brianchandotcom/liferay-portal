@@ -27,6 +27,10 @@ public class CPAttachmentFileEntryServiceWrapper
 	implements CPAttachmentFileEntryService,
 			   ServiceWrapper<CPAttachmentFileEntryService> {
 
+	public CPAttachmentFileEntryServiceWrapper() {
+		this(null);
+	}
+
 	public CPAttachmentFileEntryServiceWrapper(
 		CPAttachmentFileEntryService cpAttachmentFileEntryService) {
 

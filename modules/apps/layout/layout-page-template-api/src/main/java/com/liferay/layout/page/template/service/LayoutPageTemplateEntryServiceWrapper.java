@@ -28,6 +28,10 @@ public class LayoutPageTemplateEntryServiceWrapper
 	implements LayoutPageTemplateEntryService,
 			   ServiceWrapper<LayoutPageTemplateEntryService> {
 
+	public LayoutPageTemplateEntryServiceWrapper() {
+		this(null);
+	}
+
 	public LayoutPageTemplateEntryServiceWrapper(
 		LayoutPageTemplateEntryService layoutPageTemplateEntryService) {
 

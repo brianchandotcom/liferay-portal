@@ -24,6 +24,10 @@ package com.liferay.portal.kernel.service;
 public class AccountServiceWrapper
 	implements AccountService, ServiceWrapper<AccountService> {
 
+	public AccountServiceWrapper() {
+		this(null);
+	}
+
 	public AccountServiceWrapper(AccountService accountService) {
 		_accountService = accountService;
 	}

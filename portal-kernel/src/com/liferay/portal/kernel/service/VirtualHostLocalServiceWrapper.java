@@ -29,6 +29,10 @@ public class VirtualHostLocalServiceWrapper
 	implements ServiceWrapper<VirtualHostLocalService>,
 			   VirtualHostLocalService {
 
+	public VirtualHostLocalServiceWrapper() {
+		this(null);
+	}
+
 	public VirtualHostLocalServiceWrapper(
 		VirtualHostLocalService virtualHostLocalService) {
 

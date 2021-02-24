@@ -30,6 +30,10 @@ public class MBMailingListLocalServiceWrapper
 	implements MBMailingListLocalService,
 			   ServiceWrapper<MBMailingListLocalService> {
 
+	public MBMailingListLocalServiceWrapper() {
+		this(null);
+	}
+
 	public MBMailingListLocalServiceWrapper(
 		MBMailingListLocalService mbMailingListLocalService) {
 

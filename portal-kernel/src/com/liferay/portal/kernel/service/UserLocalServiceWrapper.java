@@ -28,6 +28,10 @@ import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersisten
 public class UserLocalServiceWrapper
 	implements ServiceWrapper<UserLocalService>, UserLocalService {
 
+	public UserLocalServiceWrapper() {
+		this(null);
+	}
+
 	public UserLocalServiceWrapper(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}

@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class ERCCompanyEntryServiceWrapper
 	implements ERCCompanyEntryService, ServiceWrapper<ERCCompanyEntryService> {
 
+	public ERCCompanyEntryServiceWrapper() {
+		this(null);
+	}
+
 	public ERCCompanyEntryServiceWrapper(
 		ERCCompanyEntryService ercCompanyEntryService) {
 

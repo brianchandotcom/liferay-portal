@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class PowwowMeetingServiceWrapper
 	implements PowwowMeetingService, ServiceWrapper<PowwowMeetingService> {
 
+	public PowwowMeetingServiceWrapper() {
+		this(null);
+	}
+
 	public PowwowMeetingServiceWrapper(
 		PowwowMeetingService powwowMeetingService) {
 

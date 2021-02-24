@@ -24,6 +24,10 @@ package com.liferay.portal.kernel.service;
 public class EmailAddressServiceWrapper
 	implements EmailAddressService, ServiceWrapper<EmailAddressService> {
 
+	public EmailAddressServiceWrapper() {
+		this(null);
+	}
+
 	public EmailAddressServiceWrapper(EmailAddressService emailAddressService) {
 		_emailAddressService = emailAddressService;
 	}

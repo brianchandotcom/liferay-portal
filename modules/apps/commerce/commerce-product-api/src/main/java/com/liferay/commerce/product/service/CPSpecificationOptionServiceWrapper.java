@@ -27,6 +27,10 @@ public class CPSpecificationOptionServiceWrapper
 	implements CPSpecificationOptionService,
 			   ServiceWrapper<CPSpecificationOptionService> {
 
+	public CPSpecificationOptionServiceWrapper() {
+		this(null);
+	}
+
 	public CPSpecificationOptionServiceWrapper(
 		CPSpecificationOptionService cpSpecificationOptionService) {
 

@@ -28,6 +28,10 @@ public class DDMStructureLayoutServiceWrapper
 	implements DDMStructureLayoutService,
 			   ServiceWrapper<DDMStructureLayoutService> {
 
+	public DDMStructureLayoutServiceWrapper() {
+		this(null);
+	}
+
 	public DDMStructureLayoutServiceWrapper(
 		DDMStructureLayoutService ddmStructureLayoutService) {
 

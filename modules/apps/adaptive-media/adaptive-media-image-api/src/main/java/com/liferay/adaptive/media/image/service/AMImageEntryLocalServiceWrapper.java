@@ -27,6 +27,10 @@ public class AMImageEntryLocalServiceWrapper
 	implements AMImageEntryLocalService,
 			   ServiceWrapper<AMImageEntryLocalService> {
 
+	public AMImageEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public AMImageEntryLocalServiceWrapper(
 		AMImageEntryLocalService amImageEntryLocalService) {
 

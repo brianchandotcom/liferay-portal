@@ -27,6 +27,10 @@ public class KaleoActionLocalServiceWrapper
 	implements KaleoActionLocalService,
 			   ServiceWrapper<KaleoActionLocalService> {
 
+	public KaleoActionLocalServiceWrapper() {
+		this(null);
+	}
+
 	public KaleoActionLocalServiceWrapper(
 		KaleoActionLocalService kaleoActionLocalService) {
 

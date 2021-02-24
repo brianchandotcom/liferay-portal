@@ -27,6 +27,10 @@ public class CommerceTaxFixedRateAddressRelServiceWrapper
 	implements CommerceTaxFixedRateAddressRelService,
 			   ServiceWrapper<CommerceTaxFixedRateAddressRelService> {
 
+	public CommerceTaxFixedRateAddressRelServiceWrapper() {
+		this(null);
+	}
+
 	public CommerceTaxFixedRateAddressRelServiceWrapper(
 		CommerceTaxFixedRateAddressRelService
 			commerceTaxFixedRateAddressRelService) {

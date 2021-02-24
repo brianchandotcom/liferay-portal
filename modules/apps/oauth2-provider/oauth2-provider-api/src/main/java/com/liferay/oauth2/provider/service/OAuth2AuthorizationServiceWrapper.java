@@ -27,6 +27,10 @@ public class OAuth2AuthorizationServiceWrapper
 	implements OAuth2AuthorizationService,
 			   ServiceWrapper<OAuth2AuthorizationService> {
 
+	public OAuth2AuthorizationServiceWrapper() {
+		this(null);
+	}
+
 	public OAuth2AuthorizationServiceWrapper(
 		OAuth2AuthorizationService oAuth2AuthorizationService) {
 

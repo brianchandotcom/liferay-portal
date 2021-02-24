@@ -28,6 +28,10 @@ public class SocialRequestInterpreterLocalServiceWrapper
 	implements ServiceWrapper<SocialRequestInterpreterLocalService>,
 			   SocialRequestInterpreterLocalService {
 
+	public SocialRequestInterpreterLocalServiceWrapper() {
+		this(null);
+	}
+
 	public SocialRequestInterpreterLocalServiceWrapper(
 		SocialRequestInterpreterLocalService
 			socialRequestInterpreterLocalService) {

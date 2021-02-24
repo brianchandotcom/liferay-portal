@@ -27,6 +27,10 @@ public class KaleoConditionLocalServiceWrapper
 	implements KaleoConditionLocalService,
 			   ServiceWrapper<KaleoConditionLocalService> {
 
+	public KaleoConditionLocalServiceWrapper() {
+		this(null);
+	}
+
 	public KaleoConditionLocalServiceWrapper(
 		KaleoConditionLocalService kaleoConditionLocalService) {
 

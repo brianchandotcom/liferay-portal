@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class AccountEntryServiceWrapper
 	implements AccountEntryService, ServiceWrapper<AccountEntryService> {
 
+	public AccountEntryServiceWrapper() {
+		this(null);
+	}
+
 	public AccountEntryServiceWrapper(AccountEntryService accountEntryService) {
 		_accountEntryService = accountEntryService;
 	}

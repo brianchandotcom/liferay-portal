@@ -27,6 +27,10 @@ public class CommerceBOMDefinitionServiceWrapper
 	implements CommerceBOMDefinitionService,
 			   ServiceWrapper<CommerceBOMDefinitionService> {
 
+	public CommerceBOMDefinitionServiceWrapper() {
+		this(null);
+	}
+
 	public CommerceBOMDefinitionServiceWrapper(
 		CommerceBOMDefinitionService commerceBOMDefinitionService) {
 

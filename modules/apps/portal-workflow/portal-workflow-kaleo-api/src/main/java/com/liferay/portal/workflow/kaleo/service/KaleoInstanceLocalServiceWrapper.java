@@ -27,6 +27,10 @@ public class KaleoInstanceLocalServiceWrapper
 	implements KaleoInstanceLocalService,
 			   ServiceWrapper<KaleoInstanceLocalService> {
 
+	public KaleoInstanceLocalServiceWrapper() {
+		this(null);
+	}
+
 	public KaleoInstanceLocalServiceWrapper(
 		KaleoInstanceLocalService kaleoInstanceLocalService) {
 

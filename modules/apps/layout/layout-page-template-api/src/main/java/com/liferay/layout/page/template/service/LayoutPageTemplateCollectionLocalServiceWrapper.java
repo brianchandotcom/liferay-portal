@@ -30,6 +30,10 @@ public class LayoutPageTemplateCollectionLocalServiceWrapper
 	implements LayoutPageTemplateCollectionLocalService,
 			   ServiceWrapper<LayoutPageTemplateCollectionLocalService> {
 
+	public LayoutPageTemplateCollectionLocalServiceWrapper() {
+		this(null);
+	}
+
 	public LayoutPageTemplateCollectionLocalServiceWrapper(
 		LayoutPageTemplateCollectionLocalService
 			layoutPageTemplateCollectionLocalService) {

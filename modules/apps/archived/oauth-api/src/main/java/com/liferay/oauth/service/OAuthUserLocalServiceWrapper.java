@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class OAuthUserLocalServiceWrapper
 	implements OAuthUserLocalService, ServiceWrapper<OAuthUserLocalService> {
 
+	public OAuthUserLocalServiceWrapper() {
+		this(null);
+	}
+
 	public OAuthUserLocalServiceWrapper(
 		OAuthUserLocalService oAuthUserLocalService) {
 

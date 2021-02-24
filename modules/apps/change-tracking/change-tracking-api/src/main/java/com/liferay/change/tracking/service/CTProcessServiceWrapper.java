@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class CTProcessServiceWrapper
 	implements CTProcessService, ServiceWrapper<CTProcessService> {
 
+	public CTProcessServiceWrapper() {
+		this(null);
+	}
+
 	public CTProcessServiceWrapper(CTProcessService ctProcessService) {
 		_ctProcessService = ctProcessService;
 	}

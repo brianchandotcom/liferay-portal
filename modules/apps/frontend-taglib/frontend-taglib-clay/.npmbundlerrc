@@ -110,6 +110,7 @@
 		"metal-web-component": true,
 		"xss-filters": true
 	},
+	"ignore": ["__generated__/**/*"],
 	"output": "build/node/packageRunBuild/resources",
 	"preset": "liferay-npm-bundler-preset-standard",
 	"sources": ["src/main/resources/META-INF/resources"]

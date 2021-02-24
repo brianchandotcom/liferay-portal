@@ -14,8 +14,8 @@
 
 module.exports = {
 	federation: {
-		bridges: [],
-		runLegacyBuild: false,
+		bridges: true,
+		mode: 'incompatible',
 	},
 	preset: '@liferay/npm-scripts/src/presets/standard',
 };

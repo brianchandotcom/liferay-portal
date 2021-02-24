@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dispatch.portal.kernel.scheduler;
+package com.liferay.dispatch.scheduler;
 
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.portal.kernel.scheduler.StorageType;

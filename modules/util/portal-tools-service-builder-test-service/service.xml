@@ -95,7 +95,7 @@
 
 		<column lazy="false" name="blob" type="Blob" />
 	</entity>
-	<entity external-reference-code="company" local-service="true" name="ERCCompanyEntry">
+	<entity external-reference-code="company" local-service="true" name="ERCCompanyEntry" remote-service="false">
 
 		<!-- PK fields -->
 
@@ -105,7 +105,7 @@
 
 		<column name="companyId" type="long" />
 	</entity>
-	<entity external-reference-code="group" local-service="true" name="ERCGroupEntry">
+	<entity external-reference-code="group" local-service="true" name="ERCGroupEntry" remote-service="false">
 
 		<!-- PK fields -->
 
@@ -136,7 +136,7 @@
 			<finder-column name="name" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="GenericMethodsEntry" />
+	<entity local-service="true" name="GenericMethodsEntry" remote-service="false" />
 	<entity local-service="true" name="LazyBlobEntry" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
@@ -208,7 +208,7 @@
 
 		<reference entity="BigDecimalEntry" package-path="com.liferay.portal.tools.service.builder.test" />
 	</entity>
-	<entity local-service="true" name="ManyColumnsEntry">
+	<entity local-service="true" name="ManyColumnsEntry" remote-service="false">
 
 		<!-- PK fields -->
 
@@ -297,7 +297,7 @@
 		<column name="leftNestedSetsTreeEntryId" type="long" />
 		<column name="rightNestedSetsTreeEntryId" type="long" />
 	</entity>
-	<entity local-service="true" name="UADPartialEntry">
+	<entity local-service="true" name="UADPartialEntry" remote-service="false">
 
 		<!-- PK fields -->
 

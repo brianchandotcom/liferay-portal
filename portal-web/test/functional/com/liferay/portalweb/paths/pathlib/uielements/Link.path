@@ -145,7 +145,7 @@
 </tr>
 <tr>
 	<td>SUBSCRIBE</td>
-	<td>//a/span[contains(@class,'taglib-text') and contains(.,'Subscribe')]</td>
+	<td>//a//span[contains(@class,'taglib-text') and contains(.,'Subscribe')]</td>
 	<td></td>
 </tr>
 <tr>

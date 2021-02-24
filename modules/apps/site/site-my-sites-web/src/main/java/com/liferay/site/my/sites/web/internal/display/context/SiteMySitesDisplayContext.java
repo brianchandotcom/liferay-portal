@@ -20,6 +20,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBu
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
 import com.liferay.portlet.usersadmin.search.GroupSearchTerms;
+import com.liferay.site.my.sites.web.internal.constants.MySitesPortletKeys;
 import com.liferay.site.my.sites.web.internal.servlet.taglib.util.SiteActionDropdownItemsProvider;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
@@ -68,8 +70,8 @@ public class SiteMySitesDisplayContext {
 			return _displayStyle;
 		}
 
-		_displayStyle = ParamUtil.getString(
-			_renderRequest, "displayStyle", "descriptive");
+		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
+			_httpServletRequest, MySitesPortletKeys.MY_SITES, "descriptive");
 
 		return _displayStyle;
 	}

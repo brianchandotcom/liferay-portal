@@ -31,15 +31,15 @@ definition {
 
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
-					layoutName = "Test Page Name");
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
 		}
 
 		task ("Add a web content based on Basic Web Content") {
 			JSONWebcontent.addWebContent(
-					content = "WC Content",
-					groupName = "Test Site Name",
-					title = "WC 1");
+				content = "WC Content",
+				groupName = "Test Site Name",
+				title = "WC 1");
 		}
 
 		task ("Add a web content structure with all fields") {
@@ -48,8 +48,8 @@ definition {
 			NavItem.gotoStructures();
 
 			WebContentStructures.addCP(
-					structureDescription = "WC Structure Description",
-					structureName = "WC Structure Name");
+				structureDescription = "WC Structure Description",
+				structureName = "WC Structure Name");
 
 			DataEngine.addFields(fieldNameList = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page,Separator");
 
@@ -60,10 +60,10 @@ definition {
 			WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "WC Structure Name");
 
 			WebContentTemplates.addCP(
-					structureName = "WC Structure Name",
-					templateDescription = "WC Template Description",
-					templateFieldNames = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page",
-					templateName = "WC Template Name");
+				structureName = "WC Structure Name",
+				templateDescription = "WC Template Description",
+				templateFieldNames = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page",
+				templateName = "WC Template Name");
 		}
 
 		task ("Add a web content based on new structure and template") {
@@ -72,50 +72,50 @@ definition {
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 			WebContent.addWithStructureCP(
-					column = "1",
-					dmNavTab = "User Personal Folder",
-					navTab = "Web Content Images",
-					row = "1",
-					structureName = "WC Structure Name",
-					templateName = "WC Template Name",
-					webContentColor = "FF0D0D",
-					webContentDate = "10/10/2020",
-					webContentGrid = "true",
-					webContentImage = "Document_3.png",
-					webContentLinkToPage = "Test Page Name",
-					webContentMultipleSelection = "Option 1",
-					webContentNumeric = "9",
-					webContentRichText = "This is a Rich Text field",
-					webContentSelectFromList = "Option 2",
-					webContentSingleSelection = "Option 3",
-					webContentText = "This is a Text field",
-					webContentTitle = "Web Content Title",
-					webContentUpload = "Document_1.doc",
-					webContentWebContent = "WC 1");
+				column = "1",
+				dmNavTab = "User Personal Folder",
+				navTab = "Web Content Images",
+				row = "1",
+				structureName = "WC Structure Name",
+				templateName = "WC Template Name",
+				webContentColor = "FF0D0D",
+				webContentDate = "10/10/2020",
+				webContentGrid = "true",
+				webContentImage = "Document_3.png",
+				webContentLinkToPage = "Test Page Name",
+				webContentMultipleSelection = "Option 1",
+				webContentNumeric = "9",
+				webContentRichText = "This is a Rich Text field",
+				webContentSelectFromList = "Option 2",
+				webContentSingleSelection = "Option 3",
+				webContentText = "This is a Text field",
+				webContentTitle = "Web Content Title",
+				webContentUpload = "Document_1.doc",
+				webContentWebContent = "WC 1");
 
 			PortletEntry.publish();
 		}
 
 		task ("View web content") {
 			WebContent.viewWithStructureCP(
-					column = "1",
-					row = "1",
-					webContentColor = "FF0D0D",
-					webContentDate = "10/10/2020",
-					webContentGeolocation = "true",
-					webContentGrid = "true",
-					webContentImage = "Document_3.png",
-					webContentLinkToPage = "Test Page Name",
-					webContentMultipleSelection = "Option 1",
-					webContentNumeric = "9",
-					webContentRichText = "This is a Rich Text field",
-					webContentSelectFromList = "Option 2",
-					webContentSeparator = "true",
-					webContentSingleSelection = "Option 3",
-					webContentText = "This is a Text field",
-					webContentTitle = "Web Content Title",
-					webContentUpload = "Document_1.doc",
-					webContentWebContent = "WC 1");
+				column = "1",
+				row = "1",
+				webContentColor = "FF0D0D",
+				webContentDate = "10/10/2020",
+				webContentGeolocation = "true",
+				webContentGrid = "true",
+				webContentImage = "Document_3.png",
+				webContentLinkToPage = "Test Page Name",
+				webContentMultipleSelection = "Option 1",
+				webContentNumeric = "9",
+				webContentRichText = "This is a Rich Text field",
+				webContentSelectFromList = "Option 2",
+				webContentSeparator = "true",
+				webContentSingleSelection = "Option 3",
+				webContentText = "This is a Text field",
+				webContentTitle = "Web Content Title",
+				webContentUpload = "Document_1.doc",
+				webContentWebContent = "WC 1");
 
 			Button.clickCancel();
 		}
@@ -124,8 +124,8 @@ definition {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContent.deleteCP(
-					siteURLKey = "test-site-name",
-					webContentTitle = "Web Content Title");
+				siteURLKey = "test-site-name",
+				webContentTitle = "Web Content Title");
 		}
 	}
 

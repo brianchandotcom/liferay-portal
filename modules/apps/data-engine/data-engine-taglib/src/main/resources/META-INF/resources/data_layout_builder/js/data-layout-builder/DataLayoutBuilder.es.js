@@ -21,7 +21,7 @@ import React from 'react';
 import {
 	getDDMFormField,
 	getDDMFormFieldSettingsContext,
-	getDataDefinitionField,
+	getDataDefinitionAndDataLayout,
 	getFieldSetDDMForm,
 } from '../utils/dataConverter.es';
 import EventEmitter from './EventEmitter.es';
@@ -128,68 +128,6 @@ class DataLayoutBuilder extends React.Component {
 		this.eventEmitter.emit(event, payload, error);
 	}
 
-	getDataDefinitionAndDataLayout(pages, rules) {
-		const {
-			defaultLanguageId = themeDisplay.getDefaultLanguageId(),
-		} = this.props;
-		const availableLanguageIds = this.state.availableLanguageIds ||
-			this.props.availableLanguageIds || [
-				themeDisplay.getDefaultLanguageId(),
-			];
-		const fieldDefinitions = [];
-		const pagesVisitor = new PagesVisitor(pages);
-
-		const newPages = pagesVisitor.mapFields((field) => {
-			fieldDefinitions.push(getDataDefinitionField(field));
-
-			return field.fieldName;
-		}, false);
-
-		const layoutProvider = this.getLayoutProvider();
-
-		return {
-			definition: {
-				availableLanguageIds,
-				dataDefinitionFields: fieldDefinitions,
-				defaultLanguageId,
-			},
-			layout: {
-				dataLayoutPages: newPages.map((page) => {
-					const rows = page.rows.map((row) => {
-						const columns = row.columns.map((column) => {
-							return {
-								columnSize: column.size,
-								fieldNames: column.fields,
-							};
-						});
-
-						return {
-							dataLayoutColumns: columns,
-						};
-					});
-
-					return {
-						dataLayoutRows: rows,
-						description: page.localizedDescription,
-						title: page.localizedTitle,
-					};
-				}),
-				dataRules: rules.map((rule) => {
-					if (typeof rule.name === 'string') {
-						rule.name = {
-							[defaultLanguageId]: rule.name,
-						};
-					}
-
-					delete rule.ruleEditedIndex;
-
-					return rule;
-				}),
-				paginationMode: layoutProvider.getPaginationMode(),
-			},
-		};
-	}
-
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by DataConverter.getDDMFormFieldSettingsContext()
 	 */
@@ -248,14 +186,18 @@ class DataLayoutBuilder extends React.Component {
 	}
 
 	getFormData() {
+		const {availableLanguageIds, defaultLanguageId} = this.props;
+		const {availableLanguageIds: availableLanguageIdsState} = this.state;
+
 		const layoutProvider = this.getLayoutProvider();
-		const {defaultLanguageId} = layoutProvider.props;
+		const {
+			props: {defaultLanguageId: layoutDefaultLanguageId},
+			state: {pages: layoutProviderPages, rules},
+		} = layoutProvider;
 
-		const {pages, rules} = this.getStore();
+		const pagesVisitor = new PagesVisitor(layoutProviderPages);
 
-		const pagesVisitor = new PagesVisitor(pages);
-
-		const newPages = pagesVisitor.mapFields(
+		const pages = pagesVisitor.mapFields(
 			(field) => {
 				const {settingsContext} = field;
 
@@ -279,8 +221,8 @@ class DataLayoutBuilder extends React.Component {
 									);
 								});
 
-								if (!newValue[defaultLanguageId]) {
-									newValue[defaultLanguageId] = [];
+								if (!newValue[layoutDefaultLanguageId]) {
+									newValue[layoutDefaultLanguageId] = [];
 								}
 
 								settingsField = {
@@ -303,7 +245,14 @@ class DataLayoutBuilder extends React.Component {
 			true
 		);
 
-		return this.getDataDefinitionAndDataLayout(newPages, rules || []);
+		return getDataDefinitionAndDataLayout({
+			availableLanguageIds:
+				availableLanguageIdsState ?? availableLanguageIds,
+			defaultLanguageId,
+			pages,
+			paginationMode: layoutProvider.getPaginationMode(),
+			rules,
+		});
 	}
 
 	getLayoutProvider() {
@@ -419,10 +368,17 @@ class DataLayoutBuilder extends React.Component {
 	}
 
 	serialize(pages, rules) {
-		const {definition, layout} = this.getDataDefinitionAndDataLayout(
+		const {availableLanguageIds, defaultLanguageId} = this.props;
+		const {availableLanguageIds: availableLanguageIdsState} = this.state;
+
+		const {definition, layout} = getDataDefinitionAndDataLayout({
+			availableLanguageIds:
+				availableLanguageIdsState ?? availableLanguageIds,
+			defaultLanguageId,
 			pages,
-			rules || []
-		);
+			paginationMode: this.getLayoutProvider().getPaginationMode(),
+			rules,
+		});
 
 		return {
 			definition: JSON.stringify(definition),

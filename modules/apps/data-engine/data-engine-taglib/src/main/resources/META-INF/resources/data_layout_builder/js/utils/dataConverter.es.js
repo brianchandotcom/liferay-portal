@@ -193,6 +193,65 @@ export function getDefaultDataLayout(dataDefinition) {
 	};
 }
 
+export function getDataDefinitionAndDataLayout({
+	availableLanguageIds = [themeDisplay.getDefaultLanguageId()],
+	defaultLanguageId = themeDisplay.getDefaultLanguageId(),
+	pages,
+	paginationMode,
+	rules = [],
+}) {
+	const fieldDefinitions = [];
+	const pagesVisitor = new PagesVisitor(pages);
+
+	const newPages = pagesVisitor.mapFields((field) => {
+		fieldDefinitions.push(getDataDefinitionField(field));
+
+		return field.fieldName;
+	}, false);
+
+	return {
+		definition: {
+			availableLanguageIds,
+			dataDefinitionFields: fieldDefinitions,
+			defaultLanguageId,
+		},
+		layout: {
+			dataLayoutPages: newPages.map((page) => {
+				const rows = page.rows.map((row) => {
+					const columns = row.columns.map((column) => {
+						return {
+							columnSize: column.size,
+							fieldNames: column.fields,
+						};
+					});
+
+					return {
+						dataLayoutColumns: columns,
+					};
+				});
+
+				return {
+					dataLayoutRows: rows,
+					description: page.localizedDescription,
+					title: page.localizedTitle,
+				};
+			}),
+			dataRules: rules.map((rule) => {
+				if (typeof rule.name === 'string') {
+					rule.name = {
+						[defaultLanguageId]: rule.name,
+					};
+				}
+
+				delete rule.ruleEditedIndex;
+
+				return rule;
+			}),
+			paginationMode,
+		},
+	};
+}
+
 /**
  * Gets a data definition from a field
  *

@@ -44,7 +44,10 @@ import {
 	UPDATE_IDS,
 	UPDATE_PAGES,
 } from './actions.es';
-import {getDataDefinitionField as convertFieldToDataDefinition} from './utils/dataConverter.es';
+import {
+	getDataDefinitionAndDataLayout,
+	getDataDefinitionField as convertFieldToDataDefinition,
+} from './utils/dataConverter.es';
 import {getDataDefinitionField} from './utils/dataDefinition.es';
 import * as DataLayoutVisitor from './utils/dataLayoutVisitor.es';
 import {normalizeRule} from './utils/normalizers.es';
@@ -233,14 +236,30 @@ const setDataDefinitionFields = (
 };
 
 const setDataLayout = (dataLayout, dataLayoutBuilder) => {
-	const {dataLayoutFields, dataRules} = dataLayout;
-	const {pages} = dataLayoutBuilder.getStore();
-	const {layout} = dataLayoutBuilder.getDataDefinitionAndDataLayout(
-		pages,
-		dataRules || []
-	);
+	const {dataLayoutFields, dataRules: rules} = dataLayout;
+	const layoutProvider = dataLayoutBuilder.getLayoutProvider();
+	const {
+		state: {pages},
+	} = layoutProvider;
 
-	if (dataLayoutBuilder.props.contentType === 'app-builder') {
+	const {
+		availableLanguageIds,
+		contentType,
+		defaultLanguageId,
+	} = dataLayoutBuilder.props;
+	const {
+		availableLanguageIds: availableLanguageIdsState,
+	} = dataLayoutBuilder.state;
+
+	const {layout} = getDataDefinitionAndDataLayout({
+		availableLanguageIds: availableLanguageIdsState ?? availableLanguageIds,
+		defaultLanguageId,
+		pages,
+		paginationMode: layoutProvider.getPaginationMode(),
+		rules,
+	});
+
+	if (contentType === 'app-builder') {
 		const visitor = new PagesVisitor(pages);
 		const fields = [];
 

@@ -57,6 +57,51 @@ public class TestrayRoutine {
 		}
 	}
 
+	public TestrayBuild createTestrayBuild(
+		TestrayProductVersion testrayProductVersion, String buildName) {
+
+		if (testrayProductVersion == null) {
+			throw new RuntimeException("Please set a testray product version");
+		}
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(buildName)) {
+			throw new RuntimeException("Please set a testray build name");
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("name=");
+		sb.append(buildName);
+		sb.append("&testrayProductVersionId=");
+		sb.append(testrayProductVersion.getID());
+		sb.append("&testrayRoutineId=");
+		sb.append(getID());
+
+		String buildAddURL = JenkinsResultsParserUtil.combine(
+			String.valueOf(_testrayServer.getURL()),
+			"/web/guest/home/-/testray/builds/add.json");
+
+		try {
+			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
+				buildAddURL, sb.toString());
+
+			if (jsonObject.has("data")) {
+				return new TestrayBuild(this, jsonObject.getJSONObject("data"));
+			}
+
+			String message = jsonObject.optString("message", "");
+
+			if (!message.equals("The build name already exists.")) {
+				throw new RuntimeException("Failed to create a testray build");
+			}
+
+			return getTestrayBuildByName(buildName);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
 	public int getID() {
 		return _jsonObject.getInt("testrayRoutineId");
 	}

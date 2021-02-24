@@ -43,6 +43,8 @@ import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroup;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -154,6 +156,24 @@ public class TestrayImporter {
 				_replaceEnvVars(testrayBuildName));
 		}
 
+		testrayBuildID = _getBuildParameter("TESTRAY_BUILD_ID");
+
+		if ((testrayBuild == null) && (testrayBuildID != null) &&
+			testrayBuildID.matches("\\d+")) {
+
+			testrayBuild = testrayRoutine.getTestrayBuildByID(
+				Integer.parseInt(testrayBuildID));
+		}
+
+		testrayBuildName = _getBuildParameter("TESTRAY_BUILD_NAME");
+
+		if ((testrayBuild == null) &&
+			!JenkinsResultsParserUtil.isNullOrEmpty(testrayBuildName)) {
+
+			testrayBuild = testrayRoutine.getTestrayBuildByName(
+				_replaceEnvVars(testrayBuildName));
+		}
+
 		testrayBuildID = JenkinsResultsParserUtil.getProperty(
 			job.getJobProperties(), "testray.build.id", job.getJobName(),
 			_topLevelBuild.getTestSuiteName());
@@ -213,6 +233,24 @@ public class TestrayImporter {
 		}
 
 		String testrayProjectName = System.getProperty("TESTRAY_PROJECT_NAME");
+
+		if ((testrayProject == null) &&
+			!JenkinsResultsParserUtil.isNullOrEmpty(testrayProjectName)) {
+
+			testrayProject = testrayServer.getTestrayProjectByName(
+				_replaceEnvVars(testrayProjectName));
+		}
+
+		testrayProjectID = _getBuildParameter("TESTRAY_PROJECT_ID");
+
+		if ((testrayProject == null) && (testrayProjectID != null) &&
+			testrayProjectID.matches("\\d+")) {
+
+			testrayProject = testrayServer.getTestrayProjectByID(
+				Integer.parseInt(testrayProjectID));
+		}
+
+		testrayProjectName = _getBuildParameter("TESTRAY_PROJECT_NAME");
 
 		if ((testrayProject == null) &&
 			!JenkinsResultsParserUtil.isNullOrEmpty(testrayProjectName)) {
@@ -288,6 +326,33 @@ public class TestrayImporter {
 				_replaceEnvVars(testrayRoutineName));
 		}
 
+		testrayRoutineID = _getBuildParameter("TESTRAY_ROUTINE_ID");
+
+		if ((testrayRoutine == null) && (testrayRoutineID != null) &&
+			testrayRoutineID.matches("\\d+")) {
+
+			testrayRoutine = testrayProject.getTestrayRoutineByID(
+				Integer.parseInt(testrayRoutineID));
+		}
+
+		testrayRoutineName = _getBuildParameter("TESTRAY_ROUTINE_NAME");
+
+		if ((testrayRoutine == null) &&
+			!JenkinsResultsParserUtil.isNullOrEmpty(testrayRoutineName)) {
+
+			testrayRoutine = testrayProject.getTestrayRoutineByName(
+				_replaceEnvVars(testrayRoutineName));
+		}
+
+		testrayRoutineName = _getBuildParameter("TESTRAY_BUILD_TYPE");
+
+		if ((testrayRoutine == null) &&
+			!JenkinsResultsParserUtil.isNullOrEmpty(testrayRoutineName)) {
+
+			testrayRoutine = testrayProject.getTestrayRoutineByName(
+				_replaceEnvVars(testrayRoutineName));
+		}
+
 		testrayRoutineID = JenkinsResultsParserUtil.getProperty(
 			job.getJobProperties(), "testray.routine.id", job.getJobName(),
 			_topLevelBuild.getTestSuiteName());
@@ -343,6 +408,14 @@ public class TestrayImporter {
 			testrayServer = new TestrayServer(testrayServerURL);
 		}
 
+		testrayServerURL = System.getProperty("TESTRAY_SERVER_URL");
+
+		if ((testrayServer == null) && (testrayServerURL != null) &&
+			testrayServerURL.matches("https?://.*")) {
+
+			testrayServer = new TestrayServer(testrayServerURL);
+		}
+
 		Job job = getJob();
 
 		testrayServerURL = JenkinsResultsParserUtil.getProperty(
@@ -379,43 +452,57 @@ public class TestrayImporter {
 		Job job = getJob();
 
 		List<AxisTestClassGroup> axisTestClassGroups =
-			job.getAxisTestClassGroups();
+		job.getAxisTestClassGroups();
 
 		if (job instanceof BatchDependentJob) {
-			BatchDependentJob batchDependentJob = (BatchDependentJob)job;
+			BatchDependentJob batchDependentJob = (BatchDependentJob) job;
 
 			axisTestClassGroups.addAll(
-				batchDependentJob.getDependentAxisTestClassGroups());
+			batchDependentJob.getDependentAxisTestClassGroups());
 		}
 
 		List<TestrayCase> testrayCases = new ArrayList<>();
 
 		for (AxisTestClassGroup axisTestClassGroup : axisTestClassGroups) {
 			if (axisTestClassGroup instanceof CucumberAxisTestClassGroup ||
-				axisTestClassGroup instanceof FunctionalAxisTestClassGroup ||
-				axisTestClassGroup instanceof JUnitAxisTestClassGroup) {
+			axisTestClassGroup instanceof FunctionalAxisTestClassGroup ||
+			axisTestClassGroup instanceof JUnitAxisTestClassGroup) {
 
 				for (TestClassGroup.TestClass testClass :
-						axisTestClassGroup.getTestClasses()) {
+				axisTestClassGroup.getTestClasses()) {
 
 					testrayCases.add(
-						TestrayCaseFactory.newTestrayCase(
-							getTestrayBuild(), getTopLevelBuild(),
-							axisTestClassGroup, testClass));
+					TestrayCaseFactory.newTestrayCase(
+					getTestrayBuild(), getTopLevelBuild(),
+					axisTestClassGroup, testClass));
 				}
 
 				continue;
 			}
 
 			testrayCases.add(
-				TestrayCaseFactory.newTestrayCase(
-					getTestrayBuild(), getTopLevelBuild(), axisTestClassGroup,
-					null));
+			TestrayCaseFactory.newTestrayCase(
+			getTestrayBuild(), getTopLevelBuild(), axisTestClassGroup,
+			null));
 		}
 
 		for (TestrayCase testrayCase : testrayCases) {
 			System.out.println(testrayCase);
 		}
+	}
+
+	private String _getBuildParameter(String buildParameterName) {
+		Map<String, String> buildParameters = new HashMap<>();
+
+		Build controllerBuild = _topLevelBuild.getControllerBuild();
+
+		if (controllerBuild != null) {
+			buildParameters.putAll(controllerBuild.getParameters());
+		}
+
+		buildParameters.putAll(_topLevelBuild.getParameters());
+
+		return buildParameters.get(buildParameterName);
 	}
 
 	private PortalGitWorkingDirectory _getPortalGitWorkingDirectory() {

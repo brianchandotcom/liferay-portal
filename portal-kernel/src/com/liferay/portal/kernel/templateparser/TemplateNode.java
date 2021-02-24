@@ -29,13 +29,10 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -206,38 +203,35 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 			return StringPool.BLANK;
 		}
 
+		String data = (String)get("data");
+
+		if (JSONUtil.isValid(data)) {
+			return StringPool.BLANK;
+		}
+
 		long layoutGroupId = 0;
 		long layoutId = 0;
 		String layoutType = StringPool.BLANK;
 
-		String data = (String)get("data");
+		try {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(data);
 
-		if (JSONUtil.isValid(data)) {
-			try {
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(data);
+			layoutGroupId = jsonObject.getLong("groupId");
+			layoutId = jsonObject.getLong("layoutId");
 
-				layoutGroupId = jsonObject.getLong("groupId");
-				layoutId = jsonObject.getLong("layoutId");
-
-				if (jsonObject.getBoolean("privateLayout")) {
-					layoutType = _LAYOUT_TYPE_PRIVATE_GROUP;
-				}
-				else {
-					layoutType = _LAYOUT_TYPE_PUBLIC;
-				}
+			if (jsonObject.getBoolean("privateLayout")) {
+				layoutType = _LAYOUT_TYPE_PRIVATE_GROUP;
 			}
-			catch (JSONException jsonException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Unable to parse JSON from data: " + data);
-				}
-
-				return StringPool.BLANK;
+			else {
+				layoutType = _LAYOUT_TYPE_PUBLIC;
 			}
 		}
-		else {
-			layoutGroupId = getLayoutGroupId();
-			layoutId = getLayoutId();
-			layoutType = getLayoutType();
+		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to parse JSON from data: " + data);
+			}
+
+			return StringPool.BLANK;
 		}
 
 		if (Validator.isNull(layoutType)) {
@@ -282,48 +276,6 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 		sb.append(layoutId);
 
 		return sb.toString();
-	}
-
-	protected long getLayoutGroupId() {
-		String data = (String)get("data");
-
-		int pos = data.lastIndexOf(CharPool.AT);
-
-		if (pos != -1) {
-			data = data.substring(pos + 1);
-		}
-
-		return GetterUtil.getLong(data);
-	}
-
-	protected long getLayoutId() {
-		String data = (String)get("data");
-
-		int pos = data.indexOf(CharPool.AT);
-
-		if (pos != -1) {
-			data = data.substring(0, pos);
-		}
-
-		return GetterUtil.getLong(data);
-	}
-
-	protected String getLayoutType() {
-		String data = (String)get("data");
-
-		int x = data.indexOf(CharPool.AT);
-		int y = data.lastIndexOf(CharPool.AT);
-
-		if ((x != -1) && (y != -1)) {
-			if (x == y) {
-				data = data.substring(x + 1);
-			}
-			else {
-				data = data.substring(x + 1, y);
-			}
-		}
-
-		return data;
 	}
 
 	private String _getDDMJournalArticleFriendlyURL() {
@@ -498,39 +450,7 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 			return getUrl();
 		}
 
-		String layoutType = getLayoutType();
-
-		if (Validator.isNull(layoutType)) {
-			return StringPool.BLANK;
-		}
-
-		long groupId = getLayoutGroupId();
-
-		if (groupId == 0) {
-			groupId = _themeDisplay.getScopeGroupId();
-		}
-
-		boolean privateLayout = layoutType.startsWith("private");
-
-		try {
-			Layout layout = LayoutLocalServiceUtil.getLayout(
-				groupId, privateLayout, getLayoutId());
-
-			String layoutFriendlyURL = PortalUtil.getLayoutFriendlyURL(
-				layout, _themeDisplay);
-
-			return HttpUtil.removeDomain(layoutFriendlyURL);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to get friendly URL for URL " +
-						_themeDisplay.getURLCurrent(),
-					exception);
-			}
-
-			return getUrl();
-		}
+		return StringPool.BLANK;
 	}
 
 	private static final String _LAYOUT_TYPE_PRIVATE_GROUP = "private-group";

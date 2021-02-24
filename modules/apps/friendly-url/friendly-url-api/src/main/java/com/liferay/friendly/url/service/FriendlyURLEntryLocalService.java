@@ -413,8 +413,8 @@ public interface FriendlyURLEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public String getUniqueUrlTitle(
-		long groupId, long classNameId, long classPK, String languageId,
-		String urlTitle);
+		long groupId, long classNameId, long classPK, String urlTitle,
+		String languageId);
 
 	public void setMainFriendlyURLEntry(FriendlyURLEntry friendlyURLEntry);
 

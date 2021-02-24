@@ -581,11 +581,11 @@ public class FriendlyURLEntryLocalServiceWrapper
 
 	@Override
 	public String getUniqueUrlTitle(
-		long groupId, long classNameId, long classPK, String languageId,
-		String urlTitle) {
+		long groupId, long classNameId, long classPK, String urlTitle,
+		String languageId) {
 
 		return _friendlyURLEntryLocalService.getUniqueUrlTitle(
-			groupId, classNameId, classPK, languageId, urlTitle);
+			groupId, classNameId, classPK, urlTitle, languageId);
 	}
 
 	@Override

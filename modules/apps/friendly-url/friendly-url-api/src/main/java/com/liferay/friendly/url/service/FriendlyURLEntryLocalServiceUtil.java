@@ -543,11 +543,11 @@ public class FriendlyURLEntryLocalServiceUtil {
 	}
 
 	public static String getUniqueUrlTitle(
-		long groupId, long classNameId, long classPK, String languageId,
-		String urlTitle) {
+		long groupId, long classNameId, long classPK, String urlTitle,
+		String languageId) {
 
 		return getService().getUniqueUrlTitle(
-			groupId, classNameId, classPK, languageId, urlTitle);
+			groupId, classNameId, classPK, urlTitle, languageId);
 	}
 
 	public static void setMainFriendlyURLEntry(

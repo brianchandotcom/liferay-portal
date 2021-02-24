@@ -70,7 +70,7 @@ describe('AccountSelector', () => {
 
 		it('must display the accounts search autocomplete component"', () => {
 			expect(
-				renderedComponent.getByPlaceholderText(/search-account/)
+				renderedComponent.getByPlaceholderText(/search/)
 			).toBeInTheDocument();
 		});
 
@@ -164,7 +164,7 @@ describe('AccountSelector', () => {
 
 		it('must display the account name', () => {
 			const currentAccountName = renderedComponent.container.querySelector(
-				'.btn-account-selector .account-name'
+				'.btn-account-selector .account-name .text-truncate'
 			).innerHTML;
 			expect(currentAccountName).toBe('My Account Name');
 		});
@@ -188,10 +188,10 @@ describe('AccountSelector', () => {
 			);
 
 			const orders = renderedComponent.baseElement.querySelectorAll(
-				'.orders-list tbody tr'
+				'.orders-table tbody tr'
 			);
 			const orderItem = renderedComponent.baseElement.querySelector(
-				'.orders-list tbody tr'
+				'.orders-table tbody tr'
 			);
 
 			expect(orders.length).toBe(10);
@@ -228,11 +228,13 @@ describe('AccountSelector', () => {
 			const button = renderedComponent.container.querySelector(
 				'.btn-account-selector'
 			);
-			const currentAccountName = button.querySelector('.account-name')
-				.innerHTML;
+			const currentAccountName = button.querySelector(
+				'.account-name .text-truncate'
+			).innerHTML;
 			const currentOrderId = button.querySelector('.order-id').innerHTML;
-			const currentOrderLabel = button.querySelector('.order-label')
-				.innerHTML;
+			const currentOrderLabel = button.querySelector(
+				'.order-label .label'
+			).innerHTML;
 
 			expect(currentAccountName).toBe('My Account Name');
 			expect(currentOrderId).toBe('34234');

@@ -434,7 +434,7 @@ public class JenkinsResultsParserUtil {
 		Process process = new BufferedProcess(2000000, processBuilder.start());
 
 		long duration = 0;
-		long start = getCurrentTimeMillis();
+		long start = System.currentTimeMillis();
 		int returnCode = -1;
 
 		while (true) {
@@ -445,7 +445,7 @@ public class JenkinsResultsParserUtil {
 					String standardOut = readInputStream(
 						process.getInputStream(), true);
 
-					duration = getCurrentTimeMillis() - start;
+					duration = System.currentTimeMillis() - start;
 
 					while (!standardOut.contains(
 								"Finished executing Bash commands.") &&
@@ -456,14 +456,14 @@ public class JenkinsResultsParserUtil {
 						standardOut = readInputStream(
 							process.getInputStream(), true);
 
-						duration = getCurrentTimeMillis() - start;
+						duration = System.currentTimeMillis() - start;
 					}
 				}
 
 				break;
 			}
 			catch (IllegalThreadStateException illegalThreadStateException) {
-				duration = getCurrentTimeMillis() - start;
+				duration = System.currentTimeMillis() - start;
 
 				if (duration >= timeout) {
 					throw new TimeoutException(

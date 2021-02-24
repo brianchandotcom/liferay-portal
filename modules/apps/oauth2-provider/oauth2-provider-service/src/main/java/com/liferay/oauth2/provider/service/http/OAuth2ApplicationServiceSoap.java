@@ -63,42 +63,6 @@ import java.rmi.RemoteException;
 @Deprecated
 public class OAuth2ApplicationServiceSoap {
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addOAuth2Application(List, long, String, int, String, String, List, String, long, String, String, List, List, ServiceContext, boolean)}
-	 */
-	@Deprecated
-	public static com.liferay.oauth2.provider.model.OAuth2ApplicationSoap
-			addOAuth2Application(
-				java.util.List<com.liferay.oauth2.provider.constants.GrantType>
-					allowedGrantTypesList,
-				long clientCredentialUserId, String clientId, int clientProfile,
-				String clientSecret, String description,
-				java.util.List<String> featuresList, String homePageURL,
-				long iconFileEntryId, String name, String privacyPolicyURL,
-				java.util.List<String> redirectURIsList,
-				java.util.List<String> scopeAliasesList,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-
-		try {
-			com.liferay.oauth2.provider.model.OAuth2Application returnValue =
-				OAuth2ApplicationServiceUtil.addOAuth2Application(
-					allowedGrantTypesList, clientCredentialUserId, clientId,
-					clientProfile, clientSecret, description, featuresList,
-					homePageURL, iconFileEntryId, name, privacyPolicyURL,
-					redirectURIsList, scopeAliasesList, serviceContext);
-
-			return com.liferay.oauth2.provider.model.OAuth2ApplicationSoap.
-				toSoapModel(returnValue);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			throw new RemoteException(exception.getMessage());
-		}
-	}
-
 	public static com.liferay.oauth2.provider.model.OAuth2ApplicationSoap
 			addOAuth2Application(
 				java.util.List<com.liferay.oauth2.provider.constants.GrantType>
@@ -121,6 +85,42 @@ public class OAuth2ApplicationServiceSoap {
 					homePageURL, iconFileEntryId, name, privacyPolicyURL,
 					redirectURIsList, scopeAliasesList, trustedApplication,
 					serviceContext);
+
+			return com.liferay.oauth2.provider.model.OAuth2ApplicationSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addOAuth2Application(List, long, String, int, String, String, List, String, long, String, String, List, List, boolean, ServiceContext)}
+	 */
+	@Deprecated
+	public static com.liferay.oauth2.provider.model.OAuth2ApplicationSoap
+			addOAuth2Application(
+				java.util.List<com.liferay.oauth2.provider.constants.GrantType>
+					allowedGrantTypesList,
+				long clientCredentialUserId, String clientId, int clientProfile,
+				String clientSecret, String description,
+				java.util.List<String> featuresList, String homePageURL,
+				long iconFileEntryId, String name, String privacyPolicyURL,
+				java.util.List<String> redirectURIsList,
+				java.util.List<String> scopeAliasesList,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.oauth2.provider.model.OAuth2Application returnValue =
+				OAuth2ApplicationServiceUtil.addOAuth2Application(
+					allowedGrantTypesList, clientCredentialUserId, clientId,
+					clientProfile, clientSecret, description, featuresList,
+					homePageURL, iconFileEntryId, name, privacyPolicyURL,
+					redirectURIsList, scopeAliasesList, serviceContext);
 
 			return com.liferay.oauth2.provider.model.OAuth2ApplicationSoap.
 				toSoapModel(returnValue);
@@ -284,11 +284,6 @@ public class OAuth2ApplicationServiceSoap {
 		}
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #updateOAuth2Application(long, List, long, String, int, String, String, List, String, long, String, String, List, long, ServiceContext)}
-	 */
-	@Deprecated
 	public static com.liferay.oauth2.provider.model.OAuth2ApplicationSoap
 			updateOAuth2Application(
 				long oAuth2ApplicationId,
@@ -324,6 +319,11 @@ public class OAuth2ApplicationServiceSoap {
 		}
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #updateOAuth2Application(long, List, long, String, int, String, String, List, String, long, String, String, List, long, ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.oauth2.provider.model.OAuth2ApplicationSoap
 			updateOAuth2Application(
 				long oAuth2ApplicationId,

@@ -64,7 +64,7 @@ public class OAuth2ApplicationLocalServiceUtil {
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addOAuth2Application(long, long, String, List, long, String, int, String, String, List, String, long, String, String, List, Consumer, ServiceContext, boolean)}
+	 #addOAuth2Application(long, long, String, List, long, String, int, String, String, List, String, long, String, String, List, boolean, Consumer, ServiceContext)}
 	 */
 	@Deprecated
 	public static com.liferay.oauth2.provider.model.OAuth2Application
@@ -116,7 +116,7 @@ public class OAuth2ApplicationLocalServiceUtil {
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addOAuth2Application(long, long, String, List, long, String, int, String, String, List, String, long, String, String, List, List, ServiceContext, boolean)} (String,
+	 #addOAuth2Application(long, long, String, List, long, String, int, String, String, List, String, long, String, String, List, List, boolean, ServiceContext)} (String,
 	 long)}
 	 */
 	@Deprecated

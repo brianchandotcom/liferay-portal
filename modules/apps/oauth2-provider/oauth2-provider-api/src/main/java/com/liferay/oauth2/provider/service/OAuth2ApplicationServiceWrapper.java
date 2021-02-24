@@ -57,7 +57,7 @@ public class OAuth2ApplicationServiceWrapper
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addOAuth2Application(List, long, String, int, String, String, List, String, long, String, String, List, List, ServiceContext, boolean)}
+	 #addOAuth2Application(List, long, String, int, String, String, List, String, long, String, String, List, List, boolean, ServiceContext)}
 	 */
 	@Deprecated
 	@Override

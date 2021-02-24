@@ -62,6 +62,7 @@ public class OAuth2ApplicationServiceHttp {
 				long iconFileEntryId, String name, String privacyPolicyURL,
 				java.util.List<String> redirectURIsList,
 				java.util.List<String> scopeAliasesList,
+				boolean trustedApplication,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -75,7 +76,7 @@ public class OAuth2ApplicationServiceHttp {
 				clientId, clientProfile, clientSecret, description,
 				featuresList, homePageURL, iconFileEntryId, name,
 				privacyPolicyURL, redirectURIsList, scopeAliasesList,
-				serviceContext);
+				trustedApplication, serviceContext);
 
 			Object returnObj = null;
 
@@ -117,7 +118,6 @@ public class OAuth2ApplicationServiceHttp {
 				long iconFileEntryId, String name, String privacyPolicyURL,
 				java.util.List<String> redirectURIsList,
 				java.util.List<String> scopeAliasesList,
-				boolean trustedApplication,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -131,7 +131,7 @@ public class OAuth2ApplicationServiceHttp {
 				clientId, clientProfile, clientSecret, description,
 				featuresList, homePageURL, iconFileEntryId, name,
 				privacyPolicyURL, redirectURIsList, scopeAliasesList,
-				trustedApplication, serviceContext);
+				serviceContext);
 
 			Object returnObj = null;
 
@@ -716,7 +716,7 @@ public class OAuth2ApplicationServiceHttp {
 			java.util.List.class, long.class, String.class, int.class,
 			String.class, String.class, java.util.List.class, String.class,
 			long.class, String.class, String.class, java.util.List.class,
-			java.util.List.class,
+			java.util.List.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addOAuth2ApplicationParameterTypes1 =
@@ -724,7 +724,7 @@ public class OAuth2ApplicationServiceHttp {
 			java.util.List.class, long.class, String.class, int.class,
 			String.class, String.class, java.util.List.class, String.class,
 			long.class, String.class, String.class, java.util.List.class,
-			java.util.List.class, boolean.class,
+			java.util.List.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addOAuth2ApplicationParameterTypes2 =
@@ -758,7 +758,7 @@ public class OAuth2ApplicationServiceHttp {
 			long.class, java.util.List.class, long.class, String.class,
 			int.class, String.class, String.class, java.util.List.class,
 			String.class, long.class, String.class, String.class,
-			java.util.List.class, long.class,
+			java.util.List.class, long.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateOAuth2ApplicationParameterTypes11 =
@@ -766,7 +766,7 @@ public class OAuth2ApplicationServiceHttp {
 			long.class, java.util.List.class, long.class, String.class,
 			int.class, String.class, String.class, java.util.List.class,
 			String.class, long.class, String.class, String.class,
-			java.util.List.class, long.class, boolean.class,
+			java.util.List.class, long.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateOAuth2ApplicationParameterTypes12 =

@@ -4,6 +4,7 @@ definition {
 	// Ignore test until Analytics Cloud connection is fully automated
 
 	property analytics.cloud.enabled = "true";
+	property minimum.slave.ram = "32";
 	property portal.release = "false";
 	property portal.upstream = "false";
 	property testray.main.component.name = "A/B Test";

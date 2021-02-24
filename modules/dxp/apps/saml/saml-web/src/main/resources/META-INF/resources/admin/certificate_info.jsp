@@ -21,6 +21,10 @@ CertificateTool certificateTool = (CertificateTool)request.getAttribute(SamlWebK
 
 LocalEntityManager.CertificateUsage certificateUsage = LocalEntityManager.CertificateUsage.valueOf(ParamUtil.getString(request, "certificateUsage"));
 
+GeneralTabDefaultViewDisplayContext generalTabDefaultViewDisplayContext = (GeneralTabDefaultViewDisplayContext)renderRequest.getAttribute(GeneralTabDefaultViewDisplayContext.class.getName());
+
+SamlProviderConfiguration samlProviderConfiguration = samlProviderConfigurationHelper.getSamlProviderConfiguration();
+
 GeneralTabDefaultViewDisplayContext.X509CertificateStatus x509CertificateStatus = generalTabDefaultViewDisplayContext.getX509CertificateStatus(certificateUsage);
 
 X509Certificate x509Certificate = x509CertificateStatus.getX509Certificate();

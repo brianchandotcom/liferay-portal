@@ -116,7 +116,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test DeleteFieldGroupOnStructure {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		var dmDocumentTypeTitle = "DM Document Type";
 

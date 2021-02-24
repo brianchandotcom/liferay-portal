@@ -438,7 +438,7 @@ definition {
 	@description = "This is a test for LPS-98073. As a Developer, I want to Implement the image field type"
 	@priority = "5"
 	test UploadImageFromDocumentsAndMedia {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "Document_1.jpg",
@@ -478,7 +478,7 @@ definition {
 	@description = "This is a test for LPS-98073. As a Developer, I want to Implement the image field type"
 	@priority = "5"
 	test UploadImageFromLocalStorage {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 

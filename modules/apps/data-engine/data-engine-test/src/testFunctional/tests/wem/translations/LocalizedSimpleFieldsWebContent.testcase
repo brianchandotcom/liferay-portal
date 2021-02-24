@@ -686,7 +686,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test TranslationDoesNotChangeAnother {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 

@@ -460,7 +460,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test UploadImageFromDocumentsAndMedia {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		var structureTitle = "My Structure";
 		var webTitle = "WC Title";

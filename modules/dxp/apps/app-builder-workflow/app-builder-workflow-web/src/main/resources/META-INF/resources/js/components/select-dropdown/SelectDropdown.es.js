@@ -31,6 +31,7 @@ const DropdownIcons = ({children, warningIcon}) => {
 export default function SelectDropdown({
 	ariaLabelId,
 	children,
+	dropdownButtonProps,
 	emptyResultMessage,
 	items = [],
 	label,
@@ -39,6 +40,9 @@ export default function SelectDropdown({
 	warningIcon,
 	...otherProps
 }) {
+	const buttonClassName = dropdownButtonProps
+		? dropdownButtonProps.className
+		: 'clearfix w-100';
 	const itemName = selectedValue || label;
 
 	return (
@@ -50,7 +54,7 @@ export default function SelectDropdown({
 				trigger={
 					<ClayButton
 						aria-labelledby={ariaLabelId}
-						className="clearfix w-100"
+						className={buttonClassName}
 						displayType="secondary"
 					>
 						<span

@@ -475,6 +475,13 @@ export default function DataAndViewsTab({
 							<SelectFormView
 								addButton={addFormViewButton(updateFormView)}
 								ariaLabelId="form-view-label"
+								dropdownButtonProps={{
+									className: classNames(
+										'clearfix w-100',
+										formView.missingRequiredFields
+											.nativeField && 'border-error'
+									),
+								}}
 								isLoading={fetching}
 								items={mainFormViews}
 								onSelect={updateFormView}

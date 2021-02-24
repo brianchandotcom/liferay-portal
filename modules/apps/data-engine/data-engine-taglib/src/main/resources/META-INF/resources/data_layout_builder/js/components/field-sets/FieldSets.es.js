@@ -134,7 +134,7 @@ export default function FieldSets({keywords}) {
 	const propagateFieldSet = usePropagateFieldSet();
 
 	const onDoubleClick = ({fieldSet}) => {
-		const {activePage, pages} = dataLayoutBuilder.getStore();
+		const {activePage, pages} = dataLayoutBuilder.getLayoutProvider().state;
 		const payload = dropFieldSet({
 			availableLanguageIds: dataDefinition.availableLanguageIds,
 			dataLayoutBuilder,

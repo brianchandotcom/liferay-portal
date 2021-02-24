@@ -381,7 +381,7 @@ describe('EditFormView', () => {
 			},
 		};
 
-		dataLayoutBuilderMock.props.appContext[0] = context;
+		dataLayoutBuilderProps.props.appContext[0] = context;
 
 		const {container, queryByText, rerender} = render(
 			<EditFormViewWrapper />

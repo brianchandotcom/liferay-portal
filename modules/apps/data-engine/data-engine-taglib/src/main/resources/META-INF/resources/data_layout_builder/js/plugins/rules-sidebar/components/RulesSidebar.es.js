@@ -29,7 +29,7 @@ import DataLayoutBuilderContext from '../../../data-layout-builder/DataLayoutBui
 
 export const DataEngineRulesSidebar = ({title}) => {
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
-	const {pages} = dataLayoutBuilder.getStore();
+	const {pages} = dataLayoutBuilder.getLayoutProvider().state;
 
 	const [
 		{

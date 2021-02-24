@@ -796,13 +796,11 @@ export const FORM_VIEW = {
 				getEvents: () => ({
 					fieldHovered: jest.fn(),
 				}),
-			}),
-			getStore: () => {
-				return {
+				state: {
 					activePage: 0,
 					pages,
-				};
-			},
+				},
+			}),
 			on: jest.fn(),
 			onEditingLanguageIdChange: jest.fn(),
 			removeEventListener: jest.fn(),

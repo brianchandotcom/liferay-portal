@@ -58,7 +58,7 @@ export default ({dataLayoutBuilder}) => {
 			);
 
 			if (dataDefinitionField) {
-				const {pages} = dataLayoutBuilder.getStore();
+				const {pages} = dataLayoutBuilder.getLayoutProvider().state;
 				const visitor = new PagesVisitor(pages);
 				const fieldName = dataDefinitionField.name;
 				const event = {

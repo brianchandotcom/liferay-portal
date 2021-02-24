@@ -29,7 +29,7 @@ import FormViewContext from './FormViewContext.es';
  * @param {object} dataLayoutBuilder
  */
 function getDDMFormFields(dataLayoutBuilder) {
-	const {pages} = dataLayoutBuilder.getStore();
+	const {pages} = dataLayoutBuilder.getLayoutProvider().state;
 	const visitor = new PagesVisitor(pages);
 
 	const fields = [];

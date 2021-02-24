@@ -22,7 +22,7 @@ export default ({dataLayoutBuilder}) => {
 	const [, dispatch] = useContext(FormViewContext);
 
 	return (event) => {
-		const {pages} = dataLayoutBuilder.getStore();
+		const {pages} = dataLayoutBuilder.getLayoutProvider().state;
 		const visitor = new PagesVisitor(pages);
 
 		if (visitor.containsField(event.fieldName, true)) {

@@ -286,7 +286,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 		String[] ddmStructureFieldNameParts = StringUtil.split(
 			ddmStructureFieldName, DDM_FIELD_SEPARATOR);
 
-		DDMStructure structure = _ddmStructureLocalService.getStructure(
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
 			GetterUtil.getLong(ddmStructureFieldNameParts[2]));
 
 		String fieldName = StringUtil.replaceLast(
@@ -295,8 +295,8 @@ public class DDMIndexerImpl implements DDMIndexer {
 			StringPool.BLANK);
 
 		return createFieldValueQueryFilter(
-			ddmStructureFieldName, ddmStructureFieldValue, structure, fieldName,
-			ddmStructureFieldNameParts[1], locale);
+			ddmStructure, ddmStructureFieldName, ddmStructureFieldValue,
+			fieldName, ddmStructureFieldNameParts[1], locale);
 	}
 
 	@Override
@@ -652,9 +652,9 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 		BooleanQuery booleanQuery = new BooleanQueryImpl();
 
-		if (structure.hasField(fieldName)) {
+		if (ddmStructure.hasField(fieldName)) {
 			ddmStructureFieldValue = _ddm.getIndexedFieldValue(
-				ddmStructureFieldValue, structure.getFieldType(fieldName));
+				ddmStructureFieldValue, ddmStructure.getFieldType(fieldName));
 		}
 
 		if (ddmStructureFieldValue instanceof String[]) {

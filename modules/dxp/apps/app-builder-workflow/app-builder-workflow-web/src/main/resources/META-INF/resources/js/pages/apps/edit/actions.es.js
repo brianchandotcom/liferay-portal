@@ -120,9 +120,8 @@ export function populateConfigData([
 		tableView: tableViews.find(({id}) => id === app.dataListViewId),
 	};
 
-	if (!app.active && config.formView.missingRequiredFields.nativeField) {
+	if (config.formView.missingRequiredFields.nativeField) {
 		app.dataLayoutId = null;
-		config.formView = {};
 	}
 
 	return [app, config];

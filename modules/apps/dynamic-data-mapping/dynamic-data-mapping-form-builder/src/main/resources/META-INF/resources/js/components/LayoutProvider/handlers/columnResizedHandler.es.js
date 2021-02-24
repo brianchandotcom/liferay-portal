@@ -14,10 +14,6 @@
 
 import {FormSupport} from 'dynamic-data-mapping-form-renderer';
 
-import {
-	MAX_COLUMNS,
-	MIN_COLUMN_SIZE,
-} from '../../FormBuilder/withResizeableColumns.es';
 import {updateField} from '../util/settingsContext.es';
 
 const getColumn = (pages, nestedIndexes = []) => {
@@ -150,19 +146,16 @@ export const handleResizeRight = (
 		) {
 			newCurrentColumn = {
 				...currentColumn,
-				size: Math.max(currentColumn.size - newSize, MIN_COLUMN_SIZE),
+				size: Math.max(currentColumn.size - newSize, 1),
 			};
 
 			newNextColumn = {
 				...nextColumn,
-				size: Math.min(nextColumn.size + newSize, MAX_COLUMNS),
+				size: Math.min(nextColumn.size + newSize, 12),
 			};
 		}
 		else if (columnTarget > currentColumnPosition) {
-			if (
-				nextColumn.size === MIN_COLUMN_SIZE &&
-				nextColumn.fields.length === 0
-			) {
+			if (nextColumn.size === 1 && nextColumn.fields.length === 0) {
 				newCurrentColumn = {
 					...currentColumn,
 					size: currentColumn.size + newSize,
@@ -277,7 +270,7 @@ const handleResizeLeft = (props, state, source, indexes, columnTarget) => {
 	}
 	else if (
 		previousColumn &&
-		previousColumn.size === MIN_COLUMN_SIZE &&
+		previousColumn.size === 1 &&
 		previousColumn.fields.length === 0 &&
 		columnTarget <= previousColumnPosition
 	) {
@@ -297,7 +290,7 @@ const handleResizeLeft = (props, state, source, indexes, columnTarget) => {
 			columnIndex - 1,
 			{
 				...currentColumn,
-				size: currentColumn.size + MIN_COLUMN_SIZE,
+				size: currentColumn.size + 1,
 			}
 		);
 	}
@@ -375,7 +368,7 @@ export default (props, state, source, container, column, direction) => {
 				state,
 				source,
 				sourceIndexes,
-				column
+				column + 1
 			);
 		}
 	}

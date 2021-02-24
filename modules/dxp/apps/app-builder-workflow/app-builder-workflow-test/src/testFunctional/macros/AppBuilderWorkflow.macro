@@ -163,6 +163,26 @@ definition {
 			value1 = "${tableViewName}");
 	}
 
+	macro assignEntryAndCommentThroughDetailsView {
+		Click.javaScriptClick(locator1 = "AppBuilderWorkflow#ASSIGN_TO");
+
+		Click(locator1 = "AppBuilderWorkflow#SELECT_NEW_ASSIGNEE_BUTTON");
+
+		Type(
+			locator1 = "AppBuilderWorkflow#SELECT_NEW_ASSIGNEE_SEARCH_FIELD",
+			value1 = "${assignee}");
+
+		Click(
+			key_assignee = "${assignee}",
+			locator1 = "AppBuilderWorkflow#SELECT_NEW_ASSIGNEE");
+
+		Type(
+			locator1 = "AppBuilderWorkflow#ASSIGN_TO_COMMENT",
+			value1 = "${comment}");
+
+		Button.click(button = "Done");
+	}
+
 	macro assignEntryThroughTableView {
 		Click(
 			key_itemName = "${itemName}",
@@ -279,6 +299,10 @@ definition {
 		SelectFrame(
 			key_title = "New Table View",
 			locator1 = "IFrame#MODAL_ANY");
+	}
+
+	macro collapseOrExpandActivity {
+		Click(locator1 = "AppBuilderWorkflow#ACTIVITY_HEADER");
 	}
 
 	macro createSimpleFormView {
@@ -468,6 +492,28 @@ definition {
 				key_actionName = "${secondaryActionName}",
 				locator1 = "AppBuilderWorkflow#ACTION_NAME_INSIDE_ACTIONS_CARD");
 		}
+	}
+
+	macro validateActivity {
+		AssertElementPresent(
+			locator1 = "AppBuilderWorkflow#ACTIVITY_DESCRIPTION",
+			value1 = "${description}");
+	}
+
+	macro validateActivityDate {
+		var key_currentDateDay = DateUtil.getFormattedDate("0", "dd");
+		var key_currentDateYear = DateUtil.getCurrentYear();
+		var key_currentDate = "/${key_currentDateDay}/${key_currentDateYear}";
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "AppBuilderWorkflow#ACTIVITY_DATE",
+			value1 = "${key_currentDate}");
+	}
+
+	macro validateCollapsedActivity {
+		AssertElementPresent(
+			key_description = "${description}",
+			locator1 = "AppBuilderWorkflow#ACTIVITY_DESCRIPTION_COLLAPSED");
 	}
 
 	macro validateFormOrTableViewResultNotPresent {

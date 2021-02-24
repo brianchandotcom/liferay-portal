@@ -54,6 +54,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BODY_TEXT</td>
+	<td>//body[contains(@class,'cke_editable') and contains(.,'${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>OK_BUTTON</td>
 	<td>//a[contains(@role,'button')][normalize-space()='OK']</td>
 	<td></td>

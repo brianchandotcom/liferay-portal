@@ -224,7 +224,9 @@ definition {
 			RobotType.robotTypeShortcut(locator1 = "Ctrl + v");
 		}
 
-		Pause(locator1 = "5000");
+		WaitForElementPresent(
+			key_text = "Sample document for editor area test",
+			locator1 = "CKEditor#BODY_TEXT");
 
 		takeScreenshot();
 

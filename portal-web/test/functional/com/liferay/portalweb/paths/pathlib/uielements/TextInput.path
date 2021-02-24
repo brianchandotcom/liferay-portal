@@ -415,7 +415,7 @@
 </tr>
 <tr>
 	<td>OPEN_GRAPH_CUSTOM_IMAGE_INPUT</td>
-	<td>//div[label[contains(.,'Image')]]//input[contains(@value,'${key_dmDocumentURL}') and @readonly='true']</td>
+	<td>//div[label[contains(.,'Image')]]//input[contains(@value,'${key_dmDocumentURL}') and @readonly='readonly']</td>
 	<td></td>
 </tr>
 <tr>

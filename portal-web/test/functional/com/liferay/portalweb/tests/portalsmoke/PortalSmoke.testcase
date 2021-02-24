@@ -77,7 +77,7 @@ definition {
 
 	@priority = "5"
 	test SmokeWithRuntimeJSPCompile {
-		property delete.precompile.jsp.folder = "true";
+		property delete.precompiled.jsps = "true";
 		property portal.smoke = "false";
 
 		Smoke.viewWelcomeContentPage();

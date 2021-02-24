@@ -13320,10 +13320,10 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 
 				<antcall target="wait-for-plugins-deployment" />
 
-				<get-testcase-property property.name="delete.precompile.jsp.folder" />
+				<get-testcase-property property.name="delete.precompiled.jsps" />
 
 				<if>
-					<equals arg1="${delete.precompile.jsp.folder}" arg2="true" />
+					<equals arg1="${delete.precompiled.jsps}" arg2="true" />
 					<then>
 						<delete dir="${liferay.home}/work" />
 					</then>

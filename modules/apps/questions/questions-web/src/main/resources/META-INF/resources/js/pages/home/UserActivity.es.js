@@ -82,6 +82,14 @@ export default withRouter(
 				isWebCrawler() ? '/-' : '#'
 			}/activity/${creatorId}?page=${page}&pagesize=${pageSize}`;
 
+		const addSectionToQuestion = (question) => {
+			return {
+				messageBoardSection:
+					question.messageBoardThread.messageBoardSection,
+				...question,
+			};
+		};
+
 		return (
 			<section className="questions-section questions-section-list">
 				<div className="c-p-5 questions-container row">
@@ -146,7 +154,7 @@ export default withRouter(
 											  context.rootTopicId
 									}
 									key={question.id}
-									question={question}
+									question={addSectionToQuestion(question)}
 									showSectionLabel={true}
 								/>
 							)}

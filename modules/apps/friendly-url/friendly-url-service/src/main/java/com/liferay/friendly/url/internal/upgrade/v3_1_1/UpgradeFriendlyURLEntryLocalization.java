@@ -38,7 +38,7 @@ import java.util.Map;
 /**
  * @author Ricardo Couso
  */
-public class UpgradeFriendlyURLEntryLocalizations extends UpgradeProcess {
+public class UpgradeFriendlyURLEntryLocalization extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
@@ -326,6 +326,6 @@ public class UpgradeFriendlyURLEntryLocalizations extends UpgradeProcess {
 		"com.liferay.journal.model.JournalArticle");
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		UpgradeFriendlyURLEntryLocalizations.class);
+		UpgradeFriendlyURLEntryLocalization.class);
 
 }

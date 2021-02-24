@@ -52,6 +52,12 @@ public interface DDMFormWebConfiguration {
 	public String defaultDisplayView();
 
 	@Meta.AD(
+		deflt = "5", description = "maximum-repetitions-for-upload-fields-help",
+		name = "maximum-repetitions-for-upload-fields", required = false
+	)
+	public int maximumRepetitionsForUploadFields();
+
+	@Meta.AD(
 		deflt = "doc, docx, jpeg, jpg, pdf, png, ppt, pptx, tiff, txt, xls, xlsx",
 		description = "guest-upload-file-extensions-help",
 		name = "guest-upload-file-extensions", required = false
@@ -63,12 +69,6 @@ public interface DDMFormWebConfiguration {
 		name = "guest-upload-maximum-file-size", required = false
 	)
 	public long guestUploadMaximumFileSize();
-
-	@Meta.AD(
-		deflt = "5", description = "maximum-repetitions-for-upload-fields-help",
-		name = "maximum-repetitions-for-upload-fields", required = false
-	)
-	public int maximumRepetitionsForUploadFields();
 
 	@Meta.AD(
 		deflt = "5",

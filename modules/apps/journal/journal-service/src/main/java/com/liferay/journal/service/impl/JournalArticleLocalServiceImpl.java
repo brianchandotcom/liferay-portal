@@ -9082,7 +9082,7 @@ public class JournalArticleLocalServiceImpl
 						groupId,
 						classNameLocalService.getClassNameId(
 							JournalArticle.class),
-						resourcePrimKey, value);
+						resourcePrimKey, LocaleUtil.toLanguageId(key), value);
 
 				urlTitleMap.put(LocaleUtil.toLanguageId(key), urlTitle);
 			}

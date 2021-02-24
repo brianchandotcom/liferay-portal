@@ -77,7 +77,9 @@ const EditTagsModal = ({
 			};
 
 			return fetch(`${pathModule}${url}`, init)
-				.then((response) => response.json())
+				.then((response) =>
+					response.status === 204 ? '' : response.json()
+				)
 				.catch(() => {
 					onModalClose();
 				});

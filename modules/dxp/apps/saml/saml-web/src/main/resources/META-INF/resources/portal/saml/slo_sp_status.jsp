@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portal/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 JSONObject samlSloRequestInfoJSONObject = (JSONObject)request.getAttribute("SAML_SLO_REQUEST_INFO");

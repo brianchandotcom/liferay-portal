@@ -67,7 +67,7 @@ CreationMenu creationMenu =
 	};
 %>
 
-<clay:management-toolbar-v2
+<clay:management-toolbar
 	clearResultsURL="<%= String.valueOf(clearResultsURL) %>"
 	creationMenu="<%= creationMenu %>"
 	itemsTotal="<%= loggerSearchContainer.getTotal() %>"

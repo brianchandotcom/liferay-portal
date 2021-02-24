@@ -63,7 +63,7 @@ propertiesSearchContainer.setResults(ListUtil.subList(filteredPropertiesList, pr
 propertiesSearchContainer.setTotal(filteredPropertiesList.size());
 %>
 
-<clay:management-toolbar-v2
+<clay:management-toolbar
 	clearResultsURL="<%= String.valueOf(clearResultsURL) %>"
 	itemsTotal="<%= propertiesSearchContainer.getTotal() %>"
 	searchActionURL="<%= String.valueOf(serverURL) %>"

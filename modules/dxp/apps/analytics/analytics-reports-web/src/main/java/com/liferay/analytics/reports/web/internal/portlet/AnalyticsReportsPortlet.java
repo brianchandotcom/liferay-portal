@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -94,21 +95,20 @@ public class AnalyticsReportsPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			AnalyticsReportsWebKeys.ANALYTICS_REPORTS_DISPLAY_CONTEXT,
 			new AnalyticsReportsDisplayContext(
-				_portal.getClassNameId(infoItemReference.getClassName()),
-				infoItemReference.getClassPK(), renderRequest, renderResponse,
+				infoItemReference, renderRequest, renderResponse,
 				themeDisplay));
 
 		super.doDispatch(renderRequest, renderResponse);
 	}
 
 	private String _getClassName(HttpServletRequest httpServletRequest) {
-		long classNameId = ParamUtil.getLong(httpServletRequest, "classNameId");
+		String className = ParamUtil.getString(httpServletRequest, "className");
 
-		if (classNameId == 0) {
+		if (Validator.isNull(className)) {
 			return Layout.class.getName();
 		}
 
-		return _portal.getClassName(classNameId);
+		return className;
 	}
 
 	private long _getClassPK(HttpServletRequest httpServletRequest) {

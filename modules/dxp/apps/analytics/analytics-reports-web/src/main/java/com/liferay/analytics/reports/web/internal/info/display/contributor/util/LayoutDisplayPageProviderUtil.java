@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -45,13 +46,11 @@ public class LayoutDisplayPageProviderUtil {
 			return layoutDisplayPageObjectProvider;
 		}
 
-		long classNameId = ParamUtil.getLong(httpServletRequest, "classNameId");
+		String className = ParamUtil.getString(httpServletRequest, "className");
 
-		if (classNameId == 0) {
+		if (Validator.isNull(className)) {
 			return null;
 		}
-
-		String className = portal.getClassName(classNameId);
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			layoutDisplayPageProviderTracker.

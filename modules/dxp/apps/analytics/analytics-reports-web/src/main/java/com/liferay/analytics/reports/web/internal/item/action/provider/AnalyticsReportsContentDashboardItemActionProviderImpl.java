@@ -61,8 +61,7 @@ public class AnalyticsReportsContentDashboardItemActionProviderImpl
 			return new AnalyticsReportsContentDashboardItemAction(
 				_resourceBundleLoader,
 				AnalyticsReportsUtil.getAnalyticsReportsPanelURL(
-					_portal.getClassNameId(infoItemReference.getClassName()),
-					infoItemReference.getClassPK(), httpServletRequest, _portal,
+					infoItemReference, httpServletRequest, _portal,
 					_portletURLFactory));
 		}
 		catch (PortalException | WindowStateException exception) {

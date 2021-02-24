@@ -129,10 +129,8 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 				values.put(
 					"analyticsReportsPanelURL",
 					AnalyticsReportsUtil.getAnalyticsReportsPanelURL(
-						_portal.getClassNameId(
-							infoItemReference.getClassName()),
-						infoItemReference.getClassPK(), httpServletRequest,
-						_portal, _portletURLFactory));
+						infoItemReference, httpServletRequest, _portal,
+						_portletURLFactory));
 			}
 			catch (Exception exception) {
 				ReflectionUtil.throwException(exception);

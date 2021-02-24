@@ -15,6 +15,7 @@
 package com.liferay.analytics.reports.web.internal.util;
 
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPortletKeys;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -44,7 +45,7 @@ public class AnalyticsReportsUtil {
 		"https://www.liferay.com/products/analytics-cloud/get-started";
 
 	public static String getAnalyticsReportsPanelURL(
-			long classNameId, long classPK,
+			InfoItemReference infoItemReference,
 			HttpServletRequest httpServletRequest, Portal portal,
 			PortletURLFactory portletURLFactory)
 		throws WindowStateException {
@@ -56,8 +57,9 @@ public class AnalyticsReportsUtil {
 		portletURL.setParameter("mvcPath", "/analytics_reports_panel.jsp");
 		portletURL.setParameter(
 			"redirect", portal.getCurrentCompleteURL(httpServletRequest));
-		portletURL.setParameter("classNameId", String.valueOf(classNameId));
-		portletURL.setParameter("classPK", String.valueOf(classPK));
+		portletURL.setParameter("className", infoItemReference.getClassName());
+		portletURL.setParameter(
+			"classPK", String.valueOf(infoItemReference.getClassPK()));
 		portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 
 		return portletURL.toString();

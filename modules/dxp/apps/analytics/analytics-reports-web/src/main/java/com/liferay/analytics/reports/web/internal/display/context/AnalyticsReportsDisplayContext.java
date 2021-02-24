@@ -15,6 +15,7 @@
 package com.liferay.analytics.reports.web.internal.display.context;
 
 import com.liferay.analytics.reports.web.internal.util.AnalyticsReportsUtil;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
@@ -36,11 +37,10 @@ import javax.portlet.ResourceURL;
 public class AnalyticsReportsDisplayContext<T> {
 
 	public AnalyticsReportsDisplayContext(
-		long classNameId, long classPK, RenderRequest renderRequest,
+		InfoItemReference infoItemReference, RenderRequest renderRequest,
 		RenderResponse renderResponse, ThemeDisplay themeDisplay) {
 
-		_classNameId = classNameId;
-		_classPK = classPK;
+		_infoItemReference = infoItemReference;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_themeDisplay = themeDisplay;
@@ -97,17 +97,18 @@ public class AnalyticsReportsDisplayContext<T> {
 	private ResourceURL _getResourceURL(String resourceID) {
 		ResourceURL resourceURL = _renderResponse.createResourceURL();
 
-		resourceURL.setParameter("classNameId", String.valueOf(_classNameId));
-		resourceURL.setParameter("classPK", String.valueOf(_classPK));
+		resourceURL.setParameter(
+			"className", _infoItemReference.getClassName());
+		resourceURL.setParameter(
+			"classPK", String.valueOf(_infoItemReference.getClassPK()));
 
 		resourceURL.setResourceID(resourceID);
 
 		return resourceURL;
 	}
 
-	private final long _classNameId;
-	private final long _classPK;
 	private Map<String, Object> _data;
+	private final InfoItemReference _infoItemReference;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final ThemeDisplay _themeDisplay;

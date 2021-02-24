@@ -211,6 +211,21 @@ definition {
 
 			AssertElementNotPresent(locator1 = "TextInput#FILE_PRESENT");
 		}
+		else if (isSet(validateStorageQuota)) {
+			Button.clickPublish();
+
+			Alert.viewRequestFailedToComplete();
+
+			AssertTextEquals.assertPartialText(
+				key_alertMessage = "You have exceeded the ${storageQuota} storage quota for this instance.",
+				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE",
+				value1 = "You have exceeded the ${storageQuota} storage quota for this instance.");
+
+			AssertTextEquals.assertPartialText(
+				key_alertMessage = "Please select the file again.",
+				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE",
+				value1 = "Please select the file again.");
+		}
 		else if (isSet(requiredFieldValidation)) {
 			Button.clickPublish();
 
@@ -417,6 +432,12 @@ definition {
 			Select(
 				locator1 = "Select#PERMISSIONS",
 				value1 = "${viewableBy}");
+		}
+
+		if (isSet(validateStorageQuota)) {
+			AssertTextEquals.assertPartialText(
+				locator1 = "DocumentsAndMediaDocument#DOCUMENT_EXCEED_STORAGE_QUOTA_ERROR",
+				value1 = "You have exceeded the ${storageQuota} storage quota for this instance.");
 		}
 
 		AssertClick(

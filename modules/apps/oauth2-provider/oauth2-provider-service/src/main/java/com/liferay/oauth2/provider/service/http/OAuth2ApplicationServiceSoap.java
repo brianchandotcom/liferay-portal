@@ -294,7 +294,8 @@ public class OAuth2ApplicationServiceSoap {
 				java.util.List<String> featuresList, String homePageURL,
 				long iconFileEntryId, String name, String privacyPolicyURL,
 				java.util.List<String> redirectURIsList,
-				long auth2ApplicationScopeAliasesId, boolean trustedApplication,
+				long oAuth2ApplicationScopeAliasesId,
+				boolean trustedApplication,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 
@@ -305,7 +306,7 @@ public class OAuth2ApplicationServiceSoap {
 					clientCredentialUserId, clientId, clientProfile,
 					clientSecret, description, featuresList, homePageURL,
 					iconFileEntryId, name, privacyPolicyURL, redirectURIsList,
-					auth2ApplicationScopeAliasesId, trustedApplication,
+					oAuth2ApplicationScopeAliasesId, trustedApplication,
 					serviceContext);
 
 			return com.liferay.oauth2.provider.model.OAuth2ApplicationSoap.
@@ -333,7 +334,7 @@ public class OAuth2ApplicationServiceSoap {
 				java.util.List<String> featuresList, String homePageURL,
 				long iconFileEntryId, String name, String privacyPolicyURL,
 				java.util.List<String> redirectURIsList,
-				long auth2ApplicationScopeAliasesId,
+				long oAuth2ApplicationScopeAliasesId,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 
@@ -344,7 +345,7 @@ public class OAuth2ApplicationServiceSoap {
 					clientCredentialUserId, clientId, clientProfile,
 					clientSecret, description, featuresList, homePageURL,
 					iconFileEntryId, name, privacyPolicyURL, redirectURIsList,
-					auth2ApplicationScopeAliasesId, serviceContext);
+					oAuth2ApplicationScopeAliasesId, serviceContext);
 
 			return com.liferay.oauth2.provider.model.OAuth2ApplicationSoap.
 				toSoapModel(returnValue);
@@ -370,7 +371,7 @@ public class OAuth2ApplicationServiceSoap {
 				String homePageURL, long iconFileEntryId, String name,
 				String privacyPolicyURL,
 				java.util.List<String> redirectURIsList,
-				long auth2ApplicationScopeAliasesId,
+				long oAuth2ApplicationScopeAliasesId,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 
@@ -380,7 +381,7 @@ public class OAuth2ApplicationServiceSoap {
 					oAuth2ApplicationId, allowedGrantTypesList, clientId,
 					clientProfile, clientSecret, description, featuresList,
 					homePageURL, iconFileEntryId, name, privacyPolicyURL,
-					redirectURIsList, auth2ApplicationScopeAliasesId,
+					redirectURIsList, oAuth2ApplicationScopeAliasesId,
 					serviceContext);
 
 			return com.liferay.oauth2.provider.model.OAuth2ApplicationSoap.

@@ -155,6 +155,10 @@ public class FragmentEntryProcessorHelperImpl
 			long classNameId, long classPK, String fieldId, Locale locale)
 		throws PortalException {
 
+		if (classNameId == 0) {
+			return 0;
+		}
+
 		InfoItemIdentifier infoItemIdentifier = new ClassPKInfoItemIdentifier(
 			classPK);
 

@@ -516,6 +516,34 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "Document_2.jpg");
 	}
 
+	@description = "This ensures that users can not upload a file that exceed the storage quota through the single upload."
+	@priority = "5"
+	test ExceedStorageQuotaSingleUpload {
+		property data.limit.max.dl.storage.size = "1048576";
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "DM Document Title");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewCP(
+			dmDocumentSize = "259 B",
+			dmDocumentTitle = "DM Document Title");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "high_resolution_photo.jpg",
+			dmDocumentTitle = "DM Document Title2",
+			storageQuota = "1 MB",
+			validateStorageQuota = "true");
+	}
+
 	@description = "This test covers LPS-94820. This test ensures that only the last two checked in versions of a file are kept when the max version limit is set."
 	@priority = "4"
 	test LimitCheckInMaxFileVersion {

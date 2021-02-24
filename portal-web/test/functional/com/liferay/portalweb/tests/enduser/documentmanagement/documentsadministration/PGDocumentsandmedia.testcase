@@ -983,6 +983,33 @@ definition {
 			dmDocumentVersionNumber = "1.1");
 	}
 
+	@description = "This ensures that users can not upload files that exceed the storage quota through the multiple upload."
+	@priority = "5"
+	test ExceedStorageQuotaMultipleUpload {
+		property data.limit.max.dl.storage.size = "1048576";
+
+		DMDocument.addMultiplePG(dmDocumentFileList = "Document_1.doc");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.viewPG(dmDocumentTitle = "Document_1");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.addMultiplePG(
+			dmDocumentFileList = "Document_2.txt,high_resolution_photo.jpg",
+			storageQuota = "1 MB",
+			validateStorageQuota = "true");
+
+		DMDocument.viewPG(dmDocumentTitle = "Document_2");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		AssertElementNotPresent(
+			key_dmDocumentTitle = "high_resolution_photo",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE");
+	}
+
 	@priority = "4"
 	test MoveDocumentWithSlashesInTitle {
 		Navigator.gotoPage(pageName = "Documents and Media Page");

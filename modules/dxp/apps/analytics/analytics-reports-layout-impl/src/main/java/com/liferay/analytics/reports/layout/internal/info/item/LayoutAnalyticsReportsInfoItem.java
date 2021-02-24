@@ -19,29 +19,32 @@ import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.type.WebImage;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -103,12 +106,16 @@ public class LayoutAnalyticsReportsInfoItem
 
 	@Override
 	public List<Locale> getAvailableLocales(Layout layout) {
-		return Stream.of(
-			layout.getAvailableLanguageIds()
+		return Optional.ofNullable(
+			_groupLocalService.fetchGroup(layout.getGroupId())
 		).map(
-			LocaleUtil::fromLanguageId
-		).collect(
-			Collectors.toList()
+			Group::getGroupId
+		).map(
+			_language::getAvailableLocales
+		).map(
+			ListUtil::fromCollection
+		).orElseGet(
+			() -> Collections.singletonList(LocaleUtil.getDefault())
 		);
 	}
 
@@ -203,7 +210,13 @@ public class LayoutAnalyticsReportsInfoItem
 		LayoutAnalyticsReportsInfoItem.class);
 
 	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

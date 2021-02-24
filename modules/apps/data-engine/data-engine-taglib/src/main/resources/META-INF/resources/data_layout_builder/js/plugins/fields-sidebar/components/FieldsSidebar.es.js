@@ -104,7 +104,10 @@ export const DataEngineFieldsSidebar = ({title}) => {
 				dataLayoutBuilder.dispatch('sidebarFieldBlurred');
 			}}
 			onDoubleClick={({name}) => {
-				const {activePage, pages} = dataLayoutBuilder.getStore();
+				const {
+					activePage,
+					pages,
+				} = dataLayoutBuilder.getLayoutProvider().state;
 
 				dataLayoutBuilder.dispatch(
 					'fieldAdded',

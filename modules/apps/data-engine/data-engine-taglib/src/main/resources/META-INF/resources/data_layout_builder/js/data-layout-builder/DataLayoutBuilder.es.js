@@ -258,14 +258,6 @@ class DataLayoutBuilder extends React.Component {
 		return layoutProvider;
 	}
 
-	getStore() {
-		const layoutProvider = this.getLayoutProvider();
-
-		return {
-			...layoutProvider.state,
-		};
-	}
-
 	on(eventName, listener) {
 		this.eventEmitter.on(eventName, listener);
 	}

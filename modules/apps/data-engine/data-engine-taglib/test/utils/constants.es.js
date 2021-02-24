@@ -582,13 +582,11 @@ export const FORM_VIEW = {
 				on: () => ({
 					removeListener: jest.fn(),
 				}),
-			}),
-			getStore: () => {
-				return {
+				state: {
 					activePage: 0,
 					pages,
-				};
-			},
+				},
+			}),
 			on: jest.fn(),
 			onEditingLanguageIdChange: jest.fn(),
 			removeEventListener: jest.fn(),

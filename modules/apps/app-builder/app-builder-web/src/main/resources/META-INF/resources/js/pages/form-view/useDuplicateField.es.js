@@ -28,7 +28,7 @@ import FormViewContext from './FormViewContext.es';
  * @param {object} dataLayoutBuilder
  */
 function getNewFields(dataLayoutBuilder) {
-	const {pages} = dataLayoutBuilder.getStore();
+	const {pages} = dataLayoutBuilder.getLayoutProvider().state;
 	const visitor = new PagesVisitor(pages);
 
 	const fields = [];

@@ -137,7 +137,7 @@ public class SchedulerResponseDisplayContext extends BaseDisplayContext {
 	}
 
 	public String getSimpleName(String jobName) {
-		return jobName.substring(jobName.lastIndexOf(StringPool.PERIOD) + 1);
+		return _schedulerResponseHelper.getSimpleJobName(jobName);
 	}
 
 	public TriggerState getTriggerState(SchedulerResponse schedulerResponse)

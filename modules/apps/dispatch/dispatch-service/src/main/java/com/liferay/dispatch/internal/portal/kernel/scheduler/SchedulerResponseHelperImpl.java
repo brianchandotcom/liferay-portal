@@ -15,6 +15,7 @@
 package com.liferay.dispatch.internal.portal.kernel.scheduler;
 
 import com.liferay.dispatch.scheduler.SchedulerResponseHelper;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.MessageBus;
@@ -70,7 +71,9 @@ public class SchedulerResponseHelperImpl implements SchedulerResponseHelper {
 
 		Collections.sort(
 			schedulerResponses,
-			Comparator.comparing(SchedulerResponse::getJobName));
+			Comparator.comparing(
+				schedulerResponse -> getSimpleJobName(
+					schedulerResponse.getJobName())));
 
 		return schedulerResponses.subList(
 			start, Math.min(end, schedulerResponses.size()));
@@ -95,6 +98,10 @@ public class SchedulerResponseHelperImpl implements SchedulerResponseHelper {
 
 				return !jobName.startsWith("DISPATCH_JOB_");
 			});
+	}
+
+	public String getSimpleJobName(String jobName) {
+		return jobName.substring(jobName.lastIndexOf(StringPool.PERIOD) + 1);
 	}
 
 	public TriggerState getTriggerState(

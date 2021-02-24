@@ -35,6 +35,8 @@ public interface SchedulerResponseHelper {
 
 	public int getSchedulerResponsesCount();
 
+	public String getSimpleJobName(String jobName);
+
 	public TriggerState getTriggerState(
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException;

@@ -7,9 +7,9 @@ Export-Package:\
 	com.liferay.dispatch.exception,\
 	com.liferay.dispatch.executor,\
 	com.liferay.dispatch.model,\
-	com.liferay.dispatch.portal.kernel.scheduler,\
 	com.liferay.dispatch.repository,\
 	com.liferay.dispatch.repository.exception,\
+	com.liferay.dispatch.scheduler,\
 	com.liferay.dispatch.service,\
 	com.liferay.dispatch.service.persistence
 Provide-Capability:\

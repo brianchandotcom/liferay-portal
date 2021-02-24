@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DOCUMENT_EXCEED_STORAGE_QUOTA_ERROR</td>
+	<td>//li[contains(@class,'upload-error')]//span[@class='error-message']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

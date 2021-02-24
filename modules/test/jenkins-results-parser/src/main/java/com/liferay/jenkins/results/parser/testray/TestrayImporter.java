@@ -248,7 +248,7 @@ public class TestrayImporter {
 					testrayProductVersionName)) {
 
 				testrayProductVersion =
-					testrayProject.getTestrayProductVersionByName(
+					testrayProject.createTestrayProductVersion(
 						_replaceEnvVars(testrayProductVersionName));
 			}
 
@@ -272,7 +272,7 @@ public class TestrayImporter {
 					testrayProductVersionName)) {
 
 				testrayProductVersion =
-					testrayProject.getTestrayProductVersionByName(
+					testrayProject.createTestrayProductVersion(
 						_replaceEnvVars(testrayProductVersionName));
 			}
 
@@ -300,7 +300,7 @@ public class TestrayImporter {
 					testrayProductVersionName)) {
 
 				testrayProductVersion =
-					testrayProject.getTestrayProductVersionByName(
+					testrayProject.createTestrayProductVersion(
 						_replaceEnvVars(testrayProductVersionName));
 			}
 		}

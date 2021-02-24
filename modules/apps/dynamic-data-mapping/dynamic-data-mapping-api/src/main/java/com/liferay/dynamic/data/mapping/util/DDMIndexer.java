@@ -62,8 +62,8 @@ public interface DDMIndexer {
 		throws PortalException;
 
 	public QueryFilter createFieldValueQueryFilter(
-			DDMStructure ddmStructure, String fieldName, Serializable value,
-			Locale locale)
+			DDMStructure ddmStructure, String fieldName, Locale locale,
+			Serializable value)
 		throws Exception;
 
 	public QueryFilter createFieldValueQueryFilter(

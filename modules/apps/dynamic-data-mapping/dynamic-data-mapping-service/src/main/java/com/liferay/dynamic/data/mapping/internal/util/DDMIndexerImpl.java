@@ -264,16 +264,17 @@ public class DDMIndexerImpl implements DDMIndexer {
 	}
 
 	public QueryFilter createFieldValueQueryFilter(
-			DDMStructure ddmStructure, String fieldName, Serializable value,
-			Locale locale)
+			DDMStructure ddmStructure, String fieldName, Locale locale,
+			Serializable value)
 		throws Exception {
 
 		String indexType = ddmStructure.getFieldProperty(
 			fieldName, "indexType");
 
 		return createFieldValueQueryFilter(
+			ddmStructure,
 			encodeName(ddmStructure.getStructureId(), fieldName, locale), value,
-			ddmStructure, fieldName, indexType, locale);
+			fieldName, indexType, locale);
 	}
 
 	@Override
@@ -644,9 +645,9 @@ public class DDMIndexerImpl implements DDMIndexer {
 	}
 
 	protected QueryFilter createFieldValueQueryFilter(
-			String ddmStructureFieldName, Serializable ddmStructureFieldValue,
-			DDMStructure structure, String fieldName, String indexType,
-			Locale locale)
+			DDMStructure ddmStructure, String ddmStructureFieldName,
+			Serializable ddmStructureFieldValue, String fieldName,
+			String indexType, Locale locale)
 		throws Exception {
 
 		BooleanQuery booleanQuery = new BooleanQueryImpl();

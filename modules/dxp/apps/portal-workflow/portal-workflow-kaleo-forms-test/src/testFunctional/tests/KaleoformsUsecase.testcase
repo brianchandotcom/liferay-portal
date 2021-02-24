@@ -4872,7 +4872,7 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
-		Click(locator1 = "MyWorkflowTasksTask#ORDER");
+		Workflow.clickRevertSortDirection();
 
 		Pause(locator1 = "1000");
 

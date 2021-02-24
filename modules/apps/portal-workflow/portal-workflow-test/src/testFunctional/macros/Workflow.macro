@@ -119,7 +119,7 @@ definition {
 			Workflow.gotoCompletedFilter();
 
 			if (isSet(workflowOrder)) {
-				Click(locator1 = "MyWorkflowTasksTask#ORDER");
+				Workflow.clickRevertSortDirection();
 
 				Pause(locator1 = "1000");
 			}

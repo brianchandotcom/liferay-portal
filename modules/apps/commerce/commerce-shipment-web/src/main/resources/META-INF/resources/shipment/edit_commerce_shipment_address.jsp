@@ -56,7 +56,7 @@ CommerceAddress shippingAddress = commerceShipmentDisplayContext.getShippingAddr
 			for (Country country : countries) {
 			%>
 
-				<aui:option label="<%= country.getTitle(locale) %>" selected="<%= shippingAddress.getCommerceCountryId() == country.getCountryId() %>" value="<%= country.getCountryId() %>" />
+				<aui:option label="<%= country.getName(locale) %>" selected="<%= shippingAddress.getCommerceCountryId() == country.getCountryId() %>" value="<%= country.getCountryId() %>" />
 
 			<%
 			}

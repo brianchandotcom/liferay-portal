@@ -105,7 +105,7 @@ public class CommerceTaxRateSettingDataSetDataProvider
 				new TaxRateSetting(
 					_getCountry(
 						commerceTaxFixedRateAddressRel.getCountry(),
-						themeDisplay.getLanguageId()),
+						themeDisplay.getLocale()),
 					_getLocalizedRate(
 						commerceCurrency, commerceTaxFixedRateAddressRel,
 						themeDisplay.getLocale()),
@@ -138,12 +138,12 @@ public class CommerceTaxRateSettingDataSetDataProvider
 				commerceChannel.getGroupId(), commerceTaxMethodId);
 	}
 
-	private String _getCountry(Country country, String languageId) {
+	private String _getCountry(Country country, Locale locale) {
 		if (country == null) {
 			return StringPool.STAR;
 		}
 
-		return country.getTitle(languageId);
+		return country.getName(locale);
 	}
 
 	private String _getLocalizedRate(

@@ -98,7 +98,7 @@ if (commerceShippingFixedOptionRel != null) {
 						for (Country country : countries) {
 						%>
 
-							<aui:option label="<%= country.getTitle(languageId) %>" selected="<%= (commerceShippingFixedOptionRel != null) && (commerceShippingFixedOptionRel.getCommerceCountryId() == country.getCountryId()) %>" value="<%= country.getCountryId() %>" />
+							<aui:option label="<%= country.getName(locale) %>" selected="<%= (commerceShippingFixedOptionRel != null) && (commerceShippingFixedOptionRel.getCommerceCountryId() == country.getCountryId()) %>" value="<%= country.getCountryId() %>" />
 
 						<%
 						}

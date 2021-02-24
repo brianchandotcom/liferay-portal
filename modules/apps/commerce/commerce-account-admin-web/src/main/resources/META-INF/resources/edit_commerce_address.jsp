@@ -76,7 +76,7 @@ long commerceRegionId = commerceAccountAddressAdminDisplayContext.getCommerceReg
 							for (Country country : countries) {
 							%>
 
-								<aui:option label="<%= country.getTitle(locale) %>" selected="<%= (commerceAddress != null) && (commerceAddress.getCommerceCountryId() == country.getCountryId()) %>" value="<%= country.getCountryId() %>" />
+								<aui:option label="<%= country.getName(locale) %>" selected="<%= (commerceAddress != null) && (commerceAddress.getCommerceCountryId() == country.getCountryId()) %>" value="<%= country.getCountryId() %>" />
 
 							<%
 							}

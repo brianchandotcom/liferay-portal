@@ -23,8 +23,6 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 String backURL = ParamUtil.getString(request, "backURL", redirect);
 
-String languageId = LanguageUtil.getLanguageId(locale);
-
 CommerceAddressDisplayContext commerceAddressDisplayContext = (CommerceAddressDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CommerceAddress commerceAddress = commerceAddressDisplayContext.getCommerceAddress();
@@ -79,7 +77,7 @@ CommerceAccount commerceAccount = commerceAddressDisplayContext.getCommerceAccou
 					for (Country country : countries) {
 					%>
 
-						<aui:option label="<%= country.getTitle(languageId) %>" selected="<%= (commerceAddress != null) && (commerceAddress.getCommerceCountryId() == country.getCountryId()) %>" value="<%= country.getCountryId() %>" />
+						<aui:option label="<%= country.getName(locale) %>" selected="<%= (commerceAddress != null) && (commerceAddress.getCommerceCountryId() == country.getCountryId()) %>" value="<%= country.getCountryId() %>" />
 
 					<%
 					}

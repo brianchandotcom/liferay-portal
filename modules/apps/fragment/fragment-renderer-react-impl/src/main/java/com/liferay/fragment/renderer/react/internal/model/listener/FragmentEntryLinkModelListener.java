@@ -161,7 +161,7 @@ public class FragmentEntryLinkModelListener
 	}
 
 	private static final List<String> _dependencies = Collections.singletonList(
-		"frontend-js-react-web$react");
+		"@liferay!frontend-js-react-web$react");
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

@@ -1,7 +1,7 @@
 Liferay.Loader.define('__FRAGMENT_MODULE_NAME__', [
     'module',
     'require',
-    'frontend-js-react-web$react'
+    '@liferay!frontend-js-react-web$react'
 ], function (__MODULE__, __REQUIRE__) {
     (function (modules) {
         var installedModules = {};

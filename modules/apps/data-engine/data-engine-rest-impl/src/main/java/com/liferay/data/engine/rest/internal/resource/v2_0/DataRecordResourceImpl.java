@@ -484,8 +484,6 @@ public class DataRecordResourceImpl
 			new ArrayList<>();
 
 		for (Sort sort : sorts) {
-			String fieldName = sort.getFieldName();
-
 			SortOrder sortOrder = SortOrder.ASC;
 
 			if (sort.isReverse()) {
@@ -494,7 +492,7 @@ public class DataRecordResourceImpl
 
 			com.liferay.portal.search.sort.Sort searchSort =
 				_ddmIndexer.createDDMStructureFieldSort(
-					ddmStructure, fieldName,
+					ddmStructure, sort.getFieldName(),
 					contextAcceptLanguage.getPreferredLocale(), sortOrder);
 
 			searchSorts.add(searchSort);

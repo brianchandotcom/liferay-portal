@@ -13212,6 +13212,15 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			</then>
 		</if>
 
+		<get-testcase-property property.name="delete.precompiled.jsps" />
+
+		<if>
+			<equals arg1="${delete.precompiled.jsps}" arg2="true" />
+			<then>
+				<delete dir="${app.server.tomcat.work.dir}" verbose="true" />
+			</then>
+		</if>
+
 		<get-testcase-property property.name="hook.plugins.includes" />
 
 		<if>
@@ -13319,15 +13328,6 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 				</waitfor>
 
 				<antcall target="wait-for-plugins-deployment" />
-
-				<get-testcase-property property.name="delete.precompiled.jsps" />
-
-				<if>
-					<equals arg1="${delete.precompiled.jsps}" arg2="true" />
-					<then>
-						<delete dir="${app.server.tomcat.work.dir}" verbose="true" />
-					</then>
-				</if>
 
 				<if>
 					<available file="${liferay.home}/tmp/${theme.file.name}" />

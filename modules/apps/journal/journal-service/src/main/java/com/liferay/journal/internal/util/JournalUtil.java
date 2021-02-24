@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.portlet.ThemeDisplayModel;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.service.ImageLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.template.TemplateHandler;
@@ -352,35 +351,28 @@ public class JournalUtil {
 	public static String removeArticleLocale(
 		Document document, String content, String languageId) {
 
-		try {
-			Element rootElement = document.getRootElement();
+		Element rootElement = document.getRootElement();
 
-			String availableLocales = rootElement.attributeValue(
-				"available-locales");
+		String availableLocales = rootElement.attributeValue(
+			"available-locales");
 
-			if (availableLocales == null) {
-				return content;
-			}
-
-			availableLocales = StringUtil.removeFromList(
-				availableLocales, languageId);
-
-			if (availableLocales.endsWith(",")) {
-				availableLocales = availableLocales.substring(
-					0, availableLocales.length() - 1);
-			}
-
-			rootElement.addAttribute("available-locales", availableLocales);
-
-			_removeArticleLocale(rootElement, languageId);
-
-			content = XMLUtil.formatXML(document);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
+		if (availableLocales == null) {
+			return content;
 		}
 
-		return content;
+		availableLocales = StringUtil.removeFromList(
+			availableLocales, languageId);
+
+		if (availableLocales.endsWith(",")) {
+			availableLocales = availableLocales.substring(
+				0, availableLocales.length() - 1);
+		}
+
+		rootElement.addAttribute("available-locales", availableLocales);
+
+		_removeArticleLocale(rootElement, languageId);
+
+		return XMLUtil.formatXML(document);
 	}
 
 	public static String transform(
@@ -661,8 +653,8 @@ public class JournalUtil {
 		tokens.put("page_url", themeDisplayModel.getPathFriendlyURLPublic());
 	}
 
-	private static void _removeArticleLocale(Element element, String languageId)
-		throws PortalException {
+	private static void _removeArticleLocale(
+		Element element, String languageId) {
 
 		for (Element dynamicElementElement :
 				element.elements("dynamic-element")) {
@@ -674,13 +666,6 @@ public class JournalUtil {
 					dynamicContentElement.attributeValue("language-id"));
 
 				if (curLanguageId.equals(languageId)) {
-					long id = GetterUtil.getLong(
-						dynamicContentElement.attributeValue("id"));
-
-					if (id > 0) {
-						ImageLocalServiceUtil.deleteImage(id);
-					}
-
 					dynamicContentElement.detach();
 				}
 			}

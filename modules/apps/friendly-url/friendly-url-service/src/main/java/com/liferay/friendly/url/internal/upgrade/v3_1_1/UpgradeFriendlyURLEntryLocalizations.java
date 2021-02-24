@@ -107,20 +107,22 @@ public class UpgradeFriendlyURLEntryLocalizations extends UpgradeProcess {
 				long id = rs1.getLong(1);
 				long resourcePrimKey = rs1.getLong(2);
 
-				StringBundler sb2 = new StringBundler(13);
+				StringBundler sb2 = new StringBundler(15);
 
-				sb2.append("select JAL.title, JAL.languageId from (select ");
-				sb2.append("title, languageId from ");
-				sb2.append("JournalArticleLocalization where articlePK = ");
+				sb2.append("select TEMP_TABLE_1.title, ");
+				sb2.append("TEMP_TABLE_1.languageId from (select title, ");
+				sb2.append("languageId from JournalArticleLocalization where ");
+				sb2.append("articlePK = ");
 				sb2.append(id);
-				sb2.append(") JAL left join (select ");
+				sb2.append(") TEMP_TABLE_1 left join (select ");
 				sb2.append("friendlyURLEntryLocalizationId, languageId from ");
 				sb2.append("FriendlyURLEntryLocalization where classPK = ");
 				sb2.append(resourcePrimKey);
 				sb2.append(" and classNameId = ");
 				sb2.append(_CLASS_NAME_ID);
-				sb2.append(") FURLEL on JAL.languageId = FURLEL.languageId ");
-				sb2.append("where FURLEL.friendlyURLEntryLocalizationId is ");
+				sb2.append(") TEMP_TABLE_2 on TEMP_TABLE_1.languageId = ");
+				sb2.append("TEMP_TABLE_2.languageId where ");
+				sb2.append("TEMP_TABLE_2.friendlyURLEntryLocalizationId is ");
 				sb2.append("null");
 
 				Map<String, String> urlTitleMap = new HashMap<>();

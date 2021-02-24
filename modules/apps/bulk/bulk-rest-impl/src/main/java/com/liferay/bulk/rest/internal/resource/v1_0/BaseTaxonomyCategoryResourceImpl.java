@@ -42,6 +42,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.PATCH;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -62,6 +63,7 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	@Consumes({"application/json", "application/xml"})
 	@PATCH
 	@Path("/taxonomy-categories/batch")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "TaxonomyCategory")})
 	public void patchTaxonomyCategoryBatch(
 			TaxonomyCategoryBulkSelection taxonomyCategoryBulkSelection)
@@ -77,6 +79,7 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	@Consumes({"application/json", "application/xml"})
 	@PUT
 	@Path("/taxonomy-categories/batch")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "TaxonomyCategory")})
 	public void putTaxonomyCategoryBatch(
 			TaxonomyCategoryBulkSelection taxonomyCategoryBulkSelection)

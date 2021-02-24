@@ -67,6 +67,7 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 	@Consumes({"application/json", "application/xml"})
 	@PATCH
 	@Path("/keywords/batch")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Keyword")})
 	public void patchKeywordBatch(KeywordBulkSelection keywordBulkSelection)
 		throws Exception {
@@ -81,6 +82,7 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 	@Consumes({"application/json", "application/xml"})
 	@PUT
 	@Path("/keywords/batch")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Keyword")})
 	public void putKeywordBatch(KeywordBulkSelection keywordBulkSelection)
 		throws Exception {

@@ -17,10 +17,10 @@ package com.liferay.vldap.server.internal.portal.security.samba;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.RegistryUtil;
@@ -43,7 +43,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author Jonathan McCann
  */
-@PrepareForTest(ExpandoBridgeFactoryUtil.class)
+@PrepareForTest({CompanyLocalServiceUtil.class, ExpandoBridgeFactoryUtil.class})
 @RunWith(PowerMockRunner.class)
 public class PortalSambaUtilTest extends BaseVLDAPTestCase {
 
@@ -60,7 +60,7 @@ public class PortalSambaUtilTest extends BaseVLDAPTestCase {
 	@Test
 	public void testCheckAttribute() throws Exception {
 		setUpExpandoBridge();
-		setUpPortalUtil();
+		_setUpCompanyLocalServiceUtil();
 
 		Method checkAttributeMethod = _clazz.getDeclaredMethod(
 			"_checkAttribute", String.class);
@@ -90,7 +90,7 @@ public class PortalSambaUtilTest extends BaseVLDAPTestCase {
 	@Test
 	public void testCheckAttributes() throws Exception {
 		setUpExpandoBridge();
-		setUpPortalUtil();
+		_setUpCompanyLocalServiceUtil();
 
 		PortalSambaUtil.checkAttributes();
 
@@ -127,7 +127,7 @@ public class PortalSambaUtilTest extends BaseVLDAPTestCase {
 	@Test
 	public void testCheckAttributeWithExistingAttribute() throws Exception {
 		setUpExpandoBridge();
-		setUpPortalUtil();
+		_setUpCompanyLocalServiceUtil();
 
 		when(
 			_expandoBridge.hasAttribute("sambaLMPassword")
@@ -287,21 +287,6 @@ public class PortalSambaUtilTest extends BaseVLDAPTestCase {
 		);
 	}
 
-	@Override
-	protected void setUpPortalUtil() {
-		Portal portal = mock(Portal.class);
-
-		when(
-			portal.getCompanyIds()
-		).thenReturn(
-			new long[] {PRIMARY_KEY}
-		);
-
-		PortalUtil portalUtil = new PortalUtil();
-
-		portalUtil.setPortal(portal);
-	}
-
 	protected void setUpUser() {
 		_user = mock(User.class);
 
@@ -309,6 +294,24 @@ public class PortalSambaUtilTest extends BaseVLDAPTestCase {
 			_user.getExpandoBridge()
 		).thenReturn(
 			_expandoBridge
+		);
+	}
+
+	private void _setUpCompanyLocalServiceUtil() throws Exception {
+		mockStatic(CompanyLocalServiceUtil.class);
+
+		doAnswer(
+			invocation -> {
+				UnsafeConsumer<Long, Exception> unsafeConsumer =
+					(UnsafeConsumer)invocation.getArguments()[0];
+
+				unsafeConsumer.accept(PRIMARY_KEY);
+
+				return null;
+			}
+		).when(
+			CompanyLocalServiceUtil.class, "forEachCompanyId",
+			Mockito.any(UnsafeConsumer.class)
 		);
 	}
 

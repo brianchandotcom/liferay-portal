@@ -90,13 +90,13 @@ public class CPInstanceTierPriceEntryDataSetDataProvider
 			instanceTierPriceEntries.add(
 				new InstanceTierPriceEntry(
 					commerceTierPriceEntry.getCommerceTierPriceEntryId(),
-					HtmlUtil.escape(
-						priceCommerceMoney.format(
-							_portal.getLocale(httpServletRequest))),
-					commerceTierPriceEntry.getMinQuantity(),
 					LanguageUtil.format(
 						httpServletRequest, "x-ago", createDateDescription,
-						false)));
+						false),
+					commerceTierPriceEntry.getMinQuantity(),
+					HtmlUtil.escape(
+						priceCommerceMoney.format(
+							_portal.getLocale(httpServletRequest)))));
 		}
 
 		return instanceTierPriceEntries;

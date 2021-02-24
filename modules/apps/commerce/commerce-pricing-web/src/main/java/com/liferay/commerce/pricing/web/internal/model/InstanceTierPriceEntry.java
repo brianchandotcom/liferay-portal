@@ -20,13 +20,13 @@ package com.liferay.commerce.pricing.web.internal.model;
 public class InstanceTierPriceEntry {
 
 	public InstanceTierPriceEntry(
-		long priceTierEntryId, String price, int minQuantity,
-		String createDate) {
+		long priceTierEntryId, String createDate, int minQuantity,
+		String price) {
 
 		_priceTierEntryId = priceTierEntryId;
-		_price = price;
-		_minQuantity = minQuantity;
 		_createDate = createDate;
+		_minQuantity = minQuantity;
+		_price = price;
 	}
 
 	public String getCreateDate() {

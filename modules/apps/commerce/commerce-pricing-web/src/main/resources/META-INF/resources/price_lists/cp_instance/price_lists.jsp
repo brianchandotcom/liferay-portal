@@ -67,7 +67,7 @@ productSkusURL.setParameter("screenNavigationCategoryKey", "skus");
 </div>
 
 <aui:script use="liferay-item-selector-dialog">
-	Liferay.on('<portlet:namespace />addCommercePriceEntry', function () {
+	Liferay.on('<portlet:namespace />addCommercePriceEntry', () => {
 		var itemSelectorDialog = new A.LiferayItemSelectorDialog({
 			eventName: 'priceListsSelectItem',
 			on: {

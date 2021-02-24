@@ -46,7 +46,7 @@ public class LegacyDataArchiveHelper {
 
 	public LocalGitBranch createDataArchiveLocalGitBranch() throws IOException {
 		String dataArchiveBranchName = JenkinsResultsParserUtil.combine(
-			"data-archive-", String.valueOf(System.currentTimeMillis()));
+			"data-archive-", String.valueOf(JenkinsResultsParserUtil.getCurrentTimeMillis()));
 
 		_dataArchiveLocalGitBranch =
 			_legacyGitWorkingDirectory.getLocalGitBranch(dataArchiveBranchName);

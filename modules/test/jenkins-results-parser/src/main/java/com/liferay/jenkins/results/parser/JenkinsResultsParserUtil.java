@@ -434,7 +434,7 @@ public class JenkinsResultsParserUtil {
 		Process process = new BufferedProcess(2000000, processBuilder.start());
 
 		long duration = 0;
-		long start = System.currentTimeMillis();
+		long start = getCurrentTimeMillis();
 		int returnCode = -1;
 
 		while (true) {
@@ -445,7 +445,7 @@ public class JenkinsResultsParserUtil {
 					String standardOut = readInputStream(
 						process.getInputStream(), true);
 
-					duration = System.currentTimeMillis() - start;
+					duration = getCurrentTimeMillis() - start;
 
 					while (!standardOut.contains(
 								"Finished executing Bash commands.") &&
@@ -456,14 +456,14 @@ public class JenkinsResultsParserUtil {
 						standardOut = readInputStream(
 							process.getInputStream(), true);
 
-						duration = System.currentTimeMillis() - start;
+						duration = getCurrentTimeMillis() - start;
 					}
 				}
 
 				break;
 			}
 			catch (IllegalThreadStateException illegalThreadStateException) {
-				duration = System.currentTimeMillis() - start;
+				duration = getCurrentTimeMillis() - start;
 
 				if (duration >= timeout) {
 					throw new TimeoutException(
@@ -1163,7 +1163,7 @@ public class JenkinsResultsParserUtil {
 
 	public static String getDistinctTimeStamp() {
 		while (true) {
-			String timeStamp = String.valueOf(System.currentTimeMillis());
+			String timeStamp = String.valueOf(getCurrentTimeMillis());
 
 			if (_timeStamps.contains(timeStamp)) {
 				continue;
@@ -1822,7 +1822,7 @@ public class JenkinsResultsParserUtil {
 					blacklist, minimumRAM, maximumSlavesPerHost,
 					buildProperties);
 
-			Random random = new Random(System.currentTimeMillis());
+			Random random = new Random(getCurrentTimeMillis());
 
 			JenkinsMaster randomJenkinsMaster = availableJenkinsMasters.get(
 				random.nextInt(availableJenkinsMasters.size()));
@@ -3984,7 +3984,7 @@ public class JenkinsResultsParserUtil {
 		sb.append(limit);
 		sb.append(" remain. GitHub API call limit will reset in ");
 		sb.append(
-			toDurationString((1000 * reset) - System.currentTimeMillis()));
+			toDurationString((1000 * reset) - getCurrentTimeMillis()));
 		sb.append(".");
 
 		return sb.toString();

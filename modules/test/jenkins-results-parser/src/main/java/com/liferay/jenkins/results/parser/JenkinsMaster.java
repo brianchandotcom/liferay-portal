@@ -134,7 +134,7 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 
 	public synchronized void addRecentBatch(int batchSize) {
 		_batchSizes.put(
-			System.currentTimeMillis() + maxRecentBatchAge, batchSize);
+			JenkinsResultsParserUtil.getCurrentTimeMillis() + maxRecentBatchAge, batchSize);
 
 		getAvailableSlavesCount();
 	}
@@ -435,7 +435,7 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	protected static long maxRecentBatchAge = 120 * 1000;
 
 	private synchronized int _getRecentBatchSizesTotal() {
-		long currentTimestamp = System.currentTimeMillis();
+		long currentTimestamp = JenkinsResultsParserUtil.getCurrentTimeMillis();
 		int recentBatchSizesTotal = 0;
 
 		List<Long> expiredTimestamps = new ArrayList<>(_batchSizes.size());

@@ -187,7 +187,7 @@ public abstract class BaseBuildRunner<T extends BuildData, S extends Workspace>
 		}
 
 		long allowedBuildStartTime =
-			System.currentTimeMillis() - allowedBuildAge;
+			JenkinsResultsParserUtil.getCurrentTimeMillis() - allowedBuildAge;
 
 		for (JSONObject previousBuildJSONObject :
 				getPreviousBuildJSONObjects()) {

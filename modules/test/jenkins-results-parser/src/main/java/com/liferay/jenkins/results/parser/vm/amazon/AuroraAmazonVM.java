@@ -60,10 +60,10 @@ public abstract class AuroraAmazonVM extends VM {
 
 		System.out.println("Waiting for the DB cluster to start");
 
-		long timeout = System.currentTimeMillis() + MILLIS_TIMEOUT_DURATION;
+		long timeout = JenkinsResultsParserUtil.getCurrentTimeMillis() + MILLIS_TIMEOUT_DURATION;
 
 		while (!dbClusterStatus.equals("available")) {
-			if (System.currentTimeMillis() >= timeout) {
+			if (JenkinsResultsParserUtil.getCurrentTimeMillis() >= timeout) {
 				throw new RuntimeException(
 					"Timeout occurred while waiting for DB cluster status " +
 						"\"available\"");
@@ -90,10 +90,10 @@ public abstract class AuroraAmazonVM extends VM {
 
 		System.out.println("Waiting for the DB instance to start");
 
-		timeout = System.currentTimeMillis() + MILLIS_TIMEOUT_DURATION;
+		timeout = JenkinsResultsParserUtil.getCurrentTimeMillis() + MILLIS_TIMEOUT_DURATION;
 
 		while (!dbInstanceStatus.equals("available")) {
-			if (System.currentTimeMillis() >= timeout) {
+			if (JenkinsResultsParserUtil.getCurrentTimeMillis() >= timeout) {
 				throw new RuntimeException(
 					"Timeout occurred while waiting for DB instance status " +
 						"\"available\"");

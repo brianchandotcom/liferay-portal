@@ -220,7 +220,7 @@ public abstract class BaseSpiraTestResult implements SpiraTestResult {
 
 	@Override
 	public void record() {
-		long startTestCase = System.currentTimeMillis();
+		long startTestCase = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		SpiraTestCaseObject spiraTestCaseObject = getSpiraTestCaseObject();
 
@@ -228,9 +228,9 @@ public abstract class BaseSpiraTestResult implements SpiraTestResult {
 			JenkinsResultsParserUtil.combine(
 				getTestName(), " ", spiraTestCaseObject.getURL(), " in ",
 				JenkinsResultsParserUtil.toDurationString(
-					System.currentTimeMillis() - startTestCase)));
+					JenkinsResultsParserUtil.getCurrentTimeMillis() - startTestCase)));
 
-		long startTestRun = System.currentTimeMillis();
+		long startTestRun = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		List<SpiraTestCaseRun> spiraTestCaseRuns =
 			SpiraTestCaseRun.recordSpiraTestCaseRuns(
@@ -242,7 +242,7 @@ public abstract class BaseSpiraTestResult implements SpiraTestResult {
 			JenkinsResultsParserUtil.combine(
 				getTestName(), " ", spiraTestCaseRun.getURL(), " in ",
 				JenkinsResultsParserUtil.toDurationString(
-					System.currentTimeMillis() - startTestRun)));
+					JenkinsResultsParserUtil.getCurrentTimeMillis() - startTestRun)));
 
 		System.out.println();
 	}
@@ -290,7 +290,7 @@ public abstract class BaseSpiraTestResult implements SpiraTestResult {
 		}
 
 		if (startTime == null) {
-			startTime = System.currentTimeMillis();
+			startTime = JenkinsResultsParserUtil.getCurrentTimeMillis();
 		}
 
 		return BaseSpiraArtifact.toDateString(new Date(startTime));

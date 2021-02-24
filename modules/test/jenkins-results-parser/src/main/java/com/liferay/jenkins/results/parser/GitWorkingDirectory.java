@@ -120,7 +120,7 @@ public class GitWorkingDirectory {
 		LocalGitBranch localGitBranch = createLocalGitBranch(
 			JenkinsResultsParserUtil.combine(
 				branchInformation.getUpstreamBranchName(), "-temp-",
-				String.valueOf(System.currentTimeMillis())),
+				String.valueOf(JenkinsResultsParserUtil.getCurrentTimeMillis())),
 			true);
 
 		try {
@@ -405,7 +405,7 @@ public class GitWorkingDirectory {
 				localGitBranchName.equals(currentLocalGitBranch.getName())) {
 
 				tempLocalGitBranch = createLocalGitBranch(
-					"temp-" + System.currentTimeMillis());
+					"temp-" + JenkinsResultsParserUtil.getCurrentTimeMillis());
 
 				checkoutLocalGitBranch(tempLocalGitBranch);
 			}
@@ -687,12 +687,12 @@ public class GitWorkingDirectory {
 			}
 		}
 
-		long start = System.currentTimeMillis();
+		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		GitUtil.ExecutionResult executionResult = executeBashCommands(
 			retries, GitUtil.MILLIS_RETRY_DELAY, 1000 * 60 * 15, sb.toString());
 
-		long duration = System.currentTimeMillis() - start;
+		long duration = JenkinsResultsParserUtil.getCurrentTimeMillis() - start;
 
 		if (executionResult.getExitValue() != 0) {
 			System.out.println(executionResult.getStandardOut());
@@ -818,12 +818,12 @@ public class GitWorkingDirectory {
 		sb.append(remoteURL);
 		sb.append(" refs/heads/*:refs/remotes/origin/*");
 
-		long start = System.currentTimeMillis();
+		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		GitUtil.ExecutionResult executionResult = executeBashCommands(
 			3, GitUtil.MILLIS_RETRY_DELAY, 1000 * 60 * 30, sb.toString());
 
-		long duration = System.currentTimeMillis() - start;
+		long duration = JenkinsResultsParserUtil.getCurrentTimeMillis() - start;
 
 		if (executionResult.getExitValue() != 0) {
 			System.out.println(gitBranchesSHAReportStringBuilder.toString());
@@ -863,7 +863,7 @@ public class GitWorkingDirectory {
 			sb.append(branchName);
 		}
 
-		long start = System.currentTimeMillis();
+		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		GitUtil.ExecutionResult executionResult = executeBashCommands(
 			3, GitUtil.MILLIS_RETRY_DELAY, 1000 * 60 * 30, sb.toString());
@@ -877,7 +877,7 @@ public class GitWorkingDirectory {
 		}
 
 		String durationString = JenkinsResultsParserUtil.toDurationString(
-			System.currentTimeMillis() - start);
+			JenkinsResultsParserUtil.getCurrentTimeMillis() - start);
 
 		System.out.println("Fetch completed in " + durationString);
 
@@ -1439,7 +1439,7 @@ public class GitWorkingDirectory {
 				currentBranchName.equals(rebasedLocalGitBranchName)) {
 
 				tempLocalGitBranch = createLocalGitBranch(
-					"temp-" + System.currentTimeMillis());
+					"temp-" + JenkinsResultsParserUtil.getCurrentTimeMillis());
 
 				checkoutLocalGitBranch(tempLocalGitBranch);
 			}
@@ -1726,7 +1726,7 @@ public class GitWorkingDirectory {
 		if (currentBranchName == null) {
 			checkoutLocalGitBranch(
 				createLocalGitBranch(
-					upstreamBranchName + "-temp-" + System.currentTimeMillis(),
+					upstreamBranchName + "-temp-" + JenkinsResultsParserUtil.getCurrentTimeMillis(),
 					true, upstreamBranchSHA));
 		}
 

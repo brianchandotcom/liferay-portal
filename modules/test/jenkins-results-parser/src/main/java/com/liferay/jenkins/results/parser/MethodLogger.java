@@ -36,7 +36,7 @@ public class MethodLogger implements InvocationHandler {
 			JenkinsResultsParserUtil.combine(
 				"Starting ", _getClassMethodName(method)));
 
-		long start = System.currentTimeMillis();
+		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		try {
 			result = method.invoke(_object, args);
@@ -46,7 +46,7 @@ public class MethodLogger implements InvocationHandler {
 		}
 		finally {
 			String duration = JenkinsResultsParserUtil.toDurationString(
-				System.currentTimeMillis() - start);
+				JenkinsResultsParserUtil.getCurrentTimeMillis() - start);
 
 			_logger.log(
 				Level.INFO,

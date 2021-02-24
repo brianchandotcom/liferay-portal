@@ -90,7 +90,7 @@ public class CISystemStatusReportUtil {
 		sb.append(relevantSuiteBuildDataJSONObject.toString());
 
 		sb.append("\nvar spiraDataGeneratedDate = new Date(");
-		sb.append(System.currentTimeMillis());
+		sb.append(JenkinsResultsParserUtil.getCurrentTimeMillis());
 		sb.append(");\nvar successRateData = ");
 
 		JSONArray successRateTableDataJSONArray =

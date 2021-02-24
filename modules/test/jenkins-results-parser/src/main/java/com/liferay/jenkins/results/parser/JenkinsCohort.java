@@ -165,7 +165,7 @@ public class JenkinsCohort {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("var jenkinsDataGeneratedDate = new Date(");
-		sb.append(System.currentTimeMillis());
+		sb.append(JenkinsResultsParserUtil.getCurrentTimeMillis());
 		sb.append(");\nvar nodeData = ");
 
 		JSONArray nodeDataTableJSONArray = new JSONArray();

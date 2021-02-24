@@ -44,7 +44,7 @@ public class RemoteExecutor {
 			"Remote execution starting with " + threadCount + " threads.");
 
 		try {
-			_start = System.currentTimeMillis();
+			_start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 			for (String targetSlave : _targetSlaves) {
 				executorService.execute(
@@ -104,7 +104,7 @@ public class RemoteExecutor {
 		sb.append("\nTarget slaves:");
 		sb.append(_targetSlaves.length);
 		sb.append("\nTotal duration: ");
-		sb.append(System.currentTimeMillis() - _start);
+		sb.append(JenkinsResultsParserUtil.getCurrentTimeMillis() - _start);
 		sb.append("\n");
 
 		System.out.println(sb.toString());
@@ -114,7 +114,7 @@ public class RemoteExecutor {
 
 			System.out.println(
 				"Remote execution completed in " +
-					(System.currentTimeMillis() - _start) + "ms.");
+					(JenkinsResultsParserUtil.getCurrentTimeMillis() - _start) + "ms.");
 		}
 	}
 
@@ -140,12 +140,12 @@ public class RemoteExecutor {
 
 			_error = false;
 
-			long start = System.currentTimeMillis();
+			long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 			try {
 				int returnCode = _executeBashCommands();
 
-				_duration = System.currentTimeMillis() - start;
+				_duration = JenkinsResultsParserUtil.getCurrentTimeMillis() - start;
 
 				if (returnCode != 0) {
 					_handleError(null);

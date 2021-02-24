@@ -221,7 +221,7 @@ public class SpiraRestAPIUtil {
 		int requestCount = 0;
 
 		while (true) {
-			long start = System.currentTimeMillis();
+			long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 			String responseData = null;
 
@@ -254,7 +254,7 @@ public class SpiraRestAPIUtil {
 			finally {
 				requestCount++;
 
-				long duration = System.currentTimeMillis() - start;
+				long duration = JenkinsResultsParserUtil.getCurrentTimeMillis() - start;
 
 				RequestDataEntry requestDataEntry = new RequestDataEntry(
 					"/" + urlPath, duration, requestData, responseData);

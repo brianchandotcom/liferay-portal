@@ -190,7 +190,7 @@ public class BaseSpiraBuildResult implements SpiraBuildResult {
 	}
 
 	private SpiraProject _getSpiraProject() {
-		long start = System.currentTimeMillis();
+		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		String spiraProjectID = System.getenv("TEST_SPIRA_PROJECT_ID");
 
@@ -211,7 +211,7 @@ public class BaseSpiraBuildResult implements SpiraBuildResult {
 				JenkinsResultsParserUtil.combine(
 					"Spira Project ", spiraProject.getURL(), " created in ",
 					JenkinsResultsParserUtil.toDurationString(
-						System.currentTimeMillis() - start)));
+						JenkinsResultsParserUtil.getCurrentTimeMillis() - start)));
 
 			return spiraProject;
 		}
@@ -220,7 +220,7 @@ public class BaseSpiraBuildResult implements SpiraBuildResult {
 	}
 
 	private SpiraRelease _getSpiraRelease(SpiraProject spiraProject) {
-		long start = System.currentTimeMillis();
+		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		String spiraReleaseID = System.getProperty("TEST_SPIRA_RELEASE_ID");
 
@@ -265,7 +265,7 @@ public class BaseSpiraBuildResult implements SpiraBuildResult {
 				JenkinsResultsParserUtil.combine(
 					"Spira Release ", spiraRelease.getURL(), " created in ",
 					JenkinsResultsParserUtil.toDurationString(
-						System.currentTimeMillis() - start)));
+						JenkinsResultsParserUtil.getCurrentTimeMillis() - start)));
 
 			return spiraRelease;
 		}
@@ -276,7 +276,7 @@ public class BaseSpiraBuildResult implements SpiraBuildResult {
 	private SpiraReleaseBuild _getSpiraReleaseBuild(
 		SpiraProject spiraProject, SpiraRelease spiraRelease) {
 
-		long start = System.currentTimeMillis();
+		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		String spiraReleaseBuildID = System.getenv("TEST_SPIRA_BUILD_ID");
 
@@ -330,7 +330,7 @@ public class BaseSpiraBuildResult implements SpiraBuildResult {
 					"Spira Release Build ", spiraReleaseBuild.getURL(),
 					" created in ",
 					JenkinsResultsParserUtil.toDurationString(
-						System.currentTimeMillis() - start)));
+						JenkinsResultsParserUtil.getCurrentTimeMillis() - start)));
 
 			return spiraReleaseBuild;
 		}
@@ -376,7 +376,7 @@ public class BaseSpiraBuildResult implements SpiraBuildResult {
 	private SpiraTestCaseFolder _getSpiraTestCaseFolder(
 		SpiraProject spiraProject) {
 
-		long start = System.currentTimeMillis();
+		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		String spiraTestCaseFolderID = System.getenv(
 			"TEST_SPIRA_BASE_TEST_CASE_FOLDER_ID");
@@ -430,7 +430,7 @@ public class BaseSpiraBuildResult implements SpiraBuildResult {
 					"Base Spira Test Case Folder ",
 					spiraTestCaseFolder.getURL(), " created in ",
 					JenkinsResultsParserUtil.toDurationString(
-						System.currentTimeMillis() - start)));
+						JenkinsResultsParserUtil.getCurrentTimeMillis() - start)));
 
 			return spiraTestCaseFolder;
 		}
@@ -447,7 +447,7 @@ public class BaseSpiraBuildResult implements SpiraBuildResult {
 	}
 
 	private SpiraTestSet _getSpiraTestSet(SpiraProject spiraProject) {
-		long start = System.currentTimeMillis();
+		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		SpiraTestSet spiraTestSet = null;
 
@@ -494,7 +494,7 @@ public class BaseSpiraBuildResult implements SpiraBuildResult {
 				JenkinsResultsParserUtil.combine(
 					"Spira Test Set created in ",
 					JenkinsResultsParserUtil.toDurationString(
-						System.currentTimeMillis() - start)));
+						JenkinsResultsParserUtil.getCurrentTimeMillis() - start)));
 
 			return spiraTestSet;
 		}

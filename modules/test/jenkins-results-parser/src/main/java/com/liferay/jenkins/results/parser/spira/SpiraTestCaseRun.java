@@ -193,7 +193,7 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 
 					@Override
 					public List<SpiraTestCaseRun> safeCall() {
-						long start = System.currentTimeMillis();
+						long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 						String startString =
 							JenkinsResultsParserUtil.toDateString(
@@ -212,7 +212,7 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 
 						String durationString =
 							JenkinsResultsParserUtil.toDurationString(
-								System.currentTimeMillis() - start);
+								JenkinsResultsParserUtil.getCurrentTimeMillis() - start);
 
 						print("Completed in " + durationString);
 
@@ -264,7 +264,7 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 
 					@Override
 					public JSONObject call() {
-						long start = System.currentTimeMillis();
+						long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 						JSONObject requestJSONObject =
 							spiraTestResult.getRequestJSONObject();
@@ -277,7 +277,7 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 								spiraTestCaseObject.getName(), " ",
 								spiraTestCaseObject.getURL(), " in ",
 								JenkinsResultsParserUtil.toDurationString(
-									System.currentTimeMillis() - start)));
+									JenkinsResultsParserUtil.getCurrentTimeMillis() - start)));
 
 						return requestJSONObject;
 					}
@@ -676,7 +676,7 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 	private static List<SpiraTestCaseRun> _recordSpiraTestCaseRuns(
 		final SpiraProject spiraProject, final JSONArray requestJSONArray) {
 
-		final long startInvocation = System.currentTimeMillis();
+		final long startInvocation = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		List<Callable<List<SpiraTestCaseRun>>> callables = new ArrayList<>();
 
@@ -685,7 +685,7 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 
 				@Override
 				public List<SpiraTestCaseRun> call() throws Exception {
-					long startRequest = System.currentTimeMillis();
+					long startRequest = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 					System.out.println(
 						JenkinsResultsParserUtil.combine(
@@ -734,7 +734,7 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 							JenkinsResultsParserUtil.combine(
 								"Record test runs process completed in ",
 								JenkinsResultsParserUtil.toDurationString(
-									System.currentTimeMillis() -
+									JenkinsResultsParserUtil.getCurrentTimeMillis() -
 										startRequest)));
 					}
 				}

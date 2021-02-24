@@ -89,7 +89,7 @@ public class SpiraResultImporter {
 	}
 
 	public void record() {
-		long start = System.currentTimeMillis();
+		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		Job job = _topLevelBuild.getJob();
 
@@ -160,7 +160,7 @@ public class SpiraResultImporter {
 
 					@Override
 					public List<SpiraTestCaseRun> call() throws Exception {
-						long startGroup = System.currentTimeMillis();
+						long startGroup = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 						System.out.println(
 							JenkinsResultsParserUtil.combine(
@@ -175,7 +175,7 @@ public class SpiraResultImporter {
 								_spiraBuildResult.getSpiraProject(),
 								results.toArray(new SpiraTestResult[0]));
 
-						long endGroup = System.currentTimeMillis();
+						long endGroup = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 						System.out.println(
 							JenkinsResultsParserUtil.combine(
@@ -222,7 +222,7 @@ public class SpiraResultImporter {
 					"Recorded ", String.valueOf(spiraTestCaseRuns.size()),
 					" tests in ",
 					JenkinsResultsParserUtil.toDurationString(
-						System.currentTimeMillis() - start)));
+						JenkinsResultsParserUtil.getCurrentTimeMillis() - start)));
 		}
 
 		SpiraRestAPIUtil.summarizeRequests();
@@ -248,7 +248,7 @@ public class SpiraResultImporter {
 	}
 
 	private void _cacheBuildDatabase() {
-		long start = System.currentTimeMillis();
+		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		System.out.println(
 			JenkinsResultsParserUtil.combine(
@@ -262,7 +262,7 @@ public class SpiraResultImporter {
 			System.out.println("Unable to find build-database.json");
 		}
 
-		long end = System.currentTimeMillis();
+		long end = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		System.out.println(
 			JenkinsResultsParserUtil.combine(
@@ -272,7 +272,7 @@ public class SpiraResultImporter {
 	}
 
 	private void _cacheBuildResults() {
-		long start = System.currentTimeMillis();
+		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		List<Callable<List<TestResult>>> callables = new ArrayList<>();
 
@@ -294,7 +294,7 @@ public class SpiraResultImporter {
 
 					@Override
 					public List<TestResult> call() throws Exception {
-						long start = System.currentTimeMillis();
+						long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 						System.out.println(
 							JenkinsResultsParserUtil.combine(
@@ -325,7 +325,7 @@ public class SpiraResultImporter {
 									"] Completed loading Test Results for ",
 									axisBuild.getAxisName(), " in ",
 									JenkinsResultsParserUtil.toDurationString(
-										System.currentTimeMillis() - start),
+										JenkinsResultsParserUtil.getCurrentTimeMillis() - start),
 									" at ",
 									JenkinsResultsParserUtil.toDateString(
 										new Date())));
@@ -349,7 +349,7 @@ public class SpiraResultImporter {
 				"Completed loading ", String.valueOf(testResults.size()),
 				" Build Results in ",
 				JenkinsResultsParserUtil.toDurationString(
-					System.currentTimeMillis() - start),
+					JenkinsResultsParserUtil.getCurrentTimeMillis() - start),
 				" at ", JenkinsResultsParserUtil.toDateString(new Date())));
 	}
 
@@ -358,7 +358,7 @@ public class SpiraResultImporter {
 			return;
 		}
 
-		long start = System.currentTimeMillis();
+		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		System.out.println(
 			JenkinsResultsParserUtil.combine(
@@ -454,7 +454,7 @@ public class SpiraResultImporter {
 				"Loaded ", String.valueOf(_spiraAutomationHosts.size()),
 				" Spira Automation Hosts in ",
 				JenkinsResultsParserUtil.toDurationString(
-					System.currentTimeMillis() - start)));
+					JenkinsResultsParserUtil.getCurrentTimeMillis() - start)));
 	}
 
 	private void _cacheSpiraTestCaseComponents() {
@@ -462,7 +462,7 @@ public class SpiraResultImporter {
 			return;
 		}
 
-		long start = System.currentTimeMillis();
+		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		System.out.println(
 			JenkinsResultsParserUtil.combine(
@@ -513,7 +513,7 @@ public class SpiraResultImporter {
 				"Loaded ", String.valueOf(_spiraTestCaseComponents.size()),
 				" Spira Test Case Components in ",
 				JenkinsResultsParserUtil.toDurationString(
-					System.currentTimeMillis() - start)));
+					JenkinsResultsParserUtil.getCurrentTimeMillis() - start)));
 	}
 
 	private void _cacheSpiraTestCaseObjects() {
@@ -521,7 +521,7 @@ public class SpiraResultImporter {
 			return;
 		}
 
-		long start = System.currentTimeMillis();
+		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		System.out.println(
 			JenkinsResultsParserUtil.combine(
@@ -541,7 +541,7 @@ public class SpiraResultImporter {
 				"Loaded ", String.valueOf(_spiraTestCaseObjects.size()),
 				" Spira Test Cases in ",
 				JenkinsResultsParserUtil.toDurationString(
-					System.currentTimeMillis() - start)));
+					JenkinsResultsParserUtil.getCurrentTimeMillis() - start)));
 	}
 
 	private void _callPrepareTCK() {

@@ -454,7 +454,7 @@ public abstract class TopLevelBuild extends BaseBuild {
 	}
 
 	public Element getJenkinsReportElement() {
-		long start = System.currentTimeMillis();
+		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		try {
 			return Dom4JUtil.getNewElement(
@@ -463,7 +463,7 @@ public abstract class TopLevelBuild extends BaseBuild {
 		}
 		finally {
 			String duration = JenkinsResultsParserUtil.toDurationString(
-				System.currentTimeMillis() - start);
+				JenkinsResultsParserUtil.getCurrentTimeMillis() - start);
 
 			System.out.println("Jenkins reported generated in " + duration);
 		}
@@ -511,7 +511,7 @@ public abstract class TopLevelBuild extends BaseBuild {
 
 	@Override
 	public String getStatusSummary() {
-		long currentTimeMillis = System.currentTimeMillis();
+		long currentTimeMillis = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		if ((currentTimeMillis - _MILLIS_DOWNSTREAM_BUILDS_LISTING_INTERVAL) >=
 				_lastDownstreamBuildsListingTimestamp) {
@@ -520,7 +520,7 @@ public abstract class TopLevelBuild extends BaseBuild {
 
 			sb.append("\nRunning Builds: ");
 
-			_lastDownstreamBuildsListingTimestamp = System.currentTimeMillis();
+			_lastDownstreamBuildsListingTimestamp = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 			for (Build downstreamBuild : getDownstreamBuilds("running")) {
 				sb.append("\n");
@@ -590,11 +590,11 @@ public abstract class TopLevelBuild extends BaseBuild {
 
 	@Override
 	public synchronized void update() {
-		long start = System.currentTimeMillis();
+		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		super.update();
 
-		_updateDuration = System.currentTimeMillis() - start;
+		_updateDuration = JenkinsResultsParserUtil.getCurrentTimeMillis() - start;
 
 		if (_sendBuildMetrics && !fromArchive && (getParentBuild() == null)) {
 			if (!fromCompletedBuild) {

@@ -387,7 +387,7 @@ public class FriendlyURLEntryLocalServiceImpl
 	public String getUniqueUrlTitle(
 		long groupId, long classNameId, long classPK, String urlTitle) {
 
-		return getUniqueUrlTitle(groupId, classNameId, classPK, null, urlTitle);
+		return getUniqueUrlTitle(groupId, classNameId, classPK, urlTitle, null);
 	}
 
 	@Override
@@ -698,7 +698,7 @@ public class FriendlyURLEntryLocalServiceImpl
 				else {
 					normalizedUrlTitle = getUniqueUrlTitle(
 						friendlyURLEntry.getGroupId(), classNameId, classPK,
-						entry.getKey(), normalizedUrlTitle);
+						normalizedUrlTitle, entry.getKey());
 				}
 			}
 

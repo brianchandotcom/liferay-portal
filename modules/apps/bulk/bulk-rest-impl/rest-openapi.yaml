@@ -131,9 +131,10 @@ paths:
                         schema:
                             $ref: "#/components/schemas/KeywordBulkSelection"
             responses:
-                200:
+                204:
                     content:
-                        {}
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["Keyword"]
@@ -147,9 +148,10 @@ paths:
                         schema:
                             $ref: "#/components/schemas/KeywordBulkSelection"
             responses:
-                200:
+                204:
                     content:
-                        {}
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["Keyword"]
@@ -240,9 +242,10 @@ paths:
                         schema:
                             $ref: "#/components/schemas/TaxonomyCategoryBulkSelection"
             responses:
-                200:
+                204:
                     content:
-                        {}
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["TaxonomyCategory"]
@@ -258,7 +261,8 @@ paths:
             responses:
                 200:
                     content:
-                        {}
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["TaxonomyCategory"]

@@ -116,7 +116,7 @@ describe('DataLayoutBuilder', () => {
 	it('is getting fieldTypes', () => {
 		component = new DataLayoutBuilder(props);
 
-		expect(props.fieldTypes).toBe(component.getFieldTypes());
+		expect(props.fieldTypes).toBe(component.props.fieldTypes);
 	});
 
 	it('is getting layoutProvider', () => {

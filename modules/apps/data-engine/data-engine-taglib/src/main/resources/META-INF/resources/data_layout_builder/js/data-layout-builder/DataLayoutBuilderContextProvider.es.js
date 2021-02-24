@@ -111,7 +111,7 @@ export default ({children, dataLayoutBuilder}) => {
 	}, [dataLayoutBuilder, dispatch]);
 
 	useEffect(() => {
-		const fieldTypes = dataLayoutBuilder.getFieldTypes();
+		const {fieldTypes} = dataLayoutBuilder.props;
 
 		dispatch({payload: {fieldTypes}, type: UPDATE_FIELD_TYPES});
 	}, [dataLayoutBuilder, dispatch]);

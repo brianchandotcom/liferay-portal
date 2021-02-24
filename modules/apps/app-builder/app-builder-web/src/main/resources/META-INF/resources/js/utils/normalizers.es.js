@@ -69,7 +69,7 @@ export const normalizeDataLayout = ({
 
 	dataDefinitionFields.forEach((dataDefinitionField) => {
 		const {editingLanguageId} = dataLayoutBuilder.getState();
-		const fieldTypes = dataLayoutBuilder.getFieldTypes();
+		const {fieldTypes} = dataLayoutBuilder.props;
 		const fieldProperties = DataConverter.getDDMSettingsContextWithVisualProperties(
 			{
 				dataDefinitionField,

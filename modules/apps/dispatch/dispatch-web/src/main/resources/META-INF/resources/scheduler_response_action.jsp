@@ -19,11 +19,11 @@
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-ScheduledJobDispatchTrigger scheduledJobDispatchTrigger = (ScheduledJobDispatchTrigger)row.getObject();
+SchedulerResponse schedulerResponse = (SchedulerResponse)row.getObject();
 
-ScheduledJobDispatchTriggerDisplayContext scheduledJobDispatchTriggerDisplayContext = (ScheduledJobDispatchTriggerDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+SchedulerResponseDisplayContext schedulerResponseDisplayContext = (SchedulerResponseDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-TriggerState triggerState = scheduledJobDispatchTriggerDisplayContext.getTriggerState(scheduledJobDispatchTrigger);
+TriggerState triggerState = schedulerResponseDisplayContext.getTriggerState(schedulerResponse);
 
 String cmd = (triggerState == TriggerState.NORMAL) ? "pause" : "resume";
 %>
@@ -35,12 +35,12 @@ String cmd = (triggerState == TriggerState.NORMAL) ? "pause" : "resume";
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<portlet:actionURL name="/dispatch/edit_scheduled_task_dispatch_trigger" var="editScheduledTaskURL">
+	<portlet:actionURL name="/dispatch/edit_scheduler_response" var="editScheduledTaskURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= cmd %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="jobName" value="<%= scheduledJobDispatchTrigger.getName() %>" />
-		<portlet:param name="groupName" value="<%= scheduledJobDispatchTrigger.getGroupName() %>" />
-		<portlet:param name="storageType" value="<%= scheduledJobDispatchTrigger.getStorageType().toString() %>" />
+		<portlet:param name="jobName" value="<%= schedulerResponse.getJobName() %>" />
+		<portlet:param name="groupName" value="<%= schedulerResponse.getGroupName() %>" />
+		<portlet:param name="storageType" value="<%= schedulerResponse.getStorageType().toString() %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon

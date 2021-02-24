@@ -82,13 +82,13 @@ public class CPInstancePriceEntryDataSetDataProvider
 			instancePriceEntries.add(
 				new InstancePriceEntry(
 					commercePriceEntry.getCommercePriceEntryId(),
+					LanguageUtil.format(
+						httpServletRequest, "x-ago", createDateDescription,
+						false),
 					commercePriceList.getName(),
 					HtmlUtil.escape(
 						priceCommerceMoney.format(
-							_portal.getLocale(httpServletRequest))),
-					LanguageUtil.format(
-						httpServletRequest, "x-ago", createDateDescription,
-						false)));
+							_portal.getLocale(httpServletRequest)))));
 		}
 
 		return instancePriceEntries;

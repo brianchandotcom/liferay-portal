@@ -13325,7 +13325,7 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 				<if>
 					<equals arg1="${delete.precompiled.jsps}" arg2="true" />
 					<then>
-						<delete dir="${liferay.home}/work" />
+						<delete dir="${app.server.tomcat.work.dir}" verbose="true" />
 					</then>
 				</if>
 

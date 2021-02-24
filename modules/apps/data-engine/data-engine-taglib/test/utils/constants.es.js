@@ -469,7 +469,43 @@ const fieldTypes = [
 	},
 ];
 
+const FORM_VIEW_CONTEXT = {
+	appProps: {},
+	config: {
+		allowFieldSets: false,
+		allowNestedFields: true,
+		allowRules: false,
+		disabledProperties: [],
+		disabledTabs: [],
+		multiPage: true,
+		ruleSettings: {},
+		unimplementedProperties: [],
+	},
+	dataDefinition: DATA_DEFINITION_RESPONSES.THREE_ITEMS,
+	dataDefinitionId: 0,
+	dataLayout: {
+		dataLayoutPages: [],
+		dataRules: [],
+		name: {
+			en_US: 'FormView',
+		},
+		paginationMode: 'wizard',
+	},
+	dataLayoutId: 0,
+	editingDataDefinitionId: 0,
+	editingLanguageId: themeDisplay.getLanguageId(),
+	fieldSets: [],
+	fieldTypes,
+	focusedCustomObjectField: {},
+	focusedField: {},
+	hoveredField: {},
+	sidebarOpen: true,
+	sidebarPanelId: 'fields',
+	spritemap: 'icons.svg',
+};
+
 export const dataLayoutBuilderConfig = {
+	appContext: [FORM_VIEW_CONTEXT],
 	config: {
 		allowFieldSets: true,
 		allowMultiplePages: false,
@@ -519,41 +555,6 @@ const pages = [
 	},
 ];
 
-const FORM_VIEW_CONTEXT = {
-	appProps: {},
-	config: {
-		allowFieldSets: false,
-		allowNestedFields: true,
-		allowRules: false,
-		disabledProperties: [],
-		disabledTabs: [],
-		multiPage: true,
-		ruleSettings: {},
-		unimplementedProperties: [],
-	},
-	dataDefinition: DATA_DEFINITION_RESPONSES.THREE_ITEMS,
-	dataDefinitionId: 0,
-	dataLayout: {
-		dataLayoutPages: [],
-		dataRules: [],
-		name: {
-			en_US: 'FormView',
-		},
-		paginationMode: 'wizard',
-	},
-	dataLayoutId: 0,
-	editingDataDefinitionId: 0,
-	editingLanguageId: themeDisplay.getLanguageId(),
-	fieldSets: [],
-	fieldTypes,
-	focusedCustomObjectField: {},
-	focusedField: {},
-	hoveredField: {},
-	sidebarOpen: true,
-	sidebarPanelId: 'fields',
-	spritemap: 'icons.svg',
-};
-
 export const FORM_VIEW = {
 	EDIT_FORM_VIEW_PROPS: {
 		basePortletURL: 'localhost',
@@ -582,9 +583,6 @@ export const FORM_VIEW = {
 					removeListener: jest.fn(),
 				}),
 			}),
-			getState: () => {
-				return FORM_VIEW_CONTEXT;
-			},
 			getStore: () => {
 				return {
 					activePage: 0,

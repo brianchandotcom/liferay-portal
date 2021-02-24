@@ -659,57 +659,6 @@ const fieldTypes = [
 	},
 ];
 
-export const dataLayoutBuilderConfig = {
-	config: {
-		allowFieldSets: true,
-		allowMultiplePages: false,
-		allowRules: false,
-		allowSuccessPage: false,
-		disabledProperties: ['predefinedValue'],
-		disabledTabs: ['Autocomplete'],
-		unimplementedProperties: [
-			'fieldNamespace',
-			'indexType',
-			'readOnly',
-			'validation',
-			'visibilityExpression',
-		],
-	},
-	context: {},
-	dataLayoutBuilderId:
-		'_com_liferay_journal_web_portlet_JournalPortlet_dataLayoutBuilder',
-	fieldTypes: [
-		{
-			name: 'Text',
-		},
-	],
-	localizable: true,
-	portletNamespace: 'com_liferay_journal_web_portlet_JournalPortlet',
-};
-
-const dataLayoutBuilder = new DataLayoutBuilder.default(
-	dataLayoutBuilderConfig
-);
-
-const pages = [
-	{
-		rows: [
-			{
-				columns: [
-					{
-						fields: [
-							{
-								fieldName: 'Text',
-							},
-						],
-						size: 12,
-					},
-				],
-			},
-		],
-	},
-];
-
 const FORM_VIEW_CONTEXT = {
 	appProps: {},
 	config: {
@@ -772,6 +721,58 @@ const FORM_VIEW_CONTEXT = {
 	spritemap: 'icons.svg',
 };
 
+export const dataLayoutBuilderConfig = {
+	appContext: [FORM_VIEW_CONTEXT],
+	config: {
+		allowFieldSets: true,
+		allowMultiplePages: false,
+		allowRules: false,
+		allowSuccessPage: false,
+		disabledProperties: ['predefinedValue'],
+		disabledTabs: ['Autocomplete'],
+		unimplementedProperties: [
+			'fieldNamespace',
+			'indexType',
+			'readOnly',
+			'validation',
+			'visibilityExpression',
+		],
+	},
+	context: {},
+	dataLayoutBuilderId:
+		'_com_liferay_journal_web_portlet_JournalPortlet_dataLayoutBuilder',
+	fieldTypes: [
+		{
+			name: 'Text',
+		},
+	],
+	localizable: true,
+	portletNamespace: 'com_liferay_journal_web_portlet_JournalPortlet',
+};
+
+const dataLayoutBuilder = new DataLayoutBuilder.default(
+	dataLayoutBuilderConfig
+);
+
+const pages = [
+	{
+		rows: [
+			{
+				columns: [
+					{
+						fields: [
+							{
+								fieldName: 'Text',
+							},
+						],
+						size: 12,
+					},
+				],
+			},
+		],
+	},
+];
+
 export const FORM_VIEW = {
 	EDIT_FORM_VIEW_PROPS: {
 		basePortletURL: 'localhost',
@@ -796,9 +797,6 @@ export const FORM_VIEW = {
 					fieldHovered: jest.fn(),
 				}),
 			}),
-			getState: () => {
-				return FORM_VIEW_CONTEXT;
-			},
 			getStore: () => {
 				return {
 					activePage: 0,

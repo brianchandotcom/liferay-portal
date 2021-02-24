@@ -18,11 +18,17 @@ import DataLayoutBuilderInstanceProvider from './DataLayoutBuilderInstanceProvid
 import FormViewContext from './FormViewContext.es';
 
 export default ({children, dataLayoutBuilder}) => {
-	const [state, setState] = useState(dataLayoutBuilder.getState());
+	const {
+		appContext: [appState],
+	} = dataLayoutBuilder.props;
+	const [state, setState] = useState(appState);
 
 	useEffect(() => {
 		const callback = () => {
-			setState(dataLayoutBuilder.getState());
+			const {
+				appContext: [state],
+			} = dataLayoutBuilder.props;
+			setState(state);
 		};
 
 		dataLayoutBuilder.on('contextUpdated', callback);

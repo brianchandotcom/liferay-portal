@@ -199,8 +199,10 @@ describe('normalizers', () => {
 		const editingLanguageId = 'en_US';
 
 		const dataLayoutBuilder = {
-			getState: () => ({}),
-			props: {fieldTypes: undefined},
+			props: {
+				appContext: [{}],
+				fieldTypes: undefined,
+			},
 		};
 
 		jest.spyOn(DataConverter, 'getDDMSettingsContextWithVisualProperties')

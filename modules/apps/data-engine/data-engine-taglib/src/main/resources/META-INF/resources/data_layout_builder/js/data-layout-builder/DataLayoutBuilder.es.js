@@ -132,8 +132,11 @@ class DataLayoutBuilder extends React.Component {
 	 * @deprecated As of Athanasius (7.3.x), replaced by DataConverter.getDDMFormFieldSettingsContext()
 	 */
 	getDDMFormFieldSettingsContext(dataDefinitionField, defaultLanguageId) {
-		const {fieldTypes} = this.props;
-		const {editingLanguageId} = this.getState();
+		const {
+			appContext: [state],
+			fieldTypes,
+		} = this.props;
+		const {editingLanguageId} = state;
 
 		return getDDMFormFieldSettingsContext({
 			dataDefinitionField,
@@ -255,13 +258,6 @@ class DataLayoutBuilder extends React.Component {
 		return layoutProvider;
 	}
 
-	getState() {
-		const {appContext} = this.props;
-		const [state] = appContext;
-
-		return state;
-	}
-
 	getStore() {
 		const layoutProvider = this.getLayoutProvider();
 
@@ -322,7 +318,10 @@ class DataLayoutBuilder extends React.Component {
 	}
 
 	render() {
-		const {sidebarOpen = false} = this.getState();
+		const {
+			appContext: [state],
+		} = this.props;
+		const {sidebarOpen = false} = state;
 
 		return (
 			<div

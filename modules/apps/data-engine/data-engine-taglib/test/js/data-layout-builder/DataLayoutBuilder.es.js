@@ -128,13 +128,6 @@ describe('DataLayoutBuilder', () => {
 		});
 	});
 
-	it('is getting component state', () => {
-		component = new DataLayoutBuilder(props);
-		component.componentDidMount();
-
-		expect(component.getState()).toMatchObject(props.appContext[0]);
-	});
-
 	it('is getting component store', () => {
 		component = new DataLayoutBuilder(props);
 		component.componentDidMount();

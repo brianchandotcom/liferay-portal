@@ -18,7 +18,6 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
-import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
@@ -27,7 +26,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.tools.service.builder.test.model.ERCCompanyEntry;
 import com.liferay.portal.tools.service.builder.test.model.ERCCompanyEntryModel;
-import com.liferay.portal.tools.service.builder.test.model.ERCCompanyEntrySoap;
 
 import java.io.Serializable;
 
@@ -36,11 +34,9 @@ import java.lang.reflect.InvocationHandler;
 
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
@@ -56,7 +52,6 @@ import java.util.function.Function;
  * @see ERCCompanyEntryImpl
  * @generated
  */
-@JSON(strict = true)
 public class ERCCompanyEntryModelImpl
 	extends BaseModelImpl<ERCCompanyEntry> implements ERCCompanyEntryModel {
 
@@ -134,53 +129,6 @@ public class ERCCompanyEntryModelImpl
 	 */
 	@Deprecated
 	public static final long ERCCOMPANYENTRYID_COLUMN_BITMASK = 4L;
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static ERCCompanyEntry toModel(ERCCompanyEntrySoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		ERCCompanyEntry model = new ERCCompanyEntryImpl();
-
-		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
-		model.setErcCompanyEntryId(soapModel.getErcCompanyEntryId());
-		model.setCompanyId(soapModel.getCompanyId());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<ERCCompanyEntry> toModels(
-		ERCCompanyEntrySoap[] soapModels) {
-
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<ERCCompanyEntry> models = new ArrayList<ERCCompanyEntry>(
-			soapModels.length);
-
-		for (ERCCompanyEntrySoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.portal.tools.service.builder.test.service.util.ServiceProps.
@@ -336,7 +284,6 @@ public class ERCCompanyEntryModelImpl
 			(Map)attributeSetterBiConsumers);
 	}
 
-	@JSON
 	@Override
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCode == null) {
@@ -365,7 +312,6 @@ public class ERCCompanyEntryModelImpl
 		return getColumnOriginalValue("externalReferenceCode");
 	}
 
-	@JSON
 	@Override
 	public long getErcCompanyEntryId() {
 		return _ercCompanyEntryId;
@@ -380,7 +326,6 @@ public class ERCCompanyEntryModelImpl
 		_ercCompanyEntryId = ercCompanyEntryId;
 	}
 
-	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;

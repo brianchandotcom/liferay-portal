@@ -18,15 +18,12 @@
 	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.EagerBlobEntryServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.EagerBlobEntryService" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.EagerBlobEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.EagerBlobEntryPersistence" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.ERCCompanyEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.ERCCompanyEntryLocalService" />
-	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.ERCCompanyEntryServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.ERCCompanyEntryService" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.ERCCompanyEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.ERCCompanyEntryPersistence" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.ERCGroupEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.ERCGroupEntryLocalService" />
-	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.ERCGroupEntryServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.ERCGroupEntryService" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.ERCGroupEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.ERCGroupEntryPersistence" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.FinderWhereClauseEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.FinderWhereClauseEntryLocalService" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.FinderWhereClauseEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.FinderWhereClauseEntryPersistence" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.GenericMethodsEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.GenericMethodsEntryLocalService" />
-	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.GenericMethodsEntryServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.GenericMethodsEntryService" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.LazyBlobEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.LazyBlobEntryLocalService" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.LazyBlobEntryServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.LazyBlobEntryService" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.LazyBlobEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.LazyBlobEntryPersistence" />
@@ -39,12 +36,10 @@
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.LVEntryLocalizationVersionPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.LVEntryLocalizationVersionPersistence" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.LVEntryVersionPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.LVEntryVersionPersistence" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.ManyColumnsEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.ManyColumnsEntryLocalService" />
-	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.ManyColumnsEntryServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.ManyColumnsEntryService" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.ManyColumnsEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.ManyColumnsEntryPersistence" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.NestedSetsTreeEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.NestedSetsTreeEntryLocalService" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.NestedSetsTreeEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.NestedSetsTreeEntryPersistence" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.UADPartialEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.UADPartialEntryLocalService" />
-	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.UADPartialEntryServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.UADPartialEntryService" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.UADPartialEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.UADPartialEntryPersistence" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.VersionedEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.VersionedEntryLocalService" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.VersionedEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.VersionedEntryPersistence" />

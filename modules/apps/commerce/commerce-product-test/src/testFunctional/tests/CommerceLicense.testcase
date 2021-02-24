@@ -105,6 +105,18 @@ definition {
 		CommerceLicense.executeSmoke();
 	}
 
+	@description = "This is a test for covering the following LPS-113419"
+	@priority = "4"
+	test ModuleLicenseExpirationWarning {
+		property commerce.enabled = "true";
+
+		// Require property to generate a modify license with 7 or 30 days warning expiration date
+
+		CommerceLicense.viewCommerceAvailable();
+
+		CommerceLicense.ViewWarningExpirationDate();
+	}
+
 	@priority = "5"
 	test ViewCommerceDisabled {
 		property commerce.enabled = "false";

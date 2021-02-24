@@ -13,6 +13,7 @@
  */
 
 import {useQuery} from '@apollo/client';
+import ClayEmptyState from '@clayui/empty-state';
 import React, {useContext, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
@@ -57,17 +58,19 @@ export default withRouter(
 
 		const {data, loading} = useQuery(getUserActivityQuery, {
 			onCompleted(data) {
-				const {
-					creator,
-					creatorStatistics,
-				} = data.messageBoardMessages.items[0];
-				setUserInfo({
-					id: creator.id,
-					image: creator.image,
-					name: creator.name,
-					postsNumber: creatorStatistics.postsNumber,
-					rank: creatorStatistics.rank,
-				});
+				if (data.messageBoardMessages.items.lenght) {
+					const {
+						creator,
+						creatorStatistics,
+					} = data.messageBoardMessages.items[0];
+					setUserInfo({
+						id: creator.id,
+						image: creator.image,
+						name: creator.name,
+						postsNumber: creatorStatistics.postsNumber,
+						rank: creatorStatistics.rank,
+					});
+				}
 			},
 			variables: {
 				filter: `creatorId eq ${creatorId}`,
@@ -135,6 +138,14 @@ export default withRouter(
 							activePage={page}
 							changeDelta={setPageSize}
 							data={data && data.messageBoardMessages}
+							emptyState={
+								<ClayEmptyState
+									imgSrc={
+										context.includeContextPath +
+										'/assets/empty_questions_list.png'
+									}
+								/>
+							}
 							hrefConstructor={hrefConstructor}
 							loading={loading}
 						>

@@ -23,7 +23,9 @@ const toggleFormBuilder = (managementToolbar) => {
 	);
 	const publishIcon = document.querySelector('.publish-icon');
 
-	managementToolbar.classList.remove('hide');
+	if (managementToolbar) {
+		managementToolbar.classList.remove('hide');
+	}
 
 	formBuilderButtons.forEach((formBuilderButton) => {
 		formBuilderButton.classList.remove('hide');
@@ -34,7 +36,9 @@ const toggleFormBuilder = (managementToolbar) => {
 	}
 
 	return () => {
-		managementToolbar.classList.add('hide');
+		if (managementToolbar) {
+			managementToolbar.classList.add('hide');
+		}
 
 		formBuilderButtons.forEach((formBuilderButton) => {
 			formBuilderButton.classList.add('hide');

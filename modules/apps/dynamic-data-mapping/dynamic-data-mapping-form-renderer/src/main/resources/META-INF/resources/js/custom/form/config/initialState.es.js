@@ -49,13 +49,23 @@ export const BUILDER_INITIAL_STATE = {
 	paginationMode: 'multi_pages',
 };
 
-export const initState = ({
-	initialSuccessPageSettings,
-	pages,
-	paginationMode,
-	successPageSettings: initialSuccessPage,
-	...otherProps
-}) => {
+export const initState = (
+	{
+		initialSuccessPageSettings,
+		pages,
+		paginationMode: initialPaginationMode,
+		successPageSettings: initialSuccessPage,
+		...otherProps
+	},
+	{view}
+) => {
+
+	// The Forms application is also rendered for Element Set, so we have to configure some
+	// components to behave differently. This can be removed when Element Set is deprecated.
+
+	const paginationMode =
+		view === 'fieldSets' ? 'single-page' : initialPaginationMode;
+
 	const successPageSettings = {
 		body:
 			initialSuccessPage?.body === 'string'
@@ -63,7 +73,8 @@ export const initState = ({
 						[themeDisplay.getDefaultLanguageId()]: initialSuccessPage.body,
 				  }
 				: initialSuccessPageSettings.body,
-		enabled: initialSuccessPage?.enabled ?? true,
+		enabled:
+			view === 'fieldSets' ? false : initialSuccessPage?.enabled ?? true,
 		title:
 			initialSuccessPage?.title === 'string'
 				? {

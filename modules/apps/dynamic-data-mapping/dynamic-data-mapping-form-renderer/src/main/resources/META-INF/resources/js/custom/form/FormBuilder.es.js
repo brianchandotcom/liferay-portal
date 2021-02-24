@@ -13,6 +13,7 @@
  */
 
 import ClayButton from '@clayui/button';
+import ClayLink from '@clayui/link';
 import React, {useCallback, useEffect, useRef} from 'react';
 
 import Pages from '../../core/components/Pages.es';
@@ -31,8 +32,12 @@ export const FormBuilder = () => {
 		formInstanceId,
 		portletNamespace,
 		publishFormInstanceURL,
+		published,
+		redirectURL,
 		restrictedFormURL,
 		sharedFormURL,
+		showPublishAlert,
+		view,
 	} = useConfig();
 	const {
 		activePage,
@@ -144,6 +149,15 @@ export const FormBuilder = () => {
 		[doSave, getFormUrl]
 	);
 
+	const subtmitForm = useCallback(
+		(form) => {
+			doSyncInput();
+
+			window.submitForm(form);
+		},
+		[doSyncInput]
+	);
+
 	const onPublishClick = useCallback(
 		(event) => {
 			event.preventDefault();
@@ -154,24 +168,18 @@ export const FormBuilder = () => {
 				form.setAttribute('action', publishFormInstanceURL);
 			}
 
-			doSyncInput();
-
-			window.submitForm(form);
+			subtmitForm(form);
 		},
-		[doSyncInput, portletNamespace, publishFormInstanceURL]
+		[subtmitForm, portletNamespace, publishFormInstanceURL]
 	);
 
 	const onSaveClick = useCallback(
 		(event) => {
 			event.preventDefault();
 
-			doSyncInput();
-
-			window.submitForm(
-				document.getElementById(`${portletNamespace}editForm`)
-			);
+			subtmitForm(document.getElementById(`${portletNamespace}editForm`));
 		},
-		[portletNamespace, doSyncInput]
+		[portletNamespace, subtmitForm]
 	);
 
 	const onShareClick = useCallback(() => {}, []);
@@ -204,6 +212,27 @@ export const FormBuilder = () => {
 					rules={rules}
 				/>
 			</div>
+
+			{view === 'fieldSets' && (
+				<div className="container container-fluid-1280">
+					<div className="button-holder ddm-form-builder-buttons">
+						<ClayButton
+							onClick={() =>
+								subtmitForm(
+									document.getElementById(
+										`${portletNamespace}editForm`
+									)
+								)
+							}
+						>
+							{Liferay.Language.get('Save')}
+						</ClayButton>
+						<ClayLink button displayType="link" href={redirectURL}>
+							{Liferay.Language.get('cancel')}
+						</ClayLink>
+					</div>
+				</div>
+			)}
 		</>
 	);
 };

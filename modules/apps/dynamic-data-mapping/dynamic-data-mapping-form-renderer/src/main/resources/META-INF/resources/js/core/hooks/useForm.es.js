@@ -127,20 +127,22 @@ const usePropagateAction = ([state, dispatch], onAction) => {
  */
 export const FormProvider = ({
 	children,
-	init,
+	init = (props) => props,
 	initialState = {},
 	onAction,
 	reducers,
 	...otherProps
 }) => {
+	const config = useConfig();
+
 	const {value = initialState} = otherProps;
 
 	const [state, dispatch] = useThunk(
 		usePropagateAction(
 			useReducer(
-				createReducer(reducers, useConfig()),
+				createReducer(reducers, config),
 				{...initialState, ...value},
-				init
+				(props) => init(props, config)
 			),
 			onAction
 		)

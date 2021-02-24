@@ -108,6 +108,8 @@ export const AutoSaveProvider = ({children, interval, url}) => {
 
 	const lastKnownHashRef = useRef(null);
 
+	const lastKnownHashRulesRef = useRef(null);
+
 	const getCurrentStateHash = useCallback(
 		() =>
 			getStateHash({
@@ -214,15 +216,22 @@ export const AutoSaveProvider = ({children, interval, url}) => {
 
 	useEffect(() => {
 		lastKnownHashRef.current = getCurrentStateHash();
+		lastKnownHashRulesRef.current = getStateHash(rules);
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {
-		performSave();
+		const currentKnownHashRules = getStateHash(rules);
+
+		if (lastKnownHashRulesRef.current !== currentKnownHashRules) {
+			lastKnownHashRulesRef.current = currentKnownHashRules;
+
+			performSave();
+		}
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [rules]);
+	}, [lastKnownHashRulesRef, rules]);
 
 	return (
 		<AutoSaveContext.Provider value={{doSave, doSyncInput, isSaved}}>

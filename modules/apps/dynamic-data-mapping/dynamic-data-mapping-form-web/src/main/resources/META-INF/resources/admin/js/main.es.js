@@ -18,115 +18,26 @@ import {delegate} from 'frontend-js-web';
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';
 
-import ShareFormModal from './components/ShareFormModal/ShareFormModal.es';
-import FormURL from './util/FormURL.es';
 /**
  * Form.
  * @extends Component
  */
 
 class Form extends Component {
-	attached() {
-		this.store = this.refs.app.reactComponentRef;
-	}
-
-	created() {
-		this._createFormURL = this._createFormURL.bind(this);
-		this._handlePaginationModeChanded = this._handlePaginationModeChanded.bind(
-			this
-		);
-	}
-
-	isFormBuilderView() {
-		const {view} = this.props;
-
-		return view !== 'fieldSets';
-	}
-
 	render() {
 		const {
-			autocompleteUserURL,
 			context,
-			namespace,
-			published,
-			shareFormInstanceURL,
-			spritemap,
 			...otherProps
 		} = this.props;
 
 		const App = FormApp;
 
 		return (
-			<div>
-				<App
-					{...otherProps}
-					{...context}
-					namespace={namespace}
-					ref="app"
-					spritemap={spritemap}
-				/>
-
-				<div class="container container-fluid-1280">
-					{published && (
-						<ShareFormModal
-							autocompleteUserURL={autocompleteUserURL}
-							localizedName={this.store.current.localizedName}
-							portletNamespace={namespace}
-							shareFormInstanceURL={shareFormInstanceURL}
-							spritemap={spritemap}
-							url={this._createFormURL()}
-						/>
-					)}
-				</div>
-			</div>
+			<App
+				{...otherProps}
+				{...context}
+			/>
 		);
-	}
-
-	_createFormURL() {
-		const settingsDDMForm = Liferay.component('settingsDDMForm');
-
-		let requireAuthentication = false;
-
-		if (settingsDDMForm && settingsDDMForm.reactComponentRef.current) {
-			const settingsPageVisitor = new PagesVisitor(
-				settingsDDMForm.reactComponentRef.current.get('pages')
-			);
-
-			settingsPageVisitor.mapFields((field) => {
-				if (field.fieldName === 'requireAuthentication') {
-					requireAuthentication = field.value;
-				}
-			});
-		}
-
-		const formURL = new FormURL(
-			this._getFormInstanceId(),
-			this.props.published,
-			requireAuthentication
-		);
-
-		return formURL.create();
-	}
-
-	_getFormInstanceId() {
-		const {namespace} = this.props;
-
-		return document.querySelector(`#${namespace}formInstanceId`).value;
-	}
-
-	_handleCancelButtonClicked(event) {
-		const href = event.delegateTarget.href;
-
-		event.preventDefault();
-		event.stopPropagation();
-
-		window.location.href = href;
-	}
-
-	_handlePaginationModeChanded({newVal}) {
-		this.setState({
-			paginationMode: newVal,
-		});
 	}
 
 	_pagesValueFn() {
@@ -139,16 +50,6 @@ class Form extends Component {
 		const {context} = this.props;
 
 		return context.paginationMode;
-	}
-
-	_saveButtonLabelValueFn() {
-		let label = Liferay.Language.get('save');
-
-		if (this.isFormBuilderView()) {
-			label = Liferay.Language.get('save-form');
-		}
-
-		return label;
 	}
 
 	_setContext(context) {
@@ -479,16 +380,6 @@ Form.STATE = {
 	 */
 
 	paginationMode: Config.string().valueFn('_paginationModeValueFn'),
-
-	/**
-	 * The label of the save button
-	 * @default 'save-form'
-	 * @instance
-	 * @memberof Form
-	 * @type {!string}
-	 */
-
-	saveButtonLabel: Config.string().valueFn('_saveButtonLabelValueFn'),
 };
 
 export default Form;

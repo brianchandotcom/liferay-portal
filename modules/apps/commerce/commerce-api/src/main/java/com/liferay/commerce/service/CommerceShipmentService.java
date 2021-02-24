@@ -153,6 +153,13 @@ public interface CommerceShipmentService extends BaseService {
 			String phoneNumber)
 		throws PortalException;
 
+	public CommerceShipment updateAddress(
+			long commerceShipmentId, String name, String description,
+			String street1, String street2, String street3, String city,
+			String zip, long commerceRegionId, long commerceCountryId,
+			String phoneNumber, ServiceContext serviceContext)
+		throws PortalException;
+
 	public CommerceShipment updateCarrierDetails(
 			long commerceShipmentId, String carrier, String trackingNumber)
 		throws PortalException;

@@ -408,6 +408,31 @@ public class CommerceShipmentServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.model.CommerceShipmentSoap updateAddress(
+			long commerceShipmentId, String name, String description,
+			String street1, String street2, String street3, String city,
+			String zip, long commerceRegionId, long commerceCountryId,
+			String phoneNumber,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.commerce.model.CommerceShipment returnValue =
+				CommerceShipmentServiceUtil.updateAddress(
+					commerceShipmentId, name, description, street1, street2,
+					street3, city, zip, commerceRegionId, commerceCountryId,
+					phoneNumber, serviceContext);
+
+			return com.liferay.commerce.model.CommerceShipmentSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.model.CommerceShipmentSoap
 			updateCarrierDetails(
 				long commerceShipmentId, String carrier, String trackingNumber)

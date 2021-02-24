@@ -219,6 +219,21 @@ public class CommerceShipmentServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.model.CommerceShipment updateAddress(
+			long commerceShipmentId, String name, String description,
+			String street1, String street2, String street3, String city,
+			String zip, long commerceRegionId, long commerceCountryId,
+			String phoneNumber,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShipmentService.updateAddress(
+			commerceShipmentId, name, description, street1, street2, street3,
+			city, zip, commerceRegionId, commerceCountryId, phoneNumber,
+			serviceContext);
+	}
+
+	@Override
 	public com.liferay.commerce.model.CommerceShipment updateCarrierDetails(
 			long commerceShipmentId, String carrier, String trackingNumber)
 		throws com.liferay.portal.kernel.exception.PortalException {

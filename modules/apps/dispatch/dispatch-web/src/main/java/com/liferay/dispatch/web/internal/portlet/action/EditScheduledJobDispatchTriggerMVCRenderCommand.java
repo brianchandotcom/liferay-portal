@@ -15,7 +15,7 @@
 package com.liferay.dispatch.web.internal.portlet.action;
 
 import com.liferay.dispatch.constants.DispatchPortletKeys;
-import com.liferay.dispatch.portal.kernel.scheduler.DispatchSchedulerEngineHelper;
+import com.liferay.dispatch.scheduler.DispatchSchedulerEngineHelper;
 import com.liferay.dispatch.web.internal.display.context.ScheduledJobDispatchTriggerDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.WebKeys;

@@ -15,8 +15,8 @@
 package com.liferay.dispatch.internal.portal.kernel.scheduler;
 
 import com.liferay.dispatch.model.DispatchTriggerModel;
-import com.liferay.dispatch.portal.kernel.scheduler.DispatchSchedulerEngineHelper;
-import com.liferay.dispatch.portal.kernel.scheduler.ScheduledJobDispatchTrigger;
+import com.liferay.dispatch.scheduler.DispatchSchedulerEngineHelper;
+import com.liferay.dispatch.scheduler.ScheduledJobDispatchTrigger;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.MessageBus;

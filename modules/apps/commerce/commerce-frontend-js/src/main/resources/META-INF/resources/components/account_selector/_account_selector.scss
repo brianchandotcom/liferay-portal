@@ -1,0 +1,76 @@
+.account-selector {
+	.btn-account-selector {
+		font-size: 0.75rem;
+		max-width: 16rem;
+
+		&:focus {
+			box-shadow: none !important;
+		}
+
+		.account-name {
+			font-size: 0.875rem;
+			font-weight: 500;
+			text-transform: capitalize;
+		}
+	}
+
+	.label {
+		transform: translateY(-1px);
+	}
+
+	&-dropdown-menu {
+		max-height: 28.65rem !important;
+		max-width: 25rem !important;
+		min-height: 28.65rem !important;
+		min-width: 25rem !important;
+		position: fixed;
+
+		.item-list-head {
+			align-items: center;
+			display: flex;
+			font-size: 1rem;
+			font-weight: 500;
+			height: 3rem;
+			justify-content: center;
+			position: relative;
+			text-transform: capitalize;
+
+			.btn {
+				height: 100%;
+				left: 0.5rem;
+				position: absolute;
+				top: 0;
+			}
+		}
+
+		.accounts-list-container {
+			.dropdown-item {
+				font-size: 0.825rem;
+				font-weight: 500;
+				text-transform: capitalize;
+			}
+
+			.inline-scroller {
+				max-height: 19rem;
+				min-height: 19rem;
+			}
+
+			.item-list-head .btn {
+				left: auto;
+				right: 0.5rem;
+			}
+		}
+
+		.orders-list-container {
+			.inline-scroller {
+				max-height: 15.25rem;
+				min-height: 15.25rem;
+			}
+
+			.orders-table tr {
+				font-size: 0.8rem;
+				height: auto !important;
+			}
+		}
+	}
+}

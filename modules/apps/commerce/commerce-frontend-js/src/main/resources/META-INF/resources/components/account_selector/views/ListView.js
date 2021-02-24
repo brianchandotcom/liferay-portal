@@ -12,17 +12,24 @@
  * details.
  */
 
-import AJAX from '../../../utilities/AJAX/index';
+import React from 'react';
 
-const ACCOUNTS_PATH = '/accounts';
+import Autocomplete from '../../autocomplete/Autocomplete';
 
-const VERSION = 'v1.0';
-
-function resolvePath(basePath = '') {
-	return `${basePath}${VERSION}${ACCOUNTS_PATH}`;
+function ListView({apiUrl, contentWrapperRef, customView, placeholder}) {
+	return (
+		<Autocomplete
+			apiUrl={apiUrl}
+			contentWrapperRef={contentWrapperRef}
+			customView={customView}
+			infiniteScrollMode={true}
+			inputName={placeholder}
+			inputPlaceholder={Liferay.Language.get(placeholder)}
+			itemsKey="id"
+			itemsLabel="name"
+			pageSize={10}
+		/>
+	);
 }
 
-export default (basePath) => ({
-	baseURL: resolvePath(basePath),
-	getAccounts: (...params) => AJAX.GET(resolvePath(basePath), ...params),
-});
+export default ListView;

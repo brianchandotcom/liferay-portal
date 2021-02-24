@@ -12,17 +12,15 @@
  * details.
  */
 
-import AJAX from '../../../utilities/AJAX/index';
+import ClayDropDown from '@clayui/drop-down';
+import React from 'react';
 
-const ACCOUNTS_PATH = '/accounts';
-
-const VERSION = 'v1.0';
-
-function resolvePath(basePath = '') {
-	return `${basePath}${VERSION}${ACCOUNTS_PATH}`;
+function EmptyListView({caption, loading}) {
+	return (
+		<ClayDropDown.Caption>
+			{Liferay.Language.get(loading ? 'loading' : caption)}
+		</ClayDropDown.Caption>
+	);
 }
 
-export default (basePath) => ({
-	baseURL: resolvePath(basePath),
-	getAccounts: (...params) => AJAX.GET(resolvePath(basePath), ...params),
-});
+export default EmptyListView;

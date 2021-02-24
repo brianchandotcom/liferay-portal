@@ -4,6 +4,7 @@
 	color: $info-primary;
 
 	&.awaiting-pickup,
+	&.draft,
 	&.in-progress,
 	&.on-hold,
 	&.partially-refunded,
@@ -22,6 +23,7 @@
 		color: $danger-primary;
 	}
 
+	&.approved,
 	&.completed,
 	&.refunded,
 	&.subscription {

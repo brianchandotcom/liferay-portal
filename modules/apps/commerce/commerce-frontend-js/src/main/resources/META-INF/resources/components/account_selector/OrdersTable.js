@@ -20,9 +20,9 @@ import {formatActionUrl} from '../../utilities/index';
 import DateRenderer from '../data_renderers/DateRenderer';
 import StatusRenderer from '../data_renderers/StatusRenderer';
 
-function OrdersTable(props) {
+function OrdersTable({orders, selectOrderURL}) {
 	return (
-		<ClayTable borderless className="orders-list">
+		<ClayTable borderless className="orders-table">
 			<ClayTable.Head>
 				<ClayTable.Row>
 					<ClayTable.Cell headingCell>
@@ -37,15 +37,10 @@ function OrdersTable(props) {
 				</ClayTable.Row>
 			</ClayTable.Head>
 			<ClayTable.Body>
-				{props.orders.map((order) => (
+				{orders.map((order) => (
 					<ClayTable.Row key={order.id}>
 						<ClayTable.Cell headingTitle>
-							<a
-								href={formatActionUrl(
-									props.selectOrderURL,
-									order
-								)}
-							>
+							<a href={formatActionUrl(selectOrderURL, order)}>
 								{order.id}
 							</a>
 						</ClayTable.Cell>

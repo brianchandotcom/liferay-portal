@@ -12,17 +12,7 @@
  * details.
  */
 
-import AJAX from '../../../utilities/AJAX/index';
-
-const ACCOUNTS_PATH = '/accounts';
-
-const VERSION = 'v1.0';
-
-function resolvePath(basePath = '') {
-	return `${basePath}${VERSION}${ACCOUNTS_PATH}`;
-}
-
-export default (basePath) => ({
-	baseURL: resolvePath(basePath),
-	getAccounts: (...params) => AJAX.GET(resolvePath(basePath), ...params),
-});
+export const VIEWS = {
+	ACCOUNTS_LIST: 'accounts',
+	ORDERS_LIST: 'orders',
+};

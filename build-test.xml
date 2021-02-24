@@ -3147,9 +3147,9 @@ ${tomcat-gc-log}
 				<property name="elasticsearch.port" value="${elasticsearch.port}" />
 			</ant>
 
-			<get-testcase-property property.name="elasticsearch.multiple.connections" />
+			<get-testcase-property property.name="elasticsearch.ccr.enabled" />
 
-			<ant antfile="build-test-elasticsearch7.xml" if:true="${elasticsearch.multiple.connections}" target="print-elasticsearch-indices">
+			<ant antfile="build-test-elasticsearch7.xml" if:true="${elasticsearch.ccr.enabled}" target="print-elasticsearch-indices">
 				<property name="elasticsearch.port" value="9202" />
 			</ant>
 		</sequential>

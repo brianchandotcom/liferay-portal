@@ -744,11 +744,11 @@ public class DLReferencesExportImportContentProcessor
 
 	private static final String[] _DL_REFERENCE_STOP_STRINGS = {
 		StringPool.APOSTROPHE, StringPool.APOSTROPHE_ENCODED,
-		StringPool.CLOSE_BRACKET, StringPool.CLOSE_CURLY_BRACE,
-		StringPool.CLOSE_PARENTHESIS, StringPool.GREATER_THAN,
-		StringPool.LESS_THAN, StringPool.NEW_LINE, StringPool.PIPE,
-		StringPool.QUESTION, StringPool.QUOTE, StringPool.QUOTE_ENCODED,
-		StringPool.SPACE
+		StringPool.BACK_SLASH, StringPool.CLOSE_BRACKET,
+		StringPool.CLOSE_CURLY_BRACE, StringPool.CLOSE_PARENTHESIS,
+		StringPool.GREATER_THAN, StringPool.LESS_THAN, StringPool.NEW_LINE,
+		StringPool.PIPE, StringPool.QUESTION, StringPool.QUOTE,
+		StringPool.QUOTE_ENCODED, StringPool.SPACE
 	};
 
 	private static final int _OFFSET_HREF_ATTRIBUTE = 6;

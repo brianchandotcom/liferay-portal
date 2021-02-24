@@ -21,12 +21,11 @@
 	navigationItems="<%= ddmFormBrowserDisplayContext.getNavigationItems() %>"
 />
 
-<clay:management-toolbar-v2
+<clay:management-toolbar
 	clearResultsURL="<%= ddmFormBrowserDisplayContext.getClearResultsURL() %>"
 	disabled="<%= ddmFormBrowserDisplayContext.isDisabledManagementBar() %>"
 	filterDropdownItems="<%= ddmFormBrowserDisplayContext.getFilterItemsDropdownItems() %>"
 	itemsTotal="<%= ddmFormBrowserDisplayContext.getTotalItems() %>"
-	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	searchActionURL="<%= ddmFormBrowserDisplayContext.getSearchActionURL() %>"
 	searchContainerId="<%= ddmFormBrowserDisplayContext.getSearchContainerId() %>"
 	searchFormName="searchFm"

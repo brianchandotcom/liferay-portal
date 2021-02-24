@@ -22,14 +22,23 @@ DDMFormViewFormInstanceRecordsDisplayContext ddmFormViewFormInstanceRecordsDispl
 PortletURL portletURL = ddmFormViewFormInstanceRecordsDisplayContext.getPortletURL();
 %>
 
-<clay:management-toolbar-v2
+<portlet:actionURL name="/dynamic_data_mapping_form/delete_form_instance_record" var="deleteFormInstanceRecordURL">
+	<portlet:param name="mvcPath" value="/admin/view_form_instance_records.jsp" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
+
+<clay:management-toolbar
 	actionDropdownItems="<%= ddmFormViewFormInstanceRecordsDisplayContext.getActionItemsDropdownItems() %>"
+	additionalProps='<%=
+		HashMapBuilder.<String, Object>put(
+			"deleteFormInstanceRecordURL", deleteFormInstanceRecordURL.toString()
+		).build()
+	%>'
 	clearResultsURL="<%= ddmFormViewFormInstanceRecordsDisplayContext.getClearResultsURL() %>"
-	componentId="ddmFormInstanceRecordsManagementToolbar"
 	disabled="<%= ddmFormViewFormInstanceRecordsDisplayContext.isDisabledManagementBar() %>"
 	filterDropdownItems="<%= ddmFormViewFormInstanceRecordsDisplayContext.getFilterItemsDropdownItems() %>"
 	itemsTotal="<%= ddmFormViewFormInstanceRecordsDisplayContext.getTotalItems() %>"
-	namespace="<%= liferayPortletResponse.getNamespace() %>"
+	propsTransformer="admin/js/DDMFormViewFormInstanceRecordsManagementToolbarPropsTransformer"
 	searchActionURL="<%= ddmFormViewFormInstanceRecordsDisplayContext.getSearchActionURL() %>"
 	searchContainerId="<%= ddmFormViewFormInstanceRecordsDisplayContext.getSearchContainerId() %>"
 	searchFormName="fm"
@@ -143,54 +152,3 @@ PortletURL portletURL = ddmFormViewFormInstanceRecordsDisplayContext.getPortletU
 </clay:container-fluid>
 
 <%@ include file="/admin/export_form_instance.jspf" %>
-
-<aui:script sandbox="<%= true %>">
-	var deleteRecords = function () {
-		if (
-			confirm(
-				'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>'
-			)
-		) {
-			var searchContainer = document.getElementById(
-				'<portlet:namespace />ddmFormInstanceRecord'
-			);
-
-			if (searchContainer) {
-				Liferay.Util.postForm(
-					document.<portlet:namespace />searchContainerForm,
-					{
-						data: {
-							deleteFormInstanceRecordIds: Liferay.Util.listCheckedExcept(
-								searchContainer,
-								'<portlet:namespace />allRowIds'
-							),
-						},
-
-						<portlet:actionURL name="/dynamic_data_mapping_form/delete_form_instance_record" var="deleteFormInstanceRecordURL">
-							<portlet:param name="mvcPath" value="/admin/view_form_instance_records.jsp" />
-							<portlet:param name="redirect" value="<%= currentURL %>" />
-						</portlet:actionURL>
-
-						url: '<%= deleteFormInstanceRecordURL %>',
-					}
-				);
-			}
-		}
-	};
-
-	var ACTIONS = {
-		deleteRecords: deleteRecords,
-	};
-
-	Liferay.componentReady('ddmFormInstanceRecordsManagementToolbar').then(
-		(managementToolbar) => {
-			managementToolbar.on(['actionItemClicked'], (event) => {
-				var itemData = event.data.item.data;
-
-				if (itemData && itemData.action && ACTIONS[itemData.action]) {
-					ACTIONS[itemData.action]();
-				}
-			});
-		}
-	);
-</aui:script>

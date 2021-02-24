@@ -20,15 +20,23 @@
 boolean includeCheckBox = ParamUtil.getBoolean(request, "includeCheckBox", true);
 %>
 
-<clay:management-toolbar-v2
+<portlet:actionURL name="/dynamic_data_mapping/delete_template" var="deleteTemplatesURL">
+	<portlet:param name="mvcPath" value="/view_template.jsp" />
+</portlet:actionURL>
+
+<clay:management-toolbar
 	actionDropdownItems='<%= ddmDisplayContext.getActionItemsDropdownItems("deleteTemplates") %>'
+	additionalProps='<%=
+		HashMapBuilder.<String, Object>put(
+			"deleteTemplatesURL", deleteTemplatesURL.toString()
+		).build()
+	%>'
 	clearResultsURL="<%= ddmDisplayContext.getClearResultsURL() %>"
-	componentId="ddmTemplateManagementToolbar"
 	creationMenu="<%= ddmDisplayContext.getTemplateCreationMenu() %>"
 	disabled="<%= ddmDisplayContext.isDisabledManagementBar(DDMWebKeys.DYNAMIC_DATA_MAPPING_TEMPLATE) %>"
 	filterDropdownItems="<%= ddmDisplayContext.getFilterItemsDropdownItems() %>"
 	itemsTotal="<%= ddmDisplayContext.getTotalItems(DDMWebKeys.DYNAMIC_DATA_MAPPING_TEMPLATE) %>"
-	namespace="<%= liferayPortletResponse.getNamespace() %>"
+	propsTransformer="js/DDMTemplateManagementToolbarPropsTransformer"
 	searchActionURL="<%= ddmDisplayContext.getTemplateSearchActionURL() %>"
 	searchContainerId="<%= ddmDisplayContext.getTemplateSearchContainerId() %>"
 	searchFormName="fm1"
@@ -36,49 +44,3 @@ boolean includeCheckBox = ParamUtil.getBoolean(request, "includeCheckBox", true)
 	sortingOrder="<%= ddmDisplayContext.getOrderByType() %>"
 	sortingURL="<%= ddmDisplayContext.getSortingURL() %>"
 />
-
-<aui:script sandbox="<%= true %>">
-	var deleteTemplates = function () {
-		if (
-			confirm(
-				'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>'
-			)
-		) {
-			var searchContainer = document.getElementById(
-				'<portlet:namespace />entriesContainer'
-			);
-
-			<portlet:actionURL name="/dynamic_data_mapping/delete_template" var="deleteTemplatesURL">
-				<portlet:param name="mvcPath" value="/view_template.jsp" />
-			</portlet:actionURL>
-
-			if (searchContainer) {
-				Liferay.Util.postForm(document.<portlet:namespace />fm, {
-					data: {
-						deleteTemplateIds: Liferay.Util.listCheckedExcept(
-							searchContainer,
-							'<portlet:namespace />allRowIds'
-						),
-					},
-					url: '<%= deleteTemplatesURL %>',
-				});
-			}
-		}
-	};
-
-	var ACTIONS = {
-		deleteTemplates: deleteTemplates,
-	};
-
-	Liferay.componentReady('ddmTemplateManagementToolbar').then(
-		(managementToolbar) => {
-			managementToolbar.on('actionItemClicked', (event) => {
-				var itemData = event.data.item.data;
-
-				if (itemData && itemData.action && ACTIONS[itemData.action]) {
-					ACTIONS[itemData.action]();
-				}
-			});
-		}
-	);
-</aui:script>

@@ -16,15 +16,32 @@
 
 <%@ include file="/admin/init.jsp" %>
 
-<clay:management-toolbar-v2
+<portlet:actionURL name="/dynamic_data_mapping_form/delete_form_instance" var="deleteFormInstanceURL">
+	<portlet:param name="mvcPath" value="/admin/view.jsp" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
+
+<portlet:actionURL name="/dynamic_data_mapping_form/delete_structure" var="deleteStructureURL">
+	<portlet:param name="mvcPath" value="/admin/view.jsp" />
+	<portlet:param name="currentTab" value="element-set" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
+
+<clay:management-toolbar
 	actionDropdownItems="<%= ddmFormAdminDisplayContext.getActionItemsDropdownItems() %>"
+	additionalProps='<%=
+		HashMapBuilder.<String, Object>put(
+			"deleteFormInstanceURL", deleteFormInstanceURL.toString()
+		).put(
+			"deleteStructureURL", deleteStructureURL.toString()
+		).build()
+	%>'
 	clearResultsURL="<%= ddmFormAdminDisplayContext.getClearResultsURL() %>"
-	componentId="ddmFormManagementToolbar"
 	creationMenu="<%= ddmFormAdminDisplayContext.getCreationMenu() %>"
 	disabled="<%= ddmFormAdminDisplayContext.isDisabledManagementBar() %>"
 	filterDropdownItems="<%= ddmFormAdminDisplayContext.getFilterItemsDropdownItems() %>"
 	itemsTotal="<%= ddmFormAdminDisplayContext.getTotalItems() %>"
-	namespace="<%= liferayPortletResponse.getNamespace() %>"
+	propsTransformer="admin/js/DDMFormAdminManagementToolbarPropsTransformer"
 	searchActionURL="<%= ddmFormAdminDisplayContext.getSearchActionURL() %>"
 	searchContainerId="<%= ddmFormAdminDisplayContext.getSearchContainerId() %>"
 	searchFormName="fm1"
@@ -32,87 +49,3 @@
 	sortingURL="<%= ddmFormAdminDisplayContext.getSortingURL() %>"
 	viewTypeItems="<%= ddmFormAdminDisplayContext.getViewTypesItems() %>"
 />
-
-<aui:script sandbox="<%= true %>">
-	var deleteFormInstances = function () {
-		if (
-			confirm(
-				'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>'
-			)
-		) {
-			var searchContainer = document.getElementById(
-				'<portlet:namespace /><%= ddmFormAdminDisplayContext.getSearchContainerId() %>'
-			);
-
-			if (searchContainer) {
-				Liferay.Util.postForm(
-					document.<portlet:namespace />searchContainerForm,
-					{
-						data: {
-							deleteFormInstanceIds: Liferay.Util.listCheckedExcept(
-								searchContainer,
-								'<portlet:namespace />allRowIds'
-							),
-						},
-
-						<portlet:actionURL name="/dynamic_data_mapping_form/delete_form_instance" var="deleteFormInstanceURL">
-							<portlet:param name="mvcPath" value="/admin/view.jsp" />
-							<portlet:param name="redirect" value="<%= currentURL %>" />
-						</portlet:actionURL>
-
-						url: '<%= deleteFormInstanceURL %>',
-					}
-				);
-			}
-		}
-	};
-
-	var deleteStructures = function () {
-		if (
-			confirm(
-				'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>'
-			)
-		) {
-			var searchContainer = document.getElementById(
-				'<portlet:namespace /><%= ddmFormAdminDisplayContext.getSearchContainerId() %>'
-			);
-
-			if (searchContainer) {
-				Liferay.Util.postForm(
-					document.<portlet:namespace />searchContainerForm,
-					{
-						data: {
-							deleteStructureIds: Liferay.Util.listCheckedExcept(
-								searchContainer,
-								'<portlet:namespace />allRowIds'
-							),
-						},
-
-						<portlet:actionURL name="/dynamic_data_mapping_form/delete_structure" var="deleteStructureURL">
-							<portlet:param name="mvcPath" value="/admin/view.jsp" />
-							<portlet:param name="currentTab" value="element-set" />
-							<portlet:param name="redirect" value="<%= currentURL %>" />
-						</portlet:actionURL>
-
-						url: '<%= deleteStructureURL %>',
-					}
-				);
-			}
-		}
-	};
-
-	var ACTIONS = {
-		deleteFormInstances: deleteFormInstances,
-		deleteStructures: deleteStructures,
-	};
-
-	Liferay.componentReady('ddmFormManagementToolbar').then((managementToolbar) => {
-		managementToolbar.on(['actionItemClicked'], (event) => {
-			var itemData = event.data.item.data;
-
-			if (itemData && itemData.action && ACTIONS[itemData.action]) {
-				ACTIONS[itemData.action]();
-			}
-		});
-	});
-</aui:script>

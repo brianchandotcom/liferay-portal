@@ -16,15 +16,23 @@
 
 <%@ include file="/init.jsp" %>
 
-<clay:management-toolbar-v2
+<portlet:actionURL name="/dynamic_data_mapping/delete_structure" var="deleteStructuresURL">
+	<portlet:param name="mvcPath" value="/view.jsp" />
+</portlet:actionURL>
+
+<clay:management-toolbar
 	actionDropdownItems='<%= ddmDisplayContext.getActionItemsDropdownItems("deleteStructures") %>'
+	additionalProps='<%=
+		HashMapBuilder.<String, Object>put(
+			"deleteStructuresURL", deleteStructuresURL.toString()
+		).build()
+	%>'
 	clearResultsURL="<%= ddmDisplayContext.getClearResultsURL() %>"
-	componentId="ddmStructureManagementToolbar"
 	creationMenu="<%= ddmDisplayContext.getStructureCreationMenu() %>"
 	disabled="<%= ddmDisplayContext.isDisabledManagementBar(DDMWebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE) %>"
 	filterDropdownItems="<%= ddmDisplayContext.getFilterItemsDropdownItems() %>"
 	itemsTotal="<%= ddmDisplayContext.getTotalItems(DDMWebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE) %>"
-	namespace="<%= liferayPortletResponse.getNamespace() %>"
+	propsTransformer="js/DDMStructureManagementToolbarPropsTransformer"
 	searchActionURL="<%= ddmDisplayContext.getStructureSearchActionURL() %>"
 	searchContainerId="<%= ddmDisplayContext.getStructureSearchContainerId() %>"
 	searchFormName="fm1"
@@ -32,49 +40,3 @@
 	sortingOrder="<%= ddmDisplayContext.getOrderByType() %>"
 	sortingURL="<%= ddmDisplayContext.getSortingURL() %>"
 />
-
-<aui:script sandbox="<%= true %>">
-	var deleteStructures = function () {
-		if (
-			confirm(
-				'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>'
-			)
-		) {
-			var searchContainer = document.getElementById(
-				'<portlet:namespace />entriesContainer'
-			);
-
-			if (searchContainer) {
-				<portlet:actionURL name="/dynamic_data_mapping/delete_structure" var="deleteStructuresURL">
-					<portlet:param name="mvcPath" value="/view.jsp" />
-				</portlet:actionURL>
-
-				Liferay.Util.postForm(document.<portlet:namespace />fm, {
-					data: {
-						deleteStructureIds: Liferay.Util.listCheckedExcept(
-							searchContainer,
-							'<portlet:namespace />allRowIds'
-						),
-					},
-					url: '<%= deleteStructuresURL %>',
-				});
-			}
-		}
-	};
-
-	var ACTIONS = {
-		deleteStructures: deleteStructures,
-	};
-
-	Liferay.componentReady('ddmStructureManagementToolbar').then(
-		(managementToolbar) => {
-			managementToolbar.on('actionItemClicked', (event) => {
-				var itemData = event.data.item.data;
-
-				if (itemData && itemData.action && ACTIONS[itemData.action]) {
-					ACTIONS[itemData.action]();
-				}
-			});
-		}
-	);
-</aui:script>

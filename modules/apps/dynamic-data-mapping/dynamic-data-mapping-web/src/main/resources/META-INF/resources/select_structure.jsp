@@ -26,17 +26,16 @@ SearchContainer<DDMStructure> structureSearch = ddmDisplayContext.getStructureSe
 
 <liferay-util:include page="/structure_navigation_bar.jsp" servletContext="<%= application %>" />
 
-<clay:management-toolbar-v2
+<clay:management-toolbar
 	clearResultsURL="<%= ddmDisplayContext.getClearResultsURL() %>"
-	componentId="ddmStructureManagementToolbar"
 	creationMenu="<%= ddmDisplayContext.getSelectStructureCreationMenu() %>"
 	disabled="<%= ddmDisplayContext.isDisabledManagementBar(DDMWebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE) %>"
 	filterDropdownItems="<%= ddmDisplayContext.getFilterItemsDropdownItems() %>"
 	itemsTotal="<%= ddmDisplayContext.getTotalItems(DDMWebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE) %>"
-	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	searchActionURL="<%= ddmDisplayContext.getSelectStructureSearchActionURL() %>"
 	searchContainerId="<%= ddmDisplayContext.getStructureSearchContainerId() %>"
 	searchFormName="searchForm"
+	searchInputAutoFocus="<%= true %>"
 	selectable="<%= false %>"
 	sortingOrder="<%= ddmDisplayContext.getOrderByType() %>"
 	sortingURL="<%= ddmDisplayContext.getSortingURL() %>"
@@ -107,15 +106,6 @@ SearchContainer<DDMStructure> structureSearch = ddmDisplayContext.getStructureSe
 </aui:form>
 
 <aui:script>
-	Liferay.componentReady('ddmStructureManagementToolbar').then(
-		(managementToolbar) => {
-			Liferay.Util.focusFormField(
-				document.<portlet:namespace />searchForm
-					.<portlet:namespace />keywords
-			);
-		}
-	);
-
 	Liferay.Util.selectEntityHandler(
 		'#<portlet:namespace />selectStructureFm',
 		'<%= HtmlUtil.escapeJS(eventName) %>'

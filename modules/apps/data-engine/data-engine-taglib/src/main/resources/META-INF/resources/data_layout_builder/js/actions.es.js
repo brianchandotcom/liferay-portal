@@ -65,7 +65,10 @@ export const dropCustomObjectField = ({
 	);
 	const {label} = dataDefinitionField;
 
-	const {editingLanguageId} = dataLayoutBuilder.getState();
+	const {
+		appContext: [{editingLanguageId}],
+		fieldTypes,
+	} = dataLayoutBuilder.props;
 
 	return {
 		data: {
@@ -73,7 +76,7 @@ export const dropCustomObjectField = ({
 			parentFieldName,
 		},
 		fieldType: {
-			...dataLayoutBuilder.props.fieldTypes.find(({name}) => {
+			...fieldTypes.find(({name}) => {
 				return name === dataDefinitionField.fieldType;
 			}),
 			editable: true,

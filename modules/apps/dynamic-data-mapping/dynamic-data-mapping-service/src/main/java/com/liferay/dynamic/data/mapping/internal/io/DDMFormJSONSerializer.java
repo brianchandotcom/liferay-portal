@@ -20,7 +20,6 @@ import com.liferay.dynamic.data.mapping.io.DDMFormSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.model.DDMFormSuccessPageSettings;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
@@ -53,28 +52,6 @@ public class DDMFormJSONSerializer implements DDMFormSerializer {
 
 		DDMForm ddmForm = ddmFormSerializerSerializeRequest.getDDMForm();
 
-		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
-
-		for (DDMFormField ddmFormField : ddmFormFields) {
-			_addMissingLocales(
-				ddmFormField.getLabel(), ddmForm.getAvailableLocales());
-			_addMissingLocales(
-				ddmFormField.getPredefinedValue(),
-				ddmForm.getAvailableLocales());
-			_addMissingLocales(
-				ddmFormField.getTip(), ddmForm.getAvailableLocales());
-
-			Map<String, Object> properties = ddmFormField.getProperties();
-
-			for (Object property : properties.values()) {
-				if (property instanceof LocalizedValue) {
-					_addMissingLocales(
-						(LocalizedValue)property,
-						ddmForm.getAvailableLocales());
-				}
-			}
-		}
-
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		addAvailableLanguageIds(jsonObject, ddmForm.getAvailableLocales());
@@ -90,8 +67,8 @@ public class DDMFormJSONSerializer implements DDMFormSerializer {
 		}
 
 		DDMFormFieldSerializerUtil.serialize(
-			ddmFormFields, _ddmFormFieldTypeServicesTracker, _jsonFactory,
-			jsonObject);
+			ddmForm.getDDMFormFields(), _ddmFormFieldTypeServicesTracker,
+			_jsonFactory, jsonObject);
 
 		DDMFormSerializerSerializeResponse.Builder builder =
 			DDMFormSerializerSerializeResponse.Builder.newBuilder(
@@ -185,26 +162,6 @@ public class DDMFormJSONSerializer implements DDMFormSerializer {
 		}
 
 		return jsonObject;
-	}
-
-	private void _addMissingLocales(
-		LocalizedValue localizedValue, Set<Locale> availableLocales) {
-
-		if (localizedValue == null) {
-			return;
-		}
-
-		String defaultLocaleValue = localizedValue.getString(
-			localizedValue.getDefaultLocale());
-
-		Set<Locale> localizedValueAvailableLocales =
-			localizedValue.getAvailableLocales();
-
-		for (Locale locale : availableLocales) {
-			if (!localizedValueAvailableLocales.contains(locale)) {
-				localizedValue.addString(locale, defaultLocaleValue);
-			}
-		}
 	}
 
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;

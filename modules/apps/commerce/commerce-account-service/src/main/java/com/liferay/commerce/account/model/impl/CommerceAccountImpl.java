@@ -86,7 +86,7 @@ public class CommerceAccountImpl extends CommerceAccountBaseImpl {
 
 	public static Integer toAccountEntryStatus(Boolean commerceAccountActive) {
 		if (commerceAccountActive == null) {
-			return null;
+			return WorkflowConstants.STATUS_ANY;
 		}
 
 		if (commerceAccountActive) {

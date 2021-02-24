@@ -18,9 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.model.CommerceAddress;
-import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.service.CommerceShipmentLocalServiceUtil;
@@ -30,6 +28,8 @@ import com.liferay.headless.commerce.admin.shipment.client.dto.v1_0.ShippingAddr
 import com.liferay.headless.commerce.admin.shipment.client.serdes.v1_0.ShippingAddressSerDes;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
@@ -87,11 +87,10 @@ public class ShippingAddressResourceTest
 			testCompany.getCompanyId(), testGroup.getGroupId(),
 			_user.getUserId());
 
-		_commerceCountry = CommerceInventoryTestUtil.addCommerceCountry(
-			_serviceContext);
+		_country = CommerceInventoryTestUtil.addCountry(_serviceContext);
 
-		_commerceRegion = CommerceInventoryTestUtil.addCommerceRegion(
-			_commerceCountry.getCommerceCountryId(), _serviceContext);
+		_region = CommerceInventoryTestUtil.addRegion(
+			_country.getCountryId(), _serviceContext);
 
 		_commerceShipment =
 			CommerceShipmentLocalServiceUtil.addCommerceShipment(
@@ -168,7 +167,7 @@ public class ShippingAddressResourceTest
 		return new ShippingAddress() {
 			{
 				city = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				countryISOCode = _commerceCountry.getTwoLettersISOCode();
+				countryISOCode = _country.getA2();
 				description = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				externalReferenceCode = StringUtil.toLowerCase(
@@ -179,7 +178,7 @@ public class ShippingAddressResourceTest
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				phoneNumber = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
-				regionISOCode = _commerceRegion.getCode();
+				regionISOCode = _region.getRegionCode();
 				street1 = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				street2 = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				street3 = StringUtil.toLowerCase(RandomTestUtil.randomString());
@@ -191,24 +190,24 @@ public class ShippingAddressResourceTest
 	private String _getRegionISOCode(CommerceAddress commerceAddress)
 		throws Exception {
 
-		CommerceRegion commerceRegion = commerceAddress.getCommerceRegion();
+		Region region = commerceAddress.getRegion();
 
-		if (commerceRegion == null) {
+		if (region == null) {
 			return StringPool.BLANK;
 		}
 
-		return commerceRegion.getCode();
+		return region.getRegionCode();
 	}
 
 	private ShippingAddress _toShippingAddress(CommerceAddress commerceAddress)
 		throws Exception {
 
-		CommerceCountry commerceCountry = commerceAddress.getCommerceCountry();
+		Country country = commerceAddress.getCountry();
 
 		return new ShippingAddress() {
 			{
 				city = commerceAddress.getCity();
-				countryISOCode = commerceCountry.getTwoLettersISOCode();
+				countryISOCode = country.getA2();
 				description = commerceAddress.getDescription();
 				externalReferenceCode =
 					commerceAddress.getExternalReferenceCode();
@@ -243,19 +242,19 @@ public class ShippingAddressResourceTest
 	private CommerceChannel _commerceChannel;
 
 	@DeleteAfterTestRun
-	private CommerceCountry _commerceCountry;
-
-	@DeleteAfterTestRun
 	private CommerceCurrency _commerceCurrency;
 
 	@DeleteAfterTestRun
 	private CommerceOrder _commerceOrder;
 
 	@DeleteAfterTestRun
-	private CommerceRegion _commerceRegion;
+	private CommerceShipment _commerceShipment;
 
 	@DeleteAfterTestRun
-	private CommerceShipment _commerceShipment;
+	private Country _country;
+
+	@DeleteAfterTestRun
+	private Region _region;
 
 	private ServiceContext _serviceContext;
 

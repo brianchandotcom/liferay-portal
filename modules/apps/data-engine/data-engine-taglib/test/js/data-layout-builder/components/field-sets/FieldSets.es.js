@@ -83,12 +83,18 @@ describe('FieldSets', () => {
 					...dataLayoutBuilderProps,
 					dispose: jest.fn(),
 					emit: jest.fn(),
-					getLayoutProvider: () => ({
-						getRules: jest.fn().mockImplementation(() => []),
-						on: jest.fn().mockImplementation(() => ({
-							removeListener: jest.fn(),
-						})),
-					}),
+					formBuilderWithLayoutProvider: {
+						refs: {
+							layoutProvider: {
+								getRules: jest
+									.fn()
+									.mockImplementation(() => []),
+								on: jest.fn().mockImplementation(() => ({
+									removeListener: jest.fn(),
+								})),
+							},
+						},
+					},
 				};
 
 				props.layoutProviderProps.onLoad(state);

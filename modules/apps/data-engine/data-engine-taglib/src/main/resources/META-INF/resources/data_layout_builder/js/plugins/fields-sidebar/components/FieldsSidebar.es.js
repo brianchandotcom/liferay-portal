@@ -107,7 +107,7 @@ export const DataEngineFieldsSidebar = ({title}) => {
 				const {
 					activePage,
 					pages,
-				} = dataLayoutBuilder.getLayoutProvider().state;
+				} = dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider.state;
 
 				dataLayoutBuilder.dispatch(
 					'fieldAdded',

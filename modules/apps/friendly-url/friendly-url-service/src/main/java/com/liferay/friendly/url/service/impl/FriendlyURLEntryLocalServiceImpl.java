@@ -392,8 +392,8 @@ public class FriendlyURLEntryLocalServiceImpl
 
 	@Override
 	public String getUniqueUrlTitle(
-		long groupId, long classNameId, long classPK, String languageId,
-		String urlTitle) {
+		long groupId, long classNameId, long classPK, String urlTitle,
+		String languageId) {
 
 		String normalizedUrlTitle =
 			FriendlyURLNormalizerUtil.normalizeWithEncoding(urlTitle);

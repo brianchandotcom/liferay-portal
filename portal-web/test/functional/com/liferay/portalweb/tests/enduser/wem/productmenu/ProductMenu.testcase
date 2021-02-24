@@ -1,0 +1,82 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Control Menu";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Site.tearDownCP();
+		}
+	}
+
+	@description = "This is a use case for LPS-127446. Assert the Product Menu is shown correctly."
+	@priority = "5"
+	test ViewProductMenuStyles {
+		property portal.acceptance = "true";
+
+		var minCategoryPaddingHorizontal = "20";
+		var minCategoryPaddingVertical = "10";
+		var minPortletPaddingHorizontal = "14";
+		var minPortletPaddingVertical = "8";
+
+		task ("Open the Product Menu") {
+			ProductMenuHelper.openProductMenu();
+		}
+
+		task ("Assert the padding settings of category") {
+			AssertVisible(
+				key_category = "Design",
+				locator1 = "ProductMenu#CATEGORY_COLLAPSED");
+
+			for (var paddingVertical : list "padding-bottom,padding-top") {
+				TestUtils.assertCssValueIsGreaterThan(
+					attribute = "${paddingVertical}",
+					element = "//a[@data-qa-id='appGroup'][normalize-space(text())='Design']",
+					expected = "${minCategoryPaddingVertical}");
+			}
+
+			for (var paddingHorizontal : list "padding-left,padding-right") {
+				TestUtils.assertCssValueIsGreaterThan(
+					attribute = "${paddingHorizontal}",
+					element = "//a[@data-qa-id='appGroup'][normalize-space(text())='Design']",
+					expected = "${minCategoryPaddingHorizontal}");
+			}
+		}
+
+		task ("Assert the padding settings of portlet") {
+			ProductMenuHelper.expandCategory(category = "Design");
+
+			AssertVisible(
+				key_portlet = "Style Books",
+				locator1 = "ProductMenu#PORTLET");
+
+			for (var paddingVertical : list "padding-bottom,padding-top") {
+				TestUtils.assertCssValueIsGreaterThan(
+					attribute = "${paddingVertical}",
+					element = "//a[contains(@id,'Portlet') and @data-title='Style Books']",
+					expected = "${minPortletPaddingVertical}");
+			}
+
+			for (var paddingHorizontal : list "padding-left,padding-right") {
+				TestUtils.assertCssValueIsGreaterThan(
+					attribute = "${paddingHorizontal}",
+					element = "//a[contains(@id,'Portlet') and @data-title='Style Books']",
+					expected = "${minPortletPaddingHorizontal}");
+			}
+		}
+	}
+
+}

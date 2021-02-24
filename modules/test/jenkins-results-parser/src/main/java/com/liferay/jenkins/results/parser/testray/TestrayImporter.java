@@ -136,8 +136,6 @@ public class TestrayImporter {
 		TestrayBuild testrayBuild = null;
 
 		try {
-			Job job = getJob();
-
 			String testrayBuildID = System.getProperty("TESTRAY_BUILD_ID");
 
 			TestrayRoutine testrayRoutine = getTestrayRoutine();
@@ -173,6 +171,8 @@ public class TestrayImporter {
 				testrayBuild = testrayRoutine.getTestrayBuildByName(
 					_replaceEnvVars(testrayBuildName));
 			}
+
+			Job job = getJob();
 
 			testrayBuildID = JenkinsResultsParserUtil.getProperty(
 				job.getJobProperties(), "testray.build.id", job.getJobName(),
@@ -215,6 +215,111 @@ public class TestrayImporter {
 		return null;
 	}
 
+	public TestrayProductVersion getTestrayProductVersion() {
+		if (_testrayProductVersion != null) {
+			return _testrayProductVersion;
+		}
+
+		long start = System.currentTimeMillis();
+		TestrayProductVersion testrayProductVersion = null;
+
+		try {
+			TestrayProject testrayProject = getTestrayProject();
+
+			String testrayProductVersionID = System.getProperty(
+				"TESTRAY_PRODUCT_VERSION_ID");
+
+			if ((testrayProductVersionID != null) &&
+				testrayProductVersionID.matches("\\d+")) {
+
+				testrayProductVersion =
+					testrayProject.getTestrayProductVersionByID(
+						Integer.parseInt(testrayProductVersionID));
+			}
+
+			String testrayProductVersionName = System.getProperty(
+				"TESTRAY_PRODUCT_VERSION_NAME");
+
+			if ((testrayProductVersion == null) &&
+				!JenkinsResultsParserUtil.isNullOrEmpty(
+					testrayProductVersionName)) {
+
+				testrayProductVersion =
+					testrayProject.getTestrayProductVersionByName(
+						_replaceEnvVars(testrayProductVersionName));
+			}
+
+			testrayProductVersionID = _getBuildParameter(
+				"TESTRAY_PRODUCT_VERSION_ID");
+
+			if ((testrayProductVersion == null) &&
+				(testrayProductVersionID != null) &&
+				testrayProductVersionID.matches("\\d+")) {
+
+				testrayProductVersion =
+					testrayProject.getTestrayProductVersionByID(
+						Integer.parseInt(testrayProductVersionID));
+			}
+
+			testrayProductVersionName = _getBuildParameter(
+				"TESTRAY_PRODUCT_VERSION_NAME");
+
+			if ((testrayProductVersion == null) &&
+				!JenkinsResultsParserUtil.isNullOrEmpty(
+					testrayProductVersionName)) {
+
+				testrayProductVersion =
+					testrayProject.getTestrayProductVersionByName(
+						_replaceEnvVars(testrayProductVersionName));
+			}
+
+			Job job = getJob();
+
+			testrayProductVersionID = JenkinsResultsParserUtil.getProperty(
+				job.getJobProperties(), "testray.product.version.id",
+				job.getJobName(), _topLevelBuild.getTestSuiteName());
+
+			if ((testrayProductVersion == null) &&
+				(testrayProductVersionID != null) &&
+				testrayProductVersionID.matches("\\d+")) {
+
+				testrayProductVersion =
+					testrayProject.getTestrayProductVersionByID(
+						Integer.parseInt(testrayProductVersionID));
+			}
+
+			testrayProductVersionName = JenkinsResultsParserUtil.getProperty(
+				job.getJobProperties(), "testray.product.version.name",
+				job.getJobName(), _topLevelBuild.getTestSuiteName());
+
+			if ((testrayProductVersion == null) &&
+				!JenkinsResultsParserUtil.isNullOrEmpty(
+					testrayProductVersionName)) {
+
+				testrayProductVersion =
+					testrayProject.getTestrayProductVersionByName(
+						_replaceEnvVars(testrayProductVersionName));
+			}
+		}
+		finally {
+			if (testrayProductVersion != null) {
+				_testrayProductVersion = testrayProductVersion;
+
+				System.out.println(
+					JenkinsResultsParserUtil.combine(
+						"Testray Product Version ",
+						String.valueOf(_testrayProductVersion.getURL()),
+						" created in ",
+						JenkinsResultsParserUtil.toDurationString(
+							System.currentTimeMillis() - start)));
+
+				return _testrayProductVersion;
+			}
+		}
+
+		return null;
+	}
+
 	public TestrayProject getTestrayProject() {
 		if (_testrayProject != null) {
 			return _testrayProject;
@@ -224,8 +329,6 @@ public class TestrayImporter {
 		TestrayProject testrayProject = null;
 
 		try {
-			Job job = getJob();
-
 			String testrayProjectID = System.getProperty("TESTRAY_PROJECT_ID");
 
 			TestrayServer testrayServer = getTestrayServer();
@@ -264,6 +367,8 @@ public class TestrayImporter {
 				testrayProject = testrayServer.getTestrayProjectByName(
 					_replaceEnvVars(testrayProjectName));
 			}
+
+			Job job = getJob();
 
 			testrayProjectID = JenkinsResultsParserUtil.getProperty(
 				job.getJobProperties(), "testray.project.id", job.getJobName(),
@@ -316,8 +421,6 @@ public class TestrayImporter {
 		TestrayRoutine testrayRoutine = null;
 
 		try {
-			Job job = getJob();
-
 			String testrayRoutineID = System.getProperty("TESTRAY_ROUTINE_ID");
 
 			TestrayProject testrayProject = getTestrayProject();
@@ -365,6 +468,8 @@ public class TestrayImporter {
 				testrayRoutine = testrayProject.getTestrayRoutineByName(
 					_replaceEnvVars(testrayRoutineName));
 			}
+
+			Job job = getJob();
 
 			testrayRoutineID = JenkinsResultsParserUtil.getProperty(
 				job.getJobProperties(), "testray.routine.id", job.getJobName(),
@@ -768,6 +873,7 @@ public class TestrayImporter {
 
 	private Job _job;
 	private TestrayBuild _testrayBuild;
+	private TestrayProductVersion _testrayProductVersion;
 	private TestrayProject _testrayProject;
 	private TestrayRoutine _testrayRoutine;
 	private TestrayServer _testrayServer;

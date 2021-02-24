@@ -125,7 +125,7 @@ public class CommerceAccountAddressClayDataSetDataSetDisplayView
 			dropdownItem -> {
 				StringBundler sb = new StringBundler(7);
 
-				sb.append("javascript:/commerce_account/edit_commerce_address");
+				sb.append("javascript:editCommerceAddress");
 				sb.append(StringPool.OPEN_PARENTHESIS);
 				sb.append(StringPool.APOSTROPHE);
 				sb.append(address.getAddressId());

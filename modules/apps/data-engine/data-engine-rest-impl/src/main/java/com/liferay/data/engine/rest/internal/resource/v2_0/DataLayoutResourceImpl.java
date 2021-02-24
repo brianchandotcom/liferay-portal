@@ -320,6 +320,27 @@ public class DataLayoutResourceImpl
 	}
 
 	private void _addDataDefinitionFieldLinks(
+			long dataLayoutId, DDMFormField ddmFormField, long siteId)
+		throws Exception {
+
+		long fieldSetDDMStructureId = GetterUtil.getLong(
+			ddmFormField.getProperty("ddmStructureId"));
+
+		if (fieldSetDDMStructureId != 0) {
+			_deDataDefinitionFieldLinkLocalService.addDEDataDefinitionFieldLink(
+				siteId, _portal.getClassNameId(DDMStructureLayout.class),
+				dataLayoutId, fieldSetDDMStructureId, ddmFormField.getName());
+
+			for (DDMFormField nestedDDMFormField :
+					ddmFormField.getNestedDDMFormFields()) {
+
+				_addDataDefinitionFieldLinks(
+					dataLayoutId, nestedDDMFormField, siteId);
+			}
+		}
+	}
+
+	private void _addDataDefinitionFieldLinks(
 			long dataDefinitionId, long dataLayoutId, DDMForm ddmForm,
 			List<String> fieldNames, long siteId)
 		throws Exception {
@@ -334,19 +355,9 @@ public class DataLayoutResourceImpl
 
 			DDMFormField ddmFormField = ddmFormFieldsMap.get(fieldName);
 
-			if ((ddmFormField != null) &&
-				Validator.isNotNull(
-					GetterUtil.getLong(
-						ddmFormField.getProperty("ddmStructureId")))) {
-
-				_deDataDefinitionFieldLinkLocalService.
-					addDEDataDefinitionFieldLink(
-						siteId,
-						_portal.getClassNameId(DDMStructureLayout.class),
-						dataLayoutId,
-						GetterUtil.getLong(
-							ddmFormField.getProperty("ddmStructureId")),
-						fieldName);
+			if (ddmFormField != null) {
+				_addDataDefinitionFieldLinks(
+					dataLayoutId, ddmFormField, siteId);
 			}
 		}
 	}

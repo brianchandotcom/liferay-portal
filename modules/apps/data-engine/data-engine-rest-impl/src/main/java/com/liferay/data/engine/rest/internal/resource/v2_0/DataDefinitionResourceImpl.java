@@ -705,6 +705,10 @@ public class DataDefinitionResourceImpl
 						groupId, _portal.getClassNameId(DDMStructure.class),
 						dataDefinitionId, fieldSetDDMStructureId,
 						ddmFormField.getName());
+
+				_addDataDefinitionFieldLinks(
+					dataDefinitionId, ddmFormField.getNestedDDMFormFields(),
+					groupId);
 			}
 		}
 	}

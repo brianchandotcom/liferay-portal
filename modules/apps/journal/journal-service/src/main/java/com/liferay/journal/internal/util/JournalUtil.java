@@ -693,6 +693,6 @@ public class JournalUtil {
 
 	private static Map<String, String> _customTokens;
 	private static final JournalTransformer _journalTransformer =
-		new JournalTransformer(true);
+		new JournalTransformer();
 
 }

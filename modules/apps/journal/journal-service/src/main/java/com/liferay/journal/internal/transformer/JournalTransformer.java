@@ -88,10 +88,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class JournalTransformer {
 
-	public JournalTransformer(boolean restricted) {
-		_restricted = restricted;
-	}
-
 	public String transform(
 			ThemeDisplay themeDisplay, Map<String, Object> contextObjects,
 			Map<String, String> tokens, String viewMode, String languageId,
@@ -452,7 +448,7 @@ public class JournalTransformer {
 		}
 
 		return TemplateManagerUtil.getTemplate(
-			langType, templateResource, _restricted);
+			langType, templateResource, true);
 	}
 
 	protected String getTemplateId(
@@ -689,7 +685,5 @@ public class JournalTransformer {
 		JournalTransformer.class.getName() + ".XmlAfterListener");
 	private static final Log _logXmlBeforeListener = LogFactoryUtil.getLog(
 		JournalTransformer.class.getName() + ".XmlBeforeListener");
-
-	private final boolean _restricted;
 
 }

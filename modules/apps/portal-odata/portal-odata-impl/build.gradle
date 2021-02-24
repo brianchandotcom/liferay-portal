@@ -1,7 +1,7 @@
 dependencies {
 	compileInclude group: "io.netty", name: "netty-buffer", version: "4.1.50.Final"
 	compileInclude group: "io.netty", name: "netty-codec", version: "4.1.50.Final"
-	compileInclude group: "io.netty", name: "netty-codec-http", version: "4.1.50.Final"
+	compileInclude group: "io.netty", name: "netty-codec-http", version: "4.1.59.Final"
 	compileInclude group: "io.netty", name: "netty-common", version: "4.1.50.Final"
 	compileInclude group: "io.netty", name: "netty-handler", version: "4.1.50.Final"
 	compileInclude group: "io.netty", name: "netty-resolver", version: "4.1.50.Final"

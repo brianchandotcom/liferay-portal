@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser.testray;
 
+import com.liferay.jenkins.results.parser.BatchDependentJob;
 import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.GitWorkingDirectoryFactory;
 import com.liferay.jenkins.results.parser.JenkinsMaster;
@@ -33,8 +34,15 @@ import com.liferay.jenkins.results.parser.PullRequest;
 import com.liferay.jenkins.results.parser.PullRequestBuild;
 import com.liferay.jenkins.results.parser.QAWebsitesTopLevelBuild;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
+import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
+import com.liferay.jenkins.results.parser.test.clazz.group.CucumberAxisTestClassGroup;
+import com.liferay.jenkins.results.parser.test.clazz.group.FunctionalAxisTestClassGroup;
+import com.liferay.jenkins.results.parser.test.clazz.group.JUnitAxisTestClassGroup;
+import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroup;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -365,6 +373,49 @@ public class TestrayImporter {
 
 	public TopLevelBuild getTopLevelBuild() {
 		return _topLevelBuild;
+	}
+
+	public void recordTestrayCases() {
+		Job job = getJob();
+
+		List<AxisTestClassGroup> axisTestClassGroups =
+			job.getAxisTestClassGroups();
+
+		if (job instanceof BatchDependentJob) {
+			BatchDependentJob batchDependentJob = (BatchDependentJob)job;
+
+			axisTestClassGroups.addAll(
+				batchDependentJob.getDependentAxisTestClassGroups());
+		}
+
+		List<TestrayCase> testrayCases = new ArrayList<>();
+
+		for (AxisTestClassGroup axisTestClassGroup : axisTestClassGroups) {
+			if (axisTestClassGroup instanceof CucumberAxisTestClassGroup ||
+				axisTestClassGroup instanceof FunctionalAxisTestClassGroup ||
+				axisTestClassGroup instanceof JUnitAxisTestClassGroup) {
+
+				for (TestClassGroup.TestClass testClass :
+						axisTestClassGroup.getTestClasses()) {
+
+					testrayCases.add(
+						TestrayCaseFactory.newTestrayCase(
+							getTestrayBuild(), getTopLevelBuild(),
+							axisTestClassGroup, testClass));
+				}
+
+				continue;
+			}
+
+			testrayCases.add(
+				TestrayCaseFactory.newTestrayCase(
+					getTestrayBuild(), getTopLevelBuild(), axisTestClassGroup,
+					null));
+		}
+
+		for (TestrayCase testrayCase : testrayCases) {
+			System.out.println(testrayCase);
+		}
 	}
 
 	private PortalGitWorkingDirectory _getPortalGitWorkingDirectory() {

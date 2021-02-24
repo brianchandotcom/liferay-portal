@@ -215,6 +215,10 @@ public class JournalArticleAnalyticsReportsInfoItem
 					layoutDisplayPageObjectProvider.getClassPK(),
 					layoutDisplayPageObjectProvider.getClassTypeId());
 
+			if (layoutPageTemplateEntry == null) {
+				return null;
+			}
+
 			return _layoutLocalService.fetchLayout(
 				layoutPageTemplateEntry.getPlid());
 		}

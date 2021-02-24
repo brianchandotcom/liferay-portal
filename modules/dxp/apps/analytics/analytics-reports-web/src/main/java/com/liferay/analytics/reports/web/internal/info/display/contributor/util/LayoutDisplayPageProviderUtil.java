@@ -57,6 +57,10 @@ public class LayoutDisplayPageProviderUtil {
 			layoutDisplayPageProviderTracker.
 				getLayoutDisplayPageProviderByClassName(className);
 
+		if (layoutDisplayPageProvider == null) {
+			return null;
+		}
+
 		try {
 			layoutDisplayPageObjectProvider =
 				layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(

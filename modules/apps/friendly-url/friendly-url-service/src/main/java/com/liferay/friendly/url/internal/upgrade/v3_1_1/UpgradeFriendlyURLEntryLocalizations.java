@@ -202,7 +202,7 @@ public class UpgradeFriendlyURLEntryLocalizations extends UpgradeProcess {
 		StringBundler sb = new StringBundler(5);
 
 		sb.append("select friendlyURLEntryId from FriendlyURLEntryMapping ");
-		sb.append("where classnameId = ");
+		sb.append("where classNameId = ");
 		sb.append(_CLASS_NAME_ID);
 		sb.append(" and classPK = ");
 		sb.append(resourcePrimKey);

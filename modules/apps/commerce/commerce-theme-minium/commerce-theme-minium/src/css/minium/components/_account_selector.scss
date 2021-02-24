@@ -1,0 +1,9 @@
+.account-selector-dropdown-menu {
+	border-radius: $border-radius;
+	box-shadow: 0 0.5rem 20px -10px rgba(0, 0, 0, 0.5);
+
+	.btn:not(.btn-unstyled) {
+		margin-top: -0.75rem;
+		padding: 1rem 0;
+	}
+}

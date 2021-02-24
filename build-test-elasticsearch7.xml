@@ -1095,35 +1095,24 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 		<if>
 			<http url="http://localhost:${elasticsearch.port}" />
 			<then>
-				<get-testcase-property property.name="test.name.skip.portal.instance" />
-
-				<if>
-					<and>
-						<not>
-							<isset property="test.name.skip.portal.instance" />
-						</not>
-						<equals arg1="test.portal.instance" arg2="true" />
-					</and>
-					<then>
-						<var name="portalInstanceName" value="${env.HOSTNAME}" />
-					</then>
-					<else>
-						<var name="portalInstanceName" value="localhost" />
-					</else>
-				</if>
-
-				<exec executable="curl" outputproperty="companyId">
-					<arg value="http://localhost:8080/api/jsonws/company/get-company-by-virtual-host/virtual-host/${portalInstanceName}" />
-					<arg value="-u" />
-					<arg value="test@liferay.com:test" />
+				<exec executable="curl" outputproperty="curl.output.elasticsearch.indices">
+					<arg value="localhost:${elasticsearch.port}/_cat/indices" />
+					<arg value="--silent" />
 				</exec>
 
+				<echo></echo>
+				<echo>##</echo>
+				<echo>## All Elasticsearch Indices on Port ${elasticsearch.port}</echo>
+				<echo>##</echo>
+				<echo></echo>
+				<echo>${curl.output.elasticsearch.indices}</echo>
+				<echo></echo>
+
 				<propertyregex
-					input="${companyId}"
-					override="true"
-					property="companyId"
-					regexp="(?&lt;=companyId&quot;:&quot;)(.*)(?=&quot;,&quot;home)"
-					select="\1"
+					input="${curl.output.elasticsearch.indices}"
+					property="liferay.company.index"
+					regexp="liferay-\d{5}"
+					select="\0"
 				/>
 
 				<property name="company.index.query">
@@ -1164,30 +1153,18 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 				<exec executable="curl" outputproperty="curl.output.company.index">
 					<arg value="-H" />
 					<arg value="Content-Type: application/json" />
-					<arg value="localhost:${elasticsearch.port}/liferay-${companyId}/_search?pretty" />
+					<arg value="localhost:${elasticsearch.port}/${liferay.company.index}/_search?pretty" />
 					<arg value="-d" />
 					<arg value="${company.index.query}" />
+					<arg value="--silent" />
 				</exec>
 
 				<echo></echo>
 				<echo>##</echo>
-				<echo>## Elasticsearch Liferay Company Index on Port ${elasticsearch.port}</echo>
+				<echo>## Elasticsearch Liferay Company Index ${liferay.company.index} on Port ${elasticsearch.port}</echo>
 				<echo>##</echo>
 				<echo></echo>
 				<echo>${curl.output.company.index}</echo>
-				<echo></echo>
-
-				<exec executable="curl" outputproperty="curl.output.elasticsearch.indices">
-					<arg value="localhost:${elasticsearch.port}/_cat/indices" />
-					<arg value="-s" />
-				</exec>
-
-				<echo></echo>
-				<echo>##</echo>
-				<echo>## All Elasticsearch Indices on Port ${elasticsearch.port}</echo>
-				<echo>##</echo>
-				<echo></echo>
-				<echo>${curl.output.elasticsearch.indices}</echo>
 				<echo></echo>
 			</then>
 			<else>

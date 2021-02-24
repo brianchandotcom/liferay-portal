@@ -43,4 +43,13 @@ definition {
 			locator1 = "ApplicationsMenu#PANEL");
 	}
 
+	@summary = "Assert expiration date warning for Liferay Commerce Subscription"
+	macro ViewWarningExpirationDate {
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Catalogs");
+
+		Alert.viewErrorMessage(errorMessage = "Update your activation key for Liferay Commerce Subscription Development, it will expire");
+	}
+
 }

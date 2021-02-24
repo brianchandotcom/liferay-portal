@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -150,6 +151,13 @@ public class CommerceAccountLocalServiceImpl
 			accountEntry = accountEntryLocalService.updateAccountEntry(
 				accountEntry);
 		}
+
+		// Resources
+
+		resourceLocalService.addResources(
+			user.getCompanyId(), GroupConstants.DEFAULT_LIVE_GROUP_ID,
+			user.getUserId(), CommerceAccount.class.getName(),
+			accountEntry.getAccountEntryId(), false, false, false);
 
 		return CommerceAccountImpl.fromAccountEntry(accountEntry);
 	}

@@ -71,10 +71,9 @@ public interface DDMFormWebConfiguration {
 	public long guestUploadMaximumFileSize();
 
 	@Meta.AD(
-		deflt = "5",
-		description = "maximum-submissions-for-guest-upload-fields-help",
-		name = "maximum-submissions-for-guest-upload-fields", required = false
+		deflt = "5", description = "guest-upload-maximum-submissions-help",
+		name = "guest-upload-maximum-submissions", required = false
 	)
-	public int maximumSubmissionsForGuestUploadFields();
+	public int guestUploadMaximumSubmissions();
 
 }

@@ -48,7 +48,7 @@ public class DDMFormGuestUploadFieldUtil {
 	public static boolean isMaximumSubmissionLimitReached(
 			DDMFormInstance ddmFormInstance,
 			HttpServletRequest httpServletRequest,
-			int maximumSubmissionsForGuestUploadFields)
+			int guestUploadMaximumSubmissions)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay =
@@ -74,7 +74,7 @@ public class DDMFormGuestUploadFieldUtil {
 			if (Objects.equals(
 					ddmFormInstanceRecord.getIpAddress(),
 					httpServletRequest.getRemoteAddr()) &&
-				((i + 1) == maximumSubmissionsForGuestUploadFields)) {
+				((i + 1) == guestUploadMaximumSubmissions)) {
 
 				return true;
 			}

@@ -50,10 +50,9 @@ public class DDMFormWebConfigurationTest {
 		Assert.assertEquals(
 			25, ddmFormWebConfiguration.guestUploadMaximumFileSize());
 		Assert.assertEquals(
-			5, ddmFormWebConfiguration.maximumRepetitionsForUploadFields());
+			5, ddmFormWebConfiguration.guestUploadMaximumSubmissions());
 		Assert.assertEquals(
-			5,
-			ddmFormWebConfiguration.maximumSubmissionsForGuestUploadFields());
+			5, ddmFormWebConfiguration.maximumRepetitionsForUploadFields());
 	}
 
 }

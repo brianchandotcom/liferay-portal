@@ -193,8 +193,7 @@ public class DDMFormDisplayContext {
 		boolean maximumSubmissionLimitReached =
 			DDMFormGuestUploadFieldUtil.isMaximumSubmissionLimitReached(
 				ddmFormInstance, _getHttpServletRequest(),
-				_ddmFormWebConfiguration.
-					maximumSubmissionsForGuestUploadFields());
+				_ddmFormWebConfiguration.guestUploadMaximumSubmissions());
 
 		boolean requireCaptcha = isCaptchaRequired(ddmFormInstance);
 

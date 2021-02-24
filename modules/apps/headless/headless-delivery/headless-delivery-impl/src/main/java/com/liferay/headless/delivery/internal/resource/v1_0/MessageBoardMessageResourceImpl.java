@@ -306,7 +306,7 @@ public class MessageBoardMessageResourceImpl
 			Long messageBoardMessageId, MessageBoardMessage messageBoardMessage)
 		throws Exception {
 
-		return _replaceMessageBoardMessage(
+		return _updateMessageBoardMessage(
 			messageBoardMessageId, messageBoardMessage);
 	}
 
@@ -591,7 +591,7 @@ public class MessageBoardMessageResourceImpl
 			contextUser);
 	}
 
-	private MessageBoardMessage _replaceMessageBoardMessage(
+	private MessageBoardMessage _updateMessageBoardMessage(
 			Long messageBoardMessageId, MessageBoardMessage messageBoardMessage)
 		throws Exception {
 
@@ -702,7 +702,7 @@ public class MessageBoardMessageResourceImpl
 				messageBoardMessage);
 		}
 
-		return _replaceMessageBoardMessage(
+		return _updateMessageBoardMessage(
 			mbMessage.getMessageId(), messageBoardMessage);
 	}
 

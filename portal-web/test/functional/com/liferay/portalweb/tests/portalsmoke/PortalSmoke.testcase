@@ -76,6 +76,16 @@ definition {
 	}
 
 	@priority = "5"
+	test SmokeWithRuntimeJSPCompile {
+		property delete.precompile.jsp.folder = "true";
+		property portal.smoke = "false";
+
+		Smoke.viewWelcomeContentPage();
+
+		Smoke.runSmoke();
+	}
+
+	@priority = "5"
 	test SmokeWithSPADisabled {
 		property custom.properties = "javascript.single.page.application.enabled=false";
 		property portal.smoke = "false";

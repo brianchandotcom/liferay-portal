@@ -12,9 +12,7 @@
  * details.
  */
 
-import {pageStructure} from 'dynamic-data-mapping-form-builder/js/util/config.es';
-import {FormApp, PagesVisitor} from 'dynamic-data-mapping-form-renderer';
-import {delegate} from 'frontend-js-web';
+import {FormApp} from 'dynamic-data-mapping-form-renderer';
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';
 
@@ -25,95 +23,13 @@ import {Config} from 'metal-state';
 
 class Form extends Component {
 	render() {
-		const {
-			context,
-			...otherProps
-		} = this.props;
-
 		const App = FormApp;
 
 		return (
 			<App
-				{...otherProps}
-				{...context}
+				{...this.props}
 			/>
 		);
-	}
-
-	_pagesValueFn() {
-		const {context} = this.props;
-
-		return context.pages;
-	}
-
-	_paginationModeValueFn() {
-		const {context} = this.props;
-
-		return context.paginationMode;
-	}
-
-	_setContext(context) {
-		const emptyLocalizableValue = {
-			[themeDisplay.getLanguageId()]: '',
-		};
-
-		if (!context.pages.length) {
-			context = {
-				...context,
-				pages: [
-					{
-						description: '',
-						localizedDescription: emptyLocalizableValue,
-						localizedTitle: emptyLocalizableValue,
-						rows: [
-							{
-								columns: [
-									{
-										fields: [],
-										size: 12,
-									},
-								],
-							},
-						],
-						title: '',
-					},
-				],
-			};
-		}
-
-		return {
-			...context,
-			pages: context.pages.map((page) => {
-				let {
-					description,
-					localizedDescription,
-					localizedTitle,
-					title,
-				} = page;
-
-				if (description && typeof description !== 'string') {
-					description = description[themeDisplay.getLanguageId()];
-					localizedDescription = {
-						[themeDisplay.getLanguageId()]: description,
-					};
-				}
-
-				if (title && typeof title !== 'string') {
-					title = title[themeDisplay.getLanguageId()];
-					localizedTitle = {
-						[themeDisplay.getLanguageId()]: title,
-					};
-				}
-
-				return {
-					...page,
-					description,
-					localizedDescription,
-					localizedTitle,
-					title,
-				};
-			}),
-		};
 	}
 }
 
@@ -143,8 +59,7 @@ Form.PROPS = {
 		rules: Config.array(),
 		successPageSettings: Config.object(),
 	})
-		.required()
-		.setter('_setContext'),
+		.required(),
 
 	/**
 	 * The rules of a form.
@@ -358,28 +273,6 @@ Form.PROPS = {
 	spritemap: Config.string().required(),
 
 	view: Config.string(),
-};
-
-Form.STATE = {
-
-	/**
-	 * Internal mirror of the pages state
-	 * @default _pagesValueFn
-	 * @instance
-	 * @memberof Form
-	 * @type {!array}
-	 */
-
-	pages: Config.arrayOf(pageStructure).valueFn('_pagesValueFn'),
-
-	/**
-	 * @default _paginationModeValueFn
-	 * @instance
-	 * @memberof Form
-	 * @type {!array}
-	 */
-
-	paginationMode: Config.string().valueFn('_paginationModeValueFn'),
 };
 
 export default Form;

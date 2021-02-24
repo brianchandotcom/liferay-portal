@@ -23,6 +23,7 @@ export const COMMON_INITIAL_STATE = {
 export const BUILDER_INITIAL_STATE = {
 	...COMMON_INITIAL_STATE,
 	availableLanguageIds: [themeDisplay.getLanguageId()],
+	editingLanguageId: themeDisplay.getDefaultLanguageId(),
 	fieldActions: [
 		{
 			label: Liferay.Language.get('duplicate'),
@@ -33,7 +34,11 @@ export const BUILDER_INITIAL_STATE = {
 			type: CORE_EVENT_TYPES.FIELD.DELETE,
 		},
 	],
+	fieldSets: [],
+	fieldTypes: [],
 	focusedField: {},
+	formInstanceId: 0,
+	functionsMetadata: {},
 	initialSuccessPageSettings: {
 		body: {
 			[themeDisplay.getDefaultLanguageId()]: Liferay.Language.get(
@@ -47,18 +52,43 @@ export const BUILDER_INITIAL_STATE = {
 		},
 	},
 	paginationMode: 'multi_pages',
+	rules: [],
 };
+
+const INITIAL_PAGES = [
+	{
+		description: '',
+		localizedDescription: {
+			[themeDisplay.getLanguageId()]: '',
+		},
+		localizedTitle: {
+			[themeDisplay.getLanguageId()]: '',
+		},
+		rows: [
+			{
+				columns: [
+					{
+						fields: [],
+						size: 12,
+					},
+				],
+			},
+		],
+		title: '',
+	},
+];
 
 export const initState = (
 	{
 		initialSuccessPageSettings,
-		pages,
+		pages: initialPages,
 		paginationMode: initialPaginationMode,
 		successPageSettings: initialSuccessPage,
 		...otherProps
 	},
 	{view}
 ) => {
+	const pages = initialPages.length ? initialPages : INITIAL_PAGES;
 
 	// The Forms application is also rendered for Element Set, so we have to configure some
 	// components to behave differently. This can be removed when Element Set is deprecated.

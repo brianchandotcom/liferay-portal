@@ -17,6 +17,7 @@ export const parseProps = ({
 	autocompleteUserURL,
 	cancelLabel,
 	containerId,
+	context,
 	dataProviderInstanceParameterSettingsURL,
 	dataProviderInstancesURL,
 	defaultLanguageId,
@@ -74,5 +75,8 @@ export const parseProps = ({
 		submitLabel,
 		view,
 	},
-	state: otherProps,
+	state: {
+		...otherProps,
+		...context,
+	},
 });

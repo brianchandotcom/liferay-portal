@@ -106,7 +106,7 @@
 </tr>
 <tr>
 	<td>USER_ADDRESS_PRIMARY_TABLE</td>
-	<td>//tr[contains(.,'${key_primaryValue}')]//span/span[contains(.,'Primary')]</td>
+	<td>//tr[contains(.,'${key_primaryValue}')]//span/span[normalize-space(text())='Primary']</td>
 	<td></td>
 </tr>
 <!--USER_CONTACT_INFORMATION_TABLE-->

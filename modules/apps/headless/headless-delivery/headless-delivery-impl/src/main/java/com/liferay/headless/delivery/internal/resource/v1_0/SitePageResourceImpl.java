@@ -67,6 +67,7 @@ import com.liferay.segments.service.SegmentsExperienceService;
 import com.liferay.taglib.util.ThemeUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -297,6 +298,10 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 	private List<SegmentsExperience> _getSegmentsExperiences(Layout layout)
 		throws Exception {
+
+		if (!layout.isTypeContent()) {
+			return Collections.emptyList();
+		}
 
 		List<SegmentsExperience> segmentsExperiences = new ArrayList<>(
 			_segmentsExperienceLocalService.getSegmentsExperiences(

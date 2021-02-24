@@ -205,6 +205,8 @@ public interface Build {
 
 	public boolean isCompleted();
 
+	public boolean isFailing();
+
 	public boolean isFromArchive();
 
 	public boolean isFromCompletedBuild();

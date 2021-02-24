@@ -502,7 +502,8 @@ public class OAuth2ApplicationLocalServiceWrapper
 				java.util.List<String> featuresList, String homePageURL,
 				long iconFileEntryId, String name, String privacyPolicyURL,
 				java.util.List<String> redirectURIsList,
-				long auth2ApplicationScopeAliasesId, boolean trustedApplication,
+				long oAuth2ApplicationScopeAliasesId,
+				boolean trustedApplication,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -510,7 +511,7 @@ public class OAuth2ApplicationLocalServiceWrapper
 			oAuth2ApplicationId, allowedGrantTypesList, clientCredentialUserId,
 			clientId, clientProfile, clientSecret, description, featuresList,
 			homePageURL, iconFileEntryId, name, privacyPolicyURL,
-			redirectURIsList, auth2ApplicationScopeAliasesId,
+			redirectURIsList, oAuth2ApplicationScopeAliasesId,
 			trustedApplication, serviceContext);
 	}
 
@@ -530,7 +531,7 @@ public class OAuth2ApplicationLocalServiceWrapper
 				java.util.List<String> featuresList, String homePageURL,
 				long iconFileEntryId, String name, String privacyPolicyURL,
 				java.util.List<String> redirectURIsList,
-				long auth2ApplicationScopeAliasesId,
+				long oAuth2ApplicationScopeAliasesId,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -538,7 +539,7 @@ public class OAuth2ApplicationLocalServiceWrapper
 			oAuth2ApplicationId, allowedGrantTypesList, clientCredentialUserId,
 			clientId, clientProfile, clientSecret, description, featuresList,
 			homePageURL, iconFileEntryId, name, privacyPolicyURL,
-			redirectURIsList, auth2ApplicationScopeAliasesId, serviceContext);
+			redirectURIsList, oAuth2ApplicationScopeAliasesId, serviceContext);
 	}
 
 	/**
@@ -556,7 +557,7 @@ public class OAuth2ApplicationLocalServiceWrapper
 				String homePageURL, long iconFileEntryId, String name,
 				String privacyPolicyURL,
 				java.util.List<String> redirectURIsList,
-				long auth2ApplicationScopeAliasesId,
+				long oAuth2ApplicationScopeAliasesId,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -564,7 +565,7 @@ public class OAuth2ApplicationLocalServiceWrapper
 			oAuth2ApplicationId, allowedGrantTypesList, clientId, clientProfile,
 			clientSecret, description, featuresList, homePageURL,
 			iconFileEntryId, name, privacyPolicyURL, redirectURIsList,
-			auth2ApplicationScopeAliasesId, serviceContext);
+			oAuth2ApplicationScopeAliasesId, serviceContext);
 	}
 
 	/**

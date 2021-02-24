@@ -491,7 +491,7 @@ public class OAuth2ApplicationLocalServiceImpl
 			String clientSecret, String description, List<String> featuresList,
 			String homePageURL, long iconFileEntryId, String name,
 			String privacyPolicyURL, List<String> redirectURIsList,
-			long auth2ApplicationScopeAliasesId, boolean trustedApplication,
+			long oAuth2ApplicationScopeAliasesId, boolean trustedApplication,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -516,7 +516,7 @@ public class OAuth2ApplicationLocalServiceImpl
 
 		oAuth2Application.setModifiedDate(new Date());
 		oAuth2Application.setOAuth2ApplicationScopeAliasesId(
-			auth2ApplicationScopeAliasesId);
+			oAuth2ApplicationScopeAliasesId);
 		oAuth2Application.setAllowedGrantTypesList(allowedGrantTypesList);
 		oAuth2Application.setClientCredentialUserId(user.getUserId());
 		oAuth2Application.setClientCredentialUserName(user.getScreenName());
@@ -547,7 +547,7 @@ public class OAuth2ApplicationLocalServiceImpl
 			String clientSecret, String description, List<String> featuresList,
 			String homePageURL, long iconFileEntryId, String name,
 			String privacyPolicyURL, List<String> redirectURIsList,
-			long auth2ApplicationScopeAliasesId, ServiceContext serviceContext)
+			long oAuth2ApplicationScopeAliasesId, ServiceContext serviceContext)
 		throws PortalException {
 
 		OAuth2Application oAuth2Application =
@@ -558,7 +558,7 @@ public class OAuth2ApplicationLocalServiceImpl
 			oAuth2Application.getClientCredentialUserId(), clientId,
 			clientProfile, clientSecret, description, featuresList, homePageURL,
 			iconFileEntryId, name, privacyPolicyURL, redirectURIsList,
-			auth2ApplicationScopeAliasesId, false, serviceContext);
+			oAuth2ApplicationScopeAliasesId, false, serviceContext);
 	}
 
 	/**
@@ -571,7 +571,7 @@ public class OAuth2ApplicationLocalServiceImpl
 			String clientId, int clientProfile, String clientSecret,
 			String description, List<String> featuresList, String homePageURL,
 			long iconFileEntryId, String name, String privacyPolicyURL,
-			List<String> redirectURIsList, long auth2ApplicationScopeAliasesId,
+			List<String> redirectURIsList, long oAuth2ApplicationScopeAliasesId,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -583,7 +583,7 @@ public class OAuth2ApplicationLocalServiceImpl
 			oAuth2Application.getClientCredentialUserId(), clientId,
 			clientProfile, clientSecret, description, featuresList, homePageURL,
 			iconFileEntryId, name, privacyPolicyURL, redirectURIsList,
-			auth2ApplicationScopeAliasesId, serviceContext);
+			oAuth2ApplicationScopeAliasesId, serviceContext);
 	}
 
 	@Override

@@ -133,7 +133,7 @@ public interface OAuth2ApplicationService extends BaseService {
 			String clientSecret, String description, List<String> featuresList,
 			String homePageURL, long iconFileEntryId, String name,
 			String privacyPolicyURL, List<String> redirectURIsList,
-			long auth2ApplicationScopeAliasesId, boolean trustedApplication,
+			long oAuth2ApplicationScopeAliasesId, boolean trustedApplication,
 			ServiceContext serviceContext)
 		throws PortalException;
 
@@ -148,7 +148,7 @@ public interface OAuth2ApplicationService extends BaseService {
 			String clientSecret, String description, List<String> featuresList,
 			String homePageURL, long iconFileEntryId, String name,
 			String privacyPolicyURL, List<String> redirectURIsList,
-			long auth2ApplicationScopeAliasesId, ServiceContext serviceContext)
+			long oAuth2ApplicationScopeAliasesId, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -160,7 +160,7 @@ public interface OAuth2ApplicationService extends BaseService {
 			String clientId, int clientProfile, String clientSecret,
 			String description, List<String> featuresList, String homePageURL,
 			long iconFileEntryId, String name, String privacyPolicyURL,
-			List<String> redirectURIsList, long auth2ApplicationScopeAliasesId,
+			List<String> redirectURIsList, long oAuth2ApplicationScopeAliasesId,
 			ServiceContext serviceContext)
 		throws PortalException;
 

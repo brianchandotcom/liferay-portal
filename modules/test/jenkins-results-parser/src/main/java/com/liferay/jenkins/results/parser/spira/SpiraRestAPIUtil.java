@@ -254,7 +254,8 @@ public class SpiraRestAPIUtil {
 			finally {
 				requestCount++;
 
-				long duration = JenkinsResultsParserUtil.getCurrentTimeMillis() - start;
+				long duration =
+					JenkinsResultsParserUtil.getCurrentTimeMillis() - start;
 
 				RequestDataEntry requestDataEntry = new RequestDataEntry(
 					"/" + urlPath, duration, requestData, responseData);

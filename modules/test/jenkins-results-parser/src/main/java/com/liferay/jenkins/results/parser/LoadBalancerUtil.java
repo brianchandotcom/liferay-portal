@@ -155,12 +155,15 @@ public class LoadBalancerUtil {
 				long nextUpdateTimestamp = _getNextUpdateTimestamp(
 					masterPrefix);
 
-				if (nextUpdateTimestamp < JenkinsResultsParserUtil.getCurrentTimeMillis()) {
+				if (nextUpdateTimestamp <
+						JenkinsResultsParserUtil.getCurrentTimeMillis()) {
+
 					_updateJenkinsMasters(jenkinsMasters);
 
 					_setNextUpdateTimestamp(
 						masterPrefix,
-						JenkinsResultsParserUtil.getCurrentTimeMillis() + _updateInterval);
+						JenkinsResultsParserUtil.getCurrentTimeMillis() +
+							_updateInterval);
 				}
 
 				Collections.sort(jenkinsMasters);
@@ -221,7 +224,8 @@ public class LoadBalancerUtil {
 				if (verbose) {
 					String durationString =
 						JenkinsResultsParserUtil.toDurationString(
-							JenkinsResultsParserUtil.getCurrentTimeMillis() - start);
+							JenkinsResultsParserUtil.getCurrentTimeMillis() -
+								start);
 
 					System.out.println(
 						"Got most available master URL in " + durationString);

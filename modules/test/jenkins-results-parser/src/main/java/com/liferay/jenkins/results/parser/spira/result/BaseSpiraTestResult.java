@@ -228,7 +228,8 @@ public abstract class BaseSpiraTestResult implements SpiraTestResult {
 			JenkinsResultsParserUtil.combine(
 				getTestName(), " ", spiraTestCaseObject.getURL(), " in ",
 				JenkinsResultsParserUtil.toDurationString(
-					JenkinsResultsParserUtil.getCurrentTimeMillis() - startTestCase)));
+					JenkinsResultsParserUtil.getCurrentTimeMillis() -
+						startTestCase)));
 
 		long startTestRun = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
@@ -242,7 +243,8 @@ public abstract class BaseSpiraTestResult implements SpiraTestResult {
 			JenkinsResultsParserUtil.combine(
 				getTestName(), " ", spiraTestCaseRun.getURL(), " in ",
 				JenkinsResultsParserUtil.toDurationString(
-					JenkinsResultsParserUtil.getCurrentTimeMillis() - startTestRun)));
+					JenkinsResultsParserUtil.getCurrentTimeMillis() -
+						startTestRun)));
 
 		System.out.println();
 	}

@@ -113,7 +113,8 @@ public class FilePropagator {
 				sb.append("\nTarget slaves:");
 				sb.append(_targetSlaves.size());
 				sb.append("\nTotal duration: ");
-				sb.append(JenkinsResultsParserUtil.getCurrentTimeMillis() - start);
+				sb.append(
+					JenkinsResultsParserUtil.getCurrentTimeMillis() - start);
 				sb.append("\n");
 
 				System.out.println(sb.toString());
@@ -123,7 +124,8 @@ public class FilePropagator {
 
 			System.out.println(
 				"File propagation completed in " +
-					(JenkinsResultsParserUtil.getCurrentTimeMillis() - start) + "ms.");
+					(JenkinsResultsParserUtil.getCurrentTimeMillis() - start) +
+						"ms.");
 
 			if (!_errorSlaves.isEmpty()) {
 				System.out.println(

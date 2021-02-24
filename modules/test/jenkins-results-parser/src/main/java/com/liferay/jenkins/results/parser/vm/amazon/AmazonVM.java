@@ -233,7 +233,9 @@ public abstract class AmazonVM extends VM {
 			JenkinsResultsParserUtil.combine(
 				"Waiting for the EC2 instance state \"", targetState, "\""));
 
-		long timeout = JenkinsResultsParserUtil.getCurrentTimeMillis() + MILLIS_TIMEOUT_DURATION;
+		long timeout =
+			JenkinsResultsParserUtil.getCurrentTimeMillis() +
+				MILLIS_TIMEOUT_DURATION;
 
 		while (!instanceState.equals(targetState)) {
 			if (JenkinsResultsParserUtil.getCurrentTimeMillis() >= timeout) {

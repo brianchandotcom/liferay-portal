@@ -91,146 +91,161 @@ public class SpiraResultImporter {
 	public void record() {
 		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
-		Job job = _topLevelBuild.getJob();
+		String message = null;
 
-		String spiraEnabled = JenkinsResultsParserUtil.getProperty(
-			job.getJobProperties(), "test.batch.spira.enabled",
-			_topLevelBuild.getJobName(), _topLevelBuild.getTestSuiteName());
+		try {
+			Job job = _topLevelBuild.getJob();
 
-		if ((spiraEnabled == null) || !spiraEnabled.equals("true")) {
-			return;
-		}
+			String spiraEnabled = JenkinsResultsParserUtil.getProperty(
+				job.getJobProperties(), "test.batch.spira.enabled",
+				_topLevelBuild.getJobName(), _topLevelBuild.getTestSuiteName());
 
-		_cacheBuildDatabase();
-		_cacheBuildResults();
-		_cacheSpiraAutomationHosts();
-		_cacheSpiraTestCaseComponents();
-		_cacheSpiraTestCaseObjects();
-
-		List<SpiraTestResult> spiraTestResults = new ArrayList<>();
-
-		spiraTestResults.add(
-			SpiraResultFactory.newSpiraTestResult(
-				_spiraBuildResult, null, null));
-
-		List<AxisTestClassGroup> axisTestClassGroups =
-			job.getAxisTestClassGroups();
-
-		if (job instanceof BatchDependentJob) {
-			BatchDependentJob batchDependentJob = (BatchDependentJob)job;
-
-			axisTestClassGroups.addAll(
-				batchDependentJob.getDependentAxisTestClassGroups());
-		}
-
-		for (AxisTestClassGroup axisTestClassGroup : axisTestClassGroups) {
-			if (axisTestClassGroup instanceof CucumberAxisTestClassGroup ||
-				axisTestClassGroup instanceof FunctionalAxisTestClassGroup ||
-				axisTestClassGroup instanceof JUnitAxisTestClassGroup) {
-
-				for (TestClassGroup.TestClass testClass :
-						axisTestClassGroup.getTestClasses()) {
-
-					spiraTestResults.add(
-						SpiraResultFactory.newSpiraTestResult(
-							_spiraBuildResult, axisTestClassGroup, testClass));
-				}
-
-				continue;
+			if ((spiraEnabled == null) || !spiraEnabled.equals("true")) {
+				return;
 			}
+
+			_cacheBuildDatabase();
+			_cacheBuildResults();
+			_cacheSpiraAutomationHosts();
+			_cacheSpiraTestCaseComponents();
+			_cacheSpiraTestCaseObjects();
+
+			List<SpiraTestResult> spiraTestResults = new ArrayList<>();
 
 			spiraTestResults.add(
 				SpiraResultFactory.newSpiraTestResult(
-					_spiraBuildResult, axisTestClassGroup, null));
-		}
+					_spiraBuildResult, null, null));
 
-		List<List<SpiraTestResult>> partition = Lists.partition(
-			spiraTestResults, _GROUP_SIZE);
+			List<AxisTestClassGroup> axisTestClassGroups =
+				job.getAxisTestClassGroups();
 
-		List<Callable<List<SpiraTestCaseRun>>> callableList = new ArrayList<>();
+			if (job instanceof BatchDependentJob) {
+				BatchDependentJob batchDependentJob = (BatchDependentJob)job;
 
-		System.out.println("Created " + partition.size() + " groups");
+				axisTestClassGroups.addAll(
+					batchDependentJob.getDependentAxisTestClassGroups());
+			}
 
-		for (int i = 0; i < partition.size(); i++) {
-			final List<SpiraTestResult> results = partition.get(i);
-			final String groupName = "group-" + i;
+			for (AxisTestClassGroup axisTestClassGroup : axisTestClassGroups) {
+				if (axisTestClassGroup instanceof CucumberAxisTestClassGroup ||
+					axisTestClassGroup instanceof
+						FunctionalAxisTestClassGroup ||
+					axisTestClassGroup instanceof JUnitAxisTestClassGroup) {
 
-			callableList.add(
-				new Callable<List<SpiraTestCaseRun>>() {
+					for (TestClassGroup.TestClass testClass :
+							axisTestClassGroup.getTestClasses()) {
 
-					@Override
-					public List<SpiraTestCaseRun> call() throws Exception {
-						long startGroup = JenkinsResultsParserUtil.getCurrentTimeMillis();
-
-						System.out.println(
-							JenkinsResultsParserUtil.combine(
-								"[", groupName, "] ",
-								JenkinsResultsParserUtil.toDateString(
-									new Date(startGroup)),
-								" - Start recording ",
-								String.valueOf(results.size()), " tests"));
-
-						List<SpiraTestCaseRun> spiraTestCaseRuns =
-							SpiraTestCaseRun.recordSpiraTestCaseRuns(
-								_spiraBuildResult.getSpiraProject(),
-								results.toArray(new SpiraTestResult[0]));
-
-						long endGroup = JenkinsResultsParserUtil.getCurrentTimeMillis();
-
-						System.out.println(
-							JenkinsResultsParserUtil.combine(
-								"[", groupName, "] ",
-								JenkinsResultsParserUtil.toDateString(
-									new Date(startGroup)),
-								" - Completed recording ",
-								String.valueOf(spiraTestCaseRuns.size()),
-								" tests in ",
-								JenkinsResultsParserUtil.toDurationString(
-									endGroup - startGroup)));
-
-						return spiraTestCaseRuns;
+						spiraTestResults.add(
+							SpiraResultFactory.newSpiraTestResult(
+								_spiraBuildResult, axisTestClassGroup,
+								testClass));
 					}
 
-				});
-		}
+					continue;
+				}
 
-		if (!callableList.isEmpty()) {
-			Callable<List<SpiraTestCaseRun>> callable = callableList.get(0);
-
-			List<SpiraTestCaseRun> spiraTestCaseRuns = new ArrayList<>();
-
-			try {
-				spiraTestCaseRuns.addAll(callable.call());
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
+				spiraTestResults.add(
+					SpiraResultFactory.newSpiraTestResult(
+						_spiraBuildResult, axisTestClassGroup, null));
 			}
 
-			ParallelExecutor<List<SpiraTestCaseRun>> parallelExecutor =
-				new ParallelExecutor<>(
-					callableList.subList(1, callableList.size()),
-					_groupExecutorService);
+			List<List<SpiraTestResult>> partition = Lists.partition(
+				spiraTestResults, _GROUP_SIZE);
 
-			for (List<SpiraTestCaseRun> spiraTestCaseRunsList :
-					parallelExecutor.execute()) {
+			List<Callable<List<SpiraTestCaseRun>>> callableList =
+				new ArrayList<>();
 
-				spiraTestCaseRuns.addAll(spiraTestCaseRunsList);
+			System.out.println("Created " + partition.size() + " groups");
+
+			for (int i = 0; i < partition.size(); i++) {
+				final List<SpiraTestResult> results = partition.get(i);
+				final String groupName = "group-" + i;
+
+				callableList.add(
+					new Callable<List<SpiraTestCaseRun>>() {
+
+						@Override
+						public List<SpiraTestCaseRun> call() throws Exception {
+							long startGroup =
+								JenkinsResultsParserUtil.getCurrentTimeMillis();
+
+							System.out.println(
+								JenkinsResultsParserUtil.combine(
+									"[", groupName, "] ",
+									JenkinsResultsParserUtil.toDateString(
+										new Date(startGroup)),
+									" - Start recording ",
+									String.valueOf(results.size()), " tests"));
+
+							List<SpiraTestCaseRun> spiraTestCaseRuns =
+								SpiraTestCaseRun.recordSpiraTestCaseRuns(
+									_spiraBuildResult.getSpiraProject(),
+									results.toArray(new SpiraTestResult[0]));
+
+							long endGroup =
+								JenkinsResultsParserUtil.getCurrentTimeMillis();
+
+							System.out.println(
+								JenkinsResultsParserUtil.combine(
+									"[", groupName, "] ",
+									JenkinsResultsParserUtil.toDateString(
+										new Date(startGroup)),
+									" - Completed recording ",
+									String.valueOf(spiraTestCaseRuns.size()),
+									" tests in ",
+									JenkinsResultsParserUtil.toDurationString(
+										endGroup - startGroup)));
+
+							return spiraTestCaseRuns;
+						}
+
+					});
 			}
 
-			System.out.println(
-				JenkinsResultsParserUtil.combine(
+			if (!callableList.isEmpty()) {
+				Callable<List<SpiraTestCaseRun>> callable = callableList.get(0);
+
+				List<SpiraTestCaseRun> spiraTestCaseRuns = new ArrayList<>();
+
+				try {
+					spiraTestCaseRuns.addAll(callable.call());
+				}
+				catch (Exception exception) {
+					throw new RuntimeException(exception);
+				}
+
+				ParallelExecutor<List<SpiraTestCaseRun>> parallelExecutor =
+					new ParallelExecutor<>(
+						callableList.subList(1, callableList.size()),
+						_groupExecutorService);
+
+				for (List<SpiraTestCaseRun> spiraTestCaseRunsList :
+						parallelExecutor.execute()) {
+
+					spiraTestCaseRuns.addAll(spiraTestCaseRunsList);
+				}
+
+				long duration =
+					JenkinsResultsParserUtil.getCurrentTimeMillis() - start;
+
+				message = JenkinsResultsParserUtil.combine(
 					"Recorded ", String.valueOf(spiraTestCaseRuns.size()),
 					" tests in ",
-					JenkinsResultsParserUtil.toDurationString(
-						JenkinsResultsParserUtil.getCurrentTimeMillis() - start)));
+					JenkinsResultsParserUtil.toDurationString(duration));
+			}
+
+			SpiraRestAPIUtil.summarizeRequests();
+
+			_updateCurrentBuildDescription();
+			_updatePullRequest();
+			_updateSlackChannel();
+			_updateTopLevelBuildDescription();
 		}
-
-		SpiraRestAPIUtil.summarizeRequests();
-
-		_updateCurrentBuildDescription();
-		_updatePullRequest();
-		_updateSlackChannel();
-		_updateTopLevelBuildDescription();
+		finally {
+			if (message != null) {
+				System.out.println(message);
+			}
+		}
 	}
 
 	public void setup() {
@@ -294,7 +309,8 @@ public class SpiraResultImporter {
 
 					@Override
 					public List<TestResult> call() throws Exception {
-						long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
+						long start =
+							JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 						System.out.println(
 							JenkinsResultsParserUtil.combine(
@@ -319,13 +335,18 @@ public class SpiraResultImporter {
 							throw new RuntimeException(exception);
 						}
 						finally {
+							long currentTimeMillis =
+								JenkinsResultsParserUtil.getCurrentTimeMillis();
+
+							long duration = currentTimeMillis - start;
+
 							System.out.println(
 								JenkinsResultsParserUtil.combine(
 									"[", axisBuildName,
 									"] Completed loading Test Results for ",
 									axisBuild.getAxisName(), " in ",
 									JenkinsResultsParserUtil.toDurationString(
-										JenkinsResultsParserUtil.getCurrentTimeMillis() - start),
+										duration),
 									" at ",
 									JenkinsResultsParserUtil.toDateString(
 										new Date())));

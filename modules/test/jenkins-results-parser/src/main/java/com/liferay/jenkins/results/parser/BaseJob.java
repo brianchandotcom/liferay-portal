@@ -345,7 +345,8 @@ public abstract class BaseJob implements Job {
 					}
 
 					private BatchTestClassGroup _call() throws Exception {
-						long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
+						long start =
+							JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 						System.out.println(
 							JenkinsResultsParserUtil.combine(
@@ -362,12 +363,16 @@ public abstract class BaseJob implements Job {
 							return null;
 						}
 
+						long duration =
+							JenkinsResultsParserUtil.getCurrentTimeMillis() -
+								start;
+
 						System.out.println(
 							JenkinsResultsParserUtil.combine(
 								"[", batchName, "] Completed batch test class ",
 								"group in ",
 								JenkinsResultsParserUtil.toDurationString(
-									JenkinsResultsParserUtil.getCurrentTimeMillis() - start),
+									duration),
 								" at ",
 								JenkinsResultsParserUtil.toDateString(
 									new Date())));

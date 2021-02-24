@@ -193,7 +193,8 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 
 					@Override
 					public List<SpiraTestCaseRun> safeCall() {
-						long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
+						long start =
+							JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 						String startString =
 							JenkinsResultsParserUtil.toDateString(
@@ -210,9 +211,12 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 								spiraProject, spiraRelease, spiraReleaseBuild,
 								spiraTestSet, resultGroup);
 
+						long duration =
+							JenkinsResultsParserUtil.getCurrentTimeMillis() -
+								start;
+
 						String durationString =
-							JenkinsResultsParserUtil.toDurationString(
-								JenkinsResultsParserUtil.getCurrentTimeMillis() - start);
+							JenkinsResultsParserUtil.toDurationString(duration);
 
 						print("Completed in " + durationString);
 
@@ -264,7 +268,8 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 
 					@Override
 					public JSONObject call() {
-						long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
+						long start =
+							JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 						JSONObject requestJSONObject =
 							spiraTestResult.getRequestJSONObject();
@@ -272,12 +277,16 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 						SpiraTestCaseObject spiraTestCaseObject =
 							spiraTestResult.getSpiraTestCaseObject();
 
+						long duration =
+							JenkinsResultsParserUtil.getCurrentTimeMillis() -
+								start;
+
 						System.out.println(
 							JenkinsResultsParserUtil.combine(
 								spiraTestCaseObject.getName(), " ",
 								spiraTestCaseObject.getURL(), " in ",
 								JenkinsResultsParserUtil.toDurationString(
-									JenkinsResultsParserUtil.getCurrentTimeMillis() - start)));
+									duration)));
 
 						return requestJSONObject;
 					}
@@ -676,7 +685,8 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 	private static List<SpiraTestCaseRun> _recordSpiraTestCaseRuns(
 		final SpiraProject spiraProject, final JSONArray requestJSONArray) {
 
-		final long startInvocation = JenkinsResultsParserUtil.getCurrentTimeMillis();
+		final long startInvocation =
+			JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		List<Callable<List<SpiraTestCaseRun>>> callables = new ArrayList<>();
 
@@ -685,7 +695,8 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 
 				@Override
 				public List<SpiraTestCaseRun> call() throws Exception {
-					long startRequest = JenkinsResultsParserUtil.getCurrentTimeMillis();
+					long startRequest =
+						JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 					System.out.println(
 						JenkinsResultsParserUtil.combine(
@@ -730,12 +741,15 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 						throw new RuntimeException(ioException);
 					}
 					finally {
+						long duration =
+							JenkinsResultsParserUtil.getCurrentTimeMillis() -
+								startRequest;
+
 						System.out.println(
 							JenkinsResultsParserUtil.combine(
 								"Record test runs process completed in ",
 								JenkinsResultsParserUtil.toDurationString(
-									JenkinsResultsParserUtil.getCurrentTimeMillis() -
-										startRequest)));
+									duration)));
 					}
 				}
 

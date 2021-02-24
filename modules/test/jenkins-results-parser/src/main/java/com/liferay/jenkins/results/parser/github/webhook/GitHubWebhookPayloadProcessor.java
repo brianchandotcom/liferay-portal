@@ -75,7 +75,8 @@ public class GitHubWebhookPayloadProcessor {
 	}
 
 	public void addTestPullRequestURL(String url) {
-		_testPullRequestURLs.put(url, JenkinsResultsParserUtil.getCurrentTimeMillis());
+		_testPullRequestURLs.put(
+			url, JenkinsResultsParserUtil.getCurrentTimeMillis());
 	}
 
 	public String getCIJobName(
@@ -602,17 +603,21 @@ public class GitHubWebhookPayloadProcessor {
 	}
 
 	protected long getTestPullRequestQueryStringExpiredTime() {
+		long currentTimeMillis =
+			JenkinsResultsParserUtil.getCurrentTimeMillis();
 
-		// return JenkinsResultsParserUtil.getCurrentTimeMillis() - 3600000; // 1 hour
+		// return currentTimeMillis - 3600000; // 1 hour
 
-		return JenkinsResultsParserUtil.getCurrentTimeMillis() - 21600000; // 6 hours
+		return currentTimeMillis - 21600000; // 6 hours
 	}
 
 	protected long getTestPullRequestURLExpiredTime() {
+		long currentTimeMillis =
+			JenkinsResultsParserUtil.getCurrentTimeMillis();
 
-		// return JenkinsResultsParserUtil.getCurrentTimeMillis() - 3600000; // 1 hour
+		// return currentTimeMillis - 3600000; // 1 hour
 
-		return JenkinsResultsParserUtil.getCurrentTimeMillis() - 21600000; // 6 hours
+		return currentTimeMillis - 21600000; // 6 hours
 	}
 
 	protected boolean hasLiferayEmailAddress(String githubUsername) {

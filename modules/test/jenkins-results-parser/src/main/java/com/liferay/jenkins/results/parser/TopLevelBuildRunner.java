@@ -187,10 +187,11 @@ public abstract class TopLevelBuildRunner
 			return;
 		}
 
-		long currentTimeMillis = JenkinsResultsParserUtil.getCurrentTimeMillis();
+		long currentTimeMillis =
+			JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		if (_lastGeneratedReportTime == -1) {
-			_lastGeneratedReportTime = JenkinsResultsParserUtil.getCurrentTimeMillis();
+			_lastGeneratedReportTime = currentTimeMillis;
 
 			publishJenkinsReport();
 
@@ -203,7 +204,7 @@ public abstract class TopLevelBuildRunner
 			return;
 		}
 
-		_lastGeneratedReportTime = JenkinsResultsParserUtil.getCurrentTimeMillis();
+		_lastGeneratedReportTime = currentTimeMillis;
 
 		publishJenkinsReport();
 	}
@@ -326,7 +327,8 @@ public abstract class TopLevelBuildRunner
 		invocationParameters.put(
 			"TOP_LEVEL_RUN_ID", topLevelBuildData.getRunID());
 
-		buildData.setInvocationTime(JenkinsResultsParserUtil.getCurrentTimeMillis());
+		buildData.setInvocationTime(
+			JenkinsResultsParserUtil.getCurrentTimeMillis());
 
 		_invokeBuild(
 			topLevelBuildData.getCohortName(), buildData.getJobName(),
@@ -337,7 +339,8 @@ public abstract class TopLevelBuildRunner
 		TopLevelBuildData topLevelBuildData = getBuildData();
 
 		topLevelBuildData.setBuildDuration(
-			JenkinsResultsParserUtil.getCurrentTimeMillis() - topLevelBuildData.getStartTime());
+			JenkinsResultsParserUtil.getCurrentTimeMillis() -
+				topLevelBuildData.getStartTime());
 		topLevelBuildData.setBuildResult(_topLevelBuild.getResult());
 		topLevelBuildData.setBuildStatus(_topLevelBuild.getStatus());
 

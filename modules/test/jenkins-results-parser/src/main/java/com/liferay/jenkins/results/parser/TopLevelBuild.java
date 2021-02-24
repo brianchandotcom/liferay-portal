@@ -511,7 +511,8 @@ public abstract class TopLevelBuild extends BaseBuild {
 
 	@Override
 	public String getStatusSummary() {
-		long currentTimeMillis = JenkinsResultsParserUtil.getCurrentTimeMillis();
+		long currentTimeMillis =
+			JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		if ((currentTimeMillis - _MILLIS_DOWNSTREAM_BUILDS_LISTING_INTERVAL) >=
 				_lastDownstreamBuildsListingTimestamp) {
@@ -520,7 +521,8 @@ public abstract class TopLevelBuild extends BaseBuild {
 
 			sb.append("\nRunning Builds: ");
 
-			_lastDownstreamBuildsListingTimestamp = JenkinsResultsParserUtil.getCurrentTimeMillis();
+			_lastDownstreamBuildsListingTimestamp =
+				JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 			for (Build downstreamBuild : getDownstreamBuilds("running")) {
 				sb.append("\n");
@@ -594,7 +596,8 @@ public abstract class TopLevelBuild extends BaseBuild {
 
 		super.update();
 
-		_updateDuration = JenkinsResultsParserUtil.getCurrentTimeMillis() - start;
+		_updateDuration =
+			JenkinsResultsParserUtil.getCurrentTimeMillis() - start;
 
 		if (_sendBuildMetrics && !fromArchive && (getParentBuild() == null)) {
 			if (!fromCompletedBuild) {

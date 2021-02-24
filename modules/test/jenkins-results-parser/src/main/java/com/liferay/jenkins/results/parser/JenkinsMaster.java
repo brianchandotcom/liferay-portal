@@ -134,7 +134,8 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 
 	public synchronized void addRecentBatch(int batchSize) {
 		_batchSizes.put(
-			JenkinsResultsParserUtil.getCurrentTimeMillis() + maxRecentBatchAge, batchSize);
+			JenkinsResultsParserUtil.getCurrentTimeMillis() + maxRecentBatchAge,
+			batchSize);
 
 		getAvailableSlavesCount();
 	}

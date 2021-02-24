@@ -114,7 +114,8 @@ public class RemoteExecutor {
 
 			System.out.println(
 				"Remote execution completed in " +
-					(JenkinsResultsParserUtil.getCurrentTimeMillis() - _start) + "ms.");
+					(JenkinsResultsParserUtil.getCurrentTimeMillis() - _start) +
+						"ms.");
 		}
 	}
 
@@ -145,7 +146,8 @@ public class RemoteExecutor {
 			try {
 				int returnCode = _executeBashCommands();
 
-				_duration = JenkinsResultsParserUtil.getCurrentTimeMillis() - start;
+				_duration =
+					JenkinsResultsParserUtil.getCurrentTimeMillis() - start;
 
 				if (returnCode != 0) {
 					_handleError(null);

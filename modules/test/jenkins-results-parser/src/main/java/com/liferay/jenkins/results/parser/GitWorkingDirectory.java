@@ -120,7 +120,8 @@ public class GitWorkingDirectory {
 		LocalGitBranch localGitBranch = createLocalGitBranch(
 			JenkinsResultsParserUtil.combine(
 				branchInformation.getUpstreamBranchName(), "-temp-",
-				String.valueOf(JenkinsResultsParserUtil.getCurrentTimeMillis())),
+				String.valueOf(
+					JenkinsResultsParserUtil.getCurrentTimeMillis())),
 			true);
 
 		try {
@@ -1726,7 +1727,8 @@ public class GitWorkingDirectory {
 		if (currentBranchName == null) {
 			checkoutLocalGitBranch(
 				createLocalGitBranch(
-					upstreamBranchName + "-temp-" + JenkinsResultsParserUtil.getCurrentTimeMillis(),
+					upstreamBranchName + "-temp-" +
+						JenkinsResultsParserUtil.getCurrentTimeMillis(),
 					true, upstreamBranchSHA));
 		}
 

@@ -560,7 +560,8 @@ public class CPContentHelperImpl implements CPContentHelper {
 					cpCatalogEntry.getProductTypeName(), renderRequest));
 
 		if (cpContentRenderer == null) {
-			return;
+			cpContentRenderer = _cpContentRendererRegistry.getCPContentRenderer(
+				"default");
 		}
 
 		cpContentRenderer.render(

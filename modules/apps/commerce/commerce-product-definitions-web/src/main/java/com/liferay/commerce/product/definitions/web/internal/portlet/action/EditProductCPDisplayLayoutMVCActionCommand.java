@@ -12,33 +12,28 @@
  * details.
  */
 
-package com.liferay.commerce.product.asset.categories.web.internal.portlet.action;
+package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
-import com.liferay.asset.kernel.exception.NoSuchCategoryException;
-import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.asset.kernel.model.AssetVocabulary;
-import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.exception.CPDisplayLayoutEntryException;
 import com.liferay.commerce.product.exception.CPDisplayLayoutLayoutUuidException;
+import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.exception.NoSuchCPDisplayLayoutException;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPDisplayLayoutService;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -53,7 +48,7 @@ import org.osgi.service.component.annotations.Reference;
 	enabled = false, immediate = true,
 	property = {
 		"javax.portlet.name=" + CPPortletKeys.COMMERCE_CHANNELS,
-		"mvc.command.name=/commerce_channels/edit_cp_display_layout"
+		"mvc.command.name=/commerce_channels/edit_product_cp_display_layout"
 	},
 	service = MVCActionCommand.class
 )
@@ -98,8 +93,7 @@ public class EditCPDisplayLayoutMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 		catch (Exception exception) {
-			if (exception instanceof NoSuchCategoryException ||
-				exception instanceof NoSuchCPDisplayLayoutException ||
+			if (exception instanceof NoSuchCPDisplayLayoutException ||
 				exception instanceof PrincipalException) {
 
 				SessionErrors.add(actionRequest, exception.getClass());
@@ -107,13 +101,21 @@ public class EditCPDisplayLayoutMVCActionCommand extends BaseMVCActionCommand {
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
 			else if (exception instanceof CPDisplayLayoutEntryException ||
-					 exception instanceof CPDisplayLayoutLayoutUuidException) {
+					 exception instanceof CPDisplayLayoutLayoutUuidException ||
+					 exception instanceof NoSuchCPDefinitionException) {
+
+				hideDefaultErrorMessage(actionRequest);
 
 				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter(
 					"mvcRenderCommandName",
-					"/commerce_channels/edit_cp_display_layout");
+					"/commerce_channels/edit_product_cp_display_layout");
+			}
+			else {
+				_log.error(exception, exception);
+
+				throw exception;
 			}
 		}
 	}
@@ -124,32 +126,7 @@ public class EditCPDisplayLayoutMVCActionCommand extends BaseMVCActionCommand {
 		long cpDisplayLayoutId = ParamUtil.getLong(
 			actionRequest, "cpDisplayLayoutId");
 
-		List<Long> classPKs = new ArrayList<>();
-
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");
-
-		if (classPK > 0) {
-			classPKs.add(classPK);
-		}
-		else {
-			Group companyGroup = _groupLocalService.getCompanyGroup(
-				_portal.getCompanyId(actionRequest));
-
-			List<AssetVocabulary> assetVocabularies =
-				_assetVocabularyLocalService.getGroupVocabularies(
-					companyGroup.getGroupId(), false);
-
-			for (AssetVocabulary assetVocabulary : assetVocabularies) {
-				long assetVocabularyClassPK = ParamUtil.getLong(
-					actionRequest,
-					"classPK_" + assetVocabulary.getVocabularyId());
-
-				if (assetVocabularyClassPK > 0) {
-					classPKs.add(assetVocabularyClassPK);
-				}
-			}
-		}
-
 		String layoutUuid = ParamUtil.getString(actionRequest, "layoutUuid");
 
 		if (cpDisplayLayoutId > 0) {
@@ -163,30 +140,21 @@ public class EditCPDisplayLayoutMVCActionCommand extends BaseMVCActionCommand {
 			CommerceChannel commerceChannel =
 				_commerceChannelService.getCommerceChannel(commerceChannelId);
 
-			if (classPKs.isEmpty()) {
-				throw new CPDisplayLayoutEntryException();
-			}
-
-			for (long curClassPK : classPKs) {
-				_cpDisplayLayoutService.addCPDisplayLayout(
-					_portal.getUserId(actionRequest),
-					commerceChannel.getSiteGroupId(), AssetCategory.class,
-					curClassPK, layoutUuid);
-			}
+			_cpDisplayLayoutService.addCPDisplayLayout(
+				_portal.getUserId(actionRequest),
+				commerceChannel.getSiteGroupId(), CPDefinition.class, classPK,
+				layoutUuid);
 		}
 	}
 
-	@Reference
-	private AssetVocabularyLocalService _assetVocabularyLocalService;
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditCPDisplayLayoutMVCActionCommand.class);
 
 	@Reference
 	private CommerceChannelService _commerceChannelService;
 
 	@Reference
 	private CPDisplayLayoutService _cpDisplayLayoutService;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Portal _portal;

@@ -24,8 +24,10 @@ import com.liferay.adaptive.media.image.service.AMImageEntryLocalService;
 import com.liferay.adaptive.media.image.url.AMImageURLFactory;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -115,7 +117,12 @@ public class GetAvailableImageConfigurationsMVCResourceCommand
 				}
 			}
 
-			mediaQueriesMap.put(mediaQuery.getSrc(), sb.toString());
+			List<String> mediaQuerySources = StringUtil.split(
+				mediaQuery.getSrc(), CharPool.COMMA);
+
+			for (String mediaQuerySource : mediaQuerySources) {
+				mediaQueriesMap.put(mediaQuerySource.trim(), sb.toString());
+			}
 		}
 
 		FileVersion fileVersion = fileEntry.getFileVersion();

@@ -140,7 +140,6 @@ import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.social.SocialActivityManagerUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
-import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -7524,37 +7523,6 @@ public class JournalArticleLocalServiceImpl
 
 		boolean cacheable = true;
 
-		Map<String, String> tokens = JournalUtil.getTokens(
-			article.getGroupId(), portletRequestModel, themeDisplay);
-
-		if ((themeDisplay == null) && (portletRequestModel == null)) {
-			tokens.put("company_id", String.valueOf(article.getCompanyId()));
-
-			Group companyGroup = groupLocalService.getCompanyGroup(
-				article.getCompanyId());
-
-			tokens.put(
-				"article_group_id", String.valueOf(article.getGroupId()));
-			tokens.put(
-				"company_group_id", String.valueOf(companyGroup.getGroupId()));
-		}
-
-		tokens.put(
-			TemplateConstants.CLASS_NAME_ID,
-			String.valueOf(
-				classNameLocalService.getClassNameId(DDMStructure.class)));
-		tokens.put(
-			"article_resource_pk",
-			String.valueOf(article.getResourcePrimKey()));
-
-		DDMStructure ddmStructure = article.getDDMStructure();
-
-		tokens.put(
-			"ddm_structure_key",
-			String.valueOf(ddmStructure.getStructureKey()));
-		tokens.put(
-			"ddm_structure_id", String.valueOf(ddmStructure.getStructureId()));
-
 		Document document = article.getDocument();
 
 		document = document.clone();
@@ -7613,9 +7581,6 @@ public class JournalArticleLocalServiceImpl
 			}
 		}
 
-		JournalUtil.addAllReservedEls(
-			rootElement, tokens, article, languageId, themeDisplay);
-
 		try {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
@@ -7644,33 +7609,23 @@ public class JournalArticleLocalServiceImpl
 					article.getDDMTemplateKey(), true);
 			}
 
-			if (ddmTemplate != null) {
-				Group companyGroup = groupLocalService.getCompanyGroup(
-					article.getCompanyId());
+			Map<String, String> tokens = JournalUtil.getTokens(
+				article, ddmTemplate, portletRequestModel, themeDisplay);
 
-				if (companyGroup.getGroupId() == ddmTemplate.getGroupId()) {
-					tokens.put(
-						"company_group_id",
-						String.valueOf(companyGroup.getGroupId()));
-				}
-			}
+			JournalUtil.addAllReservedEls(
+				rootElement, tokens, article, languageId, themeDisplay);
 
 			String script = StringPool.BLANK;
 			String langType = StringPool.BLANK;
 
 			if (ddmTemplate != null) {
-				tokens.put(
-					"ddm_template_key",
-					String.valueOf(ddmTemplate.getTemplateKey()));
-				tokens.put(
-					"ddm_template_id",
-					String.valueOf(ddmTemplate.getTemplateId()));
-
 				script = ddmTemplate.getScript();
 				langType = ddmTemplate.getLanguage();
 				cacheable = ddmTemplate.isCacheable();
 			}
 			else {
+				DDMStructure ddmStructure = article.getDDMStructure();
+
 				script = _journalDefaultTemplateProvider.getScript(
 					ddmStructure.getStructureId());
 

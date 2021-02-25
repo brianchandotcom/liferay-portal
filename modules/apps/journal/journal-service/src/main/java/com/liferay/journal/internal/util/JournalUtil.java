@@ -15,6 +15,8 @@
 package com.liferay.journal.internal.util;
 
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.constants.JournalStructureConstants;
@@ -40,13 +42,17 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.portlet.ThemeDisplayModel;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -244,14 +250,43 @@ public class JournalUtil {
 	}
 
 	public static Map<String, String> getTokens(
-			long articleGroupId, PortletRequestModel portletRequestModel,
-			ThemeDisplay themeDisplay)
+			JournalArticle article, DDMTemplate ddmTemplate,
+			PortletRequestModel portletRequestModel, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		Map<String, String> tokens = new HashMap<>();
+		DDMStructure ddmStructure = article.getDDMStructure();
+
+		Map<String, String> tokens = HashMapBuilder.put(
+			TemplateConstants.CLASS_NAME_ID,
+			String.valueOf(
+				ClassNameLocalServiceUtil.getClassNameId(DDMStructure.class))
+		).put(
+			"article_resource_pk", String.valueOf(article.getResourcePrimKey())
+		).put(
+			"ddm_structure_id", String.valueOf(ddmStructure.getStructureId())
+		).put(
+			"ddm_structure_key", ddmStructure.getStructureKey()
+		).build();
+
+		if (ddmTemplate != null) {
+			tokens.put(
+				"ddm_template_id", String.valueOf(ddmTemplate.getTemplateId()));
+			tokens.put(
+				"ddm_template_key",
+				String.valueOf(ddmTemplate.getTemplateKey()));
+
+			Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
+				article.getCompanyId());
+
+			if (companyGroup.getGroupId() == ddmTemplate.getGroupId()) {
+				tokens.put(
+					"company_group_id",
+					String.valueOf(companyGroup.getGroupId()));
+			}
+		}
 
 		if (themeDisplay != null) {
-			_populateTokens(tokens, articleGroupId, themeDisplay);
+			_populateTokens(tokens, article.getGroupId(), themeDisplay);
 		}
 		else if (portletRequestModel != null) {
 			ThemeDisplayModel themeDisplayModel =
@@ -259,7 +294,8 @@ public class JournalUtil {
 
 			if (themeDisplayModel != null) {
 				try {
-					_populateTokens(tokens, articleGroupId, themeDisplayModel);
+					_populateTokens(
+						tokens, article.getGroupId(), themeDisplayModel);
 				}
 				catch (Exception exception) {
 					if (_log.isWarnEnabled()) {
@@ -267,6 +303,17 @@ public class JournalUtil {
 					}
 				}
 			}
+		}
+		else {
+			tokens.put("company_id", String.valueOf(article.getCompanyId()));
+
+			Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
+				article.getCompanyId());
+
+			tokens.put(
+				"article_group_id", String.valueOf(article.getGroupId()));
+			tokens.put(
+				"company_group_id", String.valueOf(companyGroup.getGroupId()));
 		}
 
 		return tokens;

@@ -773,15 +773,16 @@ public class JournalTestUtil {
 
 	public static Method getJournalUtilGetTokensMethod() {
 		return ReflectionTestUtil.getMethod(
-			_JOURNAL_UTIL_CLASS, "getTokens", long.class,
-			PortletRequestModel.class, ThemeDisplay.class);
+			_JOURNAL_UTIL_CLASS, "getTokens", JournalArticle.class,
+			DDMTemplate.class, PortletRequestModel.class, ThemeDisplay.class);
 	}
 
 	public static Method getJournalUtilTransformMethod() {
 		return ReflectionTestUtil.getMethod(
 			_JOURNAL_UTIL_CLASS, "transform", ThemeDisplay.class, Map.class,
 			String.class, String.class, Document.class,
-			PortletRequestModel.class, String.class, String.class);
+			PortletRequestModel.class, String.class, String.class,
+			boolean.class, Map.class);
 	}
 
 	public static String getSampleTemplateXSL() {

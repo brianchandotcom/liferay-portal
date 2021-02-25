@@ -103,7 +103,42 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 			</clay:container-fluid>
 		</div>
 
-		<div id="<portlet:namespace />-container"></div>
+		<div id="<portlet:namespace />-container">
+			<react:component
+				module="admin/js/App.es"
+				props='<%=
+					HashMapBuilder.<String, Object>put(
+						"context", formBuilderContextJSONObject
+					).put(
+						"dataProviderInstanceParameterSettingsURL", dataProviderInstanceParameterSettingsURL
+					).put(
+						"dataProviderInstancesURL", dataProviderInstancesURL
+					).put(
+						"defaultLanguageId", ddmFormAdminDisplayContext.getDefaultLanguageId()
+					).put(
+						"fieldSetDefinitionURL", ddmFormAdminDisplayContext.getFieldSetDefinitionURL()
+					).put(
+						"fieldSets", ddmFormAdminDisplayContext.getFieldSetsJSONArray()
+					).put(
+						"fieldTypes", ddmFormAdminDisplayContext.getDDMFormFieldTypesJSONArray()
+					).put(
+						"groupId", groupId
+					).put(
+						"localizedDescription", ddmFormAdminDisplayContext.getFormLocalizedDescriptionJSONObject()
+					).put(
+						"localizedName", ddmFormAdminDisplayContext.getFormLocalizedNameJSONObject(structure)
+					).put(
+						"portletNamespace", liferayPortletResponse.getNamespace()
+					).put(
+						"redirectURL", HtmlUtil.escape(redirect)
+					).put(
+						"spritemap", themeDisplay.getPathThemeImages() + "/clay/icons.svg"
+					).put(
+						"view", "fieldSets"
+					).build()
+				%>'
+			/>
+		</div>
 	</aui:form>
 </div>
 
@@ -121,69 +156,8 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 		spritemap: '<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg',
 	};
 
-	Liferay.Forms.App = {
-		dispose: function () {
-			if (Liferay.Forms.instance) {
-				Liferay.Forms.instance.dispose();
-				Liferay.Forms.instance = null;
-			}
-		},
-		reset: function () {
-			var pages;
-
-			if (Liferay.Forms.instance) {
-				pages = Liferay.Forms.instance.state.pages;
-			}
-
-			this.dispose();
-			this.start(pages);
-		},
-		start: function (initialPages) {
-			Liferay.Loader.require(
-				'<%= mainRequire %>',
-				(packageName) => {
-					var context = <%= formBuilderContextJSONObject %>;
-
-					if (context.pages.length === 0 && initialPages) {
-						context.pages = initialPages;
-					}
-
-					Liferay.Forms.instance = new packageName.Form(
-						{
-							context: context,
-							dataProviderInstanceParameterSettingsURL:
-								'<%= dataProviderInstanceParameterSettingsURL %>',
-							dataProviderInstancesURL:
-								'<%= dataProviderInstancesURL %>',
-							defaultLanguageId:
-								'<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>',
-							fieldSetDefinitionURL:
-								'<%= ddmFormAdminDisplayContext.getFieldSetDefinitionURL() %>',
-							fieldSets: <%= ddmFormAdminDisplayContext.getFieldSetsJSONArray() %>,
-							fieldTypes: <%= ddmFormAdminDisplayContext.getDDMFormFieldTypesJSONArray() %>,
-							groupId: <%= groupId %>,
-							localizedDescription: <%= ddmFormAdminDisplayContext.getFormLocalizedDescriptionJSONObject() %>,
-							localizedName: <%= ddmFormAdminDisplayContext.getFormLocalizedNameJSONObject(structure) %>,
-							namespace: '<portlet:namespace />',
-							redirectURL: '<%= HtmlUtil.escape(redirect) %>',
-							spritemap: Liferay.DDM.FormSettings.spritemap,
-							strings: Liferay.DDM.FormSettings.strings,
-							view: 'fieldSets',
-						},
-						'#<portlet:namespace />-container'
-					);
-				},
-				(error) => {
-					throw error;
-				}
-			);
-		},
-	};
-
 	var clearPortletHandlers = function (event) {
 		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
-			Liferay.Forms.App.dispose();
-
 			var translationManager = Liferay.component(
 				'<portlet:namespace />translationManager'
 			);
@@ -203,6 +177,4 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 	};
 
 	Liferay.on('destroyPortlet', clearPortletHandlers);
-
-	Liferay.Forms.App.start();
 </aui:script>

@@ -12,7 +12,6 @@
  * details.
  */
 
-import {ClayIconSpriteContext} from '@clayui/icon';
 import {ClayModalProvider} from '@clayui/modal';
 import React from 'react';
 import {DndProvider} from 'react-dnd';
@@ -25,7 +24,6 @@ import dragAndDropReducer from '../../core/reducers/dragAndDropReducer.es';
 import fieldEditableReducer from '../../core/reducers/fieldEditableReducer.es';
 import languageReducer from '../../core/reducers/languageReducer.es';
 import pagesStructureReducer from '../../core/reducers/pagesStructureReducer.es';
-import {getConnectedReactComponentAdapter} from '../../util/ReactComponentAdapter.es';
 import {FormBuilder} from './FormBuilder.es';
 import {Report} from './Report.es';
 import {RuleBuilder} from './RuleBuilder.es';
@@ -47,73 +45,69 @@ import {parseProps} from './util/parseProps.es';
  * Exporting default application to Forms Admin. Only Providers and
  * routing must be defined.
  */
-export const App = React.forwardRef(
-	({autosaveInterval, autosaveURL, spritemap, ...otherProps}) => {
-		const {config, state} = parseProps({spritemap, ...otherProps});
+export const App = ({autosaveInterval, autosaveURL, ...otherProps}) => {
+	const {config, state} = parseProps(otherProps);
 
-		return (
-			<ClayIconSpriteContext.Provider value={spritemap}>
-				<DndProvider backend={HTML5Backend} context={window}>
-					<ConfigProvider
-						config={config}
-						initialConfig={BUILDER_INITIAL_CONFIG_STATE}
+	return (
+		<DndProvider backend={HTML5Backend} context={window}>
+			<ConfigProvider
+				config={config}
+				initialConfig={BUILDER_INITIAL_CONFIG_STATE}
+			>
+				<ClayModalProvider>
+					<FormProvider
+						init={initState}
+						initialState={BUILDER_INITIAL_STATE}
+						reducers={[
+							dragAndDropReducer,
+							elementSetReducer,
+							fieldEditableReducer,
+							formInfoReducer,
+							languageReducer,
+							pageReducer,
+							pagesStructureReducer,
+							rulesReducer,
+							sidebarReducer,
+						]}
+						value={state}
 					>
-						<ClayModalProvider spritemap={spritemap}>
-							<FormProvider
-								init={initState}
-								initialState={BUILDER_INITIAL_STATE}
-								reducers={[
-									dragAndDropReducer,
-									elementSetReducer,
-									fieldEditableReducer,
-									formInfoReducer,
-									languageReducer,
-									pageReducer,
-									pagesStructureReducer,
-									rulesReducer,
-									sidebarReducer,
-								]}
-								value={state}
-							>
-								<AutoSaveProvider
-									interval={autosaveInterval}
-									url={autosaveURL}
-								>
-									<ToastProvider>
-										<Router>
-											<Switch>
-												<Route
-													component={NavigationBar}
-													path="/"
-												/>
-											</Switch>
-											<Switch>
-												<Route
-													component={FormBuilder}
-													exact
-													path="/"
-												/>
-												<Route
-													component={RuleBuilder}
-													path="/rules"
-												/>
-												<Route
-													component={Report}
-													path="/report"
-												/>
-											</Switch>
-										</Router>
-									</ToastProvider>
-								</AutoSaveProvider>
-							</FormProvider>
-						</ClayModalProvider>
-					</ConfigProvider>
-				</DndProvider>
-			</ClayIconSpriteContext.Provider>
-		);
-	}
-);
+						<AutoSaveProvider
+							interval={autosaveInterval}
+							url={autosaveURL}
+						>
+							<ToastProvider>
+								<Router>
+									<Switch>
+										<Route
+											component={NavigationBar}
+											path="/"
+										/>
+									</Switch>
+									<Switch>
+										<Route
+											component={FormBuilder}
+											exact
+											path="/"
+										/>
+										<Route
+											component={RuleBuilder}
+											path="/rules"
+										/>
+										<Route
+											component={Report}
+											path="/report"
+										/>
+									</Switch>
+								</Router>
+							</ToastProvider>
+						</AutoSaveProvider>
+					</FormProvider>
+				</ClayModalProvider>
+			</ConfigProvider>
+		</DndProvider>
+	);
+};
 
 App.displayName = 'App';
 
-export default getConnectedReactComponentAdapter(App);
+export default App;

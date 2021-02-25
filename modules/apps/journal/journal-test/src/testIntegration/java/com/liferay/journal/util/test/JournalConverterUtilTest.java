@@ -23,7 +23,10 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
+import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
@@ -81,15 +84,14 @@ public class JournalConverterUtilTest {
 
 		_group = GroupTestUtil.addGroup();
 
-		DDMStructureTestHelper ddmStructureTestHelper =
-			new DDMStructureTestHelper(
-				PortalUtil.getClassNameId(JournalArticle.class), _group);
+		_ddmStructureTestHelper = new DDMStructureTestHelper(
+			PortalUtil.getClassNameId(JournalArticle.class), _group);
 
 		String definition = read("test-ddm-structure-all-fields.xml");
 
 		DDMForm ddmForm = deserialize(definition);
 
-		_ddmStructure = ddmStructureTestHelper.addStructure(
+		_ddmStructure = _ddmStructureTestHelper.addStructure(
 			PortalUtil.getClassNameId(JournalArticle.class), null,
 			"Test Structure", ddmForm, StorageType.DEFAULT.getValue(),
 			DDMStructureConstants.TYPE_DEFAULT);
@@ -261,6 +263,78 @@ public class JournalConverterUtilTest {
 
 		Fields actualFields = _journalConverter.getDDMFields(
 			_ddmStructure, content);
+
+		Assert.assertEquals(expectedFields, actualFields);
+	}
+
+	@Test
+	public void testGetFieldsFromContentWithParentStructuresElementsBackwardsCompatibility()
+		throws Exception {
+
+		String parentStructureDefinition = read(
+			"test-ddm-structure-parent-structure.json");
+
+		DDMStructure parentDDMStructure = _ddmStructureTestHelper.addStructure(
+			PortalUtil.getClassNameId(JournalArticle.class), null,
+			"Test Structure", jsonDeserialize(parentStructureDefinition),
+			StorageType.DEFAULT.getValue(), DDMStructureConstants.TYPE_DEFAULT);
+
+		DDMStructureVersion parentDDMStructureVersion =
+			parentDDMStructure.getStructureVersion();
+
+		DDMStructureLayout parentDDMStructureLayout =
+			DDMStructureLayoutLocalServiceUtil.
+				getStructureLayoutByStructureVersionId(
+					parentDDMStructureVersion.getStructureVersionId());
+
+		String childStructureDefinition = StringUtil.replace(
+			read("test-ddm-structure-child-structure.json"),
+			new String[] {"$DDM_STRUCTURE_ID", "$DDM_STRUCTURE_LAYOUT_ID"},
+			new String[] {
+				String.valueOf(parentDDMStructure.getStructureId()),
+				String.valueOf(parentDDMStructureLayout.getStructureLayoutId())
+			});
+
+		DDMStructure childDDMStructure = _ddmStructureTestHelper.addStructure(
+			PortalUtil.getClassNameId(JournalArticle.class), null,
+			"Test Structure", jsonDeserialize(childStructureDefinition),
+			StorageType.DEFAULT.getValue(), DDMStructureConstants.TYPE_DEFAULT);
+
+		Fields expectedFields = new Fields();
+
+		Field textField1 = new Field();
+
+		textField1.setDDMStructureId(childDDMStructure.getStructureId());
+		textField1.setDefaultLocale(_enLocale);
+		textField1.setName("Text23i4");
+
+		textField1.addValue(_enLocale, "Text 1");
+
+		expectedFields.put(textField1);
+
+		Field textField2 = new Field();
+
+		textField2.setDDMStructureId(childDDMStructure.getStructureId());
+		textField2.setDefaultLocale(_enLocale);
+		textField2.setName("Textlmzq");
+
+		textField2.addValue(_enLocale, "Text 2");
+
+		expectedFields.put(textField2);
+
+		Field fieldsDisplayField = getFieldsDisplayField(
+			childDDMStructure.getStructureId(),
+			"parentStructureFieldSet37599_INSTANCE_" +
+				childDDMStructure.getStructureId() +
+					",Text23i4_INSTANCE_ngkuwrmn,Textlmzq_INSTANCE_yxxxshhf");
+
+		expectedFields.put(fieldsDisplayField);
+
+		String content = read(
+			"test-journal-content-parent-structure-fields.xml");
+
+		Fields actualFields = _journalConverter.getDDMFields(
+			childDDMStructure, content);
 
 		Assert.assertEquals(expectedFields, actualFields);
 	}
@@ -585,6 +659,17 @@ public class JournalConverterUtilTest {
 		return valuesMap.computeIfAbsent(locale, key -> new ArrayList<>());
 	}
 
+	protected DDMForm jsonDeserialize(String content) {
+		DDMFormDeserializerDeserializeRequest.Builder builder =
+			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(content);
+
+		DDMFormDeserializerDeserializeResponse
+			ddmFormDeserializerDeserializeResponse =
+				_jsonDDMFormDeserializer.deserialize(builder.build());
+
+		return ddmFormDeserializerDeserializeResponse.getDDMForm();
+	}
+
 	protected String read(String fileName) throws Exception {
 		Class<?> clazz = getClass();
 
@@ -637,10 +722,14 @@ public class JournalConverterUtilTest {
 		}
 	}
 
+	@Inject(filter = "ddm.form.deserializer.type=json")
+	private static DDMFormDeserializer _jsonDDMFormDeserializer;
+
 	@Inject(filter = "ddm.form.deserializer.type=xsd")
 	private static DDMFormDeserializer _xsdDDMFormDeserializer;
 
 	private DDMStructure _ddmStructure;
+	private DDMStructureTestHelper _ddmStructureTestHelper;
 	private Locale _enLocale;
 
 	@DeleteAfterTestRun

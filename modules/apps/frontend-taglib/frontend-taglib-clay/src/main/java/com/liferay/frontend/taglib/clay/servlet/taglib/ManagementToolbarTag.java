@@ -1015,7 +1015,7 @@ public class ManagementToolbarTag extends BaseContainerTag {
 				jspWriter.write("</button></div></li>");
 			}
 
-			if (isShowCreationMenu() && (getCreationMenu() != null)) {
+			if (isShowCreationMenu()) {
 				jspWriter.write("<li class=\"nav-item\">");
 
 				LinkTag linkTag = new LinkTag();

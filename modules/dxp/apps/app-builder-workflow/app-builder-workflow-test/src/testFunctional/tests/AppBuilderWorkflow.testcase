@@ -324,26 +324,14 @@ definition {
 			panel = "Applications",
 			portlet = "Apps");
 
-		AppBuilderAppAdmin.goToWorkflowPoweredTab();
-
-		AppBuilderAppAdmin.clickOnCreateNewAppButton();
-
-		AppBuilderWorkflow.selectStartStepDataAndViews(
-			formViewName = "My Form View",
-			objectName = "my custom object",
-			tableViewName = "My Table View");
-
-		AppBuilderWorkflow.addNewStep();
-
-		AppBuilderWorkflow.selectStepAssignee(
-			assignee = "Administrator",
-			step = "1");
-
-		AppBuilderWorkflow.addWorkflowAppName(workflowAppName = "My Workflow App");
-		Button.click(button = "Deploy");
-		App.toggleDeploy(deployOption = "Product Menu");
-		Button.click(button = "Done");
-		AppBuilderWorkflow.waitForButtonNotPresent(buttonName = "Done");
+		AppBuilderAppAdmin.createBasicWorkflowAppWith1ExtraStep(
+            assignee = "Administrator",
+            deployOption = "Product Menu",
+            formViewName = "My Form View",
+            isCreatingViaPlusIcon = "false",
+            objectName = "my custom object",
+            tableViewName = "My Table View",
+            workflowAppName = "My Workflow App");
 
 		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "My Workflow App");
 		AppBuilderAdmin.addEntry();

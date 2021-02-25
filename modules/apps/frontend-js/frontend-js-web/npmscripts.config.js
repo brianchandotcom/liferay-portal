@@ -25,5 +25,4 @@ module.exports = {
 	federation: {
 		mode: 'compatible',
 	},
-	preset: '@liferay/npm-scripts/src/presets/standard',
 };

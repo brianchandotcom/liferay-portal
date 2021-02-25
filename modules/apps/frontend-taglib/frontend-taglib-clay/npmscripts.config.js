@@ -17,5 +17,4 @@ module.exports = {
 		bridges: ['@clayui/icon'],
 		mode: 'compatible',
 	},
-	preset: '@liferay/npm-scripts/src/presets/standard',
 };

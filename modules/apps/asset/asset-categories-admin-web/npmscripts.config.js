@@ -22,5 +22,4 @@ module.exports = {
 		mode: 'incompatible',
 		remotes: ['asset-taglib'],
 	},
-	preset: '@liferay/npm-scripts/src/presets/standard',
 };

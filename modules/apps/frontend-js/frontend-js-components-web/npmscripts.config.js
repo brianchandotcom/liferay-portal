@@ -17,5 +17,4 @@ module.exports = {
 		bridges: true,
 		mode: 'incompatible',
 	},
-	preset: '@liferay/npm-scripts/src/presets/standard',
 };

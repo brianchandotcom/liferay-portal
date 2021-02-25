@@ -22,5 +22,4 @@ module.exports = {
 		],
 		mode: 'incompatible',
 	},
-	preset: '@liferay/npm-scripts/src/presets/standard',
 };

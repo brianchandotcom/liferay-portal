@@ -165,5 +165,4 @@ module.exports = {
 		}
 	},
 	fix: CHECK_AND_FIX_GLOBS,
-	preset: '@liferay/npm-scripts/src/presets/standard',
 };

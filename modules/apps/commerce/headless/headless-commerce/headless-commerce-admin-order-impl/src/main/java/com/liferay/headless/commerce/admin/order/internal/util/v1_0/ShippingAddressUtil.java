@@ -54,8 +54,7 @@ public class ShippingAddressUtil {
 			commerceAddress.getDescription(), commerceAddress.getStreet1(),
 			commerceAddress.getStreet2(), commerceAddress.getStreet3(),
 			commerceAddress.getCity(), commerceAddress.getZip(),
-			commerceAddress.getCommerceRegionId(),
-			commerceAddress.getCommerceCountryId(),
+			commerceAddress.getRegionId(), commerceAddress.getCountryId(),
 			commerceAddress.getPhoneNumber(), serviceContext);
 	}
 
@@ -111,7 +110,7 @@ public class ShippingAddressUtil {
 		if (Validator.isNull(shippingAddress.getRegionISOCode()) &&
 			(commerceAddress != null)) {
 
-			return commerceAddress.getCommerceRegionId();
+			return commerceAddress.getRegionId();
 		}
 
 		if (country == null) {

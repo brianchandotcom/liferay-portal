@@ -54,8 +54,7 @@ public class BillingAddressUtil {
 			commerceAddress.getDescription(), commerceAddress.getStreet1(),
 			commerceAddress.getStreet2(), commerceAddress.getStreet3(),
 			commerceAddress.getCity(), commerceAddress.getZip(),
-			commerceAddress.getCommerceRegionId(),
-			commerceAddress.getCommerceCountryId(),
+			commerceAddress.getRegionId(), commerceAddress.getCountryId(),
 			commerceAddress.getPhoneNumber(), serviceContext);
 	}
 
@@ -110,7 +109,7 @@ public class BillingAddressUtil {
 		if (Validator.isNull(billingAddress.getRegionISOCode()) &&
 			(commerceAddress != null)) {
 
-			return commerceAddress.getCommerceRegionId();
+			return commerceAddress.getRegionId();
 		}
 
 		if (Validator.isNull(billingAddress.getRegionISOCode()) ||

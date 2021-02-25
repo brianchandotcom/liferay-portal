@@ -278,7 +278,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 		if (Validator.isNull(address.getRegionISOCode()) &&
 			(commerceAddress != null)) {
 
-			return commerceAddress.getCommerceRegionId();
+			return commerceAddress.getRegionId();
 		}
 
 		if (Validator.isNull(address.getRegionISOCode()) || (country == null)) {

@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class FolderLocalServiceWrapper
 	implements FolderLocalService, ServiceWrapper<FolderLocalService> {
 
+	public FolderLocalServiceWrapper() {
+		this(null);
+	}
+
 	public FolderLocalServiceWrapper(FolderLocalService folderLocalService) {
 		_folderLocalService = folderLocalService;
 	}

@@ -24,6 +24,10 @@ package com.liferay.portal.kernel.service;
 public class ListTypeServiceWrapper
 	implements ListTypeService, ServiceWrapper<ListTypeService> {
 
+	public ListTypeServiceWrapper() {
+		this(null);
+	}
+
 	public ListTypeServiceWrapper(ListTypeService listTypeService) {
 		_listTypeService = listTypeService;
 	}

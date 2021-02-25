@@ -27,6 +27,10 @@ public class ViewCountEntryLocalServiceWrapper
 	implements ServiceWrapper<ViewCountEntryLocalService>,
 			   ViewCountEntryLocalService {
 
+	public ViewCountEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public ViewCountEntryLocalServiceWrapper(
 		ViewCountEntryLocalService viewCountEntryLocalService) {
 

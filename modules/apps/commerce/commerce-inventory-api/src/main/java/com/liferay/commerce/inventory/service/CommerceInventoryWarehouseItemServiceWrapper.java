@@ -27,6 +27,10 @@ public class CommerceInventoryWarehouseItemServiceWrapper
 	implements CommerceInventoryWarehouseItemService,
 			   ServiceWrapper<CommerceInventoryWarehouseItemService> {
 
+	public CommerceInventoryWarehouseItemServiceWrapper() {
+		this(null);
+	}
+
 	public CommerceInventoryWarehouseItemServiceWrapper(
 		CommerceInventoryWarehouseItemService
 			commerceInventoryWarehouseItemService) {

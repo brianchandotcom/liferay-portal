@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class PollsChoiceServiceWrapper
 	implements PollsChoiceService, ServiceWrapper<PollsChoiceService> {
 
+	public PollsChoiceServiceWrapper() {
+		this(null);
+	}
+
 	public PollsChoiceServiceWrapper(PollsChoiceService pollsChoiceService) {
 		_pollsChoiceService = pollsChoiceService;
 	}

@@ -30,6 +30,10 @@ public class SegmentsExperimentLocalServiceWrapper
 	implements SegmentsExperimentLocalService,
 			   ServiceWrapper<SegmentsExperimentLocalService> {
 
+	public SegmentsExperimentLocalServiceWrapper() {
+		this(null);
+	}
+
 	public SegmentsExperimentLocalServiceWrapper(
 		SegmentsExperimentLocalService segmentsExperimentLocalService) {
 

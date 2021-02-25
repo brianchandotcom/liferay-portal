@@ -27,6 +27,10 @@ public class CommerceBOMFolderApplicationRelLocalServiceWrapper
 	implements CommerceBOMFolderApplicationRelLocalService,
 			   ServiceWrapper<CommerceBOMFolderApplicationRelLocalService> {
 
+	public CommerceBOMFolderApplicationRelLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CommerceBOMFolderApplicationRelLocalServiceWrapper(
 		CommerceBOMFolderApplicationRelLocalService
 			commerceBOMFolderApplicationRelLocalService) {

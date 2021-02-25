@@ -27,6 +27,10 @@ public class PollsQuestionLocalServiceWrapper
 	implements PollsQuestionLocalService,
 			   ServiceWrapper<PollsQuestionLocalService> {
 
+	public PollsQuestionLocalServiceWrapper() {
+		this(null);
+	}
+
 	public PollsQuestionLocalServiceWrapper(
 		PollsQuestionLocalService pollsQuestionLocalService) {
 

@@ -29,6 +29,10 @@ import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersisten
 public class DDMFieldLocalServiceWrapper
 	implements DDMFieldLocalService, ServiceWrapper<DDMFieldLocalService> {
 
+	public DDMFieldLocalServiceWrapper() {
+		this(null);
+	}
+
 	public DDMFieldLocalServiceWrapper(
 		DDMFieldLocalService ddmFieldLocalService) {
 

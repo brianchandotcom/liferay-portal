@@ -27,6 +27,10 @@ public class AccountRoleLocalServiceWrapper
 	implements AccountRoleLocalService,
 			   ServiceWrapper<AccountRoleLocalService> {
 
+	public AccountRoleLocalServiceWrapper() {
+		this(null);
+	}
+
 	public AccountRoleLocalServiceWrapper(
 		AccountRoleLocalService accountRoleLocalService) {
 

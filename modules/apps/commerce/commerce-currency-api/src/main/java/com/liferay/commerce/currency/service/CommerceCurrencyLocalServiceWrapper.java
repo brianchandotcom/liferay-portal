@@ -27,6 +27,10 @@ public class CommerceCurrencyLocalServiceWrapper
 	implements CommerceCurrencyLocalService,
 			   ServiceWrapper<CommerceCurrencyLocalService> {
 
+	public CommerceCurrencyLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CommerceCurrencyLocalServiceWrapper(
 		CommerceCurrencyLocalService commerceCurrencyLocalService) {
 

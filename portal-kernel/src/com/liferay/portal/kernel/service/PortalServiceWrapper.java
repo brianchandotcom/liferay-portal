@@ -24,6 +24,10 @@ package com.liferay.portal.kernel.service;
 public class PortalServiceWrapper
 	implements PortalService, ServiceWrapper<PortalService> {
 
+	public PortalServiceWrapper() {
+		this(null);
+	}
+
 	public PortalServiceWrapper(PortalService portalService) {
 		_portalService = portalService;
 	}

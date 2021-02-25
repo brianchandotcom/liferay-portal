@@ -27,6 +27,10 @@ public class NestedSetsTreeEntryLocalServiceWrapper
 	implements NestedSetsTreeEntryLocalService,
 			   ServiceWrapper<NestedSetsTreeEntryLocalService> {
 
+	public NestedSetsTreeEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public NestedSetsTreeEntryLocalServiceWrapper(
 		NestedSetsTreeEntryLocalService nestedSetsTreeEntryLocalService) {
 

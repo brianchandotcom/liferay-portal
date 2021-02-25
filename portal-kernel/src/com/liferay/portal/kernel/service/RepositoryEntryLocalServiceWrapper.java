@@ -25,6 +25,10 @@ public class RepositoryEntryLocalServiceWrapper
 	implements RepositoryEntryLocalService,
 			   ServiceWrapper<RepositoryEntryLocalService> {
 
+	public RepositoryEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public RepositoryEntryLocalServiceWrapper(
 		RepositoryEntryLocalService repositoryEntryLocalService) {
 

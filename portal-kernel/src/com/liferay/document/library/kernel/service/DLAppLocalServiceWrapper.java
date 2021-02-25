@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class DLAppLocalServiceWrapper
 	implements DLAppLocalService, ServiceWrapper<DLAppLocalService> {
 
+	public DLAppLocalServiceWrapper() {
+		this(null);
+	}
+
 	public DLAppLocalServiceWrapper(DLAppLocalService dlAppLocalService) {
 		_dlAppLocalService = dlAppLocalService;
 	}

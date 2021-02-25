@@ -27,6 +27,10 @@ public class CommerceInventoryBookedQuantityLocalServiceWrapper
 	implements CommerceInventoryBookedQuantityLocalService,
 			   ServiceWrapper<CommerceInventoryBookedQuantityLocalService> {
 
+	public CommerceInventoryBookedQuantityLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CommerceInventoryBookedQuantityLocalServiceWrapper(
 		CommerceInventoryBookedQuantityLocalService
 			commerceInventoryBookedQuantityLocalService) {

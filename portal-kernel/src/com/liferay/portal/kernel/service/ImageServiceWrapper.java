@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.model.Image;
 public class ImageServiceWrapper
 	implements ImageService, ServiceWrapper<ImageService> {
 
+	public ImageServiceWrapper() {
+		this(null);
+	}
+
 	public ImageServiceWrapper(ImageService imageService) {
 		_imageService = imageService;
 	}

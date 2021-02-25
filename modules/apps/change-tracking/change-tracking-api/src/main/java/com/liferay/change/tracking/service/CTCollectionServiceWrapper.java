@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class CTCollectionServiceWrapper
 	implements CTCollectionService, ServiceWrapper<CTCollectionService> {
 
+	public CTCollectionServiceWrapper() {
+		this(null);
+	}
+
 	public CTCollectionServiceWrapper(CTCollectionService ctCollectionService) {
 		_ctCollectionService = ctCollectionService;
 	}

@@ -58,10 +58,6 @@ import org.osgi.service.component.annotations.Reference;
 public class AkismetMBMessageLocalServiceWrapper
 	extends MBMessageLocalServiceWrapper {
 
-	public AkismetMBMessageLocalServiceWrapper() {
-		super(null);
-	}
-
 	@Override
 	public MBMessage addMessage(
 			long userId, String userName, long groupId, long categoryId,

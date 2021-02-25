@@ -27,6 +27,10 @@ public class CalendarResourceServiceWrapper
 	implements CalendarResourceService,
 			   ServiceWrapper<CalendarResourceService> {
 
+	public CalendarResourceServiceWrapper() {
+		this(null);
+	}
+
 	public CalendarResourceServiceWrapper(
 		CalendarResourceService calendarResourceService) {
 

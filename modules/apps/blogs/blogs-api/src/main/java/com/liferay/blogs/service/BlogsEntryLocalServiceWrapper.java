@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class BlogsEntryLocalServiceWrapper
 	implements BlogsEntryLocalService, ServiceWrapper<BlogsEntryLocalService> {
 
+	public BlogsEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public BlogsEntryLocalServiceWrapper(
 		BlogsEntryLocalService blogsEntryLocalService) {
 

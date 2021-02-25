@@ -27,6 +27,10 @@ public class CalendarNotificationTemplateLocalServiceWrapper
 	implements CalendarNotificationTemplateLocalService,
 			   ServiceWrapper<CalendarNotificationTemplateLocalService> {
 
+	public CalendarNotificationTemplateLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CalendarNotificationTemplateLocalServiceWrapper(
 		CalendarNotificationTemplateLocalService
 			calendarNotificationTemplateLocalService) {

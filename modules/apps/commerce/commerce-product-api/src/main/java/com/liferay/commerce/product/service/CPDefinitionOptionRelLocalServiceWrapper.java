@@ -27,6 +27,10 @@ public class CPDefinitionOptionRelLocalServiceWrapper
 	implements CPDefinitionOptionRelLocalService,
 			   ServiceWrapper<CPDefinitionOptionRelLocalService> {
 
+	public CPDefinitionOptionRelLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CPDefinitionOptionRelLocalServiceWrapper(
 		CPDefinitionOptionRelLocalService cpDefinitionOptionRelLocalService) {
 

@@ -27,6 +27,10 @@ public class CommerceBOMDefinitionLocalServiceWrapper
 	implements CommerceBOMDefinitionLocalService,
 			   ServiceWrapper<CommerceBOMDefinitionLocalService> {
 
+	public CommerceBOMDefinitionLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CommerceBOMDefinitionLocalServiceWrapper(
 		CommerceBOMDefinitionLocalService commerceBOMDefinitionLocalService) {
 

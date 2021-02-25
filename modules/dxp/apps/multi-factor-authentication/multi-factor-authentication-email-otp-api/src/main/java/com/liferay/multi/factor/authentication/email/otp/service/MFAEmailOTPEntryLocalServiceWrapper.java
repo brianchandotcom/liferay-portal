@@ -27,6 +27,10 @@ public class MFAEmailOTPEntryLocalServiceWrapper
 	implements MFAEmailOTPEntryLocalService,
 			   ServiceWrapper<MFAEmailOTPEntryLocalService> {
 
+	public MFAEmailOTPEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public MFAEmailOTPEntryLocalServiceWrapper(
 		MFAEmailOTPEntryLocalService mfaEmailOTPEntryLocalService) {
 

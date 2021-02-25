@@ -27,6 +27,10 @@ public class MFATimeBasedOTPEntryLocalServiceWrapper
 	implements MFATimeBasedOTPEntryLocalService,
 			   ServiceWrapper<MFATimeBasedOTPEntryLocalService> {
 
+	public MFATimeBasedOTPEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public MFATimeBasedOTPEntryLocalServiceWrapper(
 		MFATimeBasedOTPEntryLocalService mfaTimeBasedOTPEntryLocalService) {
 

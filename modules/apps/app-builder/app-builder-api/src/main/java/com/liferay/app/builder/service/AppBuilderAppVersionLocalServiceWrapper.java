@@ -27,6 +27,10 @@ public class AppBuilderAppVersionLocalServiceWrapper
 	implements AppBuilderAppVersionLocalService,
 			   ServiceWrapper<AppBuilderAppVersionLocalService> {
 
+	public AppBuilderAppVersionLocalServiceWrapper() {
+		this(null);
+	}
+
 	public AppBuilderAppVersionLocalServiceWrapper(
 		AppBuilderAppVersionLocalService appBuilderAppVersionLocalService) {
 

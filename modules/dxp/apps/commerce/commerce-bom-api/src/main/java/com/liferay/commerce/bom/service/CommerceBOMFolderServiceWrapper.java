@@ -27,6 +27,10 @@ public class CommerceBOMFolderServiceWrapper
 	implements CommerceBOMFolderService,
 			   ServiceWrapper<CommerceBOMFolderService> {
 
+	public CommerceBOMFolderServiceWrapper() {
+		this(null);
+	}
+
 	public CommerceBOMFolderServiceWrapper(
 		CommerceBOMFolderService commerceBOMFolderService) {
 

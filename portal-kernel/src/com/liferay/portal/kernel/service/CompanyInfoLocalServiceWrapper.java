@@ -25,6 +25,10 @@ public class CompanyInfoLocalServiceWrapper
 	implements CompanyInfoLocalService,
 			   ServiceWrapper<CompanyInfoLocalService> {
 
+	public CompanyInfoLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CompanyInfoLocalServiceWrapper(
 		CompanyInfoLocalService companyInfoLocalService) {
 

@@ -27,6 +27,10 @@ public class DLAppHelperLocalServiceWrapper
 	implements DLAppHelperLocalService,
 			   ServiceWrapper<DLAppHelperLocalService> {
 
+	public DLAppHelperLocalServiceWrapper() {
+		this(null);
+	}
+
 	public DLAppHelperLocalServiceWrapper(
 		DLAppHelperLocalService dlAppHelperLocalService) {
 

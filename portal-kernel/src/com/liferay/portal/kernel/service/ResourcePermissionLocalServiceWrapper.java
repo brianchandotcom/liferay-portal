@@ -29,6 +29,10 @@ public class ResourcePermissionLocalServiceWrapper
 	implements ResourcePermissionLocalService,
 			   ServiceWrapper<ResourcePermissionLocalService> {
 
+	public ResourcePermissionLocalServiceWrapper() {
+		this(null);
+	}
+
 	public ResourcePermissionLocalServiceWrapper(
 		ResourcePermissionLocalService resourcePermissionLocalService) {
 

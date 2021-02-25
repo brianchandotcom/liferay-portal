@@ -25,6 +25,10 @@ public class PasswordPolicyRelLocalServiceWrapper
 	implements PasswordPolicyRelLocalService,
 			   ServiceWrapper<PasswordPolicyRelLocalService> {
 
+	public PasswordPolicyRelLocalServiceWrapper() {
+		this(null);
+	}
+
 	public PasswordPolicyRelLocalServiceWrapper(
 		PasswordPolicyRelLocalService passwordPolicyRelLocalService) {
 

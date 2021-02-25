@@ -27,6 +27,10 @@ public class CommerceInventoryAuditServiceWrapper
 	implements CommerceInventoryAuditService,
 			   ServiceWrapper<CommerceInventoryAuditService> {
 
+	public CommerceInventoryAuditServiceWrapper() {
+		this(null);
+	}
+
 	public CommerceInventoryAuditServiceWrapper(
 		CommerceInventoryAuditService commerceInventoryAuditService) {
 

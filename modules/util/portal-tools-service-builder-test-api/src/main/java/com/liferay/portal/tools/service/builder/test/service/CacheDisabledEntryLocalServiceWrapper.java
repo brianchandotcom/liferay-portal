@@ -27,6 +27,10 @@ public class CacheDisabledEntryLocalServiceWrapper
 	implements CacheDisabledEntryLocalService,
 			   ServiceWrapper<CacheDisabledEntryLocalService> {
 
+	public CacheDisabledEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CacheDisabledEntryLocalServiceWrapper(
 		CacheDisabledEntryLocalService cacheDisabledEntryLocalService) {
 

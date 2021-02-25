@@ -30,6 +30,10 @@ public class FragmentEntryLocalServiceWrapper
 	implements FragmentEntryLocalService,
 			   ServiceWrapper<FragmentEntryLocalService> {
 
+	public FragmentEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public FragmentEntryLocalServiceWrapper(
 		FragmentEntryLocalService fragmentEntryLocalService) {
 

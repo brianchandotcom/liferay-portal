@@ -27,6 +27,10 @@ public class OAuth2ApplicationScopeAliasesLocalServiceWrapper
 	implements OAuth2ApplicationScopeAliasesLocalService,
 			   ServiceWrapper<OAuth2ApplicationScopeAliasesLocalService> {
 
+	public OAuth2ApplicationScopeAliasesLocalServiceWrapper() {
+		this(null);
+	}
+
 	public OAuth2ApplicationScopeAliasesLocalServiceWrapper(
 		OAuth2ApplicationScopeAliasesLocalService
 			oAuth2ApplicationScopeAliasesLocalService) {

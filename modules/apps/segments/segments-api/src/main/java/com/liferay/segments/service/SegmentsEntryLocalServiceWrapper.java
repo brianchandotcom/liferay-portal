@@ -30,6 +30,10 @@ public class SegmentsEntryLocalServiceWrapper
 	implements SegmentsEntryLocalService,
 			   ServiceWrapper<SegmentsEntryLocalService> {
 
+	public SegmentsEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public SegmentsEntryLocalServiceWrapper(
 		SegmentsEntryLocalService segmentsEntryLocalService) {
 

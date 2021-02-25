@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class DLFileRankLocalServiceWrapper
 	implements DLFileRankLocalService, ServiceWrapper<DLFileRankLocalService> {
 
+	public DLFileRankLocalServiceWrapper() {
+		this(null);
+	}
+
 	public DLFileRankLocalServiceWrapper(
 		DLFileRankLocalService dlFileRankLocalService) {
 

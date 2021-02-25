@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class DispatchTriggerServiceWrapper
 	implements DispatchTriggerService, ServiceWrapper<DispatchTriggerService> {
 
+	public DispatchTriggerServiceWrapper() {
+		this(null);
+	}
+
 	public DispatchTriggerServiceWrapper(
 		DispatchTriggerService dispatchTriggerService) {
 

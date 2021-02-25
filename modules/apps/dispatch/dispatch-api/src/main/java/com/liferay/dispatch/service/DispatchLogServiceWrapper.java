@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class DispatchLogServiceWrapper
 	implements DispatchLogService, ServiceWrapper<DispatchLogService> {
 
+	public DispatchLogServiceWrapper() {
+		this(null);
+	}
+
 	public DispatchLogServiceWrapper(DispatchLogService dispatchLogService) {
 		_dispatchLogService = dispatchLogService;
 	}

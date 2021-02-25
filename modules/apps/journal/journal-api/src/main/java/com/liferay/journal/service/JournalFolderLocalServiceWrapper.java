@@ -30,6 +30,10 @@ public class JournalFolderLocalServiceWrapper
 	implements JournalFolderLocalService,
 			   ServiceWrapper<JournalFolderLocalService> {
 
+	public JournalFolderLocalServiceWrapper() {
+		this(null);
+	}
+
 	public JournalFolderLocalServiceWrapper(
 		JournalFolderLocalService journalFolderLocalService) {
 

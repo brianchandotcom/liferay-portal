@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class GadgetLocalServiceWrapper
 	implements GadgetLocalService, ServiceWrapper<GadgetLocalService> {
 
+	public GadgetLocalServiceWrapper() {
+		this(null);
+	}
+
 	public GadgetLocalServiceWrapper(GadgetLocalService gadgetLocalService) {
 		_gadgetLocalService = gadgetLocalService;
 	}

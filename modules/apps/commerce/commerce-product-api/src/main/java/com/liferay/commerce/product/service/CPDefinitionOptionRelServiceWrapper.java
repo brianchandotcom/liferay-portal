@@ -27,6 +27,10 @@ public class CPDefinitionOptionRelServiceWrapper
 	implements CPDefinitionOptionRelService,
 			   ServiceWrapper<CPDefinitionOptionRelService> {
 
+	public CPDefinitionOptionRelServiceWrapper() {
+		this(null);
+	}
+
 	public CPDefinitionOptionRelServiceWrapper(
 		CPDefinitionOptionRelService cpDefinitionOptionRelService) {
 

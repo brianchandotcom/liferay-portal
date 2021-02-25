@@ -29,6 +29,10 @@ import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersisten
 public class CTSContentLocalServiceWrapper
 	implements CTSContentLocalService, ServiceWrapper<CTSContentLocalService> {
 
+	public CTSContentLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CTSContentLocalServiceWrapper(
 		CTSContentLocalService ctsContentLocalService) {
 

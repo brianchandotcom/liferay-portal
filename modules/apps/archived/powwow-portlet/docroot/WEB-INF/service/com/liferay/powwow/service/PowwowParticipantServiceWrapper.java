@@ -27,6 +27,10 @@ public class PowwowParticipantServiceWrapper
 	implements PowwowParticipantService,
 			   ServiceWrapper<PowwowParticipantService> {
 
+	public PowwowParticipantServiceWrapper() {
+		this(null);
+	}
+
 	public PowwowParticipantServiceWrapper(
 		PowwowParticipantService powwowParticipantService) {
 

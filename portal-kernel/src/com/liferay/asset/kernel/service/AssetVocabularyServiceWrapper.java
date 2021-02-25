@@ -27,6 +27,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class AssetVocabularyServiceWrapper
 	implements AssetVocabularyService, ServiceWrapper<AssetVocabularyService> {
 
+	public AssetVocabularyServiceWrapper() {
+		this(null);
+	}
+
 	public AssetVocabularyServiceWrapper(
 		AssetVocabularyService assetVocabularyService) {
 

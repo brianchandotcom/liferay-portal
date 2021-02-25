@@ -27,6 +27,10 @@ public class SamlSpMessageLocalServiceWrapper
 	implements SamlSpMessageLocalService,
 			   ServiceWrapper<SamlSpMessageLocalService> {
 
+	public SamlSpMessageLocalServiceWrapper() {
+		this(null);
+	}
+
 	public SamlSpMessageLocalServiceWrapper(
 		SamlSpMessageLocalService samlSpMessageLocalService) {
 

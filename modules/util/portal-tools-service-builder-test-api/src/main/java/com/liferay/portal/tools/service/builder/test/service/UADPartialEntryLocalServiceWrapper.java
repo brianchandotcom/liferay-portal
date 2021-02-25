@@ -27,6 +27,10 @@ public class UADPartialEntryLocalServiceWrapper
 	implements ServiceWrapper<UADPartialEntryLocalService>,
 			   UADPartialEntryLocalService {
 
+	public UADPartialEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public UADPartialEntryLocalServiceWrapper(
 		UADPartialEntryLocalService uadPartialEntryLocalService) {
 

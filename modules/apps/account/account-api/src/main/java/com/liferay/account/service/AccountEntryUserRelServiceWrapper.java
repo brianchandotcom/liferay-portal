@@ -27,6 +27,10 @@ public class AccountEntryUserRelServiceWrapper
 	implements AccountEntryUserRelService,
 			   ServiceWrapper<AccountEntryUserRelService> {
 
+	public AccountEntryUserRelServiceWrapper() {
+		this(null);
+	}
+
 	public AccountEntryUserRelServiceWrapper(
 		AccountEntryUserRelService accountEntryUserRelService) {
 

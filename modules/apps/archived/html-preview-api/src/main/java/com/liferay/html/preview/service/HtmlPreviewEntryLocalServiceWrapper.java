@@ -27,6 +27,10 @@ public class HtmlPreviewEntryLocalServiceWrapper
 	implements HtmlPreviewEntryLocalService,
 			   ServiceWrapper<HtmlPreviewEntryLocalService> {
 
+	public HtmlPreviewEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public HtmlPreviewEntryLocalServiceWrapper(
 		HtmlPreviewEntryLocalService htmlPreviewEntryLocalService) {
 

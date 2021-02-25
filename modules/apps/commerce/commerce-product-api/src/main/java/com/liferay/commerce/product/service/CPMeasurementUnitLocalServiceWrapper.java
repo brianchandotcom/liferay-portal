@@ -27,6 +27,10 @@ public class CPMeasurementUnitLocalServiceWrapper
 	implements CPMeasurementUnitLocalService,
 			   ServiceWrapper<CPMeasurementUnitLocalService> {
 
+	public CPMeasurementUnitLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CPMeasurementUnitLocalServiceWrapper(
 		CPMeasurementUnitLocalService cpMeasurementUnitLocalService) {
 

@@ -34,17 +34,6 @@ import org.osgi.service.component.annotations.Reference;
 public class ModularSubscriptionLocalServiceWrapper
 	extends SubscriptionLocalServiceWrapper {
 
-	public ModularSubscriptionLocalServiceWrapper() {
-		super(null);
-	}
-
-	public ModularSubscriptionLocalServiceWrapper(
-		com.liferay.portal.kernel.service.SubscriptionLocalService
-			subscriptionLocalService) {
-
-		super(subscriptionLocalService);
-	}
-
 	@Override
 	public Subscription addSubscription(
 			long userId, long groupId, String className, long classPK)

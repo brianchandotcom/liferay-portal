@@ -27,6 +27,10 @@ public class CommerceChannelLocalServiceWrapper
 	implements CommerceChannelLocalService,
 			   ServiceWrapper<CommerceChannelLocalService> {
 
+	public CommerceChannelLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CommerceChannelLocalServiceWrapper(
 		CommerceChannelLocalService commerceChannelLocalService) {
 

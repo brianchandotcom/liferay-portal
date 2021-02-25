@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class AttachmentLocalServiceWrapper
 	implements AttachmentLocalService, ServiceWrapper<AttachmentLocalService> {
 
+	public AttachmentLocalServiceWrapper() {
+		this(null);
+	}
+
 	public AttachmentLocalServiceWrapper(
 		AttachmentLocalService attachmentLocalService) {
 

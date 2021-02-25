@@ -27,6 +27,10 @@ public class CommerceAccountGroupLocalServiceWrapper
 	implements CommerceAccountGroupLocalService,
 			   ServiceWrapper<CommerceAccountGroupLocalService> {
 
+	public CommerceAccountGroupLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CommerceAccountGroupLocalServiceWrapper(
 		CommerceAccountGroupLocalService commerceAccountGroupLocalService) {
 

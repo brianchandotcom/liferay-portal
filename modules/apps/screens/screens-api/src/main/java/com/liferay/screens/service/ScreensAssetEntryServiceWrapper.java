@@ -27,6 +27,10 @@ public class ScreensAssetEntryServiceWrapper
 	implements ScreensAssetEntryService,
 			   ServiceWrapper<ScreensAssetEntryService> {
 
+	public ScreensAssetEntryServiceWrapper() {
+		this(null);
+	}
+
 	public ScreensAssetEntryServiceWrapper(
 		ScreensAssetEntryService screensAssetEntryService) {
 

@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class OAuthUserServiceWrapper
 	implements OAuthUserService, ServiceWrapper<OAuthUserService> {
 
+	public OAuthUserServiceWrapper() {
+		this(null);
+	}
+
 	public OAuthUserServiceWrapper(OAuthUserService oAuthUserService) {
 		_oAuthUserService = oAuthUserService;
 	}

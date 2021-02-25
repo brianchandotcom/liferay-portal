@@ -24,6 +24,10 @@ package com.liferay.portal.kernel.service;
 public class AccountLocalServiceWrapper
 	implements AccountLocalService, ServiceWrapper<AccountLocalService> {
 
+	public AccountLocalServiceWrapper() {
+		this(null);
+	}
+
 	public AccountLocalServiceWrapper(AccountLocalService accountLocalService) {
 		_accountLocalService = accountLocalService;
 	}

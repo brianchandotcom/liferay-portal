@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class LazyBlobEntryServiceWrapper
 	implements LazyBlobEntryService, ServiceWrapper<LazyBlobEntryService> {
 
+	public LazyBlobEntryServiceWrapper() {
+		this(null);
+	}
+
 	public LazyBlobEntryServiceWrapper(
 		LazyBlobEntryService lazyBlobEntryService) {
 

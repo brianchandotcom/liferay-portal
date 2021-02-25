@@ -18,7 +18,6 @@ import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceWrapper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceWrapper;
@@ -33,16 +32,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = ServiceWrapper.class)
 public class SubscriptionDLAppLocalServiceWrapper
 	extends DLAppLocalServiceWrapper {
-
-	public SubscriptionDLAppLocalServiceWrapper() {
-		super(null);
-	}
-
-	public SubscriptionDLAppLocalServiceWrapper(
-		DLAppLocalService dlAppLocalService) {
-
-		super(dlAppLocalService);
-	}
 
 	@Override
 	public void subscribeFileEntryType(

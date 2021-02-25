@@ -25,6 +25,10 @@ public class LayoutSetPrototypeServiceWrapper
 	implements LayoutSetPrototypeService,
 			   ServiceWrapper<LayoutSetPrototypeService> {
 
+	public LayoutSetPrototypeServiceWrapper() {
+		this(null);
+	}
+
 	public LayoutSetPrototypeServiceWrapper(
 		LayoutSetPrototypeService layoutSetPrototypeService) {
 

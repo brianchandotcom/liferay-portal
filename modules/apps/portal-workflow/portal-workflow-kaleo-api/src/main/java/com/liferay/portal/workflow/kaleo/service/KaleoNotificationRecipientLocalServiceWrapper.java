@@ -27,6 +27,10 @@ public class KaleoNotificationRecipientLocalServiceWrapper
 	implements KaleoNotificationRecipientLocalService,
 			   ServiceWrapper<KaleoNotificationRecipientLocalService> {
 
+	public KaleoNotificationRecipientLocalServiceWrapper() {
+		this(null);
+	}
+
 	public KaleoNotificationRecipientLocalServiceWrapper(
 		KaleoNotificationRecipientLocalService
 			kaleoNotificationRecipientLocalService) {

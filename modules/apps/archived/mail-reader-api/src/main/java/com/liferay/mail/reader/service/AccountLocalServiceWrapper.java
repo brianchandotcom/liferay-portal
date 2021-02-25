@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class AccountLocalServiceWrapper
 	implements AccountLocalService, ServiceWrapper<AccountLocalService> {
 
+	public AccountLocalServiceWrapper() {
+		this(null);
+	}
+
 	public AccountLocalServiceWrapper(AccountLocalService accountLocalService) {
 		_accountLocalService = accountLocalService;
 	}

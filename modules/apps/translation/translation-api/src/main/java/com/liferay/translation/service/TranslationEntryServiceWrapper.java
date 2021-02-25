@@ -28,6 +28,10 @@ public class TranslationEntryServiceWrapper
 	implements ServiceWrapper<TranslationEntryService>,
 			   TranslationEntryService {
 
+	public TranslationEntryServiceWrapper() {
+		this(null);
+	}
+
 	public TranslationEntryServiceWrapper(
 		TranslationEntryService translationEntryService) {
 

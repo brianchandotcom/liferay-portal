@@ -27,6 +27,10 @@ public class OAuth2AuthorizationLocalServiceWrapper
 	implements OAuth2AuthorizationLocalService,
 			   ServiceWrapper<OAuth2AuthorizationLocalService> {
 
+	public OAuth2AuthorizationLocalServiceWrapper() {
+		this(null);
+	}
+
 	public OAuth2AuthorizationLocalServiceWrapper(
 		OAuth2AuthorizationLocalService oAuth2AuthorizationLocalService) {
 

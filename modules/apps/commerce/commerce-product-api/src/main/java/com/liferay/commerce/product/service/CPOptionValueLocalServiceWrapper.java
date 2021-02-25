@@ -27,6 +27,10 @@ public class CPOptionValueLocalServiceWrapper
 	implements CPOptionValueLocalService,
 			   ServiceWrapper<CPOptionValueLocalService> {
 
+	public CPOptionValueLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CPOptionValueLocalServiceWrapper(
 		CPOptionValueLocalService cpOptionValueLocalService) {
 

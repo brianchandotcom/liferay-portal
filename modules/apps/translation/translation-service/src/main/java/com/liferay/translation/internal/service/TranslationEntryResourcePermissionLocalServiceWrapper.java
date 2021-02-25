@@ -37,16 +37,6 @@ import org.osgi.service.component.annotations.Reference;
 public class TranslationEntryResourcePermissionLocalServiceWrapper
 	extends ResourcePermissionLocalServiceWrapper {
 
-	public TranslationEntryResourcePermissionLocalServiceWrapper() {
-		super(null);
-	}
-
-	public TranslationEntryResourcePermissionLocalServiceWrapper(
-		ResourcePermissionLocalService resourcePermissionLocalService) {
-
-		super(resourcePermissionLocalService);
-	}
-
 	@Override
 	public boolean hasResourcePermission(
 			long companyId, String name, int scope, String primKey, long roleId,

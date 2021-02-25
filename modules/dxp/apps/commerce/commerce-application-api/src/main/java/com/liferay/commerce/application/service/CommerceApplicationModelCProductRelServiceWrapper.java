@@ -27,6 +27,10 @@ public class CommerceApplicationModelCProductRelServiceWrapper
 	implements CommerceApplicationModelCProductRelService,
 			   ServiceWrapper<CommerceApplicationModelCProductRelService> {
 
+	public CommerceApplicationModelCProductRelServiceWrapper() {
+		this(null);
+	}
+
 	public CommerceApplicationModelCProductRelServiceWrapper(
 		CommerceApplicationModelCProductRelService
 			commerceApplicationModelCProductRelService) {

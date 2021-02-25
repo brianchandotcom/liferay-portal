@@ -27,6 +27,10 @@ public class BatchEngineImportTaskLocalServiceWrapper
 	implements BatchEngineImportTaskLocalService,
 			   ServiceWrapper<BatchEngineImportTaskLocalService> {
 
+	public BatchEngineImportTaskLocalServiceWrapper() {
+		this(null);
+	}
+
 	public BatchEngineImportTaskLocalServiceWrapper(
 		BatchEngineImportTaskLocalService batchEngineImportTaskLocalService) {
 

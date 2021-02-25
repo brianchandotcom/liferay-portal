@@ -27,6 +27,10 @@ public class AnalyticsMessageLocalServiceWrapper
 	implements AnalyticsMessageLocalService,
 			   ServiceWrapper<AnalyticsMessageLocalService> {
 
+	public AnalyticsMessageLocalServiceWrapper() {
+		this(null);
+	}
+
 	public AnalyticsMessageLocalServiceWrapper(
 		AnalyticsMessageLocalService analyticsMessageLocalService) {
 

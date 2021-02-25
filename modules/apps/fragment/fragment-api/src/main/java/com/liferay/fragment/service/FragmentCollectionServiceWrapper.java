@@ -28,6 +28,10 @@ public class FragmentCollectionServiceWrapper
 	implements FragmentCollectionService,
 			   ServiceWrapper<FragmentCollectionService> {
 
+	public FragmentCollectionServiceWrapper() {
+		this(null);
+	}
+
 	public FragmentCollectionServiceWrapper(
 		FragmentCollectionService fragmentCollectionService) {
 

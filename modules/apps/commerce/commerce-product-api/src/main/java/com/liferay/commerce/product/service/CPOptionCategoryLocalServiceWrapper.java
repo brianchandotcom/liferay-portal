@@ -27,6 +27,10 @@ public class CPOptionCategoryLocalServiceWrapper
 	implements CPOptionCategoryLocalService,
 			   ServiceWrapper<CPOptionCategoryLocalService> {
 
+	public CPOptionCategoryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CPOptionCategoryLocalServiceWrapper(
 		CPOptionCategoryLocalService cpOptionCategoryLocalService) {
 

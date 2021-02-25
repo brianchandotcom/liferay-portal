@@ -27,6 +27,10 @@ public class BackgroundTaskLocalServiceWrapper
 	implements BackgroundTaskLocalService,
 			   ServiceWrapper<BackgroundTaskLocalService> {
 
+	public BackgroundTaskLocalServiceWrapper() {
+		this(null);
+	}
+
 	public BackgroundTaskLocalServiceWrapper(
 		BackgroundTaskLocalService backgroundTaskLocalService) {
 

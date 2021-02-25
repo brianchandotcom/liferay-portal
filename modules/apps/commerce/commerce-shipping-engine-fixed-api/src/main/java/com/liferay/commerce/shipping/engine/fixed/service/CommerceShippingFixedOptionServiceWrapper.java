@@ -27,6 +27,10 @@ public class CommerceShippingFixedOptionServiceWrapper
 	implements CommerceShippingFixedOptionService,
 			   ServiceWrapper<CommerceShippingFixedOptionService> {
 
+	public CommerceShippingFixedOptionServiceWrapper() {
+		this(null);
+	}
+
 	public CommerceShippingFixedOptionServiceWrapper(
 		CommerceShippingFixedOptionService commerceShippingFixedOptionService) {
 

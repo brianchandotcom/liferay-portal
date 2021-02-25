@@ -27,6 +27,10 @@ public class AppBuilderAppLocalServiceWrapper
 	implements AppBuilderAppLocalService,
 			   ServiceWrapper<AppBuilderAppLocalService> {
 
+	public AppBuilderAppLocalServiceWrapper() {
+		this(null);
+	}
+
 	public AppBuilderAppLocalServiceWrapper(
 		AppBuilderAppLocalService appBuilderAppLocalService) {
 

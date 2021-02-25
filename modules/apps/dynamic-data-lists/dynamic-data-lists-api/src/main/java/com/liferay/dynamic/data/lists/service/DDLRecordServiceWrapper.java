@@ -27,6 +27,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class DDLRecordServiceWrapper
 	implements DDLRecordService, ServiceWrapper<DDLRecordService> {
 
+	public DDLRecordServiceWrapper() {
+		this(null);
+	}
+
 	public DDLRecordServiceWrapper(DDLRecordService ddlRecordService) {
 		_ddlRecordService = ddlRecordService;
 	}

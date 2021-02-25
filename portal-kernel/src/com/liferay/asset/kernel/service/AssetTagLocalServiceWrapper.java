@@ -29,6 +29,10 @@ import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersisten
 public class AssetTagLocalServiceWrapper
 	implements AssetTagLocalService, ServiceWrapper<AssetTagLocalService> {
 
+	public AssetTagLocalServiceWrapper() {
+		this(null);
+	}
+
 	public AssetTagLocalServiceWrapper(
 		AssetTagLocalService assetTagLocalService) {
 

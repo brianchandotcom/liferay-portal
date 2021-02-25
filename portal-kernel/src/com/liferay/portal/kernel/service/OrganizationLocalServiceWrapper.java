@@ -29,6 +29,10 @@ public class OrganizationLocalServiceWrapper
 	implements OrganizationLocalService,
 			   ServiceWrapper<OrganizationLocalService> {
 
+	public OrganizationLocalServiceWrapper() {
+		this(null);
+	}
+
 	public OrganizationLocalServiceWrapper(
 		OrganizationLocalService organizationLocalService) {
 

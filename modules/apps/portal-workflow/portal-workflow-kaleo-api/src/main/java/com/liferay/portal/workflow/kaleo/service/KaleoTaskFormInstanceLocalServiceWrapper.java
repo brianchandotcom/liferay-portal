@@ -27,6 +27,10 @@ public class KaleoTaskFormInstanceLocalServiceWrapper
 	implements KaleoTaskFormInstanceLocalService,
 			   ServiceWrapper<KaleoTaskFormInstanceLocalService> {
 
+	public KaleoTaskFormInstanceLocalServiceWrapper() {
+		this(null);
+	}
+
 	public KaleoTaskFormInstanceLocalServiceWrapper(
 		KaleoTaskFormInstanceLocalService kaleoTaskFormInstanceLocalService) {
 

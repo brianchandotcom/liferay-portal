@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class StyleBookEntryServiceWrapper
 	implements ServiceWrapper<StyleBookEntryService>, StyleBookEntryService {
 
+	public StyleBookEntryServiceWrapper() {
+		this(null);
+	}
+
 	public StyleBookEntryServiceWrapper(
 		StyleBookEntryService styleBookEntryService) {
 

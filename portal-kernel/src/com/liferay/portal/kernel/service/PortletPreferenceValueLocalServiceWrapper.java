@@ -29,6 +29,10 @@ public class PortletPreferenceValueLocalServiceWrapper
 	implements PortletPreferenceValueLocalService,
 			   ServiceWrapper<PortletPreferenceValueLocalService> {
 
+	public PortletPreferenceValueLocalServiceWrapper() {
+		this(null);
+	}
+
 	public PortletPreferenceValueLocalServiceWrapper(
 		PortletPreferenceValueLocalService portletPreferenceValueLocalService) {
 

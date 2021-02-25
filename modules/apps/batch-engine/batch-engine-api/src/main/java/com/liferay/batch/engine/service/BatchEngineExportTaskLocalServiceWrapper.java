@@ -27,6 +27,10 @@ public class BatchEngineExportTaskLocalServiceWrapper
 	implements BatchEngineExportTaskLocalService,
 			   ServiceWrapper<BatchEngineExportTaskLocalService> {
 
+	public BatchEngineExportTaskLocalServiceWrapper() {
+		this(null);
+	}
+
 	public BatchEngineExportTaskLocalServiceWrapper(
 		BatchEngineExportTaskLocalService batchEngineExportTaskLocalService) {
 

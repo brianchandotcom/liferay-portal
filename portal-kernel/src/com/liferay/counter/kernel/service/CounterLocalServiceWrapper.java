@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class CounterLocalServiceWrapper
 	implements CounterLocalService, ServiceWrapper<CounterLocalService> {
 
+	public CounterLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CounterLocalServiceWrapper(CounterLocalService counterLocalService) {
 		_counterLocalService = counterLocalService;
 	}

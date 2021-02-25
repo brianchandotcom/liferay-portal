@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class KBTemplateLocalServiceWrapper
 	implements KBTemplateLocalService, ServiceWrapper<KBTemplateLocalService> {
 
+	public KBTemplateLocalServiceWrapper() {
+		this(null);
+	}
+
 	public KBTemplateLocalServiceWrapper(
 		KBTemplateLocalService kbTemplateLocalService) {
 

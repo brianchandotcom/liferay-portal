@@ -27,6 +27,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class DLFileShortcutServiceWrapper
 	implements DLFileShortcutService, ServiceWrapper<DLFileShortcutService> {
 
+	public DLFileShortcutServiceWrapper() {
+		this(null);
+	}
+
 	public DLFileShortcutServiceWrapper(
 		DLFileShortcutService dlFileShortcutService) {
 

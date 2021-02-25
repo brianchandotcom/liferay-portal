@@ -57,7 +57,7 @@ public class ModelPermissionsFactoryTest extends PowerMockito {
 	public static void setUpClass() throws Exception {
 		ReflectionTestUtil.setFieldValue(
 			RoleLocalServiceUtil.class, "_service",
-			new RoleLocalServiceWrapper(null) {
+			new RoleLocalServiceWrapper() {
 
 				@Override
 				public Role getDefaultGroupRole(long groupId) {

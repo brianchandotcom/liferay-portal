@@ -25,6 +25,10 @@ public class UserNotificationEventLocalServiceWrapper
 	implements ServiceWrapper<UserNotificationEventLocalService>,
 			   UserNotificationEventLocalService {
 
+	public UserNotificationEventLocalServiceWrapper() {
+		this(null);
+	}
+
 	public UserNotificationEventLocalServiceWrapper(
 		UserNotificationEventLocalService userNotificationEventLocalService) {
 

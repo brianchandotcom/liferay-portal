@@ -27,6 +27,10 @@ public class CommerceInventoryBookedQuantityServiceWrapper
 	implements CommerceInventoryBookedQuantityService,
 			   ServiceWrapper<CommerceInventoryBookedQuantityService> {
 
+	public CommerceInventoryBookedQuantityServiceWrapper() {
+		this(null);
+	}
+
 	public CommerceInventoryBookedQuantityServiceWrapper(
 		CommerceInventoryBookedQuantityService
 			commerceInventoryBookedQuantityService) {

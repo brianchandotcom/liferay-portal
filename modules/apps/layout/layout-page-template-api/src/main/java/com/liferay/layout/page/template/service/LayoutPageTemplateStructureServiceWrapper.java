@@ -28,6 +28,10 @@ public class LayoutPageTemplateStructureServiceWrapper
 	implements LayoutPageTemplateStructureService,
 			   ServiceWrapper<LayoutPageTemplateStructureService> {
 
+	public LayoutPageTemplateStructureServiceWrapper() {
+		this(null);
+	}
+
 	public LayoutPageTemplateStructureServiceWrapper(
 		LayoutPageTemplateStructureService layoutPageTemplateStructureService) {
 

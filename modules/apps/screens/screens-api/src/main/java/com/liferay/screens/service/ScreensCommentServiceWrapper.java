@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class ScreensCommentServiceWrapper
 	implements ScreensCommentService, ServiceWrapper<ScreensCommentService> {
 
+	public ScreensCommentServiceWrapper() {
+		this(null);
+	}
+
 	public ScreensCommentServiceWrapper(
 		ScreensCommentService screensCommentService) {
 

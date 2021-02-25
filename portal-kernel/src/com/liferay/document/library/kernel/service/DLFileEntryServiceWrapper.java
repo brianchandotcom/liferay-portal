@@ -27,6 +27,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class DLFileEntryServiceWrapper
 	implements DLFileEntryService, ServiceWrapper<DLFileEntryService> {
 
+	public DLFileEntryServiceWrapper() {
+		this(null);
+	}
+
 	public DLFileEntryServiceWrapper(DLFileEntryService dlFileEntryService) {
 		_dlFileEntryService = dlFileEntryService;
 	}

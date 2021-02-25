@@ -27,6 +27,10 @@ public class ERUserGroupLocalServiceWrapper
 	implements ERUserGroupLocalService,
 			   ServiceWrapper<ERUserGroupLocalService> {
 
+	public ERUserGroupLocalServiceWrapper() {
+		this(null);
+	}
+
 	public ERUserGroupLocalServiceWrapper(
 		ERUserGroupLocalService erUserGroupLocalService) {
 

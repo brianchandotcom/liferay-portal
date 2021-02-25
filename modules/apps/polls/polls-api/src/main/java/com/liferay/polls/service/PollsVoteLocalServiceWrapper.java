@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class PollsVoteLocalServiceWrapper
 	implements PollsVoteLocalService, ServiceWrapper<PollsVoteLocalService> {
 
+	public PollsVoteLocalServiceWrapper() {
+		this(null);
+	}
+
 	public PollsVoteLocalServiceWrapper(
 		PollsVoteLocalService pollsVoteLocalService) {
 

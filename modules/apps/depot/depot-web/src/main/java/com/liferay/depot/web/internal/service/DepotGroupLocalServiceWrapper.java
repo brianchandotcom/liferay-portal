@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.GroupServiceWrapper;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
@@ -37,14 +36,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ServiceWrapper.class)
 public class DepotGroupLocalServiceWrapper extends GroupServiceWrapper {
-
-	public DepotGroupLocalServiceWrapper() {
-		super(null);
-	}
-
-	public DepotGroupLocalServiceWrapper(GroupService groupService) {
-		super(groupService);
-	}
 
 	@Override
 	public String getGroupDisplayURL(

@@ -27,6 +27,10 @@ public class AccountGroupRelLocalServiceWrapper
 	implements AccountGroupRelLocalService,
 			   ServiceWrapper<AccountGroupRelLocalService> {
 
+	public AccountGroupRelLocalServiceWrapper() {
+		this(null);
+	}
+
 	public AccountGroupRelLocalServiceWrapper(
 		AccountGroupRelLocalService accountGroupRelLocalService) {
 

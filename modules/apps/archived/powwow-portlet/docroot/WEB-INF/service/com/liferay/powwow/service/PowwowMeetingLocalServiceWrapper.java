@@ -27,6 +27,10 @@ public class PowwowMeetingLocalServiceWrapper
 	implements PowwowMeetingLocalService,
 			   ServiceWrapper<PowwowMeetingLocalService> {
 
+	public PowwowMeetingLocalServiceWrapper() {
+		this(null);
+	}
+
 	public PowwowMeetingLocalServiceWrapper(
 		PowwowMeetingLocalService powwowMeetingLocalService) {
 

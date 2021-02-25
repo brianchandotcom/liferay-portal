@@ -27,6 +27,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class AssetCategoryServiceWrapper
 	implements AssetCategoryService, ServiceWrapper<AssetCategoryService> {
 
+	public AssetCategoryServiceWrapper() {
+		this(null);
+	}
+
 	public AssetCategoryServiceWrapper(
 		AssetCategoryService assetCategoryService) {
 

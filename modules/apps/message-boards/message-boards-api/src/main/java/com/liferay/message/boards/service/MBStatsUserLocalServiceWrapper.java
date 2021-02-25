@@ -30,6 +30,10 @@ public class MBStatsUserLocalServiceWrapper
 	implements MBStatsUserLocalService,
 			   ServiceWrapper<MBStatsUserLocalService> {
 
+	public MBStatsUserLocalServiceWrapper() {
+		this(null);
+	}
+
 	public MBStatsUserLocalServiceWrapper(
 		MBStatsUserLocalService mbStatsUserLocalService) {
 

@@ -27,6 +27,10 @@ public class AccountGroupLocalServiceWrapper
 	implements AccountGroupLocalService,
 			   ServiceWrapper<AccountGroupLocalService> {
 
+	public AccountGroupLocalServiceWrapper() {
+		this(null);
+	}
+
 	public AccountGroupLocalServiceWrapper(
 		AccountGroupLocalService accountGroupLocalService) {
 

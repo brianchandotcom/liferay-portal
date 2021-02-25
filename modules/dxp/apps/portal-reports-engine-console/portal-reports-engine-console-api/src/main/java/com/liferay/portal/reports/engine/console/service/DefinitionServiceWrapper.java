@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class DefinitionServiceWrapper
 	implements DefinitionService, ServiceWrapper<DefinitionService> {
 
+	public DefinitionServiceWrapper() {
+		this(null);
+	}
+
 	public DefinitionServiceWrapper(DefinitionService definitionService) {
 		_definitionService = definitionService;
 	}

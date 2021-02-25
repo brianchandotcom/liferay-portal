@@ -39,16 +39,6 @@ import org.osgi.service.component.annotations.Reference;
 public class ExternalRepositoryDLAppHelperLocalServiceWrapper
 	extends DLAppHelperLocalServiceWrapper {
 
-	public ExternalRepositoryDLAppHelperLocalServiceWrapper() {
-		super(null);
-	}
-
-	public ExternalRepositoryDLAppHelperLocalServiceWrapper(
-		DLAppHelperLocalService dlAppHelperLocalService) {
-
-		super(dlAppHelperLocalService);
-	}
-
 	@Override
 	public void addFolder(
 			long userId, Folder folder, ServiceContext serviceContext)

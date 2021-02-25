@@ -27,6 +27,10 @@ public class DispatchLogLocalServiceWrapper
 	implements DispatchLogLocalService,
 			   ServiceWrapper<DispatchLogLocalService> {
 
+	public DispatchLogLocalServiceWrapper() {
+		this(null);
+	}
+
 	public DispatchLogLocalServiceWrapper(
 		DispatchLogLocalService dispatchLogLocalService) {
 

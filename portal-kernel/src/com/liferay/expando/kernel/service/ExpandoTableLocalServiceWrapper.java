@@ -30,6 +30,10 @@ public class ExpandoTableLocalServiceWrapper
 	implements ExpandoTableLocalService,
 			   ServiceWrapper<ExpandoTableLocalService> {
 
+	public ExpandoTableLocalServiceWrapper() {
+		this(null);
+	}
+
 	public ExpandoTableLocalServiceWrapper(
 		ExpandoTableLocalService expandoTableLocalService) {
 

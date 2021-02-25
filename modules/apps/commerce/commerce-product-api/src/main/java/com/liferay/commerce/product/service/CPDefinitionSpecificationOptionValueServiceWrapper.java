@@ -27,6 +27,10 @@ public class CPDefinitionSpecificationOptionValueServiceWrapper
 	implements CPDefinitionSpecificationOptionValueService,
 			   ServiceWrapper<CPDefinitionSpecificationOptionValueService> {
 
+	public CPDefinitionSpecificationOptionValueServiceWrapper() {
+		this(null);
+	}
+
 	public CPDefinitionSpecificationOptionValueServiceWrapper(
 		CPDefinitionSpecificationOptionValueService
 			cpDefinitionSpecificationOptionValueService) {

@@ -27,6 +27,10 @@ public class CPSpecificationOptionLocalServiceWrapper
 	implements CPSpecificationOptionLocalService,
 			   ServiceWrapper<CPSpecificationOptionLocalService> {
 
+	public CPSpecificationOptionLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CPSpecificationOptionLocalServiceWrapper(
 		CPSpecificationOptionLocalService cpSpecificationOptionLocalService) {
 

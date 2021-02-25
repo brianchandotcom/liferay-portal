@@ -27,6 +27,10 @@ public class CTSchemaVersionLocalServiceWrapper
 	implements CTSchemaVersionLocalService,
 			   ServiceWrapper<CTSchemaVersionLocalService> {
 
+	public CTSchemaVersionLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CTSchemaVersionLocalServiceWrapper(
 		CTSchemaVersionLocalService ctSchemaVersionLocalService) {
 

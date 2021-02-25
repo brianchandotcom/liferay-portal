@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 public class CTEntryLocalServiceWrapper
 	implements CTEntryLocalService, ServiceWrapper<CTEntryLocalService> {
 
+	public CTEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public CTEntryLocalServiceWrapper(CTEntryLocalService ctEntryLocalService) {
 		_ctEntryLocalService = ctEntryLocalService;
 	}

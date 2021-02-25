@@ -30,6 +30,10 @@ public class DDMStorageLinkLocalServiceWrapper
 	implements DDMStorageLinkLocalService,
 			   ServiceWrapper<DDMStorageLinkLocalService> {
 
+	public DDMStorageLinkLocalServiceWrapper() {
+		this(null);
+	}
+
 	public DDMStorageLinkLocalServiceWrapper(
 		DDMStorageLinkLocalService ddmStorageLinkLocalService) {
 

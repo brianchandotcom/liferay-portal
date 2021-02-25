@@ -27,6 +27,10 @@ public class DEDataListViewLocalServiceWrapper
 	implements DEDataListViewLocalService,
 			   ServiceWrapper<DEDataListViewLocalService> {
 
+	public DEDataListViewLocalServiceWrapper() {
+		this(null);
+	}
+
 	public DEDataListViewLocalServiceWrapper(
 		DEDataListViewLocalService deDataListViewLocalService) {
 

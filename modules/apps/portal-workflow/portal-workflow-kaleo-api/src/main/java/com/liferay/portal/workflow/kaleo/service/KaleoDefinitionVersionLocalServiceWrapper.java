@@ -27,6 +27,10 @@ public class KaleoDefinitionVersionLocalServiceWrapper
 	implements KaleoDefinitionVersionLocalService,
 			   ServiceWrapper<KaleoDefinitionVersionLocalService> {
 
+	public KaleoDefinitionVersionLocalServiceWrapper() {
+		this(null);
+	}
+
 	public KaleoDefinitionVersionLocalServiceWrapper(
 		KaleoDefinitionVersionLocalService kaleoDefinitionVersionLocalService) {
 

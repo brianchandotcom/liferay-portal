@@ -17,7 +17,6 @@ package com.liferay.document.library.internal.service;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
-import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceWrapper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -36,16 +35,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = ServiceWrapper.class)
 public class DepotDLFileEntryTypeLocalServiceWrapper
 	extends DLFileEntryTypeLocalServiceWrapper {
-
-	public DepotDLFileEntryTypeLocalServiceWrapper() {
-		super(null);
-	}
-
-	public DepotDLFileEntryTypeLocalServiceWrapper(
-		DLFileEntryTypeLocalService dlFileEntryTypeLocalService) {
-
-		super(dlFileEntryTypeLocalService);
-	}
 
 	@Override
 	public List<DLFileEntryType> getFolderFileEntryTypes(

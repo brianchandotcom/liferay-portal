@@ -35,14 +35,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = ServiceWrapper.class)
 public class AMDLAppServiceWrapper extends DLAppServiceWrapper {
 
-	public AMDLAppServiceWrapper() {
-		super(null);
-	}
-
-	public AMDLAppServiceWrapper(DLAppService dlAppService) {
-		super(dlAppService);
-	}
-
 	@Override
 	public FileEntry updateFileEntryAndCheckIn(
 			long fileEntryId, String sourceFileName, String mimeType,

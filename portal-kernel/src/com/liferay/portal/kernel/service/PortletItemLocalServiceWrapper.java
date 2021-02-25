@@ -25,6 +25,10 @@ public class PortletItemLocalServiceWrapper
 	implements PortletItemLocalService,
 			   ServiceWrapper<PortletItemLocalService> {
 
+	public PortletItemLocalServiceWrapper() {
+		this(null);
+	}
+
 	public PortletItemLocalServiceWrapper(
 		PortletItemLocalService portletItemLocalService) {
 

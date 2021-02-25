@@ -24,6 +24,10 @@ package com.liferay.portal.kernel.service;
 public class WebsiteServiceWrapper
 	implements ServiceWrapper<WebsiteService>, WebsiteService {
 
+	public WebsiteServiceWrapper() {
+		this(null);
+	}
+
 	public WebsiteServiceWrapper(WebsiteService websiteService) {
 		_websiteService = websiteService;
 	}

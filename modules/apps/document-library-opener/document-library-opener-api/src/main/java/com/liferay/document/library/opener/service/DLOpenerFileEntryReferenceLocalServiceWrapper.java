@@ -27,6 +27,10 @@ public class DLOpenerFileEntryReferenceLocalServiceWrapper
 	implements DLOpenerFileEntryReferenceLocalService,
 			   ServiceWrapper<DLOpenerFileEntryReferenceLocalService> {
 
+	public DLOpenerFileEntryReferenceLocalServiceWrapper() {
+		this(null);
+	}
+
 	public DLOpenerFileEntryReferenceLocalServiceWrapper(
 		DLOpenerFileEntryReferenceLocalService
 			dlOpenerFileEntryReferenceLocalService) {

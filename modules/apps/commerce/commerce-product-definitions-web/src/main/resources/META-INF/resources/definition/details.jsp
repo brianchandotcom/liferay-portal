@@ -154,6 +154,7 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 						className="<%= CPDefinition.class.getName() %>"
 						classPK="<%= cpDefinitionId %>"
 						groupIds="<%= new long[] {company.getGroupId()} %>"
+						visibilityTypes="<%= AssetVocabularyConstants.VISIBILITY_TYPES %>"
 					/>
 				</aui:field-wrapper>
 

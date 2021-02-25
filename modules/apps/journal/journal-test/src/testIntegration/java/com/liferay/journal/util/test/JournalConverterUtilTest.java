@@ -591,10 +591,10 @@ public class JournalConverterUtilTest {
 
 		StringBundler sb = new StringBundler(5);
 
-		sb.append("contact_INSTANCE_RF3do1m5,phone_INSTANCE_QK6B0wK9,");
+		sb.append("contact_INSTANCE_RF3do1m5,contact_INSTANCE_CUeFxcrA,");
+		sb.append("phone_INSTANCE_QK6B0wK9,phone_INSTANCE_lVTcTviF,");
 		sb.append("ext_INSTANCE_L67MPqQf,ext_INSTANCE_8uxzZl41,");
-		sb.append("ext_INSTANCE_S58K861T,contact_INSTANCE_CUeFxcrA,");
-		sb.append("phone_INSTANCE_lVTcTviF,ext_INSTANCE_cZalDSll,");
+		sb.append("ext_INSTANCE_S58K861T,ext_INSTANCE_cZalDSll,");
 		sb.append("ext_INSTANCE_HDrK2Um5");
 
 		Field fieldsDisplayField = new Field(

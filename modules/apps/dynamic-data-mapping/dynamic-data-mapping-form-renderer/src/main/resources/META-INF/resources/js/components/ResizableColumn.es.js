@@ -12,8 +12,8 @@
  * details.
  */
 
+import {useEventListener} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
-import {useEventListener} from 'frontend-js-react-web';
 import React, {useCallback, useContext} from 'react';
 
 import {EVENT_TYPES} from '../actions/eventTypes.es';

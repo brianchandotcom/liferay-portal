@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>REMOVE</td>
-	<td>//div[contains(@id,'ManagementToolbar')]//button[contains(@title,'Remove')]</td>
+	<td>//nav[contains(@class,'management-bar')]//button[contains(@title,'Remove')]</td>
 	<td></td>
 </tr>
 <tr>

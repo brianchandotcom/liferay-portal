@@ -19,10 +19,6 @@ export default function propsTransformer({
 	portletNamespace,
 	...otherProps
 }) {
-	Liferay.on('sharing:changed', () =>
-		Liferay.Portlet.refresh(`#p_p_id${portletNamespace}`);
-	);
-
 	return {
 		...otherProps,
 		onFilterDropdownItemClick(event, {item}) {

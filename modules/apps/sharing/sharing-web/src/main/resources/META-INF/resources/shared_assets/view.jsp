@@ -120,3 +120,7 @@ viewSharedAssetsDisplayContext.populateResults(sharingEntriesSearchContainer);
 		/>
 	</liferay-ui:search-container>
 </clay:container-fluid>
+
+<liferay-frontend:component
+	module="shared_assets/js/SharedAssets"
+/>

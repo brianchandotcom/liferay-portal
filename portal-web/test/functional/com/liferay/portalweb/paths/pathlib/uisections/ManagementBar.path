@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>FILTER_RESULTS_SCOPE</td>
-	<td>//span[contains(@class,'label-item')]//div[contains(@class,'label-section') and contains(.,'${key_filterScope}')]</td>
+	<td>//span[contains(@class,'label-item') and contains(.,'${key_filterScope}')]</td>
 	<td></td>
 </tr>
 <tr>

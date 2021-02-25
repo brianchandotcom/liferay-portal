@@ -24,7 +24,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-125933. Create, read, update and delete a Web Content from a Structure with all possible fields and using a Template with all posible fields."
+	@description = "LPS-128283. This smoke test for Data Engine creates, reads and deletes a Web Content from a Structure with all possible fields and using a Template with all possible fields."
 	@priority = "5"
 	test ViewAndDeleteContentWithTitleAndAllFields {
 		property portal.acceptance = "true";

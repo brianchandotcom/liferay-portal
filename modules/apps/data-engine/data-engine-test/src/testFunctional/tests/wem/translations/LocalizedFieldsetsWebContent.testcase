@@ -323,9 +323,9 @@ definition {
 
 		PortletEntry.inputTitle(title = "EN Title");
 
-		PortletEntry.changeLocale(locale = "pt-BR");
+		PortletEntry.changeLocale(locale = "zh-CN");
 
-		PortletEntry.inputTitle(title = "BR Title");
+		PortletEntry.inputTitle(title = "测试标题");
 
 		PortletEntry.changeLocale(locale = "en-US");
 

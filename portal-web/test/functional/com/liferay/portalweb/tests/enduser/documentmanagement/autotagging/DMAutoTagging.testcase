@@ -157,6 +157,122 @@ definition {
 		AutoTagging.assertAutoTagPresent(tagName = "carton");
 	}
 
+	@description = "This test asserts that tags are added to the images when they are uploaded on both nodes with tensorflow enabled on a clustered configuration."
+	@priority = "4"
+	test AutoTaggingImagesOnSeparateNodes {
+		property app.server.bundles.size = "1";
+		property cluster.enabled = "true";
+		property test.name.skip.portal.instance = "DMAutoTagging#AutoTaggingImagesOnSeparateNodes";
+
+		Clustering.viewClusterStatusInConsole();
+
+		Page.assertNodePortPG(nodePort = "8080");
+
+		User.logoutPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		Page.assertNodePortPG(nodePort = "9080");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Assets",
+			configurationName = "TensorFlow Image Auto Tagging",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.viewCheckboxChecked(fieldName = "enabled");
+
+		AssertElementNotPresent(
+			key_infoMessage = "The TensorFlow model will be downloaded in the background. No tags will be created until the model is fully downloaded",
+			locator1 = "Message#INFO_SPECIFIC");
+
+		AssertElementNotPresent(
+			key_infoMessage = "The TensorFlow model is being downloaded in the background. No tags will be created until the model is fully downloaded",
+			locator1 = "Message#INFO_SPECIFIC");
+
+		DMNavigator.openDocumentsAndMediaAdmin(
+			baseURL = "http://localhost:9080",
+			siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "Document Description",
+			dmDocumentFile = "Document_4.jpg",
+			dmDocumentTitle = "DM Document JPG Node2");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document JPG Node2");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG Node2");
+
+		AutoTagging.assertAutoTagPresent(tagName = "carton");
+
+		User.logoutPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document JPG Node2");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG Node2");
+
+		AutoTagging.assertAutoTagPresent(tagName = "carton");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "Document Description",
+			dmDocumentFile = "Commerce_Black.jpg",
+			dmDocumentTitle = "DM Document JPG Node1");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document JPG Node1");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG Node1");
+
+		AutoTagging.assertAutoTagPresent(tagName = "jersey");
+
+		User.logoutPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		DMNavigator.openDocumentsAndMediaAdmin(
+			baseURL = "http://localhost:9080",
+			siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document JPG Node1");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG Node1");
+
+		AutoTagging.assertAutoTagPresent(tagName = "jersey");
+
+		User.logoutPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+	}
+
 	@description = "This test asserts that no auto-tag is generated when an image is uploaded to a site that has auto-tagging disabled despite the auto-tagging functionality enabled at portal level."
 	@priority = "4"
 	test ConfigureImageAutoTaggingPerSite {

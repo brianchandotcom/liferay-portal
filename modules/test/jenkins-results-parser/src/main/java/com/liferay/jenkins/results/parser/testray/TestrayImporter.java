@@ -42,8 +42,8 @@ import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroup;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -505,7 +505,7 @@ public class TestrayImporter {
 			testrayServer = new TestrayServer(testrayServerURL);
 		}
 
-		testrayServerURL = System.getProperty("TESTRAY_SERVER_URL");
+		testrayServerURL = _getBuildParameter("TESTRAY_SERVER_URL");
 
 		if ((testrayServer == null) && (testrayServerURL != null) &&
 			testrayServerURL.matches("https?://.*")) {
@@ -549,38 +549,38 @@ public class TestrayImporter {
 		Job job = getJob();
 
 		List<AxisTestClassGroup> axisTestClassGroups =
-		job.getAxisTestClassGroups();
+			job.getAxisTestClassGroups();
 
 		if (job instanceof BatchDependentJob) {
-			BatchDependentJob batchDependentJob = (BatchDependentJob) job;
+			BatchDependentJob batchDependentJob = (BatchDependentJob)job;
 
 			axisTestClassGroups.addAll(
-			batchDependentJob.getDependentAxisTestClassGroups());
+				batchDependentJob.getDependentAxisTestClassGroups());
 		}
 
 		List<TestrayCase> testrayCases = new ArrayList<>();
 
 		for (AxisTestClassGroup axisTestClassGroup : axisTestClassGroups) {
 			if (axisTestClassGroup instanceof CucumberAxisTestClassGroup ||
-			axisTestClassGroup instanceof FunctionalAxisTestClassGroup ||
-			axisTestClassGroup instanceof JUnitAxisTestClassGroup) {
+				axisTestClassGroup instanceof FunctionalAxisTestClassGroup ||
+				axisTestClassGroup instanceof JUnitAxisTestClassGroup) {
 
 				for (TestClassGroup.TestClass testClass :
-				axisTestClassGroup.getTestClasses()) {
+						axisTestClassGroup.getTestClasses()) {
 
 					testrayCases.add(
-					TestrayCaseFactory.newTestrayCase(
-					getTestrayBuild(), getTopLevelBuild(),
-					axisTestClassGroup, testClass));
+						TestrayCaseFactory.newTestrayCase(
+							getTestrayBuild(), getTopLevelBuild(),
+							axisTestClassGroup, testClass));
 				}
 
 				continue;
 			}
 
 			testrayCases.add(
-			TestrayCaseFactory.newTestrayCase(
-			getTestrayBuild(), getTopLevelBuild(), axisTestClassGroup,
-			null));
+				TestrayCaseFactory.newTestrayCase(
+					getTestrayBuild(), getTopLevelBuild(), axisTestClassGroup,
+					null));
 		}
 
 		for (TestrayCase testrayCase : testrayCases) {

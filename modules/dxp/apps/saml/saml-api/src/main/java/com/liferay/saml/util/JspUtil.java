@@ -33,6 +33,9 @@ public class JspUtil {
 	public static final String PATH_PORTAL_SAML_ERROR =
 		"/portal/saml/error.jsp";
 
+	public static final String PATH_PORTAL_SAML_SELECT_IDP =
+		"/portal/saml/select_idp.jsp";
+
 	public static final String PATH_PORTAL_SAML_SLO = "/portal/saml/slo.jsp";
 
 	public static final String PATH_PORTAL_SAML_SLO_SP_STATUS =

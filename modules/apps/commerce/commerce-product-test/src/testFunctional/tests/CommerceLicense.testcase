@@ -149,6 +149,78 @@ definition {
 		CommerceLicense.viewCommerceMissing();
 	}
 
+	@description = "This is a test for covering the following LPS-120477"
+	@priority = "4"
+	test ModuleLicenseExpirationNotShownToNonAdmin {
+		property commerce.enabled = "true";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}login.secure.forgot.password=false";
+
+		// Require property to generate license with modify expiration date
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
+
+		Alert.viewErrorMessage(errorMessage = "Update your activation key for Liferay Commerce Subscription Development, it will expire");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		Click(locator1 = "Icon#BACK");
+
+		CommerceLogin.editPasswordCP(
+			newPassword = "ttest",
+			requirePasswordReset = "true",
+			userScreenName = "usersn");
+
+		Click(locator1 = "Icon#BACK");
+
+		User.editUserSiteCP(
+			siteName = "Minium",
+			userScreenName = "usersn");
+
+		Click(locator1 = "Icon#BACK");
+
+		User.assignRegularRoleCP(
+			roleTitle = "Category Manager",
+			userScreenName = "usersn");
+
+		User.logoutPG();
+
+		CommerceLogin.miniumLogin(
+			password = "ttest",
+			resetPassword = "test",
+			urlAppend = "web/minium",
+			userEmailAddress = "userea@liferay.com");
+
+		AssertElementNotPresent(
+			locator1 = "Message#ERROR",
+			value1 = "Update your activation key for Liferay Commerce Subscription Development, it will expire");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Catalogs");
+
+		AssertElementNotPresent(
+			locator1 = "Message#ERROR",
+			value1 = "Update your activation key for Liferay Commerce Subscription Development, it will expire");
+	}
+
 	@description = "This is a test for covering the following LPS-113419"
 	@priority = "4"
 	test ModuleLicenseExpirationWarning {

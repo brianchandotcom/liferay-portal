@@ -35,20 +35,11 @@ export const normalizeNames = ({
 	return name;
 };
 
-export const normalizeDataDefinition = (
-	dataDefinition,
-	{dataLayoutFields}
-) => ({
+export const normalizeDataDefinition = (dataDefinition) => ({
 	...dataDefinition,
 	dataDefinitionFields: dataDefinition.dataDefinitionFields.map(
 		(dataDefinitionField) => ({
 			...dataDefinitionField,
-			customProperties: {
-				...dataDefinitionField.customProperties,
-				labelAtStructureLevel: !Object.values(
-					dataLayoutFields[dataDefinitionField.name]?.label ?? {}
-				)?.length,
-			},
 
 			// Actually showLabel property will be always true
 			// because the same property can be controlled by dataLayoutFields

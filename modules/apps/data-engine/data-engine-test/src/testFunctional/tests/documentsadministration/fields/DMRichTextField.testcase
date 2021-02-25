@@ -201,23 +201,10 @@ definition {
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
 	@priority = "3"
 	test SetFieldReferenceOfRichTextWithInvalidCharacters {
-		property portal.acceptance = "false";
 
 		var richTextValue = "Rich Text";
 		var dmDocumentTitle = "New Document Type";
 		var fieldReferenceWithInvalidChars = "Myreference@#$%¨&*";
-
-		// ProductMenu.gotoPortlet(
-		// 	category = "Content & Data",
-		// 	panel = "Site Administration",
-		// 	portlet = "Documents and Media");
-
-		// DMNavigator.gotoDocumentType();
-
-		// DMDocumentType.add(
-		// 	dmDocumentTypeDescription = "DM Document Type Description",
-		// 	dmDocumentTypeFieldNames = "${richTextValue}",
-		// 	dmDocumentTypeName = "${dmDocumentTitle}");
 
 		DataEngine.addField(
 			fieldFieldLabel = "${richTextValue}",
@@ -241,8 +228,6 @@ definition {
 			fieldFieldLabel = "${richTextValue}",
 			fieldName = "${richTextValue}",
 			fieldReference = "Myreference");
-
-		Button.clickSave();
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"

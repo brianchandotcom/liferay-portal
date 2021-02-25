@@ -19,6 +19,14 @@ import {EVENT_TYPES} from '../actions/eventTypes.es';
 import extractDataRecordValueKey from '../util/extractDataRecordValueKey.es';
 import setDataRecord from '../util/setDataRecord.es';
 
+const formatFieldValue = ({dataType, symbols, value}) => {
+	if (dataType === 'double') {
+		return String(value).replace(symbols.decimalSymbol, '.');
+	}
+
+	return value;
+};
+
 const formatDataRecord = (languageId, pages, preserveValue) => {
 	const visitor = new PagesVisitor(pages);
 
@@ -26,7 +34,15 @@ const formatDataRecord = (languageId, pages, preserveValue) => {
 
 	visitor.mapFields(
 		(field) => {
-			setDataRecord(field, dataRecordValues, languageId, preserveValue);
+			setDataRecord(
+				{
+					...field,
+					value: formatFieldValue(field),
+				},
+				dataRecordValues,
+				languageId,
+				preserveValue
+			);
 		},
 		true,
 		true

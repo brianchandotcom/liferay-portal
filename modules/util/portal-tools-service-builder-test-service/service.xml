@@ -59,6 +59,20 @@
 			<finder-column name="name" />
 		</finder>
 	</entity>
+	<entity cache-enabled="true" local-service="true" name="DataLimitEntry" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="dataLimitEntryId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+	</entity>
 	<entity cache-enabled="true" local-service="true" name="DSLQueryEntry" remote-service="false">
 
 		<!-- PK fields -->

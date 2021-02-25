@@ -32,7 +32,9 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
-import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
+import com.liferay.layout.seo.kernel.LayoutSEOLink;
+import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -43,8 +45,11 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -56,6 +61,8 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -119,6 +126,77 @@ public class JournalArticleAnalyticsReportsInfoItem
 	}
 
 	@Override
+	public String getCanonicalURL(
+		JournalArticle journalArticle, Locale locale) {
+
+		Optional<ThemeDisplay> themeDisplayOptional =
+			_getThemeDisplayOptional();
+
+		if (!themeDisplayOptional.isPresent()) {
+			return StringPool.BLANK;
+		}
+
+		return themeDisplayOptional.map(
+			themeDisplay -> {
+				Optional<Layout> layoutOptional = _getLayoutOptional(
+					journalArticle);
+
+				return layoutOptional.map(
+					layout -> {
+						HttpServletRequest httpServletRequest =
+							themeDisplay.getRequest();
+
+						LayoutDisplayPageObjectProvider<?>
+							initialLayoutDisplayPageObjectProvider =
+								(LayoutDisplayPageObjectProvider<?>)
+									httpServletRequest.getAttribute(
+										LayoutDisplayPageWebKeys.
+											LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
+
+						httpServletRequest.setAttribute(
+							LayoutDisplayPageWebKeys.
+								LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
+							_getLayoutDisplayPageObjectProvider(
+								journalArticle));
+
+						String completeURL = _portal.getCurrentCompleteURL(
+							httpServletRequest);
+
+						try {
+							String canonicalURL = _portal.getCanonicalURL(
+								completeURL, themeDisplay, layout, false,
+								false);
+
+							LayoutSEOLink layoutSEOLink =
+								_layoutSEOLinkManager.getCanonicalLayoutSEOLink(
+									layout, locale, canonicalURL,
+									_portal.getAlternateURLs(
+										canonicalURL, themeDisplay, layout));
+
+							return layoutSEOLink.getHref();
+						}
+						catch (PortalException portalException) {
+							_log.error(portalException, portalException);
+
+							return StringPool.BLANK;
+						}
+						finally {
+							httpServletRequest.setAttribute(
+								LayoutDisplayPageWebKeys.
+									LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
+								initialLayoutDisplayPageObjectProvider);
+						}
+					}
+				).orElse(
+					StringPool.BLANK
+				);
+			}
+		).orElse(
+			StringPool.BLANK
+		);
+	}
+
+	@Override
 	public Locale getDefaultLocale(JournalArticle journalArticle) {
 		return LocaleUtil.fromLanguageId(journalArticle.getDefaultLanguageId());
 	}
@@ -149,35 +227,26 @@ public class JournalArticleAnalyticsReportsInfoItem
 
 	@Override
 	public boolean isShow(JournalArticle journalArticle) {
-		Layout layout = _getLayout(journalArticle);
+		Optional<Layout> layoutOptional = _getLayoutOptional(journalArticle);
 
-		if (layout == null) {
-			return false;
-		}
+		return layoutOptional.filter(
+			Layout::isTypeAssetDisplay
+		).filter(
+			layout -> !_isEmbeddedPersonalApplicationLayout(layout)
+		).filter(
+			layout -> {
+				try {
+					return _hasEditPermission(
+						journalArticle, layout,
+						PermissionThreadLocal.getPermissionChecker());
+				}
+				catch (PortalException portalException) {
+					_log.error(portalException, portalException);
 
-		if (!layout.isTypeAssetDisplay()) {
-			return false;
-		}
-
-		if (_isEmbeddedPersonalApplicationLayout(layout)) {
-			return false;
-		}
-
-		try {
-			if (!_hasEditPermission(
-					journalArticle, layout,
-					PermissionThreadLocal.getPermissionChecker())) {
-
-				return false;
+					return false;
+				}
 			}
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
-
-			return false;
-		}
-
-		return true;
+		).isPresent();
 	}
 
 	private Date _getJournalArticleFirstPublishLocalDate(
@@ -197,39 +266,7 @@ public class JournalArticleAnalyticsReportsInfoItem
 		}
 	}
 
-	private Layout _getLayout(JournalArticle journalArticle) {
-		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
-			_getLayoutDisplayPageObjectProvider(journalArticle);
-
-		if ((layoutDisplayPageObjectProvider == null) ||
-			(layoutDisplayPageObjectProvider.getDisplayObject() == null)) {
-
-			return null;
-		}
-
-		try {
-			LayoutPageTemplateEntry layoutPageTemplateEntry =
-				AssetDisplayPageUtil.getAssetDisplayPageLayoutPageTemplateEntry(
-					layoutDisplayPageObjectProvider.getGroupId(),
-					layoutDisplayPageObjectProvider.getClassNameId(),
-					layoutDisplayPageObjectProvider.getClassPK(),
-					layoutDisplayPageObjectProvider.getClassTypeId());
-
-			if (layoutPageTemplateEntry == null) {
-				return null;
-			}
-
-			return _layoutLocalService.fetchLayout(
-				layoutPageTemplateEntry.getPlid());
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
-		}
-
-		return null;
-	}
-
-	private LayoutDisplayPageObjectProvider<?>
+	private LayoutDisplayPageObjectProvider<JournalArticle>
 		_getLayoutDisplayPageObjectProvider(JournalArticle journalArticle) {
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
@@ -241,10 +278,47 @@ public class JournalArticleAnalyticsReportsInfoItem
 			return null;
 		}
 
-		return layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
-			new InfoItemReference(
-				JournalArticle.class.getName(),
-				journalArticle.getResourcePrimKey()));
+		return (LayoutDisplayPageObjectProvider<JournalArticle>)
+			layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
+				new InfoItemReference(
+					JournalArticle.class.getName(),
+					journalArticle.getResourcePrimKey()));
+	}
+
+	private Optional<Layout> _getLayoutOptional(JournalArticle journalArticle) {
+		return Optional.ofNullable(
+			_getLayoutDisplayPageObjectProvider(journalArticle)
+		).filter(
+			layoutDisplayPageObjectProvider ->
+				layoutDisplayPageObjectProvider.getDisplayObject() != null
+		).map(
+			layoutDisplayPageObjectProvider -> {
+				try {
+					return AssetDisplayPageUtil.
+						getAssetDisplayPageLayoutPageTemplateEntry(
+							layoutDisplayPageObjectProvider.getGroupId(),
+							layoutDisplayPageObjectProvider.getClassNameId(),
+							layoutDisplayPageObjectProvider.getClassPK(),
+							layoutDisplayPageObjectProvider.getClassTypeId());
+				}
+				catch (PortalException portalException) {
+					_log.error(portalException, portalException);
+
+					return null;
+				}
+			}
+		).map(
+			layoutPageTemplateEntry -> _layoutLocalService.fetchLayout(
+				layoutPageTemplateEntry.getPlid())
+		);
+	}
+
+	private Optional<ThemeDisplay> _getThemeDisplayOptional() {
+		return Optional.ofNullable(
+			ServiceContextThreadLocal.getServiceContext()
+		).map(
+			ServiceContext::getThemeDisplay
+		);
 	}
 
 	private Optional<User> _getUser(JournalArticle journalArticle) {
@@ -319,6 +393,9 @@ public class JournalArticleAnalyticsReportsInfoItem
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutSEOLinkManager _layoutSEOLinkManager;
 
 	@Reference
 	private Portal _portal;

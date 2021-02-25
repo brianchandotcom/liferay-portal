@@ -63,7 +63,7 @@ public class EditProductCPDisplayLayoutMVCRenderCommand
 
 		RequestDispatcher requestDispatcher =
 			_servletContext.getRequestDispatcher(
-				"/display_layout/edit_cp_display_layout.jsp");
+				"/display_layout/edit_product_cp_display_layout.jsp");
 
 		try {
 			HttpServletRequest httpServletRequest =

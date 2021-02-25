@@ -103,6 +103,10 @@ public class FacetedSearcherTest extends BaseFacetedSearcherTestCase {
 			SearchContext searchContext)
 		throws Exception {
 
+		String[] userClassName = {User.class.getName()};
+
+		searchContext.setEntryClassNames(userClassName);
+
 		Hits hits = search(searchContext);
 
 		assertTags(keywords, hits, expected, searchContext);

@@ -44,7 +44,7 @@ definition {
 	}
 
 	@summary = "Assert expiration date warning for Liferay Commerce Subscription"
-	macro ViewWarningExpirationDate {
+	macro viewWarningExpirationDate {
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
 			portlet = "Catalogs");

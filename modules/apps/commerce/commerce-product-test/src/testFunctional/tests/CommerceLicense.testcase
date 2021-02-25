@@ -113,7 +113,7 @@ definition {
 
 		CommerceLicense.viewCommerceAvailable();
 
-		CommerceLicense.ViewWarningExpirationDate();
+		CommerceLicense.viewWarningExpirationDate();
 	}
 
 	@priority = "5"

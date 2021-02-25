@@ -2046,18 +2046,13 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		int oldStatus = page.getStatus();
 
-		page.setStatus(status);
-		page.setStatusByUserId(userId);
-		page.setStatusByUserName(user.getFullName());
-		page.setStatusDate(new Date());
-
-		page = wikiPagePersistence.update(page);
-
 		if (status == WorkflowConstants.STATUS_APPROVED) {
 			String cmd = GetterUtil.getString(
 				workflowContext.get(WorkflowConstants.CONTEXT_COMMAND));
 
 			if (cmd.equals(Constants.CHANGE_PARENT)) {
+				page = _updatePageStatus(user, page, status);
+
 				List<WikiPage> pageVersions = wikiPagePersistence.findByN_T(
 					page.getNodeId(), page.getTitle());
 
@@ -2074,9 +2069,16 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			else if (cmd.equals(Constants.RENAME)) {
 				WikiPage oldPage = getPage(page.getResourcePrimKey(), true);
 
-				page = _renamePage(
+				WikiPage renamedPage = _renamePage(
 					userId, page.getNodeId(), oldPage.getTitle(),
 					page.getTitle(), serviceContext);
+
+				_updatePageStatus(user, page, status);
+
+				page = renamedPage;
+			}
+			else {
+				page = _updatePageStatus(user, page, status);
 			}
 
 			// Asset
@@ -2175,6 +2177,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			// Cache
 
 			clearPageCache(page);
+		}
+		else {
+			page = _updatePageStatus(user, page, status);
 		}
 
 		// Head
@@ -3315,6 +3320,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		// Workflow
 
 		return _startWorkflowInstance(userId, page, serviceContext);
+	}
+
+	private WikiPage _updatePageStatus(User user, WikiPage page, int status) {
+		page.setStatus(status);
+		page.setStatusByUserId(user.getUserId());
+		page.setStatusByUserName(user.getFullName());
+		page.setStatusDate(new Date());
+
+		return wikiPagePersistence.update(page);
 	}
 
 	private void _validate(long nodeId, String content, String format)

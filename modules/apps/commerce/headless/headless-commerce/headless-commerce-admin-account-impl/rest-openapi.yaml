@@ -102,8 +102,7 @@ components:
                 accountAddresses:
                     example:
                         - city: Diamond Bar
-                          commerceCountryId: 30130
-                          commerceRegionId: 30234
+                          countryISOCode: US
                           defaultBilling: true
                           defaultShipping: true
                           description:
@@ -113,6 +112,7 @@ components:
                           longitude: -117.8144595
                           name: Alessio Antonio Rendina
                           phoneNumber: (123) 456 7890
+                          regionISOCode: CA
                           street1: 1400 Montefino Ave
                           street2: 1st floor
                           street3: suite 200

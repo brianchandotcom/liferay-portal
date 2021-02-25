@@ -674,7 +674,7 @@ export default ({dataURL, getCache, spritemap, updateCache}) => {
 											setViewType(VIEW_TYPE_FULL)
 										}
 										spritemap={spritemap}
-										symbol="full-view"
+										symbol="rectangle"
 										title={Liferay.Language.get(
 											'full-view'
 										)}
@@ -688,7 +688,7 @@ export default ({dataURL, getCache, spritemap, updateCache}) => {
 											setViewType(VIEW_TYPE_SPLIT)
 										}
 										spritemap={spritemap}
-										symbol="split-view"
+										symbol="rectangle-split"
 										title={getSplitViewTooltip()}
 									/>
 								</ClayButton.Group>

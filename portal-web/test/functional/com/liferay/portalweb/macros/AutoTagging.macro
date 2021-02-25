@@ -170,6 +170,8 @@ definition {
 			configurationName = "TensorFlow Image Auto Tagging",
 			configurationScope = "Virtual Instance Scope");
 
+		Alert.viewInfoMessageSpecific(infoMessage = "The TensorFlow model will be downloaded in the background. No tags will be created until the model is fully downloaded");
+
 		FormFields.enableCheckbox(fieldName = "enabled");
 
 		if (IsElementPresent(locator1 = "Button#UPDATE")) {
@@ -179,6 +181,22 @@ definition {
 		else if (IsElementPresent(locator1 = "Button#SAVE")) {
 			PortletEntry.save();
 		}
+
+		Alert.viewInfoMessageSpecific(infoMessage = "The TensorFlow model is being downloaded in the background. No tags will be created until the model is fully downloaded");
+
+		while (IsElementPresent(key_infoMessage = "The TensorFlow model is being downloaded in the background. No tags will be created until the model is fully downloaded", locator1 = "Message#INFO_SPECIFIC")) {
+			Pause(locator1 = "20000");
+
+			Refresh();
+		}
+
+		AssertElementNotPresent(
+			key_infoMessage = "The TensorFlow model will be downloaded in the background. No tags will be created until the model is fully downloaded",
+			locator1 = "Message#INFO_SPECIFIC");
+
+		AssertElementNotPresent(
+			key_infoMessage = "The TensorFlow model is being downloaded in the background. No tags will be created until the model is fully downloaded",
+			locator1 = "Message#INFO_SPECIFIC");
 	}
 
 }

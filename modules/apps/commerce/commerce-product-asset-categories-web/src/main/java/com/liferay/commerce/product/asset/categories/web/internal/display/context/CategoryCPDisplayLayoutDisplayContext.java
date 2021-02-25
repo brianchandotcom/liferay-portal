@@ -88,7 +88,7 @@ public class CategoryCPDisplayLayoutDisplayContext
 
 		portletURL.setParameter(
 			"mvcRenderCommandName",
-			"/commerce_channels/edit_cp_display_layout");
+			"/commerce_channels/edit_category_cp_display_layout");
 		portletURL.setParameter(
 			"commerceChannelId", String.valueOf(getCommerceChannelId()));
 

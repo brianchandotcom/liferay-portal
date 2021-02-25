@@ -52,7 +52,8 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCActionCommand.class
 )
-public class EditCPDisplayLayoutMVCActionCommand extends BaseMVCActionCommand {
+public class EditProductCPDisplayLayoutMVCActionCommand
+	extends BaseMVCActionCommand {
 
 	protected void deleteCPDisplayLayouts(ActionRequest actionRequest)
 		throws Exception {
@@ -148,7 +149,7 @@ public class EditCPDisplayLayoutMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		EditCPDisplayLayoutMVCActionCommand.class);
+		EditProductCPDisplayLayoutMVCActionCommand.class);
 
 	@Reference
 	private CommerceChannelService _commerceChannelService;

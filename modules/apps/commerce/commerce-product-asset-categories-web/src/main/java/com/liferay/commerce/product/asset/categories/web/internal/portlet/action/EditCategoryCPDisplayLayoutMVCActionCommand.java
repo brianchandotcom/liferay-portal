@@ -57,7 +57,8 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCActionCommand.class
 )
-public class EditCPDisplayLayoutMVCActionCommand extends BaseMVCActionCommand {
+public class EditCategoryCPDisplayLayoutMVCActionCommand
+	extends BaseMVCActionCommand {
 
 	protected void deleteCPDisplayLayouts(ActionRequest actionRequest)
 		throws Exception {

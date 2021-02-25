@@ -49,13 +49,23 @@ const getMaskConfig = (dataType, symbols) => {
 };
 
 const getValue = (dataType, symbols, value) => {
-	let newValue = typeof value === 'number' ? `${value}` : value;
-
 	let decimalSymbol = symbols.decimalSymbol;
 
-	if (newValue && !newValue.includes('.') && symbols.decimalSymbol != ',') {
+	let newValue;
+
+	if (typeof value === 'number') {
+		newValue = `${value}`;
+		newValue = newValue.replace('.', decimalSymbol);
+	}
+	else {
+		newValue = value;
+	}
+
+	if (newValue && !newValue.includes('.') && decimalSymbol != ',') {
 		decimalSymbol = ',';
 	}
+
+	newValue = newValue.replace('$[DECIMAL_SYMBOL]', decimalSymbol);
 
 	if (dataType === 'integer' && newValue) {
 		newValue = String(Math.round(newValue.replace(decimalSymbol, '.')));

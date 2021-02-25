@@ -14,9 +14,16 @@
 
 package com.liferay.jenkins.results.parser.testray;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+
+import java.io.IOException;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import java.util.List;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -40,6 +47,14 @@ public class TestrayBuild {
 		return _jsonObject.getString("name");
 	}
 
+	public List<TestrayCaseResult> getTestrayCaseResults() {
+		if (_testrayCaseResults == null) {
+			_initTestrayCaseResults();
+		}
+
+		return _testrayCaseResults;
+	}
+
 	public TestrayProject getTestrayProject() {
 		return _testrayProject;
 	}
@@ -61,7 +76,34 @@ public class TestrayBuild {
 		}
 	}
 
+	private void _initTestrayCaseResults() {
+		String urlString = String.valueOf(getURL());
+
+		String caseResultsAPIURLString = urlString.replace(
+			"runs", "case_results.json");
+
+		try {
+			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
+				caseResultsAPIURLString);
+
+			JSONArray dataJSONArray = jsonObject.getJSONArray("data");
+
+			for (int i = 0; i < dataJSONArray.length(); i++) {
+				JSONObject dataJSONObject = dataJSONArray.getJSONObject(i);
+
+				TestrayCaseResult testrayCaseResult = new TestrayCaseResult(
+					this, dataJSONObject);
+
+				_testrayCaseResults.add(testrayCaseResult);
+			}
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
 	private final JSONObject _jsonObject;
+	private List<TestrayCaseResult> _testrayCaseResults;
 	private final TestrayProject _testrayProject;
 	private final TestrayRoutine _testrayRoutine;
 	private final TestrayServer _testrayServer;

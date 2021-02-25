@@ -15,17 +15,12 @@
 package com.liferay.analytics.reports.web.internal.request.attributes.contributor;
 
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsWebKeys;
-import com.liferay.analytics.reports.web.internal.info.display.contributor.util.LayoutDisplayPageProviderUtil;
 import com.liferay.info.display.request.attributes.contributor.InfoDisplayRequestAttributesContributor;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
-import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
+import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.portal.kernel.model.ClassName;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -42,19 +37,10 @@ public class AnalyticsReportsInfoDisplayRequestAttributesContributor
 	@Override
 	public void addAttributes(HttpServletRequest httpServletRequest) {
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
-			LayoutDisplayPageProviderUtil.initLayoutDisplayPageObjectProvider(
-				httpServletRequest, _layoutDisplayPageProviderTracker, _portal);
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			(LayoutDisplayPageObjectProvider<?>)httpServletRequest.getAttribute(
+				LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
 
 		if (layoutDisplayPageObjectProvider == null) {
-			httpServletRequest.setAttribute(
-				AnalyticsReportsWebKeys.INFO_ITEM_REFERENCE,
-				new InfoItemReference(
-					Layout.class.getName(), themeDisplay.getPlid()));
-
 			return;
 		}
 
@@ -70,11 +56,5 @@ public class AnalyticsReportsInfoDisplayRequestAttributesContributor
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
-
-	@Reference
-	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;
-
-	@Reference
-	private Portal _portal;
 
 }

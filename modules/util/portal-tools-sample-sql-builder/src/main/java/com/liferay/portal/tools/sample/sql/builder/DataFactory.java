@@ -1477,45 +1477,11 @@ public class DataFactory {
 	}
 
 	public List<CounterModel> newCounterModels() {
-		List<CounterModel> counterModels = new ArrayList<>();
-
-		// Counter
-
-		CounterModel counterModel = new CounterModelImpl();
-
-		counterModel.setName(Counter.class.getName());
-		counterModel.setCurrentId(_counter.get());
-
-		counterModels.add(counterModel);
-
-		// FriendlyURLEntryLocalization
-
-		counterModel = new CounterModelImpl();
-
-		counterModel.setName(FriendlyURLEntryLocalization.class.getName());
-		counterModel.setCurrentId(_counter.get());
-
-		counterModels.add(counterModel);
-
-		// ResourcePermission
-
-		counterModel = new CounterModelImpl();
-
-		counterModel.setName(ResourcePermission.class.getName());
-		counterModel.setCurrentId(_resourcePermissionCounter.get());
-
-		counterModels.add(counterModel);
-
-		// SocialActivity
-
-		counterModel = new CounterModelImpl();
-
-		counterModel.setName(SocialActivity.class.getName());
-		counterModel.setCurrentId(_socialActivityCounter.get());
-
-		counterModels.add(counterModel);
-
-		return counterModels;
+		return Arrays.asList(
+			_newCounterModel(Counter.class.getName()),
+			_newCounterModel(FriendlyURLEntryLocalization.class.getName()),
+			_newCounterModel(ResourcePermission.class.getName()),
+			_newCounterModel(SocialActivity.class.getName()));
 	}
 
 	public CPDefinitionLocalizationModel newCPDefinitionLocalizationModel(
@@ -5313,6 +5279,15 @@ public class DataFactory {
 		sb.setIndex(sb.index() - 1);
 
 		return sb.toString();
+	}
+
+	private CounterModel _newCounterModel(String name) {
+		CounterModel counterModel = new CounterModelImpl();
+
+		counterModel.setName(name);
+		counterModel.setCurrentId(_counter.get());
+
+		return counterModel;
 	}
 
 	private String _readFile(String resourceName) throws Exception {

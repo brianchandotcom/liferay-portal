@@ -15,9 +15,9 @@
 package com.liferay.portal.upgrade.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.test.rule.Inject;
@@ -25,11 +25,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.util.PropsValues;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -55,30 +51,15 @@ public class AutoUpgradeProcessTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_upgradeDatabaseAutoRunField = ReflectionUtil.getDeclaredField(
+		_originalUpgradeDatabaseAutoRun = ReflectionTestUtil.getFieldValue(
 			PropsValues.class, "UPGRADE_DATABASE_AUTO_RUN");
-
-		_upgradeDatabaseAutoRunField.setAccessible(true);
-
-		_modifiersField = Field.class.getDeclaredField("modifiers");
-
-		_modifiersField.setAccessible(true);
-		_modifiersField.setInt(
-			_upgradeDatabaseAutoRunField,
-			_upgradeDatabaseAutoRunField.getModifiers() & ~Modifier.FINAL);
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		_upgradeDatabaseAutoRunField.setAccessible(false);
-
-		_modifiersField.setAccessible(false);
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		_upgradeDatabaseAutoRunField.set(
-			null, _ORIGINAL_UPGRADE_DATABASE_AUTO_RUN);
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "UPGRADE_DATABASE_AUTO_RUN",
+			_originalUpgradeDatabaseAutoRun);
 
 		if (_serviceRegistration != null) {
 			_serviceRegistration.unregister();
@@ -96,7 +77,8 @@ public class AutoUpgradeProcessTest {
 	public void testNewUpgradeProcessWhenAutoUpgradeDisabled()
 		throws Exception {
 
-		_setAutoUpgrade(false);
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "UPGRADE_DATABASE_AUTO_RUN", false);
 
 		Assert.assertEquals(
 			"1.0.0", _registerNewUpgradeProcess().getSchemaVersion());
@@ -104,7 +86,8 @@ public class AutoUpgradeProcessTest {
 
 	@Test
 	public void testNewUpgradeProcessWhenAutoUpgradeEnabled() throws Exception {
-		_setAutoUpgrade(true);
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "UPGRADE_DATABASE_AUTO_RUN", true);
 
 		Assert.assertEquals(
 			"2.0.0", _registerNewUpgradeProcess().getSchemaVersion());
@@ -124,22 +107,13 @@ public class AutoUpgradeProcessTest {
 		return _releaseLocalService.fetchRelease(_SERVLET_CONTEXT_NAME);
 	}
 
-	private void _setAutoUpgrade(boolean value) throws Exception {
-		_upgradeDatabaseAutoRunField.set(null, value);
-	}
-
-	private static final boolean _ORIGINAL_UPGRADE_DATABASE_AUTO_RUN =
-		PropsValues.UPGRADE_DATABASE_AUTO_RUN;
-
 	private static final String _SERVLET_CONTEXT_NAME =
 		"com.liferay.portal.upgrade.test";
 
-	private static Field _modifiersField;
+	private static boolean _originalUpgradeDatabaseAutoRun;
 
 	@Inject
 	private static ReleaseLocalService _releaseLocalService;
-
-	private static Field _upgradeDatabaseAutoRunField;
 
 	private ServiceRegistration<UpgradeStepRegistrator> _serviceRegistration;
 

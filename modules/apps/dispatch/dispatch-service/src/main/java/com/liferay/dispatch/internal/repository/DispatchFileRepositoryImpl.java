@@ -27,8 +27,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Repository;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
-import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -189,12 +189,10 @@ public class DispatchFileRepositoryImpl implements DispatchFileRepository {
 	@Reference
 	private DispatchTriggerLocalService _dispatchTriggerLocalService;
 
+	@Reference(target = ModuleServiceLifecycle.PORTLETS_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
+
 	@Reference
 	private PortletFileRepository _portletFileRepository;
-
-	@Reference(
-		target = "(repository.target.class.name=com.liferay.portal.repository.portletrepository.PortletRepository)"
-	)
-	private RepositoryFactory _repositoryFactory;
 
 }

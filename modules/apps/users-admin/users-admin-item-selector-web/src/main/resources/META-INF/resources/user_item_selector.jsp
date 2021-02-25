@@ -22,8 +22,8 @@ UserItemSelectorViewDisplayContext userItemSelectorViewDisplayContext = (UserIte
 String displayStyle = userItemSelectorViewDisplayContext.getDisplayStyle();
 %>
 
-<clay:management-toolbar-v2
-	displayContext="<%= new UserItemSelectorViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, userItemSelectorViewDisplayContext) %>"
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= new UserItemSelectorViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, userItemSelectorViewDisplayContext) %>"
 />
 
 <clay:container-fluid

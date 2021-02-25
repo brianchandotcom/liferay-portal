@@ -249,9 +249,12 @@ public class JournalTransformer {
 				if (document != null) {
 					Element rootElement = document.getRootElement();
 
+					long ddmStructureId = GetterUtil.getLong(
+						tokens.get("ddm_structure_id"));
+
 					DDMStructure ddmStructure =
 						DDMStructureLocalServiceUtil.getStructure(
-							Long.valueOf(tokens.get("ddm_structure_id")));
+							ddmStructureId);
 
 					DDMForm ddmForm = ddmStructure.getDDMForm();
 

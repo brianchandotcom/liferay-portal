@@ -30,9 +30,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Matija Petanjek
  */
-public abstract class BaseDispatchTriggerDisplayContext {
+public abstract class BaseDisplayContext {
 
-	public BaseDispatchTriggerDisplayContext(RenderRequest renderRequest) {
+	public BaseDisplayContext(RenderRequest renderRequest) {
 		dispatchRequestHelper = new DispatchRequestHelper(renderRequest);
 	}
 
@@ -63,13 +63,13 @@ public abstract class BaseDispatchTriggerDisplayContext {
 			() -> {
 				NavigationItem navigationItem = new NavigationItem();
 
-				navigationItem.setActive(tabs1.equals("scheduled-task"));
+				navigationItem.setActive(tabs1.equals("scheduler-response"));
 				navigationItem.setHref(
 					liferayPortletResponse.createRenderURL(), "tabs1",
-					"scheduled-task", "mvcRenderCommandName",
-					"/dispatch/edit_scheduled_task_dispatch_trigger");
+					"scheduler-response", "mvcRenderCommandName",
+					"/dispatch/edit_scheduler_response");
 				navigationItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "scheduled-tasks"));
+					LanguageUtil.get(httpServletRequest, "scheduled-jobs"));
 
 				return navigationItem;
 			});

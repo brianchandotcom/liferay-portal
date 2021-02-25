@@ -14,13 +14,13 @@
 
 package com.liferay.dispatch.web.internal.display.context;
 
-import com.liferay.dispatch.scheduler.DispatchSchedulerEngineHelper;
-import com.liferay.dispatch.scheduler.ScheduledJobDispatchTrigger;
+import com.liferay.dispatch.scheduler.SchedulerResponseHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.TriggerState;
+import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -36,30 +36,26 @@ import javax.portlet.RenderRequest;
 /**
  * @author Matija Petanjek
  */
-public class ScheduledJobDispatchTriggerDisplayContext
-	extends BaseDispatchTriggerDisplayContext {
+public class SchedulerResponseDisplayContext extends BaseDisplayContext {
 
-	public ScheduledJobDispatchTriggerDisplayContext(
+	public SchedulerResponseDisplayContext(
 		RenderRequest renderRequest,
-		DispatchSchedulerEngineHelper dispatchSchedulerEngineHelper) {
+		SchedulerResponseHelper schedulerResponseHelper) {
 
 		super(renderRequest);
 
 		_dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
 			dispatchRequestHelper.getLocale());
 
-		_dispatchSchedulerEngineHelper = dispatchSchedulerEngineHelper;
+		_schedulerResponseHelper = schedulerResponseHelper;
 	}
 
-	public String getNextFireDateString(
-			ScheduledJobDispatchTrigger scheduledJobDispatchTrigger)
+	public String getNextFireDateString(SchedulerResponse schedulerResponse)
 		throws SchedulerException {
 
-		Date nextFireDate =
-			_dispatchSchedulerEngineHelper.getScheduledJobNextFireDate(
-				scheduledJobDispatchTrigger.getName(),
-				scheduledJobDispatchTrigger.getGroupName(),
-				scheduledJobDispatchTrigger.getStorageType());
+		Date nextFireDate = _schedulerResponseHelper.getNextFireDate(
+			schedulerResponse.getJobName(), schedulerResponse.getGroupName(),
+			schedulerResponse.getStorageType());
 
 		if (nextFireDate != null) {
 			return _dateFormatDateTime.format(nextFireDate);
@@ -101,10 +97,9 @@ public class ScheduledJobDispatchTriggerDisplayContext
 		}
 
 		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/dispatch/edit_scheduled_task_dispatch_trigger");
+			"mvcRenderCommandName", "/dispatch/edit_scheduler_response");
 
-		portletURL.setParameter("tabs1", "scheduled-task");
+		portletURL.setParameter("tabs1", "scheduler-response");
 
 		String redirect = ParamUtil.getString(
 			dispatchRequestHelper.getRequest(), "redirect");
@@ -116,7 +111,7 @@ public class ScheduledJobDispatchTriggerDisplayContext
 		return portletURL;
 	}
 
-	public SearchContainer<ScheduledJobDispatchTrigger> getSearchContainer() {
+	public SearchContainer<SchedulerResponse> getSearchContainer() {
 		if (_searchContainer != null) {
 			return _searchContainer;
 		}
@@ -130,10 +125,10 @@ public class ScheduledJobDispatchTriggerDisplayContext
 		_searchContainer.setOrderByType(getOrderByType());
 
 		_searchContainer.setTotal(
-			_dispatchSchedulerEngineHelper.getScheduledJobsCount());
+			_schedulerResponseHelper.getSchedulerResponsesCount());
 
-		List<ScheduledJobDispatchTrigger> results =
-			_dispatchSchedulerEngineHelper.getScheduledJobDispatchTriggers(
+		List<SchedulerResponse> results =
+			_schedulerResponseHelper.getSchedulerResponses(
 				_searchContainer.getStart(), _searchContainer.getEnd());
 
 		_searchContainer.setResults(results);
@@ -141,18 +136,20 @@ public class ScheduledJobDispatchTriggerDisplayContext
 		return _searchContainer;
 	}
 
-	public TriggerState getTriggerState(
-			ScheduledJobDispatchTrigger scheduledJobDispatchTrigger)
+	public String getSimpleName(String jobName) {
+		return jobName.substring(jobName.lastIndexOf(StringPool.PERIOD) + 1);
+	}
+
+	public TriggerState getTriggerState(SchedulerResponse schedulerResponse)
 		throws SchedulerException {
 
-		return _dispatchSchedulerEngineHelper.getTriggerState(
-			scheduledJobDispatchTrigger.getName(),
-			scheduledJobDispatchTrigger.getGroupName(),
-			scheduledJobDispatchTrigger.getStorageType());
+		return _schedulerResponseHelper.getTriggerState(
+			schedulerResponse.getJobName(), schedulerResponse.getGroupName(),
+			schedulerResponse.getStorageType());
 	}
 
 	private final Format _dateFormatDateTime;
-	private final DispatchSchedulerEngineHelper _dispatchSchedulerEngineHelper;
-	private SearchContainer<ScheduledJobDispatchTrigger> _searchContainer;
+	private final SchedulerResponseHelper _schedulerResponseHelper;
+	private SearchContainer<SchedulerResponse> _searchContainer;
 
 }

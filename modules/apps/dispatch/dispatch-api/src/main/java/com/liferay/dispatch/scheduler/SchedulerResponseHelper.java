@@ -17,6 +17,7 @@ package com.liferay.dispatch.scheduler;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.TriggerState;
+import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 
 import java.util.Date;
 import java.util.List;
@@ -24,16 +25,15 @@ import java.util.List;
 /**
  * @author Matija Petanjek
  */
-public interface DispatchSchedulerEngineHelper {
+public interface SchedulerResponseHelper {
 
-	public List<ScheduledJobDispatchTrigger> getScheduledJobDispatchTriggers(
-		int start, int end);
-
-	public Date getScheduledJobNextFireDate(
+	public Date getNextFireDate(
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException;
 
-	public int getScheduledJobsCount();
+	public List<SchedulerResponse> getSchedulerResponses(int start, int end);
+
+	public int getSchedulerResponsesCount();
 
 	public TriggerState getTriggerState(
 			String jobName, String groupName, StorageType storageType)

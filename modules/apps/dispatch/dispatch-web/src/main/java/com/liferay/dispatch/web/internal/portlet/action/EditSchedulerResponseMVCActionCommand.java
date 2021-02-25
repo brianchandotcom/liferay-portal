@@ -15,7 +15,7 @@
 package com.liferay.dispatch.web.internal.portlet.action;
 
 import com.liferay.dispatch.constants.DispatchPortletKeys;
-import com.liferay.dispatch.scheduler.DispatchSchedulerEngineHelper;
+import com.liferay.dispatch.scheduler.SchedulerResponseHelper;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.scheduler.StorageType;
@@ -36,11 +36,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + DispatchPortletKeys.DISPATCH,
-		"mvc.command.name=/dispatch/edit_scheduled_job_dispatch_trigger"
+		"mvc.command.name=/dispatch/edit_scheduler_response"
 	},
 	service = MVCActionCommand.class
 )
-public class EditScheduledJobDispatchTriggerMVCActionCommand
+public class EditSchedulerResponseMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	@Override
@@ -50,17 +50,17 @@ public class EditScheduledJobDispatchTriggerMVCActionCommand
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		if (Objects.equals(cmd, "runScheduledTask")) {
-			_runScheduledTask(actionRequest);
+		if (Objects.equals(cmd, "runScheduledJob")) {
+			_runScheduledJob(actionRequest);
 		}
 		else if (Objects.equals(cmd, "pause") ||
 				 Objects.equals(cmd, "resume")) {
 
-			_updateScheduledTask(actionRequest, cmd);
+			_updateScheduledJob(actionRequest, cmd);
 		}
 	}
 
-	private void _runScheduledTask(ActionRequest actionRequest)
+	private void _runScheduledJob(ActionRequest actionRequest)
 		throws Exception {
 
 		String jobName = ParamUtil.getString(actionRequest, "jobName");
@@ -68,10 +68,10 @@ public class EditScheduledJobDispatchTriggerMVCActionCommand
 		StorageType storageType = StorageType.valueOf(
 			ParamUtil.getString(actionRequest, "storageType"));
 
-		_dispatchSchedulerEngineHelper.run(jobName, groupName, storageType);
+		_schedulerResponseHelper.run(jobName, groupName, storageType);
 	}
 
-	private void _updateScheduledTask(ActionRequest actionRequest, String cmd)
+	private void _updateScheduledJob(ActionRequest actionRequest, String cmd)
 		throws Exception {
 
 		String jobName = ParamUtil.getString(actionRequest, "jobName");
@@ -80,16 +80,14 @@ public class EditScheduledJobDispatchTriggerMVCActionCommand
 			ParamUtil.getString(actionRequest, "storageType"));
 
 		if (Objects.equals(cmd, "pause")) {
-			_dispatchSchedulerEngineHelper.pause(
-				jobName, groupName, storageType);
+			_schedulerResponseHelper.pause(jobName, groupName, storageType);
 		}
 		else {
-			_dispatchSchedulerEngineHelper.resume(
-				jobName, groupName, storageType);
+			_schedulerResponseHelper.resume(jobName, groupName, storageType);
 		}
 	}
 
 	@Reference
-	private DispatchSchedulerEngineHelper _dispatchSchedulerEngineHelper;
+	private SchedulerResponseHelper _schedulerResponseHelper;
 
 }

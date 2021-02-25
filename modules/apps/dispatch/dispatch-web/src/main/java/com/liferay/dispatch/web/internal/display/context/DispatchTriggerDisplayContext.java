@@ -45,8 +45,7 @@ import javax.portlet.RenderRequest;
  * @author guywandji
  * @author Alessio Antonio Rendina
  */
-public class DispatchTriggerDisplayContext
-	extends BaseDispatchTriggerDisplayContext {
+public class DispatchTriggerDisplayContext extends BaseDisplayContext {
 
 	public DispatchTriggerDisplayContext(
 		DispatchTaskExecutorRegistry dispatchTaskExecutorRegistry,

@@ -14,8 +14,11 @@
 
 package com.liferay.commerce.frontend.taglib.servlet.taglib;
 
+import com.liferay.commerce.frontend.model.ProductSettingsModel;
 import com.liferay.commerce.frontend.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.commerce.frontend.util.ProductHelper;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
+import com.liferay.commerce.product.catalog.CPSku;
 import com.liferay.commerce.product.constants.CPContentContributorConstants;
 import com.liferay.commerce.product.content.util.CPContentHelper;
 import com.liferay.petra.string.StringPool;
@@ -37,18 +40,34 @@ public class AvailabilityLabelTag extends IncludeTag {
 	@Override
 	public int doStartTag() throws JspException {
 		try {
-			JSONObject availabilityContentContributorValueJSONObject =
-				_cpContentHelper.
-					getAvailabilityContentContributorValueJSONObject(
-						_cpCatalogEntry, getRequest());
+			CPSku cpSku = _cpContentHelper.getDefaultCPSku(_cpCatalogEntry);
 
-			_label = availabilityContentContributorValueJSONObject.getString(
-				CPContentContributorConstants.AVAILABILITY_NAME,
-				StringPool.BLANK);
-			_labelType =
-				availabilityContentContributorValueJSONObject.getString(
-					CPContentContributorConstants.AVAILABILITY_DISPLAY_TYPE,
-					"default");
+			boolean hasChildCPDefinitions =
+				_cpContentHelper.hasChildCPDefinitions(
+					_cpCatalogEntry.getCPDefinitionId());
+
+			if ((cpSku != null) && !hasChildCPDefinitions) {
+				ProductSettingsModel productSettingsModel =
+					_productHelper.getProductSettingsModel(
+						cpSku.getCPInstanceId());
+
+				if (productSettingsModel.isShowAvailabilityDot()) {
+					JSONObject availabilityContentContributorValueJSONObject =
+						_cpContentHelper.
+							getAvailabilityContentContributorValueJSONObject(
+								_cpCatalogEntry, getRequest());
+
+					_label =
+						availabilityContentContributorValueJSONObject.getString(
+							CPContentContributorConstants.AVAILABILITY_NAME,
+							StringPool.BLANK);
+					_labelType =
+						availabilityContentContributorValueJSONObject.getString(
+							CPContentContributorConstants.
+								AVAILABILITY_DISPLAY_TYPE,
+							"default");
+				}
+			}
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -92,6 +111,7 @@ public class AvailabilityLabelTag extends IncludeTag {
 
 		_cpContentHelper = ServletContextUtil.getCPContentHelper();
 		servletContext = ServletContextUtil.getServletContext();
+		_productHelper = ServletContextUtil.getProductHelper();
 	}
 
 	@Override
@@ -103,6 +123,7 @@ public class AvailabilityLabelTag extends IncludeTag {
 		_label = StringPool.BLANK;
 		_labelType = "default";
 		_namespace = StringPool.BLANK;
+		_productHelper = null;
 	}
 
 	@Override
@@ -123,5 +144,6 @@ public class AvailabilityLabelTag extends IncludeTag {
 	private String _label = StringPool.BLANK;
 	private String _labelType = "default";
 	private String _namespace = StringPool.BLANK;
+	private ProductHelper _productHelper;
 
 }

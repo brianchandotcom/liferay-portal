@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`PreviewButton renders 1`] = `<button class="btn btn-link" type="button">preview-form</button>`;

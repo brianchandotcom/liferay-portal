@@ -110,11 +110,11 @@
 						"portletPreferences": {
 							"cpContentListRendererKey": "list-minium",
 							"dataSource": "assetCategoriesAndTagsDataSource",
-							"grouped--cpTypeListEntryRendererKey": "list-entry-minium",
+							"grouped--cpTypeListEntryRendererKey": "list-entry-default",
 							"renderSelection": "custom",
 							"selectionStyle": "dataSource",
-							"simple--cpTypeListEntryRendererKey": "list-entry-minium",
-							"virtual--cpTypeListEntryRendererKey": "list-entry-minium"
+							"simple--cpTypeListEntryRendererKey": "list-entry-default",
+							"virtual--cpTypeListEntryRendererKey": "list-entry-default"
 						}
 					},
 					{

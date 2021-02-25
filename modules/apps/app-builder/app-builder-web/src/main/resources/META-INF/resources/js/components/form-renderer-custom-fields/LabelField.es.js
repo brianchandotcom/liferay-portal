@@ -14,6 +14,7 @@
 
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import {DataLayoutBuilderActions} from 'data-engine-taglib';
 import React, {useContext, useEffect, useState} from 'react';
 
 import useDebounce from '../../hooks/useDebounce.es';
@@ -22,11 +23,9 @@ import FieldBase from './shared/FieldBase.es';
 import {STRUCTURE_LEVEL, VIEW_LEVEL} from './shared/constants.es';
 import {
 	containsFieldInsideFormBuilder,
-	getDataDefinitionField,
-	getDataLayoutField,
 	getFormattedState,
-	setPropertyAtFormViewLevel,
-	setPropertyAtObjectViewLevel,
+	setPropertyAtStructureLevel,
+	setPropertyAtViewLevel,
 } from './shared/utils.es';
 
 const PROPERTY_NAME = 'label';
@@ -42,104 +41,122 @@ const LEVEL = {
 
 /**
  * Get initial selected value
- * @param {Object} state
+ * @param {object} state
  */
-function getInitialSelectedValue(state) {
-	const label = getDataLayoutField(state)?.label;
-
-	if (label && !!Object.keys(label).length) {
-		return VIEW_LEVEL;
+function getInitialSelectedValue({dataDefinitionField: {customProperties}}) {
+	if (customProperties.labelAtStructureLevel) {
+		return STRUCTURE_LEVEL;
 	}
 
-	return STRUCTURE_LEVEL;
+	return VIEW_LEVEL;
 }
 
 /**
  * Get localized value
- * @param {Object} label
- * @param {Object} state
+ * @param {object} value
+ * @param {object} state
  */
-function getLocalizedValue(label, {defaultLanguageId, editingLanguageId}) {
-	return label[editingLanguageId] || label[defaultLanguageId];
+function getLocalizedValue(value, {defaultLanguageId, editingLanguageId}) {
+	return {
+		...value,
+		[editingLanguageId]:
+			value[editingLanguageId] || value[defaultLanguageId],
+	};
 }
 
 /**
  * Get initial value
- * @param {Object} state
- * @param {Object} field
+ * @param {string} selectedValue
+ * @param {object} state
  */
-function getInitialValue({editingLanguageId}, {value}) {
-	return () => {
-		if (typeof value === 'object') {
-			return value[editingLanguageId];
-		}
+function getInitialValue(selectedValue, state) {
+	const {dataDefinitionField, dataLayoutField} = state;
 
-		return value;
-	};
+	if (selectedValue === VIEW_LEVEL) {
+		return getLocalizedValue(dataLayoutField.label, state);
+	}
+
+	return getLocalizedValue(dataDefinitionField.label, state);
+}
+
+/**
+ * Update variable labelAtStructureLevel
+ * @param {object} state
+ * @param {function} dispatch
+ * @param {string} selectedValue
+ */
+function updateLabelAtStructureLevel(
+	{dataDefinitionFields, fieldName},
+	dispatch,
+	selectedValue
+) {
+	dispatch({
+		payload: {
+			dataDefinitionFields: dataDefinitionFields.map((field) => {
+				if (field.name === fieldName) {
+					return {
+						...field,
+						customProperties: {
+							...field.customProperties,
+							labelAtStructureLevel:
+								selectedValue === STRUCTURE_LEVEL,
+						},
+					};
+				}
+
+				return field;
+			}),
+		},
+		type: DataLayoutBuilderActions.UPDATE_DATA_DEFINITION_FIELDS,
+	});
 }
 
 export default function LabelField({AppContext, dataLayoutBuilder, field}) {
 	const [state, dispatch] = useContext(AppContext);
+
 	const formattedState = getFormattedState(state);
-	const [value, setValue] = useState(getInitialValue(formattedState, field));
+
 	const [selectedValue, setSelectedValue] = useState(
 		getInitialSelectedValue(formattedState)
 	);
 
-	const dataDefinitionField = getDataDefinitionField(formattedState);
-	const dataLayoutField = getDataLayoutField(formattedState);
+	const [value, setValue] = useState(
+		getInitialValue(selectedValue, formattedState)
+	);
 
-	const callbackFn = (fn) => fn(formattedState, dispatch);
-
-	const onSelectedValueChange = (value) => {
-		setSelectedValue(value);
-
-		if (value === VIEW_LEVEL) {
-			callbackFn(
-				setPropertyAtFormViewLevel(
-					PROPERTY_NAME,
-					dataDefinitionField.label
-				)
-			);
-		}
-		else {
-			callbackFn(setPropertyAtFormViewLevel(PROPERTY_NAME, {}));
-
-			setValue(
-				getLocalizedValue(dataDefinitionField.label, formattedState)
-			);
-		}
-	};
+	const {
+		dataDefinitionField,
+		dataLayoutField,
+		defaultLanguageId,
+		editingLanguageId,
+	} = formattedState;
 
 	const debounce = useDebounce(value);
 
 	useEffect(() => {
-		if (!dataDefinitionField) {
-			return;
-		}
-
-		const label = {[formattedState.editingLanguageId]: value};
-
 		if (containsFieldInsideFormBuilder(dataLayoutBuilder, formattedState)) {
 			dataLayoutBuilder.dispatch('fieldEdited', {
 				propertyName: PROPERTY_NAME,
-				propertyValue: value,
+				propertyValue:
+					value[editingLanguageId] || value[defaultLanguageId],
 			});
 		}
 
+		const callbackFn = (fn) => fn(formattedState, dispatch);
+
 		if (selectedValue === VIEW_LEVEL) {
 			callbackFn(
-				setPropertyAtFormViewLevel(PROPERTY_NAME, {
+				setPropertyAtViewLevel(PROPERTY_NAME, {
 					...dataLayoutField.label,
-					...label,
+					...value,
 				})
 			);
 		}
 		else {
 			callbackFn(
-				setPropertyAtObjectViewLevel(PROPERTY_NAME, {
+				setPropertyAtStructureLevel(PROPERTY_NAME, {
 					...dataDefinitionField.label,
-					...label,
+					...value,
 				})
 			);
 		}
@@ -147,31 +164,32 @@ export default function LabelField({AppContext, dataLayoutBuilder, field}) {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [debounce]);
 
-	useEffect(() => {
-		if (!dataDefinitionField) {
-			return;
-		}
-
-		if (selectedValue === VIEW_LEVEL) {
-			setValue(getLocalizedValue(dataLayoutField.label, formattedState));
-		}
-		else {
-			setValue(
-				getLocalizedValue(dataDefinitionField.label, formattedState)
-			);
-		}
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [field.name]);
-
-	useEffect(() => {
-		setSelectedValue(getInitialSelectedValue(formattedState));
-	}, [formattedState]);
-
 	return (
 		<FieldBase
 			className="form-renderer-label-field"
-			onSelectedValueChange={onSelectedValueChange}
+			onSelectedValueChange={(selectedValue) => {
+				if (selectedValue === VIEW_LEVEL) {
+					setValue(
+						getLocalizedValue(dataLayoutField.label, formattedState)
+					);
+				}
+				else {
+					setValue(
+						getLocalizedValue(
+							dataDefinitionField.label,
+							formattedState
+						)
+					);
+				}
+
+				updateLabelAtStructureLevel(
+					formattedState,
+					dispatch,
+					selectedValue
+				);
+
+				setSelectedValue(selectedValue);
+			}}
 			options={LEVEL}
 			selectedValue={selectedValue}
 			title={Liferay.Language.get('label-options')}
@@ -191,10 +209,15 @@ export default function LabelField({AppContext, dataLayoutBuilder, field}) {
 				autoFocus
 				className="ddm-field-text"
 				name={field.name}
-				onChange={({target: {value}}) => setValue(value)}
+				onChange={({target: {value: currentValue}}) =>
+					setValue({
+						...value,
+						[editingLanguageId]: currentValue,
+					})
+				}
 				placeholder={field.placeholder}
 				type="text"
-				value={value}
+				value={value[editingLanguageId] || value[defaultLanguageId]}
 			/>
 
 			{selectedValue === VIEW_LEVEL && (
@@ -204,7 +227,7 @@ export default function LabelField({AppContext, dataLayoutBuilder, field}) {
 							getLocalizedValue(
 								dataDefinitionField.label,
 								formattedState
-							),
+							)[editingLanguageId],
 						])}
 					</ClayForm.FeedbackItem>
 				</ClayForm.FeedbackGroup>

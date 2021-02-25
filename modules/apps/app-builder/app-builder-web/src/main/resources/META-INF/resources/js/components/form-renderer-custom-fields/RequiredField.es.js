@@ -19,10 +19,9 @@ import FieldBase from './shared/FieldBase.es';
 import {STRUCTURE_LEVEL, VIEW_LEVEL} from './shared/constants.es';
 import {
 	containsFieldInsideFormBuilder,
-	getDataDefinitionField,
 	getFormattedState,
-	setPropertyAtFormViewLevel,
-	setPropertyAtObjectViewLevel,
+	setPropertyAtStructureLevel,
+	setPropertyAtViewLevel,
 } from './shared/utils.es';
 
 const PROPERTY_NAME = 'required';
@@ -30,15 +29,15 @@ const PROPERTY_NAME = 'required';
 const LEVEL = {
 	[STRUCTURE_LEVEL]: {
 		fn: (...params) => {
-			setPropertyAtObjectViewLevel(PROPERTY_NAME, true)(...params);
+			setPropertyAtStructureLevel(PROPERTY_NAME, true)(...params);
 		},
 		label: Liferay.Language.get('for-all-forms-using-this-field'),
 	},
 	[VIEW_LEVEL]: {
 		fn: (...params) => {
-			setPropertyAtFormViewLevel(PROPERTY_NAME, true)(...params);
+			setPropertyAtViewLevel(PROPERTY_NAME, true)(...params);
 
-			setPropertyAtObjectViewLevel(PROPERTY_NAME, false)(...params);
+			setPropertyAtStructureLevel(PROPERTY_NAME, false)(...params);
 		},
 		label: Liferay.Language.get('only-for-this-form'),
 	},
@@ -83,16 +82,16 @@ function isRequiredField(field) {
  * Check if it is required at form view level
  * @param {object} state
  */
-function isRequiredAtFormViewLevel({dataLayoutFields, fieldName}) {
-	return isRequiredField(dataLayoutFields[fieldName]);
+function isRequiredAtFormViewLevel({dataLayoutField}) {
+	return isRequiredField(dataLayoutField);
 }
 
 /**
  * Check if it is required at object view level
  * @param {object} state
  */
-function isRequiredAtObjectViewLevel(state) {
-	return isRequiredField(getDataDefinitionField(state));
+function isRequiredAtObjectViewLevel({dataDefinitionField}) {
+	return isRequiredField(dataDefinitionField);
 }
 
 export default function RequiredField({AppContext, dataLayoutBuilder}) {
@@ -138,9 +137,9 @@ export default function RequiredField({AppContext, dataLayoutBuilder}) {
 		}
 		else {
 			callbackFn((...params) => {
-				setPropertyAtFormViewLevel(PROPERTY_NAME, false)(...params);
+				setPropertyAtViewLevel(PROPERTY_NAME, false)(...params);
 
-				setPropertyAtObjectViewLevel(PROPERTY_NAME, false)(...params);
+				setPropertyAtStructureLevel(PROPERTY_NAME, false)(...params);
 			});
 		}
 	};

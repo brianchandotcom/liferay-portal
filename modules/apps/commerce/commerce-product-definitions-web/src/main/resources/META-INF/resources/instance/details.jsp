@@ -220,7 +220,7 @@ if ((cpInstance != null) && (cpInstance.getExpirationDate() != null)) {
 	Liferay.componentReady(
 		'ProductOptions<%= cpDefinition.getCPDefinitionId() %>'
 	).then((ddmForm) => {
-		ddmForm.unstable_onEvent(function(e) {
+		ddmForm.unstable_onEvent((e) => {
 			var eventName = e.type;
 			if (eventName === 'fieldEdited') {
 				var key = e.payload.fieldInstance.fieldName;
@@ -244,7 +244,7 @@ if ((cpInstance != null) && (cpInstance.getExpirationDate() != null)) {
 
 				var form = window.document['<portlet:namespace />fm'];
 				form['<portlet:namespace />ddmFormValues'].value = JSON.stringify(
-				fieldValues
+					fieldValues
 				);
 			}
 		});

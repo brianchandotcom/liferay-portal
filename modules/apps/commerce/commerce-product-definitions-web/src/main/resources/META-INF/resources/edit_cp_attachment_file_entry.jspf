@@ -105,7 +105,6 @@ if (cpAttachmentFileEntry != null) {
 %>
 
 <aui:script require="commerce-frontend-js/utilities/forms/formsHelper as FormsHelper">
-	debugger;
 	var fieldValues = [];
 
 	try {
@@ -119,13 +118,17 @@ if (cpAttachmentFileEntry != null) {
 				var ddmFormJSONShape = ddmForm.reactComponentRef.current.toJSON();
 				fieldValues = FormsHelper.getDefaultFieldsShape(ddmFormJSONShape);
 			}
-			ddmForm.unstable_onEvent(function(event) {
+			ddmForm.unstable_onEvent((event) => {
 				var eventName = event.type;
 				if (eventName === 'fieldEdited') {
-					fieldValues = FormsHelper.updateFields(fieldValues, event.payload);
+					fieldValues = FormsHelper.updateFields(
+						fieldValues,
+						event.payload
+					);
 					var form = document['<portlet:namespace />fm'];
-					form['<portlet:namespace />ddmFormValues'].value =
-					JSON.stringify(fieldValues);
+					form[
+						'<portlet:namespace />ddmFormValues'
+					].value = JSON.stringify(fieldValues);
 				}
 			});
 		}

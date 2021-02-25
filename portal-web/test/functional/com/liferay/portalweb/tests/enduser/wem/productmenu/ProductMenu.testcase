@@ -42,14 +42,14 @@ definition {
 				locator1 = "ProductMenu#CATEGORY_COLLAPSED");
 
 			for (var paddingVertical : list "padding-bottom,padding-top") {
-				TestUtils.assertCssValueIsGreaterThan(
+				Css.assertCssValueIsGreaterThan(
 					attribute = "${paddingVertical}",
 					element = "//a[@data-qa-id='appGroup'][normalize-space(text())='Design']",
 					expected = "${minCategoryPaddingVertical}");
 			}
 
 			for (var paddingHorizontal : list "padding-left,padding-right") {
-				TestUtils.assertCssValueIsGreaterThan(
+				Css.assertCssValueIsGreaterThan(
 					attribute = "${paddingHorizontal}",
 					element = "//a[@data-qa-id='appGroup'][normalize-space(text())='Design']",
 					expected = "${minCategoryPaddingHorizontal}");
@@ -64,14 +64,14 @@ definition {
 				locator1 = "ProductMenu#PORTLET");
 
 			for (var paddingVertical : list "padding-bottom,padding-top") {
-				TestUtils.assertCssValueIsGreaterThan(
+				Css.assertCssValueIsGreaterThan(
 					attribute = "${paddingVertical}",
 					element = "//a[contains(@id,'Portlet') and @data-title='Style Books']",
 					expected = "${minPortletPaddingVertical}");
 			}
 
 			for (var paddingHorizontal : list "padding-left,padding-right") {
-				TestUtils.assertCssValueIsGreaterThan(
+				Css.assertCssValueIsGreaterThan(
 					attribute = "${paddingHorizontal}",
 					element = "//a[contains(@id,'Portlet') and @data-title='Style Books']",
 					expected = "${minPortletPaddingHorizontal}");

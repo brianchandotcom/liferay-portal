@@ -1,16 +1,5 @@
 definition {
 
-	macro assertCssValueIsGreaterThan {
-		var actual = TestCase.getCssValue(
-			attribute = "${attribute}",
-			element = "${element}");
-		var actual = StringUtil.extractLeadingDigits("${actual}");
-
-		TestUtils.isGreaterThan(
-			actual = "${actual}",
-			expected = "${expected}");
-	}
-
 	macro assertEquals {
 		echo("${expected}");
 

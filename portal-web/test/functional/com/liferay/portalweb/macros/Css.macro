@@ -1,5 +1,16 @@
 definition {
 
+	macro assertCssValueIsGreaterThan {
+		var actual = Css.getCssValue(
+			attribute = "${attribute}",
+			element = "${element}");
+		var actual = StringUtil.extractLeadingDigits("${actual}");
+
+		TestUtils.isGreaterThan(
+			actual = "${actual}",
+			expected = "${expected}");
+	}
+
 	macro getCssValue {
 		WaitForSPARefresh();
 

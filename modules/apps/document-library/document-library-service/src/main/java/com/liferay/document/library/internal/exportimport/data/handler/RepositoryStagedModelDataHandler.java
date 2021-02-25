@@ -202,22 +202,23 @@ public class RepositoryStagedModelDataHandler
 			else {
 				importedRepository = existingRepository;
 			}
+
+			portletDataContext.importClassedModel(
+				repository, importedRepository);
+
+			StagedModelDataHandlerUtil.importReferenceStagedModels(
+				portletDataContext, repository, RepositoryEntry.class);
 		}
 		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					StringBundler.concat(
-						"Unable to connect to repository {name=",
-						repository.getName(), ", typeSettings=",
-						repository.getTypeSettingsProperties(), "}"),
-					exception);
-			}
+			_log.error(
+				StringBundler.concat(
+					"Unable to connect to repository {name=",
+					repository.getName(), ", typeSettings=",
+					repository.getTypeSettingsProperties(), "}"),
+				exception);
+
+			throw exception;
 		}
-
-		portletDataContext.importClassedModel(repository, importedRepository);
-
-		StagedModelDataHandlerUtil.importReferenceStagedModels(
-			portletDataContext, repository, RepositoryEntry.class);
 	}
 
 	@Override

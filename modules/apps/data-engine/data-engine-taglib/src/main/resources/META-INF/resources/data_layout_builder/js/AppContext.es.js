@@ -45,6 +45,7 @@ import {
 	UPDATE_PAGES,
 } from './actions.es';
 import {
+	getDDMFormFieldSettingsContext,
 	getDataDefinitionAndDataLayout,
 	getDataDefinitionField as convertFieldToDataDefinition,
 } from './utils/dataConverter.es';
@@ -295,6 +296,16 @@ const createReducer = (dataLayoutBuilder) => {
 					fieldTypes,
 				});
 
+				const {
+					appContext: [{editingLanguageId}],
+				} = dataLayoutBuilder.props;
+
+				const settingsContext = getDDMFormFieldSettingsContext({
+					dataDefinitionField: newCustomObjectField,
+					editingLanguageId,
+					fieldTypes,
+				});
+
 				return {
 					...state,
 					dataDefinition: {
@@ -306,9 +317,7 @@ const createReducer = (dataLayoutBuilder) => {
 					},
 					focusedCustomObjectField: {
 						...newCustomObjectField,
-						settingsContext: dataLayoutBuilder.getDDMFormFieldSettingsContext(
-							newCustomObjectField
-						),
+						settingsContext,
 					},
 				};
 			}
@@ -561,11 +570,20 @@ const createReducer = (dataLayoutBuilder) => {
 				let focusedCustomObjectField = {};
 
 				if (Object.keys(dataDefinitionField).length > 0) {
+					const {
+						appContext: [{editingLanguageId}],
+						fieldTypes,
+					} = dataLayoutBuilder.props;
+
+					const settingsContext = getDDMFormFieldSettingsContext({
+						dataDefinitionField,
+						editingLanguageId,
+						fieldTypes,
+					});
+
 					focusedCustomObjectField = {
 						...dataDefinitionField,
-						settingsContext: dataLayoutBuilder.getDDMFormFieldSettingsContext(
-							dataDefinitionField
-						),
+						settingsContext,
 					};
 
 					return {

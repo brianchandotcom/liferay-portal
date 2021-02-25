@@ -115,14 +115,14 @@ export function getDDMFormField({
 
 export function getDDMFormFieldSettingsContext({
 	dataDefinitionField,
-	fieldTypes,
-	editingLanguageId = themeDisplay.getDefaultLanguageId(),
 	defaultLanguageId = themeDisplay.getDefaultLanguageId(),
+	editingLanguageId = themeDisplay.getDefaultLanguageId(),
+	fieldTypes,
 }) {
-	const settingsContext = _getSettingsContext(
-		dataDefinitionField.fieldType,
-		fieldTypes
-	);
+	const {settingsContext} = fieldTypes.find(({name}) => {
+		return name === dataDefinitionField.fieldType;
+	});
+
 	const visitor = new PagesVisitor(settingsContext.pages);
 
 	return {
@@ -451,14 +451,6 @@ function _getDDMForm({
 		})),
 		title: name[editingLanguageId] || name[defaultLanguageId],
 	};
-}
-
-function _getSettingsContext(fieldType, fieldTypes) {
-	const {settingsContext} = fieldTypes.find(({name}) => {
-		return name === fieldType;
-	});
-
-	return settingsContext;
 }
 
 function _isCustomProperty(name) {

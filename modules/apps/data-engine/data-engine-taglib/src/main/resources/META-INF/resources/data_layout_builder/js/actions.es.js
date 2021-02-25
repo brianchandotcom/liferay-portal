@@ -12,7 +12,10 @@
  * details.
  */
 
-import {getDefaultDataLayout} from './utils/dataConverter.es';
+import {
+	getDDMFormFieldSettingsContext,
+	getDefaultDataLayout,
+} from './utils/dataConverter.es';
 import {getDataDefinitionField} from './utils/dataDefinition.es';
 import {normalizeDataLayoutRows} from './utils/normalizers.es';
 
@@ -60,15 +63,19 @@ export const dropCustomObjectField = ({
 		dataDefinition,
 		dataDefinitionFieldName
 	);
-	const settingsContext = dataLayoutBuilder.getDDMFormFieldSettingsContext(
-		dataDefinitionField
-	);
-	const {label} = dataDefinitionField;
 
 	const {
 		appContext: [{editingLanguageId}],
 		fieldTypes,
 	} = dataLayoutBuilder.props;
+
+	const settingsContext = getDDMFormFieldSettingsContext({
+		dataDefinitionField,
+		editingLanguageId,
+		fieldTypes,
+	});
+
+	const {label} = dataDefinitionField;
 
 	return {
 		data: {

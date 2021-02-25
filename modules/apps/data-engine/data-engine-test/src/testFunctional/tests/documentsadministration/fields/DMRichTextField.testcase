@@ -204,20 +204,26 @@ definition {
 		property portal.acceptance = "false";
 
 		var richTextValue = "Rich Text";
-		var dmDocumentTitle = "SetInvalidCharacters";
+		var dmDocumentTitle = "New Document Type";
 		var fieldReferenceWithInvalidChars = "Myreference@#$%¨&*";
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			panel = "Site Administration",
-			portlet = "Documents and Media");
+		// ProductMenu.gotoPortlet(
+		// 	category = "Content & Data",
+		// 	panel = "Site Administration",
+		// 	portlet = "Documents and Media");
 
-		DMNavigator.gotoDocumentType();
+		// DMNavigator.gotoDocumentType();
 
-		DMDocumentType.add(
-			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "${richTextValue}",
-			dmDocumentTypeName = "${dmDocumentTitle}");
+		// DMDocumentType.add(
+		// 	dmDocumentTypeDescription = "DM Document Type Description",
+		// 	dmDocumentTypeFieldNames = "${richTextValue}",
+		// 	dmDocumentTypeName = "${dmDocumentTitle}");
+
+		DataEngine.addField(
+			fieldFieldLabel = "${richTextValue}",
+			fieldName = "${richTextValue}");
+
+		Button.clickSave();
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "${dmDocumentTitle}");
 

@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.commerce.product.definitions.web.internal.portlet.action;
+package com.liferay.commerce.product.asset.categories.web.internal.portlet.action;
 
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.commerce.product.asset.categories.web.internal.display.context.CategoryCPDisplayLayoutDisplayContext;
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.product.definitions.web.internal.display.context.CPDefinitionDisplayLayoutDisplayContext;
 import com.liferay.commerce.product.exception.NoSuchCPDisplayLayoutException;
 import com.liferay.commerce.product.portlet.action.ActionHelper;
-import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPDisplayLayoutService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.item.selector.ItemSelector;
@@ -49,11 +49,11 @@ import org.osgi.service.component.annotations.Reference;
 	enabled = false, immediate = true,
 	property = {
 		"javax.portlet.name=" + CPPortletKeys.COMMERCE_CHANNELS,
-		"mvc.command.name=/commerce_channels/edit_product_cp_display_layout"
+		"mvc.command.name=/commerce_channels/edit_asset_category_cp_display_layout"
 	},
 	service = MVCRenderCommand.class
 )
-public class EditProductCPDisplayLayoutMVCRenderCommand
+public class EditAssetCategoryCPDisplayLayoutMVCRenderCommand
 	implements MVCRenderCommand {
 
 	@Override
@@ -63,7 +63,7 @@ public class EditProductCPDisplayLayoutMVCRenderCommand
 
 		RequestDispatcher requestDispatcher =
 			_servletContext.getRequestDispatcher(
-				"/display_layout/edit_cp_display_layout.jsp");
+				"/display_layout/edit_asset_category_cp_display_layout.jsp");
 
 		try {
 			HttpServletRequest httpServletRequest =
@@ -71,17 +71,17 @@ public class EditProductCPDisplayLayoutMVCRenderCommand
 			HttpServletResponse httpServletResponse =
 				_portal.getHttpServletResponse(renderResponse);
 
-			CPDefinitionDisplayLayoutDisplayContext
-				cpDefinitionDisplayLayoutDisplayContext =
-					new CPDefinitionDisplayLayoutDisplayContext(
-						_actionHelper, httpServletRequest,
-						_commerceChannelLocalService, _cpDefinitionService,
+			CategoryCPDisplayLayoutDisplayContext
+				categoryCPDisplayLayoutDisplayContext =
+					new CategoryCPDisplayLayoutDisplayContext(
+						_actionHelper, _assetCategoryLocalService,
+						httpServletRequest, _commerceChannelLocalService,
 						_cpDisplayLayoutService, _groupLocalService,
 						_itemSelector);
 
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				cpDefinitionDisplayLayoutDisplayContext);
+				categoryCPDisplayLayoutDisplayContext);
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
@@ -95,8 +95,7 @@ public class EditProductCPDisplayLayoutMVCRenderCommand
 			}
 
 			throw new PortletException(
-				"Unable to include edit_definition_display_page.jsp",
-				exception);
+				"Unable to include edit_category_display_page.jsp", exception);
 		}
 
 		return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
@@ -106,10 +105,10 @@ public class EditProductCPDisplayLayoutMVCRenderCommand
 	private ActionHelper _actionHelper;
 
 	@Reference
-	private CommerceChannelLocalService _commerceChannelLocalService;
+	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Reference
-	private CPDefinitionService _cpDefinitionService;
+	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
 	private CPDisplayLayoutService _cpDisplayLayoutService;
@@ -124,7 +123,7 @@ public class EditProductCPDisplayLayoutMVCRenderCommand
 	private Portal _portal;
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.product.definitions.web)"
+		target = "(osgi.web.symbolicname=com.liferay.commerce.product.asset.categories.web)"
 	)
 	private ServletContext _servletContext;
 

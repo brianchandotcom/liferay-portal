@@ -56,9 +56,9 @@ if (cpDisplayLayout != null) {
 <commerce-ui:side-panel-content
 	title='<%= (cpDisplayLayout == null) ? LanguageUtil.get(request, "add-display-layout") : LanguageUtil.get(request, "edit-display-layout") %>'
 >
-	<portlet:actionURL name="/commerce_channels/edit_product_cp_display_layout" var="editProductDisplayPageActionURL" />
+	<portlet:actionURL name="/commerce_channels/edit_cp_definition_cp_display_layout" var="editCPDefinitionCPDisplayLayoutActionURL" />
 
-	<aui:form action="<%= editProductDisplayPageActionURL %>" method="post" name="fm">
+	<aui:form action="<%= editCPDefinitionCPDisplayLayoutActionURL %>" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (cpDisplayLayout == null) ? Constants.ADD : Constants.UPDATE %>" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="classPK" type="hidden" value="<%= (cpDisplayLayout == null) ? 0 : cpDisplayLayout.getClassPK() %>" />

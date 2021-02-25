@@ -9,14 +9,20 @@
 				<li class="list-group-item list-group-item-flex">
 					<#if !entry.isTemporarilyUnavailable()>
 						<div class="autofit-col">
-							<#if entry.isUserPortraitVisible()>
-								<@liferay_ui["user-portrait"] userId=entry.getAssetEntryUserId() />
-							</#if>
-
 							<#if entry.isThumbnailVisible()>
-								<img alt="${languageUtil.get(locale, "thumbnail")}" class="rounded search-result-thumbnail-img" src="${entry.getThumbnailURLString()}" />
+								<span class="sticker">
+									<span class="sticker-overlay">
+										<img
+											alt="${languageUtil.get(locale, "thumbnail")}"
+											class="sticker-img"
+											src="${entry.getThumbnailURLString()}"
+										/>
+									</span>
+								</span>
+							<#elseif entry.isUserPortraitVisible() && stringUtil.equals(entry.getClassName(), userClassName)>
+								<@liferay_ui["user-portrait"] userId=entry.getAssetEntryUserId() />
 							<#elseif entry.isIconVisible()>
-								<span class="search-asset-type-sticker sticker sticker-rounded sticker-secondary sticker-static">
+								<span class="sticker sticker-rounded sticker-secondary sticker-static">
 									<@clay.icon symbol="${entry.getIconId()}" />
 								</span>
 							</#if>

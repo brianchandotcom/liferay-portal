@@ -17,6 +17,7 @@ package com.liferay.portal.file.install.deploy.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -32,10 +33,10 @@ import java.util.Dictionary;
 import java.util.concurrent.CountDownLatch;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -52,7 +53,6 @@ import org.osgi.service.cm.ManagedService;
 /**
  * @author Matthew Tambara
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class FileInstallCfgTest {
 
@@ -61,11 +61,22 @@ public class FileInstallCfgTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	public void setUp() {
+	@BeforeClass
+	public static void setUpClass() {
 		Bundle bundle = FrameworkUtil.getBundle(FileInstallCfgTest.class);
 
 		_bundleContext = bundle.getBundleContext();
+
+		_originalValue = ReflectionTestUtil.getAndSetFieldValue(
+			PropsValues.class, "MODULE_FRAMEWORK_FILE_INSTALL_CFG_ENABLED",
+			true);
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "MODULE_FRAMEWORK_FILE_INSTALL_CFG_ENABLED",
+			_originalValue);
 	}
 
 	@After
@@ -139,10 +150,13 @@ public class FileInstallCfgTest {
 	private static final String _CONFIGURATION_PID_PREFIX =
 		FileInstallCfgTest.class.getName() + "Configuration";
 
+	private static BundleContext _bundleContext;
+
 	@Inject
 	private static ConfigurationAdmin _configurationAdmin;
 
-	private BundleContext _bundleContext;
+	private static boolean _originalValue;
+
 	private Configuration _configuration;
 	private Path _configurationPath;
 

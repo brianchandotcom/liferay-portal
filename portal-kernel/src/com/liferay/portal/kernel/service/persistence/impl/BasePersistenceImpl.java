@@ -16,11 +16,15 @@ package com.liferay.portal.kernel.service.persistence.impl;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.ast.ASTNode;
 import com.liferay.petra.sql.dsl.expression.Alias;
 import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.petra.sql.dsl.query.FromStep;
+import com.liferay.petra.sql.dsl.query.GroupByStep;
+import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.petra.sql.dsl.spi.ast.BaseASTNode;
 import com.liferay.petra.sql.dsl.spi.ast.DefaultASTNodeListener;
 import com.liferay.petra.sql.dsl.spi.expression.AggregateExpression;
@@ -37,7 +41,6 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.orm.Dialect;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -48,7 +51,6 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -699,18 +701,22 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		boolean isNew = model.isNew();
 
 		if (isNew && (_dataLimitModelMaxCount > 0)) {
-			DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-				clazz, clazz.getClassLoader());
-
 			AuditedModel auditedModel = (AuditedModel)model;
 
-			dynamicQuery.add(
-				RestrictionsFactoryUtil.eq(
-					"companyId", auditedModel.getCompanyId()));
+			FromStep fromStep = DSLQueryFactoryUtil.count();
 
-			if (countWithDynamicQuery(dynamicQuery) >=
-					_dataLimitModelMaxCount) {
+			JoinStep joinStep = fromStep.from(_table);
 
+			GroupByStep groupByStep = joinStep.where(
+				_table.getColumn(
+					"companyId", Long.class
+				).eq(
+					auditedModel.getCompanyId()
+				));
+
+			Long modelCount = dslQuery(groupByStep);
+
+			if (modelCount >= _dataLimitModelMaxCount) {
 				throw new DataLimitExceededException(
 					"Unable to exceed maximum number of allowed " +
 						clazz.getName());

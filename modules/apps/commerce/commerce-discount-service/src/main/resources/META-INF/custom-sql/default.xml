@@ -45,11 +45,11 @@
 				CommerceDiscount ON
 					CDiscountCAccountGroupRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
 			JOIN
-				CommerceAccountGroup ON
-					CDiscountCAccountGroupRel.commerceAccountGroupId = CommerceAccountGroup.commerceAccountGroupId
+				AccountGroup ON
+					CDiscountCAccountGroupRel.commerceAccountGroupId = AccountGroup.accountGroupId
 			WHERE
 				(CommerceDiscount.commerceDiscountId = ?) AND
-				(LOWER(CommerceAccountGroup.name) LIKE ? [$AND_OR_NULL_CHECK$])
+				(LOWER(AccountGroup.name) LIKE ? [$AND_OR_NULL_CHECK$])
 		]]>
 	</sql>
 	<sql id="com.liferay.commerce.discount.service.persistence.CommerceDiscountCommerceAccountGroupRelFinder.findByCommerceDiscountId">
@@ -62,11 +62,11 @@
 				CommerceDiscount ON
 					CDiscountCAccountGroupRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
 			JOIN
-				CommerceAccountGroup ON
-					CDiscountCAccountGroupRel.commerceAccountGroupId = CommerceAccountGroup.commerceAccountGroupId
+				AccountGroup ON
+					CDiscountCAccountGroupRel.commerceAccountGroupId = AccountGroup.accountGroupId
 			WHERE
 				(CommerceDiscount.commerceDiscountId = ?) AND
-				(LOWER(CommerceAccountGroup.name) LIKE ? [$AND_OR_NULL_CHECK$])
+				(LOWER(AccountGroup.name) LIKE ? [$AND_OR_NULL_CHECK$])
 		]]>
 	</sql>
 	<sql id="com.liferay.commerce.discount.service.persistence.CommerceDiscountFinder.countByCommercePricingClassId">

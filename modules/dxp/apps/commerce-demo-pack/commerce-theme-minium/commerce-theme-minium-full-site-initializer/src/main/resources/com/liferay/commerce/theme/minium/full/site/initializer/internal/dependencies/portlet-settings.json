@@ -49,9 +49,9 @@
 		"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPContentPortlet",
 		"portletPreferences": {
 			"cpType": "simple",
-			"grouped--cpTypeRendererKey": "minium",
-			"simple--cpTypeRendererKey": "minium",
-			"virtual--cpTypeRendererKey": "minium"
+			"grouped--cpTypeRendererKey": "default",
+			"simple--cpTypeRendererKey": "default",
+			"virtual--cpTypeRendererKey": "default"
 		}
 	},
 	{

@@ -164,6 +164,7 @@ if (ddmDisplayContext != null) {
 	scopeClassNameId = PortalUtil.getClassNameId(ddmDisplay.getStructureType());
 	scopeStorageType = ddmDisplay.getStorageType();
 	scopeTemplateType = ddmDisplay.getTemplateType();
+	scopeTitle = ddmDisplayContext.getScopedStructureLabel();
 }
 
 String storageTypeValue = StringPool.BLANK;

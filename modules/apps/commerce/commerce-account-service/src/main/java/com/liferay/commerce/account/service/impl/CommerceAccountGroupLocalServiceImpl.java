@@ -183,6 +183,14 @@ public class CommerceAccountGroupLocalServiceImpl
 	}
 
 	@Override
+	public CommerceAccountGroup fetchCommerceAccountGroup(
+		long commerceAccountGroupId) {
+
+		return CommerceAccountGroupImpl.fromAccountGroup(
+			accountGroupLocalService.fetchAccountGroup(commerceAccountGroupId));
+	}
+
+	@Override
 	public CommerceAccountGroup getCommerceAccountGroup(
 			long commerceAccountGroupId)
 		throws PortalException {

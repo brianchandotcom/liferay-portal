@@ -19,6 +19,7 @@ import AppContext from '../../AppContext.es';
 import {dropFieldSet} from '../../actions.es';
 import DataLayoutBuilderContext from '../../data-layout-builder/DataLayoutBuilderContext.es';
 import {DRAG_FIELDSET_ADD} from '../../drag-and-drop/dragTypes.es';
+import {getFieldSetDDMForm} from '../../utils/dataConverter.es';
 import {containsFieldSet} from '../../utils/dataDefinition.es';
 import {getLocalizedValue} from '../../utils/lang.es';
 import EmptyState from '../empty-state/EmptyState.es';
@@ -88,9 +89,18 @@ export default function FieldSets({keywords}) {
 		if (fieldSet) {
 			const {context} = appProps;
 			const {defaultDataLayout, id: dataDefinitionId} = fieldSet;
-			const ddmForm = dataLayoutBuilder.getFieldSetDDMForm({
+			const {
+				contentTypeConfig: {allowInvalidAvailableLocalesForProperty},
+				editingLanguageId,
+				fieldTypes,
+			} = dataLayoutBuilder.props;
+
+			const ddmForm = getFieldSetDDMForm({
+				allowInvalidAvailableLocalesForProperty,
 				availableLanguageIds: dataDefinition.availableLanguageIds,
+				editingLanguageId,
 				fieldSet,
+				fieldTypes,
 			});
 
 			const [{rows}] = ddmForm.pages;

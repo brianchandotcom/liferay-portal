@@ -15,6 +15,7 @@
 import {
 	getDDMFormFieldSettingsContext,
 	getDefaultDataLayout,
+	getFieldSetDDMForm,
 } from './utils/dataConverter.es';
 import {getDataDefinitionField} from './utils/dataDefinition.es';
 import {normalizeDataLayoutRows} from './utils/normalizers.es';
@@ -136,13 +137,24 @@ export const dropFieldSet = ({
 		availableLanguageIds = [...availableLanguageIds, defaultLanguageId];
 	}
 
+	const {
+		contentTypeConfig: {allowInvalidAvailableLocalesForProperty},
+		editingLanguageId,
+		fieldTypes,
+	} = dataLayoutBuilder.props;
+
+	const newFieldSet = getFieldSetDDMForm({
+		allowInvalidAvailableLocalesForProperty,
+		availableLanguageIds,
+		editingLanguageId,
+		fieldSet,
+		fieldTypes,
+	});
+
 	return {
 		...otherProps,
 		defaultLanguageId: fieldSet.defaultLanguageId,
-		fieldSet: dataLayoutBuilder.getFieldSetDDMForm({
-			availableLanguageIds,
-			fieldSet,
-		}),
+		fieldSet: newFieldSet,
 		indexes,
 		parentFieldName,
 		useFieldName,

@@ -32,9 +32,10 @@ import com.liferay.portal.tools.service.builder.test.service.base.DataLimitEntry
 public class DataLimitEntryLocalServiceImpl
 	extends DataLimitEntryLocalServiceBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Use <code>com.liferay.portal.tools.service.builder.test.service.DataLimitEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.tools.service.builder.test.service.DataLimitEntryLocalServiceUtil</code>.
 	 */
+
 }

@@ -95,7 +95,7 @@
 		<tag-class>com.liferay.commerce.frontend.taglib.servlet.taglib.AvailabilityLabelTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<name>cpCatalogEntry</name>
+			<name>CPCatalogEntry</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

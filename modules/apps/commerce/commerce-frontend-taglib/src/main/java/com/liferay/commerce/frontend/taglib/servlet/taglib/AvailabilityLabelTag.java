@@ -80,7 +80,7 @@ public class AvailabilityLabelTag extends IncludeTag {
 		return super.doStartTag();
 	}
 
-	public CPCatalogEntry getCpCatalogEntry() {
+	public CPCatalogEntry getCPCatalogEntry() {
 		return _cpCatalogEntry;
 	}
 
@@ -97,7 +97,7 @@ public class AvailabilityLabelTag extends IncludeTag {
 		setNamespacedAttribute(httpServletRequest, "namespace", _namespace);
 	}
 
-	public void setCpCatalogEntry(CPCatalogEntry cpCatalogEntry) {
+	public void setCPCatalogEntry(CPCatalogEntry cpCatalogEntry) {
 		_cpCatalogEntry = cpCatalogEntry;
 	}
 

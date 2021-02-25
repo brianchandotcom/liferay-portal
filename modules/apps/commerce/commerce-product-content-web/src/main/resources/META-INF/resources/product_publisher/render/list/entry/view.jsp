@@ -36,7 +36,7 @@ String productDetailURL = cpContentHelper.getFriendlyURL(cpCatalogEntry, themeDi
 
 				<div class="aspect-ratio-item-bottom-left">
 					<commerce-ui:availability-label
-						cpCatalogEntry="<%= cpCatalogEntry %>"
+						CPCatalogEntry="<%= cpCatalogEntry %>"
 					/>
 				</div>
 			</a>

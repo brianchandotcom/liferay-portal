@@ -109,8 +109,7 @@ definition {
 	@priority = "4"
 	test ModuleLicenseExpirationWarning {
 		property commerce.enabled = "true";
-
-		// Require property to generate a modify license with 7 or 30 days warning expiration date
+		property custom.commerce.license = "commerce-license-developer-custom-expiration.xml";
 
 		CommerceLicense.viewCommerceAvailable();
 

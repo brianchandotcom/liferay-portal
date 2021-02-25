@@ -1603,6 +1603,10 @@ public class JenkinsResultsParserUtil {
 								buildProperties, jenkinsMasterName, null,
 								false);
 
+							if (jenkinsSlaveNames.isEmpty()) {
+								continue;
+							}
+
 							jenkinsNodeMap.put(
 								jenkinsMasterName, jenkinsSlaveNames);
 						}

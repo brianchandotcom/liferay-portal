@@ -2135,7 +2135,7 @@ definition {
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 	}
 
-	@description = "This is a test for LPS-125933. Create, read, update and delete a Web Content from a Structure with all possible fields and using a Template with all posible fields."
+	@description = "LPS-128283. Smoke tests for Data Engine. Create, read  and delete a Web Content from a Structure with all possible fields and using a Template with all possible fields."
 	@priority = "5"
 	test ViewAndEditAsWellAsDeleteContentWithTitleAndAllFields {
 		task ("Add two widget pages") {

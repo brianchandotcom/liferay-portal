@@ -50,7 +50,7 @@ function toArray(value) {
 
 export function getDefaultFieldsShape(formInstance) {
 	try {
-		const options = formInstance.props.pages[0].rows;
+		const options = formInstance.pages[0].rows;
 		const fields = options.map((option) => option.columns[0].fields[0]);
 
 		return fields.map((field) => {

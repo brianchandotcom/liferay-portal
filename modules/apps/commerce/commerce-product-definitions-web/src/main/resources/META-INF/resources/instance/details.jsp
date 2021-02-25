@@ -220,33 +220,33 @@ if ((cpInstance != null) && (cpInstance.getExpirationDate() != null)) {
 	Liferay.componentReady(
 		'ProductOptions<%= cpDefinition.getCPDefinitionId() %>'
 	).then((ddmForm) => {
-		if (!ddmForm.on) {
-			return;
-		}
-		ddmForm.on('fieldEdited', (e) => {
-			var key = e.fieldInstance.fieldName;
-			var updatedItem = {
-				key: e.fieldInstance.fieldName,
-				value: e.value,
-			};
+		ddmForm.unstable_onEvent(function(e) {
+			var eventName = e.type;
+			if (eventName === 'fieldEdited') {
+				var key = e.payload.fieldInstance.fieldName;
+				var updatedItem = {
+					key: e.payload.fieldInstance.fieldName,
+					value: e.payload.value,
+				};
 
-			var itemFound = fieldValues.find((item) => {
-				return item.key === key;
-			});
+				var itemFound = fieldValues.find((item) => {
+					return item.key === key;
+				});
 
-			if (itemFound) {
-				fieldValues = fieldValues.reduce((acc, item) => {
-					return acc.concat(item.key === key ? updatedItem : item);
-				}, []);
-			}
-			else {
-				fieldValues.push(updatedItem);
-			}
+				if (itemFound) {
+					fieldValues = fieldValues.reduce((acc, item) => {
+						return acc.concat(item.key === key ? updatedItem : item);
+					}, []);
+				}
+				else {
+					fieldValues.push(updatedItem);
+				}
 
-			var form = window.document['<portlet:namespace />fm'];
-			form['<portlet:namespace />ddmFormValues'].value = JSON.stringify(
+				var form = window.document['<portlet:namespace />fm'];
+				form['<portlet:namespace />ddmFormValues'].value = JSON.stringify(
 				fieldValues
-			);
+				);
+			}
 		});
 	});
 

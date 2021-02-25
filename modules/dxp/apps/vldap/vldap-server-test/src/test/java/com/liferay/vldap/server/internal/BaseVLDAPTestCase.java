@@ -15,8 +15,6 @@
 package com.liferay.vldap.server.internal;
 
 import com.liferay.petra.lang.ClassLoaderPool;
-import com.liferay.portal.kernel.bean.BeanLocator;
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactory;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
@@ -43,14 +41,13 @@ import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.vldap.server.internal.directory.SearchBase;
 import com.liferay.vldap.server.internal.util.PortletPropsKeys;
-
-import java.lang.reflect.Field;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,13 +79,10 @@ public abstract class BaseVLDAPTestCase extends PowerMockito {
 	}
 
 	@After
-	public void tearDown() throws Exception {
+	public void tearDown() {
 		for (Class<?> serviceUtilClass : serviceUtilClasses) {
-			Field field = serviceUtilClass.getDeclaredField("_service");
-
-			field.setAccessible(true);
-
-			field.set(serviceUtilClass, null);
+			ReflectionTestUtil.setFieldValue(
+				serviceUtilClass, "_service", null);
 		}
 	}
 
@@ -99,11 +93,8 @@ public abstract class BaseVLDAPTestCase extends PowerMockito {
 
 		T serviceMock = mock(serviceClass);
 
-		when(
-			portalBeanLocator.locate(Mockito.eq(serviceClass.getName()))
-		).thenReturn(
-			serviceMock
-		);
+		ReflectionTestUtil.setFieldValue(
+			serviceUtilClass, "_service", serviceMock);
 
 		return serviceMock;
 	}
@@ -289,10 +280,6 @@ public abstract class BaseVLDAPTestCase extends PowerMockito {
 	}
 
 	protected void setUpPortal() {
-		portalBeanLocator = mock(BeanLocator.class);
-
-		PortalBeanLocatorUtil.setBeanLocator(portalBeanLocator);
-
 		groupLocalService = getMockPortalService(
 			GroupLocalServiceUtil.class, GroupLocalService.class);
 		imageService = getMockPortalService(
@@ -374,7 +361,6 @@ public abstract class BaseVLDAPTestCase extends PowerMockito {
 	protected GroupLocalService groupLocalService;
 	protected ImageService imageService;
 	protected OrganizationLocalService organizationLocalService;
-	protected BeanLocator portalBeanLocator;
 	protected Props props;
 	protected RoleLocalService roleLocalService;
 	protected SearchBase searchBase;

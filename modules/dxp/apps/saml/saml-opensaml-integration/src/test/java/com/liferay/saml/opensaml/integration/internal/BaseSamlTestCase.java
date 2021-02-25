@@ -16,9 +16,6 @@ package com.liferay.saml.opensaml.integration.internal;
 
 import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.bean.BeanLocator;
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactory;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
@@ -60,8 +57,6 @@ import com.liferay.saml.runtime.metadata.LocalEntityManager;
 import com.liferay.saml.util.PortletPropsKeys;
 
 import java.io.UnsupportedEncodingException;
-
-import java.lang.reflect.Field;
 
 import java.net.URLDecoder;
 
@@ -133,22 +128,11 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 		identifiers.clear();
 
 		for (Class<?> serviceUtilClass : serviceUtilClasses) {
-			clearService(serviceUtilClass);
+			ReflectionTestUtil.setFieldValue(
+				serviceUtilClass, "_service", null);
 		}
 
 		ClassLoaderPool.unregister("saml-portlet");
-	}
-
-	protected void clearService(Class<?> serviceUtilClass) {
-		try {
-			Field field = serviceUtilClass.getDeclaredField("_service");
-
-			field.setAccessible(true);
-
-			field.set(serviceUtilClass, null);
-		}
-		catch (Exception exception) {
-		}
 	}
 
 	protected Credential getCredential(String entityId) throws Exception {
@@ -277,34 +261,26 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 	protected <T> T getMockPortalService(
 		Class<?> serviceUtilClass, Class<T> serviceClass) {
 
-		return getMockService(
-			serviceUtilClass, serviceClass, portalBeanLocator);
+		return getMockService(serviceUtilClass, serviceClass);
 	}
 
 	protected <T> T getMockPortletService(
 		Class<?> serviceUtilClass, Class<T> serviceClass) {
 
-		return getMockService(
-			serviceUtilClass, serviceClass, portletBeanLocator);
+		return getMockService(serviceUtilClass, serviceClass);
 	}
 
 	protected <T> T getMockService(
-		Class<?> serviceUtilClass, Class<T> serviceClass,
-		BeanLocator beanLocator) {
-
-		clearService(serviceUtilClass);
+		Class<?> serviceUtilClass, Class<T> serviceClass) {
 
 		serviceUtilClasses.add(serviceUtilClass);
 
-		T service = mock(serviceClass);
+		T serviceMock = mock(serviceClass);
 
-		when(
-			beanLocator.locate(serviceClass.getName())
-		).thenReturn(
-			service
-		);
+		ReflectionTestUtil.setFieldValue(
+			serviceUtilClass, "_service", serviceMock);
 
-		return service;
+		return serviceMock;
 	}
 
 	protected void prepareIdentityProvider(String entityId) {
@@ -579,15 +555,6 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 				new String[] {"8080", "8443"})
 		);
 
-		portalBeanLocator = mock(BeanLocator.class);
-
-		PortalBeanLocatorUtil.setBeanLocator(portalBeanLocator);
-
-		portletBeanLocator = mock(BeanLocator.class);
-
-		PortletBeanLocatorUtil.setBeanLocator(
-			"saml-portlet", portletBeanLocator);
-
 		groupLocalService = getMockPortalService(
 			GroupLocalServiceUtil.class, GroupLocalService.class);
 
@@ -683,8 +650,6 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 	protected MetadataManagerImpl metadataManagerImpl;
 	protected ParserPool parserPool;
 	protected Portal portal;
-	protected BeanLocator portalBeanLocator;
-	protected BeanLocator portletBeanLocator;
 	protected List<SamlBinding> samlBindings;
 	protected IdentifierGenerationStrategy samlIdentifierGenerator;
 	protected SamlProviderConfiguration samlProviderConfiguration;

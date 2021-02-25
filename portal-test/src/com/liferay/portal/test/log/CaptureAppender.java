@@ -70,6 +70,10 @@ public class CaptureAppender extends AppenderSkeleton implements Closeable {
 		return _logEvents;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #getLogEvents()}
+	 */
+	@Deprecated
 	public List<LoggingEvent> getLoggingEvents() {
 		List<LoggingEvent> loggingEvents = new ArrayList<>();
 

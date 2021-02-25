@@ -43,7 +43,50 @@ public class Log4JLoggerTestUtil {
 
 	public static final String WARN = String.valueOf(Level.WARN);
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *            #configureLog4JLogger(String, String)}
+	 */
+	@Deprecated
 	public static CaptureAppender configureLog4JLogger(
+		String name, Level level) {
+
+		return _configureLog4JLogger(name, level);
+	}
+
+	public static CaptureAppender configureLog4JLogger(
+		String name, String priority) {
+
+		return _configureLog4JLogger(name, Level.toLevel(priority));
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
+	public static Level setLoggerLevel(String name, Level level) {
+		LogWrapper logWrapper = (LogWrapper)LogFactoryUtil.getLog(name);
+
+		Log log = logWrapper.getWrappedLog();
+
+		Logger logger = null;
+
+		try {
+			logger = ReflectionTestUtil.getFieldValue(log, "_logger");
+		}
+		catch (Exception exception) {
+			throw new IllegalStateException(
+				"Log " + name + " is not a Log4j logger");
+		}
+
+		Level oldLevel = logger.getLevel();
+
+		logger.setLevel(level);
+
+		return oldLevel;
+	}
+
+	private static CaptureAppender _configureLog4JLogger(
 		String name, Level level) {
 
 		LogWrapper logWrapper = (LogWrapper)LogFactoryUtil.getLog(name);
@@ -67,34 +110,6 @@ public class Log4JLoggerTestUtil {
 		logger.setLevel(level);
 
 		return captureAppender;
-	}
-
-	public static CaptureAppender configureLog4JLogger(
-		String name, String priority) {
-
-		return configureLog4JLogger(name, Level.toLevel(priority));
-	}
-
-	public static Level setLoggerLevel(String name, Level level) {
-		LogWrapper logWrapper = (LogWrapper)LogFactoryUtil.getLog(name);
-
-		Log log = logWrapper.getWrappedLog();
-
-		Logger logger = null;
-
-		try {
-			logger = ReflectionTestUtil.getFieldValue(log, "_logger");
-		}
-		catch (Exception exception) {
-			throw new IllegalStateException(
-				"Log " + name + " is not a Log4j logger");
-		}
-
-		Level oldLevel = logger.getLevel();
-
-		logger.setLevel(level);
-
-		return oldLevel;
 	}
 
 }

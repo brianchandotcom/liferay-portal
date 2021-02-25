@@ -131,9 +131,9 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 		<aui:input name="formInstanceId" type="hidden" value="<%= formInstanceId %>" />
 		<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 		<aui:input name="ddmStructureId" type="hidden" value="<%= ddmStructureId %>" />
-		<aui:input name="name" type="hidden" value="<%= ddmFormAdminDisplayContext.getFormLocalizedName(formInstance) %>" />
-		<aui:input name="description" type="hidden" value="<%= ddmFormAdminDisplayContext.getFormLocalizedDescription() %>" />
-		<aui:input name="serializedFormBuilderContext" type="hidden" value="<%= serializedFormBuilderContext %>" />
+		<aui:input name="name" type="hidden" value="<%= ddmFormAdminDisplayContext.getFormLocalizedNameJSONObject(formInstance) %>" />
+		<aui:input name="description" type="hidden" value="<%= ddmFormAdminDisplayContext.getFormLocalizedDescriptionJSONObject() %>" />
+		<aui:input name="serializedFormBuilderContext" type="hidden" value="<%= formBuilderContextJSONObject %>" />
 		<aui:input name="serializedSettingsContext" type="hidden" value="" />
 
 		<clay:container-fluid>

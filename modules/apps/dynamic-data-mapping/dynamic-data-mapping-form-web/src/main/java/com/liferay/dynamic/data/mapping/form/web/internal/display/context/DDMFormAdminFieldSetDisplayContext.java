@@ -232,7 +232,7 @@ public class DDMFormAdminFieldSetDisplayContext
 	}
 
 	@Override
-	public String getFormLocalizedDescription() {
+	public JSONObject getFormLocalizedDescriptionJSONObject() {
 		DDMStructure structure = getDDMStructure();
 
 		JSONObject jsonObject = jsonFactory.createJSONObject();
@@ -249,11 +249,11 @@ public class DDMFormAdminFieldSetDisplayContext
 			}
 		}
 
-		return jsonObject.toString();
+		return jsonObject;
 	}
 
 	@Override
-	public <T> String getFormLocalizedName(T object) {
+	public <T> JSONObject getFormLocalizedNameJSONObject(T object) {
 		DDMStructure structure = (DDMStructure)object;
 
 		JSONObject jsonObject = jsonFactory.createJSONObject();
@@ -270,7 +270,7 @@ public class DDMFormAdminFieldSetDisplayContext
 			}
 		}
 
-		return jsonObject.toString();
+		return jsonObject;
 	}
 
 	@Override

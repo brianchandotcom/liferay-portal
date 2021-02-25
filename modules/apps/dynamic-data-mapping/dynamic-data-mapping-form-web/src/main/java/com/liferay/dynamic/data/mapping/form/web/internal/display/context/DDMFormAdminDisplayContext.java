@@ -80,7 +80,6 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -388,6 +387,14 @@ public class DDMFormAdminDisplayContext {
 		return formInstanceRecord.getLatestFormInstanceRecordVersion();
 	}
 
+	public JSONArray getDDMFormRulesJSONArray() throws PortalException {
+		DDMFormBuilderSettingsResponse ddmFormBuilderSettingsResponse =
+			getDDMFormBuilderSettingsResponse();
+
+		return jsonFactory.createJSONArray(
+			ddmFormBuilderSettingsResponse.getSerializedDDMFormRules());
+	}
+
 	public Map<String, Object> getDDMFormSettingsContext(
 			PageContext pageContext)
 		throws Exception {
@@ -564,6 +571,47 @@ public class DDMFormAdminDisplayContext {
 		).build();
 	}
 
+	public JSONObject getFormBuilderContextJSONObject() throws PortalException {
+		String serializedFormBuilderContext = ParamUtil.getString(
+			renderRequest, "serializedFormBuilderContext");
+
+		ThemeDisplay themeDisplay = formAdminRequestHelper.getThemeDisplay();
+
+		if (Validator.isNotNull(serializedFormBuilderContext)) {
+			JSONObject jsonObject = jsonFactory.createJSONObject(
+				serializedFormBuilderContext);
+
+			_escape(themeDisplay.getLanguageId(), "description", jsonObject);
+			_escape(themeDisplay.getLanguageId(), "name", jsonObject);
+
+			return jsonObject;
+		}
+
+		DDMFormBuilderContextRequest ddmFormBuilderContextRequest =
+			DDMFormBuilderContextRequest.with(
+				Optional.ofNullable(null), themeDisplay.getRequest(),
+				themeDisplay.getResponse(),
+				LocaleUtil.fromLanguageId(getDefaultLanguageId()), true);
+
+		ddmFormBuilderContextRequest.addProperty(
+			"ddmStructureVersion", getLatestDDMStructureVersion());
+		ddmFormBuilderContextRequest.addProperty(
+			"portletNamespace", renderResponse.getNamespace());
+
+		DDMFormBuilderContextResponse ddmFormBuilderContextResponse =
+			_ddmFormBuilderContextFactory.create(ddmFormBuilderContextRequest);
+
+		Map<String, Object> context =
+			ddmFormBuilderContextResponse.getContext();
+
+		context.put(
+			"activeNavItem",
+			ParamUtil.getInteger(
+				renderRequest, "activeNavItem", _NAV_ITEM_FORM));
+
+		return jsonFactory.createJSONObject(context);
+	}
+
 	public List<NavigationItem> getFormBuilderNavigationItems() {
 		HttpServletRequest httpServletRequest =
 			formAdminRequestHelper.getRequest();
@@ -618,7 +666,9 @@ public class DDMFormAdminDisplayContext {
 		return getJSONObjectLocalizedPropertyFromRequest("description");
 	}
 
-	public String getFormLocalizedDescription() throws PortalException {
+	public JSONObject getFormLocalizedDescriptionJSONObject()
+		throws PortalException {
+
 		JSONObject jsonObject = jsonFactory.createJSONObject();
 
 		DDMFormInstance formInstance = getDDMFormInstance();
@@ -636,10 +686,12 @@ public class DDMFormAdminDisplayContext {
 			}
 		}
 
-		return jsonObject.toString();
+		return jsonObject;
 	}
 
-	public <T> String getFormLocalizedName(T object) throws PortalException {
+	public <T> JSONObject getFormLocalizedNameJSONObject(T object)
+		throws PortalException {
+
 		DDMFormInstance formInstance = (DDMFormInstance)object;
 
 		JSONObject jsonObject = jsonFactory.createJSONObject();
@@ -656,7 +708,7 @@ public class DDMFormAdminDisplayContext {
 			}
 		}
 
-		return jsonObject.toString();
+		return jsonObject;
 	}
 
 	public String getFormName() throws PortalException {
@@ -713,11 +765,12 @@ public class DDMFormAdminDisplayContext {
 			_ddmFormFieldTypeServicesTracker);
 	}
 
-	public String getFunctionsMetadata() throws PortalException {
+	public JSONObject getFunctionsMetadataJSONObject() throws PortalException {
 		DDMFormBuilderSettingsResponse ddmFormBuilderSettingsResponse =
 			getDDMFormBuilderSettingsResponse();
 
-		return ddmFormBuilderSettingsResponse.getFunctionsMetadata();
+		return jsonFactory.createJSONObject(
+			ddmFormBuilderSettingsResponse.getFunctionsMetadata());
 	}
 
 	public String getFunctionsURL() throws PortalException {
@@ -971,56 +1024,6 @@ public class DDMFormAdminDisplayContext {
 
 	public String getSearchContainerId() {
 		return "formInstance";
-	}
-
-	public String getSerializedDDMFormRules() throws PortalException {
-		DDMFormBuilderSettingsResponse ddmFormBuilderSettingsResponse =
-			getDDMFormBuilderSettingsResponse();
-
-		return ddmFormBuilderSettingsResponse.getSerializedDDMFormRules();
-	}
-
-	public String getSerializedFormBuilderContext() throws PortalException {
-		String serializedFormBuilderContext = ParamUtil.getString(
-			renderRequest, "serializedFormBuilderContext");
-
-		ThemeDisplay themeDisplay = formAdminRequestHelper.getThemeDisplay();
-
-		if (Validator.isNotNull(serializedFormBuilderContext)) {
-			JSONObject jsonObject = jsonFactory.createJSONObject(
-				serializedFormBuilderContext);
-
-			_escape(themeDisplay.getLanguageId(), "description", jsonObject);
-			_escape(themeDisplay.getLanguageId(), "name", jsonObject);
-
-			return jsonObject.toString();
-		}
-
-		JSONSerializer jsonSerializer = jsonFactory.createJSONSerializer();
-
-		DDMFormBuilderContextRequest ddmFormBuilderContextRequest =
-			DDMFormBuilderContextRequest.with(
-				Optional.ofNullable(null), themeDisplay.getRequest(),
-				themeDisplay.getResponse(),
-				LocaleUtil.fromLanguageId(getDefaultLanguageId()), true);
-
-		ddmFormBuilderContextRequest.addProperty(
-			"ddmStructureVersion", getLatestDDMStructureVersion());
-		ddmFormBuilderContextRequest.addProperty(
-			"portletNamespace", renderResponse.getNamespace());
-
-		DDMFormBuilderContextResponse ddmFormBuilderContextResponse =
-			_ddmFormBuilderContextFactory.create(ddmFormBuilderContextRequest);
-
-		Map<String, Object> context =
-			ddmFormBuilderContextResponse.getContext();
-
-		context.put(
-			"activeNavItem",
-			ParamUtil.getInteger(
-				renderRequest, "activeNavItem", _NAV_ITEM_FORM));
-
-		return jsonSerializer.serializeDeep(context);
 	}
 
 	public String getSharedFormURL() {

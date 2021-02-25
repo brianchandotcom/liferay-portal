@@ -55,6 +55,8 @@ page import="com.liferay.petra.string.StringBundler" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker" %><%@
+page import="com.liferay.portal.kernel.json.JSONArray" %><%@
+page import="com.liferay.portal.kernel.json.JSONObject" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
@@ -89,12 +91,12 @@ DDMFormAdminDisplayContext ddmFormAdminDisplayContext = (DDMFormAdminDisplayCont
 String dataProviderInstanceParameterSettingsURL = ddmFormAdminDisplayContext.getDataProviderInstanceParameterSettingsURL();
 String dataProviderInstancesURL = ddmFormAdminDisplayContext.getDataProviderInstancesURL();
 String displayStyle = ddmFormAdminDisplayContext.getDisplayStyle();
-String functionsMetadata = ddmFormAdminDisplayContext.getFunctionsMetadata();
+JSONObject functionsMetadataJSONObject = ddmFormAdminDisplayContext.getFunctionsMetadataJSONObject();
 String functionsURL = ddmFormAdminDisplayContext.getFunctionsURL();
 String mainRequire = ddmFormAdminDisplayContext.getMainRequire();
 String rolesURL = ddmFormAdminDisplayContext.getRolesURL();
-String serializedDDMFormRules = ddmFormAdminDisplayContext.getSerializedDDMFormRules();
-String serializedFormBuilderContext = ddmFormAdminDisplayContext.getSerializedFormBuilderContext();
+JSONArray ddmFormRulesJSONArray = ddmFormAdminDisplayContext.getDDMFormRulesJSONArray();
+JSONObject formBuilderContextJSONObject = ddmFormAdminDisplayContext.getFormBuilderContextJSONObject();
 %>
 
 <%@ include file="/admin/init-ext.jsp" %>

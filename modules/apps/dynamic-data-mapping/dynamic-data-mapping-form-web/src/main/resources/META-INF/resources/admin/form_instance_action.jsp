@@ -115,7 +115,7 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 		<liferay-ui:icon
 			cssClass='<%= !valid ? "disabled" : "" %>'
 			message="share"
-			onClick='<%= "Liferay.fire('" + liferayPortletResponse.getNamespace() + "openShareFormModal', { localizedName:" + ddmFormAdminDisplayContext.getFormLocalizedName(formInstance) + " , shareFormInstanceURL:'" + ddmFormAdminDisplayContext.getShareFormInstanceURL(formInstance) + "' , url:'" + ddmFormAdminDisplayContext.getPublishedFormURL(formInstance) + "' , node: this});" %>'
+			onClick='<%= "Liferay.fire('" + liferayPortletResponse.getNamespace() + "openShareFormModal', { localizedName:" + ddmFormAdminDisplayContext.getFormLocalizedNameJSONObject(formInstance) + " , shareFormInstanceURL:'" + ddmFormAdminDisplayContext.getShareFormInstanceURL(formInstance) + "' , url:'" + ddmFormAdminDisplayContext.getPublishedFormURL(formInstance) + "' , node: this});" %>'
 			url="javascript:;"
 		/>
 	</c:if>

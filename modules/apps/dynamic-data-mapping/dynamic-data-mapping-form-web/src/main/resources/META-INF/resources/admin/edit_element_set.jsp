@@ -82,7 +82,7 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 		<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 		<aui:input name="structureId" type="hidden" value="<%= structureId %>" />
 		<aui:input name="structureKey" type="hidden" value="<%= structureKey %>" />
-		<aui:input name="serializedFormBuilderContext" type="hidden" value="<%= serializedFormBuilderContext %>" />
+		<aui:input name="serializedFormBuilderContext" type="hidden" value="<%= formBuilderContextJSONObject %>" />
 		<aui:input name="serializedSettingsContext" type="hidden" value="" />
 
 		<%@ include file="/admin/exceptions.jspf" %>
@@ -142,7 +142,7 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 			Liferay.Loader.require(
 				'<%= mainRequire %>',
 				(packageName) => {
-					var context = <%= serializedFormBuilderContext %>;
+					var context = <%= formBuilderContextJSONObject %>;
 
 					if (context.pages.length === 0 && initialPages) {
 						context.pages = initialPages;
@@ -162,8 +162,8 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 							fieldSets: <%= ddmFormAdminDisplayContext.getFieldSetsJSONArray() %>,
 							fieldTypes: <%= ddmFormAdminDisplayContext.getDDMFormFieldTypesJSONArray() %>,
 							groupId: <%= groupId %>,
-							localizedDescription: <%= ddmFormAdminDisplayContext.getFormLocalizedDescription() %>,
-							localizedName: <%= ddmFormAdminDisplayContext.getFormLocalizedName(structure) %>,
+							localizedDescription: <%= ddmFormAdminDisplayContext.getFormLocalizedDescriptionJSONObject() %>,
+							localizedName: <%= ddmFormAdminDisplayContext.getFormLocalizedNameJSONObject(structure) %>,
 							namespace: '<portlet:namespace />',
 							redirectURL: '<%= HtmlUtil.escape(redirect) %>',
 							spritemap: Liferay.DDM.FormSettings.spritemap,

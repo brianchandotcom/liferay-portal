@@ -87,7 +87,7 @@ public class TestrayRoutine {
 
 			TestrayBuild testrayBuild = new TestrayBuild(this, dataJSONObject);
 
-			_addTestrayBuild(testrayBuild);
+			_addToTestrayBuildMaps(testrayBuild);
 
 			return testrayBuild;
 		}
@@ -127,7 +127,7 @@ public class TestrayRoutine {
 					TestrayBuild testrayBuild = new TestrayBuild(
 						this, dataJSONObject);
 
-					_addTestrayBuild(testrayBuild);
+					_addToTestrayBuildMaps(testrayBuild);
 
 					if (_testrayBuildsByName.containsKey(buildName)) {
 						return _testrayBuildsByName.get(buildName);
@@ -179,7 +179,7 @@ public class TestrayRoutine {
 						break;
 					}
 
-					_addTestrayBuild(testrayBuild);
+					_addToTestrayBuildMaps(testrayBuild);
 				}
 			}
 			catch (IOException ioException) {
@@ -205,7 +205,7 @@ public class TestrayRoutine {
 		return _url;
 	}
 
-	private void _addTestrayBuild(TestrayBuild testrayBuild) {
+	private void _addToTestrayBuildMaps(TestrayBuild testrayBuild) {
 		_testrayBuildsByID.put(testrayBuild.getID(), testrayBuild);
 		_testrayBuildsByName.put(testrayBuild.getName(), testrayBuild);
 	}

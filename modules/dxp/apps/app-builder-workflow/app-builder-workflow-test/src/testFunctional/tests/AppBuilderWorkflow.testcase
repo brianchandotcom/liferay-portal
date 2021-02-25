@@ -325,13 +325,13 @@ definition {
 			portlet = "Apps");
 
 		AppBuilderAppAdmin.createBasicWorkflowAppWith1ExtraStep(
-            assignee = "Administrator",
-            deployOption = "Product Menu",
-            formViewName = "My Form View",
-            isCreatingViaPlusIcon = "false",
-            objectName = "my custom object",
-            tableViewName = "My Table View",
-            workflowAppName = "My Workflow App");
+			assignee = "Administrator",
+			deployOption = "Product Menu",
+			formViewName = "My Form View",
+			isCreatingViaPlusIcon = "false",
+			objectName = "my custom object",
+			tableViewName = "My Table View",
+			workflowAppName = "My Workflow App");
 
 		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "My Workflow App");
 		AppBuilderAdmin.addEntry();

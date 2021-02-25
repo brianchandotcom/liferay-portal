@@ -102,9 +102,16 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+		DepotNavigator.openDepotAdmin();
 
-		LexiconEntry.viewNoEntry(rowEntry = "userfn");
+		DepotNavigator.gotoDepotPortlet(
+			depotName = "Test Depot Name",
+			portlet = "Memberships");
+
+		AssertElementNotPresent(
+			key_card = "userfn userln",
+			locator1 = "Card#CARD_TITLE",
+			value1 = "userfn userln");
 	}
 
 	@description = "This ensures that a user group can be added and removed in the membership of an asset library."

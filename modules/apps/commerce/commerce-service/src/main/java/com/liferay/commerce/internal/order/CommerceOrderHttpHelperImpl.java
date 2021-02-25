@@ -285,8 +285,9 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 	}
 
 	@Override
-	public String getCookieName(long groupId) {
-		return CommerceOrder.class.getName() + StringPool.POUND + groupId;
+	public String getCookieName(long commerceChannelId) {
+		return CommerceOrder.class.getName() + StringPool.POUND +
+			commerceChannelId;
 	}
 
 	@Override
@@ -490,7 +491,8 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 
 		HttpSession httpSession = originalHttpServletRequest.getSession();
 
-		String cookieName = getCookieName(commerceChannel.getGroupId());
+		String cookieName = getCookieName(
+			commerceChannel.getCommerceChannelId());
 
 		String commerceOrderUuid = (String)httpSession.getAttribute(cookieName);
 
@@ -590,8 +592,12 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 			return;
 		}
 
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
+				commerceOrder.getGroupId());
+
 		String commerceOrderUuidWebKey = getCookieName(
-			commerceOrder.getGroupId());
+			commerceChannel.getCommerceChannelId());
 
 		Cookie cookie = new Cookie(
 			commerceOrderUuidWebKey, commerceOrder.getUuid());

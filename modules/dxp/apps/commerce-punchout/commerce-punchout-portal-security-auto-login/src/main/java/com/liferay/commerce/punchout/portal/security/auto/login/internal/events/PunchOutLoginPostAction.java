@@ -163,7 +163,7 @@ public class PunchOutLoginPostAction extends Action {
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
 
 		String cookieName = _commerceOrderHttpHelper.getCookieName(
-			commerceOrder.getGroupId());
+			commerceContext.getCommerceChannelId());
 
 		Cookie cookie = new Cookie(cookieName, commerceOrder.getUuid());
 

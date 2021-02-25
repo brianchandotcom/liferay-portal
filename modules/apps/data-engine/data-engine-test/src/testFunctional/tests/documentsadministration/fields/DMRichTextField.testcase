@@ -203,7 +203,8 @@ definition {
 	test SetFieldReferenceOfRichTextWithInvalidCharacters {
 		property portal.acceptance = "false";
 
-		var assertFieldReference = "Myreference";
+		var richTextValue = "Rich Text";
+		var dmDocumentTitle = "SetInvalidCharacters";
 		var fieldReferenceWithInvalidChars = "Myreference@#$%¨&*";
 
 		ProductMenu.gotoPortlet(
@@ -215,25 +216,25 @@ definition {
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "Rich Text",
-			dmDocumentTypeName = "SetInvalidCharacters");
+			dmDocumentTypeFieldNames = "${richTextValue}",
+			dmDocumentTypeName = "${dmDocumentTitle}");
 
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "SetInvalidCharacters");
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "${dmDocumentTitle}");
 
 		DataEngine.editFieldReference(
-			assertFieldReference = "${assertFieldReference}",
-			fieldFieldLabel = "Rich Text",
-			fieldName = "Rich Text",
+			assertFieldReference = "Myreference",
+			fieldFieldLabel = "${richTextValue}",
+			fieldName = "${richTextValue}",
 			fieldReference = "${fieldReferenceWithInvalidChars}");
 
 		Button.clickSave();
 
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "SetInvalidCharacters");
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "${dmDocumentTitle}");
 
 		DataEngine.viewFieldReference(
-			fieldFieldLabel = "Rich Text",
-			fieldName = "Rich Text",
-			fieldReference = "${assertFieldReference}");
+			fieldFieldLabel = "${richTextValue}",
+			fieldName = "${richTextValue}",
+			fieldReference = "Myreference");
 
 		Button.clickSave();
 	}

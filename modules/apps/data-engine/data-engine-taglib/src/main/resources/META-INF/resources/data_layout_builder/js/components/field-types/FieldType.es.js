@@ -80,7 +80,7 @@ const FieldType = (props) => {
 			return;
 		}
 
-		onDoubleClick({...props});
+		onDoubleClick?.({...props});
 	};
 
 	const [loading, setLoading] = useState(false);
@@ -97,7 +97,7 @@ const FieldType = (props) => {
 			})}
 			data-field-type-name={name}
 			onClick={onClick && handleOnClick}
-			onDoubleClick={onDoubleClick && handleOnDoubleClick}
+			onDoubleClick={handleOnDoubleClick}
 			ref={drag}
 			verticalAlign="center"
 		>

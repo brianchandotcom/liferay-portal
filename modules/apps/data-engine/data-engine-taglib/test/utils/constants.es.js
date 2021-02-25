@@ -588,7 +588,6 @@ export const FORM_VIEW = {
 				},
 			},
 			getDDMForm: () => ({pages}),
-			getDDMFormFieldSettingsContext: jest.fn(),
 			getDefaultDataLayout: () => ({dataLayoutPages: pages}),
 			getFieldSetDDMForm: ({fieldSet: {name}}) => ({name, pages}),
 			on: jest.fn(),

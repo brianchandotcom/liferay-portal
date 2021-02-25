@@ -20,7 +20,6 @@ import React from 'react';
 
 import {
 	getDDMFormField,
-	getDDMFormFieldSettingsContext,
 	getDataDefinitionAndDataLayout,
 	getFieldSetDDMForm,
 } from '../utils/dataConverter.es';
@@ -127,24 +126,6 @@ class DataLayoutBuilder extends React.Component {
 
 	emit(event, payload, error = false) {
 		this.eventEmitter.emit(event, payload, error);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by DataConverter.getDDMFormFieldSettingsContext()
-	 */
-	getDDMFormFieldSettingsContext(dataDefinitionField, defaultLanguageId) {
-		const {
-			appContext: [state],
-			fieldTypes,
-		} = this.props;
-		const {editingLanguageId} = state;
-
-		return getDDMFormFieldSettingsContext({
-			dataDefinitionField,
-			defaultLanguageId,
-			editingLanguageId,
-			fieldTypes,
-		});
 	}
 
 	/**

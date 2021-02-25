@@ -1613,6 +1613,14 @@ public class JenkinsResultsParserUtil {
 					}
 
 					if (jenkinsNodeMap.isEmpty()) {
+						System.out.println(
+							combine(
+								"Jenkins slave name mapping properties could ",
+								"not be found. Build properties URLs will be ",
+								"reverted to their default values."));
+
+						setBuildProperties(URLS_BUILD_PROPERTIES_DEFAULT);
+
 						_checkCache = false;
 
 						throw new RuntimeException(

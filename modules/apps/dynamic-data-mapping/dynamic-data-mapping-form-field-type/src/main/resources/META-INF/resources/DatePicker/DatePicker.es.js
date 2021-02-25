@@ -133,6 +133,8 @@ const DatePicker = ({
 		[initialValue, locale]
 	);
 
+	const [localizedValue, setLocalizedValue] = useState({});
+
 	const [value, setValue] = useSyncValue(initialValueMemoized);
 	const [years, setYears] = useState(() => {
 		const currentYear = new Date().getFullYear();
@@ -156,15 +158,28 @@ const DatePicker = ({
 				showMask: true,
 			});
 
-			if (initialValueMemoized) {
+			if (localizedValue[locale]) {
+				inputRef.current.value = localizedValue[locale];
+			}
+			else if (initialValueMemoized) {
 				inputRef.current.value = moment(initialValueMemoized).format(
 					dateMask.toUpperCase()
 				);
 			}
+			else {
+				inputRef.current.value = '';
+			}
 
 			maskInstance.current.update(inputRef.current.value);
 		}
-	}, [dateMask, inputMask, inputRef, initialValueMemoized]);
+	}, [
+		dateMask,
+		inputMask,
+		inputRef,
+		initialValueMemoized,
+		localizedValue,
+		locale,
+	]);
 
 	const handleNavigation = (date) => {
 		const currentYear = date.getFullYear();
@@ -193,9 +208,18 @@ const DatePicker = ({
 				}}
 				onInput={(event) => {
 					maskInstance.current.update(event.target.value);
+					setLocalizedValue({
+						...localizedValue,
+						[locale]: event.target.value,
+					});
 				}}
 				onNavigation={handleNavigation}
 				onValueChange={(value, eventType) => {
+					setLocalizedValue({
+						...localizedValue,
+						[locale]: value,
+					});
+
 					setValue(value);
 
 					if (eventType === 'click') {

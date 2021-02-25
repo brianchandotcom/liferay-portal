@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactory;
 import com.liferay.portal.kernel.util.Http;
@@ -356,6 +357,8 @@ public class SearchResultsPortlet extends MVCPortlet {
 			summaryBuilderFactory
 		).setThemeDisplay(
 			themeDisplay
+		).setUserLocalService(
+			userLocalService
 		);
 
 		return searchResultSummaryDisplayBuilder.build();
@@ -471,6 +474,9 @@ public class SearchResultsPortlet extends MVCPortlet {
 
 	@Reference
 	protected SummaryBuilderFactory summaryBuilderFactory;
+
+	@Reference
+	protected UserLocalService userLocalService;
 
 	@Reference
 	private Portal _portal;

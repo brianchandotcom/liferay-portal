@@ -11,6 +11,8 @@
 						<div class="aspect-ratio card-item-first">
 							<#if entry.isThumbnailVisible()>
 								<img alt="${htmlUtil.escape(entry.getTitle())}" class="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-vertical-fluid" src="${entry.getThumbnailURLString()}" />
+							<#elseif entry.isUserPortraitVisible() && stringUtil.equals(entry.getClassName(), userClassName)>
+								<img alt="${htmlUtil.escape(entry.getTitle())}" class="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-vertical-fluid" src="${entry.getUserPortraitURLString()}" />
 							<#else>
 								<div class="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-vertical-fluid card-type-asset-icon">
 									<@clay.icon symbol="${(entry.isIconVisible())?then(entry.getIconId(),'web-content')}" />

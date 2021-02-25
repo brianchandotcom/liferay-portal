@@ -107,6 +107,10 @@ public class SearchResultSummaryDisplayContext implements Serializable {
 		return _title;
 	}
 
+	public String getUserPortraitURLString() {
+		return _userPortraitURLString;
+	}
+
 	public String getViewURL() {
 		return _viewURL;
 	}
@@ -300,6 +304,10 @@ public class SearchResultSummaryDisplayContext implements Serializable {
 		_title = title;
 	}
 
+	public void setUserPortraitURLString(String userPortraitURLString) {
+		_userPortraitURLString = userPortraitURLString;
+	}
+
 	public void setUserPortraitVisible(boolean userPortraitVisible) {
 		_userPortraitVisible = userPortraitVisible;
 	}
@@ -341,6 +349,7 @@ public class SearchResultSummaryDisplayContext implements Serializable {
 	private String _thumbnailURLString;
 	private boolean _thumbnailVisible;
 	private String _title;
+	private String _userPortraitURLString;
 	private boolean _userPortraitVisible;
 	private String _viewURL;
 

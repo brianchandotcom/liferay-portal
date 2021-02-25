@@ -16,7 +16,7 @@
 
 <c:choose>
 	<c:when test="<%= !searchResultSummaryDisplayContext.isTemporarilyUnavailable() %>">
-		<c:if test="<%= searchResultSummaryDisplayContext.isUserPortraitVisible() %>">
+		<c:if test="<%= searchResultSummaryDisplayContext.getAssetEntryUserId() > 0 %>">
 			<liferay-ui:search-container-column-text>
 				<liferay-ui:user-portrait
 					userId="<%= searchResultSummaryDisplayContext.getAssetEntryUserId() %>"

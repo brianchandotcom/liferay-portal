@@ -19,6 +19,9 @@ package com.liferay.saml.constants;
  */
 public class SamlPortletKeys {
 
+	public static final String SAML =
+		"com_liferay_saml_web_internal_portlet_SamlPortlet";
+
 	public static final String SAML_ADMIN =
 		"com_liferay_saml_web_internal_portlet_SamlAdminPortlet";
 

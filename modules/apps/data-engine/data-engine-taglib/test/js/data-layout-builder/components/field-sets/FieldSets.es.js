@@ -22,6 +22,7 @@ import {HTML5Backend} from 'react-dnd-html5-backend';
 import AppContext from '../../../../../src/main/resources/META-INF/resources/data_layout_builder/js/AppContext.es';
 import FieldSets from '../../../../../src/main/resources/META-INF/resources/data_layout_builder/js/components/field-sets/FieldSets.es';
 import DataLayoutBuilderContextProvider from '../../../../../src/main/resources/META-INF/resources/data_layout_builder/js/data-layout-builder/DataLayoutBuilderContextProvider.es';
+import * as DataConverter from '../../../../../src/main/resources/META-INF/resources/data_layout_builder/js/utils/dataConverter.es';
 import * as toast from '../../../../../src/main/resources/META-INF/resources/data_layout_builder/js/utils/toast.es';
 import {
 	DATA_DEFINITION_FIELDSET,
@@ -75,6 +76,11 @@ export const FieldSetWrapper = ({
 describe('FieldSets', () => {
 	beforeEach(() => {
 		dataLayoutBuilderProps = getDataLayoutBuilderProps();
+
+		jest.spyOn(DataConverter, 'getFieldSetDDMForm').mockReturnValue({
+			name: 'Field53354166',
+			pages: FORM_VIEW.pages,
+		});
 
 		ddmFormSpy = jest
 			.spyOn(DDMForm, 'default')
@@ -413,10 +419,6 @@ describe('FieldSets', () => {
 				{
 					...DATA_DEFINITION_FIELDSET,
 					dataDefinitionFields: nestedDataDefinitionFields,
-					name: {
-						en_US: 'Address',
-						pt_BR: 'Endereço',
-					},
 				},
 			],
 		};
@@ -440,7 +442,7 @@ describe('FieldSets', () => {
 
 		expect(action).toBe('fieldSetAdded');
 
-		expect(name).toStrictEqual({en_US: 'Address', pt_BR: 'Endereço'});
+		expect(name).toStrictEqual('Field53354166');
 		expect(indexes).toStrictEqual({
 			columnIndex: 0,
 			pageIndex: 0,

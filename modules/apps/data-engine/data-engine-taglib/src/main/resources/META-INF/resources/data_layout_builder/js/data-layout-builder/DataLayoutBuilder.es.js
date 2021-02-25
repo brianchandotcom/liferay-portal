@@ -21,7 +21,6 @@ import React from 'react';
 import {
 	getDDMFormField,
 	getDataDefinitionAndDataLayout,
-	getFieldSetDDMForm,
 } from '../utils/dataConverter.es';
 import EventEmitter from './EventEmitter.es';
 import saveDefinitionAndLayout from './saveDefinitionAndLayout.es';
@@ -141,25 +140,6 @@ class DataLayoutBuilder extends React.Component {
 			dataDefinition,
 			editingLanguageId,
 			fieldName,
-			fieldTypes,
-		});
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by DataConverter.getFieldSetDDMForm()
-	 */
-	getFieldSetDDMForm({availableLanguageIds, fieldSet}) {
-		const {
-			contentTypeConfig: {allowInvalidAvailableLocalesForProperty},
-			editingLanguageId,
-			fieldTypes,
-		} = this.props;
-
-		return getFieldSetDDMForm({
-			allowInvalidAvailableLocalesForProperty,
-			availableLanguageIds,
-			editingLanguageId,
-			fieldSet,
 			fieldTypes,
 		});
 	}

@@ -28,6 +28,15 @@ create table DSLQueryStatusEntry (
 	statusDate DATE null
 );
 
+create table DataLimitEntry (
+	dataLimitEntryId LONG not null primary key,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null
+);
+
 create table ERCCompanyEntry (
 	externalReferenceCode VARCHAR(75) null,
 	ercCompanyEntryId LONG not null primary key,

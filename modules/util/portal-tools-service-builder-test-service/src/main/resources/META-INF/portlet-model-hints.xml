@@ -10,6 +10,14 @@
 		<field name="cacheDisabledEntryId" type="long" />
 		<field name="name" type="String" />
 	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.model.DataLimitEntry">
+		<field name="dataLimitEntryId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
 	<model name="com.liferay.portal.tools.service.builder.test.model.DSLQueryEntry">
 		<field name="dslQueryEntryId" type="long" />
 		<field name="name" type="String" />

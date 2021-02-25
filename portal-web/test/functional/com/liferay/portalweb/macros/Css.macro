@@ -3,20 +3,18 @@ definition {
 	macro getCssValue {
 		WaitForSPARefresh();
 
-		var cssClassSelector = '''document.querySelector('${cssClassSelector}')''';
-		var cssProperty = "${cssProperty}";
+		var javascript = '''
+function getWebElement(locator) {
+	return document.evaluate(locator, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+}
 
-		var javaScript = '''
-const style = getComputedStyle(${cssClassSelector});
+var computedStyle = getComputedStyle(getWebElement("${element}"));
 
-const cssValue = style.${cssProperty}
+return computedStyle.getPropertyValue("${attribute}");
 
-return cssValue
 		''';
 
-		var cssValue = "";
-
-		var cssValue = selenium.getEval("${javaScript}");
+		var cssValue = selenium.getEval("${javascript}");
 
 		return "${cssValue}";
 	}

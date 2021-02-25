@@ -34,7 +34,7 @@ export default function EditAppToolbar({isSaving, onCancel, onSave}) {
 		dispatch,
 		setAppChangesModalVisible,
 		setDeployModalVisible,
-		setMissingRequiredFieldsModalProps,
+		setMissingRequiredFieldsVisible,
 		state: {app},
 	} = useContext(EditAppContext);
 	const {availableLanguageIds, defaultLanguageId} = config.dataObject;
@@ -53,6 +53,9 @@ export default function EditAppToolbar({isSaving, onCancel, onSave}) {
 		}),
 		{}
 	);
+
+	const disabledSaveButton =
+		!canDeployApp({...app, appName}, config) || isSaving;
 
 	const onAppNameChange = ({target}) => {
 		dispatch({
@@ -104,6 +107,18 @@ export default function EditAppToolbar({isSaving, onCancel, onSave}) {
 			.catch(({title}) => errorToast(title));
 	};
 
+	const getManageAppStatusOnClick = () => {
+		if (app.active) {
+			return onClickUndeploy;
+		}
+
+		if (config.formView.missingRequiredFields?.customField && appId) {
+			return () => setMissingRequiredFieldsVisible(true);
+		}
+
+		return () => setDeployModalVisible(true);
+	};
+
 	useEffect(() => {
 		if (!availableLanguageIds.includes(editingLanguageId)) {
 			setEditingLanguageId(defaultLanguageId);
@@ -122,9 +137,6 @@ export default function EditAppToolbar({isSaving, onCancel, onSave}) {
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [availableLanguageIds, defaultLanguageId]);
-
-	const isDisabledSaveButton =
-		!canDeployApp({...app, appName}, config) || isSaving;
 
 	return (
 		<UpperToolbar className="align-items-center">
@@ -165,7 +177,7 @@ export default function EditAppToolbar({isSaving, onCancel, onSave}) {
 				</UpperToolbar.Button>
 
 				<UpperToolbar.Button
-					disabled={isDisabledSaveButton}
+					disabled={disabledSaveButton}
 					displayType="secondary"
 					onClick={onClickSave}
 				>
@@ -174,19 +186,9 @@ export default function EditAppToolbar({isSaving, onCancel, onSave}) {
 
 				<ClayButton.Group className="ml-2">
 					<ClayButton
-						disabled={!app.active && isDisabledSaveButton}
+						disabled={!app.active && disabledSaveButton}
 						displayType={app.active ? 'secondary' : 'primary'}
-						onClick={
-							app.active
-								? onClickUndeploy
-								: config.formView.missingRequiredFields
-										?.customField && appId
-								? () =>
-										setMissingRequiredFieldsModalProps({
-											visible: true,
-										})
-								: () => setDeployModalVisible(true)
-						}
+						onClick={getManageAppStatusOnClick()}
 						small
 					>
 						{app.active

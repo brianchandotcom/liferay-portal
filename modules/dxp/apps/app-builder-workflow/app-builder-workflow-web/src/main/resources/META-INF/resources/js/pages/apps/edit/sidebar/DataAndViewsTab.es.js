@@ -479,7 +479,7 @@ export default function DataAndViewsTab({
 									className: classNames(
 										'clearfix w-100',
 										formView.missingRequiredFields
-											.nativeField && 'border-error'
+											?.nativeField && 'border-error'
 									),
 								}}
 								isLoading={fetching}

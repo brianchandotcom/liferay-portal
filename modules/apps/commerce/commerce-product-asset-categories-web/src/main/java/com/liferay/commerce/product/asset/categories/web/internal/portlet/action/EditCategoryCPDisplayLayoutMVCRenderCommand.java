@@ -49,11 +49,11 @@ import org.osgi.service.component.annotations.Reference;
 	enabled = false, immediate = true,
 	property = {
 		"javax.portlet.name=" + CPPortletKeys.COMMERCE_CHANNELS,
-		"mvc.command.name=/commerce_channels/edit_cp_display_layout"
+		"mvc.command.name=/commerce_channels/edit_category_cp_display_layout"
 	},
 	service = MVCRenderCommand.class
 )
-public class EditCPDisplayLayoutMVCRenderCommand implements MVCRenderCommand {
+public class EditCategoryCPDisplayLayoutMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(

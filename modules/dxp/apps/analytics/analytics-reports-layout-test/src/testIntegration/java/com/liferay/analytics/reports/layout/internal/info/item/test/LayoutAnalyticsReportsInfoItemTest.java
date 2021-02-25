@@ -16,12 +16,14 @@ package com.liferay.analytics.reports.layout.internal.info.item.test;
 
 import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItem;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.info.type.WebImage;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -153,6 +155,68 @@ public class LayoutAnalyticsReportsInfoItemTest {
 	}
 
 	@Test
+	public void testGetAuthorWebImage() throws Exception {
+		User user = UserTestUtil.addUser(_group.getGroupId());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, new ThemeDisplay());
+
+		serviceContext.setRequest(mockHttpServletRequest);
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			Layout layout = _layoutLocalService.addLayout(
+				user.getUserId(), _group.getGroupId(), false,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				StringPool.BLANK, LayoutConstants.TYPE_CONTENT, false,
+				StringPool.BLANK, serviceContext);
+
+			WebImage webImage = _analyticsReportsInfoItem.getAuthorWebImage(
+				layout, LocaleUtil.getSiteDefault());
+
+			String url = webImage.getUrl();
+
+			Assert.assertTrue(url.contains("user_portrait?"));
+		}
+		finally {
+			_userLocalService.deleteUser(user);
+
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	@Test
+	public void testGetAuthorWebImageWithoutThemeDisplay() throws Exception {
+		User user = UserTestUtil.addUser(_group.getGroupId());
+
+		try {
+			Layout layout = _layoutLocalService.addLayout(
+				user.getUserId(), _group.getGroupId(), false,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				StringPool.BLANK, LayoutConstants.TYPE_CONTENT, false,
+				StringPool.BLANK,
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+			WebImage webImage = _analyticsReportsInfoItem.getAuthorWebImage(
+				layout, LocaleUtil.getSiteDefault());
+
+			Assert.assertEquals(StringPool.BLANK, webImage.getUrl());
+		}
+		finally {
+			_userLocalService.deleteUser(user);
+		}
+	}
+
+	@Test
 	public void testGetAvailableLocales() throws Exception {
 		Layout layout = _layoutLocalService.addLayout(
 			TestPropsValues.getUserId(), _group.getGroupId(), false,
@@ -170,6 +234,80 @@ public class LayoutAnalyticsReportsInfoItemTest {
 		Assert.assertEquals(
 			Arrays.asList(LocaleUtil.BRAZIL, LocaleUtil.SPAIN),
 			_analyticsReportsInfoItem.getAvailableLocales(layout));
+	}
+
+	@Test
+	public void testGetCanonicalURL() throws Exception {
+		User user = UserTestUtil.addUser(_group.getGroupId());
+
+		try {
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+			MockHttpServletRequest mockHttpServletRequest =
+				new MockHttpServletRequest();
+
+			mockHttpServletRequest.setAttribute(
+				WebKeys.CURRENT_COMPLETE_URL, StringPool.BLANK);
+
+			ThemeDisplay themeDisplay = new ThemeDisplay();
+
+			themeDisplay.setCompany(
+				_companyLocalService.fetchCompany(
+					TestPropsValues.getCompanyId()));
+
+			Layout layout = _layoutLocalService.addLayout(
+				user.getUserId(), _group.getGroupId(), false,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				StringPool.BLANK, LayoutConstants.TYPE_CONTENT, false,
+				StringPool.BLANK, serviceContext);
+
+			themeDisplay.setLayoutSet(layout.getLayoutSet());
+
+			themeDisplay.setRequest(mockHttpServletRequest);
+			themeDisplay.setSiteGroupId(_group.getGroupId());
+
+			mockHttpServletRequest.setAttribute(
+				WebKeys.THEME_DISPLAY, themeDisplay);
+
+			serviceContext.setRequest(mockHttpServletRequest);
+
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+			String canonicalURL = _analyticsReportsInfoItem.getCanonicalURL(
+				layout, LocaleUtil.getSiteDefault());
+
+			Assert.assertTrue(canonicalURL.contains(_group.getFriendlyURL()));
+		}
+		finally {
+			_userLocalService.deleteUser(user);
+
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	@Test
+	public void testGetCanonicalURLWithoutThemeDisplay() throws Exception {
+		User user = UserTestUtil.addUser(_group.getGroupId());
+
+		try {
+			Layout layout = _layoutLocalService.addLayout(
+				user.getUserId(), _group.getGroupId(), false,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				StringPool.BLANK, LayoutConstants.TYPE_CONTENT, false,
+				StringPool.BLANK,
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+			Assert.assertEquals(
+				StringPool.BLANK,
+				_analyticsReportsInfoItem.getCanonicalURL(
+					layout, LocaleUtil.getSiteDefault()));
+		}
+		finally {
+			_userLocalService.deleteUser(user);
+		}
 	}
 
 	@Test
@@ -329,6 +467,9 @@ public class LayoutAnalyticsReportsInfoItemTest {
 
 	@Inject(filter = "component.name=*.LayoutAnalyticsReportsInfoItem")
 	private AnalyticsReportsInfoItem<Layout> _analyticsReportsInfoItem;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

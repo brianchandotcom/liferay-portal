@@ -110,8 +110,8 @@ public class AvailabilityLabelTag extends IncludeTag {
 		super.setPageContext(pageContext);
 
 		_cpContentHelper = ServletContextUtil.getCPContentHelper();
-		servletContext = ServletContextUtil.getServletContext();
 		_productHelper = ServletContextUtil.getProductHelper();
+		servletContext = ServletContextUtil.getServletContext();
 	}
 
 	@Override

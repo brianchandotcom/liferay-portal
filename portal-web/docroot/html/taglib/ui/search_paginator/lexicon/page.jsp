@@ -33,7 +33,6 @@ String type = (String)request.getAttribute("liferay-ui:search:type");
 PortletURL iteratorURL = searchContainer.getIteratorURL();
 
 if (iteratorURL != null) {
-	iteratorURL.setParameter(searchContainer.getCurParam(), (String)null);
 	iteratorURL.setParameter("resetCur", Boolean.FALSE.toString());
 }
 %>

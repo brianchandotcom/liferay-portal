@@ -41,11 +41,10 @@ public class JUnitBatchTestrayCase extends BatchTestrayCase {
 		String testClassName = JenkinsResultsParserUtil.getCanonicalPath(
 			_testClass.getTestClassFile());
 
-		testClassName = testClassName.replaceAll(".*/(com/liferay.*)", "$1");
+		testClassName = testClassName.replaceAll(
+			".*/(com/liferay.*)\\.java", "$1");
 
-		testClassName = testClassName.replace("/", ".");
-
-		return testClassName.replace(".java", "");
+		return testClassName.replace("/", ".");
 	}
 
 	@Override

@@ -16,7 +16,6 @@ import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 import {fetch} from 'frontend-js-web';
 
 import {EVENT_TYPES} from '../actions/eventTypes.es';
-import extractDataRecordValueKey from '../util/extractDataRecordValueKey.es';
 import setDataRecord from '../util/setDataRecord.es';
 
 const formatFieldValue = ({dataType, symbols, value}) => {
@@ -119,22 +118,10 @@ export default function pageLanguageUpdate({
 							field.localizedValue = {};
 						}
 
-						const fieldRecordValue =
-							dataRecordValues[
-								extractDataRecordValueKey(field.name)
-							];
-
-						if (fieldRecordValue) {
-							if (field.localizable) {
-								field.localizedValue = {
-									...fieldRecordValue,
-								};
-							}
-							else {
-								field.localizedValue = {
-									[defaultLanguageId]: fieldRecordValue,
-								};
-							}
+						if (!field.localizable) {
+							field.localizedValue = {
+								[defaultLanguageId]: field.value,
+							};
 						}
 
 						return {

@@ -15,8 +15,9 @@
 package com.liferay.analytics.reports.layout.internal.info.item;
 
 import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItem;
-import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.type.WebImage;
+import com.liferay.layout.seo.kernel.LayoutSEOLink;
+import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -82,27 +83,31 @@ public class LayoutAnalyticsReportsInfoItem
 
 	@Override
 	public WebImage getAuthorWebImage(Layout layout, Locale locale) {
-		ThemeDisplay themeDisplay = _getThemeDisplay();
+		Optional<ThemeDisplay> themeDisplayOptional =
+			_getThemeDisplayOptional();
 
-		if (themeDisplay == null) {
-			return new WebImage(StringPool.BLANK);
-		}
+		return themeDisplayOptional.map(
+			themeDisplay -> {
+				Optional<User> userOptional = _getUserOptional(layout);
 
-		Optional<User> userOptional = _getUserOptional(layout);
+				return userOptional.map(
+					user -> {
+						try {
+							return new WebImage(
+								user.getPortraitURL(themeDisplay));
+						}
+						catch (PortalException portalException) {
+							_log.error(portalException, portalException);
 
-		return userOptional.map(
-			user -> {
-				try {
-					return new WebImage(user.getPortraitURL(themeDisplay));
-				}
-				catch (PortalException portalException) {
-					_log.error(portalException, portalException);
-
-					return new WebImage(StringPool.BLANK);
-				}
+							return new WebImage(StringPool.BLANK);
+						}
+					}
+				).orElse(
+					null
+				);
 			}
-		).orElse(
-			new WebImage(StringPool.BLANK)
+		).orElseGet(
+			() -> new WebImage(StringPool.BLANK)
 		);
 	}
 
@@ -118,6 +123,39 @@ public class LayoutAnalyticsReportsInfoItem
 			ListUtil::fromCollection
 		).orElseGet(
 			() -> Collections.singletonList(LocaleUtil.getDefault())
+		);
+	}
+
+	@Override
+	public String getCanonicalURL(Layout layout, Locale locale) {
+		Optional<ThemeDisplay> themeDisplayOptional =
+			_getThemeDisplayOptional();
+
+		return themeDisplayOptional.map(
+			themeDisplay -> {
+				String completeURL = _portal.getCurrentCompleteURL(
+					themeDisplay.getRequest());
+
+				try {
+					String canonicalURL = _portal.getCanonicalURL(
+						completeURL, themeDisplay, layout, false, false);
+
+					LayoutSEOLink layoutSEOLink =
+						_layoutSEOLinkManager.getCanonicalLayoutSEOLink(
+							layout, locale, canonicalURL,
+							_portal.getAlternateURLs(
+								canonicalURL, themeDisplay, layout));
+
+					return layoutSEOLink.getHref();
+				}
+				catch (PortalException portalException) {
+					_log.error(portalException, portalException);
+
+					return StringPool.BLANK;
+				}
+			}
+		).orElse(
+			StringPool.BLANK
 		);
 	}
 
@@ -175,15 +213,12 @@ public class LayoutAnalyticsReportsInfoItem
 		return true;
 	}
 
-	private ThemeDisplay _getThemeDisplay() {
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		if (serviceContext != null) {
-			return serviceContext.getThemeDisplay();
-		}
-
-		return null;
+	private Optional<ThemeDisplay> _getThemeDisplayOptional() {
+		return Optional.ofNullable(
+			ServiceContextThreadLocal.getServiceContext()
+		).map(
+			ServiceContext::getThemeDisplay
+		);
 	}
 
 	private Optional<User> _getUserOptional(Layout layout) {
@@ -228,13 +263,13 @@ public class LayoutAnalyticsReportsInfoItem
 	private GroupLocalService _groupLocalService;
 
 	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
-
-	@Reference
 	private Language _language;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutSEOLinkManager _layoutSEOLinkManager;
 
 	@Reference
 	private Portal _portal;

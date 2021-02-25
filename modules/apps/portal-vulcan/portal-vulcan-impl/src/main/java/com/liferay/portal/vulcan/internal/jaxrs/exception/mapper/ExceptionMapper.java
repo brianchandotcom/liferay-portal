@@ -19,12 +19,28 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.Providers;
 
 /**
  * @author Javier Gamarra
  */
 public class ExceptionMapper extends BaseExceptionMapper<Exception> {
+
+	@Override
+	public Response toResponse(Exception exception) {
+		Throwable throwable = exception.getCause();
+
+		javax.ws.rs.ext.ExceptionMapper exceptionMapper =
+			_providers.getExceptionMapper(throwable.getClass());
+
+		if (exceptionMapper != null) {
+			return exceptionMapper.toResponse(throwable);
+		}
+
+		return super.toResponse(exception);
+	}
 
 	@Override
 	protected Problem getProblem(Exception exception) {
@@ -36,5 +52,8 @@ public class ExceptionMapper extends BaseExceptionMapper<Exception> {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ExceptionMapper.class);
+
+	@Context
+	private Providers _providers;
 
 }

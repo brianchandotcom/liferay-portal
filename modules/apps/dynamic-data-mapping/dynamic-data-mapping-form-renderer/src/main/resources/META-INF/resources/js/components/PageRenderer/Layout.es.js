@@ -28,6 +28,7 @@ export const Layout = ({components, editable, rows}) => {
 		activePage,
 		allowNestedFields,
 		containerElement,
+		defaultLanguageId,
 		pageIndex,
 		spritemap,
 	} = usePage();
@@ -62,6 +63,7 @@ export const Layout = ({components, editable, rows}) => {
 								<Field
 									{...fieldProps}
 									activePage={activePage}
+									defaultLanguageId={defaultLanguageId}
 									editable={editable}
 									key={
 										fieldProps.field?.instanceId ??

@@ -96,7 +96,7 @@ public class JournalUtil {
 		_addReservedEl(
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_VERSION,
-			article.getVersion());
+			String.valueOf(article.getVersion()));
 
 		_addReservedEl(
 			rootElement, tokens,
@@ -447,13 +447,6 @@ public class JournalUtil {
 		Date value) {
 
 		_addReservedEl(rootElement, tokens, name, Time.getRFC822(value));
-	}
-
-	private static void _addReservedEl(
-		Element rootElement, Map<String, String> tokens, String name,
-		double value) {
-
-		_addReservedEl(rootElement, tokens, name, String.valueOf(value));
 	}
 
 	private static void _addReservedEl(

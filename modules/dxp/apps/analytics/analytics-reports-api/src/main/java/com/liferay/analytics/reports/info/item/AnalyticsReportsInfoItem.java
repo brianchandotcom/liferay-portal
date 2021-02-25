@@ -41,6 +41,10 @@ public interface AnalyticsReportsInfoItem<T> {
 		return Collections.singletonList(LocaleUtil.getDefault());
 	}
 
+	public default String getCanonicalURL(T model, Locale locale) {
+		return null;
+	}
+
 	public default Locale getDefaultLocale(T model) {
 		return LocaleUtil.getDefault();
 	}

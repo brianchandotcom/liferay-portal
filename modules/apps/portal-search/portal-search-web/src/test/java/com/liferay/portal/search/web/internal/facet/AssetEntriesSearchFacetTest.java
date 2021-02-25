@@ -157,7 +157,7 @@ public class AssetEntriesSearchFacetTest {
 		String[] assetEntryClassNames) {
 
 		Mockito.when(
-			_searchEngineHelper.getassetEntryClassNames()
+			_searchEngineHelper.getEntryClassNames()
 		).thenReturn(
 			assetEntryClassNames
 		);

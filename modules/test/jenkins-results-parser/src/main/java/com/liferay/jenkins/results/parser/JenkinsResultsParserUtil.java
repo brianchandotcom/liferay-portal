@@ -1502,6 +1502,10 @@ public class JenkinsResultsParserUtil {
 	public static String getJenkinsMasterName(String jenkinsSlaveName) {
 		jenkinsSlaveName = jenkinsSlaveName.replaceAll("([^\\.]+).*", "$1");
 
+		if (jenkinsSlaveName.matches("test-\\d{1,2}-\\d{1,2}")) {
+			return jenkinsSlaveName;
+		}
+
 		Map<String, List<String>> jenkinsNodeMap = getJenkinsNodeMap();
 
 		if (jenkinsNodeMap != null) {

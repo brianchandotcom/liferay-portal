@@ -79,11 +79,11 @@
 				CommercePriceList ON
 					CPLCommerceGroupAccountRel.commercePriceListId = CommercePriceList.commercePriceListId
 			JOIN
-				CommerceAccountGroup ON
-					CPLCommerceGroupAccountRel.commerceAccountGroupId = CommerceAccountGroup.commerceAccountGroupId
+				AccountGroup ON
+					CPLCommerceGroupAccountRel.commerceAccountGroupId = AccountGroup.accountGroupId
 			WHERE
 				(CommercePriceList.commercePriceListId = ?) AND
-				(LOWER(CommerceAccountGroup.name) LIKE ? [$AND_OR_NULL_CHECK$])
+				(LOWER(AccountGroup.name) LIKE ? [$AND_OR_NULL_CHECK$])
 		]]>
 	</sql>
 	<sql id="com.liferay.commerce.price.list.service.persistence.CommercePriceListCommerceAccountGroupRelFinder.findByCommercePriceListId">
@@ -96,11 +96,11 @@
 				CommercePriceList ON
 					CPLCommerceGroupAccountRel.commercePriceListId = CommercePriceList.commercePriceListId
 			JOIN
-				CommerceAccountGroup ON
-					CPLCommerceGroupAccountRel.commerceAccountGroupId = CommerceAccountGroup.commerceAccountGroupId
+				AccountGroup ON
+					CPLCommerceGroupAccountRel.commerceAccountGroupId = AccountGroup.accountGroupId
 			WHERE
 				(CommercePriceList.commercePriceListId = ?) AND
-				(LOWER(CommerceAccountGroup.name) LIKE ? [$AND_OR_NULL_CHECK$])
+				(LOWER(AccountGroup.name) LIKE ? [$AND_OR_NULL_CHECK$])
 		]]>
 	</sql>
 	<sql id="com.liferay.commerce.price.list.service.persistence.CommercePriceListFinder.countByCommercePricingClassId">

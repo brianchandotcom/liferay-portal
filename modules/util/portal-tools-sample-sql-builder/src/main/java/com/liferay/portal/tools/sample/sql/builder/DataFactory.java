@@ -76,6 +76,8 @@ import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.model.DDMContent;
+import com.liferay.dynamic.data.mapping.model.DDMField;
+import com.liferay.dynamic.data.mapping.model.DDMFieldAttribute;
 import com.liferay.dynamic.data.mapping.model.DDMFieldAttributeModel;
 import com.liferay.dynamic.data.mapping.model.DDMFieldModel;
 import com.liferay.dynamic.data.mapping.model.DDMStorageLinkModel;
@@ -180,6 +182,7 @@ import com.liferay.portal.kernel.model.LayoutModel;
 import com.liferay.portal.kernel.model.LayoutSetModel;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
+import com.liferay.portal.kernel.model.PortletPreferenceValue;
 import com.liferay.portal.kernel.model.PortletPreferenceValueModel;
 import com.liferay.portal.kernel.model.PortletPreferencesModel;
 import com.liferay.portal.kernel.model.ReleaseConstants;
@@ -1479,7 +1482,10 @@ public class DataFactory {
 	public List<CounterModel> newCounterModels() {
 		return Arrays.asList(
 			_newCounterModel(Counter.class.getName()),
+			_newCounterModel(DDMField.class.getName()),
+			_newCounterModel(DDMFieldAttribute.class.getName()),
 			_newCounterModel(FriendlyURLEntryLocalization.class.getName()),
+			_newCounterModel(PortletPreferenceValue.class.getName()),
 			_newCounterModel(ResourcePermission.class.getName()),
 			_newCounterModel(SocialActivity.class.getName()));
 	}

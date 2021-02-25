@@ -16,9 +16,6 @@ package com.liferay.analytics.reports.web.internal.portlet.action;
 
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPortletKeys;
 import com.liferay.analytics.reports.web.internal.data.provider.AnalyticsReportsDataProvider;
-import com.liferay.analytics.reports.web.internal.layout.seo.CanonicalURLProvider;
-import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
-import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -29,6 +26,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -37,8 +35,6 @@ import java.util.ResourceBundle;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -61,22 +57,16 @@ public class GetTotalReadsMVCResourceCommand extends BaseMVCResourceCommand {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			resourceRequest);
-
 		AnalyticsReportsDataProvider analyticsReportsDataProvider =
 			new AnalyticsReportsDataProvider(_http);
-
-		CanonicalURLProvider canonicalURLProvider = new CanonicalURLProvider(
-			httpServletRequest, _layoutDisplayPageProviderTracker,
-			_layoutSEOLinkManager, _portal);
+		String canonicalURL = ParamUtil.getString(
+			resourceRequest, "canonicalURL");
 
 		try {
 			JSONObject jsonObject = JSONUtil.put(
 				"analyticsReportsTotalReads",
 				analyticsReportsDataProvider.getTotalReads(
-					_portal.getCompanyId(resourceRequest),
-					canonicalURLProvider.getCanonicalURL()));
+					_portal.getCompanyId(resourceRequest), canonicalURL));
 
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse, jsonObject);
@@ -110,12 +100,6 @@ public class GetTotalReadsMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;
-
-	@Reference
-	private LayoutSEOLinkManager _layoutSEOLinkManager;
 
 	@Reference
 	private Portal _portal;

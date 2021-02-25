@@ -16,15 +16,12 @@ package com.liferay.analytics.reports.web.internal.portlet.action;
 
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPortletKeys;
 import com.liferay.analytics.reports.web.internal.data.provider.AnalyticsReportsDataProvider;
-import com.liferay.analytics.reports.web.internal.layout.seo.CanonicalURLProvider;
 import com.liferay.analytics.reports.web.internal.model.DirectTrafficChannelImpl;
 import com.liferay.analytics.reports.web.internal.model.OrganicTrafficChannelImpl;
 import com.liferay.analytics.reports.web.internal.model.PaidTrafficChannelImpl;
 import com.liferay.analytics.reports.web.internal.model.ReferralTrafficChannelImpl;
 import com.liferay.analytics.reports.web.internal.model.SocialTrafficChannelImpl;
 import com.liferay.analytics.reports.web.internal.model.TrafficChannel;
-import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
-import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -38,6 +35,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -85,18 +83,14 @@ public class GetTrafficSourcesMVCResourceCommand
 		try {
 			AnalyticsReportsDataProvider analyticsReportsDataProvider =
 				new AnalyticsReportsDataProvider(_http);
-			CanonicalURLProvider canonicalURLProvider =
-				new CanonicalURLProvider(
-					_portal.getHttpServletRequest(resourceRequest),
-					_layoutDisplayPageProviderTracker, _layoutSEOLinkManager,
-					_portal);
+			String canonicalURL = ParamUtil.getString(
+				resourceRequest, "canonicalURL");
 
 			JSONObject jsonObject = JSONUtil.put(
 				"trafficSources",
 				_getTrafficSourcesJSONArray(
 					analyticsReportsDataProvider, themeDisplay.getCompanyId(),
-					canonicalURLProvider.getCanonicalURL(),
-					themeDisplay.getLocale(), resourceBundle));
+					canonicalURL, themeDisplay.getLocale(), resourceBundle));
 
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse, jsonObject);
@@ -189,12 +183,6 @@ public class GetTrafficSourcesMVCResourceCommand
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;
-
-	@Reference
-	private LayoutSEOLinkManager _layoutSEOLinkManager;
 
 	@Reference
 	private Portal _portal;

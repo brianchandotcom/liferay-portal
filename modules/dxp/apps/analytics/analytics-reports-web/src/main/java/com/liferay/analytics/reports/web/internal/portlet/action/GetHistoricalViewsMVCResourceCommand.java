@@ -16,11 +16,8 @@ package com.liferay.analytics.reports.web.internal.portlet.action;
 
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPortletKeys;
 import com.liferay.analytics.reports.web.internal.data.provider.AnalyticsReportsDataProvider;
-import com.liferay.analytics.reports.web.internal.layout.seo.CanonicalURLProvider;
 import com.liferay.analytics.reports.web.internal.model.HistoricalMetric;
 import com.liferay.analytics.reports.web.internal.model.TimeSpan;
-import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
-import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
@@ -75,17 +72,13 @@ public class GetHistoricalViewsMVCResourceCommand
 			int timeSpanOffset = ParamUtil.getInteger(
 				resourceRequest, "timeSpanOffset");
 
-			CanonicalURLProvider canonicalURLProvider =
-				new CanonicalURLProvider(
-					_portal.getHttpServletRequest(resourceRequest),
-					_layoutDisplayPageProviderTracker, _layoutSEOLinkManager,
-					_portal);
+			String canonicalURL = ParamUtil.getString(
+				resourceRequest, "canonicalURL");
 
 			HistoricalMetric historicalMetric =
 				analyticsReportsDataProvider.getHistoricalViewsHistoricalMetric(
 					_portal.getCompanyId(resourceRequest),
-					timeSpan.toTimeRange(timeSpanOffset),
-					canonicalURLProvider.getCanonicalURL());
+					timeSpan.toTimeRange(timeSpanOffset), canonicalURL);
 
 			jsonObject.put(
 				"analyticsReportsHistoricalViews",
@@ -116,12 +109,6 @@ public class GetHistoricalViewsMVCResourceCommand
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;
-
-	@Reference
-	private LayoutSEOLinkManager _layoutSEOLinkManager;
 
 	@Reference
 	private Portal _portal;

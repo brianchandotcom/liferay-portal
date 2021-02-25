@@ -15,13 +15,16 @@
 package com.liferay.oauth2.provider.rest.internal.endpoint.authorize;
 
 import com.liferay.oauth2.provider.configuration.OAuth2ProviderConfiguration;
+import com.liferay.oauth2.provider.rest.internal.endpoint.constants.OAuth2ProviderRESTEndpointConstants;
 import com.liferay.oauth2.provider.rest.internal.endpoint.liferay.LiferayOAuthDataProvider;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.Dictionary;
+import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -29,7 +32,9 @@ import javax.ws.rs.core.Response;
 
 import org.apache.cxf.rs.security.oauth2.common.Client;
 import org.apache.cxf.rs.security.oauth2.common.OAuthError;
+import org.apache.cxf.rs.security.oauth2.common.OAuthPermission;
 import org.apache.cxf.rs.security.oauth2.common.OOBAuthorizationResponse;
+import org.apache.cxf.rs.security.oauth2.common.UserSubject;
 import org.apache.cxf.rs.security.oauth2.provider.OAuthServiceException;
 import org.apache.cxf.rs.security.oauth2.provider.SubjectCreator;
 import org.apache.cxf.rs.security.oauth2.services.AuthorizationCodeGrantService;
@@ -67,6 +72,25 @@ public class AuthorizationCodeGrantServiceRegistrator {
 
 		AuthorizationCodeGrantService authorizationCodeGrantService =
 			new AuthorizationCodeGrantService() {
+
+				@Override
+				protected boolean canAuthorizationBeSkipped(
+					MultivaluedMap<String, String> params, Client client,
+					UserSubject userSubject, List<String> requestedScope,
+					List<OAuthPermission> permissions) {
+
+					if (MapUtil.getBoolean(
+							client.getProperties(),
+							OAuth2ProviderRESTEndpointConstants.
+								PROPERTY_KEY_CLIENT_TRUSTED_APPLICATION)) {
+
+						return true;
+					}
+
+					return super.canAuthorizationBeSkipped(
+						params, client, userSubject, requestedScope,
+						permissions);
+				}
 
 				@Override
 				protected Response deliverOOBResponse(

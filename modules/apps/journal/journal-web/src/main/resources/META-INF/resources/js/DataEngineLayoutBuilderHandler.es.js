@@ -17,20 +17,27 @@ export default function ({defaultLanguageId, namespace}) {
 
 	const clearNameInputIfNeeded = () => {
 		const inputComponent = Liferay.component(`${namespace}name`);
-		const selectedLanguageId = document.getElementById(
-			`${namespace}languageId`
-		).value;
-		const translatedLanguages = inputComponent.get('translatedLanguages');
 
-		if (
-			!translatedLanguages.has(selectedLanguageId) &&
-			selectedLanguageId !== defaultLanguageId
-		) {
-			inputComponent.updateInput('');
+		if (inputComponent) {
+			const selectedLanguageId = document.getElementById(
+				`${namespace}languageId`
+			).value;
+			const translatedLanguages = inputComponent.get(
+				'translatedLanguages'
+			);
 
-			const form = Liferay.Form.get(`${namespace}fm`);
+			if (
+				!translatedLanguages.has(selectedLanguageId) &&
+				selectedLanguageId !== defaultLanguageId
+			) {
+				inputComponent.updateInput('');
 
-			form.removeRule(`${namespace}name`, 'required');
+				const form = Liferay.Form.get(`${namespace}fm`);
+
+				if (form) {
+					form.removeRule(`${namespace}name`, 'required');
+				}
+			}
 		}
 	};
 

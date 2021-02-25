@@ -169,8 +169,7 @@ public class AccountAddressResourceImpl
 				accountAddress.getCity(), commerceAddress.getCity()),
 			GetterUtil.getString(
 				accountAddress.getZip(), commerceAddress.getZip()),
-			commerceAddress.getCommerceRegionId(),
-			commerceAddress.getCommerceCountryId(),
+			commerceAddress.getRegionId(), commerceAddress.getCountryId(),
 			GetterUtil.getString(
 				accountAddress.getPhoneNumber(),
 				commerceAddress.getPhoneNumber()),
@@ -213,8 +212,7 @@ public class AccountAddressResourceImpl
 				accountAddress.getCity(), commerceAddress.getCity()),
 			GetterUtil.getString(
 				accountAddress.getZip(), commerceAddress.getZip()),
-			commerceAddress.getCommerceRegionId(),
-			commerceAddress.getCommerceCountryId(),
+			commerceAddress.getRegionId(), commerceAddress.getCountryId(),
 			GetterUtil.getString(
 				accountAddress.getPhoneNumber(),
 				commerceAddress.getPhoneNumber()),
@@ -266,8 +264,8 @@ public class AccountAddressResourceImpl
 					GetterUtil.getString(accountAddress.getStreet3(), null),
 					GetterUtil.getString(accountAddress.getCity(), null),
 					GetterUtil.getString(accountAddress.getZip(), null),
-					commerceAddress.getCommerceRegionId(),
-					commerceAddress.getCommerceCountryId(),
+					commerceAddress.getRegionId(),
+					commerceAddress.getCountryId(),
 					GetterUtil.getString(accountAddress.getPhoneNumber(), null),
 					GetterUtil.getInteger(
 						accountAddress.getType(), commerceAddress.getType()),
@@ -303,8 +301,7 @@ public class AccountAddressResourceImpl
 			GetterUtil.getString(accountAddress.getStreet3()),
 			GetterUtil.getString(accountAddress.getCity()),
 			GetterUtil.getString(accountAddress.getZip()),
-			commerceAddress.getCommerceRegionId(),
-			commerceAddress.getCommerceCountryId(),
+			commerceAddress.getRegionId(), commerceAddress.getCountryId(),
 			GetterUtil.getString(accountAddress.getPhoneNumber()),
 			GetterUtil.getInteger(accountAddress.getType()),
 			_serviceContextHelper.getServiceContext());

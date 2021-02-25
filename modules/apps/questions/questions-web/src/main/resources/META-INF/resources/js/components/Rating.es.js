@@ -76,9 +76,7 @@ export default ({
 	return (
 		<div className="align-items-center d-inline-flex flex-md-column justify-content-center text-secondary">
 			<ClayButton
-				className={
-					'text-reset' + (userRating === 1 ? ' text-primary' : '')
-				}
+				className={userRating === 1 ? ' text-primary' : 'text-reset'}
 				disabled={disabled || !Liferay.ThemeDisplay.isSignedIn()}
 				displayType="unstyled"
 				monospaced
@@ -90,9 +88,7 @@ export default ({
 			<span className="c-px-2">{rating || 0}</span>
 
 			<ClayButton
-				className={
-					'text-reset' + (userRating === -1 ? ' text-primary' : '')
-				}
+				className={userRating === -1 ? ' text-primary' : 'text-reset'}
 				disabled={disabled || !Liferay.ThemeDisplay.isSignedIn()}
 				displayType="unstyled"
 				monospaced

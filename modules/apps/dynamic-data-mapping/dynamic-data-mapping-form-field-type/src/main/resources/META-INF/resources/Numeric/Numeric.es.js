@@ -20,6 +20,14 @@ import vanillaTextMask from 'vanilla-text-mask';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 
+const getGenericValue = (symbols, value) => {
+	if (typeof value === 'number' || !symbols) {
+		return value;
+	}
+
+	return value.replace(symbols.decimalSymbol, '$[DECIMAL_SYMBOL]');
+};
+
 const getMaskConfig = (dataType, symbols) => {
 	let config = {
 		allowLeadingZeroes: true,
@@ -75,13 +83,17 @@ const Numeric = ({
 	const inputRef = useRef(null);
 
 	const prevEditingLanguageId = usePrevious(editingLanguageId);
+	const prevSymbols = usePrevious(symbols);
 
 	useEffect(() => {
 		if (prevEditingLanguageId !== editingLanguageId && localizable) {
 			let newValue =
 				localizedValue[editingLanguageId] !== undefined
 					? localizedValue[editingLanguageId]
-					: localizedValue[defaultLanguageId];
+					: getGenericValue(
+							prevSymbols,
+							localizedValue[defaultLanguageId]
+					  );
 
 			newValue = getValue(dataType, symbols, newValue);
 
@@ -94,6 +106,7 @@ const Numeric = ({
 		localizable,
 		localizedValue,
 		prevEditingLanguageId,
+		prevSymbols,
 		setCurrentValue,
 	]);
 

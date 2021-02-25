@@ -44,6 +44,10 @@ public class DataLayoutRendererContext {
 		return _httpServletResponse;
 	}
 
+	public String getLanguageId() {
+		return _languageId;
+	}
+
 	public String getPortletNamespace() {
 		return _portletNamespace;
 	}
@@ -74,6 +78,10 @@ public class DataLayoutRendererContext {
 		_httpServletResponse = httpServletResponse;
 	}
 
+	public void setLanguageId(String languageId) {
+		_languageId = languageId;
+	}
+
 	public void setPortletNamespace(String portletNamespace) {
 		_portletNamespace = portletNamespace;
 	}
@@ -87,6 +95,7 @@ public class DataLayoutRendererContext {
 	private String _defaultLanguageId;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
+	private String _languageId;
 	private String _portletNamespace;
 	private boolean _readOnly;
 

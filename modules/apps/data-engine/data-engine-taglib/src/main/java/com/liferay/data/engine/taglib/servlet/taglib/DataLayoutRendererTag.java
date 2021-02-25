@@ -71,6 +71,10 @@ public class DataLayoutRendererTag extends BaseDataLayoutRendererTag {
 					getDefaultLanguageId());
 			}
 
+			if (Validator.isNotNull(getLanguageId())) {
+				dataLayoutRendererContext.setLanguageId(getLanguageId());
+			}
+
 			dataLayoutRendererContext.setHttpServletRequest(httpServletRequest);
 			dataLayoutRendererContext.setHttpServletResponse(
 				PortalUtil.getHttpServletResponse(

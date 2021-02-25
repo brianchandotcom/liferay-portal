@@ -150,6 +150,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="AccountGroupIds" return-type="Collection">
+			<finder-column arrayable-operator="OR" name="accountGroupId" />
+		</finder>
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>

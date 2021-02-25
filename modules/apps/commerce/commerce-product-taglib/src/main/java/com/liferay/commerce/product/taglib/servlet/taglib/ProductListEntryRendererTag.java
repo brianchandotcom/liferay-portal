@@ -60,6 +60,14 @@ public class ProductListEntryRendererTag extends IncludeTag {
 				_key, portletDisplay.getPortletName(),
 				_cpCatalogEntry.getProductTypeName());
 
+		if (_cpContentListEntryRenderer == null) {
+			_cpContentListEntryRenderer =
+				cpContentListEntryRendererRegistry.
+					getCPContentListEntryRenderer(
+						"list-entry-default", portletDisplay.getPortletName(),
+						_cpCatalogEntry.getProductTypeName());
+		}
+
 		return super.doStartTag();
 	}
 

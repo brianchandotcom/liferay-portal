@@ -84,7 +84,7 @@
 				languageValue = LocalizationUtil.getLocalization(xml, curLanguageId, false);
 			}
 
-			if (Validator.isNotNull(languageValue) || (!ignoreRequestValue && (request.getParameter(name + StringPool.UNDERLINE + curLanguageId) != null))) {
+			if (Validator.isNotNull(languageValue) || (!ignoreRequestValue && Validator.isNotNull(ParamUtil.getString(request, name + StringPool.UNDERLINE + curLanguageId, languageValue)))) {
 				languageIds.add(curLanguageId);
 			}
 		}

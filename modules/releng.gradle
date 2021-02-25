@@ -85,6 +85,7 @@ task portalJavadoc(type: Javadoc)
 task portalJavadocJar(type: Jar)
 task portalSourcesJar(type: ShadowJar)
 task prepareMajorIncrement
+task prepareMajorIncrementAppProperties
 task syncAppProperties
 task syncGitRepoReleases
 task tagAppReleases
@@ -889,6 +890,33 @@ prepareMajorIncrement {
 	}
 
 	group = "releng"
+}
+
+prepareMajorIncrementAppProperties {
+	description = "Increment 'app.marketplace.version' to the next major version for all 'app.properties' files."
+	group = "releng"
+
+	doLast {
+		FileTree appPropertiesFileTree = fileTree(dir: projectDir, includes: [".releng/apps/**/app.properties", ".releng/dxp/**/app.properties"])
+
+		appPropertiesFileTree.each {
+			File appPropertiesFile ->
+
+			File markerFile = new File(appPropertiesFile.parentFile, ".lfrbuild-app-portal-build-ignore")
+
+			if (!markerFile.exists()) {
+				appPropertiesFile.text = appPropertiesFile.text.replaceFirst(~/app.marketplace.version=(\w+\.\w+\.\w+)/) {
+					String all, String versionString ->
+
+					VersionNumber versionNumber = VersionNumber.parse(versionString)
+
+					VersionNumber newVersionNumber = new VersionNumber(versionNumber.major + 1, 0, 0, null)
+
+					all.replace versionString, newVersionNumber as String
+				}
+			}
+		}
+	}
 }
 
 repositories {

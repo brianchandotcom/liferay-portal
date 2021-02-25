@@ -11,6 +11,9 @@
 		"baseTheme": "styled",
 		"distName": "classic-theme",
 		"rubySass": false,
+		"sassOptions": {
+			"dartSass": true
+		},
 		"version": "7.1"
 	},
 	"main": "package.json",

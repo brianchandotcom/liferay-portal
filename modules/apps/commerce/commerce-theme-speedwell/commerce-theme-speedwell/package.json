@@ -5,6 +5,9 @@
 	"liferayTheme": {
 		"baseTheme": "styled",
 		"rubySass": false,
+		"sassOptions": {
+			"dartSass": true
+		},
 		"screenshot": "",
 		"templateLanguage": "ftl",
 		"version": "7.1"

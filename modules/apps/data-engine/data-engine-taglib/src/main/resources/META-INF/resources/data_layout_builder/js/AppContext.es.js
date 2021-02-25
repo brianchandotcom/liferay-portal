@@ -200,20 +200,26 @@ const setDataDefinitionFields = (
 	const newFields = [];
 
 	visitor.mapFields((field) => {
-		const formattedDefinitionField = convertFieldToDataDefinition(field);
+		const convertedField = convertFieldToDataDefinition(field);
 
 		if (dataLayoutBuilder.props.contentType === 'app-builder') {
 			const definitionField = getDefinitionField(dataDefinition, field);
 
 			newFields.push({
-				...formattedDefinitionField,
-				label:
-					definitionField?.label ?? formattedDefinitionField?.label,
+				...convertedField,
+				customProperties: {
+					...convertedField.customProperties,
+					labelAtStructureLevel:
+						definitionField?.customProperties
+							?.labelAtStructureLevel ??
+						convertedField?.customProperties?.labelAtStructureLevel,
+				},
+				label: definitionField?.label ?? convertedField?.label,
 				required: !!definitionField?.required,
 			});
 		}
 		else {
-			newFields.push(formattedDefinitionField);
+			newFields.push(convertedField);
 		}
 	});
 

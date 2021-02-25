@@ -61,7 +61,7 @@
 		<reference entity="UserGroupRole" package-path="com.liferay.portal" />
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
-	<entity external-reference-code="true" local-service="true" name="CommerceAccountGroup" remote-service="true">
+	<entity external-reference-code="true" local-service="true" name="CommerceAccountGroup" persistence="false" remote-service="true">
 
 		<!-- PK fields -->
 

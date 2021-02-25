@@ -174,9 +174,14 @@ public class JournalConverterImpl implements JournalConverter {
 			ddmFormField.getName());
 
 		if (dynamicElementElements == null) {
-			updateFieldsDisplay(
-				ddmFields, ddmFormField.getName(),
-				String.valueOf(ddmStructure.getStructureId()));
+			if (Objects.equals(
+					ddmFormField.getType(),
+					DDMFormFieldTypeConstants.FIELDSET)) {
+
+				updateFieldsDisplay(
+					ddmFields, ddmFormField.getName(),
+					String.valueOf(ddmStructure.getStructureId()));
+			}
 
 			return;
 		}

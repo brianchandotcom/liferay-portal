@@ -685,20 +685,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	public T update(T model) {
 		Class<?> clazz = model.getModelClass();
 
-		if (_checkDataLimitModelMaxCount == null) {
-			long dataLimitModelMaxCount = GetterUtil.getLong(
-				PropsUtil.get(
-					"data.limit.model.max.count", new Filter(clazz.getName())));
-
-			_checkDataLimitModelMaxCount =
-				(model instanceof AuditedModel) && (dataLimitModelMaxCount > 0);
-		}
-
-		if (_checkDataLimitModelMaxCount) {
-			long dataLimitModelMaxCount = GetterUtil.getLong(
-				PropsUtil.get(
-					"data.limit.model.max.count", new Filter(clazz.getName())));
-
+		if (_dataLimitModelMaxCount > 0) {
 			DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 				clazz, clazz.getClassLoader());
 
@@ -708,7 +695,9 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 				RestrictionsFactoryUtil.eq(
 					"companyId", auditedModel.getCompanyId()));
 
-			if (countWithDynamicQuery(dynamicQuery) >= dataLimitModelMaxCount) {
+			if (countWithDynamicQuery(dynamicQuery) >=
+					_dataLimitModelMaxCount) {
+
 				throw new DataLimitExceededException(
 					"Unable to exceed maximum number of allowed " +
 						clazz.getName());
@@ -903,6 +892,17 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 	protected void setModelClass(Class<T> modelClass) {
 		_modelClass = modelClass;
+
+		long dataLimitModelMaxCount = GetterUtil.getLong(
+			PropsUtil.get(
+				"data.limit.model.max.count",
+				new Filter(modelClass.getName())));
+
+		if (AuditedModel.class.isAssignableFrom(modelClass) &&
+			(dataLimitModelMaxCount > 0)) {
+
+			_dataLimitModelMaxCount = dataLimitModelMaxCount;
+		}
 	}
 
 	protected void setModelImplClass(Class<? extends T> modelImplClass) {
@@ -1128,8 +1128,8 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 			Timestamp.class, Type.TIMESTAMP
 		).build();
 
-	private Boolean _checkDataLimitModelMaxCount;
 	private int _databaseOrderByMaxColumns;
+	private long _dataLimitModelMaxCount;
 	private DataSource _dataSource;
 	private DB _db;
 	private Map<String, String> _dbColumnNames = Collections.emptyMap();

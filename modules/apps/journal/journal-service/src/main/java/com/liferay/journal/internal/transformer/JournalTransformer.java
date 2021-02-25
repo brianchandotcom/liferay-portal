@@ -249,9 +249,15 @@ public class JournalTransformer {
 				if (document != null) {
 					Element rootElement = document.getRootElement();
 
+					DDMStructure ddmStructure =
+						DDMStructureLocalServiceUtil.getStructure(
+							Long.valueOf(tokens.get("ddm_structure_id")));
+
+					DDMForm ddmForm = ddmStructure.getDDMForm();
+
 					List<TemplateNode> templateNodes = getTemplateNodes(
 						themeDisplay, rootElement,
-						Long.valueOf(tokens.get("ddm_structure_id")), locale);
+						ddmForm.getDDMFormFieldsMap(true), locale);
 
 					if (templateNodes != null) {
 						for (TemplateNode templateNode : templateNodes) {
@@ -468,17 +474,9 @@ public class JournalTransformer {
 	}
 
 	protected List<TemplateNode> getTemplateNodes(
-			ThemeDisplay themeDisplay, Element element, long ddmStructureId,
-			Locale locale)
+			ThemeDisplay themeDisplay, Element element,
+			Map<String, DDMFormField> ddmFormFieldsMap, Locale locale)
 		throws Exception {
-
-		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(
-			ddmStructureId);
-
-		DDMForm ddmForm = ddmStructure.getDDMForm();
-
-		Map<String, DDMFormField> ddmFormFieldsMap =
-			ddmForm.getDDMFormFieldsMap(true);
 
 		List<TemplateNode> templateNodes = new ArrayList<>();
 
@@ -544,7 +542,7 @@ public class JournalTransformer {
 			if (dynamicElementElement.element("dynamic-element") != null) {
 				templateNode.appendChildren(
 					getTemplateNodes(
-						themeDisplay, dynamicElementElement, ddmStructureId,
+						themeDisplay, dynamicElementElement, ddmFormFieldsMap,
 						locale));
 			}
 			else if ((dynamicContentElement != null) &&

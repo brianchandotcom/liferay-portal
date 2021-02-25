@@ -17,51 +17,50 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ScheduledJobDispatchTriggerDisplayContext scheduledJobDispatchTriggerDisplayContext = (ScheduledJobDispatchTriggerDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+SchedulerResponseDisplayContext schedulerResponseDisplayContext = (SchedulerResponseDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-PortletURL portletURL = scheduledJobDispatchTriggerDisplayContext.getPortletURL();
+PortletURL portletURL = schedulerResponseDisplayContext.getPortletURL();
 
-portletURL.setParameter("searchContainerId", "liferayScheduledTasks");
-portletURL.setParameter("tabs1", "scheduled-task");
+portletURL.setParameter("searchContainerId", "schedulerResponses");
+portletURL.setParameter("tabs1", "scheduler-response");
 %>
 
 <clay:navigation-bar
-	navigationItems="<%= scheduledJobDispatchTriggerDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= schedulerResponseDisplayContext.getNavigationItems() %>"
 />
 
 <div id="<portlet:namespace />scheduledTaskContainer">
 	<div class="closed container" id="<portlet:namespace />infoPanelId">
 		<liferay-ui:search-container
-			id="scheduledTasks"
-			searchContainer="<%= scheduledJobDispatchTriggerDisplayContext.getSearchContainer() %>"
+			id="schedulerResponses"
+			searchContainer="<%= schedulerResponseDisplayContext.getSearchContainer() %>"
 		>
 			<liferay-ui:search-container-row
-				className="com.liferay.dispatch.scheduler.ScheduledJobDispatchTrigger"
-				keyProperty="dispatchTriggerId"
-				modelVar="scheduledJobDispatchTrigger"
+				className="com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse"
+				modelVar="schedulerResponse"
 			>
 				<liferay-ui:search-container-column-jsp
 					cssClass="entry-action-column"
-					path="/scheduled_task_action.jsp"
+					path="/scheduler_response_action.jsp"
 				/>
 
 				<liferay-ui:search-container-column-text
 					cssClass="important table-cell-expand"
 					name="name"
 				>
-					<liferay-ui:message key="<%= scheduledJobDispatchTrigger.getSimpleName() %>" />
+					<liferay-ui:message key="<%= schedulerResponseDisplayContext.getSimpleName(schedulerResponse.getJobName()) %>" />
 
-					<liferay-ui:icon-help message="<%= scheduledJobDispatchTrigger.getName() %>" />
+					<liferay-ui:icon-help message="<%= schedulerResponse.getJobName() %>" />
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text
 					name="system"
-					value='<%= scheduledJobDispatchTrigger.isSystem() ? LanguageUtil.get(request, "yes") : LanguageUtil.get(request, "no") %>'
+					value='<%= LanguageUtil.get(request, "yes") %>'
 				/>
 
 				<liferay-ui:search-container-column-text
 					name="next-fire-date"
-					value="<%= scheduledJobDispatchTriggerDisplayContext.getNextFireDateString(scheduledJobDispatchTrigger) %>"
+					value="<%= schedulerResponseDisplayContext.getNextFireDateString(schedulerResponse) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
@@ -70,7 +69,7 @@ portletURL.setParameter("tabs1", "scheduled-task");
 				>
 
 					<%
-					TriggerState triggerState = scheduledJobDispatchTriggerDisplayContext.getTriggerState(scheduledJobDispatchTrigger);
+					TriggerState triggerState = schedulerResponseDisplayContext.getTriggerState(schedulerResponse);
 					%>
 
 					<h6 class="<%= (triggerState == TriggerState.NORMAL) ? "text-success" : "text-info" %>">
@@ -80,7 +79,7 @@ portletURL.setParameter("tabs1", "scheduled-task");
 
 				<liferay-ui:search-container-column-jsp
 					cssClass="table-cell-ws-nowrap"
-					path="/scheduled_task_buttons.jsp"
+					path="/scheduler_response_buttons.jsp"
 				/>
 			</liferay-ui:search-container-row>
 

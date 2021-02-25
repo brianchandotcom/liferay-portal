@@ -562,15 +562,6 @@ public class JournalUtil {
 		tokens.put("theme_image_path", themeDisplay.getPathThemeImages());
 
 		_populateCustomTokens(tokens, themeDisplay.getCompanyId());
-
-		// Deprecated tokens
-
-		tokens.put("friendly_url", themeDisplay.getPathFriendlyURLPublic());
-		tokens.put(
-			"friendly_url_private",
-			themeDisplay.getPathFriendlyURLPrivateGroup());
-		tokens.put("group_id", String.valueOf(articleGroupId));
-		tokens.put("page_url", themeDisplay.getPathFriendlyURLPublic());
 	}
 
 	private static void _populateTokens(
@@ -641,16 +632,6 @@ public class JournalUtil {
 		tokens.put("theme_image_path", themeDisplayModel.getPathThemeImages());
 
 		_populateCustomTokens(tokens, themeDisplayModel.getCompanyId());
-
-		// Deprecated tokens
-
-		tokens.put(
-			"friendly_url", themeDisplayModel.getPathFriendlyURLPublic());
-		tokens.put(
-			"friendly_url_private",
-			themeDisplayModel.getPathFriendlyURLPrivateGroup());
-		tokens.put("group_id", String.valueOf(articleGroupId));
-		tokens.put("page_url", themeDisplayModel.getPathFriendlyURLPublic());
 	}
 
 	private static void _removeArticleLocale(

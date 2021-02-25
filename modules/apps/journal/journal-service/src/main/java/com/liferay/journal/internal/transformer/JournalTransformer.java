@@ -313,11 +313,6 @@ public class JournalTransformer {
 							themeDisplay.getResponse(), unsyncStringWriter));
 				}
 
-				// Deprecated variables
-
-				template.put("groupId", articleGroupId);
-				template.put("journalTemplatesPath", templatesPath);
-
 				if (propagateException) {
 					template.processTemplate(unsyncStringWriter);
 				}

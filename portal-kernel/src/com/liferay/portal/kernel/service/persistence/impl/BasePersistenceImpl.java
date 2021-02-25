@@ -685,7 +685,20 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	public T update(T model) {
 		Class<?> clazz = model.getModelClass();
 
-		if (_dataLimitModelMaxCount > 0) {
+		if (ReadOnlyTransactionThreadLocal.isReadOnly()) {
+			throw new IllegalStateException(
+				"Update called with read only transaction");
+		}
+
+		while (model instanceof ModelWrapper) {
+			ModelWrapper<T> modelWrapper = (ModelWrapper<T>)model;
+
+			model = modelWrapper.getWrappedModel();
+		}
+
+		boolean isNew = model.isNew();
+
+		if (isNew && (_dataLimitModelMaxCount > 0)) {
 			DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 				clazz, clazz.getClassLoader());
 
@@ -703,19 +716,6 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 						clazz.getName());
 			}
 		}
-
-		if (ReadOnlyTransactionThreadLocal.isReadOnly()) {
-			throw new IllegalStateException(
-				"Update called with read only transaction");
-		}
-
-		while (model instanceof ModelWrapper) {
-			ModelWrapper<T> modelWrapper = (ModelWrapper<T>)model;
-
-			model = modelWrapper.getWrappedModel();
-		}
-
-		boolean isNew = model.isNew();
 
 		ModelListener<T>[] listeners = getListeners();
 

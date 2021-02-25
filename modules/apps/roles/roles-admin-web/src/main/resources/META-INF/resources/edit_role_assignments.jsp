@@ -56,12 +56,41 @@ renderResponse.setTitle(role.getTitle(locale));
 	navigationItems="<%= roleDisplayContext.getRoleAssignmentsNavigationItems(portletURL) %>"
 />
 
-<clay:management-toolbar-v2
+<portlet:actionURL name="editRoleAssignments" var="editRoleAssignmentsURL">
+	<portlet:param name="mvcPath" value="/edit_role_assignments.jsp" />
+	<portlet:param name="tabs1" value="assignees" />
+</portlet:actionURL>
+
+<portlet:renderURL var="selectAssigneesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="mvcPath" value="/select_assignees.jsp" />
+	<portlet:param name="tabs2" value="<%= tabs2 %>" />
+	<portlet:param name="tabs3" value="available" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+	<portlet:param name="roleId" value="<%= String.valueOf(roleId) %>" />
+	<portlet:param name="displayStyle" value="<%= displayStyle %>" />
+</portlet:renderURL>
+
+<clay:management-toolbar
 	actionDropdownItems="<%= editRoleAssignmentsManagementToolbarDisplayContext.getActionDropdownItems() %>"
+	additionalProps='<%=
+		HashMapBuilder.<String, Object>put(
+			"assigneeType", HtmlUtil.escapeJS(tabs2)
+		).put(
+			"editRoleAssignmentsURL", editRoleAssignmentsURL.toString()
+		).put(
+			"modalSegmentState", RolesAdminWebKeys.MODAL_SEGMENT_STATE
+		).put(
+			"portletURL", portletURL.toString()
+		).put(
+			"roleName", role.getName()
+		).put(
+			"selectAssigneesURL", selectAssigneesURL.toString()
+		).build()
+	%>'
 	clearResultsURL="<%= editRoleAssignmentsManagementToolbarDisplayContext.getClearResultsURL() %>"
-	componentId="editRoleAssignmentsManagementToolbar"
 	filterDropdownItems="<%= editRoleAssignmentsManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	itemsTotal="<%= searchContainer.getTotal() %>"
+	propsTransformer="js/EditRoleAssignmentsManagementToolbarPropsTransformer"
 	searchActionURL="<%= editRoleAssignmentsManagementToolbarDisplayContext.getSearchActionURL() %>"
 	searchContainerId="assigneesSearch"
 	searchFormName="searchFm"
@@ -118,105 +147,21 @@ renderResponse.setTitle(role.getTitle(locale));
 	</c:choose>
 </aui:form>
 
-<portlet:actionURL name="editRoleAssignments" var="editRoleAssignmentsURL">
-	<portlet:param name="mvcPath" value="/edit_role_assignments.jsp" />
-	<portlet:param name="tabs1" value="assignees" />
-</portlet:actionURL>
+<aui:script require='<%= npmResolvedPackageName + "/js/add_assignees as addAssignees" %>'>
+	var modalSegmentState = '<%= RolesAdminWebKeys.MODAL_SEGMENT_STATE %>';
 
-<aui:script sandbox="<%= true %>">
-	var form = document.<portlet:namespace />fm;
+	var state = window.sessionStorage.getItem(modalSegmentState);
 
-	var addAssignees = function (event) {
-		Liferay.Util.openSelectionModal({
-			multiple: true,
-			onSelect: function (selectedItem) {
-				if (selectedItem) {
-					var assignmentsRedirect = Liferay.Util.PortletURL.createPortletURL(
-						'<%= portletURL.toString() %>',
-						{
-							tabs2: selectedItem.type,
-						}
-					);
+	if (state === 'open') {
+		window.sessionStorage.removeItem(modalSegmentState);
 
-					var data = {
-						redirect: assignmentsRedirect.toString(),
-					};
-
-					if (selectedItem.type == 'segments') {
-						data.addSegmentsEntryIds = selectedItem.value;
-					}
-					else if (selectedItem.type === 'users') {
-						data.addUserIds = selectedItem.value;
-					}
-					else {
-						data.addGroupIds = selectedItem.value;
-					}
-
-					Liferay.Util.postForm(form, {
-						data: data,
-						url: '<%= editRoleAssignmentsURL %>',
-					});
-				}
-			},
-			selectEventName: '<portlet:namespace />selectAssignees',
-			title:
-				'<liferay-ui:message arguments="<%= HtmlUtil.escape(role.getName()) %>" key="add-assignees-to-x" />',
-
-			<portlet:renderURL var="selectAssigneesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-				<portlet:param name="mvcPath" value="/select_assignees.jsp" />
-				<portlet:param name="tabs2" value="<%= tabs2 %>" />
-				<portlet:param name="tabs3" value="available" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="roleId" value="<%= String.valueOf(roleId) %>" />
-				<portlet:param name="displayStyle" value="<%= displayStyle %>" />
-			</portlet:renderURL>
-
-			url: '<%= selectAssigneesURL %>',
+		addAssignees.default({
+			editRoleAssignmentsURL: '<%= editRoleAssignmentsURL.toString() %>',
+			modalSegmentState: modalSegmentState,
+			namespace: '<portlet:namespace />',
+			portletURL: '<%= portletURL.toString() %>',
+			roleName: '<%= role.getName() %>',
+			selectAssigneesURL: '<%= selectAssigneesURL.toString() %>',
 		});
-	};
-
-	<portlet:namespace />unsetRoleAssignments = function () {
-		var assigneeType = '<%= HtmlUtil.escapeJS(tabs2) %>';
-		var ids = Liferay.Util.listCheckedExcept(
-			form,
-			'<portlet:namespace />allRowIds'
-		);
-
-		var data = {
-			assignmentsRedirect: '<%= portletURL.toString() %>',
-		};
-
-		if (assigneeType == 'segments') {
-			data.removeSegmentsEntryIds = ids;
-		}
-		else if (assigneeType === 'users') {
-			data.removeUserIds = ids;
-		}
-		else {
-			data.removeGroupIds = ids;
-		}
-
-		Liferay.Util.postForm(form, {
-			data: data,
-			url: '<%= editRoleAssignmentsURL %>',
-		});
-	};
-
-	Liferay.componentReady('editRoleAssignmentsManagementToolbar').then(
-		(managementToolbar) => {
-			managementToolbar.on('creationButtonClicked', addAssignees);
-		}
-	);
-
-	var state = window.sessionStorage.getItem(
-		'<%= RolesAdminWebKeys.MODAL_SEGMENT_STATE %>'
-	);
-
-	if (state == 'open') {
-		window.sessionStorage.removeItem(
-			'<%= RolesAdminWebKeys.MODAL_SEGMENT_STATE %>'
-		);
-
-		addAssignees();
 	}
 </aui:script>

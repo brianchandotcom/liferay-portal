@@ -55,7 +55,6 @@ page import="com.liferay.portal.kernel.exception.RoleNameException" %><%@
 page import="com.liferay.portal.kernel.exception.RolePermissionsException" %><%@
 page import="com.liferay.portal.kernel.exception.SystemException" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
-page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Group" %><%@
 page import="com.liferay.portal.kernel.model.GroupConstants" %><%@
 page import="com.liferay.portal.kernel.model.Organization" %><%@

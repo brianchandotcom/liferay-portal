@@ -69,9 +69,10 @@ PortletURL portletURL = selectRoleManagementToolbarDisplayContext.getPortletURL(
 SearchContainer<Role> roleSearchContainer = selectRoleManagementToolbarDisplayContext.getRoleSearchContainer(filterManageableRoles, groupId);
 %>
 
-<clay:management-toolbar-v2
+<clay:management-toolbar
 	clearResultsURL="<%= selectRoleManagementToolbarDisplayContext.getClearResultsURL() %>"
 	itemsTotal="<%= (step == 1) ? groups.size() : roleSearchContainer.getTotal() %>"
+	propsTransformer="js/ViewRolesManagementToolbarPropsTransformer"
 	searchActionURL="<%= selectRoleManagementToolbarDisplayContext.getSearchActionURL() %>"
 	searchFormName="searchFm"
 	selectable="<%= false %>"

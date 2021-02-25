@@ -66,9 +66,10 @@ else {
 }
 %>
 
-<clay:management-toolbar-v2
+<clay:management-toolbar
 	clearResultsURL="<%= selectRoleManagementToolbarDisplayContext.getClearResultsURL() %>"
 	itemsTotal="<%= (step == 1) ? organizations.size() : roleSearchContainer.getTotal() %>"
+	propsTransformer="js/ViewRolesManagementToolbarPropsTransformer"
 	searchActionURL="<%= selectRoleManagementToolbarDisplayContext.getSearchActionURL() %>"
 	searchFormName="searchFm"
 	selectable="<%= false %>"

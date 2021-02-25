@@ -12,14 +12,18 @@
  * details.
  */
 
-import {DefaultEventHandler} from 'frontend-js-web';
+export default function propsTransformer({...otherProps}) {
+	return {
+		...otherProps,
+		onCreateButtonClick(event, {item}) {
+			const action = item.data?.action;
 
-class EditRoleAssignmentsManagementToolbarDefaultEventHandler extends DefaultEventHandler {
-	addSegmentEntry(itemData) {
-		window.sessionStorage.setItem(itemData.sessionKey, 'open');
+			if (action === 'addSegmentEntry') {
+				window.sessionStorage.setItem(item.data.sessionKey, 'open');
 
-		Liferay.Util.getTop().location.href = itemData.addSegmentEntryURL;
-	}
+				Liferay.Util.getTop().location.href =
+					item.data.addSegmentEntryURL;
+			}
+		},
+	};
 }
-
-export default EditRoleAssignmentsManagementToolbarDefaultEventHandler;

@@ -21,7 +21,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -115,10 +114,7 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 			() -> {
 				DropdownItem dropdownItem = new DropdownItem();
 
-				dropdownItem.setHref(
-					StringBundler.concat(
-						"javascript:", _renderResponse.getNamespace(),
-						"unsetRoleAssignments();"));
+				dropdownItem.putData("action", "unsetRoleAssignments");
 				dropdownItem.setIcon("times-circle");
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "remove"));
@@ -175,10 +171,6 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 					LanguageUtil.get(_httpServletRequest, "new-segment"));
 			}
 		).build();
-	}
-
-	public String getDefaultEventHandler() {
-		return "EDIT_ROLE_ASSIGNMENTS_MANAGEMENT_TOOLBAR_DEFAULT_EVENT_HANDLER";
 	}
 
 	public List<DropdownItem> getFilterDropdownItems() {

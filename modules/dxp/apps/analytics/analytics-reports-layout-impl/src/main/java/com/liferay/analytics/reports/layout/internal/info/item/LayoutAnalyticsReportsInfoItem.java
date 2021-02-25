@@ -15,8 +15,10 @@
 package com.liferay.analytics.reports.layout.internal.info.item;
 
 import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItem;
-import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.type.WebImage;
+import com.liferay.layout.seo.kernel.LayoutSEOLink;
+import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -28,8 +30,11 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -80,6 +85,39 @@ public class LayoutAnalyticsReportsInfoItem
 			ListUtil::fromCollection
 		).orElseGet(
 			() -> Collections.singletonList(LocaleUtil.getDefault())
+		);
+	}
+
+	@Override
+	public String getCanonicalURL(Layout layout, Locale locale) {
+		Optional<ThemeDisplay> themeDisplayOptional =
+			_getThemeDisplayOptional();
+
+		return themeDisplayOptional.map(
+			themeDisplay -> {
+				String completeURL = _portal.getCurrentCompleteURL(
+					themeDisplay.getRequest());
+
+				try {
+					String canonicalURL = _portal.getCanonicalURL(
+						completeURL, themeDisplay, layout, false, false);
+
+					LayoutSEOLink layoutSEOLink =
+						_layoutSEOLinkManager.getCanonicalLayoutSEOLink(
+							layout, locale, canonicalURL,
+							_portal.getAlternateURLs(
+								canonicalURL, themeDisplay, layout));
+
+					return layoutSEOLink.getHref();
+				}
+				catch (PortalException portalException) {
+					_log.error(portalException, portalException);
+
+					return StringPool.BLANK;
+				}
+			}
+		).orElse(
+			StringPool.BLANK
 		);
 	}
 
@@ -137,6 +175,14 @@ public class LayoutAnalyticsReportsInfoItem
 		return true;
 	}
 
+	private Optional<ThemeDisplay> _getThemeDisplayOptional() {
+		return Optional.ofNullable(
+			ServiceContextThreadLocal.getServiceContext()
+		).map(
+			ServiceContext::getThemeDisplay
+		);
+	}
+
 	private boolean _hasEditPermission(
 			Layout layout, PermissionChecker permissionChecker)
 		throws PortalException {
@@ -174,13 +220,13 @@ public class LayoutAnalyticsReportsInfoItem
 	private GroupLocalService _groupLocalService;
 
 	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
-
-	@Reference
 	private Language _language;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutSEOLinkManager _layoutSEOLinkManager;
 
 	@Reference
 	private Portal _portal;

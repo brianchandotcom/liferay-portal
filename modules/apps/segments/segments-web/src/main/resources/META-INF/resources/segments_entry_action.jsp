@@ -75,10 +75,15 @@ SegmentsEntry segmentsEntry = (SegmentsEntry)row.getObject();
 		roleItemSelectorCriterion.setExcludedRoleNames(excludedRoleNames);
 
 		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(renderRequest), eventName, roleItemSelectorCriterion);
+
+		String linkCssClass = "assign-site-roles-link dropdown-item";
+
+		if (!segmentsDisplayContext.isRoleSegmentationEnabled()) {
+			linkCssClass += " action disabled";
+		}
 		%>
 
 		<liferay-ui:icon
-			cssClass='<%= segmentsDisplayContext.isRoleSegmentationEnabled() ? "" : "action disabled" %>'
 			data='<%=
 				HashMapBuilder.<String, Object>put(
 					"itemSelectorURL", itemSelectorURL.toString()
@@ -86,7 +91,7 @@ SegmentsEntry segmentsEntry = (SegmentsEntry)row.getObject();
 					"segmentsEntryId", segmentsEntry.getSegmentsEntryId()
 				).build()
 			%>'
-			linkCssClass="assign-site-roles-link"
+			linkCssClass="<%= linkCssClass %>"
 			message="assign-site-roles"
 			url="javascript:;"
 		/>

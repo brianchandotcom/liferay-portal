@@ -44,6 +44,8 @@ public class TalendProcess {
 
 	public static final String ISO_8601_PATTERN = "yyyy-MM-dd'T'HH:mm:ssZ";
 
+	public static final String JAVA_OPTS_KEY = "JAVA_OPTS";
+
 	public String[] getMainMethodArguments() {
 		return _mainMethodArguments.toArray(new String[0]);
 	}
@@ -79,7 +81,7 @@ public class TalendProcess {
 		}
 
 		public Builder contextParam(String name, String value) {
-			if (Objects.equals(name, "JAVA_OPTS")) {
+			if (Objects.equals(name, JAVA_OPTS_KEY)) {
 				_jvmOptions = StringUtil.split(value, CharPool.SPACE);
 
 				return this;

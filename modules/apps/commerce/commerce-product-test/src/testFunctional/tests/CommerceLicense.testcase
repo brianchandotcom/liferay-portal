@@ -129,6 +129,14 @@ definition {
 		CommerceLicense.viewCommerceAvailable();
 	}
 
+	@priority = "4"
+	test MatchMacAddress {
+		property commerce.enabled = "true";
+		property custom.commerce.license = "commerce-license-developer-macaddress.xml";
+
+		CommerceLicense.viewCommerceAvailable();
+	}
+
 	@description = "This is a test for covering the following LPS-113419"
 	@priority = "4"
 	test ModuleLicenseExpirationWarning {

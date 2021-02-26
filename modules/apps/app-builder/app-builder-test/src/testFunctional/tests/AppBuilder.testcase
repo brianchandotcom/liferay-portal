@@ -3911,9 +3911,9 @@ definition {
 
 		FormViewBuilder.validateFieldLabel(fieldLabel = "Field Sets");
 
-		Click(locator1 = "FormViewBuilder#RULE_BUILDER_GO_BACK");
-
 		FormViewBuilder.dragAndDropFieldSet(fieldLabel = "Select from List");
+
+		Click(locator1 = "FormViewBuilder#RULE_BUILDER_GO_BACK");
 
 		FormViewBuilder.goToFieldsetsTab();
 

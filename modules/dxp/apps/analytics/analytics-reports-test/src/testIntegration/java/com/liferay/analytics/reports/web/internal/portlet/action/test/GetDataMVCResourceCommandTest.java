@@ -373,10 +373,7 @@ public class GetDataMVCResourceCommandTest {
 					_layoutSetLocalService.getLayoutSet(
 						_group.getGroupId(), false)));
 			mockLiferayResourceRequest.setParameter(
-				"classNameId",
-				String.valueOf(
-					_classNameLocalService.getClassNameId(
-						MockObject.class.getName())));
+				"className", MockObject.class.getName());
 
 			return mockLiferayResourceRequest;
 		}

@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.JaxRsLinkUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.site.navigation.constants.SiteNavigationConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
@@ -512,6 +513,26 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 						}
 
 						return null;
+					});
+				setSitePageURL(
+					() -> {
+						if (layout == null) {
+							return null;
+						}
+
+						List<Object> arguments = new ArrayList<>();
+
+						arguments.add(layout.getGroupId());
+
+						String friendlyURL = layout.getFriendlyURL(
+							contextAcceptLanguage.getPreferredLocale());
+
+						arguments.add(friendlyURL.substring(1));
+
+						return JaxRsLinkUtil.getJaxRsLink(
+							"headless-delivery", BaseSitePageResourceImpl.class,
+							"getSiteSitePage", contextUriInfo,
+							arguments.toArray(new Object[0]));
 					});
 				setUseCustomName(
 					() -> {

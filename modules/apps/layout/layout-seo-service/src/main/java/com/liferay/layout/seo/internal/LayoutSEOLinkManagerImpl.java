@@ -244,9 +244,12 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 			return group.getDescriptiveName(locale);
 		}
 
+		HttpServletRequest httpServletRequest = _getHttpServletRequest();
+
 		if (Validator.isNull(PropsValues.LAYOUT_FRIENDLY_URL_PAGE_NOT_FOUND) &&
+			(httpServletRequest != null) &&
 			SessionErrors.contains(
-				_getHttpServletRequest(), NoSuchLayoutException.class)) {
+				httpServletRequest, NoSuchLayoutException.class)) {
 
 			if (titleListMergeable == null) {
 				titleListMergeable = new ListMergeable<>();

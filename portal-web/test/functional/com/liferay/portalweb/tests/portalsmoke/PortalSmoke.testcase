@@ -86,6 +86,131 @@ definition {
 	}
 
 	@priority = "5"
+	test SmokeWithSaasProperties {
+		property portal.acceptance = "true";
+		property portal.smoke = "true";
+		property saas.properties = "true";
+
+		AssertConsoleTextPresent(value1 = "Stopping blacklisted bundle");
+
+		HeadlessPortalInstanceAPI.addPortalInstance(
+			domain = "liferay.com",
+			portalInstanceId = "www.able.com",
+			virtualHost = "www.able.com");
+
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com",
+			virtualHostsURL = "http://www.able.com:8080");
+
+		Smoke.viewWelcomeContentPage();
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(pageName = "Test Page1");
+
+		SitePages.addPublicPage(pageName = "Test Page2");
+
+		SitePages.addPublicPage(pageName = "Test Page3");
+
+		var pageName = "Test Page1";
+		var portletBody = "Welcome to Liferay";
+		var portletName = "Hello World";
+
+		task ("Add a '${portletName}' portlet to the page named '${pageName}'") {
+			Navigator.gotoSpecificURLPage(
+				pageName = "${pageName}",
+				url = "http://www.able.com:8080");
+
+			Portlet.addPG(
+				i = "${i}",
+				portletName = "${portletName}");
+
+			Portlet.viewTitle(portletName = "${portletName}");
+
+			Portlet.viewBody(
+				portletBody = "${portletBody}",
+				portletName = "${portletName}");
+
+			Navigator.gotoSpecificURLPage(
+				pageName = "${pageName}",
+				url = "http://www.able.com:8080");
+
+			Portlet.viewTitle(portletName = "${portletName}");
+
+			Portlet.viewBody(
+				portletBody = "${portletBody}",
+				portletName = "${portletName}");
+		}
+
+		var collectionName = "Basic Components";
+		var contentPageName = "Test Content Page";
+		var fragmentId = "Heading";
+		var fragmentName = "Heading";
+
+		task ("Add a '${fragmentName}' fragment to the content page named '${contentPageName}'") {
+			task ("Create a Content Page") {
+				Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+				ProductMenu.gotoPortlet(
+					category = "Site Builder",
+					portlet = "Pages");
+
+				ContentPages.addPage(pageName = "${contentPageName}");
+			}
+
+			task ("Add a basic '${fragmentName}' component") {
+				PageEditor.addFragment(
+					collectionName = "${collectionName}",
+					fragmentName = "${fragmentName}");
+			}
+
+			task ("Publish Content Page") {
+				PageEditor.clickPublish();
+			}
+
+			task ("Navigate to the content page") {
+				Navigator.gotoSpecificURLPage(
+					pageName = "${contentPageName}",
+					url = "http://www.able.com:8080");
+			}
+
+			task ("Assert the '${fragmentName}' fragment is present") {
+				AssertElementPresent(locator1 = "//h1[contains(.,'Heading Example')]");
+			}
+		}
+
+		var portlet = "Web Content";
+
+		task ("Navigate to Product Menu > Sites > Content > ${portlet}") {
+			Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+			ProductMenu.gotoPortlet(
+				category = "Content &amp; Data",
+				portlet = "${portlet}");
+
+			SiteAdmin.viewPortletTitle(portletTitle = "${portlet}");
+		}
+
+		var webContentContent = "Web Content Content";
+		var webContentTitle = "Web Content Title";
+
+		task ("Add a web content article with '${webContentTitle}' as the title and '${webContentContent}' as the content") {
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "${webContentContent}",
+				webContentTitle = "${webContentTitle}");
+
+			PortletEntry.publish();
+
+			WebContent.viewTitle(webContentTitle = "${webContentTitle}");
+		}
+	}
+
+	@priority = "5"
 	test SmokeWithSPADisabled {
 		property custom.properties = "javascript.single.page.application.enabled=false";
 		property portal.smoke = "false";

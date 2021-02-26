@@ -328,11 +328,6 @@ public class ContentPageLayoutEditorDisplayContext
 	}
 
 	private Map<String, Map<String, Object>> _getAvailableLanguages() {
-		Group group = GroupLocalServiceUtil.fetchGroup(
-			_getStagingAwareGroupId());
-
-		String defaultLanguageId = group.getDefaultLanguageId();
-
 		Set<Locale> locales = LanguageUtil.getAvailableLocales(
 			themeDisplay.getSiteGroupId());
 
@@ -343,8 +338,7 @@ public class ContentPageLayoutEditorDisplayContext
 				LocaleUtil.toLanguageId(locale),
 				HashMapBuilder.<String, Object>put(
 					"default",
-					Objects.equals(
-						defaultLanguageId, LocaleUtil.toLanguageId(locale))
+					Objects.equals(LocaleUtil.getSiteDefault(), locale)
 				).put(
 					"displayName",
 					locale.getDisplayName(themeDisplay.getLocale())

@@ -1,0 +1,29 @@
+<html>
+<head>
+<title>WorkflowTransitionModal</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">WorkflowTransitionModal</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>TASK_PANEL</td>
+	<td>//div[@class='panel']//h4[text()='${key_taskName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TRANSITION_TO_BUTTON</td>
+	<td>//h4[text()='${key_taskName}']/parent::div/following-sibling::div[1]//select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TRANSITION_TO_OPTION</td>
+	<td>//h4[text()='${key_taskName}']/parent::div/following-sibling::div[1]//select//option[@value='${key_transitionOption}']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

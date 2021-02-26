@@ -255,6 +255,25 @@ definition {
 			value1 = "Current Assignee");
 	}
 
+	macro assertTransitionTaskOptionNotPresent {
+		var key_taskName = "${taskName}";
+		var key_transitionOption = "${transitionOption}";
+
+		AssertElementNotPresent(locator1 = "WorkflowTransitionModal#TRANSITION_TO_OPTION");
+	}
+
+	macro assertTransitionTaskOptionPresent {
+		var key_taskName = "${taskName}";
+		var key_transitionOption = "${transitionOption}";
+
+		AssertElementPresent(locator1 = "WorkflowTransitionModal#TRANSITION_TO_OPTION");
+	}
+
+	macro assertTransitionTaskPresent {
+		var key_taskName = "${taskName}";
+		AssertElementPresent(locator1 = "WorkflowTransitionModal#TASK_PANEL");
+	}
+
 	macro assertWorkflowProcessPresent {
 		AssertElementPresent(
 			key_workflowProcessName = "${workflowProcessName}",
@@ -625,12 +644,21 @@ definition {
 	}
 
 	macro goToBulkReassignSelectTasks {
-		Pause(locator1 = "2000");
+		WaitForElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ALL");
 		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ALL");
 		Click(
 			locator1 = "WorkflowAllItems#KEBAB_DROPDOWN",
 			task = "1");
 		Click(locator1 = "WorkflowAllItems#REASSIGN_TASK_DROPDOWN");
+	}
+
+	macro goToBulkTransitionSelectTasks {
+		WaitForElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ALL");
+		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ALL");
+		Click(
+			locator1 = "WorkflowAllItems#KEBAB_DROPDOWN",
+			task = "1");
+		Click(locator1 = "WorkflowAllItems#TRANSITION_DROPDOWN");
 	}
 
 	macro goToCreatedSLAForm {
@@ -699,7 +727,7 @@ definition {
 	}
 
 	macro goToWorkflowAllItems {
-		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "${workflowProcessName}");
 
 		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_VALUE");
 	}
@@ -762,6 +790,11 @@ definition {
 		WorkflowMetrics.assertCheckboxChecked(taskList = "${taskList}");
 		AssertElementPresent(locator1 = "WorkflowReassignModal#SELECT_ALL_REASSIGN");
 		Click(locator1 = "WorkflowReassignModal#SELECT_ALL_REASSIGN");
+		Click(locator1 = "WorkflowReassignModal#NEXT_BUTTON");
+	}
+
+	macro selectAllTransitionTasks {
+		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ALL_MODAL");
 		Click(locator1 = "WorkflowReassignModal#NEXT_BUTTON");
 	}
 
@@ -920,6 +953,14 @@ definition {
 		}
 
 		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_DROPDOWN_STEP_${velocityUnit}");
+	}
+
+	macro selectTransition {
+		var key_taskName = "${taskName}";
+
+		Select(
+			locator1 = "WorkflowTransitionModal#TRANSITION_TO_BUTTON",
+			value1 = "${transitionOption}");
 	}
 
 	macro selectVelocityUnit {

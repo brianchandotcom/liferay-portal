@@ -505,11 +505,9 @@ definition {
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Blogs Entry");
 
-		WorkflowMetrics.createBlogInstances(
-			numberOfBlogInstances = "6",
-			numberOfUsers = "6");
+		WorkflowMetrics.createBlogInstances(numberOfBlogInstances = "6");
 
-		WorkflowMetrics.goToWorkflowAllItems();
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 
 		WorkflowMetrics.goToBulkReassignSelectTasks();
 
@@ -527,7 +525,7 @@ definition {
 
 		WorkflowMetrics.selectNewAssigneePagination(taskList = "Blogs Entry: Blogs Entry Title 1,Blogs Entry: Blogs Entry Title 2,Blogs Entry: Blogs Entry Title 3,Blogs Entry: Blogs Entry Title 4,Blogs Entry: Blogs Entry Title 5,Blogs Entry: Blogs Entry Title 6");
 
-		WorkflowMetrics.goToWorkflowAllItems();
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 
 		AssertElementPresent(
 			key_workflowInstanceAssignee = "Test Test",
@@ -685,7 +683,7 @@ definition {
 
 		WorkflowMetrics.bulkReassignSetup();
 
-		WorkflowMetrics.goToWorkflowAllItems();
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 
 		WorkflowMetrics.goToBulkReassignSelectTasks();
 		AssertElementPresent(locator1 = "WorkflowReassignModal#BULK_REASSIGN_MODAL");
@@ -700,7 +698,7 @@ definition {
 		WorkflowMetrics.goToBulkReassignSelectTasks();
 		WorkflowMetrics.selectReassignTasks(taskList = "Blogs Entry: Blogs Entry Title 3,Blogs Entry: Blogs Entry Title 4,Blogs Entry: Blogs Entry Title 5");
 		WorkflowMetrics.selectNewAssigneeBulkTask(nameOfAssignee = "Test Test");
-		WorkflowMetrics.goToWorkflowAllItems();
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 
 		AssertElementPresent(
 			key_workflowInstanceAssignee = "Test Test",
@@ -751,7 +749,7 @@ definition {
 
 		WorkflowMetrics.bulkReassignSetup();
 		WorkflowMetrics.bulkReassignExceptionsSetup(site = "${siteName}");
-		WorkflowMetrics.goToWorkflowAllItems();
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 		WorkflowMetrics.assertBulkCount();
 		WorkflowMetrics.goToBulkReassignSelectTasks();
 		WorkflowMetrics.checkWorkflowTaskCrossover();
@@ -769,6 +767,82 @@ definition {
 		AssertElementPresent(
 			key_nameOfAssignee = "No results were found.",
 			locator1 = "WorkflowReassignModal#REASSIGN_TASK_NEW_ASSIGNEE_DROPDOWN");
+	}
+
+	@description = "LRQA-57667 - Automate LPS-108138: As a Operation Manager, I want to transition a multi-task workflow instance while analyzing my process metrics"
+	@priority = "5"
+	test BulkTransitionWorkflowTasks {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "WorkflowMetrics#BulkTransitionWorkflowInstances";
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Workflow.uploadDefinition(
+			workflowDefinitionFile = "workflow_quarterly_reports_review_process.xml",
+			workflowDefinitionTitle = "Fork Reviews Workflow");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			portlet = "Workflow",
+			site = "${siteName}");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Fork Reviews Workflow",
+			workflowResourceValue = "Blogs Entry");
+
+		WorkflowMetrics.createBlogInstances(numberOfBlogInstances = "1");
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Fork Reviews Workflow");
+		WorkflowMetrics.goToBulkTransitionSelectTasks();
+		WorkflowMetrics.selectAllTransitionTasks();
+		WorkflowMetrics.assertTransitionTaskPresent(taskName = "Board Member Review 5");
+		WorkflowMetrics.assertTransitionTaskPresent(taskName = "Board Member Review 6");
+
+		WorkflowMetrics.assertTransitionTaskOptionPresent(
+			taskName = "Board Member Review 5",
+			transitionOption = "Approve 5");
+
+		for (var transitionNumber : list "1,2,3,4,6") {
+			WorkflowMetrics.assertTransitionTaskOptionNotPresent(
+				taskName = "Board Member Review 5",
+				transitionOption = "Approve ${transitionNumber}");
+		}
+
+		WorkflowMetrics.assertTransitionTaskOptionPresent(
+			taskName = "Board Member Review 6",
+			transitionOption = "Approve 6");
+
+		for (var transitionNumber : list "1,2,3,4,5") {
+			WorkflowMetrics.assertTransitionTaskOptionNotPresent(
+				taskName = "Board Member Review 6",
+				transitionOption = "Approve ${transitionNumber}");
+		}
+
+		WorkflowMetrics.selectTransition(
+			taskName = "Board Member Review 5",
+			transitionOption = "Approve 5");
+
+		WorkflowMetrics.selectTransition(
+			taskName = "Board Member Review 6",
+			transitionOption = "Approve 6");
+
+		Button.clickDone();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.viewCompletedTask(
+			workflowAssetTitle = "Blogs Entry Title 1",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Board Member Review 5");
+
+		Workflow.viewCompletedTask(
+			workflowAssetTitle = "Blogs Entry Title 1",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Board Member Review 6");
 	}
 
 	@description = "LRQA-57939 - Automate LPS-105498: As a Operation Manager, I want to bulk update the due date my workflow instances while analyzing my process metrics"
@@ -803,7 +877,7 @@ definition {
 				workflowTask = "Review");
 		}
 
-		WorkflowMetrics.goToWorkflowAllItems();
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 		WorkflowMetrics.goToUpdateDueDateTasks();
 		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ALL_MODAL");
 		Click(locator1 = "WorkflowReassignModal#NEXT_BUTTON");
@@ -1356,7 +1430,7 @@ definition {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		WorkflowMetrics.singleReassignSetup(site = "${siteName}");
-		WorkflowMetrics.goToWorkflowAllItems();
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 		WorkflowMetrics.goToReassignSelectTask();
 		WorkflowMetrics.assertNewAssigneeModalTable();
 
@@ -1382,7 +1456,7 @@ definition {
 			workflowAssetTitle = "Blogs Entry Title 1",
 			workflowAssetType = "Blogs Entry",
 			workflowTask = "Review");
-		WorkflowMetrics.goToWorkflowAllItems();
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 		Click(locator1 = "WorkflowAllItems#CLEAR_ALL_BUTTON");
 		MouseOver(
 			locator1 = "WorkflowAllItems#KEBAB_DROPDOWN",
@@ -2041,7 +2115,7 @@ definition {
 			workflowAssetType = "Blogs Entry",
 			workflowTask = "Review");
 
-		WorkflowMetrics.goToWorkflowAllItems();
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 		WorkflowMetrics.goToUpdateDueDateTasks();
 
 		Type(

@@ -85,6 +85,11 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 				_jspBundleWiring.listResources(
 					packagePath, "*.class", options)));
 
+		javaFileObjects.addAll(
+			toJavaFileObjects(
+				_bundleWiring.getBundle(),
+				_bundleWiring.listResources(packagePath, "*.class", options)));
+
 		String packageName = StringUtil.replace(
 			packagePath, CharPool.SLASH, CharPool.PERIOD);
 
@@ -97,12 +102,6 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 				javaFileObjects.addAll(
 					doResolveClasses(entry.getKey(), packagePath, options));
 			}
-		}
-
-		if (javaFileObjects.isEmpty()) {
-			return toJavaFileObjects(
-				_bundleWiring.getBundle(),
-				_bundleWiring.listResources(packagePath, "*.class", options));
 		}
 
 		return javaFileObjects;

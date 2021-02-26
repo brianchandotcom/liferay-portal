@@ -1,5 +1,37 @@
 definition {
 
+	macro accountGroupsTearDown {
+		var accountGroupsList = "";
+
+		var count = "1";
+
+		while (IsElementPresent(key_rowNumber = "${count}", locator1 = "CommerceNavigation#ENTRY_NAME_N")) {
+			var key_rowNumber = "${count}";
+
+			var entryName = selenium.getText("CommerceNavigation#ENTRY_NAME_N");
+
+			if ("${entryName}" != "Guest") {
+				accountGroupsList = StringUtil.add("${accountGroupsList}", "${entryName}");
+			}
+
+			var count = ${count} + 1;
+		}
+
+		if ("${accountGroupsList}" != "") {
+			for (var accountGroupName : list "${accountGroupsList}") {
+				ClickNoError(
+					key_entryName = "${accountGroupName}",
+					locator1 = "CommerceEntry#ENTRY_NAME_BODY_VERTICAL_ELLIPSIS_2");
+
+				CommerceEntry.clickNoError(menuItem = "Delete");
+
+				AssertElementPresent(locator1 = "Message#SUCCESS");
+
+				AssertElementNotPresent(locator1 = "Message#ERROR");
+			}
+		}
+	}
+
 	macro commerceAdminSetUp {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -71,6 +103,13 @@ definition {
 
 			AssertConfirm.waitForConfirmation(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 		}
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Account Groups");
+
+		CommerceConfiguration.accountGroupsTearDown();
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

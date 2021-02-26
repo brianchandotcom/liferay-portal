@@ -33,7 +33,7 @@ export default function Translation({
 		);
 	}, [defaultLanguage, viewURLs]);
 
-	const {state: chartState} = useChartState();
+	const chartState = useChartState();
 
 	return (
 		<ClayLayout.ContentRow>

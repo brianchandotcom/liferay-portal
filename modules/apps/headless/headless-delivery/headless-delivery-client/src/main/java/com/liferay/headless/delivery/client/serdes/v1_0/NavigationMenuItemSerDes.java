@@ -157,6 +157,16 @@ public class NavigationMenuItemSerDes {
 			sb.append("\"");
 		}
 
+		if (navigationMenuItem.getLink_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"link_i18n\": ");
+
+			sb.append(_toJSON(navigationMenuItem.getLink_i18n()));
+		}
+
 		if (navigationMenuItem.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -215,6 +225,20 @@ public class NavigationMenuItemSerDes {
 			sb.append("\"parentNavigationMenuId\": ");
 
 			sb.append(navigationMenuItem.getParentNavigationMenuId());
+		}
+
+		if (navigationMenuItem.getSitePageURL() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"sitePageURL\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(navigationMenuItem.getSitePageURL()));
+
+			sb.append("\"");
 		}
 
 		if (navigationMenuItem.getType() != null) {
@@ -329,6 +353,14 @@ public class NavigationMenuItemSerDes {
 			map.put("link", String.valueOf(navigationMenuItem.getLink()));
 		}
 
+		if (navigationMenuItem.getLink_i18n() == null) {
+			map.put("link_i18n", null);
+		}
+		else {
+			map.put(
+				"link_i18n", String.valueOf(navigationMenuItem.getLink_i18n()));
+		}
+
 		if (navigationMenuItem.getName() == null) {
 			map.put("name", null);
 		}
@@ -360,6 +392,15 @@ public class NavigationMenuItemSerDes {
 			map.put(
 				"parentNavigationMenuId",
 				String.valueOf(navigationMenuItem.getParentNavigationMenuId()));
+		}
+
+		if (navigationMenuItem.getSitePageURL() == null) {
+			map.put("sitePageURL", null);
+		}
+		else {
+			map.put(
+				"sitePageURL",
+				String.valueOf(navigationMenuItem.getSitePageURL()));
 		}
 
 		if (navigationMenuItem.getType() == null) {
@@ -441,6 +482,13 @@ public class NavigationMenuItemSerDes {
 					navigationMenuItem.setLink((String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "link_i18n")) {
+				if (jsonParserFieldValue != null) {
+					navigationMenuItem.setLink_i18n(
+						(Map)NavigationMenuItemSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					navigationMenuItem.setName((String)jsonParserFieldValue);
@@ -474,6 +522,12 @@ public class NavigationMenuItemSerDes {
 				if (jsonParserFieldValue != null) {
 					navigationMenuItem.setParentNavigationMenuId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "sitePageURL")) {
+				if (jsonParserFieldValue != null) {
+					navigationMenuItem.setSitePageURL(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {

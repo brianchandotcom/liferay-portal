@@ -227,6 +227,36 @@ public class NavigationMenuItem implements Serializable {
 	protected String link;
 
 	@Schema
+	@Valid
+	public Map<String, String> getLink_i18n() {
+		return link_i18n;
+	}
+
+	public void setLink_i18n(Map<String, String> link_i18n) {
+		this.link_i18n = link_i18n;
+	}
+
+	@JsonIgnore
+	public void setLink_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			link_i18nUnsafeSupplier) {
+
+		try {
+			link_i18n = link_i18nUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, String> link_i18n;
+
+	@Schema
 	public String getName() {
 		return name;
 	}
@@ -341,6 +371,34 @@ public class NavigationMenuItem implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long parentNavigationMenuId;
+
+	@Schema
+	public String getSitePageURL() {
+		return sitePageURL;
+	}
+
+	public void setSitePageURL(String sitePageURL) {
+		this.sitePageURL = sitePageURL;
+	}
+
+	@JsonIgnore
+	public void setSitePageURL(
+		UnsafeSupplier<String, Exception> sitePageURLUnsafeSupplier) {
+
+		try {
+			sitePageURL = sitePageURLUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String sitePageURL;
 
 	@Schema
 	public String getType() {
@@ -538,6 +596,16 @@ public class NavigationMenuItem implements Serializable {
 			sb.append("\"");
 		}
 
+		if (link_i18n != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"link_i18n\": ");
+
+			sb.append(_toJSON(link_i18n));
+		}
+
 		if (name != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -590,6 +658,20 @@ public class NavigationMenuItem implements Serializable {
 			sb.append("\"parentNavigationMenuId\": ");
 
 			sb.append(parentNavigationMenuId);
+		}
+
+		if (sitePageURL != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"sitePageURL\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(sitePageURL));
+
+			sb.append("\"");
 		}
 
 		if (type != null) {

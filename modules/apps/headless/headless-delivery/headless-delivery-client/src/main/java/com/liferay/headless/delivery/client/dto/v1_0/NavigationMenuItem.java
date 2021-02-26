@@ -158,6 +158,28 @@ public class NavigationMenuItem implements Cloneable, Serializable {
 
 	protected String link;
 
+	public Map<String, String> getLink_i18n() {
+		return link_i18n;
+	}
+
+	public void setLink_i18n(Map<String, String> link_i18n) {
+		this.link_i18n = link_i18n;
+	}
+
+	public void setLink_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			link_i18nUnsafeSupplier) {
+
+		try {
+			link_i18n = link_i18nUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> link_i18n;
+
 	public String getName() {
 		return name;
 	}
@@ -243,6 +265,27 @@ public class NavigationMenuItem implements Cloneable, Serializable {
 	}
 
 	protected Long parentNavigationMenuId;
+
+	public String getSitePageURL() {
+		return sitePageURL;
+	}
+
+	public void setSitePageURL(String sitePageURL) {
+		this.sitePageURL = sitePageURL;
+	}
+
+	public void setSitePageURL(
+		UnsafeSupplier<String, Exception> sitePageURLUnsafeSupplier) {
+
+		try {
+			sitePageURL = sitePageURLUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String sitePageURL;
 
 	public String getType() {
 		return type;

@@ -556,6 +556,32 @@ definition {
 			uploadFileName = "Document_1");
 	}
 
+	@description = "This test covers LPS-126756. It ensures that a blog entry can be added with a static gif."
+	@priority = "5"
+	test ViewBlogsEntryWithStaticGif {
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		Blogs.addEntryWithUploadedCoverImage(
+			coverImageName = "static",
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title",
+			navTab = "Blog Images",
+			uploadFileName = "static.gif");
+
+		Button.clickPublish();
+
+		Pause(locator1 = "3000");
+
+		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewEntryCP(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title",
+			uploadFileName = "static");
+	}
+
 	@priority = "3"
 	test ViewCoverImageDetails {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");

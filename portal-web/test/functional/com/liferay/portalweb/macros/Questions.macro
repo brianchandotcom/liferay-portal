@@ -121,6 +121,12 @@ definition {
 
 		Click(locator1 = "Questions#ASK_QUESTION_POST_YOUR_QUESTION_BUTTON");
 
+		if (isSet(answeredLabel)) {
+			AssertElementPresent(
+				key_label = "Answered",
+				locator1 = "Questions#QUESTIONS_RESPONSE_DATE_LABEL");
+		}
+
 		AssertVisible(
 			key_answerBodyContent = "${contentField}",
 			locator1 = "Questions#ANSWER_BODY");
@@ -493,6 +499,12 @@ definition {
 		AssertClick(
 			locator1 = "Button#REPLY_LAST",
 			value1 = "Reply");
+
+		if (isSet(repliedLabel)) {
+			AssertElementPresent(
+				key_label = "Replied",
+				locator1 = "Questions#QUESTIONS_RESPONSE_DATE_LABEL");
+		}
 
 		AssertVisible(
 			key_replyBodyContent = "${commentReply}",

@@ -53,7 +53,8 @@ export const mergePages = (
 	editingLanguageId,
 	fieldName,
 	newPages,
-	sourcePages
+	sourcePages,
+	viewMode
 ) => {
 	const newPagesVisitor = new PagesVisitor(newPages);
 	const sourcePagesVisitor = new PagesVisitor(sourcePages);
@@ -75,7 +76,11 @@ export const mergePages = (
 				? field.value
 				: sourceField.value;
 
-			if (field.visible !== sourceField.visible && field.visible) {
+			if (
+				field.visible !== sourceField.visible &&
+				field.visible &&
+				viewMode
+			) {
 				fieldValue = '';
 			}
 
@@ -120,6 +125,7 @@ const doEvaluate = debounce((fieldName, evaluatorContext, callback) => {
 		groupId,
 		pages,
 		portletNamespace,
+		viewMode,
 	} = evaluatorContext;
 
 	if (controller) {
@@ -151,7 +157,8 @@ const doEvaluate = debounce((fieldName, evaluatorContext, callback) => {
 				editingLanguageId,
 				fieldName,
 				newPages,
-				pages
+				pages,
+				viewMode
 			);
 
 			callback(null, mergedPages);

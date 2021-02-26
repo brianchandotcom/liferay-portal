@@ -25,6 +25,7 @@ export default function nextPage({
 	pages,
 	portletNamespace,
 	rules,
+	viewMode,
 }) {
 	return (dispatch) => {
 		evaluate(null, {
@@ -34,6 +35,7 @@ export default function nextPage({
 			pages,
 			portletNamespace,
 			rules,
+			viewMode,
 		}).then((evaluatedPages) => {
 			let validPage = true;
 			const visitor = new PagesVisitor(evaluatedPages);

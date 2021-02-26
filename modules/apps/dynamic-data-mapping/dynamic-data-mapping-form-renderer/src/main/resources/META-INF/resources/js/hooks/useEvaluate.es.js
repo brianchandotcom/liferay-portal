@@ -29,6 +29,7 @@ export const useEvaluate = (thunk) => {
 		pages,
 		portletNamespace,
 		rules,
+		viewMode,
 	} = usePage();
 
 	return useCallback(
@@ -40,6 +41,7 @@ export const useEvaluate = (thunk) => {
 				pages,
 				portletNamespace,
 				rules,
+				viewMode,
 				...args,
 			}),
 		[
@@ -50,6 +52,7 @@ export const useEvaluate = (thunk) => {
 			portletNamespace,
 			rules,
 			thunk,
+			viewMode,
 		]
 	);
 };

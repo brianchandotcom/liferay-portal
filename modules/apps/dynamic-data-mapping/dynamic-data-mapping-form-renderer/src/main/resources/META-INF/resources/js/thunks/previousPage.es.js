@@ -24,6 +24,7 @@ export default function previousPage({
 	pages,
 	portletNamespace,
 	rules,
+	viewMode,
 }) {
 	return (dispatch) => {
 		evaluate(null, {
@@ -33,6 +34,7 @@ export default function previousPage({
 			pages,
 			portletNamespace,
 			rules,
+			viewMode,
 		}).then((evaluatedPages) => {
 			let previousActivePageIndex = activePage;
 

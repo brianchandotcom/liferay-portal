@@ -68,6 +68,7 @@ export default function useCreateFieldChange() {
 					pages,
 					portletNamespace,
 					rules,
+					viewMode,
 				} = optionsRef.current;
 
 				const {fieldInstance, value} = event;
@@ -107,6 +108,7 @@ export default function useCreateFieldChange() {
 						pages: editedPages,
 						portletNamespace,
 						rules,
+						viewMode,
 					})
 						.then((evaluatedPages) => {
 							if (REVALIDATE_UPDATES.length > 0) {
@@ -139,7 +141,8 @@ export default function useCreateFieldChange() {
 								editingLanguageId,
 								fieldName,
 								evaluatedPages,
-								lastEditedPages
+								lastEditedPages,
+								viewMode
 							);
 
 							dispatch({

@@ -24,6 +24,7 @@ export default function formValidate({
 	pages,
 	portletNamespace,
 	rules,
+	viewMode,
 }) {
 	return (dispatch) => {
 		return evaluate(null, {
@@ -33,6 +34,7 @@ export default function formValidate({
 			pages,
 			portletNamespace,
 			rules,
+			viewMode,
 		}).then((evaluatedPages) => {
 			let validForm = true;
 			const visitor = new PagesVisitor(evaluatedPages);

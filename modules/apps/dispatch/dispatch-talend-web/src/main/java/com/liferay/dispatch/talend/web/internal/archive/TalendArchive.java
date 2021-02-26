@@ -16,9 +16,11 @@ package com.liferay.dispatch.talend.web.internal.archive;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -44,6 +46,18 @@ public class TalendArchive {
 
 	public String getJobMainClassFQN() {
 		return _jobMainClassFQN;
+	}
+
+	public String getJVMOptions() {
+		return _jvmOptions;
+	}
+
+	public boolean hasJVMOptions() {
+		if (Validator.isNotNull(_jvmOptions)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public static class Builder {
@@ -82,6 +96,12 @@ public class TalendArchive {
 			return this;
 		}
 
+		public Builder jvmOptionEntries(List<String> jvmOptionEntries) {
+			_jvmOptionEntries = jvmOptionEntries;
+
+			return this;
+		}
+
 		private String _buildClassPath() {
 			if (_classPathEntries == null) {
 				return StringPool.BLANK;
@@ -100,17 +120,42 @@ public class TalendArchive {
 			return sb.toString();
 		}
 
+		private String _buildJVMOptions() {
+			if ((_jvmOptionEntries == null) || _jvmOptionEntries.isEmpty()) {
+				return null;
+			}
+
+			StringBundler sb = new StringBundler(
+				(_jvmOptionEntries.size() * 2) - 1);
+
+			Iterator<String> iterator = _jvmOptionEntries.iterator();
+
+			while (iterator.hasNext()) {
+				String jvmOptionEntry = iterator.next();
+
+				sb.append(jvmOptionEntry);
+
+				if (iterator.hasNext()) {
+					sb.append(StringPool.SPACE);
+				}
+			}
+
+			return sb.toString();
+		}
+
 		private List<String> _classPathEntries;
 		private String _contextName;
 		private String _jobDirectory;
 		private String _jobJarPath;
 		private String _jobMainClassFQN;
+		private List<String> _jvmOptionEntries;
 
 	}
 
 	private TalendArchive(Builder builder) {
 		_classPath = builder._buildClassPath();
 		_contextName = builder._contextName;
+		_jvmOptions = builder._buildJVMOptions();
 		_jobDirectory = builder._jobDirectory;
 		_jobJarPath = builder._jobJarPath;
 		_jobMainClassFQN = builder._jobMainClassFQN;
@@ -121,5 +166,6 @@ public class TalendArchive {
 	private final String _jobDirectory;
 	private final String _jobJarPath;
 	private final String _jobMainClassFQN;
+	private final String _jvmOptions;
 
 }

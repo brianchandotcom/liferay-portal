@@ -15,13 +15,17 @@
 package com.liferay.dispatch.talend.web.internal.archive;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -53,6 +57,34 @@ public class TalendArchiveParserUtil {
 		}
 
 		return null;
+	}
+
+	private static void _addJVMOptionEntries(
+		List<String> jvmOptionEntries, String commandLine) {
+
+		if (Validator.isNull(commandLine) || !commandLine.startsWith("java")) {
+			return;
+		}
+
+		String[] tokens = commandLine.split("\\s");
+
+		for (String token : tokens) {
+			if (token.startsWith(StringPool.QUOTE) ||
+				token.startsWith(StringPool.APOSTROPHE)) {
+
+				token = token.substring(1);
+			}
+
+			if (token.endsWith(StringPool.QUOTE) ||
+				token.endsWith(StringPool.APOSTROPHE)) {
+
+				token = token.substring(0, token.length() - 1);
+			}
+
+			if (token.startsWith("-X")) {
+				jvmOptionEntries.add(token);
+			}
+		}
 	}
 
 	private static File _getJobDirectory(InputStream jobArchiveInputStream)
@@ -182,6 +214,67 @@ public class TalendArchiveParserUtil {
 		return properties;
 	}
 
+	private static List<String> _getJobScriptPaths(Path jobDirectoryPath)
+		throws IOException {
+
+		List<String> paths = new ArrayList<>();
+
+		Files.walkFileTree(
+			jobDirectoryPath,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult visitFile(
+					Path filePath, BasicFileAttributes basicFileAttributes) {
+
+					String path = filePath.toString();
+
+					if (path.endsWith(".bat") || path.endsWith(".ps1") ||
+						path.endsWith(".sh")) {
+
+						paths.add(path);
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+
+		paths.sort(null);
+
+		return paths;
+	}
+
+	private static List<String> _getJVMOptionEntries(
+			File jobDirectory, String jobName)
+		throws IOException {
+
+		Path path = jobDirectory.toPath();
+
+		List<String> jobScriptPaths = _getJobScriptPaths(path.resolve(jobName));
+
+		List<String> jvmOptionEntries = new ArrayList<>();
+
+		for (String jobScriptPath : jobScriptPaths) {
+			BufferedReader reader = new BufferedReader(
+				new FileReader(jobScriptPath));
+
+			String readLine = reader.readLine();
+
+			while (readLine != null) {
+				_addJVMOptionEntries(jvmOptionEntries, readLine);
+
+				readLine = reader.readLine();
+			}
+
+			if (!jvmOptionEntries.isEmpty()) {
+				break;
+			}
+		}
+
+		return jvmOptionEntries;
+	}
+
 	private static TalendArchive _parse(InputStream jobZIPInputStream)
 		throws IOException {
 
@@ -198,6 +291,9 @@ public class TalendArchiveParserUtil {
 			_getJobLibEntries(jobDirectoryPath));
 		talendArchiveBuilder.contextName(
 			(String)jobProperties.get("contextName"));
+		talendArchiveBuilder.jvmOptionEntries(
+			_getJVMOptionEntries(
+				jobDirectory, (String)jobProperties.get("job")));
 		talendArchiveBuilder.jobDirectory(jobDirectory.getAbsolutePath());
 
 		String jobName = (String)jobProperties.get("job");

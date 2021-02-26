@@ -70,31 +70,37 @@ export function checkRequiredFields(formViews = [], dataDefinition) {
 	}));
 }
 
-export function getFormViewFields({dataLayoutPages = []}) {
-	return dataLayoutPages.reduce(
-		(fields, {dataLayoutRows}) => [
-			...fields,
-			...dataLayoutRows.reduce(
-				(fields, {dataLayoutColumns}) => [
-					...fields,
-					...dataLayoutColumns.reduce(
-						(fields, {fieldNames}) => [...fields, ...fieldNames],
-						[]
-					),
-				],
-				[]
-			),
-		],
-		[]
-	);
-}
-
 export function hasConfigBreakChanges({draftConfig, ...config}) {
 	const props = ['dataObject', 'formView', 'steps'];
 
 	return props
 		.map((prop) => !isEqualObjects(draftConfig[prop], config[prop]))
 		.some((isDifferent) => isDifferent);
+}
+
+export function populateFormViewFields(formView) {
+	return {
+		...formView,
+		fields: formView.dataLayoutPages?.reduce(
+			(fields, {dataLayoutRows}) => [
+				...fields,
+				...dataLayoutRows.reduce(
+					(fields, {dataLayoutColumns}) => [
+						...fields,
+						...dataLayoutColumns.reduce(
+							(fields, {fieldNames}) => [
+								...fields,
+								...fieldNames,
+							],
+							[]
+						),
+					],
+					[]
+				),
+			],
+			[]
+		),
+	};
 }
 
 export function validateSelectedFormViews(formViews = []) {

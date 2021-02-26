@@ -11,7 +11,7 @@
 
 import {sub} from 'data-engine-js-components-web/js/utils/lang.es';
 
-import {getFormViewFields, validateSelectedFormViews} from './utils.es';
+import {populateFormViewFields, validateSelectedFormViews} from './utils.es';
 
 export const ADD_STEP = 'ADD_STEP';
 export const ADD_STEP_ACTION = 'ADD_STEP_ACTION';
@@ -269,10 +269,7 @@ export default (state, action) => {
 			const initialStep = workflowSteps.shift();
 			const finalStep = workflowSteps.pop();
 
-			const formView = {
-				...action.formView,
-				fields: getFormViewFields(action.formView),
-			};
+			const formView = populateFormViewFields(action.formView);
 
 			workflowSteps.forEach((step) => {
 				if (step.appWorkflowDataLayoutLinks.length === 0) {
@@ -345,8 +342,8 @@ export default (state, action) => {
 
 			formViews[action.index] = {
 				...formViews[action.index],
+				...populateFormViewFields(action.formView),
 				dataLayoutId: action.formView.id,
-				fields: getFormViewFields(action.formView),
 				name: action.formView.name,
 			};
 

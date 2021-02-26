@@ -14,7 +14,7 @@ import {getLocalizedValue} from 'data-engine-js-components-web/js/utils/lang.es'
 
 import {
 	checkRequiredFields,
-	getFormViewFields,
+	populateFormViewFields,
 	validateSelectedFormViews,
 } from './utils.es';
 
@@ -46,10 +46,7 @@ export function getFormViews(dataDefinitionId, defaultLanguageId) {
 		.then(getItems)
 		.then(buildLocalizedItems(defaultLanguageId))
 		.then((formViews) =>
-			formViews.map((formView) => ({
-				...formView,
-				fields: getFormViewFields(formView),
-			}))
+			formViews.map((formView) => populateFormViewFields(formView))
 		);
 }
 

@@ -30,7 +30,7 @@ import React, {useContext, useState} from 'react';
 
 import MissingRequiredFieldsModal from './edit/MissingRequiredFieldsModal.es';
 import {getDataDefinition} from './edit/actions.es';
-import {checkRequiredFields, getFormViewFields} from './edit/utils.es';
+import {checkRequiredFields, populateFormViewFields} from './edit/utils.es';
 
 export default ({history, scope, ...props}) => {
 	const {baseResourceURL, namespace, userId} = useContext(AppContext);
@@ -159,10 +159,8 @@ export default ({history, scope, ...props}) => {
 					return getItem(
 						`/o/data-engine/v2.0/data-layouts/${app.dataLayoutId}`
 					).then((formView) => {
-						formView.fields = getFormViewFields(formView);
-
 						formView = checkRequiredFields(
-							[formView],
+							[populateFormViewFields(formView)],
 							dataDefinition
 						)[0];
 

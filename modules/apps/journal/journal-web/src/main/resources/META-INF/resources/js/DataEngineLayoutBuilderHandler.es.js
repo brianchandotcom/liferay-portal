@@ -119,14 +119,15 @@ export default function ({defaultLanguageId, namespace}) {
 
 	// Deselect field when clicking outside the form builder
 
-	const detectClickOutside = (event) => {
+	const detectClickOutside = async (event) => {
 		if (
 			!event.target.closest('.ddm-form-builder-wrapper') &&
 			!event.target.closest('.multi-panel-sidebar')
 		) {
-			getDataLayoutBuilder().then((dataLayoutBuilder) => {
-				dataLayoutBuilder.dispatch('sidebarFieldBlurred');
-			});
+			const dataLayoutBuilder = await getDataLayoutBuilder();
+			dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider?.dispatch?.(
+				'sidebarFieldBlurred'
+			);
 		}
 	};
 

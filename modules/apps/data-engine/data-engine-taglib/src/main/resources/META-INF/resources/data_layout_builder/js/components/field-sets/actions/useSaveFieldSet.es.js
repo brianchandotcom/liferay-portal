@@ -114,27 +114,31 @@ export default ({
 					const fieldName = dataDefinitionFieldSet.name;
 
 					if (containsField(dataLayout.dataLayoutPages, fieldName)) {
-						dataLayoutBuilder.dispatch('fieldEditedProperties', {
-							defaultLanguageId: fieldSet.defaultLanguageId,
-							fieldName,
-							properties: [
-								{
-									name: 'nestedFields',
-									value: dataDefinitionFields.map(({name}) =>
-										dataLayoutBuilder.getDDMFormField(
-											childrenState.dataDefinition,
-											name
-										)
-									),
-								},
-								{
-									name: 'rows',
-									value: normalizeDataLayoutRows(
-										dataLayoutPages
-									),
-								},
-							],
-						});
+						dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider?.dispatch?.(
+							'fieldEditedProperties',
+							{
+								defaultLanguageId: fieldSet.defaultLanguageId,
+								fieldName,
+								properties: [
+									{
+										name: 'nestedFields',
+										value: dataDefinitionFields.map(
+											({name}) =>
+												dataLayoutBuilder.getDDMFormField(
+													childrenState.dataDefinition,
+													name
+												)
+										),
+									},
+									{
+										name: 'rows',
+										value: normalizeDataLayoutRows(
+											dataLayoutPages
+										),
+									},
+								],
+							}
+						);
 					}
 					else {
 						dispatch({

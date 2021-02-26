@@ -252,7 +252,9 @@ const CustomObjectSidebar = () => {
 						DataLayoutBuilderActions.UPDATE_FOCUSED_CUSTOM_OBJECT_FIELD,
 				});
 
-				dataLayoutBuilder.dispatch('sidebarFieldBlurred');
+				dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider?.dispatch?.(
+					'sidebarFieldBlurred'
+				);
 			}
 		};
 

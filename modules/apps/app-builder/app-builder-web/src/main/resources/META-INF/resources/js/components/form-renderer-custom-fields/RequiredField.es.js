@@ -212,10 +212,13 @@ export default ({AppContext, dataLayoutBuilder}) => {
 					onToggle={(toggle) => {
 						setToggle(toggle);
 
-						dataLayoutBuilder.dispatch('fieldEdited', {
-							propertyName: 'required',
-							propertyValue: toggle,
-						});
+						dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider?.dispatch?.(
+							'fieldEdited',
+							{
+								propertyName: 'required',
+								propertyValue: toggle,
+							}
+						);
 
 						if (toggle) {
 							setViewSelected(FORM_VIEW_LEVEL);

@@ -433,7 +433,10 @@ describe('FieldSets', () => {
 
 		fireEvent.doubleClick(container.querySelector('.field-type'));
 
-		const [action, payload] = dataLayoutBuilderProps.dispatch.mock.calls[0];
+		const [
+			action,
+			payload,
+		] = dataLayoutBuilderProps.formBuilderWithLayoutProvider.refs.layoutProvider.dispatch.mock.calls[0];
 
 		const {
 			fieldSet: {name},
@@ -560,7 +563,7 @@ describe('FieldSets', () => {
 			dispatch: {
 				mock: {calls: dispatchCalls},
 			},
-		} = dataLayoutBuilderProps;
+		} = dataLayoutBuilderProps.formBuilderWithLayoutProvider.refs.layoutProvider;
 		const [action, payload] = dispatchCalls[0];
 
 		expect(action).toEqual('fieldDeleted');

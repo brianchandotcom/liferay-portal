@@ -91,7 +91,10 @@ export const DataEngineFieldsSidebar = ({title}) => {
 				}
 
 				if (!hasFocusedCustomObjectField(focusedCustomObjectField)) {
-					dataLayoutBuilder.dispatch(type, payload);
+					dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider?.dispatch?.(
+						type,
+						payload
+					);
 				}
 			}}
 			displaySettings={displaySettings}
@@ -101,7 +104,9 @@ export const DataEngineFieldsSidebar = ({title}) => {
 			focusedField={focusedField}
 			hasFocusedCustomObjectField={hasFocusedCustomObjectField}
 			onClick={() => {
-				dataLayoutBuilder.dispatch('sidebarFieldBlurred');
+				dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider?.dispatch?.(
+					'sidebarFieldBlurred'
+				);
 			}}
 			onDoubleClick={({name}) => {
 				const {
@@ -109,7 +114,7 @@ export const DataEngineFieldsSidebar = ({title}) => {
 					pages,
 				} = dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider.state;
 
-				dataLayoutBuilder.dispatch(
+				dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider?.dispatch?.(
 					'fieldAdded',
 					dropLayoutBuilderField({
 						addedToPlaceholder: true,

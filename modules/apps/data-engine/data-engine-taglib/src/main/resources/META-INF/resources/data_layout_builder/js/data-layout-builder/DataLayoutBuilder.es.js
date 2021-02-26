@@ -105,15 +105,6 @@ class DataLayoutBuilder extends React.Component {
 		Liferay.destroyComponent(dataLayoutBuilderId);
 	}
 
-	dispatch(event, payload) {
-		const layoutProvider = this.formBuilderWithLayoutProvider.refs
-			.layoutProvider;
-
-		if (layoutProvider && layoutProvider.dispatch) {
-			layoutProvider.dispatch(event, payload);
-		}
-	}
-
 	dispatchAction(action) {
 		const {appContext} = this.props;
 		const [, dispatch] = appContext;

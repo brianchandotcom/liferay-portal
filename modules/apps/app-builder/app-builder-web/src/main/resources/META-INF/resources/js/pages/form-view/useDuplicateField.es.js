@@ -73,7 +73,10 @@ export default ({dataLayoutBuilder}) => {
 	const [{dataDefinition}, dispatch] = useContext(FormViewContext);
 
 	return (event) => {
-		dataLayoutBuilder.dispatch('fieldDuplicated', event);
+		dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider?.dispatch?.(
+			'fieldDuplicated',
+			event
+		);
 
 		const dataDefinitionFields = getNewFields(dataLayoutBuilder).map(
 			(newField) => {

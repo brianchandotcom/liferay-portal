@@ -83,7 +83,10 @@ describe('DataLayoutBuilder', () => {
 
 		component.eventEmitter.once(event, expect(payload).toBe);
 
-		component.dispatch(event, payload);
+		component.formBuilderWithLayoutProvider.refs.layoutProvider.dispatch(
+			event,
+			payload
+		);
 	});
 
 	it('is emetting message', () => {
@@ -129,7 +132,10 @@ describe('DataLayoutBuilder', () => {
 
 			expect(payload).toBe(eventPayload);
 		});
-		component.dispatch(event, payload);
+		component.formBuilderWithLayoutProvider.refs.layoutProvider.dispatch(
+			event,
+			payload
+		);
 	});
 
 	it('is removing listener after dispatching event with function', () => {
@@ -142,7 +148,10 @@ describe('DataLayoutBuilder', () => {
 			expect(payload).toBe(eventPayload);
 		};
 		component.on(event, listener);
-		component.dispatch(event, payload);
+		component.formBuilderWithLayoutProvider.refs.layoutProvider.dispatch(
+			event,
+			payload
+		);
 	});
 
 	it('is serializing pages', () => {

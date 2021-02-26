@@ -159,7 +159,10 @@ export default function FieldSets({keywords}) {
 				rowIndex: pages[activePage].rows.length,
 			},
 		});
-		dataLayoutBuilder.dispatch('fieldSetAdded', payload);
+		dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider?.dispatch?.(
+			'fieldSetAdded',
+			payload
+		);
 	};
 
 	const onClickCreateNewFieldset = () => toggleFieldSet(null, dataDefinition);

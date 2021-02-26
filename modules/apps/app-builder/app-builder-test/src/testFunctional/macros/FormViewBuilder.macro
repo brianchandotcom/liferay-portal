@@ -289,11 +289,10 @@ definition {
 	}
 
 	macro dragAndDropFieldSet {
-		DragAndDrop(
-			fieldLabel = "${fieldType}",
+		DragAndDrop.javaScriptDragAndDropToObject(
 			locator1 = "FormViewBuilder#FIELD_LABEL",
 			locator2 = "FormViewBuilder#FORM_FIELD_FIRST_ROW",
-			value1 = "${fieldType}");
+			value1 = "${fieldLabel}");
 	}
 
 	macro editDate {

@@ -3913,7 +3913,7 @@ definition {
 
 		Click(locator1 = "FormViewBuilder#RULE_BUILDER_GO_BACK");
 
-		FormViewBuilder.dragAndDropFieldSet(fieldType = "Select from List");
+		FormViewBuilder.dragAndDropFieldSet(fieldLabel = "Select from List");
 
 		FormViewBuilder.goToFieldsetsTab();
 

@@ -14,8 +14,9 @@
 
 package com.liferay.jenkins.results.parser.testray;
 
-import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import java.io.IOException;
 
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -37,6 +38,34 @@ public class TestrayS3Object {
 		}
 	}
 
+	public boolean exists() {
+		if (_exists != null) {
+			return _exists;
+		}
+
+		try {
+			HttpURLConnection httpURLConnection =
+				(HttpURLConnection)_url.openConnection();
+
+			httpURLConnection.setRequestMethod("HEAD");
+			httpURLConnection.connect();
+
+			int responseCode = httpURLConnection.getResponseCode();
+
+			if (responseCode == HttpURLConnection.HTTP_OK) {
+				_exists = true;
+
+				return _exists;
+			}
+		}
+		catch (IOException ioException) {
+		}
+
+		_exists = false;
+
+		return _exists;
+	}
+
 	public String getKey() {
 		return _key;
 	}
@@ -51,10 +80,10 @@ public class TestrayS3Object {
 
 	@Override
 	public String toString() {
-		return JenkinsResultsParserUtil.combine(
-			String.valueOf(getURL()), "/", getKey());
+		return String.valueOf(getURL());
 	}
 
+	private Boolean _exists;
 	private final String _key;
 	private final TestrayS3Bucket _testrayS3Bucket;
 	private final URL _url;

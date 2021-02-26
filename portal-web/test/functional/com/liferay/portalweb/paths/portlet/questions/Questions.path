@@ -153,6 +153,11 @@
 	<td>//h1[contains(.,'${key_questionTitle}')]//*[name()='svg'][contains(@class,'lexicon-icon-lock')]</td>
 	<td></td>
 </tr>
+<tr>	
+	<td>QUESTIONS_RESPONSE_DATE_LABEL</td>	
+	<td>//span[contains(@class,'text-secondary') and contains(.,'${key_label}')]</td>	
+	<td></td>	
+</tr>
 <tr>
 	<td>QUESTIONS_SUBSCRIBED_BUTTON</td>
 	<td>//button[@type='button' and @title='Subscribed']</td>

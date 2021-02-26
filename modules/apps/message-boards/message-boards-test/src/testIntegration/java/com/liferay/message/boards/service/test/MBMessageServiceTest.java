@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.security.permission.DoAsUserThread;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
+import com.liferay.portal.test.log.LogEvent;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
@@ -57,8 +58,6 @@ import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.log4j.spi.LoggingEvent;
 
 import org.hibernate.util.JDBCExceptionReporter;
 
@@ -177,10 +176,8 @@ public class MBMessageServiceTest {
 			DB db = DBManagerUtil.getDB();
 
 			if (db.getDBType() == DBType.HYPERSONIC) {
-				for (LoggingEvent loggingEvent :
-						captureAppender2.getLoggingEvents()) {
-
-					String message = loggingEvent.getRenderedMessage();
+				for (LogEvent logEvent : captureAppender2.getLogEvents()) {
+					String message = logEvent.getMessage();
 
 					Assert.assertTrue(
 						message.startsWith(
@@ -188,29 +185,23 @@ public class MBMessageServiceTest {
 								"exception"));
 				}
 
-				for (LoggingEvent loggingEvent :
-						captureAppender5.getLoggingEvents()) {
-
-					String message = loggingEvent.getRenderedMessage();
+				for (LogEvent logEvent : captureAppender5.getLogEvents()) {
+					String message = logEvent.getMessage();
 
 					Assert.assertTrue(
 						message.startsWith("Unable to process message"));
 				}
 			}
 			else if (db.getDBType() == DBType.SYBASE) {
-				for (LoggingEvent loggingEvent :
-						captureAppender1.getLoggingEvents()) {
-
-					String message = loggingEvent.getRenderedMessage();
+				for (LogEvent logEvent : captureAppender1.getLogEvents()) {
+					String message = logEvent.getMessage();
 
 					Assert.assertTrue(
 						message.startsWith("Caught unexpected exception"));
 				}
 
-				for (LoggingEvent loggingEvent :
-						captureAppender3.getLoggingEvents()) {
-
-					String message = loggingEvent.getRenderedMessage();
+				for (LogEvent logEvent : captureAppender3.getLogEvents()) {
+					String message = logEvent.getMessage();
 
 					StringBundler sb = new StringBundler(2);
 
@@ -220,10 +211,8 @@ public class MBMessageServiceTest {
 					Assert.assertTrue(message.startsWith(sb.toString()));
 				}
 
-				for (LoggingEvent loggingEvent :
-						captureAppender4.getLoggingEvents()) {
-
-					String message = loggingEvent.getRenderedMessage();
+				for (LogEvent logEvent : captureAppender4.getLogEvents()) {
+					String message = logEvent.getMessage();
 
 					Assert.assertTrue(
 						message, message.contains("Your server command"));

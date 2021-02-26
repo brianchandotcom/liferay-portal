@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.osgi.web.portlet.container.test.util.PortletContainerTestUtil;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
+import com.liferay.portal.test.log.LogEvent;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.SecurityPortletContainerWrapper;
 
@@ -48,8 +49,6 @@ import javax.portlet.ResourceResponse;
 import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
-
-import org.apache.log4j.spi.LoggingEvent;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -85,21 +84,19 @@ public class RenderRequestPortletContainerTest
 			PortletContainerTestUtil.Response response =
 				PortletContainerTestUtil.request(url);
 
-			List<LoggingEvent> loggingEvents =
-				captureAppender.getLoggingEvents();
+			List<LogEvent> logEvents = captureAppender.getLogEvents();
 
 			int totalExpectedEvents = 2;
 
 			Assert.assertEquals(
-				loggingEvents.toString(), totalExpectedEvents,
-				loggingEvents.size());
+				logEvents.toString(), totalExpectedEvents, logEvents.size());
 
 			for (int i = 0; i < totalExpectedEvents; i++) {
-				LoggingEvent loggingEvent = loggingEvents.get(i);
+				LogEvent logEvent = logEvents.get(i);
 
 				Assert.assertEquals(
 					"Invalid portlet ID '\"><script>alert(1)</script>",
-					loggingEvent.getMessage());
+					logEvent.getMessage());
 			}
 
 			Assert.assertEquals(200, response.getCode());

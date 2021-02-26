@@ -37,12 +37,11 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
+import com.liferay.portal.test.log.LogEvent;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.List;
-
-import org.apache.log4j.spi.LoggingEvent;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -90,11 +89,9 @@ public class MBCategoryIndexerTest {
 			_indexer.reindex(
 				new String[] {String.valueOf(_company.getCompanyId())});
 
-			List<LoggingEvent> loggingEvents =
-				captureAppender.getLoggingEvents();
+			List<LogEvent> logEvents = captureAppender.getLogEvents();
 
-			Assert.assertEquals(
-				loggingEvents.toString(), 0, loggingEvents.size());
+			Assert.assertEquals(logEvents.toString(), 0, logEvents.size());
 		}
 	}
 
@@ -119,20 +116,18 @@ public class MBCategoryIndexerTest {
 			_indexer.reindex(
 				new String[] {String.valueOf(_company.getCompanyId())});
 
-			List<LoggingEvent> loggingEvents =
-				captureAppender.getLoggingEvents();
+			List<LogEvent> logEvents = captureAppender.getLogEvents();
 
-			Assert.assertEquals(
-				loggingEvents.toString(), 1, loggingEvents.size());
+			Assert.assertEquals(logEvents.toString(), 1, logEvents.size());
 
-			LoggingEvent loggingEvent = loggingEvents.get(0);
+			LogEvent logEvent = logEvents.get(0);
 
 			Assert.assertEquals(
 				StringBundler.concat(
 					"Reindexing message boards categories for category ID ",
 					mbCategory.getCategoryId(), " and group ID ",
 					group.getGroupId()),
-				loggingEvent.getMessage());
+				logEvent.getMessage());
 		}
 	}
 

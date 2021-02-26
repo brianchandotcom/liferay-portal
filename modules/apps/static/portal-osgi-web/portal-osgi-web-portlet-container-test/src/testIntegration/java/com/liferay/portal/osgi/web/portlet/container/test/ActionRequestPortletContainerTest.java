@@ -31,6 +31,7 @@ import com.liferay.portal.security.auth.AuthTokenWhitelistImpl;
 import com.liferay.portal.security.auth.SessionAuthToken;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
+import com.liferay.portal.test.log.LogEvent;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.SecurityPortletContainerWrapper;
 
@@ -48,8 +49,6 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import javax.servlet.http.HttpServletRequest;
-
-import org.apache.log4j.spi.LoggingEvent;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -187,13 +186,11 @@ public class ActionRequestPortletContainerTest
 			PortletContainerTestUtil.Response response =
 				PortletContainerTestUtil.request(url);
 
-			List<LoggingEvent> loggingEvents =
-				captureAppender.getLoggingEvents();
+			List<LogEvent> logEvents = captureAppender.getLogEvents();
 
-			Assert.assertEquals(
-				loggingEvents.toString(), 1, loggingEvents.size());
+			Assert.assertEquals(logEvents.toString(), 1, logEvents.size());
 
-			LoggingEvent loggingEvent = loggingEvents.get(0);
+			LogEvent logEvent = logEvents.get(0);
 
 			Assert.assertEquals(
 				StringBundler.concat(
@@ -202,7 +199,7 @@ public class ActionRequestPortletContainerTest
 					TEST_PORTLET_ID, ": User 0 did not provide a valid CSRF ",
 					"token for ",
 					"com.liferay.portlet.SecurityPortletContainerWrapper"),
-				loggingEvent.getMessage());
+				logEvent.getMessage());
 
 			Assert.assertEquals(403, response.getCode());
 			Assert.assertFalse(testPortlet.isCalledAction());

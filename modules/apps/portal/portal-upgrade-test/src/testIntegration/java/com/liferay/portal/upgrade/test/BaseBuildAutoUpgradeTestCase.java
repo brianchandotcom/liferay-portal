@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.aop.AopInvocationHandler;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
+import com.liferay.portal.test.log.LogEvent;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.test.model.impl.BuildAutoUpgradeTestEntityModelImpl;
@@ -54,8 +55,6 @@ import java.util.List;
 import java.util.Properties;
 import java.util.jar.JarEntry;
 import java.util.jar.JarOutputStream;
-
-import org.apache.log4j.spi.LoggingEvent;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -447,13 +446,13 @@ public abstract class BaseBuildAutoUpgradeTestCase {
 	private String _assertAndGetFirstLogRecordMessage(
 		CaptureAppender captureAppender) {
 
-		List<LoggingEvent> loggingEvents = captureAppender.getLoggingEvents();
+		List<LogEvent> logEvents = captureAppender.getLogEvents();
 
-		Assert.assertEquals(loggingEvents.toString(), 1, loggingEvents.size());
+		Assert.assertEquals(logEvents.toString(), 1, logEvents.size());
 
-		LoggingEvent loggingEvent = loggingEvents.get(0);
+		LogEvent logEvent = logEvents.get(0);
 
-		return loggingEvent.getRenderedMessage();
+		return logEvent.getMessage();
 	}
 
 	private void _initTableColumns(

@@ -1,0 +1,10 @@
+dependencies {
+	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testCompile project(":core:petra:petra-string")
+}
+
+test {
+	systemProperty "modules.test.class.group", System.getProperty("modules.test.class.group")
+	systemProperty "project.dir", System.getProperty("project.dir")
+}

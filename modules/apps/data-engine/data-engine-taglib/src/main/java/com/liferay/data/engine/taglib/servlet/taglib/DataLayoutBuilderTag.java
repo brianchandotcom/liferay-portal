@@ -166,7 +166,7 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 
 	private ServletContext _getModuleServletContext() {
 		if (getModuleServletContext() == null) {
-			return pageContext.getServletContext();
+			return getServletContext();
 		}
 
 		return getModuleServletContext();

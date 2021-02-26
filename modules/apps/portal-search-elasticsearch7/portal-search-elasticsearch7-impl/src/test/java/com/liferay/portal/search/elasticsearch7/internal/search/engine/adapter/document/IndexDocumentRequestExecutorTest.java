@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.document;
 
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
@@ -37,9 +37,8 @@ import org.junit.Test;
 public class IndexDocumentRequestExecutorTest {
 
 	@ClassRule
-	public static InitializeKernelUtilClassTestRule
-		initializeKernelUtilClassTestRule =
-			InitializeKernelUtilClassTestRule.INSTANCE;
+	public static LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {

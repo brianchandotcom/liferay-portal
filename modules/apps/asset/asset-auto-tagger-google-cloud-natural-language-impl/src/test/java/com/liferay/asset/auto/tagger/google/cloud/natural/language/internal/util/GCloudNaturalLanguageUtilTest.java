@@ -20,7 +20,7 @@ import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -44,9 +44,8 @@ import org.mockito.MockitoAnnotations;
 public class GCloudNaturalLanguageUtilTest {
 
 	@ClassRule
-	public static InitializeKernelUtilClassTestRule
-		initializeKernelUtilClassTestRule =
-			InitializeKernelUtilClassTestRule.INSTANCE;
+	public static LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() {

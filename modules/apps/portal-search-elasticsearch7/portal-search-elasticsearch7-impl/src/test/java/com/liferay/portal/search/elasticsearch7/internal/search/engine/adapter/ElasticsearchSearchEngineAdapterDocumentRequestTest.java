@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
@@ -78,9 +78,8 @@ import org.junit.Test;
 public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 
 	@ClassRule
-	public static InitializeKernelUtilClassTestRule
-		initializeKernelUtilClassTestRule =
-			InitializeKernelUtilClassTestRule.INSTANCE;
+	public static LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {

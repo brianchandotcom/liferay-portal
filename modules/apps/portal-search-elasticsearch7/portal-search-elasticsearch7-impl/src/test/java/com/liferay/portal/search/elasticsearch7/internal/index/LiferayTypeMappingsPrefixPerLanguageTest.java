@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.index;
 
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.search.elasticsearch7.internal.connection.IndexName;
 import com.liferay.portal.search.elasticsearch7.internal.document.SingleFieldFixture;
 import com.liferay.portal.search.elasticsearch7.internal.index.constants.LiferayTypeMappingsConstants;
@@ -33,9 +33,8 @@ import org.junit.rules.TestName;
 public class LiferayTypeMappingsPrefixPerLanguageTest {
 
 	@ClassRule
-	public static InitializeKernelUtilClassTestRule
-		initializeKernelUtilClassTestRule =
-			InitializeKernelUtilClassTestRule.INSTANCE;
+	public static LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() throws Exception {

@@ -17,7 +17,7 @@ package com.liferay.portal.dao.db;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.test.BaseDBTestCase;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.kernel.util.PropsKeys;
 
 import java.lang.reflect.Method;
@@ -35,17 +35,16 @@ import org.junit.Test;
 public class SybaseDBTest extends BaseDBTestCase {
 
 	@ClassRule
-	public static InitializeKernelUtilClassTestRule
-		initializeKernelUtilClassTestRule =
-			new InitializeKernelUtilClassTestRule() {
+	public static LiferayUnitTestRule liferayUnitTestRule =
+		new LiferayUnitTestRule() {
 
-				@Override
-				public void addProperties(Properties properties) {
-					properties.setProperty(
-						PropsKeys.DATABASE_STRING_INDEX_MAX_LENGTH, "-1");
-				}
+			@Override
+			public void addProperties(Properties properties) {
+				properties.setProperty(
+					PropsKeys.DATABASE_STRING_INDEX_MAX_LENGTH, "-1");
+			}
 
-			};
+		};
 
 	@Test
 	public void testApplyMaxStringIndexLengthLimitation() throws Exception {

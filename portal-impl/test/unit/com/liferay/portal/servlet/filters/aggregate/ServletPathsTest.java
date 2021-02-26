@@ -18,7 +18,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.test.log.LogCapture;
@@ -54,8 +54,7 @@ public class ServletPathsTest {
 	@ClassRule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			CodeCoverageAssertor.INSTANCE,
-			InitializeKernelUtilClassTestRule.INSTANCE);
+			CodeCoverageAssertor.INSTANCE, LiferayUnitTestRule.INSTANCE);
 
 	@BeforeClass
 	public static void setUpClass() {

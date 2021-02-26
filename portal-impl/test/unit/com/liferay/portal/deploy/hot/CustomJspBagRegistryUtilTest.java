@@ -15,7 +15,7 @@
 package com.liferay.portal.deploy.hot;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.kernel.url.URLContainer;
 import com.liferay.portal.kernel.util.CustomJspRegistryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -48,9 +48,8 @@ import org.junit.Test;
 public class CustomJspBagRegistryUtilTest {
 
 	@ClassRule
-	public static InitializeKernelUtilClassTestRule
-		initializeKernelUtilClassTestRule =
-			InitializeKernelUtilClassTestRule.INSTANCE;
+	public static LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@BeforeClass
 	public static void setUpClass() {

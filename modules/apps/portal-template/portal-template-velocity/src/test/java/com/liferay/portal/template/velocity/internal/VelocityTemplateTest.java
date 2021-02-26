@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceCache;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.template.ClassLoaderResourceParser;
@@ -59,9 +59,8 @@ import org.junit.Test;
 public class VelocityTemplateTest {
 
 	@ClassRule
-	public static InitializeKernelUtilClassTestRule
-		initializeKernelUtilClassTestRule =
-			InitializeKernelUtilClassTestRule.INSTANCE;
+	public static LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {

@@ -14,7 +14,7 @@
 
 package com.liferay.petra.json.validator;
 
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.kernel.util.FileUtil;
 
 import java.io.InputStream;
@@ -32,9 +32,8 @@ import org.junit.rules.ExpectedException;
 public class JSONValidatorTest {
 
 	@ClassRule
-	public static InitializeKernelUtilClassTestRule
-		initializeKernelUtilClassTestRule =
-			InitializeKernelUtilClassTestRule.INSTANCE;
+	public static LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testValidateExampleInvalidExtraProperties() throws Exception {

@@ -15,7 +15,7 @@
 package com.liferay.portal.reports.engine.console.web.internal.admin.portlet.action;
 
 import com.liferay.portal.kernel.cal.Recurrence;
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -42,9 +42,8 @@ import org.mockito.Mockito;
 public class AddSchedulerMVCActionCommandTest {
 
 	@ClassRule
-	public static InitializeKernelUtilClassTestRule
-		initializeKernelUtilClassTestRule =
-			InitializeKernelUtilClassTestRule.INSTANCE;
+	public static LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() {

@@ -15,7 +15,7 @@
 package com.liferay.portal.search.tuning.synonyms.web.internal.display.context;
 
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -52,9 +52,8 @@ import org.mockito.MockitoAnnotations;
 public class SynonymsDisplayContextTest {
 
 	@ClassRule
-	public static InitializeKernelUtilClassTestRule
-		initializeKernelUtilClassTestRule =
-			InitializeKernelUtilClassTestRule.INSTANCE;
+	public static LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	public void mockSynonymSets(String... synonymSets) {
 		Mockito.when(

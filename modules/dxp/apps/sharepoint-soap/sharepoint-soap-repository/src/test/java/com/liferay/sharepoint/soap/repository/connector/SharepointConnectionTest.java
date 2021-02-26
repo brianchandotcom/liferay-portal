@@ -16,7 +16,7 @@ package com.liferay.sharepoint.soap.repository.connector;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.util.HtmlImpl;
@@ -52,9 +52,8 @@ import org.junit.Test;
 public class SharepointConnectionTest {
 
 	@ClassRule
-	public static InitializeKernelUtilClassTestRule
-		initializeKernelUtilClassTestRule =
-			InitializeKernelUtilClassTestRule.INSTANCE;
+	public static LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@BeforeClass
 	public static void setUpClass() {

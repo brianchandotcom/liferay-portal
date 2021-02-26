@@ -44,7 +44,7 @@ import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -96,7 +96,7 @@ public class TableMapperTest {
 				}
 
 			},
-			InitializeKernelUtilClassTestRule.INSTANCE);
+			LiferayUnitTestRule.INSTANCE);
 
 	@BeforeClass
 	public static void setUpClass() {

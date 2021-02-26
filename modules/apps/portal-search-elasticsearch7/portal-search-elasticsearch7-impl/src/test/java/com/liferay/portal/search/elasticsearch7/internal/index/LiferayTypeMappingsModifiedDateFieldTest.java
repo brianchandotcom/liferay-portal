@@ -15,7 +15,7 @@
 package com.liferay.portal.search.elasticsearch7.internal.index;
 
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.search.elasticsearch7.internal.connection.IndexName;
 
 import java.util.Collections;
@@ -38,9 +38,8 @@ import org.junit.rules.TestName;
 public class LiferayTypeMappingsModifiedDateFieldTest {
 
 	@ClassRule
-	public static InitializeKernelUtilClassTestRule
-		initializeKernelUtilClassTestRule =
-			InitializeKernelUtilClassTestRule.INSTANCE;
+	public static LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() throws Exception {

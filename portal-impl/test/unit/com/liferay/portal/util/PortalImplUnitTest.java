@@ -19,7 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.auth.AlwaysAllowDoAsUser;
 import com.liferay.portal.kernel.servlet.PersistentHttpServletRequestWrapper;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -48,9 +48,8 @@ import org.springframework.mock.web.MockHttpServletRequest;
 public class PortalImplUnitTest {
 
 	@ClassRule
-	public static InitializeKernelUtilClassTestRule
-		initializeKernelUtilClassTestRule =
-			InitializeKernelUtilClassTestRule.INSTANCE;
+	public static LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@BeforeClass
 	public static void setUpClass() {

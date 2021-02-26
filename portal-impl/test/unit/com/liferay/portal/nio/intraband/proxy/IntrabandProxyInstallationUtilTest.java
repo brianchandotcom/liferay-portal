@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
@@ -58,8 +58,7 @@ public class IntrabandProxyInstallationUtilTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			CodeCoverageAssertor.INSTANCE,
-			InitializeKernelUtilClassTestRule.INSTANCE);
+			CodeCoverageAssertor.INSTANCE, LiferayUnitTestRule.INSTANCE);
 
 	@Before
 	public void setUp() {

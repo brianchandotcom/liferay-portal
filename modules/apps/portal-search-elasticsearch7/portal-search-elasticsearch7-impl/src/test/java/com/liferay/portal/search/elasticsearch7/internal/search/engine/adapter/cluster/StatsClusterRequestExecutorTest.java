@@ -17,7 +17,7 @@ package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionFixture;
 import com.liferay.portal.search.engine.adapter.cluster.StatsClusterRequest;
 import com.liferay.portal.search.engine.adapter.cluster.StatsClusterResponse;
@@ -34,9 +34,8 @@ import org.junit.Test;
 public class StatsClusterRequestExecutorTest {
 
 	@ClassRule
-	public static InitializeKernelUtilClassTestRule
-		initializeKernelUtilClassTestRule =
-			InitializeKernelUtilClassTestRule.INSTANCE;
+	public static LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() throws Exception {

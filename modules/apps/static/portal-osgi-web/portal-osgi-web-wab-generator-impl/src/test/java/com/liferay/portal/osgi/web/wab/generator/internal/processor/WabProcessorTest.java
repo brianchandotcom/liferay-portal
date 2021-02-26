@@ -27,7 +27,7 @@ import aQute.lib.filter.Filter;
 
 import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.xml.Document;
@@ -70,9 +70,8 @@ import org.junit.Test;
 public class WabProcessorTest {
 
 	@ClassRule
-	public static InitializeKernelUtilClassTestRule
-		initializeKernelUtilClassTestRule =
-			InitializeKernelUtilClassTestRule.INSTANCE;
+	public static LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@BeforeClass
 	public static void setUpClass() {

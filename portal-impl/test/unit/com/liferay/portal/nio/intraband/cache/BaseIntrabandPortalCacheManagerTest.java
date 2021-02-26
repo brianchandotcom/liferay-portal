@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.nio.intraband.RegistrationReference;
 import com.liferay.portal.kernel.nio.intraband.proxy.ExceptionHandler;
 import com.liferay.portal.kernel.nio.intraband.test.MockIntraband;
 import com.liferay.portal.kernel.nio.intraband.test.MockRegistrationReference;
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.nio.intraband.proxy.IntrabandProxyUtil;
 import com.liferay.portal.nio.intraband.proxy.WarnLogExceptionHandler;
 
@@ -35,9 +35,8 @@ import org.junit.Test;
 public class BaseIntrabandPortalCacheManagerTest {
 
 	@ClassRule
-	public static InitializeKernelUtilClassTestRule
-		initializeKernelUtilClassTestRule =
-			InitializeKernelUtilClassTestRule.INSTANCE;
+	public static LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testStubGeneration() throws Exception {

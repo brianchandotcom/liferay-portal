@@ -16,7 +16,7 @@ package com.liferay.layout.page.template.validator.test;
 
 import com.liferay.layout.page.template.exception.PageDefinitionValidatorException;
 import com.liferay.layout.page.template.validator.PageDefinitionValidator;
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.kernel.util.FileUtil;
 
 import org.hamcrest.core.StringContains;
@@ -33,9 +33,8 @@ import org.junit.rules.ExpectedException;
 public class PageDefinitionValidatorTest {
 
 	@ClassRule
-	public static InitializeKernelUtilClassTestRule
-		initializeKernelUtilClassTestRule =
-			InitializeKernelUtilClassTestRule.INSTANCE;
+	public static LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testValidatePageDefinitionInvalidColumnExtraProperties()

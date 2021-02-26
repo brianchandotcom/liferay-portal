@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.cluster;
 
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionFixture;
 import com.liferay.portal.search.elasticsearch7.internal.connection.HealthExpectations;
@@ -38,9 +38,8 @@ import org.junit.rules.TestName;
 public class Cluster2InstancesTest {
 
 	@ClassRule
-	public static InitializeKernelUtilClassTestRule
-		initializeKernelUtilClassTestRule =
-			InitializeKernelUtilClassTestRule.INSTANCE;
+	public static LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() throws Exception {

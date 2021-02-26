@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.test.FinalizeManagerUtil;
 import com.liferay.portal.kernel.test.GCUtil;
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
@@ -58,9 +58,8 @@ public class JSONWebServiceServiceActionTest
 	extends BaseJSONWebServiceTestCase {
 
 	@ClassRule
-	public static InitializeKernelUtilClassTestRule
-		initializeKernelUtilClassTestRule =
-			InitializeKernelUtilClassTestRule.INSTANCE;
+	public static LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {

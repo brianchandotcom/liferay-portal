@@ -41,7 +41,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.tools.ToolDependencies;
@@ -78,8 +78,7 @@ public class CTTableMapperTest {
 	@ClassRule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			CodeCoverageAssertor.INSTANCE,
-			InitializeKernelUtilClassTestRule.INSTANCE);
+			CodeCoverageAssertor.INSTANCE, LiferayUnitTestRule.INSTANCE);
 
 	@BeforeClass
 	public static void setUpClass() {

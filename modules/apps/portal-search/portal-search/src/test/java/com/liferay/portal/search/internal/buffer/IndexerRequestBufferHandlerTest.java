@@ -15,7 +15,7 @@
 package com.liferay.portal.search.internal.buffer;
 
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.configuration.IndexerRegistryConfiguration;
 
@@ -37,9 +37,8 @@ import org.mockito.Mockito;
 public class IndexerRequestBufferHandlerTest {
 
 	@ClassRule
-	public static InitializeKernelUtilClassTestRule
-		initializeKernelUtilClassTestRule =
-			InitializeKernelUtilClassTestRule.INSTANCE;
+	public static LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	public IndexerRequestBufferHandlerTest() throws Exception {
 		_method = Indexer.class.getDeclaredMethod(

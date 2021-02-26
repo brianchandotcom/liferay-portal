@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.js.loader.modules.extender.npm;
 
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -26,9 +26,8 @@ import org.junit.Test;
 public class ModuleNameUtilTest {
 
 	@ClassRule
-	public static InitializeKernelUtilClassTestRule
-		initializeKernelUtilClassTestRule =
-			InitializeKernelUtilClassTestRule.INSTANCE;
+	public static LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testGetDependencyPath() {

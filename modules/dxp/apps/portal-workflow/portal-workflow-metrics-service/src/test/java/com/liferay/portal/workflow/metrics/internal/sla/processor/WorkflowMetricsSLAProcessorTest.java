@@ -14,7 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.internal.sla.processor;
 
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
@@ -45,9 +45,8 @@ import org.powermock.api.mockito.PowerMockito;
 public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 
 	@ClassRule
-	public static InitializeKernelUtilClassTestRule
-		initializeKernelUtilClassTestRule =
-			InitializeKernelUtilClassTestRule.INSTANCE;
+	public static LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testIsBreached() {

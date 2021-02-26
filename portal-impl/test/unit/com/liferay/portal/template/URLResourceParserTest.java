@@ -16,7 +16,7 @@ package com.liferay.portal.template;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 
 import java.net.URL;
 
@@ -30,9 +30,8 @@ import org.junit.Test;
 public class URLResourceParserTest {
 
 	@ClassRule
-	public static InitializeKernelUtilClassTestRule
-		initializeKernelUtilClassTestRule =
-			InitializeKernelUtilClassTestRule.INSTANCE;
+	public static LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testIsTemplateResourceValid() {

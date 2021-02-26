@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.dao.search;
 
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.kernel.util.ProxyFactory;
 
 import javax.portlet.PortletRequest;
@@ -31,9 +31,8 @@ import org.junit.Test;
 public class SearchContainerTest {
 
 	@ClassRule
-	public static InitializeKernelUtilClassTestRule
-		initializeKernelUtilClassTestRule =
-			InitializeKernelUtilClassTestRule.INSTANCE;
+	public static LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@After
 	public void tearDown() {

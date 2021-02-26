@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletURL;
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -63,9 +63,8 @@ import org.junit.Test;
 public class ContentDashboardDropdownItemsProviderTest {
 
 	@ClassRule
-	public static InitializeKernelUtilClassTestRule
-		initializeKernelUtilClassTestRule =
-			InitializeKernelUtilClassTestRule.INSTANCE;
+	public static LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@BeforeClass
 	public static void setUpClass() {

@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.portlet.toolbar;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.locator.PortletToolbarContributorLocator;
 import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
@@ -46,9 +46,8 @@ import org.springframework.mock.web.MockHttpServletRequest;
 public class PortletToolbarTest {
 
 	@ClassRule
-	public static InitializeKernelUtilClassTestRule
-		initializeKernelUtilClassTestRule =
-			InitializeKernelUtilClassTestRule.INSTANCE;
+	public static LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testGetPortletTitleMenus() {

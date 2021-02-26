@@ -15,7 +15,7 @@
 package com.liferay.portal.search.elasticsearch7.internal.connection;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationWrapper;
@@ -31,9 +31,8 @@ import org.junit.Test;
 public class HttpPortRangeTest {
 
 	@ClassRule
-	public static InitializeKernelUtilClassTestRule
-		initializeKernelUtilClassTestRule =
-			InitializeKernelUtilClassTestRule.INSTANCE;
+	public static LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testEmbeddedHttpPort() {

@@ -27,6 +27,7 @@ import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -43,6 +44,7 @@ import javax.portlet.ResourceRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -56,6 +58,10 @@ import org.powermock.api.mockito.PowerMockito;
  */
 @RunWith(MockitoJUnitRunner.class)
 public class AddFormInstanceRecordMVCResourceCommandTest extends PowerMockito {
+
+	@ClassRule
+	public static LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() throws Exception {

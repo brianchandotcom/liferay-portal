@@ -15,7 +15,7 @@
 package com.liferay.portal.search.internal.batch;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
 import java.util.Arrays;
@@ -31,9 +31,8 @@ import org.junit.Test;
 public class BatchIndexingHelperImplBulkSizesTest {
 
 	@ClassRule
-	public static InitializeKernelUtilClassTestRule
-		initializeKernelUtilClassTestRule =
-			InitializeKernelUtilClassTestRule.INSTANCE;
+	public static LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testConfiguration() {

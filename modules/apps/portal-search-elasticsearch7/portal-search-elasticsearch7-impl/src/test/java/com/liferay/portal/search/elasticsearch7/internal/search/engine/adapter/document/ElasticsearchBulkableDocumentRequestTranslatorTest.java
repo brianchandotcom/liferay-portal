@@ -17,7 +17,7 @@ package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch7.internal.document.DefaultElasticsearchDocumentFactory;
@@ -49,9 +49,8 @@ import org.junit.Test;
 public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 
 	@ClassRule
-	public static InitializeKernelUtilClassTestRule
-		initializeKernelUtilClassTestRule =
-			InitializeKernelUtilClassTestRule.INSTANCE;
+	public static LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {

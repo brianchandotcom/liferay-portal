@@ -15,7 +15,7 @@
 package com.liferay.portal.search.elasticsearch7.internal;
 
 import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionFixture;
 
@@ -44,9 +44,8 @@ import org.junit.Test;
 public class ElasticsearchSearchEngineBackupTest {
 
 	@ClassRule
-	public static InitializeKernelUtilClassTestRule
-		initializeKernelUtilClassTestRule =
-			InitializeKernelUtilClassTestRule.INSTANCE;
+	public static LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {

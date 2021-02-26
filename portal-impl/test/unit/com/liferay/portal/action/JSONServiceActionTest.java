@@ -18,7 +18,7 @@ import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.service.RoleServiceUtil;
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
@@ -38,9 +38,8 @@ import org.springframework.mock.web.MockHttpServletRequest;
 public class JSONServiceActionTest {
 
 	@ClassRule
-	public static InitializeKernelUtilClassTestRule
-		initializeKernelUtilClassTestRule =
-			InitializeKernelUtilClassTestRule.INSTANCE;
+	public static LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() throws Exception {

@@ -18,7 +18,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.diff.Diff;
 import com.liferay.portal.kernel.diff.DiffResult;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 
 import java.io.Reader;
 
@@ -35,9 +35,8 @@ import org.junit.Test;
 public class DiffImplTest {
 
 	@ClassRule
-	public static InitializeKernelUtilClassTestRule
-		initializeKernelUtilClassTestRule =
-			InitializeKernelUtilClassTestRule.INSTANCE;
+	public static LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testEight() {

@@ -17,7 +17,7 @@ package com.liferay.document.library.internal.util;
 import com.liferay.document.library.configuration.DLConfiguration;
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.util.DLValidator;
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -31,9 +31,8 @@ import org.mockito.Mockito;
 public class DLValidatorImplTest {
 
 	@ClassRule
-	public static InitializeKernelUtilClassTestRule
-		initializeKernelUtilClassTestRule =
-			InitializeKernelUtilClassTestRule.INSTANCE;
+	public static LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() {

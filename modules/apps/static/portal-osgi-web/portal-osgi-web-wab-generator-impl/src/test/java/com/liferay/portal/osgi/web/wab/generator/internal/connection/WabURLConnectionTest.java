@@ -15,7 +15,7 @@
 package com.liferay.portal.osgi.web.wab.generator.internal.connection;
 
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
@@ -41,9 +41,8 @@ import org.junit.Test;
 public class WabURLConnectionTest {
 
 	@ClassRule
-	public static InitializeKernelUtilClassTestRule
-		initializeKernelUtilClassTestRule =
-			InitializeKernelUtilClassTestRule.INSTANCE;
+	public static LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@BeforeClass
 	public static void setUpClass() {

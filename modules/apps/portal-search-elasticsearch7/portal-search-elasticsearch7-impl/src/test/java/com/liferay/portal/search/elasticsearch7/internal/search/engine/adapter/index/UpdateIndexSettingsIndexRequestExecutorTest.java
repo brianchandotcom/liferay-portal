@@ -15,7 +15,7 @@
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.index;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.engine.adapter.index.UpdateIndexSettingsIndexRequest;
 
@@ -35,9 +35,8 @@ import org.junit.Test;
 public class UpdateIndexSettingsIndexRequestExecutorTest {
 
 	@ClassRule
-	public static InitializeKernelUtilClassTestRule
-		initializeKernelUtilClassTestRule =
-			InitializeKernelUtilClassTestRule.INSTANCE;
+	public static LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() throws Exception {

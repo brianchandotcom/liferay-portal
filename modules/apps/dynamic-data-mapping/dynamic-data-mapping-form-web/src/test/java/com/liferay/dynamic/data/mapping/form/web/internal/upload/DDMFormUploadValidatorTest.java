@@ -20,7 +20,7 @@ import com.liferay.document.library.kernel.exception.InvalidFileException;
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormWebConfiguration;
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.activator.DDMFormWebConfigurationActivator;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 
 import java.io.File;
@@ -40,9 +40,8 @@ import org.powermock.api.support.membermodification.MemberMatcher;
 public class DDMFormUploadValidatorTest {
 
 	@ClassRule
-	public static InitializeKernelUtilClassTestRule
-		initializeKernelUtilClassTestRule =
-			InitializeKernelUtilClassTestRule.INSTANCE;
+	public static LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() throws Exception {

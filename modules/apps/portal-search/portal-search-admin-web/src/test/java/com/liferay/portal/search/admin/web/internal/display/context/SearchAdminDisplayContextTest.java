@@ -17,7 +17,7 @@ package com.liferay.portal.search.admin.web.internal.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
@@ -44,9 +44,8 @@ import org.mockito.Mockito;
 public class SearchAdminDisplayContextTest {
 
 	@ClassRule
-	public static InitializeKernelUtilClassTestRule
-		initializeKernelUtilClassTestRule =
-			InitializeKernelUtilClassTestRule.INSTANCE;
+	public static LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() {

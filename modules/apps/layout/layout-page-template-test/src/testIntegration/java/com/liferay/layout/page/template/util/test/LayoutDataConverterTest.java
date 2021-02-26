@@ -25,7 +25,7 @@ import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -50,8 +50,7 @@ public class LayoutDataConverterTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			InitializeKernelUtilClassTestRule.INSTANCE,
-			new LiferayIntegrationTestRule(),
+			new LiferayIntegrationTestRule(), LiferayUnitTestRule.INSTANCE,
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@BeforeClass

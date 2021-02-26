@@ -16,7 +16,7 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 
 import java.lang.reflect.Field;
 
@@ -32,9 +32,8 @@ import org.springframework.mock.web.MockHttpServletRequest;
 public class CookieKeysTest {
 
 	@ClassRule
-	public static InitializeKernelUtilClassTestRule
-		initializeKernelUtilClassTestRule =
-			InitializeKernelUtilClassTestRule.INSTANCE;
+	public static LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testDomain1() throws Exception {

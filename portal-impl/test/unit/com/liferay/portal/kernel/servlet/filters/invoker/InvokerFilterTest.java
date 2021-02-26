@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.servlet.filters.invoker;
 
 import com.liferay.portal.kernel.servlet.HttpMethods;
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -46,9 +46,8 @@ import org.springframework.mock.web.MockHttpServletResponse;
 public class InvokerFilterTest {
 
 	@ClassRule
-	public static InitializeKernelUtilClassTestRule
-		initializeKernelUtilClassTestRule =
-			InitializeKernelUtilClassTestRule.INSTANCE;
+	public static LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() {

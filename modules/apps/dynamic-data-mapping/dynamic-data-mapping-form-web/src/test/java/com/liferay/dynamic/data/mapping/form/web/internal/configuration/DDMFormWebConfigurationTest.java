@@ -15,7 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.web.internal.configuration;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
+import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 
 import org.junit.Assert;
@@ -28,9 +28,8 @@ import org.junit.Test;
 public class DDMFormWebConfigurationTest {
 
 	@ClassRule
-	public static InitializeKernelUtilClassTestRule
-		initializeKernelUtilClassTestRule =
-			InitializeKernelUtilClassTestRule.INSTANCE;
+	public static LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testCreateDefaultDDMFormWebConfiguration() {

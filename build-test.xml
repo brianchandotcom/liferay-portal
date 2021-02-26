@@ -2500,10 +2500,10 @@ configuration.override.com.liferay.document.library.configuration.DLConfiguratio
     "xls", \
     "xlsx", \
     ]
-configuration.override.com.liferay.dynamic.data.mapping.data.provider.configuration.DDMDataProviderConfiguration_accessLocalNetwork="false"
-configuration.override.com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormWebConfiguration_guestUploadMaximumFileSize="10"
-configuration.override.com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormWebConfiguration_maximumRepetitionsForUploadFields="5"
-configuration.override.com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormWebConfiguration_maximumSubmissionsForGuestUploadFields="3"
+configuration.override.com.liferay.dynamic.data.mapping.data.provider.configuration.DDMDataProviderConfiguration_accessLocalNetwork=B"false"
+configuration.override.com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormWebConfiguration_guestUploadMaximumFileSize=I"10"
+configuration.override.com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormWebConfiguration_maximumRepetitionsForUploadFields=I"5"
+configuration.override.com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormWebConfiguration_maximumSubmissionsForGuestUploadFields=I"3"
 configuration.override.com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormWebConfiguration_guestUploadFileExtensions=[ \
     "doc", \
     "docx", \

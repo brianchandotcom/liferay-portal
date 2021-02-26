@@ -484,7 +484,8 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 							return null;
 						}
 
-						return layout.getFriendlyURL();
+						return layout.getFriendlyURL(
+							contextAcceptLanguage.getPreferredLocale());
 					});
 				setName(
 					() -> {

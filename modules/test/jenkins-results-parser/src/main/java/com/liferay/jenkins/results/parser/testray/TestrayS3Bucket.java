@@ -27,10 +27,12 @@ import com.amazonaws.services.s3.model.AccessControlList;
 import com.amazonaws.services.s3.model.Bucket;
 import com.amazonaws.services.s3.model.CanonicalGrantee;
 import com.amazonaws.services.s3.model.GroupGrantee;
+import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.Owner;
 import com.amazonaws.services.s3.model.Permission;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.amazonaws.util.IOUtils;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
@@ -201,6 +203,31 @@ public class TestrayS3Bucket {
 		}
 	}
 
+	public List<TestrayS3Object> getTestrayS3Objects() {
+		List<TestrayS3Object> testrayS3Objects = new ArrayList<>();
+
+		ObjectListing objectListing = _amazonS3.listObjects(_getBucketName());
+
+		do {
+			for (S3ObjectSummary objectSummary :
+					objectListing.getObjectSummaries()) {
+
+				testrayS3Objects.add(
+					TestrayS3ObjectFactory.newTestrayS3Object(
+						this, objectSummary.getKey()));
+			}
+
+			if (testrayS3Objects.size() > _MAX_S3_OBJECT_COUNT) {
+				break;
+			}
+
+			objectListing = _amazonS3.listNextBatchOfObjects(objectListing);
+		}
+		while (objectListing.isTruncated());
+
+		return testrayS3Objects;
+	}
+
 	private TestrayS3Bucket() {
 		ClientConfiguration clientConfig = new ClientConfiguration();
 
@@ -301,6 +328,8 @@ public class TestrayS3Bucket {
 			throw new RuntimeException(ioException);
 		}
 	}
+
+	private static final int _MAX_S3_OBJECT_COUNT = 1000;
 
 	private static final TestrayS3Bucket _testrayS3Bucket =
 		new TestrayS3Bucket();

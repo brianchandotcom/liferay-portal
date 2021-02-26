@@ -5,7 +5,7 @@ dependencies {
 	compileInclude group: "com.worldline.sips", name: "payment-sdk-common", version: "1.2.0"
 	compileInclude group: "commons-codec", name: "commons-codec", version: "1.4"
 	compileInclude group: "org.apache.commons", name: "commons-lang3", version: "3.8.1"
-	compileInclude group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.3"
+	compileInclude group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.13"
 	compileInclude group: "org.apache.httpcomponents", name: "httpcore", version: "4.4.6"
 
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"

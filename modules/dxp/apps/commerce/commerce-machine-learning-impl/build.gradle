@@ -1,5 +1,5 @@
 dependencies {
-	compileInclude group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.3"
+	compileInclude group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.13"
 	compileInclude group: "org.apache.httpcomponents", name: "httpcore", version: "4.4.6"
 	compileInclude group: "org.apache.httpcomponents", name: "httpmime", version: "4.5.1"
 

@@ -18,6 +18,7 @@ import AppContext from '../../../AppContext.es';
 import {UPDATE_DATA_DEFINITION, UPDATE_FIELDSETS} from '../../../actions.es';
 import DataLayoutBuilderContext from '../../../data-layout-builder/DataLayoutBuilderContext.es';
 import {updateItem} from '../../../utils/client.es';
+import {getDDMFormField} from '../../../utils/dataConverter.es';
 import {getDataDefinitionFieldSet} from '../../../utils/dataDefinition.es';
 import {containsField} from '../../../utils/dataLayoutVisitor.es';
 import {
@@ -41,6 +42,8 @@ export default ({
 	const {state: childrenState} = childrenContext;
 	const {
 		contentTypeConfig: {allowInvalidAvailableLocalesForProperty},
+		editingLanguageId = themeDisplay.getDefaultLanguageId(),
+		fieldTypes,
 	} = dataLayoutBuilder.props;
 
 	return (name) => {
@@ -124,10 +127,13 @@ export default ({
 										name: 'nestedFields',
 										value: dataDefinitionFields.map(
 											({name}) =>
-												dataLayoutBuilder.getDDMFormField(
-													childrenState.dataDefinition,
-													name
-												)
+												getDDMFormField({
+													dataDefinition:
+														childrenState.dataDefinition,
+													editingLanguageId,
+													fieldName: name,
+													fieldTypes,
+												})
 										),
 									},
 									{

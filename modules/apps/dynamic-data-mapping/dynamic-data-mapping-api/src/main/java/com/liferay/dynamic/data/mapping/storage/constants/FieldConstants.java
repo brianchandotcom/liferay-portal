@@ -226,7 +226,7 @@ public class FieldConstants {
 	}
 
 	private static final String _SCIENTIFIC_NOTATION_PATTERN =
-		"^[+-]?\\d+(?:\\.\\d*(?:[eE][+-]?\\d+)+)?$";
+		"^[+-]?\\d+(?:\\.\\d*(?:[eE][+-]?\\d+)+)+$";
 
 	private static final Log _log = LogFactoryUtil.getLog(FieldConstants.class);
 

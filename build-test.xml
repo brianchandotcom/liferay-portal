@@ -2460,98 +2460,6 @@ jdbc.default.password=${database.password}</echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="prepare-patching-tool">
-		<attribute default="${app.server.parent.dir}/patching-tool" name="patching.tool.dir" />
-
-		<sequential>
-			<local name="patching.tool.version.url" />
-
-			<property name="patching.tool.version.url" value="${test.fix.pack.base.url}/patching-tool/${patching.tool.latest.txt}" />
-
-			<if>
-				<contains string="${patching.tool.version.url}" substring="mirrors.lax.liferay.com" />
-				<then>
-					<propertyregex
-						input="${patching.tool.version.url}"
-						override="true"
-						property="patching.tool.version.url"
-						regexp="mirrors.lax.liferay.com"
-						replace="mirrors-no-cache.lax.liferay.com"
-					/>
-				</then>
-			</if>
-
-			<get
-				dest="${basedir}"
-				httpusecaches="false"
-				src="${patching.tool.version.url}"
-			/>
-
-			<local name="patching.tool.version" />
-
-			<loadfile
-				property="patching.tool.version"
-				srcFile="${patching.tool.latest.txt}"
-			>
-				<filterchain>
-					<striplinebreaks/>
-					<trim />
-				</filterchain>
-			</loadfile>
-
-			<local name="patching.tool.name" />
-
-			<property name="patching.tool.name" value="patching-tool-${patching.tool.version}.zip" />
-
-			<mirrors-get
-				dest="${basedir}"
-				src="${test.fix.pack.base.url}/patching-tool/${patching.tool.name}"
-			/>
-
-			<delete dir="@{patching.tool.dir}" />
-
-			<unzip
-				dest="@{patching.tool.dir}/.."
-			>
-				<fileset
-					dir="${basedir}"
-					includes="patching-tool*"
-				/>
-			</unzip>
-
-			<chmod
-				perm="a+x"
-			>
-				<fileset
-					dir="@{patching.tool.dir}"
-				>
-					<include name="*.sh" />
-				</fileset>
-			</chmod>
-
-			<delete file="${basedir}/${patching.tool.latest.txt}" />
-			<delete file="${basedir}/${patching.tool.name}" />
-		</sequential>
-	</macrodef>
-
-	<macrodef name="prepare-portal-elasticsearch-osgi-configuration">
-		<sequential>
-			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config">logExceptionsOnly=B"false"${line.separator}sidecarShutdownTimeout=L"20000"${line.separator}sidecarHttpPort="AUTO"${line.separator}sidecarJVMOptions=["-Xms256m","-Xmx512m"]</echo>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="prepare-portal-search-osgi-configuration">
-		<sequential>
-			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.internal.index.configuration.IndexStatusManagerInternalConfiguration.config">suppressIndexReadOnly=B"true"</echo>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="prepare-portal-template-freemarker-osgi-configuration">
-		<sequential>
-			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration.config">asyncRenderTimeout=L"7200000"${line.separator}loopCountThreshold=I"2147483647"</echo>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="prepare-liferay-online-properties">
 		<sequential>
 			<echo append="true" file="portal-impl/src/portal-ext.properties">
@@ -2905,6 +2813,98 @@ configuration.override.com.liferay.portal.bundle.blacklist.internal.configuratio
     "com.liferay.user.groups.admin.web", \
     "com.liferay.users.admin.item.selector.web", \
     ]</echo>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-patching-tool">
+		<attribute default="${app.server.parent.dir}/patching-tool" name="patching.tool.dir" />
+
+		<sequential>
+			<local name="patching.tool.version.url" />
+
+			<property name="patching.tool.version.url" value="${test.fix.pack.base.url}/patching-tool/${patching.tool.latest.txt}" />
+
+			<if>
+				<contains string="${patching.tool.version.url}" substring="mirrors.lax.liferay.com" />
+				<then>
+					<propertyregex
+						input="${patching.tool.version.url}"
+						override="true"
+						property="patching.tool.version.url"
+						regexp="mirrors.lax.liferay.com"
+						replace="mirrors-no-cache.lax.liferay.com"
+					/>
+				</then>
+			</if>
+
+			<get
+				dest="${basedir}"
+				httpusecaches="false"
+				src="${patching.tool.version.url}"
+			/>
+
+			<local name="patching.tool.version" />
+
+			<loadfile
+				property="patching.tool.version"
+				srcFile="${patching.tool.latest.txt}"
+			>
+				<filterchain>
+					<striplinebreaks/>
+					<trim />
+				</filterchain>
+			</loadfile>
+
+			<local name="patching.tool.name" />
+
+			<property name="patching.tool.name" value="patching-tool-${patching.tool.version}.zip" />
+
+			<mirrors-get
+				dest="${basedir}"
+				src="${test.fix.pack.base.url}/patching-tool/${patching.tool.name}"
+			/>
+
+			<delete dir="@{patching.tool.dir}" />
+
+			<unzip
+				dest="@{patching.tool.dir}/.."
+			>
+				<fileset
+					dir="${basedir}"
+					includes="patching-tool*"
+				/>
+			</unzip>
+
+			<chmod
+				perm="a+x"
+			>
+				<fileset
+					dir="@{patching.tool.dir}"
+				>
+					<include name="*.sh" />
+				</fileset>
+			</chmod>
+
+			<delete file="${basedir}/${patching.tool.latest.txt}" />
+			<delete file="${basedir}/${patching.tool.name}" />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-portal-elasticsearch-osgi-configuration">
+		<sequential>
+			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config">logExceptionsOnly=B"false"${line.separator}sidecarShutdownTimeout=L"20000"${line.separator}sidecarHttpPort="AUTO"${line.separator}sidecarJVMOptions=["-Xms256m","-Xmx512m"]</echo>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-portal-search-osgi-configuration">
+		<sequential>
+			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.internal.index.configuration.IndexStatusManagerInternalConfiguration.config">suppressIndexReadOnly=B"true"</echo>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-portal-template-freemarker-osgi-configuration">
+		<sequential>
+			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration.config">asyncRenderTimeout=L"7200000"${line.separator}loopCountThreshold=I"2147483647"</echo>
 		</sequential>
 	</macrodef>
 

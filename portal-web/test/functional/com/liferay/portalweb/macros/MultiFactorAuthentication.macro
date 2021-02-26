@@ -277,13 +277,13 @@ definition {
 		}
 		else {
 			var bodySpecificText = MockMock.getBodySpecificText(
-				asset = "${portalURL}",
+				asset = "${portalURL}: Your One-Time Password",
 				content = "Your one-time password is:",
 				enableOTP = "true",
 				recipient = "${recipient}",
 				sender = "Joe Bloggs",
 				specificText = "Your one-time password is: <pre>",
-				subject = "${portalURL}");
+				subject = "${portalURL}: Your One-Time Password");
 
 			if (isSet(specificURL)) {
 				Navigator.openSpecificURL(url = "${specificURL}");

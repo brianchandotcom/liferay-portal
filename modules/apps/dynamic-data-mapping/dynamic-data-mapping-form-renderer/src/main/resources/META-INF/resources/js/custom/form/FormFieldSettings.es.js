@@ -15,6 +15,8 @@
 import React, {useEffect, useRef} from 'react';
 
 import {EVENT_TYPES as CORE_EVENT_TYPES} from '../../core/actions/eventTypes.es';
+import {INITIAL_CONFIG_STATE} from '../../core/config/initialConfigState.es';
+import {INITIAL_STATE} from '../../core/config/initialState.es';
 import {ConfigProvider} from '../../core/hooks/useConfig.es';
 import {FormProvider, useForm} from '../../core/hooks/useForm.es';
 import activePageReducer from '../../core/reducers/activePageReducer.es';
@@ -22,11 +24,9 @@ import fieldReducer from '../../core/reducers/fieldReducer.es';
 import languageReducer from '../../core/reducers/languageReducer.es';
 import pagesStructureReducer from '../../core/reducers/pagesStructureReducer.es';
 import {getConnectedReactComponentAdapter} from '../../util/ReactComponentAdapter.es';
+import {parseProps} from '../../util/parseProps.es';
 import {Form} from './FormView.es';
-import {COMMON_INITIAL_CONFIG_STATE} from './config/initialConfigState.es';
-import {COMMON_INITIAL_STATE} from './config/initialState.es';
 import {pageValidationReducer, paginationReducer} from './reducers/index.es';
-import {parseProps} from './util/parseProps.es';
 
 /**
  * Updates the state of the FieldSettings when any value coming
@@ -75,12 +75,9 @@ export const FormFieldSettings = ({children, onAction, ...otherProps}) => {
 	const {config, state} = parseProps(otherProps);
 
 	return (
-		<ConfigProvider
-			config={config}
-			initialConfig={COMMON_INITIAL_CONFIG_STATE}
-		>
+		<ConfigProvider config={config} initialConfig={INITIAL_CONFIG_STATE}>
 			<FormProvider
-				initialState={COMMON_INITIAL_STATE}
+				initialState={INITIAL_STATE}
 				onAction={onAction}
 				reducers={[
 					activePageReducer,

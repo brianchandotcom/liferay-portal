@@ -20,12 +20,12 @@ import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import {MAPPED_EVENT_TYPES} from '../../core/actions/eventTypes.es';
 import Pages from '../../core/components/Pages.es';
+import {INITIAL_CONFIG_STATE} from '../../core/config/initialConfigState.es';
+import {INITIAL_STATE} from '../../core/config/initialState.es';
 import {ConfigProvider} from '../../core/hooks/useConfig.es';
 import {FormNoopProvider} from '../../core/hooks/useForm.es';
 import {getConnectedReactComponentAdapter} from '../../util/ReactComponentAdapter.es';
-import {COMMON_INITIAL_CONFIG_STATE} from './config/initialConfigState.es';
-import {COMMON_INITIAL_STATE} from './config/initialState.es';
-import {parseProps} from './util/parseProps.es';
+import {parseProps} from '../../util/parseProps.es';
 
 /**
  * Render a form just for preview without actions/reducer just with FormNoopProvider,
@@ -40,10 +40,10 @@ const LegacyFormBuilder = React.forwardRef(
 				<DndProvider backend={HTML5Backend} context={window}>
 					<ConfigProvider
 						config={config}
-						initialConfig={COMMON_INITIAL_CONFIG_STATE}
+						initialConfig={INITIAL_CONFIG_STATE}
 					>
 						<FormNoopProvider
-							initialState={COMMON_INITIAL_STATE}
+							initialState={INITIAL_STATE}
 							onAction={({payload, type}) =>
 								instance?.context.dispatch(
 									MAPPED_EVENT_TYPES[type] ?? type,

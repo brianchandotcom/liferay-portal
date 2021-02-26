@@ -13,9 +13,8 @@
  */
 
 import {FieldUtil} from 'dynamic-data-mapping-form-builder';
+import {FormSupport, PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 
-import * as FormSupport from '../../../util/FormSupport.es';
-import {PagesVisitor} from '../../../util/visitors.es';
 import {EVENT_TYPES} from '../eventTypes.es';
 
 /**

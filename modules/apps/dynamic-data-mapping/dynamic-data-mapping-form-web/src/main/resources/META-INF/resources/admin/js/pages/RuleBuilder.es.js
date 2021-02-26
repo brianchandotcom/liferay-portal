@@ -15,15 +15,18 @@
 import {useResource} from '@clayui/data-provider';
 import ClayLayout from '@clayui/layout';
 import {FormsRuleEditor, FormsRuleList} from 'data-engine-taglib';
+import {
+	PagesVisitor,
+	useConfig,
+	useForm,
+	useFormState,
+} from 'dynamic-data-mapping-form-renderer';
 import {fetch} from 'frontend-js-web';
 import React, {useCallback, useMemo, useState} from 'react';
 import {Route, Switch} from 'react-router-dom';
 
-import {useConfig} from '../../core/hooks/useConfig.es';
-import {useForm, useFormState} from '../../core/hooks/useForm.es';
-import {PagesVisitor} from '../../util/visitors.es';
-import {ManagementToolbar} from './components/ManagementToolbar.es';
-import {EVENT_TYPES} from './eventTypes.es';
+import {ManagementToolbar} from '../components/ManagementToolbar.es';
+import {EVENT_TYPES} from '../eventTypes.es';
 
 export const RuleBuilder = ({history, location}) => {
 	const {

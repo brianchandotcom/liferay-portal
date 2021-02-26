@@ -12,23 +12,7 @@
  * details.
  */
 
-const PAGINATION = {
-	CHANGE: 'pagination_change',
-	NEXT: 'pagination_next',
-	PREVIOUS: 'pagination_previous',
-};
-
-const PAGE = {
-	ADD: 'page_add',
-	DELETE: 'page_delete',
-	DESCRIPTION_CHANGE: 'page_description_change',
-	RESET: 'page_reset',
-	SWAP: 'page_swap',
-	TITLE_CHANGE: 'page_title_change',
-};
-
-export const EVENT_TYPES = {
-	PAGE,
-	PAGINATION,
-	SUCCESS_PAGE: 'success_page',
+export const INITIAL_STATE = {
+	activePage: 0,
+	pages: [],
 };

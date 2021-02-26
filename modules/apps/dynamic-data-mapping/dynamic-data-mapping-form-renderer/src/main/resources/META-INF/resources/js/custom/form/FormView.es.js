@@ -23,10 +23,11 @@ import React, {
 } from 'react';
 
 import Pages from '../../core/components/Pages.es';
+import {INITIAL_CONFIG_STATE} from '../../core/config/initialConfigState.es';
+import {INITIAL_STATE} from '../../core/config/initialState.es';
 import {ConfigProvider, useConfig} from '../../core/hooks/useConfig.es';
 import {FormProvider, useForm, useFormState} from '../../core/hooks/useForm.es';
 import activePageReducer from '../../core/reducers/activePageReducer.es';
-import dataRecordReducer from '../../core/reducers/dataRecordReducer.es';
 import fieldReducer from '../../core/reducers/fieldReducer.es';
 import languageReducer from '../../core/reducers/languageReducer.es';
 import pagesStructureReducer from '../../core/reducers/pagesStructureReducer.es';
@@ -35,10 +36,8 @@ import pageLanguageUpdate from '../../core/thunks/pageLanguageUpdate.es';
 import {evaluate} from '../../util/evaluation.es';
 import * as Fields from '../../util/fields.es';
 import {getFormId, getFormNode} from '../../util/formId.es';
-import {COMMON_INITIAL_CONFIG_STATE} from './config/initialConfigState.es';
-import {COMMON_INITIAL_STATE} from './config/initialState.es';
+import {parseProps} from '../../util/parseProps.es';
 import {pageValidationReducer, paginationReducer} from './reducers/index.es';
-import {parseProps} from './util/parseProps.es';
 
 /**
  * This is a copy of the old implementation made in Metal.js, deals with
@@ -296,16 +295,13 @@ export const FormView = React.forwardRef((props, ref) => {
 	const unstable_onEventRef = useRef(null);
 
 	return (
-		<ConfigProvider
-			config={config}
-			initialConfig={COMMON_INITIAL_CONFIG_STATE}
-		>
+		<ConfigProvider config={config} initialConfig={INITIAL_CONFIG_STATE}>
 			<FormProvider
 				init={(props) => ({
 					...props,
 					paginationMode: 'wizard',
 				})}
-				initialState={COMMON_INITIAL_STATE}
+				initialState={INITIAL_STATE}
 				onAction={(action) => {
 					if (unstable_onEventRef.current) {
 						unstable_onEventRef.current(action);
@@ -313,7 +309,6 @@ export const FormView = React.forwardRef((props, ref) => {
 				}}
 				reducers={[
 					activePageReducer,
-					dataRecordReducer,
 					fieldReducer,
 					languageReducer,
 					pagesStructureReducer,

@@ -12,6 +12,106 @@
  * details.
  */
 
-import {FormApp} from 'dynamic-data-mapping-form-renderer';
+import {ClayModalProvider} from '@clayui/modal';
+import {
+	ConfigProvider,
+	FormProvider,
+	parseProps,
+} from 'dynamic-data-mapping-form-renderer';
+import {INITIAL_CONFIG_STATE} from 'dynamic-data-mapping-form-renderer/js/core/config/index.es';
+import {
+	dragAndDropReducer,
+	fieldEditableReducer,
+	languageReducer,
+	pagesStructureReducer,
+} from 'dynamic-data-mapping-form-renderer/js/core/reducers/index.es';
+import {pageReducer} from 'dynamic-data-mapping-form-renderer/js/custom/form/reducers/index.es';
+import React from 'react';
+import {DndProvider} from 'react-dnd';
+import {HTML5Backend} from 'react-dnd-html5-backend';
+import {HashRouter as Router, Route, Switch} from 'react-router-dom';
 
-export default FormApp;
+import {NavigationBar} from './components/NavigationBar.es';
+import {BUILDER_INITIAL_STATE, initState} from './config/initialState.es';
+import {AutoSaveProvider} from './hooks/useAutoSave.es';
+import {ToastProvider} from './hooks/useToast.es';
+import {FormBuilder} from './pages/FormBuilder.es';
+import {Report} from './pages/Report.es';
+import {RuleBuilder} from './pages/RuleBuilder.es';
+import {
+	elementSetReducer,
+	formInfoReducer,
+	rulesReducer,
+	sidebarReducer,
+} from './reducers/index.es';
+
+/**
+ * Exporting default application to Forms Admin. Only Providers and
+ * routing must be defined.
+ */
+export const App = ({autosaveInterval, autosaveURL, ...otherProps}) => {
+	const {config, state} = parseProps(otherProps);
+
+	return (
+		<DndProvider backend={HTML5Backend} context={window}>
+			<ConfigProvider
+				config={config}
+				initialConfig={INITIAL_CONFIG_STATE}
+			>
+				<ClayModalProvider>
+					<FormProvider
+						init={initState}
+						initialState={BUILDER_INITIAL_STATE}
+						reducers={[
+							dragAndDropReducer,
+							elementSetReducer,
+							fieldEditableReducer,
+							formInfoReducer,
+							languageReducer,
+							pageReducer,
+							pagesStructureReducer,
+							rulesReducer,
+							sidebarReducer,
+						]}
+						value={state}
+					>
+						<AutoSaveProvider
+							interval={autosaveInterval}
+							url={autosaveURL}
+						>
+							<ToastProvider>
+								<Router>
+									<Switch>
+										<Route
+											component={NavigationBar}
+											path="/"
+										/>
+									</Switch>
+									<Switch>
+										<Route
+											component={FormBuilder}
+											exact
+											path="/"
+										/>
+										<Route
+											component={RuleBuilder}
+											path="/rules"
+										/>
+										<Route
+											component={Report}
+											path="/report"
+										/>
+									</Switch>
+								</Router>
+							</ToastProvider>
+						</AutoSaveProvider>
+					</FormProvider>
+				</ClayModalProvider>
+			</ConfigProvider>
+		</DndProvider>
+	);
+};
+
+App.displayName = 'App';
+
+export default App;

@@ -12,10 +12,12 @@
  * details.
  */
 
+import {
+	EVENT_TYPES as CORE_EVENT_TYPES,
+	useForm,
+} from 'dynamic-data-mapping-form-renderer';
 import {useEffect} from 'react';
 
-import {EVENT_TYPES as CORE_EVENT_TYPES} from '../../../core/actions/eventTypes.es';
-import {useForm} from '../../../core/hooks/useForm.es';
 import {EVENT_TYPES} from '../eventTypes.es';
 
 export const TranslationManager = () => {

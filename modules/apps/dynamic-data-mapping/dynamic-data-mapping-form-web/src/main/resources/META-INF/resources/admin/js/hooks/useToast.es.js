@@ -14,9 +14,8 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
+import {getUid} from 'dynamic-data-mapping-form-renderer';
 import React, {useCallback, useContext, useState} from 'react';
-
-import {getUid} from '../../../util/formId.es';
 
 const ToastContext = React.createContext();
 

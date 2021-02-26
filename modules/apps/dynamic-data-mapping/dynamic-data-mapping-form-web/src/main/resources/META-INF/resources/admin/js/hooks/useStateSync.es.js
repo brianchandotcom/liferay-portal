@@ -12,11 +12,12 @@
  * details.
  */
 
+import {
+	PagesVisitor,
+	useConfig,
+	useFormState,
+} from 'dynamic-data-mapping-form-renderer';
 import {useCallback, useEffect, useRef} from 'react';
-
-import {useConfig} from '../../../core/hooks/useConfig.es';
-import {useFormState} from '../../../core/hooks/useForm.es';
-import {PagesVisitor} from '../../../util/visitors.es';
 
 const getSerializedSettingsContextPages = (pages, defaultLanguageId) => {
 	const visitor = new PagesVisitor(pages);

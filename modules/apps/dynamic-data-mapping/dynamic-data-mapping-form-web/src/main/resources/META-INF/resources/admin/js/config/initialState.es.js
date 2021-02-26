@@ -12,16 +12,12 @@
  * details.
  */
 
-import {EVENT_TYPES as CORE_EVENT_TYPES} from '../../../core/actions/eventTypes.es';
-import {getUid} from '../../../util/formId.es';
-
-export const COMMON_INITIAL_STATE = {
-	activePage: 0,
-	pages: [],
-};
+import {getUid} from 'dynamic-data-mapping-form-renderer';
+import {EVENT_TYPES as CORE_EVENT_TYPES} from 'dynamic-data-mapping-form-renderer/js/core/actions/eventTypes.es';
+import {INITIAL_STATE} from 'dynamic-data-mapping-form-renderer/js/core/config/index.es';
 
 export const BUILDER_INITIAL_STATE = {
-	...COMMON_INITIAL_STATE,
+	...INITIAL_STATE,
 	availableLanguageIds: [themeDisplay.getLanguageId()],
 	editingLanguageId: themeDisplay.getDefaultLanguageId(),
 	fieldActions: [

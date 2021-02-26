@@ -18,11 +18,14 @@ import {
 	isKeyInSet,
 	isModifyingKey,
 } from 'dynamic-data-mapping-form-builder/js/util/dom.es';
+import {
+	useConfig,
+	useForm,
+	useFormState,
+} from 'dynamic-data-mapping-form-renderer';
 import {autoSize} from 'frontend-js-web';
 import React, {useEffect, useRef} from 'react';
 
-import {useConfig} from '../../../core/hooks/useConfig.es';
-import {useForm, useFormState} from '../../../core/hooks/useForm.es';
 import {EVENT_TYPES} from '../eventTypes.es';
 
 const isForbiddenKey = (event, limit) => {

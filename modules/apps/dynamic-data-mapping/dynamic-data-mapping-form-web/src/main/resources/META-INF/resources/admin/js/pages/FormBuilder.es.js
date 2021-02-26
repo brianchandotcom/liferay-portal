@@ -14,18 +14,20 @@
 
 import ClayButton from '@clayui/button';
 import ClayLink from '@clayui/link';
+import {
+	Pages,
+	useConfig,
+	useFormState,
+} from 'dynamic-data-mapping-form-renderer';
 import React, {useCallback, useEffect, useRef} from 'react';
 
-import Pages from '../../core/components/Pages.es';
-import {useConfig} from '../../core/hooks/useConfig.es';
-import {useFormState} from '../../core/hooks/useForm.es';
-import {createFormURL} from '../../util/form.es';
-import {FormInfo} from './components/FormInfo.es';
-import {ManagementToolbar} from './components/ManagementToolbar.es';
-import {MetalSidebarAdapter} from './components/MetalSidebarAdapter.es';
-import {TranslationManager} from './components/TranslationManager.es';
-import {useAutoSave} from './hooks/useAutoSave.es';
-import {useToast} from './hooks/useToast.es';
+import {FormInfo} from '../components/FormInfo.es';
+import {ManagementToolbar} from '../components/ManagementToolbar.es';
+import {MetalSidebarAdapter} from '../components/MetalSidebarAdapter.es';
+import {TranslationManager} from '../components/TranslationManager.es';
+import {useAutoSave} from '../hooks/useAutoSave.es';
+import {useToast} from '../hooks/useToast.es';
+import {createFormURL} from '../util/form.es';
 
 export const FormBuilder = () => {
 	const {

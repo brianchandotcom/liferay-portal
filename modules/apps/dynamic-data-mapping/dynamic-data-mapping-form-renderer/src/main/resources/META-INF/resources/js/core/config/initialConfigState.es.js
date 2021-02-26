@@ -31,13 +31,9 @@ const getFieldNameGenerator = (pages, generateFieldNameUsingFieldLabel) => (
 		generateFieldNameUsingFieldLabel
 	);
 
-export const COMMON_INITIAL_CONFIG_STATE = {
+export const INITIAL_CONFIG_STATE = {
 	cache: {},
 	defaultLanguageId: themeDisplay.getLanguageId(),
-};
-
-export const BUILDER_INITIAL_CONFIG_STATE = {
-	...COMMON_INITIAL_CONFIG_STATE,
 	generateFieldNameUsingFieldLabel: false,
 	getFieldNameGenerator,
 };

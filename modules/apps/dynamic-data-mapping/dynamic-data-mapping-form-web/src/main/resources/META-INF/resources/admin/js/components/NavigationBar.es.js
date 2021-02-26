@@ -12,10 +12,10 @@
  * details.
  */
 
+import {useConfig} from 'dynamic-data-mapping-form-renderer';
 import {useEventListener} from 'frontend-js-react-web';
 import {useCallback} from 'react';
 
-import {useConfig} from '../../../core/hooks/useConfig.es';
 import {useBack} from '../hooks/useBack.es';
 
 const NAV_ITEMS = {

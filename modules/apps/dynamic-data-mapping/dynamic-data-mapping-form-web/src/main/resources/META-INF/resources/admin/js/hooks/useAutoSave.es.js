@@ -13,14 +13,17 @@
  */
 
 import {sub} from 'dynamic-data-mapping-form-builder/js/util/strings.es';
+import {
+	FormSupport,
+	convertToFormData,
+	makeFetch,
+	useConfig,
+	useFormState,
+} from 'dynamic-data-mapping-form-renderer';
 import {useIsMounted} from 'frontend-js-react-web';
 import objectHash from 'object-hash';
 import React, {useCallback, useContext, useEffect, useRef} from 'react';
 
-import {useConfig} from '../../../core/hooks/useConfig.es';
-import {useFormState} from '../../../core/hooks/useForm.es';
-import * as FormSupport from '../../../util/FormSupport.es';
-import {convertToFormData, makeFetch} from '../../../util/fetch.es';
 import {useStateSync} from './useStateSync.es';
 
 const AutoSaveContext = React.createContext({});

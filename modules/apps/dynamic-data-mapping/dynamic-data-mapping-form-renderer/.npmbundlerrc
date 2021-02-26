@@ -6,9 +6,6 @@
 			},
 			"dynamic-data-mapping-form-field-type": {
 				"/": ">=5.0.0"
-			},
-			"data-engine-taglib": {
-				"/": ">=3.0.0"
 			}
 		}
 	},

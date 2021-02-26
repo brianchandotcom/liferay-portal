@@ -14,10 +14,10 @@
 
 import ClayButton from '@clayui/button';
 import {Context as ModalContext} from '@clayui/modal';
+import {useConfig} from 'dynamic-data-mapping-form-renderer';
 import {useEventListener} from 'frontend-js-react-web';
 import React, {useCallback, useContext} from 'react';
 
-import {useConfig} from '../../../core/hooks/useConfig.es';
 import {useAutoSave} from './useAutoSave.es';
 
 /**

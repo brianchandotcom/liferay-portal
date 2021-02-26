@@ -12,10 +12,9 @@
  * details.
  */
 
+import {useConfig} from 'dynamic-data-mapping-form-renderer';
 import {useEventListener} from 'frontend-js-react-web';
 import {useEffect} from 'react';
-
-import {useConfig} from '../../../core/hooks/useConfig.es';
 
 const toggleFormBuilder = (managementToolbar) => {
 	const formBuilderButtons = document.querySelectorAll(

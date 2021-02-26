@@ -18,8 +18,7 @@ import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayProgressBar from '@clayui/progress-bar';
 import axios from 'axios';
-import {PagesVisitor, useFormState, useConfig} from 'dynamic-data-mapping-form-renderer';
-import {convertToFormData} from 'dynamic-data-mapping-form-renderer/js/util/fetch.es';
+import {convertToFormData, PagesVisitor, useFormState, useConfig} from 'dynamic-data-mapping-form-renderer';
 import {ItemSelectorDialog} from 'frontend-js-web';
 import React, {useEffect, useMemo, useState} from 'react';
 

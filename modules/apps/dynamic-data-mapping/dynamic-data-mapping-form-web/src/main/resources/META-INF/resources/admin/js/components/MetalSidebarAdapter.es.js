@@ -15,10 +15,8 @@
 import ClayButton from '@clayui/button';
 import {Context as ModalContext} from '@clayui/modal';
 import {Sidebar} from 'dynamic-data-mapping-form-builder';
+import {useConfig, useForm} from 'dynamic-data-mapping-form-renderer';
 import React, {useContext, useEffect, useImperativeHandle, useRef} from 'react';
-
-import {useConfig} from '../../../core/hooks/useConfig.es';
-import {useForm} from '../../../core/hooks/useForm.es';
 
 class NoRender extends React.Component {
 	shouldComponentUpdate() {

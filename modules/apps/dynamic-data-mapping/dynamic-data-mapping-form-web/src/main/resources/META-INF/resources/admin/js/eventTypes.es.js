@@ -12,23 +12,27 @@
  * details.
  */
 
-const PAGINATION = {
-	CHANGE: 'pagination_change',
-	NEXT: 'pagination_next',
-	PREVIOUS: 'pagination_previous',
+const RULE = {
+	ADD: 'rule_add',
+	CHANGE: 'rule_change',
+	DELETE: 'rule_delete',
 };
 
-const PAGE = {
-	ADD: 'page_add',
-	DELETE: 'page_delete',
-	DESCRIPTION_CHANGE: 'page_description_change',
-	RESET: 'page_reset',
-	SWAP: 'page_swap',
-	TITLE_CHANGE: 'page_title_change',
+const SIDEBAR = {
+	BLUR: 'sidebar_blur',
+	CHANGES_CANCEL: 'sidebar_changes_cancel',
+	EVALUATE: 'sidebar_evaluate',
+};
+
+const FORM_INFO = {
+	DESCRIPTION_CHANGE: 'form_info_description_change',
+	LANGUAGE_DELETE: 'form_info_language_delete',
+	NAME_CHANGE: 'form_info_name_change',
 };
 
 export const EVENT_TYPES = {
-	PAGE,
-	PAGINATION,
-	SUCCESS_PAGE: 'success_page',
+	ELEMENT_SET_ADD: 'element_set_add',
+	FORM_INFO,
+	RULE,
+	SIDEBAR,
 };

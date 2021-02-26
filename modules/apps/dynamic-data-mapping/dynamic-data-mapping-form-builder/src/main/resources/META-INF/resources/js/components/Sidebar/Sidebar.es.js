@@ -22,8 +22,8 @@ import {
 	PagesVisitor,
 	generateInstanceId,
 	generateName,
+	makeFetch,
 } from 'dynamic-data-mapping-form-renderer';
-import {makeFetch} from 'dynamic-data-mapping-form-renderer/js/util/fetch.es';
 import {EventHandler, openModal} from 'frontend-js-web';
 import {Drag, DragDrop} from 'metal-drag-drop';
 import Component, {Fragment} from 'metal-jsx';

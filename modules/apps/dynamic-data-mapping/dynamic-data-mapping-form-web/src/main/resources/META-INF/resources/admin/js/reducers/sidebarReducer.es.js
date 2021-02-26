@@ -13,8 +13,8 @@
  */
 
 import {FieldSupport, RulesSupport} from 'dynamic-data-mapping-form-builder';
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 
-import {PagesVisitor} from '../../../util/visitors.es';
 import {EVENT_TYPES} from '../eventTypes.es';
 
 /**
@@ -27,22 +27,19 @@ export default (state, action) => {
 			return {
 				focusedField: {},
 			};
-
-		/// WIP
-
 		case EVENT_TYPES.SIDEBAR.CHANGES_CANCEL: {
-			const {focusedField, previousFocusedField} = state;
+			const {focusedField, pages, previousFocusedField} = state;
 
 			const {settingsContext} = previousFocusedField;
 
-			const visitor = new PagesVisitor(settingsContext.pages);
+			const visitor = new PagesVisitor(pages);
 
 			return {
 				focusedField: previousFocusedField,
 				pages: visitor.mapFields((field) => {
 					if (field.fieldName === focusedField.fieldName) {
 						return {
-							...field,
+							...previousFocusedField,
 							settingsContext,
 						};
 					}

@@ -2308,6 +2308,9 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
+                sitePageURL:
+                    readOnly: true
+                    type: string
                 type:
                     readOnly: true
                     type: string

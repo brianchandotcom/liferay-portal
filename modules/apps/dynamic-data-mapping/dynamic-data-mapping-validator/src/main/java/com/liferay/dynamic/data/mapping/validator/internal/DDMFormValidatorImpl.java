@@ -295,8 +295,7 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 			List<DDMFormField> ddmFormFields, Set<String> ddmFormFieldNames,
 			boolean allowInvalidAvailableLocalesForProperty,
 			Set<Locale> ddmFormAvailableLocales, Locale ddmFormDefaultLocale)
-		throws DDMFormFieldValueValidationException,
-			   DDMFormValidationException {
+		throws DDMFormValidationException {
 
 		for (DDMFormField ddmFormField : ddmFormFields) {
 			validateDDMFormFieldName(ddmFormField, ddmFormFieldNames);

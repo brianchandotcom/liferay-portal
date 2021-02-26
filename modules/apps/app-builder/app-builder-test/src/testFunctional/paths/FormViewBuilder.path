@@ -549,7 +549,7 @@
 </tr>
 
 <tr>
-	<td>RULE_BUILDER_GO_BACK</td>
+	<td>SIDEBAR_GO_BACK</td>
 	<td>//div[contains(@class, 'sidebar-header')]//button[contains(@class,'btn btn-secondary')]</td>
 	<td></td>
 </tr>

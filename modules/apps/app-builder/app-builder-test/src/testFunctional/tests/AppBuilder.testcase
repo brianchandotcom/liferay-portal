@@ -892,7 +892,7 @@ definition {
 			locator1 = "FormViewBuilder#FIELD_SET_NAME",
 			value1 = "Field Set Brazil");
 
-		Click(locator1 = "FormViewBuilder#RULE_BUILDER_GO_BACK");
+		Click(locator1 = "FormViewBuilder#SIDEBAR_GO_BACK");
 
 		FormViewBuilder.validateTranslatedField(fieldLabel = "Name BR");
 
@@ -1853,7 +1853,7 @@ definition {
 
 		FormViewBuilder.addFieldByDoubleClick(fieldType = "Field Set English");
 
-		Click(locator1 = "FormViewBuilder#RULE_BUILDER_GO_BACK");
+		Click(locator1 = "FormViewBuilder#SIDEBAR_GO_BACK");
 
 		FormViewBuilder.goToFieldsetsTab();
 
@@ -2035,7 +2035,7 @@ definition {
 
 		FormViewBuilder.addObjectByDragAndDrop(fieldType = "Field Set English");
 
-		Click(locator1 = "FormViewBuilder#RULE_BUILDER_GO_BACK");
+		Click(locator1 = "FormViewBuilder#SIDEBAR_GO_BACK");
 
 		FormViewBuilder.goToFieldsetsTab();
 
@@ -3417,7 +3417,7 @@ definition {
 			locator1 = "FormViewBuilder#FIELD_SET_NAME",
 			value1 = "Field Set Brazil");
 
-		Click(locator1 = "FormViewBuilder#RULE_BUILDER_GO_BACK");
+		Click(locator1 = "FormViewBuilder#SIDEBAR_GO_BACK");
 
 		FormViewBuilder.validateTranslatedField(fieldLabel = "Name Brazil");
 
@@ -3897,7 +3897,7 @@ definition {
 
 		FormViewBuilder.validateFieldLabel(fieldLabel = "Text");
 
-		Click(locator1 = "FormViewBuilder#RULE_BUILDER_GO_BACK");
+		Click(locator1 = "FormViewBuilder#SIDEBAR_GO_BACK");
 
 		FormViewBuilder.setUpFieldSetOptions(
 			fieldSetName = "Field Sets",
@@ -3913,7 +3913,7 @@ definition {
 
 		FormViewBuilder.dragAndDropFieldSet(fieldLabel = "Select from List");
 
-		Click(locator1 = "FormViewBuilder#RULE_BUILDER_GO_BACK");
+		Click(locator1 = "FormViewBuilder#SIDEBAR_GO_BACK");
 
 		FormViewBuilder.goToFieldsetsTab();
 

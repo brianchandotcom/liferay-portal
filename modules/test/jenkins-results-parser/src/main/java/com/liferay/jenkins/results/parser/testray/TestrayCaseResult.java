@@ -14,9 +14,15 @@
 
 package com.liferay.jenkins.results.parser.testray;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.json.JSONArray;
@@ -40,15 +46,18 @@ public class TestrayCaseResult {
 		jsonObject = new JSONObject();
 	}
 
-	public Map<String, String> getAttachments() {
-		Map<String, String> attachments = new HashMap<>();
+	public List<Attachment> getAttachments() {
+		List<Attachment> attachments = new ArrayList<>();
 
 		if (jsonObject.optJSONObject("attachments") != null) {
 			JSONObject attachmentsJSONObject = jsonObject.optJSONObject(
 				"attachments");
 
 			for (String key : attachmentsJSONObject.keySet()) {
-				attachments.put(key, attachmentsJSONObject.getString(key));
+				Attachment attachment = new Attachment(
+					this, key, attachmentsJSONObject.getString(key));
+
+				attachments.add(attachment);
 			}
 		}
 
@@ -85,6 +94,10 @@ public class TestrayCaseResult {
 		return _testrayBuild;
 	}
 
+	public TestrayServer getTestrayServer() {
+		return _testrayBuild.getTestrayServer();
+	}
+
 	public TopLevelBuild getTopLevelBuild() {
 		return _topLevelBuild;
 	}
@@ -103,6 +116,60 @@ public class TestrayCaseResult {
 		}
 
 		return warnings;
+	}
+
+	public static class Attachment {
+
+		public Attachment(
+			TestrayCaseResult testrayCaseResult, String name, String value) {
+
+			_testrayCaseResult = testrayCaseResult;
+			_name = name;
+			_value = value;
+		}
+
+		public Attachment(
+			TestrayCaseResult testrayCaseResult,
+			TestrayS3Object testrayS3Object, String name) {
+
+			_testrayCaseResult = testrayCaseResult;
+			_testrayS3Object = testrayS3Object;
+			_name = name;
+
+			_value = testrayS3Object.getKey();
+		}
+
+		public String getName() {
+			return _name;
+		}
+
+		public URL getURL() {
+			if (_testrayS3Object != null) {
+				return _testrayS3Object.getURL();
+			}
+
+			TestrayServer testrayServer = _testrayCaseResult.getTestrayServer();
+
+			try {
+				return new URL(
+					testrayServer.getURL(),
+					JenkinsResultsParserUtil.combine(
+						"/reports/production/logs/", getValue()));
+			}
+			catch (MalformedURLException malformedURLException) {
+				throw new RuntimeException(malformedURLException);
+			}
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		private final String _name;
+		private final TestrayCaseResult _testrayCaseResult;
+		private TestrayS3Object _testrayS3Object;
+		private final String _value;
+
 	}
 
 	public static enum Status {

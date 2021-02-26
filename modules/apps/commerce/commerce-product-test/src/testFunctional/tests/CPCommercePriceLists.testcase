@@ -9,6 +9,13 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 	}
 
 	tearDown {

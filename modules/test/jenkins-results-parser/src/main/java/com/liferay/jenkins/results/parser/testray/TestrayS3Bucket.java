@@ -16,9 +16,13 @@ package com.liferay.jenkins.results.parser.testray;
 
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.Protocol;
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.AccessControlList;
 import com.amazonaws.services.s3.model.Bucket;
 import com.amazonaws.services.s3.model.CanonicalGrantee;
@@ -202,11 +206,21 @@ public class TestrayS3Bucket {
 
 		clientConfig.setProtocol(Protocol.HTTPS);
 
-		_amazonS3 = new AmazonS3Client(
-			new BasicAWSCredentials(_getTestrayS3Key(), _getTestrayS3Secret()),
-			clientConfig);
+		AmazonS3ClientBuilder amazonS3ClientBuilder = AmazonS3Client.builder();
 
-		_amazonS3.setEndpoint(_getTestrayS3Host());
+		AWSCredentials awsCredentials = new BasicAWSCredentials(
+			_getTestrayS3Key(), _getTestrayS3Secret());
+
+		amazonS3ClientBuilder.setCredentials(
+			new AWSStaticCredentialsProvider(awsCredentials));
+
+		amazonS3ClientBuilder.setClientConfiguration(clientConfig);
+
+		amazonS3ClientBuilder.setEndpointConfiguration(
+			new AwsClientBuilder.EndpointConfiguration(
+				_getTestrayS3Host(), _getTestrayS3Region()));
+
+		_amazonS3 = amazonS3ClientBuilder.build();
 
 		String bucketName = _getBucketName();
 
@@ -262,6 +276,16 @@ public class TestrayS3Bucket {
 	private String _getTestrayS3Key() {
 		try {
 			return JenkinsResultsParserUtil.getBuildProperty("testray.s3.key");
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
+	private String _getTestrayS3Region() {
+		try {
+			return JenkinsResultsParserUtil.getBuildProperty(
+				"testray.s3.region");
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

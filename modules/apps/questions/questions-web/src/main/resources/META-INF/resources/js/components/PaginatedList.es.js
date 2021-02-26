@@ -42,6 +42,10 @@ const PaginatedList = ({
 		setTotalItems(totalCount ? totalCount : data.totalCount);
 	}, [data.totalCount, totalCount]);
 
+	useEffect(() => {
+		scrollToTop(top);
+	}, [data]);
+
 	return (
 		<>
 			{emptyState && !data.totalCount && {...emptyState}}
@@ -70,7 +74,6 @@ const PaginatedList = ({
 								if (changePage) {
 									changePage(page);
 								}
-								scrollToTop(top);
 							}}
 							totalItems={totalItems}
 						/>

@@ -15,7 +15,14 @@
 package com.liferay.dispatch.talend.web.internal.portlet.action;
 
 import com.liferay.dispatch.constants.DispatchPortletKeys;
+import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.repository.DispatchFileRepository;
+import com.liferay.dispatch.service.DispatchTriggerLocalService;
+import com.liferay.dispatch.talend.web.internal.archive.TalendArchive;
+import com.liferay.dispatch.talend.web.internal.archive.TalendArchiveParserUtil;
+import com.liferay.dispatch.talend.web.internal.process.TalendProcess;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -26,9 +33,16 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -38,6 +52,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
+ * @author Igor Beslic
  */
 @Component(
 	property = {
@@ -63,12 +78,24 @@ public class EditDispatchTalendJobArchiveMVCActionCommand
 			long dispatchTriggerId = ParamUtil.getLong(
 				uploadPortletRequest, "dispatchTriggerId");
 
-			_dispatchFileRepository.addFileEntry(
-				_portal.getUserId(actionRequest), dispatchTriggerId,
-				uploadPortletRequest.getFileName("jobArchive"),
-				uploadPortletRequest.getSize("jobArchive"),
-				uploadPortletRequest.getContentType("jobArchive"),
+			File jobArchiveFile = FileUtil.createTempFile(
 				uploadPortletRequest.getFileAsStream("jobArchive"));
+
+			try (FileInputStream fileInputStream = new FileInputStream(
+					jobArchiveFile)) {
+
+				_updateDispatchTaskSettings(dispatchTriggerId, fileInputStream);
+
+				_dispatchFileRepository.addFileEntry(
+					_portal.getUserId(actionRequest), dispatchTriggerId,
+					uploadPortletRequest.getFileName("jobArchive"),
+					uploadPortletRequest.getSize("jobArchive"),
+					uploadPortletRequest.getContentType("jobArchive"),
+					new FileInputStream(jobArchiveFile));
+			}
+			finally {
+				FileUtil.delete(jobArchiveFile);
+			}
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -91,11 +118,72 @@ public class EditDispatchTalendJobArchiveMVCActionCommand
 		}
 	}
 
+	private String _getJVMOptionsUnion(
+		String newJVMOptions, String oldJVMOptions) {
+
+		String[] jvmOptions = newJVMOptions.split("\\s");
+
+		StringBundler sb = new StringBundler((jvmOptions.length * 2) + 1);
+
+		for (String newJVMOption : jvmOptions) {
+			if (oldJVMOptions.contains(newJVMOption)) {
+				continue;
+			}
+
+			sb.append(newJVMOption);
+
+			sb.append(StringPool.SPACE);
+		}
+
+		sb.append(oldJVMOptions);
+
+		return sb.toString();
+	}
+
+	private void _updateDispatchTaskSettings(
+			long dispatchTriggerId, InputStream jobArchiveInputStream)
+		throws PortalException {
+
+		TalendArchive talendArchive = TalendArchiveParserUtil.parse(
+			jobArchiveInputStream);
+
+		if (!talendArchive.hasJVMOptions()) {
+			return;
+		}
+
+		DispatchTrigger dispatchTrigger =
+			_dispatchTriggerLocalService.getDispatchTrigger(dispatchTriggerId);
+
+		UnicodeProperties dispatchTaskSettingsUnicodeProperties =
+			dispatchTrigger.getDispatchTaskSettingsUnicodeProperties();
+
+		String currentJVMOptions =
+			dispatchTaskSettingsUnicodeProperties.getProperty(
+				TalendProcess.JAVA_OPTS_KEY);
+
+		String newJVMOptions = talendArchive.getJVMOptions();
+
+		if (Validator.isNotNull(currentJVMOptions)) {
+			newJVMOptions = _getJVMOptionsUnion(
+				newJVMOptions, currentJVMOptions);
+		}
+
+		dispatchTaskSettingsUnicodeProperties.put(
+			TalendProcess.JAVA_OPTS_KEY, newJVMOptions);
+
+		_dispatchTriggerLocalService.updateDispatchTrigger(
+			dispatchTriggerId, dispatchTaskSettingsUnicodeProperties,
+			dispatchTrigger.getName());
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditDispatchTalendJobArchiveMVCActionCommand.class);
 
 	@Reference
 	private DispatchFileRepository _dispatchFileRepository;
+
+	@Reference
+	private DispatchTriggerLocalService _dispatchTriggerLocalService;
 
 	@Reference
 	private Portal _portal;

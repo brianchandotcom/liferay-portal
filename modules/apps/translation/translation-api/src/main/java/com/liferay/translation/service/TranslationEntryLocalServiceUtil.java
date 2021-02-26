@@ -14,9 +14,17 @@
 
 package com.liferay.translation.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.translation.model.TranslationEntry;
+
+import java.io.Serializable;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for TranslationEntry. This utility wraps
@@ -37,25 +45,23 @@ public class TranslationEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.translation.service.impl.TranslationEntryLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.translation.model.TranslationEntry
-			addOrUpdateTranslationEntry(
-				long groupId, String languageId,
-				com.liferay.info.item.InfoItemReference infoItemReference,
-				com.liferay.info.item.InfoItemFieldValues infoItemFieldValues,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static TranslationEntry addOrUpdateTranslationEntry(
+			long groupId, String languageId,
+			com.liferay.info.item.InfoItemReference infoItemReference,
+			com.liferay.info.item.InfoItemFieldValues infoItemFieldValues,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addOrUpdateTranslationEntry(
 			groupId, languageId, infoItemReference, infoItemFieldValues,
 			serviceContext);
 	}
 
-	public static com.liferay.translation.model.TranslationEntry
-			addOrUpdateTranslationEntry(
-				long groupId, String className, long classPK, String content,
-				String contentType, String languageId,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static TranslationEntry addOrUpdateTranslationEntry(
+			long groupId, String className, long classPK, String content,
+			String contentType, String languageId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addOrUpdateTranslationEntry(
 			groupId, className, classPK, content, contentType, languageId,
@@ -72,9 +78,8 @@ public class TranslationEntryLocalServiceUtil {
 	 * @param translationEntry the translation entry
 	 * @return the translation entry that was added
 	 */
-	public static com.liferay.translation.model.TranslationEntry
-		addTranslationEntry(
-			com.liferay.translation.model.TranslationEntry translationEntry) {
+	public static TranslationEntry addTranslationEntry(
+		TranslationEntry translationEntry) {
 
 		return getService().addTranslationEntry(translationEntry);
 	}
@@ -82,9 +87,9 @@ public class TranslationEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -95,8 +100,8 @@ public class TranslationEntryLocalServiceUtil {
 	 * @param translationEntryId the primary key for the new translation entry
 	 * @return the new translation entry
 	 */
-	public static com.liferay.translation.model.TranslationEntry
-		createTranslationEntry(long translationEntryId) {
+	public static TranslationEntry createTranslationEntry(
+		long translationEntryId) {
 
 		return getService().createTranslationEntry(translationEntryId);
 	}
@@ -104,10 +109,9 @@ public class TranslationEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
@@ -135,9 +139,9 @@ public class TranslationEntryLocalServiceUtil {
 	 * @return the translation entry that was removed
 	 * @throws PortalException if a translation entry with the primary key could not be found
 	 */
-	public static com.liferay.translation.model.TranslationEntry
-			deleteTranslationEntry(long translationEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static TranslationEntry deleteTranslationEntry(
+			long translationEntryId)
+		throws PortalException {
 
 		return getService().deleteTranslationEntry(translationEntryId);
 	}
@@ -152,22 +156,17 @@ public class TranslationEntryLocalServiceUtil {
 	 * @param translationEntry the translation entry
 	 * @return the translation entry that was removed
 	 */
-	public static com.liferay.translation.model.TranslationEntry
-		deleteTranslationEntry(
-			com.liferay.translation.model.TranslationEntry translationEntry) {
+	public static TranslationEntry deleteTranslationEntry(
+		TranslationEntry translationEntry) {
 
 		return getService().deleteTranslationEntry(translationEntry);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -177,9 +176,7 @@ public class TranslationEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -195,9 +192,8 @@ public class TranslationEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -215,10 +211,9 @@ public class TranslationEntryLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -230,9 +225,7 @@ public class TranslationEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -244,21 +237,20 @@ public class TranslationEntryLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.translation.model.TranslationEntry
-		fetchTranslationEntry(long translationEntryId) {
+	public static TranslationEntry fetchTranslationEntry(
+		long translationEntryId) {
 
 		return getService().fetchTranslationEntry(translationEntryId);
 	}
 
-	public static com.liferay.translation.model.TranslationEntry
-		fetchTranslationEntry(
-			String className, long classPK, String languageId) {
+	public static TranslationEntry fetchTranslationEntry(
+		String className, long classPK, String languageId) {
 
 		return getService().fetchTranslationEntry(
 			className, classPK, languageId);
@@ -271,8 +263,8 @@ public class TranslationEntryLocalServiceUtil {
 	 * @param groupId the primary key of the group
 	 * @return the matching translation entry, or <code>null</code> if a matching translation entry could not be found
 	 */
-	public static com.liferay.translation.model.TranslationEntry
-		fetchTranslationEntryByUuidAndGroupId(String uuid, long groupId) {
+	public static TranslationEntry fetchTranslationEntryByUuidAndGroupId(
+		String uuid, long groupId) {
 
 		return getService().fetchTranslationEntryByUuidAndGroupId(
 			uuid, groupId);
@@ -302,7 +294,7 @@ public class TranslationEntryLocalServiceUtil {
 	public static com.liferay.info.item.InfoItemFieldValues
 			getInfoItemFieldValues(
 				long groupId, String className, long classPK, String content)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getInfoItemFieldValues(
 			groupId, className, classPK, content);
@@ -320,9 +312,8 @@ public class TranslationEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -338,8 +329,8 @@ public class TranslationEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of translation entries (not inclusive)
 	 * @return the range of translation entries
 	 */
-	public static java.util.List<com.liferay.translation.model.TranslationEntry>
-		getTranslationEntries(int start, int end) {
+	public static List<TranslationEntry> getTranslationEntries(
+		int start, int end) {
 
 		return getService().getTranslationEntries(start, end);
 	}
@@ -351,7 +342,7 @@ public class TranslationEntryLocalServiceUtil {
 	 * @param companyId the primary key of the company
 	 * @return the matching translation entries, or an empty list if no matches were found
 	 */
-	public static java.util.List<com.liferay.translation.model.TranslationEntry>
+	public static List<TranslationEntry>
 		getTranslationEntriesByUuidAndCompanyId(String uuid, long companyId) {
 
 		return getService().getTranslationEntriesByUuidAndCompanyId(
@@ -368,12 +359,10 @@ public class TranslationEntryLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the range of matching translation entries, or an empty list if no matches were found
 	 */
-	public static java.util.List<com.liferay.translation.model.TranslationEntry>
+	public static List<TranslationEntry>
 		getTranslationEntriesByUuidAndCompanyId(
 			String uuid, long companyId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.translation.model.TranslationEntry>
-					orderByComparator) {
+			OrderByComparator<TranslationEntry> orderByComparator) {
 
 		return getService().getTranslationEntriesByUuidAndCompanyId(
 			uuid, companyId, start, end, orderByComparator);
@@ -395,9 +384,8 @@ public class TranslationEntryLocalServiceUtil {
 	 * @return the translation entry
 	 * @throws PortalException if a translation entry with the primary key could not be found
 	 */
-	public static com.liferay.translation.model.TranslationEntry
-			getTranslationEntry(long translationEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static TranslationEntry getTranslationEntry(long translationEntryId)
+		throws PortalException {
 
 		return getService().getTranslationEntry(translationEntryId);
 	}
@@ -410,18 +398,18 @@ public class TranslationEntryLocalServiceUtil {
 	 * @return the matching translation entry
 	 * @throws PortalException if a matching translation entry could not be found
 	 */
-	public static com.liferay.translation.model.TranslationEntry
-			getTranslationEntryByUuidAndGroupId(String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static TranslationEntry getTranslationEntryByUuidAndGroupId(
+			String uuid, long groupId)
+		throws PortalException {
 
 		return getService().getTranslationEntryByUuidAndGroupId(uuid, groupId);
 	}
 
-	public static com.liferay.translation.model.TranslationEntry updateStatus(
+	public static TranslationEntry updateStatus(
 			long userId, long translationEntryId, int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext,
-			java.util.Map<String, java.io.Serializable> workflowContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+			Map<String, Serializable> workflowContext)
+		throws PortalException {
 
 		return getService().updateStatus(
 			userId, translationEntryId, status, serviceContext,
@@ -438,37 +426,16 @@ public class TranslationEntryLocalServiceUtil {
 	 * @param translationEntry the translation entry
 	 * @return the translation entry that was updated
 	 */
-	public static com.liferay.translation.model.TranslationEntry
-		updateTranslationEntry(
-			com.liferay.translation.model.TranslationEntry translationEntry) {
+	public static TranslationEntry updateTranslationEntry(
+		TranslationEntry translationEntry) {
 
 		return getService().updateTranslationEntry(translationEntry);
 	}
 
 	public static TranslationEntryLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<TranslationEntryLocalService, TranslationEntryLocalService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			TranslationEntryLocalService.class);
-
-		ServiceTracker
-			<TranslationEntryLocalService, TranslationEntryLocalService>
-				serviceTracker =
-					new ServiceTracker
-						<TranslationEntryLocalService,
-						 TranslationEntryLocalService>(
-							 bundle.getBundleContext(),
-							 TranslationEntryLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile TranslationEntryLocalService _service;
 
 }

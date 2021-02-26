@@ -14,7 +14,12 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.LayoutSetPrototype;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the remote service utility for LayoutSetPrototype. This utility wraps
@@ -35,47 +40,44 @@ public class LayoutSetPrototypeServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.service.impl.LayoutSetPrototypeServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.kernel.model.LayoutSetPrototype
-			addLayoutSetPrototype(
-				java.util.Map<java.util.Locale, String> nameMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				boolean active, boolean layoutsUpdateable,
-				boolean readyForPropagation, ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static LayoutSetPrototype addLayoutSetPrototype(
+			Map<java.util.Locale, String> nameMap,
+			Map<java.util.Locale, String> descriptionMap, boolean active,
+			boolean layoutsUpdateable, boolean readyForPropagation,
+			ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addLayoutSetPrototype(
 			nameMap, descriptionMap, active, layoutsUpdateable,
 			readyForPropagation, serviceContext);
 	}
 
-	public static com.liferay.portal.kernel.model.LayoutSetPrototype
-			addLayoutSetPrototype(
-				java.util.Map<java.util.Locale, String> nameMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				boolean active, boolean layoutsUpdateable,
-				ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static LayoutSetPrototype addLayoutSetPrototype(
+			Map<java.util.Locale, String> nameMap,
+			Map<java.util.Locale, String> descriptionMap, boolean active,
+			boolean layoutsUpdateable, ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addLayoutSetPrototype(
 			nameMap, descriptionMap, active, layoutsUpdateable, serviceContext);
 	}
 
 	public static void deleteLayoutSetPrototype(long layoutSetPrototypeId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteLayoutSetPrototype(layoutSetPrototypeId);
 	}
 
-	public static com.liferay.portal.kernel.model.LayoutSetPrototype
-			fetchLayoutSetPrototype(long layoutSetPrototypeId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static LayoutSetPrototype fetchLayoutSetPrototype(
+			long layoutSetPrototypeId)
+		throws PortalException {
 
 		return getService().fetchLayoutSetPrototype(layoutSetPrototypeId);
 	}
 
-	public static com.liferay.portal.kernel.model.LayoutSetPrototype
-			getLayoutSetPrototype(long layoutSetPrototypeId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static LayoutSetPrototype getLayoutSetPrototype(
+			long layoutSetPrototypeId)
+		throws PortalException {
 
 		return getService().getLayoutSetPrototype(layoutSetPrototypeId);
 	}
@@ -89,62 +91,49 @@ public class LayoutSetPrototypeServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static java.util.List
-		<com.liferay.portal.kernel.model.LayoutSetPrototype> search(
-				long companyId, Boolean active,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.portal.kernel.model.LayoutSetPrototype>
-						orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<LayoutSetPrototype> search(
+			long companyId, Boolean active,
+			OrderByComparator<LayoutSetPrototype> orderByComparator)
+		throws PortalException {
 
 		return getService().search(companyId, active, orderByComparator);
 	}
 
-	public static com.liferay.portal.kernel.model.LayoutSetPrototype
-			updateLayoutSetPrototype(
-				long layoutSetPrototypeId,
-				java.util.Map<java.util.Locale, String> nameMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				boolean active, boolean layoutsUpdateable,
-				boolean readyForPropagation, ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static LayoutSetPrototype updateLayoutSetPrototype(
+			long layoutSetPrototypeId, Map<java.util.Locale, String> nameMap,
+			Map<java.util.Locale, String> descriptionMap, boolean active,
+			boolean layoutsUpdateable, boolean readyForPropagation,
+			ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().updateLayoutSetPrototype(
 			layoutSetPrototypeId, nameMap, descriptionMap, active,
 			layoutsUpdateable, readyForPropagation, serviceContext);
 	}
 
-	public static com.liferay.portal.kernel.model.LayoutSetPrototype
-			updateLayoutSetPrototype(
-				long layoutSetPrototypeId,
-				java.util.Map<java.util.Locale, String> nameMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				boolean active, boolean layoutsUpdateable,
-				ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static LayoutSetPrototype updateLayoutSetPrototype(
+			long layoutSetPrototypeId, Map<java.util.Locale, String> nameMap,
+			Map<java.util.Locale, String> descriptionMap, boolean active,
+			boolean layoutsUpdateable, ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().updateLayoutSetPrototype(
 			layoutSetPrototypeId, nameMap, descriptionMap, active,
 			layoutsUpdateable, serviceContext);
 	}
 
-	public static com.liferay.portal.kernel.model.LayoutSetPrototype
-			updateLayoutSetPrototype(long layoutSetPrototypeId, String settings)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static LayoutSetPrototype updateLayoutSetPrototype(
+			long layoutSetPrototypeId, String settings)
+		throws PortalException {
 
 		return getService().updateLayoutSetPrototype(
 			layoutSetPrototypeId, settings);
 	}
 
 	public static LayoutSetPrototypeService getService() {
-		if (_service == null) {
-			_service = (LayoutSetPrototypeService)PortalBeanLocatorUtil.locate(
-				LayoutSetPrototypeService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static LayoutSetPrototypeService _service;
+	private static volatile LayoutSetPrototypeService _service;
 
 }

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * Provides the remote service utility for Portal. This utility wraps
@@ -93,9 +93,7 @@ public class PortalServiceUtil {
 		getService().testAutoSyncHibernateSessionStateOnTxCreation();
 	}
 
-	public static void testDeleteClassName()
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static void testDeleteClassName() throws PortalException {
 		getService().testDeleteClassName();
 	}
 
@@ -112,14 +110,9 @@ public class PortalServiceUtil {
 	}
 
 	public static PortalService getService() {
-		if (_service == null) {
-			_service = (PortalService)PortalBeanLocatorUtil.locate(
-				PortalService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static PortalService _service;
+	private static volatile PortalService _service;
 
 }

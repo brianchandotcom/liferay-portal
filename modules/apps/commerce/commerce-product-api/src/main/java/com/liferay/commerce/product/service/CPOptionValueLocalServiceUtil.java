@@ -14,9 +14,17 @@
 
 package com.liferay.commerce.product.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.product.model.CPOptionValue;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for CPOptionValue. This utility wraps
@@ -48,32 +56,25 @@ public class CPOptionValueLocalServiceUtil {
 	 * @param cpOptionValue the cp option value
 	 * @return the cp option value that was added
 	 */
-	public static com.liferay.commerce.product.model.CPOptionValue
-		addCPOptionValue(
-			com.liferay.commerce.product.model.CPOptionValue cpOptionValue) {
-
+	public static CPOptionValue addCPOptionValue(CPOptionValue cpOptionValue) {
 		return getService().addCPOptionValue(cpOptionValue);
 	}
 
-	public static com.liferay.commerce.product.model.CPOptionValue
-			addCPOptionValue(
-				long cpOptionId,
-				java.util.Map<java.util.Locale, String> nameMap,
-				double priority, String key,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPOptionValue addCPOptionValue(
+			long cpOptionId, Map<java.util.Locale, String> nameMap,
+			double priority, String key,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCPOptionValue(
 			cpOptionId, nameMap, priority, key, serviceContext);
 	}
 
-	public static com.liferay.commerce.product.model.CPOptionValue
-			addCPOptionValue(
-				String externalReferenceCode, long cpOptionId,
-				java.util.Map<java.util.Locale, String> nameMap,
-				double priority, String key,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPOptionValue addCPOptionValue(
+			String externalReferenceCode, long cpOptionId,
+			Map<java.util.Locale, String> nameMap, double priority, String key,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCPOptionValue(
 			externalReferenceCode, cpOptionId, nameMap, priority, key,
@@ -86,18 +87,16 @@ public class CPOptionValueLocalServiceUtil {
 	 * @param CPOptionValueId the primary key for the new cp option value
 	 * @return the new cp option value
 	 */
-	public static com.liferay.commerce.product.model.CPOptionValue
-		createCPOptionValue(long CPOptionValueId) {
-
+	public static CPOptionValue createCPOptionValue(long CPOptionValueId) {
 		return getService().createCPOptionValue(CPOptionValueId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -113,10 +112,8 @@ public class CPOptionValueLocalServiceUtil {
 	 * @return the cp option value that was removed
 	 * @throws PortalException
 	 */
-	public static com.liferay.commerce.product.model.CPOptionValue
-			deleteCPOptionValue(
-				com.liferay.commerce.product.model.CPOptionValue cpOptionValue)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPOptionValue deleteCPOptionValue(CPOptionValue cpOptionValue)
+		throws PortalException {
 
 		return getService().deleteCPOptionValue(cpOptionValue);
 	}
@@ -132,15 +129,14 @@ public class CPOptionValueLocalServiceUtil {
 	 * @return the cp option value that was removed
 	 * @throws PortalException if a cp option value with the primary key could not be found
 	 */
-	public static com.liferay.commerce.product.model.CPOptionValue
-			deleteCPOptionValue(long CPOptionValueId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPOptionValue deleteCPOptionValue(long CPOptionValueId)
+		throws PortalException {
 
 		return getService().deleteCPOptionValue(CPOptionValueId);
 	}
 
 	public static void deleteCPOptionValues(long cpOptionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCPOptionValues(cpOptionId);
 	}
@@ -148,23 +144,18 @@ public class CPOptionValueLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -174,9 +165,7 @@ public class CPOptionValueLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -192,9 +181,8 @@ public class CPOptionValueLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -212,10 +200,9 @@ public class CPOptionValueLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -227,9 +214,7 @@ public class CPOptionValueLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -241,23 +226,20 @@ public class CPOptionValueLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.commerce.product.model.CPOptionValue
-		fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId) {
+	public static CPOptionValue fetchByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
 
 		return getService().fetchByExternalReferenceCode(
 			externalReferenceCode, companyId);
 	}
 
-	public static com.liferay.commerce.product.model.CPOptionValue
-		fetchCPOptionValue(long CPOptionValueId) {
-
+	public static CPOptionValue fetchCPOptionValue(long CPOptionValueId) {
 		return getService().fetchCPOptionValue(CPOptionValueId);
 	}
 
@@ -268,9 +250,8 @@ public class CPOptionValueLocalServiceUtil {
 	 * @param externalReferenceCode the cp option value's external reference code
 	 * @return the matching cp option value, or <code>null</code> if a matching cp option value could not be found
 	 */
-	public static com.liferay.commerce.product.model.CPOptionValue
-		fetchCPOptionValueByReferenceCode(
-			long companyId, String externalReferenceCode) {
+	public static CPOptionValue fetchCPOptionValueByReferenceCode(
+		long companyId, String externalReferenceCode) {
 
 		return getService().fetchCPOptionValueByReferenceCode(
 			companyId, externalReferenceCode);
@@ -283,8 +264,8 @@ public class CPOptionValueLocalServiceUtil {
 	 * @param companyId the primary key of the company
 	 * @return the matching cp option value, or <code>null</code> if a matching cp option value could not be found
 	 */
-	public static com.liferay.commerce.product.model.CPOptionValue
-		fetchCPOptionValueByUuidAndCompanyId(String uuid, long companyId) {
+	public static CPOptionValue fetchCPOptionValueByUuidAndCompanyId(
+		String uuid, long companyId) {
 
 		return getService().fetchCPOptionValueByUuidAndCompanyId(
 			uuid, companyId);
@@ -303,16 +284,14 @@ public class CPOptionValueLocalServiceUtil {
 	 * @return the cp option value
 	 * @throws PortalException if a cp option value with the primary key could not be found
 	 */
-	public static com.liferay.commerce.product.model.CPOptionValue
-			getCPOptionValue(long CPOptionValueId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPOptionValue getCPOptionValue(long CPOptionValueId)
+		throws PortalException {
 
 		return getService().getCPOptionValue(CPOptionValueId);
 	}
 
-	public static com.liferay.commerce.product.model.CPOptionValue
-			getCPOptionValue(long cpOptionId, String key)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPOptionValue getCPOptionValue(long cpOptionId, String key)
+		throws PortalException {
 
 		return getService().getCPOptionValue(cpOptionId, key);
 	}
@@ -325,9 +304,9 @@ public class CPOptionValueLocalServiceUtil {
 	 * @return the matching cp option value
 	 * @throws PortalException if a matching cp option value could not be found
 	 */
-	public static com.liferay.commerce.product.model.CPOptionValue
-			getCPOptionValueByUuidAndCompanyId(String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPOptionValue getCPOptionValueByUuidAndCompanyId(
+			String uuid, long companyId)
+		throws PortalException {
 
 		return getService().getCPOptionValueByUuidAndCompanyId(uuid, companyId);
 	}
@@ -343,26 +322,19 @@ public class CPOptionValueLocalServiceUtil {
 	 * @param end the upper bound of the range of cp option values (not inclusive)
 	 * @return the range of cp option values
 	 */
-	public static java.util.List
-		<com.liferay.commerce.product.model.CPOptionValue> getCPOptionValues(
-			int start, int end) {
-
+	public static List<CPOptionValue> getCPOptionValues(int start, int end) {
 		return getService().getCPOptionValues(start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.product.model.CPOptionValue> getCPOptionValues(
-			long cpOptionId, int start, int end) {
+	public static List<CPOptionValue> getCPOptionValues(
+		long cpOptionId, int start, int end) {
 
 		return getService().getCPOptionValues(cpOptionId, start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.product.model.CPOptionValue> getCPOptionValues(
-			long cpOptionId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.commerce.product.model.CPOptionValue>
-					orderByComparator) {
+	public static List<CPOptionValue> getCPOptionValues(
+		long cpOptionId, int start, int end,
+		OrderByComparator<CPOptionValue> orderByComparator) {
 
 		return getService().getCPOptionValues(
 			cpOptionId, start, end, orderByComparator);
@@ -408,9 +380,8 @@ public class CPOptionValueLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -436,20 +407,20 @@ public class CPOptionValueLocalServiceUtil {
 	 */
 	@Deprecated
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
-		<com.liferay.commerce.product.model.CPOptionValue> searchCPOptionValues(
+		<CPOptionValue> searchCPOptionValues(
 				long companyId, long groupId, long cpOptionId, String keywords,
 				int start, int end, com.liferay.portal.kernel.search.Sort sort)
-			throws com.liferay.portal.kernel.exception.PortalException {
+			throws PortalException {
 
 		return getService().searchCPOptionValues(
 			companyId, groupId, cpOptionId, keywords, start, end, sort);
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
-		<com.liferay.commerce.product.model.CPOptionValue> searchCPOptionValues(
+		<CPOptionValue> searchCPOptionValues(
 				long companyId, long cpOptionId, String keywords, int start,
 				int end, com.liferay.portal.kernel.search.Sort[] sorts)
-			throws com.liferay.portal.kernel.exception.PortalException {
+			throws PortalException {
 
 		return getService().searchCPOptionValues(
 			companyId, cpOptionId, keywords, start, end, sorts);
@@ -457,7 +428,7 @@ public class CPOptionValueLocalServiceUtil {
 
 	public static int searchCPOptionValuesCount(
 			long companyId, long cpOptionId, String keywords)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().searchCPOptionValuesCount(
 			companyId, cpOptionId, keywords);
@@ -473,32 +444,27 @@ public class CPOptionValueLocalServiceUtil {
 	 * @param cpOptionValue the cp option value
 	 * @return the cp option value that was updated
 	 */
-	public static com.liferay.commerce.product.model.CPOptionValue
-		updateCPOptionValue(
-			com.liferay.commerce.product.model.CPOptionValue cpOptionValue) {
+	public static CPOptionValue updateCPOptionValue(
+		CPOptionValue cpOptionValue) {
 
 		return getService().updateCPOptionValue(cpOptionValue);
 	}
 
-	public static com.liferay.commerce.product.model.CPOptionValue
-			updateCPOptionValue(
-				long cpOptionValueId,
-				java.util.Map<java.util.Locale, String> nameMap,
-				double priority, String key,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPOptionValue updateCPOptionValue(
+			long cpOptionValueId, Map<java.util.Locale, String> nameMap,
+			double priority, String key,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().updateCPOptionValue(
 			cpOptionValueId, nameMap, priority, key, serviceContext);
 	}
 
-	public static com.liferay.commerce.product.model.CPOptionValue
-			upsertCPOptionValue(
-				String externalReferenceCode, long cpOptionId,
-				java.util.Map<java.util.Locale, String> nameMap,
-				double priority, String key,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPOptionValue upsertCPOptionValue(
+			String externalReferenceCode, long cpOptionId,
+			Map<java.util.Locale, String> nameMap, double priority, String key,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().upsertCPOptionValue(
 			externalReferenceCode, cpOptionId, nameMap, priority, key,
@@ -506,26 +472,9 @@ public class CPOptionValueLocalServiceUtil {
 	}
 
 	public static CPOptionValueLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CPOptionValueLocalService, CPOptionValueLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CPOptionValueLocalService.class);
-
-		ServiceTracker<CPOptionValueLocalService, CPOptionValueLocalService>
-			serviceTracker =
-				new ServiceTracker
-					<CPOptionValueLocalService, CPOptionValueLocalService>(
-						bundle.getBundleContext(),
-						CPOptionValueLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CPOptionValueLocalService _service;
 
 }

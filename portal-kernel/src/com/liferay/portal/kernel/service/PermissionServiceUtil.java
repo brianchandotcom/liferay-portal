@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * Provides the remote service utility for Permission. This utility wraps
@@ -44,7 +44,7 @@ public class PermissionServiceUtil {
 	 * @param primKey the primary key of the service
 	 */
 	public static void checkPermission(long groupId, String name, long primKey)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().checkPermission(groupId, name, primKey);
 	}
@@ -58,7 +58,7 @@ public class PermissionServiceUtil {
 	 */
 	public static void checkPermission(
 			long groupId, String name, String primKey)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().checkPermission(groupId, name, primKey);
 	}
@@ -73,14 +73,9 @@ public class PermissionServiceUtil {
 	}
 
 	public static PermissionService getService() {
-		if (_service == null) {
-			_service = (PermissionService)PortalBeanLocatorUtil.locate(
-				PermissionService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static PermissionService _service;
+	private static volatile PermissionService _service;
 
 }

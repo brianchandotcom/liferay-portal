@@ -14,9 +14,11 @@
 
 package com.liferay.fragment.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.fragment.model.FragmentComposition;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for FragmentComposition. This utility wraps
@@ -37,78 +39,69 @@ public class FragmentCompositionServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.fragment.service.impl.FragmentCompositionServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.fragment.model.FragmentComposition
-			addFragmentComposition(
-				long groupId, long fragmentCollectionId,
-				String fragmentCompositionKey, String name, String description,
-				String data, long previewFileEntryId, int status,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static FragmentComposition addFragmentComposition(
+			long groupId, long fragmentCollectionId,
+			String fragmentCompositionKey, String name, String description,
+			String data, long previewFileEntryId, int status,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addFragmentComposition(
 			groupId, fragmentCollectionId, fragmentCompositionKey, name,
 			description, data, previewFileEntryId, status, serviceContext);
 	}
 
-	public static com.liferay.fragment.model.FragmentComposition
-			deleteFragmentComposition(long fragmentCompositionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static FragmentComposition deleteFragmentComposition(
+			long fragmentCompositionId)
+		throws PortalException {
 
 		return getService().deleteFragmentComposition(fragmentCompositionId);
 	}
 
-	public static com.liferay.fragment.model.FragmentComposition
-		fetchFragmentComposition(long fragmentCompositionId) {
+	public static FragmentComposition fetchFragmentComposition(
+		long fragmentCompositionId) {
 
 		return getService().fetchFragmentComposition(fragmentCompositionId);
 	}
 
-	public static com.liferay.fragment.model.FragmentComposition
-		fetchFragmentComposition(long groupId, String fragmentCompositionKey) {
+	public static FragmentComposition fetchFragmentComposition(
+		long groupId, String fragmentCompositionKey) {
 
 		return getService().fetchFragmentComposition(
 			groupId, fragmentCompositionKey);
 	}
 
-	public static java.util.List<com.liferay.fragment.model.FragmentComposition>
-		getFragmentCompositions(long fragmentCollectionId) {
+	public static List<FragmentComposition> getFragmentCompositions(
+		long fragmentCollectionId) {
 
 		return getService().getFragmentCompositions(fragmentCollectionId);
 	}
 
-	public static java.util.List<com.liferay.fragment.model.FragmentComposition>
-		getFragmentCompositions(long fragmentCollectionId, int start, int end) {
+	public static List<FragmentComposition> getFragmentCompositions(
+		long fragmentCollectionId, int start, int end) {
 
 		return getService().getFragmentCompositions(
 			fragmentCollectionId, start, end);
 	}
 
-	public static java.util.List<com.liferay.fragment.model.FragmentComposition>
-		getFragmentCompositions(
-			long groupId, long fragmentCollectionId, int status) {
+	public static List<FragmentComposition> getFragmentCompositions(
+		long groupId, long fragmentCollectionId, int status) {
 
 		return getService().getFragmentCompositions(
 			groupId, fragmentCollectionId, status);
 	}
 
-	public static java.util.List<com.liferay.fragment.model.FragmentComposition>
-		getFragmentCompositions(
-			long groupId, long fragmentCollectionId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.fragment.model.FragmentComposition>
-					orderByComparator) {
+	public static List<FragmentComposition> getFragmentCompositions(
+		long groupId, long fragmentCollectionId, int start, int end,
+		OrderByComparator<FragmentComposition> orderByComparator) {
 
 		return getService().getFragmentCompositions(
 			groupId, fragmentCollectionId, start, end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.fragment.model.FragmentComposition>
-		getFragmentCompositions(
-			long groupId, long fragmentCollectionId, String name, int start,
-			int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.fragment.model.FragmentComposition>
-					orderByComparator) {
+	public static List<FragmentComposition> getFragmentCompositions(
+		long groupId, long fragmentCollectionId, String name, int start,
+		int end, OrderByComparator<FragmentComposition> orderByComparator) {
 
 		return getService().getFragmentCompositions(
 			groupId, fragmentCollectionId, name, start, end, orderByComparator);
@@ -127,49 +120,45 @@ public class FragmentCompositionServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.fragment.model.FragmentComposition
-			moveFragmentComposition(
-				long fragmentCompositionId, long fragmentCollectionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static FragmentComposition moveFragmentComposition(
+			long fragmentCompositionId, long fragmentCollectionId)
+		throws PortalException {
 
 		return getService().moveFragmentComposition(
 			fragmentCompositionId, fragmentCollectionId);
 	}
 
-	public static com.liferay.fragment.model.FragmentComposition
-			updateFragmentComposition(
-				long fragmentCompositionId, long previewFileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static FragmentComposition updateFragmentComposition(
+			long fragmentCompositionId, long previewFileEntryId)
+		throws PortalException {
 
 		return getService().updateFragmentComposition(
 			fragmentCompositionId, previewFileEntryId);
 	}
 
-	public static com.liferay.fragment.model.FragmentComposition
-			updateFragmentComposition(
-				long fragmentCompositionId, long fragmentCollectionId,
-				String name, String description, String data,
-				long previewFileEntryId, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static FragmentComposition updateFragmentComposition(
+			long fragmentCompositionId, long fragmentCollectionId, String name,
+			String description, String data, long previewFileEntryId,
+			int status)
+		throws PortalException {
 
 		return getService().updateFragmentComposition(
 			fragmentCompositionId, fragmentCollectionId, name, description,
 			data, previewFileEntryId, status);
 	}
 
-	public static com.liferay.fragment.model.FragmentComposition
-			updateFragmentComposition(long fragmentCompositionId, String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static FragmentComposition updateFragmentComposition(
+			long fragmentCompositionId, String name)
+		throws PortalException {
 
 		return getService().updateFragmentComposition(
 			fragmentCompositionId, name);
 	}
 
-	public static com.liferay.fragment.model.FragmentComposition
-			updateFragmentComposition(
-				long fragmentCompositionId, String name, String description,
-				String data, long previewFileEntryId, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static FragmentComposition updateFragmentComposition(
+			long fragmentCompositionId, String name, String description,
+			String data, long previewFileEntryId, int status)
+		throws PortalException {
 
 		return getService().updateFragmentComposition(
 			fragmentCompositionId, name, description, data, previewFileEntryId,
@@ -177,27 +166,9 @@ public class FragmentCompositionServiceUtil {
 	}
 
 	public static FragmentCompositionService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<FragmentCompositionService, FragmentCompositionService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			FragmentCompositionService.class);
-
-		ServiceTracker<FragmentCompositionService, FragmentCompositionService>
-			serviceTracker =
-				new ServiceTracker
-					<FragmentCompositionService, FragmentCompositionService>(
-						bundle.getBundleContext(),
-						FragmentCompositionService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile FragmentCompositionService _service;
 
 }

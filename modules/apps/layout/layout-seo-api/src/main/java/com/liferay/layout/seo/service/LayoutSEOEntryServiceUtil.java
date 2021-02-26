@@ -14,9 +14,10 @@
 
 package com.liferay.layout.seo.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.layout.seo.model.LayoutSEOEntry;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.Map;
 
 /**
  * Provides the remote service utility for LayoutSEOEntry. This utility wraps
@@ -47,28 +48,26 @@ public class LayoutSEOEntryServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.layout.seo.model.LayoutSEOEntry
-			updateCustomMetaTags(
-				long groupId, boolean privateLayout, long layoutId,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static LayoutSEOEntry updateCustomMetaTags(
+			long groupId, boolean privateLayout, long layoutId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().updateCustomMetaTags(
 			groupId, privateLayout, layoutId, serviceContext);
 	}
 
-	public static com.liferay.layout.seo.model.LayoutSEOEntry
-			updateLayoutSEOEntry(
-				long groupId, boolean privateLayout, long layoutId,
-				boolean canonicalURLEnabled,
-				java.util.Map<java.util.Locale, String> canonicalURLMap,
-				boolean openGraphDescriptionEnabled,
-				java.util.Map<java.util.Locale, String> openGraphDescriptionMap,
-				java.util.Map<java.util.Locale, String> openGraphImageAltMap,
-				long openGraphImageFileEntryId, boolean openGraphTitleEnabled,
-				java.util.Map<java.util.Locale, String> openGraphTitleMap,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static LayoutSEOEntry updateLayoutSEOEntry(
+			long groupId, boolean privateLayout, long layoutId,
+			boolean canonicalURLEnabled,
+			Map<java.util.Locale, String> canonicalURLMap,
+			boolean openGraphDescriptionEnabled,
+			Map<java.util.Locale, String> openGraphDescriptionMap,
+			Map<java.util.Locale, String> openGraphImageAltMap,
+			long openGraphImageFileEntryId, boolean openGraphTitleEnabled,
+			Map<java.util.Locale, String> openGraphTitleMap,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().updateLayoutSEOEntry(
 			groupId, privateLayout, layoutId, canonicalURLEnabled,
@@ -78,13 +77,12 @@ public class LayoutSEOEntryServiceUtil {
 			serviceContext);
 	}
 
-	public static com.liferay.layout.seo.model.LayoutSEOEntry
-			updateLayoutSEOEntry(
-				long groupId, boolean privateLayout, long layoutId,
-				boolean enabledCanonicalURLMap,
-				java.util.Map<java.util.Locale, String> canonicalURLMap,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static LayoutSEOEntry updateLayoutSEOEntry(
+			long groupId, boolean privateLayout, long layoutId,
+			boolean enabledCanonicalURLMap,
+			Map<java.util.Locale, String> canonicalURLMap,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().updateLayoutSEOEntry(
 			groupId, privateLayout, layoutId, enabledCanonicalURLMap,
@@ -92,25 +90,9 @@ public class LayoutSEOEntryServiceUtil {
 	}
 
 	public static LayoutSEOEntryService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<LayoutSEOEntryService, LayoutSEOEntryService>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(LayoutSEOEntryService.class);
-
-		ServiceTracker<LayoutSEOEntryService, LayoutSEOEntryService>
-			serviceTracker =
-				new ServiceTracker
-					<LayoutSEOEntryService, LayoutSEOEntryService>(
-						bundle.getBundleContext(), LayoutSEOEntryService.class,
-						null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile LayoutSEOEntryService _service;
 
 }

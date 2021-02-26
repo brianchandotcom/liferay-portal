@@ -14,9 +14,14 @@
 
 package com.liferay.portal.reports.engine.console.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.reports.engine.console.model.Definition;
+
+import java.io.InputStream;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the remote service utility for Definition. This utility wraps
@@ -37,44 +42,35 @@ public class DefinitionServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.reports.engine.console.service.impl.DefinitionServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.reports.engine.console.model.Definition
-			addDefinition(
-				long groupId, java.util.Map<java.util.Locale, String> nameMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				long sourceId, String reportParameters, String fileName,
-				java.io.InputStream inputStream,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static Definition addDefinition(
+			long groupId, Map<java.util.Locale, String> nameMap,
+			Map<java.util.Locale, String> descriptionMap, long sourceId,
+			String reportParameters, String fileName, InputStream inputStream,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addDefinition(
 			groupId, nameMap, descriptionMap, sourceId, reportParameters,
 			fileName, inputStream, serviceContext);
 	}
 
-	public static com.liferay.portal.reports.engine.console.model.Definition
-			deleteDefinition(long definitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static Definition deleteDefinition(long definitionId)
+		throws PortalException {
 
 		return getService().deleteDefinition(definitionId);
 	}
 
-	public static com.liferay.portal.reports.engine.console.model.Definition
-			getDefinition(long definitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static Definition getDefinition(long definitionId)
+		throws PortalException {
 
 		return getService().getDefinition(definitionId);
 	}
 
-	public static java.util.List
-		<com.liferay.portal.reports.engine.console.model.Definition>
-				getDefinitions(
-					long groupId, String definitionName, String description,
-					String sourceId, String reportName, boolean andSearch,
-					int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						<com.liferay.portal.reports.engine.console.model.
-							Definition> orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<Definition> getDefinitions(
+			long groupId, String definitionName, String description,
+			String sourceId, String reportName, boolean andSearch, int start,
+			int end, OrderByComparator<Definition> orderByComparator)
+		throws PortalException {
 
 		return getService().getDefinitions(
 			groupId, definitionName, description, sourceId, reportName,
@@ -99,15 +95,12 @@ public class DefinitionServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.portal.reports.engine.console.model.Definition
-			updateDefinition(
-				long definitionId,
-				java.util.Map<java.util.Locale, String> nameMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				long sourceId, String reportParameters, String fileName,
-				java.io.InputStream inputStream,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static Definition updateDefinition(
+			long definitionId, Map<java.util.Locale, String> nameMap,
+			Map<java.util.Locale, String> descriptionMap, long sourceId,
+			String reportParameters, String fileName, InputStream inputStream,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().updateDefinition(
 			definitionId, nameMap, descriptionMap, sourceId, reportParameters,
@@ -115,22 +108,9 @@ public class DefinitionServiceUtil {
 	}
 
 	public static DefinitionService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<DefinitionService, DefinitionService>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(DefinitionService.class);
-
-		ServiceTracker<DefinitionService, DefinitionService> serviceTracker =
-			new ServiceTracker<DefinitionService, DefinitionService>(
-				bundle.getBundleContext(), DefinitionService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile DefinitionService _service;
 
 }

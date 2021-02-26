@@ -14,9 +14,10 @@
 
 package com.liferay.commerce.bom.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.bom.model.CommerceBOMFolder;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for CommerceBOMFolder. This utility wraps
@@ -37,41 +38,36 @@ public class CommerceBOMFolderServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.bom.service.impl.CommerceBOMFolderServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.commerce.bom.model.CommerceBOMFolder
-			addCommerceBOMFolder(
-				long userId, long parentCommerceBOMFolderId, String name,
-				boolean logo, byte[] logoBytes)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceBOMFolder addCommerceBOMFolder(
+			long userId, long parentCommerceBOMFolderId, String name,
+			boolean logo, byte[] logoBytes)
+		throws PortalException {
 
 		return getService().addCommerceBOMFolder(
 			userId, parentCommerceBOMFolderId, name, logo, logoBytes);
 	}
 
 	public static void deleteCommerceBOMFolder(long commerceBOMFolderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommerceBOMFolder(commerceBOMFolderId);
 	}
 
-	public static com.liferay.commerce.bom.model.CommerceBOMFolder
-			getCommerceBOMFolder(long commerceBOMFolderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceBOMFolder getCommerceBOMFolder(
+			long commerceBOMFolderId)
+		throws PortalException {
 
 		return getService().getCommerceBOMFolder(commerceBOMFolderId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.bom.model.CommerceBOMFolder>
-			getCommerceBOMFolders(long companyId, int start, int end) {
+	public static List<CommerceBOMFolder> getCommerceBOMFolders(
+		long companyId, int start, int end) {
 
 		return getService().getCommerceBOMFolders(companyId, start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.bom.model.CommerceBOMFolder>
-			getCommerceBOMFolders(
-				long companyId, long parentCommerceBOMFolderId, int start,
-				int end) {
+	public static List<CommerceBOMFolder> getCommerceBOMFolders(
+		long companyId, long parentCommerceBOMFolderId, int start, int end) {
 
 		return getService().getCommerceBOMFolders(
 			companyId, parentCommerceBOMFolderId, start, end);
@@ -97,36 +93,19 @@ public class CommerceBOMFolderServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.commerce.bom.model.CommerceBOMFolder
-			updateCommerceBOMFolder(
-				long commerceBOMFolderId, String name, boolean logo,
-				byte[] logoBytes)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceBOMFolder updateCommerceBOMFolder(
+			long commerceBOMFolderId, String name, boolean logo,
+			byte[] logoBytes)
+		throws PortalException {
 
 		return getService().updateCommerceBOMFolder(
 			commerceBOMFolderId, name, logo, logoBytes);
 	}
 
 	public static CommerceBOMFolderService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceBOMFolderService, CommerceBOMFolderService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(CommerceBOMFolderService.class);
-
-		ServiceTracker<CommerceBOMFolderService, CommerceBOMFolderService>
-			serviceTracker =
-				new ServiceTracker
-					<CommerceBOMFolderService, CommerceBOMFolderService>(
-						bundle.getBundleContext(),
-						CommerceBOMFolderService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceBOMFolderService _service;
 
 }

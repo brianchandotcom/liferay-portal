@@ -14,9 +14,16 @@
 
 package com.liferay.change.tracking.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.change.tracking.model.CTMessage;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for CTMessage. This utility wraps
@@ -48,13 +55,11 @@ public class CTMessageLocalServiceUtil {
 	 * @param ctMessage the ct message
 	 * @return the ct message that was added
 	 */
-	public static com.liferay.change.tracking.model.CTMessage addCTMessage(
-		com.liferay.change.tracking.model.CTMessage ctMessage) {
-
+	public static CTMessage addCTMessage(CTMessage ctMessage) {
 		return getService().addCTMessage(ctMessage);
 	}
 
-	public static com.liferay.change.tracking.model.CTMessage addCTMessage(
+	public static CTMessage addCTMessage(
 		long ctCollectionId,
 		com.liferay.portal.kernel.messaging.Message message) {
 
@@ -67,18 +72,16 @@ public class CTMessageLocalServiceUtil {
 	 * @param ctMessageId the primary key for the new ct message
 	 * @return the new ct message
 	 */
-	public static com.liferay.change.tracking.model.CTMessage createCTMessage(
-		long ctMessageId) {
-
+	public static CTMessage createCTMessage(long ctMessageId) {
 		return getService().createCTMessage(ctMessageId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -93,9 +96,7 @@ public class CTMessageLocalServiceUtil {
 	 * @param ctMessage the ct message
 	 * @return the ct message that was removed
 	 */
-	public static com.liferay.change.tracking.model.CTMessage deleteCTMessage(
-		com.liferay.change.tracking.model.CTMessage ctMessage) {
-
+	public static CTMessage deleteCTMessage(CTMessage ctMessage) {
 		return getService().deleteCTMessage(ctMessage);
 	}
 
@@ -110,9 +111,8 @@ public class CTMessageLocalServiceUtil {
 	 * @return the ct message that was removed
 	 * @throws PortalException if a ct message with the primary key could not be found
 	 */
-	public static com.liferay.change.tracking.model.CTMessage deleteCTMessage(
-			long ctMessageId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CTMessage deleteCTMessage(long ctMessageId)
+		throws PortalException {
 
 		return getService().deleteCTMessage(ctMessageId);
 	}
@@ -120,23 +120,18 @@ public class CTMessageLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -146,9 +141,7 @@ public class CTMessageLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -164,9 +157,8 @@ public class CTMessageLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -184,10 +176,9 @@ public class CTMessageLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -199,9 +190,7 @@ public class CTMessageLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -213,15 +202,13 @@ public class CTMessageLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.change.tracking.model.CTMessage fetchCTMessage(
-		long ctMessageId) {
-
+	public static CTMessage fetchCTMessage(long ctMessageId) {
 		return getService().fetchCTMessage(ctMessageId);
 	}
 
@@ -238,9 +225,8 @@ public class CTMessageLocalServiceUtil {
 	 * @return the ct message
 	 * @throws PortalException if a ct message with the primary key could not be found
 	 */
-	public static com.liferay.change.tracking.model.CTMessage getCTMessage(
-			long ctMessageId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CTMessage getCTMessage(long ctMessageId)
+		throws PortalException {
 
 		return getService().getCTMessage(ctMessageId);
 	}
@@ -256,9 +242,7 @@ public class CTMessageLocalServiceUtil {
 	 * @param end the upper bound of the range of ct messages (not inclusive)
 	 * @return the range of ct messages
 	 */
-	public static java.util.List<com.liferay.change.tracking.model.CTMessage>
-		getCTMessages(int start, int end) {
-
+	public static List<CTMessage> getCTMessages(int start, int end) {
 		return getService().getCTMessages(start, end);
 	}
 
@@ -278,8 +262,8 @@ public class CTMessageLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.messaging.Message>
-		getMessages(long ctCollectionId) {
+	public static List<com.liferay.portal.kernel.messaging.Message> getMessages(
+		long ctCollectionId) {
 
 		return getService().getMessages(ctCollectionId);
 	}
@@ -296,9 +280,8 @@ public class CTMessageLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -313,32 +296,14 @@ public class CTMessageLocalServiceUtil {
 	 * @param ctMessage the ct message
 	 * @return the ct message that was updated
 	 */
-	public static com.liferay.change.tracking.model.CTMessage updateCTMessage(
-		com.liferay.change.tracking.model.CTMessage ctMessage) {
-
+	public static CTMessage updateCTMessage(CTMessage ctMessage) {
 		return getService().updateCTMessage(ctMessage);
 	}
 
 	public static CTMessageLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<CTMessageLocalService, CTMessageLocalService>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(CTMessageLocalService.class);
-
-		ServiceTracker<CTMessageLocalService, CTMessageLocalService>
-			serviceTracker =
-				new ServiceTracker
-					<CTMessageLocalService, CTMessageLocalService>(
-						bundle.getBundleContext(), CTMessageLocalService.class,
-						null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CTMessageLocalService _service;
 
 }

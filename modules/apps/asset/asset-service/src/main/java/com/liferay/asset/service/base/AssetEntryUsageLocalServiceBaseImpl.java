@@ -16,6 +16,7 @@ package com.liferay.asset.service.base;
 
 import com.liferay.asset.model.AssetEntryUsage;
 import com.liferay.asset.service.AssetEntryUsageLocalService;
+import com.liferay.asset.service.AssetEntryUsageLocalServiceUtil;
 import com.liferay.asset.service.persistence.AssetEntryUsageFinder;
 import com.liferay.asset.service.persistence.AssetEntryUsagePersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
@@ -54,10 +55,13 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -82,7 +86,7 @@ public abstract class AssetEntryUsageLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>AssetEntryUsageLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.asset.service.AssetEntryUsageLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>AssetEntryUsageLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>AssetEntryUsageLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -515,6 +519,11 @@ public abstract class AssetEntryUsageLocalServiceBaseImpl
 		return assetEntryUsagePersistence.update(assetEntryUsage);
 	}
 
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
+	}
+
 	@Override
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
@@ -526,6 +535,8 @@ public abstract class AssetEntryUsageLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		assetEntryUsageLocalService = (AssetEntryUsageLocalService)aopProxy;
+
+		_setLocalServiceUtilService(assetEntryUsageLocalService);
 	}
 
 	/**
@@ -582,6 +593,23 @@ public abstract class AssetEntryUsageLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		AssetEntryUsageLocalService assetEntryUsageLocalService) {
+
+		try {
+			Field field =
+				AssetEntryUsageLocalServiceUtil.class.getDeclaredField(
+					"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, assetEntryUsageLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

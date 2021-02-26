@@ -16,6 +16,7 @@ package com.liferay.account.service.base;
 
 import com.liferay.account.model.AccountEntryOrganizationRel;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
+import com.liferay.account.service.AccountEntryOrganizationRelLocalServiceUtil;
 import com.liferay.account.service.persistence.AccountEntryOrganizationRelPersistence;
 import com.liferay.account.service.persistence.AccountEntryPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -45,10 +46,13 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -70,7 +74,7 @@ public abstract class AccountEntryOrganizationRelLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>AccountEntryOrganizationRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.account.service.AccountEntryOrganizationRelLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>AccountEntryOrganizationRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>AccountEntryOrganizationRelLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -400,6 +404,11 @@ public abstract class AccountEntryOrganizationRelLocalServiceBaseImpl
 			accountEntryOrganizationRel);
 	}
 
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
+	}
+
 	@Override
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
@@ -412,6 +421,8 @@ public abstract class AccountEntryOrganizationRelLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		accountEntryOrganizationRelLocalService =
 			(AccountEntryOrganizationRelLocalService)aopProxy;
+
+		_setLocalServiceUtilService(accountEntryOrganizationRelLocalService);
 	}
 
 	/**
@@ -454,6 +465,24 @@ public abstract class AccountEntryOrganizationRelLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		AccountEntryOrganizationRelLocalService
+			accountEntryOrganizationRelLocalService) {
+
+		try {
+			Field field =
+				AccountEntryOrganizationRelLocalServiceUtil.class.
+					getDeclaredField("_service");
+
+			field.setAccessible(true);
+
+			field.set(null, accountEntryOrganizationRelLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

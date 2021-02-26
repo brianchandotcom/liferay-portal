@@ -14,9 +14,10 @@
 
 package com.liferay.commerce.bom.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.bom.model.CommerceBOMDefinition;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for CommerceBOMDefinition. This utility wraps
@@ -37,11 +38,10 @@ public class CommerceBOMDefinitionServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.bom.service.impl.CommerceBOMDefinitionServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.commerce.bom.model.CommerceBOMDefinition
-			addCommerceBOMDefinition(
-				long userId, long commerceBOMFolderId,
-				long cpAttachmentFileEntryId, String name, String friendlyUrl)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceBOMDefinition addCommerceBOMDefinition(
+			long userId, long commerceBOMFolderId, long cpAttachmentFileEntryId,
+			String name, String friendlyUrl)
+		throws PortalException {
 
 		return getService().addCommerceBOMDefinition(
 			userId, commerceBOMFolderId, cpAttachmentFileEntryId, name,
@@ -49,22 +49,20 @@ public class CommerceBOMDefinitionServiceUtil {
 	}
 
 	public static void deleteCommerceBOMDefinition(long commerceBOMDefinitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommerceBOMDefinition(commerceBOMDefinitionId);
 	}
 
-	public static com.liferay.commerce.bom.model.CommerceBOMDefinition
-			getCommerceBOMDefinition(long commerceBOMDefinitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceBOMDefinition getCommerceBOMDefinition(
+			long commerceBOMDefinitionId)
+		throws PortalException {
 
 		return getService().getCommerceBOMDefinition(commerceBOMDefinitionId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.bom.model.CommerceBOMDefinition>
-			getCommerceBOMDefinitions(
-				long commerceBOMFolderId, int start, int end) {
+	public static List<CommerceBOMDefinition> getCommerceBOMDefinitions(
+		long commerceBOMFolderId, int start, int end) {
 
 		return getService().getCommerceBOMDefinitions(
 			commerceBOMFolderId, start, end);
@@ -83,40 +81,19 @@ public class CommerceBOMDefinitionServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.commerce.bom.model.CommerceBOMDefinition
-			updateCommerceBOMDefinition(
-				long commerceBOMDefinitionId, long cpAttachmentFileEntryId,
-				String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceBOMDefinition updateCommerceBOMDefinition(
+			long commerceBOMDefinitionId, long cpAttachmentFileEntryId,
+			String name)
+		throws PortalException {
 
 		return getService().updateCommerceBOMDefinition(
 			commerceBOMDefinitionId, cpAttachmentFileEntryId, name);
 	}
 
 	public static CommerceBOMDefinitionService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceBOMDefinitionService, CommerceBOMDefinitionService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommerceBOMDefinitionService.class);
-
-		ServiceTracker
-			<CommerceBOMDefinitionService, CommerceBOMDefinitionService>
-				serviceTracker =
-					new ServiceTracker
-						<CommerceBOMDefinitionService,
-						 CommerceBOMDefinitionService>(
-							 bundle.getBundleContext(),
-							 CommerceBOMDefinitionService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceBOMDefinitionService _service;
 
 }

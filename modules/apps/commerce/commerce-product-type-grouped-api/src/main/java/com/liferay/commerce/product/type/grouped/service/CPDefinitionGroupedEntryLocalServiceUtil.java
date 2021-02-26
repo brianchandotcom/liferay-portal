@@ -14,9 +14,16 @@
 
 package com.liferay.commerce.product.type.grouped.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for CPDefinitionGroupedEntry. This utility wraps
@@ -45,7 +52,7 @@ public class CPDefinitionGroupedEntryLocalServiceUtil {
 	public static void addCPDefinitionGroupedEntries(
 			long cpDefinitionId, long[] entryCPDefinitionIds,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().addCPDefinitionGroupedEntries(
 			cpDefinitionId, entryCPDefinitionIds, serviceContext);
@@ -54,7 +61,7 @@ public class CPDefinitionGroupedEntryLocalServiceUtil {
 	public static void addCPDefinitionGroupedEntriesByEntryCProductIds(
 			long cpDefinitionId, long[] entryCProductIds,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().addCPDefinitionGroupedEntriesByEntryCProductIds(
 			cpDefinitionId, entryCProductIds, serviceContext);
@@ -70,11 +77,8 @@ public class CPDefinitionGroupedEntryLocalServiceUtil {
 	 * @param cpDefinitionGroupedEntry the cp definition grouped entry
 	 * @return the cp definition grouped entry that was added
 	 */
-	public static
-		com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry
-			addCPDefinitionGroupedEntry(
-				com.liferay.commerce.product.type.grouped.model.
-					CPDefinitionGroupedEntry cpDefinitionGroupedEntry) {
+	public static CPDefinitionGroupedEntry addCPDefinitionGroupedEntry(
+		CPDefinitionGroupedEntry cpDefinitionGroupedEntry) {
 
 		return getService().addCPDefinitionGroupedEntry(
 			cpDefinitionGroupedEntry);
@@ -84,28 +88,23 @@ public class CPDefinitionGroupedEntryLocalServiceUtil {
 	 * @deprecated As of Mueller (7.2.x)
 	 */
 	@Deprecated
-	public static
-		com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry
-				addCPDefinitionGroupedEntry(
-					long cpDefinitionId, long entryCPDefinitionId,
-					double priority, int quantity,
-					com.liferay.portal.kernel.service.ServiceContext
-						serviceContext)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPDefinitionGroupedEntry addCPDefinitionGroupedEntry(
+			long cpDefinitionId, long entryCPDefinitionId, double priority,
+			int quantity,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCPDefinitionGroupedEntry(
 			cpDefinitionId, entryCPDefinitionId, priority, quantity,
 			serviceContext);
 	}
 
-	public static
-		com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry
-				addCPDefinitionGroupedEntryByEntryCProductId(
-					long cpDefinitionId, long entryCProductId, double priority,
-					int quantity,
-					com.liferay.portal.kernel.service.ServiceContext
-						serviceContext)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPDefinitionGroupedEntry
+			addCPDefinitionGroupedEntryByEntryCProductId(
+				long cpDefinitionId, long entryCProductId, double priority,
+				int quantity,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCPDefinitionGroupedEntryByEntryCProductId(
 			cpDefinitionId, entryCProductId, priority, quantity,
@@ -125,9 +124,8 @@ public class CPDefinitionGroupedEntryLocalServiceUtil {
 	 * @param CPDefinitionGroupedEntryId the primary key for the new cp definition grouped entry
 	 * @return the new cp definition grouped entry
 	 */
-	public static
-		com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry
-			createCPDefinitionGroupedEntry(long CPDefinitionGroupedEntryId) {
+	public static CPDefinitionGroupedEntry createCPDefinitionGroupedEntry(
+		long CPDefinitionGroupedEntryId) {
 
 		return getService().createCPDefinitionGroupedEntry(
 			CPDefinitionGroupedEntryId);
@@ -136,9 +134,9 @@ public class CPDefinitionGroupedEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -157,11 +155,8 @@ public class CPDefinitionGroupedEntryLocalServiceUtil {
 	 * @param cpDefinitionGroupedEntry the cp definition grouped entry
 	 * @return the cp definition grouped entry that was removed
 	 */
-	public static
-		com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry
-			deleteCPDefinitionGroupedEntry(
-				com.liferay.commerce.product.type.grouped.model.
-					CPDefinitionGroupedEntry cpDefinitionGroupedEntry) {
+	public static CPDefinitionGroupedEntry deleteCPDefinitionGroupedEntry(
+		CPDefinitionGroupedEntry cpDefinitionGroupedEntry) {
 
 		return getService().deleteCPDefinitionGroupedEntry(
 			cpDefinitionGroupedEntry);
@@ -178,10 +173,9 @@ public class CPDefinitionGroupedEntryLocalServiceUtil {
 	 * @return the cp definition grouped entry that was removed
 	 * @throws PortalException if a cp definition grouped entry with the primary key could not be found
 	 */
-	public static
-		com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry
-				deleteCPDefinitionGroupedEntry(long CPDefinitionGroupedEntryId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPDefinitionGroupedEntry deleteCPDefinitionGroupedEntry(
+			long CPDefinitionGroupedEntryId)
+		throws PortalException {
 
 		return getService().deleteCPDefinitionGroupedEntry(
 			CPDefinitionGroupedEntryId);
@@ -190,23 +184,18 @@ public class CPDefinitionGroupedEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -216,9 +205,7 @@ public class CPDefinitionGroupedEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -234,9 +221,8 @@ public class CPDefinitionGroupedEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -254,10 +240,9 @@ public class CPDefinitionGroupedEntryLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -269,9 +254,7 @@ public class CPDefinitionGroupedEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -283,24 +266,21 @@ public class CPDefinitionGroupedEntryLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static
-		com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry
-			fetchCPDefinitionGroupedEntry(long CPDefinitionGroupedEntryId) {
+	public static CPDefinitionGroupedEntry fetchCPDefinitionGroupedEntry(
+		long CPDefinitionGroupedEntryId) {
 
 		return getService().fetchCPDefinitionGroupedEntry(
 			CPDefinitionGroupedEntryId);
 	}
 
-	public static
-		com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry
-			fetchCPDefinitionGroupedEntry(
-				long cpDefinitionId, long entryCProductId) {
+	public static CPDefinitionGroupedEntry fetchCPDefinitionGroupedEntry(
+		long cpDefinitionId, long entryCProductId) {
 
 		return getService().fetchCPDefinitionGroupedEntry(
 			cpDefinitionId, entryCProductId);
@@ -310,10 +290,8 @@ public class CPDefinitionGroupedEntryLocalServiceUtil {
 	 * @deprecated As of Mueller (7.2.x)
 	 */
 	@Deprecated
-	public static
-		com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry
-			fetchCPDefinitionGroupedEntryByC_E(
-				long cpDefinitionId, long entryCPDefinitionId) {
+	public static CPDefinitionGroupedEntry fetchCPDefinitionGroupedEntryByC_E(
+		long cpDefinitionId, long entryCPDefinitionId) {
 
 		return getService().fetchCPDefinitionGroupedEntryByC_E(
 			cpDefinitionId, entryCPDefinitionId);
@@ -326,10 +304,9 @@ public class CPDefinitionGroupedEntryLocalServiceUtil {
 	 * @param groupId the primary key of the group
 	 * @return the matching cp definition grouped entry, or <code>null</code> if a matching cp definition grouped entry could not be found
 	 */
-	public static
-		com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry
-			fetchCPDefinitionGroupedEntryByUuidAndGroupId(
-				String uuid, long groupId) {
+	public static CPDefinitionGroupedEntry
+		fetchCPDefinitionGroupedEntryByUuidAndGroupId(
+			String uuid, long groupId) {
 
 		return getService().fetchCPDefinitionGroupedEntryByUuidAndGroupId(
 			uuid, groupId);
@@ -352,39 +329,28 @@ public class CPDefinitionGroupedEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of cp definition grouped entries (not inclusive)
 	 * @return the range of cp definition grouped entries
 	 */
-	public static java.util.List
-		<com.liferay.commerce.product.type.grouped.model.
-			CPDefinitionGroupedEntry> getCPDefinitionGroupedEntries(
-				int start, int end) {
+	public static List<CPDefinitionGroupedEntry> getCPDefinitionGroupedEntries(
+		int start, int end) {
 
 		return getService().getCPDefinitionGroupedEntries(start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.product.type.grouped.model.
-			CPDefinitionGroupedEntry> getCPDefinitionGroupedEntries(
-				long cpDefinitionId) {
+	public static List<CPDefinitionGroupedEntry> getCPDefinitionGroupedEntries(
+		long cpDefinitionId) {
 
 		return getService().getCPDefinitionGroupedEntries(cpDefinitionId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.product.type.grouped.model.
-			CPDefinitionGroupedEntry> getCPDefinitionGroupedEntries(
-				long cpDefinitionId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.commerce.product.type.grouped.model.
-						CPDefinitionGroupedEntry> orderByComparator) {
+	public static List<CPDefinitionGroupedEntry> getCPDefinitionGroupedEntries(
+		long cpDefinitionId, int start, int end,
+		OrderByComparator<CPDefinitionGroupedEntry> orderByComparator) {
 
 		return getService().getCPDefinitionGroupedEntries(
 			cpDefinitionId, start, end, orderByComparator);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.product.type.grouped.model.
-			CPDefinitionGroupedEntry>
-				getCPDefinitionGroupedEntriesByCPDefinitionId(
-					long cpDefinitionId) {
+	public static List<CPDefinitionGroupedEntry>
+		getCPDefinitionGroupedEntriesByCPDefinitionId(long cpDefinitionId) {
 
 		return getService().getCPDefinitionGroupedEntriesByCPDefinitionId(
 			cpDefinitionId);
@@ -397,11 +363,9 @@ public class CPDefinitionGroupedEntryLocalServiceUtil {
 	 * @param companyId the primary key of the company
 	 * @return the matching cp definition grouped entries, or an empty list if no matches were found
 	 */
-	public static java.util.List
-		<com.liferay.commerce.product.type.grouped.model.
-			CPDefinitionGroupedEntry>
-				getCPDefinitionGroupedEntriesByUuidAndCompanyId(
-					String uuid, long companyId) {
+	public static List<CPDefinitionGroupedEntry>
+		getCPDefinitionGroupedEntriesByUuidAndCompanyId(
+			String uuid, long companyId) {
 
 		return getService().getCPDefinitionGroupedEntriesByUuidAndCompanyId(
 			uuid, companyId);
@@ -417,14 +381,10 @@ public class CPDefinitionGroupedEntryLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the range of matching cp definition grouped entries, or an empty list if no matches were found
 	 */
-	public static java.util.List
-		<com.liferay.commerce.product.type.grouped.model.
-			CPDefinitionGroupedEntry>
-				getCPDefinitionGroupedEntriesByUuidAndCompanyId(
-					String uuid, long companyId, int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						<com.liferay.commerce.product.type.grouped.model.
-							CPDefinitionGroupedEntry> orderByComparator) {
+	public static List<CPDefinitionGroupedEntry>
+		getCPDefinitionGroupedEntriesByUuidAndCompanyId(
+			String uuid, long companyId, int start, int end,
+			OrderByComparator<CPDefinitionGroupedEntry> orderByComparator) {
 
 		return getService().getCPDefinitionGroupedEntriesByUuidAndCompanyId(
 			uuid, companyId, start, end, orderByComparator);
@@ -450,10 +410,9 @@ public class CPDefinitionGroupedEntryLocalServiceUtil {
 	 * @return the cp definition grouped entry
 	 * @throws PortalException if a cp definition grouped entry with the primary key could not be found
 	 */
-	public static
-		com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry
-				getCPDefinitionGroupedEntry(long CPDefinitionGroupedEntryId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPDefinitionGroupedEntry getCPDefinitionGroupedEntry(
+			long CPDefinitionGroupedEntryId)
+		throws PortalException {
 
 		return getService().getCPDefinitionGroupedEntry(
 			CPDefinitionGroupedEntryId);
@@ -467,11 +426,10 @@ public class CPDefinitionGroupedEntryLocalServiceUtil {
 	 * @return the matching cp definition grouped entry
 	 * @throws PortalException if a matching cp definition grouped entry could not be found
 	 */
-	public static
-		com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry
-				getCPDefinitionGroupedEntryByUuidAndGroupId(
-					String uuid, long groupId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPDefinitionGroupedEntry
+			getCPDefinitionGroupedEntryByUuidAndGroupId(
+				String uuid, long groupId)
+		throws PortalException {
 
 		return getService().getCPDefinitionGroupedEntryByUuidAndGroupId(
 			uuid, groupId);
@@ -504,9 +462,8 @@ public class CPDefinitionGroupedEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -521,51 +478,25 @@ public class CPDefinitionGroupedEntryLocalServiceUtil {
 	 * @param cpDefinitionGroupedEntry the cp definition grouped entry
 	 * @return the cp definition grouped entry that was updated
 	 */
-	public static
-		com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry
-			updateCPDefinitionGroupedEntry(
-				com.liferay.commerce.product.type.grouped.model.
-					CPDefinitionGroupedEntry cpDefinitionGroupedEntry) {
+	public static CPDefinitionGroupedEntry updateCPDefinitionGroupedEntry(
+		CPDefinitionGroupedEntry cpDefinitionGroupedEntry) {
 
 		return getService().updateCPDefinitionGroupedEntry(
 			cpDefinitionGroupedEntry);
 	}
 
-	public static
-		com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry
-				updateCPDefinitionGroupedEntry(
-					long cpDefinitionGroupedEntryId, double priority,
-					int quantity)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPDefinitionGroupedEntry updateCPDefinitionGroupedEntry(
+			long cpDefinitionGroupedEntryId, double priority, int quantity)
+		throws PortalException {
 
 		return getService().updateCPDefinitionGroupedEntry(
 			cpDefinitionGroupedEntryId, priority, quantity);
 	}
 
 	public static CPDefinitionGroupedEntryLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CPDefinitionGroupedEntryLocalService,
-		 CPDefinitionGroupedEntryLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CPDefinitionGroupedEntryLocalService.class);
-
-		ServiceTracker
-			<CPDefinitionGroupedEntryLocalService,
-			 CPDefinitionGroupedEntryLocalService> serviceTracker =
-				new ServiceTracker
-					<CPDefinitionGroupedEntryLocalService,
-					 CPDefinitionGroupedEntryLocalService>(
-						 bundle.getBundleContext(),
-						 CPDefinitionGroupedEntryLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CPDefinitionGroupedEntryLocalService _service;
 
 }

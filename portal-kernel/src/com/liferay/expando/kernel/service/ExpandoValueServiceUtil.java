@@ -14,7 +14,12 @@
 
 package com.liferay.expando.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.expando.kernel.model.ExpandoValue;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.io.Serializable;
+
+import java.util.Map;
 
 /**
  * Provides the remote service utility for ExpandoValue. This utility wraps
@@ -35,19 +40,19 @@ public class ExpandoValueServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portlet.expando.service.impl.ExpandoValueServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.expando.kernel.model.ExpandoValue addValue(
+	public static ExpandoValue addValue(
 			long companyId, String className, String tableName,
 			String columnName, long classPK, Object data)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addValue(
 			companyId, className, tableName, columnName, classPK, data);
 	}
 
-	public static com.liferay.expando.kernel.model.ExpandoValue addValue(
+	public static ExpandoValue addValue(
 			long companyId, String className, String tableName,
 			String columnName, long classPK, String data)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addValue(
 			companyId, className, tableName, columnName, classPK, data);
@@ -55,26 +60,26 @@ public class ExpandoValueServiceUtil {
 
 	public static void addValues(
 			long companyId, String className, String tableName, long classPK,
-			java.util.Map<String, java.io.Serializable> attributeValues)
-		throws com.liferay.portal.kernel.exception.PortalException {
+			Map<String, Serializable> attributeValues)
+		throws PortalException {
 
 		getService().addValues(
 			companyId, className, tableName, classPK, attributeValues);
 	}
 
-	public static java.util.Map<String, java.io.Serializable> getData(
+	public static Map<String, Serializable> getData(
 			long companyId, String className, String tableName,
 			java.util.Collection<String> columnNames, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getData(
 			companyId, className, tableName, columnNames, classPK);
 	}
 
-	public static java.io.Serializable getData(
+	public static Serializable getData(
 			long companyId, String className, String tableName,
 			String columnName, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getData(
 			companyId, className, tableName, columnName, classPK);
@@ -83,7 +88,7 @@ public class ExpandoValueServiceUtil {
 	public static com.liferay.portal.kernel.json.JSONObject getJSONData(
 			long companyId, String className, String tableName,
 			String columnName, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getJSONData(
 			companyId, className, tableName, columnName, classPK);
@@ -99,14 +104,9 @@ public class ExpandoValueServiceUtil {
 	}
 
 	public static ExpandoValueService getService() {
-		if (_service == null) {
-			_service = (ExpandoValueService)PortalBeanLocatorUtil.locate(
-				ExpandoValueService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static ExpandoValueService _service;
+	private static volatile ExpandoValueService _service;
 
 }

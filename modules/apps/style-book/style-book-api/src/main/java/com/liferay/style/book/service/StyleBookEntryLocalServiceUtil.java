@@ -14,9 +14,16 @@
 
 package com.liferay.style.book.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.style.book.model.StyleBookEntry;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for StyleBookEntry. This utility wraps
@@ -37,20 +44,20 @@ public class StyleBookEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.style.book.service.impl.StyleBookEntryLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.style.book.model.StyleBookEntry addStyleBookEntry(
+	public static StyleBookEntry addStyleBookEntry(
 			long userId, long groupId, String name, String styleBookEntryKey,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addStyleBookEntry(
 			userId, groupId, name, styleBookEntryKey, serviceContext);
 	}
 
-	public static com.liferay.style.book.model.StyleBookEntry addStyleBookEntry(
+	public static StyleBookEntry addStyleBookEntry(
 			long userId, long groupId, String frontendTokensValues, String name,
 			String styleBookEntryKey,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addStyleBookEntry(
 			userId, groupId, frontendTokensValues, name, styleBookEntryKey,
@@ -67,25 +74,23 @@ public class StyleBookEntryLocalServiceUtil {
 	 * @param styleBookEntry the style book entry
 	 * @return the style book entry that was added
 	 */
-	public static com.liferay.style.book.model.StyleBookEntry addStyleBookEntry(
-		com.liferay.style.book.model.StyleBookEntry styleBookEntry) {
+	public static StyleBookEntry addStyleBookEntry(
+		StyleBookEntry styleBookEntry) {
 
 		return getService().addStyleBookEntry(styleBookEntry);
 	}
 
-	public static com.liferay.style.book.model.StyleBookEntry checkout(
-			com.liferay.style.book.model.StyleBookEntry publishedStyleBookEntry,
-			int version)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static StyleBookEntry checkout(
+			StyleBookEntry publishedStyleBookEntry, int version)
+		throws PortalException {
 
 		return getService().checkout(publishedStyleBookEntry, version);
 	}
 
-	public static com.liferay.style.book.model.StyleBookEntry
-			copyStyleBookEntry(
-				long userId, long groupId, long styleBookEntryId,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static StyleBookEntry copyStyleBookEntry(
+			long userId, long groupId, long styleBookEntryId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().copyStyleBookEntry(
 			userId, groupId, styleBookEntryId, serviceContext);
@@ -96,30 +101,28 @@ public class StyleBookEntryLocalServiceUtil {
 	 *
 	 * @return the new style book entry
 	 */
-	public static com.liferay.style.book.model.StyleBookEntry create() {
+	public static StyleBookEntry create() {
 		return getService().create();
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
 
-	public static com.liferay.style.book.model.StyleBookEntry delete(
-			com.liferay.style.book.model.StyleBookEntry publishedStyleBookEntry)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static StyleBookEntry delete(StyleBookEntry publishedStyleBookEntry)
+		throws PortalException {
 
 		return getService().delete(publishedStyleBookEntry);
 	}
 
-	public static com.liferay.style.book.model.StyleBookEntry deleteDraft(
-			com.liferay.style.book.model.StyleBookEntry draftStyleBookEntry)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static StyleBookEntry deleteDraft(StyleBookEntry draftStyleBookEntry)
+		throws PortalException {
 
 		return getService().deleteDraft(draftStyleBookEntry);
 	}
@@ -127,10 +130,9 @@ public class StyleBookEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
@@ -146,9 +148,8 @@ public class StyleBookEntryLocalServiceUtil {
 	 * @return the style book entry that was removed
 	 * @throws PortalException if a style book entry with the primary key could not be found
 	 */
-	public static com.liferay.style.book.model.StyleBookEntry
-			deleteStyleBookEntry(long styleBookEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static StyleBookEntry deleteStyleBookEntry(long styleBookEntryId)
+		throws PortalException {
 
 		return getService().deleteStyleBookEntry(styleBookEntryId);
 	}
@@ -164,10 +165,9 @@ public class StyleBookEntryLocalServiceUtil {
 	 * @return the style book entry that was removed
 	 * @throws PortalException
 	 */
-	public static com.liferay.style.book.model.StyleBookEntry
-			deleteStyleBookEntry(
-				com.liferay.style.book.model.StyleBookEntry styleBookEntry)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static StyleBookEntry deleteStyleBookEntry(
+			StyleBookEntry styleBookEntry)
+		throws PortalException {
 
 		return getService().deleteStyleBookEntry(styleBookEntry);
 	}
@@ -176,20 +176,16 @@ public class StyleBookEntryLocalServiceUtil {
 			deleteVersion(
 				com.liferay.style.book.model.StyleBookEntryVersion
 					styleBookEntryVersion)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().deleteVersion(styleBookEntryVersion);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -199,9 +195,7 @@ public class StyleBookEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -217,9 +211,8 @@ public class StyleBookEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -237,10 +230,9 @@ public class StyleBookEntryLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -252,9 +244,7 @@ public class StyleBookEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -266,63 +256,50 @@ public class StyleBookEntryLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.style.book.model.StyleBookEntry
-		fetchDefaultStyleBookEntry(long groupId) {
-
+	public static StyleBookEntry fetchDefaultStyleBookEntry(long groupId) {
 		return getService().fetchDefaultStyleBookEntry(groupId);
 	}
 
-	public static com.liferay.style.book.model.StyleBookEntry fetchDraft(
-		long primaryKey) {
-
+	public static StyleBookEntry fetchDraft(long primaryKey) {
 		return getService().fetchDraft(primaryKey);
 	}
 
-	public static com.liferay.style.book.model.StyleBookEntry fetchDraft(
-		com.liferay.style.book.model.StyleBookEntry styleBookEntry) {
-
+	public static StyleBookEntry fetchDraft(StyleBookEntry styleBookEntry) {
 		return getService().fetchDraft(styleBookEntry);
 	}
 
 	public static com.liferay.style.book.model.StyleBookEntryVersion
-		fetchLatestVersion(
-			com.liferay.style.book.model.StyleBookEntry styleBookEntry) {
+		fetchLatestVersion(StyleBookEntry styleBookEntry) {
 
 		return getService().fetchLatestVersion(styleBookEntry);
 	}
 
-	public static com.liferay.style.book.model.StyleBookEntry fetchPublished(
-		long primaryKey) {
-
+	public static StyleBookEntry fetchPublished(long primaryKey) {
 		return getService().fetchPublished(primaryKey);
 	}
 
-	public static com.liferay.style.book.model.StyleBookEntry fetchPublished(
-		com.liferay.style.book.model.StyleBookEntry styleBookEntry) {
-
+	public static StyleBookEntry fetchPublished(StyleBookEntry styleBookEntry) {
 		return getService().fetchPublished(styleBookEntry);
 	}
 
-	public static com.liferay.style.book.model.StyleBookEntry
-		fetchStyleBookEntry(long styleBookEntryId) {
-
+	public static StyleBookEntry fetchStyleBookEntry(long styleBookEntryId) {
 		return getService().fetchStyleBookEntry(styleBookEntryId);
 	}
 
-	public static com.liferay.style.book.model.StyleBookEntry
-		fetchStyleBookEntry(long groupId, String styleBookEntryKey) {
+	public static StyleBookEntry fetchStyleBookEntry(
+		long groupId, String styleBookEntryKey) {
 
 		return getService().fetchStyleBookEntry(groupId, styleBookEntryKey);
 	}
 
-	public static com.liferay.style.book.model.StyleBookEntry
-		fetchStyleBookEntryByUuidAndGroupId(String uuid, long groupId) {
+	public static StyleBookEntry fetchStyleBookEntryByUuidAndGroupId(
+		String uuid, long groupId) {
 
 		return getService().fetchStyleBookEntryByUuidAndGroupId(uuid, groupId);
 	}
@@ -337,16 +314,14 @@ public class StyleBookEntryLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
-	public static com.liferay.style.book.model.StyleBookEntry getDraft(
-			long primaryKey)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static StyleBookEntry getDraft(long primaryKey)
+		throws PortalException {
 
 		return getService().getDraft(primaryKey);
 	}
 
-	public static com.liferay.style.book.model.StyleBookEntry getDraft(
-			com.liferay.style.book.model.StyleBookEntry styleBookEntry)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static StyleBookEntry getDraft(StyleBookEntry styleBookEntry)
+		throws PortalException {
 
 		return getService().getDraft(styleBookEntry);
 	}
@@ -378,9 +353,8 @@ public class StyleBookEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -396,36 +370,28 @@ public class StyleBookEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of style book entries (not inclusive)
 	 * @return the range of style book entries
 	 */
-	public static java.util.List<com.liferay.style.book.model.StyleBookEntry>
-		getStyleBookEntries(int start, int end) {
-
+	public static List<StyleBookEntry> getStyleBookEntries(int start, int end) {
 		return getService().getStyleBookEntries(start, end);
 	}
 
-	public static java.util.List<com.liferay.style.book.model.StyleBookEntry>
-		getStyleBookEntries(
-			long groupId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.style.book.model.StyleBookEntry>
-					orderByComparator) {
+	public static List<StyleBookEntry> getStyleBookEntries(
+		long groupId, int start, int end,
+		OrderByComparator<StyleBookEntry> orderByComparator) {
 
 		return getService().getStyleBookEntries(
 			groupId, start, end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.style.book.model.StyleBookEntry>
-		getStyleBookEntries(
-			long groupId, String name, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.style.book.model.StyleBookEntry>
-					orderByComparator) {
+	public static List<StyleBookEntry> getStyleBookEntries(
+		long groupId, String name, int start, int end,
+		OrderByComparator<StyleBookEntry> orderByComparator) {
 
 		return getService().getStyleBookEntries(
 			groupId, name, start, end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.style.book.model.StyleBookEntry>
-		getStyleBookEntriesByUuidAndCompanyId(String uuid, long companyId) {
+	public static List<StyleBookEntry> getStyleBookEntriesByUuidAndCompanyId(
+		String uuid, long companyId) {
 
 		return getService().getStyleBookEntriesByUuidAndCompanyId(
 			uuid, companyId);
@@ -455,39 +421,35 @@ public class StyleBookEntryLocalServiceUtil {
 	 * @return the style book entry
 	 * @throws PortalException if a style book entry with the primary key could not be found
 	 */
-	public static com.liferay.style.book.model.StyleBookEntry getStyleBookEntry(
-			long styleBookEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static StyleBookEntry getStyleBookEntry(long styleBookEntryId)
+		throws PortalException {
 
 		return getService().getStyleBookEntry(styleBookEntryId);
 	}
 
 	public static com.liferay.style.book.model.StyleBookEntryVersion getVersion(
-			com.liferay.style.book.model.StyleBookEntry styleBookEntry,
-			int version)
-		throws com.liferay.portal.kernel.exception.PortalException {
+			StyleBookEntry styleBookEntry, int version)
+		throws PortalException {
 
 		return getService().getVersion(styleBookEntry, version);
 	}
 
-	public static java.util.List
-		<com.liferay.style.book.model.StyleBookEntryVersion> getVersions(
-			com.liferay.style.book.model.StyleBookEntry styleBookEntry) {
+	public static List<com.liferay.style.book.model.StyleBookEntryVersion>
+		getVersions(StyleBookEntry styleBookEntry) {
 
 		return getService().getVersions(styleBookEntry);
 	}
 
-	public static com.liferay.style.book.model.StyleBookEntry publishDraft(
-			com.liferay.style.book.model.StyleBookEntry draftStyleBookEntry)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static StyleBookEntry publishDraft(
+			StyleBookEntry draftStyleBookEntry)
+		throws PortalException {
 
 		return getService().publishDraft(draftStyleBookEntry);
 	}
 
 	public static void registerListener(
 		com.liferay.portal.kernel.service.version.VersionServiceListener
-			<com.liferay.style.book.model.StyleBookEntry,
-			 com.liferay.style.book.model.StyleBookEntryVersion>
+			<StyleBookEntry, com.liferay.style.book.model.StyleBookEntryVersion>
 				versionServiceListener) {
 
 		getService().registerListener(versionServiceListener);
@@ -495,70 +457,62 @@ public class StyleBookEntryLocalServiceUtil {
 
 	public static void unregisterListener(
 		com.liferay.portal.kernel.service.version.VersionServiceListener
-			<com.liferay.style.book.model.StyleBookEntry,
-			 com.liferay.style.book.model.StyleBookEntryVersion>
+			<StyleBookEntry, com.liferay.style.book.model.StyleBookEntryVersion>
 				versionServiceListener) {
 
 		getService().unregisterListener(versionServiceListener);
 	}
 
-	public static com.liferay.style.book.model.StyleBookEntry
-			updateDefaultStyleBookEntry(
-				long styleBookEntryId, boolean defaultStyleBookEntry)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static StyleBookEntry updateDefaultStyleBookEntry(
+			long styleBookEntryId, boolean defaultStyleBookEntry)
+		throws PortalException {
 
 		return getService().updateDefaultStyleBookEntry(
 			styleBookEntryId, defaultStyleBookEntry);
 	}
 
-	public static com.liferay.style.book.model.StyleBookEntry updateDraft(
-			com.liferay.style.book.model.StyleBookEntry draftStyleBookEntry)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static StyleBookEntry updateDraft(StyleBookEntry draftStyleBookEntry)
+		throws PortalException {
 
 		return getService().updateDraft(draftStyleBookEntry);
 	}
 
-	public static com.liferay.style.book.model.StyleBookEntry
-			updateFrontendTokensValues(
-				long styleBookEntryId, String frontendTokensValues)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static StyleBookEntry updateFrontendTokensValues(
+			long styleBookEntryId, String frontendTokensValues)
+		throws PortalException {
 
 		return getService().updateFrontendTokensValues(
 			styleBookEntryId, frontendTokensValues);
 	}
 
-	public static com.liferay.style.book.model.StyleBookEntry updateName(
-			long styleBookEntryId, String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static StyleBookEntry updateName(long styleBookEntryId, String name)
+		throws PortalException {
 
 		return getService().updateName(styleBookEntryId, name);
 	}
 
-	public static com.liferay.style.book.model.StyleBookEntry
-			updatePreviewFileEntryId(
-				long styleBookEntryId, long previewFileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static StyleBookEntry updatePreviewFileEntryId(
+			long styleBookEntryId, long previewFileEntryId)
+		throws PortalException {
 
 		return getService().updatePreviewFileEntryId(
 			styleBookEntryId, previewFileEntryId);
 	}
 
-	public static com.liferay.style.book.model.StyleBookEntry
-			updateStyleBookEntry(
-				long userId, long styleBookEntryId,
-				boolean defaultStylebookEntry, String frontendTokensValues,
-				String name, String styleBookEntryKey, long previewFileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static StyleBookEntry updateStyleBookEntry(
+			long userId, long styleBookEntryId, boolean defaultStylebookEntry,
+			String frontendTokensValues, String name, String styleBookEntryKey,
+			long previewFileEntryId)
+		throws PortalException {
 
 		return getService().updateStyleBookEntry(
 			userId, styleBookEntryId, defaultStylebookEntry,
 			frontendTokensValues, name, styleBookEntryKey, previewFileEntryId);
 	}
 
-	public static com.liferay.style.book.model.StyleBookEntry
-			updateStyleBookEntry(
-				long styleBookEntryId, String frontendTokensValues, String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static StyleBookEntry updateStyleBookEntry(
+			long styleBookEntryId, String frontendTokensValues, String name)
+		throws PortalException {
 
 		return getService().updateStyleBookEntry(
 			styleBookEntryId, frontendTokensValues, name);
@@ -574,36 +528,17 @@ public class StyleBookEntryLocalServiceUtil {
 	 * @param styleBookEntry the style book entry
 	 * @return the style book entry that was updated
 	 */
-	public static com.liferay.style.book.model.StyleBookEntry
-			updateStyleBookEntry(
-				com.liferay.style.book.model.StyleBookEntry draftStyleBookEntry)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static StyleBookEntry updateStyleBookEntry(
+			StyleBookEntry draftStyleBookEntry)
+		throws PortalException {
 
 		return getService().updateStyleBookEntry(draftStyleBookEntry);
 	}
 
 	public static StyleBookEntryLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<StyleBookEntryLocalService, StyleBookEntryLocalService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			StyleBookEntryLocalService.class);
-
-		ServiceTracker<StyleBookEntryLocalService, StyleBookEntryLocalService>
-			serviceTracker =
-				new ServiceTracker
-					<StyleBookEntryLocalService, StyleBookEntryLocalService>(
-						bundle.getBundleContext(),
-						StyleBookEntryLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile StyleBookEntryLocalService _service;
 
 }

@@ -14,7 +14,10 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Address;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for Address. This utility wraps
@@ -35,34 +38,28 @@ public class AddressServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.service.impl.AddressServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.kernel.model.Address addAddress(
+	public static Address addAddress(
 			String className, long classPK, String street1, String street2,
 			String street3, String city, String zip, long regionId,
 			long countryId, long typeId, boolean mailing, boolean primary,
 			ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addAddress(
 			className, classPK, street1, street2, street3, city, zip, regionId,
 			countryId, typeId, mailing, primary, serviceContext);
 	}
 
-	public static void deleteAddress(long addressId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static void deleteAddress(long addressId) throws PortalException {
 		getService().deleteAddress(addressId);
 	}
 
-	public static com.liferay.portal.kernel.model.Address getAddress(
-			long addressId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static Address getAddress(long addressId) throws PortalException {
 		return getService().getAddress(addressId);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.Address>
-			getAddresses(String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<Address> getAddresses(String className, long classPK)
+		throws PortalException {
 
 		return getService().getAddresses(className, classPK);
 	}
@@ -76,11 +73,11 @@ public class AddressServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.portal.kernel.model.Address updateAddress(
+	public static Address updateAddress(
 			long addressId, String street1, String street2, String street3,
 			String city, String zip, long regionId, long countryId, long typeId,
 			boolean mailing, boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateAddress(
 			addressId, street1, street2, street3, city, zip, regionId,
@@ -88,14 +85,9 @@ public class AddressServiceUtil {
 	}
 
 	public static AddressService getService() {
-		if (_service == null) {
-			_service = (AddressService)PortalBeanLocatorUtil.locate(
-				AddressService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static AddressService _service;
+	private static volatile AddressService _service;
 
 }

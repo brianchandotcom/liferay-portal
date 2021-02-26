@@ -14,9 +14,16 @@
 
 package com.liferay.portal.tools.service.builder.test.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.tools.service.builder.test.model.FinderWhereClauseEntry;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for FinderWhereClauseEntry. This utility wraps
@@ -48,11 +55,8 @@ public class FinderWhereClauseEntryLocalServiceUtil {
 	 * @param finderWhereClauseEntry the finder where clause entry
 	 * @return the finder where clause entry that was added
 	 */
-	public static
-		com.liferay.portal.tools.service.builder.test.model.
-			FinderWhereClauseEntry addFinderWhereClauseEntry(
-				com.liferay.portal.tools.service.builder.test.model.
-					FinderWhereClauseEntry finderWhereClauseEntry) {
+	public static FinderWhereClauseEntry addFinderWhereClauseEntry(
+		FinderWhereClauseEntry finderWhereClauseEntry) {
 
 		return getService().addFinderWhereClauseEntry(finderWhereClauseEntry);
 	}
@@ -63,10 +67,8 @@ public class FinderWhereClauseEntryLocalServiceUtil {
 	 * @param finderWhereClauseEntryId the primary key for the new finder where clause entry
 	 * @return the new finder where clause entry
 	 */
-	public static
-		com.liferay.portal.tools.service.builder.test.model.
-			FinderWhereClauseEntry createFinderWhereClauseEntry(
-				long finderWhereClauseEntryId) {
+	public static FinderWhereClauseEntry createFinderWhereClauseEntry(
+		long finderWhereClauseEntryId) {
 
 		return getService().createFinderWhereClauseEntry(
 			finderWhereClauseEntryId);
@@ -75,9 +77,9 @@ public class FinderWhereClauseEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -92,11 +94,8 @@ public class FinderWhereClauseEntryLocalServiceUtil {
 	 * @param finderWhereClauseEntry the finder where clause entry
 	 * @return the finder where clause entry that was removed
 	 */
-	public static
-		com.liferay.portal.tools.service.builder.test.model.
-			FinderWhereClauseEntry deleteFinderWhereClauseEntry(
-				com.liferay.portal.tools.service.builder.test.model.
-					FinderWhereClauseEntry finderWhereClauseEntry) {
+	public static FinderWhereClauseEntry deleteFinderWhereClauseEntry(
+		FinderWhereClauseEntry finderWhereClauseEntry) {
 
 		return getService().deleteFinderWhereClauseEntry(
 			finderWhereClauseEntry);
@@ -113,11 +112,9 @@ public class FinderWhereClauseEntryLocalServiceUtil {
 	 * @return the finder where clause entry that was removed
 	 * @throws PortalException if a finder where clause entry with the primary key could not be found
 	 */
-	public static
-		com.liferay.portal.tools.service.builder.test.model.
-			FinderWhereClauseEntry deleteFinderWhereClauseEntry(
-					long finderWhereClauseEntryId)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static FinderWhereClauseEntry deleteFinderWhereClauseEntry(
+			long finderWhereClauseEntryId)
+		throws PortalException {
 
 		return getService().deleteFinderWhereClauseEntry(
 			finderWhereClauseEntryId);
@@ -126,23 +123,18 @@ public class FinderWhereClauseEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -152,9 +144,7 @@ public class FinderWhereClauseEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -170,9 +160,8 @@ public class FinderWhereClauseEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -190,10 +179,9 @@ public class FinderWhereClauseEntryLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -205,9 +193,7 @@ public class FinderWhereClauseEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -219,16 +205,14 @@ public class FinderWhereClauseEntryLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static
-		com.liferay.portal.tools.service.builder.test.model.
-			FinderWhereClauseEntry fetchFinderWhereClauseEntry(
-				long finderWhereClauseEntryId) {
+	public static FinderWhereClauseEntry fetchFinderWhereClauseEntry(
+		long finderWhereClauseEntryId) {
 
 		return getService().fetchFinderWhereClauseEntry(
 			finderWhereClauseEntryId);
@@ -251,10 +235,8 @@ public class FinderWhereClauseEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of finder where clause entries (not inclusive)
 	 * @return the range of finder where clause entries
 	 */
-	public static java.util.List
-		<com.liferay.portal.tools.service.builder.test.model.
-			FinderWhereClauseEntry> getFinderWhereClauseEntries(
-				int start, int end) {
+	public static List<FinderWhereClauseEntry> getFinderWhereClauseEntries(
+		int start, int end) {
 
 		return getService().getFinderWhereClauseEntries(start, end);
 	}
@@ -275,11 +257,9 @@ public class FinderWhereClauseEntryLocalServiceUtil {
 	 * @return the finder where clause entry
 	 * @throws PortalException if a finder where clause entry with the primary key could not be found
 	 */
-	public static
-		com.liferay.portal.tools.service.builder.test.model.
-			FinderWhereClauseEntry getFinderWhereClauseEntry(
-					long finderWhereClauseEntryId)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static FinderWhereClauseEntry getFinderWhereClauseEntry(
+			long finderWhereClauseEntryId)
+		throws PortalException {
 
 		return getService().getFinderWhereClauseEntry(finderWhereClauseEntryId);
 	}
@@ -303,9 +283,8 @@ public class FinderWhereClauseEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -320,40 +299,17 @@ public class FinderWhereClauseEntryLocalServiceUtil {
 	 * @param finderWhereClauseEntry the finder where clause entry
 	 * @return the finder where clause entry that was updated
 	 */
-	public static
-		com.liferay.portal.tools.service.builder.test.model.
-			FinderWhereClauseEntry updateFinderWhereClauseEntry(
-				com.liferay.portal.tools.service.builder.test.model.
-					FinderWhereClauseEntry finderWhereClauseEntry) {
+	public static FinderWhereClauseEntry updateFinderWhereClauseEntry(
+		FinderWhereClauseEntry finderWhereClauseEntry) {
 
 		return getService().updateFinderWhereClauseEntry(
 			finderWhereClauseEntry);
 	}
 
 	public static FinderWhereClauseEntryLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<FinderWhereClauseEntryLocalService, FinderWhereClauseEntryLocalService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			FinderWhereClauseEntryLocalService.class);
-
-		ServiceTracker
-			<FinderWhereClauseEntryLocalService,
-			 FinderWhereClauseEntryLocalService> serviceTracker =
-				new ServiceTracker
-					<FinderWhereClauseEntryLocalService,
-					 FinderWhereClauseEntryLocalService>(
-						 bundle.getBundleContext(),
-						 FinderWhereClauseEntryLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile FinderWhereClauseEntryLocalService _service;
 
 }

@@ -14,9 +14,11 @@
 
 package com.liferay.commerce.product.type.grouped.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for CPDefinitionGroupedEntry. This utility wraps
@@ -40,44 +42,38 @@ public class CPDefinitionGroupedEntryServiceUtil {
 	public static void addCPDefinitionGroupedEntries(
 			long cpDefinitionId, long[] entryCPDefinitionIds,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().addCPDefinitionGroupedEntries(
 			cpDefinitionId, entryCPDefinitionIds, serviceContext);
 	}
 
-	public static
-		com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry
-				deleteCPDefinitionGroupedEntry(long cpDefinitionGroupedEntryId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPDefinitionGroupedEntry deleteCPDefinitionGroupedEntry(
+			long cpDefinitionGroupedEntryId)
+		throws PortalException {
 
 		return getService().deleteCPDefinitionGroupedEntry(
 			cpDefinitionGroupedEntryId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.product.type.grouped.model.
-			CPDefinitionGroupedEntry> getCPDefinitionGroupedEntries(
-					long cpDefinitionId, int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						<com.liferay.commerce.product.type.grouped.model.
-							CPDefinitionGroupedEntry> orderByComparator)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CPDefinitionGroupedEntry> getCPDefinitionGroupedEntries(
+			long cpDefinitionId, int start, int end,
+			OrderByComparator<CPDefinitionGroupedEntry> orderByComparator)
+		throws PortalException {
 
 		return getService().getCPDefinitionGroupedEntries(
 			cpDefinitionId, start, end, orderByComparator);
 	}
 
 	public static int getCPDefinitionGroupedEntriesCount(long cpDefinitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCPDefinitionGroupedEntriesCount(cpDefinitionId);
 	}
 
-	public static
-		com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry
-				getCPDefinitionGroupedEntry(long cpDefinitionGroupedEntryId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPDefinitionGroupedEntry getCPDefinitionGroupedEntry(
+			long cpDefinitionGroupedEntryId)
+		throws PortalException {
 
 		return getService().getCPDefinitionGroupedEntry(
 			cpDefinitionGroupedEntryId);
@@ -92,41 +88,18 @@ public class CPDefinitionGroupedEntryServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static
-		com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry
-				updateCPDefinitionGroupedEntry(
-					long cpDefinitionGroupedEntryId, double priority,
-					int quantity)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPDefinitionGroupedEntry updateCPDefinitionGroupedEntry(
+			long cpDefinitionGroupedEntryId, double priority, int quantity)
+		throws PortalException {
 
 		return getService().updateCPDefinitionGroupedEntry(
 			cpDefinitionGroupedEntryId, priority, quantity);
 	}
 
 	public static CPDefinitionGroupedEntryService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CPDefinitionGroupedEntryService, CPDefinitionGroupedEntryService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CPDefinitionGroupedEntryService.class);
-
-		ServiceTracker
-			<CPDefinitionGroupedEntryService, CPDefinitionGroupedEntryService>
-				serviceTracker =
-					new ServiceTracker
-						<CPDefinitionGroupedEntryService,
-						 CPDefinitionGroupedEntryService>(
-							 bundle.getBundleContext(),
-							 CPDefinitionGroupedEntryService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CPDefinitionGroupedEntryService _service;
 
 }

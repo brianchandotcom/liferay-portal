@@ -14,9 +14,17 @@
 
 package com.liferay.portal.tools.service.builder.test.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.tools.service.builder.test.model.LazyBlobEntry;
+
+import java.io.InputStream;
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for LazyBlobEntry. This utility wraps
@@ -48,21 +56,13 @@ public class LazyBlobEntryLocalServiceUtil {
 	 * @param lazyBlobEntry the lazy blob entry
 	 * @return the lazy blob entry that was added
 	 */
-	public static
-		com.liferay.portal.tools.service.builder.test.model.LazyBlobEntry
-			addLazyBlobEntry(
-				com.liferay.portal.tools.service.builder.test.model.
-					LazyBlobEntry lazyBlobEntry) {
-
+	public static LazyBlobEntry addLazyBlobEntry(LazyBlobEntry lazyBlobEntry) {
 		return getService().addLazyBlobEntry(lazyBlobEntry);
 	}
 
-	public static
-		com.liferay.portal.tools.service.builder.test.model.LazyBlobEntry
-			addLazyBlobEntry(
-				long groupId, byte[] bytes,
-				com.liferay.portal.kernel.service.ServiceContext
-					serviceContext) {
+	public static LazyBlobEntry addLazyBlobEntry(
+		long groupId, byte[] bytes,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 
 		return getService().addLazyBlobEntry(groupId, bytes, serviceContext);
 	}
@@ -73,19 +73,16 @@ public class LazyBlobEntryLocalServiceUtil {
 	 * @param lazyBlobEntryId the primary key for the new lazy blob entry
 	 * @return the new lazy blob entry
 	 */
-	public static
-		com.liferay.portal.tools.service.builder.test.model.LazyBlobEntry
-			createLazyBlobEntry(long lazyBlobEntryId) {
-
+	public static LazyBlobEntry createLazyBlobEntry(long lazyBlobEntryId) {
 		return getService().createLazyBlobEntry(lazyBlobEntryId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -100,11 +97,8 @@ public class LazyBlobEntryLocalServiceUtil {
 	 * @param lazyBlobEntry the lazy blob entry
 	 * @return the lazy blob entry that was removed
 	 */
-	public static
-		com.liferay.portal.tools.service.builder.test.model.LazyBlobEntry
-			deleteLazyBlobEntry(
-				com.liferay.portal.tools.service.builder.test.model.
-					LazyBlobEntry lazyBlobEntry) {
+	public static LazyBlobEntry deleteLazyBlobEntry(
+		LazyBlobEntry lazyBlobEntry) {
 
 		return getService().deleteLazyBlobEntry(lazyBlobEntry);
 	}
@@ -120,10 +114,8 @@ public class LazyBlobEntryLocalServiceUtil {
 	 * @return the lazy blob entry that was removed
 	 * @throws PortalException if a lazy blob entry with the primary key could not be found
 	 */
-	public static
-		com.liferay.portal.tools.service.builder.test.model.LazyBlobEntry
-				deleteLazyBlobEntry(long lazyBlobEntryId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static LazyBlobEntry deleteLazyBlobEntry(long lazyBlobEntryId)
+		throws PortalException {
 
 		return getService().deleteLazyBlobEntry(lazyBlobEntryId);
 	}
@@ -131,23 +123,18 @@ public class LazyBlobEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -157,9 +144,7 @@ public class LazyBlobEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -175,9 +160,8 @@ public class LazyBlobEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -195,10 +179,9 @@ public class LazyBlobEntryLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -210,9 +193,7 @@ public class LazyBlobEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -224,16 +205,13 @@ public class LazyBlobEntryLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static
-		com.liferay.portal.tools.service.builder.test.model.LazyBlobEntry
-			fetchLazyBlobEntry(long lazyBlobEntryId) {
-
+	public static LazyBlobEntry fetchLazyBlobEntry(long lazyBlobEntryId) {
 		return getService().fetchLazyBlobEntry(lazyBlobEntryId);
 	}
 
@@ -244,9 +222,8 @@ public class LazyBlobEntryLocalServiceUtil {
 	 * @param groupId the primary key of the group
 	 * @return the matching lazy blob entry, or <code>null</code> if a matching lazy blob entry could not be found
 	 */
-	public static
-		com.liferay.portal.tools.service.builder.test.model.LazyBlobEntry
-			fetchLazyBlobEntryByUuidAndGroupId(String uuid, long groupId) {
+	public static LazyBlobEntry fetchLazyBlobEntryByUuidAndGroupId(
+		String uuid, long groupId) {
 
 		return getService().fetchLazyBlobEntryByUuidAndGroupId(uuid, groupId);
 	}
@@ -258,15 +235,13 @@ public class LazyBlobEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.tools.service.builder.test.model.
-		LazyBlobEntryBlob1BlobModel getBlob1BlobModel(
-			java.io.Serializable primaryKey) {
+		LazyBlobEntryBlob1BlobModel getBlob1BlobModel(Serializable primaryKey) {
 
 		return getService().getBlob1BlobModel(primaryKey);
 	}
 
 	public static com.liferay.portal.tools.service.builder.test.model.
-		LazyBlobEntryBlob2BlobModel getBlob2BlobModel(
-			java.io.Serializable primaryKey) {
+		LazyBlobEntryBlob2BlobModel getBlob2BlobModel(Serializable primaryKey) {
 
 		return getService().getBlob2BlobModel(primaryKey);
 	}
@@ -289,10 +264,7 @@ public class LazyBlobEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of lazy blob entries (not inclusive)
 	 * @return the range of lazy blob entries
 	 */
-	public static java.util.List
-		<com.liferay.portal.tools.service.builder.test.model.LazyBlobEntry>
-			getLazyBlobEntries(int start, int end) {
-
+	public static List<LazyBlobEntry> getLazyBlobEntries(int start, int end) {
 		return getService().getLazyBlobEntries(start, end);
 	}
 
@@ -312,10 +284,8 @@ public class LazyBlobEntryLocalServiceUtil {
 	 * @return the lazy blob entry
 	 * @throws PortalException if a lazy blob entry with the primary key could not be found
 	 */
-	public static
-		com.liferay.portal.tools.service.builder.test.model.LazyBlobEntry
-				getLazyBlobEntry(long lazyBlobEntryId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static LazyBlobEntry getLazyBlobEntry(long lazyBlobEntryId)
+		throws PortalException {
 
 		return getService().getLazyBlobEntry(lazyBlobEntryId);
 	}
@@ -328,10 +298,9 @@ public class LazyBlobEntryLocalServiceUtil {
 	 * @return the matching lazy blob entry
 	 * @throws PortalException if a matching lazy blob entry could not be found
 	 */
-	public static
-		com.liferay.portal.tools.service.builder.test.model.LazyBlobEntry
-				getLazyBlobEntryByUuidAndGroupId(String uuid, long groupId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static LazyBlobEntry getLazyBlobEntryByUuidAndGroupId(
+			String uuid, long groupId)
+		throws PortalException {
 
 		return getService().getLazyBlobEntryByUuidAndGroupId(uuid, groupId);
 	}
@@ -348,22 +317,17 @@ public class LazyBlobEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static java.io.InputStream openBlob1InputStream(
-		long lazyBlobEntryId) {
-
+	public static InputStream openBlob1InputStream(long lazyBlobEntryId) {
 		return getService().openBlob1InputStream(lazyBlobEntryId);
 	}
 
-	public static java.io.InputStream openBlob2InputStream(
-		long lazyBlobEntryId) {
-
+	public static InputStream openBlob2InputStream(long lazyBlobEntryId) {
 		return getService().openBlob2InputStream(lazyBlobEntryId);
 	}
 
@@ -377,36 +341,16 @@ public class LazyBlobEntryLocalServiceUtil {
 	 * @param lazyBlobEntry the lazy blob entry
 	 * @return the lazy blob entry that was updated
 	 */
-	public static
-		com.liferay.portal.tools.service.builder.test.model.LazyBlobEntry
-			updateLazyBlobEntry(
-				com.liferay.portal.tools.service.builder.test.model.
-					LazyBlobEntry lazyBlobEntry) {
+	public static LazyBlobEntry updateLazyBlobEntry(
+		LazyBlobEntry lazyBlobEntry) {
 
 		return getService().updateLazyBlobEntry(lazyBlobEntry);
 	}
 
 	public static LazyBlobEntryLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<LazyBlobEntryLocalService, LazyBlobEntryLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			LazyBlobEntryLocalService.class);
-
-		ServiceTracker<LazyBlobEntryLocalService, LazyBlobEntryLocalService>
-			serviceTracker =
-				new ServiceTracker
-					<LazyBlobEntryLocalService, LazyBlobEntryLocalService>(
-						bundle.getBundleContext(),
-						LazyBlobEntryLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile LazyBlobEntryLocalService _service;
 
 }

@@ -23,9 +23,12 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.service.ThemeService;
+import com.liferay.portal.kernel.service.ThemeServiceUtil;
 import com.liferay.portal.kernel.service.persistence.PluginSettingPersistence;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+
+import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
 
@@ -46,7 +49,7 @@ public abstract class ThemeServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>ThemeService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.kernel.service.ThemeServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>ThemeService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>ThemeServiceUtil</code>.
 	 */
 
 	/**
@@ -202,9 +205,11 @@ public abstract class ThemeServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
+		_setServiceUtilService(themeService);
 	}
 
 	public void destroy() {
+		_setServiceUtilService(null);
 	}
 
 	/**
@@ -238,6 +243,19 @@ public abstract class ThemeServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setServiceUtilService(ThemeService themeService) {
+		try {
+			Field field = ThemeServiceUtil.class.getDeclaredField("_service");
+
+			field.setAccessible(true);
+
+			field.set(null, themeService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

@@ -14,9 +14,11 @@
 
 package com.liferay.knowledge.base.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.knowledge.base.model.KBComment;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for KBComment. This utility wraps
@@ -37,116 +39,96 @@ public class KBCommentServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.knowledge.base.service.impl.KBCommentServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.knowledge.base.model.KBComment deleteKBComment(
-			com.liferay.knowledge.base.model.KBComment kbComment)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static KBComment deleteKBComment(KBComment kbComment)
+		throws PortalException {
 
 		return getService().deleteKBComment(kbComment);
 	}
 
-	public static com.liferay.knowledge.base.model.KBComment deleteKBComment(
-			long kbCommentId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static KBComment deleteKBComment(long kbCommentId)
+		throws PortalException {
 
 		return getService().deleteKBComment(kbCommentId);
 	}
 
-	public static com.liferay.knowledge.base.model.KBComment getKBComment(
-			long kbCommentId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static KBComment getKBComment(long kbCommentId)
+		throws PortalException {
 
 		return getService().getKBComment(kbCommentId);
 	}
 
-	public static java.util.List<com.liferay.knowledge.base.model.KBComment>
-			getKBComments(long groupId, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<KBComment> getKBComments(
+			long groupId, int status, int start, int end)
+		throws PortalException {
 
 		return getService().getKBComments(groupId, status, start, end);
 	}
 
-	public static java.util.List<com.liferay.knowledge.base.model.KBComment>
-			getKBComments(
-				long groupId, int status, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.knowledge.base.model.KBComment>
-						orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<KBComment> getKBComments(
+			long groupId, int status, int start, int end,
+			OrderByComparator<KBComment> orderByComparator)
+		throws PortalException {
 
 		return getService().getKBComments(
 			groupId, status, start, end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.knowledge.base.model.KBComment>
-			getKBComments(
-				long groupId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.knowledge.base.model.KBComment>
-						orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<KBComment> getKBComments(
+			long groupId, int start, int end,
+			OrderByComparator<KBComment> orderByComparator)
+		throws PortalException {
 
 		return getService().getKBComments(
 			groupId, start, end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.knowledge.base.model.KBComment>
-			getKBComments(
-				long groupId, String className, long classPK, int status,
-				int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<KBComment> getKBComments(
+			long groupId, String className, long classPK, int status, int start,
+			int end)
+		throws PortalException {
 
 		return getService().getKBComments(
 			groupId, className, classPK, status, start, end);
 	}
 
-	public static java.util.List<com.liferay.knowledge.base.model.KBComment>
-			getKBComments(
-				long groupId, String className, long classPK, int status,
-				int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.knowledge.base.model.KBComment>
-						orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<KBComment> getKBComments(
+			long groupId, String className, long classPK, int status, int start,
+			int end, OrderByComparator<KBComment> orderByComparator)
+		throws PortalException {
 
 		return getService().getKBComments(
 			groupId, className, classPK, status, start, end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.knowledge.base.model.KBComment>
-			getKBComments(
-				long groupId, String className, long classPK, int start,
-				int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.knowledge.base.model.KBComment>
-						orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<KBComment> getKBComments(
+			long groupId, String className, long classPK, int start, int end,
+			OrderByComparator<KBComment> orderByComparator)
+		throws PortalException {
 
 		return getService().getKBComments(
 			groupId, className, classPK, start, end, orderByComparator);
 	}
 
-	public static int getKBCommentsCount(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static int getKBCommentsCount(long groupId) throws PortalException {
 		return getService().getKBCommentsCount(groupId);
 	}
 
 	public static int getKBCommentsCount(long groupId, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getKBCommentsCount(groupId, status);
 	}
 
 	public static int getKBCommentsCount(
 			long groupId, String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getKBCommentsCount(groupId, className, classPK);
 	}
 
 	public static int getKBCommentsCount(
 			long groupId, String className, long classPK, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getKBCommentsCount(
 			groupId, className, classPK, status);
@@ -161,50 +143,37 @@ public class KBCommentServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.knowledge.base.model.KBComment updateKBComment(
+	public static KBComment updateKBComment(
 			long kbCommentId, long classNameId, long classPK, String content,
 			int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateKBComment(
 			kbCommentId, classNameId, classPK, content, status, serviceContext);
 	}
 
-	public static com.liferay.knowledge.base.model.KBComment updateKBComment(
+	public static KBComment updateKBComment(
 			long kbCommentId, long classNameId, long classPK, String content,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateKBComment(
 			kbCommentId, classNameId, classPK, content, serviceContext);
 	}
 
-	public static com.liferay.knowledge.base.model.KBComment updateStatus(
+	public static KBComment updateStatus(
 			long kbCommentId, int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateStatus(kbCommentId, status, serviceContext);
 	}
 
 	public static KBCommentService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<KBCommentService, KBCommentService>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(KBCommentService.class);
-
-		ServiceTracker<KBCommentService, KBCommentService> serviceTracker =
-			new ServiceTracker<KBCommentService, KBCommentService>(
-				bundle.getBundleContext(), KBCommentService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile KBCommentService _service;
 
 }

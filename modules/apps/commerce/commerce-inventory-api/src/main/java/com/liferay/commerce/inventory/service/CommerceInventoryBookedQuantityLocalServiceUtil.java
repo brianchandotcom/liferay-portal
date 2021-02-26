@@ -14,9 +14,17 @@
 
 package com.liferay.commerce.inventory.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for CommerceInventoryBookedQuantity. This utility wraps
@@ -37,13 +45,10 @@ public class CommerceInventoryBookedQuantityLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.inventory.service.impl.CommerceInventoryBookedQuantityLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static
-		com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity
-				addCommerceBookedQuantity(
-					long userId, String sku, int quantity,
-					java.util.Date expirationDate,
-					java.util.Map<String, String> context)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceInventoryBookedQuantity addCommerceBookedQuantity(
+			long userId, String sku, int quantity,
+			java.util.Date expirationDate, Map<String, String> context)
+		throws PortalException {
 
 		return getService().addCommerceBookedQuantity(
 			userId, sku, quantity, expirationDate, context);
@@ -59,12 +64,9 @@ public class CommerceInventoryBookedQuantityLocalServiceUtil {
 	 * @param commerceInventoryBookedQuantity the commerce inventory booked quantity
 	 * @return the commerce inventory booked quantity that was added
 	 */
-	public static
-		com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity
-			addCommerceInventoryBookedQuantity(
-				com.liferay.commerce.inventory.model.
-					CommerceInventoryBookedQuantity
-						commerceInventoryBookedQuantity) {
+	public static CommerceInventoryBookedQuantity
+		addCommerceInventoryBookedQuantity(
+			CommerceInventoryBookedQuantity commerceInventoryBookedQuantity) {
 
 		return getService().addCommerceInventoryBookedQuantity(
 			commerceInventoryBookedQuantity);
@@ -74,12 +76,10 @@ public class CommerceInventoryBookedQuantityLocalServiceUtil {
 		getService().checkCommerceInventoryBookedQuantities();
 	}
 
-	public static
-		com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity
-				consumeCommerceBookedQuantity(
-					long commerceBookedQuantityId, int quantity)
-			throws com.liferay.commerce.inventory.exception.
-				NoSuchInventoryBookedQuantityException {
+	public static CommerceInventoryBookedQuantity consumeCommerceBookedQuantity(
+			long commerceBookedQuantityId, int quantity)
+		throws com.liferay.commerce.inventory.exception.
+			NoSuchInventoryBookedQuantityException {
 
 		return getService().consumeCommerceBookedQuantity(
 			commerceBookedQuantityId, quantity);
@@ -91,10 +91,9 @@ public class CommerceInventoryBookedQuantityLocalServiceUtil {
 	 * @param commerceInventoryBookedQuantityId the primary key for the new commerce inventory booked quantity
 	 * @return the new commerce inventory booked quantity
 	 */
-	public static
-		com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity
-			createCommerceInventoryBookedQuantity(
-				long commerceInventoryBookedQuantityId) {
+	public static CommerceInventoryBookedQuantity
+		createCommerceInventoryBookedQuantity(
+			long commerceInventoryBookedQuantityId) {
 
 		return getService().createCommerceInventoryBookedQuantity(
 			commerceInventoryBookedQuantityId);
@@ -103,9 +102,9 @@ public class CommerceInventoryBookedQuantityLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -120,12 +119,9 @@ public class CommerceInventoryBookedQuantityLocalServiceUtil {
 	 * @param commerceInventoryBookedQuantity the commerce inventory booked quantity
 	 * @return the commerce inventory booked quantity that was removed
 	 */
-	public static
-		com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity
-			deleteCommerceInventoryBookedQuantity(
-				com.liferay.commerce.inventory.model.
-					CommerceInventoryBookedQuantity
-						commerceInventoryBookedQuantity) {
+	public static CommerceInventoryBookedQuantity
+		deleteCommerceInventoryBookedQuantity(
+			CommerceInventoryBookedQuantity commerceInventoryBookedQuantity) {
 
 		return getService().deleteCommerceInventoryBookedQuantity(
 			commerceInventoryBookedQuantity);
@@ -142,11 +138,10 @@ public class CommerceInventoryBookedQuantityLocalServiceUtil {
 	 * @return the commerce inventory booked quantity that was removed
 	 * @throws PortalException if a commerce inventory booked quantity with the primary key could not be found
 	 */
-	public static
-		com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity
-				deleteCommerceInventoryBookedQuantity(
-					long commerceInventoryBookedQuantityId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceInventoryBookedQuantity
+			deleteCommerceInventoryBookedQuantity(
+				long commerceInventoryBookedQuantityId)
+		throws PortalException {
 
 		return getService().deleteCommerceInventoryBookedQuantity(
 			commerceInventoryBookedQuantityId);
@@ -155,23 +150,18 @@ public class CommerceInventoryBookedQuantityLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -181,9 +171,7 @@ public class CommerceInventoryBookedQuantityLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -199,9 +187,8 @@ public class CommerceInventoryBookedQuantityLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -219,10 +206,9 @@ public class CommerceInventoryBookedQuantityLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -234,9 +220,7 @@ public class CommerceInventoryBookedQuantityLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -248,16 +232,15 @@ public class CommerceInventoryBookedQuantityLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static
-		com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity
-			fetchCommerceInventoryBookedQuantity(
-				long commerceInventoryBookedQuantityId) {
+	public static CommerceInventoryBookedQuantity
+		fetchCommerceInventoryBookedQuantity(
+			long commerceInventoryBookedQuantityId) {
 
 		return getService().fetchCommerceInventoryBookedQuantity(
 			commerceInventoryBookedQuantityId);
@@ -284,17 +267,15 @@ public class CommerceInventoryBookedQuantityLocalServiceUtil {
 	 * @param end the upper bound of the range of commerce inventory booked quantities (not inclusive)
 	 * @return the range of commerce inventory booked quantities
 	 */
-	public static java.util.List
-		<com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity>
-			getCommerceInventoryBookedQuantities(int start, int end) {
+	public static List<CommerceInventoryBookedQuantity>
+		getCommerceInventoryBookedQuantities(int start, int end) {
 
 		return getService().getCommerceInventoryBookedQuantities(start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity>
-			getCommerceInventoryBookedQuantities(
-				long companyId, String sku, int start, int end) {
+	public static List<CommerceInventoryBookedQuantity>
+		getCommerceInventoryBookedQuantities(
+			long companyId, String sku, int start, int end) {
 
 		return getService().getCommerceInventoryBookedQuantities(
 			companyId, sku, start, end);
@@ -323,11 +304,10 @@ public class CommerceInventoryBookedQuantityLocalServiceUtil {
 	 * @return the commerce inventory booked quantity
 	 * @throws PortalException if a commerce inventory booked quantity with the primary key could not be found
 	 */
-	public static
-		com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity
-				getCommerceInventoryBookedQuantity(
-					long commerceInventoryBookedQuantityId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceInventoryBookedQuantity
+			getCommerceInventoryBookedQuantity(
+				long commerceInventoryBookedQuantityId)
+		throws PortalException {
 
 		return getService().getCommerceInventoryBookedQuantity(
 			commerceInventoryBookedQuantityId);
@@ -352,20 +332,17 @@ public class CommerceInventoryBookedQuantityLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static
-		com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity
-				resetCommerceBookedQuantity(
-					long commerceBookedQuantityId, long userId, String sku,
-					int quantity, java.util.Date expirationDate,
-					java.util.Map<String, String> context)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceInventoryBookedQuantity resetCommerceBookedQuantity(
+			long commerceBookedQuantityId, long userId, String sku,
+			int quantity, java.util.Date expirationDate,
+			Map<String, String> context)
+		throws PortalException {
 
 		return getService().resetCommerceBookedQuantity(
 			commerceBookedQuantityId, userId, sku, quantity, expirationDate,
@@ -382,24 +359,19 @@ public class CommerceInventoryBookedQuantityLocalServiceUtil {
 	 * @param commerceInventoryBookedQuantity the commerce inventory booked quantity
 	 * @return the commerce inventory booked quantity that was updated
 	 */
-	public static
-		com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity
-			updateCommerceInventoryBookedQuantity(
-				com.liferay.commerce.inventory.model.
-					CommerceInventoryBookedQuantity
-						commerceInventoryBookedQuantity) {
+	public static CommerceInventoryBookedQuantity
+		updateCommerceInventoryBookedQuantity(
+			CommerceInventoryBookedQuantity commerceInventoryBookedQuantity) {
 
 		return getService().updateCommerceInventoryBookedQuantity(
 			commerceInventoryBookedQuantity);
 	}
 
-	public static
-		com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity
-				updateCommerceInventoryBookedQuantity(
-					long userId, long commerceInventoryBookedQuantityId,
-					int quantity, java.util.Map<String, String> context,
-					long mvccVersion)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceInventoryBookedQuantity
+			updateCommerceInventoryBookedQuantity(
+				long userId, long commerceInventoryBookedQuantityId,
+				int quantity, Map<String, String> context, long mvccVersion)
+		throws PortalException {
 
 		return getService().updateCommerceInventoryBookedQuantity(
 			userId, commerceInventoryBookedQuantityId, quantity, context,
@@ -407,30 +379,10 @@ public class CommerceInventoryBookedQuantityLocalServiceUtil {
 	}
 
 	public static CommerceInventoryBookedQuantityLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceInventoryBookedQuantityLocalService,
-		 CommerceInventoryBookedQuantityLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommerceInventoryBookedQuantityLocalService.class);
-
-		ServiceTracker
-			<CommerceInventoryBookedQuantityLocalService,
-			 CommerceInventoryBookedQuantityLocalService> serviceTracker =
-				new ServiceTracker
-					<CommerceInventoryBookedQuantityLocalService,
-					 CommerceInventoryBookedQuantityLocalService>(
-						 bundle.getBundleContext(),
-						 CommerceInventoryBookedQuantityLocalService.class,
-						 null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceInventoryBookedQuantityLocalService
+		_service;
 
 }

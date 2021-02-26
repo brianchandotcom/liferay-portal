@@ -14,7 +14,10 @@
 
 package com.liferay.social.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.social.kernel.model.SocialActivitySetting;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for SocialActivitySetting. This utility wraps
@@ -38,31 +41,28 @@ public class SocialActivitySettingServiceUtil {
 	public static com.liferay.social.kernel.model.SocialActivityDefinition
 			getActivityDefinition(
 				long groupId, String className, int activityType)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getActivityDefinition(
 			groupId, className, activityType);
 	}
 
-	public static java.util.List
-		<com.liferay.social.kernel.model.SocialActivityDefinition>
-				getActivityDefinitions(long groupId, String className)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<com.liferay.social.kernel.model.SocialActivityDefinition>
+			getActivityDefinitions(long groupId, String className)
+		throws PortalException {
 
 		return getService().getActivityDefinitions(groupId, className);
 	}
 
-	public static java.util.List
-		<com.liferay.social.kernel.model.SocialActivitySetting>
-				getActivitySettings(long groupId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<SocialActivitySetting> getActivitySettings(long groupId)
+		throws PortalException {
 
 		return getService().getActivitySettings(groupId);
 	}
 
 	public static com.liferay.portal.kernel.json.JSONArray
 			getJSONActivityDefinitions(long groupId, String className)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getJSONActivityDefinitions(groupId, className);
 	}
@@ -78,7 +78,7 @@ public class SocialActivitySettingServiceUtil {
 
 	public static void updateActivitySetting(
 			long groupId, String className, boolean enabled)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().updateActivitySetting(groupId, className, enabled);
 	}
@@ -87,7 +87,7 @@ public class SocialActivitySettingServiceUtil {
 			long groupId, String className, int activityType,
 			com.liferay.social.kernel.model.SocialActivityCounterDefinition
 				activityCounterDefinition)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().updateActivitySetting(
 			groupId, className, activityType, activityCounterDefinition);
@@ -95,25 +95,19 @@ public class SocialActivitySettingServiceUtil {
 
 	public static void updateActivitySettings(
 			long groupId, String className, int activityType,
-			java.util.List
+			List
 				<com.liferay.social.kernel.model.
 					SocialActivityCounterDefinition> activityCounterDefinitions)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().updateActivitySettings(
 			groupId, className, activityType, activityCounterDefinitions);
 	}
 
 	public static SocialActivitySettingService getService() {
-		if (_service == null) {
-			_service =
-				(SocialActivitySettingService)PortalBeanLocatorUtil.locate(
-					SocialActivitySettingService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static SocialActivitySettingService _service;
+	private static volatile SocialActivitySettingService _service;
 
 }

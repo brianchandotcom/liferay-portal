@@ -14,9 +14,11 @@
 
 package com.liferay.commerce.pricing.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.pricing.model.CommercePriceModifier;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for CommercePriceModifier. This utility wraps
@@ -37,18 +39,17 @@ public class CommercePriceModifierServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.pricing.service.impl.CommercePriceModifierServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.commerce.pricing.model.CommercePriceModifier
-			addCommercePriceModifier(
-				long userId, long groupId, String title, String target,
-				long commercePriceListId, String modifierType,
-				java.math.BigDecimal modifierAmount, double priority,
-				boolean active, int displayDateMonth, int displayDateDay,
-				int displayDateYear, int displayDateHour, int displayDateMinute,
-				int expirationDateMonth, int expirationDateDay,
-				int expirationDateYear, int expirationDateHour,
-				int expirationDateMinute, boolean neverExpire,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceModifier addCommercePriceModifier(
+			long userId, long groupId, String title, String target,
+			long commercePriceListId, String modifierType,
+			java.math.BigDecimal modifierAmount, double priority,
+			boolean active, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCommercePriceModifier(
 			userId, groupId, title, target, commercePriceListId, modifierType,
@@ -59,45 +60,40 @@ public class CommercePriceModifierServiceUtil {
 			serviceContext);
 	}
 
-	public static com.liferay.commerce.pricing.model.CommercePriceModifier
-			deleteCommercePriceModifier(long commercePriceModifierId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceModifier deleteCommercePriceModifier(
+			long commercePriceModifierId)
+		throws PortalException {
 
 		return getService().deleteCommercePriceModifier(
 			commercePriceModifierId);
 	}
 
-	public static com.liferay.commerce.pricing.model.CommercePriceModifier
-			fetchByExternalReferenceCode(
-				String externalReferenceCode, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceModifier fetchByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
 
 		return getService().fetchByExternalReferenceCode(
 			externalReferenceCode, companyId);
 	}
 
-	public static com.liferay.commerce.pricing.model.CommercePriceModifier
-			fetchCommercePriceModifier(long commercePriceModifierId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceModifier fetchCommercePriceModifier(
+			long commercePriceModifierId)
+		throws PortalException {
 
 		return getService().fetchCommercePriceModifier(commercePriceModifierId);
 	}
 
-	public static com.liferay.commerce.pricing.model.CommercePriceModifier
-			getCommercePriceModifier(long commercePriceModifierId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceModifier getCommercePriceModifier(
+			long commercePriceModifierId)
+		throws PortalException {
 
 		return getService().getCommercePriceModifier(commercePriceModifierId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.pricing.model.CommercePriceModifier>
-				getCommercePriceModifiers(
-					long commercePriceListId, int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						<com.liferay.commerce.pricing.model.
-							CommercePriceModifier> orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommercePriceModifier> getCommercePriceModifiers(
+			long commercePriceListId, int start, int end,
+			OrderByComparator<CommercePriceModifier> orderByComparator)
+		throws PortalException {
 
 		return getService().getCommercePriceModifiers(
 			commercePriceListId, start, end, orderByComparator);
@@ -107,10 +103,9 @@ public class CommercePriceModifierServiceUtil {
 	 * @deprecated As of Athanasius (7.3.x)
 	 */
 	@Deprecated
-	public static java.util.List
-		<com.liferay.commerce.pricing.model.CommercePriceModifier>
-				getCommercePriceModifiers(long companyId, String target)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommercePriceModifier> getCommercePriceModifiers(
+			long companyId, String target)
+		throws PortalException {
 
 		return getService().getCommercePriceModifiers(companyId, target);
 	}
@@ -119,14 +114,12 @@ public class CommercePriceModifierServiceUtil {
 	 * @deprecated As of Athanasius (7.3.x)
 	 */
 	@Deprecated
-	public static int getCommercePriceModifiersCount()
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static int getCommercePriceModifiersCount() throws PortalException {
 		return getService().getCommercePriceModifiersCount();
 	}
 
 	public static int getCommercePriceModifiersCount(long commercePriceListId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCommercePriceModifiersCount(commercePriceListId);
 	}
@@ -145,28 +138,26 @@ public class CommercePriceModifierServiceUtil {
 	 */
 	@Deprecated
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
-		<com.liferay.commerce.pricing.model.CommercePriceModifier>
-				searchCommercePriceModifiers(
-					long companyId, String keywords, int status, int start,
-					int end, com.liferay.portal.kernel.search.Sort sort)
-			throws com.liferay.portal.kernel.exception.PortalException {
+		<CommercePriceModifier> searchCommercePriceModifiers(
+				long companyId, String keywords, int status, int start, int end,
+				com.liferay.portal.kernel.search.Sort sort)
+			throws PortalException {
 
 		return getService().searchCommercePriceModifiers(
 			companyId, keywords, status, start, end, sort);
 	}
 
-	public static com.liferay.commerce.pricing.model.CommercePriceModifier
-			updateCommercePriceModifier(
-				long commercePriceModifierId, long groupId, String title,
-				String target, long commercePriceListId, String modifierType,
-				java.math.BigDecimal modifierAmount, double priority,
-				boolean active, int displayDateMonth, int displayDateDay,
-				int displayDateYear, int displayDateHour, int displayDateMinute,
-				int expirationDateMonth, int expirationDateDay,
-				int expirationDateYear, int expirationDateHour,
-				int expirationDateMinute, boolean neverExpire,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceModifier updateCommercePriceModifier(
+			long commercePriceModifierId, long groupId, String title,
+			String target, long commercePriceListId, String modifierType,
+			java.math.BigDecimal modifierAmount, double priority,
+			boolean active, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().updateCommercePriceModifier(
 			commercePriceModifierId, groupId, title, target,
@@ -177,19 +168,18 @@ public class CommercePriceModifierServiceUtil {
 			neverExpire, serviceContext);
 	}
 
-	public static com.liferay.commerce.pricing.model.CommercePriceModifier
-			upsertCommercePriceModifier(
-				String externalReferenceCode, long userId,
-				long commercePriceModifierId, long groupId, String title,
-				String target, long commercePriceListId, String modifierType,
-				java.math.BigDecimal modifierAmount, double priority,
-				boolean active, int displayDateMonth, int displayDateDay,
-				int displayDateYear, int displayDateHour, int displayDateMinute,
-				int expirationDateMonth, int expirationDateDay,
-				int expirationDateYear, int expirationDateHour,
-				int expirationDateMinute, boolean neverExpire,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceModifier upsertCommercePriceModifier(
+			String externalReferenceCode, long userId,
+			long commercePriceModifierId, long groupId, String title,
+			String target, long commercePriceListId, String modifierType,
+			java.math.BigDecimal modifierAmount, double priority,
+			boolean active, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().upsertCommercePriceModifier(
 			externalReferenceCode, userId, commercePriceModifierId, groupId,
@@ -201,29 +191,9 @@ public class CommercePriceModifierServiceUtil {
 	}
 
 	public static CommercePriceModifierService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommercePriceModifierService, CommercePriceModifierService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommercePriceModifierService.class);
-
-		ServiceTracker
-			<CommercePriceModifierService, CommercePriceModifierService>
-				serviceTracker =
-					new ServiceTracker
-						<CommercePriceModifierService,
-						 CommercePriceModifierService>(
-							 bundle.getBundleContext(),
-							 CommercePriceModifierService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommercePriceModifierService _service;
 
 }

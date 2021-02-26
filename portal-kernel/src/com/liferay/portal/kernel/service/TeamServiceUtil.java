@@ -14,7 +14,11 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Team;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for Team. This utility wraps
@@ -35,23 +39,20 @@ public class TeamServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.service.impl.TeamServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.kernel.model.Team addTeam(
+	public static Team addTeam(
 			long groupId, String name, String description,
 			ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addTeam(groupId, name, description, serviceContext);
 	}
 
-	public static void deleteTeam(long teamId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static void deleteTeam(long teamId) throws PortalException {
 		getService().deleteTeam(teamId);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.Team>
-			getGroupTeams(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<Team> getGroupTeams(long groupId)
+		throws PortalException {
 
 		return getService().getGroupTeams(groupId);
 	}
@@ -65,44 +66,36 @@ public class TeamServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.portal.kernel.model.Team getTeam(long teamId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static Team getTeam(long teamId) throws PortalException {
 		return getService().getTeam(teamId);
 	}
 
-	public static com.liferay.portal.kernel.model.Team getTeam(
-			long groupId, String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static Team getTeam(long groupId, String name)
+		throws PortalException {
 
 		return getService().getTeam(groupId, name);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.Team>
-			getUserTeams(long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static List<Team> getUserTeams(long userId) throws PortalException {
 		return getService().getUserTeams(userId);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.Team>
-			getUserTeams(long userId, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<Team> getUserTeams(long userId, long groupId)
+		throws PortalException {
 
 		return getService().getUserTeams(userId, groupId);
 	}
 
 	public static boolean hasUserTeam(long userId, long teamId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().hasUserTeam(userId, teamId);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.Team> search(
+	public static List<Team> search(
 		long groupId, String name, String description,
 		java.util.LinkedHashMap<String, Object> params, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<com.liferay.portal.kernel.model.Team> orderByComparator) {
+		OrderByComparator<Team> orderByComparator) {
 
 		return getService().search(
 			groupId, name, description, params, start, end, orderByComparator);
@@ -115,22 +108,16 @@ public class TeamServiceUtil {
 		return getService().searchCount(groupId, name, description, params);
 	}
 
-	public static com.liferay.portal.kernel.model.Team updateTeam(
-			long teamId, String name, String description)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static Team updateTeam(long teamId, String name, String description)
+		throws PortalException {
 
 		return getService().updateTeam(teamId, name, description);
 	}
 
 	public static TeamService getService() {
-		if (_service == null) {
-			_service = (TeamService)PortalBeanLocatorUtil.locate(
-				TeamService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static TeamService _service;
+	private static volatile TeamService _service;
 
 }

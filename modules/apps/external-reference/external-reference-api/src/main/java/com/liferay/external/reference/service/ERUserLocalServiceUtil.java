@@ -14,9 +14,9 @@
 
 package com.liferay.external.reference.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for ERUser. This utility wraps
@@ -46,11 +46,10 @@ public class ERUserLocalServiceUtil {
 			int birthdayMonth, int birthdayDay, int birthdayYear,
 			String jobTitle, long[] groupIds, long[] organizationIds,
 			long[] roleIds,
-			java.util.List<com.liferay.portal.kernel.model.UserGroupRole>
-				userGroupRoles,
+			List<com.liferay.portal.kernel.model.UserGroupRole> userGroupRoles,
 			long[] userGroupIds, boolean sendEmail,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addOrUpdateUser(
 			externalReferenceCode, creatorUserId, companyId, autoPassword,
@@ -71,22 +70,9 @@ public class ERUserLocalServiceUtil {
 	}
 
 	public static ERUserLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<ERUserLocalService, ERUserLocalService>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(ERUserLocalService.class);
-
-		ServiceTracker<ERUserLocalService, ERUserLocalService> serviceTracker =
-			new ServiceTracker<ERUserLocalService, ERUserLocalService>(
-				bundle.getBundleContext(), ERUserLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile ERUserLocalService _service;
 
 }

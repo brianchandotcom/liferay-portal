@@ -14,9 +14,17 @@
 
 package com.liferay.commerce.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.model.CommerceAvailabilityEstimate;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for CommerceAvailabilityEstimate. This utility wraps
@@ -48,21 +56,17 @@ public class CommerceAvailabilityEstimateLocalServiceUtil {
 	 * @param commerceAvailabilityEstimate the commerce availability estimate
 	 * @return the commerce availability estimate that was added
 	 */
-	public static com.liferay.commerce.model.CommerceAvailabilityEstimate
-		addCommerceAvailabilityEstimate(
-			com.liferay.commerce.model.CommerceAvailabilityEstimate
-				commerceAvailabilityEstimate) {
+	public static CommerceAvailabilityEstimate addCommerceAvailabilityEstimate(
+		CommerceAvailabilityEstimate commerceAvailabilityEstimate) {
 
 		return getService().addCommerceAvailabilityEstimate(
 			commerceAvailabilityEstimate);
 	}
 
-	public static com.liferay.commerce.model.CommerceAvailabilityEstimate
-			addCommerceAvailabilityEstimate(
-				java.util.Map<java.util.Locale, String> titleMap,
-				double priority,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceAvailabilityEstimate addCommerceAvailabilityEstimate(
+			Map<java.util.Locale, String> titleMap, double priority,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCommerceAvailabilityEstimate(
 			titleMap, priority, serviceContext);
@@ -74,7 +78,7 @@ public class CommerceAvailabilityEstimateLocalServiceUtil {
 	 * @param commerceAvailabilityEstimateId the primary key for the new commerce availability estimate
 	 * @return the new commerce availability estimate
 	 */
-	public static com.liferay.commerce.model.CommerceAvailabilityEstimate
+	public static CommerceAvailabilityEstimate
 		createCommerceAvailabilityEstimate(
 			long commerceAvailabilityEstimateId) {
 
@@ -85,9 +89,9 @@ public class CommerceAvailabilityEstimateLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -103,11 +107,10 @@ public class CommerceAvailabilityEstimateLocalServiceUtil {
 	 * @return the commerce availability estimate that was removed
 	 * @throws PortalException
 	 */
-	public static com.liferay.commerce.model.CommerceAvailabilityEstimate
+	public static CommerceAvailabilityEstimate
 			deleteCommerceAvailabilityEstimate(
-				com.liferay.commerce.model.CommerceAvailabilityEstimate
-					commerceAvailabilityEstimate)
-		throws com.liferay.portal.kernel.exception.PortalException {
+				CommerceAvailabilityEstimate commerceAvailabilityEstimate)
+		throws PortalException {
 
 		return getService().deleteCommerceAvailabilityEstimate(
 			commerceAvailabilityEstimate);
@@ -124,17 +127,17 @@ public class CommerceAvailabilityEstimateLocalServiceUtil {
 	 * @return the commerce availability estimate that was removed
 	 * @throws PortalException if a commerce availability estimate with the primary key could not be found
 	 */
-	public static com.liferay.commerce.model.CommerceAvailabilityEstimate
+	public static CommerceAvailabilityEstimate
 			deleteCommerceAvailabilityEstimate(
 				long commerceAvailabilityEstimateId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().deleteCommerceAvailabilityEstimate(
 			commerceAvailabilityEstimateId);
 	}
 
 	public static void deleteCommerceAvailabilityEstimates(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommerceAvailabilityEstimates(companyId);
 	}
@@ -142,23 +145,18 @@ public class CommerceAvailabilityEstimateLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -168,9 +166,7 @@ public class CommerceAvailabilityEstimateLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -186,9 +182,8 @@ public class CommerceAvailabilityEstimateLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -206,10 +201,9 @@ public class CommerceAvailabilityEstimateLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -221,9 +215,7 @@ public class CommerceAvailabilityEstimateLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -235,13 +227,13 @@ public class CommerceAvailabilityEstimateLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.commerce.model.CommerceAvailabilityEstimate
+	public static CommerceAvailabilityEstimate
 		fetchCommerceAvailabilityEstimate(long commerceAvailabilityEstimateId) {
 
 		return getService().fetchCommerceAvailabilityEstimate(
@@ -255,7 +247,7 @@ public class CommerceAvailabilityEstimateLocalServiceUtil {
 	 * @param companyId the primary key of the company
 	 * @return the matching commerce availability estimate, or <code>null</code> if a matching commerce availability estimate could not be found
 	 */
-	public static com.liferay.commerce.model.CommerceAvailabilityEstimate
+	public static CommerceAvailabilityEstimate
 		fetchCommerceAvailabilityEstimateByUuidAndCompanyId(
 			String uuid, long companyId) {
 
@@ -276,9 +268,9 @@ public class CommerceAvailabilityEstimateLocalServiceUtil {
 	 * @return the commerce availability estimate
 	 * @throws PortalException if a commerce availability estimate with the primary key could not be found
 	 */
-	public static com.liferay.commerce.model.CommerceAvailabilityEstimate
-			getCommerceAvailabilityEstimate(long commerceAvailabilityEstimateId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceAvailabilityEstimate getCommerceAvailabilityEstimate(
+			long commerceAvailabilityEstimateId)
+		throws PortalException {
 
 		return getService().getCommerceAvailabilityEstimate(
 			commerceAvailabilityEstimateId);
@@ -292,10 +284,10 @@ public class CommerceAvailabilityEstimateLocalServiceUtil {
 	 * @return the matching commerce availability estimate
 	 * @throws PortalException if a matching commerce availability estimate could not be found
 	 */
-	public static com.liferay.commerce.model.CommerceAvailabilityEstimate
+	public static CommerceAvailabilityEstimate
 			getCommerceAvailabilityEstimateByUuidAndCompanyId(
 				String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCommerceAvailabilityEstimateByUuidAndCompanyId(
 			uuid, companyId);
@@ -312,20 +304,16 @@ public class CommerceAvailabilityEstimateLocalServiceUtil {
 	 * @param end the upper bound of the range of commerce availability estimates (not inclusive)
 	 * @return the range of commerce availability estimates
 	 */
-	public static java.util.List
-		<com.liferay.commerce.model.CommerceAvailabilityEstimate>
-			getCommerceAvailabilityEstimates(int start, int end) {
+	public static List<CommerceAvailabilityEstimate>
+		getCommerceAvailabilityEstimates(int start, int end) {
 
 		return getService().getCommerceAvailabilityEstimates(start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.model.CommerceAvailabilityEstimate>
-			getCommerceAvailabilityEstimates(
-				long companyId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.commerce.model.CommerceAvailabilityEstimate>
-						orderByComparator) {
+	public static List<CommerceAvailabilityEstimate>
+		getCommerceAvailabilityEstimates(
+			long companyId, int start, int end,
+			OrderByComparator<CommerceAvailabilityEstimate> orderByComparator) {
 
 		return getService().getCommerceAvailabilityEstimates(
 			companyId, start, end, orderByComparator);
@@ -371,9 +359,8 @@ public class CommerceAvailabilityEstimateLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -388,51 +375,29 @@ public class CommerceAvailabilityEstimateLocalServiceUtil {
 	 * @param commerceAvailabilityEstimate the commerce availability estimate
 	 * @return the commerce availability estimate that was updated
 	 */
-	public static com.liferay.commerce.model.CommerceAvailabilityEstimate
+	public static CommerceAvailabilityEstimate
 		updateCommerceAvailabilityEstimate(
-			com.liferay.commerce.model.CommerceAvailabilityEstimate
-				commerceAvailabilityEstimate) {
+			CommerceAvailabilityEstimate commerceAvailabilityEstimate) {
 
 		return getService().updateCommerceAvailabilityEstimate(
 			commerceAvailabilityEstimate);
 	}
 
-	public static com.liferay.commerce.model.CommerceAvailabilityEstimate
+	public static CommerceAvailabilityEstimate
 			updateCommerceAvailabilityEstimate(
 				long commerceAvailabilityId,
-				java.util.Map<java.util.Locale, String> titleMap,
-				double priority,
+				Map<java.util.Locale, String> titleMap, double priority,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateCommerceAvailabilityEstimate(
 			commerceAvailabilityId, titleMap, priority, serviceContext);
 	}
 
 	public static CommerceAvailabilityEstimateLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceAvailabilityEstimateLocalService,
-		 CommerceAvailabilityEstimateLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommerceAvailabilityEstimateLocalService.class);
-
-		ServiceTracker
-			<CommerceAvailabilityEstimateLocalService,
-			 CommerceAvailabilityEstimateLocalService> serviceTracker =
-				new ServiceTracker
-					<CommerceAvailabilityEstimateLocalService,
-					 CommerceAvailabilityEstimateLocalService>(
-						 bundle.getBundleContext(),
-						 CommerceAvailabilityEstimateLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceAvailabilityEstimateLocalService _service;
 
 }

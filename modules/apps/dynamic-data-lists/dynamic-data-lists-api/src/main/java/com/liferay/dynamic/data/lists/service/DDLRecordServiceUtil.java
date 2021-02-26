@@ -14,9 +14,10 @@
 
 package com.liferay.dynamic.data.lists.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.dynamic.data.lists.model.DDLRecord;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for DDLRecord. This utility wraps
@@ -53,12 +54,12 @@ public class DDLRecordServiceUtil {
 	 * @return the record
 	 * @throws PortalException if a portal exception occurred
 	 */
-	public static com.liferay.dynamic.data.lists.model.DDLRecord addRecord(
+	public static DDLRecord addRecord(
 			long groupId, long recordSetId, int displayIndex,
 			com.liferay.dynamic.data.mapping.storage.DDMFormValues
 				ddmFormValues,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addRecord(
 			groupId, recordSetId, displayIndex, ddmFormValues, serviceContext);
@@ -70,9 +71,7 @@ public class DDLRecordServiceUtil {
 	 * @param recordId the primary key of the record to be deleted
 	 * @throws PortalException
 	 */
-	public static void deleteRecord(long recordId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static void deleteRecord(long recordId) throws PortalException {
 		getService().deleteRecord(recordId);
 	}
 
@@ -92,10 +91,7 @@ public class DDLRecordServiceUtil {
 	 * @return the record with the ID
 	 * @throws PortalException if a portal exception occurred
 	 */
-	public static com.liferay.dynamic.data.lists.model.DDLRecord getRecord(
-			long recordId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static DDLRecord getRecord(long recordId) throws PortalException {
 		return getService().getRecord(recordId);
 	}
 
@@ -106,9 +102,8 @@ public class DDLRecordServiceUtil {
 	 * @return the matching records
 	 * @throws PortalException if a portal exception occurred
 	 */
-	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord>
-			getRecords(long recordSetId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<DDLRecord> getRecords(long recordSetId)
+		throws PortalException {
 
 		return getService().getRecords(recordSetId);
 	}
@@ -125,7 +120,7 @@ public class DDLRecordServiceUtil {
 	public static void revertRecord(
 			long recordId, String version,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().revertRecord(recordId, version, serviceContext);
 	}
@@ -145,12 +140,12 @@ public class DDLRecordServiceUtil {
 	 * @return the record
 	 * @throws PortalException if a portal exception occurred
 	 */
-	public static com.liferay.dynamic.data.lists.model.DDLRecord updateRecord(
+	public static DDLRecord updateRecord(
 			long recordId, boolean majorVersion, int displayIndex,
 			com.liferay.dynamic.data.mapping.storage.DDMFormValues
 				ddmFormValues,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateRecord(
 			recordId, majorVersion, displayIndex, ddmFormValues,
@@ -158,22 +153,9 @@ public class DDLRecordServiceUtil {
 	}
 
 	public static DDLRecordService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<DDLRecordService, DDLRecordService>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(DDLRecordService.class);
-
-		ServiceTracker<DDLRecordService, DDLRecordService> serviceTracker =
-			new ServiceTracker<DDLRecordService, DDLRecordService>(
-				bundle.getBundleContext(), DDLRecordService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile DDLRecordService _service;
 
 }

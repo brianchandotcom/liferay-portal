@@ -14,7 +14,16 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.PortletPreferenceValue;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for PortletPreferenceValue. This utility wraps
@@ -46,10 +55,8 @@ public class PortletPreferenceValueLocalServiceUtil {
 	 * @param portletPreferenceValue the portlet preference value
 	 * @return the portlet preference value that was added
 	 */
-	public static com.liferay.portal.kernel.model.PortletPreferenceValue
-		addPortletPreferenceValue(
-			com.liferay.portal.kernel.model.PortletPreferenceValue
-				portletPreferenceValue) {
+	public static PortletPreferenceValue addPortletPreferenceValue(
+		PortletPreferenceValue portletPreferenceValue) {
 
 		return getService().addPortletPreferenceValue(portletPreferenceValue);
 	}
@@ -57,9 +64,9 @@ public class PortletPreferenceValueLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -70,8 +77,8 @@ public class PortletPreferenceValueLocalServiceUtil {
 	 * @param portletPreferenceValueId the primary key for the new portlet preference value
 	 * @return the new portlet preference value
 	 */
-	public static com.liferay.portal.kernel.model.PortletPreferenceValue
-		createPortletPreferenceValue(long portletPreferenceValueId) {
+	public static PortletPreferenceValue createPortletPreferenceValue(
+		long portletPreferenceValueId) {
 
 		return getService().createPortletPreferenceValue(
 			portletPreferenceValueId);
@@ -80,10 +87,9 @@ public class PortletPreferenceValueLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
@@ -99,9 +105,9 @@ public class PortletPreferenceValueLocalServiceUtil {
 	 * @return the portlet preference value that was removed
 	 * @throws PortalException if a portlet preference value with the primary key could not be found
 	 */
-	public static com.liferay.portal.kernel.model.PortletPreferenceValue
-			deletePortletPreferenceValue(long portletPreferenceValueId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PortletPreferenceValue deletePortletPreferenceValue(
+			long portletPreferenceValueId)
+		throws PortalException {
 
 		return getService().deletePortletPreferenceValue(
 			portletPreferenceValueId);
@@ -117,24 +123,18 @@ public class PortletPreferenceValueLocalServiceUtil {
 	 * @param portletPreferenceValue the portlet preference value
 	 * @return the portlet preference value that was removed
 	 */
-	public static com.liferay.portal.kernel.model.PortletPreferenceValue
-		deletePortletPreferenceValue(
-			com.liferay.portal.kernel.model.PortletPreferenceValue
-				portletPreferenceValue) {
+	public static PortletPreferenceValue deletePortletPreferenceValue(
+		PortletPreferenceValue portletPreferenceValue) {
 
 		return getService().deletePortletPreferenceValue(
 			portletPreferenceValue);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -144,9 +144,7 @@ public class PortletPreferenceValueLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -162,9 +160,8 @@ public class PortletPreferenceValueLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -182,10 +179,9 @@ public class PortletPreferenceValueLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -197,9 +193,7 @@ public class PortletPreferenceValueLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -211,14 +205,14 @@ public class PortletPreferenceValueLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.portal.kernel.model.PortletPreferenceValue
-		fetchPortletPreferenceValue(long portletPreferenceValueId) {
+	public static PortletPreferenceValue fetchPortletPreferenceValue(
+		long portletPreferenceValueId) {
 
 		return getService().fetchPortletPreferenceValue(
 			portletPreferenceValueId);
@@ -249,9 +243,8 @@ public class PortletPreferenceValueLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -263,9 +256,9 @@ public class PortletPreferenceValueLocalServiceUtil {
 	 * @return the portlet preference value
 	 * @throws PortalException if a portlet preference value with the primary key could not be found
 	 */
-	public static com.liferay.portal.kernel.model.PortletPreferenceValue
-			getPortletPreferenceValue(long portletPreferenceValueId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PortletPreferenceValue getPortletPreferenceValue(
+			long portletPreferenceValueId)
+		throws PortalException {
 
 		return getService().getPortletPreferenceValue(portletPreferenceValueId);
 	}
@@ -281,9 +274,8 @@ public class PortletPreferenceValueLocalServiceUtil {
 	 * @param end the upper bound of the range of portlet preference values (not inclusive)
 	 * @return the range of portlet preference values
 	 */
-	public static java.util.List
-		<com.liferay.portal.kernel.model.PortletPreferenceValue>
-			getPortletPreferenceValues(int start, int end) {
+	public static List<PortletPreferenceValue> getPortletPreferenceValues(
+		int start, int end) {
 
 		return getService().getPortletPreferenceValues(start, end);
 	}
@@ -313,26 +305,17 @@ public class PortletPreferenceValueLocalServiceUtil {
 	 * @param portletPreferenceValue the portlet preference value
 	 * @return the portlet preference value that was updated
 	 */
-	public static com.liferay.portal.kernel.model.PortletPreferenceValue
-		updatePortletPreferenceValue(
-			com.liferay.portal.kernel.model.PortletPreferenceValue
-				portletPreferenceValue) {
+	public static PortletPreferenceValue updatePortletPreferenceValue(
+		PortletPreferenceValue portletPreferenceValue) {
 
 		return getService().updatePortletPreferenceValue(
 			portletPreferenceValue);
 	}
 
 	public static PortletPreferenceValueLocalService getService() {
-		if (_service == null) {
-			_service =
-				(PortletPreferenceValueLocalService)
-					PortalBeanLocatorUtil.locate(
-						PortletPreferenceValueLocalService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static PortletPreferenceValueLocalService _service;
+	private static volatile PortletPreferenceValueLocalService _service;
 
 }

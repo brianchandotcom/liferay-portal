@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.service.base;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplateVersion;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateVersionLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateVersionLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateVersionPersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -47,10 +48,13 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -72,7 +76,7 @@ public abstract class DDMTemplateVersionLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>DDMTemplateVersionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.dynamic.data.mapping.service.DDMTemplateVersionLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>DDMTemplateVersionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>DDMTemplateVersionLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -383,6 +387,11 @@ public abstract class DDMTemplateVersionLocalServiceBaseImpl
 		return ddmTemplateVersionPersistence.update(ddmTemplateVersion);
 	}
 
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
+	}
+
 	@Override
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
@@ -395,6 +404,8 @@ public abstract class DDMTemplateVersionLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		ddmTemplateVersionLocalService =
 			(DDMTemplateVersionLocalService)aopProxy;
+
+		_setLocalServiceUtilService(ddmTemplateVersionLocalService);
 	}
 
 	/**
@@ -452,6 +463,23 @@ public abstract class DDMTemplateVersionLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		DDMTemplateVersionLocalService ddmTemplateVersionLocalService) {
+
+		try {
+			Field field =
+				DDMTemplateVersionLocalServiceUtil.class.getDeclaredField(
+					"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, ddmTemplateVersionLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

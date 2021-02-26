@@ -14,9 +14,16 @@
 
 package com.liferay.layout.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.layout.model.LayoutClassedModelUsage;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for LayoutClassedModelUsage. This utility wraps
@@ -37,10 +44,9 @@ public class LayoutClassedModelUsageLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.layout.service.impl.LayoutClassedModelUsageLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.layout.model.LayoutClassedModelUsage
-		addDefaultLayoutClassedModelUsage(
-			long groupId, long classNameId, long classPK,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+	public static LayoutClassedModelUsage addDefaultLayoutClassedModelUsage(
+		long groupId, long classNameId, long classPK,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 
 		return getService().addDefaultLayoutClassedModelUsage(
 			groupId, classNameId, classPK, serviceContext);
@@ -56,19 +62,16 @@ public class LayoutClassedModelUsageLocalServiceUtil {
 	 * @param layoutClassedModelUsage the layout classed model usage
 	 * @return the layout classed model usage that was added
 	 */
-	public static com.liferay.layout.model.LayoutClassedModelUsage
-		addLayoutClassedModelUsage(
-			com.liferay.layout.model.LayoutClassedModelUsage
-				layoutClassedModelUsage) {
+	public static LayoutClassedModelUsage addLayoutClassedModelUsage(
+		LayoutClassedModelUsage layoutClassedModelUsage) {
 
 		return getService().addLayoutClassedModelUsage(layoutClassedModelUsage);
 	}
 
-	public static com.liferay.layout.model.LayoutClassedModelUsage
-		addLayoutClassedModelUsage(
-			long groupId, long classNameId, long classPK, String containerKey,
-			long containerType, long plid,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+	public static LayoutClassedModelUsage addLayoutClassedModelUsage(
+		long groupId, long classNameId, long classPK, String containerKey,
+		long containerType, long plid,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 
 		return getService().addLayoutClassedModelUsage(
 			groupId, classNameId, classPK, containerKey, containerType, plid,
@@ -81,8 +84,8 @@ public class LayoutClassedModelUsageLocalServiceUtil {
 	 * @param layoutClassedModelUsageId the primary key for the new layout classed model usage
 	 * @return the new layout classed model usage
 	 */
-	public static com.liferay.layout.model.LayoutClassedModelUsage
-		createLayoutClassedModelUsage(long layoutClassedModelUsageId) {
+	public static LayoutClassedModelUsage createLayoutClassedModelUsage(
+		long layoutClassedModelUsageId) {
 
 		return getService().createLayoutClassedModelUsage(
 			layoutClassedModelUsageId);
@@ -91,9 +94,9 @@ public class LayoutClassedModelUsageLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -108,10 +111,8 @@ public class LayoutClassedModelUsageLocalServiceUtil {
 	 * @param layoutClassedModelUsage the layout classed model usage
 	 * @return the layout classed model usage that was removed
 	 */
-	public static com.liferay.layout.model.LayoutClassedModelUsage
-		deleteLayoutClassedModelUsage(
-			com.liferay.layout.model.LayoutClassedModelUsage
-				layoutClassedModelUsage) {
+	public static LayoutClassedModelUsage deleteLayoutClassedModelUsage(
+		LayoutClassedModelUsage layoutClassedModelUsage) {
 
 		return getService().deleteLayoutClassedModelUsage(
 			layoutClassedModelUsage);
@@ -128,9 +129,9 @@ public class LayoutClassedModelUsageLocalServiceUtil {
 	 * @return the layout classed model usage that was removed
 	 * @throws PortalException if a layout classed model usage with the primary key could not be found
 	 */
-	public static com.liferay.layout.model.LayoutClassedModelUsage
-			deleteLayoutClassedModelUsage(long layoutClassedModelUsageId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static LayoutClassedModelUsage deleteLayoutClassedModelUsage(
+			long layoutClassedModelUsageId)
+		throws PortalException {
 
 		return getService().deleteLayoutClassedModelUsage(
 			layoutClassedModelUsageId);
@@ -156,23 +157,18 @@ public class LayoutClassedModelUsageLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -182,9 +178,7 @@ public class LayoutClassedModelUsageLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -200,9 +194,8 @@ public class LayoutClassedModelUsageLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -220,10 +213,9 @@ public class LayoutClassedModelUsageLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -235,9 +227,7 @@ public class LayoutClassedModelUsageLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -249,23 +239,22 @@ public class LayoutClassedModelUsageLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.layout.model.LayoutClassedModelUsage
-		fetchLayoutClassedModelUsage(long layoutClassedModelUsageId) {
+	public static LayoutClassedModelUsage fetchLayoutClassedModelUsage(
+		long layoutClassedModelUsageId) {
 
 		return getService().fetchLayoutClassedModelUsage(
 			layoutClassedModelUsageId);
 	}
 
-	public static com.liferay.layout.model.LayoutClassedModelUsage
-		fetchLayoutClassedModelUsage(
-			long classNameId, long classPK, String containerKey,
-			long containerType, long plid) {
+	public static LayoutClassedModelUsage fetchLayoutClassedModelUsage(
+		long classNameId, long classPK, String containerKey, long containerType,
+		long plid) {
 
 		return getService().fetchLayoutClassedModelUsage(
 			classNameId, classPK, containerKey, containerType, plid);
@@ -278,7 +267,7 @@ public class LayoutClassedModelUsageLocalServiceUtil {
 	 * @param groupId the primary key of the group
 	 * @return the matching layout classed model usage, or <code>null</code> if a matching layout classed model usage could not be found
 	 */
-	public static com.liferay.layout.model.LayoutClassedModelUsage
+	public static LayoutClassedModelUsage
 		fetchLayoutClassedModelUsageByUuidAndGroupId(
 			String uuid, long groupId) {
 
@@ -314,9 +303,9 @@ public class LayoutClassedModelUsageLocalServiceUtil {
 	 * @return the layout classed model usage
 	 * @throws PortalException if a layout classed model usage with the primary key could not be found
 	 */
-	public static com.liferay.layout.model.LayoutClassedModelUsage
-			getLayoutClassedModelUsage(long layoutClassedModelUsageId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static LayoutClassedModelUsage getLayoutClassedModelUsage(
+			long layoutClassedModelUsageId)
+		throws PortalException {
 
 		return getService().getLayoutClassedModelUsage(
 			layoutClassedModelUsageId);
@@ -330,10 +319,10 @@ public class LayoutClassedModelUsageLocalServiceUtil {
 	 * @return the matching layout classed model usage
 	 * @throws PortalException if a matching layout classed model usage could not be found
 	 */
-	public static com.liferay.layout.model.LayoutClassedModelUsage
+	public static LayoutClassedModelUsage
 			getLayoutClassedModelUsageByUuidAndGroupId(
 				String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getLayoutClassedModelUsageByUuidAndGroupId(
 			uuid, groupId);
@@ -350,47 +339,36 @@ public class LayoutClassedModelUsageLocalServiceUtil {
 	 * @param end the upper bound of the range of layout classed model usages (not inclusive)
 	 * @return the range of layout classed model usages
 	 */
-	public static java.util.List
-		<com.liferay.layout.model.LayoutClassedModelUsage>
-			getLayoutClassedModelUsages(int start, int end) {
+	public static List<LayoutClassedModelUsage> getLayoutClassedModelUsages(
+		int start, int end) {
 
 		return getService().getLayoutClassedModelUsages(start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.layout.model.LayoutClassedModelUsage>
-			getLayoutClassedModelUsages(long classNameId, long classPK) {
+	public static List<LayoutClassedModelUsage> getLayoutClassedModelUsages(
+		long classNameId, long classPK) {
 
 		return getService().getLayoutClassedModelUsages(classNameId, classPK);
 	}
 
-	public static java.util.List
-		<com.liferay.layout.model.LayoutClassedModelUsage>
-			getLayoutClassedModelUsages(
-				long classNameId, long classPK, int type, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.layout.model.LayoutClassedModelUsage>
-						orderByComparator) {
+	public static List<LayoutClassedModelUsage> getLayoutClassedModelUsages(
+		long classNameId, long classPK, int type, int start, int end,
+		OrderByComparator<LayoutClassedModelUsage> orderByComparator) {
 
 		return getService().getLayoutClassedModelUsages(
 			classNameId, classPK, type, start, end, orderByComparator);
 	}
 
-	public static java.util.List
-		<com.liferay.layout.model.LayoutClassedModelUsage>
-			getLayoutClassedModelUsages(
-				long classNameId, long classPK, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.layout.model.LayoutClassedModelUsage>
-						orderByComparator) {
+	public static List<LayoutClassedModelUsage> getLayoutClassedModelUsages(
+		long classNameId, long classPK, int start, int end,
+		OrderByComparator<LayoutClassedModelUsage> orderByComparator) {
 
 		return getService().getLayoutClassedModelUsages(
 			classNameId, classPK, start, end, orderByComparator);
 	}
 
-	public static java.util.List
-		<com.liferay.layout.model.LayoutClassedModelUsage>
-			getLayoutClassedModelUsagesByPlid(long plid) {
+	public static List<LayoutClassedModelUsage>
+		getLayoutClassedModelUsagesByPlid(long plid) {
 
 		return getService().getLayoutClassedModelUsagesByPlid(plid);
 	}
@@ -402,10 +380,9 @@ public class LayoutClassedModelUsageLocalServiceUtil {
 	 * @param companyId the primary key of the company
 	 * @return the matching layout classed model usages, or an empty list if no matches were found
 	 */
-	public static java.util.List
-		<com.liferay.layout.model.LayoutClassedModelUsage>
-			getLayoutClassedModelUsagesByUuidAndCompanyId(
-				String uuid, long companyId) {
+	public static List<LayoutClassedModelUsage>
+		getLayoutClassedModelUsagesByUuidAndCompanyId(
+			String uuid, long companyId) {
 
 		return getService().getLayoutClassedModelUsagesByUuidAndCompanyId(
 			uuid, companyId);
@@ -421,13 +398,10 @@ public class LayoutClassedModelUsageLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the range of matching layout classed model usages, or an empty list if no matches were found
 	 */
-	public static java.util.List
-		<com.liferay.layout.model.LayoutClassedModelUsage>
-			getLayoutClassedModelUsagesByUuidAndCompanyId(
-				String uuid, long companyId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.layout.model.LayoutClassedModelUsage>
-						orderByComparator) {
+	public static List<LayoutClassedModelUsage>
+		getLayoutClassedModelUsagesByUuidAndCompanyId(
+			String uuid, long companyId, int start, int end,
+			OrderByComparator<LayoutClassedModelUsage> orderByComparator) {
 
 		return getService().getLayoutClassedModelUsagesByUuidAndCompanyId(
 			uuid, companyId, start, end, orderByComparator);
@@ -468,9 +442,8 @@ public class LayoutClassedModelUsageLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -499,39 +472,17 @@ public class LayoutClassedModelUsageLocalServiceUtil {
 	 * @param layoutClassedModelUsage the layout classed model usage
 	 * @return the layout classed model usage that was updated
 	 */
-	public static com.liferay.layout.model.LayoutClassedModelUsage
-		updateLayoutClassedModelUsage(
-			com.liferay.layout.model.LayoutClassedModelUsage
-				layoutClassedModelUsage) {
+	public static LayoutClassedModelUsage updateLayoutClassedModelUsage(
+		LayoutClassedModelUsage layoutClassedModelUsage) {
 
 		return getService().updateLayoutClassedModelUsage(
 			layoutClassedModelUsage);
 	}
 
 	public static LayoutClassedModelUsageLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<LayoutClassedModelUsageLocalService,
-		 LayoutClassedModelUsageLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			LayoutClassedModelUsageLocalService.class);
-
-		ServiceTracker
-			<LayoutClassedModelUsageLocalService,
-			 LayoutClassedModelUsageLocalService> serviceTracker =
-				new ServiceTracker
-					<LayoutClassedModelUsageLocalService,
-					 LayoutClassedModelUsageLocalService>(
-						 bundle.getBundleContext(),
-						 LayoutClassedModelUsageLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile LayoutClassedModelUsageLocalService _service;
 
 }

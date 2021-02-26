@@ -40,16 +40,20 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.view.count.model.ViewCountEntry;
 import com.liferay.view.count.service.ViewCountEntryLocalService;
+import com.liferay.view.count.service.ViewCountEntryLocalServiceUtil;
 import com.liferay.view.count.service.persistence.ViewCountEntryFinder;
 import com.liferay.view.count.service.persistence.ViewCountEntryPK;
 import com.liferay.view.count.service.persistence.ViewCountEntryPersistence;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -70,7 +74,7 @@ public abstract class ViewCountEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>ViewCountEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.view.count.service.ViewCountEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>ViewCountEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>ViewCountEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -377,6 +381,11 @@ public abstract class ViewCountEntryLocalServiceBaseImpl
 		return viewCountEntryPersistence.update(viewCountEntry);
 	}
 
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
+	}
+
 	@Override
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
@@ -388,6 +397,8 @@ public abstract class ViewCountEntryLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		viewCountEntryLocalService = (ViewCountEntryLocalService)aopProxy;
+
+		_setLocalServiceUtilService(viewCountEntryLocalService);
 	}
 
 	/**
@@ -429,6 +440,22 @@ public abstract class ViewCountEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		ViewCountEntryLocalService viewCountEntryLocalService) {
+
+		try {
+			Field field = ViewCountEntryLocalServiceUtil.class.getDeclaredField(
+				"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, viewCountEntryLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

@@ -16,6 +16,7 @@ package com.liferay.commerce.bom.service.base;
 
 import com.liferay.commerce.bom.model.CommerceBOMDefinition;
 import com.liferay.commerce.bom.service.CommerceBOMDefinitionService;
+import com.liferay.commerce.bom.service.CommerceBOMDefinitionServiceUtil;
 import com.liferay.commerce.bom.service.persistence.CommerceBOMDefinitionPersistence;
 import com.liferay.commerce.bom.service.persistence.CommerceBOMEntryPersistence;
 import com.liferay.commerce.bom.service.persistence.CommerceBOMFolderApplicationRelPersistence;
@@ -32,6 +33,8 @@ import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
+
+import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
 
@@ -53,7 +56,7 @@ public abstract class CommerceBOMDefinitionServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceBOMDefinitionService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.bom.service.CommerceBOMDefinitionServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceBOMDefinitionService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceBOMDefinitionServiceUtil</code>.
 	 */
 
 	/**
@@ -503,9 +506,11 @@ public abstract class CommerceBOMDefinitionServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
+		_setServiceUtilService(commerceBOMDefinitionService);
 	}
 
 	public void destroy() {
+		_setServiceUtilService(null);
 	}
 
 	/**
@@ -548,6 +553,23 @@ public abstract class CommerceBOMDefinitionServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setServiceUtilService(
+		CommerceBOMDefinitionService commerceBOMDefinitionService) {
+
+		try {
+			Field field =
+				CommerceBOMDefinitionServiceUtil.class.getDeclaredField(
+					"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, commerceBOMDefinitionService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

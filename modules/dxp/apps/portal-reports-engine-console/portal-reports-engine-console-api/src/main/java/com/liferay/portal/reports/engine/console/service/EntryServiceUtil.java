@@ -14,9 +14,11 @@
 
 package com.liferay.portal.reports.engine.console.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.reports.engine.console.model.Entry;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for Entry. This utility wraps
@@ -37,16 +39,14 @@ public class EntryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.reports.engine.console.service.impl.EntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.reports.engine.console.model.Entry
-			addEntry(
-				long groupId, long definitionId, String format,
-				boolean schedulerRequest, java.util.Date startDate,
-				java.util.Date endDate, boolean repeating, String recurrence,
-				String emailNotifications, String emailDelivery,
-				String portletId, String pageURL, String reportName,
-				String reportParameters,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static Entry addEntry(
+			long groupId, long definitionId, String format,
+			boolean schedulerRequest, java.util.Date startDate,
+			java.util.Date endDate, boolean repeating, String recurrence,
+			String emailNotifications, String emailDelivery, String portletId,
+			String pageURL, String reportName, String reportParameters,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addEntry(
 			groupId, definitionId, format, schedulerRequest, startDate, endDate,
@@ -56,27 +56,21 @@ public class EntryServiceUtil {
 
 	public static void deleteAttachment(
 			long companyId, long entryId, String fileName)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteAttachment(companyId, entryId, fileName);
 	}
 
-	public static com.liferay.portal.reports.engine.console.model.Entry
-			deleteEntry(long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static Entry deleteEntry(long entryId) throws PortalException {
 		return getService().deleteEntry(entryId);
 	}
 
-	public static java.util.List
-		<com.liferay.portal.reports.engine.console.model.Entry> getEntries(
-				long groupId, String definitionName, String userName,
-				java.util.Date createDateGT, java.util.Date createDateLT,
-				boolean andSearch, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.portal.reports.engine.console.model.Entry>
-						orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<Entry> getEntries(
+			long groupId, String definitionName, String userName,
+			java.util.Date createDateGT, java.util.Date createDateLT,
+			boolean andSearch, int start, int end,
+			OrderByComparator<Entry> orderByComparator)
+		throws PortalException {
 
 		return getService().getEntries(
 			groupId, definitionName, userName, createDateGT, createDateLT,
@@ -87,7 +81,7 @@ public class EntryServiceUtil {
 			long groupId, String definitionName, String userName,
 			java.util.Date createDateGT, java.util.Date createDateLT,
 			boolean andSearch)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getEntriesCount(
 			groupId, definitionName, userName, createDateGT, createDateLT,
@@ -106,34 +100,20 @@ public class EntryServiceUtil {
 	public static void sendEmails(
 			long entryId, String fileName, String[] emailAddresses,
 			boolean notification)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().sendEmails(
 			entryId, fileName, emailAddresses, notification);
 	}
 
-	public static void unscheduleEntry(long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static void unscheduleEntry(long entryId) throws PortalException {
 		getService().unscheduleEntry(entryId);
 	}
 
 	public static EntryService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<EntryService, EntryService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(EntryService.class);
-
-		ServiceTracker<EntryService, EntryService> serviceTracker =
-			new ServiceTracker<EntryService, EntryService>(
-				bundle.getBundleContext(), EntryService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile EntryService _service;
 
 }

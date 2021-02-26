@@ -14,7 +14,7 @@
 
 package com.liferay.counter.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import java.util.List;
 
 /**
  * Provides the local service utility for Counter. This utility wraps
@@ -35,7 +35,7 @@ public class CounterLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.counter.service.impl.CounterLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static java.util.List<String> getNames() {
+	public static List<String> getNames() {
 		return getService().getNames();
 	}
 
@@ -73,14 +73,9 @@ public class CounterLocalServiceUtil {
 	}
 
 	public static CounterLocalService getService() {
-		if (_service == null) {
-			_service = (CounterLocalService)PortalBeanLocatorUtil.locate(
-				CounterLocalService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static CounterLocalService _service;
+	private static volatile CounterLocalService _service;
 
 }

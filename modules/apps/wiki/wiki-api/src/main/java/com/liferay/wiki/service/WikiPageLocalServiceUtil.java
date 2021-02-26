@@ -14,9 +14,18 @@
 
 package com.liferay.wiki.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.wiki.model.WikiPage;
+
+import java.io.InputStream;
+import java.io.Serializable;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for WikiPage. This utility wraps
@@ -37,23 +46,23 @@ public class WikiPageLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.wiki.service.impl.WikiPageLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.wiki.model.WikiPage addPage(
+	public static WikiPage addPage(
 			long userId, long nodeId, String title, double version,
 			String content, String summary, boolean minorEdit, String format,
 			boolean head, String parentTitle, String redirectTitle,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addPage(
 			userId, nodeId, title, version, content, summary, minorEdit, format,
 			head, parentTitle, redirectTitle, serviceContext);
 	}
 
-	public static com.liferay.wiki.model.WikiPage addPage(
+	public static WikiPage addPage(
 			long userId, long nodeId, String title, String content,
 			String summary, boolean minorEdit,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addPage(
 			userId, nodeId, title, content, summary, minorEdit, serviceContext);
@@ -63,7 +72,7 @@ public class WikiPageLocalServiceUtil {
 			addPageAttachment(
 				long userId, long nodeId, String title, String fileName,
 				java.io.File file, String mimeType)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addPageAttachment(
 			userId, nodeId, title, fileName, file, mimeType);
@@ -72,21 +81,20 @@ public class WikiPageLocalServiceUtil {
 	public static com.liferay.portal.kernel.repository.model.FileEntry
 			addPageAttachment(
 				long userId, long nodeId, String title, String fileName,
-				java.io.InputStream inputStream, String mimeType)
-		throws com.liferay.portal.kernel.exception.PortalException {
+				InputStream inputStream, String mimeType)
+		throws PortalException {
 
 		return getService().addPageAttachment(
 			userId, nodeId, title, fileName, inputStream, mimeType);
 	}
 
-	public static java.util.List
-		<com.liferay.portal.kernel.repository.model.FileEntry>
-				addPageAttachments(
-					long userId, long nodeId, String title,
-					java.util.List
-						<com.liferay.portal.kernel.util.ObjectValuePair
-							<String, java.io.InputStream>> inputStreamOVPs)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<com.liferay.portal.kernel.repository.model.FileEntry>
+			addPageAttachments(
+				long userId, long nodeId, String title,
+				List
+					<com.liferay.portal.kernel.util.ObjectValuePair
+						<String, InputStream>> inputStreamOVPs)
+		throws PortalException {
 
 		return getService().addPageAttachments(
 			userId, nodeId, title, inputStreamOVPs);
@@ -95,26 +103,26 @@ public class WikiPageLocalServiceUtil {
 	public static void addPageResources(
 			long nodeId, String title, boolean addGroupPermissions,
 			boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().addPageResources(
 			nodeId, title, addGroupPermissions, addGuestPermissions);
 	}
 
 	public static void addPageResources(
-			com.liferay.wiki.model.WikiPage page, boolean addGroupPermissions,
+			WikiPage page, boolean addGroupPermissions,
 			boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().addPageResources(
 			page, addGroupPermissions, addGuestPermissions);
 	}
 
 	public static void addPageResources(
-			com.liferay.wiki.model.WikiPage page,
+			WikiPage page,
 			com.liferay.portal.kernel.service.permission.ModelPermissions
 				modelPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().addPageResources(page, modelPermissions);
 	}
@@ -122,8 +130,8 @@ public class WikiPageLocalServiceUtil {
 	public static com.liferay.portal.kernel.repository.model.FileEntry
 			addTempFileEntry(
 				long groupId, long userId, String folderName, String fileName,
-				java.io.InputStream inputStream, String mimeType)
-		throws com.liferay.portal.kernel.exception.PortalException {
+				InputStream inputStream, String mimeType)
+		throws PortalException {
 
 		return getService().addTempFileEntry(
 			groupId, userId, folderName, fileName, inputStream, mimeType);
@@ -139,16 +147,14 @@ public class WikiPageLocalServiceUtil {
 	 * @param wikiPage the wiki page
 	 * @return the wiki page that was added
 	 */
-	public static com.liferay.wiki.model.WikiPage addWikiPage(
-		com.liferay.wiki.model.WikiPage wikiPage) {
-
+	public static WikiPage addWikiPage(WikiPage wikiPage) {
 		return getService().addWikiPage(wikiPage);
 	}
 
-	public static com.liferay.wiki.model.WikiPage changeParent(
+	public static WikiPage changeParent(
 			long userId, long nodeId, String title, String newParentTitle,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().changeParent(
 			userId, nodeId, title, newParentTitle, serviceContext);
@@ -157,7 +163,7 @@ public class WikiPageLocalServiceUtil {
 	public static void copyPageAttachments(
 			long userId, long templateNodeId, String templateTitle, long nodeId,
 			String title)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().copyPageAttachments(
 			userId, templateNodeId, templateTitle, nodeId, title);
@@ -166,9 +172,9 @@ public class WikiPageLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -179,61 +185,56 @@ public class WikiPageLocalServiceUtil {
 	 * @param pageId the primary key for the new wiki page
 	 * @return the new wiki page
 	 */
-	public static com.liferay.wiki.model.WikiPage createWikiPage(long pageId) {
+	public static WikiPage createWikiPage(long pageId) {
 		return getService().createWikiPage(pageId);
 	}
 
 	public static void deletePage(long nodeId, String title)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deletePage(nodeId, title);
 	}
 
-	public static void deletePage(com.liferay.wiki.model.WikiPage page)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static void deletePage(WikiPage page) throws PortalException {
 		getService().deletePage(page);
 	}
 
 	public static void deletePageAttachment(
 			long nodeId, String title, String fileName)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deletePageAttachment(nodeId, title, fileName);
 	}
 
 	public static void deletePageAttachments(long nodeId, String title)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deletePageAttachments(nodeId, title);
 	}
 
-	public static void deletePages(long nodeId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static void deletePages(long nodeId) throws PortalException {
 		getService().deletePages(nodeId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
 	public static void deleteTempFileEntry(
 			long groupId, long userId, String folderName, String fileName)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteTempFileEntry(groupId, userId, folderName, fileName);
 	}
 
 	public static void deleteTrashPageAttachments(long nodeId, String title)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteTrashPageAttachments(nodeId, title);
 	}
@@ -249,9 +250,7 @@ public class WikiPageLocalServiceUtil {
 	 * @return the wiki page that was removed
 	 * @throws PortalException if a wiki page with the primary key could not be found
 	 */
-	public static com.liferay.wiki.model.WikiPage deleteWikiPage(long pageId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static WikiPage deleteWikiPage(long pageId) throws PortalException {
 		return getService().deleteWikiPage(pageId);
 	}
 
@@ -265,27 +264,21 @@ public class WikiPageLocalServiceUtil {
 	 * @param wikiPage the wiki page
 	 * @return the wiki page that was removed
 	 */
-	public static com.liferay.wiki.model.WikiPage deleteWikiPage(
-		com.liferay.wiki.model.WikiPage wikiPage) {
-
+	public static WikiPage deleteWikiPage(WikiPage wikiPage) {
 		return getService().deleteWikiPage(wikiPage);
 	}
 
 	public static void discardDraft(long nodeId, String title, double version)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().discardDraft(nodeId, title, version);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -295,9 +288,7 @@ public class WikiPageLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -313,9 +304,8 @@ public class WikiPageLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -333,10 +323,9 @@ public class WikiPageLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -348,9 +337,7 @@ public class WikiPageLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -362,52 +349,48 @@ public class WikiPageLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.wiki.model.WikiPage fetchLatestPage(
+	public static WikiPage fetchLatestPage(
 		long resourcePrimKey, int status, boolean preferApproved) {
 
 		return getService().fetchLatestPage(
 			resourcePrimKey, status, preferApproved);
 	}
 
-	public static com.liferay.wiki.model.WikiPage fetchLatestPage(
+	public static WikiPage fetchLatestPage(
 		long resourcePrimKey, long nodeId, int status, boolean preferApproved) {
 
 		return getService().fetchLatestPage(
 			resourcePrimKey, nodeId, status, preferApproved);
 	}
 
-	public static com.liferay.wiki.model.WikiPage fetchLatestPage(
+	public static WikiPage fetchLatestPage(
 		long nodeId, String title, int status, boolean preferApproved) {
 
 		return getService().fetchLatestPage(
 			nodeId, title, status, preferApproved);
 	}
 
-	public static com.liferay.wiki.model.WikiPage fetchPage(
-		long resourcePrimKey) {
-
+	public static WikiPage fetchPage(long resourcePrimKey) {
 		return getService().fetchPage(resourcePrimKey);
 	}
 
-	public static com.liferay.wiki.model.WikiPage fetchPage(
-		long nodeId, String title) {
-
+	public static WikiPage fetchPage(long nodeId, String title) {
 		return getService().fetchPage(nodeId, title);
 	}
 
-	public static com.liferay.wiki.model.WikiPage fetchPage(
+	public static WikiPage fetchPage(
 		long nodeId, String title, double version) {
 
 		return getService().fetchPage(nodeId, title, version);
 	}
 
-	public static com.liferay.wiki.model.WikiPage fetchWikiPage(long pageId) {
+	public static WikiPage fetchWikiPage(long pageId) {
 		return getService().fetchWikiPage(pageId);
 	}
 
@@ -418,7 +401,7 @@ public class WikiPageLocalServiceUtil {
 	 * @param groupId the primary key of the group
 	 * @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
 	 */
-	public static com.liferay.wiki.model.WikiPage fetchWikiPageByUuidAndGroupId(
+	public static WikiPage fetchWikiPageByUuidAndGroupId(
 		String uuid, long groupId) {
 
 		return getService().fetchWikiPageByUuidAndGroupId(uuid, groupId);
@@ -430,29 +413,27 @@ public class WikiPageLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
-	public static java.util.List<com.liferay.wiki.model.WikiPage> getChildren(
+	public static List<WikiPage> getChildren(
 		long nodeId, boolean head, String parentTitle) {
 
 		return getService().getChildren(nodeId, head, parentTitle);
 	}
 
-	public static java.util.List<com.liferay.wiki.model.WikiPage> getChildren(
+	public static List<WikiPage> getChildren(
 		long nodeId, boolean head, String parentTitle, int status) {
 
 		return getService().getChildren(nodeId, head, parentTitle, status);
 	}
 
-	public static java.util.List<com.liferay.wiki.model.WikiPage> getChildren(
+	public static List<WikiPage> getChildren(
 		long nodeId, boolean head, String parentTitle, int start, int end) {
 
 		return getService().getChildren(nodeId, head, parentTitle, start, end);
 	}
 
-	public static java.util.List<com.liferay.wiki.model.WikiPage> getChildren(
+	public static List<WikiPage> getChildren(
 		long nodeId, boolean head, String parentTitle, int status, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<com.liferay.wiki.model.WikiPage> orderByComparator) {
+		int end, OrderByComparator<WikiPage> orderByComparator) {
 
 		return getService().getChildren(
 			nodeId, head, parentTitle, status, start, end, orderByComparator);
@@ -470,8 +451,8 @@ public class WikiPageLocalServiceUtil {
 		return getService().getChildrenCount(nodeId, head, parentTitle, status);
 	}
 
-	public static java.util.List<com.liferay.wiki.model.WikiPage>
-		getDependentPages(long nodeId, boolean head, String title, int status) {
+	public static List<WikiPage> getDependentPages(
+		long nodeId, boolean head, String title, int status) {
 
 		return getService().getDependentPages(nodeId, head, title, status);
 	}
@@ -481,16 +462,15 @@ public class WikiPageLocalServiceUtil {
 			java.util.function.Supplier<javax.portlet.PortletURL>
 				editPageURLSupplier,
 			String attachmentURLPrefix)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getDisplay(
 			nodeId, title, viewPageURL, editPageURLSupplier,
 			attachmentURLPrefix);
 	}
 
-	public static com.liferay.wiki.model.WikiPage getDraftPage(
-			long nodeId, String title)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static WikiPage getDraftPage(long nodeId, String title)
+		throws PortalException {
 
 		return getService().getDraftPage(nodeId, title);
 	}
@@ -503,9 +483,8 @@ public class WikiPageLocalServiceUtil {
 		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
-	public static java.util.List<com.liferay.wiki.model.WikiPage>
-			getIncomingLinks(long nodeId, String title)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<WikiPage> getIncomingLinks(long nodeId, String title)
+		throws PortalException {
 
 		return getService().getIncomingLinks(nodeId, title);
 	}
@@ -517,41 +496,39 @@ public class WikiPageLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
-	public static com.liferay.wiki.model.WikiPage getLatestPage(
+	public static WikiPage getLatestPage(
 			long resourcePrimKey, int status, boolean preferApproved)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getLatestPage(
 			resourcePrimKey, status, preferApproved);
 	}
 
-	public static com.liferay.wiki.model.WikiPage getLatestPage(
+	public static WikiPage getLatestPage(
 			long resourcePrimKey, long nodeId, int status,
 			boolean preferApproved)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getLatestPage(
 			resourcePrimKey, nodeId, status, preferApproved);
 	}
 
-	public static com.liferay.wiki.model.WikiPage getLatestPage(
+	public static WikiPage getLatestPage(
 			long nodeId, String title, int status, boolean preferApproved)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getLatestPage(
 			nodeId, title, status, preferApproved);
 	}
 
-	public static java.util.List<com.liferay.wiki.model.WikiPage> getOrphans(
-			java.util.List<com.liferay.wiki.model.WikiPage> pages)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<WikiPage> getOrphans(List<WikiPage> pages)
+		throws PortalException {
 
 		return getService().getOrphans(pages);
 	}
 
-	public static java.util.List<com.liferay.wiki.model.WikiPage> getOrphans(
-			long nodeId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<WikiPage> getOrphans(long nodeId)
+		throws PortalException {
 
 		return getService().getOrphans(nodeId);
 	}
@@ -565,78 +542,69 @@ public class WikiPageLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static java.util.List<com.liferay.wiki.model.WikiPage>
-			getOutgoingLinks(long nodeId, String title)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<WikiPage> getOutgoingLinks(long nodeId, String title)
+		throws PortalException {
 
 		return getService().getOutgoingLinks(nodeId, title);
 	}
 
-	public static com.liferay.wiki.model.WikiPage getPage(long resourcePrimKey)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static WikiPage getPage(long resourcePrimKey)
+		throws PortalException {
 
 		return getService().getPage(resourcePrimKey);
 	}
 
-	public static com.liferay.wiki.model.WikiPage getPage(
-			long resourcePrimKey, Boolean head)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static WikiPage getPage(long resourcePrimKey, Boolean head)
+		throws PortalException {
 
 		return getService().getPage(resourcePrimKey, head);
 	}
 
-	public static com.liferay.wiki.model.WikiPage getPage(
-			long nodeId, String title)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static WikiPage getPage(long nodeId, String title)
+		throws PortalException {
 
 		return getService().getPage(nodeId, title);
 	}
 
-	public static com.liferay.wiki.model.WikiPage getPage(
-			long nodeId, String title, Boolean head)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static WikiPage getPage(long nodeId, String title, Boolean head)
+		throws PortalException {
 
 		return getService().getPage(nodeId, title, head);
 	}
 
-	public static com.liferay.wiki.model.WikiPage getPage(
-			long nodeId, String title, double version)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static WikiPage getPage(long nodeId, String title, double version)
+		throws PortalException {
 
 		return getService().getPage(nodeId, title, version);
 	}
 
-	public static com.liferay.wiki.model.WikiPage getPageByPageId(long pageId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static WikiPage getPageByPageId(long pageId) throws PortalException {
 		return getService().getPageByPageId(pageId);
 	}
 
 	public static com.liferay.wiki.model.WikiPageDisplay getPageDisplay(
 			long nodeId, String title, javax.portlet.PortletURL viewPageURL,
 			javax.portlet.PortletURL editPageURL, String attachmentURLPrefix)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getPageDisplay(
 			nodeId, title, viewPageURL, editPageURL, attachmentURLPrefix);
 	}
 
 	public static com.liferay.wiki.model.WikiPageDisplay getPageDisplay(
-			com.liferay.wiki.model.WikiPage page,
-			javax.portlet.PortletURL viewPageURL,
+			WikiPage page, javax.portlet.PortletURL viewPageURL,
 			javax.portlet.PortletURL editPageURL, String attachmentURLPrefix)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getPageDisplay(
 			page, viewPageURL, editPageURL, attachmentURLPrefix);
 	}
 
 	public static com.liferay.wiki.model.WikiPageDisplay getPageDisplay(
-			com.liferay.wiki.model.WikiPage page,
-			javax.portlet.PortletURL viewPageURL,
+			WikiPage page, javax.portlet.PortletURL viewPageURL,
 			javax.portlet.PortletURL editPageURL, String attachmentURLPrefix,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getPageDisplay(
 			page, viewPageURL, editPageURL, attachmentURLPrefix,
@@ -644,99 +612,90 @@ public class WikiPageLocalServiceUtil {
 	}
 
 	public static com.liferay.wiki.model.WikiPageDisplay getPageDisplay(
-			com.liferay.wiki.model.WikiPage page,
-			javax.portlet.PortletURL viewPageURL,
+			WikiPage page, javax.portlet.PortletURL viewPageURL,
 			java.util.function.Supplier<javax.portlet.PortletURL>
 				editPageURLSupplier,
 			String attachmentURLPrefix,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getPageDisplay(
 			page, viewPageURL, editPageURLSupplier, attachmentURLPrefix,
 			serviceContext);
 	}
 
-	public static java.util.List<com.liferay.wiki.model.WikiPage> getPages(
+	public static List<WikiPage> getPages(
 		long nodeId, boolean head, int start, int end) {
 
 		return getService().getPages(nodeId, head, start, end);
 	}
 
-	public static java.util.List<com.liferay.wiki.model.WikiPage> getPages(
+	public static List<WikiPage> getPages(
 		long nodeId, boolean head, int status, int start, int end) {
 
 		return getService().getPages(nodeId, head, status, start, end);
 	}
 
-	public static java.util.List<com.liferay.wiki.model.WikiPage> getPages(
+	public static List<WikiPage> getPages(
 		long nodeId, boolean head, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<com.liferay.wiki.model.WikiPage> orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 
 		return getService().getPages(
 			nodeId, head, status, start, end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.wiki.model.WikiPage> getPages(
+	public static List<WikiPage> getPages(
 		long nodeId, boolean head, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<com.liferay.wiki.model.WikiPage> orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 
 		return getService().getPages(
 			nodeId, head, start, end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.wiki.model.WikiPage> getPages(
-		long nodeId, int start, int end) {
-
+	public static List<WikiPage> getPages(long nodeId, int start, int end) {
 		return getService().getPages(nodeId, start, end);
 	}
 
-	public static java.util.List<com.liferay.wiki.model.WikiPage> getPages(
+	public static List<WikiPage> getPages(
 		long nodeId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<com.liferay.wiki.model.WikiPage> orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 
 		return getService().getPages(nodeId, start, end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.wiki.model.WikiPage> getPages(
+	public static List<WikiPage> getPages(
 		long resourcePrimKey, long nodeId, int status) {
 
 		return getService().getPages(resourcePrimKey, nodeId, status);
 	}
 
-	public static java.util.List<com.liferay.wiki.model.WikiPage> getPages(
+	public static List<WikiPage> getPages(
 		long userId, long nodeId, int status, int start, int end) {
 
 		return getService().getPages(userId, nodeId, status, start, end);
 	}
 
-	public static java.util.List<com.liferay.wiki.model.WikiPage> getPages(
+	public static List<WikiPage> getPages(
 		long nodeId, String title, boolean head, int start, int end) {
 
 		return getService().getPages(nodeId, title, head, start, end);
 	}
 
-	public static java.util.List<com.liferay.wiki.model.WikiPage> getPages(
+	public static List<WikiPage> getPages(
 		long nodeId, String title, int start, int end) {
 
 		return getService().getPages(nodeId, title, start, end);
 	}
 
-	public static java.util.List<com.liferay.wiki.model.WikiPage> getPages(
+	public static List<WikiPage> getPages(
 		long nodeId, String title, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<com.liferay.wiki.model.WikiPage> orderByComparator) {
+		OrderByComparator<WikiPage> orderByComparator) {
 
 		return getService().getPages(
 			nodeId, title, start, end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.wiki.model.WikiPage> getPages(
-		String format) {
-
+	public static List<WikiPage> getPages(String format) {
 		return getService().getPages(format);
 	}
 
@@ -772,10 +731,9 @@ public class WikiPageLocalServiceUtil {
 		return getService().getPagesCount(format);
 	}
 
-	public static java.util.List
-		<? extends com.liferay.portal.kernel.model.PersistedModel>
-				getPersistedModel(long resourcePrimKey)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<? extends PersistedModel> getPersistedModel(
+			long resourcePrimKey)
+		throws PortalException {
 
 		return getService().getPersistedModel(resourcePrimKey);
 	}
@@ -783,22 +741,20 @@ public class WikiPageLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static com.liferay.wiki.model.WikiPage getPreviousVersionPage(
-			com.liferay.wiki.model.WikiPage page)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static WikiPage getPreviousVersionPage(WikiPage page)
+		throws PortalException {
 
 		return getService().getPreviousVersionPage(page);
 	}
 
-	public static java.util.List<com.liferay.wiki.model.WikiPage>
-		getRecentChanges(long groupId, long nodeId, int start, int end) {
+	public static List<WikiPage> getRecentChanges(
+		long groupId, long nodeId, int start, int end) {
 
 		return getService().getRecentChanges(groupId, nodeId, start, end);
 	}
@@ -807,23 +763,22 @@ public class WikiPageLocalServiceUtil {
 		return getService().getRecentChangesCount(groupId, nodeId);
 	}
 
-	public static java.util.List<com.liferay.wiki.model.WikiPage>
-		getRedirectorPages(
-			long nodeId, boolean head, String redirectTitle, int status) {
+	public static List<WikiPage> getRedirectorPages(
+		long nodeId, boolean head, String redirectTitle, int status) {
 
 		return getService().getRedirectorPages(
 			nodeId, head, redirectTitle, status);
 	}
 
-	public static java.util.List<com.liferay.wiki.model.WikiPage>
-		getRedirectorPages(long nodeId, String redirectTitle) {
+	public static List<WikiPage> getRedirectorPages(
+		long nodeId, String redirectTitle) {
 
 		return getService().getRedirectorPages(nodeId, redirectTitle);
 	}
 
 	public static String[] getTempFileNames(
 			long groupId, long userId, String folderName)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getTempFileNames(groupId, userId, folderName);
 	}
@@ -835,9 +790,7 @@ public class WikiPageLocalServiceUtil {
 	 * @return the wiki page
 	 * @throws PortalException if a wiki page with the primary key could not be found
 	 */
-	public static com.liferay.wiki.model.WikiPage getWikiPage(long pageId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static WikiPage getWikiPage(long pageId) throws PortalException {
 		return getService().getWikiPage(pageId);
 	}
 
@@ -849,9 +802,9 @@ public class WikiPageLocalServiceUtil {
 	 * @return the matching wiki page
 	 * @throws PortalException if a matching wiki page could not be found
 	 */
-	public static com.liferay.wiki.model.WikiPage getWikiPageByUuidAndGroupId(
+	public static WikiPage getWikiPageByUuidAndGroupId(
 			String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getWikiPageByUuidAndGroupId(uuid, groupId);
 	}
@@ -867,9 +820,7 @@ public class WikiPageLocalServiceUtil {
 	 * @param end the upper bound of the range of wiki pages (not inclusive)
 	 * @return the range of wiki pages
 	 */
-	public static java.util.List<com.liferay.wiki.model.WikiPage> getWikiPages(
-		int start, int end) {
-
+	public static List<WikiPage> getWikiPages(int start, int end) {
 		return getService().getWikiPages(start, end);
 	}
 
@@ -880,8 +831,8 @@ public class WikiPageLocalServiceUtil {
 	 * @param companyId the primary key of the company
 	 * @return the matching wiki pages, or an empty list if no matches were found
 	 */
-	public static java.util.List<com.liferay.wiki.model.WikiPage>
-		getWikiPagesByUuidAndCompanyId(String uuid, long companyId) {
+	public static List<WikiPage> getWikiPagesByUuidAndCompanyId(
+		String uuid, long companyId) {
 
 		return getService().getWikiPagesByUuidAndCompanyId(uuid, companyId);
 	}
@@ -896,11 +847,9 @@ public class WikiPageLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the range of matching wiki pages, or an empty list if no matches were found
 	 */
-	public static java.util.List<com.liferay.wiki.model.WikiPage>
-		getWikiPagesByUuidAndCompanyId(
-			String uuid, long companyId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.wiki.model.WikiPage> orderByComparator) {
+	public static List<WikiPage> getWikiPagesByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<WikiPage> orderByComparator) {
 
 		return getService().getWikiPagesByUuidAndCompanyId(
 			uuid, companyId, start, end, orderByComparator);
@@ -919,9 +868,8 @@ public class WikiPageLocalServiceUtil {
 		return getService().hasDraftPage(nodeId, title);
 	}
 
-	public static void moveDependentToTrash(
-			com.liferay.wiki.model.WikiPage page, long trashEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static void moveDependentToTrash(WikiPage page, long trashEntryId)
+		throws PortalException {
 
 		getService().moveDependentToTrash(page, trashEntryId);
 	}
@@ -929,38 +877,37 @@ public class WikiPageLocalServiceUtil {
 	public static com.liferay.portal.kernel.repository.model.FileEntry
 			movePageAttachmentToTrash(
 				long userId, long nodeId, String title, String fileName)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().movePageAttachmentToTrash(
 			userId, nodeId, title, fileName);
 	}
 
-	public static com.liferay.wiki.model.WikiPage movePageFromTrash(
+	public static WikiPage movePageFromTrash(
 			long userId, long nodeId, String title, long newNodeId,
 			String newParentTitle)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().movePageFromTrash(
 			userId, nodeId, title, newNodeId, newParentTitle);
 	}
 
-	public static com.liferay.wiki.model.WikiPage movePageToTrash(
+	public static WikiPage movePageToTrash(
 			long userId, long nodeId, String title)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().movePageToTrash(userId, nodeId, title);
 	}
 
-	public static com.liferay.wiki.model.WikiPage movePageToTrash(
+	public static WikiPage movePageToTrash(
 			long userId, long nodeId, String title, double version)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().movePageToTrash(userId, nodeId, title, version);
 	}
 
-	public static com.liferay.wiki.model.WikiPage movePageToTrash(
-			long userId, com.liferay.wiki.model.WikiPage page)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static WikiPage movePageToTrash(long userId, WikiPage page)
+		throws PortalException {
 
 		return getService().movePageToTrash(userId, page);
 	}
@@ -969,7 +916,7 @@ public class WikiPageLocalServiceUtil {
 			long userId, long nodeId, String title, String newTitle,
 			boolean strict,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().renamePage(
 			userId, nodeId, title, newTitle, strict, serviceContext);
@@ -978,7 +925,7 @@ public class WikiPageLocalServiceUtil {
 	public static void renamePage(
 			long userId, long nodeId, String title, String newTitle,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().renamePage(
 			userId, nodeId, title, newTitle, serviceContext);
@@ -986,45 +933,43 @@ public class WikiPageLocalServiceUtil {
 
 	public static void restorePageAttachmentFromTrash(
 			long userId, long nodeId, String title, String fileName)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().restorePageAttachmentFromTrash(
 			userId, nodeId, title, fileName);
 	}
 
-	public static void restorePageFromTrash(
-			long userId, com.liferay.wiki.model.WikiPage page)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static void restorePageFromTrash(long userId, WikiPage page)
+		throws PortalException {
 
 		getService().restorePageFromTrash(userId, page);
 	}
 
-	public static com.liferay.wiki.model.WikiPage revertPage(
+	public static WikiPage revertPage(
 			long userId, long nodeId, String title, double version,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().revertPage(
 			userId, nodeId, title, version, serviceContext);
 	}
 
 	public static void subscribePage(long userId, long nodeId, String title)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().subscribePage(userId, nodeId, title);
 	}
 
 	public static void unsubscribePage(long userId, long nodeId, String title)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().unsubscribePage(userId, nodeId, title);
 	}
 
 	public static void updateAsset(
-			long userId, com.liferay.wiki.model.WikiPage page,
-			long[] assetCategoryIds, String[] assetTagNames,
-			long[] assetLinkEntryIds, Double priority)
-		throws com.liferay.portal.kernel.exception.PortalException {
+			long userId, WikiPage page, long[] assetCategoryIds,
+			String[] assetTagNames, long[] assetLinkEntryIds, Double priority)
+		throws PortalException {
 
 		getService().updateAsset(
 			userId, page, assetCategoryIds, assetTagNames, assetLinkEntryIds,
@@ -1037,32 +982,32 @@ public class WikiPageLocalServiceUtil {
 		getService().updateLastPostDate(nodeId, lastPostDate);
 	}
 
-	public static com.liferay.wiki.model.WikiPage updatePage(
+	public static WikiPage updatePage(
 			long userId, long nodeId, String title, double version,
 			String content, String summary, boolean minorEdit, String format,
 			String parentTitle, String redirectTitle,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updatePage(
 			userId, nodeId, title, version, content, summary, minorEdit, format,
 			parentTitle, redirectTitle, serviceContext);
 	}
 
-	public static com.liferay.wiki.model.WikiPage updateStatus(
+	public static WikiPage updateStatus(
 			long userId, long resourcePrimKey, int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateStatus(
 			userId, resourcePrimKey, status, serviceContext);
 	}
 
-	public static com.liferay.wiki.model.WikiPage updateStatus(
-			long userId, com.liferay.wiki.model.WikiPage page, int status,
+	public static WikiPage updateStatus(
+			long userId, WikiPage page, int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext,
-			java.util.Map<String, java.io.Serializable> workflowContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+			Map<String, Serializable> workflowContext)
+		throws PortalException {
 
 		return getService().updateStatus(
 			userId, page, status, serviceContext, workflowContext);
@@ -1078,38 +1023,21 @@ public class WikiPageLocalServiceUtil {
 	 * @param wikiPage the wiki page
 	 * @return the wiki page that was updated
 	 */
-	public static com.liferay.wiki.model.WikiPage updateWikiPage(
-		com.liferay.wiki.model.WikiPage wikiPage) {
-
+	public static WikiPage updateWikiPage(WikiPage wikiPage) {
 		return getService().updateWikiPage(wikiPage);
 	}
 
-	public static com.liferay.wiki.model.WikiPage updateWikiPage(
-		com.liferay.wiki.model.WikiPage wikiPage,
+	public static WikiPage updateWikiPage(
+		WikiPage wikiPage,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 
 		return getService().updateWikiPage(wikiPage, serviceContext);
 	}
 
 	public static WikiPageLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<WikiPageLocalService, WikiPageLocalService>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(WikiPageLocalService.class);
-
-		ServiceTracker<WikiPageLocalService, WikiPageLocalService>
-			serviceTracker =
-				new ServiceTracker<WikiPageLocalService, WikiPageLocalService>(
-					bundle.getBundleContext(), WikiPageLocalService.class,
-					null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile WikiPageLocalService _service;
 
 }

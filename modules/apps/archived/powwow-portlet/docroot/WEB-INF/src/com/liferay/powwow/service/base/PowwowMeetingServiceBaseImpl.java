@@ -27,10 +27,13 @@ import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.powwow.model.PowwowMeeting;
 import com.liferay.powwow.service.PowwowMeetingService;
+import com.liferay.powwow.service.PowwowMeetingServiceUtil;
 import com.liferay.powwow.service.persistence.PowwowMeetingFinder;
 import com.liferay.powwow.service.persistence.PowwowMeetingPersistence;
 import com.liferay.powwow.service.persistence.PowwowParticipantPersistence;
 import com.liferay.powwow.service.persistence.PowwowServerPersistence;
+
+import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
 
@@ -52,7 +55,7 @@ public abstract class PowwowMeetingServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>PowwowMeetingService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.powwow.service.PowwowMeetingServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>PowwowMeetingService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>PowwowMeetingServiceUtil</code>.
 	 */
 
 	/**
@@ -419,9 +422,11 @@ public abstract class PowwowMeetingServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
+		_setServiceUtilService(powwowMeetingService);
 	}
 
 	public void destroy() {
+		_setServiceUtilService(null);
 	}
 
 	/**
@@ -463,6 +468,22 @@ public abstract class PowwowMeetingServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setServiceUtilService(
+		PowwowMeetingService powwowMeetingService) {
+
+		try {
+			Field field = PowwowMeetingServiceUtil.class.getDeclaredField(
+				"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, powwowMeetingService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

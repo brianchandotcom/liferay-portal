@@ -14,9 +14,8 @@
 
 package com.liferay.sharing.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.sharing.model.SharingEntry;
 
 /**
  * Provides the remote service utility for SharingEntry. This utility wraps
@@ -57,16 +56,15 @@ public class SharingEntryServiceUtil {
 	 {@code null} value), if the to/from user IDs are the same, or if
 	 the expiration date is a past value
 	 */
-	public static com.liferay.sharing.model.SharingEntry
-			addOrUpdateSharingEntry(
-				long toUserId, long classNameId, long classPK, long groupId,
-				boolean shareable,
-				java.util.Collection
-					<com.liferay.sharing.security.permission.SharingEntryAction>
-						sharingEntryActions,
-				java.util.Date expirationDate,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static SharingEntry addOrUpdateSharingEntry(
+			long toUserId, long classNameId, long classPK, long groupId,
+			boolean shareable,
+			java.util.Collection
+				<com.liferay.sharing.security.permission.SharingEntryAction>
+					sharingEntryActions,
+			java.util.Date expirationDate,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addOrUpdateSharingEntry(
 			toUserId, classNameId, classPK, groupId, shareable,
@@ -93,7 +91,7 @@ public class SharingEntryServiceUtil {
 	 null} value), if the to/from user IDs are the same, or if the
 	 expiration date is a past value
 	 */
-	public static com.liferay.sharing.model.SharingEntry addSharingEntry(
+	public static SharingEntry addSharingEntry(
 			long toUserId, long classNameId, long classPK, long groupId,
 			boolean shareable,
 			java.util.Collection
@@ -101,17 +99,17 @@ public class SharingEntryServiceUtil {
 					sharingEntryActions,
 			java.util.Date expirationDate,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addSharingEntry(
 			toUserId, classNameId, classPK, groupId, shareable,
 			sharingEntryActions, expirationDate, serviceContext);
 	}
 
-	public static com.liferay.sharing.model.SharingEntry deleteSharingEntry(
+	public static SharingEntry deleteSharingEntry(
 			long sharingEntryId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().deleteSharingEntry(sharingEntryId, serviceContext);
 	}
@@ -140,14 +138,14 @@ public class SharingEntryServiceUtil {
 	 {@code SharingEntryAction#VIEW}, or contain a {@code null}
 	 value), or if the expiration date is a past value
 	 */
-	public static com.liferay.sharing.model.SharingEntry updateSharingEntry(
+	public static SharingEntry updateSharingEntry(
 			long sharingEntryId,
 			java.util.Collection
 				<com.liferay.sharing.security.permission.SharingEntryAction>
 					sharingEntryActions,
 			boolean shareable, java.util.Date expirationDate,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateSharingEntry(
 			sharingEntryId, sharingEntryActions, shareable, expirationDate,
@@ -155,23 +153,9 @@ public class SharingEntryServiceUtil {
 	}
 
 	public static SharingEntryService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<SharingEntryService, SharingEntryService>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(SharingEntryService.class);
-
-		ServiceTracker<SharingEntryService, SharingEntryService>
-			serviceTracker =
-				new ServiceTracker<SharingEntryService, SharingEntryService>(
-					bundle.getBundleContext(), SharingEntryService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile SharingEntryService _service;
 
 }

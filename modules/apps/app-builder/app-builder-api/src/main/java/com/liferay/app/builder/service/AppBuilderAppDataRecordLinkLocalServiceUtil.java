@@ -14,9 +14,16 @@
 
 package com.liferay.app.builder.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.app.builder.model.AppBuilderAppDataRecordLink;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for AppBuilderAppDataRecordLink. This utility wraps
@@ -48,10 +55,8 @@ public class AppBuilderAppDataRecordLinkLocalServiceUtil {
 	 * @param appBuilderAppDataRecordLink the app builder app data record link
 	 * @return the app builder app data record link that was added
 	 */
-	public static com.liferay.app.builder.model.AppBuilderAppDataRecordLink
-		addAppBuilderAppDataRecordLink(
-			com.liferay.app.builder.model.AppBuilderAppDataRecordLink
-				appBuilderAppDataRecordLink) {
+	public static AppBuilderAppDataRecordLink addAppBuilderAppDataRecordLink(
+		AppBuilderAppDataRecordLink appBuilderAppDataRecordLink) {
 
 		return getService().addAppBuilderAppDataRecordLink(
 			appBuilderAppDataRecordLink);
@@ -63,18 +68,16 @@ public class AppBuilderAppDataRecordLinkLocalServiceUtil {
 	 long)}
 	 */
 	@Deprecated
-	public static com.liferay.app.builder.model.AppBuilderAppDataRecordLink
-		addAppBuilderAppDataRecordLink(
-			long companyId, long appBuilderAppId, long ddlRecordId) {
+	public static AppBuilderAppDataRecordLink addAppBuilderAppDataRecordLink(
+		long companyId, long appBuilderAppId, long ddlRecordId) {
 
 		return getService().addAppBuilderAppDataRecordLink(
 			companyId, appBuilderAppId, ddlRecordId);
 	}
 
-	public static com.liferay.app.builder.model.AppBuilderAppDataRecordLink
-		addAppBuilderAppDataRecordLink(
-			long groupId, long companyId, long appBuilderAppId,
-			long appBuilderAppVersionId, long ddlRecordId) {
+	public static AppBuilderAppDataRecordLink addAppBuilderAppDataRecordLink(
+		long groupId, long companyId, long appBuilderAppId,
+		long appBuilderAppVersionId, long ddlRecordId) {
 
 		return getService().addAppBuilderAppDataRecordLink(
 			groupId, companyId, appBuilderAppId, appBuilderAppVersionId,
@@ -87,8 +90,8 @@ public class AppBuilderAppDataRecordLinkLocalServiceUtil {
 	 * @param appBuilderAppDataRecordLinkId the primary key for the new app builder app data record link
 	 * @return the new app builder app data record link
 	 */
-	public static com.liferay.app.builder.model.AppBuilderAppDataRecordLink
-		createAppBuilderAppDataRecordLink(long appBuilderAppDataRecordLinkId) {
+	public static AppBuilderAppDataRecordLink createAppBuilderAppDataRecordLink(
+		long appBuilderAppDataRecordLinkId) {
 
 		return getService().createAppBuilderAppDataRecordLink(
 			appBuilderAppDataRecordLinkId);
@@ -97,9 +100,9 @@ public class AppBuilderAppDataRecordLinkLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -114,10 +117,8 @@ public class AppBuilderAppDataRecordLinkLocalServiceUtil {
 	 * @param appBuilderAppDataRecordLink the app builder app data record link
 	 * @return the app builder app data record link that was removed
 	 */
-	public static com.liferay.app.builder.model.AppBuilderAppDataRecordLink
-		deleteAppBuilderAppDataRecordLink(
-			com.liferay.app.builder.model.AppBuilderAppDataRecordLink
-				appBuilderAppDataRecordLink) {
+	public static AppBuilderAppDataRecordLink deleteAppBuilderAppDataRecordLink(
+		AppBuilderAppDataRecordLink appBuilderAppDataRecordLink) {
 
 		return getService().deleteAppBuilderAppDataRecordLink(
 			appBuilderAppDataRecordLink);
@@ -134,10 +135,9 @@ public class AppBuilderAppDataRecordLinkLocalServiceUtil {
 	 * @return the app builder app data record link that was removed
 	 * @throws PortalException if a app builder app data record link with the primary key could not be found
 	 */
-	public static com.liferay.app.builder.model.AppBuilderAppDataRecordLink
-			deleteAppBuilderAppDataRecordLink(
-				long appBuilderAppDataRecordLinkId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AppBuilderAppDataRecordLink deleteAppBuilderAppDataRecordLink(
+			long appBuilderAppDataRecordLinkId)
+		throws PortalException {
 
 		return getService().deleteAppBuilderAppDataRecordLink(
 			appBuilderAppDataRecordLinkId);
@@ -146,23 +146,18 @@ public class AppBuilderAppDataRecordLinkLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -172,9 +167,7 @@ public class AppBuilderAppDataRecordLinkLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -190,9 +183,8 @@ public class AppBuilderAppDataRecordLinkLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -210,10 +202,9 @@ public class AppBuilderAppDataRecordLinkLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -225,9 +216,7 @@ public class AppBuilderAppDataRecordLinkLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -239,20 +228,20 @@ public class AppBuilderAppDataRecordLinkLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.app.builder.model.AppBuilderAppDataRecordLink
-		fetchAppBuilderAppDataRecordLink(long appBuilderAppDataRecordLinkId) {
+	public static AppBuilderAppDataRecordLink fetchAppBuilderAppDataRecordLink(
+		long appBuilderAppDataRecordLinkId) {
 
 		return getService().fetchAppBuilderAppDataRecordLink(
 			appBuilderAppDataRecordLinkId);
 	}
 
-	public static com.liferay.app.builder.model.AppBuilderAppDataRecordLink
+	public static AppBuilderAppDataRecordLink
 		fetchDDLRecordAppBuilderAppDataRecordLink(long ddlRecordId) {
 
 		return getService().fetchDDLRecordAppBuilderAppDataRecordLink(
@@ -272,9 +261,9 @@ public class AppBuilderAppDataRecordLinkLocalServiceUtil {
 	 * @return the app builder app data record link
 	 * @throws PortalException if a app builder app data record link with the primary key could not be found
 	 */
-	public static com.liferay.app.builder.model.AppBuilderAppDataRecordLink
-			getAppBuilderAppDataRecordLink(long appBuilderAppDataRecordLinkId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AppBuilderAppDataRecordLink getAppBuilderAppDataRecordLink(
+			long appBuilderAppDataRecordLinkId)
+		throws PortalException {
 
 		return getService().getAppBuilderAppDataRecordLink(
 			appBuilderAppDataRecordLinkId);
@@ -291,24 +280,21 @@ public class AppBuilderAppDataRecordLinkLocalServiceUtil {
 	 * @param end the upper bound of the range of app builder app data record links (not inclusive)
 	 * @return the range of app builder app data record links
 	 */
-	public static java.util.List
-		<com.liferay.app.builder.model.AppBuilderAppDataRecordLink>
-			getAppBuilderAppDataRecordLinks(int start, int end) {
+	public static List<AppBuilderAppDataRecordLink>
+		getAppBuilderAppDataRecordLinks(int start, int end) {
 
 		return getService().getAppBuilderAppDataRecordLinks(start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.app.builder.model.AppBuilderAppDataRecordLink>
-			getAppBuilderAppDataRecordLinks(long appBuilderAppId) {
+	public static List<AppBuilderAppDataRecordLink>
+		getAppBuilderAppDataRecordLinks(long appBuilderAppId) {
 
 		return getService().getAppBuilderAppDataRecordLinks(appBuilderAppId);
 	}
 
-	public static java.util.List
-		<com.liferay.app.builder.model.AppBuilderAppDataRecordLink>
-			getAppBuilderAppDataRecordLinks(
-				long appBuilderAppId, long[] ddlRecordIds) {
+	public static List<AppBuilderAppDataRecordLink>
+		getAppBuilderAppDataRecordLinks(
+			long appBuilderAppId, long[] ddlRecordIds) {
 
 		return getService().getAppBuilderAppDataRecordLinks(
 			appBuilderAppId, ddlRecordIds);
@@ -323,9 +309,9 @@ public class AppBuilderAppDataRecordLinkLocalServiceUtil {
 		return getService().getAppBuilderAppDataRecordLinksCount();
 	}
 
-	public static com.liferay.app.builder.model.AppBuilderAppDataRecordLink
+	public static AppBuilderAppDataRecordLink
 			getDDLRecordAppBuilderAppDataRecordLink(long ddlRecordId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getDDLRecordAppBuilderAppDataRecordLink(
 			ddlRecordId);
@@ -350,9 +336,8 @@ public class AppBuilderAppDataRecordLinkLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -367,39 +352,17 @@ public class AppBuilderAppDataRecordLinkLocalServiceUtil {
 	 * @param appBuilderAppDataRecordLink the app builder app data record link
 	 * @return the app builder app data record link that was updated
 	 */
-	public static com.liferay.app.builder.model.AppBuilderAppDataRecordLink
-		updateAppBuilderAppDataRecordLink(
-			com.liferay.app.builder.model.AppBuilderAppDataRecordLink
-				appBuilderAppDataRecordLink) {
+	public static AppBuilderAppDataRecordLink updateAppBuilderAppDataRecordLink(
+		AppBuilderAppDataRecordLink appBuilderAppDataRecordLink) {
 
 		return getService().updateAppBuilderAppDataRecordLink(
 			appBuilderAppDataRecordLink);
 	}
 
 	public static AppBuilderAppDataRecordLinkLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<AppBuilderAppDataRecordLinkLocalService,
-		 AppBuilderAppDataRecordLinkLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			AppBuilderAppDataRecordLinkLocalService.class);
-
-		ServiceTracker
-			<AppBuilderAppDataRecordLinkLocalService,
-			 AppBuilderAppDataRecordLinkLocalService> serviceTracker =
-				new ServiceTracker
-					<AppBuilderAppDataRecordLinkLocalService,
-					 AppBuilderAppDataRecordLinkLocalService>(
-						 bundle.getBundleContext(),
-						 AppBuilderAppDataRecordLinkLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile AppBuilderAppDataRecordLinkLocalService _service;
 
 }

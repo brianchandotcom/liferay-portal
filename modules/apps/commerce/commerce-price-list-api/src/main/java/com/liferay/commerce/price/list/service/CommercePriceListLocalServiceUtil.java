@@ -14,9 +14,17 @@
 
 package com.liferay.commerce.price.list.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.price.list.model.CommercePriceList;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for CommercePriceList. This utility wraps
@@ -37,12 +45,11 @@ public class CommercePriceListLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.price.list.service.impl.CommercePriceListLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-			addCatalogBaseCommercePriceList(
-				long groupId, long userId, long commerceCurrencyId, String type,
-				String name,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceList addCatalogBaseCommercePriceList(
+			long groupId, long userId, long commerceCurrencyId, String type,
+			String name,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCatalogBaseCommercePriceList(
 			groupId, userId, commerceCurrencyId, type, name, serviceContext);
@@ -52,12 +59,11 @@ public class CommercePriceListLocalServiceUtil {
 	 * @deprecated As of Athanasius (7.3.x)
 	 */
 	@Deprecated
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-			addCommerceCatalogBasePriceList(
-				long groupId, long userId, long commerceCurrencyId, String type,
-				String name,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceList addCommerceCatalogBasePriceList(
+			long groupId, long userId, long commerceCurrencyId, String type,
+			String name,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCommerceCatalogBasePriceList(
 			groupId, userId, commerceCurrencyId, type, name, serviceContext);
@@ -73,25 +79,22 @@ public class CommercePriceListLocalServiceUtil {
 	 * @param commercePriceList the commerce price list
 	 * @return the commerce price list that was added
 	 */
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-		addCommercePriceList(
-			com.liferay.commerce.price.list.model.CommercePriceList
-				commercePriceList) {
+	public static CommercePriceList addCommercePriceList(
+		CommercePriceList commercePriceList) {
 
 		return getService().addCommercePriceList(commercePriceList);
 	}
 
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-			addCommercePriceList(
-				long groupId, long userId, long commerceCurrencyId,
-				long parentCommercePriceListId, String name, double priority,
-				int displayDateMonth, int displayDateDay, int displayDateYear,
-				int displayDateHour, int displayDateMinute,
-				int expirationDateMonth, int expirationDateDay,
-				int expirationDateYear, int expirationDateHour,
-				int expirationDateMinute, boolean neverExpire,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceList addCommercePriceList(
+			long groupId, long userId, long commerceCurrencyId,
+			long parentCommercePriceListId, String name, double priority,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCommercePriceList(
 			groupId, userId, commerceCurrencyId, parentCommercePriceListId,
@@ -101,16 +104,15 @@ public class CommercePriceListLocalServiceUtil {
 			expirationDateMinute, neverExpire, serviceContext);
 	}
 
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-			addCommercePriceList(
-				long groupId, long userId, long commerceCurrencyId, String name,
-				double priority, int displayDateMonth, int displayDateDay,
-				int displayDateYear, int displayDateHour, int displayDateMinute,
-				int expirationDateMonth, int expirationDateDay,
-				int expirationDateYear, int expirationDateHour,
-				int expirationDateMinute, boolean neverExpire,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceList addCommercePriceList(
+			long groupId, long userId, long commerceCurrencyId, String name,
+			double priority, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCommercePriceList(
 			groupId, userId, commerceCurrencyId, name, priority,
@@ -120,17 +122,16 @@ public class CommercePriceListLocalServiceUtil {
 			neverExpire, serviceContext);
 	}
 
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-			addCommercePriceList(
-				long groupId, long userId, long commerceCurrencyId, String type,
-				long parentCommercePriceListId, String name, double priority,
-				int displayDateMonth, int displayDateDay, int displayDateYear,
-				int displayDateHour, int displayDateMinute,
-				int expirationDateMonth, int expirationDateDay,
-				int expirationDateYear, int expirationDateHour,
-				int expirationDateMinute, boolean neverExpire,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceList addCommercePriceList(
+			long groupId, long userId, long commerceCurrencyId, String type,
+			long parentCommercePriceListId, String name, double priority,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCommercePriceList(
 			groupId, userId, commerceCurrencyId, type,
@@ -141,17 +142,16 @@ public class CommercePriceListLocalServiceUtil {
 			serviceContext);
 	}
 
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-			addCommercePriceList(
-				long groupId, long userId, long commerceCurrencyId, String type,
-				String name, double priority, int displayDateMonth,
-				int displayDateDay, int displayDateYear, int displayDateHour,
-				int displayDateMinute, int expirationDateMonth,
-				int expirationDateDay, int expirationDateYear,
-				int expirationDateHour, int expirationDateMinute,
-				boolean neverExpire,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceList addCommercePriceList(
+			long groupId, long userId, long commerceCurrencyId, String type,
+			String name, double priority, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCommercePriceList(
 			groupId, userId, commerceCurrencyId, type, name, priority,
@@ -161,18 +161,17 @@ public class CommercePriceListLocalServiceUtil {
 			neverExpire, serviceContext);
 	}
 
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-			addCommercePriceList(
-				String externalReferenceCode, long groupId, long userId,
-				long commerceCurrencyId, boolean netPrice,
-				long parentCommercePriceListId, String name, double priority,
-				int displayDateMonth, int displayDateDay, int displayDateYear,
-				int displayDateHour, int displayDateMinute,
-				int expirationDateMonth, int expirationDateDay,
-				int expirationDateYear, int expirationDateHour,
-				int expirationDateMinute, boolean neverExpire,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceList addCommercePriceList(
+			String externalReferenceCode, long groupId, long userId,
+			long commerceCurrencyId, boolean netPrice,
+			long parentCommercePriceListId, String name, double priority,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCommercePriceList(
 			externalReferenceCode, groupId, userId, commerceCurrencyId,
@@ -183,19 +182,18 @@ public class CommercePriceListLocalServiceUtil {
 			neverExpire, serviceContext);
 	}
 
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-			addCommercePriceList(
-				String externalReferenceCode, long groupId, long userId,
-				long commerceCurrencyId, boolean netPrice, String type,
-				long parentCommercePriceListId, boolean catalogBasePriceList,
-				String name, double priority, int displayDateMonth,
-				int displayDateDay, int displayDateYear, int displayDateHour,
-				int displayDateMinute, int expirationDateMonth,
-				int expirationDateDay, int expirationDateYear,
-				int expirationDateHour, int expirationDateMinute,
-				boolean neverExpire,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceList addCommercePriceList(
+			String externalReferenceCode, long groupId, long userId,
+			long commerceCurrencyId, boolean netPrice, String type,
+			long parentCommercePriceListId, boolean catalogBasePriceList,
+			String name, double priority, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCommercePriceList(
 			externalReferenceCode, groupId, userId, commerceCurrencyId,
@@ -206,18 +204,17 @@ public class CommercePriceListLocalServiceUtil {
 			expirationDateMinute, neverExpire, serviceContext);
 	}
 
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-			addCommercePriceList(
-				String externalReferenceCode, long groupId, long userId,
-				long commerceCurrencyId, long parentCommercePriceListId,
-				String name, double priority, int displayDateMonth,
-				int displayDateDay, int displayDateYear, int displayDateHour,
-				int displayDateMinute, int expirationDateMonth,
-				int expirationDateDay, int expirationDateYear,
-				int expirationDateHour, int expirationDateMinute,
-				boolean neverExpire,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceList addCommercePriceList(
+			String externalReferenceCode, long groupId, long userId,
+			long commerceCurrencyId, long parentCommercePriceListId,
+			String name, double priority, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCommercePriceList(
 			externalReferenceCode, groupId, userId, commerceCurrencyId,
@@ -228,17 +225,16 @@ public class CommercePriceListLocalServiceUtil {
 			serviceContext);
 	}
 
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-			addCommercePriceList(
-				String externalReferenceCode, long groupId, long userId,
-				long commerceCurrencyId, String name, double priority,
-				int displayDateMonth, int displayDateDay, int displayDateYear,
-				int displayDateHour, int displayDateMinute,
-				int expirationDateMonth, int expirationDateDay,
-				int expirationDateYear, int expirationDateHour,
-				int expirationDateMinute, boolean neverExpire,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceList addCommercePriceList(
+			String externalReferenceCode, long groupId, long userId,
+			long commerceCurrencyId, String name, double priority,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCommercePriceList(
 			externalReferenceCode, groupId, userId, commerceCurrencyId, name,
@@ -248,19 +244,18 @@ public class CommercePriceListLocalServiceUtil {
 			expirationDateMinute, neverExpire, serviceContext);
 	}
 
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-			addCommercePriceList(
-				String externalReferenceCode, long groupId, long userId,
-				long commerceCurrencyId, String type,
-				long parentCommercePriceListId, boolean catalogBasePriceList,
-				String name, double priority, int displayDateMonth,
-				int displayDateDay, int displayDateYear, int displayDateHour,
-				int displayDateMinute, int expirationDateMonth,
-				int expirationDateDay, int expirationDateYear,
-				int expirationDateHour, int expirationDateMinute,
-				boolean neverExpire,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceList addCommercePriceList(
+			String externalReferenceCode, long groupId, long userId,
+			long commerceCurrencyId, String type,
+			long parentCommercePriceListId, boolean catalogBasePriceList,
+			String name, double priority, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCommercePriceList(
 			externalReferenceCode, groupId, userId, commerceCurrencyId, type,
@@ -271,9 +266,7 @@ public class CommercePriceListLocalServiceUtil {
 			neverExpire, serviceContext);
 	}
 
-	public static void checkCommercePriceLists()
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static void checkCommercePriceLists() throws PortalException {
 		getService().checkCommercePriceLists();
 	}
 
@@ -287,8 +280,8 @@ public class CommercePriceListLocalServiceUtil {
 	 * @param commercePriceListId the primary key for the new commerce price list
 	 * @return the new commerce price list
 	 */
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-		createCommercePriceList(long commercePriceListId) {
+	public static CommercePriceList createCommercePriceList(
+		long commercePriceListId) {
 
 		return getService().createCommercePriceList(commercePriceListId);
 	}
@@ -296,9 +289,9 @@ public class CommercePriceListLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -314,11 +307,9 @@ public class CommercePriceListLocalServiceUtil {
 	 * @return the commerce price list that was removed
 	 * @throws PortalException
 	 */
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-			deleteCommercePriceList(
-				com.liferay.commerce.price.list.model.CommercePriceList
-					commercePriceList)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceList deleteCommercePriceList(
+			CommercePriceList commercePriceList)
+		throws PortalException {
 
 		return getService().deleteCommercePriceList(commercePriceList);
 	}
@@ -334,15 +325,15 @@ public class CommercePriceListLocalServiceUtil {
 	 * @return the commerce price list that was removed
 	 * @throws PortalException if a commerce price list with the primary key could not be found
 	 */
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-			deleteCommercePriceList(long commercePriceListId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceList deleteCommercePriceList(
+			long commercePriceListId)
+		throws PortalException {
 
 		return getService().deleteCommercePriceList(commercePriceListId);
 	}
 
 	public static void deleteCommercePriceLists(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommercePriceLists(companyId);
 	}
@@ -350,23 +341,18 @@ public class CommercePriceListLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -376,9 +362,7 @@ public class CommercePriceListLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -394,9 +378,8 @@ public class CommercePriceListLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -414,10 +397,9 @@ public class CommercePriceListLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -429,9 +411,7 @@ public class CommercePriceListLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -443,30 +423,29 @@ public class CommercePriceListLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-		fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId) {
+	public static CommercePriceList fetchByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
 
 		return getService().fetchByExternalReferenceCode(
 			externalReferenceCode, companyId);
 	}
 
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-			fetchCatalogBaseCommercePriceList(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceList fetchCatalogBaseCommercePriceList(
+			long groupId)
+		throws PortalException {
 
 		return getService().fetchCatalogBaseCommercePriceList(groupId);
 	}
 
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-			fetchCatalogBaseCommercePriceListByType(long groupId, String type)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceList fetchCatalogBaseCommercePriceListByType(
+			long groupId, String type)
+		throws PortalException {
 
 		return getService().fetchCatalogBaseCommercePriceListByType(
 			groupId, type);
@@ -476,9 +455,9 @@ public class CommercePriceListLocalServiceUtil {
 	 * @deprecated As of Athanasius (7.3.x)
 	 */
 	@Deprecated
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-			fetchCommerceCatalogBasePriceList(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceList fetchCommerceCatalogBasePriceList(
+			long groupId)
+		throws PortalException {
 
 		return getService().fetchCommerceCatalogBasePriceList(groupId);
 	}
@@ -487,16 +466,16 @@ public class CommercePriceListLocalServiceUtil {
 	 * @deprecated As of Athanasius (7.3.x)
 	 */
 	@Deprecated
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-			fetchCommerceCatalogBasePriceListByType(long groupId, String type)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceList fetchCommerceCatalogBasePriceListByType(
+			long groupId, String type)
+		throws PortalException {
 
 		return getService().fetchCommerceCatalogBasePriceListByType(
 			groupId, type);
 	}
 
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-		fetchCommercePriceList(long commercePriceListId) {
+	public static CommercePriceList fetchCommercePriceList(
+		long commercePriceListId) {
 
 		return getService().fetchCommercePriceList(commercePriceListId);
 	}
@@ -508,9 +487,8 @@ public class CommercePriceListLocalServiceUtil {
 	 * @param externalReferenceCode the commerce price list's external reference code
 	 * @return the matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
 	 */
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-		fetchCommercePriceListByReferenceCode(
-			long companyId, String externalReferenceCode) {
+	public static CommercePriceList fetchCommercePriceListByReferenceCode(
+		long companyId, String externalReferenceCode) {
 
 		return getService().fetchCommercePriceListByReferenceCode(
 			companyId, externalReferenceCode);
@@ -523,8 +501,8 @@ public class CommercePriceListLocalServiceUtil {
 	 * @param groupId the primary key of the group
 	 * @return the matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
 	 */
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-		fetchCommercePriceListByUuidAndGroupId(String uuid, long groupId) {
+	public static CommercePriceList fetchCommercePriceListByUuidAndGroupId(
+		String uuid, long groupId) {
 
 		return getService().fetchCommercePriceListByUuidAndGroupId(
 			uuid, groupId);
@@ -536,16 +514,16 @@ public class CommercePriceListLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-			getCatalogBaseCommercePriceList(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceList getCatalogBaseCommercePriceList(
+			long groupId)
+		throws PortalException {
 
 		return getService().getCatalogBaseCommercePriceList(groupId);
 	}
 
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-			getCatalogBaseCommercePriceListByType(long groupId, String type)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceList getCatalogBaseCommercePriceListByType(
+			long groupId, String type)
+		throws PortalException {
 
 		return getService().getCatalogBaseCommercePriceListByType(
 			groupId, type);
@@ -555,9 +533,9 @@ public class CommercePriceListLocalServiceUtil {
 	 * @deprecated As of Athanasius (7.3.x)
 	 */
 	@Deprecated
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-			getCommerceCatalogBasePriceList(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceList getCommerceCatalogBasePriceList(
+			long groupId)
+		throws PortalException {
 
 		return getService().getCommerceCatalogBasePriceList(groupId);
 	}
@@ -566,9 +544,9 @@ public class CommercePriceListLocalServiceUtil {
 	 * @deprecated As of Athanasius (7.3.x)
 	 */
 	@Deprecated
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-			getCommerceCatalogBasePriceListByType(long groupId, String type)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceList getCommerceCatalogBasePriceListByType(
+			long groupId, String type)
+		throws PortalException {
 
 		return getService().getCommerceCatalogBasePriceListByType(
 			groupId, type);
@@ -581,42 +559,38 @@ public class CommercePriceListLocalServiceUtil {
 	 * @return the commerce price list
 	 * @throws PortalException if a commerce price list with the primary key could not be found
 	 */
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-			getCommercePriceList(long commercePriceListId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceList getCommercePriceList(
+			long commercePriceListId)
+		throws PortalException {
 
 		return getService().getCommercePriceList(commercePriceListId);
 	}
 
-	public static java.util.Optional
-		<com.liferay.commerce.price.list.model.CommercePriceList>
-				getCommercePriceList(
-					long companyId, long groupId, long commerceAccountId,
-					long[] commerceAccountGroupIds)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static java.util.Optional<CommercePriceList> getCommercePriceList(
+			long companyId, long groupId, long commerceAccountId,
+			long[] commerceAccountGroupIds)
+		throws PortalException {
 
 		return getService().getCommercePriceList(
 			companyId, groupId, commerceAccountId, commerceAccountGroupIds);
 	}
 
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-		getCommercePriceListByAccountAndChannelId(
-			long groupId, String type, long commerceAccountId,
-			long commerceChannelId) {
+	public static CommercePriceList getCommercePriceListByAccountAndChannelId(
+		long groupId, String type, long commerceAccountId,
+		long commerceChannelId) {
 
 		return getService().getCommercePriceListByAccountAndChannelId(
 			groupId, type, commerceAccountId, commerceChannelId);
 	}
 
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-		getCommercePriceListByAccountGroupIds(
-			long groupId, String type, long[] commerceAccountGroupIds) {
+	public static CommercePriceList getCommercePriceListByAccountGroupIds(
+		long groupId, String type, long[] commerceAccountGroupIds) {
 
 		return getService().getCommercePriceListByAccountGroupIds(
 			groupId, type, commerceAccountGroupIds);
 	}
 
-	public static com.liferay.commerce.price.list.model.CommercePriceList
+	public static CommercePriceList
 		getCommercePriceListByAccountGroupsAndChannelId(
 			long groupId, String type, long[] commerceAccountGroupIds,
 			long commerceChannelId) {
@@ -625,36 +599,33 @@ public class CommercePriceListLocalServiceUtil {
 			groupId, type, commerceAccountGroupIds, commerceChannelId);
 	}
 
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-		getCommercePriceListByAccountId(
-			long groupId, String type, long commerceAccountId) {
+	public static CommercePriceList getCommercePriceListByAccountId(
+		long groupId, String type, long commerceAccountId) {
 
 		return getService().getCommercePriceListByAccountId(
 			groupId, type, commerceAccountId);
 	}
 
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-		getCommercePriceListByChannelId(
-			long groupId, String type, long commerceChannelId) {
+	public static CommercePriceList getCommercePriceListByChannelId(
+		long groupId, String type, long commerceChannelId) {
 
 		return getService().getCommercePriceListByChannelId(
 			groupId, type, commerceChannelId);
 	}
 
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-			getCommercePriceListByLowestPrice(
-				long groupId, String type, String cPInstanceUuid,
-				long commerceAccountId, long[] commerceAccountGroupIds,
-				long commerceChannelId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceList getCommercePriceListByLowestPrice(
+			long groupId, String type, String cPInstanceUuid,
+			long commerceAccountId, long[] commerceAccountGroupIds,
+			long commerceChannelId)
+		throws PortalException {
 
 		return getService().getCommercePriceListByLowestPrice(
 			groupId, type, cPInstanceUuid, commerceAccountId,
 			commerceAccountGroupIds, commerceChannelId);
 	}
 
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-		getCommercePriceListByUnqualified(long groupId, String type) {
+	public static CommercePriceList getCommercePriceListByUnqualified(
+		long groupId, String type) {
 
 		return getService().getCommercePriceListByUnqualified(groupId, type);
 	}
@@ -667,9 +638,9 @@ public class CommercePriceListLocalServiceUtil {
 	 * @return the matching commerce price list
 	 * @throws PortalException if a matching commerce price list could not be found
 	 */
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-			getCommercePriceListByUuidAndGroupId(String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceList getCommercePriceListByUuidAndGroupId(
+			String uuid, long groupId)
+		throws PortalException {
 
 		return getService().getCommercePriceListByUuidAndGroupId(uuid, groupId);
 	}
@@ -685,36 +656,28 @@ public class CommercePriceListLocalServiceUtil {
 	 * @param end the upper bound of the range of commerce price lists (not inclusive)
 	 * @return the range of commerce price lists
 	 */
-	public static java.util.List
-		<com.liferay.commerce.price.list.model.CommercePriceList>
-			getCommercePriceLists(int start, int end) {
+	public static List<CommercePriceList> getCommercePriceLists(
+		int start, int end) {
 
 		return getService().getCommercePriceLists(start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.price.list.model.CommercePriceList>
-			getCommercePriceLists(long companyId, int start, int end) {
+	public static List<CommercePriceList> getCommercePriceLists(
+		long companyId, int start, int end) {
 
 		return getService().getCommercePriceLists(companyId, start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.price.list.model.CommercePriceList>
-			getCommercePriceLists(
-				long[] groupIds, long companyId, int start, int end) {
+	public static List<CommercePriceList> getCommercePriceLists(
+		long[] groupIds, long companyId, int start, int end) {
 
 		return getService().getCommercePriceLists(
 			groupIds, companyId, start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.price.list.model.CommercePriceList>
-			getCommercePriceLists(
-				long[] groupIds, long companyId, int status, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.commerce.price.list.model.CommercePriceList>
-						orderByComparator) {
+	public static List<CommercePriceList> getCommercePriceLists(
+		long[] groupIds, long companyId, int status, int start, int end,
+		OrderByComparator<CommercePriceList> orderByComparator) {
 
 		return getService().getCommercePriceLists(
 			groupIds, companyId, status, start, end, orderByComparator);
@@ -727,10 +690,8 @@ public class CommercePriceListLocalServiceUtil {
 	 * @param companyId the primary key of the company
 	 * @return the matching commerce price lists, or an empty list if no matches were found
 	 */
-	public static java.util.List
-		<com.liferay.commerce.price.list.model.CommercePriceList>
-			getCommercePriceListsByUuidAndCompanyId(
-				String uuid, long companyId) {
+	public static List<CommercePriceList>
+		getCommercePriceListsByUuidAndCompanyId(String uuid, long companyId) {
 
 		return getService().getCommercePriceListsByUuidAndCompanyId(
 			uuid, companyId);
@@ -746,13 +707,10 @@ public class CommercePriceListLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the range of matching commerce price lists, or an empty list if no matches were found
 	 */
-	public static java.util.List
-		<com.liferay.commerce.price.list.model.CommercePriceList>
-			getCommercePriceListsByUuidAndCompanyId(
-				String uuid, long companyId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.commerce.price.list.model.CommercePriceList>
-						orderByComparator) {
+	public static List<CommercePriceList>
+		getCommercePriceListsByUuidAndCompanyId(
+			String uuid, long companyId, int start, int end,
+			OrderByComparator<CommercePriceList> orderByComparator) {
 
 		return getService().getCommercePriceListsByUuidAndCompanyId(
 			uuid, companyId, start, end, orderByComparator);
@@ -808,9 +766,8 @@ public class CommercePriceListLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -821,22 +778,18 @@ public class CommercePriceListLocalServiceUtil {
 		return getService().search(searchContext);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.price.list.model.CommercePriceList>
-			searchByCommercePricingClassId(
-				long commercePricingClassId, String name, int start, int end) {
+	public static List<CommercePriceList> searchByCommercePricingClassId(
+		long commercePricingClassId, String name, int start, int end) {
 
 		return getService().searchByCommercePricingClassId(
 			commercePricingClassId, name, start, end);
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
-		<com.liferay.commerce.price.list.model.CommercePriceList>
-				searchCommercePriceLists(
-					long companyId, long[] groupIds, String keywords,
-					int status, int start, int end,
-					com.liferay.portal.kernel.search.Sort sort)
-			throws com.liferay.portal.kernel.exception.PortalException {
+		<CommercePriceList> searchCommercePriceLists(
+				long companyId, long[] groupIds, String keywords, int status,
+				int start, int end, com.liferay.portal.kernel.search.Sort sort)
+			throws PortalException {
 
 		return getService().searchCommercePriceLists(
 			companyId, groupIds, keywords, status, start, end, sort);
@@ -844,16 +797,15 @@ public class CommercePriceListLocalServiceUtil {
 
 	public static int searchCommercePriceListsCount(
 			long companyId, long[] groupIds, String keywords, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().searchCommercePriceListsCount(
 			companyId, groupIds, keywords, status);
 	}
 
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-			setCatalogBasePriceList(
-				long commercePriceListId, boolean catalogBasePriceList)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceList setCatalogBasePriceList(
+			long commercePriceListId, boolean catalogBasePriceList)
+		throws PortalException {
 
 		return getService().setCatalogBasePriceList(
 			commercePriceListId, catalogBasePriceList);
@@ -861,7 +813,7 @@ public class CommercePriceListLocalServiceUtil {
 
 	public static void setCatalogBasePriceList(
 			long groupId, long commercePriceListId, String type)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().setCatalogBasePriceList(
 			groupId, commercePriceListId, type);
@@ -877,25 +829,22 @@ public class CommercePriceListLocalServiceUtil {
 	 * @param commercePriceList the commerce price list
 	 * @return the commerce price list that was updated
 	 */
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-		updateCommercePriceList(
-			com.liferay.commerce.price.list.model.CommercePriceList
-				commercePriceList) {
+	public static CommercePriceList updateCommercePriceList(
+		CommercePriceList commercePriceList) {
 
 		return getService().updateCommercePriceList(commercePriceList);
 	}
 
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-			updateCommercePriceList(
-				long commercePriceListId, long commerceCurrencyId,
-				boolean netPrice, long parentCommercePriceListId, String name,
-				double priority, int displayDateMonth, int displayDateDay,
-				int displayDateYear, int displayDateHour, int displayDateMinute,
-				int expirationDateMonth, int expirationDateDay,
-				int expirationDateYear, int expirationDateHour,
-				int expirationDateMinute, boolean neverExpire,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceList updateCommercePriceList(
+			long commercePriceListId, long commerceCurrencyId, boolean netPrice,
+			long parentCommercePriceListId, String name, double priority,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().updateCommercePriceList(
 			commercePriceListId, commerceCurrencyId, netPrice,
@@ -906,18 +855,17 @@ public class CommercePriceListLocalServiceUtil {
 			serviceContext);
 	}
 
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-			updateCommercePriceList(
-				long commercePriceListId, long commerceCurrencyId,
-				boolean netPrice, String type, long parentCommercePriceListId,
-				boolean catalogBasePriceList, String name, double priority,
-				int displayDateMonth, int displayDateDay, int displayDateYear,
-				int displayDateHour, int displayDateMinute,
-				int expirationDateMonth, int expirationDateDay,
-				int expirationDateYear, int expirationDateHour,
-				int expirationDateMinute, boolean neverExpire,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceList updateCommercePriceList(
+			long commercePriceListId, long commerceCurrencyId, boolean netPrice,
+			String type, long parentCommercePriceListId,
+			boolean catalogBasePriceList, String name, double priority,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().updateCommercePriceList(
 			commercePriceListId, commerceCurrencyId, netPrice, type,
@@ -928,17 +876,16 @@ public class CommercePriceListLocalServiceUtil {
 			neverExpire, serviceContext);
 	}
 
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-			updateCommercePriceList(
-				long commercePriceListId, long commerceCurrencyId,
-				long parentCommercePriceListId, String name, double priority,
-				int displayDateMonth, int displayDateDay, int displayDateYear,
-				int displayDateHour, int displayDateMinute,
-				int expirationDateMonth, int expirationDateDay,
-				int expirationDateYear, int expirationDateHour,
-				int expirationDateMinute, boolean neverExpire,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceList updateCommercePriceList(
+			long commercePriceListId, long commerceCurrencyId,
+			long parentCommercePriceListId, String name, double priority,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().updateCommercePriceList(
 			commercePriceListId, commerceCurrencyId, parentCommercePriceListId,
@@ -948,16 +895,15 @@ public class CommercePriceListLocalServiceUtil {
 			expirationDateMinute, neverExpire, serviceContext);
 	}
 
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-			updateCommercePriceList(
-				long commercePriceListId, long commerceCurrencyId, String name,
-				double priority, int displayDateMonth, int displayDateDay,
-				int displayDateYear, int displayDateHour, int displayDateMinute,
-				int expirationDateMonth, int expirationDateDay,
-				int expirationDateYear, int expirationDateHour,
-				int expirationDateMinute, boolean neverExpire,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceList updateCommercePriceList(
+			long commercePriceListId, long commerceCurrencyId, String name,
+			double priority, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().updateCommercePriceList(
 			commercePriceListId, commerceCurrencyId, name, priority,
@@ -967,18 +913,17 @@ public class CommercePriceListLocalServiceUtil {
 			neverExpire, serviceContext);
 	}
 
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-			updateCommercePriceList(
-				long commercePriceListId, long commerceCurrencyId, String type,
-				long parentCommercePriceListId, boolean catalogBasePriceList,
-				String name, double priority, int displayDateMonth,
-				int displayDateDay, int displayDateYear, int displayDateHour,
-				int displayDateMinute, int expirationDateMonth,
-				int expirationDateDay, int expirationDateYear,
-				int expirationDateHour, int expirationDateMinute,
-				boolean neverExpire,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceList updateCommercePriceList(
+			long commercePriceListId, long commerceCurrencyId, String type,
+			long parentCommercePriceListId, boolean catalogBasePriceList,
+			String name, double priority, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().updateCommercePriceList(
 			commercePriceListId, commerceCurrencyId, type,
@@ -991,47 +936,42 @@ public class CommercePriceListLocalServiceUtil {
 
 	public static void updateCommercePriceListCurrencies(
 			long commerceCurrencyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().updateCommercePriceListCurrencies(commerceCurrencyId);
 	}
 
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-			updateExternalReferenceCode(
-				com.liferay.commerce.price.list.model.CommercePriceList
-					commercePriceList,
-				String externalReferenceCode)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceList updateExternalReferenceCode(
+			CommercePriceList commercePriceList, String externalReferenceCode)
+		throws PortalException {
 
 		return getService().updateExternalReferenceCode(
 			commercePriceList, externalReferenceCode);
 	}
 
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-			updateStatus(
-				long userId, long commercePriceListId, int status,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext,
-				java.util.Map<String, java.io.Serializable> workflowContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceList updateStatus(
+			long userId, long commercePriceListId, int status,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext,
+			Map<String, Serializable> workflowContext)
+		throws PortalException {
 
 		return getService().updateStatus(
 			userId, commercePriceListId, status, serviceContext,
 			workflowContext);
 	}
 
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-			upsertCommercePriceList(
-				String externalReferenceCode, long groupId, long userId,
-				long commercePriceListId, long commerceCurrencyId,
-				boolean netPrice, String type, long parentCommercePriceListId,
-				boolean catalogBasePriceList, String name, double priority,
-				int displayDateMonth, int displayDateDay, int displayDateYear,
-				int displayDateHour, int displayDateMinute,
-				int expirationDateMonth, int expirationDateDay,
-				int expirationDateYear, int expirationDateHour,
-				int expirationDateMinute, boolean neverExpire,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceList upsertCommercePriceList(
+			String externalReferenceCode, long groupId, long userId,
+			long commercePriceListId, long commerceCurrencyId, boolean netPrice,
+			String type, long parentCommercePriceListId,
+			boolean catalogBasePriceList, String name, double priority,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().upsertCommercePriceList(
 			externalReferenceCode, groupId, userId, commercePriceListId,
@@ -1071,18 +1011,17 @@ public class CommercePriceListLocalServiceUtil {
 	 * @param serviceContext
 	 * @throws PortalException
 	 */
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-			upsertCommercePriceList(
-				String externalReferenceCode, long groupId, long userId,
-				long commercePriceListId, long commerceCurrencyId,
-				long parentCommercePriceListId, String name, double priority,
-				int displayDateMonth, int displayDateDay, int displayDateYear,
-				int displayDateHour, int displayDateMinute,
-				int expirationDateMonth, int expirationDateDay,
-				int expirationDateYear, int expirationDateHour,
-				int expirationDateMinute, boolean neverExpire,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceList upsertCommercePriceList(
+			String externalReferenceCode, long groupId, long userId,
+			long commercePriceListId, long commerceCurrencyId,
+			long parentCommercePriceListId, String name, double priority,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().upsertCommercePriceList(
 			externalReferenceCode, groupId, userId, commercePriceListId,
@@ -1093,17 +1032,16 @@ public class CommercePriceListLocalServiceUtil {
 			neverExpire, serviceContext);
 	}
 
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-			upsertCommercePriceList(
-				String externalReferenceCode, long groupId, long userId,
-				long commercePriceListId, long commerceCurrencyId, String name,
-				double priority, int displayDateMonth, int displayDateDay,
-				int displayDateYear, int displayDateHour, int displayDateMinute,
-				int expirationDateMonth, int expirationDateDay,
-				int expirationDateYear, int expirationDateHour,
-				int expirationDateMinute, boolean neverExpire,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceList upsertCommercePriceList(
+			String externalReferenceCode, long groupId, long userId,
+			long commercePriceListId, long commerceCurrencyId, String name,
+			double priority, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().upsertCommercePriceList(
 			externalReferenceCode, groupId, userId, commercePriceListId,
@@ -1114,19 +1052,18 @@ public class CommercePriceListLocalServiceUtil {
 			serviceContext);
 	}
 
-	public static com.liferay.commerce.price.list.model.CommercePriceList
-			upsertCommercePriceList(
-				String externalReferenceCode, long groupId, long userId,
-				long commercePriceListId, long commerceCurrencyId, String type,
-				long parentCommercePriceListId, boolean catalogBasePriceList,
-				String name, double priority, int displayDateMonth,
-				int displayDateDay, int displayDateYear, int displayDateHour,
-				int displayDateMinute, int expirationDateMonth,
-				int expirationDateDay, int expirationDateYear,
-				int expirationDateHour, int expirationDateMinute,
-				boolean neverExpire,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceList upsertCommercePriceList(
+			String externalReferenceCode, long groupId, long userId,
+			long commercePriceListId, long commerceCurrencyId, String type,
+			long parentCommercePriceListId, boolean catalogBasePriceList,
+			String name, double priority, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().upsertCommercePriceList(
 			externalReferenceCode, groupId, userId, commercePriceListId,
@@ -1139,29 +1076,9 @@ public class CommercePriceListLocalServiceUtil {
 	}
 
 	public static CommercePriceListLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommercePriceListLocalService, CommercePriceListLocalService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommercePriceListLocalService.class);
-
-		ServiceTracker
-			<CommercePriceListLocalService, CommercePriceListLocalService>
-				serviceTracker =
-					new ServiceTracker
-						<CommercePriceListLocalService,
-						 CommercePriceListLocalService>(
-							 bundle.getBundleContext(),
-							 CommercePriceListLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommercePriceListLocalService _service;
 
 }

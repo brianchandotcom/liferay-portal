@@ -14,9 +14,16 @@
 
 package com.liferay.app.builder.workflow.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.app.builder.workflow.model.AppBuilderWorkflowTaskLink;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for AppBuilderWorkflowTaskLink. This utility wraps
@@ -48,23 +55,18 @@ public class AppBuilderWorkflowTaskLinkLocalServiceUtil {
 	 * @param appBuilderWorkflowTaskLink the app builder workflow task link
 	 * @return the app builder workflow task link that was added
 	 */
-	public static
-		com.liferay.app.builder.workflow.model.AppBuilderWorkflowTaskLink
-			addAppBuilderWorkflowTaskLink(
-				com.liferay.app.builder.workflow.model.
-					AppBuilderWorkflowTaskLink appBuilderWorkflowTaskLink) {
+	public static AppBuilderWorkflowTaskLink addAppBuilderWorkflowTaskLink(
+		AppBuilderWorkflowTaskLink appBuilderWorkflowTaskLink) {
 
 		return getService().addAppBuilderWorkflowTaskLink(
 			appBuilderWorkflowTaskLink);
 	}
 
-	public static
-		com.liferay.app.builder.workflow.model.AppBuilderWorkflowTaskLink
-				addAppBuilderWorkflowTaskLink(
-					long companyId, long appBuilderAppId,
-					long appBuilderAppVersionId, long ddmStructureLayoutId,
-					boolean readOnly, String workflowTaskName)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static AppBuilderWorkflowTaskLink addAppBuilderWorkflowTaskLink(
+			long companyId, long appBuilderAppId, long appBuilderAppVersionId,
+			long ddmStructureLayoutId, boolean readOnly,
+			String workflowTaskName)
+		throws PortalException {
 
 		return getService().addAppBuilderWorkflowTaskLink(
 			companyId, appBuilderAppId, appBuilderAppVersionId,
@@ -77,10 +79,8 @@ public class AppBuilderWorkflowTaskLinkLocalServiceUtil {
 	 * @param appBuilderWorkflowTaskLinkId the primary key for the new app builder workflow task link
 	 * @return the new app builder workflow task link
 	 */
-	public static
-		com.liferay.app.builder.workflow.model.AppBuilderWorkflowTaskLink
-			createAppBuilderWorkflowTaskLink(
-				long appBuilderWorkflowTaskLinkId) {
+	public static AppBuilderWorkflowTaskLink createAppBuilderWorkflowTaskLink(
+		long appBuilderWorkflowTaskLinkId) {
 
 		return getService().createAppBuilderWorkflowTaskLink(
 			appBuilderWorkflowTaskLinkId);
@@ -89,9 +89,9 @@ public class AppBuilderWorkflowTaskLinkLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -106,11 +106,8 @@ public class AppBuilderWorkflowTaskLinkLocalServiceUtil {
 	 * @param appBuilderWorkflowTaskLink the app builder workflow task link
 	 * @return the app builder workflow task link that was removed
 	 */
-	public static
-		com.liferay.app.builder.workflow.model.AppBuilderWorkflowTaskLink
-			deleteAppBuilderWorkflowTaskLink(
-				com.liferay.app.builder.workflow.model.
-					AppBuilderWorkflowTaskLink appBuilderWorkflowTaskLink) {
+	public static AppBuilderWorkflowTaskLink deleteAppBuilderWorkflowTaskLink(
+		AppBuilderWorkflowTaskLink appBuilderWorkflowTaskLink) {
 
 		return getService().deleteAppBuilderWorkflowTaskLink(
 			appBuilderWorkflowTaskLink);
@@ -127,11 +124,9 @@ public class AppBuilderWorkflowTaskLinkLocalServiceUtil {
 	 * @return the app builder workflow task link that was removed
 	 * @throws PortalException if a app builder workflow task link with the primary key could not be found
 	 */
-	public static
-		com.liferay.app.builder.workflow.model.AppBuilderWorkflowTaskLink
-				deleteAppBuilderWorkflowTaskLink(
-					long appBuilderWorkflowTaskLinkId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static AppBuilderWorkflowTaskLink deleteAppBuilderWorkflowTaskLink(
+			long appBuilderWorkflowTaskLinkId)
+		throws PortalException {
 
 		return getService().deleteAppBuilderWorkflowTaskLink(
 			appBuilderWorkflowTaskLinkId);
@@ -151,23 +146,18 @@ public class AppBuilderWorkflowTaskLinkLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -177,9 +167,7 @@ public class AppBuilderWorkflowTaskLinkLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -195,9 +183,8 @@ public class AppBuilderWorkflowTaskLinkLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -215,10 +202,9 @@ public class AppBuilderWorkflowTaskLinkLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -230,9 +216,7 @@ public class AppBuilderWorkflowTaskLinkLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -244,15 +228,14 @@ public class AppBuilderWorkflowTaskLinkLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static
-		com.liferay.app.builder.workflow.model.AppBuilderWorkflowTaskLink
-			fetchAppBuilderWorkflowTaskLink(long appBuilderWorkflowTaskLinkId) {
+	public static AppBuilderWorkflowTaskLink fetchAppBuilderWorkflowTaskLink(
+		long appBuilderWorkflowTaskLinkId) {
 
 		return getService().fetchAppBuilderWorkflowTaskLink(
 			appBuilderWorkflowTaskLinkId);
@@ -271,10 +254,9 @@ public class AppBuilderWorkflowTaskLinkLocalServiceUtil {
 	 * @return the app builder workflow task link
 	 * @throws PortalException if a app builder workflow task link with the primary key could not be found
 	 */
-	public static
-		com.liferay.app.builder.workflow.model.AppBuilderWorkflowTaskLink
-				getAppBuilderWorkflowTaskLink(long appBuilderWorkflowTaskLinkId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static AppBuilderWorkflowTaskLink getAppBuilderWorkflowTaskLink(
+			long appBuilderWorkflowTaskLinkId)
+		throws PortalException {
 
 		return getService().getAppBuilderWorkflowTaskLink(
 			appBuilderWorkflowTaskLinkId);
@@ -291,34 +273,30 @@ public class AppBuilderWorkflowTaskLinkLocalServiceUtil {
 	 * @param end the upper bound of the range of app builder workflow task links (not inclusive)
 	 * @return the range of app builder workflow task links
 	 */
-	public static java.util.List
-		<com.liferay.app.builder.workflow.model.AppBuilderWorkflowTaskLink>
-			getAppBuilderWorkflowTaskLinks(int start, int end) {
+	public static List<AppBuilderWorkflowTaskLink>
+		getAppBuilderWorkflowTaskLinks(int start, int end) {
 
 		return getService().getAppBuilderWorkflowTaskLinks(start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.app.builder.workflow.model.AppBuilderWorkflowTaskLink>
-			getAppBuilderWorkflowTaskLinks(long appBuilderAppId) {
+	public static List<AppBuilderWorkflowTaskLink>
+		getAppBuilderWorkflowTaskLinks(long appBuilderAppId) {
 
 		return getService().getAppBuilderWorkflowTaskLinks(appBuilderAppId);
 	}
 
-	public static java.util.List
-		<com.liferay.app.builder.workflow.model.AppBuilderWorkflowTaskLink>
-			getAppBuilderWorkflowTaskLinks(
-				long appBuilderAppId, long appBuilderAppVersionId) {
+	public static List<AppBuilderWorkflowTaskLink>
+		getAppBuilderWorkflowTaskLinks(
+			long appBuilderAppId, long appBuilderAppVersionId) {
 
 		return getService().getAppBuilderWorkflowTaskLinks(
 			appBuilderAppId, appBuilderAppVersionId);
 	}
 
-	public static java.util.List
-		<com.liferay.app.builder.workflow.model.AppBuilderWorkflowTaskLink>
-			getAppBuilderWorkflowTaskLinks(
-				long appBuilderAppId, long appBuilderAppVersionId,
-				String workflowTaskName) {
+	public static List<AppBuilderWorkflowTaskLink>
+		getAppBuilderWorkflowTaskLinks(
+			long appBuilderAppId, long appBuilderAppVersionId,
+			String workflowTaskName) {
 
 		return getService().getAppBuilderWorkflowTaskLinks(
 			appBuilderAppId, appBuilderAppVersionId, workflowTaskName);
@@ -352,9 +330,8 @@ public class AppBuilderWorkflowTaskLinkLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -369,40 +346,17 @@ public class AppBuilderWorkflowTaskLinkLocalServiceUtil {
 	 * @param appBuilderWorkflowTaskLink the app builder workflow task link
 	 * @return the app builder workflow task link that was updated
 	 */
-	public static
-		com.liferay.app.builder.workflow.model.AppBuilderWorkflowTaskLink
-			updateAppBuilderWorkflowTaskLink(
-				com.liferay.app.builder.workflow.model.
-					AppBuilderWorkflowTaskLink appBuilderWorkflowTaskLink) {
+	public static AppBuilderWorkflowTaskLink updateAppBuilderWorkflowTaskLink(
+		AppBuilderWorkflowTaskLink appBuilderWorkflowTaskLink) {
 
 		return getService().updateAppBuilderWorkflowTaskLink(
 			appBuilderWorkflowTaskLink);
 	}
 
 	public static AppBuilderWorkflowTaskLinkLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<AppBuilderWorkflowTaskLinkLocalService,
-		 AppBuilderWorkflowTaskLinkLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			AppBuilderWorkflowTaskLinkLocalService.class);
-
-		ServiceTracker
-			<AppBuilderWorkflowTaskLinkLocalService,
-			 AppBuilderWorkflowTaskLinkLocalService> serviceTracker =
-				new ServiceTracker
-					<AppBuilderWorkflowTaskLinkLocalService,
-					 AppBuilderWorkflowTaskLinkLocalService>(
-						 bundle.getBundleContext(),
-						 AppBuilderWorkflowTaskLinkLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile AppBuilderWorkflowTaskLinkLocalService _service;
 
 }

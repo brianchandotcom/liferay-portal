@@ -14,9 +14,10 @@
 
 package com.liferay.commerce.product.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.product.model.CPSpecificationOption;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.Map;
 
 /**
  * Provides the remote service utility for CPSpecificationOption. This utility wraps
@@ -37,14 +38,12 @@ public class CPSpecificationOptionServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CPSpecificationOptionServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.commerce.product.model.CPSpecificationOption
-			addCPSpecificationOption(
-				long cpOptionCategoryId,
-				java.util.Map<java.util.Locale, String> titleMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				boolean facetable, String key,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPSpecificationOption addCPSpecificationOption(
+			long cpOptionCategoryId, Map<java.util.Locale, String> titleMap,
+			Map<java.util.Locale, String> descriptionMap, boolean facetable,
+			String key,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCPSpecificationOption(
 			cpOptionCategoryId, titleMap, descriptionMap, facetable, key,
@@ -52,21 +51,21 @@ public class CPSpecificationOptionServiceUtil {
 	}
 
 	public static void deleteCPSpecificationOption(long cpSpecificationOptionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCPSpecificationOption(cpSpecificationOptionId);
 	}
 
-	public static com.liferay.commerce.product.model.CPSpecificationOption
-			fetchCPSpecificationOption(long companyId, String key)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPSpecificationOption fetchCPSpecificationOption(
+			long companyId, String key)
+		throws PortalException {
 
 		return getService().fetchCPSpecificationOption(companyId, key);
 	}
 
-	public static com.liferay.commerce.product.model.CPSpecificationOption
-			getCPSpecificationOption(long cpSpecificationOptionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPSpecificationOption getCPSpecificationOption(
+			long cpSpecificationOptionId)
+		throws PortalException {
 
 		return getService().getCPSpecificationOption(cpSpecificationOptionId);
 	}
@@ -81,25 +80,22 @@ public class CPSpecificationOptionServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
-		<com.liferay.commerce.product.model.CPSpecificationOption>
-				searchCPSpecificationOptions(
-					long companyId, Boolean facetable, String keywords,
-					int start, int end,
-					com.liferay.portal.kernel.search.Sort sort)
-			throws com.liferay.portal.kernel.exception.PortalException {
+		<CPSpecificationOption> searchCPSpecificationOptions(
+				long companyId, Boolean facetable, String keywords, int start,
+				int end, com.liferay.portal.kernel.search.Sort sort)
+			throws PortalException {
 
 		return getService().searchCPSpecificationOptions(
 			companyId, facetable, keywords, start, end, sort);
 	}
 
-	public static com.liferay.commerce.product.model.CPSpecificationOption
-			updateCPSpecificationOption(
-				long cpSpecificationOptionId, long cpOptionCategoryId,
-				java.util.Map<java.util.Locale, String> titleMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				boolean facetable, String key,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPSpecificationOption updateCPSpecificationOption(
+			long cpSpecificationOptionId, long cpOptionCategoryId,
+			Map<java.util.Locale, String> titleMap,
+			Map<java.util.Locale, String> descriptionMap, boolean facetable,
+			String key,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().updateCPSpecificationOption(
 			cpSpecificationOptionId, cpOptionCategoryId, titleMap,
@@ -107,29 +103,9 @@ public class CPSpecificationOptionServiceUtil {
 	}
 
 	public static CPSpecificationOptionService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CPSpecificationOptionService, CPSpecificationOptionService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CPSpecificationOptionService.class);
-
-		ServiceTracker
-			<CPSpecificationOptionService, CPSpecificationOptionService>
-				serviceTracker =
-					new ServiceTracker
-						<CPSpecificationOptionService,
-						 CPSpecificationOptionService>(
-							 bundle.getBundleContext(),
-							 CPSpecificationOptionService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CPSpecificationOptionService _service;
 
 }

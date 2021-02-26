@@ -16,6 +16,7 @@ package com.liferay.app.builder.service.base;
 
 import com.liferay.app.builder.model.AppBuilderApp;
 import com.liferay.app.builder.service.AppBuilderAppLocalService;
+import com.liferay.app.builder.service.AppBuilderAppLocalServiceUtil;
 import com.liferay.app.builder.service.persistence.AppBuilderAppFinder;
 import com.liferay.app.builder.service.persistence.AppBuilderAppPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
@@ -51,10 +52,13 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -75,7 +79,7 @@ public abstract class AppBuilderAppLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>AppBuilderAppLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.app.builder.service.AppBuilderAppLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>AppBuilderAppLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>AppBuilderAppLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -504,6 +508,11 @@ public abstract class AppBuilderAppLocalServiceBaseImpl
 		return appBuilderAppPersistence.update(appBuilderApp);
 	}
 
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
+	}
+
 	@Override
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
@@ -515,6 +524,8 @@ public abstract class AppBuilderAppLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		appBuilderAppLocalService = (AppBuilderAppLocalService)aopProxy;
+
+		_setLocalServiceUtilService(appBuilderAppLocalService);
 	}
 
 	/**
@@ -556,6 +567,22 @@ public abstract class AppBuilderAppLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		AppBuilderAppLocalService appBuilderAppLocalService) {
+
+		try {
+			Field field = AppBuilderAppLocalServiceUtil.class.getDeclaredField(
+				"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, appBuilderAppLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

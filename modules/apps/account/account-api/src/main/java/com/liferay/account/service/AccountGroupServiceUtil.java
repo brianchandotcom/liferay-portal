@@ -14,10 +14,6 @@
 
 package com.liferay.account.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-
 /**
  * Provides the remote service utility for AccountGroup. This utility wraps
  * <code>com.liferay.account.service.impl.AccountGroupServiceImpl</code> and is an
@@ -43,28 +39,14 @@ public class AccountGroupServiceUtil {
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static String getOSGiServiceIdentifier() {
+	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static AccountGroupService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<AccountGroupService, AccountGroupService>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(AccountGroupService.class);
-
-		ServiceTracker<AccountGroupService, AccountGroupService>
-			serviceTracker =
-				new ServiceTracker<AccountGroupService, AccountGroupService>(
-					bundle.getBundleContext(), AccountGroupService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile AccountGroupService _service;
 
 }

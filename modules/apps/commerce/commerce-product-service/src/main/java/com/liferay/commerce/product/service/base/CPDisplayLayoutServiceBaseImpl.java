@@ -16,6 +16,7 @@ package com.liferay.commerce.product.service.base;
 
 import com.liferay.commerce.product.model.CPDisplayLayout;
 import com.liferay.commerce.product.service.CPDisplayLayoutService;
+import com.liferay.commerce.product.service.CPDisplayLayoutServiceUtil;
 import com.liferay.commerce.product.service.persistence.CPAttachmentFileEntryFinder;
 import com.liferay.commerce.product.service.persistence.CPAttachmentFileEntryPersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionFinder;
@@ -56,6 +57,8 @@ import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
+import java.lang.reflect.Field;
+
 import javax.sql.DataSource;
 
 /**
@@ -76,7 +79,7 @@ public abstract class CPDisplayLayoutServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CPDisplayLayoutService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.product.service.CPDisplayLayoutServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CPDisplayLayoutService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CPDisplayLayoutServiceUtil</code>.
 	 */
 
 	/**
@@ -1722,9 +1725,11 @@ public abstract class CPDisplayLayoutServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
+		_setServiceUtilService(cpDisplayLayoutService);
 	}
 
 	public void destroy() {
+		_setServiceUtilService(null);
 	}
 
 	/**
@@ -1766,6 +1771,22 @@ public abstract class CPDisplayLayoutServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setServiceUtilService(
+		CPDisplayLayoutService cpDisplayLayoutService) {
+
+		try {
+			Field field = CPDisplayLayoutServiceUtil.class.getDeclaredField(
+				"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, cpDisplayLayoutService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

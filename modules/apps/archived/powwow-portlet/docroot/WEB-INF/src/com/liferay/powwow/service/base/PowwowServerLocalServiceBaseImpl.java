@@ -42,12 +42,15 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.powwow.model.PowwowServer;
 import com.liferay.powwow.service.PowwowServerLocalService;
+import com.liferay.powwow.service.PowwowServerLocalServiceUtil;
 import com.liferay.powwow.service.persistence.PowwowMeetingFinder;
 import com.liferay.powwow.service.persistence.PowwowMeetingPersistence;
 import com.liferay.powwow.service.persistence.PowwowParticipantPersistence;
 import com.liferay.powwow.service.persistence.PowwowServerPersistence;
 
 import java.io.Serializable;
+
+import java.lang.reflect.Field;
 
 import java.util.List;
 
@@ -71,7 +74,7 @@ public abstract class PowwowServerLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>PowwowServerLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.powwow.service.PowwowServerLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>PowwowServerLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>PowwowServerLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -649,11 +652,15 @@ public abstract class PowwowServerLocalServiceBaseImpl
 	public void afterPropertiesSet() {
 		PersistedModelLocalServiceRegistryUtil.register(
 			"com.liferay.powwow.model.PowwowServer", powwowServerLocalService);
+
+		_setLocalServiceUtilService(powwowServerLocalService);
 	}
 
 	public void destroy() {
 		PersistedModelLocalServiceRegistryUtil.unregister(
 			"com.liferay.powwow.model.PowwowServer");
+
+		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -695,6 +702,22 @@ public abstract class PowwowServerLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		PowwowServerLocalService powwowServerLocalService) {
+
+		try {
+			Field field = PowwowServerLocalServiceUtil.class.getDeclaredField(
+				"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, powwowServerLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

@@ -14,9 +14,7 @@
 
 package com.liferay.external.reference.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * Provides the local service utility for ERUserGroup. This utility wraps
@@ -42,7 +40,7 @@ public class ERUserGroupLocalServiceUtil {
 				String externalReferenceCode, long userId, long companyId,
 				String name, String description,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addOrUpdateUserGroup(
 			externalReferenceCode, userId, companyId, name, description,
@@ -59,25 +57,9 @@ public class ERUserGroupLocalServiceUtil {
 	}
 
 	public static ERUserGroupLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<ERUserGroupLocalService, ERUserGroupLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(ERUserGroupLocalService.class);
-
-		ServiceTracker<ERUserGroupLocalService, ERUserGroupLocalService>
-			serviceTracker =
-				new ServiceTracker
-					<ERUserGroupLocalService, ERUserGroupLocalService>(
-						bundle.getBundleContext(),
-						ERUserGroupLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile ERUserGroupLocalService _service;
 
 }

@@ -14,9 +14,10 @@
 
 package com.liferay.mobile.device.rules.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.mobile.device.rules.model.MDRAction;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.Map;
 
 /**
  * Provides the remote service utility for MDRAction. This utility wraps
@@ -37,50 +38,40 @@ public class MDRActionServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.mobile.device.rules.service.impl.MDRActionServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.mobile.device.rules.model.MDRAction addAction(
-			long ruleGroupInstanceId,
-			java.util.Map<java.util.Locale, String> nameMap,
-			java.util.Map<java.util.Locale, String> descriptionMap, String type,
+	public static MDRAction addAction(
+			long ruleGroupInstanceId, Map<java.util.Locale, String> nameMap,
+			Map<java.util.Locale, String> descriptionMap, String type,
 			String typeSettings,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addAction(
 			ruleGroupInstanceId, nameMap, descriptionMap, type, typeSettings,
 			serviceContext);
 	}
 
-	public static com.liferay.mobile.device.rules.model.MDRAction addAction(
-			long ruleGroupInstanceId,
-			java.util.Map<java.util.Locale, String> nameMap,
-			java.util.Map<java.util.Locale, String> descriptionMap, String type,
+	public static MDRAction addAction(
+			long ruleGroupInstanceId, Map<java.util.Locale, String> nameMap,
+			Map<java.util.Locale, String> descriptionMap, String type,
 			com.liferay.portal.kernel.util.UnicodeProperties
 				typeSettingsUnicodeProperties,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addAction(
 			ruleGroupInstanceId, nameMap, descriptionMap, type,
 			typeSettingsUnicodeProperties, serviceContext);
 	}
 
-	public static void deleteAction(long actionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static void deleteAction(long actionId) throws PortalException {
 		getService().deleteAction(actionId);
 	}
 
-	public static com.liferay.mobile.device.rules.model.MDRAction fetchAction(
-			long actionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static MDRAction fetchAction(long actionId) throws PortalException {
 		return getService().fetchAction(actionId);
 	}
 
-	public static com.liferay.mobile.device.rules.model.MDRAction getAction(
-			long actionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static MDRAction getAction(long actionId) throws PortalException {
 		return getService().getAction(actionId);
 	}
 
@@ -93,25 +84,25 @@ public class MDRActionServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.mobile.device.rules.model.MDRAction updateAction(
-			long actionId, java.util.Map<java.util.Locale, String> nameMap,
-			java.util.Map<java.util.Locale, String> descriptionMap, String type,
+	public static MDRAction updateAction(
+			long actionId, Map<java.util.Locale, String> nameMap,
+			Map<java.util.Locale, String> descriptionMap, String type,
 			String typeSettings,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateAction(
 			actionId, nameMap, descriptionMap, type, typeSettings,
 			serviceContext);
 	}
 
-	public static com.liferay.mobile.device.rules.model.MDRAction updateAction(
-			long actionId, java.util.Map<java.util.Locale, String> nameMap,
-			java.util.Map<java.util.Locale, String> descriptionMap, String type,
+	public static MDRAction updateAction(
+			long actionId, Map<java.util.Locale, String> nameMap,
+			Map<java.util.Locale, String> descriptionMap, String type,
 			com.liferay.portal.kernel.util.UnicodeProperties
 				typeSettingsUnicodeProperties,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateAction(
 			actionId, nameMap, descriptionMap, type,
@@ -119,22 +110,9 @@ public class MDRActionServiceUtil {
 	}
 
 	public static MDRActionService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<MDRActionService, MDRActionService>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(MDRActionService.class);
-
-		ServiceTracker<MDRActionService, MDRActionService> serviceTracker =
-			new ServiceTracker<MDRActionService, MDRActionService>(
-				bundle.getBundleContext(), MDRActionService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile MDRActionService _service;
 
 }

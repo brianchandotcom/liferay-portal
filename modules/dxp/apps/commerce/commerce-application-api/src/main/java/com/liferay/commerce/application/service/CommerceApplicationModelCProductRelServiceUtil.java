@@ -14,9 +14,10 @@
 
 package com.liferay.commerce.application.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.application.model.CommerceApplicationModelCProductRel;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for CommerceApplicationModelCProductRel. This utility wraps
@@ -37,13 +38,10 @@ public class CommerceApplicationModelCProductRelServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.application.service.impl.CommerceApplicationModelCProductRelServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static
-		com.liferay.commerce.application.model.
-			CommerceApplicationModelCProductRel
-					addCommerceApplicationModelCProductRel(
-						long userId, long commerceApplicationModelId,
-						long cProductId)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceApplicationModelCProductRel
+			addCommerceApplicationModelCProductRel(
+				long userId, long commerceApplicationModelId, long cProductId)
+		throws PortalException {
 
 		return getService().addCommerceApplicationModelCProductRel(
 			userId, commerceApplicationModelId, cProductId);
@@ -51,18 +49,16 @@ public class CommerceApplicationModelCProductRelServiceUtil {
 
 	public static void deleteCommerceApplicationModelCProductRel(
 			long commerceApplicationModelCProductRelId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommerceApplicationModelCProductRel(
 			commerceApplicationModelCProductRelId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.application.model.
-			CommerceApplicationModelCProductRel>
-					getCommerceApplicationModelCProductRels(
-						long commerceApplicationModelId, int start, int end)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommerceApplicationModelCProductRel>
+			getCommerceApplicationModelCProductRels(
+				long commerceApplicationModelId, int start, int end)
+		throws PortalException {
 
 		return getService().getCommerceApplicationModelCProductRels(
 			commerceApplicationModelId, start, end);
@@ -70,7 +66,7 @@ public class CommerceApplicationModelCProductRelServiceUtil {
 
 	public static int getCommerceApplicationModelCProductRelsCount(
 			long commerceApplicationModelId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCommerceApplicationModelCProductRelsCount(
 			commerceApplicationModelId);
@@ -86,30 +82,9 @@ public class CommerceApplicationModelCProductRelServiceUtil {
 	}
 
 	public static CommerceApplicationModelCProductRelService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceApplicationModelCProductRelService,
-		 CommerceApplicationModelCProductRelService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommerceApplicationModelCProductRelService.class);
-
-		ServiceTracker
-			<CommerceApplicationModelCProductRelService,
-			 CommerceApplicationModelCProductRelService> serviceTracker =
-				new ServiceTracker
-					<CommerceApplicationModelCProductRelService,
-					 CommerceApplicationModelCProductRelService>(
-						 bundle.getBundleContext(),
-						 CommerceApplicationModelCProductRelService.class,
-						 null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceApplicationModelCProductRelService _service;
 
 }

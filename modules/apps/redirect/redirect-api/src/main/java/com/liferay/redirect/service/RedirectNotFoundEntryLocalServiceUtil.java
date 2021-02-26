@@ -14,9 +14,16 @@
 
 package com.liferay.redirect.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.redirect.model.RedirectNotFoundEntry;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for RedirectNotFoundEntry. This utility wraps
@@ -37,9 +44,8 @@ public class RedirectNotFoundEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.redirect.service.impl.RedirectNotFoundEntryLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.redirect.model.RedirectNotFoundEntry
-		addOrUpdateRedirectNotFoundEntry(
-			com.liferay.portal.kernel.model.Group group, String url) {
+	public static RedirectNotFoundEntry addOrUpdateRedirectNotFoundEntry(
+		com.liferay.portal.kernel.model.Group group, String url) {
 
 		return getService().addOrUpdateRedirectNotFoundEntry(group, url);
 	}
@@ -54,10 +60,8 @@ public class RedirectNotFoundEntryLocalServiceUtil {
 	 * @param redirectNotFoundEntry the redirect not found entry
 	 * @return the redirect not found entry that was added
 	 */
-	public static com.liferay.redirect.model.RedirectNotFoundEntry
-		addRedirectNotFoundEntry(
-			com.liferay.redirect.model.RedirectNotFoundEntry
-				redirectNotFoundEntry) {
+	public static RedirectNotFoundEntry addRedirectNotFoundEntry(
+		RedirectNotFoundEntry redirectNotFoundEntry) {
 
 		return getService().addRedirectNotFoundEntry(redirectNotFoundEntry);
 	}
@@ -65,9 +69,9 @@ public class RedirectNotFoundEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -78,8 +82,8 @@ public class RedirectNotFoundEntryLocalServiceUtil {
 	 * @param redirectNotFoundEntryId the primary key for the new redirect not found entry
 	 * @return the new redirect not found entry
 	 */
-	public static com.liferay.redirect.model.RedirectNotFoundEntry
-		createRedirectNotFoundEntry(long redirectNotFoundEntryId) {
+	public static RedirectNotFoundEntry createRedirectNotFoundEntry(
+		long redirectNotFoundEntryId) {
 
 		return getService().createRedirectNotFoundEntry(
 			redirectNotFoundEntryId);
@@ -88,10 +92,9 @@ public class RedirectNotFoundEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
@@ -107,9 +110,9 @@ public class RedirectNotFoundEntryLocalServiceUtil {
 	 * @return the redirect not found entry that was removed
 	 * @throws PortalException if a redirect not found entry with the primary key could not be found
 	 */
-	public static com.liferay.redirect.model.RedirectNotFoundEntry
-			deleteRedirectNotFoundEntry(long redirectNotFoundEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static RedirectNotFoundEntry deleteRedirectNotFoundEntry(
+			long redirectNotFoundEntryId)
+		throws PortalException {
 
 		return getService().deleteRedirectNotFoundEntry(
 			redirectNotFoundEntryId);
@@ -125,23 +128,17 @@ public class RedirectNotFoundEntryLocalServiceUtil {
 	 * @param redirectNotFoundEntry the redirect not found entry
 	 * @return the redirect not found entry that was removed
 	 */
-	public static com.liferay.redirect.model.RedirectNotFoundEntry
-		deleteRedirectNotFoundEntry(
-			com.liferay.redirect.model.RedirectNotFoundEntry
-				redirectNotFoundEntry) {
+	public static RedirectNotFoundEntry deleteRedirectNotFoundEntry(
+		RedirectNotFoundEntry redirectNotFoundEntry) {
 
 		return getService().deleteRedirectNotFoundEntry(redirectNotFoundEntry);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -151,9 +148,7 @@ public class RedirectNotFoundEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -169,9 +164,8 @@ public class RedirectNotFoundEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -189,10 +183,9 @@ public class RedirectNotFoundEntryLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -204,9 +197,7 @@ public class RedirectNotFoundEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -218,20 +209,20 @@ public class RedirectNotFoundEntryLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.redirect.model.RedirectNotFoundEntry
-		fetchRedirectNotFoundEntry(long redirectNotFoundEntryId) {
+	public static RedirectNotFoundEntry fetchRedirectNotFoundEntry(
+		long redirectNotFoundEntryId) {
 
 		return getService().fetchRedirectNotFoundEntry(redirectNotFoundEntryId);
 	}
 
-	public static com.liferay.redirect.model.RedirectNotFoundEntry
-		fetchRedirectNotFoundEntry(long groupId, String url) {
+	public static RedirectNotFoundEntry fetchRedirectNotFoundEntry(
+		long groupId, String url) {
 
 		return getService().fetchRedirectNotFoundEntry(groupId, url);
 	}
@@ -261,9 +252,8 @@ public class RedirectNotFoundEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -279,46 +269,32 @@ public class RedirectNotFoundEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of redirect not found entries (not inclusive)
 	 * @return the range of redirect not found entries
 	 */
-	public static java.util.List
-		<com.liferay.redirect.model.RedirectNotFoundEntry>
-			getRedirectNotFoundEntries(int start, int end) {
+	public static List<RedirectNotFoundEntry> getRedirectNotFoundEntries(
+		int start, int end) {
 
 		return getService().getRedirectNotFoundEntries(start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.redirect.model.RedirectNotFoundEntry>
-			getRedirectNotFoundEntries(
-				long groupId, Boolean ignored, java.util.Date minModifiedDate,
-				int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.redirect.model.RedirectNotFoundEntry>
-						orderByComparator) {
+	public static List<RedirectNotFoundEntry> getRedirectNotFoundEntries(
+		long groupId, Boolean ignored, java.util.Date minModifiedDate,
+		int start, int end,
+		OrderByComparator<RedirectNotFoundEntry> orderByComparator) {
 
 		return getService().getRedirectNotFoundEntries(
 			groupId, ignored, minModifiedDate, start, end, orderByComparator);
 	}
 
-	public static java.util.List
-		<com.liferay.redirect.model.RedirectNotFoundEntry>
-			getRedirectNotFoundEntries(
-				long groupId, java.util.Date minModifiedDate, int start,
-				int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.redirect.model.RedirectNotFoundEntry>
-						orderByComparator) {
+	public static List<RedirectNotFoundEntry> getRedirectNotFoundEntries(
+		long groupId, java.util.Date minModifiedDate, int start, int end,
+		OrderByComparator<RedirectNotFoundEntry> orderByComparator) {
 
 		return getService().getRedirectNotFoundEntries(
 			groupId, minModifiedDate, start, end, orderByComparator);
 	}
 
-	public static java.util.List
-		<com.liferay.redirect.model.RedirectNotFoundEntry>
-			getRedirectNotFoundEntries(
-				long groupId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.redirect.model.RedirectNotFoundEntry>
-						orderByComparator) {
+	public static List<RedirectNotFoundEntry> getRedirectNotFoundEntries(
+		long groupId, int start, int end,
+		OrderByComparator<RedirectNotFoundEntry> orderByComparator) {
 
 		return getService().getRedirectNotFoundEntries(
 			groupId, start, end, orderByComparator);
@@ -358,17 +334,16 @@ public class RedirectNotFoundEntryLocalServiceUtil {
 	 * @return the redirect not found entry
 	 * @throws PortalException if a redirect not found entry with the primary key could not be found
 	 */
-	public static com.liferay.redirect.model.RedirectNotFoundEntry
-			getRedirectNotFoundEntry(long redirectNotFoundEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static RedirectNotFoundEntry getRedirectNotFoundEntry(
+			long redirectNotFoundEntryId)
+		throws PortalException {
 
 		return getService().getRedirectNotFoundEntry(redirectNotFoundEntryId);
 	}
 
-	public static com.liferay.redirect.model.RedirectNotFoundEntry
-			updateRedirectNotFoundEntry(
-				long redirectNotFoundEntryId, boolean ignored)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static RedirectNotFoundEntry updateRedirectNotFoundEntry(
+			long redirectNotFoundEntryId, boolean ignored)
+		throws PortalException {
 
 		return getService().updateRedirectNotFoundEntry(
 			redirectNotFoundEntryId, ignored);
@@ -384,38 +359,16 @@ public class RedirectNotFoundEntryLocalServiceUtil {
 	 * @param redirectNotFoundEntry the redirect not found entry
 	 * @return the redirect not found entry that was updated
 	 */
-	public static com.liferay.redirect.model.RedirectNotFoundEntry
-		updateRedirectNotFoundEntry(
-			com.liferay.redirect.model.RedirectNotFoundEntry
-				redirectNotFoundEntry) {
+	public static RedirectNotFoundEntry updateRedirectNotFoundEntry(
+		RedirectNotFoundEntry redirectNotFoundEntry) {
 
 		return getService().updateRedirectNotFoundEntry(redirectNotFoundEntry);
 	}
 
 	public static RedirectNotFoundEntryLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<RedirectNotFoundEntryLocalService, RedirectNotFoundEntryLocalService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			RedirectNotFoundEntryLocalService.class);
-
-		ServiceTracker
-			<RedirectNotFoundEntryLocalService,
-			 RedirectNotFoundEntryLocalService> serviceTracker =
-				new ServiceTracker
-					<RedirectNotFoundEntryLocalService,
-					 RedirectNotFoundEntryLocalService>(
-						 bundle.getBundleContext(),
-						 RedirectNotFoundEntryLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile RedirectNotFoundEntryLocalService _service;
 
 }

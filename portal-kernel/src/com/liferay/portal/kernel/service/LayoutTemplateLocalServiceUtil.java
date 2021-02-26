@@ -14,7 +14,8 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Provides the local service utility for LayoutTemplate. This utility wraps
@@ -55,13 +56,13 @@ public class LayoutTemplateLocalServiceUtil {
 			layoutTemplateId, standard, themeId);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.LayoutTemplate>
+	public static List<com.liferay.portal.kernel.model.LayoutTemplate>
 		getLayoutTemplates() {
 
 		return getService().getLayoutTemplates();
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.LayoutTemplate>
+	public static List<com.liferay.portal.kernel.model.LayoutTemplate>
 		getLayoutTemplates(String themeId) {
 
 		return getService().getLayoutTemplates(themeId);
@@ -76,19 +77,17 @@ public class LayoutTemplateLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.LayoutTemplate>
-		init(
-			javax.servlet.ServletContext servletContext, String[] xmls,
-			com.liferay.portal.kernel.plugin.PluginPackage pluginPackage) {
+	public static List<com.liferay.portal.kernel.model.LayoutTemplate> init(
+		javax.servlet.ServletContext servletContext, String[] xmls,
+		com.liferay.portal.kernel.plugin.PluginPackage pluginPackage) {
 
 		return getService().init(servletContext, xmls, pluginPackage);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.LayoutTemplate>
-		init(
-			String servletContextName,
-			javax.servlet.ServletContext servletContext, String[] xmls,
-			com.liferay.portal.kernel.plugin.PluginPackage pluginPackage) {
+	public static List<com.liferay.portal.kernel.model.LayoutTemplate> init(
+		String servletContextName, javax.servlet.ServletContext servletContext,
+		String[] xmls,
+		com.liferay.portal.kernel.plugin.PluginPackage pluginPackage) {
 
 		return getService().init(
 			servletContextName, servletContext, xmls, pluginPackage);
@@ -96,8 +95,7 @@ public class LayoutTemplateLocalServiceUtil {
 
 	public static void readLayoutTemplate(
 		String servletContextName, javax.servlet.ServletContext servletContext,
-		java.util.Set<com.liferay.portal.kernel.model.LayoutTemplate>
-			layoutTemplates,
+		Set<com.liferay.portal.kernel.model.LayoutTemplate> layoutTemplates,
 		com.liferay.portal.kernel.xml.Element element, boolean standard,
 		String themeId,
 		com.liferay.portal.kernel.plugin.PluginPackage pluginPackage) {
@@ -118,14 +116,9 @@ public class LayoutTemplateLocalServiceUtil {
 	}
 
 	public static LayoutTemplateLocalService getService() {
-		if (_service == null) {
-			_service = (LayoutTemplateLocalService)PortalBeanLocatorUtil.locate(
-				LayoutTemplateLocalService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static LayoutTemplateLocalService _service;
+	private static volatile LayoutTemplateLocalService _service;
 
 }

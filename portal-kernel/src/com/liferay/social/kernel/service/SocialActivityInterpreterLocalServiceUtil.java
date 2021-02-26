@@ -14,7 +14,10 @@
 
 package com.liferay.social.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for SocialActivityInterpreter. This utility wraps
@@ -60,16 +63,15 @@ public class SocialActivityInterpreterLocalServiceUtil {
 		getService().deleteActivityInterpreter(activityInterpreter);
 	}
 
-	public static java.util.Map
+	public static Map
 		<String,
-		 java.util.List
-			 <com.liferay.social.kernel.model.SocialActivityInterpreter>>
-				getActivityInterpreters() {
+		 List<com.liferay.social.kernel.model.SocialActivityInterpreter>>
+			getActivityInterpreters() {
 
 		return getService().getActivityInterpreters();
 	}
 
-	public static java.util.List
+	public static List
 		<com.liferay.social.kernel.model.SocialActivityInterpreter>
 			getActivityInterpreters(String selector) {
 
@@ -121,22 +123,15 @@ public class SocialActivityInterpreterLocalServiceUtil {
 	}
 
 	public static void updateActivitySet(long activityId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().updateActivitySet(activityId);
 	}
 
 	public static SocialActivityInterpreterLocalService getService() {
-		if (_service == null) {
-			_service =
-				(SocialActivityInterpreterLocalService)
-					PortalBeanLocatorUtil.locate(
-						SocialActivityInterpreterLocalService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static SocialActivityInterpreterLocalService _service;
+	private static volatile SocialActivityInterpreterLocalService _service;
 
 }

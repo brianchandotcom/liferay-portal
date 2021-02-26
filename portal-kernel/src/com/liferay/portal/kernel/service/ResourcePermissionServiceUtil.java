@@ -14,7 +14,9 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.Map;
 
 /**
  * Provides the remote service utility for ResourcePermission. This utility wraps
@@ -75,7 +77,7 @@ public class ResourcePermissionServiceUtil {
 	public static void addResourcePermission(
 			long groupId, long companyId, String name, int scope,
 			String primKey, long roleId, String actionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().addResourcePermission(
 			groupId, companyId, name, scope, primKey, roleId, actionId);
@@ -113,7 +115,7 @@ public class ResourcePermissionServiceUtil {
 	public static void removeResourcePermission(
 			long groupId, long companyId, String name, int scope,
 			String primKey, long roleId, String actionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().removeResourcePermission(
 			groupId, companyId, name, scope, primKey, roleId, actionId);
@@ -136,7 +138,7 @@ public class ResourcePermissionServiceUtil {
 	public static void removeResourcePermissions(
 			long groupId, long companyId, String name, int scope, long roleId,
 			String actionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().removeResourcePermissions(
 			groupId, companyId, name, scope, roleId, actionId);
@@ -169,7 +171,7 @@ public class ResourcePermissionServiceUtil {
 	public static void setIndividualResourcePermissions(
 			long groupId, long companyId, String name, String primKey,
 			long roleId, String[] actionIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().setIndividualResourcePermissions(
 			groupId, companyId, name, primKey, roleId, actionIds);
@@ -200,22 +202,17 @@ public class ResourcePermissionServiceUtil {
 	 */
 	public static void setIndividualResourcePermissions(
 			long groupId, long companyId, String name, String primKey,
-			java.util.Map<Long, String[]> roleIdsToActionIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
+			Map<Long, String[]> roleIdsToActionIds)
+		throws PortalException {
 
 		getService().setIndividualResourcePermissions(
 			groupId, companyId, name, primKey, roleIdsToActionIds);
 	}
 
 	public static ResourcePermissionService getService() {
-		if (_service == null) {
-			_service = (ResourcePermissionService)PortalBeanLocatorUtil.locate(
-				ResourcePermissionService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static ResourcePermissionService _service;
+	private static volatile ResourcePermissionService _service;
 
 }

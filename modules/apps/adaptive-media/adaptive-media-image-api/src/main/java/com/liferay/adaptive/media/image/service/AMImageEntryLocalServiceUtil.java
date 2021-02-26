@@ -14,9 +14,17 @@
 
 package com.liferay.adaptive.media.image.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.adaptive.media.image.model.AMImageEntry;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.InputStream;
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for AMImageEntry. This utility wraps
@@ -55,15 +63,12 @@ public class AMImageEntryLocalServiceUtil {
 	 * @throws PortalException if an adaptive media image already exists for the
 	 file version and configuration
 	 */
-	public static com.liferay.adaptive.media.image.model.AMImageEntry
-			addAMImageEntry(
-				com.liferay.adaptive.media.image.configuration.
-					AMImageConfigurationEntry amImageConfigurationEntry,
-				com.liferay.portal.kernel.repository.model.FileVersion
-					fileVersion,
-				int height, int width, java.io.InputStream inputStream,
-				long size)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AMImageEntry addAMImageEntry(
+			com.liferay.adaptive.media.image.configuration.
+				AMImageConfigurationEntry amImageConfigurationEntry,
+			com.liferay.portal.kernel.repository.model.FileVersion fileVersion,
+			int height, int width, InputStream inputStream, long size)
+		throws PortalException {
 
 		return getService().addAMImageEntry(
 			amImageConfigurationEntry, fileVersion, height, width, inputStream,
@@ -80,10 +85,7 @@ public class AMImageEntryLocalServiceUtil {
 	 * @param amImageEntry the am image entry
 	 * @return the am image entry that was added
 	 */
-	public static com.liferay.adaptive.media.image.model.AMImageEntry
-		addAMImageEntry(
-			com.liferay.adaptive.media.image.model.AMImageEntry amImageEntry) {
-
+	public static AMImageEntry addAMImageEntry(AMImageEntry amImageEntry) {
 		return getService().addAMImageEntry(amImageEntry);
 	}
 
@@ -93,18 +95,16 @@ public class AMImageEntryLocalServiceUtil {
 	 * @param amImageEntryId the primary key for the new am image entry
 	 * @return the new am image entry
 	 */
-	public static com.liferay.adaptive.media.image.model.AMImageEntry
-		createAMImageEntry(long amImageEntryId) {
-
+	public static AMImageEntry createAMImageEntry(long amImageEntryId) {
 		return getService().createAMImageEntry(amImageEntryId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -136,10 +136,7 @@ public class AMImageEntryLocalServiceUtil {
 	 * @param amImageEntry the am image entry
 	 * @return the am image entry that was removed
 	 */
-	public static com.liferay.adaptive.media.image.model.AMImageEntry
-		deleteAMImageEntry(
-			com.liferay.adaptive.media.image.model.AMImageEntry amImageEntry) {
-
+	public static AMImageEntry deleteAMImageEntry(AMImageEntry amImageEntry) {
 		return getService().deleteAMImageEntry(amImageEntry);
 	}
 
@@ -154,9 +151,8 @@ public class AMImageEntryLocalServiceUtil {
 	 * @return the am image entry that was removed
 	 * @throws PortalException if a am image entry with the primary key could not be found
 	 */
-	public static com.liferay.adaptive.media.image.model.AMImageEntry
-			deleteAMImageEntry(long amImageEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AMImageEntry deleteAMImageEntry(long amImageEntryId)
+		throws PortalException {
 
 		return getService().deleteAMImageEntry(amImageEntryId);
 	}
@@ -171,7 +167,7 @@ public class AMImageEntryLocalServiceUtil {
 	 */
 	public static void deleteAMImageEntryFileVersion(
 			com.liferay.portal.kernel.repository.model.FileVersion fileVersion)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteAMImageEntryFileVersion(fileVersion);
 	}
@@ -187,7 +183,7 @@ public class AMImageEntryLocalServiceUtil {
 	 */
 	public static void deleteAMImageEntryFileVersion(
 			String configurationUuid, long fileVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteAMImageEntryFileVersion(
 			configurationUuid, fileVersionId);
@@ -196,23 +192,18 @@ public class AMImageEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -222,9 +213,7 @@ public class AMImageEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -240,9 +229,8 @@ public class AMImageEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -260,10 +248,9 @@ public class AMImageEntryLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -275,9 +262,7 @@ public class AMImageEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -289,15 +274,13 @@ public class AMImageEntryLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.adaptive.media.image.model.AMImageEntry
-		fetchAMImageEntry(long amImageEntryId) {
-
+	public static AMImageEntry fetchAMImageEntry(long amImageEntryId) {
 		return getService().fetchAMImageEntry(amImageEntryId);
 	}
 
@@ -311,8 +294,8 @@ public class AMImageEntryLocalServiceUtil {
 	 * @return the matching adaptive media image entry, or <code>null</code> if
 	 a matching adaptive media image entry could not be found
 	 */
-	public static com.liferay.adaptive.media.image.model.AMImageEntry
-		fetchAMImageEntry(String configurationUuid, long fileVersionId) {
+	public static AMImageEntry fetchAMImageEntry(
+		String configurationUuid, long fileVersionId) {
 
 		return getService().fetchAMImageEntry(configurationUuid, fileVersionId);
 	}
@@ -324,8 +307,8 @@ public class AMImageEntryLocalServiceUtil {
 	 * @param groupId the primary key of the group
 	 * @return the matching am image entry, or <code>null</code> if a matching am image entry could not be found
 	 */
-	public static com.liferay.adaptive.media.image.model.AMImageEntry
-		fetchAMImageEntryByUuidAndGroupId(String uuid, long groupId) {
+	public static AMImageEntry fetchAMImageEntryByUuidAndGroupId(
+		String uuid, long groupId) {
 
 		return getService().fetchAMImageEntryByUuidAndGroupId(uuid, groupId);
 	}
@@ -347,10 +330,7 @@ public class AMImageEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of am image entries (not inclusive)
 	 * @return the range of am image entries
 	 */
-	public static java.util.List
-		<com.liferay.adaptive.media.image.model.AMImageEntry> getAMImageEntries(
-			int start, int end) {
-
+	public static List<AMImageEntry> getAMImageEntries(int start, int end) {
 		return getService().getAMImageEntries(start, end);
 	}
 
@@ -361,10 +341,7 @@ public class AMImageEntryLocalServiceUtil {
 	 * @param fileVersionId the primary key of the file version
 	 * @return the list of adaptive media image entries in the file version
 	 */
-	public static java.util.List
-		<com.liferay.adaptive.media.image.model.AMImageEntry> getAMImageEntries(
-			long fileVersionId) {
-
+	public static List<AMImageEntry> getAMImageEntries(long fileVersionId) {
 		return getService().getAMImageEntries(fileVersionId);
 	}
 
@@ -375,9 +352,8 @@ public class AMImageEntryLocalServiceUtil {
 	 * @param companyId the primary key of the company
 	 * @return the matching am image entries, or an empty list if no matches were found
 	 */
-	public static java.util.List
-		<com.liferay.adaptive.media.image.model.AMImageEntry>
-			getAMImageEntriesByUuidAndCompanyId(String uuid, long companyId) {
+	public static List<AMImageEntry> getAMImageEntriesByUuidAndCompanyId(
+		String uuid, long companyId) {
 
 		return getService().getAMImageEntriesByUuidAndCompanyId(
 			uuid, companyId);
@@ -393,13 +369,9 @@ public class AMImageEntryLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the range of matching am image entries, or an empty list if no matches were found
 	 */
-	public static java.util.List
-		<com.liferay.adaptive.media.image.model.AMImageEntry>
-			getAMImageEntriesByUuidAndCompanyId(
-				String uuid, long companyId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.adaptive.media.image.model.AMImageEntry>
-						orderByComparator) {
+	public static List<AMImageEntry> getAMImageEntriesByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<AMImageEntry> orderByComparator) {
 
 		return getService().getAMImageEntriesByUuidAndCompanyId(
 			uuid, companyId, start, end, orderByComparator);
@@ -438,9 +410,8 @@ public class AMImageEntryLocalServiceUtil {
 	 * @return the am image entry
 	 * @throws PortalException if a am image entry with the primary key could not be found
 	 */
-	public static com.liferay.adaptive.media.image.model.AMImageEntry
-			getAMImageEntry(long amImageEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AMImageEntry getAMImageEntry(long amImageEntryId)
+		throws PortalException {
 
 		return getService().getAMImageEntry(amImageEntryId);
 	}
@@ -453,9 +424,9 @@ public class AMImageEntryLocalServiceUtil {
 	 * @return the matching am image entry
 	 * @throws PortalException if a matching am image entry could not be found
 	 */
-	public static com.liferay.adaptive.media.image.model.AMImageEntry
-			getAMImageEntryByUuidAndGroupId(String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AMImageEntry getAMImageEntryByUuidAndGroupId(
+			String uuid, long groupId)
+		throws PortalException {
 
 		return getService().getAMImageEntryByUuidAndGroupId(uuid, groupId);
 	}
@@ -471,7 +442,7 @@ public class AMImageEntryLocalServiceUtil {
 	 * @return the input stream of the adaptive media image generated for a file
 	 version and configuration
 	 */
-	public static java.io.InputStream getAMImageEntryContentStream(
+	public static InputStream getAMImageEntryContentStream(
 		com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry
 			amImageConfigurationEntry,
 		com.liferay.portal.kernel.repository.model.FileVersion fileVersion) {
@@ -527,9 +498,8 @@ public class AMImageEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -544,33 +514,14 @@ public class AMImageEntryLocalServiceUtil {
 	 * @param amImageEntry the am image entry
 	 * @return the am image entry that was updated
 	 */
-	public static com.liferay.adaptive.media.image.model.AMImageEntry
-		updateAMImageEntry(
-			com.liferay.adaptive.media.image.model.AMImageEntry amImageEntry) {
-
+	public static AMImageEntry updateAMImageEntry(AMImageEntry amImageEntry) {
 		return getService().updateAMImageEntry(amImageEntry);
 	}
 
 	public static AMImageEntryLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<AMImageEntryLocalService, AMImageEntryLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(AMImageEntryLocalService.class);
-
-		ServiceTracker<AMImageEntryLocalService, AMImageEntryLocalService>
-			serviceTracker =
-				new ServiceTracker
-					<AMImageEntryLocalService, AMImageEntryLocalService>(
-						bundle.getBundleContext(),
-						AMImageEntryLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile AMImageEntryLocalService _service;
 
 }

@@ -14,7 +14,10 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.ListType;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for ListType. This utility wraps
@@ -35,22 +38,15 @@ public class ListTypeServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.service.impl.ListTypeServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.kernel.model.ListType getListType(
-			long listTypeId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static ListType getListType(long listTypeId) throws PortalException {
 		return getService().getListType(listTypeId);
 	}
 
-	public static com.liferay.portal.kernel.model.ListType getListType(
-		String name, String type) {
-
+	public static ListType getListType(String name, String type) {
 		return getService().getListType(name, type);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.ListType>
-		getListTypes(String type) {
-
+	public static List<ListType> getListTypes(String type) {
 		return getService().getListTypes(type);
 	}
 
@@ -64,26 +60,21 @@ public class ListTypeServiceUtil {
 	}
 
 	public static void validate(long listTypeId, long classNameId, String type)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().validate(listTypeId, classNameId, type);
 	}
 
 	public static void validate(long listTypeId, String type)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().validate(listTypeId, type);
 	}
 
 	public static ListTypeService getService() {
-		if (_service == null) {
-			_service = (ListTypeService)PortalBeanLocatorUtil.locate(
-				ListTypeService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static ListTypeService _service;
+	private static volatile ListTypeService _service;
 
 }

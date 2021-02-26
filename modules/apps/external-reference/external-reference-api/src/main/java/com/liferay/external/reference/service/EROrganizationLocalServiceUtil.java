@@ -14,9 +14,7 @@
 
 package com.liferay.external.reference.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * Provides the local service utility for EROrganization. This utility wraps
@@ -44,7 +42,7 @@ public class EROrganizationLocalServiceUtil {
 				long regionId, long countryId, long statusId, String comments,
 				boolean site, boolean hasLogo, byte[] logoBytes,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addOrUpdateOrganization(
 			externalReferenceCode, userId, parentOrganizationId, name, type,
@@ -62,27 +60,9 @@ public class EROrganizationLocalServiceUtil {
 	}
 
 	public static EROrganizationLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<EROrganizationLocalService, EROrganizationLocalService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			EROrganizationLocalService.class);
-
-		ServiceTracker<EROrganizationLocalService, EROrganizationLocalService>
-			serviceTracker =
-				new ServiceTracker
-					<EROrganizationLocalService, EROrganizationLocalService>(
-						bundle.getBundleContext(),
-						EROrganizationLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile EROrganizationLocalService _service;
 
 }

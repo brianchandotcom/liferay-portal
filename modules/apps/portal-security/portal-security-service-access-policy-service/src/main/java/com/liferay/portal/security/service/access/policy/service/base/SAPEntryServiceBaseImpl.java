@@ -25,10 +25,14 @@ import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryService;
+import com.liferay.portal.security.service.access.policy.service.SAPEntryServiceUtil;
 import com.liferay.portal.security.service.access.policy.service.persistence.SAPEntryPersistence;
+
+import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
 
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -49,8 +53,13 @@ public abstract class SAPEntryServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>SAPEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.security.service.access.policy.service.SAPEntryServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>SAPEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>SAPEntryServiceUtil</code>.
 	 */
+	@Deactivate
+	protected void deactivate() {
+		_setServiceUtilService(null);
+	}
+
 	@Override
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
@@ -61,6 +70,8 @@ public abstract class SAPEntryServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		sapEntryService = (SAPEntryService)aopProxy;
+
+		_setServiceUtilService(sapEntryService);
 	}
 
 	/**
@@ -102,6 +113,20 @@ public abstract class SAPEntryServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setServiceUtilService(SAPEntryService sapEntryService) {
+		try {
+			Field field = SAPEntryServiceUtil.class.getDeclaredField(
+				"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, sapEntryService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

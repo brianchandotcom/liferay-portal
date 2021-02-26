@@ -14,9 +14,11 @@
 
 package com.liferay.commerce.price.list.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.price.list.model.CommercePriceListCommerceAccountGroupRel;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for CommercePriceListCommerceAccountGroupRel. This utility wraps
@@ -37,14 +39,12 @@ public class CommercePriceListCommerceAccountGroupRelServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.price.list.service.impl.CommercePriceListCommerceAccountGroupRelServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.commerce.price.list.model.
-		CommercePriceListCommerceAccountGroupRel
-				addCommercePriceListCommerceAccountGroupRel(
-					long commercePriceListId, long commerceAccountGroupId,
-					int order,
-					com.liferay.portal.kernel.service.ServiceContext
-						serviceContext)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceListCommerceAccountGroupRel
+			addCommercePriceListCommerceAccountGroupRel(
+				long commercePriceListId, long commerceAccountGroupId,
+				int order,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCommercePriceListCommerceAccountGroupRel(
 			commercePriceListId, commerceAccountGroupId, order, serviceContext);
@@ -53,7 +53,7 @@ public class CommercePriceListCommerceAccountGroupRelServiceUtil {
 	public static void
 			deleteCommercePriceListAccountGroupRelsByCommercePriceListId(
 				long commercePriceListId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().
 			deleteCommercePriceListAccountGroupRelsByCommercePriceListId(
@@ -62,63 +62,53 @@ public class CommercePriceListCommerceAccountGroupRelServiceUtil {
 
 	public static void deleteCommercePriceListCommerceAccountGroupRel(
 			long commercePriceListCommerceAccountGroupRelId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommercePriceListCommerceAccountGroupRel(
 			commercePriceListCommerceAccountGroupRelId);
 	}
 
-	public static com.liferay.commerce.price.list.model.
-		CommercePriceListCommerceAccountGroupRel
-				fetchCommercePriceListCommerceAccountGroupRel(
-					long commercePriceListId, long commerceAccountGroupId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceListCommerceAccountGroupRel
+			fetchCommercePriceListCommerceAccountGroupRel(
+				long commercePriceListId, long commerceAccountGroupId)
+		throws PortalException {
 
 		return getService().fetchCommercePriceListCommerceAccountGroupRel(
 			commercePriceListId, commerceAccountGroupId);
 	}
 
-	public static com.liferay.commerce.price.list.model.
-		CommercePriceListCommerceAccountGroupRel
-				getCommercePriceListCommerceAccountGroupRel(
-					long commercePriceListCommerceAccoungGroupRelId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceListCommerceAccountGroupRel
+			getCommercePriceListCommerceAccountGroupRel(
+				long commercePriceListCommerceAccoungGroupRelId)
+		throws PortalException {
 
 		return getService().getCommercePriceListCommerceAccountGroupRel(
 			commercePriceListCommerceAccoungGroupRelId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.price.list.model.
-			CommercePriceListCommerceAccountGroupRel>
-					getCommercePriceListCommerceAccountGroupRels(
-						long commercePriceListId)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommercePriceListCommerceAccountGroupRel>
+			getCommercePriceListCommerceAccountGroupRels(
+				long commercePriceListId)
+		throws PortalException {
 
 		return getService().getCommercePriceListCommerceAccountGroupRels(
 			commercePriceListId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.price.list.model.
-			CommercePriceListCommerceAccountGroupRel>
-					getCommercePriceListCommerceAccountGroupRels(
-						long commercePriceListId, int start, int end,
-						com.liferay.portal.kernel.util.OrderByComparator
-							<com.liferay.commerce.price.list.model.
-								CommercePriceListCommerceAccountGroupRel>
-									orderByComparator)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommercePriceListCommerceAccountGroupRel>
+			getCommercePriceListCommerceAccountGroupRels(
+				long commercePriceListId, int start, int end,
+				OrderByComparator<CommercePriceListCommerceAccountGroupRel>
+					orderByComparator)
+		throws PortalException {
 
 		return getService().getCommercePriceListCommerceAccountGroupRels(
 			commercePriceListId, start, end, orderByComparator);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.price.list.model.
-			CommercePriceListCommerceAccountGroupRel>
-				getCommercePriceListCommerceAccountGroupRels(
-					long commercePriceListId, String name, int start, int end) {
+	public static List<CommercePriceListCommerceAccountGroupRel>
+		getCommercePriceListCommerceAccountGroupRels(
+			long commercePriceListId, String name, int start, int end) {
 
 		return getService().getCommercePriceListCommerceAccountGroupRels(
 			commercePriceListId, name, start, end);
@@ -126,7 +116,7 @@ public class CommercePriceListCommerceAccountGroupRelServiceUtil {
 
 	public static int getCommercePriceListCommerceAccountGroupRelsCount(
 			long commercePriceListId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCommercePriceListCommerceAccountGroupRelsCount(
 			commercePriceListId);
@@ -148,43 +138,21 @@ public class CommercePriceListCommerceAccountGroupRelServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.commerce.price.list.model.
-		CommercePriceListCommerceAccountGroupRel
-				updateCommercePriceListCommerceAccountGroupRel(
-					long commercePriceListCommerceAccountGroupRelId, int order,
-					com.liferay.portal.kernel.service.ServiceContext
-						serviceContext)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceListCommerceAccountGroupRel
+			updateCommercePriceListCommerceAccountGroupRel(
+				long commercePriceListCommerceAccountGroupRelId, int order,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().updateCommercePriceListCommerceAccountGroupRel(
 			commercePriceListCommerceAccountGroupRelId, order, serviceContext);
 	}
 
 	public static CommercePriceListCommerceAccountGroupRelService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommercePriceListCommerceAccountGroupRelService,
-		 CommercePriceListCommerceAccountGroupRelService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommercePriceListCommerceAccountGroupRelService.class);
-
-		ServiceTracker
-			<CommercePriceListCommerceAccountGroupRelService,
-			 CommercePriceListCommerceAccountGroupRelService> serviceTracker =
-				new ServiceTracker
-					<CommercePriceListCommerceAccountGroupRelService,
-					 CommercePriceListCommerceAccountGroupRelService>(
-						 bundle.getBundleContext(),
-						 CommercePriceListCommerceAccountGroupRelService.class,
-						 null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommercePriceListCommerceAccountGroupRelService
+		_service;
 
 }

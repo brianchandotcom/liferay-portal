@@ -41,9 +41,12 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.model.UADPartialEntry;
 import com.liferay.portal.tools.service.builder.test.service.UADPartialEntryLocalService;
+import com.liferay.portal.tools.service.builder.test.service.UADPartialEntryLocalServiceUtil;
 import com.liferay.portal.tools.service.builder.test.service.persistence.UADPartialEntryPersistence;
 
 import java.io.Serializable;
+
+import java.lang.reflect.Field;
 
 import java.util.List;
 
@@ -67,7 +70,7 @@ public abstract class UADPartialEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>UADPartialEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.tools.service.builder.test.service.UADPartialEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>UADPartialEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>UADPartialEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -438,11 +441,15 @@ public abstract class UADPartialEntryLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry.register(
 			"com.liferay.portal.tools.service.builder.test.model.UADPartialEntry",
 			uadPartialEntryLocalService);
+
+		_setLocalServiceUtilService(uadPartialEntryLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.portal.tools.service.builder.test.model.UADPartialEntry");
+
+		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -484,6 +491,23 @@ public abstract class UADPartialEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		UADPartialEntryLocalService uadPartialEntryLocalService) {
+
+		try {
+			Field field =
+				UADPartialEntryLocalServiceUtil.class.getDeclaredField(
+					"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, uadPartialEntryLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

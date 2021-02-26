@@ -14,9 +14,16 @@
 
 package com.liferay.portal.workflow.kaleo.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.workflow.kaleo.model.KaleoTaskForm;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for KaleoTaskForm. This utility wraps
@@ -48,22 +55,17 @@ public class KaleoTaskFormLocalServiceUtil {
 	 * @param kaleoTaskForm the kaleo task form
 	 * @return the kaleo task form that was added
 	 */
-	public static com.liferay.portal.workflow.kaleo.model.KaleoTaskForm
-		addKaleoTaskForm(
-			com.liferay.portal.workflow.kaleo.model.KaleoTaskForm
-				kaleoTaskForm) {
-
+	public static KaleoTaskForm addKaleoTaskForm(KaleoTaskForm kaleoTaskForm) {
 		return getService().addKaleoTaskForm(kaleoTaskForm);
 	}
 
-	public static com.liferay.portal.workflow.kaleo.model.KaleoTaskForm
-			addKaleoTaskForm(
-				long kaleoDefinitionId, long kaleoDefinitionVersionId,
-				long kaleoNodeId,
-				com.liferay.portal.workflow.kaleo.model.KaleoTask kaleoTask,
-				com.liferay.portal.workflow.kaleo.definition.TaskForm taskForm,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static KaleoTaskForm addKaleoTaskForm(
+			long kaleoDefinitionId, long kaleoDefinitionVersionId,
+			long kaleoNodeId,
+			com.liferay.portal.workflow.kaleo.model.KaleoTask kaleoTask,
+			com.liferay.portal.workflow.kaleo.definition.TaskForm taskForm,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addKaleoTaskForm(
 			kaleoDefinitionId, kaleoDefinitionVersionId, kaleoNodeId, kaleoTask,
@@ -76,18 +78,16 @@ public class KaleoTaskFormLocalServiceUtil {
 	 * @param kaleoTaskFormId the primary key for the new kaleo task form
 	 * @return the new kaleo task form
 	 */
-	public static com.liferay.portal.workflow.kaleo.model.KaleoTaskForm
-		createKaleoTaskForm(long kaleoTaskFormId) {
-
+	public static KaleoTaskForm createKaleoTaskForm(long kaleoTaskFormId) {
 		return getService().createKaleoTaskForm(kaleoTaskFormId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -113,10 +113,8 @@ public class KaleoTaskFormLocalServiceUtil {
 	 * @param kaleoTaskForm the kaleo task form
 	 * @return the kaleo task form that was removed
 	 */
-	public static com.liferay.portal.workflow.kaleo.model.KaleoTaskForm
-		deleteKaleoTaskForm(
-			com.liferay.portal.workflow.kaleo.model.KaleoTaskForm
-				kaleoTaskForm) {
+	public static KaleoTaskForm deleteKaleoTaskForm(
+		KaleoTaskForm kaleoTaskForm) {
 
 		return getService().deleteKaleoTaskForm(kaleoTaskForm);
 	}
@@ -132,9 +130,8 @@ public class KaleoTaskFormLocalServiceUtil {
 	 * @return the kaleo task form that was removed
 	 * @throws PortalException if a kaleo task form with the primary key could not be found
 	 */
-	public static com.liferay.portal.workflow.kaleo.model.KaleoTaskForm
-			deleteKaleoTaskForm(long kaleoTaskFormId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static KaleoTaskForm deleteKaleoTaskForm(long kaleoTaskFormId)
+		throws PortalException {
 
 		return getService().deleteKaleoTaskForm(kaleoTaskFormId);
 	}
@@ -142,23 +139,18 @@ public class KaleoTaskFormLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -168,9 +160,7 @@ public class KaleoTaskFormLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -186,9 +176,8 @@ public class KaleoTaskFormLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -206,10 +195,9 @@ public class KaleoTaskFormLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -221,9 +209,7 @@ public class KaleoTaskFormLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -235,15 +221,13 @@ public class KaleoTaskFormLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.portal.workflow.kaleo.model.KaleoTaskForm
-		fetchKaleoTaskForm(long kaleoTaskFormId) {
-
+	public static KaleoTaskForm fetchKaleoTaskForm(long kaleoTaskFormId) {
 		return getService().fetchKaleoTaskForm(kaleoTaskFormId);
 	}
 
@@ -267,9 +251,8 @@ public class KaleoTaskFormLocalServiceUtil {
 	 * @return the kaleo task form
 	 * @throws PortalException if a kaleo task form with the primary key could not be found
 	 */
-	public static com.liferay.portal.workflow.kaleo.model.KaleoTaskForm
-			getKaleoTaskForm(long kaleoTaskFormId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static KaleoTaskForm getKaleoTaskForm(long kaleoTaskFormId)
+		throws PortalException {
 
 		return getService().getKaleoTaskForm(kaleoTaskFormId);
 	}
@@ -285,17 +268,12 @@ public class KaleoTaskFormLocalServiceUtil {
 	 * @param end the upper bound of the range of kaleo task forms (not inclusive)
 	 * @return the range of kaleo task forms
 	 */
-	public static java.util.List
-		<com.liferay.portal.workflow.kaleo.model.KaleoTaskForm>
-			getKaleoTaskForms(int start, int end) {
-
+	public static List<KaleoTaskForm> getKaleoTaskForms(int start, int end) {
 		return getService().getKaleoTaskForms(start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.portal.workflow.kaleo.model.KaleoTaskForm>
-				getKaleoTaskForms(long kaleoTaskId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<KaleoTaskForm> getKaleoTaskForms(long kaleoTaskId)
+		throws PortalException {
 
 		return getService().getKaleoTaskForms(kaleoTaskId);
 	}
@@ -321,9 +299,8 @@ public class KaleoTaskFormLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -338,35 +315,16 @@ public class KaleoTaskFormLocalServiceUtil {
 	 * @param kaleoTaskForm the kaleo task form
 	 * @return the kaleo task form that was updated
 	 */
-	public static com.liferay.portal.workflow.kaleo.model.KaleoTaskForm
-		updateKaleoTaskForm(
-			com.liferay.portal.workflow.kaleo.model.KaleoTaskForm
-				kaleoTaskForm) {
+	public static KaleoTaskForm updateKaleoTaskForm(
+		KaleoTaskForm kaleoTaskForm) {
 
 		return getService().updateKaleoTaskForm(kaleoTaskForm);
 	}
 
 	public static KaleoTaskFormLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<KaleoTaskFormLocalService, KaleoTaskFormLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			KaleoTaskFormLocalService.class);
-
-		ServiceTracker<KaleoTaskFormLocalService, KaleoTaskFormLocalService>
-			serviceTracker =
-				new ServiceTracker
-					<KaleoTaskFormLocalService, KaleoTaskFormLocalService>(
-						bundle.getBundleContext(),
-						KaleoTaskFormLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile KaleoTaskFormLocalService _service;
 
 }

@@ -14,9 +14,11 @@
 
 package com.liferay.commerce.notification.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.notification.model.CommerceNotificationQueueEntry;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for CommerceNotificationQueueEntry. This utility wraps
@@ -39,27 +41,25 @@ public class CommerceNotificationQueueEntryServiceUtil {
 	 */
 	public static void deleteCommerceNotificationQueueEntry(
 			long commerceNotificationQueueEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommerceNotificationQueueEntry(
 			commerceNotificationQueueEntryId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.notification.model.CommerceNotificationQueueEntry>
-				getCommerceNotificationQueueEntries(
-					long groupId, int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						<com.liferay.commerce.notification.model.
-							CommerceNotificationQueueEntry> orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommerceNotificationQueueEntry>
+			getCommerceNotificationQueueEntries(
+				long groupId, int start, int end,
+				OrderByComparator<CommerceNotificationQueueEntry>
+					orderByComparator)
+		throws PortalException {
 
 		return getService().getCommerceNotificationQueueEntries(
 			groupId, start, end, orderByComparator);
 	}
 
 	public static int getCommerceNotificationQueueEntriesCount(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCommerceNotificationQueueEntriesCount(groupId);
 	}
@@ -73,40 +73,19 @@ public class CommerceNotificationQueueEntryServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static
-		com.liferay.commerce.notification.model.CommerceNotificationQueueEntry
-				resendCommerceNotificationQueueEntry(
-					long commerceNotificationQueueEntryId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceNotificationQueueEntry
+			resendCommerceNotificationQueueEntry(
+				long commerceNotificationQueueEntryId)
+		throws PortalException {
 
 		return getService().resendCommerceNotificationQueueEntry(
 			commerceNotificationQueueEntryId);
 	}
 
 	public static CommerceNotificationQueueEntryService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceNotificationQueueEntryService,
-		 CommerceNotificationQueueEntryService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommerceNotificationQueueEntryService.class);
-
-		ServiceTracker
-			<CommerceNotificationQueueEntryService,
-			 CommerceNotificationQueueEntryService> serviceTracker =
-				new ServiceTracker
-					<CommerceNotificationQueueEntryService,
-					 CommerceNotificationQueueEntryService>(
-						 bundle.getBundleContext(),
-						 CommerceNotificationQueueEntryService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceNotificationQueueEntryService _service;
 
 }

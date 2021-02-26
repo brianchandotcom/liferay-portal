@@ -14,10 +14,6 @@
 
 package com.liferay.polls.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-
 /**
  * Provides the remote service utility for PollsChoice. This utility wraps
  * <code>com.liferay.polls.service.impl.PollsChoiceServiceImpl</code> and is an
@@ -43,27 +39,14 @@ public class PollsChoiceServiceUtil {
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static String getOSGiServiceIdentifier() {
+	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static PollsChoiceService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<PollsChoiceService, PollsChoiceService>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(PollsChoiceService.class);
-
-		ServiceTracker<PollsChoiceService, PollsChoiceService> serviceTracker =
-			new ServiceTracker<PollsChoiceService, PollsChoiceService>(
-				bundle.getBundleContext(), PollsChoiceService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile PollsChoiceService _service;
 
 }

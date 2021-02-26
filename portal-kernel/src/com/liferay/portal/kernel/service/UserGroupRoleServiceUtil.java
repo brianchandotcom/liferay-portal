@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * Provides the remote service utility for UserGroupRole. This utility wraps
@@ -37,28 +37,28 @@ public class UserGroupRoleServiceUtil {
 	 */
 	public static void addUserGroupRoles(
 			long userId, long groupId, long[] roleIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().addUserGroupRoles(userId, groupId, roleIds);
 	}
 
 	public static void addUserGroupRoles(
 			long[] userIds, long groupId, long roleId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().addUserGroupRoles(userIds, groupId, roleId);
 	}
 
 	public static void deleteUserGroupRoles(
 			long userId, long groupId, long[] roleIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteUserGroupRoles(userId, groupId, roleIds);
 	}
 
 	public static void deleteUserGroupRoles(
 			long[] userIds, long groupId, long roleId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteUserGroupRoles(userIds, groupId, roleId);
 	}
@@ -75,21 +75,16 @@ public class UserGroupRoleServiceUtil {
 	public static void updateUserGroupRoles(
 			long userId, long groupId, long[] addedRoleIds,
 			long[] deletedRoleIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().updateUserGroupRoles(
 			userId, groupId, addedRoleIds, deletedRoleIds);
 	}
 
 	public static UserGroupRoleService getService() {
-		if (_service == null) {
-			_service = (UserGroupRoleService)PortalBeanLocatorUtil.locate(
-				UserGroupRoleService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static UserGroupRoleService _service;
+	private static volatile UserGroupRoleService _service;
 
 }

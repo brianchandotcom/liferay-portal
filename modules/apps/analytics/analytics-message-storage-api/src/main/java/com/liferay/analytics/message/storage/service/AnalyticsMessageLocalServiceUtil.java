@@ -14,9 +14,17 @@
 
 package com.liferay.analytics.message.storage.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.analytics.message.storage.model.AnalyticsMessage;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.InputStream;
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for AnalyticsMessage. This utility wraps
@@ -48,17 +56,15 @@ public class AnalyticsMessageLocalServiceUtil {
 	 * @param analyticsMessage the analytics message
 	 * @return the analytics message that was added
 	 */
-	public static com.liferay.analytics.message.storage.model.AnalyticsMessage
-		addAnalyticsMessage(
-			com.liferay.analytics.message.storage.model.AnalyticsMessage
-				analyticsMessage) {
+	public static AnalyticsMessage addAnalyticsMessage(
+		AnalyticsMessage analyticsMessage) {
 
 		return getService().addAnalyticsMessage(analyticsMessage);
 	}
 
-	public static com.liferay.analytics.message.storage.model.AnalyticsMessage
-			addAnalyticsMessage(long companyId, long userId, byte[] body)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AnalyticsMessage addAnalyticsMessage(
+			long companyId, long userId, byte[] body)
+		throws PortalException {
 
 		return getService().addAnalyticsMessage(companyId, userId, body);
 	}
@@ -69,8 +75,8 @@ public class AnalyticsMessageLocalServiceUtil {
 	 * @param analyticsMessageId the primary key for the new analytics message
 	 * @return the new analytics message
 	 */
-	public static com.liferay.analytics.message.storage.model.AnalyticsMessage
-		createAnalyticsMessage(long analyticsMessageId) {
+	public static AnalyticsMessage createAnalyticsMessage(
+		long analyticsMessageId) {
 
 		return getService().createAnalyticsMessage(analyticsMessageId);
 	}
@@ -78,9 +84,9 @@ public class AnalyticsMessageLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -95,10 +101,8 @@ public class AnalyticsMessageLocalServiceUtil {
 	 * @param analyticsMessage the analytics message
 	 * @return the analytics message that was removed
 	 */
-	public static com.liferay.analytics.message.storage.model.AnalyticsMessage
-		deleteAnalyticsMessage(
-			com.liferay.analytics.message.storage.model.AnalyticsMessage
-				analyticsMessage) {
+	public static AnalyticsMessage deleteAnalyticsMessage(
+		AnalyticsMessage analyticsMessage) {
 
 		return getService().deleteAnalyticsMessage(analyticsMessage);
 	}
@@ -114,17 +118,15 @@ public class AnalyticsMessageLocalServiceUtil {
 	 * @return the analytics message that was removed
 	 * @throws PortalException if a analytics message with the primary key could not be found
 	 */
-	public static com.liferay.analytics.message.storage.model.AnalyticsMessage
-			deleteAnalyticsMessage(long analyticsMessageId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AnalyticsMessage deleteAnalyticsMessage(
+			long analyticsMessageId)
+		throws PortalException {
 
 		return getService().deleteAnalyticsMessage(analyticsMessageId);
 	}
 
 	public static void deleteAnalyticsMessages(
-		java.util.List
-			<com.liferay.analytics.message.storage.model.AnalyticsMessage>
-				analyticsMessages) {
+		List<AnalyticsMessage> analyticsMessages) {
 
 		getService().deleteAnalyticsMessages(analyticsMessages);
 	}
@@ -136,23 +138,18 @@ public class AnalyticsMessageLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -162,9 +159,7 @@ public class AnalyticsMessageLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -180,9 +175,8 @@ public class AnalyticsMessageLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -200,10 +194,9 @@ public class AnalyticsMessageLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -215,9 +208,7 @@ public class AnalyticsMessageLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -229,14 +220,14 @@ public class AnalyticsMessageLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.analytics.message.storage.model.AnalyticsMessage
-		fetchAnalyticsMessage(long analyticsMessageId) {
+	public static AnalyticsMessage fetchAnalyticsMessage(
+		long analyticsMessageId) {
 
 		return getService().fetchAnalyticsMessage(analyticsMessageId);
 	}
@@ -254,9 +245,8 @@ public class AnalyticsMessageLocalServiceUtil {
 	 * @return the analytics message
 	 * @throws PortalException if a analytics message with the primary key could not be found
 	 */
-	public static com.liferay.analytics.message.storage.model.AnalyticsMessage
-			getAnalyticsMessage(long analyticsMessageId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AnalyticsMessage getAnalyticsMessage(long analyticsMessageId)
+		throws PortalException {
 
 		return getService().getAnalyticsMessage(analyticsMessageId);
 	}
@@ -272,16 +262,14 @@ public class AnalyticsMessageLocalServiceUtil {
 	 * @param end the upper bound of the range of analytics messages (not inclusive)
 	 * @return the range of analytics messages
 	 */
-	public static java.util.List
-		<com.liferay.analytics.message.storage.model.AnalyticsMessage>
-			getAnalyticsMessages(int start, int end) {
+	public static List<AnalyticsMessage> getAnalyticsMessages(
+		int start, int end) {
 
 		return getService().getAnalyticsMessages(start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.analytics.message.storage.model.AnalyticsMessage>
-			getAnalyticsMessages(long companyId, int start, int end) {
+	public static List<AnalyticsMessage> getAnalyticsMessages(
+		long companyId, int start, int end) {
 
 		return getService().getAnalyticsMessages(companyId, start, end);
 	}
@@ -298,12 +286,12 @@ public class AnalyticsMessageLocalServiceUtil {
 	public static
 		com.liferay.analytics.message.storage.model.
 			AnalyticsMessageBodyBlobModel getBodyBlobModel(
-				java.io.Serializable primaryKey) {
+				Serializable primaryKey) {
 
 		return getService().getBodyBlobModel(primaryKey);
 	}
 
-	public static java.util.List<Long> getCompanyIds() {
+	public static List<Long> getCompanyIds() {
 		return getService().getCompanyIds();
 	}
 
@@ -326,16 +314,13 @@ public class AnalyticsMessageLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static java.io.InputStream openBodyInputStream(
-		long analyticsMessageId) {
-
+	public static InputStream openBodyInputStream(long analyticsMessageId) {
 		return getService().openBodyInputStream(analyticsMessageId);
 	}
 
@@ -349,38 +334,16 @@ public class AnalyticsMessageLocalServiceUtil {
 	 * @param analyticsMessage the analytics message
 	 * @return the analytics message that was updated
 	 */
-	public static com.liferay.analytics.message.storage.model.AnalyticsMessage
-		updateAnalyticsMessage(
-			com.liferay.analytics.message.storage.model.AnalyticsMessage
-				analyticsMessage) {
+	public static AnalyticsMessage updateAnalyticsMessage(
+		AnalyticsMessage analyticsMessage) {
 
 		return getService().updateAnalyticsMessage(analyticsMessage);
 	}
 
 	public static AnalyticsMessageLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<AnalyticsMessageLocalService, AnalyticsMessageLocalService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			AnalyticsMessageLocalService.class);
-
-		ServiceTracker
-			<AnalyticsMessageLocalService, AnalyticsMessageLocalService>
-				serviceTracker =
-					new ServiceTracker
-						<AnalyticsMessageLocalService,
-						 AnalyticsMessageLocalService>(
-							 bundle.getBundleContext(),
-							 AnalyticsMessageLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile AnalyticsMessageLocalService _service;
 
 }

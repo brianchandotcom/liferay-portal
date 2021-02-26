@@ -14,9 +14,11 @@
 
 package com.liferay.mobile.device.rules.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.mobile.device.rules.model.MDRRuleGroup;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the remote service utility for MDRRuleGroup. This utility wraps
@@ -37,35 +39,32 @@ public class MDRRuleGroupServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.mobile.device.rules.service.impl.MDRRuleGroupServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.mobile.device.rules.model.MDRRuleGroup
-			addRuleGroup(
-				long groupId, java.util.Map<java.util.Locale, String> nameMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static MDRRuleGroup addRuleGroup(
+			long groupId, Map<java.util.Locale, String> nameMap,
+			Map<java.util.Locale, String> descriptionMap,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addRuleGroup(
 			groupId, nameMap, descriptionMap, serviceContext);
 	}
 
-	public static com.liferay.mobile.device.rules.model.MDRRuleGroup
-			copyRuleGroup(
-				long ruleGroupId, long groupId,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static MDRRuleGroup copyRuleGroup(
+			long ruleGroupId, long groupId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().copyRuleGroup(ruleGroupId, groupId, serviceContext);
 	}
 
 	public static void deleteRuleGroup(long ruleGroupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteRuleGroup(ruleGroupId);
 	}
 
-	public static com.liferay.mobile.device.rules.model.MDRRuleGroup
-			fetchRuleGroup(long ruleGroupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static MDRRuleGroup fetchRuleGroup(long ruleGroupId)
+		throws PortalException {
 
 		return getService().fetchRuleGroup(ruleGroupId);
 	}
@@ -79,16 +78,14 @@ public class MDRRuleGroupServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.mobile.device.rules.model.MDRRuleGroup
-			getRuleGroup(long ruleGroupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static MDRRuleGroup getRuleGroup(long ruleGroupId)
+		throws PortalException {
 
 		return getService().getRuleGroup(ruleGroupId);
 	}
 
-	public static java.util.List
-		<com.liferay.mobile.device.rules.model.MDRRuleGroup> getRuleGroups(
-			long[] groupIds, int start, int end) {
+	public static List<MDRRuleGroup> getRuleGroups(
+		long[] groupIds, int start, int end) {
 
 		return getService().getRuleGroups(groupIds, start, end);
 	}
@@ -97,36 +94,20 @@ public class MDRRuleGroupServiceUtil {
 		return getService().getRuleGroupsCount(groupIds);
 	}
 
-	public static com.liferay.mobile.device.rules.model.MDRRuleGroup
-			updateRuleGroup(
-				long ruleGroupId,
-				java.util.Map<java.util.Locale, String> nameMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static MDRRuleGroup updateRuleGroup(
+			long ruleGroupId, Map<java.util.Locale, String> nameMap,
+			Map<java.util.Locale, String> descriptionMap,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().updateRuleGroup(
 			ruleGroupId, nameMap, descriptionMap, serviceContext);
 	}
 
 	public static MDRRuleGroupService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<MDRRuleGroupService, MDRRuleGroupService>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(MDRRuleGroupService.class);
-
-		ServiceTracker<MDRRuleGroupService, MDRRuleGroupService>
-			serviceTracker =
-				new ServiceTracker<MDRRuleGroupService, MDRRuleGroupService>(
-					bundle.getBundleContext(), MDRRuleGroupService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile MDRRuleGroupService _service;
 
 }

@@ -14,9 +14,10 @@
 
 package com.liferay.commerce.application.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.application.model.CommerceApplicationBrand;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for CommerceApplicationBrand. This utility wraps
@@ -37,11 +38,9 @@ public class CommerceApplicationBrandServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.application.service.impl.CommerceApplicationBrandServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static
-		com.liferay.commerce.application.model.CommerceApplicationBrand
-				addCommerceApplicationBrand(
-					long userId, String name, boolean logo, byte[] logoBytes)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceApplicationBrand addCommerceApplicationBrand(
+			long userId, String name, boolean logo, byte[] logoBytes)
+		throws PortalException {
 
 		return getService().addCommerceApplicationBrand(
 			userId, name, logo, logoBytes);
@@ -49,23 +48,21 @@ public class CommerceApplicationBrandServiceUtil {
 
 	public static void deleteCommerceApplicationBrand(
 			long commerceApplicationBrandId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommerceApplicationBrand(commerceApplicationBrandId);
 	}
 
-	public static
-		com.liferay.commerce.application.model.CommerceApplicationBrand
-				getCommerceApplicationBrand(long commerceApplicationBrandId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceApplicationBrand getCommerceApplicationBrand(
+			long commerceApplicationBrandId)
+		throws PortalException {
 
 		return getService().getCommerceApplicationBrand(
 			commerceApplicationBrandId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.application.model.CommerceApplicationBrand>
-			getCommerceApplicationBrands(long companyId, int start, int end) {
+	public static List<CommerceApplicationBrand> getCommerceApplicationBrands(
+		long companyId, int start, int end) {
 
 		return getService().getCommerceApplicationBrands(companyId, start, end);
 	}
@@ -83,41 +80,19 @@ public class CommerceApplicationBrandServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static
-		com.liferay.commerce.application.model.CommerceApplicationBrand
-				updateCommerceApplicationBrand(
-					long commerceApplicationBrandId, String name, boolean logo,
-					byte[] logoBytes)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceApplicationBrand updateCommerceApplicationBrand(
+			long commerceApplicationBrandId, String name, boolean logo,
+			byte[] logoBytes)
+		throws PortalException {
 
 		return getService().updateCommerceApplicationBrand(
 			commerceApplicationBrandId, name, logo, logoBytes);
 	}
 
 	public static CommerceApplicationBrandService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceApplicationBrandService, CommerceApplicationBrandService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommerceApplicationBrandService.class);
-
-		ServiceTracker
-			<CommerceApplicationBrandService, CommerceApplicationBrandService>
-				serviceTracker =
-					new ServiceTracker
-						<CommerceApplicationBrandService,
-						 CommerceApplicationBrandService>(
-							 bundle.getBundleContext(),
-							 CommerceApplicationBrandService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceApplicationBrandService _service;
 
 }

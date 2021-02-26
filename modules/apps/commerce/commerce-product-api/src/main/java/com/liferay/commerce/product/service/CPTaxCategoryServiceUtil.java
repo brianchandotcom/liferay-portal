@@ -14,9 +14,12 @@
 
 package com.liferay.commerce.product.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.product.model.CPTaxCategory;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the remote service utility for CPTaxCategory. This utility wraps
@@ -43,24 +46,21 @@ public class CPTaxCategoryServiceUtil {
 	 #addCPTaxCategory(String, Map, Map, ServiceContext)}
 	 */
 	@Deprecated
-	public static com.liferay.commerce.product.model.CPTaxCategory
-			addCPTaxCategory(
-				java.util.Map<java.util.Locale, String> nameMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPTaxCategory addCPTaxCategory(
+			Map<java.util.Locale, String> nameMap,
+			Map<java.util.Locale, String> descriptionMap,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCPTaxCategory(
 			nameMap, descriptionMap, serviceContext);
 	}
 
-	public static com.liferay.commerce.product.model.CPTaxCategory
-			addCPTaxCategory(
-				String externalReferenceCode,
-				java.util.Map<java.util.Locale, String> nameMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPTaxCategory addCPTaxCategory(
+			String externalReferenceCode, Map<java.util.Locale, String> nameMap,
+			Map<java.util.Locale, String> descriptionMap,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCPTaxCategory(
 			externalReferenceCode, nameMap, descriptionMap, serviceContext);
@@ -68,56 +68,48 @@ public class CPTaxCategoryServiceUtil {
 
 	public static int countCPTaxCategoriesByCompanyId(
 			long companyId, String keyword)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().countCPTaxCategoriesByCompanyId(companyId, keyword);
 	}
 
 	public static void deleteCPTaxCategory(long cpTaxCategoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCPTaxCategory(cpTaxCategoryId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.product.model.CPTaxCategory>
-				findCPTaxCategoriesByCompanyId(
-					long companyId, String keyword, int start, int end)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CPTaxCategory> findCPTaxCategoriesByCompanyId(
+			long companyId, String keyword, int start, int end)
+		throws PortalException {
 
 		return getService().findCPTaxCategoriesByCompanyId(
 			companyId, keyword, start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.product.model.CPTaxCategory> getCPTaxCategories(
-				long companyId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CPTaxCategory> getCPTaxCategories(long companyId)
+		throws PortalException {
 
 		return getService().getCPTaxCategories(companyId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.product.model.CPTaxCategory> getCPTaxCategories(
-				long companyId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.commerce.product.model.CPTaxCategory>
-						orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CPTaxCategory> getCPTaxCategories(
+			long companyId, int start, int end,
+			OrderByComparator<CPTaxCategory> orderByComparator)
+		throws PortalException {
 
 		return getService().getCPTaxCategories(
 			companyId, start, end, orderByComparator);
 	}
 
 	public static int getCPTaxCategoriesCount(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCPTaxCategoriesCount(companyId);
 	}
 
-	public static com.liferay.commerce.product.model.CPTaxCategory
-			getCPTaxCategory(long cpTaxCategoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPTaxCategory getCPTaxCategory(long cpTaxCategoryId)
+		throws PortalException {
 
 		return getService().getCPTaxCategory(cpTaxCategoryId);
 	}
@@ -136,47 +128,29 @@ public class CPTaxCategoryServiceUtil {
 	 #updateCPTaxCategory(String, long, Map, Map)}
 	 */
 	@Deprecated
-	public static com.liferay.commerce.product.model.CPTaxCategory
-			updateCPTaxCategory(
-				long cpTaxCategoryId,
-				java.util.Map<java.util.Locale, String> nameMap,
-				java.util.Map<java.util.Locale, String> descriptionMap)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPTaxCategory updateCPTaxCategory(
+			long cpTaxCategoryId, Map<java.util.Locale, String> nameMap,
+			Map<java.util.Locale, String> descriptionMap)
+		throws PortalException {
 
 		return getService().updateCPTaxCategory(
 			cpTaxCategoryId, nameMap, descriptionMap);
 	}
 
-	public static com.liferay.commerce.product.model.CPTaxCategory
-			updateCPTaxCategory(
-				String externalReferenceCode, long cpTaxCategoryId,
-				java.util.Map<java.util.Locale, String> nameMap,
-				java.util.Map<java.util.Locale, String> descriptionMap)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPTaxCategory updateCPTaxCategory(
+			String externalReferenceCode, long cpTaxCategoryId,
+			Map<java.util.Locale, String> nameMap,
+			Map<java.util.Locale, String> descriptionMap)
+		throws PortalException {
 
 		return getService().updateCPTaxCategory(
 			externalReferenceCode, cpTaxCategoryId, nameMap, descriptionMap);
 	}
 
 	public static CPTaxCategoryService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<CPTaxCategoryService, CPTaxCategoryService>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(CPTaxCategoryService.class);
-
-		ServiceTracker<CPTaxCategoryService, CPTaxCategoryService>
-			serviceTracker =
-				new ServiceTracker<CPTaxCategoryService, CPTaxCategoryService>(
-					bundle.getBundleContext(), CPTaxCategoryService.class,
-					null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CPTaxCategoryService _service;
 
 }

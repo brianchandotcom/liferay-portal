@@ -14,9 +14,16 @@
 
 package com.liferay.commerce.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.model.CommerceAddressRestriction;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for CommerceAddressRestriction. This utility wraps
@@ -48,20 +55,17 @@ public class CommerceAddressRestrictionLocalServiceUtil {
 	 * @param commerceAddressRestriction the commerce address restriction
 	 * @return the commerce address restriction that was added
 	 */
-	public static com.liferay.commerce.model.CommerceAddressRestriction
-		addCommerceAddressRestriction(
-			com.liferay.commerce.model.CommerceAddressRestriction
-				commerceAddressRestriction) {
+	public static CommerceAddressRestriction addCommerceAddressRestriction(
+		CommerceAddressRestriction commerceAddressRestriction) {
 
 		return getService().addCommerceAddressRestriction(
 			commerceAddressRestriction);
 	}
 
-	public static com.liferay.commerce.model.CommerceAddressRestriction
-			addCommerceAddressRestriction(
-				long userId, long groupId, String className, long classPK,
-				long commerceCountryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceAddressRestriction addCommerceAddressRestriction(
+			long userId, long groupId, String className, long classPK,
+			long commerceCountryId)
+		throws PortalException {
 
 		return getService().addCommerceAddressRestriction(
 			userId, groupId, className, classPK, commerceCountryId);
@@ -71,11 +75,10 @@ public class CommerceAddressRestrictionLocalServiceUtil {
 	 * @deprecated As of Athanasius (7.3.x)
 	 */
 	@Deprecated
-	public static com.liferay.commerce.model.CommerceAddressRestriction
-			addCommerceAddressRestriction(
-				String className, long classPK, long commerceCountryId,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceAddressRestriction addCommerceAddressRestriction(
+			String className, long classPK, long commerceCountryId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCommerceAddressRestriction(
 			className, classPK, commerceCountryId, serviceContext);
@@ -87,8 +90,8 @@ public class CommerceAddressRestrictionLocalServiceUtil {
 	 * @param commerceAddressRestrictionId the primary key for the new commerce address restriction
 	 * @return the new commerce address restriction
 	 */
-	public static com.liferay.commerce.model.CommerceAddressRestriction
-		createCommerceAddressRestriction(long commerceAddressRestrictionId) {
+	public static CommerceAddressRestriction createCommerceAddressRestriction(
+		long commerceAddressRestrictionId) {
 
 		return getService().createCommerceAddressRestriction(
 			commerceAddressRestrictionId);
@@ -97,9 +100,9 @@ public class CommerceAddressRestrictionLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -114,10 +117,8 @@ public class CommerceAddressRestrictionLocalServiceUtil {
 	 * @param commerceAddressRestriction the commerce address restriction
 	 * @return the commerce address restriction that was removed
 	 */
-	public static com.liferay.commerce.model.CommerceAddressRestriction
-		deleteCommerceAddressRestriction(
-			com.liferay.commerce.model.CommerceAddressRestriction
-				commerceAddressRestriction) {
+	public static CommerceAddressRestriction deleteCommerceAddressRestriction(
+		CommerceAddressRestriction commerceAddressRestriction) {
 
 		return getService().deleteCommerceAddressRestriction(
 			commerceAddressRestriction);
@@ -134,9 +135,9 @@ public class CommerceAddressRestrictionLocalServiceUtil {
 	 * @return the commerce address restriction that was removed
 	 * @throws PortalException if a commerce address restriction with the primary key could not be found
 	 */
-	public static com.liferay.commerce.model.CommerceAddressRestriction
-			deleteCommerceAddressRestriction(long commerceAddressRestrictionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceAddressRestriction deleteCommerceAddressRestriction(
+			long commerceAddressRestrictionId)
+		throws PortalException {
 
 		return getService().deleteCommerceAddressRestriction(
 			commerceAddressRestrictionId);
@@ -157,23 +158,18 @@ public class CommerceAddressRestrictionLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -183,9 +179,7 @@ public class CommerceAddressRestrictionLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -201,9 +195,8 @@ public class CommerceAddressRestrictionLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -221,10 +214,9 @@ public class CommerceAddressRestrictionLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -236,9 +228,7 @@ public class CommerceAddressRestrictionLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -250,22 +240,21 @@ public class CommerceAddressRestrictionLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.commerce.model.CommerceAddressRestriction
-		fetchCommerceAddressRestriction(long commerceAddressRestrictionId) {
+	public static CommerceAddressRestriction fetchCommerceAddressRestriction(
+		long commerceAddressRestrictionId) {
 
 		return getService().fetchCommerceAddressRestriction(
 			commerceAddressRestrictionId);
 	}
 
-	public static com.liferay.commerce.model.CommerceAddressRestriction
-		fetchCommerceAddressRestriction(
-			String className, long classPK, long commerceCountryId) {
+	public static CommerceAddressRestriction fetchCommerceAddressRestriction(
+		String className, long classPK, long commerceCountryId) {
 
 		return getService().fetchCommerceAddressRestriction(
 			className, classPK, commerceCountryId);
@@ -284,9 +273,9 @@ public class CommerceAddressRestrictionLocalServiceUtil {
 	 * @return the commerce address restriction
 	 * @throws PortalException if a commerce address restriction with the primary key could not be found
 	 */
-	public static com.liferay.commerce.model.CommerceAddressRestriction
-			getCommerceAddressRestriction(long commerceAddressRestrictionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceAddressRestriction getCommerceAddressRestriction(
+			long commerceAddressRestrictionId)
+		throws PortalException {
 
 		return getService().getCommerceAddressRestriction(
 			commerceAddressRestrictionId);
@@ -303,20 +292,16 @@ public class CommerceAddressRestrictionLocalServiceUtil {
 	 * @param end the upper bound of the range of commerce address restrictions (not inclusive)
 	 * @return the range of commerce address restrictions
 	 */
-	public static java.util.List
-		<com.liferay.commerce.model.CommerceAddressRestriction>
-			getCommerceAddressRestrictions(int start, int end) {
+	public static List<CommerceAddressRestriction>
+		getCommerceAddressRestrictions(int start, int end) {
 
 		return getService().getCommerceAddressRestrictions(start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.model.CommerceAddressRestriction>
-			getCommerceAddressRestrictions(
-				String className, long classPK, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.commerce.model.CommerceAddressRestriction>
-						orderByComparator) {
+	public static List<CommerceAddressRestriction>
+		getCommerceAddressRestrictions(
+			String className, long classPK, int start, int end,
+			OrderByComparator<CommerceAddressRestriction> orderByComparator) {
 
 		return getService().getCommerceAddressRestrictions(
 			className, classPK, start, end, orderByComparator);
@@ -357,9 +342,8 @@ public class CommerceAddressRestrictionLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -388,39 +372,17 @@ public class CommerceAddressRestrictionLocalServiceUtil {
 	 * @param commerceAddressRestriction the commerce address restriction
 	 * @return the commerce address restriction that was updated
 	 */
-	public static com.liferay.commerce.model.CommerceAddressRestriction
-		updateCommerceAddressRestriction(
-			com.liferay.commerce.model.CommerceAddressRestriction
-				commerceAddressRestriction) {
+	public static CommerceAddressRestriction updateCommerceAddressRestriction(
+		CommerceAddressRestriction commerceAddressRestriction) {
 
 		return getService().updateCommerceAddressRestriction(
 			commerceAddressRestriction);
 	}
 
 	public static CommerceAddressRestrictionLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceAddressRestrictionLocalService,
-		 CommerceAddressRestrictionLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommerceAddressRestrictionLocalService.class);
-
-		ServiceTracker
-			<CommerceAddressRestrictionLocalService,
-			 CommerceAddressRestrictionLocalService> serviceTracker =
-				new ServiceTracker
-					<CommerceAddressRestrictionLocalService,
-					 CommerceAddressRestrictionLocalService>(
-						 bundle.getBundleContext(),
-						 CommerceAddressRestrictionLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceAddressRestrictionLocalService _service;
 
 }

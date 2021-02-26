@@ -14,9 +14,16 @@
 
 package com.liferay.document.library.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.document.library.model.DLFileVersionPreview;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for DLFileVersionPreview. This utility wraps
@@ -48,17 +55,15 @@ public class DLFileVersionPreviewLocalServiceUtil {
 	 * @param dlFileVersionPreview the dl file version preview
 	 * @return the dl file version preview that was added
 	 */
-	public static com.liferay.document.library.model.DLFileVersionPreview
-		addDLFileVersionPreview(
-			com.liferay.document.library.model.DLFileVersionPreview
-				dlFileVersionPreview) {
+	public static DLFileVersionPreview addDLFileVersionPreview(
+		DLFileVersionPreview dlFileVersionPreview) {
 
 		return getService().addDLFileVersionPreview(dlFileVersionPreview);
 	}
 
 	public static void addDLFileVersionPreview(
 			long fileEntryId, long fileVersionId, int previewStatus)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().addDLFileVersionPreview(
 			fileEntryId, fileVersionId, previewStatus);
@@ -70,8 +75,8 @@ public class DLFileVersionPreviewLocalServiceUtil {
 	 * @param dlFileVersionPreviewId the primary key for the new dl file version preview
 	 * @return the new dl file version preview
 	 */
-	public static com.liferay.document.library.model.DLFileVersionPreview
-		createDLFileVersionPreview(long dlFileVersionPreviewId) {
+	public static DLFileVersionPreview createDLFileVersionPreview(
+		long dlFileVersionPreviewId) {
 
 		return getService().createDLFileVersionPreview(dlFileVersionPreviewId);
 	}
@@ -79,9 +84,9 @@ public class DLFileVersionPreviewLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -100,10 +105,8 @@ public class DLFileVersionPreviewLocalServiceUtil {
 	 * @param dlFileVersionPreview the dl file version preview
 	 * @return the dl file version preview that was removed
 	 */
-	public static com.liferay.document.library.model.DLFileVersionPreview
-		deleteDLFileVersionPreview(
-			com.liferay.document.library.model.DLFileVersionPreview
-				dlFileVersionPreview) {
+	public static DLFileVersionPreview deleteDLFileVersionPreview(
+		DLFileVersionPreview dlFileVersionPreview) {
 
 		return getService().deleteDLFileVersionPreview(dlFileVersionPreview);
 	}
@@ -119,9 +122,9 @@ public class DLFileVersionPreviewLocalServiceUtil {
 	 * @return the dl file version preview that was removed
 	 * @throws PortalException if a dl file version preview with the primary key could not be found
 	 */
-	public static com.liferay.document.library.model.DLFileVersionPreview
-			deleteDLFileVersionPreview(long dlFileVersionPreviewId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static DLFileVersionPreview deleteDLFileVersionPreview(
+			long dlFileVersionPreviewId)
+		throws PortalException {
 
 		return getService().deleteDLFileVersionPreview(dlFileVersionPreviewId);
 	}
@@ -129,23 +132,18 @@ public class DLFileVersionPreviewLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -155,9 +153,7 @@ public class DLFileVersionPreviewLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -173,9 +169,8 @@ public class DLFileVersionPreviewLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -193,10 +188,9 @@ public class DLFileVersionPreviewLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -208,9 +202,7 @@ public class DLFileVersionPreviewLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -222,28 +214,27 @@ public class DLFileVersionPreviewLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.document.library.model.DLFileVersionPreview
-		fetchDLFileVersionPreview(long dlFileVersionPreviewId) {
+	public static DLFileVersionPreview fetchDLFileVersionPreview(
+		long dlFileVersionPreviewId) {
 
 		return getService().fetchDLFileVersionPreview(dlFileVersionPreviewId);
 	}
 
-	public static com.liferay.document.library.model.DLFileVersionPreview
-		fetchDLFileVersionPreview(long fileEntryId, long fileVersionId) {
+	public static DLFileVersionPreview fetchDLFileVersionPreview(
+		long fileEntryId, long fileVersionId) {
 
 		return getService().fetchDLFileVersionPreview(
 			fileEntryId, fileVersionId);
 	}
 
-	public static com.liferay.document.library.model.DLFileVersionPreview
-		fetchDLFileVersionPreview(
-			long fileEntryId, long fileVersionId, int previewStatus) {
+	public static DLFileVersionPreview fetchDLFileVersionPreview(
+		long fileEntryId, long fileVersionId, int previewStatus) {
 
 		return getService().fetchDLFileVersionPreview(
 			fileEntryId, fileVersionId, previewStatus);
@@ -262,24 +253,23 @@ public class DLFileVersionPreviewLocalServiceUtil {
 	 * @return the dl file version preview
 	 * @throws PortalException if a dl file version preview with the primary key could not be found
 	 */
-	public static com.liferay.document.library.model.DLFileVersionPreview
-			getDLFileVersionPreview(long dlFileVersionPreviewId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static DLFileVersionPreview getDLFileVersionPreview(
+			long dlFileVersionPreviewId)
+		throws PortalException {
 
 		return getService().getDLFileVersionPreview(dlFileVersionPreviewId);
 	}
 
-	public static com.liferay.document.library.model.DLFileVersionPreview
-			getDLFileVersionPreview(long fileEntryId, long fileVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static DLFileVersionPreview getDLFileVersionPreview(
+			long fileEntryId, long fileVersionId)
+		throws PortalException {
 
 		return getService().getDLFileVersionPreview(fileEntryId, fileVersionId);
 	}
 
-	public static com.liferay.document.library.model.DLFileVersionPreview
-			getDLFileVersionPreview(
-				long fileEntryId, long fileVersionId, int previewStatus)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static DLFileVersionPreview getDLFileVersionPreview(
+			long fileEntryId, long fileVersionId, int previewStatus)
+		throws PortalException {
 
 		return getService().getDLFileVersionPreview(
 			fileEntryId, fileVersionId, previewStatus);
@@ -296,9 +286,8 @@ public class DLFileVersionPreviewLocalServiceUtil {
 	 * @param end the upper bound of the range of dl file version previews (not inclusive)
 	 * @return the range of dl file version previews
 	 */
-	public static java.util.List
-		<com.liferay.document.library.model.DLFileVersionPreview>
-			getDLFileVersionPreviews(int start, int end) {
+	public static List<DLFileVersionPreview> getDLFileVersionPreviews(
+		int start, int end) {
 
 		return getService().getDLFileVersionPreviews(start, end);
 	}
@@ -312,9 +301,8 @@ public class DLFileVersionPreviewLocalServiceUtil {
 		return getService().getDLFileVersionPreviewsCount();
 	}
 
-	public static java.util.List
-		<com.liferay.document.library.model.DLFileVersionPreview>
-			getFileEntryDLFileVersionPreviews(long fileEntryId) {
+	public static List<DLFileVersionPreview> getFileEntryDLFileVersionPreviews(
+		long fileEntryId) {
 
 		return getService().getFileEntryDLFileVersionPreviews(fileEntryId);
 	}
@@ -338,9 +326,8 @@ public class DLFileVersionPreviewLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -362,46 +349,24 @@ public class DLFileVersionPreviewLocalServiceUtil {
 	 * @param dlFileVersionPreview the dl file version preview
 	 * @return the dl file version preview that was updated
 	 */
-	public static com.liferay.document.library.model.DLFileVersionPreview
-		updateDLFileVersionPreview(
-			com.liferay.document.library.model.DLFileVersionPreview
-				dlFileVersionPreview) {
+	public static DLFileVersionPreview updateDLFileVersionPreview(
+		DLFileVersionPreview dlFileVersionPreview) {
 
 		return getService().updateDLFileVersionPreview(dlFileVersionPreview);
 	}
 
 	public static void updateDLFileVersionPreview(
 			long dlFileVersionPreviewId, int previewStatus)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().updateDLFileVersionPreview(
 			dlFileVersionPreviewId, previewStatus);
 	}
 
 	public static DLFileVersionPreviewLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<DLFileVersionPreviewLocalService, DLFileVersionPreviewLocalService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			DLFileVersionPreviewLocalService.class);
-
-		ServiceTracker
-			<DLFileVersionPreviewLocalService, DLFileVersionPreviewLocalService>
-				serviceTracker =
-					new ServiceTracker
-						<DLFileVersionPreviewLocalService,
-						 DLFileVersionPreviewLocalService>(
-							 bundle.getBundleContext(),
-							 DLFileVersionPreviewLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile DLFileVersionPreviewLocalService _service;
 
 }

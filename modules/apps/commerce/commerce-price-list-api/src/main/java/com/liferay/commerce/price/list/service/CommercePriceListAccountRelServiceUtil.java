@@ -14,9 +14,11 @@
 
 package com.liferay.commerce.price.list.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.price.list.model.CommercePriceListAccountRel;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for CommercePriceListAccountRel. This utility wraps
@@ -37,13 +39,10 @@ public class CommercePriceListAccountRelServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.price.list.service.impl.CommercePriceListAccountRelServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static
-		com.liferay.commerce.price.list.model.CommercePriceListAccountRel
-				addCommercePriceListAccountRel(
-					long commercePriceListId, long commerceAccountId, int order,
-					com.liferay.portal.kernel.service.ServiceContext
-						serviceContext)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceListAccountRel addCommercePriceListAccountRel(
+			long commercePriceListId, long commerceAccountId, int order,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCommercePriceListAccountRel(
 			commercePriceListId, commerceAccountId, order, serviceContext);
@@ -51,7 +50,7 @@ public class CommercePriceListAccountRelServiceUtil {
 
 	public static void deleteCommercePriceListAccountRel(
 			long commercePriceListAccountRelId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommercePriceListAccountRel(
 			commercePriceListAccountRelId);
@@ -59,58 +58,50 @@ public class CommercePriceListAccountRelServiceUtil {
 
 	public static void deleteCommercePriceListAccountRelsByCommercePriceListId(
 			long commercePriceListId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommercePriceListAccountRelsByCommercePriceListId(
 			commercePriceListId);
 	}
 
-	public static
-		com.liferay.commerce.price.list.model.CommercePriceListAccountRel
-				fetchCommercePriceListAccountRel(
-					long commercePriceListId, long commerceAccountId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceListAccountRel fetchCommercePriceListAccountRel(
+			long commercePriceListId, long commerceAccountId)
+		throws PortalException {
 
 		return getService().fetchCommercePriceListAccountRel(
 			commercePriceListId, commerceAccountId);
 	}
 
-	public static
-		com.liferay.commerce.price.list.model.CommercePriceListAccountRel
-				getCommercePriceListAccountRel(
-					long commercePriceListAccountRelId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceListAccountRel getCommercePriceListAccountRel(
+			long commercePriceListAccountRelId)
+		throws PortalException {
 
 		return getService().getCommercePriceListAccountRel(
 			commercePriceListAccountRelId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.price.list.model.CommercePriceListAccountRel>
-				getCommercePriceListAccountRels(long commercePriceListId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommercePriceListAccountRel>
+			getCommercePriceListAccountRels(long commercePriceListId)
+		throws PortalException {
 
 		return getService().getCommercePriceListAccountRels(
 			commercePriceListId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.price.list.model.CommercePriceListAccountRel>
-				getCommercePriceListAccountRels(
-					long commercePriceListId, int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						<com.liferay.commerce.price.list.model.
-							CommercePriceListAccountRel> orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommercePriceListAccountRel>
+			getCommercePriceListAccountRels(
+				long commercePriceListId, int start, int end,
+				OrderByComparator<CommercePriceListAccountRel>
+					orderByComparator)
+		throws PortalException {
 
 		return getService().getCommercePriceListAccountRels(
 			commercePriceListId, start, end, orderByComparator);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.price.list.model.CommercePriceListAccountRel>
-			getCommercePriceListAccountRels(
-				long commercePriceListId, String name, int start, int end) {
+	public static List<CommercePriceListAccountRel>
+		getCommercePriceListAccountRels(
+			long commercePriceListId, String name, int start, int end) {
 
 		return getService().getCommercePriceListAccountRels(
 			commercePriceListId, name, start, end);
@@ -118,7 +109,7 @@ public class CommercePriceListAccountRelServiceUtil {
 
 	public static int getCommercePriceListAccountRelsCount(
 			long commercePriceListId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCommercePriceListAccountRelsCount(
 			commercePriceListId);
@@ -141,29 +132,9 @@ public class CommercePriceListAccountRelServiceUtil {
 	}
 
 	public static CommercePriceListAccountRelService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommercePriceListAccountRelService, CommercePriceListAccountRelService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommercePriceListAccountRelService.class);
-
-		ServiceTracker
-			<CommercePriceListAccountRelService,
-			 CommercePriceListAccountRelService> serviceTracker =
-				new ServiceTracker
-					<CommercePriceListAccountRelService,
-					 CommercePriceListAccountRelService>(
-						 bundle.getBundleContext(),
-						 CommercePriceListAccountRelService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommercePriceListAccountRelService _service;
 
 }

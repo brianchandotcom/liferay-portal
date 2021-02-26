@@ -14,7 +14,16 @@
 
 package com.liferay.social.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.social.kernel.model.SocialRelation;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for SocialRelation. This utility wraps
@@ -44,9 +53,9 @@ public class SocialRelationLocalServiceUtil {
 	 * @param type the type of the relation
 	 * @return the social relation
 	 */
-	public static com.liferay.social.kernel.model.SocialRelation addRelation(
+	public static SocialRelation addRelation(
 			long userId1, long userId2, int type)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addRelation(userId1, userId2, type);
 	}
@@ -61,9 +70,8 @@ public class SocialRelationLocalServiceUtil {
 	 * @param socialRelation the social relation
 	 * @return the social relation that was added
 	 */
-	public static com.liferay.social.kernel.model.SocialRelation
-		addSocialRelation(
-			com.liferay.social.kernel.model.SocialRelation socialRelation) {
+	public static SocialRelation addSocialRelation(
+		SocialRelation socialRelation) {
 
 		return getService().addSocialRelation(socialRelation);
 	}
@@ -71,9 +79,9 @@ public class SocialRelationLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -84,19 +92,16 @@ public class SocialRelationLocalServiceUtil {
 	 * @param relationId the primary key for the new social relation
 	 * @return the new social relation
 	 */
-	public static com.liferay.social.kernel.model.SocialRelation
-		createSocialRelation(long relationId) {
-
+	public static SocialRelation createSocialRelation(long relationId) {
 		return getService().createSocialRelation(relationId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
@@ -107,9 +112,7 @@ public class SocialRelationLocalServiceUtil {
 	 *
 	 * @param relationId the primary key of the relation
 	 */
-	public static void deleteRelation(long relationId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static void deleteRelation(long relationId) throws PortalException {
 		getService().deleteRelation(relationId);
 	}
 
@@ -122,7 +125,7 @@ public class SocialRelationLocalServiceUtil {
 	 * @param type the relation's type
 	 */
 	public static void deleteRelation(long userId1, long userId2, int type)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteRelation(userId1, userId2, type);
 	}
@@ -133,9 +136,8 @@ public class SocialRelationLocalServiceUtil {
 	 *
 	 * @param relation the relation to be removed
 	 */
-	public static void deleteRelation(
-			com.liferay.social.kernel.model.SocialRelation relation)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static void deleteRelation(SocialRelation relation)
+		throws PortalException {
 
 		getService().deleteRelation(relation);
 	}
@@ -156,7 +158,7 @@ public class SocialRelationLocalServiceUtil {
 	 * @param userId2 the user at the other end of the relation
 	 */
 	public static void deleteRelations(long userId1, long userId2)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteRelations(userId1, userId2);
 	}
@@ -172,9 +174,8 @@ public class SocialRelationLocalServiceUtil {
 	 * @return the social relation that was removed
 	 * @throws PortalException if a social relation with the primary key could not be found
 	 */
-	public static com.liferay.social.kernel.model.SocialRelation
-			deleteSocialRelation(long relationId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static SocialRelation deleteSocialRelation(long relationId)
+		throws PortalException {
 
 		return getService().deleteSocialRelation(relationId);
 	}
@@ -189,22 +190,17 @@ public class SocialRelationLocalServiceUtil {
 	 * @param socialRelation the social relation
 	 * @return the social relation that was removed
 	 */
-	public static com.liferay.social.kernel.model.SocialRelation
-		deleteSocialRelation(
-			com.liferay.social.kernel.model.SocialRelation socialRelation) {
+	public static SocialRelation deleteSocialRelation(
+		SocialRelation socialRelation) {
 
 		return getService().deleteSocialRelation(socialRelation);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -214,9 +210,7 @@ public class SocialRelationLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -232,9 +226,8 @@ public class SocialRelationLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -252,10 +245,9 @@ public class SocialRelationLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -267,9 +259,7 @@ public class SocialRelationLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -281,15 +271,13 @@ public class SocialRelationLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.social.kernel.model.SocialRelation
-		fetchSocialRelation(long relationId) {
-
+	public static SocialRelation fetchSocialRelation(long relationId) {
 		return getService().fetchSocialRelation(relationId);
 	}
 
@@ -300,8 +288,8 @@ public class SocialRelationLocalServiceUtil {
 	 * @param companyId the primary key of the company
 	 * @return the matching social relation, or <code>null</code> if a matching social relation could not be found
 	 */
-	public static com.liferay.social.kernel.model.SocialRelation
-		fetchSocialRelationByUuidAndCompanyId(String uuid, long companyId) {
+	public static SocialRelation fetchSocialRelationByUuidAndCompanyId(
+		String uuid, long companyId) {
 
 		return getService().fetchSocialRelationByUuidAndCompanyId(
 			uuid, companyId);
@@ -340,8 +328,8 @@ public class SocialRelationLocalServiceUtil {
 	 * @param end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching relations
 	 */
-	public static java.util.List<com.liferay.social.kernel.model.SocialRelation>
-		getInverseRelations(long userId, int type, int start, int end) {
+	public static List<SocialRelation> getInverseRelations(
+		long userId, int type, int start, int end) {
 
 		return getService().getInverseRelations(userId, type, start, end);
 	}
@@ -370,9 +358,8 @@ public class SocialRelationLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -383,9 +370,8 @@ public class SocialRelationLocalServiceUtil {
 	 * @param relationId the primary key of the relation
 	 * @return Returns the relation
 	 */
-	public static com.liferay.social.kernel.model.SocialRelation getRelation(
-			long relationId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static SocialRelation getRelation(long relationId)
+		throws PortalException {
 
 		return getService().getRelation(relationId);
 	}
@@ -398,9 +384,9 @@ public class SocialRelationLocalServiceUtil {
 	 * @param type the relation's type
 	 * @return Returns the relation
 	 */
-	public static com.liferay.social.kernel.model.SocialRelation getRelation(
+	public static SocialRelation getRelation(
 			long userId1, long userId2, int type)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getRelation(userId1, userId2, type);
 	}
@@ -425,8 +411,8 @@ public class SocialRelationLocalServiceUtil {
 	 * @param end the upper bound of the range of results (not inclusive)
 	 * @return the range of relations
 	 */
-	public static java.util.List<com.liferay.social.kernel.model.SocialRelation>
-		getRelations(long userId, int type, int start, int end) {
+	public static List<SocialRelation> getRelations(
+		long userId, int type, int start, int end) {
 
 		return getService().getRelations(userId, type, start, end);
 	}
@@ -450,8 +436,8 @@ public class SocialRelationLocalServiceUtil {
 	 * @param end the upper bound of the range of results (not inclusive)
 	 * @return the range of relations
 	 */
-	public static java.util.List<com.liferay.social.kernel.model.SocialRelation>
-		getRelations(long userId1, long userId2, int start, int end) {
+	public static List<SocialRelation> getRelations(
+		long userId1, long userId2, int start, int end) {
 
 		return getService().getRelations(userId1, userId2, start, end);
 	}
@@ -486,9 +472,8 @@ public class SocialRelationLocalServiceUtil {
 	 * @return the social relation
 	 * @throws PortalException if a social relation with the primary key could not be found
 	 */
-	public static com.liferay.social.kernel.model.SocialRelation
-			getSocialRelation(long relationId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static SocialRelation getSocialRelation(long relationId)
+		throws PortalException {
 
 		return getService().getSocialRelation(relationId);
 	}
@@ -501,9 +486,9 @@ public class SocialRelationLocalServiceUtil {
 	 * @return the matching social relation
 	 * @throws PortalException if a matching social relation could not be found
 	 */
-	public static com.liferay.social.kernel.model.SocialRelation
-			getSocialRelationByUuidAndCompanyId(String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static SocialRelation getSocialRelationByUuidAndCompanyId(
+			String uuid, long companyId)
+		throws PortalException {
 
 		return getService().getSocialRelationByUuidAndCompanyId(
 			uuid, companyId);
@@ -520,9 +505,7 @@ public class SocialRelationLocalServiceUtil {
 	 * @param end the upper bound of the range of social relations (not inclusive)
 	 * @return the range of social relations
 	 */
-	public static java.util.List<com.liferay.social.kernel.model.SocialRelation>
-		getSocialRelations(int start, int end) {
-
+	public static List<SocialRelation> getSocialRelations(int start, int end) {
 		return getService().getSocialRelations(start, end);
 	}
 
@@ -583,22 +566,16 @@ public class SocialRelationLocalServiceUtil {
 	 * @param socialRelation the social relation
 	 * @return the social relation that was updated
 	 */
-	public static com.liferay.social.kernel.model.SocialRelation
-		updateSocialRelation(
-			com.liferay.social.kernel.model.SocialRelation socialRelation) {
+	public static SocialRelation updateSocialRelation(
+		SocialRelation socialRelation) {
 
 		return getService().updateSocialRelation(socialRelation);
 	}
 
 	public static SocialRelationLocalService getService() {
-		if (_service == null) {
-			_service = (SocialRelationLocalService)PortalBeanLocatorUtil.locate(
-				SocialRelationLocalService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static SocialRelationLocalService _service;
+	private static volatile SocialRelationLocalService _service;
 
 }

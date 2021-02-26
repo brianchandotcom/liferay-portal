@@ -14,9 +14,16 @@
 
 package com.liferay.dispatch.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.dispatch.model.DispatchTrigger;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for DispatchTrigger. This utility wraps
@@ -48,18 +55,18 @@ public class DispatchTriggerLocalServiceUtil {
 	 * @param dispatchTrigger the dispatch trigger
 	 * @return the dispatch trigger that was added
 	 */
-	public static com.liferay.dispatch.model.DispatchTrigger addDispatchTrigger(
-		com.liferay.dispatch.model.DispatchTrigger dispatchTrigger) {
+	public static DispatchTrigger addDispatchTrigger(
+		DispatchTrigger dispatchTrigger) {
 
 		return getService().addDispatchTrigger(dispatchTrigger);
 	}
 
-	public static com.liferay.dispatch.model.DispatchTrigger addDispatchTrigger(
+	public static DispatchTrigger addDispatchTrigger(
 			long userId, String dispatchTaskExecutorType,
 			com.liferay.portal.kernel.util.UnicodeProperties
 				dispatchTaskSettingsUnicodeProperties,
 			String name, boolean system)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addDispatchTrigger(
 			userId, dispatchTaskExecutorType,
@@ -72,8 +79,8 @@ public class DispatchTriggerLocalServiceUtil {
 	 * @param dispatchTriggerId the primary key for the new dispatch trigger
 	 * @return the new dispatch trigger
 	 */
-	public static com.liferay.dispatch.model.DispatchTrigger
-		createDispatchTrigger(long dispatchTriggerId) {
+	public static DispatchTrigger createDispatchTrigger(
+		long dispatchTriggerId) {
 
 		return getService().createDispatchTrigger(dispatchTriggerId);
 	}
@@ -81,9 +88,9 @@ public class DispatchTriggerLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -99,10 +106,9 @@ public class DispatchTriggerLocalServiceUtil {
 	 * @return the dispatch trigger that was removed
 	 * @throws PortalException
 	 */
-	public static com.liferay.dispatch.model.DispatchTrigger
-			deleteDispatchTrigger(
-				com.liferay.dispatch.model.DispatchTrigger dispatchTrigger)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static DispatchTrigger deleteDispatchTrigger(
+			DispatchTrigger dispatchTrigger)
+		throws PortalException {
 
 		return getService().deleteDispatchTrigger(dispatchTrigger);
 	}
@@ -118,9 +124,8 @@ public class DispatchTriggerLocalServiceUtil {
 	 * @return the dispatch trigger that was removed
 	 * @throws PortalException if a dispatch trigger with the primary key could not be found
 	 */
-	public static com.liferay.dispatch.model.DispatchTrigger
-			deleteDispatchTrigger(long dispatchTriggerId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static DispatchTrigger deleteDispatchTrigger(long dispatchTriggerId)
+		throws PortalException {
 
 		return getService().deleteDispatchTrigger(dispatchTriggerId);
 	}
@@ -128,23 +133,18 @@ public class DispatchTriggerLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -154,9 +154,7 @@ public class DispatchTriggerLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -172,9 +170,8 @@ public class DispatchTriggerLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -192,10 +189,9 @@ public class DispatchTriggerLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -207,9 +203,7 @@ public class DispatchTriggerLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -221,20 +215,18 @@ public class DispatchTriggerLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.dispatch.model.DispatchTrigger
-		fetchDispatchTrigger(long dispatchTriggerId) {
-
+	public static DispatchTrigger fetchDispatchTrigger(long dispatchTriggerId) {
 		return getService().fetchDispatchTrigger(dispatchTriggerId);
 	}
 
-	public static com.liferay.dispatch.model.DispatchTrigger
-		fetchDispatchTrigger(long companyId, String name) {
+	public static DispatchTrigger fetchDispatchTrigger(
+		long companyId, String name) {
 
 		return getService().fetchDispatchTrigger(companyId, name);
 	}
@@ -256,18 +248,16 @@ public class DispatchTriggerLocalServiceUtil {
 	 * @return the dispatch trigger
 	 * @throws PortalException if a dispatch trigger with the primary key could not be found
 	 */
-	public static com.liferay.dispatch.model.DispatchTrigger getDispatchTrigger(
-			long dispatchTriggerId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static DispatchTrigger getDispatchTrigger(long dispatchTriggerId)
+		throws PortalException {
 
 		return getService().getDispatchTrigger(dispatchTriggerId);
 	}
 
-	public static java.util.List<com.liferay.dispatch.model.DispatchTrigger>
-		getDispatchTriggers(
-			boolean active,
-			com.liferay.dispatch.executor.DispatchTaskClusterMode
-				dispatchTaskClusterMode) {
+	public static List<DispatchTrigger> getDispatchTriggers(
+		boolean active,
+		com.liferay.dispatch.executor.DispatchTaskClusterMode
+			dispatchTaskClusterMode) {
 
 		return getService().getDispatchTriggers(
 			active, dispatchTaskClusterMode);
@@ -284,14 +274,14 @@ public class DispatchTriggerLocalServiceUtil {
 	 * @param end the upper bound of the range of dispatch triggers (not inclusive)
 	 * @return the range of dispatch triggers
 	 */
-	public static java.util.List<com.liferay.dispatch.model.DispatchTrigger>
-		getDispatchTriggers(int start, int end) {
+	public static List<DispatchTrigger> getDispatchTriggers(
+		int start, int end) {
 
 		return getService().getDispatchTriggers(start, end);
 	}
 
-	public static java.util.List<com.liferay.dispatch.model.DispatchTrigger>
-		getDispatchTriggers(long companyId, int start, int end) {
+	public static List<DispatchTrigger> getDispatchTriggers(
+		long companyId, int start, int end) {
 
 		return getService().getDispatchTriggers(companyId, start, end);
 	}
@@ -317,7 +307,7 @@ public class DispatchTriggerLocalServiceUtil {
 	}
 
 	public static java.util.Date getNextFireDate(long dispatchTriggerId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getNextFireDate(dispatchTriggerId);
 	}
@@ -334,22 +324,20 @@ public class DispatchTriggerLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	public static java.util.Date getPreviousFireDate(long dispatchTriggerId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getPreviousFireDate(dispatchTriggerId);
 	}
 
-	public static java.util.List<com.liferay.dispatch.model.DispatchTrigger>
-		getUserDispatchTriggers(
-			long companyId, long userId, int start, int end) {
+	public static List<DispatchTrigger> getUserDispatchTriggers(
+		long companyId, long userId, int start, int end) {
 
 		return getService().getUserDispatchTriggers(
 			companyId, userId, start, end);
@@ -371,23 +359,21 @@ public class DispatchTriggerLocalServiceUtil {
 	 * @param dispatchTrigger the dispatch trigger
 	 * @return the dispatch trigger that was updated
 	 */
-	public static com.liferay.dispatch.model.DispatchTrigger
-		updateDispatchTrigger(
-			com.liferay.dispatch.model.DispatchTrigger dispatchTrigger) {
+	public static DispatchTrigger updateDispatchTrigger(
+		DispatchTrigger dispatchTrigger) {
 
 		return getService().updateDispatchTrigger(dispatchTrigger);
 	}
 
-	public static com.liferay.dispatch.model.DispatchTrigger
-			updateDispatchTrigger(
-				long dispatchTriggerId, boolean active, String cronExpression,
-				com.liferay.dispatch.executor.DispatchTaskClusterMode
-					dispatchTaskClusterMode,
-				int endDateMonth, int endDateDay, int endDateYear,
-				int endDateHour, int endDateMinute, boolean neverEnd,
-				boolean overlapAllowed, int startDateMonth, int startDateDay,
-				int startDateYear, int startDateHour, int startDateMinute)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static DispatchTrigger updateDispatchTrigger(
+			long dispatchTriggerId, boolean active, String cronExpression,
+			com.liferay.dispatch.executor.DispatchTaskClusterMode
+				dispatchTaskClusterMode,
+			int endDateMonth, int endDateDay, int endDateYear, int endDateHour,
+			int endDateMinute, boolean neverEnd, boolean overlapAllowed,
+			int startDateMonth, int startDateDay, int startDateYear,
+			int startDateHour, int startDateMinute)
+		throws PortalException {
 
 		return getService().updateDispatchTrigger(
 			dispatchTriggerId, active, cronExpression, dispatchTaskClusterMode,
@@ -396,40 +382,21 @@ public class DispatchTriggerLocalServiceUtil {
 			startDateYear, startDateHour, startDateMinute);
 	}
 
-	public static com.liferay.dispatch.model.DispatchTrigger
-			updateDispatchTrigger(
-				long dispatchTriggerId,
-				com.liferay.portal.kernel.util.UnicodeProperties
-					taskSettingsUnicodeProperties,
-				String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static DispatchTrigger updateDispatchTrigger(
+			long dispatchTriggerId,
+			com.liferay.portal.kernel.util.UnicodeProperties
+				taskSettingsUnicodeProperties,
+			String name)
+		throws PortalException {
 
 		return getService().updateDispatchTrigger(
 			dispatchTriggerId, taskSettingsUnicodeProperties, name);
 	}
 
 	public static DispatchTriggerLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<DispatchTriggerLocalService, DispatchTriggerLocalService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			DispatchTriggerLocalService.class);
-
-		ServiceTracker<DispatchTriggerLocalService, DispatchTriggerLocalService>
-			serviceTracker =
-				new ServiceTracker
-					<DispatchTriggerLocalService, DispatchTriggerLocalService>(
-						bundle.getBundleContext(),
-						DispatchTriggerLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile DispatchTriggerLocalService _service;
 
 }

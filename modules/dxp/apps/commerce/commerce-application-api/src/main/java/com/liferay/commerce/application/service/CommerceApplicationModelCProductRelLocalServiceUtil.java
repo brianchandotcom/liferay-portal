@@ -14,9 +14,16 @@
 
 package com.liferay.commerce.application.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.application.model.CommerceApplicationModelCProductRel;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for CommerceApplicationModelCProductRel. This utility wraps
@@ -48,25 +55,19 @@ public class CommerceApplicationModelCProductRelLocalServiceUtil {
 	 * @param commerceApplicationModelCProductRel the commerce application model c product rel
 	 * @return the commerce application model c product rel that was added
 	 */
-	public static
-		com.liferay.commerce.application.model.
+	public static CommerceApplicationModelCProductRel
+		addCommerceApplicationModelCProductRel(
 			CommerceApplicationModelCProductRel
-				addCommerceApplicationModelCProductRel(
-					com.liferay.commerce.application.model.
-						CommerceApplicationModelCProductRel
-							commerceApplicationModelCProductRel) {
+				commerceApplicationModelCProductRel) {
 
 		return getService().addCommerceApplicationModelCProductRel(
 			commerceApplicationModelCProductRel);
 	}
 
-	public static
-		com.liferay.commerce.application.model.
-			CommerceApplicationModelCProductRel
-					addCommerceApplicationModelCProductRel(
-						long userId, long commerceApplicationModelId,
-						long cProductId)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceApplicationModelCProductRel
+			addCommerceApplicationModelCProductRel(
+				long userId, long commerceApplicationModelId, long cProductId)
+		throws PortalException {
 
 		return getService().addCommerceApplicationModelCProductRel(
 			userId, commerceApplicationModelId, cProductId);
@@ -78,11 +79,9 @@ public class CommerceApplicationModelCProductRelLocalServiceUtil {
 	 * @param commerceApplicationModelCProductRelId the primary key for the new commerce application model c product rel
 	 * @return the new commerce application model c product rel
 	 */
-	public static
-		com.liferay.commerce.application.model.
-			CommerceApplicationModelCProductRel
-				createCommerceApplicationModelCProductRel(
-					long commerceApplicationModelCProductRelId) {
+	public static CommerceApplicationModelCProductRel
+		createCommerceApplicationModelCProductRel(
+			long commerceApplicationModelCProductRelId) {
 
 		return getService().createCommerceApplicationModelCProductRel(
 			commerceApplicationModelCProductRelId);
@@ -91,9 +90,9 @@ public class CommerceApplicationModelCProductRelLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -108,13 +107,10 @@ public class CommerceApplicationModelCProductRelLocalServiceUtil {
 	 * @param commerceApplicationModelCProductRel the commerce application model c product rel
 	 * @return the commerce application model c product rel that was removed
 	 */
-	public static
-		com.liferay.commerce.application.model.
+	public static CommerceApplicationModelCProductRel
+		deleteCommerceApplicationModelCProductRel(
 			CommerceApplicationModelCProductRel
-				deleteCommerceApplicationModelCProductRel(
-					com.liferay.commerce.application.model.
-						CommerceApplicationModelCProductRel
-							commerceApplicationModelCProductRel) {
+				commerceApplicationModelCProductRel) {
 
 		return getService().deleteCommerceApplicationModelCProductRel(
 			commerceApplicationModelCProductRel);
@@ -131,12 +127,10 @@ public class CommerceApplicationModelCProductRelLocalServiceUtil {
 	 * @return the commerce application model c product rel that was removed
 	 * @throws PortalException if a commerce application model c product rel with the primary key could not be found
 	 */
-	public static
-		com.liferay.commerce.application.model.
-			CommerceApplicationModelCProductRel
-					deleteCommerceApplicationModelCProductRel(
-						long commerceApplicationModelCProductRelId)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceApplicationModelCProductRel
+			deleteCommerceApplicationModelCProductRel(
+				long commerceApplicationModelCProductRelId)
+		throws PortalException {
 
 		return getService().deleteCommerceApplicationModelCProductRel(
 			commerceApplicationModelCProductRelId);
@@ -159,23 +153,18 @@ public class CommerceApplicationModelCProductRelLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -185,9 +174,7 @@ public class CommerceApplicationModelCProductRelLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -203,9 +190,8 @@ public class CommerceApplicationModelCProductRelLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -223,10 +209,9 @@ public class CommerceApplicationModelCProductRelLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -238,9 +223,7 @@ public class CommerceApplicationModelCProductRelLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -252,17 +235,15 @@ public class CommerceApplicationModelCProductRelLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static
-		com.liferay.commerce.application.model.
-			CommerceApplicationModelCProductRel
-				fetchCommerceApplicationModelCProductRel(
-					long commerceApplicationModelCProductRelId) {
+	public static CommerceApplicationModelCProductRel
+		fetchCommerceApplicationModelCProductRel(
+			long commerceApplicationModelCProductRelId) {
 
 		return getService().fetchCommerceApplicationModelCProductRel(
 			commerceApplicationModelCProductRelId);
@@ -281,12 +262,10 @@ public class CommerceApplicationModelCProductRelLocalServiceUtil {
 	 * @return the commerce application model c product rel
 	 * @throws PortalException if a commerce application model c product rel with the primary key could not be found
 	 */
-	public static
-		com.liferay.commerce.application.model.
-			CommerceApplicationModelCProductRel
-					getCommerceApplicationModelCProductRel(
-						long commerceApplicationModelCProductRelId)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceApplicationModelCProductRel
+			getCommerceApplicationModelCProductRel(
+				long commerceApplicationModelCProductRelId)
+		throws PortalException {
 
 		return getService().getCommerceApplicationModelCProductRel(
 			commerceApplicationModelCProductRelId);
@@ -303,19 +282,15 @@ public class CommerceApplicationModelCProductRelLocalServiceUtil {
 	 * @param end the upper bound of the range of commerce application model c product rels (not inclusive)
 	 * @return the range of commerce application model c product rels
 	 */
-	public static java.util.List
-		<com.liferay.commerce.application.model.
-			CommerceApplicationModelCProductRel>
-				getCommerceApplicationModelCProductRels(int start, int end) {
+	public static List<CommerceApplicationModelCProductRel>
+		getCommerceApplicationModelCProductRels(int start, int end) {
 
 		return getService().getCommerceApplicationModelCProductRels(start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.application.model.
-			CommerceApplicationModelCProductRel>
-				getCommerceApplicationModelCProductRels(
-					long commerceApplicationModelId, int start, int end) {
+	public static List<CommerceApplicationModelCProductRel>
+		getCommerceApplicationModelCProductRels(
+			long commerceApplicationModelId, int start, int end) {
 
 		return getService().getCommerceApplicationModelCProductRels(
 			commerceApplicationModelId, start, end);
@@ -356,9 +331,8 @@ public class CommerceApplicationModelCProductRelLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -373,43 +347,20 @@ public class CommerceApplicationModelCProductRelLocalServiceUtil {
 	 * @param commerceApplicationModelCProductRel the commerce application model c product rel
 	 * @return the commerce application model c product rel that was updated
 	 */
-	public static
-		com.liferay.commerce.application.model.
+	public static CommerceApplicationModelCProductRel
+		updateCommerceApplicationModelCProductRel(
 			CommerceApplicationModelCProductRel
-				updateCommerceApplicationModelCProductRel(
-					com.liferay.commerce.application.model.
-						CommerceApplicationModelCProductRel
-							commerceApplicationModelCProductRel) {
+				commerceApplicationModelCProductRel) {
 
 		return getService().updateCommerceApplicationModelCProductRel(
 			commerceApplicationModelCProductRel);
 	}
 
 	public static CommerceApplicationModelCProductRelLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceApplicationModelCProductRelLocalService,
-		 CommerceApplicationModelCProductRelLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommerceApplicationModelCProductRelLocalService.class);
-
-		ServiceTracker
-			<CommerceApplicationModelCProductRelLocalService,
-			 CommerceApplicationModelCProductRelLocalService> serviceTracker =
-				new ServiceTracker
-					<CommerceApplicationModelCProductRelLocalService,
-					 CommerceApplicationModelCProductRelLocalService>(
-						 bundle.getBundleContext(),
-						 CommerceApplicationModelCProductRelLocalService.class,
-						 null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceApplicationModelCProductRelLocalService
+		_service;
 
 }

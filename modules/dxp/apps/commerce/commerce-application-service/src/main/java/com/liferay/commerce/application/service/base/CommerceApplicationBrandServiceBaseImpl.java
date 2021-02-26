@@ -16,6 +16,7 @@ package com.liferay.commerce.application.service.base;
 
 import com.liferay.commerce.application.model.CommerceApplicationBrand;
 import com.liferay.commerce.application.service.CommerceApplicationBrandService;
+import com.liferay.commerce.application.service.CommerceApplicationBrandServiceUtil;
 import com.liferay.commerce.application.service.persistence.CommerceApplicationBrandPersistence;
 import com.liferay.commerce.application.service.persistence.CommerceApplicationModelCProductRelPersistence;
 import com.liferay.commerce.application.service.persistence.CommerceApplicationModelPersistence;
@@ -31,6 +32,8 @@ import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
+
+import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
 
@@ -52,7 +55,7 @@ public abstract class CommerceApplicationBrandServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceApplicationBrandService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.application.service.CommerceApplicationBrandServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceApplicationBrandService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceApplicationBrandServiceUtil</code>.
 	 */
 
 	/**
@@ -449,9 +452,11 @@ public abstract class CommerceApplicationBrandServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
+		_setServiceUtilService(commerceApplicationBrandService);
 	}
 
 	public void destroy() {
+		_setServiceUtilService(null);
 	}
 
 	/**
@@ -494,6 +499,23 @@ public abstract class CommerceApplicationBrandServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setServiceUtilService(
+		CommerceApplicationBrandService commerceApplicationBrandService) {
+
+		try {
+			Field field =
+				CommerceApplicationBrandServiceUtil.class.getDeclaredField(
+					"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, commerceApplicationBrandService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

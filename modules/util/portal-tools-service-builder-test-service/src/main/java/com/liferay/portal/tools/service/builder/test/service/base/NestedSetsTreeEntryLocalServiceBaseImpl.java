@@ -41,9 +41,12 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.model.NestedSetsTreeEntry;
 import com.liferay.portal.tools.service.builder.test.service.NestedSetsTreeEntryLocalService;
+import com.liferay.portal.tools.service.builder.test.service.NestedSetsTreeEntryLocalServiceUtil;
 import com.liferay.portal.tools.service.builder.test.service.persistence.NestedSetsTreeEntryPersistence;
 
 import java.io.Serializable;
+
+import java.lang.reflect.Field;
 
 import java.util.List;
 
@@ -67,7 +70,7 @@ public abstract class NestedSetsTreeEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>NestedSetsTreeEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.tools.service.builder.test.service.NestedSetsTreeEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>NestedSetsTreeEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>NestedSetsTreeEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -459,11 +462,15 @@ public abstract class NestedSetsTreeEntryLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry.register(
 			"com.liferay.portal.tools.service.builder.test.model.NestedSetsTreeEntry",
 			nestedSetsTreeEntryLocalService);
+
+		_setLocalServiceUtilService(nestedSetsTreeEntryLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.portal.tools.service.builder.test.model.NestedSetsTreeEntry");
+
+		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -506,6 +513,23 @@ public abstract class NestedSetsTreeEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		NestedSetsTreeEntryLocalService nestedSetsTreeEntryLocalService) {
+
+		try {
+			Field field =
+				NestedSetsTreeEntryLocalServiceUtil.class.getDeclaredField(
+					"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, nestedSetsTreeEntryLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

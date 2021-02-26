@@ -14,9 +14,9 @@
 
 package com.liferay.external.reference.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.Map;
 
 /**
  * Provides the local service utility for ERAssetCategory. This utility wraps
@@ -40,12 +40,11 @@ public class ERAssetCategoryLocalServiceUtil {
 	public static com.liferay.asset.kernel.model.AssetCategory
 			addOrUpdateCategory(
 				String externalReferenceCode, long userId, long groupId,
-				long parentCategoryId,
-				java.util.Map<java.util.Locale, String> titleMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				long vocabularyId, String[] categoryProperties,
+				long parentCategoryId, Map<java.util.Locale, String> titleMap,
+				Map<java.util.Locale, String> descriptionMap, long vocabularyId,
+				String[] categoryProperties,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addOrUpdateCategory(
 			externalReferenceCode, userId, groupId, parentCategoryId, titleMap,
@@ -62,27 +61,9 @@ public class ERAssetCategoryLocalServiceUtil {
 	}
 
 	public static ERAssetCategoryLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<ERAssetCategoryLocalService, ERAssetCategoryLocalService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			ERAssetCategoryLocalService.class);
-
-		ServiceTracker<ERAssetCategoryLocalService, ERAssetCategoryLocalService>
-			serviceTracker =
-				new ServiceTracker
-					<ERAssetCategoryLocalService, ERAssetCategoryLocalService>(
-						bundle.getBundleContext(),
-						ERAssetCategoryLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile ERAssetCategoryLocalService _service;
 
 }

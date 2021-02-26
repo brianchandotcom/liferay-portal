@@ -14,9 +14,10 @@
 
 package com.liferay.commerce.account.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.account.model.CommerceAccountUserRel;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for CommerceAccountUserRel. This utility wraps
@@ -37,12 +38,10 @@ public class CommerceAccountUserRelServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.account.service.impl.CommerceAccountUserRelServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.commerce.account.model.CommerceAccountUserRel
-			addCommerceAccountUserRel(
-				long commerceAccountId, long commerceAccountUserId,
-				long[] roleIds,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceAccountUserRel addCommerceAccountUserRel(
+			long commerceAccountId, long commerceAccountUserId, long[] roleIds,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCommerceAccountUserRel(
 			commerceAccountId, commerceAccountUserId, roleIds, serviceContext);
@@ -52,7 +51,7 @@ public class CommerceAccountUserRelServiceUtil {
 			long commerceAccountId, long[] userIds, String[] emailAddresses,
 			long[] roleIds,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().addCommerceAccountUserRels(
 			commerceAccountId, userIds, emailAddresses, roleIds,
@@ -61,55 +60,51 @@ public class CommerceAccountUserRelServiceUtil {
 
 	public static void deleteCommerceAccountUserRel(
 			long commerceAccountId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommerceAccountUserRel(commerceAccountId, userId);
 	}
 
 	public static void deleteCommerceAccountUserRels(long commerceAccountId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommerceAccountUserRels(commerceAccountId);
 	}
 
 	public static void deleteCommerceAccountUserRels(
 			long commerceAccountId, long[] userIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommerceAccountUserRels(commerceAccountId, userIds);
 	}
 
-	public static com.liferay.commerce.account.model.CommerceAccountUserRel
-			fetchCommerceAccountUserRel(
-				com.liferay.commerce.account.service.persistence.
-					CommerceAccountUserRelPK commerceAccountUserRelPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceAccountUserRel fetchCommerceAccountUserRel(
+			com.liferay.commerce.account.service.persistence.
+				CommerceAccountUserRelPK commerceAccountUserRelPK)
+		throws PortalException {
 
 		return getService().fetchCommerceAccountUserRel(
 			commerceAccountUserRelPK);
 	}
 
-	public static com.liferay.commerce.account.model.CommerceAccountUserRel
-			getCommerceAccountUserRel(
-				com.liferay.commerce.account.service.persistence.
-					CommerceAccountUserRelPK commerceAccountUserRelPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceAccountUserRel getCommerceAccountUserRel(
+			com.liferay.commerce.account.service.persistence.
+				CommerceAccountUserRelPK commerceAccountUserRelPK)
+		throws PortalException {
 
 		return getService().getCommerceAccountUserRel(commerceAccountUserRelPK);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.account.model.CommerceAccountUserRel>
-				getCommerceAccountUserRels(
-					long commerceAccountId, int start, int end)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommerceAccountUserRel> getCommerceAccountUserRels(
+			long commerceAccountId, int start, int end)
+		throws PortalException {
 
 		return getService().getCommerceAccountUserRels(
 			commerceAccountId, start, end);
 	}
 
 	public static int getCommerceAccountUserRelsCount(long commerceAccountId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCommerceAccountUserRelsCount(commerceAccountId);
 	}
@@ -123,12 +118,11 @@ public class CommerceAccountUserRelServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.commerce.account.model.CommerceAccountUserRel
-			inviteUser(
-				long commerceAccountId, String emailAddress, long[] roleIds,
-				String userExternalReferenceCode,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceAccountUserRel inviteUser(
+			long commerceAccountId, String emailAddress, long[] roleIds,
+			String userExternalReferenceCode,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().inviteUser(
 			commerceAccountId, emailAddress, roleIds, userExternalReferenceCode,
@@ -136,29 +130,9 @@ public class CommerceAccountUserRelServiceUtil {
 	}
 
 	public static CommerceAccountUserRelService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceAccountUserRelService, CommerceAccountUserRelService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommerceAccountUserRelService.class);
-
-		ServiceTracker
-			<CommerceAccountUserRelService, CommerceAccountUserRelService>
-				serviceTracker =
-					new ServiceTracker
-						<CommerceAccountUserRelService,
-						 CommerceAccountUserRelService>(
-							 bundle.getBundleContext(),
-							 CommerceAccountUserRelService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceAccountUserRelService _service;
 
 }

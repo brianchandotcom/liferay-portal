@@ -14,9 +14,8 @@
 
 package com.liferay.oauth.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.oauth.model.OAuthUser;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * Provides the remote service utility for OAuthUser. This utility wraps
@@ -37,17 +36,16 @@ public class OAuthUserServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.oauth.service.impl.OAuthUserServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.oauth.model.OAuthUser addOAuthUser(
+	public static OAuthUser addOAuthUser(
 			String consumerKey,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addOAuthUser(consumerKey, serviceContext);
 	}
 
-	public static com.liferay.oauth.model.OAuthUser deleteOAuthUser(
-			long oAuthApplicationId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static OAuthUser deleteOAuthUser(long oAuthApplicationId)
+		throws PortalException {
 
 		return getService().deleteOAuthUser(oAuthApplicationId);
 	}
@@ -62,22 +60,9 @@ public class OAuthUserServiceUtil {
 	}
 
 	public static OAuthUserService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<OAuthUserService, OAuthUserService>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(OAuthUserService.class);
-
-		ServiceTracker<OAuthUserService, OAuthUserService> serviceTracker =
-			new ServiceTracker<OAuthUserService, OAuthUserService>(
-				bundle.getBundleContext(), OAuthUserService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile OAuthUserService _service;
 
 }

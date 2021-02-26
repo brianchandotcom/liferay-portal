@@ -14,9 +14,11 @@
 
 package com.liferay.polls.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.polls.model.PollsQuestion;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the remote service utility for PollsQuestion. This utility wraps
@@ -37,15 +39,15 @@ public class PollsQuestionServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.polls.service.impl.PollsQuestionServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.polls.model.PollsQuestion addQuestion(
-			java.util.Map<java.util.Locale, String> titleMap,
-			java.util.Map<java.util.Locale, String> descriptionMap,
+	public static PollsQuestion addQuestion(
+			Map<java.util.Locale, String> titleMap,
+			Map<java.util.Locale, String> descriptionMap,
 			int expirationDateMonth, int expirationDateDay,
 			int expirationDateYear, int expirationDateHour,
 			int expirationDateMinute, boolean neverExpire,
-			java.util.List<com.liferay.polls.model.PollsChoice> choices,
+			List<com.liferay.polls.model.PollsChoice> choices,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addQuestion(
 			titleMap, descriptionMap, expirationDateMonth, expirationDateDay,
@@ -53,9 +55,7 @@ public class PollsQuestionServiceUtil {
 			neverExpire, choices, serviceContext);
 	}
 
-	public static void deleteQuestion(long questionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static void deleteQuestion(long questionId) throws PortalException {
 		getService().deleteQuestion(questionId);
 	}
 
@@ -68,22 +68,21 @@ public class PollsQuestionServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.polls.model.PollsQuestion getQuestion(
-			long questionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PollsQuestion getQuestion(long questionId)
+		throws PortalException {
 
 		return getService().getQuestion(questionId);
 	}
 
-	public static com.liferay.polls.model.PollsQuestion updateQuestion(
-			long questionId, java.util.Map<java.util.Locale, String> titleMap,
-			java.util.Map<java.util.Locale, String> descriptionMap,
+	public static PollsQuestion updateQuestion(
+			long questionId, Map<java.util.Locale, String> titleMap,
+			Map<java.util.Locale, String> descriptionMap,
 			int expirationDateMonth, int expirationDateDay,
 			int expirationDateYear, int expirationDateHour,
 			int expirationDateMinute, boolean neverExpire,
-			java.util.List<com.liferay.polls.model.PollsChoice> choices,
+			List<com.liferay.polls.model.PollsChoice> choices,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateQuestion(
 			questionId, titleMap, descriptionMap, expirationDateMonth,
@@ -92,24 +91,9 @@ public class PollsQuestionServiceUtil {
 	}
 
 	public static PollsQuestionService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<PollsQuestionService, PollsQuestionService>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(PollsQuestionService.class);
-
-		ServiceTracker<PollsQuestionService, PollsQuestionService>
-			serviceTracker =
-				new ServiceTracker<PollsQuestionService, PollsQuestionService>(
-					bundle.getBundleContext(), PollsQuestionService.class,
-					null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile PollsQuestionService _service;
 
 }

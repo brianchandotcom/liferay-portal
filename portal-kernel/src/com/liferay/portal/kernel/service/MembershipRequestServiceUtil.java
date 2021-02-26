@@ -14,7 +14,8 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.MembershipRequest;
 
 /**
  * Provides the remote service utility for MembershipRequest. This utility wraps
@@ -35,24 +36,23 @@ public class MembershipRequestServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.service.impl.MembershipRequestServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.kernel.model.MembershipRequest
-			addMembershipRequest(
-				long groupId, String comments, ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static MembershipRequest addMembershipRequest(
+			long groupId, String comments, ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addMembershipRequest(
 			groupId, comments, serviceContext);
 	}
 
 	public static void deleteMembershipRequests(long groupId, long statusId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteMembershipRequests(groupId, statusId);
 	}
 
-	public static com.liferay.portal.kernel.model.MembershipRequest
-			getMembershipRequest(long membershipRequestId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static MembershipRequest getMembershipRequest(
+			long membershipRequestId)
+		throws PortalException {
 
 		return getService().getMembershipRequest(membershipRequestId);
 	}
@@ -69,21 +69,16 @@ public class MembershipRequestServiceUtil {
 	public static void updateStatus(
 			long membershipRequestId, String reviewComments, long statusId,
 			ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().updateStatus(
 			membershipRequestId, reviewComments, statusId, serviceContext);
 	}
 
 	public static MembershipRequestService getService() {
-		if (_service == null) {
-			_service = (MembershipRequestService)PortalBeanLocatorUtil.locate(
-				MembershipRequestService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static MembershipRequestService _service;
+	private static volatile MembershipRequestService _service;
 
 }

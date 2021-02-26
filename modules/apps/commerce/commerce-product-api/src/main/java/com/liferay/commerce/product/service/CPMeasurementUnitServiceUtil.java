@@ -14,9 +14,12 @@
 
 package com.liferay.commerce.product.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.product.model.CPMeasurementUnit;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the remote service utility for CPMeasurementUnit. This utility wraps
@@ -37,71 +40,62 @@ public class CPMeasurementUnitServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CPMeasurementUnitServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.commerce.product.model.CPMeasurementUnit
-			addCPMeasurementUnit(
-				java.util.Map<java.util.Locale, String> nameMap, String key,
-				double rate, boolean primary, double priority, int type,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPMeasurementUnit addCPMeasurementUnit(
+			Map<java.util.Locale, String> nameMap, String key, double rate,
+			boolean primary, double priority, int type,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCPMeasurementUnit(
 			nameMap, key, rate, primary, priority, type, serviceContext);
 	}
 
 	public static void deleteCPMeasurementUnit(long cpMeasurementUnitId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCPMeasurementUnit(cpMeasurementUnitId);
 	}
 
-	public static com.liferay.commerce.product.model.CPMeasurementUnit
-			fetchPrimaryCPMeasurementUnit(long companyId, int type)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPMeasurementUnit fetchPrimaryCPMeasurementUnit(
+			long companyId, int type)
+		throws PortalException {
 
 		return getService().fetchPrimaryCPMeasurementUnit(companyId, type);
 	}
 
-	public static com.liferay.commerce.product.model.CPMeasurementUnit
-			getCPMeasurementUnit(long cpMeasurementUnitId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPMeasurementUnit getCPMeasurementUnit(
+			long cpMeasurementUnitId)
+		throws PortalException {
 
 		return getService().getCPMeasurementUnit(cpMeasurementUnitId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.product.model.CPMeasurementUnit>
-				getCPMeasurementUnits(
-					long companyId, int type, int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						<com.liferay.commerce.product.model.CPMeasurementUnit>
-							orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CPMeasurementUnit> getCPMeasurementUnits(
+			long companyId, int type, int start, int end,
+			OrderByComparator<CPMeasurementUnit> orderByComparator)
+		throws PortalException {
 
 		return getService().getCPMeasurementUnits(
 			companyId, type, start, end, orderByComparator);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.product.model.CPMeasurementUnit>
-				getCPMeasurementUnits(
-					long companyId, int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						<com.liferay.commerce.product.model.CPMeasurementUnit>
-							orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CPMeasurementUnit> getCPMeasurementUnits(
+			long companyId, int start, int end,
+			OrderByComparator<CPMeasurementUnit> orderByComparator)
+		throws PortalException {
 
 		return getService().getCPMeasurementUnits(
 			companyId, start, end, orderByComparator);
 	}
 
 	public static int getCPMeasurementUnitsCount(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCPMeasurementUnitsCount(companyId);
 	}
 
 	public static int getCPMeasurementUnitsCount(long companyId, int type)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCPMeasurementUnitsCount(companyId, type);
 	}
@@ -115,20 +109,18 @@ public class CPMeasurementUnitServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.commerce.product.model.CPMeasurementUnit
-			setPrimary(long cpMeasurementUnitId, boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPMeasurementUnit setPrimary(
+			long cpMeasurementUnitId, boolean primary)
+		throws PortalException {
 
 		return getService().setPrimary(cpMeasurementUnitId, primary);
 	}
 
-	public static com.liferay.commerce.product.model.CPMeasurementUnit
-			updateCPMeasurementUnit(
-				long cpMeasurementUnitId,
-				java.util.Map<java.util.Locale, String> nameMap, String key,
-				double rate, boolean primary, double priority, int type,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPMeasurementUnit updateCPMeasurementUnit(
+			long cpMeasurementUnitId, Map<java.util.Locale, String> nameMap,
+			String key, double rate, boolean primary, double priority, int type,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().updateCPMeasurementUnit(
 			cpMeasurementUnitId, nameMap, key, rate, primary, priority, type,
@@ -136,25 +128,9 @@ public class CPMeasurementUnitServiceUtil {
 	}
 
 	public static CPMeasurementUnitService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CPMeasurementUnitService, CPMeasurementUnitService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(CPMeasurementUnitService.class);
-
-		ServiceTracker<CPMeasurementUnitService, CPMeasurementUnitService>
-			serviceTracker =
-				new ServiceTracker
-					<CPMeasurementUnitService, CPMeasurementUnitService>(
-						bundle.getBundleContext(),
-						CPMeasurementUnitService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CPMeasurementUnitService _service;
 
 }

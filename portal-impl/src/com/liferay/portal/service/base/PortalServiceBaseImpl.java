@@ -23,9 +23,12 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.service.PortalService;
+import com.liferay.portal.kernel.service.PortalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+
+import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
 
@@ -46,7 +49,7 @@ public abstract class PortalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>PortalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.kernel.service.PortalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>PortalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>PortalServiceUtil</code>.
 	 */
 
 	/**
@@ -179,9 +182,11 @@ public abstract class PortalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
+		_setServiceUtilService(portalService);
 	}
 
 	public void destroy() {
+		_setServiceUtilService(null);
 	}
 
 	/**
@@ -215,6 +220,19 @@ public abstract class PortalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setServiceUtilService(PortalService portalService) {
+		try {
+			Field field = PortalServiceUtil.class.getDeclaredField("_service");
+
+			field.setAccessible(true);
+
+			field.set(null, portalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

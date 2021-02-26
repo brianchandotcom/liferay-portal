@@ -14,9 +14,16 @@
 
 package com.liferay.change.tracking.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.change.tracking.model.CTProcess;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for CTProcess. This utility wraps
@@ -48,15 +55,12 @@ public class CTProcessLocalServiceUtil {
 	 * @param ctProcess the ct process
 	 * @return the ct process that was added
 	 */
-	public static com.liferay.change.tracking.model.CTProcess addCTProcess(
-		com.liferay.change.tracking.model.CTProcess ctProcess) {
-
+	public static CTProcess addCTProcess(CTProcess ctProcess) {
 		return getService().addCTProcess(ctProcess);
 	}
 
-	public static com.liferay.change.tracking.model.CTProcess addCTProcess(
-			long userId, long ctCollectionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CTProcess addCTProcess(long userId, long ctCollectionId)
+		throws PortalException {
 
 		return getService().addCTProcess(userId, ctCollectionId);
 	}
@@ -67,18 +71,16 @@ public class CTProcessLocalServiceUtil {
 	 * @param ctProcessId the primary key for the new ct process
 	 * @return the new ct process
 	 */
-	public static com.liferay.change.tracking.model.CTProcess createCTProcess(
-		long ctProcessId) {
-
+	public static CTProcess createCTProcess(long ctProcessId) {
 		return getService().createCTProcess(ctProcessId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -93,9 +95,7 @@ public class CTProcessLocalServiceUtil {
 	 * @param ctProcess the ct process
 	 * @return the ct process that was removed
 	 */
-	public static com.liferay.change.tracking.model.CTProcess deleteCTProcess(
-		com.liferay.change.tracking.model.CTProcess ctProcess) {
-
+	public static CTProcess deleteCTProcess(CTProcess ctProcess) {
 		return getService().deleteCTProcess(ctProcess);
 	}
 
@@ -110,9 +110,8 @@ public class CTProcessLocalServiceUtil {
 	 * @return the ct process that was removed
 	 * @throws PortalException if a ct process with the primary key could not be found
 	 */
-	public static com.liferay.change.tracking.model.CTProcess deleteCTProcess(
-			long ctProcessId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CTProcess deleteCTProcess(long ctProcessId)
+		throws PortalException {
 
 		return getService().deleteCTProcess(ctProcessId);
 	}
@@ -120,23 +119,18 @@ public class CTProcessLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -146,9 +140,7 @@ public class CTProcessLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -164,9 +156,8 @@ public class CTProcessLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -184,10 +175,9 @@ public class CTProcessLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -199,9 +189,7 @@ public class CTProcessLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -213,21 +201,17 @@ public class CTProcessLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.change.tracking.model.CTProcess fetchCTProcess(
-		long ctProcessId) {
-
+	public static CTProcess fetchCTProcess(long ctProcessId) {
 		return getService().fetchCTProcess(ctProcessId);
 	}
 
-	public static com.liferay.change.tracking.model.CTProcess
-		fetchLatestCTProcess(long companyId) {
-
+	public static CTProcess fetchLatestCTProcess(long companyId) {
 		return getService().fetchLatestCTProcess(companyId);
 	}
 
@@ -244,9 +228,8 @@ public class CTProcessLocalServiceUtil {
 	 * @return the ct process
 	 * @throws PortalException if a ct process with the primary key could not be found
 	 */
-	public static com.liferay.change.tracking.model.CTProcess getCTProcess(
-			long ctProcessId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CTProcess getCTProcess(long ctProcessId)
+		throws PortalException {
 
 		return getService().getCTProcess(ctProcessId);
 	}
@@ -262,15 +245,11 @@ public class CTProcessLocalServiceUtil {
 	 * @param end the upper bound of the range of ct processes (not inclusive)
 	 * @return the range of ct processes
 	 */
-	public static java.util.List<com.liferay.change.tracking.model.CTProcess>
-		getCTProcesses(int start, int end) {
-
+	public static List<CTProcess> getCTProcesses(int start, int end) {
 		return getService().getCTProcesses(start, end);
 	}
 
-	public static java.util.List<com.liferay.change.tracking.model.CTProcess>
-		getCTProcesses(long ctCollectionId) {
-
+	public static List<CTProcess> getCTProcesses(long ctCollectionId) {
 		return getService().getCTProcesses(ctCollectionId);
 	}
 
@@ -302,9 +281,8 @@ public class CTProcessLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -319,32 +297,14 @@ public class CTProcessLocalServiceUtil {
 	 * @param ctProcess the ct process
 	 * @return the ct process that was updated
 	 */
-	public static com.liferay.change.tracking.model.CTProcess updateCTProcess(
-		com.liferay.change.tracking.model.CTProcess ctProcess) {
-
+	public static CTProcess updateCTProcess(CTProcess ctProcess) {
 		return getService().updateCTProcess(ctProcess);
 	}
 
 	public static CTProcessLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<CTProcessLocalService, CTProcessLocalService>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(CTProcessLocalService.class);
-
-		ServiceTracker<CTProcessLocalService, CTProcessLocalService>
-			serviceTracker =
-				new ServiceTracker
-					<CTProcessLocalService, CTProcessLocalService>(
-						bundle.getBundleContext(), CTProcessLocalService.class,
-						null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CTProcessLocalService _service;
 
 }

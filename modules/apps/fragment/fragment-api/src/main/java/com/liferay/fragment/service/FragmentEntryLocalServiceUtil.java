@@ -14,9 +14,16 @@
 
 package com.liferay.fragment.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for FragmentEntry. This utility wraps
@@ -48,31 +55,29 @@ public class FragmentEntryLocalServiceUtil {
 	 * @param fragmentEntry the fragment entry
 	 * @return the fragment entry that was added
 	 */
-	public static com.liferay.fragment.model.FragmentEntry addFragmentEntry(
-		com.liferay.fragment.model.FragmentEntry fragmentEntry) {
-
+	public static FragmentEntry addFragmentEntry(FragmentEntry fragmentEntry) {
 		return getService().addFragmentEntry(fragmentEntry);
 	}
 
-	public static com.liferay.fragment.model.FragmentEntry addFragmentEntry(
+	public static FragmentEntry addFragmentEntry(
 			long userId, long groupId, long fragmentCollectionId,
 			String fragmentEntryKey, String name, long previewFileEntryId,
 			int type, int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addFragmentEntry(
 			userId, groupId, fragmentCollectionId, fragmentEntryKey, name,
 			previewFileEntryId, type, status, serviceContext);
 	}
 
-	public static com.liferay.fragment.model.FragmentEntry addFragmentEntry(
+	public static FragmentEntry addFragmentEntry(
 			long userId, long groupId, long fragmentCollectionId,
 			String fragmentEntryKey, String name, String css, String html,
 			String js, boolean cacheable, String configuration,
 			long previewFileEntryId, int type, int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addFragmentEntry(
 			userId, groupId, fragmentCollectionId, fragmentEntryKey, name, css,
@@ -80,13 +85,13 @@ public class FragmentEntryLocalServiceUtil {
 			status, serviceContext);
 	}
 
-	public static com.liferay.fragment.model.FragmentEntry addFragmentEntry(
+	public static FragmentEntry addFragmentEntry(
 			long userId, long groupId, long fragmentCollectionId,
 			String fragmentEntryKey, String name, String css, String html,
 			String js, String configuration, long previewFileEntryId, int type,
 			int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addFragmentEntry(
 			userId, groupId, fragmentCollectionId, fragmentEntryKey, name, css,
@@ -94,19 +99,18 @@ public class FragmentEntryLocalServiceUtil {
 			serviceContext);
 	}
 
-	public static com.liferay.fragment.model.FragmentEntry checkout(
-			com.liferay.fragment.model.FragmentEntry publishedFragmentEntry,
-			int version)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static FragmentEntry checkout(
+			FragmentEntry publishedFragmentEntry, int version)
+		throws PortalException {
 
 		return getService().checkout(publishedFragmentEntry, version);
 	}
 
-	public static com.liferay.fragment.model.FragmentEntry copyFragmentEntry(
+	public static FragmentEntry copyFragmentEntry(
 			long userId, long groupId, long fragmentEntryId,
 			long fragmentCollectionId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().copyFragmentEntry(
 			userId, groupId, fragmentEntryId, fragmentCollectionId,
@@ -118,36 +122,32 @@ public class FragmentEntryLocalServiceUtil {
 	 *
 	 * @return the new fragment entry
 	 */
-	public static com.liferay.fragment.model.FragmentEntry create() {
+	public static FragmentEntry create() {
 		return getService().create();
 	}
 
-	public static com.liferay.fragment.model.FragmentEntry createFragmentEntry(
-		long fragmentEntryId) {
-
+	public static FragmentEntry createFragmentEntry(long fragmentEntryId) {
 		return getService().createFragmentEntry(fragmentEntryId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
 
-	public static com.liferay.fragment.model.FragmentEntry delete(
-			com.liferay.fragment.model.FragmentEntry publishedFragmentEntry)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static FragmentEntry delete(FragmentEntry publishedFragmentEntry)
+		throws PortalException {
 
 		return getService().delete(publishedFragmentEntry);
 	}
 
-	public static com.liferay.fragment.model.FragmentEntry deleteDraft(
-			com.liferay.fragment.model.FragmentEntry draftFragmentEntry)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static FragmentEntry deleteDraft(FragmentEntry draftFragmentEntry)
+		throws PortalException {
 
 		return getService().deleteDraft(draftFragmentEntry);
 	}
@@ -163,9 +163,8 @@ public class FragmentEntryLocalServiceUtil {
 	 * @return the fragment entry that was removed
 	 * @throws PortalException
 	 */
-	public static com.liferay.fragment.model.FragmentEntry deleteFragmentEntry(
-			com.liferay.fragment.model.FragmentEntry fragmentEntry)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static FragmentEntry deleteFragmentEntry(FragmentEntry fragmentEntry)
+		throws PortalException {
 
 		return getService().deleteFragmentEntry(fragmentEntry);
 	}
@@ -181,9 +180,8 @@ public class FragmentEntryLocalServiceUtil {
 	 * @return the fragment entry that was removed
 	 * @throws PortalException if a fragment entry with the primary key could not be found
 	 */
-	public static com.liferay.fragment.model.FragmentEntry deleteFragmentEntry(
-			long fragmentEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static FragmentEntry deleteFragmentEntry(long fragmentEntryId)
+		throws PortalException {
 
 		return getService().deleteFragmentEntry(fragmentEntryId);
 	}
@@ -191,10 +189,9 @@ public class FragmentEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
@@ -202,20 +199,16 @@ public class FragmentEntryLocalServiceUtil {
 	public static com.liferay.fragment.model.FragmentEntryVersion deleteVersion(
 			com.liferay.fragment.model.FragmentEntryVersion
 				fragmentEntryVersion)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().deleteVersion(fragmentEntryVersion);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -225,9 +218,7 @@ public class FragmentEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -243,9 +234,8 @@ public class FragmentEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -263,10 +253,9 @@ public class FragmentEntryLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -278,9 +267,7 @@ public class FragmentEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -292,58 +279,47 @@ public class FragmentEntryLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.fragment.model.FragmentEntry fetchDraft(
-		com.liferay.fragment.model.FragmentEntry fragmentEntry) {
-
+	public static FragmentEntry fetchDraft(FragmentEntry fragmentEntry) {
 		return getService().fetchDraft(fragmentEntry);
 	}
 
-	public static com.liferay.fragment.model.FragmentEntry fetchDraft(
-		long primaryKey) {
-
+	public static FragmentEntry fetchDraft(long primaryKey) {
 		return getService().fetchDraft(primaryKey);
 	}
 
-	public static com.liferay.fragment.model.FragmentEntry fetchFragmentEntry(
-		long fragmentEntryId) {
-
+	public static FragmentEntry fetchFragmentEntry(long fragmentEntryId) {
 		return getService().fetchFragmentEntry(fragmentEntryId);
 	}
 
-	public static com.liferay.fragment.model.FragmentEntry fetchFragmentEntry(
+	public static FragmentEntry fetchFragmentEntry(
 		long groupId, String fragmentEntryKey) {
 
 		return getService().fetchFragmentEntry(groupId, fragmentEntryKey);
 	}
 
-	public static com.liferay.fragment.model.FragmentEntry
-		fetchFragmentEntryByUuidAndGroupId(String uuid, long groupId) {
+	public static FragmentEntry fetchFragmentEntryByUuidAndGroupId(
+		String uuid, long groupId) {
 
 		return getService().fetchFragmentEntryByUuidAndGroupId(uuid, groupId);
 	}
 
 	public static com.liferay.fragment.model.FragmentEntryVersion
-		fetchLatestVersion(
-			com.liferay.fragment.model.FragmentEntry fragmentEntry) {
+		fetchLatestVersion(FragmentEntry fragmentEntry) {
 
 		return getService().fetchLatestVersion(fragmentEntry);
 	}
 
-	public static com.liferay.fragment.model.FragmentEntry fetchPublished(
-		com.liferay.fragment.model.FragmentEntry fragmentEntry) {
-
+	public static FragmentEntry fetchPublished(FragmentEntry fragmentEntry) {
 		return getService().fetchPublished(fragmentEntry);
 	}
 
-	public static com.liferay.fragment.model.FragmentEntry fetchPublished(
-		long primaryKey) {
-
+	public static FragmentEntry fetchPublished(long primaryKey) {
 		return getService().fetchPublished(primaryKey);
 	}
 
@@ -357,16 +333,14 @@ public class FragmentEntryLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
-	public static com.liferay.fragment.model.FragmentEntry getDraft(
-			com.liferay.fragment.model.FragmentEntry fragmentEntry)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static FragmentEntry getDraft(FragmentEntry fragmentEntry)
+		throws PortalException {
 
 		return getService().getDraft(fragmentEntry);
 	}
 
-	public static com.liferay.fragment.model.FragmentEntry getDraft(
-			long primaryKey)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static FragmentEntry getDraft(long primaryKey)
+		throws PortalException {
 
 		return getService().getDraft(primaryKey);
 	}
@@ -390,66 +364,56 @@ public class FragmentEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of fragment entries (not inclusive)
 	 * @return the range of fragment entries
 	 */
-	public static java.util.List<com.liferay.fragment.model.FragmentEntry>
-		getFragmentEntries(int start, int end) {
-
+	public static List<FragmentEntry> getFragmentEntries(int start, int end) {
 		return getService().getFragmentEntries(start, end);
 	}
 
-	public static java.util.List<com.liferay.fragment.model.FragmentEntry>
-		getFragmentEntries(long fragmentCollectionId) {
+	public static List<FragmentEntry> getFragmentEntries(
+		long fragmentCollectionId) {
 
 		return getService().getFragmentEntries(fragmentCollectionId);
 	}
 
-	public static java.util.List<com.liferay.fragment.model.FragmentEntry>
-		getFragmentEntries(long fragmentCollectionId, int start, int end) {
+	public static List<FragmentEntry> getFragmentEntries(
+		long fragmentCollectionId, int start, int end) {
 
 		return getService().getFragmentEntries(
 			fragmentCollectionId, start, end);
 	}
 
-	public static java.util.List<com.liferay.fragment.model.FragmentEntry>
-		getFragmentEntries(
-			long groupId, long fragmentCollectionId, int status) {
+	public static List<FragmentEntry> getFragmentEntries(
+		long groupId, long fragmentCollectionId, int status) {
 
 		return getService().getFragmentEntries(
 			groupId, fragmentCollectionId, status);
 	}
 
-	public static java.util.List<com.liferay.fragment.model.FragmentEntry>
-		getFragmentEntries(
-			long groupId, long fragmentCollectionId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.fragment.model.FragmentEntry> orderByComparator) {
+	public static List<FragmentEntry> getFragmentEntries(
+		long groupId, long fragmentCollectionId, int start, int end,
+		OrderByComparator<FragmentEntry> orderByComparator) {
 
 		return getService().getFragmentEntries(
 			groupId, fragmentCollectionId, start, end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.fragment.model.FragmentEntry>
-		getFragmentEntries(
-			long groupId, long fragmentCollectionId, String name, int start,
-			int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.fragment.model.FragmentEntry> orderByComparator) {
+	public static List<FragmentEntry> getFragmentEntries(
+		long groupId, long fragmentCollectionId, String name, int start,
+		int end, OrderByComparator<FragmentEntry> orderByComparator) {
 
 		return getService().getFragmentEntries(
 			groupId, fragmentCollectionId, name, start, end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.fragment.model.FragmentEntry>
-		getFragmentEntriesByUuidAndCompanyId(String uuid, long companyId) {
+	public static List<FragmentEntry> getFragmentEntriesByUuidAndCompanyId(
+		String uuid, long companyId) {
 
 		return getService().getFragmentEntriesByUuidAndCompanyId(
 			uuid, companyId);
 	}
 
-	public static java.util.List<com.liferay.fragment.model.FragmentEntry>
-		getFragmentEntriesByUuidAndCompanyId(
-			String uuid, long companyId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.fragment.model.FragmentEntry> orderByComparator) {
+	public static List<FragmentEntry> getFragmentEntriesByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<FragmentEntry> orderByComparator) {
 
 		return getService().getFragmentEntriesByUuidAndCompanyId(
 			uuid, companyId, start, end, orderByComparator);
@@ -475,16 +439,15 @@ public class FragmentEntryLocalServiceUtil {
 	 * @return the fragment entry
 	 * @throws PortalException if a fragment entry with the primary key could not be found
 	 */
-	public static com.liferay.fragment.model.FragmentEntry getFragmentEntry(
-			long fragmentEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static FragmentEntry getFragmentEntry(long fragmentEntryId)
+		throws PortalException {
 
 		return getService().getFragmentEntry(fragmentEntryId);
 	}
 
-	public static com.liferay.fragment.model.FragmentEntry
-			getFragmentEntryByUuidAndGroupId(String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static FragmentEntry getFragmentEntryByUuidAndGroupId(
+			String uuid, long groupId)
+		throws PortalException {
 
 		return getService().getFragmentEntryByUuidAndGroupId(uuid, groupId);
 	}
@@ -508,53 +471,49 @@ public class FragmentEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	public static String[] getTempFileNames(
 			long userId, long groupId, String folderName)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getTempFileNames(userId, groupId, folderName);
 	}
 
 	public static com.liferay.fragment.model.FragmentEntryVersion getVersion(
-			com.liferay.fragment.model.FragmentEntry fragmentEntry, int version)
-		throws com.liferay.portal.kernel.exception.PortalException {
+			FragmentEntry fragmentEntry, int version)
+		throws PortalException {
 
 		return getService().getVersion(fragmentEntry, version);
 	}
 
-	public static java.util.List
-		<com.liferay.fragment.model.FragmentEntryVersion> getVersions(
-			com.liferay.fragment.model.FragmentEntry fragmentEntry) {
+	public static List<com.liferay.fragment.model.FragmentEntryVersion>
+		getVersions(FragmentEntry fragmentEntry) {
 
 		return getService().getVersions(fragmentEntry);
 	}
 
-	public static com.liferay.fragment.model.FragmentEntry moveFragmentEntry(
+	public static FragmentEntry moveFragmentEntry(
 			long fragmentEntryId, long fragmentCollectionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().moveFragmentEntry(
 			fragmentEntryId, fragmentCollectionId);
 	}
 
-	public static com.liferay.fragment.model.FragmentEntry publishDraft(
-			com.liferay.fragment.model.FragmentEntry draftFragmentEntry)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static FragmentEntry publishDraft(FragmentEntry draftFragmentEntry)
+		throws PortalException {
 
 		return getService().publishDraft(draftFragmentEntry);
 	}
 
 	public static void registerListener(
 		com.liferay.portal.kernel.service.version.VersionServiceListener
-			<com.liferay.fragment.model.FragmentEntry,
-			 com.liferay.fragment.model.FragmentEntryVersion>
+			<FragmentEntry, com.liferay.fragment.model.FragmentEntryVersion>
 				versionServiceListener) {
 
 		getService().registerListener(versionServiceListener);
@@ -562,16 +521,14 @@ public class FragmentEntryLocalServiceUtil {
 
 	public static void unregisterListener(
 		com.liferay.portal.kernel.service.version.VersionServiceListener
-			<com.liferay.fragment.model.FragmentEntry,
-			 com.liferay.fragment.model.FragmentEntryVersion>
+			<FragmentEntry, com.liferay.fragment.model.FragmentEntryVersion>
 				versionServiceListener) {
 
 		getService().unregisterListener(versionServiceListener);
 	}
 
-	public static com.liferay.fragment.model.FragmentEntry updateDraft(
-			com.liferay.fragment.model.FragmentEntry draftFragmentEntry)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static FragmentEntry updateDraft(FragmentEntry draftFragmentEntry)
+		throws PortalException {
 
 		return getService().updateDraft(draftFragmentEntry);
 	}
@@ -587,26 +544,26 @@ public class FragmentEntryLocalServiceUtil {
 	 * @return the fragment entry that was updated
 	 * @throws PortalException
 	 */
-	public static com.liferay.fragment.model.FragmentEntry updateFragmentEntry(
-			com.liferay.fragment.model.FragmentEntry draftFragmentEntry)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static FragmentEntry updateFragmentEntry(
+			FragmentEntry draftFragmentEntry)
+		throws PortalException {
 
 		return getService().updateFragmentEntry(draftFragmentEntry);
 	}
 
-	public static com.liferay.fragment.model.FragmentEntry updateFragmentEntry(
+	public static FragmentEntry updateFragmentEntry(
 			long fragmentEntryId, long previewFileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateFragmentEntry(
 			fragmentEntryId, previewFileEntryId);
 	}
 
-	public static com.liferay.fragment.model.FragmentEntry updateFragmentEntry(
+	public static FragmentEntry updateFragmentEntry(
 			long userId, long fragmentEntryId, long fragmentCollectionId,
 			String name, String css, String html, String js, boolean cacheable,
 			String configuration, long previewFileEntryId, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateFragmentEntry(
 			userId, fragmentEntryId, fragmentCollectionId, name, css, html, js,
@@ -618,66 +575,49 @@ public class FragmentEntryLocalServiceUtil {
 	 #updateFragmentEntry(long, long, long, String, String, String, String, boolean, String, long, int)}
 	 */
 	@Deprecated
-	public static com.liferay.fragment.model.FragmentEntry updateFragmentEntry(
+	public static FragmentEntry updateFragmentEntry(
 			long userId, long fragmentEntryId, String name, String css,
 			String html, String js, boolean cacheable, String configuration,
 			long previewFileEntryId, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateFragmentEntry(
 			userId, fragmentEntryId, name, css, html, js, cacheable,
 			configuration, previewFileEntryId, status);
 	}
 
-	public static com.liferay.fragment.model.FragmentEntry updateFragmentEntry(
+	public static FragmentEntry updateFragmentEntry(
 			long userId, long fragmentEntryId, String name, String css,
 			String html, String js, String configuration, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateFragmentEntry(
 			userId, fragmentEntryId, name, css, html, js, configuration,
 			status);
 	}
 
-	public static com.liferay.fragment.model.FragmentEntry updateFragmentEntry(
+	public static FragmentEntry updateFragmentEntry(
 			long userId, long fragmentEntryId, String name, String css,
 			String html, String js, String configuration,
 			long previewFileEntryId, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateFragmentEntry(
 			userId, fragmentEntryId, name, css, html, js, configuration,
 			previewFileEntryId, status);
 	}
 
-	public static com.liferay.fragment.model.FragmentEntry updateFragmentEntry(
+	public static FragmentEntry updateFragmentEntry(
 			long fragmentEntryId, String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateFragmentEntry(fragmentEntryId, name);
 	}
 
 	public static FragmentEntryLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<FragmentEntryLocalService, FragmentEntryLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			FragmentEntryLocalService.class);
-
-		ServiceTracker<FragmentEntryLocalService, FragmentEntryLocalService>
-			serviceTracker =
-				new ServiceTracker
-					<FragmentEntryLocalService, FragmentEntryLocalService>(
-						bundle.getBundleContext(),
-						FragmentEntryLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile FragmentEntryLocalService _service;
 
 }

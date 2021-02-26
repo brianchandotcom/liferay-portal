@@ -14,9 +14,10 @@
 
 package com.liferay.commerce.application.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.application.model.CommerceApplicationModel;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for CommerceApplicationModel. This utility wraps
@@ -37,12 +38,10 @@ public class CommerceApplicationModelServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.application.service.impl.CommerceApplicationModelServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static
-		com.liferay.commerce.application.model.CommerceApplicationModel
-				addCommerceApplicationModel(
-					long userId, long commerceApplicationBrandId, String name,
-					String year)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceApplicationModel addCommerceApplicationModel(
+			long userId, long commerceApplicationBrandId, String name,
+			String year)
+		throws PortalException {
 
 		return getService().addCommerceApplicationModel(
 			userId, commerceApplicationBrandId, name, year);
@@ -50,33 +49,29 @@ public class CommerceApplicationModelServiceUtil {
 
 	public static void deleteCommerceApplicationModel(
 			long commerceApplicationModelId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommerceApplicationModel(commerceApplicationModelId);
 	}
 
-	public static
-		com.liferay.commerce.application.model.CommerceApplicationModel
-				getCommerceApplicationModel(long commerceApplicationModelId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceApplicationModel getCommerceApplicationModel(
+			long commerceApplicationModelId)
+		throws PortalException {
 
 		return getService().getCommerceApplicationModel(
 			commerceApplicationModelId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.application.model.CommerceApplicationModel>
-			getCommerceApplicationModels(
-				long commerceApplicationBrandId, int start, int end) {
+	public static List<CommerceApplicationModel> getCommerceApplicationModels(
+		long commerceApplicationBrandId, int start, int end) {
 
 		return getService().getCommerceApplicationModels(
 			commerceApplicationBrandId, start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.application.model.CommerceApplicationModel>
-			getCommerceApplicationModelsByCompanyId(
-				long companyId, int start, int end) {
+	public static List<CommerceApplicationModel>
+		getCommerceApplicationModelsByCompanyId(
+			long companyId, int start, int end) {
 
 		return getService().getCommerceApplicationModelsByCompanyId(
 			companyId, start, end);
@@ -105,40 +100,18 @@ public class CommerceApplicationModelServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static
-		com.liferay.commerce.application.model.CommerceApplicationModel
-				updateCommerceApplicationModel(
-					long commerceApplicationModelId, String name, String year)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceApplicationModel updateCommerceApplicationModel(
+			long commerceApplicationModelId, String name, String year)
+		throws PortalException {
 
 		return getService().updateCommerceApplicationModel(
 			commerceApplicationModelId, name, year);
 	}
 
 	public static CommerceApplicationModelService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceApplicationModelService, CommerceApplicationModelService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommerceApplicationModelService.class);
-
-		ServiceTracker
-			<CommerceApplicationModelService, CommerceApplicationModelService>
-				serviceTracker =
-					new ServiceTracker
-						<CommerceApplicationModelService,
-						 CommerceApplicationModelService>(
-							 bundle.getBundleContext(),
-							 CommerceApplicationModelService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceApplicationModelService _service;
 
 }

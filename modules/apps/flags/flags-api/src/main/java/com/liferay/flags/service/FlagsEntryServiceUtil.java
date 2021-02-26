@@ -14,9 +14,7 @@
 
 package com.liferay.flags.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * Provides the remote service utility for FlagsEntry. This utility wraps
@@ -42,7 +40,7 @@ public class FlagsEntryServiceUtil {
 			long reportedUserId, String contentTitle, String contentURL,
 			String reason,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().addEntry(
 			className, classPK, reporterEmailAddress, reportedUserId,
@@ -59,22 +57,9 @@ public class FlagsEntryServiceUtil {
 	}
 
 	public static FlagsEntryService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<FlagsEntryService, FlagsEntryService>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(FlagsEntryService.class);
-
-		ServiceTracker<FlagsEntryService, FlagsEntryService> serviceTracker =
-			new ServiceTracker<FlagsEntryService, FlagsEntryService>(
-				bundle.getBundleContext(), FlagsEntryService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile FlagsEntryService _service;
 
 }

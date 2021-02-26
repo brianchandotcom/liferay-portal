@@ -14,9 +14,11 @@
 
 package com.liferay.commerce.notification.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.notification.model.CommerceNotificationTemplateCommerceAccountGroupRel;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for CommerceNotificationTemplateCommerceAccountGroupRel. This utility wraps
@@ -37,14 +39,12 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.notification.service.impl.CommerceNotificationTemplateCommerceAccountGroupRelServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.commerce.notification.model.
-		CommerceNotificationTemplateCommerceAccountGroupRel
-				addCommerceNotificationTemplateCommerceAccountGroupRel(
-					long commerceNotificationTemplateId,
-					long commerceAccountGroupId,
-					com.liferay.portal.kernel.service.ServiceContext
-						serviceContext)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceNotificationTemplateCommerceAccountGroupRel
+			addCommerceNotificationTemplateCommerceAccountGroupRel(
+				long commerceNotificationTemplateId,
+				long commerceAccountGroupId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().
 			addCommerceNotificationTemplateCommerceAccountGroupRel(
@@ -55,34 +55,30 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelServiceUtil {
 	public static void
 			deleteCommerceNotificationTemplateCommerceAccountGroupRel(
 				long commerceNotificationTemplateCommerceAccountGroupRelId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommerceNotificationTemplateCommerceAccountGroupRel(
 			commerceNotificationTemplateCommerceAccountGroupRelId);
 	}
 
-	public static com.liferay.commerce.notification.model.
-		CommerceNotificationTemplateCommerceAccountGroupRel
-				fetchCommerceNotificationTemplateCommerceAccountGroupRel(
-					long commerceNotificationTemplateId,
-					long commerceAccountGroupId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceNotificationTemplateCommerceAccountGroupRel
+			fetchCommerceNotificationTemplateCommerceAccountGroupRel(
+				long commerceNotificationTemplateId,
+				long commerceAccountGroupId)
+		throws PortalException {
 
 		return getService().
 			fetchCommerceNotificationTemplateCommerceAccountGroupRel(
 				commerceNotificationTemplateId, commerceAccountGroupId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.notification.model.
-			CommerceNotificationTemplateCommerceAccountGroupRel>
-					getCommerceNotificationTemplateCommerceAccountGroupRels(
-						long commerceNotificationTemplateId, int start, int end,
-						com.liferay.portal.kernel.util.OrderByComparator
-							<com.liferay.commerce.notification.model.
-								CommerceNotificationTemplateCommerceAccountGroupRel>
-									orderByComparator)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommerceNotificationTemplateCommerceAccountGroupRel>
+			getCommerceNotificationTemplateCommerceAccountGroupRels(
+				long commerceNotificationTemplateId, int start, int end,
+				OrderByComparator
+					<CommerceNotificationTemplateCommerceAccountGroupRel>
+						orderByComparator)
+		throws PortalException {
 
 		return getService().
 			getCommerceNotificationTemplateCommerceAccountGroupRels(
@@ -101,32 +97,10 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelServiceUtil {
 	public static CommerceNotificationTemplateCommerceAccountGroupRelService
 		getService() {
 
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceNotificationTemplateCommerceAccountGroupRelService,
-		 CommerceNotificationTemplateCommerceAccountGroupRelService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommerceNotificationTemplateCommerceAccountGroupRelService.class);
-
-		ServiceTracker
-			<CommerceNotificationTemplateCommerceAccountGroupRelService,
-			 CommerceNotificationTemplateCommerceAccountGroupRelService>
-				serviceTracker =
-					new ServiceTracker
-						<CommerceNotificationTemplateCommerceAccountGroupRelService,
-						 CommerceNotificationTemplateCommerceAccountGroupRelService>(
-							 bundle.getBundleContext(),
-							 CommerceNotificationTemplateCommerceAccountGroupRelService.class,
-							 null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile
+		CommerceNotificationTemplateCommerceAccountGroupRelService _service;
 
 }

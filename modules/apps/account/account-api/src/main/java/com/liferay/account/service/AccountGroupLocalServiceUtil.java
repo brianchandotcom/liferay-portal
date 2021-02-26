@@ -14,9 +14,16 @@
 
 package com.liferay.account.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.account.model.AccountGroup;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for AccountGroup. This utility wraps
@@ -48,15 +55,13 @@ public class AccountGroupLocalServiceUtil {
 	 * @param accountGroup the account group
 	 * @return the account group that was added
 	 */
-	public static com.liferay.account.model.AccountGroup addAccountGroup(
-		com.liferay.account.model.AccountGroup accountGroup) {
-
+	public static AccountGroup addAccountGroup(AccountGroup accountGroup) {
 		return getService().addAccountGroup(accountGroup);
 	}
 
-	public static com.liferay.account.model.AccountGroup addAccountGroup(
+	public static AccountGroup addAccountGroup(
 			long userId, String description, String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addAccountGroup(userId, description, name);
 	}
@@ -67,18 +72,16 @@ public class AccountGroupLocalServiceUtil {
 	 * @param accountGroupId the primary key for the new account group
 	 * @return the new account group
 	 */
-	public static com.liferay.account.model.AccountGroup createAccountGroup(
-		long accountGroupId) {
-
+	public static AccountGroup createAccountGroup(long accountGroupId) {
 		return getService().createAccountGroup(accountGroupId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -93,9 +96,7 @@ public class AccountGroupLocalServiceUtil {
 	 * @param accountGroup the account group
 	 * @return the account group that was removed
 	 */
-	public static com.liferay.account.model.AccountGroup deleteAccountGroup(
-		com.liferay.account.model.AccountGroup accountGroup) {
-
+	public static AccountGroup deleteAccountGroup(AccountGroup accountGroup) {
 		return getService().deleteAccountGroup(accountGroup);
 	}
 
@@ -110,9 +111,8 @@ public class AccountGroupLocalServiceUtil {
 	 * @return the account group that was removed
 	 * @throws PortalException if a account group with the primary key could not be found
 	 */
-	public static com.liferay.account.model.AccountGroup deleteAccountGroup(
-			long accountGroupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AccountGroup deleteAccountGroup(long accountGroupId)
+		throws PortalException {
 
 		return getService().deleteAccountGroup(accountGroupId);
 	}
@@ -120,23 +120,18 @@ public class AccountGroupLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -146,9 +141,7 @@ public class AccountGroupLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -164,9 +157,8 @@ public class AccountGroupLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -184,10 +176,9 @@ public class AccountGroupLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -199,9 +190,7 @@ public class AccountGroupLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -213,15 +202,13 @@ public class AccountGroupLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.account.model.AccountGroup fetchAccountGroup(
-		long accountGroupId) {
-
+	public static AccountGroup fetchAccountGroup(long accountGroupId) {
 		return getService().fetchAccountGroup(accountGroupId);
 	}
 
@@ -232,9 +219,8 @@ public class AccountGroupLocalServiceUtil {
 	 * @param externalReferenceCode the account group's external reference code
 	 * @return the matching account group, or <code>null</code> if a matching account group could not be found
 	 */
-	public static com.liferay.account.model.AccountGroup
-		fetchAccountGroupByReferenceCode(
-			long companyId, String externalReferenceCode) {
+	public static AccountGroup fetchAccountGroupByReferenceCode(
+		long companyId, String externalReferenceCode) {
 
 		return getService().fetchAccountGroupByReferenceCode(
 			companyId, externalReferenceCode);
@@ -247,9 +233,8 @@ public class AccountGroupLocalServiceUtil {
 	 * @return the account group
 	 * @throws PortalException if a account group with the primary key could not be found
 	 */
-	public static com.liferay.account.model.AccountGroup getAccountGroup(
-			long accountGroupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AccountGroup getAccountGroup(long accountGroupId)
+		throws PortalException {
 
 		return getService().getAccountGroup(accountGroupId);
 	}
@@ -265,17 +250,13 @@ public class AccountGroupLocalServiceUtil {
 	 * @param end the upper bound of the range of account groups (not inclusive)
 	 * @return the range of account groups
 	 */
-	public static java.util.List<com.liferay.account.model.AccountGroup>
-		getAccountGroups(int start, int end) {
-
+	public static List<AccountGroup> getAccountGroups(int start, int end) {
 		return getService().getAccountGroups(start, end);
 	}
 
-	public static java.util.List<com.liferay.account.model.AccountGroup>
-		getAccountGroups(
-			long companyId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.account.model.AccountGroup> orderByComparator) {
+	public static List<AccountGroup> getAccountGroups(
+		long companyId, int start, int end,
+		OrderByComparator<AccountGroup> orderByComparator) {
 
 		return getService().getAccountGroups(
 			companyId, start, end, orderByComparator);
@@ -296,9 +277,7 @@ public class AccountGroupLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
-	public static com.liferay.account.model.AccountGroup getDefaultAccountGroup(
-		long companyId) {
-
+	public static AccountGroup getDefaultAccountGroup(long companyId) {
 		return getService().getDefaultAccountGroup(companyId);
 	}
 
@@ -321,9 +300,8 @@ public class AccountGroupLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -333,10 +311,9 @@ public class AccountGroupLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
-		<com.liferay.account.model.AccountGroup> searchAccountGroups(
+		<AccountGroup> searchAccountGroups(
 			long companyId, String keywords, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.account.model.AccountGroup> orderByComparator) {
+			OrderByComparator<AccountGroup> orderByComparator) {
 
 		return getService().searchAccountGroups(
 			companyId, keywords, start, end, orderByComparator);
@@ -352,40 +329,22 @@ public class AccountGroupLocalServiceUtil {
 	 * @param accountGroup the account group
 	 * @return the account group that was updated
 	 */
-	public static com.liferay.account.model.AccountGroup updateAccountGroup(
-		com.liferay.account.model.AccountGroup accountGroup) {
-
+	public static AccountGroup updateAccountGroup(AccountGroup accountGroup) {
 		return getService().updateAccountGroup(accountGroup);
 	}
 
-	public static com.liferay.account.model.AccountGroup updateAccountGroup(
+	public static AccountGroup updateAccountGroup(
 			long accountGroupId, String description, String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateAccountGroup(
 			accountGroupId, description, name);
 	}
 
 	public static AccountGroupLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<AccountGroupLocalService, AccountGroupLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(AccountGroupLocalService.class);
-
-		ServiceTracker<AccountGroupLocalService, AccountGroupLocalService>
-			serviceTracker =
-				new ServiceTracker
-					<AccountGroupLocalService, AccountGroupLocalService>(
-						bundle.getBundleContext(),
-						AccountGroupLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile AccountGroupLocalService _service;
 
 }

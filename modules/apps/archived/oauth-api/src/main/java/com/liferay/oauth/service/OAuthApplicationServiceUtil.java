@@ -14,9 +14,10 @@
 
 package com.liferay.oauth.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.oauth.model.OAuthApplication;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.io.InputStream;
 
 /**
  * Provides the remote service utility for OAuthApplication. This utility wraps
@@ -37,11 +38,11 @@ public class OAuthApplicationServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.oauth.service.impl.OAuthApplicationServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.oauth.model.OAuthApplication addOAuthApplication(
+	public static OAuthApplication addOAuthApplication(
 			String name, String description, int accessLevel,
 			boolean shareableAccessToken, String callbackURI, String websiteURL,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addOAuthApplication(
 			name, description, accessLevel, shareableAccessToken, callbackURI,
@@ -49,14 +50,14 @@ public class OAuthApplicationServiceUtil {
 	}
 
 	public static void deleteLogo(long oAuthApplicationId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteLogo(oAuthApplicationId);
 	}
 
-	public static com.liferay.oauth.model.OAuthApplication
-			deleteOAuthApplication(long oAuthApplicationId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static OAuthApplication deleteOAuthApplication(
+			long oAuthApplicationId)
+		throws PortalException {
 
 		return getService().deleteOAuthApplication(oAuthApplicationId);
 	}
@@ -70,20 +71,18 @@ public class OAuthApplicationServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.oauth.model.OAuthApplication updateLogo(
-			long oAuthApplicationId, java.io.InputStream inputStream)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static OAuthApplication updateLogo(
+			long oAuthApplicationId, InputStream inputStream)
+		throws PortalException {
 
 		return getService().updateLogo(oAuthApplicationId, inputStream);
 	}
 
-	public static com.liferay.oauth.model.OAuthApplication
-			updateOAuthApplication(
-				long oAuthApplicationId, String name, String description,
-				boolean shareableAccessToken, String callbackURI,
-				String websiteURL,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static OAuthApplication updateOAuthApplication(
+			long oAuthApplicationId, String name, String description,
+			boolean shareableAccessToken, String callbackURI, String websiteURL,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().updateOAuthApplication(
 			oAuthApplicationId, name, description, shareableAccessToken,
@@ -91,25 +90,9 @@ public class OAuthApplicationServiceUtil {
 	}
 
 	public static OAuthApplicationService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<OAuthApplicationService, OAuthApplicationService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(OAuthApplicationService.class);
-
-		ServiceTracker<OAuthApplicationService, OAuthApplicationService>
-			serviceTracker =
-				new ServiceTracker
-					<OAuthApplicationService, OAuthApplicationService>(
-						bundle.getBundleContext(),
-						OAuthApplicationService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile OAuthApplicationService _service;
 
 }

@@ -14,9 +14,10 @@
 
 package com.liferay.commerce.account.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.account.model.CommerceAccountOrganizationRel;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for CommerceAccountOrganizationRel. This utility wraps
@@ -37,13 +38,11 @@ public class CommerceAccountOrganizationRelServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.account.service.impl.CommerceAccountOrganizationRelServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static
-		com.liferay.commerce.account.model.CommerceAccountOrganizationRel
-				addCommerceAccountOrganizationRel(
-					long commerceAccountId, long organizationId,
-					com.liferay.portal.kernel.service.ServiceContext
-						serviceContext)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceAccountOrganizationRel
+			addCommerceAccountOrganizationRel(
+				long commerceAccountId, long organizationId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCommerceAccountOrganizationRel(
 			commerceAccountId, organizationId, serviceContext);
@@ -52,7 +51,7 @@ public class CommerceAccountOrganizationRelServiceUtil {
 	public static void addCommerceAccountOrganizationRels(
 			long commerceAccountId, long[] organizationIds,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().addCommerceAccountOrganizationRels(
 			commerceAccountId, organizationIds, serviceContext);
@@ -60,7 +59,7 @@ public class CommerceAccountOrganizationRelServiceUtil {
 
 	public static void deleteCommerceAccountOrganizationRel(
 			long commerceAccountId, long organizationId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommerceAccountOrganizationRel(
 			commerceAccountId, organizationId);
@@ -68,60 +67,55 @@ public class CommerceAccountOrganizationRelServiceUtil {
 
 	public static void deleteCommerceAccountOrganizationRels(
 			long commerceAccountId, long[] organizationIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommerceAccountOrganizationRels(
 			commerceAccountId, organizationIds);
 	}
 
-	public static
-		com.liferay.commerce.account.model.CommerceAccountOrganizationRel
-				fetchCommerceAccountOrganizationRel(
-					com.liferay.commerce.account.service.persistence.
-						CommerceAccountOrganizationRelPK
-							commerceAccountOrganizationRelPK)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceAccountOrganizationRel
+			fetchCommerceAccountOrganizationRel(
+				com.liferay.commerce.account.service.persistence.
+					CommerceAccountOrganizationRelPK
+						commerceAccountOrganizationRelPK)
+		throws PortalException {
 
 		return getService().fetchCommerceAccountOrganizationRel(
 			commerceAccountOrganizationRelPK);
 	}
 
-	public static
-		com.liferay.commerce.account.model.CommerceAccountOrganizationRel
-				getCommerceAccountOrganizationRel(
-					com.liferay.commerce.account.service.persistence.
-						CommerceAccountOrganizationRelPK
-							commerceAccountOrganizationRelPK)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceAccountOrganizationRel
+			getCommerceAccountOrganizationRel(
+				com.liferay.commerce.account.service.persistence.
+					CommerceAccountOrganizationRelPK
+						commerceAccountOrganizationRelPK)
+		throws PortalException {
 
 		return getService().getCommerceAccountOrganizationRel(
 			commerceAccountOrganizationRelPK);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.account.model.CommerceAccountOrganizationRel>
-				getCommerceAccountOrganizationRels(long commerceAccountId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommerceAccountOrganizationRel>
+			getCommerceAccountOrganizationRels(long commerceAccountId)
+		throws PortalException {
 
 		return getService().getCommerceAccountOrganizationRels(
 			commerceAccountId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.account.model.CommerceAccountOrganizationRel>
-				getCommerceAccountOrganizationRels(
-					long commerceAccountId, int start, int end)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommerceAccountOrganizationRel>
+			getCommerceAccountOrganizationRels(
+				long commerceAccountId, int start, int end)
+		throws PortalException {
 
 		return getService().getCommerceAccountOrganizationRels(
 			commerceAccountId, start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.account.model.CommerceAccountOrganizationRel>
-				getCommerceAccountOrganizationRelsByOrganizationId(
-					long organizationId, int start, int end)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommerceAccountOrganizationRel>
+			getCommerceAccountOrganizationRelsByOrganizationId(
+				long organizationId, int start, int end)
+		throws PortalException {
 
 		return getService().getCommerceAccountOrganizationRelsByOrganizationId(
 			organizationId, start, end);
@@ -129,7 +123,7 @@ public class CommerceAccountOrganizationRelServiceUtil {
 
 	public static int getCommerceAccountOrganizationRelsByOrganizationIdCount(
 			long organizationId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().
 			getCommerceAccountOrganizationRelsByOrganizationIdCount(
@@ -138,7 +132,7 @@ public class CommerceAccountOrganizationRelServiceUtil {
 
 	public static int getCommerceAccountOrganizationRelsCount(
 			long commerceAccountId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCommerceAccountOrganizationRelsCount(
 			commerceAccountId);
@@ -154,29 +148,9 @@ public class CommerceAccountOrganizationRelServiceUtil {
 	}
 
 	public static CommerceAccountOrganizationRelService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceAccountOrganizationRelService,
-		 CommerceAccountOrganizationRelService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommerceAccountOrganizationRelService.class);
-
-		ServiceTracker
-			<CommerceAccountOrganizationRelService,
-			 CommerceAccountOrganizationRelService> serviceTracker =
-				new ServiceTracker
-					<CommerceAccountOrganizationRelService,
-					 CommerceAccountOrganizationRelService>(
-						 bundle.getBundleContext(),
-						 CommerceAccountOrganizationRelService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceAccountOrganizationRelService _service;
 
 }

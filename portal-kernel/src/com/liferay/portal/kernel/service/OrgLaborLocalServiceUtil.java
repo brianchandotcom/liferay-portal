@@ -14,7 +14,16 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.OrgLabor;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for OrgLabor. This utility wraps
@@ -35,12 +44,12 @@ public class OrgLaborLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.service.impl.OrgLaborLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.kernel.model.OrgLabor addOrgLabor(
+	public static OrgLabor addOrgLabor(
 			long organizationId, long typeId, int sunOpen, int sunClose,
 			int monOpen, int monClose, int tueOpen, int tueClose, int wedOpen,
 			int wedClose, int thuOpen, int thuClose, int friOpen, int friClose,
 			int satOpen, int satClose)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addOrgLabor(
 			organizationId, typeId, sunOpen, sunClose, monOpen, monClose,
@@ -58,9 +67,7 @@ public class OrgLaborLocalServiceUtil {
 	 * @param orgLabor the org labor
 	 * @return the org labor that was added
 	 */
-	public static com.liferay.portal.kernel.model.OrgLabor addOrgLabor(
-		com.liferay.portal.kernel.model.OrgLabor orgLabor) {
-
+	public static OrgLabor addOrgLabor(OrgLabor orgLabor) {
 		return getService().addOrgLabor(orgLabor);
 	}
 
@@ -70,18 +77,16 @@ public class OrgLaborLocalServiceUtil {
 	 * @param orgLaborId the primary key for the new org labor
 	 * @return the new org labor
 	 */
-	public static com.liferay.portal.kernel.model.OrgLabor createOrgLabor(
-		long orgLaborId) {
-
+	public static OrgLabor createOrgLabor(long orgLaborId) {
 		return getService().createOrgLabor(orgLaborId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -97,9 +102,8 @@ public class OrgLaborLocalServiceUtil {
 	 * @return the org labor that was removed
 	 * @throws PortalException if a org labor with the primary key could not be found
 	 */
-	public static com.liferay.portal.kernel.model.OrgLabor deleteOrgLabor(
-			long orgLaborId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static OrgLabor deleteOrgLabor(long orgLaborId)
+		throws PortalException {
 
 		return getService().deleteOrgLabor(orgLaborId);
 	}
@@ -114,32 +118,25 @@ public class OrgLaborLocalServiceUtil {
 	 * @param orgLabor the org labor
 	 * @return the org labor that was removed
 	 */
-	public static com.liferay.portal.kernel.model.OrgLabor deleteOrgLabor(
-		com.liferay.portal.kernel.model.OrgLabor orgLabor) {
-
+	public static OrgLabor deleteOrgLabor(OrgLabor orgLabor) {
 		return getService().deleteOrgLabor(orgLabor);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -149,9 +146,7 @@ public class OrgLaborLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -167,9 +162,8 @@ public class OrgLaborLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -187,10 +181,9 @@ public class OrgLaborLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -202,9 +195,7 @@ public class OrgLaborLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -216,15 +207,13 @@ public class OrgLaborLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.portal.kernel.model.OrgLabor fetchOrgLabor(
-		long orgLaborId) {
-
+	public static OrgLabor fetchOrgLabor(long orgLaborId) {
 		return getService().fetchOrgLabor(orgLaborId);
 	}
 
@@ -248,10 +237,7 @@ public class OrgLaborLocalServiceUtil {
 	 * @return the org labor
 	 * @throws PortalException if a org labor with the primary key could not be found
 	 */
-	public static com.liferay.portal.kernel.model.OrgLabor getOrgLabor(
-			long orgLaborId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static OrgLabor getOrgLabor(long orgLaborId) throws PortalException {
 		return getService().getOrgLabor(orgLaborId);
 	}
 
@@ -266,15 +252,11 @@ public class OrgLaborLocalServiceUtil {
 	 * @param end the upper bound of the range of org labors (not inclusive)
 	 * @return the range of org labors
 	 */
-	public static java.util.List<com.liferay.portal.kernel.model.OrgLabor>
-		getOrgLabors(int start, int end) {
-
+	public static List<OrgLabor> getOrgLabors(int start, int end) {
 		return getService().getOrgLabors(start, end);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.OrgLabor>
-		getOrgLabors(long organizationId) {
-
+	public static List<OrgLabor> getOrgLabors(long organizationId) {
 		return getService().getOrgLabors(organizationId);
 	}
 
@@ -299,19 +281,18 @@ public class OrgLaborLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static com.liferay.portal.kernel.model.OrgLabor updateOrgLabor(
+	public static OrgLabor updateOrgLabor(
 			long orgLaborId, long typeId, int sunOpen, int sunClose,
 			int monOpen, int monClose, int tueOpen, int tueClose, int wedOpen,
 			int wedClose, int thuOpen, int thuClose, int friOpen, int friClose,
 			int satOpen, int satClose)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateOrgLabor(
 			orgLaborId, typeId, sunOpen, sunClose, monOpen, monClose, tueOpen,
@@ -329,21 +310,14 @@ public class OrgLaborLocalServiceUtil {
 	 * @param orgLabor the org labor
 	 * @return the org labor that was updated
 	 */
-	public static com.liferay.portal.kernel.model.OrgLabor updateOrgLabor(
-		com.liferay.portal.kernel.model.OrgLabor orgLabor) {
-
+	public static OrgLabor updateOrgLabor(OrgLabor orgLabor) {
 		return getService().updateOrgLabor(orgLabor);
 	}
 
 	public static OrgLaborLocalService getService() {
-		if (_service == null) {
-			_service = (OrgLaborLocalService)PortalBeanLocatorUtil.locate(
-				OrgLaborLocalService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static OrgLaborLocalService _service;
+	private static volatile OrgLaborLocalService _service;
 
 }

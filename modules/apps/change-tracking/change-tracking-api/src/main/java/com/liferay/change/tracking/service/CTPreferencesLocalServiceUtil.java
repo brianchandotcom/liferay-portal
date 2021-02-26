@@ -14,9 +14,16 @@
 
 package com.liferay.change.tracking.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.change.tracking.model.CTPreferences;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for CTPreferences. This utility wraps
@@ -37,9 +44,7 @@ public class CTPreferencesLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.change.tracking.service.impl.CTPreferencesLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.change.tracking.model.CTPreferences
-		addCTPreference(long companyId, long userId) {
-
+	public static CTPreferences addCTPreference(long companyId, long userId) {
 		return getService().addCTPreference(companyId, userId);
 	}
 
@@ -53,10 +58,7 @@ public class CTPreferencesLocalServiceUtil {
 	 * @param ctPreferences the ct preferences
 	 * @return the ct preferences that was added
 	 */
-	public static com.liferay.change.tracking.model.CTPreferences
-		addCTPreferences(
-			com.liferay.change.tracking.model.CTPreferences ctPreferences) {
-
+	public static CTPreferences addCTPreferences(CTPreferences ctPreferences) {
 		return getService().addCTPreferences(ctPreferences);
 	}
 
@@ -66,18 +68,16 @@ public class CTPreferencesLocalServiceUtil {
 	 * @param ctPreferencesId the primary key for the new ct preferences
 	 * @return the new ct preferences
 	 */
-	public static com.liferay.change.tracking.model.CTPreferences
-		createCTPreferences(long ctPreferencesId) {
-
+	public static CTPreferences createCTPreferences(long ctPreferencesId) {
 		return getService().createCTPreferences(ctPreferencesId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -92,9 +92,8 @@ public class CTPreferencesLocalServiceUtil {
 	 * @param ctPreferences the ct preferences
 	 * @return the ct preferences that was removed
 	 */
-	public static com.liferay.change.tracking.model.CTPreferences
-		deleteCTPreferences(
-			com.liferay.change.tracking.model.CTPreferences ctPreferences) {
+	public static CTPreferences deleteCTPreferences(
+		CTPreferences ctPreferences) {
 
 		return getService().deleteCTPreferences(ctPreferences);
 	}
@@ -110,9 +109,8 @@ public class CTPreferencesLocalServiceUtil {
 	 * @return the ct preferences that was removed
 	 * @throws PortalException if a ct preferences with the primary key could not be found
 	 */
-	public static com.liferay.change.tracking.model.CTPreferences
-			deleteCTPreferences(long ctPreferencesId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CTPreferences deleteCTPreferences(long ctPreferencesId)
+		throws PortalException {
 
 		return getService().deleteCTPreferences(ctPreferencesId);
 	}
@@ -120,23 +118,18 @@ public class CTPreferencesLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -146,9 +139,7 @@ public class CTPreferencesLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -164,9 +155,8 @@ public class CTPreferencesLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -184,10 +174,9 @@ public class CTPreferencesLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -199,9 +188,7 @@ public class CTPreferencesLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -213,20 +200,18 @@ public class CTPreferencesLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.change.tracking.model.CTPreferences
-		fetchCTPreferences(long ctPreferencesId) {
-
+	public static CTPreferences fetchCTPreferences(long ctPreferencesId) {
 		return getService().fetchCTPreferences(ctPreferencesId);
 	}
 
-	public static com.liferay.change.tracking.model.CTPreferences
-		fetchCTPreferences(long companyId, long userId) {
+	public static CTPreferences fetchCTPreferences(
+		long companyId, long userId) {
 
 		return getService().fetchCTPreferences(companyId, userId);
 	}
@@ -244,16 +229,13 @@ public class CTPreferencesLocalServiceUtil {
 	 * @return the ct preferences
 	 * @throws PortalException if a ct preferences with the primary key could not be found
 	 */
-	public static com.liferay.change.tracking.model.CTPreferences
-			getCTPreferences(long ctPreferencesId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CTPreferences getCTPreferences(long ctPreferencesId)
+		throws PortalException {
 
 		return getService().getCTPreferences(ctPreferencesId);
 	}
 
-	public static com.liferay.change.tracking.model.CTPreferences
-		getCTPreferences(long companyId, long userId) {
-
+	public static CTPreferences getCTPreferences(long companyId, long userId) {
 		return getService().getCTPreferences(companyId, userId);
 	}
 
@@ -268,10 +250,7 @@ public class CTPreferencesLocalServiceUtil {
 	 * @param end the upper bound of the range of ct preferenceses (not inclusive)
 	 * @return the range of ct preferenceses
 	 */
-	public static java.util.List
-		<com.liferay.change.tracking.model.CTPreferences> getCTPreferenceses(
-			int start, int end) {
-
+	public static List<CTPreferences> getCTPreferenceses(int start, int end) {
 		return getService().getCTPreferenceses(start, end);
 	}
 
@@ -303,9 +282,8 @@ public class CTPreferencesLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -324,34 +302,16 @@ public class CTPreferencesLocalServiceUtil {
 	 * @param ctPreferences the ct preferences
 	 * @return the ct preferences that was updated
 	 */
-	public static com.liferay.change.tracking.model.CTPreferences
-		updateCTPreferences(
-			com.liferay.change.tracking.model.CTPreferences ctPreferences) {
+	public static CTPreferences updateCTPreferences(
+		CTPreferences ctPreferences) {
 
 		return getService().updateCTPreferences(ctPreferences);
 	}
 
 	public static CTPreferencesLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CTPreferencesLocalService, CTPreferencesLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CTPreferencesLocalService.class);
-
-		ServiceTracker<CTPreferencesLocalService, CTPreferencesLocalService>
-			serviceTracker =
-				new ServiceTracker
-					<CTPreferencesLocalService, CTPreferencesLocalService>(
-						bundle.getBundleContext(),
-						CTPreferencesLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CTPreferencesLocalService _service;
 
 }

@@ -16,6 +16,7 @@ package com.liferay.fragment.service.base;
 
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.service.FragmentCollectionService;
+import com.liferay.fragment.service.FragmentCollectionServiceUtil;
 import com.liferay.fragment.service.persistence.FragmentCollectionPersistence;
 import com.liferay.fragment.service.persistence.FragmentCompositionPersistence;
 import com.liferay.fragment.service.persistence.FragmentEntryFinder;
@@ -30,8 +31,11 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 
+import java.lang.reflect.Field;
+
 import javax.sql.DataSource;
 
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -52,8 +56,13 @@ public abstract class FragmentCollectionServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>FragmentCollectionService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.fragment.service.FragmentCollectionServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>FragmentCollectionService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>FragmentCollectionServiceUtil</code>.
 	 */
+	@Deactivate
+	protected void deactivate() {
+		_setServiceUtilService(null);
+	}
+
 	@Override
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
@@ -64,6 +73,8 @@ public abstract class FragmentCollectionServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		fragmentCollectionService = (FragmentCollectionService)aopProxy;
+
+		_setServiceUtilService(fragmentCollectionService);
 	}
 
 	/**
@@ -106,6 +117,22 @@ public abstract class FragmentCollectionServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setServiceUtilService(
+		FragmentCollectionService fragmentCollectionService) {
+
+		try {
+			Field field = FragmentCollectionServiceUtil.class.getDeclaredField(
+				"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, fragmentCollectionService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

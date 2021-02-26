@@ -16,6 +16,7 @@ package com.liferay.commerce.service.base;
 
 import com.liferay.commerce.model.CPDAvailabilityEstimate;
 import com.liferay.commerce.service.CPDAvailabilityEstimateService;
+import com.liferay.commerce.service.CPDAvailabilityEstimateServiceUtil;
 import com.liferay.commerce.service.persistence.CPDAvailabilityEstimatePersistence;
 import com.liferay.commerce.service.persistence.CPDefinitionInventoryPersistence;
 import com.liferay.commerce.service.persistence.CommerceAddressPersistence;
@@ -47,6 +48,8 @@ import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
+import java.lang.reflect.Field;
+
 import javax.sql.DataSource;
 
 /**
@@ -67,7 +70,7 @@ public abstract class CPDAvailabilityEstimateServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CPDAvailabilityEstimateService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.service.CPDAvailabilityEstimateServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CPDAvailabilityEstimateService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CPDAvailabilityEstimateServiceUtil</code>.
 	 */
 
 	/**
@@ -1212,9 +1215,11 @@ public abstract class CPDAvailabilityEstimateServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
+		_setServiceUtilService(cpdAvailabilityEstimateService);
 	}
 
 	public void destroy() {
+		_setServiceUtilService(null);
 	}
 
 	/**
@@ -1257,6 +1262,23 @@ public abstract class CPDAvailabilityEstimateServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setServiceUtilService(
+		CPDAvailabilityEstimateService cpdAvailabilityEstimateService) {
+
+		try {
+			Field field =
+				CPDAvailabilityEstimateServiceUtil.class.getDeclaredField(
+					"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, cpdAvailabilityEstimateService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

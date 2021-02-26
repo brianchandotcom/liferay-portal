@@ -14,9 +14,10 @@
 
 package com.liferay.asset.category.property.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.asset.category.property.model.AssetCategoryProperty;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for AssetCategoryProperty. This utility wraps
@@ -37,30 +38,27 @@ public class AssetCategoryPropertyServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.asset.category.property.service.impl.AssetCategoryPropertyServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static
-		com.liferay.asset.category.property.model.AssetCategoryProperty
-				addCategoryProperty(long entryId, String key, String value)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static AssetCategoryProperty addCategoryProperty(
+			long entryId, String key, String value)
+		throws PortalException {
 
 		return getService().addCategoryProperty(entryId, key, value);
 	}
 
 	public static void deleteCategoryProperty(long categoryPropertyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCategoryProperty(categoryPropertyId);
 	}
 
-	public static java.util.List
-		<com.liferay.asset.category.property.model.AssetCategoryProperty>
-			getCategoryProperties(long entryId) {
+	public static List<AssetCategoryProperty> getCategoryProperties(
+		long entryId) {
 
 		return getService().getCategoryProperties(entryId);
 	}
 
-	public static java.util.List
-		<com.liferay.asset.category.property.model.AssetCategoryProperty>
-			getCategoryPropertyValues(long companyId, String key) {
+	public static List<AssetCategoryProperty> getCategoryPropertyValues(
+		long companyId, String key) {
 
 		return getService().getCategoryPropertyValues(companyId, key);
 	}
@@ -74,51 +72,26 @@ public class AssetCategoryPropertyServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static
-		com.liferay.asset.category.property.model.AssetCategoryProperty
-				updateCategoryProperty(
-					long userId, long categoryPropertyId, String key,
-					String value)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static AssetCategoryProperty updateCategoryProperty(
+			long userId, long categoryPropertyId, String key, String value)
+		throws PortalException {
 
 		return getService().updateCategoryProperty(
 			userId, categoryPropertyId, key, value);
 	}
 
-	public static
-		com.liferay.asset.category.property.model.AssetCategoryProperty
-				updateCategoryProperty(
-					long categoryPropertyId, String key, String value)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static AssetCategoryProperty updateCategoryProperty(
+			long categoryPropertyId, String key, String value)
+		throws PortalException {
 
 		return getService().updateCategoryProperty(
 			categoryPropertyId, key, value);
 	}
 
 	public static AssetCategoryPropertyService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<AssetCategoryPropertyService, AssetCategoryPropertyService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			AssetCategoryPropertyService.class);
-
-		ServiceTracker
-			<AssetCategoryPropertyService, AssetCategoryPropertyService>
-				serviceTracker =
-					new ServiceTracker
-						<AssetCategoryPropertyService,
-						 AssetCategoryPropertyService>(
-							 bundle.getBundleContext(),
-							 AssetCategoryPropertyService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile AssetCategoryPropertyService _service;
 
 }

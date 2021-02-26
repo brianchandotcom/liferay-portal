@@ -14,9 +14,17 @@
 
 package com.liferay.dynamic.data.mapping.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.dynamic.data.mapping.model.DDMField;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for DDMField. This utility wraps
@@ -48,9 +56,7 @@ public class DDMFieldLocalServiceUtil {
 	 * @param ddmField the ddm field
 	 * @return the ddm field that was added
 	 */
-	public static com.liferay.dynamic.data.mapping.model.DDMField addDDMField(
-		com.liferay.dynamic.data.mapping.model.DDMField ddmField) {
-
+	public static DDMField addDDMField(DDMField ddmField) {
 		return getService().addDDMField(ddmField);
 	}
 
@@ -60,18 +66,16 @@ public class DDMFieldLocalServiceUtil {
 	 * @param fieldId the primary key for the new ddm field
 	 * @return the new ddm field
 	 */
-	public static com.liferay.dynamic.data.mapping.model.DDMField
-		createDDMField(long fieldId) {
-
+	public static DDMField createDDMField(long fieldId) {
 		return getService().createDDMField(fieldId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -86,10 +90,7 @@ public class DDMFieldLocalServiceUtil {
 	 * @param ddmField the ddm field
 	 * @return the ddm field that was removed
 	 */
-	public static com.liferay.dynamic.data.mapping.model.DDMField
-		deleteDDMField(
-			com.liferay.dynamic.data.mapping.model.DDMField ddmField) {
-
+	public static DDMField deleteDDMField(DDMField ddmField) {
 		return getService().deleteDDMField(ddmField);
 	}
 
@@ -104,10 +105,7 @@ public class DDMFieldLocalServiceUtil {
 	 * @return the ddm field that was removed
 	 * @throws PortalException if a ddm field with the primary key could not be found
 	 */
-	public static com.liferay.dynamic.data.mapping.model.DDMField
-			deleteDDMField(long fieldId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static DDMField deleteDDMField(long fieldId) throws PortalException {
 		return getService().deleteDDMField(fieldId);
 	}
 
@@ -122,23 +120,18 @@ public class DDMFieldLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -148,9 +141,7 @@ public class DDMFieldLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -166,9 +157,8 @@ public class DDMFieldLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -186,10 +176,9 @@ public class DDMFieldLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -201,9 +190,7 @@ public class DDMFieldLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -215,15 +202,13 @@ public class DDMFieldLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.dynamic.data.mapping.model.DDMField fetchDDMField(
-		long fieldId) {
-
+	public static DDMField fetchDDMField(long fieldId) {
 		return getService().fetchDDMField(fieldId);
 	}
 
@@ -240,10 +225,7 @@ public class DDMFieldLocalServiceUtil {
 	 * @return the ddm field
 	 * @throws PortalException if a ddm field with the primary key could not be found
 	 */
-	public static com.liferay.dynamic.data.mapping.model.DDMField getDDMField(
-			long fieldId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static DDMField getDDMField(long fieldId) throws PortalException {
 		return getService().getDDMField(fieldId);
 	}
 
@@ -258,10 +240,7 @@ public class DDMFieldLocalServiceUtil {
 	 * @param end the upper bound of the range of ddm fields (not inclusive)
 	 * @return the range of ddm fields
 	 */
-	public static java.util.List
-		<com.liferay.dynamic.data.mapping.model.DDMField> getDDMFields(
-			int start, int end) {
-
+	public static List<DDMField> getDDMFields(int start, int end) {
 		return getService().getDDMFields(start, end);
 	}
 
@@ -287,8 +266,7 @@ public class DDMFieldLocalServiceUtil {
 	}
 
 	public static int getDDMFormValuesCount(
-		long companyId, String fieldType,
-		java.util.Map<String, Object> attributes) {
+		long companyId, String fieldType, Map<String, Object> attributes) {
 
 		return getService().getDDMFormValuesCount(
 			companyId, fieldType, attributes);
@@ -313,9 +291,8 @@ public class DDMFieldLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -330,10 +307,7 @@ public class DDMFieldLocalServiceUtil {
 	 * @param ddmField the ddm field
 	 * @return the ddm field that was updated
 	 */
-	public static com.liferay.dynamic.data.mapping.model.DDMField
-		updateDDMField(
-			com.liferay.dynamic.data.mapping.model.DDMField ddmField) {
-
+	public static DDMField updateDDMField(DDMField ddmField) {
 		return getService().updateDDMField(ddmField);
 	}
 
@@ -341,30 +315,15 @@ public class DDMFieldLocalServiceUtil {
 			long structureId, long storageId,
 			com.liferay.dynamic.data.mapping.storage.DDMFormValues
 				ddmFormValues)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().updateDDMFormValues(structureId, storageId, ddmFormValues);
 	}
 
 	public static DDMFieldLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<DDMFieldLocalService, DDMFieldLocalService>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(DDMFieldLocalService.class);
-
-		ServiceTracker<DDMFieldLocalService, DDMFieldLocalService>
-			serviceTracker =
-				new ServiceTracker<DDMFieldLocalService, DDMFieldLocalService>(
-					bundle.getBundleContext(), DDMFieldLocalService.class,
-					null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile DDMFieldLocalService _service;
 
 }

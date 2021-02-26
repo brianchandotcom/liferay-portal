@@ -16,6 +16,7 @@ package com.liferay.app.builder.service.base;
 
 import com.liferay.app.builder.model.AppBuilderAppVersion;
 import com.liferay.app.builder.service.AppBuilderAppVersionLocalService;
+import com.liferay.app.builder.service.AppBuilderAppVersionLocalServiceUtil;
 import com.liferay.app.builder.service.persistence.AppBuilderAppVersionPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -50,10 +51,13 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -75,7 +79,7 @@ public abstract class AppBuilderAppVersionLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>AppBuilderAppVersionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.app.builder.service.AppBuilderAppVersionLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>AppBuilderAppVersionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>AppBuilderAppVersionLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -532,6 +536,11 @@ public abstract class AppBuilderAppVersionLocalServiceBaseImpl
 		return appBuilderAppVersionPersistence.update(appBuilderAppVersion);
 	}
 
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
+	}
+
 	@Override
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
@@ -544,6 +553,8 @@ public abstract class AppBuilderAppVersionLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		appBuilderAppVersionLocalService =
 			(AppBuilderAppVersionLocalService)aopProxy;
+
+		_setLocalServiceUtilService(appBuilderAppVersionLocalService);
 	}
 
 	/**
@@ -586,6 +597,23 @@ public abstract class AppBuilderAppVersionLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		AppBuilderAppVersionLocalService appBuilderAppVersionLocalService) {
+
+		try {
+			Field field =
+				AppBuilderAppVersionLocalServiceUtil.class.getDeclaredField(
+					"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, appBuilderAppVersionLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

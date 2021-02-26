@@ -14,9 +14,16 @@
 
 package com.liferay.multi.factor.authentication.fido2.credential.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.multi.factor.authentication.fido2.credential.model.MFAFIDO2CredentialEntry;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for MFAFIDO2CredentialEntry. This utility wraps
@@ -37,12 +44,10 @@ public class MFAFIDO2CredentialEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.multi.factor.authentication.fido2.credential.service.impl.MFAFIDO2CredentialEntryLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static
-		com.liferay.multi.factor.authentication.fido2.credential.model.
-			MFAFIDO2CredentialEntry addMFAFIDO2CredentialEntry(
-					long userId, String credentialKey, int credentialType,
-					String publicKeyCOSE)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static MFAFIDO2CredentialEntry addMFAFIDO2CredentialEntry(
+			long userId, String credentialKey, int credentialType,
+			String publicKeyCOSE)
+		throws PortalException {
 
 		return getService().addMFAFIDO2CredentialEntry(
 			userId, credentialKey, credentialType, publicKeyCOSE);
@@ -58,11 +63,8 @@ public class MFAFIDO2CredentialEntryLocalServiceUtil {
 	 * @param mfaFIDO2CredentialEntry the mfafido2 credential entry
 	 * @return the mfafido2 credential entry that was added
 	 */
-	public static
-		com.liferay.multi.factor.authentication.fido2.credential.model.
-			MFAFIDO2CredentialEntry addMFAFIDO2CredentialEntry(
-				com.liferay.multi.factor.authentication.fido2.credential.model.
-					MFAFIDO2CredentialEntry mfaFIDO2CredentialEntry) {
+	public static MFAFIDO2CredentialEntry addMFAFIDO2CredentialEntry(
+		MFAFIDO2CredentialEntry mfaFIDO2CredentialEntry) {
 
 		return getService().addMFAFIDO2CredentialEntry(mfaFIDO2CredentialEntry);
 	}
@@ -73,10 +75,8 @@ public class MFAFIDO2CredentialEntryLocalServiceUtil {
 	 * @param mfaFIDO2CredentialEntryId the primary key for the new mfafido2 credential entry
 	 * @return the new mfafido2 credential entry
 	 */
-	public static
-		com.liferay.multi.factor.authentication.fido2.credential.model.
-			MFAFIDO2CredentialEntry createMFAFIDO2CredentialEntry(
-				long mfaFIDO2CredentialEntryId) {
+	public static MFAFIDO2CredentialEntry createMFAFIDO2CredentialEntry(
+		long mfaFIDO2CredentialEntryId) {
 
 		return getService().createMFAFIDO2CredentialEntry(
 			mfaFIDO2CredentialEntryId);
@@ -85,9 +85,9 @@ public class MFAFIDO2CredentialEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -103,11 +103,9 @@ public class MFAFIDO2CredentialEntryLocalServiceUtil {
 	 * @return the mfafido2 credential entry that was removed
 	 * @throws PortalException if a mfafido2 credential entry with the primary key could not be found
 	 */
-	public static
-		com.liferay.multi.factor.authentication.fido2.credential.model.
-			MFAFIDO2CredentialEntry deleteMFAFIDO2CredentialEntry(
-					long mfaFIDO2CredentialEntryId)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static MFAFIDO2CredentialEntry deleteMFAFIDO2CredentialEntry(
+			long mfaFIDO2CredentialEntryId)
+		throws PortalException {
 
 		return getService().deleteMFAFIDO2CredentialEntry(
 			mfaFIDO2CredentialEntryId);
@@ -123,11 +121,8 @@ public class MFAFIDO2CredentialEntryLocalServiceUtil {
 	 * @param mfaFIDO2CredentialEntry the mfafido2 credential entry
 	 * @return the mfafido2 credential entry that was removed
 	 */
-	public static
-		com.liferay.multi.factor.authentication.fido2.credential.model.
-			MFAFIDO2CredentialEntry deleteMFAFIDO2CredentialEntry(
-				com.liferay.multi.factor.authentication.fido2.credential.model.
-					MFAFIDO2CredentialEntry mfaFIDO2CredentialEntry) {
+	public static MFAFIDO2CredentialEntry deleteMFAFIDO2CredentialEntry(
+		MFAFIDO2CredentialEntry mfaFIDO2CredentialEntry) {
 
 		return getService().deleteMFAFIDO2CredentialEntry(
 			mfaFIDO2CredentialEntry);
@@ -136,23 +131,18 @@ public class MFAFIDO2CredentialEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -162,9 +152,7 @@ public class MFAFIDO2CredentialEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -180,9 +168,8 @@ public class MFAFIDO2CredentialEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -200,10 +187,9 @@ public class MFAFIDO2CredentialEntryLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -215,9 +201,7 @@ public class MFAFIDO2CredentialEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -229,26 +213,22 @@ public class MFAFIDO2CredentialEntryLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static
-		com.liferay.multi.factor.authentication.fido2.credential.model.
-			MFAFIDO2CredentialEntry fetchMFAFIDO2CredentialEntry(
-				long mfaFIDO2CredentialEntryId) {
+	public static MFAFIDO2CredentialEntry fetchMFAFIDO2CredentialEntry(
+		long mfaFIDO2CredentialEntryId) {
 
 		return getService().fetchMFAFIDO2CredentialEntry(
 			mfaFIDO2CredentialEntryId);
 	}
 
-	public static
-		com.liferay.multi.factor.authentication.fido2.credential.model.
-			MFAFIDO2CredentialEntry
-				fetchMFAFIDO2CredentialEntryByUserIdAndCredentialKey(
-					long userId, String credentialKey) {
+	public static MFAFIDO2CredentialEntry
+		fetchMFAFIDO2CredentialEntryByUserIdAndCredentialKey(
+			long userId, String credentialKey) {
 
 		return getService().
 			fetchMFAFIDO2CredentialEntryByUserIdAndCredentialKey(
@@ -279,28 +259,21 @@ public class MFAFIDO2CredentialEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of mfafido2 credential entries (not inclusive)
 	 * @return the range of mfafido2 credential entries
 	 */
-	public static java.util.List
-		<com.liferay.multi.factor.authentication.fido2.credential.model.
-			MFAFIDO2CredentialEntry> getMFAFIDO2CredentialEntries(
-				int start, int end) {
+	public static List<MFAFIDO2CredentialEntry> getMFAFIDO2CredentialEntries(
+		int start, int end) {
 
 		return getService().getMFAFIDO2CredentialEntries(start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.multi.factor.authentication.fido2.credential.model.
-			MFAFIDO2CredentialEntry>
-				getMFAFIDO2CredentialEntriesByCredentialKey(
-					String credentialKey) {
+	public static List<MFAFIDO2CredentialEntry>
+		getMFAFIDO2CredentialEntriesByCredentialKey(String credentialKey) {
 
 		return getService().getMFAFIDO2CredentialEntriesByCredentialKey(
 			credentialKey);
 	}
 
-	public static java.util.List
-		<com.liferay.multi.factor.authentication.fido2.credential.model.
-			MFAFIDO2CredentialEntry> getMFAFIDO2CredentialEntriesByUserId(
-				long userId) {
+	public static List<MFAFIDO2CredentialEntry>
+		getMFAFIDO2CredentialEntriesByUserId(long userId) {
 
 		return getService().getMFAFIDO2CredentialEntriesByUserId(userId);
 	}
@@ -321,11 +294,9 @@ public class MFAFIDO2CredentialEntryLocalServiceUtil {
 	 * @return the mfafido2 credential entry
 	 * @throws PortalException if a mfafido2 credential entry with the primary key could not be found
 	 */
-	public static
-		com.liferay.multi.factor.authentication.fido2.credential.model.
-			MFAFIDO2CredentialEntry getMFAFIDO2CredentialEntry(
-					long mfaFIDO2CredentialEntryId)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static MFAFIDO2CredentialEntry getMFAFIDO2CredentialEntry(
+			long mfaFIDO2CredentialEntryId)
+		throws PortalException {
 
 		return getService().getMFAFIDO2CredentialEntry(
 			mfaFIDO2CredentialEntryId);
@@ -343,18 +314,15 @@ public class MFAFIDO2CredentialEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static
-		com.liferay.multi.factor.authentication.fido2.credential.model.
-			MFAFIDO2CredentialEntry updateAttempts(
-					long userId, String credentialKey, long signatureCount)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static MFAFIDO2CredentialEntry updateAttempts(
+			long userId, String credentialKey, long signatureCount)
+		throws PortalException {
 
 		return getService().updateAttempts(
 			userId, credentialKey, signatureCount);
@@ -370,40 +338,17 @@ public class MFAFIDO2CredentialEntryLocalServiceUtil {
 	 * @param mfaFIDO2CredentialEntry the mfafido2 credential entry
 	 * @return the mfafido2 credential entry that was updated
 	 */
-	public static
-		com.liferay.multi.factor.authentication.fido2.credential.model.
-			MFAFIDO2CredentialEntry updateMFAFIDO2CredentialEntry(
-				com.liferay.multi.factor.authentication.fido2.credential.model.
-					MFAFIDO2CredentialEntry mfaFIDO2CredentialEntry) {
+	public static MFAFIDO2CredentialEntry updateMFAFIDO2CredentialEntry(
+		MFAFIDO2CredentialEntry mfaFIDO2CredentialEntry) {
 
 		return getService().updateMFAFIDO2CredentialEntry(
 			mfaFIDO2CredentialEntry);
 	}
 
 	public static MFAFIDO2CredentialEntryLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<MFAFIDO2CredentialEntryLocalService,
-		 MFAFIDO2CredentialEntryLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			MFAFIDO2CredentialEntryLocalService.class);
-
-		ServiceTracker
-			<MFAFIDO2CredentialEntryLocalService,
-			 MFAFIDO2CredentialEntryLocalService> serviceTracker =
-				new ServiceTracker
-					<MFAFIDO2CredentialEntryLocalService,
-					 MFAFIDO2CredentialEntryLocalService>(
-						 bundle.getBundleContext(),
-						 MFAFIDO2CredentialEntryLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile MFAFIDO2CredentialEntryLocalService _service;
 
 }

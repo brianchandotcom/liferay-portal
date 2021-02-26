@@ -14,9 +14,16 @@
 
 package com.liferay.akismet.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.akismet.model.AkismetEntry;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for AkismetEntry. This utility wraps
@@ -48,9 +55,7 @@ public class AkismetEntryLocalServiceUtil {
 	 * @param akismetEntry the akismet entry
 	 * @return the akismet entry that was added
 	 */
-	public static com.liferay.akismet.model.AkismetEntry addAkismetEntry(
-		com.liferay.akismet.model.AkismetEntry akismetEntry) {
-
+	public static AkismetEntry addAkismetEntry(AkismetEntry akismetEntry) {
 		return getService().addAkismetEntry(akismetEntry);
 	}
 
@@ -60,18 +65,16 @@ public class AkismetEntryLocalServiceUtil {
 	 * @param akismetEntryId the primary key for the new akismet entry
 	 * @return the new akismet entry
 	 */
-	public static com.liferay.akismet.model.AkismetEntry createAkismetEntry(
-		long akismetEntryId) {
-
+	public static AkismetEntry createAkismetEntry(long akismetEntryId) {
 		return getService().createAkismetEntry(akismetEntryId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -86,9 +89,7 @@ public class AkismetEntryLocalServiceUtil {
 	 * @param akismetEntry the akismet entry
 	 * @return the akismet entry that was removed
 	 */
-	public static com.liferay.akismet.model.AkismetEntry deleteAkismetEntry(
-		com.liferay.akismet.model.AkismetEntry akismetEntry) {
-
+	public static AkismetEntry deleteAkismetEntry(AkismetEntry akismetEntry) {
 		return getService().deleteAkismetEntry(akismetEntry);
 	}
 
@@ -107,15 +108,14 @@ public class AkismetEntryLocalServiceUtil {
 	 * @return the akismet entry that was removed
 	 * @throws PortalException if a akismet entry with the primary key could not be found
 	 */
-	public static com.liferay.akismet.model.AkismetEntry deleteAkismetEntry(
-			long akismetEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AkismetEntry deleteAkismetEntry(long akismetEntryId)
+		throws PortalException {
 
 		return getService().deleteAkismetEntry(akismetEntryId);
 	}
 
 	public static void deleteAkismetEntry(String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteAkismetEntry(className, classPK);
 	}
@@ -123,23 +123,18 @@ public class AkismetEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -149,9 +144,7 @@ public class AkismetEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -167,9 +160,8 @@ public class AkismetEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -187,10 +179,9 @@ public class AkismetEntryLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -202,9 +193,7 @@ public class AkismetEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -216,19 +205,17 @@ public class AkismetEntryLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.akismet.model.AkismetEntry fetchAkismetEntry(
-		long akismetEntryId) {
-
+	public static AkismetEntry fetchAkismetEntry(long akismetEntryId) {
 		return getService().fetchAkismetEntry(akismetEntryId);
 	}
 
-	public static com.liferay.akismet.model.AkismetEntry fetchAkismetEntry(
+	public static AkismetEntry fetchAkismetEntry(
 		String className, long classPK) {
 
 		return getService().fetchAkismetEntry(className, classPK);
@@ -251,9 +238,7 @@ public class AkismetEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of akismet entries (not inclusive)
 	 * @return the range of akismet entries
 	 */
-	public static java.util.List<com.liferay.akismet.model.AkismetEntry>
-		getAkismetEntries(int start, int end) {
-
+	public static List<AkismetEntry> getAkismetEntries(int start, int end) {
 		return getService().getAkismetEntries(start, end);
 	}
 
@@ -273,9 +258,8 @@ public class AkismetEntryLocalServiceUtil {
 	 * @return the akismet entry
 	 * @throws PortalException if a akismet entry with the primary key could not be found
 	 */
-	public static com.liferay.akismet.model.AkismetEntry getAkismetEntry(
-			long akismetEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AkismetEntry getAkismetEntry(long akismetEntryId)
+		throws PortalException {
 
 		return getService().getAkismetEntry(akismetEntryId);
 	}
@@ -299,9 +283,8 @@ public class AkismetEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -316,13 +299,11 @@ public class AkismetEntryLocalServiceUtil {
 	 * @param akismetEntry the akismet entry
 	 * @return the akismet entry that was updated
 	 */
-	public static com.liferay.akismet.model.AkismetEntry updateAkismetEntry(
-		com.liferay.akismet.model.AkismetEntry akismetEntry) {
-
+	public static AkismetEntry updateAkismetEntry(AkismetEntry akismetEntry) {
 		return getService().updateAkismetEntry(akismetEntry);
 	}
 
-	public static com.liferay.akismet.model.AkismetEntry updateAkismetEntry(
+	public static AkismetEntry updateAkismetEntry(
 		String className, long classPK, String type, String permalink,
 		String referrer, String userAgent, String userIP, String userURL) {
 
@@ -332,25 +313,9 @@ public class AkismetEntryLocalServiceUtil {
 	}
 
 	public static AkismetEntryLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<AkismetEntryLocalService, AkismetEntryLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(AkismetEntryLocalService.class);
-
-		ServiceTracker<AkismetEntryLocalService, AkismetEntryLocalService>
-			serviceTracker =
-				new ServiceTracker
-					<AkismetEntryLocalService, AkismetEntryLocalService>(
-						bundle.getBundleContext(),
-						AkismetEntryLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile AkismetEntryLocalService _service;
 
 }

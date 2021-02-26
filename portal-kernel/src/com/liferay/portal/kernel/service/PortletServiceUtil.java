@@ -14,7 +14,8 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Portlet;
 
 /**
  * Provides the remote service utility for Portlet. This utility wraps
@@ -49,22 +50,17 @@ public class PortletServiceUtil {
 		return getService().getWARPortlets();
 	}
 
-	public static com.liferay.portal.kernel.model.Portlet updatePortlet(
+	public static Portlet updatePortlet(
 			long companyId, String portletId, String roles, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updatePortlet(companyId, portletId, roles, active);
 	}
 
 	public static PortletService getService() {
-		if (_service == null) {
-			_service = (PortletService)PortalBeanLocatorUtil.locate(
-				PortletService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static PortletService _service;
+	private static volatile PortletService _service;
 
 }

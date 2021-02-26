@@ -14,7 +14,16 @@
 
 package com.liferay.asset.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.asset.kernel.model.AssetLink;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for AssetLink. This utility wraps
@@ -46,9 +55,7 @@ public class AssetLinkLocalServiceUtil {
 	 * @param assetLink the asset link
 	 * @return the asset link that was added
 	 */
-	public static com.liferay.asset.kernel.model.AssetLink addAssetLink(
-		com.liferay.asset.kernel.model.AssetLink assetLink) {
-
+	public static AssetLink addAssetLink(AssetLink assetLink) {
 		return getService().addAssetLink(assetLink);
 	}
 
@@ -67,9 +74,9 @@ public class AssetLinkLocalServiceUtil {
 	 ordering of links
 	 * @return the asset link
 	 */
-	public static com.liferay.asset.kernel.model.AssetLink addLink(
+	public static AssetLink addLink(
 			long userId, long entryId1, long entryId2, int type, int weight)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addLink(userId, entryId1, entryId2, type, weight);
 	}
@@ -80,18 +87,16 @@ public class AssetLinkLocalServiceUtil {
 	 * @param linkId the primary key for the new asset link
 	 * @return the new asset link
 	 */
-	public static com.liferay.asset.kernel.model.AssetLink createAssetLink(
-		long linkId) {
-
+	public static AssetLink createAssetLink(long linkId) {
 		return getService().createAssetLink(linkId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -106,9 +111,7 @@ public class AssetLinkLocalServiceUtil {
 	 * @param assetLink the asset link
 	 * @return the asset link that was removed
 	 */
-	public static com.liferay.asset.kernel.model.AssetLink deleteAssetLink(
-		com.liferay.asset.kernel.model.AssetLink assetLink) {
-
+	public static AssetLink deleteAssetLink(AssetLink assetLink) {
 		return getService().deleteAssetLink(assetLink);
 	}
 
@@ -123,9 +126,8 @@ public class AssetLinkLocalServiceUtil {
 	 * @return the asset link that was removed
 	 * @throws PortalException if a asset link with the primary key could not be found
 	 */
-	public static com.liferay.asset.kernel.model.AssetLink deleteAssetLink(
-			long linkId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AssetLink deleteAssetLink(long linkId)
+		throws PortalException {
 
 		return getService().deleteAssetLink(linkId);
 	}
@@ -139,9 +141,7 @@ public class AssetLinkLocalServiceUtil {
 	 *
 	 * @param link the asset link
 	 */
-	public static void deleteLink(
-		com.liferay.asset.kernel.model.AssetLink link) {
-
+	public static void deleteLink(AssetLink link) {
 		getService().deleteLink(link);
 	}
 
@@ -150,9 +150,7 @@ public class AssetLinkLocalServiceUtil {
 	 *
 	 * @param linkId the primary key of the asset link
 	 */
-	public static void deleteLink(long linkId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static void deleteLink(long linkId) throws PortalException {
 		getService().deleteLink(linkId);
 	}
 
@@ -178,23 +176,18 @@ public class AssetLinkLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -204,9 +197,7 @@ public class AssetLinkLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -222,9 +213,8 @@ public class AssetLinkLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -242,10 +232,9 @@ public class AssetLinkLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -257,9 +246,7 @@ public class AssetLinkLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -271,15 +258,13 @@ public class AssetLinkLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.asset.kernel.model.AssetLink fetchAssetLink(
-		long linkId) {
-
+	public static AssetLink fetchAssetLink(long linkId) {
 		return getService().fetchAssetLink(linkId);
 	}
 
@@ -296,10 +281,7 @@ public class AssetLinkLocalServiceUtil {
 	 * @return the asset link
 	 * @throws PortalException if a asset link with the primary key could not be found
 	 */
-	public static com.liferay.asset.kernel.model.AssetLink getAssetLink(
-			long linkId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static AssetLink getAssetLink(long linkId) throws PortalException {
 		return getService().getAssetLink(linkId);
 	}
 
@@ -314,9 +296,7 @@ public class AssetLinkLocalServiceUtil {
 	 * @param end the upper bound of the range of asset links (not inclusive)
 	 * @return the range of asset links
 	 */
-	public static java.util.List<com.liferay.asset.kernel.model.AssetLink>
-		getAssetLinks(int start, int end) {
-
+	public static List<AssetLink> getAssetLinks(int start, int end) {
 		return getService().getAssetLinks(start, end);
 	}
 
@@ -335,14 +315,12 @@ public class AssetLinkLocalServiceUtil {
 	 * @param entryId the primary key of the asset entry
 	 * @return the asset links whose first entry ID is the given entry ID
 	 */
-	public static java.util.List<com.liferay.asset.kernel.model.AssetLink>
-		getDirectLinks(long entryId) {
-
+	public static List<AssetLink> getDirectLinks(long entryId) {
 		return getService().getDirectLinks(entryId);
 	}
 
-	public static java.util.List<com.liferay.asset.kernel.model.AssetLink>
-		getDirectLinks(long entryId, boolean excludeInvisibleLinks) {
+	public static List<AssetLink> getDirectLinks(
+		long entryId, boolean excludeInvisibleLinks) {
 
 		return getService().getDirectLinks(entryId, excludeInvisibleLinks);
 	}
@@ -360,15 +338,12 @@ public class AssetLinkLocalServiceUtil {
 	 * @return the asset links of the given link type whose first entry ID is
 	 the given entry ID
 	 */
-	public static java.util.List<com.liferay.asset.kernel.model.AssetLink>
-		getDirectLinks(long entryId, int typeId) {
-
+	public static List<AssetLink> getDirectLinks(long entryId, int typeId) {
 		return getService().getDirectLinks(entryId, typeId);
 	}
 
-	public static java.util.List<com.liferay.asset.kernel.model.AssetLink>
-		getDirectLinks(
-			long entryId, int typeId, boolean excludeInvisibleLinks) {
+	public static List<AssetLink> getDirectLinks(
+		long entryId, int typeId, boolean excludeInvisibleLinks) {
 
 		return getService().getDirectLinks(
 			entryId, typeId, excludeInvisibleLinks);
@@ -389,16 +364,13 @@ public class AssetLinkLocalServiceUtil {
 	 * @return the asset links whose first or second entry ID is the given entry
 	 ID
 	 */
-	public static java.util.List<com.liferay.asset.kernel.model.AssetLink>
-		getLinks(long entryId) {
-
+	public static List<AssetLink> getLinks(long entryId) {
 		return getService().getLinks(entryId);
 	}
 
-	public static java.util.List<com.liferay.asset.kernel.model.AssetLink>
-		getLinks(
-			long groupId, java.util.Date startDate, java.util.Date endDate,
-			int start, int end) {
+	public static List<AssetLink> getLinks(
+		long groupId, java.util.Date startDate, java.util.Date endDate,
+		int start, int end) {
 
 		return getService().getLinks(groupId, startDate, endDate, start, end);
 	}
@@ -416,9 +388,7 @@ public class AssetLinkLocalServiceUtil {
 	 * @return the asset links of the given link type whose first or second
 	 entry ID is the given entry ID
 	 */
-	public static java.util.List<com.liferay.asset.kernel.model.AssetLink>
-		getLinks(long entryId, int typeId) {
-
+	public static List<AssetLink> getLinks(long entryId, int typeId) {
 		return getService().getLinks(entryId, typeId);
 	}
 
@@ -429,9 +399,7 @@ public class AssetLinkLocalServiceUtil {
 	 * @param classPK AssetEntry's classPK
 	 * @return the asset links of the given entry params
 	 */
-	public static java.util.List<com.liferay.asset.kernel.model.AssetLink>
-		getLinks(long classNameId, long classPK) {
-
+	public static List<AssetLink> getLinks(long classNameId, long classPK) {
 		return getService().getLinks(classNameId, classPK);
 	}
 
@@ -447,9 +415,8 @@ public class AssetLinkLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -467,9 +434,7 @@ public class AssetLinkLocalServiceUtil {
 	 * @return the asset links of the given link type whose second entry ID is
 	 the given entry ID
 	 */
-	public static java.util.List<com.liferay.asset.kernel.model.AssetLink>
-		getReverseLinks(long entryId, int typeId) {
-
+	public static List<AssetLink> getReverseLinks(long entryId, int typeId) {
 		return getService().getReverseLinks(entryId, typeId);
 	}
 
@@ -483,15 +448,13 @@ public class AssetLinkLocalServiceUtil {
 	 * @param assetLink the asset link
 	 * @return the asset link that was updated
 	 */
-	public static com.liferay.asset.kernel.model.AssetLink updateAssetLink(
-		com.liferay.asset.kernel.model.AssetLink assetLink) {
-
+	public static AssetLink updateAssetLink(AssetLink assetLink) {
 		return getService().updateAssetLink(assetLink);
 	}
 
-	public static com.liferay.asset.kernel.model.AssetLink updateLink(
+	public static AssetLink updateLink(
 			long userId, long entryId1, long entryId2, int typeId, int weight)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateLink(
 			userId, entryId1, entryId2, typeId, weight);
@@ -521,20 +484,15 @@ public class AssetLinkLocalServiceUtil {
 	 */
 	public static void updateLinks(
 			long userId, long entryId, long[] linkEntryIds, int typeId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().updateLinks(userId, entryId, linkEntryIds, typeId);
 	}
 
 	public static AssetLinkLocalService getService() {
-		if (_service == null) {
-			_service = (AssetLinkLocalService)PortalBeanLocatorUtil.locate(
-				AssetLinkLocalService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static AssetLinkLocalService _service;
+	private static volatile AssetLinkLocalService _service;
 
 }

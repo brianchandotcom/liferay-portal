@@ -14,9 +14,8 @@
 
 package com.liferay.portal.security.wedeploy.auth.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp;
 
 /**
  * Provides the remote service utility for WeDeployAuthApp. This utility wraps
@@ -37,22 +36,17 @@ public class WeDeployAuthAppServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.security.wedeploy.auth.service.impl.WeDeployAuthAppServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static
-		com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp
-				addWeDeployAuthApp(
-					String name, String redirectURI,
-					com.liferay.portal.kernel.service.ServiceContext
-						serviceContext)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static WeDeployAuthApp addWeDeployAuthApp(
+			String name, String redirectURI,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addWeDeployAuthApp(
 			name, redirectURI, serviceContext);
 	}
 
-	public static
-		com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp
-				deleteWeDeployAuthApp(long weDeployAuthAppId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static WeDeployAuthApp deleteWeDeployAuthApp(long weDeployAuthAppId)
+		throws PortalException {
 
 		return getService().deleteWeDeployAuthApp(weDeployAuthAppId);
 	}
@@ -67,25 +61,9 @@ public class WeDeployAuthAppServiceUtil {
 	}
 
 	public static WeDeployAuthAppService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<WeDeployAuthAppService, WeDeployAuthAppService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(WeDeployAuthAppService.class);
-
-		ServiceTracker<WeDeployAuthAppService, WeDeployAuthAppService>
-			serviceTracker =
-				new ServiceTracker
-					<WeDeployAuthAppService, WeDeployAuthAppService>(
-						bundle.getBundleContext(), WeDeployAuthAppService.class,
-						null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile WeDeployAuthAppService _service;
 
 }

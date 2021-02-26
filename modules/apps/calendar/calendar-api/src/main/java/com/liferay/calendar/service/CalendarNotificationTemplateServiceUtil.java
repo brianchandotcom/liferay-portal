@@ -14,9 +14,8 @@
 
 package com.liferay.calendar.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.calendar.model.CalendarNotificationTemplate;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * Provides the remote service utility for CalendarNotificationTemplate. This utility wraps
@@ -37,17 +36,15 @@ public class CalendarNotificationTemplateServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.calendar.service.impl.CalendarNotificationTemplateServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.calendar.model.CalendarNotificationTemplate
-			addCalendarNotificationTemplate(
-				long calendarId,
-				com.liferay.calendar.notification.NotificationType
-					notificationType,
-				String notificationTypeSettings,
-				com.liferay.calendar.notification.NotificationTemplateType
-					notificationTemplateType,
-				String subject, String body,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CalendarNotificationTemplate addCalendarNotificationTemplate(
+			long calendarId,
+			com.liferay.calendar.notification.NotificationType notificationType,
+			String notificationTypeSettings,
+			com.liferay.calendar.notification.NotificationTemplateType
+				notificationTemplateType,
+			String subject, String body,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCalendarNotificationTemplate(
 			calendarId, notificationType, notificationTypeSettings,
@@ -63,12 +60,12 @@ public class CalendarNotificationTemplateServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.calendar.model.CalendarNotificationTemplate
+	public static CalendarNotificationTemplate
 			updateCalendarNotificationTemplate(
 				long calendarNotificationTemplateId,
 				String notificationTypeSettings, String subject, String body,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateCalendarNotificationTemplate(
 			calendarNotificationTemplateId, notificationTypeSettings, subject,
@@ -76,29 +73,9 @@ public class CalendarNotificationTemplateServiceUtil {
 	}
 
 	public static CalendarNotificationTemplateService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CalendarNotificationTemplateService,
-		 CalendarNotificationTemplateService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CalendarNotificationTemplateService.class);
-
-		ServiceTracker
-			<CalendarNotificationTemplateService,
-			 CalendarNotificationTemplateService> serviceTracker =
-				new ServiceTracker
-					<CalendarNotificationTemplateService,
-					 CalendarNotificationTemplateService>(
-						 bundle.getBundleContext(),
-						 CalendarNotificationTemplateService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CalendarNotificationTemplateService _service;
 
 }

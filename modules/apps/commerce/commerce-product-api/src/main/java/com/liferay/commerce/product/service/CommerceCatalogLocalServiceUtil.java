@@ -14,9 +14,16 @@
 
 package com.liferay.commerce.product.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.product.model.CommerceCatalog;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for CommerceCatalog. This utility wraps
@@ -48,42 +55,37 @@ public class CommerceCatalogLocalServiceUtil {
 	 * @param commerceCatalog the commerce catalog
 	 * @return the commerce catalog that was added
 	 */
-	public static com.liferay.commerce.product.model.CommerceCatalog
-		addCommerceCatalog(
-			com.liferay.commerce.product.model.CommerceCatalog
-				commerceCatalog) {
+	public static CommerceCatalog addCommerceCatalog(
+		CommerceCatalog commerceCatalog) {
 
 		return getService().addCommerceCatalog(commerceCatalog);
 	}
 
-	public static com.liferay.commerce.product.model.CommerceCatalog
-			addCommerceCatalog(
-				String externalReferenceCode, String name,
-				String commerceCurrencyCode, String catalogDefaultLanguageId,
-				boolean system,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceCatalog addCommerceCatalog(
+			String externalReferenceCode, String name,
+			String commerceCurrencyCode, String catalogDefaultLanguageId,
+			boolean system,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCommerceCatalog(
 			externalReferenceCode, name, commerceCurrencyCode,
 			catalogDefaultLanguageId, system, serviceContext);
 	}
 
-	public static com.liferay.commerce.product.model.CommerceCatalog
-			addCommerceCatalog(
-				String externalReferenceCode, String name,
-				String commerceCurrencyCode, String catalogDefaultLanguageId,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceCatalog addCommerceCatalog(
+			String externalReferenceCode, String name,
+			String commerceCurrencyCode, String catalogDefaultLanguageId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCommerceCatalog(
 			externalReferenceCode, name, commerceCurrencyCode,
 			catalogDefaultLanguageId, serviceContext);
 	}
 
-	public static com.liferay.commerce.product.model.CommerceCatalog
-			addDefaultCommerceCatalog(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceCatalog addDefaultCommerceCatalog(long companyId)
+		throws PortalException {
 
 		return getService().addDefaultCommerceCatalog(companyId);
 	}
@@ -94,8 +96,8 @@ public class CommerceCatalogLocalServiceUtil {
 	 * @param commerceCatalogId the primary key for the new commerce catalog
 	 * @return the new commerce catalog
 	 */
-	public static com.liferay.commerce.product.model.CommerceCatalog
-		createCommerceCatalog(long commerceCatalogId) {
+	public static CommerceCatalog createCommerceCatalog(
+		long commerceCatalogId) {
 
 		return getService().createCommerceCatalog(commerceCatalogId);
 	}
@@ -103,9 +105,9 @@ public class CommerceCatalogLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -121,11 +123,9 @@ public class CommerceCatalogLocalServiceUtil {
 	 * @return the commerce catalog that was removed
 	 * @throws PortalException
 	 */
-	public static com.liferay.commerce.product.model.CommerceCatalog
-			deleteCommerceCatalog(
-				com.liferay.commerce.product.model.CommerceCatalog
-					commerceCatalog)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceCatalog deleteCommerceCatalog(
+			CommerceCatalog commerceCatalog)
+		throws PortalException {
 
 		return getService().deleteCommerceCatalog(commerceCatalog);
 	}
@@ -141,15 +141,14 @@ public class CommerceCatalogLocalServiceUtil {
 	 * @return the commerce catalog that was removed
 	 * @throws PortalException if a commerce catalog with the primary key could not be found
 	 */
-	public static com.liferay.commerce.product.model.CommerceCatalog
-			deleteCommerceCatalog(long commerceCatalogId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceCatalog deleteCommerceCatalog(long commerceCatalogId)
+		throws PortalException {
 
 		return getService().deleteCommerceCatalog(commerceCatalogId);
 	}
 
 	public static void deleteCommerceCatalogs(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommerceCatalogs(companyId);
 	}
@@ -157,23 +156,18 @@ public class CommerceCatalogLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -183,9 +177,7 @@ public class CommerceCatalogLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -201,9 +193,8 @@ public class CommerceCatalogLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -221,10 +212,9 @@ public class CommerceCatalogLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -236,9 +226,7 @@ public class CommerceCatalogLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -250,29 +238,24 @@ public class CommerceCatalogLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.commerce.product.model.CommerceCatalog
-		fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId) {
+	public static CommerceCatalog fetchByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
 
 		return getService().fetchByExternalReferenceCode(
 			externalReferenceCode, companyId);
 	}
 
-	public static com.liferay.commerce.product.model.CommerceCatalog
-		fetchCommerceCatalog(long commerceCatalogId) {
-
+	public static CommerceCatalog fetchCommerceCatalog(long commerceCatalogId) {
 		return getService().fetchCommerceCatalog(commerceCatalogId);
 	}
 
-	public static com.liferay.commerce.product.model.CommerceCatalog
-		fetchCommerceCatalogByGroupId(long groupId) {
-
+	public static CommerceCatalog fetchCommerceCatalogByGroupId(long groupId) {
 		return getService().fetchCommerceCatalogByGroupId(groupId);
 	}
 
@@ -283,9 +266,8 @@ public class CommerceCatalogLocalServiceUtil {
 	 * @param externalReferenceCode the commerce catalog's external reference code
 	 * @return the matching commerce catalog, or <code>null</code> if a matching commerce catalog could not be found
 	 */
-	public static com.liferay.commerce.product.model.CommerceCatalog
-		fetchCommerceCatalogByReferenceCode(
-			long companyId, String externalReferenceCode) {
+	public static CommerceCatalog fetchCommerceCatalogByReferenceCode(
+		long companyId, String externalReferenceCode) {
 
 		return getService().fetchCommerceCatalogByReferenceCode(
 			companyId, externalReferenceCode);
@@ -304,16 +286,15 @@ public class CommerceCatalogLocalServiceUtil {
 	 * @return the commerce catalog
 	 * @throws PortalException if a commerce catalog with the primary key could not be found
 	 */
-	public static com.liferay.commerce.product.model.CommerceCatalog
-			getCommerceCatalog(long commerceCatalogId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceCatalog getCommerceCatalog(long commerceCatalogId)
+		throws PortalException {
 
 		return getService().getCommerceCatalog(commerceCatalogId);
 	}
 
 	public static com.liferay.portal.kernel.model.Group getCommerceCatalogGroup(
 			long commerceCatalogId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCommerceCatalogGroup(commerceCatalogId);
 	}
@@ -329,16 +310,14 @@ public class CommerceCatalogLocalServiceUtil {
 	 * @param end the upper bound of the range of commerce catalogs (not inclusive)
 	 * @return the range of commerce catalogs
 	 */
-	public static java.util.List
-		<com.liferay.commerce.product.model.CommerceCatalog>
-			getCommerceCatalogs(int start, int end) {
+	public static List<CommerceCatalog> getCommerceCatalogs(
+		int start, int end) {
 
 		return getService().getCommerceCatalogs(start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.product.model.CommerceCatalog>
-			getCommerceCatalogs(long companyId, boolean system) {
+	public static List<CommerceCatalog> getCommerceCatalogs(
+		long companyId, boolean system) {
 
 		return getService().getCommerceCatalogs(companyId, system);
 	}
@@ -371,27 +350,22 @@ public class CommerceCatalogLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.product.model.CommerceCatalog>
-				searchCommerceCatalogs(long companyId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommerceCatalog> searchCommerceCatalogs(long companyId)
+		throws PortalException {
 
 		return getService().searchCommerceCatalogs(companyId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.product.model.CommerceCatalog>
-				searchCommerceCatalogs(
-					long companyId, String keywords, int start, int end,
-					com.liferay.portal.kernel.search.Sort sort)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommerceCatalog> searchCommerceCatalogs(
+			long companyId, String keywords, int start, int end,
+			com.liferay.portal.kernel.search.Sort sort)
+		throws PortalException {
 
 		return getService().searchCommerceCatalogs(
 			companyId, keywords, start, end, sort);
@@ -399,7 +373,7 @@ public class CommerceCatalogLocalServiceUtil {
 
 	public static int searchCommerceCatalogsCount(
 			long companyId, String keywords)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().searchCommerceCatalogsCount(companyId, keywords);
 	}
@@ -414,56 +388,34 @@ public class CommerceCatalogLocalServiceUtil {
 	 * @param commerceCatalog the commerce catalog
 	 * @return the commerce catalog that was updated
 	 */
-	public static com.liferay.commerce.product.model.CommerceCatalog
-		updateCommerceCatalog(
-			com.liferay.commerce.product.model.CommerceCatalog
-				commerceCatalog) {
+	public static CommerceCatalog updateCommerceCatalog(
+		CommerceCatalog commerceCatalog) {
 
 		return getService().updateCommerceCatalog(commerceCatalog);
 	}
 
-	public static com.liferay.commerce.product.model.CommerceCatalog
-			updateCommerceCatalog(
-				long commerceCatalogId, String name,
-				String commerceCurrencyCode, String catalogDefaultLanguageId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceCatalog updateCommerceCatalog(
+			long commerceCatalogId, String name, String commerceCurrencyCode,
+			String catalogDefaultLanguageId)
+		throws PortalException {
 
 		return getService().updateCommerceCatalog(
 			commerceCatalogId, name, commerceCurrencyCode,
 			catalogDefaultLanguageId);
 	}
 
-	public static com.liferay.commerce.product.model.CommerceCatalog
-			updateCommerceCatalogExternalReferenceCode(
-				String externalReferenceCode, long commerceCatalogId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceCatalog updateCommerceCatalogExternalReferenceCode(
+			String externalReferenceCode, long commerceCatalogId)
+		throws PortalException {
 
 		return getService().updateCommerceCatalogExternalReferenceCode(
 			externalReferenceCode, commerceCatalogId);
 	}
 
 	public static CommerceCatalogLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceCatalogLocalService, CommerceCatalogLocalService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommerceCatalogLocalService.class);
-
-		ServiceTracker<CommerceCatalogLocalService, CommerceCatalogLocalService>
-			serviceTracker =
-				new ServiceTracker
-					<CommerceCatalogLocalService, CommerceCatalogLocalService>(
-						bundle.getBundleContext(),
-						CommerceCatalogLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceCatalogLocalService _service;
 
 }

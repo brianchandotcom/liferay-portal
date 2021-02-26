@@ -14,9 +14,11 @@
 
 package com.liferay.commerce.wish.list.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.wish.list.model.CommerceWishList;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for CommerceWishList. This utility wraps
@@ -37,82 +39,69 @@ public class CommerceWishListServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.wish.list.service.impl.CommerceWishListServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.commerce.wish.list.model.CommerceWishList
-			addCommerceWishList(
-				String name, boolean defaultWishList,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceWishList addCommerceWishList(
+			String name, boolean defaultWishList,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCommerceWishList(
 			name, defaultWishList, serviceContext);
 	}
 
 	public static void deleteCommerceWishList(long commerceWishListId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommerceWishList(commerceWishListId);
 	}
 
-	public static com.liferay.commerce.wish.list.model.CommerceWishList
-			fetchCommerceWishList(
-				long groupId, long userId, boolean defaultWishList,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.commerce.wish.list.model.CommerceWishList>
-						orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceWishList fetchCommerceWishList(
+			long groupId, long userId, boolean defaultWishList,
+			OrderByComparator<CommerceWishList> orderByComparator)
+		throws PortalException {
 
 		return getService().fetchCommerceWishList(
 			groupId, userId, defaultWishList, orderByComparator);
 	}
 
-	public static com.liferay.commerce.wish.list.model.CommerceWishList
-			getCommerceWishList(long commerceWishListId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceWishList getCommerceWishList(long commerceWishListId)
+		throws PortalException {
 
 		return getService().getCommerceWishList(commerceWishListId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.wish.list.model.CommerceWishList>
-				getCommerceWishLists(
-					long groupId, int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						<com.liferay.commerce.wish.list.model.CommerceWishList>
-							orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommerceWishList> getCommerceWishLists(
+			long groupId, int start, int end,
+			OrderByComparator<CommerceWishList> orderByComparator)
+		throws PortalException {
 
 		return getService().getCommerceWishLists(
 			groupId, start, end, orderByComparator);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.wish.list.model.CommerceWishList>
-				getCommerceWishLists(
-					long groupId, long userId, int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						<com.liferay.commerce.wish.list.model.CommerceWishList>
-							orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommerceWishList> getCommerceWishLists(
+			long groupId, long userId, int start, int end,
+			OrderByComparator<CommerceWishList> orderByComparator)
+		throws PortalException {
 
 		return getService().getCommerceWishLists(
 			groupId, userId, start, end, orderByComparator);
 	}
 
 	public static int getCommerceWishListsCount(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCommerceWishListsCount(groupId);
 	}
 
 	public static int getCommerceWishListsCount(long groupId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCommerceWishListsCount(groupId, userId);
 	}
 
-	public static com.liferay.commerce.wish.list.model.CommerceWishList
-			getDefaultCommerceWishList(long groupId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceWishList getDefaultCommerceWishList(
+			long groupId, long userId)
+		throws PortalException {
 
 		return getService().getDefaultCommerceWishList(groupId, userId);
 	}
@@ -126,35 +115,18 @@ public class CommerceWishListServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.commerce.wish.list.model.CommerceWishList
-			updateCommerceWishList(
-				long commerceWishListId, String name, boolean defaultWishList)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceWishList updateCommerceWishList(
+			long commerceWishListId, String name, boolean defaultWishList)
+		throws PortalException {
 
 		return getService().updateCommerceWishList(
 			commerceWishListId, name, defaultWishList);
 	}
 
 	public static CommerceWishListService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceWishListService, CommerceWishListService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(CommerceWishListService.class);
-
-		ServiceTracker<CommerceWishListService, CommerceWishListService>
-			serviceTracker =
-				new ServiceTracker
-					<CommerceWishListService, CommerceWishListService>(
-						bundle.getBundleContext(),
-						CommerceWishListService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceWishListService _service;
 
 }

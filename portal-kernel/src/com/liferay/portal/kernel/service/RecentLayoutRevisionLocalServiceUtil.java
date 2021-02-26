@@ -14,7 +14,16 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.RecentLayoutRevision;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for RecentLayoutRevision. This utility wraps
@@ -35,11 +44,10 @@ public class RecentLayoutRevisionLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.service.impl.RecentLayoutRevisionLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.kernel.model.RecentLayoutRevision
-			addRecentLayoutRevision(
-				long userId, long layoutRevisionId, long layoutSetBranchId,
-				long plid)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static RecentLayoutRevision addRecentLayoutRevision(
+			long userId, long layoutRevisionId, long layoutSetBranchId,
+			long plid)
+		throws PortalException {
 
 		return getService().addRecentLayoutRevision(
 			userId, layoutRevisionId, layoutSetBranchId, plid);
@@ -55,10 +63,8 @@ public class RecentLayoutRevisionLocalServiceUtil {
 	 * @param recentLayoutRevision the recent layout revision
 	 * @return the recent layout revision that was added
 	 */
-	public static com.liferay.portal.kernel.model.RecentLayoutRevision
-		addRecentLayoutRevision(
-			com.liferay.portal.kernel.model.RecentLayoutRevision
-				recentLayoutRevision) {
+	public static RecentLayoutRevision addRecentLayoutRevision(
+		RecentLayoutRevision recentLayoutRevision) {
 
 		return getService().addRecentLayoutRevision(recentLayoutRevision);
 	}
@@ -66,9 +72,9 @@ public class RecentLayoutRevisionLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -79,8 +85,8 @@ public class RecentLayoutRevisionLocalServiceUtil {
 	 * @param recentLayoutRevisionId the primary key for the new recent layout revision
 	 * @return the new recent layout revision
 	 */
-	public static com.liferay.portal.kernel.model.RecentLayoutRevision
-		createRecentLayoutRevision(long recentLayoutRevisionId) {
+	public static RecentLayoutRevision createRecentLayoutRevision(
+		long recentLayoutRevisionId) {
 
 		return getService().createRecentLayoutRevision(recentLayoutRevisionId);
 	}
@@ -88,10 +94,9 @@ public class RecentLayoutRevisionLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
@@ -107,9 +112,9 @@ public class RecentLayoutRevisionLocalServiceUtil {
 	 * @return the recent layout revision that was removed
 	 * @throws PortalException if a recent layout revision with the primary key could not be found
 	 */
-	public static com.liferay.portal.kernel.model.RecentLayoutRevision
-			deleteRecentLayoutRevision(long recentLayoutRevisionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static RecentLayoutRevision deleteRecentLayoutRevision(
+			long recentLayoutRevisionId)
+		throws PortalException {
 
 		return getService().deleteRecentLayoutRevision(recentLayoutRevisionId);
 	}
@@ -124,10 +129,8 @@ public class RecentLayoutRevisionLocalServiceUtil {
 	 * @param recentLayoutRevision the recent layout revision
 	 * @return the recent layout revision that was removed
 	 */
-	public static com.liferay.portal.kernel.model.RecentLayoutRevision
-		deleteRecentLayoutRevision(
-			com.liferay.portal.kernel.model.RecentLayoutRevision
-				recentLayoutRevision) {
+	public static RecentLayoutRevision deleteRecentLayoutRevision(
+		RecentLayoutRevision recentLayoutRevision) {
 
 		return getService().deleteRecentLayoutRevision(recentLayoutRevision);
 	}
@@ -140,15 +143,11 @@ public class RecentLayoutRevisionLocalServiceUtil {
 		getService().deleteUserRecentLayoutRevisions(userId);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -158,9 +157,7 @@ public class RecentLayoutRevisionLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -176,9 +173,8 @@ public class RecentLayoutRevisionLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -196,10 +192,9 @@ public class RecentLayoutRevisionLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -211,9 +206,7 @@ public class RecentLayoutRevisionLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -225,21 +218,20 @@ public class RecentLayoutRevisionLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.portal.kernel.model.RecentLayoutRevision
-		fetchRecentLayoutRevision(long recentLayoutRevisionId) {
+	public static RecentLayoutRevision fetchRecentLayoutRevision(
+		long recentLayoutRevisionId) {
 
 		return getService().fetchRecentLayoutRevision(recentLayoutRevisionId);
 	}
 
-	public static com.liferay.portal.kernel.model.RecentLayoutRevision
-		fetchRecentLayoutRevision(
-			long userId, long layoutSetBranchId, long plid) {
+	public static RecentLayoutRevision fetchRecentLayoutRevision(
+		long userId, long layoutSetBranchId, long plid) {
 
 		return getService().fetchRecentLayoutRevision(
 			userId, layoutSetBranchId, plid);
@@ -270,9 +262,8 @@ public class RecentLayoutRevisionLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -284,9 +275,9 @@ public class RecentLayoutRevisionLocalServiceUtil {
 	 * @return the recent layout revision
 	 * @throws PortalException if a recent layout revision with the primary key could not be found
 	 */
-	public static com.liferay.portal.kernel.model.RecentLayoutRevision
-			getRecentLayoutRevision(long recentLayoutRevisionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static RecentLayoutRevision getRecentLayoutRevision(
+			long recentLayoutRevisionId)
+		throws PortalException {
 
 		return getService().getRecentLayoutRevision(recentLayoutRevisionId);
 	}
@@ -302,9 +293,8 @@ public class RecentLayoutRevisionLocalServiceUtil {
 	 * @param end the upper bound of the range of recent layout revisions (not inclusive)
 	 * @return the range of recent layout revisions
 	 */
-	public static java.util.List
-		<com.liferay.portal.kernel.model.RecentLayoutRevision>
-			getRecentLayoutRevisions(int start, int end) {
+	public static List<RecentLayoutRevision> getRecentLayoutRevisions(
+		int start, int end) {
 
 		return getService().getRecentLayoutRevisions(start, end);
 	}
@@ -328,24 +318,16 @@ public class RecentLayoutRevisionLocalServiceUtil {
 	 * @param recentLayoutRevision the recent layout revision
 	 * @return the recent layout revision that was updated
 	 */
-	public static com.liferay.portal.kernel.model.RecentLayoutRevision
-		updateRecentLayoutRevision(
-			com.liferay.portal.kernel.model.RecentLayoutRevision
-				recentLayoutRevision) {
+	public static RecentLayoutRevision updateRecentLayoutRevision(
+		RecentLayoutRevision recentLayoutRevision) {
 
 		return getService().updateRecentLayoutRevision(recentLayoutRevision);
 	}
 
 	public static RecentLayoutRevisionLocalService getService() {
-		if (_service == null) {
-			_service =
-				(RecentLayoutRevisionLocalService)PortalBeanLocatorUtil.locate(
-					RecentLayoutRevisionLocalService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static RecentLayoutRevisionLocalService _service;
+	private static volatile RecentLayoutRevisionLocalService _service;
 
 }

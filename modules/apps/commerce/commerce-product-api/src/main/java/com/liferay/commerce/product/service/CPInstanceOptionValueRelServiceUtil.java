@@ -14,10 +14,6 @@
 
 package com.liferay.commerce.product.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-
 /**
  * Provides the remote service utility for CPInstanceOptionValueRel. This utility wraps
  * <code>com.liferay.commerce.product.service.impl.CPInstanceOptionValueRelServiceImpl</code> and is an
@@ -43,34 +39,14 @@ public class CPInstanceOptionValueRelServiceUtil {
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static String getOSGiServiceIdentifier() {
+	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static CPInstanceOptionValueRelService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CPInstanceOptionValueRelService, CPInstanceOptionValueRelService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CPInstanceOptionValueRelService.class);
-
-		ServiceTracker
-			<CPInstanceOptionValueRelService, CPInstanceOptionValueRelService>
-				serviceTracker =
-					new ServiceTracker
-						<CPInstanceOptionValueRelService,
-						 CPInstanceOptionValueRelService>(
-							 bundle.getBundleContext(),
-							 CPInstanceOptionValueRelService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CPInstanceOptionValueRelService _service;
 
 }

@@ -14,9 +14,11 @@
 
 package com.liferay.commerce.product.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.product.model.CPOptionValue;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the remote service utility for CPOptionValue. This utility wraps
@@ -37,57 +39,51 @@ public class CPOptionValueServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CPOptionValueServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.commerce.product.model.CPOptionValue
-			addCPOptionValue(
-				long cpOptionId,
-				java.util.Map<java.util.Locale, String> titleMap,
-				double priority, String key,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPOptionValue addCPOptionValue(
+			long cpOptionId, Map<java.util.Locale, String> titleMap,
+			double priority, String key,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCPOptionValue(
 			cpOptionId, titleMap, priority, key, serviceContext);
 	}
 
 	public static void deleteCPOptionValue(long cpOptionValueId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCPOptionValue(cpOptionValueId);
 	}
 
-	public static com.liferay.commerce.product.model.CPOptionValue
-			fetchByExternalReferenceCode(
-				String externalReferenceCode, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPOptionValue fetchByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
 
 		return getService().fetchByExternalReferenceCode(
 			externalReferenceCode, companyId);
 	}
 
-	public static com.liferay.commerce.product.model.CPOptionValue
-			fetchCPOptionValue(long cpOptionValueId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPOptionValue fetchCPOptionValue(long cpOptionValueId)
+		throws PortalException {
 
 		return getService().fetchCPOptionValue(cpOptionValueId);
 	}
 
-	public static com.liferay.commerce.product.model.CPOptionValue
-			getCPOptionValue(long cpOptionValueId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPOptionValue getCPOptionValue(long cpOptionValueId)
+		throws PortalException {
 
 		return getService().getCPOptionValue(cpOptionValueId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.product.model.CPOptionValue> getCPOptionValues(
-				long cpOptionId, int start, int end)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CPOptionValue> getCPOptionValues(
+			long cpOptionId, int start, int end)
+		throws PortalException {
 
 		return getService().getCPOptionValues(cpOptionId, start, end);
 	}
 
 	public static int getCPOptionValuesCount(long cpOptionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCPOptionValuesCount(cpOptionId);
 	}
@@ -102,10 +98,10 @@ public class CPOptionValueServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
-		<com.liferay.commerce.product.model.CPOptionValue> searchCPOptionValues(
+		<CPOptionValue> searchCPOptionValues(
 				long companyId, long cpOptionId, String keywords, int start,
 				int end, com.liferay.portal.kernel.search.Sort[] sorts)
-			throws com.liferay.portal.kernel.exception.PortalException {
+			throws PortalException {
 
 		return getService().searchCPOptionValues(
 			companyId, cpOptionId, keywords, start, end, sorts);
@@ -113,31 +109,27 @@ public class CPOptionValueServiceUtil {
 
 	public static int searchCPOptionValuesCount(
 			long companyId, long cpOptionId, String keywords)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().searchCPOptionValuesCount(
 			companyId, cpOptionId, keywords);
 	}
 
-	public static com.liferay.commerce.product.model.CPOptionValue
-			updateCPOptionValue(
-				long cpOptionValueId,
-				java.util.Map<java.util.Locale, String> titleMap,
-				double priority, String key,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPOptionValue updateCPOptionValue(
+			long cpOptionValueId, Map<java.util.Locale, String> titleMap,
+			double priority, String key,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().updateCPOptionValue(
 			cpOptionValueId, titleMap, priority, key, serviceContext);
 	}
 
-	public static com.liferay.commerce.product.model.CPOptionValue
-			upsertCPOptionValue(
-				String externalReferenceCode, long cpOptionId,
-				java.util.Map<java.util.Locale, String> nameMap,
-				double priority, String key,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPOptionValue upsertCPOptionValue(
+			String externalReferenceCode, long cpOptionId,
+			Map<java.util.Locale, String> nameMap, double priority, String key,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().upsertCPOptionValue(
 			externalReferenceCode, cpOptionId, nameMap, priority, key,
@@ -145,24 +137,9 @@ public class CPOptionValueServiceUtil {
 	}
 
 	public static CPOptionValueService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<CPOptionValueService, CPOptionValueService>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(CPOptionValueService.class);
-
-		ServiceTracker<CPOptionValueService, CPOptionValueService>
-			serviceTracker =
-				new ServiceTracker<CPOptionValueService, CPOptionValueService>(
-					bundle.getBundleContext(), CPOptionValueService.class,
-					null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CPOptionValueService _service;
 
 }

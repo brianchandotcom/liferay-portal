@@ -14,7 +14,8 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PortletPreferences;
 
 /**
  * Provides the remote service utility for PortletPreferences. This utility wraps
@@ -36,7 +37,7 @@ public class PortletPreferencesServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.service.impl.PortletPreferencesServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static void deleteArchivedPreferences(long portletItemId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteArchivedPreferences(portletItemId);
 	}
@@ -54,7 +55,7 @@ public class PortletPreferencesServiceUtil {
 			long groupId, com.liferay.portal.kernel.model.Layout layout,
 			String portletId, long portletItemId,
 			javax.portlet.PortletPreferences jxPortletPreferences)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().restoreArchivedPreferences(
 			groupId, layout, portletId, portletItemId, jxPortletPreferences);
@@ -65,7 +66,7 @@ public class PortletPreferencesServiceUtil {
 			String portletId,
 			com.liferay.portal.kernel.model.PortletItem portletItem,
 			javax.portlet.PortletPreferences jxPortletPreferences)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().restoreArchivedPreferences(
 			groupId, layout, portletId, portletItem, jxPortletPreferences);
@@ -75,7 +76,7 @@ public class PortletPreferencesServiceUtil {
 			long groupId, String name,
 			com.liferay.portal.kernel.model.Layout layout, String portletId,
 			javax.portlet.PortletPreferences jxPortletPreferences)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().restoreArchivedPreferences(
 			groupId, name, layout, portletId, jxPortletPreferences);
@@ -84,21 +85,16 @@ public class PortletPreferencesServiceUtil {
 	public static void updateArchivePreferences(
 			long userId, long groupId, String name, String portletId,
 			javax.portlet.PortletPreferences jxPortletPreferences)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().updateArchivePreferences(
 			userId, groupId, name, portletId, jxPortletPreferences);
 	}
 
 	public static PortletPreferencesService getService() {
-		if (_service == null) {
-			_service = (PortletPreferencesService)PortalBeanLocatorUtil.locate(
-				PortletPreferencesService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static PortletPreferencesService _service;
+	private static volatile PortletPreferencesService _service;
 
 }

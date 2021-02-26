@@ -26,7 +26,10 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.model.EagerBlobEntry;
 import com.liferay.portal.tools.service.builder.test.service.EagerBlobEntryService;
+import com.liferay.portal.tools.service.builder.test.service.EagerBlobEntryServiceUtil;
 import com.liferay.portal.tools.service.builder.test.service.persistence.EagerBlobEntryPersistence;
+
+import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
 
@@ -48,7 +51,7 @@ public abstract class EagerBlobEntryServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>EagerBlobEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.tools.service.builder.test.service.EagerBlobEntryServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>EagerBlobEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>EagerBlobEntryServiceUtil</code>.
 	 */
 
 	/**
@@ -138,9 +141,11 @@ public abstract class EagerBlobEntryServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
+		_setServiceUtilService(eagerBlobEntryService);
 	}
 
 	public void destroy() {
+		_setServiceUtilService(null);
 	}
 
 	/**
@@ -182,6 +187,22 @@ public abstract class EagerBlobEntryServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setServiceUtilService(
+		EagerBlobEntryService eagerBlobEntryService) {
+
+		try {
+			Field field = EagerBlobEntryServiceUtil.class.getDeclaredField(
+				"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, eagerBlobEntryService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

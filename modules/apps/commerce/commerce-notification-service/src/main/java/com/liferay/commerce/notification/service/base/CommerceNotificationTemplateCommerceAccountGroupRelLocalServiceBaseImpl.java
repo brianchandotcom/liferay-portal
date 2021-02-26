@@ -16,6 +16,7 @@ package com.liferay.commerce.notification.service.base;
 
 import com.liferay.commerce.notification.model.CommerceNotificationTemplateCommerceAccountGroupRel;
 import com.liferay.commerce.notification.service.CommerceNotificationTemplateCommerceAccountGroupRelLocalService;
+import com.liferay.commerce.notification.service.CommerceNotificationTemplateCommerceAccountGroupRelLocalServiceUtil;
 import com.liferay.commerce.notification.service.persistence.CommerceNotificationAttachmentPersistence;
 import com.liferay.commerce.notification.service.persistence.CommerceNotificationQueueEntryPersistence;
 import com.liferay.commerce.notification.service.persistence.CommerceNotificationTemplateCommerceAccountGroupRelPersistence;
@@ -50,6 +51,8 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -74,7 +77,7 @@ public abstract class
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceNotificationTemplateCommerceAccountGroupRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.notification.service.CommerceNotificationTemplateCommerceAccountGroupRelLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceNotificationTemplateCommerceAccountGroupRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceNotificationTemplateCommerceAccountGroupRelLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -759,11 +762,16 @@ public abstract class
 		persistedModelLocalServiceRegistry.register(
 			"com.liferay.commerce.notification.model.CommerceNotificationTemplateCommerceAccountGroupRel",
 			commerceNotificationTemplateCommerceAccountGroupRelLocalService);
+
+		_setLocalServiceUtilService(
+			commerceNotificationTemplateCommerceAccountGroupRelLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.commerce.notification.model.CommerceNotificationTemplateCommerceAccountGroupRel");
+
+		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -809,6 +817,26 @@ public abstract class
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		CommerceNotificationTemplateCommerceAccountGroupRelLocalService
+			commerceNotificationTemplateCommerceAccountGroupRelLocalService) {
+
+		try {
+			Field field =
+				CommerceNotificationTemplateCommerceAccountGroupRelLocalServiceUtil.class.
+					getDeclaredField("_service");
+
+			field.setAccessible(true);
+
+			field.set(
+				null,
+				commerceNotificationTemplateCommerceAccountGroupRelLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

@@ -14,9 +14,16 @@
 
 package com.liferay.portal.tools.service.builder.test.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.tools.service.builder.test.model.DSLQueryEntry;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for DSLQueryEntry. This utility wraps
@@ -48,12 +55,7 @@ public class DSLQueryEntryLocalServiceUtil {
 	 * @param dslQueryEntry the dsl query entry
 	 * @return the dsl query entry that was added
 	 */
-	public static
-		com.liferay.portal.tools.service.builder.test.model.DSLQueryEntry
-			addDSLQueryEntry(
-				com.liferay.portal.tools.service.builder.test.model.
-					DSLQueryEntry dslQueryEntry) {
-
+	public static DSLQueryEntry addDSLQueryEntry(DSLQueryEntry dslQueryEntry) {
 		return getService().addDSLQueryEntry(dslQueryEntry);
 	}
 
@@ -63,19 +65,16 @@ public class DSLQueryEntryLocalServiceUtil {
 	 * @param dslQueryEntryId the primary key for the new dsl query entry
 	 * @return the new dsl query entry
 	 */
-	public static
-		com.liferay.portal.tools.service.builder.test.model.DSLQueryEntry
-			createDSLQueryEntry(long dslQueryEntryId) {
-
+	public static DSLQueryEntry createDSLQueryEntry(long dslQueryEntryId) {
 		return getService().createDSLQueryEntry(dslQueryEntryId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -90,11 +89,8 @@ public class DSLQueryEntryLocalServiceUtil {
 	 * @param dslQueryEntry the dsl query entry
 	 * @return the dsl query entry that was removed
 	 */
-	public static
-		com.liferay.portal.tools.service.builder.test.model.DSLQueryEntry
-			deleteDSLQueryEntry(
-				com.liferay.portal.tools.service.builder.test.model.
-					DSLQueryEntry dslQueryEntry) {
+	public static DSLQueryEntry deleteDSLQueryEntry(
+		DSLQueryEntry dslQueryEntry) {
 
 		return getService().deleteDSLQueryEntry(dslQueryEntry);
 	}
@@ -110,10 +106,8 @@ public class DSLQueryEntryLocalServiceUtil {
 	 * @return the dsl query entry that was removed
 	 * @throws PortalException if a dsl query entry with the primary key could not be found
 	 */
-	public static
-		com.liferay.portal.tools.service.builder.test.model.DSLQueryEntry
-				deleteDSLQueryEntry(long dslQueryEntryId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static DSLQueryEntry deleteDSLQueryEntry(long dslQueryEntryId)
+		throws PortalException {
 
 		return getService().deleteDSLQueryEntry(dslQueryEntryId);
 	}
@@ -121,23 +115,18 @@ public class DSLQueryEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -147,9 +136,7 @@ public class DSLQueryEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -165,9 +152,8 @@ public class DSLQueryEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -185,10 +171,9 @@ public class DSLQueryEntryLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -200,9 +185,7 @@ public class DSLQueryEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -214,16 +197,13 @@ public class DSLQueryEntryLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static
-		com.liferay.portal.tools.service.builder.test.model.DSLQueryEntry
-			fetchDSLQueryEntry(long dslQueryEntryId) {
-
+	public static DSLQueryEntry fetchDSLQueryEntry(long dslQueryEntryId) {
 		return getService().fetchDSLQueryEntry(dslQueryEntryId);
 	}
 
@@ -244,10 +224,7 @@ public class DSLQueryEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of dsl query entries (not inclusive)
 	 * @return the range of dsl query entries
 	 */
-	public static java.util.List
-		<com.liferay.portal.tools.service.builder.test.model.DSLQueryEntry>
-			getDSLQueryEntries(int start, int end) {
-
+	public static List<DSLQueryEntry> getDSLQueryEntries(int start, int end) {
 		return getService().getDSLQueryEntries(start, end);
 	}
 
@@ -267,10 +244,8 @@ public class DSLQueryEntryLocalServiceUtil {
 	 * @return the dsl query entry
 	 * @throws PortalException if a dsl query entry with the primary key could not be found
 	 */
-	public static
-		com.liferay.portal.tools.service.builder.test.model.DSLQueryEntry
-				getDSLQueryEntry(long dslQueryEntryId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static DSLQueryEntry getDSLQueryEntry(long dslQueryEntryId)
+		throws PortalException {
 
 		return getService().getDSLQueryEntry(dslQueryEntryId);
 	}
@@ -294,9 +269,8 @@ public class DSLQueryEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -311,36 +285,16 @@ public class DSLQueryEntryLocalServiceUtil {
 	 * @param dslQueryEntry the dsl query entry
 	 * @return the dsl query entry that was updated
 	 */
-	public static
-		com.liferay.portal.tools.service.builder.test.model.DSLQueryEntry
-			updateDSLQueryEntry(
-				com.liferay.portal.tools.service.builder.test.model.
-					DSLQueryEntry dslQueryEntry) {
+	public static DSLQueryEntry updateDSLQueryEntry(
+		DSLQueryEntry dslQueryEntry) {
 
 		return getService().updateDSLQueryEntry(dslQueryEntry);
 	}
 
 	public static DSLQueryEntryLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<DSLQueryEntryLocalService, DSLQueryEntryLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			DSLQueryEntryLocalService.class);
-
-		ServiceTracker<DSLQueryEntryLocalService, DSLQueryEntryLocalService>
-			serviceTracker =
-				new ServiceTracker
-					<DSLQueryEntryLocalService, DSLQueryEntryLocalService>(
-						bundle.getBundleContext(),
-						DSLQueryEntryLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile DSLQueryEntryLocalService _service;
 
 }

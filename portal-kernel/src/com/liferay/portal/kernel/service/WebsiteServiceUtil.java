@@ -14,7 +14,10 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Website;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for Website. This utility wraps
@@ -35,18 +38,16 @@ public class WebsiteServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.service.impl.WebsiteServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.kernel.model.Website addWebsite(
+	public static Website addWebsite(
 			String className, long classPK, String url, long typeId,
 			boolean primary, ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addWebsite(
 			className, classPK, url, typeId, primary, serviceContext);
 	}
 
-	public static void deleteWebsite(long websiteId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static void deleteWebsite(long websiteId) throws PortalException {
 		getService().deleteWebsite(websiteId);
 	}
 
@@ -59,36 +60,27 @@ public class WebsiteServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.portal.kernel.model.Website getWebsite(
-			long websiteId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static Website getWebsite(long websiteId) throws PortalException {
 		return getService().getWebsite(websiteId);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.Website>
-			getWebsites(String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<Website> getWebsites(String className, long classPK)
+		throws PortalException {
 
 		return getService().getWebsites(className, classPK);
 	}
 
-	public static com.liferay.portal.kernel.model.Website updateWebsite(
+	public static Website updateWebsite(
 			long websiteId, String url, long typeId, boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateWebsite(websiteId, url, typeId, primary);
 	}
 
 	public static WebsiteService getService() {
-		if (_service == null) {
-			_service = (WebsiteService)PortalBeanLocatorUtil.locate(
-				WebsiteService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static WebsiteService _service;
+	private static volatile WebsiteService _service;
 
 }

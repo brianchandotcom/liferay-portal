@@ -14,9 +14,16 @@
 
 package com.liferay.oauth2.provider.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.oauth2.provider.model.OAuth2Authorization;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for OAuth2Authorization. This utility wraps
@@ -44,14 +51,13 @@ public class OAuth2AuthorizationLocalServiceUtil {
 	 String, Date, Date, String, String, String, Date, Date)}
 	 */
 	@Deprecated
-	public static com.liferay.oauth2.provider.model.OAuth2Authorization
-		addOAuth2Authorization(
-			long companyId, long userId, String userName,
-			long oAuth2ApplicationId, long oAuth2ApplicationScopeAliasesId,
-			String accessTokenContent, java.util.Date accessTokenCreateDate,
-			java.util.Date accessTokenExpirationDate, String remoteIPInfo,
-			String refreshTokenContent, java.util.Date refreshTokenCreateDate,
-			java.util.Date refreshTokenExpirationDate) {
+	public static OAuth2Authorization addOAuth2Authorization(
+		long companyId, long userId, String userName, long oAuth2ApplicationId,
+		long oAuth2ApplicationScopeAliasesId, String accessTokenContent,
+		java.util.Date accessTokenCreateDate,
+		java.util.Date accessTokenExpirationDate, String remoteIPInfo,
+		String refreshTokenContent, java.util.Date refreshTokenCreateDate,
+		java.util.Date refreshTokenExpirationDate) {
 
 		return getService().addOAuth2Authorization(
 			companyId, userId, userName, oAuth2ApplicationId,
@@ -61,15 +67,14 @@ public class OAuth2AuthorizationLocalServiceUtil {
 			refreshTokenExpirationDate);
 	}
 
-	public static com.liferay.oauth2.provider.model.OAuth2Authorization
-		addOAuth2Authorization(
-			long companyId, long userId, String userName,
-			long oAuth2ApplicationId, long oAuth2ApplicationScopeAliasesId,
-			String accessTokenContent, java.util.Date accessTokenCreateDate,
-			java.util.Date accessTokenExpirationDate, String remoteHostInfo,
-			String remoteIPInfo, String refreshTokenContent,
-			java.util.Date refreshTokenCreateDate,
-			java.util.Date refreshTokenExpirationDate) {
+	public static OAuth2Authorization addOAuth2Authorization(
+		long companyId, long userId, String userName, long oAuth2ApplicationId,
+		long oAuth2ApplicationScopeAliasesId, String accessTokenContent,
+		java.util.Date accessTokenCreateDate,
+		java.util.Date accessTokenExpirationDate, String remoteHostInfo,
+		String remoteIPInfo, String refreshTokenContent,
+		java.util.Date refreshTokenCreateDate,
+		java.util.Date refreshTokenExpirationDate) {
 
 		return getService().addOAuth2Authorization(
 			companyId, userId, userName, oAuth2ApplicationId,
@@ -89,10 +94,8 @@ public class OAuth2AuthorizationLocalServiceUtil {
 	 * @param oAuth2Authorization the o auth2 authorization
 	 * @return the o auth2 authorization that was added
 	 */
-	public static com.liferay.oauth2.provider.model.OAuth2Authorization
-		addOAuth2Authorization(
-			com.liferay.oauth2.provider.model.OAuth2Authorization
-				oAuth2Authorization) {
+	public static OAuth2Authorization addOAuth2Authorization(
+		OAuth2Authorization oAuth2Authorization) {
 
 		return getService().addOAuth2Authorization(oAuth2Authorization);
 	}
@@ -105,9 +108,7 @@ public class OAuth2AuthorizationLocalServiceUtil {
 	}
 
 	public static void addOAuth2ScopeGrantOAuth2Authorization(
-		long oAuth2ScopeGrantId,
-		com.liferay.oauth2.provider.model.OAuth2Authorization
-			oAuth2Authorization) {
+		long oAuth2ScopeGrantId, OAuth2Authorization oAuth2Authorization) {
 
 		getService().addOAuth2ScopeGrantOAuth2Authorization(
 			oAuth2ScopeGrantId, oAuth2Authorization);
@@ -115,8 +116,7 @@ public class OAuth2AuthorizationLocalServiceUtil {
 
 	public static void addOAuth2ScopeGrantOAuth2Authorizations(
 		long oAuth2ScopeGrantId,
-		java.util.List<com.liferay.oauth2.provider.model.OAuth2Authorization>
-			oAuth2Authorizations) {
+		List<OAuth2Authorization> oAuth2Authorizations) {
 
 		getService().addOAuth2ScopeGrantOAuth2Authorizations(
 			oAuth2ScopeGrantId, oAuth2Authorizations);
@@ -142,8 +142,8 @@ public class OAuth2AuthorizationLocalServiceUtil {
 	 * @param oAuth2AuthorizationId the primary key for the new o auth2 authorization
 	 * @return the new o auth2 authorization
 	 */
-	public static com.liferay.oauth2.provider.model.OAuth2Authorization
-		createOAuth2Authorization(long oAuth2AuthorizationId) {
+	public static OAuth2Authorization createOAuth2Authorization(
+		long oAuth2AuthorizationId) {
 
 		return getService().createOAuth2Authorization(oAuth2AuthorizationId);
 	}
@@ -151,9 +151,9 @@ public class OAuth2AuthorizationLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -173,9 +173,9 @@ public class OAuth2AuthorizationLocalServiceUtil {
 	 * @return the o auth2 authorization that was removed
 	 * @throws PortalException if a o auth2 authorization with the primary key could not be found
 	 */
-	public static com.liferay.oauth2.provider.model.OAuth2Authorization
-			deleteOAuth2Authorization(long oAuth2AuthorizationId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static OAuth2Authorization deleteOAuth2Authorization(
+			long oAuth2AuthorizationId)
+		throws PortalException {
 
 		return getService().deleteOAuth2Authorization(oAuth2AuthorizationId);
 	}
@@ -190,10 +190,8 @@ public class OAuth2AuthorizationLocalServiceUtil {
 	 * @param oAuth2Authorization the o auth2 authorization
 	 * @return the o auth2 authorization that was removed
 	 */
-	public static com.liferay.oauth2.provider.model.OAuth2Authorization
-		deleteOAuth2Authorization(
-			com.liferay.oauth2.provider.model.OAuth2Authorization
-				oAuth2Authorization) {
+	public static OAuth2Authorization deleteOAuth2Authorization(
+		OAuth2Authorization oAuth2Authorization) {
 
 		return getService().deleteOAuth2Authorization(oAuth2Authorization);
 	}
@@ -206,9 +204,7 @@ public class OAuth2AuthorizationLocalServiceUtil {
 	}
 
 	public static void deleteOAuth2ScopeGrantOAuth2Authorization(
-		long oAuth2ScopeGrantId,
-		com.liferay.oauth2.provider.model.OAuth2Authorization
-			oAuth2Authorization) {
+		long oAuth2ScopeGrantId, OAuth2Authorization oAuth2Authorization) {
 
 		getService().deleteOAuth2ScopeGrantOAuth2Authorization(
 			oAuth2ScopeGrantId, oAuth2Authorization);
@@ -216,8 +212,7 @@ public class OAuth2AuthorizationLocalServiceUtil {
 
 	public static void deleteOAuth2ScopeGrantOAuth2Authorizations(
 		long oAuth2ScopeGrantId,
-		java.util.List<com.liferay.oauth2.provider.model.OAuth2Authorization>
-			oAuth2Authorizations) {
+		List<OAuth2Authorization> oAuth2Authorizations) {
 
 		getService().deleteOAuth2ScopeGrantOAuth2Authorizations(
 			oAuth2ScopeGrantId, oAuth2Authorizations);
@@ -233,23 +228,18 @@ public class OAuth2AuthorizationLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -259,9 +249,7 @@ public class OAuth2AuthorizationLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -277,9 +265,8 @@ public class OAuth2AuthorizationLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -297,10 +284,9 @@ public class OAuth2AuthorizationLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -312,9 +298,7 @@ public class OAuth2AuthorizationLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -326,19 +310,19 @@ public class OAuth2AuthorizationLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.oauth2.provider.model.OAuth2Authorization
-		fetchOAuth2Authorization(long oAuth2AuthorizationId) {
+	public static OAuth2Authorization fetchOAuth2Authorization(
+		long oAuth2AuthorizationId) {
 
 		return getService().fetchOAuth2Authorization(oAuth2AuthorizationId);
 	}
 
-	public static com.liferay.oauth2.provider.model.OAuth2Authorization
+	public static OAuth2Authorization
 		fetchOAuth2AuthorizationByAccessTokenContent(
 			String accessTokenContent) {
 
@@ -346,7 +330,7 @@ public class OAuth2AuthorizationLocalServiceUtil {
 			accessTokenContent);
 	}
 
-	public static com.liferay.oauth2.provider.model.OAuth2Authorization
+	public static OAuth2Authorization
 		fetchOAuth2AuthorizationByRefreshTokenContent(
 			String refreshTokenContent) {
 
@@ -374,14 +358,14 @@ public class OAuth2AuthorizationLocalServiceUtil {
 	 * @return the o auth2 authorization
 	 * @throws PortalException if a o auth2 authorization with the primary key could not be found
 	 */
-	public static com.liferay.oauth2.provider.model.OAuth2Authorization
-			getOAuth2Authorization(long oAuth2AuthorizationId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static OAuth2Authorization getOAuth2Authorization(
+			long oAuth2AuthorizationId)
+		throws PortalException {
 
 		return getService().getOAuth2Authorization(oAuth2AuthorizationId);
 	}
 
-	public static com.liferay.oauth2.provider.model.OAuth2Authorization
+	public static OAuth2Authorization
 			getOAuth2AuthorizationByAccessTokenContent(
 				String accessTokenContent)
 		throws com.liferay.oauth2.provider.exception.
@@ -391,7 +375,7 @@ public class OAuth2AuthorizationLocalServiceUtil {
 			accessTokenContent);
 	}
 
-	public static com.liferay.oauth2.provider.model.OAuth2Authorization
+	public static OAuth2Authorization
 			getOAuth2AuthorizationByRefreshTokenContent(
 				String refreshTokenContent)
 		throws com.liferay.oauth2.provider.exception.
@@ -412,20 +396,15 @@ public class OAuth2AuthorizationLocalServiceUtil {
 	 * @param end the upper bound of the range of o auth2 authorizations (not inclusive)
 	 * @return the range of o auth2 authorizations
 	 */
-	public static java.util.List
-		<com.liferay.oauth2.provider.model.OAuth2Authorization>
-			getOAuth2Authorizations(int start, int end) {
+	public static List<OAuth2Authorization> getOAuth2Authorizations(
+		int start, int end) {
 
 		return getService().getOAuth2Authorizations(start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.oauth2.provider.model.OAuth2Authorization>
-			getOAuth2Authorizations(
-				long oAuth2ApplicationId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.oauth2.provider.model.OAuth2Authorization>
-						orderByComparator) {
+	public static List<OAuth2Authorization> getOAuth2Authorizations(
+		long oAuth2ApplicationId, int start, int end,
+		OrderByComparator<OAuth2Authorization> orderByComparator) {
 
 		return getService().getOAuth2Authorizations(
 			oAuth2ApplicationId, start, end, orderByComparator);
@@ -444,30 +423,25 @@ public class OAuth2AuthorizationLocalServiceUtil {
 		return getService().getOAuth2AuthorizationsCount(oAuth2ApplicationId);
 	}
 
-	public static java.util.List
-		<com.liferay.oauth2.provider.model.OAuth2Authorization>
-			getOAuth2ScopeGrantOAuth2Authorizations(long oAuth2ScopeGrantId) {
+	public static List<OAuth2Authorization>
+		getOAuth2ScopeGrantOAuth2Authorizations(long oAuth2ScopeGrantId) {
 
 		return getService().getOAuth2ScopeGrantOAuth2Authorizations(
 			oAuth2ScopeGrantId);
 	}
 
-	public static java.util.List
-		<com.liferay.oauth2.provider.model.OAuth2Authorization>
-			getOAuth2ScopeGrantOAuth2Authorizations(
-				long oAuth2ScopeGrantId, int start, int end) {
+	public static List<OAuth2Authorization>
+		getOAuth2ScopeGrantOAuth2Authorizations(
+			long oAuth2ScopeGrantId, int start, int end) {
 
 		return getService().getOAuth2ScopeGrantOAuth2Authorizations(
 			oAuth2ScopeGrantId, start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.oauth2.provider.model.OAuth2Authorization>
-			getOAuth2ScopeGrantOAuth2Authorizations(
-				long oAuth2ScopeGrantId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.oauth2.provider.model.OAuth2Authorization>
-						orderByComparator) {
+	public static List<OAuth2Authorization>
+		getOAuth2ScopeGrantOAuth2Authorizations(
+			long oAuth2ScopeGrantId, int start, int end,
+			OrderByComparator<OAuth2Authorization> orderByComparator) {
 
 		return getService().getOAuth2ScopeGrantOAuth2Authorizations(
 			oAuth2ScopeGrantId, start, end, orderByComparator);
@@ -512,20 +486,15 @@ public class OAuth2AuthorizationLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static java.util.List
-		<com.liferay.oauth2.provider.model.OAuth2Authorization>
-			getUserOAuth2Authorizations(
-				long userId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.oauth2.provider.model.OAuth2Authorization>
-						orderByComparator) {
+	public static List<OAuth2Authorization> getUserOAuth2Authorizations(
+		long userId, int start, int end,
+		OrderByComparator<OAuth2Authorization> orderByComparator) {
 
 		return getService().getUserOAuth2Authorizations(
 			userId, start, end, orderByComparator);
@@ -566,38 +535,16 @@ public class OAuth2AuthorizationLocalServiceUtil {
 	 * @param oAuth2Authorization the o auth2 authorization
 	 * @return the o auth2 authorization that was updated
 	 */
-	public static com.liferay.oauth2.provider.model.OAuth2Authorization
-		updateOAuth2Authorization(
-			com.liferay.oauth2.provider.model.OAuth2Authorization
-				oAuth2Authorization) {
+	public static OAuth2Authorization updateOAuth2Authorization(
+		OAuth2Authorization oAuth2Authorization) {
 
 		return getService().updateOAuth2Authorization(oAuth2Authorization);
 	}
 
 	public static OAuth2AuthorizationLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<OAuth2AuthorizationLocalService, OAuth2AuthorizationLocalService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			OAuth2AuthorizationLocalService.class);
-
-		ServiceTracker
-			<OAuth2AuthorizationLocalService, OAuth2AuthorizationLocalService>
-				serviceTracker =
-					new ServiceTracker
-						<OAuth2AuthorizationLocalService,
-						 OAuth2AuthorizationLocalService>(
-							 bundle.getBundleContext(),
-							 OAuth2AuthorizationLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile OAuth2AuthorizationLocalService _service;
 
 }

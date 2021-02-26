@@ -54,16 +54,20 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionVersion;
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionVersionLocalService;
+import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionVersionLocalServiceUtil;
 import com.liferay.portal.workflow.metrics.service.persistence.WorkflowMetricsSLADefinitionPersistence;
 import com.liferay.portal.workflow.metrics.service.persistence.WorkflowMetricsSLADefinitionVersionFinder;
 import com.liferay.portal.workflow.metrics.service.persistence.WorkflowMetricsSLADefinitionVersionPersistence;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -85,7 +89,7 @@ public abstract class WorkflowMetricsSLADefinitionVersionLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>WorkflowMetricsSLADefinitionVersionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionVersionLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>WorkflowMetricsSLADefinitionVersionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>WorkflowMetricsSLADefinitionVersionLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -609,6 +613,11 @@ public abstract class WorkflowMetricsSLADefinitionVersionLocalServiceBaseImpl
 			workflowMetricsSLADefinitionVersion);
 	}
 
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
+	}
+
 	@Override
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
@@ -621,6 +630,9 @@ public abstract class WorkflowMetricsSLADefinitionVersionLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		workflowMetricsSLADefinitionVersionLocalService =
 			(WorkflowMetricsSLADefinitionVersionLocalService)aopProxy;
+
+		_setLocalServiceUtilService(
+			workflowMetricsSLADefinitionVersionLocalService);
 	}
 
 	/**
@@ -663,6 +675,24 @@ public abstract class WorkflowMetricsSLADefinitionVersionLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		WorkflowMetricsSLADefinitionVersionLocalService
+			workflowMetricsSLADefinitionVersionLocalService) {
+
+		try {
+			Field field =
+				WorkflowMetricsSLADefinitionVersionLocalServiceUtil.class.
+					getDeclaredField("_service");
+
+			field.setAccessible(true);
+
+			field.set(null, workflowMetricsSLADefinitionVersionLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

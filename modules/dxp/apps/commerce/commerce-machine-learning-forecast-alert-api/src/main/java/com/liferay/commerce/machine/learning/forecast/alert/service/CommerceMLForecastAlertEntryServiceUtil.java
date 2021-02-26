@@ -14,9 +14,10 @@
 
 package com.liferay.commerce.machine.learning.forecast.alert.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.machine.learning.forecast.alert.model.CommerceMLForecastAlertEntry;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for CommerceMLForecastAlertEntry. This utility wraps
@@ -37,13 +38,11 @@ public class CommerceMLForecastAlertEntryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.machine.learning.forecast.alert.service.impl.CommerceMLForecastAlertEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static java.util.List
-		<com.liferay.commerce.machine.learning.forecast.alert.model.
-			CommerceMLForecastAlertEntry>
-					getAboveThresholdCommerceMLForecastAlertEntries(
-						long companyId, long userId, int status,
-						double relativeChange, int start, int end)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommerceMLForecastAlertEntry>
+			getAboveThresholdCommerceMLForecastAlertEntries(
+				long companyId, long userId, int status, double relativeChange,
+				int start, int end)
+		throws PortalException {
 
 		return getService().getAboveThresholdCommerceMLForecastAlertEntries(
 			companyId, userId, status, relativeChange, start, end);
@@ -51,20 +50,18 @@ public class CommerceMLForecastAlertEntryServiceUtil {
 
 	public static int getAboveThresholdCommerceMLForecastAlertEntriesCount(
 			long companyId, long userId, int status, double relativeChange)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().
 			getAboveThresholdCommerceMLForecastAlertEntriesCount(
 				companyId, userId, status, relativeChange);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.machine.learning.forecast.alert.model.
-			CommerceMLForecastAlertEntry>
-					getBelowThresholdCommerceMLForecastAlertEntries(
-						long companyId, long userId, int status,
-						double relativeChange, int start, int end)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommerceMLForecastAlertEntry>
+			getBelowThresholdCommerceMLForecastAlertEntries(
+				long companyId, long userId, int status, double relativeChange,
+				int start, int end)
+		throws PortalException {
 
 		return getService().getBelowThresholdCommerceMLForecastAlertEntries(
 			companyId, userId, status, relativeChange, start, end);
@@ -72,18 +69,17 @@ public class CommerceMLForecastAlertEntryServiceUtil {
 
 	public static int getBelowThresholdCommerceMLForecastAlertEntriesCount(
 			long companyId, long userId, int status, double relativeChange)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().
 			getBelowThresholdCommerceMLForecastAlertEntriesCount(
 				companyId, userId, status, relativeChange);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.machine.learning.forecast.alert.model.
-			CommerceMLForecastAlertEntry> getCommerceMLForecastAlertEntries(
-					long companyId, long userId, int status, int start, int end)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommerceMLForecastAlertEntry>
+			getCommerceMLForecastAlertEntries(
+				long companyId, long userId, int status, int start, int end)
+		throws PortalException {
 
 		return getService().getCommerceMLForecastAlertEntries(
 			companyId, userId, status, start, end);
@@ -91,7 +87,7 @@ public class CommerceMLForecastAlertEntryServiceUtil {
 
 	public static int getCommerceMLForecastAlertEntriesCount(
 			long companyId, long userId, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCommerceMLForecastAlertEntriesCount(
 			companyId, userId, status);
@@ -106,39 +102,18 @@ public class CommerceMLForecastAlertEntryServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.commerce.machine.learning.forecast.alert.model.
-		CommerceMLForecastAlertEntry updateStatus(
-				long userId, long commerceMLForecastAlertEntryId, int status)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceMLForecastAlertEntry updateStatus(
+			long userId, long commerceMLForecastAlertEntryId, int status)
+		throws PortalException {
 
 		return getService().updateStatus(
 			userId, commerceMLForecastAlertEntryId, status);
 	}
 
 	public static CommerceMLForecastAlertEntryService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceMLForecastAlertEntryService,
-		 CommerceMLForecastAlertEntryService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommerceMLForecastAlertEntryService.class);
-
-		ServiceTracker
-			<CommerceMLForecastAlertEntryService,
-			 CommerceMLForecastAlertEntryService> serviceTracker =
-				new ServiceTracker
-					<CommerceMLForecastAlertEntryService,
-					 CommerceMLForecastAlertEntryService>(
-						 bundle.getBundleContext(),
-						 CommerceMLForecastAlertEntryService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceMLForecastAlertEntryService _service;
 
 }

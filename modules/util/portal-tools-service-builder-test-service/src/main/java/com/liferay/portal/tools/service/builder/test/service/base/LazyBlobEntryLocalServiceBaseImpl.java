@@ -48,10 +48,13 @@ import com.liferay.portal.tools.service.builder.test.model.LazyBlobEntry;
 import com.liferay.portal.tools.service.builder.test.model.LazyBlobEntryBlob1BlobModel;
 import com.liferay.portal.tools.service.builder.test.model.LazyBlobEntryBlob2BlobModel;
 import com.liferay.portal.tools.service.builder.test.service.LazyBlobEntryLocalService;
+import com.liferay.portal.tools.service.builder.test.service.LazyBlobEntryLocalServiceUtil;
 import com.liferay.portal.tools.service.builder.test.service.persistence.LazyBlobEntryPersistence;
 
 import java.io.InputStream;
 import java.io.Serializable;
+
+import java.lang.reflect.Field;
 
 import java.sql.Blob;
 
@@ -77,7 +80,7 @@ public abstract class LazyBlobEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>LazyBlobEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.tools.service.builder.test.service.LazyBlobEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>LazyBlobEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>LazyBlobEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -578,11 +581,15 @@ public abstract class LazyBlobEntryLocalServiceBaseImpl
 
 			_useTempFile = true;
 		}
+
+		_setLocalServiceUtilService(lazyBlobEntryLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.portal.tools.service.builder.test.model.LazyBlobEntry");
+
+		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -624,6 +631,22 @@ public abstract class LazyBlobEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		LazyBlobEntryLocalService lazyBlobEntryLocalService) {
+
+		try {
+			Field field = LazyBlobEntryLocalServiceUtil.class.getDeclaredField(
+				"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, lazyBlobEntryLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

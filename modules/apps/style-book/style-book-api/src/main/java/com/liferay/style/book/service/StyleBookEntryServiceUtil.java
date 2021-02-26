@@ -14,9 +14,8 @@
 
 package com.liferay.style.book.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.style.book.model.StyleBookEntry;
 
 /**
  * Provides the remote service utility for StyleBookEntry. This utility wraps
@@ -37,54 +36,51 @@ public class StyleBookEntryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.style.book.service.impl.StyleBookEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.style.book.model.StyleBookEntry addStyleBookEntry(
+	public static StyleBookEntry addStyleBookEntry(
 			long groupId, String name, String styleBookEntryKey,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addStyleBookEntry(
 			groupId, name, styleBookEntryKey, serviceContext);
 	}
 
-	public static com.liferay.style.book.model.StyleBookEntry addStyleBookEntry(
+	public static StyleBookEntry addStyleBookEntry(
 			long groupId, String frontendTokensValues, String name,
 			String styleBookEntryKey,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addStyleBookEntry(
 			groupId, frontendTokensValues, name, styleBookEntryKey,
 			serviceContext);
 	}
 
-	public static com.liferay.style.book.model.StyleBookEntry
-			copyStyleBookEntry(
-				long groupId, long styleBookEntryId,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static StyleBookEntry copyStyleBookEntry(
+			long groupId, long styleBookEntryId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().copyStyleBookEntry(
 			groupId, styleBookEntryId, serviceContext);
 	}
 
-	public static com.liferay.style.book.model.StyleBookEntry
-			deleteStyleBookEntry(long styleBookEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static StyleBookEntry deleteStyleBookEntry(long styleBookEntryId)
+		throws PortalException {
 
 		return getService().deleteStyleBookEntry(styleBookEntryId);
 	}
 
-	public static com.liferay.style.book.model.StyleBookEntry
-			deleteStyleBookEntry(
-				com.liferay.style.book.model.StyleBookEntry styleBookEntry)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static StyleBookEntry deleteStyleBookEntry(
+			StyleBookEntry styleBookEntry)
+		throws PortalException {
 
 		return getService().deleteStyleBookEntry(styleBookEntry);
 	}
 
-	public static com.liferay.style.book.model.StyleBookEntry
-			discardDraftStyleBookEntry(long styleBookEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static StyleBookEntry discardDraftStyleBookEntry(
+			long styleBookEntryId)
+		throws PortalException {
 
 		return getService().discardDraftStyleBookEntry(styleBookEntryId);
 	}
@@ -98,76 +94,54 @@ public class StyleBookEntryServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.style.book.model.StyleBookEntry publishDraft(
-			long styleBookEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static StyleBookEntry publishDraft(long styleBookEntryId)
+		throws PortalException {
 
 		return getService().publishDraft(styleBookEntryId);
 	}
 
-	public static com.liferay.style.book.model.StyleBookEntry
-			updateDefaultStyleBookEntry(
-				long styleBookEntryId, boolean defaultStyleBookEntry)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static StyleBookEntry updateDefaultStyleBookEntry(
+			long styleBookEntryId, boolean defaultStyleBookEntry)
+		throws PortalException {
 
 		return getService().updateDefaultStyleBookEntry(
 			styleBookEntryId, defaultStyleBookEntry);
 	}
 
-	public static com.liferay.style.book.model.StyleBookEntry
-			updateFrontendTokensValues(
-				long styleBookEntryId, String frontendTokensValues)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static StyleBookEntry updateFrontendTokensValues(
+			long styleBookEntryId, String frontendTokensValues)
+		throws PortalException {
 
 		return getService().updateFrontendTokensValues(
 			styleBookEntryId, frontendTokensValues);
 	}
 
-	public static com.liferay.style.book.model.StyleBookEntry updateName(
-			long styleBookEntryId, String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static StyleBookEntry updateName(long styleBookEntryId, String name)
+		throws PortalException {
 
 		return getService().updateName(styleBookEntryId, name);
 	}
 
-	public static com.liferay.style.book.model.StyleBookEntry
-			updatePreviewFileEntryId(
-				long styleBookEntryId, long previewFileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static StyleBookEntry updatePreviewFileEntryId(
+			long styleBookEntryId, long previewFileEntryId)
+		throws PortalException {
 
 		return getService().updatePreviewFileEntryId(
 			styleBookEntryId, previewFileEntryId);
 	}
 
-	public static com.liferay.style.book.model.StyleBookEntry
-			updateStyleBookEntry(
-				long styleBookEntryId, String frontendTokensValues, String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static StyleBookEntry updateStyleBookEntry(
+			long styleBookEntryId, String frontendTokensValues, String name)
+		throws PortalException {
 
 		return getService().updateStyleBookEntry(
 			styleBookEntryId, frontendTokensValues, name);
 	}
 
 	public static StyleBookEntryService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<StyleBookEntryService, StyleBookEntryService>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(StyleBookEntryService.class);
-
-		ServiceTracker<StyleBookEntryService, StyleBookEntryService>
-			serviceTracker =
-				new ServiceTracker
-					<StyleBookEntryService, StyleBookEntryService>(
-						bundle.getBundleContext(), StyleBookEntryService.class,
-						null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile StyleBookEntryService _service;
 
 }

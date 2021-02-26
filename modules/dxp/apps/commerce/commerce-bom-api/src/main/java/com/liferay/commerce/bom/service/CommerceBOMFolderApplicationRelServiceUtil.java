@@ -14,9 +14,10 @@
 
 package com.liferay.commerce.bom.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.bom.model.CommerceBOMFolderApplicationRel;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for CommerceBOMFolderApplicationRel. This utility wraps
@@ -37,11 +38,11 @@ public class CommerceBOMFolderApplicationRelServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.bom.service.impl.CommerceBOMFolderApplicationRelServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.commerce.bom.model.CommerceBOMFolderApplicationRel
+	public static CommerceBOMFolderApplicationRel
 			addCommerceBOMFolderApplicationRel(
 				long userId, long commerceBOMFolderId,
 				long commerceApplicationModelId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addCommerceBOMFolderApplicationRel(
 			userId, commerceBOMFolderId, commerceApplicationModelId);
@@ -49,27 +50,25 @@ public class CommerceBOMFolderApplicationRelServiceUtil {
 
 	public static void deleteCommerceBOMFolderApplicationRel(
 			long commerceBOMFolderApplicationRelId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommerceBOMFolderApplicationRel(
 			commerceBOMFolderApplicationRelId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.bom.model.CommerceBOMFolderApplicationRel>
-				getCommerceBOMFolderApplicationRelsByCAMId(
-					long commerceApplicationModelId, int start, int end)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommerceBOMFolderApplicationRel>
+			getCommerceBOMFolderApplicationRelsByCAMId(
+				long commerceApplicationModelId, int start, int end)
+		throws PortalException {
 
 		return getService().getCommerceBOMFolderApplicationRelsByCAMId(
 			commerceApplicationModelId, start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.bom.model.CommerceBOMFolderApplicationRel>
-				getCommerceBOMFolderApplicationRelsByCommerceBOMFolderId(
-					long commerceBOMFolderId, int start, int end)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommerceBOMFolderApplicationRel>
+			getCommerceBOMFolderApplicationRelsByCommerceBOMFolderId(
+				long commerceBOMFolderId, int start, int end)
+		throws PortalException {
 
 		return getService().
 			getCommerceBOMFolderApplicationRelsByCommerceBOMFolderId(
@@ -78,7 +77,7 @@ public class CommerceBOMFolderApplicationRelServiceUtil {
 
 	public static int getCommerceBOMFolderApplicationRelsCountByCAMId(
 			long commerceApplicationModelId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCommerceBOMFolderApplicationRelsCountByCAMId(
 			commerceApplicationModelId);
@@ -87,7 +86,7 @@ public class CommerceBOMFolderApplicationRelServiceUtil {
 	public static int
 			getCommerceBOMFolderApplicationRelsCountByCommerceBOMFolderId(
 				long commerceBOMFolderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().
 			getCommerceBOMFolderApplicationRelsCountByCommerceBOMFolderId(
@@ -104,29 +103,9 @@ public class CommerceBOMFolderApplicationRelServiceUtil {
 	}
 
 	public static CommerceBOMFolderApplicationRelService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceBOMFolderApplicationRelService,
-		 CommerceBOMFolderApplicationRelService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommerceBOMFolderApplicationRelService.class);
-
-		ServiceTracker
-			<CommerceBOMFolderApplicationRelService,
-			 CommerceBOMFolderApplicationRelService> serviceTracker =
-				new ServiceTracker
-					<CommerceBOMFolderApplicationRelService,
-					 CommerceBOMFolderApplicationRelService>(
-						 bundle.getBundleContext(),
-						 CommerceBOMFolderApplicationRelService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceBOMFolderApplicationRelService _service;
 
 }

@@ -14,7 +14,11 @@
 
 package com.liferay.asset.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for AssetTag. This utility wraps
@@ -35,43 +39,33 @@ public class AssetTagServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portlet.asset.service.impl.AssetTagServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.asset.kernel.model.AssetTag addTag(
+	public static AssetTag addTag(
 			long groupId, String name,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addTag(groupId, name, serviceContext);
 	}
 
-	public static void deleteTag(long tagId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static void deleteTag(long tagId) throws PortalException {
 		getService().deleteTag(tagId);
 	}
 
-	public static void deleteTags(long[] tagIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static void deleteTags(long[] tagIds) throws PortalException {
 		getService().deleteTags(tagIds);
 	}
 
-	public static java.util.List<com.liferay.asset.kernel.model.AssetTag>
-		getGroupsTags(long[] groupIds) {
-
+	public static List<AssetTag> getGroupsTags(long[] groupIds) {
 		return getService().getGroupsTags(groupIds);
 	}
 
-	public static java.util.List<com.liferay.asset.kernel.model.AssetTag>
-		getGroupTags(long groupId) {
-
+	public static List<AssetTag> getGroupTags(long groupId) {
 		return getService().getGroupTags(groupId);
 	}
 
-	public static java.util.List<com.liferay.asset.kernel.model.AssetTag>
-		getGroupTags(
-			long groupId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.asset.kernel.model.AssetTag> orderByComparator) {
+	public static List<AssetTag> getGroupTags(
+		long groupId, int start, int end,
+		OrderByComparator<AssetTag> orderByComparator) {
 
 		return getService().getGroupTags(
 			groupId, start, end, orderByComparator);
@@ -96,63 +90,53 @@ public class AssetTagServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.asset.kernel.model.AssetTag getTag(long tagId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static AssetTag getTag(long tagId) throws PortalException {
 		return getService().getTag(tagId);
 	}
 
-	public static java.util.List<com.liferay.asset.kernel.model.AssetTag>
-		getTags(long groupId, long classNameId, String name) {
+	public static List<AssetTag> getTags(
+		long groupId, long classNameId, String name) {
 
 		return getService().getTags(groupId, classNameId, name);
 	}
 
-	public static java.util.List<com.liferay.asset.kernel.model.AssetTag>
-		getTags(
-			long groupId, long classNameId, String name, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.asset.kernel.model.AssetTag> orderByComparator) {
+	public static List<AssetTag> getTags(
+		long groupId, long classNameId, String name, int start, int end,
+		OrderByComparator<AssetTag> orderByComparator) {
 
 		return getService().getTags(
 			groupId, classNameId, name, start, end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.asset.kernel.model.AssetTag>
-		getTags(long groupId, String name, int start, int end) {
+	public static List<AssetTag> getTags(
+		long groupId, String name, int start, int end) {
 
 		return getService().getTags(groupId, name, start, end);
 	}
 
-	public static java.util.List<com.liferay.asset.kernel.model.AssetTag>
-		getTags(
-			long groupId, String name, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.asset.kernel.model.AssetTag> orderByComparator) {
+	public static List<AssetTag> getTags(
+		long groupId, String name, int start, int end,
+		OrderByComparator<AssetTag> orderByComparator) {
 
 		return getService().getTags(
 			groupId, name, start, end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.asset.kernel.model.AssetTag>
-		getTags(long[] groupIds, String name, int start, int end) {
+	public static List<AssetTag> getTags(
+		long[] groupIds, String name, int start, int end) {
 
 		return getService().getTags(groupIds, name, start, end);
 	}
 
-	public static java.util.List<com.liferay.asset.kernel.model.AssetTag>
-		getTags(
-			long[] groupIds, String name, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.asset.kernel.model.AssetTag> orderByComparator) {
+	public static List<AssetTag> getTags(
+		long[] groupIds, String name, int start, int end,
+		OrderByComparator<AssetTag> orderByComparator) {
 
 		return getService().getTags(
 			groupIds, name, start, end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.asset.kernel.model.AssetTag>
-		getTags(String className, long classPK) {
-
+	public static List<AssetTag> getTags(String className, long classPK) {
 		return getService().getTags(className, classPK);
 	}
 
@@ -176,13 +160,13 @@ public class AssetTagServiceUtil {
 	}
 
 	public static void mergeTags(long fromTagId, long toTagId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().mergeTags(fromTagId, toTagId);
 	}
 
 	public static void mergeTags(long[] fromTagIds, long toTagId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().mergeTags(fromTagIds, toTagId);
 	}
@@ -199,23 +183,18 @@ public class AssetTagServiceUtil {
 		return getService().search(groupIds, name, start, end);
 	}
 
-	public static com.liferay.asset.kernel.model.AssetTag updateTag(
+	public static AssetTag updateTag(
 			long tagId, String name,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateTag(tagId, name, serviceContext);
 	}
 
 	public static AssetTagService getService() {
-		if (_service == null) {
-			_service = (AssetTagService)PortalBeanLocatorUtil.locate(
-				AssetTagService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static AssetTagService _service;
+	private static volatile AssetTagService _service;
 
 }

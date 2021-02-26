@@ -14,7 +14,10 @@
 
 package com.liferay.social.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.social.kernel.model.SocialActivity;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for SocialActivity. This utility wraps
@@ -54,9 +57,9 @@ public class SocialActivityServiceUtil {
 	 * @param end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching activities
 	 */
-	public static java.util.List<com.liferay.social.kernel.model.SocialActivity>
-			getActivities(long classNameId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<SocialActivity> getActivities(
+			long classNameId, int start, int end)
+		throws PortalException {
 
 		return getService().getActivities(classNameId, start, end);
 	}
@@ -82,11 +85,10 @@ public class SocialActivityServiceUtil {
 	 * @param end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching activities
 	 */
-	public static java.util.List<com.liferay.social.kernel.model.SocialActivity>
-			getActivities(
-				long mirrorActivityId, long classNameId, long classPK,
-				int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<SocialActivity> getActivities(
+			long mirrorActivityId, long classNameId, long classPK, int start,
+			int end)
+		throws PortalException {
 
 		return getService().getActivities(
 			mirrorActivityId, classNameId, classPK, start, end);
@@ -113,11 +115,10 @@ public class SocialActivityServiceUtil {
 	 * @param end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching activities
 	 */
-	public static java.util.List<com.liferay.social.kernel.model.SocialActivity>
-			getActivities(
-				long mirrorActivityId, String className, long classPK,
-				int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<SocialActivity> getActivities(
+			long mirrorActivityId, String className, long classPK, int start,
+			int end)
+		throws PortalException {
 
 		return getService().getActivities(
 			mirrorActivityId, className, classPK, start, end);
@@ -141,9 +142,9 @@ public class SocialActivityServiceUtil {
 	 * @param end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching activities
 	 */
-	public static java.util.List<com.liferay.social.kernel.model.SocialActivity>
-			getActivities(String className, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<SocialActivity> getActivities(
+			String className, int start, int end)
+		throws PortalException {
 
 		return getService().getActivities(className, start, end);
 	}
@@ -209,16 +210,15 @@ public class SocialActivityServiceUtil {
 	 * @param activityId the primary key of the activity
 	 * @return Returns the activity
 	 */
-	public static com.liferay.social.kernel.model.SocialActivity getActivity(
-			long activityId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static SocialActivity getActivity(long activityId)
+		throws PortalException {
 
 		return getService().getActivity(activityId);
 	}
 
-	public static java.util.List<com.liferay.social.kernel.model.SocialActivity>
-			getActivitySetActivities(long activitySetId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<SocialActivity> getActivitySetActivities(
+			long activitySetId, int start, int end)
+		throws PortalException {
 
 		return getService().getActivitySetActivities(activitySetId, start, end);
 	}
@@ -244,9 +244,9 @@ public class SocialActivityServiceUtil {
 	 * @param end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching activities
 	 */
-	public static java.util.List<com.liferay.social.kernel.model.SocialActivity>
-			getGroupActivities(long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<SocialActivity> getGroupActivities(
+			long groupId, int start, int end)
+		throws PortalException {
 
 		return getService().getGroupActivities(groupId, start, end);
 	}
@@ -287,9 +287,9 @@ public class SocialActivityServiceUtil {
 	 * @param end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching activities
 	 */
-	public static java.util.List<com.liferay.social.kernel.model.SocialActivity>
-			getGroupUsersActivities(long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<SocialActivity> getGroupUsersActivities(
+			long groupId, int start, int end)
+		throws PortalException {
 
 		return getService().getGroupUsersActivities(groupId, start, end);
 	}
@@ -315,9 +315,8 @@ public class SocialActivityServiceUtil {
 	 * @param mirrorActivityId the primary key of the mirror activity
 	 * @return Returns the mirror activity
 	 */
-	public static com.liferay.social.kernel.model.SocialActivity
-			getMirrorActivity(long mirrorActivityId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static SocialActivity getMirrorActivity(long mirrorActivityId)
+		throws PortalException {
 
 		return getService().getMirrorActivity(mirrorActivityId);
 	}
@@ -340,9 +339,9 @@ public class SocialActivityServiceUtil {
 	 * @param end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching activities
 	 */
-	public static java.util.List<com.liferay.social.kernel.model.SocialActivity>
-			getOrganizationActivities(long organizationId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<SocialActivity> getOrganizationActivities(
+			long organizationId, int start, int end)
+		throws PortalException {
 
 		return getService().getOrganizationActivities(
 			organizationId, start, end);
@@ -377,10 +376,9 @@ public class SocialActivityServiceUtil {
 	 * @param end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching activities
 	 */
-	public static java.util.List<com.liferay.social.kernel.model.SocialActivity>
-			getOrganizationUsersActivities(
-				long organizationId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<SocialActivity> getOrganizationUsersActivities(
+			long organizationId, int start, int end)
+		throws PortalException {
 
 		return getService().getOrganizationUsersActivities(
 			organizationId, start, end);
@@ -424,9 +422,9 @@ public class SocialActivityServiceUtil {
 	 * @param end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching activities
 	 */
-	public static java.util.List<com.liferay.social.kernel.model.SocialActivity>
-			getRelationActivities(long userId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<SocialActivity> getRelationActivities(
+			long userId, int start, int end)
+		throws PortalException {
 
 		return getService().getRelationActivities(userId, start, end);
 	}
@@ -451,9 +449,9 @@ public class SocialActivityServiceUtil {
 	 * @param end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching activities
 	 */
-	public static java.util.List<com.liferay.social.kernel.model.SocialActivity>
-			getRelationActivities(long userId, int type, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<SocialActivity> getRelationActivities(
+			long userId, int type, int start, int end)
+		throws PortalException {
 
 		return getService().getRelationActivities(userId, type, start, end);
 	}
@@ -499,9 +497,9 @@ public class SocialActivityServiceUtil {
 	 * @param end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching activities
 	 */
-	public static java.util.List<com.liferay.social.kernel.model.SocialActivity>
-			getUserActivities(long userId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<SocialActivity> getUserActivities(
+			long userId, int start, int end)
+		throws PortalException {
 
 		return getService().getUserActivities(userId, start, end);
 	}
@@ -534,9 +532,9 @@ public class SocialActivityServiceUtil {
 	 * @param end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching activities
 	 */
-	public static java.util.List<com.liferay.social.kernel.model.SocialActivity>
-			getUserGroupsActivities(long userId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<SocialActivity> getUserGroupsActivities(
+			long userId, int start, int end)
+		throws PortalException {
 
 		return getService().getUserGroupsActivities(userId, start, end);
 	}
@@ -570,10 +568,9 @@ public class SocialActivityServiceUtil {
 	 * @param end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching activities
 	 */
-	public static java.util.List<com.liferay.social.kernel.model.SocialActivity>
-			getUserGroupsAndOrganizationsActivities(
-				long userId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<SocialActivity> getUserGroupsAndOrganizationsActivities(
+			long userId, int start, int end)
+		throws PortalException {
 
 		return getService().getUserGroupsAndOrganizationsActivities(
 			userId, start, end);
@@ -611,9 +608,9 @@ public class SocialActivityServiceUtil {
 	 * @param end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching activities
 	 */
-	public static java.util.List<com.liferay.social.kernel.model.SocialActivity>
-			getUserOrganizationsActivities(long userId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<SocialActivity> getUserOrganizationsActivities(
+			long userId, int start, int end)
+		throws PortalException {
 
 		return getService().getUserOrganizationsActivities(userId, start, end);
 	}
@@ -630,14 +627,9 @@ public class SocialActivityServiceUtil {
 	}
 
 	public static SocialActivityService getService() {
-		if (_service == null) {
-			_service = (SocialActivityService)PortalBeanLocatorUtil.locate(
-				SocialActivityService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static SocialActivityService _service;
+	private static volatile SocialActivityService _service;
 
 }

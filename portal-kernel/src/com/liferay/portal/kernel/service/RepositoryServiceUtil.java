@@ -14,7 +14,8 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Repository;
 
 /**
  * Provides the remote service utility for Repository. This utility wraps
@@ -35,13 +36,13 @@ public class RepositoryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.service.impl.RepositoryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.kernel.model.Repository addRepository(
+	public static Repository addRepository(
 			long groupId, long classNameId, long parentFolderId, String name,
 			String description, String portletId,
 			com.liferay.portal.kernel.util.UnicodeProperties
 				typeSettingsUnicodeProperties,
 			ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addRepository(
 			groupId, classNameId, parentFolderId, name, description, portletId,
@@ -49,13 +50,13 @@ public class RepositoryServiceUtil {
 	}
 
 	public static void checkRepository(long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().checkRepository(repositoryId);
 	}
 
 	public static void deleteRepository(long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteRepository(repositoryId);
 	}
@@ -69,43 +70,36 @@ public class RepositoryServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.portal.kernel.model.Repository getRepository(
-			long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static Repository getRepository(long repositoryId)
+		throws PortalException {
 
 		return getService().getRepository(repositoryId);
 	}
 
-	public static com.liferay.portal.kernel.model.Repository getRepository(
-			long groupId, String portletId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static Repository getRepository(long groupId, String portletId)
+		throws PortalException {
 
 		return getService().getRepository(groupId, portletId);
 	}
 
 	public static com.liferay.portal.kernel.util.UnicodeProperties
 			getTypeSettingsProperties(long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getTypeSettingsProperties(repositoryId);
 	}
 
 	public static void updateRepository(
 			long repositoryId, String name, String description)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().updateRepository(repositoryId, name, description);
 	}
 
 	public static RepositoryService getService() {
-		if (_service == null) {
-			_service = (RepositoryService)PortalBeanLocatorUtil.locate(
-				RepositoryService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static RepositoryService _service;
+	private static volatile RepositoryService _service;
 
 }

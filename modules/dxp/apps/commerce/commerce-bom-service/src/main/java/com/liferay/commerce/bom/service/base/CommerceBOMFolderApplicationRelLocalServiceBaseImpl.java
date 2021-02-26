@@ -16,6 +16,7 @@ package com.liferay.commerce.bom.service.base;
 
 import com.liferay.commerce.bom.model.CommerceBOMFolderApplicationRel;
 import com.liferay.commerce.bom.service.CommerceBOMFolderApplicationRelLocalService;
+import com.liferay.commerce.bom.service.CommerceBOMFolderApplicationRelLocalServiceUtil;
 import com.liferay.commerce.bom.service.persistence.CommerceBOMDefinitionPersistence;
 import com.liferay.commerce.bom.service.persistence.CommerceBOMEntryPersistence;
 import com.liferay.commerce.bom.service.persistence.CommerceBOMFolderApplicationRelPersistence;
@@ -50,6 +51,8 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -73,7 +76,7 @@ public abstract class CommerceBOMFolderApplicationRelLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceBOMFolderApplicationRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.bom.service.CommerceBOMFolderApplicationRelLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceBOMFolderApplicationRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceBOMFolderApplicationRelLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -725,11 +728,16 @@ public abstract class CommerceBOMFolderApplicationRelLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry.register(
 			"com.liferay.commerce.bom.model.CommerceBOMFolderApplicationRel",
 			commerceBOMFolderApplicationRelLocalService);
+
+		_setLocalServiceUtilService(
+			commerceBOMFolderApplicationRelLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.commerce.bom.model.CommerceBOMFolderApplicationRel");
+
+		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -772,6 +780,24 @@ public abstract class CommerceBOMFolderApplicationRelLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		CommerceBOMFolderApplicationRelLocalService
+			commerceBOMFolderApplicationRelLocalService) {
+
+		try {
+			Field field =
+				CommerceBOMFolderApplicationRelLocalServiceUtil.class.
+					getDeclaredField("_service");
+
+			field.setAccessible(true);
+
+			field.set(null, commerceBOMFolderApplicationRelLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

@@ -14,9 +14,12 @@
 
 package com.liferay.portal.workflow.kaleo.forms.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the remote service utility for KaleoProcess. This utility wraps
@@ -60,17 +63,15 @@ public class KaleoProcessServiceUtil {
 	 * @return the Kaleo process
 	 * @throws PortalException if a portal exception occurred
 	 */
-	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess
-			addKaleoProcess(
-				long groupId, long ddmStructureId,
-				java.util.Map<java.util.Locale, String> nameMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				long ddmTemplateId, String workflowDefinitionName,
-				int workflowDefinitionVersion,
-				com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPairs
-					kaleoTaskFormPairs,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static KaleoProcess addKaleoProcess(
+			long groupId, long ddmStructureId,
+			Map<java.util.Locale, String> nameMap,
+			Map<java.util.Locale, String> descriptionMap, long ddmTemplateId,
+			String workflowDefinitionName, int workflowDefinitionVersion,
+			com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPairs
+				kaleoTaskFormPairs,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addKaleoProcess(
 			groupId, ddmStructureId, nameMap, descriptionMap, ddmTemplateId,
@@ -85,9 +86,8 @@ public class KaleoProcessServiceUtil {
 	 * @return the deleted Kaleo process
 	 * @throws PortalException if a portal exception occurred
 	 */
-	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess
-			deleteKaleoProcess(long kaleoProcessId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static KaleoProcess deleteKaleoProcess(long kaleoProcessId)
+		throws PortalException {
 
 		return getService().deleteKaleoProcess(kaleoProcessId);
 	}
@@ -100,9 +100,8 @@ public class KaleoProcessServiceUtil {
 	 * @throws PortalException if a Kaleo process with the primary key could not
 	 be found
 	 */
-	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess
-			getKaleoProcess(long kaleoProcessId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static KaleoProcess getKaleoProcess(long kaleoProcessId)
+		throws PortalException {
 
 		return getService().getKaleoProcess(kaleoProcessId);
 	}
@@ -143,12 +142,9 @@ public class KaleoProcessServiceUtil {
 	 * @param orderByComparator the comparator to order the Kaleo processes
 	 * @return the range of matching Kaleo processes ordered by the comparator
 	 */
-	public static java.util.List
-		<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> search(
-			long groupId, String keywords, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess>
-					orderByComparator) {
+	public static List<KaleoProcess> search(
+		long groupId, String keywords, int start, int end,
+		OrderByComparator<KaleoProcess> orderByComparator) {
 
 		return getService().search(
 			groupId, keywords, start, end, orderByComparator);
@@ -193,17 +189,15 @@ public class KaleoProcessServiceUtil {
 	 * @return the Kaleo process
 	 * @throws PortalException if a portal exception occurred
 	 */
-	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess
-			updateKaleoProcess(
-				long kaleoProcessId, long ddmStructureId,
-				java.util.Map<java.util.Locale, String> nameMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				long ddmTemplateId, String workflowDefinitionName,
-				int workflowDefinitionVersion,
-				com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPairs
-					kaleoTaskFormPairs,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static KaleoProcess updateKaleoProcess(
+			long kaleoProcessId, long ddmStructureId,
+			Map<java.util.Locale, String> nameMap,
+			Map<java.util.Locale, String> descriptionMap, long ddmTemplateId,
+			String workflowDefinitionName, int workflowDefinitionVersion,
+			com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPairs
+				kaleoTaskFormPairs,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().updateKaleoProcess(
 			kaleoProcessId, ddmStructureId, nameMap, descriptionMap,
@@ -212,23 +206,9 @@ public class KaleoProcessServiceUtil {
 	}
 
 	public static KaleoProcessService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<KaleoProcessService, KaleoProcessService>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(KaleoProcessService.class);
-
-		ServiceTracker<KaleoProcessService, KaleoProcessService>
-			serviceTracker =
-				new ServiceTracker<KaleoProcessService, KaleoProcessService>(
-					bundle.getBundleContext(), KaleoProcessService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile KaleoProcessService _service;
 
 }

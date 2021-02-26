@@ -14,9 +14,7 @@
 
 package com.liferay.screens.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * Provides the remote service utility for ScreensRatingsEntry. This utility wraps
@@ -39,7 +37,7 @@ public class ScreensRatingsEntryServiceUtil {
 	 */
 	public static com.liferay.portal.kernel.json.JSONObject deleteRatingsEntry(
 			long classPK, String className, int ratingsLength)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().deleteRatingsEntry(
 			classPK, className, ratingsLength);
@@ -56,14 +54,14 @@ public class ScreensRatingsEntryServiceUtil {
 
 	public static com.liferay.portal.kernel.json.JSONObject getRatingsEntries(
 			long assetEntryId, int ratingsLength)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getRatingsEntries(assetEntryId, ratingsLength);
 	}
 
 	public static com.liferay.portal.kernel.json.JSONObject getRatingsEntries(
 			long classPK, String className, int ratingsLength)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getRatingsEntries(
 			classPK, className, ratingsLength);
@@ -71,34 +69,16 @@ public class ScreensRatingsEntryServiceUtil {
 
 	public static com.liferay.portal.kernel.json.JSONObject updateRatingsEntry(
 			long classPK, String className, double score, int ratingsLength)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateRatingsEntry(
 			classPK, className, score, ratingsLength);
 	}
 
 	public static ScreensRatingsEntryService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<ScreensRatingsEntryService, ScreensRatingsEntryService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			ScreensRatingsEntryService.class);
-
-		ServiceTracker<ScreensRatingsEntryService, ScreensRatingsEntryService>
-			serviceTracker =
-				new ServiceTracker
-					<ScreensRatingsEntryService, ScreensRatingsEntryService>(
-						bundle.getBundleContext(),
-						ScreensRatingsEntryService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile ScreensRatingsEntryService _service;
 
 }

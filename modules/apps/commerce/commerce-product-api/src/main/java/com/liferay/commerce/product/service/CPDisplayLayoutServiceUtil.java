@@ -14,9 +14,8 @@
 
 package com.liferay.commerce.product.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.product.model.CPDisplayLayout;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * Provides the remote service utility for CPDisplayLayout. This utility wraps
@@ -42,41 +41,38 @@ public class CPDisplayLayoutServiceUtil {
 	 * @deprecated As of Athanasius (7.3.x)
 	 */
 	@Deprecated
-	public static com.liferay.commerce.product.model.CPDisplayLayout
-			addCPDisplayLayout(
-				Class<?> clazz, long classPK, String layoutUuid,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPDisplayLayout addCPDisplayLayout(
+			Class<?> clazz, long classPK, String layoutUuid,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCPDisplayLayout(
 			clazz, classPK, layoutUuid, serviceContext);
 	}
 
-	public static com.liferay.commerce.product.model.CPDisplayLayout
-			addCPDisplayLayout(
-				long userId, long groupId, Class<?> clazz, long classPK,
-				String layoutUuid)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPDisplayLayout addCPDisplayLayout(
+			long userId, long groupId, Class<?> clazz, long classPK,
+			String layoutUuid)
+		throws PortalException {
 
 		return getService().addCPDisplayLayout(
 			userId, groupId, clazz, classPK, layoutUuid);
 	}
 
 	public static void deleteCPDisplayLayout(Class<?> clazz, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCPDisplayLayout(clazz, classPK);
 	}
 
 	public static void deleteCPDisplayLayout(long cpDisplayLayoutId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCPDisplayLayout(cpDisplayLayoutId);
 	}
 
-	public static com.liferay.commerce.product.model.CPDisplayLayout
-			fetchCPDisplayLayout(long cpDisplayLayoutId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPDisplayLayout fetchCPDisplayLayout(long cpDisplayLayoutId)
+		throws PortalException {
 
 		return getService().fetchCPDisplayLayout(cpDisplayLayoutId);
 	}
@@ -91,45 +87,27 @@ public class CPDisplayLayoutServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
-		<com.liferay.commerce.product.model.CPDisplayLayout>
-				searchCPDisplayLayout(
-					long companyId, long groupId, String className,
-					String keywords, int start, int end,
-					com.liferay.portal.kernel.search.Sort sort)
-			throws com.liferay.portal.kernel.exception.PortalException {
+		<CPDisplayLayout> searchCPDisplayLayout(
+				long companyId, long groupId, String className, String keywords,
+				int start, int end, com.liferay.portal.kernel.search.Sort sort)
+			throws PortalException {
 
 		return getService().searchCPDisplayLayout(
 			companyId, groupId, className, keywords, start, end, sort);
 	}
 
-	public static com.liferay.commerce.product.model.CPDisplayLayout
-			updateCPDisplayLayout(long cpDisplayLayoutId, String layoutUuid)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPDisplayLayout updateCPDisplayLayout(
+			long cpDisplayLayoutId, String layoutUuid)
+		throws PortalException {
 
 		return getService().updateCPDisplayLayout(
 			cpDisplayLayoutId, layoutUuid);
 	}
 
 	public static CPDisplayLayoutService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CPDisplayLayoutService, CPDisplayLayoutService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(CPDisplayLayoutService.class);
-
-		ServiceTracker<CPDisplayLayoutService, CPDisplayLayoutService>
-			serviceTracker =
-				new ServiceTracker
-					<CPDisplayLayoutService, CPDisplayLayoutService>(
-						bundle.getBundleContext(), CPDisplayLayoutService.class,
-						null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CPDisplayLayoutService _service;
 
 }

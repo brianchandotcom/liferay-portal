@@ -16,6 +16,7 @@ package com.liferay.commerce.pricing.service.base;
 
 import com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel;
 import com.liferay.commerce.pricing.service.CommercePricingClassCPDefinitionRelLocalService;
+import com.liferay.commerce.pricing.service.CommercePricingClassCPDefinitionRelLocalServiceUtil;
 import com.liferay.commerce.pricing.service.persistence.CommercePriceModifierFinder;
 import com.liferay.commerce.pricing.service.persistence.CommercePriceModifierPersistence;
 import com.liferay.commerce.pricing.service.persistence.CommercePriceModifierRelFinder;
@@ -54,6 +55,8 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -77,7 +80,7 @@ public abstract class CommercePricingClassCPDefinitionRelLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommercePricingClassCPDefinitionRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.pricing.service.CommercePricingClassCPDefinitionRelLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommercePricingClassCPDefinitionRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommercePricingClassCPDefinitionRelLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -835,11 +838,16 @@ public abstract class CommercePricingClassCPDefinitionRelLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry.register(
 			"com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel",
 			commercePricingClassCPDefinitionRelLocalService);
+
+		_setLocalServiceUtilService(
+			commercePricingClassCPDefinitionRelLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel");
+
+		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -882,6 +890,24 @@ public abstract class CommercePricingClassCPDefinitionRelLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		CommercePricingClassCPDefinitionRelLocalService
+			commercePricingClassCPDefinitionRelLocalService) {
+
+		try {
+			Field field =
+				CommercePricingClassCPDefinitionRelLocalServiceUtil.class.
+					getDeclaredField("_service");
+
+			field.setAccessible(true);
+
+			field.set(null, commercePricingClassCPDefinitionRelLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

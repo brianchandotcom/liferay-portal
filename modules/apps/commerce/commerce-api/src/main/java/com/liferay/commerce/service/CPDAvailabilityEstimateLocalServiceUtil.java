@@ -14,9 +14,16 @@
 
 package com.liferay.commerce.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.model.CPDAvailabilityEstimate;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for CPDAvailabilityEstimate. This utility wraps
@@ -48,10 +55,8 @@ public class CPDAvailabilityEstimateLocalServiceUtil {
 	 * @param cpdAvailabilityEstimate the cpd availability estimate
 	 * @return the cpd availability estimate that was added
 	 */
-	public static com.liferay.commerce.model.CPDAvailabilityEstimate
-		addCPDAvailabilityEstimate(
-			com.liferay.commerce.model.CPDAvailabilityEstimate
-				cpdAvailabilityEstimate) {
+	public static CPDAvailabilityEstimate addCPDAvailabilityEstimate(
+		CPDAvailabilityEstimate cpdAvailabilityEstimate) {
 
 		return getService().addCPDAvailabilityEstimate(cpdAvailabilityEstimate);
 	}
@@ -62,8 +67,8 @@ public class CPDAvailabilityEstimateLocalServiceUtil {
 	 * @param CPDAvailabilityEstimateId the primary key for the new cpd availability estimate
 	 * @return the new cpd availability estimate
 	 */
-	public static com.liferay.commerce.model.CPDAvailabilityEstimate
-		createCPDAvailabilityEstimate(long CPDAvailabilityEstimateId) {
+	public static CPDAvailabilityEstimate createCPDAvailabilityEstimate(
+		long CPDAvailabilityEstimateId) {
 
 		return getService().createCPDAvailabilityEstimate(
 			CPDAvailabilityEstimateId);
@@ -72,9 +77,9 @@ public class CPDAvailabilityEstimateLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -89,10 +94,8 @@ public class CPDAvailabilityEstimateLocalServiceUtil {
 	 * @param cpdAvailabilityEstimate the cpd availability estimate
 	 * @return the cpd availability estimate that was removed
 	 */
-	public static com.liferay.commerce.model.CPDAvailabilityEstimate
-		deleteCPDAvailabilityEstimate(
-			com.liferay.commerce.model.CPDAvailabilityEstimate
-				cpdAvailabilityEstimate) {
+	public static CPDAvailabilityEstimate deleteCPDAvailabilityEstimate(
+		CPDAvailabilityEstimate cpdAvailabilityEstimate) {
 
 		return getService().deleteCPDAvailabilityEstimate(
 			cpdAvailabilityEstimate);
@@ -109,9 +112,9 @@ public class CPDAvailabilityEstimateLocalServiceUtil {
 	 * @return the cpd availability estimate that was removed
 	 * @throws PortalException if a cpd availability estimate with the primary key could not be found
 	 */
-	public static com.liferay.commerce.model.CPDAvailabilityEstimate
-			deleteCPDAvailabilityEstimate(long CPDAvailabilityEstimateId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPDAvailabilityEstimate deleteCPDAvailabilityEstimate(
+			long CPDAvailabilityEstimateId)
+		throws PortalException {
 
 		return getService().deleteCPDAvailabilityEstimate(
 			CPDAvailabilityEstimateId);
@@ -144,23 +147,18 @@ public class CPDAvailabilityEstimateLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -170,9 +168,7 @@ public class CPDAvailabilityEstimateLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -188,9 +184,8 @@ public class CPDAvailabilityEstimateLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -208,10 +203,9 @@ public class CPDAvailabilityEstimateLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -223,9 +217,7 @@ public class CPDAvailabilityEstimateLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -237,14 +229,14 @@ public class CPDAvailabilityEstimateLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.commerce.model.CPDAvailabilityEstimate
-		fetchCPDAvailabilityEstimate(long CPDAvailabilityEstimateId) {
+	public static CPDAvailabilityEstimate fetchCPDAvailabilityEstimate(
+		long CPDAvailabilityEstimateId) {
 
 		return getService().fetchCPDAvailabilityEstimate(
 			CPDAvailabilityEstimateId);
@@ -254,14 +246,14 @@ public class CPDAvailabilityEstimateLocalServiceUtil {
 	 * @deprecated As of Mueller (7.2.x)
 	 */
 	@Deprecated
-	public static com.liferay.commerce.model.CPDAvailabilityEstimate
+	public static CPDAvailabilityEstimate
 		fetchCPDAvailabilityEstimateByCPDefinitionId(long cpDefinitionId) {
 
 		return getService().fetchCPDAvailabilityEstimateByCPDefinitionId(
 			cpDefinitionId);
 	}
 
-	public static com.liferay.commerce.model.CPDAvailabilityEstimate
+	public static CPDAvailabilityEstimate
 		fetchCPDAvailabilityEstimateByCProductId(long cProductId) {
 
 		return getService().fetchCPDAvailabilityEstimateByCProductId(
@@ -275,7 +267,7 @@ public class CPDAvailabilityEstimateLocalServiceUtil {
 	 * @param companyId the primary key of the company
 	 * @return the matching cpd availability estimate, or <code>null</code> if a matching cpd availability estimate could not be found
 	 */
-	public static com.liferay.commerce.model.CPDAvailabilityEstimate
+	public static CPDAvailabilityEstimate
 		fetchCPDAvailabilityEstimateByUuidAndCompanyId(
 			String uuid, long companyId) {
 
@@ -296,9 +288,9 @@ public class CPDAvailabilityEstimateLocalServiceUtil {
 	 * @return the cpd availability estimate
 	 * @throws PortalException if a cpd availability estimate with the primary key could not be found
 	 */
-	public static com.liferay.commerce.model.CPDAvailabilityEstimate
-			getCPDAvailabilityEstimate(long CPDAvailabilityEstimateId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPDAvailabilityEstimate getCPDAvailabilityEstimate(
+			long CPDAvailabilityEstimateId)
+		throws PortalException {
 
 		return getService().getCPDAvailabilityEstimate(
 			CPDAvailabilityEstimateId);
@@ -312,10 +304,10 @@ public class CPDAvailabilityEstimateLocalServiceUtil {
 	 * @return the matching cpd availability estimate
 	 * @throws PortalException if a matching cpd availability estimate could not be found
 	 */
-	public static com.liferay.commerce.model.CPDAvailabilityEstimate
+	public static CPDAvailabilityEstimate
 			getCPDAvailabilityEstimateByUuidAndCompanyId(
 				String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCPDAvailabilityEstimateByUuidAndCompanyId(
 			uuid, companyId);
@@ -332,9 +324,8 @@ public class CPDAvailabilityEstimateLocalServiceUtil {
 	 * @param end the upper bound of the range of cpd availability estimates (not inclusive)
 	 * @return the range of cpd availability estimates
 	 */
-	public static java.util.List
-		<com.liferay.commerce.model.CPDAvailabilityEstimate>
-			getCPDAvailabilityEstimates(int start, int end) {
+	public static List<CPDAvailabilityEstimate> getCPDAvailabilityEstimates(
+		int start, int end) {
 
 		return getService().getCPDAvailabilityEstimates(start, end);
 	}
@@ -375,9 +366,8 @@ public class CPDAvailabilityEstimateLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -392,10 +382,8 @@ public class CPDAvailabilityEstimateLocalServiceUtil {
 	 * @param cpdAvailabilityEstimate the cpd availability estimate
 	 * @return the cpd availability estimate that was updated
 	 */
-	public static com.liferay.commerce.model.CPDAvailabilityEstimate
-		updateCPDAvailabilityEstimate(
-			com.liferay.commerce.model.CPDAvailabilityEstimate
-				cpdAvailabilityEstimate) {
+	public static CPDAvailabilityEstimate updateCPDAvailabilityEstimate(
+		CPDAvailabilityEstimate cpdAvailabilityEstimate) {
 
 		return getService().updateCPDAvailabilityEstimate(
 			cpdAvailabilityEstimate);
@@ -405,24 +393,23 @@ public class CPDAvailabilityEstimateLocalServiceUtil {
 	 * @deprecated As of Mueller (7.2.x)
 	 */
 	@Deprecated
-	public static com.liferay.commerce.model.CPDAvailabilityEstimate
-			updateCPDAvailabilityEstimate(
-				long cpdAvailabilityEstimateId, long cpDefinitionId,
-				long commerceAvailabilityEstimateId,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPDAvailabilityEstimate updateCPDAvailabilityEstimate(
+			long cpdAvailabilityEstimateId, long cpDefinitionId,
+			long commerceAvailabilityEstimateId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().updateCPDAvailabilityEstimate(
 			cpdAvailabilityEstimateId, cpDefinitionId,
 			commerceAvailabilityEstimateId, serviceContext);
 	}
 
-	public static com.liferay.commerce.model.CPDAvailabilityEstimate
+	public static CPDAvailabilityEstimate
 			updateCPDAvailabilityEstimateByCProductId(
 				long cpdAvailabilityEstimateId, long cProductId,
 				long commerceAvailabilityEstimateId,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateCPDAvailabilityEstimateByCProductId(
 			cpdAvailabilityEstimateId, cProductId,
@@ -430,29 +417,9 @@ public class CPDAvailabilityEstimateLocalServiceUtil {
 	}
 
 	public static CPDAvailabilityEstimateLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CPDAvailabilityEstimateLocalService,
-		 CPDAvailabilityEstimateLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CPDAvailabilityEstimateLocalService.class);
-
-		ServiceTracker
-			<CPDAvailabilityEstimateLocalService,
-			 CPDAvailabilityEstimateLocalService> serviceTracker =
-				new ServiceTracker
-					<CPDAvailabilityEstimateLocalService,
-					 CPDAvailabilityEstimateLocalService>(
-						 bundle.getBundleContext(),
-						 CPDAvailabilityEstimateLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CPDAvailabilityEstimateLocalService _service;
 
 }

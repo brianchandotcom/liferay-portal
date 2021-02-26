@@ -14,9 +14,11 @@
 
 package com.liferay.dynamic.data.mapping.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for DDMStructureVersion. This utility wraps
@@ -37,9 +39,9 @@ public class DDMStructureVersionServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.dynamic.data.mapping.service.impl.DDMStructureVersionServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.dynamic.data.mapping.model.DDMStructureVersion
-			getLatestStructureVersion(long structureId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static DDMStructureVersion getLatestStructureVersion(
+			long structureId)
+		throws PortalException {
 
 		return getService().getLatestStructureVersion(structureId);
 	}
@@ -53,54 +55,32 @@ public class DDMStructureVersionServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.dynamic.data.mapping.model.DDMStructureVersion
-			getStructureVersion(long structureVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static DDMStructureVersion getStructureVersion(
+			long structureVersionId)
+		throws PortalException {
 
 		return getService().getStructureVersion(structureVersionId);
 	}
 
-	public static java.util.List
-		<com.liferay.dynamic.data.mapping.model.DDMStructureVersion>
-				getStructureVersions(
-					long structureId, int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						<com.liferay.dynamic.data.mapping.model.
-							DDMStructureVersion> orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<DDMStructureVersion> getStructureVersions(
+			long structureId, int start, int end,
+			OrderByComparator<DDMStructureVersion> orderByComparator)
+		throws PortalException {
 
 		return getService().getStructureVersions(
 			structureId, start, end, orderByComparator);
 	}
 
 	public static int getStructureVersionsCount(long structureId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getStructureVersionsCount(structureId);
 	}
 
 	public static DDMStructureVersionService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<DDMStructureVersionService, DDMStructureVersionService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			DDMStructureVersionService.class);
-
-		ServiceTracker<DDMStructureVersionService, DDMStructureVersionService>
-			serviceTracker =
-				new ServiceTracker
-					<DDMStructureVersionService, DDMStructureVersionService>(
-						bundle.getBundleContext(),
-						DDMStructureVersionService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile DDMStructureVersionService _service;
 
 }

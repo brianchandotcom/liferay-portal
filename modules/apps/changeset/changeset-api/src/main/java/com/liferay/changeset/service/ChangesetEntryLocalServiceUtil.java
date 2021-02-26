@@ -14,9 +14,17 @@
 
 package com.liferay.changeset.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.changeset.model.ChangesetEntry;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * Provides the local service utility for ChangesetEntry. This utility wraps
@@ -48,16 +56,16 @@ public class ChangesetEntryLocalServiceUtil {
 	 * @param changesetEntry the changeset entry
 	 * @return the changeset entry that was added
 	 */
-	public static com.liferay.changeset.model.ChangesetEntry addChangesetEntry(
-		com.liferay.changeset.model.ChangesetEntry changesetEntry) {
+	public static ChangesetEntry addChangesetEntry(
+		ChangesetEntry changesetEntry) {
 
 		return getService().addChangesetEntry(changesetEntry);
 	}
 
-	public static com.liferay.changeset.model.ChangesetEntry addChangesetEntry(
+	public static ChangesetEntry addChangesetEntry(
 			long userId, long changesetCollectionId, long classNameId,
 			long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addChangesetEntry(
 			userId, changesetCollectionId, classNameId, classPK);
@@ -69,18 +77,16 @@ public class ChangesetEntryLocalServiceUtil {
 	 * @param changesetEntryId the primary key for the new changeset entry
 	 * @return the new changeset entry
 	 */
-	public static com.liferay.changeset.model.ChangesetEntry
-		createChangesetEntry(long changesetEntryId) {
-
+	public static ChangesetEntry createChangesetEntry(long changesetEntryId) {
 		return getService().createChangesetEntry(changesetEntryId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -89,9 +95,7 @@ public class ChangesetEntryLocalServiceUtil {
 		getService().deleteChangesetEntries(changesetCollectionId);
 	}
 
-	public static void deleteChangesetEntries(
-		java.util.Set<Long> changesetEntryIds) {
-
+	public static void deleteChangesetEntries(Set<Long> changesetEntryIds) {
 		getService().deleteChangesetEntries(changesetEntryIds);
 	}
 
@@ -105,9 +109,8 @@ public class ChangesetEntryLocalServiceUtil {
 	 * @param changesetEntry the changeset entry
 	 * @return the changeset entry that was removed
 	 */
-	public static com.liferay.changeset.model.ChangesetEntry
-		deleteChangesetEntry(
-			com.liferay.changeset.model.ChangesetEntry changesetEntry) {
+	public static ChangesetEntry deleteChangesetEntry(
+		ChangesetEntry changesetEntry) {
 
 		return getService().deleteChangesetEntry(changesetEntry);
 	}
@@ -123,9 +126,8 @@ public class ChangesetEntryLocalServiceUtil {
 	 * @return the changeset entry that was removed
 	 * @throws PortalException if a changeset entry with the primary key could not be found
 	 */
-	public static com.liferay.changeset.model.ChangesetEntry
-			deleteChangesetEntry(long changesetEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static ChangesetEntry deleteChangesetEntry(long changesetEntryId)
+		throws PortalException {
 
 		return getService().deleteChangesetEntry(changesetEntryId);
 	}
@@ -139,23 +141,18 @@ public class ChangesetEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -165,9 +162,7 @@ public class ChangesetEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -183,9 +178,8 @@ public class ChangesetEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -203,10 +197,9 @@ public class ChangesetEntryLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -218,9 +211,7 @@ public class ChangesetEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -232,30 +223,26 @@ public class ChangesetEntryLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.changeset.model.ChangesetEntry
-		fetchChangesetEntry(long changesetEntryId) {
-
+	public static ChangesetEntry fetchChangesetEntry(long changesetEntryId) {
 		return getService().fetchChangesetEntry(changesetEntryId);
 	}
 
-	public static com.liferay.changeset.model.ChangesetEntry
-		fetchChangesetEntry(
-			long changesetCollectionId, long classNameId, long classPK) {
+	public static ChangesetEntry fetchChangesetEntry(
+		long changesetCollectionId, long classNameId, long classPK) {
 
 		return getService().fetchChangesetEntry(
 			changesetCollectionId, classNameId, classPK);
 	}
 
-	public static com.liferay.changeset.model.ChangesetEntry
-			fetchOrAddChangesetEntry(
-				long changesetCollectionId, long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static ChangesetEntry fetchOrAddChangesetEntry(
+			long changesetCollectionId, long classNameId, long classPK)
+		throws PortalException {
 
 		return getService().fetchOrAddChangesetEntry(
 			changesetCollectionId, classNameId, classPK);
@@ -278,14 +265,12 @@ public class ChangesetEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of changeset entries (not inclusive)
 	 * @return the range of changeset entries
 	 */
-	public static java.util.List<com.liferay.changeset.model.ChangesetEntry>
-		getChangesetEntries(int start, int end) {
-
+	public static List<ChangesetEntry> getChangesetEntries(int start, int end) {
 		return getService().getChangesetEntries(start, end);
 	}
 
-	public static java.util.List<com.liferay.changeset.model.ChangesetEntry>
-		getChangesetEntries(long changesetCollectionId, long classNameId) {
+	public static List<ChangesetEntry> getChangesetEntries(
+		long changesetCollectionId, long classNameId) {
 
 		return getService().getChangesetEntries(
 			changesetCollectionId, classNameId);
@@ -312,8 +297,7 @@ public class ChangesetEntryLocalServiceUtil {
 	}
 
 	public static long getChangesetEntriesCount(
-		long changesetCollectionId, long classNameId,
-		java.util.Set<Long> classPKs) {
+		long changesetCollectionId, long classNameId, Set<Long> classPKs) {
 
 		return getService().getChangesetEntriesCount(
 			changesetCollectionId, classNameId, classPKs);
@@ -326,14 +310,13 @@ public class ChangesetEntryLocalServiceUtil {
 	 * @return the changeset entry
 	 * @throws PortalException if a changeset entry with the primary key could not be found
 	 */
-	public static com.liferay.changeset.model.ChangesetEntry getChangesetEntry(
-			long changesetEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static ChangesetEntry getChangesetEntry(long changesetEntryId)
+		throws PortalException {
 
 		return getService().getChangesetEntry(changesetEntryId);
 	}
 
-	public static com.liferay.changeset.model.ChangesetEntry getChangesetEntry(
+	public static ChangesetEntry getChangesetEntry(
 			long changesetCollectionId, long classNameId, long classPK)
 		throws com.liferay.changeset.exception.NoSuchEntryException {
 
@@ -360,9 +343,8 @@ public class ChangesetEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -377,35 +359,16 @@ public class ChangesetEntryLocalServiceUtil {
 	 * @param changesetEntry the changeset entry
 	 * @return the changeset entry that was updated
 	 */
-	public static com.liferay.changeset.model.ChangesetEntry
-		updateChangesetEntry(
-			com.liferay.changeset.model.ChangesetEntry changesetEntry) {
+	public static ChangesetEntry updateChangesetEntry(
+		ChangesetEntry changesetEntry) {
 
 		return getService().updateChangesetEntry(changesetEntry);
 	}
 
 	public static ChangesetEntryLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<ChangesetEntryLocalService, ChangesetEntryLocalService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			ChangesetEntryLocalService.class);
-
-		ServiceTracker<ChangesetEntryLocalService, ChangesetEntryLocalService>
-			serviceTracker =
-				new ServiceTracker
-					<ChangesetEntryLocalService, ChangesetEntryLocalService>(
-						bundle.getBundleContext(),
-						ChangesetEntryLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile ChangesetEntryLocalService _service;
 
 }

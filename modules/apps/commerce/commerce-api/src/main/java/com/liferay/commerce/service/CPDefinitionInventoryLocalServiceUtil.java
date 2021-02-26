@@ -14,9 +14,16 @@
 
 package com.liferay.commerce.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.model.CPDefinitionInventory;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for CPDefinitionInventory. This utility wraps
@@ -48,23 +55,20 @@ public class CPDefinitionInventoryLocalServiceUtil {
 	 * @param cpDefinitionInventory the cp definition inventory
 	 * @return the cp definition inventory that was added
 	 */
-	public static com.liferay.commerce.model.CPDefinitionInventory
-		addCPDefinitionInventory(
-			com.liferay.commerce.model.CPDefinitionInventory
-				cpDefinitionInventory) {
+	public static CPDefinitionInventory addCPDefinitionInventory(
+		CPDefinitionInventory cpDefinitionInventory) {
 
 		return getService().addCPDefinitionInventory(cpDefinitionInventory);
 	}
 
-	public static com.liferay.commerce.model.CPDefinitionInventory
-			addCPDefinitionInventory(
-				long userId, long cpDefinitionId,
-				String cpDefinitionInventoryEngine, String lowStockActivity,
-				boolean displayAvailability, boolean displayStockQuantity,
-				int minStockQuantity, boolean backOrders, int minOrderQuantity,
-				int maxOrderQuantity, String allowedOrderQuantities,
-				int multipleOrderQuantity)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPDefinitionInventory addCPDefinitionInventory(
+			long userId, long cpDefinitionId,
+			String cpDefinitionInventoryEngine, String lowStockActivity,
+			boolean displayAvailability, boolean displayStockQuantity,
+			int minStockQuantity, boolean backOrders, int minOrderQuantity,
+			int maxOrderQuantity, String allowedOrderQuantities,
+			int multipleOrderQuantity)
+		throws PortalException {
 
 		return getService().addCPDefinitionInventory(
 			userId, cpDefinitionId, cpDefinitionInventoryEngine,
@@ -86,8 +90,8 @@ public class CPDefinitionInventoryLocalServiceUtil {
 	 * @param CPDefinitionInventoryId the primary key for the new cp definition inventory
 	 * @return the new cp definition inventory
 	 */
-	public static com.liferay.commerce.model.CPDefinitionInventory
-		createCPDefinitionInventory(long CPDefinitionInventoryId) {
+	public static CPDefinitionInventory createCPDefinitionInventory(
+		long CPDefinitionInventoryId) {
 
 		return getService().createCPDefinitionInventory(
 			CPDefinitionInventoryId);
@@ -96,9 +100,9 @@ public class CPDefinitionInventoryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -113,10 +117,8 @@ public class CPDefinitionInventoryLocalServiceUtil {
 	 * @param cpDefinitionInventory the cp definition inventory
 	 * @return the cp definition inventory that was removed
 	 */
-	public static com.liferay.commerce.model.CPDefinitionInventory
-		deleteCPDefinitionInventory(
-			com.liferay.commerce.model.CPDefinitionInventory
-				cpDefinitionInventory) {
+	public static CPDefinitionInventory deleteCPDefinitionInventory(
+		CPDefinitionInventory cpDefinitionInventory) {
 
 		return getService().deleteCPDefinitionInventory(cpDefinitionInventory);
 	}
@@ -132,9 +134,9 @@ public class CPDefinitionInventoryLocalServiceUtil {
 	 * @return the cp definition inventory that was removed
 	 * @throws PortalException if a cp definition inventory with the primary key could not be found
 	 */
-	public static com.liferay.commerce.model.CPDefinitionInventory
-			deleteCPDefinitionInventory(long CPDefinitionInventoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPDefinitionInventory deleteCPDefinitionInventory(
+			long CPDefinitionInventoryId)
+		throws PortalException {
 
 		return getService().deleteCPDefinitionInventory(
 			CPDefinitionInventoryId);
@@ -150,23 +152,18 @@ public class CPDefinitionInventoryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -176,9 +173,7 @@ public class CPDefinitionInventoryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -194,9 +189,8 @@ public class CPDefinitionInventoryLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -214,10 +208,9 @@ public class CPDefinitionInventoryLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -229,9 +222,7 @@ public class CPDefinitionInventoryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -243,19 +234,19 @@ public class CPDefinitionInventoryLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.commerce.model.CPDefinitionInventory
-		fetchCPDefinitionInventory(long CPDefinitionInventoryId) {
+	public static CPDefinitionInventory fetchCPDefinitionInventory(
+		long CPDefinitionInventoryId) {
 
 		return getService().fetchCPDefinitionInventory(CPDefinitionInventoryId);
 	}
 
-	public static com.liferay.commerce.model.CPDefinitionInventory
+	public static CPDefinitionInventory
 		fetchCPDefinitionInventoryByCPDefinitionId(long cpDefinitionId) {
 
 		return getService().fetchCPDefinitionInventoryByCPDefinitionId(
@@ -269,7 +260,7 @@ public class CPDefinitionInventoryLocalServiceUtil {
 	 * @param groupId the primary key of the group
 	 * @return the matching cp definition inventory, or <code>null</code> if a matching cp definition inventory could not be found
 	 */
-	public static com.liferay.commerce.model.CPDefinitionInventory
+	public static CPDefinitionInventory
 		fetchCPDefinitionInventoryByUuidAndGroupId(String uuid, long groupId) {
 
 		return getService().fetchCPDefinitionInventoryByUuidAndGroupId(
@@ -293,9 +284,8 @@ public class CPDefinitionInventoryLocalServiceUtil {
 	 * @param end the upper bound of the range of cp definition inventories (not inclusive)
 	 * @return the range of cp definition inventories
 	 */
-	public static java.util.List
-		<com.liferay.commerce.model.CPDefinitionInventory>
-			getCPDefinitionInventories(int start, int end) {
+	public static List<CPDefinitionInventory> getCPDefinitionInventories(
+		int start, int end) {
 
 		return getService().getCPDefinitionInventories(start, end);
 	}
@@ -307,10 +297,9 @@ public class CPDefinitionInventoryLocalServiceUtil {
 	 * @param companyId the primary key of the company
 	 * @return the matching cp definition inventories, or an empty list if no matches were found
 	 */
-	public static java.util.List
-		<com.liferay.commerce.model.CPDefinitionInventory>
-			getCPDefinitionInventoriesByUuidAndCompanyId(
-				String uuid, long companyId) {
+	public static List<CPDefinitionInventory>
+		getCPDefinitionInventoriesByUuidAndCompanyId(
+			String uuid, long companyId) {
 
 		return getService().getCPDefinitionInventoriesByUuidAndCompanyId(
 			uuid, companyId);
@@ -326,13 +315,10 @@ public class CPDefinitionInventoryLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the range of matching cp definition inventories, or an empty list if no matches were found
 	 */
-	public static java.util.List
-		<com.liferay.commerce.model.CPDefinitionInventory>
-			getCPDefinitionInventoriesByUuidAndCompanyId(
-				String uuid, long companyId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.commerce.model.CPDefinitionInventory>
-						orderByComparator) {
+	public static List<CPDefinitionInventory>
+		getCPDefinitionInventoriesByUuidAndCompanyId(
+			String uuid, long companyId, int start, int end,
+			OrderByComparator<CPDefinitionInventory> orderByComparator) {
 
 		return getService().getCPDefinitionInventoriesByUuidAndCompanyId(
 			uuid, companyId, start, end, orderByComparator);
@@ -354,9 +340,9 @@ public class CPDefinitionInventoryLocalServiceUtil {
 	 * @return the cp definition inventory
 	 * @throws PortalException if a cp definition inventory with the primary key could not be found
 	 */
-	public static com.liferay.commerce.model.CPDefinitionInventory
-			getCPDefinitionInventory(long CPDefinitionInventoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPDefinitionInventory getCPDefinitionInventory(
+			long CPDefinitionInventoryId)
+		throws PortalException {
 
 		return getService().getCPDefinitionInventory(CPDefinitionInventoryId);
 	}
@@ -369,9 +355,9 @@ public class CPDefinitionInventoryLocalServiceUtil {
 	 * @return the matching cp definition inventory
 	 * @throws PortalException if a matching cp definition inventory could not be found
 	 */
-	public static com.liferay.commerce.model.CPDefinitionInventory
+	public static CPDefinitionInventory
 			getCPDefinitionInventoryByUuidAndGroupId(String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCPDefinitionInventoryByUuidAndGroupId(
 			uuid, groupId);
@@ -404,9 +390,8 @@ public class CPDefinitionInventoryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -421,23 +406,19 @@ public class CPDefinitionInventoryLocalServiceUtil {
 	 * @param cpDefinitionInventory the cp definition inventory
 	 * @return the cp definition inventory that was updated
 	 */
-	public static com.liferay.commerce.model.CPDefinitionInventory
-		updateCPDefinitionInventory(
-			com.liferay.commerce.model.CPDefinitionInventory
-				cpDefinitionInventory) {
+	public static CPDefinitionInventory updateCPDefinitionInventory(
+		CPDefinitionInventory cpDefinitionInventory) {
 
 		return getService().updateCPDefinitionInventory(cpDefinitionInventory);
 	}
 
-	public static com.liferay.commerce.model.CPDefinitionInventory
-			updateCPDefinitionInventory(
-				long cpDefinitionInventoryId,
-				String cpDefinitionInventoryEngine, String lowStockActivity,
-				boolean displayAvailability, boolean displayStockQuantity,
-				int minStockQuantity, boolean backOrders, int minOrderQuantity,
-				int maxOrderQuantity, String allowedOrderQuantities,
-				int multipleOrderQuantity)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPDefinitionInventory updateCPDefinitionInventory(
+			long cpDefinitionInventoryId, String cpDefinitionInventoryEngine,
+			String lowStockActivity, boolean displayAvailability,
+			boolean displayStockQuantity, int minStockQuantity,
+			boolean backOrders, int minOrderQuantity, int maxOrderQuantity,
+			String allowedOrderQuantities, int multipleOrderQuantity)
+		throws PortalException {
 
 		return getService().updateCPDefinitionInventory(
 			cpDefinitionInventoryId, cpDefinitionInventoryEngine,
@@ -447,29 +428,9 @@ public class CPDefinitionInventoryLocalServiceUtil {
 	}
 
 	public static CPDefinitionInventoryLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CPDefinitionInventoryLocalService, CPDefinitionInventoryLocalService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CPDefinitionInventoryLocalService.class);
-
-		ServiceTracker
-			<CPDefinitionInventoryLocalService,
-			 CPDefinitionInventoryLocalService> serviceTracker =
-				new ServiceTracker
-					<CPDefinitionInventoryLocalService,
-					 CPDefinitionInventoryLocalService>(
-						 bundle.getBundleContext(),
-						 CPDefinitionInventoryLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CPDefinitionInventoryLocalService _service;
 
 }

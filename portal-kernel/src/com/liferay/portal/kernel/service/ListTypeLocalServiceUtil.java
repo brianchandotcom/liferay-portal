@@ -14,7 +14,16 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.ListType;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for ListType. This utility wraps
@@ -46,15 +55,11 @@ public class ListTypeLocalServiceUtil {
 	 * @param listType the list type
 	 * @return the list type that was added
 	 */
-	public static com.liferay.portal.kernel.model.ListType addListType(
-		com.liferay.portal.kernel.model.ListType listType) {
-
+	public static ListType addListType(ListType listType) {
 		return getService().addListType(listType);
 	}
 
-	public static com.liferay.portal.kernel.model.ListType addListType(
-		String name, String type) {
-
+	public static ListType addListType(String name, String type) {
 		return getService().addListType(name, type);
 	}
 
@@ -64,18 +69,16 @@ public class ListTypeLocalServiceUtil {
 	 * @param listTypeId the primary key for the new list type
 	 * @return the new list type
 	 */
-	public static com.liferay.portal.kernel.model.ListType createListType(
-		long listTypeId) {
-
+	public static ListType createListType(long listTypeId) {
 		return getService().createListType(listTypeId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -90,9 +93,7 @@ public class ListTypeLocalServiceUtil {
 	 * @param listType the list type
 	 * @return the list type that was removed
 	 */
-	public static com.liferay.portal.kernel.model.ListType deleteListType(
-		com.liferay.portal.kernel.model.ListType listType) {
-
+	public static ListType deleteListType(ListType listType) {
 		return getService().deleteListType(listType);
 	}
 
@@ -107,9 +108,8 @@ public class ListTypeLocalServiceUtil {
 	 * @return the list type that was removed
 	 * @throws PortalException if a list type with the primary key could not be found
 	 */
-	public static com.liferay.portal.kernel.model.ListType deleteListType(
-			long listTypeId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static ListType deleteListType(long listTypeId)
+		throws PortalException {
 
 		return getService().deleteListType(listTypeId);
 	}
@@ -117,23 +117,18 @@ public class ListTypeLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -143,9 +138,7 @@ public class ListTypeLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -161,9 +154,8 @@ public class ListTypeLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -181,10 +173,9 @@ public class ListTypeLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -196,9 +187,7 @@ public class ListTypeLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -210,15 +199,13 @@ public class ListTypeLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.portal.kernel.model.ListType fetchListType(
-		long listTypeId) {
-
+	public static ListType fetchListType(long listTypeId) {
 		return getService().fetchListType(listTypeId);
 	}
 
@@ -242,16 +229,11 @@ public class ListTypeLocalServiceUtil {
 	 * @return the list type
 	 * @throws PortalException if a list type with the primary key could not be found
 	 */
-	public static com.liferay.portal.kernel.model.ListType getListType(
-			long listTypeId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static ListType getListType(long listTypeId) throws PortalException {
 		return getService().getListType(listTypeId);
 	}
 
-	public static com.liferay.portal.kernel.model.ListType getListType(
-		String name, String type) {
-
+	public static ListType getListType(String name, String type) {
 		return getService().getListType(name, type);
 	}
 
@@ -266,15 +248,11 @@ public class ListTypeLocalServiceUtil {
 	 * @param end the upper bound of the range of list types (not inclusive)
 	 * @return the range of list types
 	 */
-	public static java.util.List<com.liferay.portal.kernel.model.ListType>
-		getListTypes(int start, int end) {
-
+	public static List<ListType> getListTypes(int start, int end) {
 		return getService().getListTypes(start, end);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.ListType>
-		getListTypes(String type) {
-
+	public static List<ListType> getListTypes(String type) {
 		return getService().getListTypes(type);
 	}
 
@@ -299,9 +277,8 @@ public class ListTypeLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -316,33 +293,26 @@ public class ListTypeLocalServiceUtil {
 	 * @param listType the list type
 	 * @return the list type that was updated
 	 */
-	public static com.liferay.portal.kernel.model.ListType updateListType(
-		com.liferay.portal.kernel.model.ListType listType) {
-
+	public static ListType updateListType(ListType listType) {
 		return getService().updateListType(listType);
 	}
 
 	public static void validate(long listTypeId, long classNameId, String type)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().validate(listTypeId, classNameId, type);
 	}
 
 	public static void validate(long listTypeId, String type)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().validate(listTypeId, type);
 	}
 
 	public static ListTypeLocalService getService() {
-		if (_service == null) {
-			_service = (ListTypeLocalService)PortalBeanLocatorUtil.locate(
-				ListTypeLocalService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static ListTypeLocalService _service;
+	private static volatile ListTypeLocalService _service;
 
 }

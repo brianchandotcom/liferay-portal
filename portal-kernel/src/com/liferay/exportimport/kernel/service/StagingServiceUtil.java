@@ -14,7 +14,11 @@
 
 package com.liferay.exportimport.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for Staging. This utility wraps
@@ -36,13 +40,13 @@ public class StagingServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portlet.exportimport.service.impl.StagingServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static void cleanUpStagingRequest(long stagingRequestId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().cleanUpStagingRequest(stagingRequestId);
 	}
 
 	public static long createStagingRequest(long groupId, String checksum)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().createStagingRequest(groupId, checksum);
 	}
@@ -58,15 +62,15 @@ public class StagingServiceUtil {
 
 	public static boolean hasRemoteLayout(
 			String uuid, long groupId, boolean privateLayout)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().hasRemoteLayout(uuid, groupId, privateLayout);
 	}
 
 	public static void propagateExportImportLifecycleEvent(
 			int code, int processFlag, String processId,
-			java.util.List<java.io.Serializable> arguments)
-		throws com.liferay.portal.kernel.exception.PortalException {
+			List<Serializable> arguments)
+		throws PortalException {
 
 		getService().propagateExportImportLifecycleEvent(
 			code, processFlag, processId, arguments);
@@ -77,7 +81,7 @@ public class StagingServiceUtil {
 				long stagingRequestId,
 				com.liferay.exportimport.kernel.model.ExportImportConfiguration
 					exportImportConfiguration)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().publishStagingRequest(
 			stagingRequestId, exportImportConfiguration);
@@ -85,20 +89,15 @@ public class StagingServiceUtil {
 
 	public static void updateStagingRequest(
 			long stagingRequestId, String fileName, byte[] bytes)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().updateStagingRequest(stagingRequestId, fileName, bytes);
 	}
 
 	public static StagingService getService() {
-		if (_service == null) {
-			_service = (StagingService)PortalBeanLocatorUtil.locate(
-				StagingService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static StagingService _service;
+	private static volatile StagingService _service;
 
 }

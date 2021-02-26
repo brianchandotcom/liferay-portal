@@ -14,7 +14,9 @@
 
 package com.liferay.exportimport.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.io.InputStream;
 
 /**
  * Provides the remote service utility for ExportImport. This utility wraps
@@ -38,7 +40,7 @@ public class ExportImportServiceUtil {
 	public static java.io.File exportLayoutsAsFile(
 			com.liferay.exportimport.kernel.model.ExportImportConfiguration
 				exportImportConfiguration)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().exportLayoutsAsFile(exportImportConfiguration);
 	}
@@ -46,7 +48,7 @@ public class ExportImportServiceUtil {
 	public static long exportLayoutsAsFileInBackground(
 			com.liferay.exportimport.kernel.model.ExportImportConfiguration
 				exportImportConfiguration)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().exportLayoutsAsFileInBackground(
 			exportImportConfiguration);
@@ -54,7 +56,7 @@ public class ExportImportServiceUtil {
 
 	public static long exportLayoutsAsFileInBackground(
 			long exportImportConfigurationId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().exportLayoutsAsFileInBackground(
 			exportImportConfigurationId);
@@ -63,7 +65,7 @@ public class ExportImportServiceUtil {
 	public static java.io.File exportPortletInfoAsFile(
 			com.liferay.exportimport.kernel.model.ExportImportConfiguration
 				exportImportConfiguration)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().exportPortletInfoAsFile(exportImportConfiguration);
 	}
@@ -71,7 +73,7 @@ public class ExportImportServiceUtil {
 	public static long exportPortletInfoAsFileInBackground(
 			com.liferay.exportimport.kernel.model.ExportImportConfiguration
 				exportImportConfiguration)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().exportPortletInfoAsFileInBackground(
 			exportImportConfiguration);
@@ -90,7 +92,7 @@ public class ExportImportServiceUtil {
 			com.liferay.exportimport.kernel.model.ExportImportConfiguration
 				exportImportConfiguration,
 			java.io.File file)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().importLayouts(exportImportConfiguration, file);
 	}
@@ -98,8 +100,8 @@ public class ExportImportServiceUtil {
 	public static void importLayouts(
 			com.liferay.exportimport.kernel.model.ExportImportConfiguration
 				exportImportConfiguration,
-			java.io.InputStream inputStream)
-		throws com.liferay.portal.kernel.exception.PortalException {
+			InputStream inputStream)
+		throws PortalException {
 
 		getService().importLayouts(exportImportConfiguration, inputStream);
 	}
@@ -108,7 +110,7 @@ public class ExportImportServiceUtil {
 			com.liferay.exportimport.kernel.model.ExportImportConfiguration
 				exportImportConfiguration,
 			java.io.File file)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().importLayoutsInBackground(
 			exportImportConfiguration, file);
@@ -117,8 +119,8 @@ public class ExportImportServiceUtil {
 	public static long importLayoutsInBackground(
 			com.liferay.exportimport.kernel.model.ExportImportConfiguration
 				exportImportConfiguration,
-			java.io.InputStream inputStream)
-		throws com.liferay.portal.kernel.exception.PortalException {
+			InputStream inputStream)
+		throws PortalException {
 
 		return getService().importLayoutsInBackground(
 			exportImportConfiguration, inputStream);
@@ -128,7 +130,7 @@ public class ExportImportServiceUtil {
 			com.liferay.exportimport.kernel.model.ExportImportConfiguration
 				exportImportConfiguration,
 			java.io.File file)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().importPortletInfo(exportImportConfiguration, file);
 	}
@@ -136,8 +138,8 @@ public class ExportImportServiceUtil {
 	public static void importPortletInfo(
 			com.liferay.exportimport.kernel.model.ExportImportConfiguration
 				exportImportConfiguration,
-			java.io.InputStream inputStream)
-		throws com.liferay.portal.kernel.exception.PortalException {
+			InputStream inputStream)
+		throws PortalException {
 
 		getService().importPortletInfo(exportImportConfiguration, inputStream);
 	}
@@ -146,7 +148,7 @@ public class ExportImportServiceUtil {
 			com.liferay.exportimport.kernel.model.ExportImportConfiguration
 				exportImportConfiguration,
 			java.io.File file)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().importPortletInfoInBackground(
 			exportImportConfiguration, file);
@@ -155,8 +157,8 @@ public class ExportImportServiceUtil {
 	public static long importPortletInfoInBackground(
 			com.liferay.exportimport.kernel.model.ExportImportConfiguration
 				exportImportConfiguration,
-			java.io.InputStream inputStream)
-		throws com.liferay.portal.kernel.exception.PortalException {
+			InputStream inputStream)
+		throws PortalException {
 
 		return getService().importPortletInfoInBackground(
 			exportImportConfiguration, inputStream);
@@ -167,7 +169,7 @@ public class ExportImportServiceUtil {
 				com.liferay.exportimport.kernel.model.ExportImportConfiguration
 					exportImportConfiguration,
 				java.io.File file)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().validateImportLayoutsFile(
 			exportImportConfiguration, file);
@@ -177,8 +179,8 @@ public class ExportImportServiceUtil {
 			validateImportLayoutsFile(
 				com.liferay.exportimport.kernel.model.ExportImportConfiguration
 					exportImportConfiguration,
-				java.io.InputStream inputStream)
-		throws com.liferay.portal.kernel.exception.PortalException {
+				InputStream inputStream)
+		throws PortalException {
 
 		return getService().validateImportLayoutsFile(
 			exportImportConfiguration, inputStream);
@@ -189,7 +191,7 @@ public class ExportImportServiceUtil {
 				com.liferay.exportimport.kernel.model.ExportImportConfiguration
 					exportImportConfiguration,
 				java.io.File file)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().validateImportPortletInfo(
 			exportImportConfiguration, file);
@@ -199,22 +201,17 @@ public class ExportImportServiceUtil {
 			validateImportPortletInfo(
 				com.liferay.exportimport.kernel.model.ExportImportConfiguration
 					exportImportConfiguration,
-				java.io.InputStream inputStream)
-		throws com.liferay.portal.kernel.exception.PortalException {
+				InputStream inputStream)
+		throws PortalException {
 
 		return getService().validateImportPortletInfo(
 			exportImportConfiguration, inputStream);
 	}
 
 	public static ExportImportService getService() {
-		if (_service == null) {
-			_service = (ExportImportService)PortalBeanLocatorUtil.locate(
-				ExportImportService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static ExportImportService _service;
+	private static volatile ExportImportService _service;
 
 }

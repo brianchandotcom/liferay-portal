@@ -14,9 +14,16 @@
 
 package com.liferay.mail.reader.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.mail.reader.model.Account;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for Account. This utility wraps
@@ -48,13 +55,11 @@ public class AccountLocalServiceUtil {
 	 * @param account the account
 	 * @return the account that was added
 	 */
-	public static com.liferay.mail.reader.model.Account addAccount(
-		com.liferay.mail.reader.model.Account account) {
-
+	public static Account addAccount(Account account) {
 		return getService().addAccount(account);
 	}
 
-	public static com.liferay.mail.reader.model.Account addAccount(
+	public static Account addAccount(
 			long userId, String address, String personalName, String protocol,
 			String incomingHostName, int incomingPort, boolean incomingSecure,
 			String outgoingHostName, int outgoingPort, boolean outgoingSecure,
@@ -62,7 +67,7 @@ public class AccountLocalServiceUtil {
 			String signature, boolean useSignature, String folderPrefix,
 			long inboxFolderId, long draftFolderId, long sentFolderId,
 			long trashFolderId, boolean defaultSender)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addAccount(
 			userId, address, personalName, protocol, incomingHostName,
@@ -78,18 +83,16 @@ public class AccountLocalServiceUtil {
 	 * @param accountId the primary key for the new account
 	 * @return the new account
 	 */
-	public static com.liferay.mail.reader.model.Account createAccount(
-		long accountId) {
-
+	public static Account createAccount(long accountId) {
 		return getService().createAccount(accountId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -105,9 +108,8 @@ public class AccountLocalServiceUtil {
 	 * @return the account that was removed
 	 * @throws PortalException
 	 */
-	public static com.liferay.mail.reader.model.Account deleteAccount(
-			com.liferay.mail.reader.model.Account account)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static Account deleteAccount(Account account)
+		throws PortalException {
 
 		return getService().deleteAccount(account);
 	}
@@ -123,39 +125,29 @@ public class AccountLocalServiceUtil {
 	 * @return the account that was removed
 	 * @throws PortalException if a account with the primary key could not be found
 	 */
-	public static com.liferay.mail.reader.model.Account deleteAccount(
-			long accountId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static Account deleteAccount(long accountId) throws PortalException {
 		return getService().deleteAccount(accountId);
 	}
 
-	public static void deleteAccounts(long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static void deleteAccounts(long userId) throws PortalException {
 		getService().deleteAccounts(userId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -165,9 +157,7 @@ public class AccountLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -183,9 +173,8 @@ public class AccountLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -203,10 +192,9 @@ public class AccountLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -218,9 +206,7 @@ public class AccountLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -232,15 +218,13 @@ public class AccountLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.mail.reader.model.Account fetchAccount(
-		long accountId) {
-
+	public static Account fetchAccount(long accountId) {
 		return getService().fetchAccount(accountId);
 	}
 
@@ -251,16 +235,12 @@ public class AccountLocalServiceUtil {
 	 * @return the account
 	 * @throws PortalException if a account with the primary key could not be found
 	 */
-	public static com.liferay.mail.reader.model.Account getAccount(
-			long accountId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static Account getAccount(long accountId) throws PortalException {
 		return getService().getAccount(accountId);
 	}
 
-	public static com.liferay.mail.reader.model.Account getAccount(
-			long userId, String address)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static Account getAccount(long userId, String address)
+		throws PortalException {
 
 		return getService().getAccount(userId, address);
 	}
@@ -276,15 +256,11 @@ public class AccountLocalServiceUtil {
 	 * @param end the upper bound of the range of accounts (not inclusive)
 	 * @return the range of accounts
 	 */
-	public static java.util.List<com.liferay.mail.reader.model.Account>
-		getAccounts(int start, int end) {
-
+	public static List<Account> getAccounts(int start, int end) {
 		return getService().getAccounts(start, end);
 	}
 
-	public static java.util.List<com.liferay.mail.reader.model.Account>
-		getAccounts(long userId) {
-
+	public static List<Account> getAccounts(long userId) {
 		return getService().getAccounts(userId);
 	}
 
@@ -322,9 +298,8 @@ public class AccountLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -339,27 +314,25 @@ public class AccountLocalServiceUtil {
 	 * @param account the account
 	 * @return the account that was updated
 	 */
-	public static com.liferay.mail.reader.model.Account updateAccount(
-		com.liferay.mail.reader.model.Account account) {
-
+	public static Account updateAccount(Account account) {
 		return getService().updateAccount(account);
 	}
 
-	public static com.liferay.mail.reader.model.Account updateAccount(
+	public static Account updateAccount(
 			long accountId, String personalName, String password,
 			boolean savePassword, String signature, boolean useSignature,
 			String folderPrefix, boolean defaultSender)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateAccount(
 			accountId, personalName, password, savePassword, signature,
 			useSignature, folderPrefix, defaultSender);
 	}
 
-	public static com.liferay.mail.reader.model.Account updateFolders(
+	public static Account updateFolders(
 			long accountId, long inboxFolderId, long draftFolderId,
 			long sentFolderId, long trashFolderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateFolders(
 			accountId, inboxFolderId, draftFolderId, sentFolderId,
@@ -367,23 +340,9 @@ public class AccountLocalServiceUtil {
 	}
 
 	public static AccountLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<AccountLocalService, AccountLocalService>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(AccountLocalService.class);
-
-		ServiceTracker<AccountLocalService, AccountLocalService>
-			serviceTracker =
-				new ServiceTracker<AccountLocalService, AccountLocalService>(
-					bundle.getBundleContext(), AccountLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile AccountLocalService _service;
 
 }

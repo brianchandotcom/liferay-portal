@@ -14,9 +14,16 @@
 
 package com.liferay.commerce.bom.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.bom.model.CommerceBOMFolderApplicationRel;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for CommerceBOMFolderApplicationRel. This utility wraps
@@ -48,20 +55,19 @@ public class CommerceBOMFolderApplicationRelLocalServiceUtil {
 	 * @param commerceBOMFolderApplicationRel the commerce bom folder application rel
 	 * @return the commerce bom folder application rel that was added
 	 */
-	public static com.liferay.commerce.bom.model.CommerceBOMFolderApplicationRel
+	public static CommerceBOMFolderApplicationRel
 		addCommerceBOMFolderApplicationRel(
-			com.liferay.commerce.bom.model.CommerceBOMFolderApplicationRel
-				commerceBOMFolderApplicationRel) {
+			CommerceBOMFolderApplicationRel commerceBOMFolderApplicationRel) {
 
 		return getService().addCommerceBOMFolderApplicationRel(
 			commerceBOMFolderApplicationRel);
 	}
 
-	public static com.liferay.commerce.bom.model.CommerceBOMFolderApplicationRel
+	public static CommerceBOMFolderApplicationRel
 			addCommerceBOMFolderApplicationRel(
 				long userId, long commerceBOMFolderId,
 				long commerceApplicationModelId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addCommerceBOMFolderApplicationRel(
 			userId, commerceBOMFolderId, commerceApplicationModelId);
@@ -73,7 +79,7 @@ public class CommerceBOMFolderApplicationRelLocalServiceUtil {
 	 * @param commerceBOMFolderApplicationRelId the primary key for the new commerce bom folder application rel
 	 * @return the new commerce bom folder application rel
 	 */
-	public static com.liferay.commerce.bom.model.CommerceBOMFolderApplicationRel
+	public static CommerceBOMFolderApplicationRel
 		createCommerceBOMFolderApplicationRel(
 			long commerceBOMFolderApplicationRelId) {
 
@@ -84,9 +90,9 @@ public class CommerceBOMFolderApplicationRelLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -101,10 +107,9 @@ public class CommerceBOMFolderApplicationRelLocalServiceUtil {
 	 * @param commerceBOMFolderApplicationRel the commerce bom folder application rel
 	 * @return the commerce bom folder application rel that was removed
 	 */
-	public static com.liferay.commerce.bom.model.CommerceBOMFolderApplicationRel
+	public static CommerceBOMFolderApplicationRel
 		deleteCommerceBOMFolderApplicationRel(
-			com.liferay.commerce.bom.model.CommerceBOMFolderApplicationRel
-				commerceBOMFolderApplicationRel) {
+			CommerceBOMFolderApplicationRel commerceBOMFolderApplicationRel) {
 
 		return getService().deleteCommerceBOMFolderApplicationRel(
 			commerceBOMFolderApplicationRel);
@@ -121,10 +126,10 @@ public class CommerceBOMFolderApplicationRelLocalServiceUtil {
 	 * @return the commerce bom folder application rel that was removed
 	 * @throws PortalException if a commerce bom folder application rel with the primary key could not be found
 	 */
-	public static com.liferay.commerce.bom.model.CommerceBOMFolderApplicationRel
+	public static CommerceBOMFolderApplicationRel
 			deleteCommerceBOMFolderApplicationRel(
 				long commerceBOMFolderApplicationRelId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().deleteCommerceBOMFolderApplicationRel(
 			commerceBOMFolderApplicationRelId);
@@ -149,23 +154,18 @@ public class CommerceBOMFolderApplicationRelLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -175,9 +175,7 @@ public class CommerceBOMFolderApplicationRelLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -193,9 +191,8 @@ public class CommerceBOMFolderApplicationRelLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -213,10 +210,9 @@ public class CommerceBOMFolderApplicationRelLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -228,9 +224,7 @@ public class CommerceBOMFolderApplicationRelLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -242,13 +236,13 @@ public class CommerceBOMFolderApplicationRelLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.commerce.bom.model.CommerceBOMFolderApplicationRel
+	public static CommerceBOMFolderApplicationRel
 		fetchCommerceBOMFolderApplicationRel(
 			long commerceBOMFolderApplicationRelId) {
 
@@ -269,10 +263,10 @@ public class CommerceBOMFolderApplicationRelLocalServiceUtil {
 	 * @return the commerce bom folder application rel
 	 * @throws PortalException if a commerce bom folder application rel with the primary key could not be found
 	 */
-	public static com.liferay.commerce.bom.model.CommerceBOMFolderApplicationRel
+	public static CommerceBOMFolderApplicationRel
 			getCommerceBOMFolderApplicationRel(
 				long commerceBOMFolderApplicationRelId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCommerceBOMFolderApplicationRel(
 			commerceBOMFolderApplicationRelId);
@@ -289,26 +283,23 @@ public class CommerceBOMFolderApplicationRelLocalServiceUtil {
 	 * @param end the upper bound of the range of commerce bom folder application rels (not inclusive)
 	 * @return the range of commerce bom folder application rels
 	 */
-	public static java.util.List
-		<com.liferay.commerce.bom.model.CommerceBOMFolderApplicationRel>
-			getCommerceBOMFolderApplicationRels(int start, int end) {
+	public static List<CommerceBOMFolderApplicationRel>
+		getCommerceBOMFolderApplicationRels(int start, int end) {
 
 		return getService().getCommerceBOMFolderApplicationRels(start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.bom.model.CommerceBOMFolderApplicationRel>
-			getCommerceBOMFolderApplicationRelsByCAMId(
-				long commerceApplicationModelId, int start, int end) {
+	public static List<CommerceBOMFolderApplicationRel>
+		getCommerceBOMFolderApplicationRelsByCAMId(
+			long commerceApplicationModelId, int start, int end) {
 
 		return getService().getCommerceBOMFolderApplicationRelsByCAMId(
 			commerceApplicationModelId, start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.bom.model.CommerceBOMFolderApplicationRel>
-			getCommerceBOMFolderApplicationRelsByCommerceBOMFolderId(
-				long commerceBOMFolderId, int start, int end) {
+	public static List<CommerceBOMFolderApplicationRel>
+		getCommerceBOMFolderApplicationRelsByCommerceBOMFolderId(
+			long commerceBOMFolderId, int start, int end) {
 
 		return getService().
 			getCommerceBOMFolderApplicationRelsByCommerceBOMFolderId(
@@ -359,9 +350,8 @@ public class CommerceBOMFolderApplicationRelLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -376,40 +366,19 @@ public class CommerceBOMFolderApplicationRelLocalServiceUtil {
 	 * @param commerceBOMFolderApplicationRel the commerce bom folder application rel
 	 * @return the commerce bom folder application rel that was updated
 	 */
-	public static com.liferay.commerce.bom.model.CommerceBOMFolderApplicationRel
+	public static CommerceBOMFolderApplicationRel
 		updateCommerceBOMFolderApplicationRel(
-			com.liferay.commerce.bom.model.CommerceBOMFolderApplicationRel
-				commerceBOMFolderApplicationRel) {
+			CommerceBOMFolderApplicationRel commerceBOMFolderApplicationRel) {
 
 		return getService().updateCommerceBOMFolderApplicationRel(
 			commerceBOMFolderApplicationRel);
 	}
 
 	public static CommerceBOMFolderApplicationRelLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceBOMFolderApplicationRelLocalService,
-		 CommerceBOMFolderApplicationRelLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommerceBOMFolderApplicationRelLocalService.class);
-
-		ServiceTracker
-			<CommerceBOMFolderApplicationRelLocalService,
-			 CommerceBOMFolderApplicationRelLocalService> serviceTracker =
-				new ServiceTracker
-					<CommerceBOMFolderApplicationRelLocalService,
-					 CommerceBOMFolderApplicationRelLocalService>(
-						 bundle.getBundleContext(),
-						 CommerceBOMFolderApplicationRelLocalService.class,
-						 null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceBOMFolderApplicationRelLocalService
+		_service;
 
 }

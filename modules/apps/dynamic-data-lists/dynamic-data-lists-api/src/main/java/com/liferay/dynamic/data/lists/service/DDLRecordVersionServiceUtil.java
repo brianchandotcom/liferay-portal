@@ -14,9 +14,11 @@
 
 package com.liferay.dynamic.data.lists.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for DDLRecordVersion. This utility wraps
@@ -56,9 +58,8 @@ public class DDLRecordVersionServiceUtil {
 	 if the user did not have the required permission to access the
 	 record set
 	 */
-	public static com.liferay.dynamic.data.lists.model.DDLRecordVersion
-			getRecordVersion(long recordVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static DDLRecordVersion getRecordVersion(long recordVersionId)
+		throws PortalException {
 
 		return getService().getRecordVersion(recordVersionId);
 	}
@@ -72,9 +73,9 @@ public class DDLRecordVersionServiceUtil {
 	 * @throws PortalException if the matching record set is not found or if the
 	 user do not have the required permission to access the record set
 	 */
-	public static com.liferay.dynamic.data.lists.model.DDLRecordVersion
-			getRecordVersion(long recordId, String version)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static DDLRecordVersion getRecordVersion(
+			long recordId, String version)
+		throws PortalException {
 
 		return getService().getRecordVersion(recordId, version);
 	}
@@ -86,10 +87,8 @@ public class DDLRecordVersionServiceUtil {
 	 * @return the matching record versions
 	 * @throws PortalException if a portal exception occurred
 	 */
-	public static java.util.List
-		<com.liferay.dynamic.data.lists.model.DDLRecordVersion>
-				getRecordVersions(long recordId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<DDLRecordVersion> getRecordVersions(long recordId)
+		throws PortalException {
 
 		return getService().getRecordVersions(recordId);
 	}
@@ -115,14 +114,10 @@ public class DDLRecordVersionServiceUtil {
 	 * @return the range of matching record versions ordered by the comparator
 	 * @throws PortalException if a portal exception occurred
 	 */
-	public static java.util.List
-		<com.liferay.dynamic.data.lists.model.DDLRecordVersion>
-				getRecordVersions(
-					long recordId, int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						<com.liferay.dynamic.data.lists.model.DDLRecordVersion>
-							orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<DDLRecordVersion> getRecordVersions(
+			long recordId, int start, int end,
+			OrderByComparator<DDLRecordVersion> orderByComparator)
+		throws PortalException {
 
 		return getService().getRecordVersions(
 			recordId, start, end, orderByComparator);
@@ -136,31 +131,15 @@ public class DDLRecordVersionServiceUtil {
 	 * @throws PortalException if a portal exception occurred
 	 */
 	public static int getRecordVersionsCount(long recordId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getRecordVersionsCount(recordId);
 	}
 
 	public static DDLRecordVersionService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<DDLRecordVersionService, DDLRecordVersionService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(DDLRecordVersionService.class);
-
-		ServiceTracker<DDLRecordVersionService, DDLRecordVersionService>
-			serviceTracker =
-				new ServiceTracker
-					<DDLRecordVersionService, DDLRecordVersionService>(
-						bundle.getBundleContext(),
-						DDLRecordVersionService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile DDLRecordVersionService _service;
 
 }

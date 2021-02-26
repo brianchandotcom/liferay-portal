@@ -21,6 +21,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.opensocial.model.Gadget;
 import com.liferay.opensocial.service.GadgetLocalService;
+import com.liferay.opensocial.service.GadgetLocalServiceUtil;
 import com.liferay.opensocial.service.persistence.GadgetPersistence;
 import com.liferay.opensocial.service.persistence.OAuthConsumerPersistence;
 import com.liferay.opensocial.service.persistence.OAuthTokenPersistence;
@@ -55,6 +56,8 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -77,7 +80,7 @@ public abstract class GadgetLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>GadgetLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.opensocial.service.GadgetLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>GadgetLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>GadgetLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -757,11 +760,15 @@ public abstract class GadgetLocalServiceBaseImpl
 	public void afterPropertiesSet() {
 		PersistedModelLocalServiceRegistryUtil.register(
 			"com.liferay.opensocial.model.Gadget", gadgetLocalService);
+
+		_setLocalServiceUtilService(gadgetLocalService);
 	}
 
 	public void destroy() {
 		PersistedModelLocalServiceRegistryUtil.unregister(
 			"com.liferay.opensocial.model.Gadget");
+
+		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -803,6 +810,22 @@ public abstract class GadgetLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		GadgetLocalService gadgetLocalService) {
+
+		try {
+			Field field = GadgetLocalServiceUtil.class.getDeclaredField(
+				"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, gadgetLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

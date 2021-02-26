@@ -14,9 +14,7 @@
 
 package com.liferay.screens.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * Provides the remote service utility for ScreensJournalArticle. This utility wraps
@@ -39,14 +37,14 @@ public class ScreensJournalArticleServiceUtil {
 	 */
 	public static String getJournalArticleContent(
 			long classPK, java.util.Locale locale)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getJournalArticleContent(classPK, locale);
 	}
 
 	public static String getJournalArticleContent(
 			long classPK, long ddmTemplateId, java.util.Locale locale)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getJournalArticleContent(
 			classPK, ddmTemplateId, locale);
@@ -55,7 +53,7 @@ public class ScreensJournalArticleServiceUtil {
 	public static String getJournalArticleContent(
 			long groupId, String articleId, long ddmTemplateId,
 			java.util.Locale locale)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getJournalArticleContent(
 			groupId, articleId, ddmTemplateId, locale);
@@ -71,29 +69,9 @@ public class ScreensJournalArticleServiceUtil {
 	}
 
 	public static ScreensJournalArticleService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<ScreensJournalArticleService, ScreensJournalArticleService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			ScreensJournalArticleService.class);
-
-		ServiceTracker
-			<ScreensJournalArticleService, ScreensJournalArticleService>
-				serviceTracker =
-					new ServiceTracker
-						<ScreensJournalArticleService,
-						 ScreensJournalArticleService>(
-							 bundle.getBundleContext(),
-							 ScreensJournalArticleService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile ScreensJournalArticleService _service;
 
 }

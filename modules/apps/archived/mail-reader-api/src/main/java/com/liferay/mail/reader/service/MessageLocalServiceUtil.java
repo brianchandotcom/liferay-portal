@@ -14,9 +14,16 @@
 
 package com.liferay.mail.reader.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.mail.reader.model.Message;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for Message. This utility wraps
@@ -37,11 +44,11 @@ public class MessageLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.mail.reader.service.impl.MessageLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.mail.reader.model.Message addMessage(
+	public static Message addMessage(
 			long userId, long folderId, String sender, String to, String cc,
 			String bcc, java.util.Date sentDate, String subject, String body,
 			String flags, long remoteMessageId, String contentType)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addMessage(
 			userId, folderId, sender, to, cc, bcc, sentDate, subject, body,
@@ -58,9 +65,7 @@ public class MessageLocalServiceUtil {
 	 * @param message the message
 	 * @return the message that was added
 	 */
-	public static com.liferay.mail.reader.model.Message addMessage(
-		com.liferay.mail.reader.model.Message message) {
-
+	public static Message addMessage(Message message) {
 		return getService().addMessage(message);
 	}
 
@@ -70,18 +75,16 @@ public class MessageLocalServiceUtil {
 	 * @param messageId the primary key for the new message
 	 * @return the new message
 	 */
-	public static com.liferay.mail.reader.model.Message createMessage(
-		long messageId) {
-
+	public static Message createMessage(long messageId) {
 		return getService().createMessage(messageId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -97,10 +100,7 @@ public class MessageLocalServiceUtil {
 	 * @return the message that was removed
 	 * @throws PortalException if a message with the primary key could not be found
 	 */
-	public static com.liferay.mail.reader.model.Message deleteMessage(
-			long messageId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static Message deleteMessage(long messageId) throws PortalException {
 		return getService().deleteMessage(messageId);
 	}
 
@@ -115,39 +115,31 @@ public class MessageLocalServiceUtil {
 	 * @return the message that was removed
 	 * @throws PortalException
 	 */
-	public static com.liferay.mail.reader.model.Message deleteMessage(
-			com.liferay.mail.reader.model.Message message)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static Message deleteMessage(Message message)
+		throws PortalException {
 
 		return getService().deleteMessage(message);
 	}
 
-	public static void deleteMessages(long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static void deleteMessages(long folderId) throws PortalException {
 		getService().deleteMessages(folderId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -157,9 +149,7 @@ public class MessageLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -175,9 +165,8 @@ public class MessageLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -195,10 +184,9 @@ public class MessageLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -210,9 +198,7 @@ public class MessageLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -224,15 +210,13 @@ public class MessageLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.mail.reader.model.Message fetchMessage(
-		long messageId) {
-
+	public static Message fetchMessage(long messageId) {
 		return getService().fetchMessage(messageId);
 	}
 
@@ -246,8 +230,8 @@ public class MessageLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
-	public static java.util.List<com.liferay.mail.reader.model.Message>
-		getCompanyMessages(long companyId, int start, int end) {
+	public static List<Message> getCompanyMessages(
+		long companyId, int start, int end) {
 
 		return getService().getCompanyMessages(companyId, start, end);
 	}
@@ -256,9 +240,7 @@ public class MessageLocalServiceUtil {
 		return getService().getCompanyMessagesCount(companyId);
 	}
 
-	public static java.util.List<com.liferay.mail.reader.model.Message>
-		getFolderMessages(long folderId) {
-
+	public static List<Message> getFolderMessages(long folderId) {
 		return getService().getFolderMessages(folderId);
 	}
 
@@ -284,16 +266,12 @@ public class MessageLocalServiceUtil {
 	 * @return the message
 	 * @throws PortalException if a message with the primary key could not be found
 	 */
-	public static com.liferay.mail.reader.model.Message getMessage(
-			long messageId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static Message getMessage(long messageId) throws PortalException {
 		return getService().getMessage(messageId);
 	}
 
-	public static com.liferay.mail.reader.model.Message getMessage(
-			long folderId, long remoteMessageId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static Message getMessage(long folderId, long remoteMessageId)
+		throws PortalException {
 
 		return getService().getMessage(folderId, remoteMessageId);
 	}
@@ -309,9 +287,7 @@ public class MessageLocalServiceUtil {
 	 * @param end the upper bound of the range of messages (not inclusive)
 	 * @return the range of messages
 	 */
-	public static java.util.List<com.liferay.mail.reader.model.Message>
-		getMessages(int start, int end) {
-
+	public static List<Message> getMessages(int start, int end) {
 		return getService().getMessages(start, end);
 	}
 
@@ -336,49 +312,45 @@ public class MessageLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static com.liferay.mail.reader.model.Message getRemoteMessage(
-			long folderId, boolean oldest)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static Message getRemoteMessage(long folderId, boolean oldest)
+		throws PortalException {
 
 		return getService().getRemoteMessage(folderId, oldest);
 	}
 
 	public static int populateMessages(
-		java.util.List<com.liferay.mail.reader.model.Message> messages,
-		long folderId, String keywords, int pageNumber, int messagesPerPage,
-		String orderByField, String orderByType) {
+		List<Message> messages, long folderId, String keywords, int pageNumber,
+		int messagesPerPage, String orderByField, String orderByType) {
 
 		return getService().populateMessages(
 			messages, folderId, keywords, pageNumber, messagesPerPage,
 			orderByField, orderByType);
 	}
 
-	public static com.liferay.mail.reader.model.Message updateContent(
+	public static Message updateContent(
 			long messageId, String body, String flags)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateContent(messageId, body, flags);
 	}
 
-	public static com.liferay.mail.reader.model.Message updateFlag(
-			long messageId, int flag, boolean value)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static Message updateFlag(long messageId, int flag, boolean value)
+		throws PortalException {
 
 		return getService().updateFlag(messageId, flag, value);
 	}
 
-	public static com.liferay.mail.reader.model.Message updateMessage(
+	public static Message updateMessage(
 			long messageId, long folderId, String sender, String to, String cc,
 			String bcc, java.util.Date sentDate, String subject, String body,
 			String flags, long remoteMessageId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateMessage(
 			messageId, folderId, sender, to, cc, bcc, sentDate, subject, body,
@@ -395,30 +367,14 @@ public class MessageLocalServiceUtil {
 	 * @param message the message
 	 * @return the message that was updated
 	 */
-	public static com.liferay.mail.reader.model.Message updateMessage(
-		com.liferay.mail.reader.model.Message message) {
-
+	public static Message updateMessage(Message message) {
 		return getService().updateMessage(message);
 	}
 
 	public static MessageLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<MessageLocalService, MessageLocalService>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(MessageLocalService.class);
-
-		ServiceTracker<MessageLocalService, MessageLocalService>
-			serviceTracker =
-				new ServiceTracker<MessageLocalService, MessageLocalService>(
-					bundle.getBundleContext(), MessageLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile MessageLocalService _service;
 
 }

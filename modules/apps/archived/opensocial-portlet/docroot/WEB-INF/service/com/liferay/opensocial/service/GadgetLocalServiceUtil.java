@@ -14,7 +14,16 @@
 
 package com.liferay.opensocial.service;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
+import com.liferay.opensocial.model.Gadget;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for Gadget. This utility wraps
@@ -46,16 +55,14 @@ public class GadgetLocalServiceUtil {
 	 * @param gadget the gadget
 	 * @return the gadget that was added
 	 */
-	public static com.liferay.opensocial.model.Gadget addGadget(
-		com.liferay.opensocial.model.Gadget gadget) {
-
+	public static Gadget addGadget(Gadget gadget) {
 		return getService().addGadget(gadget);
 	}
 
-	public static com.liferay.opensocial.model.Gadget addGadget(
+	public static Gadget addGadget(
 			long companyId, String url, String portletCategoryNames,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addGadget(
 			companyId, url, portletCategoryNames, serviceContext);
@@ -67,18 +74,16 @@ public class GadgetLocalServiceUtil {
 	 * @param gadgetId the primary key for the new gadget
 	 * @return the new gadget
 	 */
-	public static com.liferay.opensocial.model.Gadget createGadget(
-		long gadgetId) {
-
+	public static Gadget createGadget(long gadgetId) {
 		return getService().createGadget(gadgetId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -94,10 +99,7 @@ public class GadgetLocalServiceUtil {
 	 * @return the gadget that was removed
 	 * @throws PortalException
 	 */
-	public static com.liferay.opensocial.model.Gadget deleteGadget(
-			com.liferay.opensocial.model.Gadget gadget)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static Gadget deleteGadget(Gadget gadget) throws PortalException {
 		return getService().deleteGadget(gadget);
 	}
 
@@ -112,26 +114,20 @@ public class GadgetLocalServiceUtil {
 	 * @return the gadget that was removed
 	 * @throws PortalException if a gadget with the primary key could not be found
 	 */
-	public static com.liferay.opensocial.model.Gadget deleteGadget(
-			long gadgetId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static Gadget deleteGadget(long gadgetId) throws PortalException {
 		return getService().deleteGadget(gadgetId);
 	}
 
-	public static void deleteGadgets(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static void deleteGadgets(long companyId) throws PortalException {
 		getService().deleteGadgets(companyId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
@@ -144,15 +140,11 @@ public class GadgetLocalServiceUtil {
 		getService().destroyGadgets();
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -162,9 +154,7 @@ public class GadgetLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -180,9 +170,8 @@ public class GadgetLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -200,10 +189,9 @@ public class GadgetLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -215,9 +203,7 @@ public class GadgetLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -229,21 +215,17 @@ public class GadgetLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.opensocial.model.Gadget fetchGadget(
-		long gadgetId) {
-
+	public static Gadget fetchGadget(long gadgetId) {
 		return getService().fetchGadget(gadgetId);
 	}
 
-	public static com.liferay.opensocial.model.Gadget fetchGadget(
-		long companyId, String url) {
-
+	public static Gadget fetchGadget(long companyId, String url) {
 		return getService().fetchGadget(companyId, url);
 	}
 
@@ -254,8 +236,8 @@ public class GadgetLocalServiceUtil {
 	 * @param companyId the primary key of the company
 	 * @return the matching gadget, or <code>null</code> if a matching gadget could not be found
 	 */
-	public static com.liferay.opensocial.model.Gadget
-		fetchGadgetByUuidAndCompanyId(String uuid, long companyId) {
+	public static Gadget fetchGadgetByUuidAndCompanyId(
+		String uuid, long companyId) {
 
 		return getService().fetchGadgetByUuidAndCompanyId(uuid, companyId);
 	}
@@ -281,22 +263,18 @@ public class GadgetLocalServiceUtil {
 	 * @return the gadget
 	 * @throws PortalException if a gadget with the primary key could not be found
 	 */
-	public static com.liferay.opensocial.model.Gadget getGadget(long gadgetId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static Gadget getGadget(long gadgetId) throws PortalException {
 		return getService().getGadget(gadgetId);
 	}
 
-	public static com.liferay.opensocial.model.Gadget getGadget(
-			long companyId, String url)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static Gadget getGadget(long companyId, String url)
+		throws PortalException {
 
 		return getService().getGadget(companyId, url);
 	}
 
-	public static com.liferay.opensocial.model.Gadget getGadget(
-			String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static Gadget getGadget(String uuid, long companyId)
+		throws PortalException {
 
 		return getService().getGadget(uuid, companyId);
 	}
@@ -309,9 +287,9 @@ public class GadgetLocalServiceUtil {
 	 * @return the matching gadget
 	 * @throws PortalException if a matching gadget could not be found
 	 */
-	public static com.liferay.opensocial.model.Gadget
-			getGadgetByUuidAndCompanyId(String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static Gadget getGadgetByUuidAndCompanyId(
+			String uuid, long companyId)
+		throws PortalException {
 
 		return getService().getGadgetByUuidAndCompanyId(uuid, companyId);
 	}
@@ -327,15 +305,11 @@ public class GadgetLocalServiceUtil {
 	 * @param end the upper bound of the range of gadgets (not inclusive)
 	 * @return the range of gadgets
 	 */
-	public static java.util.List<com.liferay.opensocial.model.Gadget>
-		getGadgets(int start, int end) {
-
+	public static List<Gadget> getGadgets(int start, int end) {
 		return getService().getGadgets(start, end);
 	}
 
-	public static java.util.List<com.liferay.opensocial.model.Gadget>
-		getGadgets(long companyId, int start, int end) {
-
+	public static List<Gadget> getGadgets(long companyId, int start, int end) {
 		return getService().getGadgets(companyId, start, end);
 	}
 
@@ -371,9 +345,8 @@ public class GadgetLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -381,15 +354,13 @@ public class GadgetLocalServiceUtil {
 	public static void initGadget(
 			String uuid, long companyId, long gadgetId, String name,
 			String portletCategoryNames)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().initGadget(
 			uuid, companyId, gadgetId, name, portletCategoryNames);
 	}
 
-	public static void initGadgets()
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static void initGadgets() throws PortalException {
 		getService().initGadgets();
 	}
 
@@ -403,15 +374,13 @@ public class GadgetLocalServiceUtil {
 	 * @param gadget the gadget
 	 * @return the gadget that was updated
 	 */
-	public static com.liferay.opensocial.model.Gadget updateGadget(
-		com.liferay.opensocial.model.Gadget gadget) {
-
+	public static Gadget updateGadget(Gadget gadget) {
 		return getService().updateGadget(gadget);
 	}
 
-	public static com.liferay.opensocial.model.Gadget updateGadget(
+	public static Gadget updateGadget(
 			long gadgetId, String portletCategoryNames)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateGadget(gadgetId, portletCategoryNames);
 	}
@@ -421,15 +390,9 @@ public class GadgetLocalServiceUtil {
 	}
 
 	public static GadgetLocalService getService() {
-		if (_service == null) {
-			_service = (GadgetLocalService)PortletBeanLocatorUtil.locate(
-				ServletContextUtil.getServletContextName(),
-				GadgetLocalService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static GadgetLocalService _service;
+	private static volatile GadgetLocalService _service;
 
 }

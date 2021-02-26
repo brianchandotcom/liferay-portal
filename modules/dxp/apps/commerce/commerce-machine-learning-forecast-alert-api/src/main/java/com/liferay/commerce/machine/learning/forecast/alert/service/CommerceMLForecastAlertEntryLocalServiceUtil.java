@@ -14,9 +14,16 @@
 
 package com.liferay.commerce.machine.learning.forecast.alert.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.machine.learning.forecast.alert.model.CommerceMLForecastAlertEntry;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for CommerceMLForecastAlertEntry. This utility wraps
@@ -48,10 +55,8 @@ public class CommerceMLForecastAlertEntryLocalServiceUtil {
 	 * @param commerceMLForecastAlertEntry the commerce ml forecast alert entry
 	 * @return the commerce ml forecast alert entry that was added
 	 */
-	public static com.liferay.commerce.machine.learning.forecast.alert.model.
-		CommerceMLForecastAlertEntry addCommerceMLForecastAlertEntry(
-			com.liferay.commerce.machine.learning.forecast.alert.model.
-				CommerceMLForecastAlertEntry commerceMLForecastAlertEntry) {
+	public static CommerceMLForecastAlertEntry addCommerceMLForecastAlertEntry(
+		CommerceMLForecastAlertEntry commerceMLForecastAlertEntry) {
 
 		return getService().addCommerceMLForecastAlertEntry(
 			commerceMLForecastAlertEntry);
@@ -63,8 +68,8 @@ public class CommerceMLForecastAlertEntryLocalServiceUtil {
 	 * @param commerceMLForecastAlertEntryId the primary key for the new commerce ml forecast alert entry
 	 * @return the new commerce ml forecast alert entry
 	 */
-	public static com.liferay.commerce.machine.learning.forecast.alert.model.
-		CommerceMLForecastAlertEntry createCommerceMLForecastAlertEntry(
+	public static CommerceMLForecastAlertEntry
+		createCommerceMLForecastAlertEntry(
 			long commerceMLForecastAlertEntryId) {
 
 		return getService().createCommerceMLForecastAlertEntry(
@@ -74,9 +79,9 @@ public class CommerceMLForecastAlertEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -91,10 +96,9 @@ public class CommerceMLForecastAlertEntryLocalServiceUtil {
 	 * @param commerceMLForecastAlertEntry the commerce ml forecast alert entry
 	 * @return the commerce ml forecast alert entry that was removed
 	 */
-	public static com.liferay.commerce.machine.learning.forecast.alert.model.
-		CommerceMLForecastAlertEntry deleteCommerceMLForecastAlertEntry(
-			com.liferay.commerce.machine.learning.forecast.alert.model.
-				CommerceMLForecastAlertEntry commerceMLForecastAlertEntry) {
+	public static CommerceMLForecastAlertEntry
+		deleteCommerceMLForecastAlertEntry(
+			CommerceMLForecastAlertEntry commerceMLForecastAlertEntry) {
 
 		return getService().deleteCommerceMLForecastAlertEntry(
 			commerceMLForecastAlertEntry);
@@ -111,10 +115,10 @@ public class CommerceMLForecastAlertEntryLocalServiceUtil {
 	 * @return the commerce ml forecast alert entry that was removed
 	 * @throws PortalException if a commerce ml forecast alert entry with the primary key could not be found
 	 */
-	public static com.liferay.commerce.machine.learning.forecast.alert.model.
-		CommerceMLForecastAlertEntry deleteCommerceMLForecastAlertEntry(
+	public static CommerceMLForecastAlertEntry
+			deleteCommerceMLForecastAlertEntry(
 				long commerceMLForecastAlertEntryId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().deleteCommerceMLForecastAlertEntry(
 			commerceMLForecastAlertEntryId);
@@ -123,23 +127,18 @@ public class CommerceMLForecastAlertEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -149,9 +148,7 @@ public class CommerceMLForecastAlertEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -167,9 +164,8 @@ public class CommerceMLForecastAlertEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -187,10 +183,9 @@ public class CommerceMLForecastAlertEntryLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -202,9 +197,7 @@ public class CommerceMLForecastAlertEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -216,15 +209,14 @@ public class CommerceMLForecastAlertEntryLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.commerce.machine.learning.forecast.alert.model.
-		CommerceMLForecastAlertEntry fetchCommerceMLForecastAlertEntry(
-			long commerceMLForecastAlertEntryId) {
+	public static CommerceMLForecastAlertEntry
+		fetchCommerceMLForecastAlertEntry(long commerceMLForecastAlertEntryId) {
 
 		return getService().fetchCommerceMLForecastAlertEntry(
 			commerceMLForecastAlertEntryId);
@@ -237,21 +229,18 @@ public class CommerceMLForecastAlertEntryLocalServiceUtil {
 	 * @param companyId the primary key of the company
 	 * @return the matching commerce ml forecast alert entry, or <code>null</code> if a matching commerce ml forecast alert entry could not be found
 	 */
-	public static com.liferay.commerce.machine.learning.forecast.alert.model.
-		CommerceMLForecastAlertEntry
-			fetchCommerceMLForecastAlertEntryByUuidAndCompanyId(
-				String uuid, long companyId) {
+	public static CommerceMLForecastAlertEntry
+		fetchCommerceMLForecastAlertEntryByUuidAndCompanyId(
+			String uuid, long companyId) {
 
 		return getService().fetchCommerceMLForecastAlertEntryByUuidAndCompanyId(
 			uuid, companyId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.machine.learning.forecast.alert.model.
-			CommerceMLForecastAlertEntry>
-				getAboveThresholdCommerceMLForecastAlertEntries(
-					long companyId, long[] commerceAccountIds,
-					double relativeChange, int status, int start, int end) {
+	public static List<CommerceMLForecastAlertEntry>
+		getAboveThresholdCommerceMLForecastAlertEntries(
+			long companyId, long[] commerceAccountIds, double relativeChange,
+			int status, int start, int end) {
 
 		return getService().getAboveThresholdCommerceMLForecastAlertEntries(
 			companyId, commerceAccountIds, relativeChange, status, start, end);
@@ -272,12 +261,10 @@ public class CommerceMLForecastAlertEntryLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.machine.learning.forecast.alert.model.
-			CommerceMLForecastAlertEntry>
-				getBelowThresholdCommerceMLForecastAlertEntries(
-					long companyId, long[] commerceAccountIds,
-					double relativeChange, int status, int start, int end) {
+	public static List<CommerceMLForecastAlertEntry>
+		getBelowThresholdCommerceMLForecastAlertEntries(
+			long companyId, long[] commerceAccountIds, double relativeChange,
+			int status, int start, int end) {
 
 		return getService().getBelowThresholdCommerceMLForecastAlertEntries(
 			companyId, commerceAccountIds, relativeChange, status, start, end);
@@ -303,19 +290,16 @@ public class CommerceMLForecastAlertEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of commerce ml forecast alert entries (not inclusive)
 	 * @return the range of commerce ml forecast alert entries
 	 */
-	public static java.util.List
-		<com.liferay.commerce.machine.learning.forecast.alert.model.
-			CommerceMLForecastAlertEntry> getCommerceMLForecastAlertEntries(
-				int start, int end) {
+	public static List<CommerceMLForecastAlertEntry>
+		getCommerceMLForecastAlertEntries(int start, int end) {
 
 		return getService().getCommerceMLForecastAlertEntries(start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.machine.learning.forecast.alert.model.
-			CommerceMLForecastAlertEntry> getCommerceMLForecastAlertEntries(
-				long companyId, long[] commerceAccountIds, int status,
-				int start, int end) {
+	public static List<CommerceMLForecastAlertEntry>
+		getCommerceMLForecastAlertEntries(
+			long companyId, long[] commerceAccountIds, int status, int start,
+			int end) {
 
 		return getService().getCommerceMLForecastAlertEntries(
 			companyId, commerceAccountIds, status, start, end);
@@ -344,10 +328,9 @@ public class CommerceMLForecastAlertEntryLocalServiceUtil {
 	 * @return the commerce ml forecast alert entry
 	 * @throws PortalException if a commerce ml forecast alert entry with the primary key could not be found
 	 */
-	public static com.liferay.commerce.machine.learning.forecast.alert.model.
-		CommerceMLForecastAlertEntry getCommerceMLForecastAlertEntry(
-				long commerceMLForecastAlertEntryId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceMLForecastAlertEntry getCommerceMLForecastAlertEntry(
+			long commerceMLForecastAlertEntryId)
+		throws PortalException {
 
 		return getService().getCommerceMLForecastAlertEntry(
 			commerceMLForecastAlertEntryId);
@@ -361,11 +344,10 @@ public class CommerceMLForecastAlertEntryLocalServiceUtil {
 	 * @return the matching commerce ml forecast alert entry
 	 * @throws PortalException if a matching commerce ml forecast alert entry could not be found
 	 */
-	public static com.liferay.commerce.machine.learning.forecast.alert.model.
-		CommerceMLForecastAlertEntry
-				getCommerceMLForecastAlertEntryByUuidAndCompanyId(
-					String uuid, long companyId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceMLForecastAlertEntry
+			getCommerceMLForecastAlertEntryByUuidAndCompanyId(
+				String uuid, long companyId)
+		throws PortalException {
 
 		return getService().getCommerceMLForecastAlertEntryByUuidAndCompanyId(
 			uuid, companyId);
@@ -398,9 +380,8 @@ public class CommerceMLForecastAlertEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -415,30 +396,28 @@ public class CommerceMLForecastAlertEntryLocalServiceUtil {
 	 * @param commerceMLForecastAlertEntry the commerce ml forecast alert entry
 	 * @return the commerce ml forecast alert entry that was updated
 	 */
-	public static com.liferay.commerce.machine.learning.forecast.alert.model.
-		CommerceMLForecastAlertEntry updateCommerceMLForecastAlertEntry(
-			com.liferay.commerce.machine.learning.forecast.alert.model.
-				CommerceMLForecastAlertEntry commerceMLForecastAlertEntry) {
+	public static CommerceMLForecastAlertEntry
+		updateCommerceMLForecastAlertEntry(
+			CommerceMLForecastAlertEntry commerceMLForecastAlertEntry) {
 
 		return getService().updateCommerceMLForecastAlertEntry(
 			commerceMLForecastAlertEntry);
 	}
 
-	public static com.liferay.commerce.machine.learning.forecast.alert.model.
-		CommerceMLForecastAlertEntry updateStatus(
-				long userId, long commerceMLForecastAlertEntryId, int status)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceMLForecastAlertEntry updateStatus(
+			long userId, long commerceMLForecastAlertEntryId, int status)
+		throws PortalException {
 
 		return getService().updateStatus(
 			userId, commerceMLForecastAlertEntryId, status);
 	}
 
-	public static com.liferay.commerce.machine.learning.forecast.alert.model.
-		CommerceMLForecastAlertEntry upsertCommerceMLForecastAlertEntry(
+	public static CommerceMLForecastAlertEntry
+			upsertCommerceMLForecastAlertEntry(
 				long companyId, long userId, long commerceAccountId,
 				java.util.Date timestamp, float actual, float forecast,
 				float relativeChange)
-			throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().upsertCommerceMLForecastAlertEntry(
 			companyId, userId, commerceAccountId, timestamp, actual, forecast,
@@ -446,29 +425,9 @@ public class CommerceMLForecastAlertEntryLocalServiceUtil {
 	}
 
 	public static CommerceMLForecastAlertEntryLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceMLForecastAlertEntryLocalService,
-		 CommerceMLForecastAlertEntryLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommerceMLForecastAlertEntryLocalService.class);
-
-		ServiceTracker
-			<CommerceMLForecastAlertEntryLocalService,
-			 CommerceMLForecastAlertEntryLocalService> serviceTracker =
-				new ServiceTracker
-					<CommerceMLForecastAlertEntryLocalService,
-					 CommerceMLForecastAlertEntryLocalService>(
-						 bundle.getBundleContext(),
-						 CommerceMLForecastAlertEntryLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceMLForecastAlertEntryLocalService _service;
 
 }

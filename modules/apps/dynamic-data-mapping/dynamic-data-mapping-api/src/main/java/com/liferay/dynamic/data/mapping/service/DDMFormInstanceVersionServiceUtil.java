@@ -14,9 +14,11 @@
 
 package com.liferay.dynamic.data.mapping.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for DDMFormInstanceVersion. This utility wraps
@@ -37,42 +39,38 @@ public class DDMFormInstanceVersionServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.dynamic.data.mapping.service.impl.DDMFormInstanceVersionServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion
-			getFormInstanceVersion(long ddmFormInstanceVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static DDMFormInstanceVersion getFormInstanceVersion(
+			long ddmFormInstanceVersionId)
+		throws PortalException {
 
 		return getService().getFormInstanceVersion(ddmFormInstanceVersionId);
 	}
 
-	public static java.util.List
-		<com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion>
-				getFormInstanceVersions(
-					long ddmFormInstanceId, int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						<com.liferay.dynamic.data.mapping.model.
-							DDMFormInstanceVersion> orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<DDMFormInstanceVersion> getFormInstanceVersions(
+			long ddmFormInstanceId, int start, int end,
+			OrderByComparator<DDMFormInstanceVersion> orderByComparator)
+		throws PortalException {
 
 		return getService().getFormInstanceVersions(
 			ddmFormInstanceId, start, end, orderByComparator);
 	}
 
 	public static int getFormInstanceVersionsCount(long ddmFormInstanceId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getFormInstanceVersionsCount(ddmFormInstanceId);
 	}
 
-	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion
-			getLatestFormInstanceVersion(long ddmFormInstanceId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static DDMFormInstanceVersion getLatestFormInstanceVersion(
+			long ddmFormInstanceId)
+		throws PortalException {
 
 		return getService().getLatestFormInstanceVersion(ddmFormInstanceId);
 	}
 
-	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion
-			getLatestFormInstanceVersion(long ddmFormInstanceId, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static DDMFormInstanceVersion getLatestFormInstanceVersion(
+			long ddmFormInstanceId, int status)
+		throws PortalException {
 
 		return getService().getLatestFormInstanceVersion(
 			ddmFormInstanceId, status);
@@ -88,29 +86,9 @@ public class DDMFormInstanceVersionServiceUtil {
 	}
 
 	public static DDMFormInstanceVersionService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<DDMFormInstanceVersionService, DDMFormInstanceVersionService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			DDMFormInstanceVersionService.class);
-
-		ServiceTracker
-			<DDMFormInstanceVersionService, DDMFormInstanceVersionService>
-				serviceTracker =
-					new ServiceTracker
-						<DDMFormInstanceVersionService,
-						 DDMFormInstanceVersionService>(
-							 bundle.getBundleContext(),
-							 DDMFormInstanceVersionService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile DDMFormInstanceVersionService _service;
 
 }

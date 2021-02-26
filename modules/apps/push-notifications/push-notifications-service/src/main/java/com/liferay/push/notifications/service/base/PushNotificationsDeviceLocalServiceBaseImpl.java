@@ -40,14 +40,18 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.push.notifications.model.PushNotificationsDevice;
 import com.liferay.push.notifications.service.PushNotificationsDeviceLocalService;
+import com.liferay.push.notifications.service.PushNotificationsDeviceLocalServiceUtil;
 import com.liferay.push.notifications.service.persistence.PushNotificationsDevicePersistence;
 
 import java.io.Serializable;
+
+import java.lang.reflect.Field;
 
 import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -69,7 +73,7 @@ public abstract class PushNotificationsDeviceLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>PushNotificationsDeviceLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.push.notifications.service.PushNotificationsDeviceLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>PushNotificationsDeviceLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>PushNotificationsDeviceLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -399,6 +403,11 @@ public abstract class PushNotificationsDeviceLocalServiceBaseImpl
 			pushNotificationsDevice);
 	}
 
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
+	}
+
 	@Override
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
@@ -411,6 +420,8 @@ public abstract class PushNotificationsDeviceLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		pushNotificationsDeviceLocalService =
 			(PushNotificationsDeviceLocalService)aopProxy;
+
+		_setLocalServiceUtilService(pushNotificationsDeviceLocalService);
 	}
 
 	/**
@@ -453,6 +464,24 @@ public abstract class PushNotificationsDeviceLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		PushNotificationsDeviceLocalService
+			pushNotificationsDeviceLocalService) {
+
+		try {
+			Field field =
+				PushNotificationsDeviceLocalServiceUtil.class.getDeclaredField(
+					"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, pushNotificationsDeviceLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

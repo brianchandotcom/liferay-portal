@@ -14,9 +14,12 @@
 
 package com.liferay.commerce.shipping.engine.fixed.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the remote service utility for CommerceShippingFixedOption. This utility wraps
@@ -37,14 +40,12 @@ public class CommerceShippingFixedOptionServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.shipping.engine.fixed.service.impl.CommerceShippingFixedOptionServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static
-		com.liferay.commerce.shipping.engine.fixed.model.
-			CommerceShippingFixedOption addCommerceShippingFixedOption(
-					long userId, long groupId, long commerceShippingMethodId,
-					java.util.Map<java.util.Locale, String> nameMap,
-					java.util.Map<java.util.Locale, String> descriptionMap,
-					java.math.BigDecimal amount, double priority)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceShippingFixedOption addCommerceShippingFixedOption(
+			long userId, long groupId, long commerceShippingMethodId,
+			Map<java.util.Locale, String> nameMap,
+			Map<java.util.Locale, String> descriptionMap,
+			java.math.BigDecimal amount, double priority)
+		throws PortalException {
 
 		return getService().addCommerceShippingFixedOption(
 			userId, groupId, commerceShippingMethodId, nameMap, descriptionMap,
@@ -55,16 +56,13 @@ public class CommerceShippingFixedOptionServiceUtil {
 	 * @deprecated As of Athanasius (7.3.x)
 	 */
 	@Deprecated
-	public static
-		com.liferay.commerce.shipping.engine.fixed.model.
-			CommerceShippingFixedOption addCommerceShippingFixedOption(
-					long commerceShippingMethodId,
-					java.util.Map<java.util.Locale, String> nameMap,
-					java.util.Map<java.util.Locale, String> descriptionMap,
-					java.math.BigDecimal amount, double priority,
-					com.liferay.portal.kernel.service.ServiceContext
-						serviceContext)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceShippingFixedOption addCommerceShippingFixedOption(
+			long commerceShippingMethodId,
+			Map<java.util.Locale, String> nameMap,
+			Map<java.util.Locale, String> descriptionMap,
+			java.math.BigDecimal amount, double priority,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCommerceShippingFixedOption(
 			commerceShippingMethodId, nameMap, descriptionMap, amount, priority,
@@ -73,51 +71,45 @@ public class CommerceShippingFixedOptionServiceUtil {
 
 	public static void deleteCommerceShippingFixedOption(
 			long commerceShippingFixedOptionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommerceShippingFixedOption(
 			commerceShippingFixedOptionId);
 	}
 
-	public static
-		com.liferay.commerce.shipping.engine.fixed.model.
-			CommerceShippingFixedOption fetchCommerceShippingFixedOption(
-					long commerceShippingFixedOptionId)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceShippingFixedOption fetchCommerceShippingFixedOption(
+			long commerceShippingFixedOptionId)
+		throws PortalException {
 
 		return getService().fetchCommerceShippingFixedOption(
 			commerceShippingFixedOptionId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.shipping.engine.fixed.model.
-			CommerceShippingFixedOption> getCommerceShippingFixedOptions(
-					long commerceShippingMethodId, int start, int end)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommerceShippingFixedOption>
+			getCommerceShippingFixedOptions(
+				long commerceShippingMethodId, int start, int end)
+		throws PortalException {
 
 		return getService().getCommerceShippingFixedOptions(
 			commerceShippingMethodId, start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.shipping.engine.fixed.model.
-			CommerceShippingFixedOption> getCommerceShippingFixedOptions(
-					long commerceShippingMethodId, int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						<com.liferay.commerce.shipping.engine.fixed.model.
-							CommerceShippingFixedOption> orderByComparator)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommerceShippingFixedOption>
+			getCommerceShippingFixedOptions(
+				long commerceShippingMethodId, int start, int end,
+				OrderByComparator<CommerceShippingFixedOption>
+					orderByComparator)
+		throws PortalException {
 
 		return getService().getCommerceShippingFixedOptions(
 			commerceShippingMethodId, start, end, orderByComparator);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.shipping.engine.fixed.model.
-			CommerceShippingFixedOption> getCommerceShippingFixedOptions(
-					long companyId, long groupId, long commerceShippingMethodId,
-					String keywords, int start, int end)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommerceShippingFixedOption>
+			getCommerceShippingFixedOptions(
+				long companyId, long groupId, long commerceShippingMethodId,
+				String keywords, int start, int end)
+		throws PortalException {
 
 		return getService().getCommerceShippingFixedOptions(
 			companyId, groupId, commerceShippingMethodId, keywords, start, end);
@@ -125,7 +117,7 @@ public class CommerceShippingFixedOptionServiceUtil {
 
 	public static int getCommerceShippingFixedOptionsCount(
 			long commerceShippingMethodId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCommerceShippingFixedOptionsCount(
 			commerceShippingMethodId);
@@ -134,7 +126,7 @@ public class CommerceShippingFixedOptionServiceUtil {
 	public static long getCommerceShippingFixedOptionsCount(
 			long companyId, long groupId, long commerceShippingMethodId,
 			String keywords)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCommerceShippingFixedOptionsCount(
 			companyId, groupId, commerceShippingMethodId, keywords);
@@ -149,14 +141,12 @@ public class CommerceShippingFixedOptionServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static
-		com.liferay.commerce.shipping.engine.fixed.model.
-			CommerceShippingFixedOption updateCommerceShippingFixedOption(
-					long commerceShippingFixedOptionId,
-					java.util.Map<java.util.Locale, String> nameMap,
-					java.util.Map<java.util.Locale, String> descriptionMap,
-					java.math.BigDecimal amount, double priority)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceShippingFixedOption updateCommerceShippingFixedOption(
+			long commerceShippingFixedOptionId,
+			Map<java.util.Locale, String> nameMap,
+			Map<java.util.Locale, String> descriptionMap,
+			java.math.BigDecimal amount, double priority)
+		throws PortalException {
 
 		return getService().updateCommerceShippingFixedOption(
 			commerceShippingFixedOptionId, nameMap, descriptionMap, amount,
@@ -164,29 +154,9 @@ public class CommerceShippingFixedOptionServiceUtil {
 	}
 
 	public static CommerceShippingFixedOptionService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceShippingFixedOptionService, CommerceShippingFixedOptionService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommerceShippingFixedOptionService.class);
-
-		ServiceTracker
-			<CommerceShippingFixedOptionService,
-			 CommerceShippingFixedOptionService> serviceTracker =
-				new ServiceTracker
-					<CommerceShippingFixedOptionService,
-					 CommerceShippingFixedOptionService>(
-						 bundle.getBundleContext(),
-						 CommerceShippingFixedOptionService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceShippingFixedOptionService _service;
 
 }

@@ -24,9 +24,12 @@ import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.service.ListTypeService;
+import com.liferay.portal.kernel.service.ListTypeServiceUtil;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.ListTypePersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
+
+import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
 
@@ -48,7 +51,7 @@ public abstract class ListTypeServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>ListTypeService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.kernel.service.ListTypeServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>ListTypeService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>ListTypeServiceUtil</code>.
 	 */
 
 	/**
@@ -201,9 +204,11 @@ public abstract class ListTypeServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
+		_setServiceUtilService(listTypeService);
 	}
 
 	public void destroy() {
+		_setServiceUtilService(null);
 	}
 
 	/**
@@ -245,6 +250,20 @@ public abstract class ListTypeServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setServiceUtilService(ListTypeService listTypeService) {
+		try {
+			Field field = ListTypeServiceUtil.class.getDeclaredField(
+				"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, listTypeService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

@@ -27,10 +27,13 @@ import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.powwow.model.PowwowParticipant;
 import com.liferay.powwow.service.PowwowParticipantService;
+import com.liferay.powwow.service.PowwowParticipantServiceUtil;
 import com.liferay.powwow.service.persistence.PowwowMeetingFinder;
 import com.liferay.powwow.service.persistence.PowwowMeetingPersistence;
 import com.liferay.powwow.service.persistence.PowwowParticipantPersistence;
 import com.liferay.powwow.service.persistence.PowwowServerPersistence;
+
+import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
 
@@ -52,7 +55,7 @@ public abstract class PowwowParticipantServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>PowwowParticipantService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.powwow.service.PowwowParticipantServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>PowwowParticipantService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>PowwowParticipantServiceUtil</code>.
 	 */
 
 	/**
@@ -418,9 +421,11 @@ public abstract class PowwowParticipantServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
+		_setServiceUtilService(powwowParticipantService);
 	}
 
 	public void destroy() {
+		_setServiceUtilService(null);
 	}
 
 	/**
@@ -463,6 +468,22 @@ public abstract class PowwowParticipantServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setServiceUtilService(
+		PowwowParticipantService powwowParticipantService) {
+
+		try {
+			Field field = PowwowParticipantServiceUtil.class.getDeclaredField(
+				"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, powwowParticipantService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

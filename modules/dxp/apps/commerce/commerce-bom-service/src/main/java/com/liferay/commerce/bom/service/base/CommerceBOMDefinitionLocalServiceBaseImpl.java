@@ -16,6 +16,7 @@ package com.liferay.commerce.bom.service.base;
 
 import com.liferay.commerce.bom.model.CommerceBOMDefinition;
 import com.liferay.commerce.bom.service.CommerceBOMDefinitionLocalService;
+import com.liferay.commerce.bom.service.CommerceBOMDefinitionLocalServiceUtil;
 import com.liferay.commerce.bom.service.persistence.CommerceBOMDefinitionPersistence;
 import com.liferay.commerce.bom.service.persistence.CommerceBOMEntryPersistence;
 import com.liferay.commerce.bom.service.persistence.CommerceBOMFolderApplicationRelPersistence;
@@ -50,6 +51,8 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -72,7 +75,7 @@ public abstract class CommerceBOMDefinitionLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceBOMDefinitionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.bom.service.CommerceBOMDefinitionLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceBOMDefinitionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceBOMDefinitionLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -713,11 +716,15 @@ public abstract class CommerceBOMDefinitionLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry.register(
 			"com.liferay.commerce.bom.model.CommerceBOMDefinition",
 			commerceBOMDefinitionLocalService);
+
+		_setLocalServiceUtilService(commerceBOMDefinitionLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.commerce.bom.model.CommerceBOMDefinition");
+
+		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -760,6 +767,23 @@ public abstract class CommerceBOMDefinitionLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		CommerceBOMDefinitionLocalService commerceBOMDefinitionLocalService) {
+
+		try {
+			Field field =
+				CommerceBOMDefinitionLocalServiceUtil.class.getDeclaredField(
+					"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, commerceBOMDefinitionLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

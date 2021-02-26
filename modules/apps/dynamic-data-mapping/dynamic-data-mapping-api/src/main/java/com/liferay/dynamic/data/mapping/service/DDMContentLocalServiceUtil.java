@@ -14,9 +14,16 @@
 
 package com.liferay.dynamic.data.mapping.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.dynamic.data.mapping.model.DDMContent;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for DDMContent. This utility wraps
@@ -40,11 +47,11 @@ public class DDMContentLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.dynamic.data.mapping.service.impl.DDMContentLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.dynamic.data.mapping.model.DDMContent addContent(
+	public static DDMContent addContent(
 			long userId, long groupId, String name, String description,
 			String data,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addContent(
 			userId, groupId, name, description, data, serviceContext);
@@ -60,10 +67,7 @@ public class DDMContentLocalServiceUtil {
 	 * @param ddmContent the ddm content
 	 * @return the ddm content that was added
 	 */
-	public static com.liferay.dynamic.data.mapping.model.DDMContent
-		addDDMContent(
-			com.liferay.dynamic.data.mapping.model.DDMContent ddmContent) {
-
+	public static DDMContent addDDMContent(DDMContent ddmContent) {
 		return getService().addDDMContent(ddmContent);
 	}
 
@@ -73,25 +77,21 @@ public class DDMContentLocalServiceUtil {
 	 * @param contentId the primary key for the new ddm content
 	 * @return the new ddm content
 	 */
-	public static com.liferay.dynamic.data.mapping.model.DDMContent
-		createDDMContent(long contentId) {
-
+	public static DDMContent createDDMContent(long contentId) {
 		return getService().createDDMContent(contentId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
 
-	public static void deleteContent(
-		com.liferay.dynamic.data.mapping.model.DDMContent content) {
-
+	public static void deleteContent(DDMContent content) {
 		getService().deleteContent(content);
 	}
 
@@ -109,10 +109,7 @@ public class DDMContentLocalServiceUtil {
 	 * @param ddmContent the ddm content
 	 * @return the ddm content that was removed
 	 */
-	public static com.liferay.dynamic.data.mapping.model.DDMContent
-		deleteDDMContent(
-			com.liferay.dynamic.data.mapping.model.DDMContent ddmContent) {
-
+	public static DDMContent deleteDDMContent(DDMContent ddmContent) {
 		return getService().deleteDDMContent(ddmContent);
 	}
 
@@ -127,9 +124,8 @@ public class DDMContentLocalServiceUtil {
 	 * @return the ddm content that was removed
 	 * @throws PortalException if a ddm content with the primary key could not be found
 	 */
-	public static com.liferay.dynamic.data.mapping.model.DDMContent
-			deleteDDMContent(long contentId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static DDMContent deleteDDMContent(long contentId)
+		throws PortalException {
 
 		return getService().deleteDDMContent(contentId);
 	}
@@ -137,23 +133,18 @@ public class DDMContentLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -163,9 +154,7 @@ public class DDMContentLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -181,9 +170,8 @@ public class DDMContentLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -201,10 +189,9 @@ public class DDMContentLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -216,9 +203,7 @@ public class DDMContentLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -230,15 +215,13 @@ public class DDMContentLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.dynamic.data.mapping.model.DDMContent
-		fetchDDMContent(long contentId) {
-
+	public static DDMContent fetchDDMContent(long contentId) {
 		return getService().fetchDDMContent(contentId);
 	}
 
@@ -249,8 +232,8 @@ public class DDMContentLocalServiceUtil {
 	 * @param groupId the primary key of the group
 	 * @return the matching ddm content, or <code>null</code> if a matching ddm content could not be found
 	 */
-	public static com.liferay.dynamic.data.mapping.model.DDMContent
-		fetchDDMContentByUuidAndGroupId(String uuid, long groupId) {
+	public static DDMContent fetchDDMContentByUuidAndGroupId(
+		String uuid, long groupId) {
 
 		return getService().fetchDDMContentByUuidAndGroupId(uuid, groupId);
 	}
@@ -261,29 +244,20 @@ public class DDMContentLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
-	public static com.liferay.dynamic.data.mapping.model.DDMContent getContent(
-			long contentId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static DDMContent getContent(long contentId) throws PortalException {
 		return getService().getContent(contentId);
 	}
 
-	public static java.util.List
-		<com.liferay.dynamic.data.mapping.model.DDMContent> getContents() {
-
+	public static List<DDMContent> getContents() {
 		return getService().getContents();
 	}
 
-	public static java.util.List
-		<com.liferay.dynamic.data.mapping.model.DDMContent> getContents(
-			long groupId) {
-
+	public static List<DDMContent> getContents(long groupId) {
 		return getService().getContents(groupId);
 	}
 
-	public static java.util.List
-		<com.liferay.dynamic.data.mapping.model.DDMContent> getContents(
-			long groupId, int start, int end) {
+	public static List<DDMContent> getContents(
+		long groupId, int start, int end) {
 
 		return getService().getContents(groupId, start, end);
 	}
@@ -299,9 +273,8 @@ public class DDMContentLocalServiceUtil {
 	 * @return the ddm content
 	 * @throws PortalException if a ddm content with the primary key could not be found
 	 */
-	public static com.liferay.dynamic.data.mapping.model.DDMContent
-			getDDMContent(long contentId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static DDMContent getDDMContent(long contentId)
+		throws PortalException {
 
 		return getService().getDDMContent(contentId);
 	}
@@ -314,9 +287,9 @@ public class DDMContentLocalServiceUtil {
 	 * @return the matching ddm content
 	 * @throws PortalException if a matching ddm content could not be found
 	 */
-	public static com.liferay.dynamic.data.mapping.model.DDMContent
-			getDDMContentByUuidAndGroupId(String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static DDMContent getDDMContentByUuidAndGroupId(
+			String uuid, long groupId)
+		throws PortalException {
 
 		return getService().getDDMContentByUuidAndGroupId(uuid, groupId);
 	}
@@ -332,10 +305,7 @@ public class DDMContentLocalServiceUtil {
 	 * @param end the upper bound of the range of ddm contents (not inclusive)
 	 * @return the range of ddm contents
 	 */
-	public static java.util.List
-		<com.liferay.dynamic.data.mapping.model.DDMContent> getDDMContents(
-			int start, int end) {
-
+	public static List<DDMContent> getDDMContents(int start, int end) {
 		return getService().getDDMContents(start, end);
 	}
 
@@ -346,9 +316,8 @@ public class DDMContentLocalServiceUtil {
 	 * @param companyId the primary key of the company
 	 * @return the matching ddm contents, or an empty list if no matches were found
 	 */
-	public static java.util.List
-		<com.liferay.dynamic.data.mapping.model.DDMContent>
-			getDDMContentsByUuidAndCompanyId(String uuid, long companyId) {
+	public static List<DDMContent> getDDMContentsByUuidAndCompanyId(
+		String uuid, long companyId) {
 
 		return getService().getDDMContentsByUuidAndCompanyId(uuid, companyId);
 	}
@@ -363,13 +332,9 @@ public class DDMContentLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the range of matching ddm contents, or an empty list if no matches were found
 	 */
-	public static java.util.List
-		<com.liferay.dynamic.data.mapping.model.DDMContent>
-			getDDMContentsByUuidAndCompanyId(
-				String uuid, long companyId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.dynamic.data.mapping.model.DDMContent>
-						orderByComparator) {
+	public static List<DDMContent> getDDMContentsByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<DDMContent> orderByComparator) {
 
 		return getService().getDDMContentsByUuidAndCompanyId(
 			uuid, companyId, start, end, orderByComparator);
@@ -411,18 +376,16 @@ public class DDMContentLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static com.liferay.dynamic.data.mapping.model.DDMContent
-			updateContent(
-				long contentId, String name, String description, String data,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static DDMContent updateContent(
+			long contentId, String name, String description, String data,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().updateContent(
 			contentId, name, description, data, serviceContext);
@@ -438,33 +401,14 @@ public class DDMContentLocalServiceUtil {
 	 * @param ddmContent the ddm content
 	 * @return the ddm content that was updated
 	 */
-	public static com.liferay.dynamic.data.mapping.model.DDMContent
-		updateDDMContent(
-			com.liferay.dynamic.data.mapping.model.DDMContent ddmContent) {
-
+	public static DDMContent updateDDMContent(DDMContent ddmContent) {
 		return getService().updateDDMContent(ddmContent);
 	}
 
 	public static DDMContentLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<DDMContentLocalService, DDMContentLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(DDMContentLocalService.class);
-
-		ServiceTracker<DDMContentLocalService, DDMContentLocalService>
-			serviceTracker =
-				new ServiceTracker
-					<DDMContentLocalService, DDMContentLocalService>(
-						bundle.getBundleContext(), DDMContentLocalService.class,
-						null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile DDMContentLocalService _service;
 
 }

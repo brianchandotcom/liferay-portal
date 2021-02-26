@@ -14,7 +14,8 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.LayoutBranch;
 
 /**
  * Provides the remote service utility for LayoutBranch. This utility wraps
@@ -35,17 +36,17 @@ public class LayoutBranchServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.service.impl.LayoutBranchServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.kernel.model.LayoutBranch addLayoutBranch(
+	public static LayoutBranch addLayoutBranch(
 			long layoutRevisionId, String name, String description,
 			boolean master, ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addLayoutBranch(
 			layoutRevisionId, name, description, master, serviceContext);
 	}
 
 	public static void deleteLayoutBranch(long layoutBranchId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteLayoutBranch(layoutBranchId);
 	}
@@ -59,25 +60,19 @@ public class LayoutBranchServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.portal.kernel.model.LayoutBranch
-			updateLayoutBranch(
-				long layoutBranchId, String name, String description,
-				ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static LayoutBranch updateLayoutBranch(
+			long layoutBranchId, String name, String description,
+			ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().updateLayoutBranch(
 			layoutBranchId, name, description, serviceContext);
 	}
 
 	public static LayoutBranchService getService() {
-		if (_service == null) {
-			_service = (LayoutBranchService)PortalBeanLocatorUtil.locate(
-				LayoutBranchService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static LayoutBranchService _service;
+	private static volatile LayoutBranchService _service;
 
 }

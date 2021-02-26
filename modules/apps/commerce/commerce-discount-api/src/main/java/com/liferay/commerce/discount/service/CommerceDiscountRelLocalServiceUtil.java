@@ -14,9 +14,16 @@
 
 package com.liferay.commerce.discount.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.discount.model.CommerceDiscountRel;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for CommerceDiscountRel. This utility wraps
@@ -48,19 +55,16 @@ public class CommerceDiscountRelLocalServiceUtil {
 	 * @param commerceDiscountRel the commerce discount rel
 	 * @return the commerce discount rel that was added
 	 */
-	public static com.liferay.commerce.discount.model.CommerceDiscountRel
-		addCommerceDiscountRel(
-			com.liferay.commerce.discount.model.CommerceDiscountRel
-				commerceDiscountRel) {
+	public static CommerceDiscountRel addCommerceDiscountRel(
+		CommerceDiscountRel commerceDiscountRel) {
 
 		return getService().addCommerceDiscountRel(commerceDiscountRel);
 	}
 
-	public static com.liferay.commerce.discount.model.CommerceDiscountRel
-			addCommerceDiscountRel(
-				long commerceDiscountId, String className, long classPK,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceDiscountRel addCommerceDiscountRel(
+			long commerceDiscountId, String className, long classPK,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCommerceDiscountRel(
 			commerceDiscountId, className, classPK, serviceContext);
@@ -72,8 +76,8 @@ public class CommerceDiscountRelLocalServiceUtil {
 	 * @param commerceDiscountRelId the primary key for the new commerce discount rel
 	 * @return the new commerce discount rel
 	 */
-	public static com.liferay.commerce.discount.model.CommerceDiscountRel
-		createCommerceDiscountRel(long commerceDiscountRelId) {
+	public static CommerceDiscountRel createCommerceDiscountRel(
+		long commerceDiscountRelId) {
 
 		return getService().createCommerceDiscountRel(commerceDiscountRelId);
 	}
@@ -81,9 +85,9 @@ public class CommerceDiscountRelLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -99,11 +103,9 @@ public class CommerceDiscountRelLocalServiceUtil {
 	 * @return the commerce discount rel that was removed
 	 * @throws PortalException
 	 */
-	public static com.liferay.commerce.discount.model.CommerceDiscountRel
-			deleteCommerceDiscountRel(
-				com.liferay.commerce.discount.model.CommerceDiscountRel
-					commerceDiscountRel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceDiscountRel deleteCommerceDiscountRel(
+			CommerceDiscountRel commerceDiscountRel)
+		throws PortalException {
 
 		return getService().deleteCommerceDiscountRel(commerceDiscountRel);
 	}
@@ -119,22 +121,22 @@ public class CommerceDiscountRelLocalServiceUtil {
 	 * @return the commerce discount rel that was removed
 	 * @throws PortalException if a commerce discount rel with the primary key could not be found
 	 */
-	public static com.liferay.commerce.discount.model.CommerceDiscountRel
-			deleteCommerceDiscountRel(long commerceDiscountRelId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceDiscountRel deleteCommerceDiscountRel(
+			long commerceDiscountRelId)
+		throws PortalException {
 
 		return getService().deleteCommerceDiscountRel(commerceDiscountRelId);
 	}
 
 	public static void deleteCommerceDiscountRels(long commerceDiscountId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommerceDiscountRels(commerceDiscountId);
 	}
 
 	public static void deleteCommerceDiscountRels(
 			String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommerceDiscountRels(className, classPK);
 	}
@@ -142,23 +144,18 @@ public class CommerceDiscountRelLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -168,9 +165,7 @@ public class CommerceDiscountRelLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -186,9 +181,8 @@ public class CommerceDiscountRelLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -206,10 +200,9 @@ public class CommerceDiscountRelLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -221,9 +214,7 @@ public class CommerceDiscountRelLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -235,20 +226,20 @@ public class CommerceDiscountRelLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.commerce.discount.model.CommerceDiscountRel
-		fetchCommerceDiscountRel(long commerceDiscountRelId) {
+	public static CommerceDiscountRel fetchCommerceDiscountRel(
+		long commerceDiscountRelId) {
 
 		return getService().fetchCommerceDiscountRel(commerceDiscountRelId);
 	}
 
-	public static com.liferay.commerce.discount.model.CommerceDiscountRel
-		fetchCommerceDiscountRel(String className, long classPK) {
+	public static CommerceDiscountRel fetchCommerceDiscountRel(
+		String className, long classPK) {
 
 		return getService().fetchCommerceDiscountRel(className, classPK);
 	}
@@ -259,10 +250,8 @@ public class CommerceDiscountRelLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.discount.model.CommerceDiscountRel>
-			getCategoriesByCommerceDiscountId(
-				long commerceDiscountId, String name, int start, int end) {
+	public static List<CommerceDiscountRel> getCategoriesByCommerceDiscountId(
+		long commerceDiscountId, String name, int start, int end) {
 
 		return getService().getCategoriesByCommerceDiscountId(
 			commerceDiscountId, name, start, end);
@@ -288,9 +277,9 @@ public class CommerceDiscountRelLocalServiceUtil {
 	 * @return the commerce discount rel
 	 * @throws PortalException if a commerce discount rel with the primary key could not be found
 	 */
-	public static com.liferay.commerce.discount.model.CommerceDiscountRel
-			getCommerceDiscountRel(long commerceDiscountRelId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceDiscountRel getCommerceDiscountRel(
+			long commerceDiscountRelId)
+		throws PortalException {
 
 		return getService().getCommerceDiscountRel(commerceDiscountRelId);
 	}
@@ -306,28 +295,22 @@ public class CommerceDiscountRelLocalServiceUtil {
 	 * @param end the upper bound of the range of commerce discount rels (not inclusive)
 	 * @return the range of commerce discount rels
 	 */
-	public static java.util.List
-		<com.liferay.commerce.discount.model.CommerceDiscountRel>
-			getCommerceDiscountRels(int start, int end) {
+	public static List<CommerceDiscountRel> getCommerceDiscountRels(
+		int start, int end) {
 
 		return getService().getCommerceDiscountRels(start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.discount.model.CommerceDiscountRel>
-			getCommerceDiscountRels(long commerceDiscountId, String className) {
+	public static List<CommerceDiscountRel> getCommerceDiscountRels(
+		long commerceDiscountId, String className) {
 
 		return getService().getCommerceDiscountRels(
 			commerceDiscountId, className);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.discount.model.CommerceDiscountRel>
-			getCommerceDiscountRels(
-				long commerceDiscountId, String className, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.commerce.discount.model.CommerceDiscountRel>
-						orderByComparator) {
+	public static List<CommerceDiscountRel> getCommerceDiscountRels(
+		long commerceDiscountId, String className, int start, int end,
+		OrderByComparator<CommerceDiscountRel> orderByComparator) {
 
 		return getService().getCommerceDiscountRels(
 			commerceDiscountId, className, start, end, orderByComparator);
@@ -349,10 +332,9 @@ public class CommerceDiscountRelLocalServiceUtil {
 			commerceDiscountId, className);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.discount.model.CommerceDiscountRel>
-			getCommercePricingClassesByCommerceDiscountId(
-				long commerceDiscountId, String title, int start, int end) {
+	public static List<CommerceDiscountRel>
+		getCommercePricingClassesByCommerceDiscountId(
+			long commerceDiscountId, String title, int start, int end) {
 
 		return getService().getCommercePricingClassesByCommerceDiscountId(
 			commerceDiscountId, title, start, end);
@@ -365,11 +347,10 @@ public class CommerceDiscountRelLocalServiceUtil {
 			commerceDiscountId, title);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.discount.model.CommerceDiscountRel>
-			getCPDefinitionsByCommerceDiscountId(
-				long commerceDiscountId, String name, String languageId,
-				int start, int end) {
+	public static List<CommerceDiscountRel>
+		getCPDefinitionsByCommerceDiscountId(
+			long commerceDiscountId, String name, String languageId, int start,
+			int end) {
 
 		return getService().getCPDefinitionsByCommerceDiscountId(
 			commerceDiscountId, name, languageId, start, end);
@@ -401,9 +382,8 @@ public class CommerceDiscountRelLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -418,38 +398,16 @@ public class CommerceDiscountRelLocalServiceUtil {
 	 * @param commerceDiscountRel the commerce discount rel
 	 * @return the commerce discount rel that was updated
 	 */
-	public static com.liferay.commerce.discount.model.CommerceDiscountRel
-		updateCommerceDiscountRel(
-			com.liferay.commerce.discount.model.CommerceDiscountRel
-				commerceDiscountRel) {
+	public static CommerceDiscountRel updateCommerceDiscountRel(
+		CommerceDiscountRel commerceDiscountRel) {
 
 		return getService().updateCommerceDiscountRel(commerceDiscountRel);
 	}
 
 	public static CommerceDiscountRelLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceDiscountRelLocalService, CommerceDiscountRelLocalService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommerceDiscountRelLocalService.class);
-
-		ServiceTracker
-			<CommerceDiscountRelLocalService, CommerceDiscountRelLocalService>
-				serviceTracker =
-					new ServiceTracker
-						<CommerceDiscountRelLocalService,
-						 CommerceDiscountRelLocalService>(
-							 bundle.getBundleContext(),
-							 CommerceDiscountRelLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceDiscountRelLocalService _service;
 
 }

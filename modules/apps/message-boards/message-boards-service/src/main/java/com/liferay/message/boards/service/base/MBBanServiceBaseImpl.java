@@ -16,6 +16,7 @@ package com.liferay.message.boards.service.base;
 
 import com.liferay.message.boards.model.MBBan;
 import com.liferay.message.boards.service.MBBanService;
+import com.liferay.message.boards.service.MBBanServiceUtil;
 import com.liferay.message.boards.service.persistence.MBBanPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -27,8 +28,11 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 
+import java.lang.reflect.Field;
+
 import javax.sql.DataSource;
 
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -49,8 +53,13 @@ public abstract class MBBanServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>MBBanService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.message.boards.service.MBBanServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>MBBanService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>MBBanServiceUtil</code>.
 	 */
+	@Deactivate
+	protected void deactivate() {
+		_setServiceUtilService(null);
+	}
+
 	@Override
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
@@ -61,6 +70,8 @@ public abstract class MBBanServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		mbBanService = (MBBanService)aopProxy;
+
+		_setServiceUtilService(mbBanService);
 	}
 
 	/**
@@ -102,6 +113,19 @@ public abstract class MBBanServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setServiceUtilService(MBBanService mbBanService) {
+		try {
+			Field field = MBBanServiceUtil.class.getDeclaredField("_service");
+
+			field.setAccessible(true);
+
+			field.set(null, mbBanService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

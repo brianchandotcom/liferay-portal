@@ -16,6 +16,7 @@ package com.liferay.external.data.source.test.service.base;
 
 import com.liferay.external.data.source.test.model.TestEntity;
 import com.liferay.external.data.source.test.service.TestEntityLocalService;
+import com.liferay.external.data.source.test.service.TestEntityLocalServiceUtil;
 import com.liferay.external.data.source.test.service.persistence.TestEntityPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -45,6 +46,8 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -67,7 +70,7 @@ public abstract class TestEntityLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>TestEntityLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.external.data.source.test.service.TestEntityLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>TestEntityLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>TestEntityLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -428,11 +431,15 @@ public abstract class TestEntityLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry.register(
 			"com.liferay.external.data.source.test.model.TestEntity",
 			testEntityLocalService);
+
+		_setLocalServiceUtilService(testEntityLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.external.data.source.test.model.TestEntity");
+
+		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -474,6 +481,22 @@ public abstract class TestEntityLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		TestEntityLocalService testEntityLocalService) {
+
+		try {
+			Field field = TestEntityLocalServiceUtil.class.getDeclaredField(
+				"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, testEntityLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

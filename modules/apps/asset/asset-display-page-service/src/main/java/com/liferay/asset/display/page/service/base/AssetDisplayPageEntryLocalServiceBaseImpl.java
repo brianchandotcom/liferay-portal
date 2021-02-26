@@ -16,6 +16,7 @@ package com.liferay.asset.display.page.service.base;
 
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
+import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalServiceUtil;
 import com.liferay.asset.display.page.service.persistence.AssetDisplayPageEntryPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -55,10 +56,13 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -80,7 +84,7 @@ public abstract class AssetDisplayPageEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>AssetDisplayPageEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>AssetDisplayPageEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>AssetDisplayPageEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -562,6 +566,11 @@ public abstract class AssetDisplayPageEntryLocalServiceBaseImpl
 		return assetDisplayPageEntryPersistence.update(assetDisplayPageEntry);
 	}
 
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
+	}
+
 	@Override
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
@@ -575,6 +584,8 @@ public abstract class AssetDisplayPageEntryLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		assetDisplayPageEntryLocalService =
 			(AssetDisplayPageEntryLocalService)aopProxy;
+
+		_setLocalServiceUtilService(assetDisplayPageEntryLocalService);
 	}
 
 	/**
@@ -632,6 +643,23 @@ public abstract class AssetDisplayPageEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		AssetDisplayPageEntryLocalService assetDisplayPageEntryLocalService) {
+
+		try {
+			Field field =
+				AssetDisplayPageEntryLocalServiceUtil.class.getDeclaredField(
+					"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, assetDisplayPageEntryLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

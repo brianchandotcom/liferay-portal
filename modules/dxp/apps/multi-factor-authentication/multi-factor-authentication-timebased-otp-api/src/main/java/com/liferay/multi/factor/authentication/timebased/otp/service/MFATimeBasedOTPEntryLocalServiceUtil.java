@@ -14,9 +14,16 @@
 
 package com.liferay.multi.factor.authentication.timebased.otp.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.multi.factor.authentication.timebased.otp.model.MFATimeBasedOTPEntry;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for MFATimeBasedOTPEntry. This utility wraps
@@ -48,18 +55,15 @@ public class MFATimeBasedOTPEntryLocalServiceUtil {
 	 * @param mfaTimeBasedOTPEntry the mfa time based otp entry
 	 * @return the mfa time based otp entry that was added
 	 */
-	public static com.liferay.multi.factor.authentication.timebased.otp.model.
-		MFATimeBasedOTPEntry addMFATimeBasedOTPEntry(
-			com.liferay.multi.factor.authentication.timebased.otp.model.
-				MFATimeBasedOTPEntry mfaTimeBasedOTPEntry) {
+	public static MFATimeBasedOTPEntry addMFATimeBasedOTPEntry(
+		MFATimeBasedOTPEntry mfaTimeBasedOTPEntry) {
 
 		return getService().addMFATimeBasedOTPEntry(mfaTimeBasedOTPEntry);
 	}
 
-	public static com.liferay.multi.factor.authentication.timebased.otp.model.
-		MFATimeBasedOTPEntry addTimeBasedOTPEntry(
-				long userId, String sharedSecret)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static MFATimeBasedOTPEntry addTimeBasedOTPEntry(
+			long userId, String sharedSecret)
+		throws PortalException {
 
 		return getService().addTimeBasedOTPEntry(userId, sharedSecret);
 	}
@@ -70,9 +74,8 @@ public class MFATimeBasedOTPEntryLocalServiceUtil {
 	 * @param mfaTimeBasedOTPEntryId the primary key for the new mfa time based otp entry
 	 * @return the new mfa time based otp entry
 	 */
-	public static com.liferay.multi.factor.authentication.timebased.otp.model.
-		MFATimeBasedOTPEntry createMFATimeBasedOTPEntry(
-			long mfaTimeBasedOTPEntryId) {
+	public static MFATimeBasedOTPEntry createMFATimeBasedOTPEntry(
+		long mfaTimeBasedOTPEntryId) {
 
 		return getService().createMFATimeBasedOTPEntry(mfaTimeBasedOTPEntryId);
 	}
@@ -80,9 +83,9 @@ public class MFATimeBasedOTPEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -98,10 +101,9 @@ public class MFATimeBasedOTPEntryLocalServiceUtil {
 	 * @return the mfa time based otp entry that was removed
 	 * @throws PortalException if a mfa time based otp entry with the primary key could not be found
 	 */
-	public static com.liferay.multi.factor.authentication.timebased.otp.model.
-		MFATimeBasedOTPEntry deleteMFATimeBasedOTPEntry(
-				long mfaTimeBasedOTPEntryId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static MFATimeBasedOTPEntry deleteMFATimeBasedOTPEntry(
+			long mfaTimeBasedOTPEntryId)
+		throws PortalException {
 
 		return getService().deleteMFATimeBasedOTPEntry(mfaTimeBasedOTPEntryId);
 	}
@@ -116,10 +118,8 @@ public class MFATimeBasedOTPEntryLocalServiceUtil {
 	 * @param mfaTimeBasedOTPEntry the mfa time based otp entry
 	 * @return the mfa time based otp entry that was removed
 	 */
-	public static com.liferay.multi.factor.authentication.timebased.otp.model.
-		MFATimeBasedOTPEntry deleteMFATimeBasedOTPEntry(
-			com.liferay.multi.factor.authentication.timebased.otp.model.
-				MFATimeBasedOTPEntry mfaTimeBasedOTPEntry) {
+	public static MFATimeBasedOTPEntry deleteMFATimeBasedOTPEntry(
+		MFATimeBasedOTPEntry mfaTimeBasedOTPEntry) {
 
 		return getService().deleteMFATimeBasedOTPEntry(mfaTimeBasedOTPEntry);
 	}
@@ -127,23 +127,18 @@ public class MFATimeBasedOTPEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -153,9 +148,7 @@ public class MFATimeBasedOTPEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -171,9 +164,8 @@ public class MFATimeBasedOTPEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -191,10 +183,9 @@ public class MFATimeBasedOTPEntryLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -206,9 +197,7 @@ public class MFATimeBasedOTPEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -220,21 +209,20 @@ public class MFATimeBasedOTPEntryLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.multi.factor.authentication.timebased.otp.model.
-		MFATimeBasedOTPEntry fetchMFATimeBasedOTPEntry(
-			long mfaTimeBasedOTPEntryId) {
+	public static MFATimeBasedOTPEntry fetchMFATimeBasedOTPEntry(
+		long mfaTimeBasedOTPEntryId) {
 
 		return getService().fetchMFATimeBasedOTPEntry(mfaTimeBasedOTPEntryId);
 	}
 
-	public static com.liferay.multi.factor.authentication.timebased.otp.model.
-		MFATimeBasedOTPEntry fetchMFATimeBasedOTPEntryByUserId(long userId) {
+	public static MFATimeBasedOTPEntry fetchMFATimeBasedOTPEntryByUserId(
+		long userId) {
 
 		return getService().fetchMFATimeBasedOTPEntryByUserId(userId);
 	}
@@ -263,10 +251,8 @@ public class MFATimeBasedOTPEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of mfa time based otp entries (not inclusive)
 	 * @return the range of mfa time based otp entries
 	 */
-	public static java.util.List
-		<com.liferay.multi.factor.authentication.timebased.otp.model.
-			MFATimeBasedOTPEntry> getMFATimeBasedOTPEntries(
-				int start, int end) {
+	public static List<MFATimeBasedOTPEntry> getMFATimeBasedOTPEntries(
+		int start, int end) {
 
 		return getService().getMFATimeBasedOTPEntries(start, end);
 	}
@@ -287,10 +273,9 @@ public class MFATimeBasedOTPEntryLocalServiceUtil {
 	 * @return the mfa time based otp entry
 	 * @throws PortalException if a mfa time based otp entry with the primary key could not be found
 	 */
-	public static com.liferay.multi.factor.authentication.timebased.otp.model.
-		MFATimeBasedOTPEntry getMFATimeBasedOTPEntry(
-				long mfaTimeBasedOTPEntryId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static MFATimeBasedOTPEntry getMFATimeBasedOTPEntry(
+			long mfaTimeBasedOTPEntryId)
+		throws PortalException {
 
 		return getService().getMFATimeBasedOTPEntry(mfaTimeBasedOTPEntryId);
 	}
@@ -307,24 +292,21 @@ public class MFATimeBasedOTPEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static com.liferay.multi.factor.authentication.timebased.otp.model.
-		MFATimeBasedOTPEntry resetFailedAttempts(long userId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static MFATimeBasedOTPEntry resetFailedAttempts(long userId)
+		throws PortalException {
 
 		return getService().resetFailedAttempts(userId);
 	}
 
-	public static com.liferay.multi.factor.authentication.timebased.otp.model.
-		MFATimeBasedOTPEntry updateAttempts(
-				long userId, String ipAddress, boolean success)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static MFATimeBasedOTPEntry updateAttempts(
+			long userId, String ipAddress, boolean success)
+		throws PortalException {
 
 		return getService().updateAttempts(userId, ipAddress, success);
 	}
@@ -339,38 +321,16 @@ public class MFATimeBasedOTPEntryLocalServiceUtil {
 	 * @param mfaTimeBasedOTPEntry the mfa time based otp entry
 	 * @return the mfa time based otp entry that was updated
 	 */
-	public static com.liferay.multi.factor.authentication.timebased.otp.model.
-		MFATimeBasedOTPEntry updateMFATimeBasedOTPEntry(
-			com.liferay.multi.factor.authentication.timebased.otp.model.
-				MFATimeBasedOTPEntry mfaTimeBasedOTPEntry) {
+	public static MFATimeBasedOTPEntry updateMFATimeBasedOTPEntry(
+		MFATimeBasedOTPEntry mfaTimeBasedOTPEntry) {
 
 		return getService().updateMFATimeBasedOTPEntry(mfaTimeBasedOTPEntry);
 	}
 
 	public static MFATimeBasedOTPEntryLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<MFATimeBasedOTPEntryLocalService, MFATimeBasedOTPEntryLocalService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			MFATimeBasedOTPEntryLocalService.class);
-
-		ServiceTracker
-			<MFATimeBasedOTPEntryLocalService, MFATimeBasedOTPEntryLocalService>
-				serviceTracker =
-					new ServiceTracker
-						<MFATimeBasedOTPEntryLocalService,
-						 MFATimeBasedOTPEntryLocalService>(
-							 bundle.getBundleContext(),
-							 MFATimeBasedOTPEntryLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile MFATimeBasedOTPEntryLocalService _service;
 
 }

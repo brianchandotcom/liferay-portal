@@ -14,9 +14,17 @@
 
 package com.liferay.commerce.product.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.product.model.CPMeasurementUnit;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for CPMeasurementUnit. This utility wraps
@@ -48,20 +56,17 @@ public class CPMeasurementUnitLocalServiceUtil {
 	 * @param cpMeasurementUnit the cp measurement unit
 	 * @return the cp measurement unit that was added
 	 */
-	public static com.liferay.commerce.product.model.CPMeasurementUnit
-		addCPMeasurementUnit(
-			com.liferay.commerce.product.model.CPMeasurementUnit
-				cpMeasurementUnit) {
+	public static CPMeasurementUnit addCPMeasurementUnit(
+		CPMeasurementUnit cpMeasurementUnit) {
 
 		return getService().addCPMeasurementUnit(cpMeasurementUnit);
 	}
 
-	public static com.liferay.commerce.product.model.CPMeasurementUnit
-			addCPMeasurementUnit(
-				java.util.Map<java.util.Locale, String> nameMap, String key,
-				double rate, boolean primary, double priority, int type,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPMeasurementUnit addCPMeasurementUnit(
+			Map<java.util.Locale, String> nameMap, String key, double rate,
+			boolean primary, double priority, int type,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCPMeasurementUnit(
 			nameMap, key, rate, primary, priority, type, serviceContext);
@@ -73,8 +78,8 @@ public class CPMeasurementUnitLocalServiceUtil {
 	 * @param CPMeasurementUnitId the primary key for the new cp measurement unit
 	 * @return the new cp measurement unit
 	 */
-	public static com.liferay.commerce.product.model.CPMeasurementUnit
-		createCPMeasurementUnit(long CPMeasurementUnitId) {
+	public static CPMeasurementUnit createCPMeasurementUnit(
+		long CPMeasurementUnitId) {
 
 		return getService().createCPMeasurementUnit(CPMeasurementUnitId);
 	}
@@ -82,9 +87,9 @@ public class CPMeasurementUnitLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -99,10 +104,8 @@ public class CPMeasurementUnitLocalServiceUtil {
 	 * @param cpMeasurementUnit the cp measurement unit
 	 * @return the cp measurement unit that was removed
 	 */
-	public static com.liferay.commerce.product.model.CPMeasurementUnit
-		deleteCPMeasurementUnit(
-			com.liferay.commerce.product.model.CPMeasurementUnit
-				cpMeasurementUnit) {
+	public static CPMeasurementUnit deleteCPMeasurementUnit(
+		CPMeasurementUnit cpMeasurementUnit) {
 
 		return getService().deleteCPMeasurementUnit(cpMeasurementUnit);
 	}
@@ -118,9 +121,9 @@ public class CPMeasurementUnitLocalServiceUtil {
 	 * @return the cp measurement unit that was removed
 	 * @throws PortalException if a cp measurement unit with the primary key could not be found
 	 */
-	public static com.liferay.commerce.product.model.CPMeasurementUnit
-			deleteCPMeasurementUnit(long CPMeasurementUnitId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPMeasurementUnit deleteCPMeasurementUnit(
+			long CPMeasurementUnitId)
+		throws PortalException {
 
 		return getService().deleteCPMeasurementUnit(CPMeasurementUnitId);
 	}
@@ -132,23 +135,18 @@ public class CPMeasurementUnitLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -158,9 +156,7 @@ public class CPMeasurementUnitLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -176,9 +172,8 @@ public class CPMeasurementUnitLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -196,10 +191,9 @@ public class CPMeasurementUnitLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -211,9 +205,7 @@ public class CPMeasurementUnitLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -225,14 +217,14 @@ public class CPMeasurementUnitLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.commerce.product.model.CPMeasurementUnit
-		fetchCPMeasurementUnit(long CPMeasurementUnitId) {
+	public static CPMeasurementUnit fetchCPMeasurementUnit(
+		long CPMeasurementUnitId) {
 
 		return getService().fetchCPMeasurementUnit(CPMeasurementUnitId);
 	}
@@ -244,15 +236,15 @@ public class CPMeasurementUnitLocalServiceUtil {
 	 * @param groupId the primary key of the group
 	 * @return the matching cp measurement unit, or <code>null</code> if a matching cp measurement unit could not be found
 	 */
-	public static com.liferay.commerce.product.model.CPMeasurementUnit
-		fetchCPMeasurementUnitByUuidAndGroupId(String uuid, long groupId) {
+	public static CPMeasurementUnit fetchCPMeasurementUnitByUuidAndGroupId(
+		String uuid, long groupId) {
 
 		return getService().fetchCPMeasurementUnitByUuidAndGroupId(
 			uuid, groupId);
 	}
 
-	public static com.liferay.commerce.product.model.CPMeasurementUnit
-		fetchPrimaryCPMeasurementUnit(long companyId, int type) {
+	public static CPMeasurementUnit fetchPrimaryCPMeasurementUnit(
+		long companyId, int type) {
 
 		return getService().fetchPrimaryCPMeasurementUnit(companyId, type);
 	}
@@ -270,9 +262,9 @@ public class CPMeasurementUnitLocalServiceUtil {
 	 * @return the cp measurement unit
 	 * @throws PortalException if a cp measurement unit with the primary key could not be found
 	 */
-	public static com.liferay.commerce.product.model.CPMeasurementUnit
-			getCPMeasurementUnit(long CPMeasurementUnitId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPMeasurementUnit getCPMeasurementUnit(
+			long CPMeasurementUnitId)
+		throws PortalException {
 
 		return getService().getCPMeasurementUnit(CPMeasurementUnitId);
 	}
@@ -285,9 +277,9 @@ public class CPMeasurementUnitLocalServiceUtil {
 	 * @return the matching cp measurement unit
 	 * @throws PortalException if a matching cp measurement unit could not be found
 	 */
-	public static com.liferay.commerce.product.model.CPMeasurementUnit
-			getCPMeasurementUnitByUuidAndGroupId(String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPMeasurementUnit getCPMeasurementUnitByUuidAndGroupId(
+			String uuid, long groupId)
+		throws PortalException {
 
 		return getService().getCPMeasurementUnitByUuidAndGroupId(uuid, groupId);
 	}
@@ -303,47 +295,36 @@ public class CPMeasurementUnitLocalServiceUtil {
 	 * @param end the upper bound of the range of cp measurement units (not inclusive)
 	 * @return the range of cp measurement units
 	 */
-	public static java.util.List
-		<com.liferay.commerce.product.model.CPMeasurementUnit>
-			getCPMeasurementUnits(int start, int end) {
+	public static List<CPMeasurementUnit> getCPMeasurementUnits(
+		int start, int end) {
 
 		return getService().getCPMeasurementUnits(start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.product.model.CPMeasurementUnit>
-			getCPMeasurementUnits(long companyId) {
+	public static List<CPMeasurementUnit> getCPMeasurementUnits(
+		long companyId) {
 
 		return getService().getCPMeasurementUnits(companyId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.product.model.CPMeasurementUnit>
-			getCPMeasurementUnits(
-				long companyId, int type, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.commerce.product.model.CPMeasurementUnit>
-						orderByComparator) {
+	public static List<CPMeasurementUnit> getCPMeasurementUnits(
+		long companyId, int type, int start, int end,
+		OrderByComparator<CPMeasurementUnit> orderByComparator) {
 
 		return getService().getCPMeasurementUnits(
 			companyId, type, start, end, orderByComparator);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.product.model.CPMeasurementUnit>
-			getCPMeasurementUnits(
-				long companyId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.commerce.product.model.CPMeasurementUnit>
-						orderByComparator) {
+	public static List<CPMeasurementUnit> getCPMeasurementUnits(
+		long companyId, int start, int end,
+		OrderByComparator<CPMeasurementUnit> orderByComparator) {
 
 		return getService().getCPMeasurementUnits(
 			companyId, start, end, orderByComparator);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.product.model.CPMeasurementUnit>
-			getCPMeasurementUnits(long companyId, String[] keys, int type) {
+	public static List<CPMeasurementUnit> getCPMeasurementUnits(
+		long companyId, String[] keys, int type) {
 
 		return getService().getCPMeasurementUnits(companyId, keys, type);
 	}
@@ -355,10 +336,8 @@ public class CPMeasurementUnitLocalServiceUtil {
 	 * @param companyId the primary key of the company
 	 * @return the matching cp measurement units, or an empty list if no matches were found
 	 */
-	public static java.util.List
-		<com.liferay.commerce.product.model.CPMeasurementUnit>
-			getCPMeasurementUnitsByUuidAndCompanyId(
-				String uuid, long companyId) {
+	public static List<CPMeasurementUnit>
+		getCPMeasurementUnitsByUuidAndCompanyId(String uuid, long companyId) {
 
 		return getService().getCPMeasurementUnitsByUuidAndCompanyId(
 			uuid, companyId);
@@ -374,13 +353,10 @@ public class CPMeasurementUnitLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the range of matching cp measurement units, or an empty list if no matches were found
 	 */
-	public static java.util.List
-		<com.liferay.commerce.product.model.CPMeasurementUnit>
-			getCPMeasurementUnitsByUuidAndCompanyId(
-				String uuid, long companyId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.commerce.product.model.CPMeasurementUnit>
-						orderByComparator) {
+	public static List<CPMeasurementUnit>
+		getCPMeasurementUnitsByUuidAndCompanyId(
+			String uuid, long companyId, int start, int end,
+			OrderByComparator<CPMeasurementUnit> orderByComparator) {
 
 		return getService().getCPMeasurementUnitsByUuidAndCompanyId(
 			uuid, companyId, start, end, orderByComparator);
@@ -430,23 +406,22 @@ public class CPMeasurementUnitLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	public static void importDefaultValues(
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().importDefaultValues(serviceContext);
 	}
 
-	public static com.liferay.commerce.product.model.CPMeasurementUnit
-			setPrimary(long cpMeasurementUnitId, boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPMeasurementUnit setPrimary(
+			long cpMeasurementUnitId, boolean primary)
+		throws PortalException {
 
 		return getService().setPrimary(cpMeasurementUnitId, primary);
 	}
@@ -461,21 +436,17 @@ public class CPMeasurementUnitLocalServiceUtil {
 	 * @param cpMeasurementUnit the cp measurement unit
 	 * @return the cp measurement unit that was updated
 	 */
-	public static com.liferay.commerce.product.model.CPMeasurementUnit
-		updateCPMeasurementUnit(
-			com.liferay.commerce.product.model.CPMeasurementUnit
-				cpMeasurementUnit) {
+	public static CPMeasurementUnit updateCPMeasurementUnit(
+		CPMeasurementUnit cpMeasurementUnit) {
 
 		return getService().updateCPMeasurementUnit(cpMeasurementUnit);
 	}
 
-	public static com.liferay.commerce.product.model.CPMeasurementUnit
-			updateCPMeasurementUnit(
-				long cpMeasurementUnitId,
-				java.util.Map<java.util.Locale, String> nameMap, String key,
-				double rate, boolean primary, double priority, int type,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPMeasurementUnit updateCPMeasurementUnit(
+			long cpMeasurementUnitId, Map<java.util.Locale, String> nameMap,
+			String key, double rate, boolean primary, double priority, int type,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().updateCPMeasurementUnit(
 			cpMeasurementUnitId, nameMap, key, rate, primary, priority, type,
@@ -483,29 +454,9 @@ public class CPMeasurementUnitLocalServiceUtil {
 	}
 
 	public static CPMeasurementUnitLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CPMeasurementUnitLocalService, CPMeasurementUnitLocalService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CPMeasurementUnitLocalService.class);
-
-		ServiceTracker
-			<CPMeasurementUnitLocalService, CPMeasurementUnitLocalService>
-				serviceTracker =
-					new ServiceTracker
-						<CPMeasurementUnitLocalService,
-						 CPMeasurementUnitLocalService>(
-							 bundle.getBundleContext(),
-							 CPMeasurementUnitLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CPMeasurementUnitLocalService _service;
 
 }

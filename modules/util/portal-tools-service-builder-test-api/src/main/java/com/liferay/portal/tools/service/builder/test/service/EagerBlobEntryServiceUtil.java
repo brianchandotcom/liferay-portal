@@ -14,10 +14,6 @@
 
 package com.liferay.portal.tools.service.builder.test.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-
 /**
  * Provides the remote service utility for EagerBlobEntry. This utility wraps
  * <code>com.liferay.portal.tools.service.builder.test.service.impl.EagerBlobEntryServiceImpl</code> and is an
@@ -43,30 +39,14 @@ public class EagerBlobEntryServiceUtil {
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static String getOSGiServiceIdentifier() {
+	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static EagerBlobEntryService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<EagerBlobEntryService, EagerBlobEntryService>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(EagerBlobEntryService.class);
-
-		ServiceTracker<EagerBlobEntryService, EagerBlobEntryService>
-			serviceTracker =
-				new ServiceTracker
-					<EagerBlobEntryService, EagerBlobEntryService>(
-						bundle.getBundleContext(), EagerBlobEntryService.class,
-						null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile EagerBlobEntryService _service;
 
 }

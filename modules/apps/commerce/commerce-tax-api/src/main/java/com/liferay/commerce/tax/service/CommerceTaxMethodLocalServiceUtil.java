@@ -14,9 +14,17 @@
 
 package com.liferay.commerce.tax.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.tax.model.CommerceTaxMethod;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for CommerceTaxMethod. This utility wraps
@@ -48,21 +56,17 @@ public class CommerceTaxMethodLocalServiceUtil {
 	 * @param commerceTaxMethod the commerce tax method
 	 * @return the commerce tax method that was added
 	 */
-	public static com.liferay.commerce.tax.model.CommerceTaxMethod
-		addCommerceTaxMethod(
-			com.liferay.commerce.tax.model.CommerceTaxMethod
-				commerceTaxMethod) {
+	public static CommerceTaxMethod addCommerceTaxMethod(
+		CommerceTaxMethod commerceTaxMethod) {
 
 		return getService().addCommerceTaxMethod(commerceTaxMethod);
 	}
 
-	public static com.liferay.commerce.tax.model.CommerceTaxMethod
-			addCommerceTaxMethod(
-				long userId, long groupId,
-				java.util.Map<java.util.Locale, String> nameMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				String engineKey, boolean percentage, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceTaxMethod addCommerceTaxMethod(
+			long userId, long groupId, Map<java.util.Locale, String> nameMap,
+			Map<java.util.Locale, String> descriptionMap, String engineKey,
+			boolean percentage, boolean active)
+		throws PortalException {
 
 		return getService().addCommerceTaxMethod(
 			userId, groupId, nameMap, descriptionMap, engineKey, percentage,
@@ -73,13 +77,12 @@ public class CommerceTaxMethodLocalServiceUtil {
 	 * @deprecated As of Athanasius (7.3.x)
 	 */
 	@Deprecated
-	public static com.liferay.commerce.tax.model.CommerceTaxMethod
-			addCommerceTaxMethod(
-				java.util.Map<java.util.Locale, String> nameMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				String engineKey, boolean percentage, boolean active,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceTaxMethod addCommerceTaxMethod(
+			Map<java.util.Locale, String> nameMap,
+			Map<java.util.Locale, String> descriptionMap, String engineKey,
+			boolean percentage, boolean active,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCommerceTaxMethod(
 			nameMap, descriptionMap, engineKey, percentage, active,
@@ -92,8 +95,8 @@ public class CommerceTaxMethodLocalServiceUtil {
 	 * @param commerceTaxMethodId the primary key for the new commerce tax method
 	 * @return the new commerce tax method
 	 */
-	public static com.liferay.commerce.tax.model.CommerceTaxMethod
-		createCommerceTaxMethod(long commerceTaxMethodId) {
+	public static CommerceTaxMethod createCommerceTaxMethod(
+		long commerceTaxMethodId) {
 
 		return getService().createCommerceTaxMethod(commerceTaxMethodId);
 	}
@@ -101,9 +104,9 @@ public class CommerceTaxMethodLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -118,10 +121,8 @@ public class CommerceTaxMethodLocalServiceUtil {
 	 * @param commerceTaxMethod the commerce tax method
 	 * @return the commerce tax method that was removed
 	 */
-	public static com.liferay.commerce.tax.model.CommerceTaxMethod
-		deleteCommerceTaxMethod(
-			com.liferay.commerce.tax.model.CommerceTaxMethod
-				commerceTaxMethod) {
+	public static CommerceTaxMethod deleteCommerceTaxMethod(
+		CommerceTaxMethod commerceTaxMethod) {
 
 		return getService().deleteCommerceTaxMethod(commerceTaxMethod);
 	}
@@ -137,15 +138,15 @@ public class CommerceTaxMethodLocalServiceUtil {
 	 * @return the commerce tax method that was removed
 	 * @throws PortalException if a commerce tax method with the primary key could not be found
 	 */
-	public static com.liferay.commerce.tax.model.CommerceTaxMethod
-			deleteCommerceTaxMethod(long commerceTaxMethodId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceTaxMethod deleteCommerceTaxMethod(
+			long commerceTaxMethodId)
+		throws PortalException {
 
 		return getService().deleteCommerceTaxMethod(commerceTaxMethodId);
 	}
 
 	public static void deleteCommerceTaxMethods(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommerceTaxMethods(groupId);
 	}
@@ -153,23 +154,18 @@ public class CommerceTaxMethodLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -179,9 +175,7 @@ public class CommerceTaxMethodLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -197,9 +191,8 @@ public class CommerceTaxMethodLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -217,10 +210,9 @@ public class CommerceTaxMethodLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -232,9 +224,7 @@ public class CommerceTaxMethodLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -246,20 +236,20 @@ public class CommerceTaxMethodLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.commerce.tax.model.CommerceTaxMethod
-		fetchCommerceTaxMethod(long commerceTaxMethodId) {
+	public static CommerceTaxMethod fetchCommerceTaxMethod(
+		long commerceTaxMethodId) {
 
 		return getService().fetchCommerceTaxMethod(commerceTaxMethodId);
 	}
 
-	public static com.liferay.commerce.tax.model.CommerceTaxMethod
-		fetchCommerceTaxMethod(long groupId, String engineKey) {
+	public static CommerceTaxMethod fetchCommerceTaxMethod(
+		long groupId, String engineKey) {
 
 		return getService().fetchCommerceTaxMethod(groupId, engineKey);
 	}
@@ -277,9 +267,9 @@ public class CommerceTaxMethodLocalServiceUtil {
 	 * @return the commerce tax method
 	 * @throws PortalException if a commerce tax method with the primary key could not be found
 	 */
-	public static com.liferay.commerce.tax.model.CommerceTaxMethod
-			getCommerceTaxMethod(long commerceTaxMethodId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceTaxMethod getCommerceTaxMethod(
+			long commerceTaxMethodId)
+		throws PortalException {
 
 		return getService().getCommerceTaxMethod(commerceTaxMethodId);
 	}
@@ -295,23 +285,18 @@ public class CommerceTaxMethodLocalServiceUtil {
 	 * @param end the upper bound of the range of commerce tax methods (not inclusive)
 	 * @return the range of commerce tax methods
 	 */
-	public static java.util.List
-		<com.liferay.commerce.tax.model.CommerceTaxMethod>
-			getCommerceTaxMethods(int start, int end) {
+	public static List<CommerceTaxMethod> getCommerceTaxMethods(
+		int start, int end) {
 
 		return getService().getCommerceTaxMethods(start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.tax.model.CommerceTaxMethod>
-			getCommerceTaxMethods(long groupId) {
-
+	public static List<CommerceTaxMethod> getCommerceTaxMethods(long groupId) {
 		return getService().getCommerceTaxMethods(groupId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.tax.model.CommerceTaxMethod>
-			getCommerceTaxMethods(long groupId, boolean active) {
+	public static List<CommerceTaxMethod> getCommerceTaxMethods(
+		long groupId, boolean active) {
 
 		return getService().getCommerceTaxMethods(groupId, active);
 	}
@@ -348,16 +333,15 @@ public class CommerceTaxMethodLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static com.liferay.commerce.tax.model.CommerceTaxMethod setActive(
+	public static CommerceTaxMethod setActive(
 			long commerceTaxMethodId, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().setActive(commerceTaxMethodId, active);
 	}
@@ -372,50 +356,26 @@ public class CommerceTaxMethodLocalServiceUtil {
 	 * @param commerceTaxMethod the commerce tax method
 	 * @return the commerce tax method that was updated
 	 */
-	public static com.liferay.commerce.tax.model.CommerceTaxMethod
-		updateCommerceTaxMethod(
-			com.liferay.commerce.tax.model.CommerceTaxMethod
-				commerceTaxMethod) {
+	public static CommerceTaxMethod updateCommerceTaxMethod(
+		CommerceTaxMethod commerceTaxMethod) {
 
 		return getService().updateCommerceTaxMethod(commerceTaxMethod);
 	}
 
-	public static com.liferay.commerce.tax.model.CommerceTaxMethod
-			updateCommerceTaxMethod(
-				long commerceTaxMethodId,
-				java.util.Map<java.util.Locale, String> nameMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				boolean percentage, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceTaxMethod updateCommerceTaxMethod(
+			long commerceTaxMethodId, Map<java.util.Locale, String> nameMap,
+			Map<java.util.Locale, String> descriptionMap, boolean percentage,
+			boolean active)
+		throws PortalException {
 
 		return getService().updateCommerceTaxMethod(
 			commerceTaxMethodId, nameMap, descriptionMap, percentage, active);
 	}
 
 	public static CommerceTaxMethodLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceTaxMethodLocalService, CommerceTaxMethodLocalService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommerceTaxMethodLocalService.class);
-
-		ServiceTracker
-			<CommerceTaxMethodLocalService, CommerceTaxMethodLocalService>
-				serviceTracker =
-					new ServiceTracker
-						<CommerceTaxMethodLocalService,
-						 CommerceTaxMethodLocalService>(
-							 bundle.getBundleContext(),
-							 CommerceTaxMethodLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceTaxMethodLocalService _service;
 
 }

@@ -14,9 +14,17 @@
 
 package com.liferay.layout.seo.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.layout.seo.model.LayoutSEOSite;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for LayoutSEOSite. This utility wraps
@@ -48,9 +56,7 @@ public class LayoutSEOSiteLocalServiceUtil {
 	 * @param layoutSEOSite the layout seo site
 	 * @return the layout seo site that was added
 	 */
-	public static com.liferay.layout.seo.model.LayoutSEOSite addLayoutSEOSite(
-		com.liferay.layout.seo.model.LayoutSEOSite layoutSEOSite) {
-
+	public static LayoutSEOSite addLayoutSEOSite(LayoutSEOSite layoutSEOSite) {
 		return getService().addLayoutSEOSite(layoutSEOSite);
 	}
 
@@ -60,18 +66,16 @@ public class LayoutSEOSiteLocalServiceUtil {
 	 * @param layoutSEOSiteId the primary key for the new layout seo site
 	 * @return the new layout seo site
 	 */
-	public static com.liferay.layout.seo.model.LayoutSEOSite
-		createLayoutSEOSite(long layoutSEOSiteId) {
-
+	public static LayoutSEOSite createLayoutSEOSite(long layoutSEOSiteId) {
 		return getService().createLayoutSEOSite(layoutSEOSiteId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -86,9 +90,8 @@ public class LayoutSEOSiteLocalServiceUtil {
 	 * @param layoutSEOSite the layout seo site
 	 * @return the layout seo site that was removed
 	 */
-	public static com.liferay.layout.seo.model.LayoutSEOSite
-		deleteLayoutSEOSite(
-			com.liferay.layout.seo.model.LayoutSEOSite layoutSEOSite) {
+	public static LayoutSEOSite deleteLayoutSEOSite(
+		LayoutSEOSite layoutSEOSite) {
 
 		return getService().deleteLayoutSEOSite(layoutSEOSite);
 	}
@@ -104,9 +107,8 @@ public class LayoutSEOSiteLocalServiceUtil {
 	 * @return the layout seo site that was removed
 	 * @throws PortalException if a layout seo site with the primary key could not be found
 	 */
-	public static com.liferay.layout.seo.model.LayoutSEOSite
-			deleteLayoutSEOSite(long layoutSEOSiteId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static LayoutSEOSite deleteLayoutSEOSite(long layoutSEOSiteId)
+		throws PortalException {
 
 		return getService().deleteLayoutSEOSite(layoutSEOSiteId);
 	}
@@ -114,23 +116,18 @@ public class LayoutSEOSiteLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -140,9 +137,7 @@ public class LayoutSEOSiteLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -158,9 +153,8 @@ public class LayoutSEOSiteLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -178,10 +172,9 @@ public class LayoutSEOSiteLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -193,9 +186,7 @@ public class LayoutSEOSiteLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -207,21 +198,17 @@ public class LayoutSEOSiteLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.layout.seo.model.LayoutSEOSite fetchLayoutSEOSite(
-		long layoutSEOSiteId) {
-
+	public static LayoutSEOSite fetchLayoutSEOSite(long layoutSEOSiteId) {
 		return getService().fetchLayoutSEOSite(layoutSEOSiteId);
 	}
 
-	public static com.liferay.layout.seo.model.LayoutSEOSite
-		fetchLayoutSEOSiteByGroupId(long groupId) {
-
+	public static LayoutSEOSite fetchLayoutSEOSiteByGroupId(long groupId) {
 		return getService().fetchLayoutSEOSiteByGroupId(groupId);
 	}
 
@@ -232,8 +219,8 @@ public class LayoutSEOSiteLocalServiceUtil {
 	 * @param groupId the primary key of the group
 	 * @return the matching layout seo site, or <code>null</code> if a matching layout seo site could not be found
 	 */
-	public static com.liferay.layout.seo.model.LayoutSEOSite
-		fetchLayoutSEOSiteByUuidAndGroupId(String uuid, long groupId) {
+	public static LayoutSEOSite fetchLayoutSEOSiteByUuidAndGroupId(
+		String uuid, long groupId) {
 
 		return getService().fetchLayoutSEOSiteByUuidAndGroupId(uuid, groupId);
 	}
@@ -266,9 +253,8 @@ public class LayoutSEOSiteLocalServiceUtil {
 	 * @return the layout seo site
 	 * @throws PortalException if a layout seo site with the primary key could not be found
 	 */
-	public static com.liferay.layout.seo.model.LayoutSEOSite getLayoutSEOSite(
-			long layoutSEOSiteId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static LayoutSEOSite getLayoutSEOSite(long layoutSEOSiteId)
+		throws PortalException {
 
 		return getService().getLayoutSEOSite(layoutSEOSiteId);
 	}
@@ -281,9 +267,9 @@ public class LayoutSEOSiteLocalServiceUtil {
 	 * @return the matching layout seo site
 	 * @throws PortalException if a matching layout seo site could not be found
 	 */
-	public static com.liferay.layout.seo.model.LayoutSEOSite
-			getLayoutSEOSiteByUuidAndGroupId(String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static LayoutSEOSite getLayoutSEOSiteByUuidAndGroupId(
+			String uuid, long groupId)
+		throws PortalException {
 
 		return getService().getLayoutSEOSiteByUuidAndGroupId(uuid, groupId);
 	}
@@ -299,9 +285,7 @@ public class LayoutSEOSiteLocalServiceUtil {
 	 * @param end the upper bound of the range of layout seo sites (not inclusive)
 	 * @return the range of layout seo sites
 	 */
-	public static java.util.List<com.liferay.layout.seo.model.LayoutSEOSite>
-		getLayoutSEOSites(int start, int end) {
-
+	public static List<LayoutSEOSite> getLayoutSEOSites(int start, int end) {
 		return getService().getLayoutSEOSites(start, end);
 	}
 
@@ -312,8 +296,8 @@ public class LayoutSEOSiteLocalServiceUtil {
 	 * @param companyId the primary key of the company
 	 * @return the matching layout seo sites, or an empty list if no matches were found
 	 */
-	public static java.util.List<com.liferay.layout.seo.model.LayoutSEOSite>
-		getLayoutSEOSitesByUuidAndCompanyId(String uuid, long companyId) {
+	public static List<LayoutSEOSite> getLayoutSEOSitesByUuidAndCompanyId(
+		String uuid, long companyId) {
 
 		return getService().getLayoutSEOSitesByUuidAndCompanyId(
 			uuid, companyId);
@@ -329,12 +313,9 @@ public class LayoutSEOSiteLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the range of matching layout seo sites, or an empty list if no matches were found
 	 */
-	public static java.util.List<com.liferay.layout.seo.model.LayoutSEOSite>
-		getLayoutSEOSitesByUuidAndCompanyId(
-			String uuid, long companyId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.layout.seo.model.LayoutSEOSite>
-					orderByComparator) {
+	public static List<LayoutSEOSite> getLayoutSEOSitesByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<LayoutSEOSite> orderByComparator) {
 
 		return getService().getLayoutSEOSitesByUuidAndCompanyId(
 			uuid, companyId, start, end, orderByComparator);
@@ -361,9 +342,8 @@ public class LayoutSEOSiteLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -378,20 +358,18 @@ public class LayoutSEOSiteLocalServiceUtil {
 	 * @param layoutSEOSite the layout seo site
 	 * @return the layout seo site that was updated
 	 */
-	public static com.liferay.layout.seo.model.LayoutSEOSite
-		updateLayoutSEOSite(
-			com.liferay.layout.seo.model.LayoutSEOSite layoutSEOSite) {
+	public static LayoutSEOSite updateLayoutSEOSite(
+		LayoutSEOSite layoutSEOSite) {
 
 		return getService().updateLayoutSEOSite(layoutSEOSite);
 	}
 
-	public static com.liferay.layout.seo.model.LayoutSEOSite
-			updateLayoutSEOSite(
-				long userId, long groupId, boolean openGraphEnabled,
-				java.util.Map<java.util.Locale, String> openGraphImageAltMap,
-				long openGraphImageFileEntryId,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static LayoutSEOSite updateLayoutSEOSite(
+			long userId, long groupId, boolean openGraphEnabled,
+			Map<java.util.Locale, String> openGraphImageAltMap,
+			long openGraphImageFileEntryId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().updateLayoutSEOSite(
 			userId, groupId, openGraphEnabled, openGraphImageAltMap,
@@ -399,26 +377,9 @@ public class LayoutSEOSiteLocalServiceUtil {
 	}
 
 	public static LayoutSEOSiteLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<LayoutSEOSiteLocalService, LayoutSEOSiteLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			LayoutSEOSiteLocalService.class);
-
-		ServiceTracker<LayoutSEOSiteLocalService, LayoutSEOSiteLocalService>
-			serviceTracker =
-				new ServiceTracker
-					<LayoutSEOSiteLocalService, LayoutSEOSiteLocalService>(
-						bundle.getBundleContext(),
-						LayoutSEOSiteLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile LayoutSEOSiteLocalService _service;
 
 }

@@ -14,10 +14,6 @@
 
 package com.liferay.commerce.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-
 /**
  * Provides the remote service utility for CommerceAddressRestriction. This utility wraps
  * <code>com.liferay.commerce.service.impl.CommerceAddressRestrictionServiceImpl</code> and is an
@@ -43,34 +39,14 @@ public class CommerceAddressRestrictionServiceUtil {
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static String getOSGiServiceIdentifier() {
+	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static CommerceAddressRestrictionService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceAddressRestrictionService, CommerceAddressRestrictionService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommerceAddressRestrictionService.class);
-
-		ServiceTracker
-			<CommerceAddressRestrictionService,
-			 CommerceAddressRestrictionService> serviceTracker =
-				new ServiceTracker
-					<CommerceAddressRestrictionService,
-					 CommerceAddressRestrictionService>(
-						 bundle.getBundleContext(),
-						 CommerceAddressRestrictionService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceAddressRestrictionService _service;
 
 }

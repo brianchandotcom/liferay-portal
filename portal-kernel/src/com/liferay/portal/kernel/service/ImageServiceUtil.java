@@ -14,7 +14,8 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Image;
 
 /**
  * Provides the remote service utility for Image. This utility wraps
@@ -35,9 +36,7 @@ public class ImageServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.service.impl.ImageServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.kernel.model.Image getImage(long imageId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static Image getImage(long imageId) throws PortalException {
 		return getService().getImage(imageId);
 	}
 
@@ -51,14 +50,9 @@ public class ImageServiceUtil {
 	}
 
 	public static ImageService getService() {
-		if (_service == null) {
-			_service = (ImageService)PortalBeanLocatorUtil.locate(
-				ImageService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static ImageService _service;
+	private static volatile ImageService _service;
 
 }

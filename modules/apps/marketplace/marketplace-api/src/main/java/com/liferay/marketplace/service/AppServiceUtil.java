@@ -14,9 +14,8 @@
 
 package com.liferay.marketplace.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.marketplace.model.App;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * Provides the remote service utility for App. This utility wraps
@@ -37,9 +36,7 @@ public class AppServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.marketplace.service.impl.AppServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.marketplace.model.App deleteApp(long appId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static App deleteApp(long appId) throws PortalException {
 		return getService().deleteApp(appId);
 	}
 
@@ -52,40 +49,22 @@ public class AppServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static void installApp(long remoteAppId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static void installApp(long remoteAppId) throws PortalException {
 		getService().installApp(remoteAppId);
 	}
 
-	public static void uninstallApp(long remoteAppId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static void uninstallApp(long remoteAppId) throws PortalException {
 		getService().uninstallApp(remoteAppId);
 	}
 
-	public static com.liferay.marketplace.model.App updateApp(java.io.File file)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static App updateApp(java.io.File file) throws PortalException {
 		return getService().updateApp(file);
 	}
 
 	public static AppService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<AppService, AppService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(AppService.class);
-
-		ServiceTracker<AppService, AppService> serviceTracker =
-			new ServiceTracker<AppService, AppService>(
-				bundle.getBundleContext(), AppService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile AppService _service;
 
 }

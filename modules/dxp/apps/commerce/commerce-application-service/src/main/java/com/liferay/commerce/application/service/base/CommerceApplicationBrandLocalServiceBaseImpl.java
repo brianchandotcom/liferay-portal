@@ -16,6 +16,7 @@ package com.liferay.commerce.application.service.base;
 
 import com.liferay.commerce.application.model.CommerceApplicationBrand;
 import com.liferay.commerce.application.service.CommerceApplicationBrandLocalService;
+import com.liferay.commerce.application.service.CommerceApplicationBrandLocalServiceUtil;
 import com.liferay.commerce.application.service.persistence.CommerceApplicationBrandPersistence;
 import com.liferay.commerce.application.service.persistence.CommerceApplicationModelCProductRelPersistence;
 import com.liferay.commerce.application.service.persistence.CommerceApplicationModelPersistence;
@@ -49,6 +50,8 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -71,7 +74,7 @@ public abstract class CommerceApplicationBrandLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceApplicationBrandLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.application.service.CommerceApplicationBrandLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceApplicationBrandLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceApplicationBrandLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -684,11 +687,15 @@ public abstract class CommerceApplicationBrandLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry.register(
 			"com.liferay.commerce.application.model.CommerceApplicationBrand",
 			commerceApplicationBrandLocalService);
+
+		_setLocalServiceUtilService(commerceApplicationBrandLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.commerce.application.model.CommerceApplicationBrand");
+
+		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -731,6 +738,24 @@ public abstract class CommerceApplicationBrandLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		CommerceApplicationBrandLocalService
+			commerceApplicationBrandLocalService) {
+
+		try {
+			Field field =
+				CommerceApplicationBrandLocalServiceUtil.class.getDeclaredField(
+					"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, commerceApplicationBrandLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

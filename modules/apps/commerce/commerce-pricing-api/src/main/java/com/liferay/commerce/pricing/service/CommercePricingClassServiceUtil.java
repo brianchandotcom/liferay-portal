@@ -14,9 +14,12 @@
 
 package com.liferay.commerce.pricing.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.pricing.model.CommercePricingClass;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the remote service utility for CommercePricingClass. This utility wraps
@@ -37,56 +40,53 @@ public class CommercePricingClassServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.pricing.service.impl.CommercePricingClassServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.commerce.pricing.model.CommercePricingClass
-			addCommercePricingClass(
-				long userId, java.util.Map<java.util.Locale, String> titleMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePricingClass addCommercePricingClass(
+			long userId, Map<java.util.Locale, String> titleMap,
+			Map<java.util.Locale, String> descriptionMap,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCommercePricingClass(
 			userId, titleMap, descriptionMap, serviceContext);
 	}
 
-	public static com.liferay.commerce.pricing.model.CommercePricingClass
-			addCommercePricingClass(
-				String externalReferenceCode, long userId,
-				java.util.Map<java.util.Locale, String> titleMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePricingClass addCommercePricingClass(
+			String externalReferenceCode, long userId,
+			Map<java.util.Locale, String> titleMap,
+			Map<java.util.Locale, String> descriptionMap,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCommercePricingClass(
 			externalReferenceCode, userId, titleMap, descriptionMap,
 			serviceContext);
 	}
 
-	public static com.liferay.commerce.pricing.model.CommercePricingClass
-			deleteCommercePricingClass(long commercePricingClassId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePricingClass deleteCommercePricingClass(
+			long commercePricingClassId)
+		throws PortalException {
 
 		return getService().deleteCommercePricingClass(commercePricingClassId);
 	}
 
-	public static com.liferay.commerce.pricing.model.CommercePricingClass
-			fetchByExternalReferenceCode(
-				String externalReferenceCode, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePricingClass fetchByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
 
 		return getService().fetchByExternalReferenceCode(
 			externalReferenceCode, companyId);
 	}
 
-	public static com.liferay.commerce.pricing.model.CommercePricingClass
-			fetchCommercePricingClass(long commercePricingClassId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePricingClass fetchCommercePricingClass(
+			long commercePricingClassId)
+		throws PortalException {
 
 		return getService().fetchCommercePricingClass(commercePricingClassId);
 	}
 
-	public static com.liferay.commerce.pricing.model.CommercePricingClass
-			getCommercePricingClass(long commercePricingClassId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePricingClass getCommercePricingClass(
+			long commercePricingClassId)
+		throws PortalException {
 
 		return getService().getCommercePricingClass(commercePricingClassId);
 	}
@@ -99,21 +99,17 @@ public class CommercePricingClassServiceUtil {
 			cpDefinitionId, title);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.pricing.model.CommercePricingClass>
-				getCommercePricingClasses(
-					long companyId, int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						<com.liferay.commerce.pricing.model.
-							CommercePricingClass> orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommercePricingClass> getCommercePricingClasses(
+			long companyId, int start, int end,
+			OrderByComparator<CommercePricingClass> orderByComparator)
+		throws PortalException {
 
 		return getService().getCommercePricingClasses(
 			companyId, start, end, orderByComparator);
 	}
 
 	public static int getCommercePricingClassesCount(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCommercePricingClassesCount(companyId);
 	}
@@ -136,55 +132,51 @@ public class CommercePricingClassServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
-		<com.liferay.commerce.pricing.model.CommercePricingClass>
-				searchCommercePricingClasses(
-					long companyId, String keywords, int start, int end,
-					com.liferay.portal.kernel.search.Sort sort)
-			throws com.liferay.portal.kernel.exception.PortalException {
+		<CommercePricingClass> searchCommercePricingClasses(
+				long companyId, String keywords, int start, int end,
+				com.liferay.portal.kernel.search.Sort sort)
+			throws PortalException {
 
 		return getService().searchCommercePricingClasses(
 			companyId, keywords, start, end, sort);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.pricing.model.CommercePricingClass>
-				searchCommercePricingClassesByCPDefinitionId(
-					long cpDefinitionId, String title, int start, int end)
-			throws com.liferay.portal.kernel.security.auth.PrincipalException {
+	public static List<CommercePricingClass>
+			searchCommercePricingClassesByCPDefinitionId(
+				long cpDefinitionId, String title, int start, int end)
+		throws com.liferay.portal.kernel.security.auth.PrincipalException {
 
 		return getService().searchCommercePricingClassesByCPDefinitionId(
 			cpDefinitionId, title, start, end);
 	}
 
-	public static com.liferay.commerce.pricing.model.CommercePricingClass
-			updateCommercePricingClass(
-				long commercePricingClassId, long userId,
-				java.util.Map<java.util.Locale, String> titleMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePricingClass updateCommercePricingClass(
+			long commercePricingClassId, long userId,
+			Map<java.util.Locale, String> titleMap,
+			Map<java.util.Locale, String> descriptionMap,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().updateCommercePricingClass(
 			commercePricingClassId, userId, titleMap, descriptionMap,
 			serviceContext);
 	}
 
-	public static com.liferay.commerce.pricing.model.CommercePricingClass
+	public static CommercePricingClass
 			updateCommercePricingClassExternalReferenceCode(
 				String externalReferenceCode, long commercePricingClassId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateCommercePricingClassExternalReferenceCode(
 			externalReferenceCode, commercePricingClassId);
 	}
 
-	public static com.liferay.commerce.pricing.model.CommercePricingClass
-			upsertCommercePricingClass(
-				String externalReferenceCode, long commercePricingClassId,
-				long userId, java.util.Map<java.util.Locale, String> titleMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePricingClass upsertCommercePricingClass(
+			String externalReferenceCode, long commercePricingClassId,
+			long userId, Map<java.util.Locale, String> titleMap,
+			Map<java.util.Locale, String> descriptionMap,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().upsertCommercePricingClass(
 			externalReferenceCode, commercePricingClassId, userId, titleMap,
@@ -192,27 +184,9 @@ public class CommercePricingClassServiceUtil {
 	}
 
 	public static CommercePricingClassService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommercePricingClassService, CommercePricingClassService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommercePricingClassService.class);
-
-		ServiceTracker<CommercePricingClassService, CommercePricingClassService>
-			serviceTracker =
-				new ServiceTracker
-					<CommercePricingClassService, CommercePricingClassService>(
-						bundle.getBundleContext(),
-						CommercePricingClassService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommercePricingClassService _service;
 
 }

@@ -14,9 +14,11 @@
 
 package com.liferay.blogs.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for BlogsEntry. This utility wraps
@@ -39,12 +41,12 @@ public class BlogsEntryServiceUtil {
 	 */
 	public static com.liferay.portal.kernel.repository.model.Folder
 			addAttachmentsFolder(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addAttachmentsFolder(groupId);
 	}
 
-	public static com.liferay.blogs.model.BlogsEntry addEntry(
+	public static BlogsEntry addEntry(
 			String title, String subtitle, String description, String content,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, boolean allowPingbacks,
@@ -55,7 +57,7 @@ public class BlogsEntryServiceUtil {
 			com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector
 				smallImageImageSelector,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addEntry(
 			title, subtitle, description, content, displayDateMonth,
@@ -64,7 +66,7 @@ public class BlogsEntryServiceUtil {
 			coverImageImageSelector, smallImageImageSelector, serviceContext);
 	}
 
-	public static com.liferay.blogs.model.BlogsEntry addEntry(
+	public static BlogsEntry addEntry(
 			String title, String subtitle, String urlTitle, String description,
 			String content, int displayDateMonth, int displayDateDay,
 			int displayDateYear, int displayDateHour, int displayDateMinute,
@@ -75,7 +77,7 @@ public class BlogsEntryServiceUtil {
 			com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector
 				smallImageImageSelector,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addEntry(
 			title, subtitle, urlTitle, description, content, displayDateMonth,
@@ -84,16 +86,13 @@ public class BlogsEntryServiceUtil {
 			coverImageImageSelector, smallImageImageSelector, serviceContext);
 	}
 
-	public static void deleteEntry(long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static void deleteEntry(long entryId) throws PortalException {
 		getService().deleteEntry(entryId);
 	}
 
-	public static java.util.List<com.liferay.blogs.model.BlogsEntry>
-			getCompanyEntries(
-				long companyId, java.util.Date displayDate, int status, int max)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<BlogsEntry> getCompanyEntries(
+			long companyId, java.util.Date displayDate, int status, int max)
+		throws PortalException {
 
 		return getService().getCompanyEntries(
 			companyId, displayDate, status, max);
@@ -104,66 +103,58 @@ public class BlogsEntryServiceUtil {
 			String type, double version, String displayStyle, String feedURL,
 			String entryURL,
 			com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCompanyEntriesRSS(
 			companyId, displayDate, status, max, type, version, displayStyle,
 			feedURL, entryURL, themeDisplay);
 	}
 
-	public static com.liferay.blogs.model.BlogsEntry[] getEntriesPrevAndNext(
-			long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static BlogsEntry[] getEntriesPrevAndNext(long entryId)
+		throws PortalException {
 
 		return getService().getEntriesPrevAndNext(entryId);
 	}
 
-	public static com.liferay.blogs.model.BlogsEntry getEntry(long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static BlogsEntry getEntry(long entryId) throws PortalException {
 		return getService().getEntry(entryId);
 	}
 
-	public static com.liferay.blogs.model.BlogsEntry getEntry(
-			long groupId, String urlTitle)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static BlogsEntry getEntry(long groupId, String urlTitle)
+		throws PortalException {
 
 		return getService().getEntry(groupId, urlTitle);
 	}
 
-	public static java.util.List<com.liferay.blogs.model.BlogsEntry>
-		getGroupEntries(
-			long groupId, java.util.Date displayDate, int status, int max) {
+	public static List<BlogsEntry> getGroupEntries(
+		long groupId, java.util.Date displayDate, int status, int max) {
 
 		return getService().getGroupEntries(groupId, displayDate, status, max);
 	}
 
-	public static java.util.List<com.liferay.blogs.model.BlogsEntry>
-		getGroupEntries(
-			long groupId, java.util.Date displayDate, int status, int start,
-			int end) {
+	public static List<BlogsEntry> getGroupEntries(
+		long groupId, java.util.Date displayDate, int status, int start,
+		int end) {
 
 		return getService().getGroupEntries(
 			groupId, displayDate, status, start, end);
 	}
 
-	public static java.util.List<com.liferay.blogs.model.BlogsEntry>
-		getGroupEntries(long groupId, int status, int max) {
+	public static List<BlogsEntry> getGroupEntries(
+		long groupId, int status, int max) {
 
 		return getService().getGroupEntries(groupId, status, max);
 	}
 
-	public static java.util.List<com.liferay.blogs.model.BlogsEntry>
-		getGroupEntries(long groupId, int status, int start, int end) {
+	public static List<BlogsEntry> getGroupEntries(
+		long groupId, int status, int start, int end) {
 
 		return getService().getGroupEntries(groupId, status, start, end);
 	}
 
-	public static java.util.List<com.liferay.blogs.model.BlogsEntry>
-		getGroupEntries(
-			long groupId, int status, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.blogs.model.BlogsEntry> orderByComparator) {
+	public static List<BlogsEntry> getGroupEntries(
+		long groupId, int status, int start, int end,
+		OrderByComparator<BlogsEntry> orderByComparator) {
 
 		return getService().getGroupEntries(
 			groupId, status, start, end, orderByComparator);
@@ -184,38 +175,33 @@ public class BlogsEntryServiceUtil {
 			String type, double version, String displayStyle, String feedURL,
 			String entryURL,
 			com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getGroupEntriesRSS(
 			groupId, displayDate, status, max, type, version, displayStyle,
 			feedURL, entryURL, themeDisplay);
 	}
 
-	public static java.util.List<com.liferay.blogs.model.BlogsEntry>
-			getGroupsEntries(
-				long companyId, long groupId, java.util.Date displayDate,
-				int status, int max)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<BlogsEntry> getGroupsEntries(
+			long companyId, long groupId, java.util.Date displayDate,
+			int status, int max)
+		throws PortalException {
 
 		return getService().getGroupsEntries(
 			companyId, groupId, displayDate, status, max);
 	}
 
-	public static java.util.List<com.liferay.blogs.model.BlogsEntry>
-		getGroupUserEntries(
-			long groupId, long userId, int status, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.blogs.model.BlogsEntry> orderByComparator) {
+	public static List<BlogsEntry> getGroupUserEntries(
+		long groupId, long userId, int status, int start, int end,
+		OrderByComparator<BlogsEntry> orderByComparator) {
 
 		return getService().getGroupUserEntries(
 			groupId, userId, status, start, end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.blogs.model.BlogsEntry>
-		getGroupUserEntries(
-			long groupId, long userId, int[] statuses, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.blogs.model.BlogsEntry> orderByComparator) {
+	public static List<BlogsEntry> getGroupUserEntries(
+		long groupId, long userId, int[] statuses, int start, int end,
+		OrderByComparator<BlogsEntry> orderByComparator) {
 
 		return getService().getGroupUserEntries(
 			groupId, userId, statuses, start, end, orderByComparator);
@@ -233,11 +219,10 @@ public class BlogsEntryServiceUtil {
 		return getService().getGroupUserEntriesCount(groupId, userId, statuses);
 	}
 
-	public static java.util.List<com.liferay.blogs.model.BlogsEntry>
-			getOrganizationEntries(
-				long organizationId, java.util.Date displayDate, int status,
-				int max)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<BlogsEntry> getOrganizationEntries(
+			long organizationId, java.util.Date displayDate, int status,
+			int max)
+		throws PortalException {
 
 		return getService().getOrganizationEntries(
 			organizationId, displayDate, status, max);
@@ -248,7 +233,7 @@ public class BlogsEntryServiceUtil {
 			int max, String type, double version, String displayStyle,
 			String feedURL, String entryURL,
 			com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getOrganizationEntriesRSS(
 			organizationId, displayDate, status, max, type, version,
@@ -264,32 +249,27 @@ public class BlogsEntryServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.blogs.model.BlogsEntry moveEntryToTrash(
-			long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static BlogsEntry moveEntryToTrash(long entryId)
+		throws PortalException {
 
 		return getService().moveEntryToTrash(entryId);
 	}
 
 	public static void restoreEntryFromTrash(long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().restoreEntryFromTrash(entryId);
 	}
 
-	public static void subscribe(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static void subscribe(long groupId) throws PortalException {
 		getService().subscribe(groupId);
 	}
 
-	public static void unsubscribe(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static void unsubscribe(long groupId) throws PortalException {
 		getService().unsubscribe(groupId);
 	}
 
-	public static com.liferay.blogs.model.BlogsEntry updateEntry(
+	public static BlogsEntry updateEntry(
 			long entryId, String title, String subtitle, String description,
 			String content, int displayDateMonth, int displayDateDay,
 			int displayDateYear, int displayDateHour, int displayDateMinute,
@@ -300,7 +280,7 @@ public class BlogsEntryServiceUtil {
 			com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector
 				smallImageImageSelector,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateEntry(
 			entryId, title, subtitle, description, content, displayDateMonth,
@@ -309,7 +289,7 @@ public class BlogsEntryServiceUtil {
 			coverImageImageSelector, smallImageImageSelector, serviceContext);
 	}
 
-	public static com.liferay.blogs.model.BlogsEntry updateEntry(
+	public static BlogsEntry updateEntry(
 			long entryId, String title, String subtitle, String urlTitle,
 			String description, String content, int displayDateMonth,
 			int displayDateDay, int displayDateYear, int displayDateHour,
@@ -321,7 +301,7 @@ public class BlogsEntryServiceUtil {
 			com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector
 				smallImageImageSelector,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateEntry(
 			entryId, title, subtitle, urlTitle, description, content,
@@ -332,22 +312,9 @@ public class BlogsEntryServiceUtil {
 	}
 
 	public static BlogsEntryService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<BlogsEntryService, BlogsEntryService>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(BlogsEntryService.class);
-
-		ServiceTracker<BlogsEntryService, BlogsEntryService> serviceTracker =
-			new ServiceTracker<BlogsEntryService, BlogsEntryService>(
-				bundle.getBundleContext(), BlogsEntryService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile BlogsEntryService _service;
 
 }

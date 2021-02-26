@@ -14,9 +14,16 @@
 
 package com.liferay.commerce.product.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.product.model.CProduct;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for CProduct. This utility wraps
@@ -48,16 +55,14 @@ public class CProductLocalServiceUtil {
 	 * @param cProduct the c product
 	 * @return the c product that was added
 	 */
-	public static com.liferay.commerce.product.model.CProduct addCProduct(
-		com.liferay.commerce.product.model.CProduct cProduct) {
-
+	public static CProduct addCProduct(CProduct cProduct) {
 		return getService().addCProduct(cProduct);
 	}
 
-	public static com.liferay.commerce.product.model.CProduct addCProduct(
+	public static CProduct addCProduct(
 			String externalReferenceCode, long groupId, long userId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addCProduct(
 			externalReferenceCode, groupId, userId, serviceContext);
@@ -69,18 +74,16 @@ public class CProductLocalServiceUtil {
 	 * @param CProductId the primary key for the new c product
 	 * @return the new c product
 	 */
-	public static com.liferay.commerce.product.model.CProduct createCProduct(
-		long CProductId) {
-
+	public static CProduct createCProduct(long CProductId) {
 		return getService().createCProduct(CProductId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -96,9 +99,8 @@ public class CProductLocalServiceUtil {
 	 * @return the c product that was removed
 	 * @throws PortalException
 	 */
-	public static com.liferay.commerce.product.model.CProduct deleteCProduct(
-			com.liferay.commerce.product.model.CProduct cProduct)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CProduct deleteCProduct(CProduct cProduct)
+		throws PortalException {
 
 		return getService().deleteCProduct(cProduct);
 	}
@@ -114,9 +116,8 @@ public class CProductLocalServiceUtil {
 	 * @return the c product that was removed
 	 * @throws PortalException if a c product with the primary key could not be found
 	 */
-	public static com.liferay.commerce.product.model.CProduct deleteCProduct(
-			long CProductId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CProduct deleteCProduct(long CProductId)
+		throws PortalException {
 
 		return getService().deleteCProduct(CProductId);
 	}
@@ -124,23 +125,18 @@ public class CProductLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -150,9 +146,7 @@ public class CProductLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -168,9 +162,8 @@ public class CProductLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -188,10 +181,9 @@ public class CProductLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -203,9 +195,7 @@ public class CProductLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -217,15 +207,13 @@ public class CProductLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.commerce.product.model.CProduct fetchCProduct(
-		long CProductId) {
-
+	public static CProduct fetchCProduct(long CProductId) {
 		return getService().fetchCProduct(CProductId);
 	}
 
@@ -236,9 +224,8 @@ public class CProductLocalServiceUtil {
 	 * @param externalReferenceCode the c product's external reference code
 	 * @return the matching c product, or <code>null</code> if a matching c product could not be found
 	 */
-	public static com.liferay.commerce.product.model.CProduct
-		fetchCProductByReferenceCode(
-			long companyId, String externalReferenceCode) {
+	public static CProduct fetchCProductByReferenceCode(
+		long companyId, String externalReferenceCode) {
 
 		return getService().fetchCProductByReferenceCode(
 			companyId, externalReferenceCode);
@@ -251,8 +238,8 @@ public class CProductLocalServiceUtil {
 	 * @param groupId the primary key of the group
 	 * @return the matching c product, or <code>null</code> if a matching c product could not be found
 	 */
-	public static com.liferay.commerce.product.model.CProduct
-		fetchCProductByUuidAndGroupId(String uuid, long groupId) {
+	public static CProduct fetchCProductByUuidAndGroupId(
+		String uuid, long groupId) {
 
 		return getService().fetchCProductByUuidAndGroupId(uuid, groupId);
 	}
@@ -270,16 +257,12 @@ public class CProductLocalServiceUtil {
 	 * @return the c product
 	 * @throws PortalException if a c product with the primary key could not be found
 	 */
-	public static com.liferay.commerce.product.model.CProduct getCProduct(
-			long CProductId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static CProduct getCProduct(long CProductId) throws PortalException {
 		return getService().getCProduct(CProductId);
 	}
 
-	public static com.liferay.commerce.product.model.CProduct
-			getCProductByCPInstanceUuid(String cpInstanceUuid)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CProduct getCProductByCPInstanceUuid(String cpInstanceUuid)
+		throws PortalException {
 
 		return getService().getCProductByCPInstanceUuid(cpInstanceUuid);
 	}
@@ -292,9 +275,9 @@ public class CProductLocalServiceUtil {
 	 * @return the matching c product
 	 * @throws PortalException if a matching c product could not be found
 	 */
-	public static com.liferay.commerce.product.model.CProduct
-			getCProductByUuidAndGroupId(String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CProduct getCProductByUuidAndGroupId(
+			String uuid, long groupId)
+		throws PortalException {
 
 		return getService().getCProductByUuidAndGroupId(uuid, groupId);
 	}
@@ -310,9 +293,7 @@ public class CProductLocalServiceUtil {
 	 * @param end the upper bound of the range of c products (not inclusive)
 	 * @return the range of c products
 	 */
-	public static java.util.List<com.liferay.commerce.product.model.CProduct>
-		getCProducts(int start, int end) {
-
+	public static List<CProduct> getCProducts(int start, int end) {
 		return getService().getCProducts(start, end);
 	}
 
@@ -323,8 +304,8 @@ public class CProductLocalServiceUtil {
 	 * @param companyId the primary key of the company
 	 * @return the matching c products, or an empty list if no matches were found
 	 */
-	public static java.util.List<com.liferay.commerce.product.model.CProduct>
-		getCProductsByUuidAndCompanyId(String uuid, long companyId) {
+	public static List<CProduct> getCProductsByUuidAndCompanyId(
+		String uuid, long companyId) {
 
 		return getService().getCProductsByUuidAndCompanyId(uuid, companyId);
 	}
@@ -339,12 +320,9 @@ public class CProductLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the range of matching c products, or an empty list if no matches were found
 	 */
-	public static java.util.List<com.liferay.commerce.product.model.CProduct>
-		getCProductsByUuidAndCompanyId(
-			String uuid, long companyId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.commerce.product.model.CProduct>
-					orderByComparator) {
+	public static List<CProduct> getCProductsByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<CProduct> orderByComparator) {
 
 		return getService().getCProductsByUuidAndCompanyId(
 			uuid, companyId, start, end, orderByComparator);
@@ -386,16 +364,13 @@ public class CProductLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static int increment(long cProductId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static int increment(long cProductId) throws PortalException {
 		return getService().increment(cProductId);
 	}
 
@@ -409,49 +384,30 @@ public class CProductLocalServiceUtil {
 	 * @param cProduct the c product
 	 * @return the c product that was updated
 	 */
-	public static com.liferay.commerce.product.model.CProduct updateCProduct(
-		com.liferay.commerce.product.model.CProduct cProduct) {
-
+	public static CProduct updateCProduct(CProduct cProduct) {
 		return getService().updateCProduct(cProduct);
 	}
 
-	public static com.liferay.commerce.product.model.CProduct
-			updateCProductExternalReferenceCode(
-				String externalReferenceCode, long cProductId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CProduct updateCProductExternalReferenceCode(
+			String externalReferenceCode, long cProductId)
+		throws PortalException {
 
 		return getService().updateCProductExternalReferenceCode(
 			externalReferenceCode, cProductId);
 	}
 
-	public static com.liferay.commerce.product.model.CProduct
-			updatePublishedCPDefinitionId(
-				long cProductId, long publishedCPDefinitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CProduct updatePublishedCPDefinitionId(
+			long cProductId, long publishedCPDefinitionId)
+		throws PortalException {
 
 		return getService().updatePublishedCPDefinitionId(
 			cProductId, publishedCPDefinitionId);
 	}
 
 	public static CProductLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<CProductLocalService, CProductLocalService>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(CProductLocalService.class);
-
-		ServiceTracker<CProductLocalService, CProductLocalService>
-			serviceTracker =
-				new ServiceTracker<CProductLocalService, CProductLocalService>(
-					bundle.getBundleContext(), CProductLocalService.class,
-					null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CProductLocalService _service;
 
 }

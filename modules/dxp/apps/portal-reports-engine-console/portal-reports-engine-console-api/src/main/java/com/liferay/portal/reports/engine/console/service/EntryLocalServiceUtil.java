@@ -14,9 +14,16 @@
 
 package com.liferay.portal.reports.engine.console.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.reports.engine.console.model.Entry;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for Entry. This utility wraps
@@ -48,22 +55,18 @@ public class EntryLocalServiceUtil {
 	 * @param entry the entry
 	 * @return the entry that was added
 	 */
-	public static com.liferay.portal.reports.engine.console.model.Entry
-		addEntry(com.liferay.portal.reports.engine.console.model.Entry entry) {
-
+	public static Entry addEntry(Entry entry) {
 		return getService().addEntry(entry);
 	}
 
-	public static com.liferay.portal.reports.engine.console.model.Entry
-			addEntry(
-				long userId, long groupId, long definitionId, String format,
-				boolean schedulerRequest, java.util.Date startDate,
-				java.util.Date endDate, boolean repeating, String recurrence,
-				String emailNotifications, String emailDelivery,
-				String portletId, String pageURL, String reportName,
-				String reportParameters,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static Entry addEntry(
+			long userId, long groupId, long definitionId, String format,
+			boolean schedulerRequest, java.util.Date startDate,
+			java.util.Date endDate, boolean repeating, String recurrence,
+			String emailNotifications, String emailDelivery, String portletId,
+			String pageURL, String reportName, String reportParameters,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addEntry(
 			userId, groupId, definitionId, format, schedulerRequest, startDate,
@@ -72,18 +75,18 @@ public class EntryLocalServiceUtil {
 	}
 
 	public static void addEntryResources(
-			com.liferay.portal.reports.engine.console.model.Entry entry,
-			boolean addCommunityPermissions, boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
+			Entry entry, boolean addCommunityPermissions,
+			boolean addGuestPermissions)
+		throws PortalException {
 
 		getService().addEntryResources(
 			entry, addCommunityPermissions, addGuestPermissions);
 	}
 
 	public static void addEntryResources(
-			com.liferay.portal.reports.engine.console.model.Entry entry,
-			String[] communityPermissions, String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
+			Entry entry, String[] communityPermissions,
+			String[] guestPermissions)
+		throws PortalException {
 
 		getService().addEntryResources(
 			entry, communityPermissions, guestPermissions);
@@ -95,24 +98,22 @@ public class EntryLocalServiceUtil {
 	 * @param entryId the primary key for the new entry
 	 * @return the new entry
 	 */
-	public static com.liferay.portal.reports.engine.console.model.Entry
-		createEntry(long entryId) {
-
+	public static Entry createEntry(long entryId) {
 		return getService().createEntry(entryId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
 
 	public static void deleteAttachment(long companyId, String fileName)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteAttachment(companyId, fileName);
 	}
@@ -128,11 +129,7 @@ public class EntryLocalServiceUtil {
 	 * @return the entry that was removed
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.reports.engine.console.model.Entry
-			deleteEntry(
-				com.liferay.portal.reports.engine.console.model.Entry entry)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static Entry deleteEntry(Entry entry) throws PortalException {
 		return getService().deleteEntry(entry);
 	}
 
@@ -147,33 +144,25 @@ public class EntryLocalServiceUtil {
 	 * @return the entry that was removed
 	 * @throws PortalException if a entry with the primary key could not be found
 	 */
-	public static com.liferay.portal.reports.engine.console.model.Entry
-			deleteEntry(long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static Entry deleteEntry(long entryId) throws PortalException {
 		return getService().deleteEntry(entryId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -183,9 +172,7 @@ public class EntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -201,9 +188,8 @@ public class EntryLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -221,10 +207,9 @@ public class EntryLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -236,9 +221,7 @@ public class EntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -250,26 +233,22 @@ public class EntryLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.portal.reports.engine.console.model.Entry
-		fetchEntry(long entryId) {
-
+	public static Entry fetchEntry(long entryId) {
 		return getService().fetchEntry(entryId);
 	}
 
-	public static void generateReport(long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static void generateReport(long entryId) throws PortalException {
 		getService().generateReport(entryId);
 	}
 
 	public static void generateReport(long entryId, String reportName)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().generateReport(entryId, reportName);
 	}
@@ -291,21 +270,15 @@ public class EntryLocalServiceUtil {
 	 * @param end the upper bound of the range of entries (not inclusive)
 	 * @return the range of entries
 	 */
-	public static java.util.List
-		<com.liferay.portal.reports.engine.console.model.Entry> getEntries(
-			int start, int end) {
-
+	public static List<Entry> getEntries(int start, int end) {
 		return getService().getEntries(start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.portal.reports.engine.console.model.Entry> getEntries(
-			long groupId, String definitionName, String userName,
-			java.util.Date createDateGT, java.util.Date createDateLT,
-			boolean andSearch, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.portal.reports.engine.console.model.Entry>
-					orderByComparator) {
+	public static List<Entry> getEntries(
+		long groupId, String definitionName, String userName,
+		java.util.Date createDateGT, java.util.Date createDateLT,
+		boolean andSearch, int start, int end,
+		OrderByComparator<Entry> orderByComparator) {
 
 		return getService().getEntries(
 			groupId, definitionName, userName, createDateGT, createDateLT,
@@ -338,10 +311,7 @@ public class EntryLocalServiceUtil {
 	 * @return the entry
 	 * @throws PortalException if a entry with the primary key could not be found
 	 */
-	public static com.liferay.portal.reports.engine.console.model.Entry
-			getEntry(long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static Entry getEntry(long entryId) throws PortalException {
 		return getService().getEntry(entryId);
 	}
 
@@ -364,9 +334,8 @@ public class EntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -374,15 +343,13 @@ public class EntryLocalServiceUtil {
 	public static void sendEmails(
 			long entryId, String fileName, String[] emailAddresses,
 			boolean notification)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().sendEmails(
 			entryId, fileName, emailAddresses, notification);
 	}
 
-	public static void unscheduleEntry(long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static void unscheduleEntry(long entryId) throws PortalException {
 		getService().unscheduleEntry(entryId);
 	}
 
@@ -396,16 +363,13 @@ public class EntryLocalServiceUtil {
 	 * @param entry the entry
 	 * @return the entry that was updated
 	 */
-	public static com.liferay.portal.reports.engine.console.model.Entry
-		updateEntry(
-			com.liferay.portal.reports.engine.console.model.Entry entry) {
-
+	public static Entry updateEntry(Entry entry) {
 		return getService().updateEntry(entry);
 	}
 
 	public static void updateEntry(
 			long entryId, String reportName, byte[] reportResults)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().updateEntry(entryId, reportName, reportResults);
 	}
@@ -415,28 +379,15 @@ public class EntryLocalServiceUtil {
 			com.liferay.portal.reports.engine.console.status.ReportStatus
 				status,
 			String errorMessage)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().updateEntryStatus(entryId, status, errorMessage);
 	}
 
 	public static EntryLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<EntryLocalService, EntryLocalService>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(EntryLocalService.class);
-
-		ServiceTracker<EntryLocalService, EntryLocalService> serviceTracker =
-			new ServiceTracker<EntryLocalService, EntryLocalService>(
-				bundle.getBundleContext(), EntryLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile EntryLocalService _service;
 
 }

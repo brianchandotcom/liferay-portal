@@ -14,9 +14,11 @@
 
 package com.liferay.commerce.price.list.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.price.list.model.CommercePriceListChannelRel;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for CommercePriceListChannelRel. This utility wraps
@@ -37,13 +39,10 @@ public class CommercePriceListChannelRelServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.price.list.service.impl.CommercePriceListChannelRelServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static
-		com.liferay.commerce.price.list.model.CommercePriceListChannelRel
-				addCommercePriceListChannelRel(
-					long commercePriceListId, long commerceChannelId, int order,
-					com.liferay.portal.kernel.service.ServiceContext
-						serviceContext)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceListChannelRel addCommercePriceListChannelRel(
+			long commercePriceListId, long commerceChannelId, int order,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCommercePriceListChannelRel(
 			commercePriceListId, commerceChannelId, order, serviceContext);
@@ -51,7 +50,7 @@ public class CommercePriceListChannelRelServiceUtil {
 
 	public static void deleteCommercePriceListChannelRel(
 			long commercePriceListChannelRelId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommercePriceListChannelRel(
 			commercePriceListChannelRelId);
@@ -59,58 +58,50 @@ public class CommercePriceListChannelRelServiceUtil {
 
 	public static void deleteCommercePriceListChannelRelsByCommercePriceListId(
 			long commercePriceListId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommercePriceListChannelRelsByCommercePriceListId(
 			commercePriceListId);
 	}
 
-	public static
-		com.liferay.commerce.price.list.model.CommercePriceListChannelRel
-				fetchCommercePriceListChannelRel(
-					long commerceChannelId, long commercePriceListId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceListChannelRel fetchCommercePriceListChannelRel(
+			long commerceChannelId, long commercePriceListId)
+		throws PortalException {
 
 		return getService().fetchCommercePriceListChannelRel(
 			commerceChannelId, commercePriceListId);
 	}
 
-	public static
-		com.liferay.commerce.price.list.model.CommercePriceListChannelRel
-				getCommercePriceListChannelRel(
-					long commercePriceListChannelRelId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceListChannelRel getCommercePriceListChannelRel(
+			long commercePriceListChannelRelId)
+		throws PortalException {
 
 		return getService().getCommercePriceListChannelRel(
 			commercePriceListChannelRelId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.price.list.model.CommercePriceListChannelRel>
-				getCommercePriceListChannelRels(long commercePriceListId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommercePriceListChannelRel>
+			getCommercePriceListChannelRels(long commercePriceListId)
+		throws PortalException {
 
 		return getService().getCommercePriceListChannelRels(
 			commercePriceListId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.price.list.model.CommercePriceListChannelRel>
-				getCommercePriceListChannelRels(
-					long commercePriceListId, int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						<com.liferay.commerce.price.list.model.
-							CommercePriceListChannelRel> orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommercePriceListChannelRel>
+			getCommercePriceListChannelRels(
+				long commercePriceListId, int start, int end,
+				OrderByComparator<CommercePriceListChannelRel>
+					orderByComparator)
+		throws PortalException {
 
 		return getService().getCommercePriceListChannelRels(
 			commercePriceListId, start, end, orderByComparator);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.price.list.model.CommercePriceListChannelRel>
-			getCommercePriceListChannelRels(
-				long commercePriceListId, String name, int start, int end) {
+	public static List<CommercePriceListChannelRel>
+		getCommercePriceListChannelRels(
+			long commercePriceListId, String name, int start, int end) {
 
 		return getService().getCommercePriceListChannelRels(
 			commercePriceListId, name, start, end);
@@ -118,7 +109,7 @@ public class CommercePriceListChannelRelServiceUtil {
 
 	public static int getCommercePriceListChannelRelsCount(
 			long commercePriceListId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCommercePriceListChannelRelsCount(
 			commercePriceListId);
@@ -141,29 +132,9 @@ public class CommercePriceListChannelRelServiceUtil {
 	}
 
 	public static CommercePriceListChannelRelService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommercePriceListChannelRelService, CommercePriceListChannelRelService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommercePriceListChannelRelService.class);
-
-		ServiceTracker
-			<CommercePriceListChannelRelService,
-			 CommercePriceListChannelRelService> serviceTracker =
-				new ServiceTracker
-					<CommercePriceListChannelRelService,
-					 CommercePriceListChannelRelService>(
-						 bundle.getBundleContext(),
-						 CommercePriceListChannelRelService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommercePriceListChannelRelService _service;
 
 }

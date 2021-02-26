@@ -16,6 +16,7 @@ package com.liferay.commerce.product.service.base;
 
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalService;
+import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalServiceUtil;
 import com.liferay.commerce.product.service.persistence.CPAttachmentFileEntryFinder;
 import com.liferay.commerce.product.service.persistence.CPAttachmentFileEntryPersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionFinder;
@@ -79,6 +80,8 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -102,7 +105,7 @@ public abstract class CPDefinitionSpecificationOptionValueLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CPDefinitionSpecificationOptionValueLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CPDefinitionSpecificationOptionValueLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CPDefinitionSpecificationOptionValueLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -1764,11 +1767,16 @@ public abstract class CPDefinitionSpecificationOptionValueLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry.register(
 			"com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue",
 			cpDefinitionSpecificationOptionValueLocalService);
+
+		_setLocalServiceUtilService(
+			cpDefinitionSpecificationOptionValueLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue");
+
+		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -1811,6 +1819,24 @@ public abstract class CPDefinitionSpecificationOptionValueLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		CPDefinitionSpecificationOptionValueLocalService
+			cpDefinitionSpecificationOptionValueLocalService) {
+
+		try {
+			Field field =
+				CPDefinitionSpecificationOptionValueLocalServiceUtil.class.
+					getDeclaredField("_service");
+
+			field.setAccessible(true);
+
+			field.set(null, cpDefinitionSpecificationOptionValueLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

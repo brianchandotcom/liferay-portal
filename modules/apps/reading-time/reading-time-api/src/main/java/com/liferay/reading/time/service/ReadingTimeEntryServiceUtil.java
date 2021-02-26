@@ -14,10 +14,6 @@
 
 package com.liferay.reading.time.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-
 /**
  * Provides the remote service utility for ReadingTimeEntry. This utility wraps
  * <code>com.liferay.reading.time.service.impl.ReadingTimeEntryServiceImpl</code> and is an
@@ -43,30 +39,14 @@ public class ReadingTimeEntryServiceUtil {
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static String getOSGiServiceIdentifier() {
+	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static ReadingTimeEntryService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<ReadingTimeEntryService, ReadingTimeEntryService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(ReadingTimeEntryService.class);
-
-		ServiceTracker<ReadingTimeEntryService, ReadingTimeEntryService>
-			serviceTracker =
-				new ServiceTracker
-					<ReadingTimeEntryService, ReadingTimeEntryService>(
-						bundle.getBundleContext(),
-						ReadingTimeEntryService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile ReadingTimeEntryService _service;
 
 }

@@ -14,9 +14,12 @@
 
 package com.liferay.commerce.currency.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the remote service utility for CommerceCurrency. This utility wraps
@@ -37,16 +40,13 @@ public class CommerceCurrencyServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.currency.service.impl.CommerceCurrencyServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.commerce.currency.model.CommerceCurrency
-			addCommerceCurrency(
-				long userId, String code,
-				java.util.Map<java.util.Locale, String> nameMap, String symbol,
-				java.math.BigDecimal rate,
-				java.util.Map<java.util.Locale, String> formatPatternMap,
-				int maxFractionDigits, int minFractionDigits,
-				String roundingMode, boolean primary, double priority,
-				boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceCurrency addCommerceCurrency(
+			long userId, String code, Map<java.util.Locale, String> nameMap,
+			String symbol, java.math.BigDecimal rate,
+			Map<java.util.Locale, String> formatPatternMap,
+			int maxFractionDigits, int minFractionDigits, String roundingMode,
+			boolean primary, double priority, boolean active)
+		throws PortalException {
 
 		return getService().addCommerceCurrency(
 			userId, code, nameMap, symbol, rate, formatPatternMap,
@@ -55,66 +55,56 @@ public class CommerceCurrencyServiceUtil {
 	}
 
 	public static void deleteCommerceCurrency(long commerceCurrencyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommerceCurrency(commerceCurrencyId);
 	}
 
-	public static com.liferay.commerce.currency.model.CommerceCurrency
-			fetchPrimaryCommerceCurrency(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceCurrency fetchPrimaryCommerceCurrency(long companyId)
+		throws PortalException {
 
 		return getService().fetchPrimaryCommerceCurrency(companyId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.currency.model.CommerceCurrency>
-				getCommerceCurrencies(
-					long companyId, boolean active, int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						<com.liferay.commerce.currency.model.CommerceCurrency>
-							orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommerceCurrency> getCommerceCurrencies(
+			long companyId, boolean active, int start, int end,
+			OrderByComparator<CommerceCurrency> orderByComparator)
+		throws PortalException {
 
 		return getService().getCommerceCurrencies(
 			companyId, active, start, end, orderByComparator);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.currency.model.CommerceCurrency>
-				getCommerceCurrencies(
-					long companyId, int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						<com.liferay.commerce.currency.model.CommerceCurrency>
-							orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommerceCurrency> getCommerceCurrencies(
+			long companyId, int start, int end,
+			OrderByComparator<CommerceCurrency> orderByComparator)
+		throws PortalException {
 
 		return getService().getCommerceCurrencies(
 			companyId, start, end, orderByComparator);
 	}
 
 	public static int getCommerceCurrenciesCount(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCommerceCurrenciesCount(companyId);
 	}
 
 	public static int getCommerceCurrenciesCount(long companyId, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCommerceCurrenciesCount(companyId, active);
 	}
 
-	public static com.liferay.commerce.currency.model.CommerceCurrency
-			getCommerceCurrency(long commerceCurrencyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceCurrency getCommerceCurrency(long commerceCurrencyId)
+		throws PortalException {
 
 		return getService().getCommerceCurrency(commerceCurrencyId);
 	}
 
-	public static com.liferay.commerce.currency.model.CommerceCurrency
-			getCommerceCurrency(long companyId, String code)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceCurrency getCommerceCurrency(
+			long companyId, String code)
+		throws PortalException {
 
 		return getService().getCommerceCurrency(companyId, code);
 	}
@@ -128,31 +118,29 @@ public class CommerceCurrencyServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.commerce.currency.model.CommerceCurrency
-			setActive(long commerceCurrencyId, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceCurrency setActive(
+			long commerceCurrencyId, boolean active)
+		throws PortalException {
 
 		return getService().setActive(commerceCurrencyId, active);
 	}
 
-	public static com.liferay.commerce.currency.model.CommerceCurrency
-			setPrimary(long commerceCurrencyId, boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceCurrency setPrimary(
+			long commerceCurrencyId, boolean primary)
+		throws PortalException {
 
 		return getService().setPrimary(commerceCurrencyId, primary);
 	}
 
-	public static com.liferay.commerce.currency.model.CommerceCurrency
-			updateCommerceCurrency(
-				long commerceCurrencyId, String code,
-				java.util.Map<java.util.Locale, String> nameMap, String symbol,
-				java.math.BigDecimal rate,
-				java.util.Map<java.util.Locale, String> formatPatternMap,
-				int maxFractionDigits, int minFractionDigits,
-				String roundingMode, boolean primary, double priority,
-				boolean active,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceCurrency updateCommerceCurrency(
+			long commerceCurrencyId, String code,
+			Map<java.util.Locale, String> nameMap, String symbol,
+			java.math.BigDecimal rate,
+			Map<java.util.Locale, String> formatPatternMap,
+			int maxFractionDigits, int minFractionDigits, String roundingMode,
+			boolean primary, double priority, boolean active,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().updateCommerceCurrency(
 			commerceCurrencyId, code, nameMap, symbol, rate, formatPatternMap,
@@ -162,38 +150,20 @@ public class CommerceCurrencyServiceUtil {
 
 	public static void updateExchangeRate(
 			long commerceCurrencyId, String exchangeRateProviderKey)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().updateExchangeRate(
 			commerceCurrencyId, exchangeRateProviderKey);
 	}
 
-	public static void updateExchangeRates()
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static void updateExchangeRates() throws PortalException {
 		getService().updateExchangeRates();
 	}
 
 	public static CommerceCurrencyService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceCurrencyService, CommerceCurrencyService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(CommerceCurrencyService.class);
-
-		ServiceTracker<CommerceCurrencyService, CommerceCurrencyService>
-			serviceTracker =
-				new ServiceTracker
-					<CommerceCurrencyService, CommerceCurrencyService>(
-						bundle.getBundleContext(),
-						CommerceCurrencyService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceCurrencyService _service;
 
 }

@@ -14,9 +14,11 @@
 
 package com.liferay.commerce.discount.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.discount.model.CommerceDiscountRule;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for CommerceDiscountRule. This utility wraps
@@ -37,79 +39,71 @@ public class CommerceDiscountRuleServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.discount.service.impl.CommerceDiscountRuleServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.commerce.discount.model.CommerceDiscountRule
-			addCommerceDiscountRule(
-				long commerceDiscountId, String type, String typeSettings,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceDiscountRule addCommerceDiscountRule(
+			long commerceDiscountId, String type, String typeSettings,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCommerceDiscountRule(
 			commerceDiscountId, type, typeSettings, serviceContext);
 	}
 
-	public static com.liferay.commerce.discount.model.CommerceDiscountRule
-			addCommerceDiscountRule(
-				long commerceDiscountId, String name, String type,
-				String typeSettings,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceDiscountRule addCommerceDiscountRule(
+			long commerceDiscountId, String name, String type,
+			String typeSettings,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCommerceDiscountRule(
 			commerceDiscountId, name, type, typeSettings, serviceContext);
 	}
 
 	public static void deleteCommerceDiscountRule(long commerceDiscountRuleId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommerceDiscountRule(commerceDiscountRuleId);
 	}
 
-	public static com.liferay.commerce.discount.model.CommerceDiscountRule
-			fetchCommerceDiscountRule(long commerceDiscountRuleId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceDiscountRule fetchCommerceDiscountRule(
+			long commerceDiscountRuleId)
+		throws PortalException {
 
 		return getService().fetchCommerceDiscountRule(commerceDiscountRuleId);
 	}
 
-	public static com.liferay.commerce.discount.model.CommerceDiscountRule
-			getCommerceDiscountRule(long commerceDiscountRuleId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceDiscountRule getCommerceDiscountRule(
+			long commerceDiscountRuleId)
+		throws PortalException {
 
 		return getService().getCommerceDiscountRule(commerceDiscountRuleId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.discount.model.CommerceDiscountRule>
-				getCommerceDiscountRules(
-					long commerceDiscountId, int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						<com.liferay.commerce.discount.model.
-							CommerceDiscountRule> orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommerceDiscountRule> getCommerceDiscountRules(
+			long commerceDiscountId, int start, int end,
+			OrderByComparator<CommerceDiscountRule> orderByComparator)
+		throws PortalException {
 
 		return getService().getCommerceDiscountRules(
 			commerceDiscountId, start, end, orderByComparator);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.discount.model.CommerceDiscountRule>
-				getCommerceDiscountRules(
-					long commerceDiscountId, String name, int start, int end)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommerceDiscountRule> getCommerceDiscountRules(
+			long commerceDiscountId, String name, int start, int end)
+		throws PortalException {
 
 		return getService().getCommerceDiscountRules(
 			commerceDiscountId, name, start, end);
 	}
 
 	public static int getCommerceDiscountRulesCount(long commerceDiscountId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCommerceDiscountRulesCount(commerceDiscountId);
 	}
 
 	public static int getCommerceDiscountRulesCount(
 			long commerceDiscountId, String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCommerceDiscountRulesCount(
 			commerceDiscountId, name);
@@ -124,47 +118,27 @@ public class CommerceDiscountRuleServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.commerce.discount.model.CommerceDiscountRule
-			updateCommerceDiscountRule(
-				long commerceDiscountRuleId, String type, String typeSettings)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceDiscountRule updateCommerceDiscountRule(
+			long commerceDiscountRuleId, String type, String typeSettings)
+		throws PortalException {
 
 		return getService().updateCommerceDiscountRule(
 			commerceDiscountRuleId, type, typeSettings);
 	}
 
-	public static com.liferay.commerce.discount.model.CommerceDiscountRule
-			updateCommerceDiscountRule(
-				long commerceDiscountRuleId, String name, String type,
-				String typeSettings)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceDiscountRule updateCommerceDiscountRule(
+			long commerceDiscountRuleId, String name, String type,
+			String typeSettings)
+		throws PortalException {
 
 		return getService().updateCommerceDiscountRule(
 			commerceDiscountRuleId, name, type, typeSettings);
 	}
 
 	public static CommerceDiscountRuleService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceDiscountRuleService, CommerceDiscountRuleService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommerceDiscountRuleService.class);
-
-		ServiceTracker<CommerceDiscountRuleService, CommerceDiscountRuleService>
-			serviceTracker =
-				new ServiceTracker
-					<CommerceDiscountRuleService, CommerceDiscountRuleService>(
-						bundle.getBundleContext(),
-						CommerceDiscountRuleService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceDiscountRuleService _service;
 
 }

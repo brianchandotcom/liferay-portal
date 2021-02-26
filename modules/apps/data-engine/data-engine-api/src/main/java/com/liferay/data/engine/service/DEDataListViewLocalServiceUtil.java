@@ -14,9 +14,17 @@
 
 package com.liferay.data.engine.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.data.engine.model.DEDataListView;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for DEDataListView. This utility wraps
@@ -48,18 +56,16 @@ public class DEDataListViewLocalServiceUtil {
 	 * @param deDataListView the de data list view
 	 * @return the de data list view that was added
 	 */
-	public static com.liferay.data.engine.model.DEDataListView
-		addDEDataListView(
-			com.liferay.data.engine.model.DEDataListView deDataListView) {
+	public static DEDataListView addDEDataListView(
+		DEDataListView deDataListView) {
 
 		return getService().addDEDataListView(deDataListView);
 	}
 
-	public static com.liferay.data.engine.model.DEDataListView
-			addDEDataListView(
-				long groupId, long companyId, long userId,
-				String appliedFilters, long ddmStructureId, String fieldNames,
-				java.util.Map<java.util.Locale, String> name, String sortField)
+	public static DEDataListView addDEDataListView(
+			long groupId, long companyId, long userId, String appliedFilters,
+			long ddmStructureId, String fieldNames,
+			Map<java.util.Locale, String> name, String sortField)
 		throws Exception {
 
 		return getService().addDEDataListView(
@@ -73,18 +79,16 @@ public class DEDataListViewLocalServiceUtil {
 	 * @param deDataListViewId the primary key for the new de data list view
 	 * @return the new de data list view
 	 */
-	public static com.liferay.data.engine.model.DEDataListView
-		createDEDataListView(long deDataListViewId) {
-
+	public static DEDataListView createDEDataListView(long deDataListViewId) {
 		return getService().createDEDataListView(deDataListViewId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -99,9 +103,8 @@ public class DEDataListViewLocalServiceUtil {
 	 * @param deDataListView the de data list view
 	 * @return the de data list view that was removed
 	 */
-	public static com.liferay.data.engine.model.DEDataListView
-		deleteDEDataListView(
-			com.liferay.data.engine.model.DEDataListView deDataListView) {
+	public static DEDataListView deleteDEDataListView(
+		DEDataListView deDataListView) {
 
 		return getService().deleteDEDataListView(deDataListView);
 	}
@@ -117,9 +120,8 @@ public class DEDataListViewLocalServiceUtil {
 	 * @return the de data list view that was removed
 	 * @throws PortalException if a de data list view with the primary key could not be found
 	 */
-	public static com.liferay.data.engine.model.DEDataListView
-			deleteDEDataListView(long deDataListViewId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static DEDataListView deleteDEDataListView(long deDataListViewId)
+		throws PortalException {
 
 		return getService().deleteDEDataListView(deDataListViewId);
 	}
@@ -131,23 +133,18 @@ public class DEDataListViewLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -157,9 +154,7 @@ public class DEDataListViewLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -175,9 +170,8 @@ public class DEDataListViewLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -195,10 +189,9 @@ public class DEDataListViewLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -210,9 +203,7 @@ public class DEDataListViewLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -224,15 +215,13 @@ public class DEDataListViewLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.data.engine.model.DEDataListView
-		fetchDEDataListView(long deDataListViewId) {
-
+	public static DEDataListView fetchDEDataListView(long deDataListViewId) {
 		return getService().fetchDEDataListView(deDataListViewId);
 	}
 
@@ -243,8 +232,8 @@ public class DEDataListViewLocalServiceUtil {
 	 * @param groupId the primary key of the group
 	 * @return the matching de data list view, or <code>null</code> if a matching de data list view could not be found
 	 */
-	public static com.liferay.data.engine.model.DEDataListView
-		fetchDEDataListViewByUuidAndGroupId(String uuid, long groupId) {
+	public static DEDataListView fetchDEDataListViewByUuidAndGroupId(
+		String uuid, long groupId) {
 
 		return getService().fetchDEDataListViewByUuidAndGroupId(uuid, groupId);
 	}
@@ -262,9 +251,8 @@ public class DEDataListViewLocalServiceUtil {
 	 * @return the de data list view
 	 * @throws PortalException if a de data list view with the primary key could not be found
 	 */
-	public static com.liferay.data.engine.model.DEDataListView
-			getDEDataListView(long deDataListViewId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static DEDataListView getDEDataListView(long deDataListViewId)
+		throws PortalException {
 
 		return getService().getDEDataListView(deDataListViewId);
 	}
@@ -277,9 +265,9 @@ public class DEDataListViewLocalServiceUtil {
 	 * @return the matching de data list view
 	 * @throws PortalException if a matching de data list view could not be found
 	 */
-	public static com.liferay.data.engine.model.DEDataListView
-			getDEDataListViewByUuidAndGroupId(String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static DEDataListView getDEDataListViewByUuidAndGroupId(
+			String uuid, long groupId)
+		throws PortalException {
 
 		return getService().getDEDataListViewByUuidAndGroupId(uuid, groupId);
 	}
@@ -295,25 +283,17 @@ public class DEDataListViewLocalServiceUtil {
 	 * @param end the upper bound of the range of de data list views (not inclusive)
 	 * @return the range of de data list views
 	 */
-	public static java.util.List<com.liferay.data.engine.model.DEDataListView>
-		getDEDataListViews(int start, int end) {
-
+	public static List<DEDataListView> getDEDataListViews(int start, int end) {
 		return getService().getDEDataListViews(start, end);
 	}
 
-	public static java.util.List<com.liferay.data.engine.model.DEDataListView>
-		getDEDataListViews(long ddmStructureId) {
-
+	public static List<DEDataListView> getDEDataListViews(long ddmStructureId) {
 		return getService().getDEDataListViews(ddmStructureId);
 	}
 
-	public static java.util.List<com.liferay.data.engine.model.DEDataListView>
-		getDEDataListViews(
-			long groupId, long companyId, long ddmStructureId, int start,
-			int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.data.engine.model.DEDataListView>
-					orderByComparator) {
+	public static List<DEDataListView> getDEDataListViews(
+		long groupId, long companyId, long ddmStructureId, int start, int end,
+		OrderByComparator<DEDataListView> orderByComparator) {
 
 		return getService().getDEDataListViews(
 			groupId, companyId, ddmStructureId, start, end, orderByComparator);
@@ -326,8 +306,8 @@ public class DEDataListViewLocalServiceUtil {
 	 * @param companyId the primary key of the company
 	 * @return the matching de data list views, or an empty list if no matches were found
 	 */
-	public static java.util.List<com.liferay.data.engine.model.DEDataListView>
-		getDEDataListViewsByUuidAndCompanyId(String uuid, long companyId) {
+	public static List<DEDataListView> getDEDataListViewsByUuidAndCompanyId(
+		String uuid, long companyId) {
 
 		return getService().getDEDataListViewsByUuidAndCompanyId(
 			uuid, companyId);
@@ -343,12 +323,9 @@ public class DEDataListViewLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the range of matching de data list views, or an empty list if no matches were found
 	 */
-	public static java.util.List<com.liferay.data.engine.model.DEDataListView>
-		getDEDataListViewsByUuidAndCompanyId(
-			String uuid, long companyId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.data.engine.model.DEDataListView>
-					orderByComparator) {
+	public static List<DEDataListView> getDEDataListViewsByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<DEDataListView> orderByComparator) {
 
 		return getService().getDEDataListViewsByUuidAndCompanyId(
 			uuid, companyId, start, end, orderByComparator);
@@ -397,9 +374,8 @@ public class DEDataListViewLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -414,18 +390,15 @@ public class DEDataListViewLocalServiceUtil {
 	 * @param deDataListView the de data list view
 	 * @return the de data list view that was updated
 	 */
-	public static com.liferay.data.engine.model.DEDataListView
-		updateDEDataListView(
-			com.liferay.data.engine.model.DEDataListView deDataListView) {
+	public static DEDataListView updateDEDataListView(
+		DEDataListView deDataListView) {
 
 		return getService().updateDEDataListView(deDataListView);
 	}
 
-	public static com.liferay.data.engine.model.DEDataListView
-			updateDEDataListView(
-				long deDataListViewId, String appliedFilters, String fieldNames,
-				java.util.Map<java.util.Locale, String> nameMap,
-				String sortField)
+	public static DEDataListView updateDEDataListView(
+			long deDataListViewId, String appliedFilters, String fieldNames,
+			Map<java.util.Locale, String> nameMap, String sortField)
 		throws Exception {
 
 		return getService().updateDEDataListView(
@@ -433,27 +406,9 @@ public class DEDataListViewLocalServiceUtil {
 	}
 
 	public static DEDataListViewLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<DEDataListViewLocalService, DEDataListViewLocalService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			DEDataListViewLocalService.class);
-
-		ServiceTracker<DEDataListViewLocalService, DEDataListViewLocalService>
-			serviceTracker =
-				new ServiceTracker
-					<DEDataListViewLocalService, DEDataListViewLocalService>(
-						bundle.getBundleContext(),
-						DEDataListViewLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile DEDataListViewLocalService _service;
 
 }

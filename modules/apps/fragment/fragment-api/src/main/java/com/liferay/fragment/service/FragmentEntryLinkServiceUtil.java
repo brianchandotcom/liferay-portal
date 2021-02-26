@@ -14,9 +14,10 @@
 
 package com.liferay.fragment.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.Map;
 
 /**
  * Provides the remote service utility for FragmentEntryLink. This utility wraps
@@ -45,15 +46,14 @@ public class FragmentEntryLinkServiceUtil {
 	 ServiceContext)}
 	 */
 	@Deprecated
-	public static com.liferay.fragment.model.FragmentEntryLink
-			addFragmentEntryLink(
-				long groupId, long originalFragmentEntryLinkId,
-				long fragmentEntryId, long segmentsExperienceId,
-				long classNameId, long classPK, String css, String html,
-				String js, String configuration, String editableValues,
-				String namespace, int position, String rendererKey,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static FragmentEntryLink addFragmentEntryLink(
+			long groupId, long originalFragmentEntryLinkId,
+			long fragmentEntryId, long segmentsExperienceId, long classNameId,
+			long classPK, String css, String html, String js,
+			String configuration, String editableValues, String namespace,
+			int position, String rendererKey,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addFragmentEntryLink(
 			groupId, originalFragmentEntryLinkId, fragmentEntryId,
@@ -62,15 +62,14 @@ public class FragmentEntryLinkServiceUtil {
 			serviceContext);
 	}
 
-	public static com.liferay.fragment.model.FragmentEntryLink
-			addFragmentEntryLink(
-				long groupId, long originalFragmentEntryLinkId,
-				long fragmentEntryId, long segmentsExperienceId, long plid,
-				String css, String html, String js, String configuration,
-				String editableValues, String namespace, int position,
-				String rendererKey,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static FragmentEntryLink addFragmentEntryLink(
+			long groupId, long originalFragmentEntryLinkId,
+			long fragmentEntryId, long segmentsExperienceId, long plid,
+			String css, String html, String js, String configuration,
+			String editableValues, String namespace, int position,
+			String rendererKey,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addFragmentEntryLink(
 			groupId, originalFragmentEntryLinkId, fragmentEntryId,
@@ -78,9 +77,9 @@ public class FragmentEntryLinkServiceUtil {
 			editableValues, namespace, position, rendererKey, serviceContext);
 	}
 
-	public static com.liferay.fragment.model.FragmentEntryLink
-			deleteFragmentEntryLink(long fragmentEntryLinkId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static FragmentEntryLink deleteFragmentEntryLink(
+			long fragmentEntryLinkId)
+		throws PortalException {
 
 		return getService().deleteFragmentEntryLink(fragmentEntryLinkId);
 	}
@@ -94,20 +93,18 @@ public class FragmentEntryLinkServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.fragment.model.FragmentEntryLink
-			updateFragmentEntryLink(
-				long fragmentEntryLinkId, String editableValues)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static FragmentEntryLink updateFragmentEntryLink(
+			long fragmentEntryLinkId, String editableValues)
+		throws PortalException {
 
 		return getService().updateFragmentEntryLink(
 			fragmentEntryLinkId, editableValues);
 	}
 
-	public static com.liferay.fragment.model.FragmentEntryLink
-			updateFragmentEntryLink(
-				long fragmentEntryLinkId, String editableValues,
-				boolean updateClassedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static FragmentEntryLink updateFragmentEntryLink(
+			long fragmentEntryLinkId, String editableValues,
+			boolean updateClassedModel)
+		throws PortalException {
 
 		return getService().updateFragmentEntryLink(
 			fragmentEntryLinkId, editableValues, updateClassedModel);
@@ -123,7 +120,7 @@ public class FragmentEntryLinkServiceUtil {
 			long groupId, long classNameId, long classPK,
 			long[] fragmentEntryIds, String editableValues,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().updateFragmentEntryLinks(
 			groupId, classNameId, classPK, fragmentEntryIds, editableValues,
@@ -134,40 +131,24 @@ public class FragmentEntryLinkServiceUtil {
 			long groupId, long plid, long[] fragmentEntryIds,
 			String editableValues,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().updateFragmentEntryLinks(
 			groupId, plid, fragmentEntryIds, editableValues, serviceContext);
 	}
 
 	public static void updateFragmentEntryLinks(
-			java.util.Map<Long, String> fragmentEntryLinksEditableValuesMap)
-		throws com.liferay.portal.kernel.exception.PortalException {
+			Map<Long, String> fragmentEntryLinksEditableValuesMap)
+		throws PortalException {
 
 		getService().updateFragmentEntryLinks(
 			fragmentEntryLinksEditableValuesMap);
 	}
 
 	public static FragmentEntryLinkService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<FragmentEntryLinkService, FragmentEntryLinkService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(FragmentEntryLinkService.class);
-
-		ServiceTracker<FragmentEntryLinkService, FragmentEntryLinkService>
-			serviceTracker =
-				new ServiceTracker
-					<FragmentEntryLinkService, FragmentEntryLinkService>(
-						bundle.getBundleContext(),
-						FragmentEntryLinkService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile FragmentEntryLinkService _service;
 
 }

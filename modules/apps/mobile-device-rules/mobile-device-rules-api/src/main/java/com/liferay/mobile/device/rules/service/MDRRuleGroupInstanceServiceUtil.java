@@ -14,9 +14,11 @@
 
 package com.liferay.mobile.device.rules.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for MDRRuleGroupInstance. This utility wraps
@@ -37,29 +39,27 @@ public class MDRRuleGroupInstanceServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.mobile.device.rules.service.impl.MDRRuleGroupInstanceServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.mobile.device.rules.model.MDRRuleGroupInstance
-			addRuleGroupInstance(
-				long groupId, String className, long classPK, long ruleGroupId,
-				int priority,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static MDRRuleGroupInstance addRuleGroupInstance(
+			long groupId, String className, long classPK, long ruleGroupId,
+			int priority,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addRuleGroupInstance(
 			groupId, className, classPK, ruleGroupId, priority, serviceContext);
 	}
 
-	public static com.liferay.mobile.device.rules.model.MDRRuleGroupInstance
-			addRuleGroupInstance(
-				long groupId, String className, long classPK, long ruleGroupId,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static MDRRuleGroupInstance addRuleGroupInstance(
+			long groupId, String className, long classPK, long ruleGroupId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addRuleGroupInstance(
 			groupId, className, classPK, ruleGroupId, serviceContext);
 	}
 
 	public static void deleteRuleGroupInstance(long ruleGroupInstanceId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteRuleGroupInstance(ruleGroupInstanceId);
 	}
@@ -73,13 +73,9 @@ public class MDRRuleGroupInstanceServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static java.util.List
-		<com.liferay.mobile.device.rules.model.MDRRuleGroupInstance>
-			getRuleGroupInstances(
-				String className, long classPK, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.mobile.device.rules.model.MDRRuleGroupInstance>
-						orderByComparator) {
+	public static List<MDRRuleGroupInstance> getRuleGroupInstances(
+		String className, long classPK, int start, int end,
+		OrderByComparator<MDRRuleGroupInstance> orderByComparator) {
 
 		return getService().getRuleGroupInstances(
 			className, classPK, start, end, orderByComparator);
@@ -91,36 +87,18 @@ public class MDRRuleGroupInstanceServiceUtil {
 		return getService().getRuleGroupInstancesCount(className, classPK);
 	}
 
-	public static com.liferay.mobile.device.rules.model.MDRRuleGroupInstance
-			updateRuleGroupInstance(long ruleGroupInstanceId, int priority)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static MDRRuleGroupInstance updateRuleGroupInstance(
+			long ruleGroupInstanceId, int priority)
+		throws PortalException {
 
 		return getService().updateRuleGroupInstance(
 			ruleGroupInstanceId, priority);
 	}
 
 	public static MDRRuleGroupInstanceService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<MDRRuleGroupInstanceService, MDRRuleGroupInstanceService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			MDRRuleGroupInstanceService.class);
-
-		ServiceTracker<MDRRuleGroupInstanceService, MDRRuleGroupInstanceService>
-			serviceTracker =
-				new ServiceTracker
-					<MDRRuleGroupInstanceService, MDRRuleGroupInstanceService>(
-						bundle.getBundleContext(),
-						MDRRuleGroupInstanceService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile MDRRuleGroupInstanceService _service;
 
 }

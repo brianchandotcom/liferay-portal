@@ -14,9 +14,11 @@
 
 package com.liferay.account.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for AccountEntry. This utility wraps
@@ -44,10 +46,10 @@ public class AccountEntryServiceUtil {
 	 byte[], String, int, ServiceContext)}
 	 */
 	@Deprecated
-	public static com.liferay.account.model.AccountEntry addAccountEntry(
+	public static AccountEntry addAccountEntry(
 			long userId, long parentAccountEntryId, String name,
 			String description, String[] domains, byte[] logoBytes, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addAccountEntry(
 			userId, parentAccountEntryId, name, description, domains, logoBytes,
@@ -60,35 +62,33 @@ public class AccountEntryServiceUtil {
 	 byte[], String, int, ServiceContext)}
 	 */
 	@Deprecated
-	public static com.liferay.account.model.AccountEntry addAccountEntry(
+	public static AccountEntry addAccountEntry(
 			long userId, long parentAccountEntryId, String name,
 			String description, String[] domains, byte[] logoBytes, int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addAccountEntry(
 			userId, parentAccountEntryId, name, description, domains, logoBytes,
 			status, serviceContext);
 	}
 
-	public static com.liferay.account.model.AccountEntry addAccountEntry(
+	public static AccountEntry addAccountEntry(
 			long userId, long parentAccountEntryId, String name,
 			String description, String[] domains, String email,
 			byte[] logoBytes, String taxIdNumber, String type, int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addAccountEntry(
 			userId, parentAccountEntryId, name, description, domains, email,
 			logoBytes, taxIdNumber, type, status, serviceContext);
 	}
 
-	public static java.util.List<com.liferay.account.model.AccountEntry>
-			getAccountEntries(
-				long companyId, int status, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.account.model.AccountEntry> orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<AccountEntry> getAccountEntries(
+			long companyId, int status, int start, int end,
+			OrderByComparator<AccountEntry> orderByComparator)
+		throws PortalException {
 
 		return getService().getAccountEntries(
 			companyId, status, start, end, orderByComparator);
@@ -104,7 +104,7 @@ public class AccountEntryServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
-		<com.liferay.account.model.AccountEntry> searchAccountEntries(
+		<AccountEntry> searchAccountEntries(
 			String keywords, java.util.LinkedHashMap<String, Object> params,
 			int cur, int delta, String orderByField, boolean reverse) {
 
@@ -113,23 +113,9 @@ public class AccountEntryServiceUtil {
 	}
 
 	public static AccountEntryService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<AccountEntryService, AccountEntryService>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(AccountEntryService.class);
-
-		ServiceTracker<AccountEntryService, AccountEntryService>
-			serviceTracker =
-				new ServiceTracker<AccountEntryService, AccountEntryService>(
-					bundle.getBundleContext(), AccountEntryService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile AccountEntryService _service;
 
 }

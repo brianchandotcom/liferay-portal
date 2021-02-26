@@ -14,9 +14,16 @@
 
 package com.liferay.commerce.pricing.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.pricing.model.CommercePriceModifierRel;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for CommercePriceModifierRel. This utility wraps
@@ -48,20 +55,17 @@ public class CommercePriceModifierRelLocalServiceUtil {
 	 * @param commercePriceModifierRel the commerce price modifier rel
 	 * @return the commerce price modifier rel that was added
 	 */
-	public static com.liferay.commerce.pricing.model.CommercePriceModifierRel
-		addCommercePriceModifierRel(
-			com.liferay.commerce.pricing.model.CommercePriceModifierRel
-				commercePriceModifierRel) {
+	public static CommercePriceModifierRel addCommercePriceModifierRel(
+		CommercePriceModifierRel commercePriceModifierRel) {
 
 		return getService().addCommercePriceModifierRel(
 			commercePriceModifierRel);
 	}
 
-	public static com.liferay.commerce.pricing.model.CommercePriceModifierRel
-			addCommercePriceModifierRel(
-				long commercePriceModifierId, String className, long classPK,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceModifierRel addCommercePriceModifierRel(
+			long commercePriceModifierId, String className, long classPK,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCommercePriceModifierRel(
 			commercePriceModifierId, className, classPK, serviceContext);
@@ -73,8 +77,8 @@ public class CommercePriceModifierRelLocalServiceUtil {
 	 * @param commercePriceModifierRelId the primary key for the new commerce price modifier rel
 	 * @return the new commerce price modifier rel
 	 */
-	public static com.liferay.commerce.pricing.model.CommercePriceModifierRel
-		createCommercePriceModifierRel(long commercePriceModifierRelId) {
+	public static CommercePriceModifierRel createCommercePriceModifierRel(
+		long commercePriceModifierRelId) {
 
 		return getService().createCommercePriceModifierRel(
 			commercePriceModifierRelId);
@@ -83,9 +87,9 @@ public class CommercePriceModifierRelLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -101,11 +105,9 @@ public class CommercePriceModifierRelLocalServiceUtil {
 	 * @return the commerce price modifier rel that was removed
 	 * @throws PortalException
 	 */
-	public static com.liferay.commerce.pricing.model.CommercePriceModifierRel
-			deleteCommercePriceModifierRel(
-				com.liferay.commerce.pricing.model.CommercePriceModifierRel
-					commercePriceModifierRel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceModifierRel deleteCommercePriceModifierRel(
+			CommercePriceModifierRel commercePriceModifierRel)
+		throws PortalException {
 
 		return getService().deleteCommercePriceModifierRel(
 			commercePriceModifierRel);
@@ -122,9 +124,9 @@ public class CommercePriceModifierRelLocalServiceUtil {
 	 * @return the commerce price modifier rel that was removed
 	 * @throws PortalException if a commerce price modifier rel with the primary key could not be found
 	 */
-	public static com.liferay.commerce.pricing.model.CommercePriceModifierRel
-			deleteCommercePriceModifierRel(long commercePriceModifierRelId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceModifierRel deleteCommercePriceModifierRel(
+			long commercePriceModifierRelId)
+		throws PortalException {
 
 		return getService().deleteCommercePriceModifierRel(
 			commercePriceModifierRelId);
@@ -132,14 +134,14 @@ public class CommercePriceModifierRelLocalServiceUtil {
 
 	public static void deleteCommercePriceModifierRels(
 			long commercePriceModifierId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommercePriceModifierRels(commercePriceModifierId);
 	}
 
 	public static void deleteCommercePriceModifierRels(
 			String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommercePriceModifierRels(className, classPK);
 	}
@@ -147,23 +149,18 @@ public class CommercePriceModifierRelLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -173,9 +170,7 @@ public class CommercePriceModifierRelLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -191,9 +186,8 @@ public class CommercePriceModifierRelLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -211,10 +205,9 @@ public class CommercePriceModifierRelLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -226,9 +219,7 @@ public class CommercePriceModifierRelLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -240,22 +231,21 @@ public class CommercePriceModifierRelLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.commerce.pricing.model.CommercePriceModifierRel
-		fetchCommercePriceModifierRel(long commercePriceModifierRelId) {
+	public static CommercePriceModifierRel fetchCommercePriceModifierRel(
+		long commercePriceModifierRelId) {
 
 		return getService().fetchCommercePriceModifierRel(
 			commercePriceModifierRelId);
 	}
 
-	public static com.liferay.commerce.pricing.model.CommercePriceModifierRel
-		fetchCommercePriceModifierRel(
-			long commercePriceModifierId, String className, long classPK) {
+	public static CommercePriceModifierRel fetchCommercePriceModifierRel(
+		long commercePriceModifierId, String className, long classPK) {
 
 		return getService().fetchCommercePriceModifierRel(
 			commercePriceModifierId, className, classPK);
@@ -267,10 +257,9 @@ public class CommercePriceModifierRelLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.pricing.model.CommercePriceModifierRel>
-			getCategoriesCommercePriceModifierRels(
-				long commercePriceModifierId, String name, int start, int end) {
+	public static List<CommercePriceModifierRel>
+		getCategoriesCommercePriceModifierRels(
+			long commercePriceModifierId, String name, int start, int end) {
 
 		return getService().getCategoriesCommercePriceModifierRels(
 			commercePriceModifierId, name, start, end);
@@ -296,9 +285,9 @@ public class CommercePriceModifierRelLocalServiceUtil {
 	 * @return the commerce price modifier rel
 	 * @throws PortalException if a commerce price modifier rel with the primary key could not be found
 	 */
-	public static com.liferay.commerce.pricing.model.CommercePriceModifierRel
-			getCommercePriceModifierRel(long commercePriceModifierRelId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePriceModifierRel getCommercePriceModifierRel(
+			long commercePriceModifierRelId)
+		throws PortalException {
 
 		return getService().getCommercePriceModifierRel(
 			commercePriceModifierRelId);
@@ -315,30 +304,22 @@ public class CommercePriceModifierRelLocalServiceUtil {
 	 * @param end the upper bound of the range of commerce price modifier rels (not inclusive)
 	 * @return the range of commerce price modifier rels
 	 */
-	public static java.util.List
-		<com.liferay.commerce.pricing.model.CommercePriceModifierRel>
-			getCommercePriceModifierRels(int start, int end) {
+	public static List<CommercePriceModifierRel> getCommercePriceModifierRels(
+		int start, int end) {
 
 		return getService().getCommercePriceModifierRels(start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.pricing.model.CommercePriceModifierRel>
-			getCommercePriceModifierRels(
-				long commercePriceModifierId, String className) {
+	public static List<CommercePriceModifierRel> getCommercePriceModifierRels(
+		long commercePriceModifierId, String className) {
 
 		return getService().getCommercePriceModifierRels(
 			commercePriceModifierId, className);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.pricing.model.CommercePriceModifierRel>
-			getCommercePriceModifierRels(
-				long commercePriceModifierId, String className, int start,
-				int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.commerce.pricing.model.
-						CommercePriceModifierRel> orderByComparator) {
+	public static List<CommercePriceModifierRel> getCommercePriceModifierRels(
+		long commercePriceModifierId, String className, int start, int end,
+		OrderByComparator<CommercePriceModifierRel> orderByComparator) {
 
 		return getService().getCommercePriceModifierRels(
 			commercePriceModifierId, className, start, end, orderByComparator);
@@ -360,18 +341,15 @@ public class CommercePriceModifierRelLocalServiceUtil {
 			commercePriceModifierId, className);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.pricing.model.CommercePriceModifierRel>
-			getCommercePriceModifiersRels(String className, long classPK) {
+	public static List<CommercePriceModifierRel> getCommercePriceModifiersRels(
+		String className, long classPK) {
 
 		return getService().getCommercePriceModifiersRels(className, classPK);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.pricing.model.CommercePriceModifierRel>
-			getCommercePricingClassesCommercePriceModifierRels(
-				long commercePriceModifierId, String title, int start,
-				int end) {
+	public static List<CommercePriceModifierRel>
+		getCommercePricingClassesCommercePriceModifierRels(
+			long commercePriceModifierId, String title, int start, int end) {
 
 		return getService().getCommercePricingClassesCommercePriceModifierRels(
 			commercePriceModifierId, title, start, end);
@@ -385,11 +363,10 @@ public class CommercePriceModifierRelLocalServiceUtil {
 				commercePriceModifierId, title);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.pricing.model.CommercePriceModifierRel>
-			getCPDefinitionsCommercePriceModifierRels(
-				long commercePriceModifierId, String name, String languageId,
-				int start, int end) {
+	public static List<CommercePriceModifierRel>
+		getCPDefinitionsCommercePriceModifierRels(
+			long commercePriceModifierId, String name, String languageId,
+			int start, int end) {
 
 		return getService().getCPDefinitionsCommercePriceModifierRels(
 			commercePriceModifierId, name, languageId, start, end);
@@ -421,9 +398,8 @@ public class CommercePriceModifierRelLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -438,39 +414,17 @@ public class CommercePriceModifierRelLocalServiceUtil {
 	 * @param commercePriceModifierRel the commerce price modifier rel
 	 * @return the commerce price modifier rel that was updated
 	 */
-	public static com.liferay.commerce.pricing.model.CommercePriceModifierRel
-		updateCommercePriceModifierRel(
-			com.liferay.commerce.pricing.model.CommercePriceModifierRel
-				commercePriceModifierRel) {
+	public static CommercePriceModifierRel updateCommercePriceModifierRel(
+		CommercePriceModifierRel commercePriceModifierRel) {
 
 		return getService().updateCommercePriceModifierRel(
 			commercePriceModifierRel);
 	}
 
 	public static CommercePriceModifierRelLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommercePriceModifierRelLocalService,
-		 CommercePriceModifierRelLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommercePriceModifierRelLocalService.class);
-
-		ServiceTracker
-			<CommercePriceModifierRelLocalService,
-			 CommercePriceModifierRelLocalService> serviceTracker =
-				new ServiceTracker
-					<CommercePriceModifierRelLocalService,
-					 CommercePriceModifierRelLocalService>(
-						 bundle.getBundleContext(),
-						 CommercePriceModifierRelLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommercePriceModifierRelLocalService _service;
 
 }

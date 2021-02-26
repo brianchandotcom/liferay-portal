@@ -14,9 +14,9 @@
 
 package com.liferay.portal.tools.service.builder.test.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for GenericMethodsEntry. This utility wraps
@@ -61,16 +61,15 @@ public class GenericMethodsEntryLocalServiceUtil {
 		getService().typeParameterMethod(consumer);
 	}
 
-	public static <T, E extends Exception> java.util.List<T>
-		typeParametersAndBoundMethod(
-			java.util.function.BiFunction<Long, T, E> biFunction,
-			java.util.function.BiConsumer<Long, E> biConsumer) {
+	public static <T, E extends Exception> List<T> typeParametersAndBoundMethod(
+		java.util.function.BiFunction<Long, T, E> biFunction,
+		java.util.function.BiConsumer<Long, E> biConsumer) {
 
 		return getService().typeParametersAndBoundMethod(
 			biFunction, biConsumer);
 	}
 
-	public static <N extends Number, E extends Exception> java.util.List<N>
+	public static <N extends Number, E extends Exception> List<N>
 		typeParametersAndBoundsMethod(
 			java.util.function.BiFunction<Long, N, E> biFunction,
 			java.util.function.BiConsumer<Long, N> biConsumer) {
@@ -81,7 +80,7 @@ public class GenericMethodsEntryLocalServiceUtil {
 
 	public static
 		<N extends Number & java.util.function.ObjIntConsumer,
-		 E extends Exception & java.io.Serializable> java.util.List<N>
+		 E extends Exception & Serializable> List<N>
 			 typeParametersAndMultipleBoundsMethod(
 			 	java.util.function.BiFunction<Long, N, E> biFunction,
 			 	java.util.function.BiConsumer<Long, N> biConsumer) {
@@ -91,29 +90,9 @@ public class GenericMethodsEntryLocalServiceUtil {
 	}
 
 	public static GenericMethodsEntryLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<GenericMethodsEntryLocalService, GenericMethodsEntryLocalService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			GenericMethodsEntryLocalService.class);
-
-		ServiceTracker
-			<GenericMethodsEntryLocalService, GenericMethodsEntryLocalService>
-				serviceTracker =
-					new ServiceTracker
-						<GenericMethodsEntryLocalService,
-						 GenericMethodsEntryLocalService>(
-							 bundle.getBundleContext(),
-							 GenericMethodsEntryLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile GenericMethodsEntryLocalService _service;
 
 }

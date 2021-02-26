@@ -14,9 +14,11 @@
 
 package com.liferay.commerce.tax.engine.fixed.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for CommerceTaxFixedRateAddressRel. This utility wraps
@@ -37,13 +39,12 @@ public class CommerceTaxFixedRateAddressRelServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.tax.engine.fixed.service.impl.CommerceTaxFixedRateAddressRelServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static
-		com.liferay.commerce.tax.engine.fixed.model.
-			CommerceTaxFixedRateAddressRel addCommerceTaxFixedRateAddressRel(
-					long userId, long groupId, long commerceTaxMethodId,
-					long cpTaxCategoryId, long commerceCountryId,
-					long commerceRegionId, String zip, double rate)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceTaxFixedRateAddressRel
+			addCommerceTaxFixedRateAddressRel(
+				long userId, long groupId, long commerceTaxMethodId,
+				long cpTaxCategoryId, long commerceCountryId,
+				long commerceRegionId, String zip, double rate)
+		throws PortalException {
 
 		return getService().addCommerceTaxFixedRateAddressRel(
 			userId, groupId, commerceTaxMethodId, cpTaxCategoryId,
@@ -54,15 +55,13 @@ public class CommerceTaxFixedRateAddressRelServiceUtil {
 	 * @deprecated As of Athanasius (7.3.x)
 	 */
 	@Deprecated
-	public static
-		com.liferay.commerce.tax.engine.fixed.model.
-			CommerceTaxFixedRateAddressRel addCommerceTaxFixedRateAddressRel(
-					long commerceTaxMethodId, long cpTaxCategoryId,
-					long commerceCountryId, long commerceRegionId, String zip,
-					double rate,
-					com.liferay.portal.kernel.service.ServiceContext
-						serviceContext)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceTaxFixedRateAddressRel
+			addCommerceTaxFixedRateAddressRel(
+				long commerceTaxMethodId, long cpTaxCategoryId,
+				long commerceCountryId, long commerceRegionId, String zip,
+				double rate,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCommerceTaxFixedRateAddressRel(
 			commerceTaxMethodId, cpTaxCategoryId, commerceCountryId,
@@ -71,33 +70,27 @@ public class CommerceTaxFixedRateAddressRelServiceUtil {
 
 	public static void deleteCommerceTaxFixedRateAddressRel(
 			long commerceTaxFixedRateAddressRelId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommerceTaxFixedRateAddressRel(
 			commerceTaxFixedRateAddressRelId);
 	}
 
-	public static
-		com.liferay.commerce.tax.engine.fixed.model.
-			CommerceTaxFixedRateAddressRel fetchCommerceTaxFixedRateAddressRel(
-					long commerceTaxFixedRateAddressRelId)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceTaxFixedRateAddressRel
+			fetchCommerceTaxFixedRateAddressRel(
+				long commerceTaxFixedRateAddressRelId)
+		throws PortalException {
 
 		return getService().fetchCommerceTaxFixedRateAddressRel(
 			commerceTaxFixedRateAddressRelId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.tax.engine.fixed.model.
-			CommerceTaxFixedRateAddressRel>
-					getCommerceTaxMethodFixedRateAddressRels(
-						long groupId, long commerceTaxMethodId, int start,
-						int end,
-						com.liferay.portal.kernel.util.OrderByComparator
-							<com.liferay.commerce.tax.engine.fixed.model.
-								CommerceTaxFixedRateAddressRel>
-									orderByComparator)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommerceTaxFixedRateAddressRel>
+			getCommerceTaxMethodFixedRateAddressRels(
+				long groupId, long commerceTaxMethodId, int start, int end,
+				OrderByComparator<CommerceTaxFixedRateAddressRel>
+					orderByComparator)
+		throws PortalException {
 
 		return getService().getCommerceTaxMethodFixedRateAddressRels(
 			groupId, commerceTaxMethodId, start, end, orderByComparator);
@@ -105,7 +98,7 @@ public class CommerceTaxFixedRateAddressRelServiceUtil {
 
 	public static int getCommerceTaxMethodFixedRateAddressRelsCount(
 			long groupId, long commerceTaxMethodId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCommerceTaxMethodFixedRateAddressRelsCount(
 			groupId, commerceTaxMethodId);
@@ -120,13 +113,11 @@ public class CommerceTaxFixedRateAddressRelServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static
-		com.liferay.commerce.tax.engine.fixed.model.
-			CommerceTaxFixedRateAddressRel updateCommerceTaxFixedRateAddressRel(
-					long commerceTaxFixedRateAddressRelId,
-					long commerceCountryId, long commerceRegionId, String zip,
-					double rate)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceTaxFixedRateAddressRel
+			updateCommerceTaxFixedRateAddressRel(
+				long commerceTaxFixedRateAddressRelId, long commerceCountryId,
+				long commerceRegionId, String zip, double rate)
+		throws PortalException {
 
 		return getService().updateCommerceTaxFixedRateAddressRel(
 			commerceTaxFixedRateAddressRelId, commerceCountryId,
@@ -134,29 +125,9 @@ public class CommerceTaxFixedRateAddressRelServiceUtil {
 	}
 
 	public static CommerceTaxFixedRateAddressRelService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceTaxFixedRateAddressRelService,
-		 CommerceTaxFixedRateAddressRelService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommerceTaxFixedRateAddressRelService.class);
-
-		ServiceTracker
-			<CommerceTaxFixedRateAddressRelService,
-			 CommerceTaxFixedRateAddressRelService> serviceTracker =
-				new ServiceTracker
-					<CommerceTaxFixedRateAddressRelService,
-					 CommerceTaxFixedRateAddressRelService>(
-						 bundle.getBundleContext(),
-						 CommerceTaxFixedRateAddressRelService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceTaxFixedRateAddressRelService _service;
 
 }

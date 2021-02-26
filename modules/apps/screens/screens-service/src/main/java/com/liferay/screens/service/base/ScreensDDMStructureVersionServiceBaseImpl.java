@@ -25,9 +25,13 @@ import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.screens.service.ScreensDDMStructureVersionService;
+import com.liferay.screens.service.ScreensDDMStructureVersionServiceUtil;
+
+import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
 
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -49,8 +53,13 @@ public abstract class ScreensDDMStructureVersionServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>ScreensDDMStructureVersionService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.screens.service.ScreensDDMStructureVersionServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>ScreensDDMStructureVersionService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>ScreensDDMStructureVersionServiceUtil</code>.
 	 */
+	@Deactivate
+	protected void deactivate() {
+		_setServiceUtilService(null);
+	}
+
 	@Override
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
@@ -63,6 +72,8 @@ public abstract class ScreensDDMStructureVersionServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		screensDDMStructureVersionService =
 			(ScreensDDMStructureVersionService)aopProxy;
+
+		_setServiceUtilService(screensDDMStructureVersionService);
 	}
 
 	/**
@@ -96,6 +107,23 @@ public abstract class ScreensDDMStructureVersionServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setServiceUtilService(
+		ScreensDDMStructureVersionService screensDDMStructureVersionService) {
+
+		try {
+			Field field =
+				ScreensDDMStructureVersionServiceUtil.class.getDeclaredField(
+					"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, screensDDMStructureVersionService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

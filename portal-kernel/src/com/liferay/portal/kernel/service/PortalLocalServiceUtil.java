@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-
 /**
  * Provides the local service utility for Portal. This utility wraps
  * <code>com.liferay.portal.service.impl.PortalLocalServiceImpl</code> and
@@ -41,19 +39,14 @@ public class PortalLocalServiceUtil {
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static String getOSGiServiceIdentifier() {
+	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static PortalLocalService getService() {
-		if (_service == null) {
-			_service = (PortalLocalService)PortalBeanLocatorUtil.locate(
-				PortalLocalService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static PortalLocalService _service;
+	private static volatile PortalLocalService _service;
 
 }

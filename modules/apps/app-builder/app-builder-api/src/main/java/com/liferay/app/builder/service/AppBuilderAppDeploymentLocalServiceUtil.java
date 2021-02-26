@@ -14,9 +14,16 @@
 
 package com.liferay.app.builder.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.app.builder.model.AppBuilderAppDeployment;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for AppBuilderAppDeployment. This utility wraps
@@ -48,17 +55,14 @@ public class AppBuilderAppDeploymentLocalServiceUtil {
 	 * @param appBuilderAppDeployment the app builder app deployment
 	 * @return the app builder app deployment that was added
 	 */
-	public static com.liferay.app.builder.model.AppBuilderAppDeployment
-		addAppBuilderAppDeployment(
-			com.liferay.app.builder.model.AppBuilderAppDeployment
-				appBuilderAppDeployment) {
+	public static AppBuilderAppDeployment addAppBuilderAppDeployment(
+		AppBuilderAppDeployment appBuilderAppDeployment) {
 
 		return getService().addAppBuilderAppDeployment(appBuilderAppDeployment);
 	}
 
-	public static com.liferay.app.builder.model.AppBuilderAppDeployment
-		addAppBuilderAppDeployment(
-			long appBuilderAppId, String settings, String type) {
+	public static AppBuilderAppDeployment addAppBuilderAppDeployment(
+		long appBuilderAppId, String settings, String type) {
 
 		return getService().addAppBuilderAppDeployment(
 			appBuilderAppId, settings, type);
@@ -70,8 +74,8 @@ public class AppBuilderAppDeploymentLocalServiceUtil {
 	 * @param appBuilderAppDeploymentId the primary key for the new app builder app deployment
 	 * @return the new app builder app deployment
 	 */
-	public static com.liferay.app.builder.model.AppBuilderAppDeployment
-		createAppBuilderAppDeployment(long appBuilderAppDeploymentId) {
+	public static AppBuilderAppDeployment createAppBuilderAppDeployment(
+		long appBuilderAppDeploymentId) {
 
 		return getService().createAppBuilderAppDeployment(
 			appBuilderAppDeploymentId);
@@ -80,9 +84,9 @@ public class AppBuilderAppDeploymentLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -97,10 +101,8 @@ public class AppBuilderAppDeploymentLocalServiceUtil {
 	 * @param appBuilderAppDeployment the app builder app deployment
 	 * @return the app builder app deployment that was removed
 	 */
-	public static com.liferay.app.builder.model.AppBuilderAppDeployment
-		deleteAppBuilderAppDeployment(
-			com.liferay.app.builder.model.AppBuilderAppDeployment
-				appBuilderAppDeployment) {
+	public static AppBuilderAppDeployment deleteAppBuilderAppDeployment(
+		AppBuilderAppDeployment appBuilderAppDeployment) {
 
 		return getService().deleteAppBuilderAppDeployment(
 			appBuilderAppDeployment);
@@ -117,9 +119,9 @@ public class AppBuilderAppDeploymentLocalServiceUtil {
 	 * @return the app builder app deployment that was removed
 	 * @throws PortalException if a app builder app deployment with the primary key could not be found
 	 */
-	public static com.liferay.app.builder.model.AppBuilderAppDeployment
-			deleteAppBuilderAppDeployment(long appBuilderAppDeploymentId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AppBuilderAppDeployment deleteAppBuilderAppDeployment(
+			long appBuilderAppDeploymentId)
+		throws PortalException {
 
 		return getService().deleteAppBuilderAppDeployment(
 			appBuilderAppDeploymentId);
@@ -128,23 +130,18 @@ public class AppBuilderAppDeploymentLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -154,9 +151,7 @@ public class AppBuilderAppDeploymentLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -172,9 +167,8 @@ public class AppBuilderAppDeploymentLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -192,10 +186,9 @@ public class AppBuilderAppDeploymentLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -207,9 +200,7 @@ public class AppBuilderAppDeploymentLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -221,14 +212,14 @@ public class AppBuilderAppDeploymentLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.app.builder.model.AppBuilderAppDeployment
-		fetchAppBuilderAppDeployment(long appBuilderAppDeploymentId) {
+	public static AppBuilderAppDeployment fetchAppBuilderAppDeployment(
+		long appBuilderAppDeploymentId) {
 
 		return getService().fetchAppBuilderAppDeployment(
 			appBuilderAppDeploymentId);
@@ -247,17 +238,17 @@ public class AppBuilderAppDeploymentLocalServiceUtil {
 	 * @return the app builder app deployment
 	 * @throws PortalException if a app builder app deployment with the primary key could not be found
 	 */
-	public static com.liferay.app.builder.model.AppBuilderAppDeployment
-			getAppBuilderAppDeployment(long appBuilderAppDeploymentId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AppBuilderAppDeployment getAppBuilderAppDeployment(
+			long appBuilderAppDeploymentId)
+		throws PortalException {
 
 		return getService().getAppBuilderAppDeployment(
 			appBuilderAppDeploymentId);
 	}
 
-	public static com.liferay.app.builder.model.AppBuilderAppDeployment
-			getAppBuilderAppDeployment(long appBuilderAppId, String type)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AppBuilderAppDeployment getAppBuilderAppDeployment(
+			long appBuilderAppId, String type)
+		throws PortalException {
 
 		return getService().getAppBuilderAppDeployment(appBuilderAppId, type);
 	}
@@ -273,16 +264,14 @@ public class AppBuilderAppDeploymentLocalServiceUtil {
 	 * @param end the upper bound of the range of app builder app deployments (not inclusive)
 	 * @return the range of app builder app deployments
 	 */
-	public static java.util.List
-		<com.liferay.app.builder.model.AppBuilderAppDeployment>
-			getAppBuilderAppDeployments(int start, int end) {
+	public static List<AppBuilderAppDeployment> getAppBuilderAppDeployments(
+		int start, int end) {
 
 		return getService().getAppBuilderAppDeployments(start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.app.builder.model.AppBuilderAppDeployment>
-			getAppBuilderAppDeployments(long appBuilderAppId) {
+	public static List<AppBuilderAppDeployment> getAppBuilderAppDeployments(
+		long appBuilderAppId) {
 
 		return getService().getAppBuilderAppDeployments(appBuilderAppId);
 	}
@@ -315,9 +304,8 @@ public class AppBuilderAppDeploymentLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -332,39 +320,17 @@ public class AppBuilderAppDeploymentLocalServiceUtil {
 	 * @param appBuilderAppDeployment the app builder app deployment
 	 * @return the app builder app deployment that was updated
 	 */
-	public static com.liferay.app.builder.model.AppBuilderAppDeployment
-		updateAppBuilderAppDeployment(
-			com.liferay.app.builder.model.AppBuilderAppDeployment
-				appBuilderAppDeployment) {
+	public static AppBuilderAppDeployment updateAppBuilderAppDeployment(
+		AppBuilderAppDeployment appBuilderAppDeployment) {
 
 		return getService().updateAppBuilderAppDeployment(
 			appBuilderAppDeployment);
 	}
 
 	public static AppBuilderAppDeploymentLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<AppBuilderAppDeploymentLocalService,
-		 AppBuilderAppDeploymentLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			AppBuilderAppDeploymentLocalService.class);
-
-		ServiceTracker
-			<AppBuilderAppDeploymentLocalService,
-			 AppBuilderAppDeploymentLocalService> serviceTracker =
-				new ServiceTracker
-					<AppBuilderAppDeploymentLocalService,
-					 AppBuilderAppDeploymentLocalService>(
-						 bundle.getBundleContext(),
-						 AppBuilderAppDeploymentLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile AppBuilderAppDeploymentLocalService _service;
 
 }

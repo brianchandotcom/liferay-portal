@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * Provides the remote service utility for UserGroupGroupRole. This utility wraps
@@ -37,28 +37,28 @@ public class UserGroupGroupRoleServiceUtil {
 	 */
 	public static void addUserGroupGroupRoles(
 			long userGroupId, long groupId, long[] roleIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().addUserGroupGroupRoles(userGroupId, groupId, roleIds);
 	}
 
 	public static void addUserGroupGroupRoles(
 			long[] userGroupIds, long groupId, long roleId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().addUserGroupGroupRoles(userGroupIds, groupId, roleId);
 	}
 
 	public static void deleteUserGroupGroupRoles(
 			long userGroupId, long groupId, long[] roleIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteUserGroupGroupRoles(userGroupId, groupId, roleIds);
 	}
 
 	public static void deleteUserGroupGroupRoles(
 			long[] userGroupIds, long groupId, long roleId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteUserGroupGroupRoles(userGroupIds, groupId, roleId);
 	}
@@ -73,14 +73,9 @@ public class UserGroupGroupRoleServiceUtil {
 	}
 
 	public static UserGroupGroupRoleService getService() {
-		if (_service == null) {
-			_service = (UserGroupGroupRoleService)PortalBeanLocatorUtil.locate(
-				UserGroupGroupRoleService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static UserGroupGroupRoleService _service;
+	private static volatile UserGroupGroupRoleService _service;
 
 }

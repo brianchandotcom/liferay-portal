@@ -14,7 +14,16 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.VirtualHost;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for VirtualHost. This utility wraps
@@ -46,18 +55,16 @@ public class VirtualHostLocalServiceUtil {
 	 * @param virtualHost the virtual host
 	 * @return the virtual host that was added
 	 */
-	public static com.liferay.portal.kernel.model.VirtualHost addVirtualHost(
-		com.liferay.portal.kernel.model.VirtualHost virtualHost) {
-
+	public static VirtualHost addVirtualHost(VirtualHost virtualHost) {
 		return getService().addVirtualHost(virtualHost);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -68,19 +75,16 @@ public class VirtualHostLocalServiceUtil {
 	 * @param virtualHostId the primary key for the new virtual host
 	 * @return the new virtual host
 	 */
-	public static com.liferay.portal.kernel.model.VirtualHost createVirtualHost(
-		long virtualHostId) {
-
+	public static VirtualHost createVirtualHost(long virtualHostId) {
 		return getService().createVirtualHost(virtualHostId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
@@ -96,9 +100,8 @@ public class VirtualHostLocalServiceUtil {
 	 * @return the virtual host that was removed
 	 * @throws PortalException if a virtual host with the primary key could not be found
 	 */
-	public static com.liferay.portal.kernel.model.VirtualHost deleteVirtualHost(
-			long virtualHostId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static VirtualHost deleteVirtualHost(long virtualHostId)
+		throws PortalException {
 
 		return getService().deleteVirtualHost(virtualHostId);
 	}
@@ -113,21 +116,15 @@ public class VirtualHostLocalServiceUtil {
 	 * @param virtualHost the virtual host
 	 * @return the virtual host that was removed
 	 */
-	public static com.liferay.portal.kernel.model.VirtualHost deleteVirtualHost(
-		com.liferay.portal.kernel.model.VirtualHost virtualHost) {
-
+	public static VirtualHost deleteVirtualHost(VirtualHost virtualHost) {
 		return getService().deleteVirtualHost(virtualHost);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -137,9 +134,7 @@ public class VirtualHostLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -155,9 +150,8 @@ public class VirtualHostLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -175,10 +169,9 @@ public class VirtualHostLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -190,9 +183,7 @@ public class VirtualHostLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -204,15 +195,13 @@ public class VirtualHostLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.portal.kernel.model.VirtualHost fetchVirtualHost(
-		long virtualHostId) {
-
+	public static VirtualHost fetchVirtualHost(long virtualHostId) {
 		return getService().fetchVirtualHost(virtualHostId);
 	}
 
@@ -221,15 +210,13 @@ public class VirtualHostLocalServiceUtil {
 	 #getVirtualHosts(long, long)}
 	 */
 	@Deprecated
-	public static com.liferay.portal.kernel.model.VirtualHost fetchVirtualHost(
+	public static VirtualHost fetchVirtualHost(
 		long companyId, long layoutSetId) {
 
 		return getService().fetchVirtualHost(companyId, layoutSetId);
 	}
 
-	public static com.liferay.portal.kernel.model.VirtualHost fetchVirtualHost(
-		String hostname) {
-
+	public static VirtualHost fetchVirtualHost(String hostname) {
 		return getService().fetchVirtualHost(hostname);
 	}
 
@@ -258,9 +245,8 @@ public class VirtualHostLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -272,9 +258,8 @@ public class VirtualHostLocalServiceUtil {
 	 * @return the virtual host
 	 * @throws PortalException if a virtual host with the primary key could not be found
 	 */
-	public static com.liferay.portal.kernel.model.VirtualHost getVirtualHost(
-			long virtualHostId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static VirtualHost getVirtualHost(long virtualHostId)
+		throws PortalException {
 
 		return getService().getVirtualHost(virtualHostId);
 	}
@@ -284,16 +269,14 @@ public class VirtualHostLocalServiceUtil {
 	 #getVirtualHosts(long, long)}
 	 */
 	@Deprecated
-	public static com.liferay.portal.kernel.model.VirtualHost getVirtualHost(
-			long companyId, long layoutSetId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static VirtualHost getVirtualHost(long companyId, long layoutSetId)
+		throws PortalException {
 
 		return getService().getVirtualHost(companyId, layoutSetId);
 	}
 
-	public static com.liferay.portal.kernel.model.VirtualHost getVirtualHost(
-			String hostname)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static VirtualHost getVirtualHost(String hostname)
+		throws PortalException {
 
 		return getService().getVirtualHost(hostname);
 	}
@@ -309,15 +292,13 @@ public class VirtualHostLocalServiceUtil {
 	 * @param end the upper bound of the range of virtual hosts (not inclusive)
 	 * @return the range of virtual hosts
 	 */
-	public static java.util.List<com.liferay.portal.kernel.model.VirtualHost>
-		getVirtualHosts(int start, int end) {
-
+	public static List<VirtualHost> getVirtualHosts(int start, int end) {
 		return getService().getVirtualHosts(start, end);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.VirtualHost>
-			getVirtualHosts(long companyId, long layoutSetId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<VirtualHost> getVirtualHosts(
+			long companyId, long layoutSetId)
+		throws PortalException {
 
 		return getService().getVirtualHosts(companyId, layoutSetId);
 	}
@@ -336,7 +317,7 @@ public class VirtualHostLocalServiceUtil {
 	 #updateVirtualHosts(long, long, TreeMap)}
 	 */
 	@Deprecated
-	public static com.liferay.portal.kernel.model.VirtualHost updateVirtualHost(
+	public static VirtualHost updateVirtualHost(
 		long companyId, long layoutSetId, String hostname) {
 
 		return getService().updateVirtualHost(companyId, layoutSetId, hostname);
@@ -352,30 +333,22 @@ public class VirtualHostLocalServiceUtil {
 	 * @param virtualHost the virtual host
 	 * @return the virtual host that was updated
 	 */
-	public static com.liferay.portal.kernel.model.VirtualHost updateVirtualHost(
-		com.liferay.portal.kernel.model.VirtualHost virtualHost) {
-
+	public static VirtualHost updateVirtualHost(VirtualHost virtualHost) {
 		return getService().updateVirtualHost(virtualHost);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.VirtualHost>
-		updateVirtualHosts(
-			long companyId, long layoutSetId,
-			java.util.TreeMap<String, String> hostnames) {
+	public static List<VirtualHost> updateVirtualHosts(
+		long companyId, long layoutSetId,
+		java.util.TreeMap<String, String> hostnames) {
 
 		return getService().updateVirtualHosts(
 			companyId, layoutSetId, hostnames);
 	}
 
 	public static VirtualHostLocalService getService() {
-		if (_service == null) {
-			_service = (VirtualHostLocalService)PortalBeanLocatorUtil.locate(
-				VirtualHostLocalService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static VirtualHostLocalService _service;
+	private static volatile VirtualHostLocalService _service;
 
 }

@@ -30,8 +30,11 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.social.kernel.service.persistence.SocialActivityPersistence;
 import com.liferay.tasks.model.TasksEntry;
 import com.liferay.tasks.service.TasksEntryService;
+import com.liferay.tasks.service.TasksEntryServiceUtil;
 import com.liferay.tasks.service.persistence.TasksEntryFinder;
 import com.liferay.tasks.service.persistence.TasksEntryPersistence;
+
+import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
 
@@ -53,7 +56,7 @@ public abstract class TasksEntryServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>TasksEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.tasks.service.TasksEntryServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>TasksEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>TasksEntryServiceUtil</code>.
 	 */
 
 	/**
@@ -485,9 +488,11 @@ public abstract class TasksEntryServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
+		_setServiceUtilService(tasksEntryService);
 	}
 
 	public void destroy() {
+		_setServiceUtilService(null);
 	}
 
 	/**
@@ -529,6 +534,20 @@ public abstract class TasksEntryServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setServiceUtilService(TasksEntryService tasksEntryService) {
+		try {
+			Field field = TasksEntryServiceUtil.class.getDeclaredField(
+				"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, tasksEntryService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

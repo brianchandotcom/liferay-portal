@@ -16,6 +16,7 @@ package com.liferay.commerce.machine.learning.forecast.alert.service.base;
 
 import com.liferay.commerce.machine.learning.forecast.alert.model.CommerceMLForecastAlertEntry;
 import com.liferay.commerce.machine.learning.forecast.alert.service.CommerceMLForecastAlertEntryLocalService;
+import com.liferay.commerce.machine.learning.forecast.alert.service.CommerceMLForecastAlertEntryLocalServiceUtil;
 import com.liferay.commerce.machine.learning.forecast.alert.service.persistence.CommerceMLForecastAlertEntryPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -53,6 +54,8 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -76,7 +79,7 @@ public abstract class CommerceMLForecastAlertEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceMLForecastAlertEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.machine.learning.forecast.alert.service.CommerceMLForecastAlertEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceMLForecastAlertEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceMLForecastAlertEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -693,11 +696,15 @@ public abstract class CommerceMLForecastAlertEntryLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry.register(
 			"com.liferay.commerce.machine.learning.forecast.alert.model.CommerceMLForecastAlertEntry",
 			commerceMLForecastAlertEntryLocalService);
+
+		_setLocalServiceUtilService(commerceMLForecastAlertEntryLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.commerce.machine.learning.forecast.alert.model.CommerceMLForecastAlertEntry");
+
+		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -740,6 +747,24 @@ public abstract class CommerceMLForecastAlertEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		CommerceMLForecastAlertEntryLocalService
+			commerceMLForecastAlertEntryLocalService) {
+
+		try {
+			Field field =
+				CommerceMLForecastAlertEntryLocalServiceUtil.class.
+					getDeclaredField("_service");
+
+			field.setAccessible(true);
+
+			field.set(null, commerceMLForecastAlertEntryLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

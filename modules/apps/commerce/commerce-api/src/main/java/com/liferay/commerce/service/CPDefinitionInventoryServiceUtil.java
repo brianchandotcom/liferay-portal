@@ -14,9 +14,8 @@
 
 package com.liferay.commerce.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.model.CPDefinitionInventory;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * Provides the remote service utility for CPDefinitionInventory. This utility wraps
@@ -37,15 +36,14 @@ public class CPDefinitionInventoryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.service.impl.CPDefinitionInventoryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.commerce.model.CPDefinitionInventory
-			addCPDefinitionInventory(
-				long userId, long cpDefinitionId,
-				String cpDefinitionInventoryEngine, String lowStockActivity,
-				boolean displayAvailability, boolean displayStockQuantity,
-				int minStockQuantity, boolean backOrders, int minOrderQuantity,
-				int maxOrderQuantity, String allowedOrderQuantities,
-				int multipleOrderQuantity)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPDefinitionInventory addCPDefinitionInventory(
+			long userId, long cpDefinitionId,
+			String cpDefinitionInventoryEngine, String lowStockActivity,
+			boolean displayAvailability, boolean displayStockQuantity,
+			int minStockQuantity, boolean backOrders, int minOrderQuantity,
+			int maxOrderQuantity, String allowedOrderQuantities,
+			int multipleOrderQuantity)
+		throws PortalException {
 
 		return getService().addCPDefinitionInventory(
 			userId, cpDefinitionId, cpDefinitionInventoryEngine,
@@ -55,14 +53,14 @@ public class CPDefinitionInventoryServiceUtil {
 	}
 
 	public static void deleteCPDefinitionInventory(long cpDefinitionInventoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCPDefinitionInventory(cpDefinitionInventoryId);
 	}
 
-	public static com.liferay.commerce.model.CPDefinitionInventory
+	public static CPDefinitionInventory
 			fetchCPDefinitionInventoryByCPDefinitionId(long cpDefinitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().fetchCPDefinitionInventoryByCPDefinitionId(
 			cpDefinitionId);
@@ -81,15 +79,14 @@ public class CPDefinitionInventoryServiceUtil {
 	 * @deprecated As of Athanasius (7.3.x)
 	 */
 	@Deprecated
-	public static com.liferay.commerce.model.CPDefinitionInventory
-			updateCPDefinitionInventory(
-				long groupId, long cpDefinitionInventoryId,
-				String cpDefinitionInventoryEngine, String lowStockActivity,
-				boolean displayAvailability, boolean displayStockQuantity,
-				int minStockQuantity, boolean backOrders, int minOrderQuantity,
-				int maxOrderQuantity, String allowedOrderQuantities,
-				int multipleOrderQuantity)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPDefinitionInventory updateCPDefinitionInventory(
+			long groupId, long cpDefinitionInventoryId,
+			String cpDefinitionInventoryEngine, String lowStockActivity,
+			boolean displayAvailability, boolean displayStockQuantity,
+			int minStockQuantity, boolean backOrders, int minOrderQuantity,
+			int maxOrderQuantity, String allowedOrderQuantities,
+			int multipleOrderQuantity)
+		throws PortalException {
 
 		return getService().updateCPDefinitionInventory(
 			groupId, cpDefinitionInventoryId, cpDefinitionInventoryEngine,
@@ -98,15 +95,13 @@ public class CPDefinitionInventoryServiceUtil {
 			allowedOrderQuantities, multipleOrderQuantity);
 	}
 
-	public static com.liferay.commerce.model.CPDefinitionInventory
-			updateCPDefinitionInventory(
-				long cpDefinitionInventoryId,
-				String cpDefinitionInventoryEngine, String lowStockActivity,
-				boolean displayAvailability, boolean displayStockQuantity,
-				int minStockQuantity, boolean backOrders, int minOrderQuantity,
-				int maxOrderQuantity, String allowedOrderQuantities,
-				int multipleOrderQuantity)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPDefinitionInventory updateCPDefinitionInventory(
+			long cpDefinitionInventoryId, String cpDefinitionInventoryEngine,
+			String lowStockActivity, boolean displayAvailability,
+			boolean displayStockQuantity, int minStockQuantity,
+			boolean backOrders, int minOrderQuantity, int maxOrderQuantity,
+			String allowedOrderQuantities, int multipleOrderQuantity)
+		throws PortalException {
 
 		return getService().updateCPDefinitionInventory(
 			cpDefinitionInventoryId, cpDefinitionInventoryEngine,
@@ -116,29 +111,9 @@ public class CPDefinitionInventoryServiceUtil {
 	}
 
 	public static CPDefinitionInventoryService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CPDefinitionInventoryService, CPDefinitionInventoryService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CPDefinitionInventoryService.class);
-
-		ServiceTracker
-			<CPDefinitionInventoryService, CPDefinitionInventoryService>
-				serviceTracker =
-					new ServiceTracker
-						<CPDefinitionInventoryService,
-						 CPDefinitionInventoryService>(
-							 bundle.getBundleContext(),
-							 CPDefinitionInventoryService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CPDefinitionInventoryService _service;
 
 }

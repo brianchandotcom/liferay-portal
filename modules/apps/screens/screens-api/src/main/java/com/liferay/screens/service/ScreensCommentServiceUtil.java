@@ -14,9 +14,7 @@
 
 package com.liferay.screens.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * Provides the remote service utility for ScreensComment. This utility wraps
@@ -39,27 +37,27 @@ public class ScreensCommentServiceUtil {
 	 */
 	public static com.liferay.portal.kernel.json.JSONObject addComment(
 			String className, long classPK, String body)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addComment(className, classPK, body);
 	}
 
 	public static com.liferay.portal.kernel.json.JSONObject getComment(
 			long commentId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getComment(commentId);
 	}
 
 	public static com.liferay.portal.kernel.json.JSONArray getComments(
 			String className, long classPK, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getComments(className, classPK, start, end);
 	}
 
 	public static int getCommentsCount(String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCommentsCount(className, classPK);
 	}
@@ -75,31 +73,15 @@ public class ScreensCommentServiceUtil {
 
 	public static com.liferay.portal.kernel.json.JSONObject updateComment(
 			long commentId, String body)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateComment(commentId, body);
 	}
 
 	public static ScreensCommentService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<ScreensCommentService, ScreensCommentService>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(ScreensCommentService.class);
-
-		ServiceTracker<ScreensCommentService, ScreensCommentService>
-			serviceTracker =
-				new ServiceTracker
-					<ScreensCommentService, ScreensCommentService>(
-						bundle.getBundleContext(), ScreensCommentService.class,
-						null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile ScreensCommentService _service;
 
 }

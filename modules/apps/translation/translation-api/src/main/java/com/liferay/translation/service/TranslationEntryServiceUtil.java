@@ -14,9 +14,8 @@
 
 package com.liferay.translation.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.translation.model.TranslationEntry;
 
 /**
  * Provides the remote service utility for TranslationEntry. This utility wraps
@@ -37,34 +36,32 @@ public class TranslationEntryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.translation.service.impl.TranslationEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.translation.model.TranslationEntry
-			addOrUpdateTranslationEntry(
-				long groupId,
-				com.liferay.info.item.InfoItemReference infoItemReference,
-				String content, String contentType,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static TranslationEntry addOrUpdateTranslationEntry(
+			long groupId,
+			com.liferay.info.item.InfoItemReference infoItemReference,
+			String content, String contentType,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addOrUpdateTranslationEntry(
 			groupId, infoItemReference, content, contentType, serviceContext);
 	}
 
-	public static com.liferay.translation.model.TranslationEntry
-			addOrUpdateTranslationEntry(
-				long groupId, String languageId,
-				com.liferay.info.item.InfoItemReference infoItemReference,
-				com.liferay.info.item.InfoItemFieldValues infoItemFieldValues,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static TranslationEntry addOrUpdateTranslationEntry(
+			long groupId, String languageId,
+			com.liferay.info.item.InfoItemReference infoItemReference,
+			com.liferay.info.item.InfoItemFieldValues infoItemFieldValues,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addOrUpdateTranslationEntry(
 			groupId, languageId, infoItemReference, infoItemFieldValues,
 			serviceContext);
 	}
 
-	public static com.liferay.translation.model.TranslationEntry
-			deleteTranslationEntry(long translationEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static TranslationEntry deleteTranslationEntry(
+			long translationEntryId)
+		throws PortalException {
 
 		return getService().deleteTranslationEntry(translationEntryId);
 	}
@@ -79,25 +76,9 @@ public class TranslationEntryServiceUtil {
 	}
 
 	public static TranslationEntryService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<TranslationEntryService, TranslationEntryService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(TranslationEntryService.class);
-
-		ServiceTracker<TranslationEntryService, TranslationEntryService>
-			serviceTracker =
-				new ServiceTracker
-					<TranslationEntryService, TranslationEntryService>(
-						bundle.getBundleContext(),
-						TranslationEntryService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile TranslationEntryService _service;
 
 }

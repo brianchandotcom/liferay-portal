@@ -14,9 +14,16 @@
 
 package com.liferay.commerce.inventory.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for CommerceInventoryReplenishmentItem. This utility wraps
@@ -48,23 +55,20 @@ public class CommerceInventoryReplenishmentItemLocalServiceUtil {
 	 * @param commerceInventoryReplenishmentItem the commerce inventory replenishment item
 	 * @return the commerce inventory replenishment item that was added
 	 */
-	public static
-		com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem
-			addCommerceInventoryReplenishmentItem(
-				com.liferay.commerce.inventory.model.
-					CommerceInventoryReplenishmentItem
-						commerceInventoryReplenishmentItem) {
+	public static CommerceInventoryReplenishmentItem
+		addCommerceInventoryReplenishmentItem(
+			CommerceInventoryReplenishmentItem
+				commerceInventoryReplenishmentItem) {
 
 		return getService().addCommerceInventoryReplenishmentItem(
 			commerceInventoryReplenishmentItem);
 	}
 
-	public static
-		com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem
-				addCommerceInventoryReplenishmentItem(
-					long userId, long commerceInventoryWarehouseId, String sku,
-					java.util.Date availabilityDate, int quantity)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceInventoryReplenishmentItem
+			addCommerceInventoryReplenishmentItem(
+				long userId, long commerceInventoryWarehouseId, String sku,
+				java.util.Date availabilityDate, int quantity)
+		throws PortalException {
 
 		return getService().addCommerceInventoryReplenishmentItem(
 			userId, commerceInventoryWarehouseId, sku, availabilityDate,
@@ -77,10 +81,9 @@ public class CommerceInventoryReplenishmentItemLocalServiceUtil {
 	 * @param commerceInventoryReplenishmentItemId the primary key for the new commerce inventory replenishment item
 	 * @return the new commerce inventory replenishment item
 	 */
-	public static
-		com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem
-			createCommerceInventoryReplenishmentItem(
-				long commerceInventoryReplenishmentItemId) {
+	public static CommerceInventoryReplenishmentItem
+		createCommerceInventoryReplenishmentItem(
+			long commerceInventoryReplenishmentItemId) {
 
 		return getService().createCommerceInventoryReplenishmentItem(
 			commerceInventoryReplenishmentItemId);
@@ -89,9 +92,9 @@ public class CommerceInventoryReplenishmentItemLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -106,12 +109,10 @@ public class CommerceInventoryReplenishmentItemLocalServiceUtil {
 	 * @param commerceInventoryReplenishmentItem the commerce inventory replenishment item
 	 * @return the commerce inventory replenishment item that was removed
 	 */
-	public static
-		com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem
-			deleteCommerceInventoryReplenishmentItem(
-				com.liferay.commerce.inventory.model.
-					CommerceInventoryReplenishmentItem
-						commerceInventoryReplenishmentItem) {
+	public static CommerceInventoryReplenishmentItem
+		deleteCommerceInventoryReplenishmentItem(
+			CommerceInventoryReplenishmentItem
+				commerceInventoryReplenishmentItem) {
 
 		return getService().deleteCommerceInventoryReplenishmentItem(
 			commerceInventoryReplenishmentItem);
@@ -128,11 +129,10 @@ public class CommerceInventoryReplenishmentItemLocalServiceUtil {
 	 * @return the commerce inventory replenishment item that was removed
 	 * @throws PortalException if a commerce inventory replenishment item with the primary key could not be found
 	 */
-	public static
-		com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem
-				deleteCommerceInventoryReplenishmentItem(
-					long commerceInventoryReplenishmentItemId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceInventoryReplenishmentItem
+			deleteCommerceInventoryReplenishmentItem(
+				long commerceInventoryReplenishmentItemId)
+		throws PortalException {
 
 		return getService().deleteCommerceInventoryReplenishmentItem(
 			commerceInventoryReplenishmentItemId);
@@ -141,23 +141,18 @@ public class CommerceInventoryReplenishmentItemLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -167,9 +162,7 @@ public class CommerceInventoryReplenishmentItemLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -185,9 +178,8 @@ public class CommerceInventoryReplenishmentItemLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -205,10 +197,9 @@ public class CommerceInventoryReplenishmentItemLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -220,9 +211,7 @@ public class CommerceInventoryReplenishmentItemLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -234,16 +223,15 @@ public class CommerceInventoryReplenishmentItemLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static
-		com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem
-			fetchCommerceInventoryReplenishmentItem(
-				long commerceInventoryReplenishmentItemId) {
+	public static CommerceInventoryReplenishmentItem
+		fetchCommerceInventoryReplenishmentItem(
+			long commerceInventoryReplenishmentItemId) {
 
 		return getService().fetchCommerceInventoryReplenishmentItem(
 			commerceInventoryReplenishmentItemId);
@@ -262,11 +250,10 @@ public class CommerceInventoryReplenishmentItemLocalServiceUtil {
 	 * @return the commerce inventory replenishment item
 	 * @throws PortalException if a commerce inventory replenishment item with the primary key could not be found
 	 */
-	public static
-		com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem
-				getCommerceInventoryReplenishmentItem(
-					long commerceInventoryReplenishmentItemId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceInventoryReplenishmentItem
+			getCommerceInventoryReplenishmentItem(
+				long commerceInventoryReplenishmentItemId)
+		throws PortalException {
 
 		return getService().getCommerceInventoryReplenishmentItem(
 			commerceInventoryReplenishmentItemId);
@@ -283,19 +270,15 @@ public class CommerceInventoryReplenishmentItemLocalServiceUtil {
 	 * @param end the upper bound of the range of commerce inventory replenishment items (not inclusive)
 	 * @return the range of commerce inventory replenishment items
 	 */
-	public static java.util.List
-		<com.liferay.commerce.inventory.model.
-			CommerceInventoryReplenishmentItem>
-				getCommerceInventoryReplenishmentItems(int start, int end) {
+	public static List<CommerceInventoryReplenishmentItem>
+		getCommerceInventoryReplenishmentItems(int start, int end) {
 
 		return getService().getCommerceInventoryReplenishmentItems(start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.inventory.model.
-			CommerceInventoryReplenishmentItem>
-				getCommerceInventoryReplenishmentItemsByCompanyIdAndSku(
-					long companyId, String sku, int start, int end) {
+	public static List<CommerceInventoryReplenishmentItem>
+		getCommerceInventoryReplenishmentItemsByCompanyIdAndSku(
+			long companyId, String sku, int start, int end) {
 
 		return getService().
 			getCommerceInventoryReplenishmentItemsByCompanyIdAndSku(
@@ -346,9 +329,8 @@ public class CommerceInventoryReplenishmentItemLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -363,24 +345,20 @@ public class CommerceInventoryReplenishmentItemLocalServiceUtil {
 	 * @param commerceInventoryReplenishmentItem the commerce inventory replenishment item
 	 * @return the commerce inventory replenishment item that was updated
 	 */
-	public static
-		com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem
-			updateCommerceInventoryReplenishmentItem(
-				com.liferay.commerce.inventory.model.
-					CommerceInventoryReplenishmentItem
-						commerceInventoryReplenishmentItem) {
+	public static CommerceInventoryReplenishmentItem
+		updateCommerceInventoryReplenishmentItem(
+			CommerceInventoryReplenishmentItem
+				commerceInventoryReplenishmentItem) {
 
 		return getService().updateCommerceInventoryReplenishmentItem(
 			commerceInventoryReplenishmentItem);
 	}
 
-	public static
-		com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem
-				updateCommerceInventoryReplenishmentItem(
-					long commerceInventoryReplenishmentItemId,
-					java.util.Date availabilityDate, int quantity,
-					long mvccVersion)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceInventoryReplenishmentItem
+			updateCommerceInventoryReplenishmentItem(
+				long commerceInventoryReplenishmentItemId,
+				java.util.Date availabilityDate, int quantity, long mvccVersion)
+		throws PortalException {
 
 		return getService().updateCommerceInventoryReplenishmentItem(
 			commerceInventoryReplenishmentItemId, availabilityDate, quantity,
@@ -388,30 +366,10 @@ public class CommerceInventoryReplenishmentItemLocalServiceUtil {
 	}
 
 	public static CommerceInventoryReplenishmentItemLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceInventoryReplenishmentItemLocalService,
-		 CommerceInventoryReplenishmentItemLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommerceInventoryReplenishmentItemLocalService.class);
-
-		ServiceTracker
-			<CommerceInventoryReplenishmentItemLocalService,
-			 CommerceInventoryReplenishmentItemLocalService> serviceTracker =
-				new ServiceTracker
-					<CommerceInventoryReplenishmentItemLocalService,
-					 CommerceInventoryReplenishmentItemLocalService>(
-						 bundle.getBundleContext(),
-						 CommerceInventoryReplenishmentItemLocalService.class,
-						 null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceInventoryReplenishmentItemLocalService
+		_service;
 
 }

@@ -14,9 +14,16 @@
 
 package com.liferay.dynamic.data.mapping.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstanceReport;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for DDMFormInstanceReport. This utility wraps
@@ -48,17 +55,15 @@ public class DDMFormInstanceReportLocalServiceUtil {
 	 * @param ddmFormInstanceReport the ddm form instance report
 	 * @return the ddm form instance report that was added
 	 */
-	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceReport
-		addDDMFormInstanceReport(
-			com.liferay.dynamic.data.mapping.model.DDMFormInstanceReport
-				ddmFormInstanceReport) {
+	public static DDMFormInstanceReport addDDMFormInstanceReport(
+		DDMFormInstanceReport ddmFormInstanceReport) {
 
 		return getService().addDDMFormInstanceReport(ddmFormInstanceReport);
 	}
 
-	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceReport
-			addFormInstanceReport(long formInstanceId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static DDMFormInstanceReport addFormInstanceReport(
+			long formInstanceId)
+		throws PortalException {
 
 		return getService().addFormInstanceReport(formInstanceId);
 	}
@@ -69,8 +74,8 @@ public class DDMFormInstanceReportLocalServiceUtil {
 	 * @param formInstanceReportId the primary key for the new ddm form instance report
 	 * @return the new ddm form instance report
 	 */
-	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceReport
-		createDDMFormInstanceReport(long formInstanceReportId) {
+	public static DDMFormInstanceReport createDDMFormInstanceReport(
+		long formInstanceReportId) {
 
 		return getService().createDDMFormInstanceReport(formInstanceReportId);
 	}
@@ -78,9 +83,9 @@ public class DDMFormInstanceReportLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -95,10 +100,8 @@ public class DDMFormInstanceReportLocalServiceUtil {
 	 * @param ddmFormInstanceReport the ddm form instance report
 	 * @return the ddm form instance report that was removed
 	 */
-	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceReport
-		deleteDDMFormInstanceReport(
-			com.liferay.dynamic.data.mapping.model.DDMFormInstanceReport
-				ddmFormInstanceReport) {
+	public static DDMFormInstanceReport deleteDDMFormInstanceReport(
+		DDMFormInstanceReport ddmFormInstanceReport) {
 
 		return getService().deleteDDMFormInstanceReport(ddmFormInstanceReport);
 	}
@@ -114,9 +117,9 @@ public class DDMFormInstanceReportLocalServiceUtil {
 	 * @return the ddm form instance report that was removed
 	 * @throws PortalException if a ddm form instance report with the primary key could not be found
 	 */
-	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceReport
-			deleteDDMFormInstanceReport(long formInstanceReportId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static DDMFormInstanceReport deleteDDMFormInstanceReport(
+			long formInstanceReportId)
+		throws PortalException {
 
 		return getService().deleteDDMFormInstanceReport(formInstanceReportId);
 	}
@@ -124,23 +127,18 @@ public class DDMFormInstanceReportLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -150,9 +148,7 @@ public class DDMFormInstanceReportLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -168,9 +164,8 @@ public class DDMFormInstanceReportLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -188,10 +183,9 @@ public class DDMFormInstanceReportLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -203,9 +197,7 @@ public class DDMFormInstanceReportLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -217,14 +209,14 @@ public class DDMFormInstanceReportLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceReport
-		fetchDDMFormInstanceReport(long formInstanceReportId) {
+	public static DDMFormInstanceReport fetchDDMFormInstanceReport(
+		long formInstanceReportId) {
 
 		return getService().fetchDDMFormInstanceReport(formInstanceReportId);
 	}
@@ -242,9 +234,9 @@ public class DDMFormInstanceReportLocalServiceUtil {
 	 * @return the ddm form instance report
 	 * @throws PortalException if a ddm form instance report with the primary key could not be found
 	 */
-	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceReport
-			getDDMFormInstanceReport(long formInstanceReportId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static DDMFormInstanceReport getDDMFormInstanceReport(
+			long formInstanceReportId)
+		throws PortalException {
 
 		return getService().getDDMFormInstanceReport(formInstanceReportId);
 	}
@@ -260,9 +252,8 @@ public class DDMFormInstanceReportLocalServiceUtil {
 	 * @param end the upper bound of the range of ddm form instance reports (not inclusive)
 	 * @return the range of ddm form instance reports
 	 */
-	public static java.util.List
-		<com.liferay.dynamic.data.mapping.model.DDMFormInstanceReport>
-			getDDMFormInstanceReports(int start, int end) {
+	public static List<DDMFormInstanceReport> getDDMFormInstanceReports(
+		int start, int end) {
 
 		return getService().getDDMFormInstanceReports(start, end);
 	}
@@ -276,9 +267,9 @@ public class DDMFormInstanceReportLocalServiceUtil {
 		return getService().getDDMFormInstanceReportsCount();
 	}
 
-	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceReport
-			getFormInstanceReportByFormInstanceId(long formInstanceId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static DDMFormInstanceReport getFormInstanceReportByFormInstanceId(
+			long formInstanceId)
+		throws PortalException {
 
 		return getService().getFormInstanceReportByFormInstanceId(
 			formInstanceId);
@@ -303,9 +294,8 @@ public class DDMFormInstanceReportLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -329,19 +319,16 @@ public class DDMFormInstanceReportLocalServiceUtil {
 	 * @param ddmFormInstanceReport the ddm form instance report
 	 * @return the ddm form instance report that was updated
 	 */
-	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceReport
-		updateDDMFormInstanceReport(
-			com.liferay.dynamic.data.mapping.model.DDMFormInstanceReport
-				ddmFormInstanceReport) {
+	public static DDMFormInstanceReport updateDDMFormInstanceReport(
+		DDMFormInstanceReport ddmFormInstanceReport) {
 
 		return getService().updateDDMFormInstanceReport(ddmFormInstanceReport);
 	}
 
-	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceReport
-			updateFormInstanceReport(
-				long formInstanceReportId, long formInstanceRecordVersionId,
-				String ddmFormInstanceReportEvent)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static DDMFormInstanceReport updateFormInstanceReport(
+			long formInstanceReportId, long formInstanceRecordVersionId,
+			String ddmFormInstanceReportEvent)
+		throws PortalException {
 
 		return getService().updateFormInstanceReport(
 			formInstanceReportId, formInstanceRecordVersionId,
@@ -349,29 +336,9 @@ public class DDMFormInstanceReportLocalServiceUtil {
 	}
 
 	public static DDMFormInstanceReportLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<DDMFormInstanceReportLocalService, DDMFormInstanceReportLocalService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			DDMFormInstanceReportLocalService.class);
-
-		ServiceTracker
-			<DDMFormInstanceReportLocalService,
-			 DDMFormInstanceReportLocalService> serviceTracker =
-				new ServiceTracker
-					<DDMFormInstanceReportLocalService,
-					 DDMFormInstanceReportLocalService>(
-						 bundle.getBundleContext(),
-						 DDMFormInstanceReportLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile DDMFormInstanceReportLocalService _service;
 
 }

@@ -14,9 +14,16 @@
 
 package com.liferay.polls.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.polls.model.PollsVote;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for PollsVote. This utility wraps
@@ -48,16 +55,14 @@ public class PollsVoteLocalServiceUtil {
 	 * @param pollsVote the polls vote
 	 * @return the polls vote that was added
 	 */
-	public static com.liferay.polls.model.PollsVote addPollsVote(
-		com.liferay.polls.model.PollsVote pollsVote) {
-
+	public static PollsVote addPollsVote(PollsVote pollsVote) {
 		return getService().addPollsVote(pollsVote);
 	}
 
-	public static com.liferay.polls.model.PollsVote addVote(
+	public static PollsVote addVote(
 			long userId, long questionId, long choiceId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addVote(
 			userId, questionId, choiceId, serviceContext);
@@ -66,9 +71,9 @@ public class PollsVoteLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -79,19 +84,16 @@ public class PollsVoteLocalServiceUtil {
 	 * @param voteId the primary key for the new polls vote
 	 * @return the new polls vote
 	 */
-	public static com.liferay.polls.model.PollsVote createPollsVote(
-		long voteId) {
-
+	public static PollsVote createPollsVote(long voteId) {
 		return getService().createPollsVote(voteId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
@@ -107,8 +109,8 @@ public class PollsVoteLocalServiceUtil {
 	 * @return the polls vote that was removed
 	 * @throws PortalException if a polls vote with the primary key could not be found
 	 */
-	public static com.liferay.polls.model.PollsVote deletePollsVote(long voteId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PollsVote deletePollsVote(long voteId)
+		throws PortalException {
 
 		return getService().deletePollsVote(voteId);
 	}
@@ -123,21 +125,15 @@ public class PollsVoteLocalServiceUtil {
 	 * @param pollsVote the polls vote
 	 * @return the polls vote that was removed
 	 */
-	public static com.liferay.polls.model.PollsVote deletePollsVote(
-		com.liferay.polls.model.PollsVote pollsVote) {
-
+	public static PollsVote deletePollsVote(PollsVote pollsVote) {
 		return getService().deletePollsVote(pollsVote);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -147,9 +143,7 @@ public class PollsVoteLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -165,9 +159,8 @@ public class PollsVoteLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -185,10 +178,9 @@ public class PollsVoteLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -200,9 +192,7 @@ public class PollsVoteLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -214,15 +204,13 @@ public class PollsVoteLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.polls.model.PollsVote fetchPollsVote(
-		long voteId) {
-
+	public static PollsVote fetchPollsVote(long voteId) {
 		return getService().fetchPollsVote(voteId);
 	}
 
@@ -233,13 +221,13 @@ public class PollsVoteLocalServiceUtil {
 	 * @param groupId the primary key of the group
 	 * @return the matching polls vote, or <code>null</code> if a matching polls vote could not be found
 	 */
-	public static com.liferay.polls.model.PollsVote
-		fetchPollsVoteByUuidAndGroupId(String uuid, long groupId) {
+	public static PollsVote fetchPollsVoteByUuidAndGroupId(
+		String uuid, long groupId) {
 
 		return getService().fetchPollsVoteByUuidAndGroupId(uuid, groupId);
 	}
 
-	public static com.liferay.polls.model.PollsVote fetchQuestionUserVote(
+	public static PollsVote fetchQuestionUserVote(
 		long questionId, long userId) {
 
 		return getService().fetchQuestionUserVote(questionId, userId);
@@ -251,8 +239,8 @@ public class PollsVoteLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
-	public static java.util.List<com.liferay.polls.model.PollsVote>
-		getChoiceVotes(long choiceId, int start, int end) {
+	public static List<PollsVote> getChoiceVotes(
+		long choiceId, int start, int end) {
 
 		return getService().getChoiceVotes(choiceId, start, end);
 	}
@@ -288,9 +276,8 @@ public class PollsVoteLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -302,9 +289,7 @@ public class PollsVoteLocalServiceUtil {
 	 * @return the polls vote
 	 * @throws PortalException if a polls vote with the primary key could not be found
 	 */
-	public static com.liferay.polls.model.PollsVote getPollsVote(long voteId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static PollsVote getPollsVote(long voteId) throws PortalException {
 		return getService().getPollsVote(voteId);
 	}
 
@@ -316,9 +301,9 @@ public class PollsVoteLocalServiceUtil {
 	 * @return the matching polls vote
 	 * @throws PortalException if a matching polls vote could not be found
 	 */
-	public static com.liferay.polls.model.PollsVote
-			getPollsVoteByUuidAndGroupId(String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PollsVote getPollsVoteByUuidAndGroupId(
+			String uuid, long groupId)
+		throws PortalException {
 
 		return getService().getPollsVoteByUuidAndGroupId(uuid, groupId);
 	}
@@ -334,9 +319,7 @@ public class PollsVoteLocalServiceUtil {
 	 * @param end the upper bound of the range of polls votes (not inclusive)
 	 * @return the range of polls votes
 	 */
-	public static java.util.List<com.liferay.polls.model.PollsVote>
-		getPollsVotes(int start, int end) {
-
+	public static List<PollsVote> getPollsVotes(int start, int end) {
 		return getService().getPollsVotes(start, end);
 	}
 
@@ -347,8 +330,8 @@ public class PollsVoteLocalServiceUtil {
 	 * @param companyId the primary key of the company
 	 * @return the matching polls votes, or an empty list if no matches were found
 	 */
-	public static java.util.List<com.liferay.polls.model.PollsVote>
-		getPollsVotesByUuidAndCompanyId(String uuid, long companyId) {
+	public static List<PollsVote> getPollsVotesByUuidAndCompanyId(
+		String uuid, long companyId) {
 
 		return getService().getPollsVotesByUuidAndCompanyId(uuid, companyId);
 	}
@@ -363,11 +346,9 @@ public class PollsVoteLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the range of matching polls votes, or an empty list if no matches were found
 	 */
-	public static java.util.List<com.liferay.polls.model.PollsVote>
-		getPollsVotesByUuidAndCompanyId(
-			String uuid, long companyId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.polls.model.PollsVote> orderByComparator) {
+	public static List<PollsVote> getPollsVotesByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<PollsVote> orderByComparator) {
 
 		return getService().getPollsVotesByUuidAndCompanyId(
 			uuid, companyId, start, end, orderByComparator);
@@ -382,8 +363,8 @@ public class PollsVoteLocalServiceUtil {
 		return getService().getPollsVotesCount();
 	}
 
-	public static java.util.List<com.liferay.polls.model.PollsVote>
-		getQuestionVotes(long questionId, int start, int end) {
+	public static List<PollsVote> getQuestionVotes(
+		long questionId, int start, int end) {
 
 		return getService().getQuestionVotes(questionId, start, end);
 	}
@@ -402,32 +383,14 @@ public class PollsVoteLocalServiceUtil {
 	 * @param pollsVote the polls vote
 	 * @return the polls vote that was updated
 	 */
-	public static com.liferay.polls.model.PollsVote updatePollsVote(
-		com.liferay.polls.model.PollsVote pollsVote) {
-
+	public static PollsVote updatePollsVote(PollsVote pollsVote) {
 		return getService().updatePollsVote(pollsVote);
 	}
 
 	public static PollsVoteLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<PollsVoteLocalService, PollsVoteLocalService>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(PollsVoteLocalService.class);
-
-		ServiceTracker<PollsVoteLocalService, PollsVoteLocalService>
-			serviceTracker =
-				new ServiceTracker
-					<PollsVoteLocalService, PollsVoteLocalService>(
-						bundle.getBundleContext(), PollsVoteLocalService.class,
-						null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile PollsVoteLocalService _service;
 
 }

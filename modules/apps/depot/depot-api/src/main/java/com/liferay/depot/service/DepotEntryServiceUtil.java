@@ -14,9 +14,11 @@
 
 package com.liferay.depot.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the remote service utility for DepotEntry. This utility wraps
@@ -37,56 +39,51 @@ public class DepotEntryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.depot.service.impl.DepotEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.depot.model.DepotEntry addDepotEntry(
-			java.util.Map<java.util.Locale, String> nameMap,
-			java.util.Map<java.util.Locale, String> descriptionMap,
+	public static DepotEntry addDepotEntry(
+			Map<java.util.Locale, String> nameMap,
+			Map<java.util.Locale, String> descriptionMap,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addDepotEntry(
 			nameMap, descriptionMap, serviceContext);
 	}
 
-	public static com.liferay.depot.model.DepotEntry deleteDepotEntry(
-			long depotEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static DepotEntry deleteDepotEntry(long depotEntryId)
+		throws PortalException {
 
 		return getService().deleteDepotEntry(depotEntryId);
 	}
 
-	public static com.liferay.depot.model.DepotEntry getDepotEntry(
-			long depotEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static DepotEntry getDepotEntry(long depotEntryId)
+		throws PortalException {
 
 		return getService().getDepotEntry(depotEntryId);
 	}
 
-	public static java.util.List<com.liferay.depot.model.DepotEntry>
-			getGroupConnectedDepotEntries(
-				long groupId, boolean ddmStructuresAvailable, int start,
-				int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<DepotEntry> getGroupConnectedDepotEntries(
+			long groupId, boolean ddmStructuresAvailable, int start, int end)
+		throws PortalException {
 
 		return getService().getGroupConnectedDepotEntries(
 			groupId, ddmStructuresAvailable, start, end);
 	}
 
-	public static java.util.List<com.liferay.depot.model.DepotEntry>
-			getGroupConnectedDepotEntries(long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<DepotEntry> getGroupConnectedDepotEntries(
+			long groupId, int start, int end)
+		throws PortalException {
 
 		return getService().getGroupConnectedDepotEntries(groupId, start, end);
 	}
 
 	public static int getGroupConnectedDepotEntriesCount(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getGroupConnectedDepotEntriesCount(groupId);
 	}
 
-	public static com.liferay.depot.model.DepotEntry getGroupDepotEntry(
-			long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static DepotEntry getGroupDepotEntry(long groupId)
+		throws PortalException {
 
 		return getService().getGroupDepotEntry(groupId);
 	}
@@ -100,14 +97,14 @@ public class DepotEntryServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.depot.model.DepotEntry updateDepotEntry(
-			long depotEntryId, java.util.Map<java.util.Locale, String> nameMap,
-			java.util.Map<java.util.Locale, String> descriptionMap,
-			java.util.Map<String, Boolean> depotAppCustomizationMap,
+	public static DepotEntry updateDepotEntry(
+			long depotEntryId, Map<java.util.Locale, String> nameMap,
+			Map<java.util.Locale, String> descriptionMap,
+			Map<String, Boolean> depotAppCustomizationMap,
 			com.liferay.portal.kernel.util.UnicodeProperties
 				typeSettingsUnicodeProperties,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateDepotEntry(
 			depotEntryId, nameMap, descriptionMap, depotAppCustomizationMap,
@@ -115,22 +112,9 @@ public class DepotEntryServiceUtil {
 	}
 
 	public static DepotEntryService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<DepotEntryService, DepotEntryService>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(DepotEntryService.class);
-
-		ServiceTracker<DepotEntryService, DepotEntryService> serviceTracker =
-			new ServiceTracker<DepotEntryService, DepotEntryService>(
-				bundle.getBundleContext(), DepotEntryService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile DepotEntryService _service;
 
 }

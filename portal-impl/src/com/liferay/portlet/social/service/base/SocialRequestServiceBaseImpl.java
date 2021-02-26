@@ -28,7 +28,10 @@ import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.social.kernel.model.SocialRequest;
 import com.liferay.social.kernel.service.SocialRequestService;
+import com.liferay.social.kernel.service.SocialRequestServiceUtil;
 import com.liferay.social.kernel.service.persistence.SocialRequestPersistence;
+
+import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
 
@@ -50,7 +53,7 @@ public abstract class SocialRequestServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>SocialRequestService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.social.kernel.service.SocialRequestServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>SocialRequestService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>SocialRequestServiceUtil</code>.
 	 */
 
 	/**
@@ -308,9 +311,11 @@ public abstract class SocialRequestServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
+		_setServiceUtilService(socialRequestService);
 	}
 
 	public void destroy() {
+		_setServiceUtilService(null);
 	}
 
 	/**
@@ -352,6 +357,22 @@ public abstract class SocialRequestServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setServiceUtilService(
+		SocialRequestService socialRequestService) {
+
+		try {
+			Field field = SocialRequestServiceUtil.class.getDeclaredField(
+				"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, socialRequestService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

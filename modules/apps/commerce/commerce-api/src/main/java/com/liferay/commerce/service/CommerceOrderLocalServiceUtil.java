@@ -14,9 +14,17 @@
 
 package com.liferay.commerce.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for CommerceOrder. This utility wraps
@@ -48,30 +56,28 @@ public class CommerceOrderLocalServiceUtil {
 	 * @param commerceOrder the commerce order
 	 * @return the commerce order that was added
 	 */
-	public static com.liferay.commerce.model.CommerceOrder addCommerceOrder(
-		com.liferay.commerce.model.CommerceOrder commerceOrder) {
-
+	public static CommerceOrder addCommerceOrder(CommerceOrder commerceOrder) {
 		return getService().addCommerceOrder(commerceOrder);
 	}
 
-	public static com.liferay.commerce.model.CommerceOrder addCommerceOrder(
+	public static CommerceOrder addCommerceOrder(
 			long userId, long groupId, long commerceAccountId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addCommerceOrder(
 			userId, groupId, commerceAccountId);
 	}
 
-	public static com.liferay.commerce.model.CommerceOrder addCommerceOrder(
+	public static CommerceOrder addCommerceOrder(
 			long userId, long groupId, long commerceAccountId,
 			long commerceCurrencyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addCommerceOrder(
 			userId, groupId, commerceAccountId, commerceCurrencyId);
 	}
 
-	public static com.liferay.commerce.model.CommerceOrder addCommerceOrder(
+	public static CommerceOrder addCommerceOrder(
 			long userId, long groupId, long commerceAccountId,
 			long commerceCurrencyId, long billingAddressId,
 			long shippingAddressId, String commercePaymentMethodKey,
@@ -84,7 +90,7 @@ public class CommerceOrderLocalServiceUtil {
 			int orderDateMonth, int orderDateDay, int orderDateYear,
 			int orderDateHour, int orderDateMinute, int orderStatus,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addCommerceOrder(
 			userId, groupId, commerceAccountId, commerceCurrencyId,
@@ -96,7 +102,7 @@ public class CommerceOrderLocalServiceUtil {
 			orderDateMinute, orderStatus, serviceContext);
 	}
 
-	public static com.liferay.commerce.model.CommerceOrder addCommerceOrder(
+	public static CommerceOrder addCommerceOrder(
 			long userId, long groupId, long commerceAccountId,
 			long commerceCurrencyId, long billingAddressId,
 			long shippingAddressId, String commercePaymentMethodKey,
@@ -108,7 +114,7 @@ public class CommerceOrderLocalServiceUtil {
 			java.math.BigDecimal totalWithTaxAmount, int paymentStatus,
 			int orderStatus,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addCommerceOrder(
 			userId, groupId, commerceAccountId, commerceCurrencyId,
@@ -119,7 +125,7 @@ public class CommerceOrderLocalServiceUtil {
 			orderStatus, serviceContext);
 	}
 
-	public static com.liferay.commerce.model.CommerceOrder addCommerceOrder(
+	public static CommerceOrder addCommerceOrder(
 			long userId, long groupId, long commerceAccountId,
 			long commerceCurrencyId, long billingAddressId,
 			long shippingAddressId, String commercePaymentMethodKey,
@@ -128,7 +134,7 @@ public class CommerceOrderLocalServiceUtil {
 			java.math.BigDecimal shippingAmount, java.math.BigDecimal total,
 			int paymentStatus, int orderStatus,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addCommerceOrder(
 			userId, groupId, commerceAccountId, commerceCurrencyId,
@@ -138,31 +144,31 @@ public class CommerceOrderLocalServiceUtil {
 			serviceContext);
 	}
 
-	public static com.liferay.commerce.model.CommerceOrder addCommerceOrder(
+	public static CommerceOrder addCommerceOrder(
 			long userId, long groupId, long commerceAccountId,
 			long commerceCurrencyId, long shippingAddressId,
 			String purchaseOrderNumber)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addCommerceOrder(
 			userId, groupId, commerceAccountId, commerceCurrencyId,
 			shippingAddressId, purchaseOrderNumber);
 	}
 
-	public static com.liferay.commerce.model.CommerceOrder addCommerceOrder(
+	public static CommerceOrder addCommerceOrder(
 			long userId, long groupId, long commerceAccountId,
 			long shippingAddressId, String purchaseOrderNumber)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addCommerceOrder(
 			userId, groupId, commerceAccountId, shippingAddressId,
 			purchaseOrderNumber);
 	}
 
-	public static com.liferay.commerce.model.CommerceOrder applyCouponCode(
+	public static CommerceOrder applyCouponCode(
 			long commerceOrderId, String couponCode,
 			com.liferay.commerce.context.CommerceContext commerceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().applyCouponCode(
 			commerceOrderId, couponCode, commerceContext);
@@ -174,18 +180,16 @@ public class CommerceOrderLocalServiceUtil {
 	 * @param commerceOrderId the primary key for the new commerce order
 	 * @return the new commerce order
 	 */
-	public static com.liferay.commerce.model.CommerceOrder createCommerceOrder(
-		long commerceOrderId) {
-
+	public static CommerceOrder createCommerceOrder(long commerceOrderId) {
 		return getService().createCommerceOrder(commerceOrderId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -201,9 +205,8 @@ public class CommerceOrderLocalServiceUtil {
 	 * @return the commerce order that was removed
 	 * @throws PortalException
 	 */
-	public static com.liferay.commerce.model.CommerceOrder deleteCommerceOrder(
-			com.liferay.commerce.model.CommerceOrder commerceOrder)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceOrder deleteCommerceOrder(CommerceOrder commerceOrder)
+		throws PortalException {
 
 		return getService().deleteCommerceOrder(commerceOrder);
 	}
@@ -219,15 +222,14 @@ public class CommerceOrderLocalServiceUtil {
 	 * @return the commerce order that was removed
 	 * @throws PortalException if a commerce order with the primary key could not be found
 	 */
-	public static com.liferay.commerce.model.CommerceOrder deleteCommerceOrder(
-			long commerceOrderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceOrder deleteCommerceOrder(long commerceOrderId)
+		throws PortalException {
 
 		return getService().deleteCommerceOrder(commerceOrderId);
 	}
 
 	public static void deleteCommerceOrders(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommerceOrders(groupId);
 	}
@@ -252,23 +254,18 @@ public class CommerceOrderLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -278,9 +275,7 @@ public class CommerceOrderLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -296,9 +291,8 @@ public class CommerceOrderLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -316,10 +310,9 @@ public class CommerceOrderLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -331,9 +324,7 @@ public class CommerceOrderLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -345,33 +336,29 @@ public class CommerceOrderLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.commerce.model.CommerceOrder
-			executeWorkflowTransition(
-				long userId, long commerceOrderId, long workflowTaskId,
-				String transitionName, String comment)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceOrder executeWorkflowTransition(
+			long userId, long commerceOrderId, long workflowTaskId,
+			String transitionName, String comment)
+		throws PortalException {
 
 		return getService().executeWorkflowTransition(
 			userId, commerceOrderId, workflowTaskId, transitionName, comment);
 	}
 
-	public static com.liferay.commerce.model.CommerceOrder
-		fetchByExternalReferenceCode(
-			String externalReferenceCode, long companyId) {
+	public static CommerceOrder fetchByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
 
 		return getService().fetchByExternalReferenceCode(
 			externalReferenceCode, companyId);
 	}
 
-	public static com.liferay.commerce.model.CommerceOrder fetchCommerceOrder(
-		long commerceOrderId) {
-
+	public static CommerceOrder fetchCommerceOrder(long commerceOrderId) {
 		return getService().fetchCommerceOrder(commerceOrderId);
 	}
 
@@ -379,14 +366,14 @@ public class CommerceOrderLocalServiceUtil {
 	 * @deprecated As of Athanasius (7.3.x)
 	 */
 	@Deprecated
-	public static com.liferay.commerce.model.CommerceOrder fetchCommerceOrder(
+	public static CommerceOrder fetchCommerceOrder(
 		long commerceAccountId, long groupId, int orderStatus) {
 
 		return getService().fetchCommerceOrder(
 			commerceAccountId, groupId, orderStatus);
 	}
 
-	public static com.liferay.commerce.model.CommerceOrder fetchCommerceOrder(
+	public static CommerceOrder fetchCommerceOrder(
 		long commerceAccountId, long groupId, long userId, int orderStatus) {
 
 		return getService().fetchCommerceOrder(
@@ -400,9 +387,8 @@ public class CommerceOrderLocalServiceUtil {
 	 * @param externalReferenceCode the commerce order's external reference code
 	 * @return the matching commerce order, or <code>null</code> if a matching commerce order could not be found
 	 */
-	public static com.liferay.commerce.model.CommerceOrder
-		fetchCommerceOrderByReferenceCode(
-			long companyId, String externalReferenceCode) {
+	public static CommerceOrder fetchCommerceOrderByReferenceCode(
+		long companyId, String externalReferenceCode) {
 
 		return getService().fetchCommerceOrderByReferenceCode(
 			companyId, externalReferenceCode);
@@ -415,8 +401,8 @@ public class CommerceOrderLocalServiceUtil {
 	 * @param groupId the primary key of the group
 	 * @return the matching commerce order, or <code>null</code> if a matching commerce order could not be found
 	 */
-	public static com.liferay.commerce.model.CommerceOrder
-		fetchCommerceOrderByUuidAndGroupId(String uuid, long groupId) {
+	public static CommerceOrder fetchCommerceOrderByUuidAndGroupId(
+		String uuid, long groupId) {
 
 		return getService().fetchCommerceOrderByUuidAndGroupId(uuid, groupId);
 	}
@@ -434,9 +420,8 @@ public class CommerceOrderLocalServiceUtil {
 	 * @return the commerce order
 	 * @throws PortalException if a commerce order with the primary key could not be found
 	 */
-	public static com.liferay.commerce.model.CommerceOrder getCommerceOrder(
-			long commerceOrderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceOrder getCommerceOrder(long commerceOrderId)
+		throws PortalException {
 
 		return getService().getCommerceOrder(commerceOrderId);
 	}
@@ -449,9 +434,9 @@ public class CommerceOrderLocalServiceUtil {
 	 * @return the matching commerce order
 	 * @throws PortalException if a matching commerce order could not be found
 	 */
-	public static com.liferay.commerce.model.CommerceOrder
-			getCommerceOrderByUuidAndGroupId(String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceOrder getCommerceOrderByUuidAndGroupId(
+			String uuid, long groupId)
+		throws PortalException {
 
 		return getService().getCommerceOrderByUuidAndGroupId(uuid, groupId);
 	}
@@ -467,83 +452,73 @@ public class CommerceOrderLocalServiceUtil {
 	 * @param end the upper bound of the range of commerce orders (not inclusive)
 	 * @return the range of commerce orders
 	 */
-	public static java.util.List<com.liferay.commerce.model.CommerceOrder>
-		getCommerceOrders(int start, int end) {
-
+	public static List<CommerceOrder> getCommerceOrders(int start, int end) {
 		return getService().getCommerceOrders(start, end);
 	}
 
-	public static java.util.List<com.liferay.commerce.model.CommerceOrder>
-		getCommerceOrders(
-			long groupId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.commerce.model.CommerceOrder> orderByComparator) {
+	public static List<CommerceOrder> getCommerceOrders(
+		long groupId, int start, int end,
+		OrderByComparator<CommerceOrder> orderByComparator) {
 
 		return getService().getCommerceOrders(
 			groupId, start, end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.commerce.model.CommerceOrder>
-		getCommerceOrders(long groupId, int[] orderStatuses) {
+	public static List<CommerceOrder> getCommerceOrders(
+		long groupId, int[] orderStatuses) {
 
 		return getService().getCommerceOrders(groupId, orderStatuses);
 	}
 
-	public static java.util.List<com.liferay.commerce.model.CommerceOrder>
-		getCommerceOrders(
-			long groupId, int[] orderStatuses, int start, int end) {
+	public static List<CommerceOrder> getCommerceOrders(
+		long groupId, int[] orderStatuses, int start, int end) {
 
 		return getService().getCommerceOrders(
 			groupId, orderStatuses, start, end);
 	}
 
-	public static java.util.List<com.liferay.commerce.model.CommerceOrder>
-		getCommerceOrders(
-			long groupId, long commerceAccountId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.commerce.model.CommerceOrder> orderByComparator) {
+	public static List<CommerceOrder> getCommerceOrders(
+		long groupId, long commerceAccountId, int start, int end,
+		OrderByComparator<CommerceOrder> orderByComparator) {
 
 		return getService().getCommerceOrders(
 			groupId, commerceAccountId, start, end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.commerce.model.CommerceOrder>
-			getCommerceOrders(
-				long companyId, long groupId, long[] commerceAccountIds,
-				String keywords, int[] orderStatuses,
-				boolean excludeOrderStatus, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommerceOrder> getCommerceOrders(
+			long companyId, long groupId, long[] commerceAccountIds,
+			String keywords, int[] orderStatuses, boolean excludeOrderStatus,
+			int start, int end)
+		throws PortalException {
 
 		return getService().getCommerceOrders(
 			companyId, groupId, commerceAccountIds, keywords, orderStatuses,
 			excludeOrderStatus, start, end);
 	}
 
-	public static java.util.List<com.liferay.commerce.model.CommerceOrder>
-		getCommerceOrders(long groupId, String commercePaymentMethodKey) {
+	public static List<CommerceOrder> getCommerceOrders(
+		long groupId, String commercePaymentMethodKey) {
 
 		return getService().getCommerceOrders(
 			groupId, commercePaymentMethodKey);
 	}
 
-	public static java.util.List<com.liferay.commerce.model.CommerceOrder>
-		getCommerceOrdersByBillingAddress(long billingAddressId) {
+	public static List<CommerceOrder> getCommerceOrdersByBillingAddress(
+		long billingAddressId) {
 
 		return getService().getCommerceOrdersByBillingAddress(billingAddressId);
 	}
 
-	public static java.util.List<com.liferay.commerce.model.CommerceOrder>
-		getCommerceOrdersByCommerceAccountId(
-			long commerceAccountId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.commerce.model.CommerceOrder> orderByComparator) {
+	public static List<CommerceOrder> getCommerceOrdersByCommerceAccountId(
+		long commerceAccountId, int start, int end,
+		OrderByComparator<CommerceOrder> orderByComparator) {
 
 		return getService().getCommerceOrdersByCommerceAccountId(
 			commerceAccountId, start, end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.commerce.model.CommerceOrder>
-		getCommerceOrdersByShippingAddress(long shippingAddressId) {
+	public static List<CommerceOrder> getCommerceOrdersByShippingAddress(
+		long shippingAddressId) {
 
 		return getService().getCommerceOrdersByShippingAddress(
 			shippingAddressId);
@@ -556,8 +531,8 @@ public class CommerceOrderLocalServiceUtil {
 	 * @param companyId the primary key of the company
 	 * @return the matching commerce orders, or an empty list if no matches were found
 	 */
-	public static java.util.List<com.liferay.commerce.model.CommerceOrder>
-		getCommerceOrdersByUuidAndCompanyId(String uuid, long companyId) {
+	public static List<CommerceOrder> getCommerceOrdersByUuidAndCompanyId(
+		String uuid, long companyId) {
 
 		return getService().getCommerceOrdersByUuidAndCompanyId(
 			uuid, companyId);
@@ -573,11 +548,9 @@ public class CommerceOrderLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the range of matching commerce orders, or an empty list if no matches were found
 	 */
-	public static java.util.List<com.liferay.commerce.model.CommerceOrder>
-		getCommerceOrdersByUuidAndCompanyId(
-			String uuid, long companyId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.commerce.model.CommerceOrder> orderByComparator) {
+	public static List<CommerceOrder> getCommerceOrdersByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<CommerceOrder> orderByComparator) {
 
 		return getService().getCommerceOrdersByUuidAndCompanyId(
 			uuid, companyId, start, end, orderByComparator);
@@ -605,7 +578,7 @@ public class CommerceOrderLocalServiceUtil {
 	public static long getCommerceOrdersCount(
 			long companyId, long groupId, long[] commerceAccountIds,
 			String keywords, int[] orderStatuses, boolean excludeOrderStatus)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCommerceOrdersCount(
 			companyId, groupId, commerceAccountIds, keywords, orderStatuses,
@@ -646,14 +619,13 @@ public class CommerceOrderLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static java.util.List<com.liferay.commerce.model.CommerceOrder>
+	public static List<CommerceOrder>
 		getShippedCommerceOrdersByCommerceShipmentId(
 			long commerceShipmentId, int start, int end) {
 
@@ -665,11 +637,9 @@ public class CommerceOrderLocalServiceUtil {
 	 * @deprecated As of Mueller (7.2.x)
 	 */
 	@Deprecated
-	public static java.util.List<com.liferay.commerce.model.CommerceOrder>
-		getUserCommerceOrders(
-			long groupId, long userId, long commerceAccountId,
-			Integer orderStatus, boolean excludeOrderStatus, String keywords,
-			int start, int end) {
+	public static List<CommerceOrder> getUserCommerceOrders(
+		long groupId, long userId, long commerceAccountId, Integer orderStatus,
+		boolean excludeOrderStatus, String keywords, int start, int end) {
 
 		return getService().getUserCommerceOrders(
 			groupId, userId, commerceAccountId, orderStatus, excludeOrderStatus,
@@ -693,75 +663,74 @@ public class CommerceOrderLocalServiceUtil {
 			long guestCommerceOrderId, long userCommerceOrderId,
 			com.liferay.commerce.context.CommerceContext commerceContext,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().mergeGuestCommerceOrder(
 			guestCommerceOrderId, userCommerceOrderId, commerceContext,
 			serviceContext);
 	}
 
-	public static com.liferay.commerce.model.CommerceOrder recalculatePrice(
+	public static CommerceOrder recalculatePrice(
 			long commerceOrderId,
 			com.liferay.commerce.context.CommerceContext commerceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().recalculatePrice(commerceOrderId, commerceContext);
 	}
 
-	public static com.liferay.commerce.model.CommerceOrder reorderCommerceOrder(
+	public static CommerceOrder reorderCommerceOrder(
 			long userId, long commerceOrderId,
 			com.liferay.commerce.context.CommerceContext commerceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().reorderCommerceOrder(
 			userId, commerceOrderId, commerceContext);
 	}
 
-	public static com.liferay.commerce.model.CommerceOrder
-			resetCommerceOrderShipping(long commerceOrderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceOrder resetCommerceOrderShipping(long commerceOrderId)
+		throws PortalException {
 
 		return getService().resetCommerceOrderShipping(commerceOrderId);
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
-		<com.liferay.commerce.model.CommerceOrder> searchCommerceOrders(
+		<CommerceOrder> searchCommerceOrders(
 				com.liferay.portal.kernel.search.SearchContext searchContext)
-			throws com.liferay.portal.kernel.exception.PortalException {
+			throws PortalException {
 
 		return getService().searchCommerceOrders(searchContext);
 	}
 
 	public static long searchCommerceOrdersCount(
 			com.liferay.portal.kernel.search.SearchContext searchContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().searchCommerceOrdersCount(searchContext);
 	}
 
-	public static com.liferay.commerce.model.CommerceOrder updateAccount(
+	public static CommerceOrder updateAccount(
 			long commerceOrderId, long userId, long commerceAccountId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateAccount(
 			commerceOrderId, userId, commerceAccountId);
 	}
 
-	public static com.liferay.commerce.model.CommerceOrder updateBillingAddress(
+	public static CommerceOrder updateBillingAddress(
 			long commerceOrderId, long billingAddressId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateBillingAddress(
 			commerceOrderId, billingAddressId);
 	}
 
-	public static com.liferay.commerce.model.CommerceOrder updateBillingAddress(
+	public static CommerceOrder updateBillingAddress(
 			long commerceOrderId, String name, String description,
 			String street1, String street2, String street3, String city,
 			String zip, long commerceRegionId, long commerceCountryId,
 			String phoneNumber,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateBillingAddress(
 			commerceOrderId, name, description, street1, street2, street3, city,
@@ -779,20 +748,20 @@ public class CommerceOrderLocalServiceUtil {
 	 * @param commerceOrder the commerce order
 	 * @return the commerce order that was updated
 	 */
-	public static com.liferay.commerce.model.CommerceOrder updateCommerceOrder(
-		com.liferay.commerce.model.CommerceOrder commerceOrder) {
+	public static CommerceOrder updateCommerceOrder(
+		CommerceOrder commerceOrder) {
 
 		return getService().updateCommerceOrder(commerceOrder);
 	}
 
-	public static com.liferay.commerce.model.CommerceOrder updateCommerceOrder(
+	public static CommerceOrder updateCommerceOrder(
 			long commerceOrderId, long billingAddressId, long shippingAddressId,
 			String commercePaymentMethodKey, long commerceShippingMethodId,
 			String shippingOptionName, String purchaseOrderNumber,
 			java.math.BigDecimal subtotal, java.math.BigDecimal shippingAmount,
 			java.math.BigDecimal total, String advanceStatus,
 			com.liferay.commerce.context.CommerceContext commerceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateCommerceOrder(
 			commerceOrderId, billingAddressId, shippingAddressId,
@@ -801,7 +770,7 @@ public class CommerceOrderLocalServiceUtil {
 			total, advanceStatus, commerceContext);
 	}
 
-	public static com.liferay.commerce.model.CommerceOrder updateCommerceOrder(
+	public static CommerceOrder updateCommerceOrder(
 			String externalReferenceCode, long commerceOrderId,
 			long billingAddressId, long shippingAddressId,
 			String commercePaymentMethodKey, long commerceShippingMethodId,
@@ -812,7 +781,7 @@ public class CommerceOrderLocalServiceUtil {
 			java.math.BigDecimal shippingWithTaxAmount,
 			java.math.BigDecimal totalWithTaxAmount, String advanceStatus,
 			com.liferay.commerce.context.CommerceContext commerceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateCommerceOrder(
 			externalReferenceCode, commerceOrderId, billingAddressId,
@@ -823,7 +792,7 @@ public class CommerceOrderLocalServiceUtil {
 			commerceContext);
 	}
 
-	public static com.liferay.commerce.model.CommerceOrder updateCommerceOrder(
+	public static CommerceOrder updateCommerceOrder(
 			String externalReferenceCode, long commerceOrderId,
 			long billingAddressId, long shippingAddressId,
 			String commercePaymentMethodKey, long commerceShippingMethodId,
@@ -831,7 +800,7 @@ public class CommerceOrderLocalServiceUtil {
 			java.math.BigDecimal subtotal, java.math.BigDecimal shippingAmount,
 			java.math.BigDecimal total, String advanceStatus,
 			com.liferay.commerce.context.CommerceContext commerceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateCommerceOrder(
 			externalReferenceCode, commerceOrderId, billingAddressId,
@@ -840,36 +809,34 @@ public class CommerceOrderLocalServiceUtil {
 			subtotal, shippingAmount, total, advanceStatus, commerceContext);
 	}
 
-	public static com.liferay.commerce.model.CommerceOrder
-			updateCommerceOrderExternalReferenceCode(
-				String externalReferenceCode, long commerceOrderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceOrder updateCommerceOrderExternalReferenceCode(
+			String externalReferenceCode, long commerceOrderId)
+		throws PortalException {
 
 		return getService().updateCommerceOrderExternalReferenceCode(
 			externalReferenceCode, commerceOrderId);
 	}
 
-	public static com.liferay.commerce.model.CommerceOrder
-			updateCommerceOrderPrices(
-				long commerceOrderId, java.math.BigDecimal subtotal,
-				java.math.BigDecimal subtotalDiscountAmount,
-				java.math.BigDecimal subtotalDiscountPercentageLevel1,
-				java.math.BigDecimal subtotalDiscountPercentageLevel2,
-				java.math.BigDecimal subtotalDiscountPercentageLevel3,
-				java.math.BigDecimal subtotalDiscountPercentageLevel4,
-				java.math.BigDecimal shippingAmount,
-				java.math.BigDecimal shippingDiscountAmount,
-				java.math.BigDecimal shippingDiscountPercentageLevel1,
-				java.math.BigDecimal shippingDiscountPercentageLevel2,
-				java.math.BigDecimal shippingDiscountPercentageLevel3,
-				java.math.BigDecimal shippingDiscountPercentageLevel4,
-				java.math.BigDecimal taxAmount, java.math.BigDecimal total,
-				java.math.BigDecimal totalDiscountAmount,
-				java.math.BigDecimal totalDiscountPercentageLevel1,
-				java.math.BigDecimal totalDiscountPercentageLevel2,
-				java.math.BigDecimal totalDiscountPercentageLevel3,
-				java.math.BigDecimal totalDiscountPercentageLevel4)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceOrder updateCommerceOrderPrices(
+			long commerceOrderId, java.math.BigDecimal subtotal,
+			java.math.BigDecimal subtotalDiscountAmount,
+			java.math.BigDecimal subtotalDiscountPercentageLevel1,
+			java.math.BigDecimal subtotalDiscountPercentageLevel2,
+			java.math.BigDecimal subtotalDiscountPercentageLevel3,
+			java.math.BigDecimal subtotalDiscountPercentageLevel4,
+			java.math.BigDecimal shippingAmount,
+			java.math.BigDecimal shippingDiscountAmount,
+			java.math.BigDecimal shippingDiscountPercentageLevel1,
+			java.math.BigDecimal shippingDiscountPercentageLevel2,
+			java.math.BigDecimal shippingDiscountPercentageLevel3,
+			java.math.BigDecimal shippingDiscountPercentageLevel4,
+			java.math.BigDecimal taxAmount, java.math.BigDecimal total,
+			java.math.BigDecimal totalDiscountAmount,
+			java.math.BigDecimal totalDiscountPercentageLevel1,
+			java.math.BigDecimal totalDiscountPercentageLevel2,
+			java.math.BigDecimal totalDiscountPercentageLevel3,
+			java.math.BigDecimal totalDiscountPercentageLevel4)
+		throws PortalException {
 
 		return getService().updateCommerceOrderPrices(
 			commerceOrderId, subtotal, subtotalDiscountAmount,
@@ -883,53 +850,44 @@ public class CommerceOrderLocalServiceUtil {
 			totalDiscountPercentageLevel3, totalDiscountPercentageLevel4);
 	}
 
-	public static com.liferay.commerce.model.CommerceOrder
-			updateCommerceOrderPrices(
-				long commerceOrderId, java.math.BigDecimal subtotal,
-				java.math.BigDecimal subtotalDiscountAmount,
-				java.math.BigDecimal subtotalDiscountPercentageLevel1,
-				java.math.BigDecimal subtotalDiscountPercentageLevel2,
-				java.math.BigDecimal subtotalDiscountPercentageLevel3,
-				java.math.BigDecimal subtotalDiscountPercentageLevel4,
-				java.math.BigDecimal shippingAmount,
-				java.math.BigDecimal shippingDiscountAmount,
-				java.math.BigDecimal shippingDiscountPercentageLevel1,
-				java.math.BigDecimal shippingDiscountPercentageLevel2,
-				java.math.BigDecimal shippingDiscountPercentageLevel3,
-				java.math.BigDecimal shippingDiscountPercentageLevel4,
-				java.math.BigDecimal taxAmount, java.math.BigDecimal total,
-				java.math.BigDecimal totalDiscountAmount,
-				java.math.BigDecimal totalDiscountPercentageLevel1,
-				java.math.BigDecimal totalDiscountPercentageLevel2,
-				java.math.BigDecimal totalDiscountPercentageLevel3,
-				java.math.BigDecimal totalDiscountPercentageLevel4,
-				java.math.BigDecimal subtotalWithTaxAmount,
-				java.math.BigDecimal subtotalDiscountWithTaxAmount,
-				java.math.BigDecimal
-					subtotalDiscountPercentageLevel1WithTaxAmount,
-				java.math.BigDecimal
-					subtotalDiscountPercentageLevel2WithTaxAmount,
-				java.math.BigDecimal
-					subtotalDiscountPercentageLevel3WithTaxAmount,
-				java.math.BigDecimal
-					subtotalDiscountPercentageLevel4WithTaxAmount,
-				java.math.BigDecimal shippingWithTaxAmount,
-				java.math.BigDecimal shippingDiscountWithTaxAmount,
-				java.math.BigDecimal
-					shippingDiscountPercentageLevel1WithTaxAmount,
-				java.math.BigDecimal
-					shippingDiscountPercentageLevel2WithTaxAmount,
-				java.math.BigDecimal
-					shippingDiscountPercentageLevel3WithTaxAmount,
-				java.math.BigDecimal
-					shippingDiscountPercentageLevel4WithTaxAmount,
-				java.math.BigDecimal totalWithTaxAmount,
-				java.math.BigDecimal totalDiscountWithTaxAmount,
-				java.math.BigDecimal totalDiscountPercentageLevel1WithTaxAmount,
-				java.math.BigDecimal totalDiscountPercentageLevel2WithTaxAmount,
-				java.math.BigDecimal totalDiscountPercentageLevel3WithTaxAmount,
-				java.math.BigDecimal totalDiscountPercentageLevel4WithTaxAmount)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceOrder updateCommerceOrderPrices(
+			long commerceOrderId, java.math.BigDecimal subtotal,
+			java.math.BigDecimal subtotalDiscountAmount,
+			java.math.BigDecimal subtotalDiscountPercentageLevel1,
+			java.math.BigDecimal subtotalDiscountPercentageLevel2,
+			java.math.BigDecimal subtotalDiscountPercentageLevel3,
+			java.math.BigDecimal subtotalDiscountPercentageLevel4,
+			java.math.BigDecimal shippingAmount,
+			java.math.BigDecimal shippingDiscountAmount,
+			java.math.BigDecimal shippingDiscountPercentageLevel1,
+			java.math.BigDecimal shippingDiscountPercentageLevel2,
+			java.math.BigDecimal shippingDiscountPercentageLevel3,
+			java.math.BigDecimal shippingDiscountPercentageLevel4,
+			java.math.BigDecimal taxAmount, java.math.BigDecimal total,
+			java.math.BigDecimal totalDiscountAmount,
+			java.math.BigDecimal totalDiscountPercentageLevel1,
+			java.math.BigDecimal totalDiscountPercentageLevel2,
+			java.math.BigDecimal totalDiscountPercentageLevel3,
+			java.math.BigDecimal totalDiscountPercentageLevel4,
+			java.math.BigDecimal subtotalWithTaxAmount,
+			java.math.BigDecimal subtotalDiscountWithTaxAmount,
+			java.math.BigDecimal subtotalDiscountPercentageLevel1WithTaxAmount,
+			java.math.BigDecimal subtotalDiscountPercentageLevel2WithTaxAmount,
+			java.math.BigDecimal subtotalDiscountPercentageLevel3WithTaxAmount,
+			java.math.BigDecimal subtotalDiscountPercentageLevel4WithTaxAmount,
+			java.math.BigDecimal shippingWithTaxAmount,
+			java.math.BigDecimal shippingDiscountWithTaxAmount,
+			java.math.BigDecimal shippingDiscountPercentageLevel1WithTaxAmount,
+			java.math.BigDecimal shippingDiscountPercentageLevel2WithTaxAmount,
+			java.math.BigDecimal shippingDiscountPercentageLevel3WithTaxAmount,
+			java.math.BigDecimal shippingDiscountPercentageLevel4WithTaxAmount,
+			java.math.BigDecimal totalWithTaxAmount,
+			java.math.BigDecimal totalDiscountWithTaxAmount,
+			java.math.BigDecimal totalDiscountPercentageLevel1WithTaxAmount,
+			java.math.BigDecimal totalDiscountPercentageLevel2WithTaxAmount,
+			java.math.BigDecimal totalDiscountPercentageLevel3WithTaxAmount,
+			java.math.BigDecimal totalDiscountPercentageLevel4WithTaxAmount)
+		throws PortalException {
 
 		return getService().updateCommerceOrderPrices(
 			commerceOrderId, subtotal, subtotalDiscountAmount,
@@ -958,56 +916,53 @@ public class CommerceOrderLocalServiceUtil {
 			totalDiscountPercentageLevel4WithTaxAmount);
 	}
 
-	public static com.liferay.commerce.model.CommerceOrder
-			updateCommercePaymentMethodKey(
-				long commerceOrderId, String commercePaymentMethodKey)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceOrder updateCommercePaymentMethodKey(
+			long commerceOrderId, String commercePaymentMethodKey)
+		throws PortalException {
 
 		return getService().updateCommercePaymentMethodKey(
 			commerceOrderId, commercePaymentMethodKey);
 	}
 
-	public static com.liferay.commerce.model.CommerceOrder
-			updateCommerceShippingMethod(
-				long commerceOrderId, long commerceShippingMethodId,
-				String commerceShippingOptionName,
-				java.math.BigDecimal shippingAmount,
-				com.liferay.commerce.context.CommerceContext commerceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceOrder updateCommerceShippingMethod(
+			long commerceOrderId, long commerceShippingMethodId,
+			String commerceShippingOptionName,
+			java.math.BigDecimal shippingAmount,
+			com.liferay.commerce.context.CommerceContext commerceContext)
+		throws PortalException {
 
 		return getService().updateCommerceShippingMethod(
 			commerceOrderId, commerceShippingMethodId,
 			commerceShippingOptionName, shippingAmount, commerceContext);
 	}
 
-	public static com.liferay.commerce.model.CommerceOrder
-			updateCommerceShippingMethod(
-				long commerceOrderId, long commerceShippingMethodId,
-				String commerceShippingOptionName,
-				com.liferay.commerce.context.CommerceContext commerceContext,
-				java.util.Locale locale)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceOrder updateCommerceShippingMethod(
+			long commerceOrderId, long commerceShippingMethodId,
+			String commerceShippingOptionName,
+			com.liferay.commerce.context.CommerceContext commerceContext,
+			java.util.Locale locale)
+		throws PortalException {
 
 		return getService().updateCommerceShippingMethod(
 			commerceOrderId, commerceShippingMethodId,
 			commerceShippingOptionName, commerceContext, locale);
 	}
 
-	public static com.liferay.commerce.model.CommerceOrder updateCustomFields(
+	public static CommerceOrder updateCustomFields(
 			long commerceOrderId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateCustomFields(commerceOrderId, serviceContext);
 	}
 
-	public static com.liferay.commerce.model.CommerceOrder updateInfo(
+	public static CommerceOrder updateInfo(
 			long commerceOrderId, String printedNote,
 			int requestedDeliveryDateMonth, int requestedDeliveryDateDay,
 			int requestedDeliveryDateYear, int requestedDeliveryDateHour,
 			int requestedDeliveryDateMinute,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateInfo(
 			commerceOrderId, printedNote, requestedDeliveryDateMonth,
@@ -1016,74 +971,71 @@ public class CommerceOrderLocalServiceUtil {
 			serviceContext);
 	}
 
-	public static com.liferay.commerce.model.CommerceOrder updateOrderDate(
+	public static CommerceOrder updateOrderDate(
 			long commerceOrderId, int orderDateMonth, int orderDateDay,
 			int orderDateYear, int orderDateHour, int orderDateMinute,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateOrderDate(
 			commerceOrderId, orderDateMonth, orderDateDay, orderDateYear,
 			orderDateHour, orderDateMinute, serviceContext);
 	}
 
-	public static com.liferay.commerce.model.CommerceOrder updateOrderStatus(
+	public static CommerceOrder updateOrderStatus(
 			long commerceOrderId, int orderStatus)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateOrderStatus(commerceOrderId, orderStatus);
 	}
 
-	public static com.liferay.commerce.model.CommerceOrder updatePaymentStatus(
+	public static CommerceOrder updatePaymentStatus(
 			long userId, long commerceOrderId, int paymentStatus)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updatePaymentStatus(
 			userId, commerceOrderId, paymentStatus);
 	}
 
-	public static com.liferay.commerce.model.CommerceOrder
-			updatePaymentStatusAndTransactionId(
-				long userId, long commerceOrderId, int paymentStatus,
-				String transactionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceOrder updatePaymentStatusAndTransactionId(
+			long userId, long commerceOrderId, int paymentStatus,
+			String transactionId)
+		throws PortalException {
 
 		return getService().updatePaymentStatusAndTransactionId(
 			userId, commerceOrderId, paymentStatus, transactionId);
 	}
 
-	public static com.liferay.commerce.model.CommerceOrder updatePrintedNote(
+	public static CommerceOrder updatePrintedNote(
 			long commerceOrderId, String printedNote)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updatePrintedNote(commerceOrderId, printedNote);
 	}
 
-	public static com.liferay.commerce.model.CommerceOrder
-			updatePurchaseOrderNumber(
-				long commerceOrderId, String purchaseOrderNumber)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceOrder updatePurchaseOrderNumber(
+			long commerceOrderId, String purchaseOrderNumber)
+		throws PortalException {
 
 		return getService().updatePurchaseOrderNumber(
 			commerceOrderId, purchaseOrderNumber);
 	}
 
-	public static com.liferay.commerce.model.CommerceOrder
-			updateShippingAddress(long commerceOrderId, long shippingAddressId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceOrder updateShippingAddress(
+			long commerceOrderId, long shippingAddressId)
+		throws PortalException {
 
 		return getService().updateShippingAddress(
 			commerceOrderId, shippingAddressId);
 	}
 
-	public static com.liferay.commerce.model.CommerceOrder
-			updateShippingAddress(
-				long commerceOrderId, String name, String description,
-				String street1, String street2, String street3, String city,
-				String zip, long commerceRegionId, long commerceCountryId,
-				String phoneNumber,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceOrder updateShippingAddress(
+			long commerceOrderId, String name, String description,
+			String street1, String street2, String street3, String city,
+			String zip, long commerceRegionId, long commerceCountryId,
+			String phoneNumber,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().updateShippingAddress(
 			commerceOrderId, name, description, street1, street2, street3, city,
@@ -1091,31 +1043,30 @@ public class CommerceOrderLocalServiceUtil {
 			serviceContext);
 	}
 
-	public static com.liferay.commerce.model.CommerceOrder updateStatus(
+	public static CommerceOrder updateStatus(
 			long userId, long commerceOrderId, int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext,
-			java.util.Map<String, java.io.Serializable> workflowContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+			Map<String, Serializable> workflowContext)
+		throws PortalException {
 
 		return getService().updateStatus(
 			userId, commerceOrderId, status, serviceContext, workflowContext);
 	}
 
-	public static com.liferay.commerce.model.CommerceOrder updateTransactionId(
+	public static CommerceOrder updateTransactionId(
 			long commerceOrderId, String transactionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateTransactionId(commerceOrderId, transactionId);
 	}
 
-	public static com.liferay.commerce.model.CommerceOrder updateUser(
-			long commerceOrderId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceOrder updateUser(long commerceOrderId, long userId)
+		throws PortalException {
 
 		return getService().updateUser(commerceOrderId, userId);
 	}
 
-	public static com.liferay.commerce.model.CommerceOrder upsertCommerceOrder(
+	public static CommerceOrder upsertCommerceOrder(
 			String externalReferenceCode, long userId, long groupId,
 			long commerceAccountId, long commerceCurrencyId,
 			long billingAddressId, long shippingAddressId,
@@ -1131,7 +1082,7 @@ public class CommerceOrderLocalServiceUtil {
 			String advanceStatus,
 			com.liferay.commerce.context.CommerceContext commerceContext,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().upsertCommerceOrder(
 			externalReferenceCode, userId, groupId, commerceAccountId,
@@ -1144,7 +1095,7 @@ public class CommerceOrderLocalServiceUtil {
 			advanceStatus, commerceContext, serviceContext);
 	}
 
-	public static com.liferay.commerce.model.CommerceOrder upsertCommerceOrder(
+	public static CommerceOrder upsertCommerceOrder(
 			String externalReferenceCode, long userId, long groupId,
 			long commerceAccountId, long commerceCurrencyId,
 			long billingAddressId, long shippingAddressId,
@@ -1158,7 +1109,7 @@ public class CommerceOrderLocalServiceUtil {
 			int orderStatus, String advanceStatus,
 			com.liferay.commerce.context.CommerceContext commerceContext,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().upsertCommerceOrder(
 			externalReferenceCode, userId, groupId, commerceAccountId,
@@ -1174,7 +1125,7 @@ public class CommerceOrderLocalServiceUtil {
 	 * @deprecated As of Athanasius (7.3.x)
 	 */
 	@Deprecated
-	public static com.liferay.commerce.model.CommerceOrder upsertCommerceOrder(
+	public static CommerceOrder upsertCommerceOrder(
 			String externalReferenceCode, long userId, long groupId,
 			long commerceAccountId, long commerceCurrencyId,
 			long billingAddressId, long shippingAddressId,
@@ -1185,7 +1136,7 @@ public class CommerceOrderLocalServiceUtil {
 			String advanceStatus,
 			com.liferay.commerce.context.CommerceContext commerceContext,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().upsertCommerceOrder(
 			externalReferenceCode, userId, groupId, commerceAccountId,
@@ -1197,26 +1148,9 @@ public class CommerceOrderLocalServiceUtil {
 	}
 
 	public static CommerceOrderLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceOrderLocalService, CommerceOrderLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommerceOrderLocalService.class);
-
-		ServiceTracker<CommerceOrderLocalService, CommerceOrderLocalService>
-			serviceTracker =
-				new ServiceTracker
-					<CommerceOrderLocalService, CommerceOrderLocalService>(
-						bundle.getBundleContext(),
-						CommerceOrderLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceOrderLocalService _service;
 
 }

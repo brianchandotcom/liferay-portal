@@ -14,7 +14,10 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.EmailAddress;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for EmailAddress. This utility wraps
@@ -35,17 +38,17 @@ public class EmailAddressServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.service.impl.EmailAddressServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.kernel.model.EmailAddress addEmailAddress(
+	public static EmailAddress addEmailAddress(
 			String className, long classPK, String address, long typeId,
 			boolean primary, ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addEmailAddress(
 			className, classPK, address, typeId, primary, serviceContext);
 	}
 
 	public static void deleteEmailAddress(long emailAddressId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteEmailAddress(emailAddressId);
 	}
@@ -58,23 +61,21 @@ public class EmailAddressServiceUtil {
 	 an email address with the primary key could not be found or if
 	 the user did not have permission to view the email address
 	 */
-	public static com.liferay.portal.kernel.model.EmailAddress
-			fetchEmailAddress(long emailAddressId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static EmailAddress fetchEmailAddress(long emailAddressId)
+		throws PortalException {
 
 		return getService().fetchEmailAddress(emailAddressId);
 	}
 
-	public static com.liferay.portal.kernel.model.EmailAddress getEmailAddress(
-			long emailAddressId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static EmailAddress getEmailAddress(long emailAddressId)
+		throws PortalException {
 
 		return getService().getEmailAddress(emailAddressId);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.EmailAddress>
-			getEmailAddresses(String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<EmailAddress> getEmailAddresses(
+			String className, long classPK)
+		throws PortalException {
 
 		return getService().getEmailAddresses(className, classPK);
 	}
@@ -88,25 +89,18 @@ public class EmailAddressServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.portal.kernel.model.EmailAddress
-			updateEmailAddress(
-				long emailAddressId, String address, long typeId,
-				boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static EmailAddress updateEmailAddress(
+			long emailAddressId, String address, long typeId, boolean primary)
+		throws PortalException {
 
 		return getService().updateEmailAddress(
 			emailAddressId, address, typeId, primary);
 	}
 
 	public static EmailAddressService getService() {
-		if (_service == null) {
-			_service = (EmailAddressService)PortalBeanLocatorUtil.locate(
-				EmailAddressService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static EmailAddressService _service;
+	private static volatile EmailAddressService _service;
 
 }

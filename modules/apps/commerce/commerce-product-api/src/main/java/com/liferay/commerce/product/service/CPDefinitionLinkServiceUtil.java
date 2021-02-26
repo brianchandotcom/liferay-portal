@@ -14,9 +14,11 @@
 
 package com.liferay.commerce.product.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.product.model.CPDefinitionLink;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for CPDefinitionLink. This utility wraps
@@ -37,83 +39,73 @@ public class CPDefinitionLinkServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CPDefinitionLinkServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.commerce.product.model.CPDefinitionLink
-			addCPDefinitionLink(
-				long cpDefinitionId, long cProductId, double priority,
-				String type,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPDefinitionLink addCPDefinitionLink(
+			long cpDefinitionId, long cProductId, double priority, String type,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCPDefinitionLink(
 			cpDefinitionId, cProductId, priority, type, serviceContext);
 	}
 
 	public static void deleteCPDefinitionLink(long cpDefinitionLinkId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCPDefinitionLink(cpDefinitionLinkId);
 	}
 
-	public static com.liferay.commerce.product.model.CPDefinitionLink
-			fetchCPDefinitionLink(long cpDefinitionLinkId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPDefinitionLink fetchCPDefinitionLink(
+			long cpDefinitionLinkId)
+		throws PortalException {
 
 		return getService().fetchCPDefinitionLink(cpDefinitionLinkId);
 	}
 
-	public static com.liferay.commerce.product.model.CPDefinitionLink
-			getCPDefinitionLink(long cpDefinitionLinkId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPDefinitionLink getCPDefinitionLink(long cpDefinitionLinkId)
+		throws PortalException {
 
 		return getService().getCPDefinitionLink(cpDefinitionLinkId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.product.model.CPDefinitionLink>
-				getCPDefinitionLinks(long cpDefinitionId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CPDefinitionLink> getCPDefinitionLinks(
+			long cpDefinitionId)
+		throws PortalException {
 
 		return getService().getCPDefinitionLinks(cpDefinitionId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.product.model.CPDefinitionLink>
-				getCPDefinitionLinks(long cpDefinitionId, int start, int end)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CPDefinitionLink> getCPDefinitionLinks(
+			long cpDefinitionId, int start, int end)
+		throws PortalException {
 
 		return getService().getCPDefinitionLinks(cpDefinitionId, start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.product.model.CPDefinitionLink>
-				getCPDefinitionLinks(long cpDefinitionId, String type)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CPDefinitionLink> getCPDefinitionLinks(
+			long cpDefinitionId, String type)
+		throws PortalException {
 
 		return getService().getCPDefinitionLinks(cpDefinitionId, type);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.product.model.CPDefinitionLink>
-				getCPDefinitionLinks(
-					long cpDefinitionId, String type, int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						<com.liferay.commerce.product.model.CPDefinitionLink>
-							orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CPDefinitionLink> getCPDefinitionLinks(
+			long cpDefinitionId, String type, int start, int end,
+			OrderByComparator<CPDefinitionLink> orderByComparator)
+		throws PortalException {
 
 		return getService().getCPDefinitionLinks(
 			cpDefinitionId, type, start, end, orderByComparator);
 	}
 
 	public static int getCPDefinitionLinksCount(long cpDefinitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCPDefinitionLinksCount(cpDefinitionId);
 	}
 
 	public static int getCPDefinitionLinksCount(
 			long cpDefinitionId, String type)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCPDefinitionLinksCount(cpDefinitionId, type);
 	}
@@ -127,11 +119,10 @@ public class CPDefinitionLinkServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.commerce.product.model.CPDefinitionLink
-			updateCPDefinitionLink(
-				long cpDefinitionLinkId, double priority,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPDefinitionLink updateCPDefinitionLink(
+			long cpDefinitionLinkId, double priority,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().updateCPDefinitionLink(
 			cpDefinitionLinkId, priority, serviceContext);
@@ -140,32 +131,16 @@ public class CPDefinitionLinkServiceUtil {
 	public static void updateCPDefinitionLinks(
 			long cpDefinitionId, long[] cpDefinitionIds2, String type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().updateCPDefinitionLinks(
 			cpDefinitionId, cpDefinitionIds2, type, serviceContext);
 	}
 
 	public static CPDefinitionLinkService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CPDefinitionLinkService, CPDefinitionLinkService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(CPDefinitionLinkService.class);
-
-		ServiceTracker<CPDefinitionLinkService, CPDefinitionLinkService>
-			serviceTracker =
-				new ServiceTracker
-					<CPDefinitionLinkService, CPDefinitionLinkService>(
-						bundle.getBundleContext(),
-						CPDefinitionLinkService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CPDefinitionLinkService _service;
 
 }

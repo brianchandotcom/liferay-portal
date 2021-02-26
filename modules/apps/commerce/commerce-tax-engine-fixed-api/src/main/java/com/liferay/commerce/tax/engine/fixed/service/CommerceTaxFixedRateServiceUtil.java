@@ -14,9 +14,11 @@
 
 package com.liferay.commerce.tax.engine.fixed.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for CommerceTaxFixedRate. This utility wraps
@@ -42,61 +44,49 @@ public class CommerceTaxFixedRateServiceUtil {
 	 * @deprecated As of Athanasius (7.3.x)
 	 */
 	@Deprecated
-	public static
-		com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate
-				addCommerceTaxFixedRate(
-					long commerceTaxMethodId, long cpTaxCategoryId, double rate,
-					com.liferay.portal.kernel.service.ServiceContext
-						serviceContext)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceTaxFixedRate addCommerceTaxFixedRate(
+			long commerceTaxMethodId, long cpTaxCategoryId, double rate,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCommerceTaxFixedRate(
 			commerceTaxMethodId, cpTaxCategoryId, rate, serviceContext);
 	}
 
-	public static
-		com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate
-				addCommerceTaxFixedRate(
-					long userId, long groupId, long commerceTaxMethodId,
-					long cpTaxCategoryId, double rate)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceTaxFixedRate addCommerceTaxFixedRate(
+			long userId, long groupId, long commerceTaxMethodId,
+			long cpTaxCategoryId, double rate)
+		throws PortalException {
 
 		return getService().addCommerceTaxFixedRate(
 			userId, groupId, commerceTaxMethodId, cpTaxCategoryId, rate);
 	}
 
 	public static void deleteCommerceTaxFixedRate(long commerceTaxFixedRateId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommerceTaxFixedRate(commerceTaxFixedRateId);
 	}
 
-	public static
-		com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate
-				fetchCommerceTaxFixedRate(long commerceTaxFixedRateId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceTaxFixedRate fetchCommerceTaxFixedRate(
+			long commerceTaxFixedRateId)
+		throws PortalException {
 
 		return getService().fetchCommerceTaxFixedRate(commerceTaxFixedRateId);
 	}
 
-	public static
-		com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate
-				fetchCommerceTaxFixedRate(
-					long cpTaxCategoryId, long commerceTaxMethodId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceTaxFixedRate fetchCommerceTaxFixedRate(
+			long cpTaxCategoryId, long commerceTaxMethodId)
+		throws PortalException {
 
 		return getService().fetchCommerceTaxFixedRate(
 			cpTaxCategoryId, commerceTaxMethodId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate>
-				getCommerceTaxFixedRates(
-					long groupId, long commerceTaxMethodId, int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						<com.liferay.commerce.tax.engine.fixed.model.
-							CommerceTaxFixedRate> orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommerceTaxFixedRate> getCommerceTaxFixedRates(
+			long groupId, long commerceTaxMethodId, int start, int end,
+			OrderByComparator<CommerceTaxFixedRate> orderByComparator)
+		throws PortalException {
 
 		return getService().getCommerceTaxFixedRates(
 			groupId, commerceTaxMethodId, start, end, orderByComparator);
@@ -104,7 +94,7 @@ public class CommerceTaxFixedRateServiceUtil {
 
 	public static int getCommerceTaxFixedRatesCount(
 			long groupId, long commerceTaxMethodId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCommerceTaxFixedRatesCount(
 			groupId, commerceTaxMethodId);
@@ -119,38 +109,18 @@ public class CommerceTaxFixedRateServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static
-		com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate
-				updateCommerceTaxFixedRate(
-					long commerceTaxFixedRateId, double rate)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceTaxFixedRate updateCommerceTaxFixedRate(
+			long commerceTaxFixedRateId, double rate)
+		throws PortalException {
 
 		return getService().updateCommerceTaxFixedRate(
 			commerceTaxFixedRateId, rate);
 	}
 
 	public static CommerceTaxFixedRateService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceTaxFixedRateService, CommerceTaxFixedRateService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommerceTaxFixedRateService.class);
-
-		ServiceTracker<CommerceTaxFixedRateService, CommerceTaxFixedRateService>
-			serviceTracker =
-				new ServiceTracker
-					<CommerceTaxFixedRateService, CommerceTaxFixedRateService>(
-						bundle.getBundleContext(),
-						CommerceTaxFixedRateService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceTaxFixedRateService _service;
 
 }

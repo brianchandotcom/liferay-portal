@@ -14,9 +14,16 @@
 
 package com.liferay.portal.tools.service.builder.test.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.tools.service.builder.test.model.VersionedEntry;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for VersionedEntry. This utility wraps
@@ -48,22 +55,15 @@ public class VersionedEntryLocalServiceUtil {
 	 * @param versionedEntry the versioned entry
 	 * @return the versioned entry that was added
 	 */
-	public static
-		com.liferay.portal.tools.service.builder.test.model.VersionedEntry
-			addVersionedEntry(
-				com.liferay.portal.tools.service.builder.test.model.
-					VersionedEntry versionedEntry) {
+	public static VersionedEntry addVersionedEntry(
+		VersionedEntry versionedEntry) {
 
 		return getService().addVersionedEntry(versionedEntry);
 	}
 
-	public static
-		com.liferay.portal.tools.service.builder.test.model.VersionedEntry
-				checkout(
-					com.liferay.portal.tools.service.builder.test.model.
-						VersionedEntry publishedVersionedEntry,
-					int version)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static VersionedEntry checkout(
+			VersionedEntry publishedVersionedEntry, int version)
+		throws PortalException {
 
 		return getService().checkout(publishedVersionedEntry, version);
 	}
@@ -73,39 +73,28 @@ public class VersionedEntryLocalServiceUtil {
 	 *
 	 * @return the new versioned entry
 	 */
-	public static
-		com.liferay.portal.tools.service.builder.test.model.VersionedEntry
-			create() {
-
+	public static VersionedEntry create() {
 		return getService().create();
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
 
-	public static
-		com.liferay.portal.tools.service.builder.test.model.VersionedEntry
-				delete(
-					com.liferay.portal.tools.service.builder.test.model.
-						VersionedEntry publishedVersionedEntry)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static VersionedEntry delete(VersionedEntry publishedVersionedEntry)
+		throws PortalException {
 
 		return getService().delete(publishedVersionedEntry);
 	}
 
-	public static
-		com.liferay.portal.tools.service.builder.test.model.VersionedEntry
-				deleteDraft(
-					com.liferay.portal.tools.service.builder.test.model.
-						VersionedEntry draftVersionedEntry)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static VersionedEntry deleteDraft(VersionedEntry draftVersionedEntry)
+		throws PortalException {
 
 		return getService().deleteDraft(draftVersionedEntry);
 	}
@@ -113,10 +102,9 @@ public class VersionedEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
@@ -126,7 +114,7 @@ public class VersionedEntryLocalServiceUtil {
 			VersionedEntryVersion deleteVersion(
 					com.liferay.portal.tools.service.builder.test.model.
 						VersionedEntryVersion versionedEntryVersion)
-				throws com.liferay.portal.kernel.exception.PortalException {
+				throws PortalException {
 
 		return getService().deleteVersion(versionedEntryVersion);
 	}
@@ -142,10 +130,8 @@ public class VersionedEntryLocalServiceUtil {
 	 * @return the versioned entry that was removed
 	 * @throws PortalException if a versioned entry with the primary key could not be found
 	 */
-	public static
-		com.liferay.portal.tools.service.builder.test.model.VersionedEntry
-				deleteVersionedEntry(long versionedEntryId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static VersionedEntry deleteVersionedEntry(long versionedEntryId)
+		throws PortalException {
 
 		return getService().deleteVersionedEntry(versionedEntryId);
 	}
@@ -160,24 +146,17 @@ public class VersionedEntryLocalServiceUtil {
 	 * @param versionedEntry the versioned entry
 	 * @return the versioned entry that was removed
 	 */
-	public static
-		com.liferay.portal.tools.service.builder.test.model.VersionedEntry
-			deleteVersionedEntry(
-				com.liferay.portal.tools.service.builder.test.model.
-					VersionedEntry versionedEntry) {
+	public static VersionedEntry deleteVersionedEntry(
+		VersionedEntry versionedEntry) {
 
 		return getService().deleteVersionedEntry(versionedEntry);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -187,9 +166,7 @@ public class VersionedEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -205,9 +182,8 @@ public class VersionedEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -225,10 +201,9 @@ public class VersionedEntryLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -240,9 +215,7 @@ public class VersionedEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -254,57 +227,37 @@ public class VersionedEntryLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static
-		com.liferay.portal.tools.service.builder.test.model.VersionedEntry
-			fetchDraft(long primaryKey) {
-
+	public static VersionedEntry fetchDraft(long primaryKey) {
 		return getService().fetchDraft(primaryKey);
 	}
 
-	public static
-		com.liferay.portal.tools.service.builder.test.model.VersionedEntry
-			fetchDraft(
-				com.liferay.portal.tools.service.builder.test.model.
-					VersionedEntry versionedEntry) {
-
+	public static VersionedEntry fetchDraft(VersionedEntry versionedEntry) {
 		return getService().fetchDraft(versionedEntry);
 	}
 
 	public static
 		com.liferay.portal.tools.service.builder.test.model.
 			VersionedEntryVersion fetchLatestVersion(
-				com.liferay.portal.tools.service.builder.test.model.
-					VersionedEntry versionedEntry) {
+				VersionedEntry versionedEntry) {
 
 		return getService().fetchLatestVersion(versionedEntry);
 	}
 
-	public static
-		com.liferay.portal.tools.service.builder.test.model.VersionedEntry
-			fetchPublished(long primaryKey) {
-
+	public static VersionedEntry fetchPublished(long primaryKey) {
 		return getService().fetchPublished(primaryKey);
 	}
 
-	public static
-		com.liferay.portal.tools.service.builder.test.model.VersionedEntry
-			fetchPublished(
-				com.liferay.portal.tools.service.builder.test.model.
-					VersionedEntry versionedEntry) {
-
+	public static VersionedEntry fetchPublished(VersionedEntry versionedEntry) {
 		return getService().fetchPublished(versionedEntry);
 	}
 
-	public static
-		com.liferay.portal.tools.service.builder.test.model.VersionedEntry
-			fetchVersionedEntry(long versionedEntryId) {
-
+	public static VersionedEntry fetchVersionedEntry(long versionedEntryId) {
 		return getService().fetchVersionedEntry(versionedEntryId);
 	}
 
@@ -314,20 +267,14 @@ public class VersionedEntryLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
-	public static
-		com.liferay.portal.tools.service.builder.test.model.VersionedEntry
-				getDraft(long primaryKey)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static VersionedEntry getDraft(long primaryKey)
+		throws PortalException {
 
 		return getService().getDraft(primaryKey);
 	}
 
-	public static
-		com.liferay.portal.tools.service.builder.test.model.VersionedEntry
-				getDraft(
-					com.liferay.portal.tools.service.builder.test.model.
-						VersionedEntry versionedEntry)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static VersionedEntry getDraft(VersionedEntry versionedEntry)
+		throws PortalException {
 
 		return getService().getDraft(versionedEntry);
 	}
@@ -351,9 +298,8 @@ public class VersionedEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -361,10 +307,8 @@ public class VersionedEntryLocalServiceUtil {
 	public static
 		com.liferay.portal.tools.service.builder.test.model.
 			VersionedEntryVersion getVersion(
-					com.liferay.portal.tools.service.builder.test.model.
-						VersionedEntry versionedEntry,
-					int version)
-				throws com.liferay.portal.kernel.exception.PortalException {
+					VersionedEntry versionedEntry, int version)
+				throws PortalException {
 
 		return getService().getVersion(versionedEntry, version);
 	}
@@ -380,10 +324,7 @@ public class VersionedEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of versioned entries (not inclusive)
 	 * @return the range of versioned entries
 	 */
-	public static java.util.List
-		<com.liferay.portal.tools.service.builder.test.model.VersionedEntry>
-			getVersionedEntries(int start, int end) {
-
+	public static List<VersionedEntry> getVersionedEntries(int start, int end) {
 		return getService().getVersionedEntries(start, end);
 	}
 
@@ -403,36 +344,29 @@ public class VersionedEntryLocalServiceUtil {
 	 * @return the versioned entry
 	 * @throws PortalException if a versioned entry with the primary key could not be found
 	 */
-	public static
-		com.liferay.portal.tools.service.builder.test.model.VersionedEntry
-				getVersionedEntry(long versionedEntryId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static VersionedEntry getVersionedEntry(long versionedEntryId)
+		throws PortalException {
 
 		return getService().getVersionedEntry(versionedEntryId);
 	}
 
-	public static java.util.List
+	public static List
 		<com.liferay.portal.tools.service.builder.test.model.
-			VersionedEntryVersion> getVersions(
-				com.liferay.portal.tools.service.builder.test.model.
-					VersionedEntry versionedEntry) {
+			VersionedEntryVersion> getVersions(VersionedEntry versionedEntry) {
 
 		return getService().getVersions(versionedEntry);
 	}
 
-	public static
-		com.liferay.portal.tools.service.builder.test.model.VersionedEntry
-				publishDraft(
-					com.liferay.portal.tools.service.builder.test.model.
-						VersionedEntry draftVersionedEntry)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static VersionedEntry publishDraft(
+			VersionedEntry draftVersionedEntry)
+		throws PortalException {
 
 		return getService().publishDraft(draftVersionedEntry);
 	}
 
 	public static void registerListener(
 		com.liferay.portal.kernel.service.version.VersionServiceListener
-			<com.liferay.portal.tools.service.builder.test.model.VersionedEntry,
+			<VersionedEntry,
 			 com.liferay.portal.tools.service.builder.test.model.
 				 VersionedEntryVersion> versionServiceListener) {
 
@@ -441,19 +375,15 @@ public class VersionedEntryLocalServiceUtil {
 
 	public static void unregisterListener(
 		com.liferay.portal.kernel.service.version.VersionServiceListener
-			<com.liferay.portal.tools.service.builder.test.model.VersionedEntry,
+			<VersionedEntry,
 			 com.liferay.portal.tools.service.builder.test.model.
 				 VersionedEntryVersion> versionServiceListener) {
 
 		getService().unregisterListener(versionServiceListener);
 	}
 
-	public static
-		com.liferay.portal.tools.service.builder.test.model.VersionedEntry
-				updateDraft(
-					com.liferay.portal.tools.service.builder.test.model.
-						VersionedEntry draftVersionedEntry)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static VersionedEntry updateDraft(VersionedEntry draftVersionedEntry)
+		throws PortalException {
 
 		return getService().updateDraft(draftVersionedEntry);
 	}
@@ -468,38 +398,17 @@ public class VersionedEntryLocalServiceUtil {
 	 * @param versionedEntry the versioned entry
 	 * @return the versioned entry that was updated
 	 */
-	public static
-		com.liferay.portal.tools.service.builder.test.model.VersionedEntry
-				updateVersionedEntry(
-					com.liferay.portal.tools.service.builder.test.model.
-						VersionedEntry draftVersionedEntry)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static VersionedEntry updateVersionedEntry(
+			VersionedEntry draftVersionedEntry)
+		throws PortalException {
 
 		return getService().updateVersionedEntry(draftVersionedEntry);
 	}
 
 	public static VersionedEntryLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<VersionedEntryLocalService, VersionedEntryLocalService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			VersionedEntryLocalService.class);
-
-		ServiceTracker<VersionedEntryLocalService, VersionedEntryLocalService>
-			serviceTracker =
-				new ServiceTracker
-					<VersionedEntryLocalService, VersionedEntryLocalService>(
-						bundle.getBundleContext(),
-						VersionedEntryLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile VersionedEntryLocalService _service;
 
 }

@@ -14,7 +14,14 @@
 
 package com.liferay.powwow.service;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.powwow.model.PowwowMeeting;
+
+import java.io.Serializable;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the remote service utility for PowwowMeeting. This utility wraps
@@ -35,15 +42,14 @@ public class PowwowMeetingServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.powwow.service.impl.PowwowMeetingServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.powwow.model.PowwowMeeting addPowwowMeeting(
+	public static PowwowMeeting addPowwowMeeting(
 			long groupId, String portletId, long powwowServerId, String name,
 			String description, String providerType,
-			java.util.Map<String, java.io.Serializable> providerTypeMetadataMap,
+			Map<String, Serializable> providerTypeMetadataMap,
 			String languageId, long calendarBookingId, int status,
-			java.util.List<com.liferay.powwow.model.PowwowParticipant>
-				powwowParticipants,
+			List<com.liferay.powwow.model.PowwowParticipant> powwowParticipants,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addPowwowMeeting(
 			groupId, portletId, powwowServerId, name, description, providerType,
@@ -51,9 +57,8 @@ public class PowwowMeetingServiceUtil {
 			powwowParticipants, serviceContext);
 	}
 
-	public static com.liferay.powwow.model.PowwowMeeting deletePowwowMeeting(
-			long powwowMeetingId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PowwowMeeting deletePowwowMeeting(long powwowMeetingId)
+		throws PortalException {
 
 		return getService().deletePowwowMeeting(powwowMeetingId);
 	}
@@ -67,18 +72,15 @@ public class PowwowMeetingServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.powwow.model.PowwowMeeting getPowwowMeeting(
-			long powwowMeetingId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PowwowMeeting getPowwowMeeting(long powwowMeetingId)
+		throws PortalException {
 
 		return getService().getPowwowMeeting(powwowMeetingId);
 	}
 
-	public static java.util.List<com.liferay.powwow.model.PowwowMeeting>
-		getPowwowMeetings(
-			long groupId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.powwow.model.PowwowMeeting> orderByComparator) {
+	public static List<PowwowMeeting> getPowwowMeetings(
+		long groupId, int start, int end,
+		OrderByComparator<PowwowMeeting> orderByComparator) {
 
 		return getService().getPowwowMeetings(
 			groupId, start, end, orderByComparator);
@@ -88,15 +90,14 @@ public class PowwowMeetingServiceUtil {
 		return getService().getPowwowMeetingsCount(groupId);
 	}
 
-	public static com.liferay.powwow.model.PowwowMeeting updatePowwowMeeting(
+	public static PowwowMeeting updatePowwowMeeting(
 			long powwowMeetingId, long powwowServerId, String name,
 			String description, String providerType,
-			java.util.Map<String, java.io.Serializable> providerTypeMetadataMap,
+			Map<String, Serializable> providerTypeMetadataMap,
 			String languageId, long calendarBookingId, int status,
-			java.util.List<com.liferay.powwow.model.PowwowParticipant>
-				powwowParticipants,
+			List<com.liferay.powwow.model.PowwowParticipant> powwowParticipants,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updatePowwowMeeting(
 			powwowMeetingId, powwowServerId, name, description, providerType,
@@ -109,15 +110,9 @@ public class PowwowMeetingServiceUtil {
 	}
 
 	public static PowwowMeetingService getService() {
-		if (_service == null) {
-			_service = (PowwowMeetingService)PortletBeanLocatorUtil.locate(
-				ServletContextUtil.getServletContextName(),
-				PowwowMeetingService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static PowwowMeetingService _service;
+	private static volatile PowwowMeetingService _service;
 
 }

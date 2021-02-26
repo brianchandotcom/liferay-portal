@@ -14,9 +14,16 @@
 
 package com.liferay.commerce.notification.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.notification.model.CommerceNotificationTemplateCommerceAccountGroupRel;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for CommerceNotificationTemplateCommerceAccountGroupRel. This utility wraps
@@ -49,26 +56,22 @@ public class
 	 * @param commerceNotificationTemplateCommerceAccountGroupRel the commerce notification template commerce account group rel
 	 * @return the commerce notification template commerce account group rel that was added
 	 */
-	public static com.liferay.commerce.notification.model.
-		CommerceNotificationTemplateCommerceAccountGroupRel
-			addCommerceNotificationTemplateCommerceAccountGroupRel(
-				com.liferay.commerce.notification.model.
-					CommerceNotificationTemplateCommerceAccountGroupRel
-						commerceNotificationTemplateCommerceAccountGroupRel) {
+	public static CommerceNotificationTemplateCommerceAccountGroupRel
+		addCommerceNotificationTemplateCommerceAccountGroupRel(
+			CommerceNotificationTemplateCommerceAccountGroupRel
+				commerceNotificationTemplateCommerceAccountGroupRel) {
 
 		return getService().
 			addCommerceNotificationTemplateCommerceAccountGroupRel(
 				commerceNotificationTemplateCommerceAccountGroupRel);
 	}
 
-	public static com.liferay.commerce.notification.model.
-		CommerceNotificationTemplateCommerceAccountGroupRel
-				addCommerceNotificationTemplateCommerceAccountGroupRel(
-					long commerceNotificationTemplateId,
-					long commerceAccountGroupId,
-					com.liferay.portal.kernel.service.ServiceContext
-						serviceContext)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceNotificationTemplateCommerceAccountGroupRel
+			addCommerceNotificationTemplateCommerceAccountGroupRel(
+				long commerceNotificationTemplateId,
+				long commerceAccountGroupId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().
 			addCommerceNotificationTemplateCommerceAccountGroupRel(
@@ -82,10 +85,9 @@ public class
 	 * @param commerceNotificationTemplateCommerceAccountGroupRelId the primary key for the new commerce notification template commerce account group rel
 	 * @return the new commerce notification template commerce account group rel
 	 */
-	public static com.liferay.commerce.notification.model.
-		CommerceNotificationTemplateCommerceAccountGroupRel
-			createCommerceNotificationTemplateCommerceAccountGroupRel(
-				long commerceNotificationTemplateCommerceAccountGroupRelId) {
+	public static CommerceNotificationTemplateCommerceAccountGroupRel
+		createCommerceNotificationTemplateCommerceAccountGroupRel(
+			long commerceNotificationTemplateCommerceAccountGroupRelId) {
 
 		return getService().
 			createCommerceNotificationTemplateCommerceAccountGroupRel(
@@ -95,9 +97,9 @@ public class
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -130,12 +132,10 @@ public class
 	 * @param commerceNotificationTemplateCommerceAccountGroupRel the commerce notification template commerce account group rel
 	 * @return the commerce notification template commerce account group rel that was removed
 	 */
-	public static com.liferay.commerce.notification.model.
-		CommerceNotificationTemplateCommerceAccountGroupRel
-			deleteCommerceNotificationTemplateCommerceAccountGroupRel(
-				com.liferay.commerce.notification.model.
-					CommerceNotificationTemplateCommerceAccountGroupRel
-						commerceNotificationTemplateCommerceAccountGroupRel) {
+	public static CommerceNotificationTemplateCommerceAccountGroupRel
+		deleteCommerceNotificationTemplateCommerceAccountGroupRel(
+			CommerceNotificationTemplateCommerceAccountGroupRel
+				commerceNotificationTemplateCommerceAccountGroupRel) {
 
 		return getService().
 			deleteCommerceNotificationTemplateCommerceAccountGroupRel(
@@ -153,11 +153,10 @@ public class
 	 * @return the commerce notification template commerce account group rel that was removed
 	 * @throws PortalException if a commerce notification template commerce account group rel with the primary key could not be found
 	 */
-	public static com.liferay.commerce.notification.model.
-		CommerceNotificationTemplateCommerceAccountGroupRel
-				deleteCommerceNotificationTemplateCommerceAccountGroupRel(
-					long commerceNotificationTemplateCommerceAccountGroupRelId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceNotificationTemplateCommerceAccountGroupRel
+			deleteCommerceNotificationTemplateCommerceAccountGroupRel(
+				long commerceNotificationTemplateCommerceAccountGroupRelId)
+		throws PortalException {
 
 		return getService().
 			deleteCommerceNotificationTemplateCommerceAccountGroupRel(
@@ -167,23 +166,18 @@ public class
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -193,9 +187,7 @@ public class
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -211,9 +203,8 @@ public class
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -231,10 +222,9 @@ public class
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -246,9 +236,7 @@ public class
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -260,27 +248,24 @@ public class
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.commerce.notification.model.
-		CommerceNotificationTemplateCommerceAccountGroupRel
-			fetchCommerceNotificationTemplateCommerceAccountGroupRel(
-				long commerceNotificationTemplateCommerceAccountGroupRelId) {
+	public static CommerceNotificationTemplateCommerceAccountGroupRel
+		fetchCommerceNotificationTemplateCommerceAccountGroupRel(
+			long commerceNotificationTemplateCommerceAccountGroupRelId) {
 
 		return getService().
 			fetchCommerceNotificationTemplateCommerceAccountGroupRel(
 				commerceNotificationTemplateCommerceAccountGroupRelId);
 	}
 
-	public static com.liferay.commerce.notification.model.
-		CommerceNotificationTemplateCommerceAccountGroupRel
-			fetchCommerceNotificationTemplateCommerceAccountGroupRel(
-				long commerceNotificationTemplateId,
-				long commerceAccountGroupId) {
+	public static CommerceNotificationTemplateCommerceAccountGroupRel
+		fetchCommerceNotificationTemplateCommerceAccountGroupRel(
+			long commerceNotificationTemplateId, long commerceAccountGroupId) {
 
 		return getService().
 			fetchCommerceNotificationTemplateCommerceAccountGroupRel(
@@ -300,11 +285,10 @@ public class
 	 * @return the commerce notification template commerce account group rel
 	 * @throws PortalException if a commerce notification template commerce account group rel with the primary key could not be found
 	 */
-	public static com.liferay.commerce.notification.model.
-		CommerceNotificationTemplateCommerceAccountGroupRel
-				getCommerceNotificationTemplateCommerceAccountGroupRel(
-					long commerceNotificationTemplateCommerceAccountGroupRelId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceNotificationTemplateCommerceAccountGroupRel
+			getCommerceNotificationTemplateCommerceAccountGroupRel(
+				long commerceNotificationTemplateCommerceAccountGroupRelId)
+		throws PortalException {
 
 		return getService().
 			getCommerceNotificationTemplateCommerceAccountGroupRel(
@@ -322,25 +306,20 @@ public class
 	 * @param end the upper bound of the range of commerce notification template commerce account group rels (not inclusive)
 	 * @return the range of commerce notification template commerce account group rels
 	 */
-	public static java.util.List
-		<com.liferay.commerce.notification.model.
-			CommerceNotificationTemplateCommerceAccountGroupRel>
-				getCommerceNotificationTemplateCommerceAccountGroupRels(
-					int start, int end) {
+	public static List<CommerceNotificationTemplateCommerceAccountGroupRel>
+		getCommerceNotificationTemplateCommerceAccountGroupRels(
+			int start, int end) {
 
 		return getService().
 			getCommerceNotificationTemplateCommerceAccountGroupRels(start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.notification.model.
-			CommerceNotificationTemplateCommerceAccountGroupRel>
-				getCommerceNotificationTemplateCommerceAccountGroupRels(
-					long commerceNotificationTemplateId, int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						<com.liferay.commerce.notification.model.
-							CommerceNotificationTemplateCommerceAccountGroupRel>
-								orderByComparator) {
+	public static List<CommerceNotificationTemplateCommerceAccountGroupRel>
+		getCommerceNotificationTemplateCommerceAccountGroupRels(
+			long commerceNotificationTemplateId, int start, int end,
+			OrderByComparator
+				<CommerceNotificationTemplateCommerceAccountGroupRel>
+					orderByComparator) {
 
 		return getService().
 			getCommerceNotificationTemplateCommerceAccountGroupRels(
@@ -378,9 +357,8 @@ public class
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -395,12 +373,10 @@ public class
 	 * @param commerceNotificationTemplateCommerceAccountGroupRel the commerce notification template commerce account group rel
 	 * @return the commerce notification template commerce account group rel that was updated
 	 */
-	public static com.liferay.commerce.notification.model.
-		CommerceNotificationTemplateCommerceAccountGroupRel
-			updateCommerceNotificationTemplateCommerceAccountGroupRel(
-				com.liferay.commerce.notification.model.
-					CommerceNotificationTemplateCommerceAccountGroupRel
-						commerceNotificationTemplateCommerceAccountGroupRel) {
+	public static CommerceNotificationTemplateCommerceAccountGroupRel
+		updateCommerceNotificationTemplateCommerceAccountGroupRel(
+			CommerceNotificationTemplateCommerceAccountGroupRel
+				commerceNotificationTemplateCommerceAccountGroupRel) {
 
 		return getService().
 			updateCommerceNotificationTemplateCommerceAccountGroupRel(
@@ -411,33 +387,11 @@ public class
 		CommerceNotificationTemplateCommerceAccountGroupRelLocalService
 			getService() {
 
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceNotificationTemplateCommerceAccountGroupRelLocalService,
-		 CommerceNotificationTemplateCommerceAccountGroupRelLocalService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommerceNotificationTemplateCommerceAccountGroupRelLocalService.
-				class);
-
-		ServiceTracker
-			<CommerceNotificationTemplateCommerceAccountGroupRelLocalService,
-			 CommerceNotificationTemplateCommerceAccountGroupRelLocalService>
-				serviceTracker =
-					new ServiceTracker
-						<CommerceNotificationTemplateCommerceAccountGroupRelLocalService,
-						 CommerceNotificationTemplateCommerceAccountGroupRelLocalService>(
-							 bundle.getBundleContext(),
-							 CommerceNotificationTemplateCommerceAccountGroupRelLocalService.class,
-							 null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile
+		CommerceNotificationTemplateCommerceAccountGroupRelLocalService
+			_service;
 
 }

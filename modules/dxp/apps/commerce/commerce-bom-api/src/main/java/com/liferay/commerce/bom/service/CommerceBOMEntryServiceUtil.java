@@ -14,9 +14,10 @@
 
 package com.liferay.commerce.bom.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.bom.model.CommerceBOMEntry;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for CommerceBOMEntry. This utility wraps
@@ -37,12 +38,11 @@ public class CommerceBOMEntryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.bom.service.impl.CommerceBOMEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.commerce.bom.model.CommerceBOMEntry
-			addCommerceBOMEntry(
-				long userId, int number, String cpInstanceUuid, long cProductId,
-				long commerceBOMDefinitionId, double positionX,
-				double positionY, double radius)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceBOMEntry addCommerceBOMEntry(
+			long userId, int number, String cpInstanceUuid, long cProductId,
+			long commerceBOMDefinitionId, double positionX, double positionY,
+			double radius)
+		throws PortalException {
 
 		return getService().addCommerceBOMEntry(
 			userId, number, cpInstanceUuid, cProductId, commerceBOMDefinitionId,
@@ -50,29 +50,27 @@ public class CommerceBOMEntryServiceUtil {
 	}
 
 	public static void deleteCommerceBOMEntry(long commerceBOMEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommerceBOMEntry(commerceBOMEntryId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.bom.model.CommerceBOMEntry> getCommerceBOMEntries(
-				long commerceBOMDefinitionId, int start, int end)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommerceBOMEntry> getCommerceBOMEntries(
+			long commerceBOMDefinitionId, int start, int end)
+		throws PortalException {
 
 		return getService().getCommerceBOMEntries(
 			commerceBOMDefinitionId, start, end);
 	}
 
 	public static int getCommerceBOMEntriesCount(long commerceBOMDefinitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCommerceBOMEntriesCount(commerceBOMDefinitionId);
 	}
 
-	public static com.liferay.commerce.bom.model.CommerceBOMEntry
-			getCommerceBOMEntry(long commerceBOMEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceBOMEntry getCommerceBOMEntry(long commerceBOMEntryId)
+		throws PortalException {
 
 		return getService().getCommerceBOMEntry(commerceBOMEntryId);
 	}
@@ -86,12 +84,10 @@ public class CommerceBOMEntryServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.commerce.bom.model.CommerceBOMEntry
-			updateCommerceBOMEntry(
-				long commerceBOMEntryId, int number, String cpInstanceUuid,
-				long cProductId, double positionX, double positionY,
-				double radius)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceBOMEntry updateCommerceBOMEntry(
+			long commerceBOMEntryId, int number, String cpInstanceUuid,
+			long cProductId, double positionX, double positionY, double radius)
+		throws PortalException {
 
 		return getService().updateCommerceBOMEntry(
 			commerceBOMEntryId, number, cpInstanceUuid, cProductId, positionX,
@@ -99,25 +95,9 @@ public class CommerceBOMEntryServiceUtil {
 	}
 
 	public static CommerceBOMEntryService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceBOMEntryService, CommerceBOMEntryService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(CommerceBOMEntryService.class);
-
-		ServiceTracker<CommerceBOMEntryService, CommerceBOMEntryService>
-			serviceTracker =
-				new ServiceTracker
-					<CommerceBOMEntryService, CommerceBOMEntryService>(
-						bundle.getBundleContext(),
-						CommerceBOMEntryService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceBOMEntryService _service;
 
 }

@@ -14,9 +14,12 @@
 
 package com.liferay.calendar.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.calendar.model.CalendarResource;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the remote service utility for CalendarResource. This utility wraps
@@ -37,37 +40,34 @@ public class CalendarResourceServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.calendar.service.impl.CalendarResourceServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.calendar.model.CalendarResource
-			addCalendarResource(
-				long groupId, long classNameId, long classPK, String classUuid,
-				String code, java.util.Map<java.util.Locale, String> nameMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				boolean active,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CalendarResource addCalendarResource(
+			long groupId, long classNameId, long classPK, String classUuid,
+			String code, Map<java.util.Locale, String> nameMap,
+			Map<java.util.Locale, String> descriptionMap, boolean active,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCalendarResource(
 			groupId, classNameId, classPK, classUuid, code, nameMap,
 			descriptionMap, active, serviceContext);
 	}
 
-	public static com.liferay.calendar.model.CalendarResource
-			deleteCalendarResource(long calendarResourceId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CalendarResource deleteCalendarResource(
+			long calendarResourceId)
+		throws PortalException {
 
 		return getService().deleteCalendarResource(calendarResourceId);
 	}
 
-	public static com.liferay.calendar.model.CalendarResource
-			fetchCalendarResource(long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CalendarResource fetchCalendarResource(
+			long classNameId, long classPK)
+		throws PortalException {
 
 		return getService().fetchCalendarResource(classNameId, classPK);
 	}
 
-	public static com.liferay.calendar.model.CalendarResource
-			getCalendarResource(long calendarResourceId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CalendarResource getCalendarResource(long calendarResourceId)
+		throws PortalException {
 
 		return getService().getCalendarResource(calendarResourceId);
 	}
@@ -81,28 +81,21 @@ public class CalendarResourceServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static java.util.List<com.liferay.calendar.model.CalendarResource>
-		search(
-			long companyId, long[] groupIds, long[] classNameIds,
-			String keywords, boolean active, boolean andOperator, int start,
-			int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.calendar.model.CalendarResource>
-					orderByComparator) {
+	public static List<CalendarResource> search(
+		long companyId, long[] groupIds, long[] classNameIds, String keywords,
+		boolean active, boolean andOperator, int start, int end,
+		OrderByComparator<CalendarResource> orderByComparator) {
 
 		return getService().search(
 			companyId, groupIds, classNameIds, keywords, active, andOperator,
 			start, end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.calendar.model.CalendarResource>
-		search(
-			long companyId, long[] groupIds, long[] classNameIds, String code,
-			String name, String description, boolean active,
-			boolean andOperator, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.calendar.model.CalendarResource>
-					orderByComparator) {
+	public static List<CalendarResource> search(
+		long companyId, long[] groupIds, long[] classNameIds, String code,
+		String name, String description, boolean active, boolean andOperator,
+		int start, int end,
+		OrderByComparator<CalendarResource> orderByComparator) {
 
 		return getService().search(
 			companyId, groupIds, classNameIds, code, name, description, active,
@@ -126,14 +119,11 @@ public class CalendarResourceServiceUtil {
 			andOperator);
 	}
 
-	public static com.liferay.calendar.model.CalendarResource
-			updateCalendarResource(
-				long calendarResourceId,
-				java.util.Map<java.util.Locale, String> nameMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				boolean active,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CalendarResource updateCalendarResource(
+			long calendarResourceId, Map<java.util.Locale, String> nameMap,
+			Map<java.util.Locale, String> descriptionMap, boolean active,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().updateCalendarResource(
 			calendarResourceId, nameMap, descriptionMap, active,
@@ -141,25 +131,9 @@ public class CalendarResourceServiceUtil {
 	}
 
 	public static CalendarResourceService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CalendarResourceService, CalendarResourceService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(CalendarResourceService.class);
-
-		ServiceTracker<CalendarResourceService, CalendarResourceService>
-			serviceTracker =
-				new ServiceTracker
-					<CalendarResourceService, CalendarResourceService>(
-						bundle.getBundleContext(),
-						CalendarResourceService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CalendarResourceService _service;
 
 }

@@ -14,9 +14,16 @@
 
 package com.liferay.dynamic.data.mapping.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceLink;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for DDMDataProviderInstanceLink. This utility wraps
@@ -37,10 +44,8 @@ public class DDMDataProviderInstanceLinkLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.dynamic.data.mapping.service.impl.DDMDataProviderInstanceLinkLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static
-		com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceLink
-			addDataProviderInstanceLink(
-				long dataProviderInstanceId, long structureId) {
+	public static DDMDataProviderInstanceLink addDataProviderInstanceLink(
+		long dataProviderInstanceId, long structureId) {
 
 		return getService().addDataProviderInstanceLink(
 			dataProviderInstanceId, structureId);
@@ -56,11 +61,8 @@ public class DDMDataProviderInstanceLinkLocalServiceUtil {
 	 * @param ddmDataProviderInstanceLink the ddm data provider instance link
 	 * @return the ddm data provider instance link that was added
 	 */
-	public static
-		com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceLink
-			addDDMDataProviderInstanceLink(
-				com.liferay.dynamic.data.mapping.model.
-					DDMDataProviderInstanceLink ddmDataProviderInstanceLink) {
+	public static DDMDataProviderInstanceLink addDDMDataProviderInstanceLink(
+		DDMDataProviderInstanceLink ddmDataProviderInstanceLink) {
 
 		return getService().addDDMDataProviderInstanceLink(
 			ddmDataProviderInstanceLink);
@@ -72,9 +74,8 @@ public class DDMDataProviderInstanceLinkLocalServiceUtil {
 	 * @param dataProviderInstanceLinkId the primary key for the new ddm data provider instance link
 	 * @return the new ddm data provider instance link
 	 */
-	public static
-		com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceLink
-			createDDMDataProviderInstanceLink(long dataProviderInstanceLinkId) {
+	public static DDMDataProviderInstanceLink createDDMDataProviderInstanceLink(
+		long dataProviderInstanceLinkId) {
 
 		return getService().createDDMDataProviderInstanceLink(
 			dataProviderInstanceLinkId);
@@ -83,30 +84,29 @@ public class DDMDataProviderInstanceLinkLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
 
 	public static void deleteDataProviderInstanceLink(
-		com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceLink
-			dataProviderInstanceLink) {
+		DDMDataProviderInstanceLink dataProviderInstanceLink) {
 
 		getService().deleteDataProviderInstanceLink(dataProviderInstanceLink);
 	}
 
 	public static void deleteDataProviderInstanceLink(
 			long dataProviderInstanceLinkId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteDataProviderInstanceLink(dataProviderInstanceLinkId);
 	}
 
 	public static void deleteDataProviderInstanceLink(
 			long dataProviderInstanceId, long structureId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteDataProviderInstanceLink(
 			dataProviderInstanceId, structureId);
@@ -126,11 +126,8 @@ public class DDMDataProviderInstanceLinkLocalServiceUtil {
 	 * @param ddmDataProviderInstanceLink the ddm data provider instance link
 	 * @return the ddm data provider instance link that was removed
 	 */
-	public static
-		com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceLink
-			deleteDDMDataProviderInstanceLink(
-				com.liferay.dynamic.data.mapping.model.
-					DDMDataProviderInstanceLink ddmDataProviderInstanceLink) {
+	public static DDMDataProviderInstanceLink deleteDDMDataProviderInstanceLink(
+		DDMDataProviderInstanceLink ddmDataProviderInstanceLink) {
 
 		return getService().deleteDDMDataProviderInstanceLink(
 			ddmDataProviderInstanceLink);
@@ -147,11 +144,9 @@ public class DDMDataProviderInstanceLinkLocalServiceUtil {
 	 * @return the ddm data provider instance link that was removed
 	 * @throws PortalException if a ddm data provider instance link with the primary key could not be found
 	 */
-	public static
-		com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceLink
-				deleteDDMDataProviderInstanceLink(
-					long dataProviderInstanceLinkId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static DDMDataProviderInstanceLink deleteDDMDataProviderInstanceLink(
+			long dataProviderInstanceLinkId)
+		throws PortalException {
 
 		return getService().deleteDDMDataProviderInstanceLink(
 			dataProviderInstanceLinkId);
@@ -160,23 +155,18 @@ public class DDMDataProviderInstanceLinkLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -186,9 +176,7 @@ public class DDMDataProviderInstanceLinkLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -204,9 +192,8 @@ public class DDMDataProviderInstanceLinkLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -224,10 +211,9 @@ public class DDMDataProviderInstanceLinkLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -239,9 +225,7 @@ public class DDMDataProviderInstanceLinkLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -253,24 +237,21 @@ public class DDMDataProviderInstanceLinkLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static
-		com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceLink
-			fetchDataProviderInstanceLink(
-				long dataProviderInstanceId, long structureId) {
+	public static DDMDataProviderInstanceLink fetchDataProviderInstanceLink(
+		long dataProviderInstanceId, long structureId) {
 
 		return getService().fetchDataProviderInstanceLink(
 			dataProviderInstanceId, structureId);
 	}
 
-	public static
-		com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceLink
-			fetchDDMDataProviderInstanceLink(long dataProviderInstanceLinkId) {
+	public static DDMDataProviderInstanceLink fetchDDMDataProviderInstanceLink(
+		long dataProviderInstanceLinkId) {
 
 		return getService().fetchDDMDataProviderInstanceLink(
 			dataProviderInstanceLinkId);
@@ -282,9 +263,8 @@ public class DDMDataProviderInstanceLinkLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
-	public static java.util.List
-		<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceLink>
-			getDataProviderInstanceLinks(long structureId) {
+	public static List<DDMDataProviderInstanceLink>
+		getDataProviderInstanceLinks(long structureId) {
 
 		return getService().getDataProviderInstanceLinks(structureId);
 	}
@@ -296,10 +276,9 @@ public class DDMDataProviderInstanceLinkLocalServiceUtil {
 	 * @return the ddm data provider instance link
 	 * @throws PortalException if a ddm data provider instance link with the primary key could not be found
 	 */
-	public static
-		com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceLink
-				getDDMDataProviderInstanceLink(long dataProviderInstanceLinkId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static DDMDataProviderInstanceLink getDDMDataProviderInstanceLink(
+			long dataProviderInstanceLinkId)
+		throws PortalException {
 
 		return getService().getDDMDataProviderInstanceLink(
 			dataProviderInstanceLinkId);
@@ -316,9 +295,8 @@ public class DDMDataProviderInstanceLinkLocalServiceUtil {
 	 * @param end the upper bound of the range of ddm data provider instance links (not inclusive)
 	 * @return the range of ddm data provider instance links
 	 */
-	public static java.util.List
-		<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceLink>
-			getDDMDataProviderInstanceLinks(int start, int end) {
+	public static List<DDMDataProviderInstanceLink>
+		getDDMDataProviderInstanceLinks(int start, int end) {
 
 		return getService().getDDMDataProviderInstanceLinks(start, end);
 	}
@@ -351,9 +329,8 @@ public class DDMDataProviderInstanceLinkLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -368,40 +345,17 @@ public class DDMDataProviderInstanceLinkLocalServiceUtil {
 	 * @param ddmDataProviderInstanceLink the ddm data provider instance link
 	 * @return the ddm data provider instance link that was updated
 	 */
-	public static
-		com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceLink
-			updateDDMDataProviderInstanceLink(
-				com.liferay.dynamic.data.mapping.model.
-					DDMDataProviderInstanceLink ddmDataProviderInstanceLink) {
+	public static DDMDataProviderInstanceLink updateDDMDataProviderInstanceLink(
+		DDMDataProviderInstanceLink ddmDataProviderInstanceLink) {
 
 		return getService().updateDDMDataProviderInstanceLink(
 			ddmDataProviderInstanceLink);
 	}
 
 	public static DDMDataProviderInstanceLinkLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<DDMDataProviderInstanceLinkLocalService,
-		 DDMDataProviderInstanceLinkLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			DDMDataProviderInstanceLinkLocalService.class);
-
-		ServiceTracker
-			<DDMDataProviderInstanceLinkLocalService,
-			 DDMDataProviderInstanceLinkLocalService> serviceTracker =
-				new ServiceTracker
-					<DDMDataProviderInstanceLinkLocalService,
-					 DDMDataProviderInstanceLinkLocalService>(
-						 bundle.getBundleContext(),
-						 DDMDataProviderInstanceLinkLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile DDMDataProviderInstanceLinkLocalService _service;
 
 }

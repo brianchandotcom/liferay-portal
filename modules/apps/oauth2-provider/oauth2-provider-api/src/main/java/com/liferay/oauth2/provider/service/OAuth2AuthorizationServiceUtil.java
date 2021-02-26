@@ -14,9 +14,11 @@
 
 package com.liferay.oauth2.provider.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.oauth2.provider.model.OAuth2Authorization;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for OAuth2Authorization. This utility wraps
@@ -37,14 +39,10 @@ public class OAuth2AuthorizationServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.oauth2.provider.service.impl.OAuth2AuthorizationServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static java.util.List
-		<com.liferay.oauth2.provider.model.OAuth2Authorization>
-				getApplicationOAuth2Authorizations(
-					long oAuth2ApplicationId, int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						<com.liferay.oauth2.provider.model.OAuth2Authorization>
-							orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<OAuth2Authorization> getApplicationOAuth2Authorizations(
+			long oAuth2ApplicationId, int start, int end,
+			OrderByComparator<OAuth2Authorization> orderByComparator)
+		throws PortalException {
 
 		return getService().getApplicationOAuth2Authorizations(
 			oAuth2ApplicationId, start, end, orderByComparator);
@@ -52,7 +50,7 @@ public class OAuth2AuthorizationServiceUtil {
 
 	public static int getApplicationOAuth2AuthorizationsCount(
 			long oAuth2ApplicationId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getApplicationOAuth2AuthorizationsCount(
 			oAuth2ApplicationId);
@@ -67,53 +65,31 @@ public class OAuth2AuthorizationServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static java.util.List
-		<com.liferay.oauth2.provider.model.OAuth2Authorization>
-				getUserOAuth2Authorizations(
-					int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						<com.liferay.oauth2.provider.model.OAuth2Authorization>
-							orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<OAuth2Authorization> getUserOAuth2Authorizations(
+			int start, int end,
+			OrderByComparator<OAuth2Authorization> orderByComparator)
+		throws PortalException {
 
 		return getService().getUserOAuth2Authorizations(
 			start, end, orderByComparator);
 	}
 
 	public static int getUserOAuth2AuthorizationsCount()
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getUserOAuth2AuthorizationsCount();
 	}
 
 	public static void revokeOAuth2Authorization(long oAuth2AuthorizationId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().revokeOAuth2Authorization(oAuth2AuthorizationId);
 	}
 
 	public static OAuth2AuthorizationService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<OAuth2AuthorizationService, OAuth2AuthorizationService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			OAuth2AuthorizationService.class);
-
-		ServiceTracker<OAuth2AuthorizationService, OAuth2AuthorizationService>
-			serviceTracker =
-				new ServiceTracker
-					<OAuth2AuthorizationService, OAuth2AuthorizationService>(
-						bundle.getBundleContext(),
-						OAuth2AuthorizationService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile OAuth2AuthorizationService _service;
 
 }

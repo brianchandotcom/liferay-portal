@@ -14,7 +14,7 @@
 
 package com.liferay.exportimport.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * Provides the local service utility for Staging. This utility wraps
@@ -39,7 +39,7 @@ public class StagingLocalServiceUtil {
 			long userId, com.liferay.portal.kernel.model.Group liveGroup,
 			boolean branchingPublic, boolean branchingPrivate, boolean remote,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().checkDefaultLayoutSetBranches(
 			userId, liveGroup, branchingPublic, branchingPrivate, remote,
@@ -47,14 +47,14 @@ public class StagingLocalServiceUtil {
 	}
 
 	public static void cleanUpStagingRequest(long stagingRequestId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().cleanUpStagingRequest(stagingRequestId);
 	}
 
 	public static long createStagingRequest(
 			long userId, long groupId, String checksum)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().createStagingRequest(userId, groupId, checksum);
 	}
@@ -62,7 +62,7 @@ public class StagingLocalServiceUtil {
 	public static void disableStaging(
 			com.liferay.portal.kernel.model.Group liveGroup,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().disableStaging(liveGroup, serviceContext);
 	}
@@ -71,7 +71,7 @@ public class StagingLocalServiceUtil {
 			javax.portlet.PortletRequest portletRequest,
 			com.liferay.portal.kernel.model.Group liveGroup,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().disableStaging(portletRequest, liveGroup, serviceContext);
 	}
@@ -80,7 +80,7 @@ public class StagingLocalServiceUtil {
 			long userId, com.liferay.portal.kernel.model.Group liveGroup,
 			boolean branchingPublic, boolean branchingPrivate,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().enableLocalStaging(
 			userId, liveGroup, branchingPublic, branchingPrivate,
@@ -93,7 +93,7 @@ public class StagingLocalServiceUtil {
 			String remoteAddress, int remotePort, String remotePathContext,
 			boolean secureConnection, long remoteGroupId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().enableRemoteStaging(
 			userId, stagingGroup, branchingPublic, branchingPrivate,
@@ -115,7 +115,7 @@ public class StagingLocalServiceUtil {
 				long userId, long stagingRequestId,
 				com.liferay.exportimport.kernel.model.ExportImportConfiguration
 					exportImportConfiguration)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().publishStagingRequest(
 			userId, stagingRequestId, exportImportConfiguration);
@@ -123,21 +123,16 @@ public class StagingLocalServiceUtil {
 
 	public static void updateStagingRequest(
 			long userId, long stagingRequestId, String fileName, byte[] bytes)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().updateStagingRequest(
 			userId, stagingRequestId, fileName, bytes);
 	}
 
 	public static StagingLocalService getService() {
-		if (_service == null) {
-			_service = (StagingLocalService)PortalBeanLocatorUtil.locate(
-				StagingLocalService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static StagingLocalService _service;
+	private static volatile StagingLocalService _service;
 
 }

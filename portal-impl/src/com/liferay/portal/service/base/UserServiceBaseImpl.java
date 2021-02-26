@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.service.UserServiceUtil;
 import com.liferay.portal.kernel.service.persistence.BrowserTrackerPersistence;
 import com.liferay.portal.kernel.service.persistence.CompanyPersistence;
 import com.liferay.portal.kernel.service.persistence.ContactPersistence;
@@ -66,6 +67,8 @@ import com.liferay.social.kernel.service.persistence.SocialActivityPersistence;
 import com.liferay.social.kernel.service.persistence.SocialRelationPersistence;
 import com.liferay.social.kernel.service.persistence.SocialRequestPersistence;
 
+import java.lang.reflect.Field;
+
 import javax.sql.DataSource;
 
 /**
@@ -85,7 +88,7 @@ public abstract class UserServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>UserService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.kernel.service.UserServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>UserService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>UserServiceUtil</code>.
 	 */
 
 	/**
@@ -1947,9 +1950,11 @@ public abstract class UserServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
+		_setServiceUtilService(userService);
 	}
 
 	public void destroy() {
+		_setServiceUtilService(null);
 	}
 
 	/**
@@ -1991,6 +1996,19 @@ public abstract class UserServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setServiceUtilService(UserService userService) {
+		try {
+			Field field = UserServiceUtil.class.getDeclaredField("_service");
+
+			field.setAccessible(true);
+
+			field.set(null, userService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

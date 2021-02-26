@@ -14,9 +14,16 @@
 
 package com.liferay.journal.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.journal.model.JournalContentSearch;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for JournalContentSearch. This utility wraps
@@ -48,16 +55,14 @@ public class JournalContentSearchLocalServiceUtil {
 	 * @param journalContentSearch the journal content search
 	 * @return the journal content search that was added
 	 */
-	public static com.liferay.journal.model.JournalContentSearch
-		addJournalContentSearch(
-			com.liferay.journal.model.JournalContentSearch
-				journalContentSearch) {
+	public static JournalContentSearch addJournalContentSearch(
+		JournalContentSearch journalContentSearch) {
 
 		return getService().addJournalContentSearch(journalContentSearch);
 	}
 
 	public static void checkContentSearches(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().checkContentSearches(companyId);
 	}
@@ -68,8 +73,8 @@ public class JournalContentSearchLocalServiceUtil {
 	 * @param contentSearchId the primary key for the new journal content search
 	 * @return the new journal content search
 	 */
-	public static com.liferay.journal.model.JournalContentSearch
-		createJournalContentSearch(long contentSearchId) {
+	public static JournalContentSearch createJournalContentSearch(
+		long contentSearchId) {
 
 		return getService().createJournalContentSearch(contentSearchId);
 	}
@@ -77,9 +82,9 @@ public class JournalContentSearchLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -115,10 +120,8 @@ public class JournalContentSearchLocalServiceUtil {
 	 * @param journalContentSearch the journal content search
 	 * @return the journal content search that was removed
 	 */
-	public static com.liferay.journal.model.JournalContentSearch
-		deleteJournalContentSearch(
-			com.liferay.journal.model.JournalContentSearch
-				journalContentSearch) {
+	public static JournalContentSearch deleteJournalContentSearch(
+		JournalContentSearch journalContentSearch) {
 
 		return getService().deleteJournalContentSearch(journalContentSearch);
 	}
@@ -134,9 +137,9 @@ public class JournalContentSearchLocalServiceUtil {
 	 * @return the journal content search that was removed
 	 * @throws PortalException if a journal content search with the primary key could not be found
 	 */
-	public static com.liferay.journal.model.JournalContentSearch
-			deleteJournalContentSearch(long contentSearchId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static JournalContentSearch deleteJournalContentSearch(
+			long contentSearchId)
+		throws PortalException {
 
 		return getService().deleteJournalContentSearch(contentSearchId);
 	}
@@ -157,23 +160,18 @@ public class JournalContentSearchLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -183,9 +181,7 @@ public class JournalContentSearchLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -201,9 +197,8 @@ public class JournalContentSearchLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -221,10 +216,9 @@ public class JournalContentSearchLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -236,9 +230,7 @@ public class JournalContentSearchLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -250,14 +242,14 @@ public class JournalContentSearchLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.journal.model.JournalContentSearch
-		fetchJournalContentSearch(long contentSearchId) {
+	public static JournalContentSearch fetchJournalContentSearch(
+		long contentSearchId) {
 
 		return getService().fetchJournalContentSearch(contentSearchId);
 	}
@@ -268,20 +260,18 @@ public class JournalContentSearchLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
-	public static java.util.List<com.liferay.journal.model.JournalContentSearch>
-		getArticleContentSearches() {
-
+	public static List<JournalContentSearch> getArticleContentSearches() {
 		return getService().getArticleContentSearches();
 	}
 
-	public static java.util.List<com.liferay.journal.model.JournalContentSearch>
-		getArticleContentSearches(long groupId, String articleId) {
+	public static List<JournalContentSearch> getArticleContentSearches(
+		long groupId, String articleId) {
 
 		return getService().getArticleContentSearches(groupId, articleId);
 	}
 
-	public static java.util.List<com.liferay.journal.model.JournalContentSearch>
-		getArticleContentSearches(String articleId) {
+	public static List<JournalContentSearch> getArticleContentSearches(
+		String articleId) {
 
 		return getService().getArticleContentSearches(articleId);
 	}
@@ -300,9 +290,9 @@ public class JournalContentSearchLocalServiceUtil {
 	 * @return the journal content search
 	 * @throws PortalException if a journal content search with the primary key could not be found
 	 */
-	public static com.liferay.journal.model.JournalContentSearch
-			getJournalContentSearch(long contentSearchId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static JournalContentSearch getJournalContentSearch(
+			long contentSearchId)
+		throws PortalException {
 
 		return getService().getJournalContentSearch(contentSearchId);
 	}
@@ -318,8 +308,8 @@ public class JournalContentSearchLocalServiceUtil {
 	 * @param end the upper bound of the range of journal content searches (not inclusive)
 	 * @return the range of journal content searches
 	 */
-	public static java.util.List<com.liferay.journal.model.JournalContentSearch>
-		getJournalContentSearchs(int start, int end) {
+	public static List<JournalContentSearch> getJournalContentSearchs(
+		int start, int end) {
 
 		return getService().getJournalContentSearchs(start, end);
 	}
@@ -333,7 +323,7 @@ public class JournalContentSearchLocalServiceUtil {
 		return getService().getJournalContentSearchsCount();
 	}
 
-	public static java.util.List<Long> getLayoutIds(
+	public static List<Long> getLayoutIds(
 		long groupId, boolean privateLayout, String articleId) {
 
 		return getService().getLayoutIds(groupId, privateLayout, articleId);
@@ -362,44 +352,40 @@ public class JournalContentSearchLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static java.util.List<com.liferay.journal.model.JournalContentSearch>
-		getPortletContentSearches(String portletId) {
+	public static List<JournalContentSearch> getPortletContentSearches(
+		String portletId) {
 
 		return getService().getPortletContentSearches(portletId);
 	}
 
-	public static com.liferay.journal.model.JournalContentSearch
-			updateContentSearch(
-				long groupId, boolean privateLayout, long layoutId,
-				String portletId, String articleId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static JournalContentSearch updateContentSearch(
+			long groupId, boolean privateLayout, long layoutId,
+			String portletId, String articleId)
+		throws PortalException {
 
 		return getService().updateContentSearch(
 			groupId, privateLayout, layoutId, portletId, articleId);
 	}
 
-	public static com.liferay.journal.model.JournalContentSearch
-			updateContentSearch(
-				long groupId, boolean privateLayout, long layoutId,
-				String portletId, String articleId, boolean purge)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static JournalContentSearch updateContentSearch(
+			long groupId, boolean privateLayout, long layoutId,
+			String portletId, String articleId, boolean purge)
+		throws PortalException {
 
 		return getService().updateContentSearch(
 			groupId, privateLayout, layoutId, portletId, articleId, purge);
 	}
 
-	public static java.util.List<com.liferay.journal.model.JournalContentSearch>
-			updateContentSearch(
-				long groupId, boolean privateLayout, long layoutId,
-				String portletId, String[] articleIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<JournalContentSearch> updateContentSearch(
+			long groupId, boolean privateLayout, long layoutId,
+			String portletId, String[] articleIds)
+		throws PortalException {
 
 		return getService().updateContentSearch(
 			groupId, privateLayout, layoutId, portletId, articleIds);
@@ -415,38 +401,16 @@ public class JournalContentSearchLocalServiceUtil {
 	 * @param journalContentSearch the journal content search
 	 * @return the journal content search that was updated
 	 */
-	public static com.liferay.journal.model.JournalContentSearch
-		updateJournalContentSearch(
-			com.liferay.journal.model.JournalContentSearch
-				journalContentSearch) {
+	public static JournalContentSearch updateJournalContentSearch(
+		JournalContentSearch journalContentSearch) {
 
 		return getService().updateJournalContentSearch(journalContentSearch);
 	}
 
 	public static JournalContentSearchLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<JournalContentSearchLocalService, JournalContentSearchLocalService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			JournalContentSearchLocalService.class);
-
-		ServiceTracker
-			<JournalContentSearchLocalService, JournalContentSearchLocalService>
-				serviceTracker =
-					new ServiceTracker
-						<JournalContentSearchLocalService,
-						 JournalContentSearchLocalService>(
-							 bundle.getBundleContext(),
-							 JournalContentSearchLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile JournalContentSearchLocalService _service;
 
 }

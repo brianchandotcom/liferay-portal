@@ -14,9 +14,16 @@
 
 package com.liferay.sharepoint.rest.oauth2.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for SharepointOAuth2TokenEntry. This utility wraps
@@ -37,12 +44,10 @@ public class SharepointOAuth2TokenEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.sharepoint.rest.oauth2.service.impl.SharepointOAuth2TokenEntryLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static
-		com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry
-				addSharepointOAuth2TokenEntry(
-					long userId, String configurationPid, String accessToken,
-					String refreshToken, java.util.Date expirationDate)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static SharepointOAuth2TokenEntry addSharepointOAuth2TokenEntry(
+			long userId, String configurationPid, String accessToken,
+			String refreshToken, java.util.Date expirationDate)
+		throws PortalException {
 
 		return getService().addSharepointOAuth2TokenEntry(
 			userId, configurationPid, accessToken, refreshToken,
@@ -59,11 +64,8 @@ public class SharepointOAuth2TokenEntryLocalServiceUtil {
 	 * @param sharepointOAuth2TokenEntry the sharepoint o auth2 token entry
 	 * @return the sharepoint o auth2 token entry that was added
 	 */
-	public static
-		com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry
-			addSharepointOAuth2TokenEntry(
-				com.liferay.sharepoint.rest.oauth2.model.
-					SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry) {
+	public static SharepointOAuth2TokenEntry addSharepointOAuth2TokenEntry(
+		SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry) {
 
 		return getService().addSharepointOAuth2TokenEntry(
 			sharepointOAuth2TokenEntry);
@@ -72,9 +74,9 @@ public class SharepointOAuth2TokenEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -85,10 +87,8 @@ public class SharepointOAuth2TokenEntryLocalServiceUtil {
 	 * @param sharepointOAuth2TokenEntryId the primary key for the new sharepoint o auth2 token entry
 	 * @return the new sharepoint o auth2 token entry
 	 */
-	public static
-		com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry
-			createSharepointOAuth2TokenEntry(
-				long sharepointOAuth2TokenEntryId) {
+	public static SharepointOAuth2TokenEntry createSharepointOAuth2TokenEntry(
+		long sharepointOAuth2TokenEntryId) {
 
 		return getService().createSharepointOAuth2TokenEntry(
 			sharepointOAuth2TokenEntryId);
@@ -97,10 +97,9 @@ public class SharepointOAuth2TokenEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
@@ -116,11 +115,9 @@ public class SharepointOAuth2TokenEntryLocalServiceUtil {
 	 * @return the sharepoint o auth2 token entry that was removed
 	 * @throws PortalException if a sharepoint o auth2 token entry with the primary key could not be found
 	 */
-	public static
-		com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry
-				deleteSharepointOAuth2TokenEntry(
-					long sharepointOAuth2TokenEntryId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static SharepointOAuth2TokenEntry deleteSharepointOAuth2TokenEntry(
+			long sharepointOAuth2TokenEntryId)
+		throws PortalException {
 
 		return getService().deleteSharepointOAuth2TokenEntry(
 			sharepointOAuth2TokenEntryId);
@@ -128,7 +125,7 @@ public class SharepointOAuth2TokenEntryLocalServiceUtil {
 
 	public static void deleteSharepointOAuth2TokenEntry(
 			long userId, String configurationPid)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteSharepointOAuth2TokenEntry(userId, configurationPid);
 	}
@@ -143,11 +140,8 @@ public class SharepointOAuth2TokenEntryLocalServiceUtil {
 	 * @param sharepointOAuth2TokenEntry the sharepoint o auth2 token entry
 	 * @return the sharepoint o auth2 token entry that was removed
 	 */
-	public static
-		com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry
-			deleteSharepointOAuth2TokenEntry(
-				com.liferay.sharepoint.rest.oauth2.model.
-					SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry) {
+	public static SharepointOAuth2TokenEntry deleteSharepointOAuth2TokenEntry(
+		SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry) {
 
 		return getService().deleteSharepointOAuth2TokenEntry(
 			sharepointOAuth2TokenEntry);
@@ -157,15 +151,11 @@ public class SharepointOAuth2TokenEntryLocalServiceUtil {
 		getService().deleteUserSharepointOAuth2TokenEntries(userId);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -175,9 +165,7 @@ public class SharepointOAuth2TokenEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -193,9 +181,8 @@ public class SharepointOAuth2TokenEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -213,10 +200,9 @@ public class SharepointOAuth2TokenEntryLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -228,9 +214,7 @@ public class SharepointOAuth2TokenEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -242,24 +226,21 @@ public class SharepointOAuth2TokenEntryLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static
-		com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry
-			fetchSharepointOAuth2TokenEntry(long sharepointOAuth2TokenEntryId) {
+	public static SharepointOAuth2TokenEntry fetchSharepointOAuth2TokenEntry(
+		long sharepointOAuth2TokenEntryId) {
 
 		return getService().fetchSharepointOAuth2TokenEntry(
 			sharepointOAuth2TokenEntryId);
 	}
 
-	public static
-		com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry
-			fetchSharepointOAuth2TokenEntry(
-				long userId, String configurationPid) {
+	public static SharepointOAuth2TokenEntry fetchSharepointOAuth2TokenEntry(
+		long userId, String configurationPid) {
 
 		return getService().fetchSharepointOAuth2TokenEntry(
 			userId, configurationPid);
@@ -290,9 +271,8 @@ public class SharepointOAuth2TokenEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -308,9 +288,8 @@ public class SharepointOAuth2TokenEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of sharepoint o auth2 token entries (not inclusive)
 	 * @return the range of sharepoint o auth2 token entries
 	 */
-	public static java.util.List
-		<com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry>
-			getSharepointOAuth2TokenEntries(int start, int end) {
+	public static List<SharepointOAuth2TokenEntry>
+		getSharepointOAuth2TokenEntries(int start, int end) {
 
 		return getService().getSharepointOAuth2TokenEntries(start, end);
 	}
@@ -331,20 +310,17 @@ public class SharepointOAuth2TokenEntryLocalServiceUtil {
 	 * @return the sharepoint o auth2 token entry
 	 * @throws PortalException if a sharepoint o auth2 token entry with the primary key could not be found
 	 */
-	public static
-		com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry
-				getSharepointOAuth2TokenEntry(long sharepointOAuth2TokenEntryId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static SharepointOAuth2TokenEntry getSharepointOAuth2TokenEntry(
+			long sharepointOAuth2TokenEntryId)
+		throws PortalException {
 
 		return getService().getSharepointOAuth2TokenEntry(
 			sharepointOAuth2TokenEntryId);
 	}
 
-	public static
-		com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry
-				getSharepointOAuth2TokenEntry(
-					long userId, String configurationPid)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static SharepointOAuth2TokenEntry getSharepointOAuth2TokenEntry(
+			long userId, String configurationPid)
+		throws PortalException {
 
 		return getService().getSharepointOAuth2TokenEntry(
 			userId, configurationPid);
@@ -364,40 +340,17 @@ public class SharepointOAuth2TokenEntryLocalServiceUtil {
 	 * @param sharepointOAuth2TokenEntry the sharepoint o auth2 token entry
 	 * @return the sharepoint o auth2 token entry that was updated
 	 */
-	public static
-		com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry
-			updateSharepointOAuth2TokenEntry(
-				com.liferay.sharepoint.rest.oauth2.model.
-					SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry) {
+	public static SharepointOAuth2TokenEntry updateSharepointOAuth2TokenEntry(
+		SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry) {
 
 		return getService().updateSharepointOAuth2TokenEntry(
 			sharepointOAuth2TokenEntry);
 	}
 
 	public static SharepointOAuth2TokenEntryLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<SharepointOAuth2TokenEntryLocalService,
-		 SharepointOAuth2TokenEntryLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			SharepointOAuth2TokenEntryLocalService.class);
-
-		ServiceTracker
-			<SharepointOAuth2TokenEntryLocalService,
-			 SharepointOAuth2TokenEntryLocalService> serviceTracker =
-				new ServiceTracker
-					<SharepointOAuth2TokenEntryLocalService,
-					 SharepointOAuth2TokenEntryLocalService>(
-						 bundle.getBundleContext(),
-						 SharepointOAuth2TokenEntryLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile SharepointOAuth2TokenEntryLocalService _service;
 
 }

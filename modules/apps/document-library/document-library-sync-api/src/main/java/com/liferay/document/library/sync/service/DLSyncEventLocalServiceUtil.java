@@ -14,9 +14,16 @@
 
 package com.liferay.document.library.sync.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.document.library.sync.model.DLSyncEvent;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for DLSyncEvent. This utility wraps
@@ -48,15 +55,12 @@ public class DLSyncEventLocalServiceUtil {
 	 * @param dlSyncEvent the dl sync event
 	 * @return the dl sync event that was added
 	 */
-	public static com.liferay.document.library.sync.model.DLSyncEvent
-		addDLSyncEvent(
-			com.liferay.document.library.sync.model.DLSyncEvent dlSyncEvent) {
-
+	public static DLSyncEvent addDLSyncEvent(DLSyncEvent dlSyncEvent) {
 		return getService().addDLSyncEvent(dlSyncEvent);
 	}
 
-	public static com.liferay.document.library.sync.model.DLSyncEvent
-		addDLSyncEvent(String event, String type, long typePK) {
+	public static DLSyncEvent addDLSyncEvent(
+		String event, String type, long typePK) {
 
 		return getService().addDLSyncEvent(event, type, typePK);
 	}
@@ -67,18 +71,16 @@ public class DLSyncEventLocalServiceUtil {
 	 * @param syncEventId the primary key for the new dl sync event
 	 * @return the new dl sync event
 	 */
-	public static com.liferay.document.library.sync.model.DLSyncEvent
-		createDLSyncEvent(long syncEventId) {
-
+	public static DLSyncEvent createDLSyncEvent(long syncEventId) {
 		return getService().createDLSyncEvent(syncEventId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -93,10 +95,7 @@ public class DLSyncEventLocalServiceUtil {
 	 * @param dlSyncEvent the dl sync event
 	 * @return the dl sync event that was removed
 	 */
-	public static com.liferay.document.library.sync.model.DLSyncEvent
-		deleteDLSyncEvent(
-			com.liferay.document.library.sync.model.DLSyncEvent dlSyncEvent) {
-
+	public static DLSyncEvent deleteDLSyncEvent(DLSyncEvent dlSyncEvent) {
 		return getService().deleteDLSyncEvent(dlSyncEvent);
 	}
 
@@ -111,9 +110,8 @@ public class DLSyncEventLocalServiceUtil {
 	 * @return the dl sync event that was removed
 	 * @throws PortalException if a dl sync event with the primary key could not be found
 	 */
-	public static com.liferay.document.library.sync.model.DLSyncEvent
-			deleteDLSyncEvent(long syncEventId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static DLSyncEvent deleteDLSyncEvent(long syncEventId)
+		throws PortalException {
 
 		return getService().deleteDLSyncEvent(syncEventId);
 	}
@@ -125,23 +123,18 @@ public class DLSyncEventLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -151,9 +144,7 @@ public class DLSyncEventLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -169,9 +160,8 @@ public class DLSyncEventLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -189,10 +179,9 @@ public class DLSyncEventLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -204,9 +193,7 @@ public class DLSyncEventLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -218,15 +205,13 @@ public class DLSyncEventLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.document.library.sync.model.DLSyncEvent
-		fetchDLSyncEvent(long syncEventId) {
-
+	public static DLSyncEvent fetchDLSyncEvent(long syncEventId) {
 		return getService().fetchDLSyncEvent(syncEventId);
 	}
 
@@ -243,9 +228,8 @@ public class DLSyncEventLocalServiceUtil {
 	 * @return the dl sync event
 	 * @throws PortalException if a dl sync event with the primary key could not be found
 	 */
-	public static com.liferay.document.library.sync.model.DLSyncEvent
-			getDLSyncEvent(long syncEventId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static DLSyncEvent getDLSyncEvent(long syncEventId)
+		throws PortalException {
 
 		return getService().getDLSyncEvent(syncEventId);
 	}
@@ -261,17 +245,11 @@ public class DLSyncEventLocalServiceUtil {
 	 * @param end the upper bound of the range of dl sync events (not inclusive)
 	 * @return the range of dl sync events
 	 */
-	public static java.util.List
-		<com.liferay.document.library.sync.model.DLSyncEvent> getDLSyncEvents(
-			int start, int end) {
-
+	public static List<DLSyncEvent> getDLSyncEvents(int start, int end) {
 		return getService().getDLSyncEvents(start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.document.library.sync.model.DLSyncEvent> getDLSyncEvents(
-			long modifiedTime) {
-
+	public static List<DLSyncEvent> getDLSyncEvents(long modifiedTime) {
 		return getService().getDLSyncEvents(modifiedTime);
 	}
 
@@ -291,10 +269,7 @@ public class DLSyncEventLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
-	public static java.util.List
-		<com.liferay.document.library.sync.model.DLSyncEvent>
-			getLatestDLSyncEvents() {
-
+	public static List<DLSyncEvent> getLatestDLSyncEvents() {
 		return getService().getLatestDLSyncEvents();
 	}
 
@@ -310,9 +285,8 @@ public class DLSyncEventLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -327,33 +301,14 @@ public class DLSyncEventLocalServiceUtil {
 	 * @param dlSyncEvent the dl sync event
 	 * @return the dl sync event that was updated
 	 */
-	public static com.liferay.document.library.sync.model.DLSyncEvent
-		updateDLSyncEvent(
-			com.liferay.document.library.sync.model.DLSyncEvent dlSyncEvent) {
-
+	public static DLSyncEvent updateDLSyncEvent(DLSyncEvent dlSyncEvent) {
 		return getService().updateDLSyncEvent(dlSyncEvent);
 	}
 
 	public static DLSyncEventLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<DLSyncEventLocalService, DLSyncEventLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(DLSyncEventLocalService.class);
-
-		ServiceTracker<DLSyncEventLocalService, DLSyncEventLocalService>
-			serviceTracker =
-				new ServiceTracker
-					<DLSyncEventLocalService, DLSyncEventLocalService>(
-						bundle.getBundleContext(),
-						DLSyncEventLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile DLSyncEventLocalService _service;
 
 }

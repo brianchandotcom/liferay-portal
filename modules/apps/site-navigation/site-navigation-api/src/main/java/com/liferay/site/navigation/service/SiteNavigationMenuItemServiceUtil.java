@@ -14,9 +14,10 @@
 
 package com.liferay.site.navigation.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.site.navigation.model.SiteNavigationMenuItem;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for SiteNavigationMenuItem. This utility wraps
@@ -37,29 +38,28 @@ public class SiteNavigationMenuItemServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.site.navigation.service.impl.SiteNavigationMenuItemServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.site.navigation.model.SiteNavigationMenuItem
-			addSiteNavigationMenuItem(
-				long groupId, long siteNavigationMenuId,
-				long parentSiteNavigationMenuItemId, String type,
-				String typeSettings,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static SiteNavigationMenuItem addSiteNavigationMenuItem(
+			long groupId, long siteNavigationMenuId,
+			long parentSiteNavigationMenuItemId, String type,
+			String typeSettings,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addSiteNavigationMenuItem(
 			groupId, siteNavigationMenuId, parentSiteNavigationMenuItemId, type,
 			typeSettings, serviceContext);
 	}
 
-	public static com.liferay.site.navigation.model.SiteNavigationMenuItem
-			deleteSiteNavigationMenuItem(long siteNavigationMenuItemId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static SiteNavigationMenuItem deleteSiteNavigationMenuItem(
+			long siteNavigationMenuItemId)
+		throws PortalException {
 
 		return getService().deleteSiteNavigationMenuItem(
 			siteNavigationMenuItemId);
 	}
 
 	public static void deleteSiteNavigationMenuItems(long siteNavigationMenuId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteSiteNavigationMenuItems(siteNavigationMenuId);
 	}
@@ -73,68 +73,42 @@ public class SiteNavigationMenuItemServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static java.util.List
-		<com.liferay.site.navigation.model.SiteNavigationMenuItem>
-			getSiteNavigationMenuItems(long siteNavigationMenuId) {
+	public static List<SiteNavigationMenuItem> getSiteNavigationMenuItems(
+		long siteNavigationMenuId) {
 
 		return getService().getSiteNavigationMenuItems(siteNavigationMenuId);
 	}
 
-	public static java.util.List
-		<com.liferay.site.navigation.model.SiteNavigationMenuItem>
-				getSiteNavigationMenuItems(
-					long siteNavigationMenuId,
-					long parentSiteNavigationMenuItemId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<SiteNavigationMenuItem> getSiteNavigationMenuItems(
+			long siteNavigationMenuId, long parentSiteNavigationMenuItemId)
+		throws PortalException {
 
 		return getService().getSiteNavigationMenuItems(
 			siteNavigationMenuId, parentSiteNavigationMenuItemId);
 	}
 
-	public static com.liferay.site.navigation.model.SiteNavigationMenuItem
-			updateSiteNavigationMenuItem(
-				long siteNavigationMenuId, long parentSiteNavigationMenuItemId,
-				int order)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static SiteNavigationMenuItem updateSiteNavigationMenuItem(
+			long siteNavigationMenuId, long parentSiteNavigationMenuItemId,
+			int order)
+		throws PortalException {
 
 		return getService().updateSiteNavigationMenuItem(
 			siteNavigationMenuId, parentSiteNavigationMenuItemId, order);
 	}
 
-	public static com.liferay.site.navigation.model.SiteNavigationMenuItem
-			updateSiteNavigationMenuItem(
-				long siteNavigationMenuId, String typeSettings,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static SiteNavigationMenuItem updateSiteNavigationMenuItem(
+			long siteNavigationMenuId, String typeSettings,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().updateSiteNavigationMenuItem(
 			siteNavigationMenuId, typeSettings, serviceContext);
 	}
 
 	public static SiteNavigationMenuItemService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<SiteNavigationMenuItemService, SiteNavigationMenuItemService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			SiteNavigationMenuItemService.class);
-
-		ServiceTracker
-			<SiteNavigationMenuItemService, SiteNavigationMenuItemService>
-				serviceTracker =
-					new ServiceTracker
-						<SiteNavigationMenuItemService,
-						 SiteNavigationMenuItemService>(
-							 bundle.getBundleContext(),
-							 SiteNavigationMenuItemService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile SiteNavigationMenuItemService _service;
 
 }

@@ -14,9 +14,11 @@
 
 package com.liferay.commerce.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.model.CommerceSubscriptionEntry;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for CommerceSubscriptionEntry. This utility wraps
@@ -39,15 +41,15 @@ public class CommerceSubscriptionEntryServiceUtil {
 	 */
 	public static void deleteCommerceSubscriptionEntry(
 			long commerceSubscriptionEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommerceSubscriptionEntry(
 			commerceSubscriptionEntryId);
 	}
 
-	public static com.liferay.commerce.model.CommerceSubscriptionEntry
-			fetchCommerceSubscriptionEntry(long commerceSubscriptionEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceSubscriptionEntry fetchCommerceSubscriptionEntry(
+			long commerceSubscriptionEntryId)
+		throws PortalException {
 
 		return getService().fetchCommerceSubscriptionEntry(
 			commerceSubscriptionEntryId);
@@ -57,28 +59,21 @@ public class CommerceSubscriptionEntryServiceUtil {
 	 * @deprecated As of Athanasius (7.3.x)
 	 */
 	@Deprecated
-	public static java.util.List
-		<com.liferay.commerce.model.CommerceSubscriptionEntry>
-				getCommerceSubscriptionEntries(
-					long companyId, long userId, int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						<com.liferay.commerce.model.CommerceSubscriptionEntry>
-							orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommerceSubscriptionEntry>
+			getCommerceSubscriptionEntries(
+				long companyId, long userId, int start, int end,
+				OrderByComparator<CommerceSubscriptionEntry> orderByComparator)
+		throws PortalException {
 
 		return getService().getCommerceSubscriptionEntries(
 			companyId, userId, start, end, orderByComparator);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.model.CommerceSubscriptionEntry>
-				getCommerceSubscriptionEntries(
-					long companyId, long groupId, long userId, int start,
-					int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						<com.liferay.commerce.model.CommerceSubscriptionEntry>
-							orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommerceSubscriptionEntry>
+			getCommerceSubscriptionEntries(
+				long companyId, long groupId, long userId, int start, int end,
+				OrderByComparator<CommerceSubscriptionEntry> orderByComparator)
+		throws PortalException {
 
 		return getService().getCommerceSubscriptionEntries(
 			companyId, groupId, userId, start, end, orderByComparator);
@@ -90,7 +85,7 @@ public class CommerceSubscriptionEntryServiceUtil {
 	@Deprecated
 	public static int getCommerceSubscriptionEntriesCount(
 			long companyId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCommerceSubscriptionEntriesCount(
 			companyId, userId);
@@ -98,7 +93,7 @@ public class CommerceSubscriptionEntryServiceUtil {
 
 	public static int getCommerceSubscriptionEntriesCount(
 			long companyId, long groupId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCommerceSubscriptionEntriesCount(
 			companyId, groupId, userId);
@@ -114,12 +109,11 @@ public class CommerceSubscriptionEntryServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
-		<com.liferay.commerce.model.CommerceSubscriptionEntry>
-				searchCommerceSubscriptionEntries(
-					long companyId, Long maxSubscriptionCycles,
-					Integer subscriptionStatus, String keywords, int start,
-					int end, com.liferay.portal.kernel.search.Sort sort)
-			throws com.liferay.portal.kernel.exception.PortalException {
+		<CommerceSubscriptionEntry> searchCommerceSubscriptionEntries(
+				long companyId, Long maxSubscriptionCycles,
+				Integer subscriptionStatus, String keywords, int start, int end,
+				com.liferay.portal.kernel.search.Sort sort)
+			throws PortalException {
 
 		return getService().searchCommerceSubscriptionEntries(
 			companyId, maxSubscriptionCycles, subscriptionStatus, keywords,
@@ -131,39 +125,35 @@ public class CommerceSubscriptionEntryServiceUtil {
 	 */
 	@Deprecated
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
-		<com.liferay.commerce.model.CommerceSubscriptionEntry>
-				searchCommerceSubscriptionEntries(
-					long companyId, long[] groupIds, Long maxSubscriptionCycles,
-					Integer subscriptionStatus, String keywords, int start,
-					int end, com.liferay.portal.kernel.search.Sort sort)
-			throws com.liferay.portal.kernel.exception.PortalException {
+		<CommerceSubscriptionEntry> searchCommerceSubscriptionEntries(
+				long companyId, long[] groupIds, Long maxSubscriptionCycles,
+				Integer subscriptionStatus, String keywords, int start, int end,
+				com.liferay.portal.kernel.search.Sort sort)
+			throws PortalException {
 
 		return getService().searchCommerceSubscriptionEntries(
 			companyId, groupIds, maxSubscriptionCycles, subscriptionStatus,
 			keywords, start, end, sort);
 	}
 
-	public static com.liferay.commerce.model.CommerceSubscriptionEntry
-			updateCommerceSubscriptionEntry(
-				long commerceSubscriptionEntryId, int subscriptionLength,
-				String subscriptionType,
-				com.liferay.portal.kernel.util.UnicodeProperties
-					subscriptionTypeSettingsUnicodeProperties,
-				long maxSubscriptionCycles, int subscriptionStatus,
-				int nextIterationDateMonth, int nextIterationDateDay,
-				int nextIterationDateYear, int nextIterationDateHour,
-				int nextIterationDateMinute, int deliverySubscriptionLength,
-				String deliverySubscriptionType,
-				com.liferay.portal.kernel.util.UnicodeProperties
-					deliverySubscriptionTypeSettingsUnicodeProperties,
-				long deliveryMaxSubscriptionCycles,
-				int deliverySubscriptionStatus,
-				int deliveryNextIterationDateMonth,
-				int deliveryNextIterationDateDay,
-				int deliveryNextIterationDateYear,
-				int deliveryNextIterationDateHour,
-				int deliveryNextIterationDateMinute)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceSubscriptionEntry updateCommerceSubscriptionEntry(
+			long commerceSubscriptionEntryId, int subscriptionLength,
+			String subscriptionType,
+			com.liferay.portal.kernel.util.UnicodeProperties
+				subscriptionTypeSettingsUnicodeProperties,
+			long maxSubscriptionCycles, int subscriptionStatus,
+			int nextIterationDateMonth, int nextIterationDateDay,
+			int nextIterationDateYear, int nextIterationDateHour,
+			int nextIterationDateMinute, int deliverySubscriptionLength,
+			String deliverySubscriptionType,
+			com.liferay.portal.kernel.util.UnicodeProperties
+				deliverySubscriptionTypeSettingsUnicodeProperties,
+			long deliveryMaxSubscriptionCycles, int deliverySubscriptionStatus,
+			int deliveryNextIterationDateMonth,
+			int deliveryNextIterationDateDay, int deliveryNextIterationDateYear,
+			int deliveryNextIterationDateHour,
+			int deliveryNextIterationDateMinute)
+		throws PortalException {
 
 		return getService().updateCommerceSubscriptionEntry(
 			commerceSubscriptionEntryId, subscriptionLength, subscriptionType,
@@ -183,39 +173,18 @@ public class CommerceSubscriptionEntryServiceUtil {
 	 * @deprecated As of Athanasius (7.3.x)
 	 */
 	@Deprecated
-	public static com.liferay.commerce.model.CommerceSubscriptionEntry
-			updateSubscriptionStatus(
-				long commerceSubscriptionEntryId, int subscriptionStatus)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceSubscriptionEntry updateSubscriptionStatus(
+			long commerceSubscriptionEntryId, int subscriptionStatus)
+		throws PortalException {
 
 		return getService().updateSubscriptionStatus(
 			commerceSubscriptionEntryId, subscriptionStatus);
 	}
 
 	public static CommerceSubscriptionEntryService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceSubscriptionEntryService, CommerceSubscriptionEntryService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommerceSubscriptionEntryService.class);
-
-		ServiceTracker
-			<CommerceSubscriptionEntryService, CommerceSubscriptionEntryService>
-				serviceTracker =
-					new ServiceTracker
-						<CommerceSubscriptionEntryService,
-						 CommerceSubscriptionEntryService>(
-							 bundle.getBundleContext(),
-							 CommerceSubscriptionEntryService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceSubscriptionEntryService _service;
 
 }

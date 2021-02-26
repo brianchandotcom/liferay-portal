@@ -25,10 +25,14 @@ import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.security.audit.storage.model.AuditEvent;
 import com.liferay.portal.security.audit.storage.service.AuditEventService;
+import com.liferay.portal.security.audit.storage.service.AuditEventServiceUtil;
 import com.liferay.portal.security.audit.storage.service.persistence.AuditEventPersistence;
+
+import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
 
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -49,8 +53,13 @@ public abstract class AuditEventServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>AuditEventService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.security.audit.storage.service.AuditEventServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>AuditEventService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>AuditEventServiceUtil</code>.
 	 */
+	@Deactivate
+	protected void deactivate() {
+		_setServiceUtilService(null);
+	}
+
 	@Override
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
@@ -61,6 +70,8 @@ public abstract class AuditEventServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		auditEventService = (AuditEventService)aopProxy;
+
+		_setServiceUtilService(auditEventService);
 	}
 
 	/**
@@ -102,6 +113,20 @@ public abstract class AuditEventServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setServiceUtilService(AuditEventService auditEventService) {
+		try {
+			Field field = AuditEventServiceUtil.class.getDeclaredField(
+				"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, auditEventService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

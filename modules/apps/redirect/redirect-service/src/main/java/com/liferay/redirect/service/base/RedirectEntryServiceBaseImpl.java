@@ -25,10 +25,14 @@ import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.redirect.model.RedirectEntry;
 import com.liferay.redirect.service.RedirectEntryService;
+import com.liferay.redirect.service.RedirectEntryServiceUtil;
 import com.liferay.redirect.service.persistence.RedirectEntryPersistence;
+
+import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
 
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -49,8 +53,13 @@ public abstract class RedirectEntryServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>RedirectEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.redirect.service.RedirectEntryServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>RedirectEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>RedirectEntryServiceUtil</code>.
 	 */
+	@Deactivate
+	protected void deactivate() {
+		_setServiceUtilService(null);
+	}
+
 	@Override
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
@@ -61,6 +70,8 @@ public abstract class RedirectEntryServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		redirectEntryService = (RedirectEntryService)aopProxy;
+
+		_setServiceUtilService(redirectEntryService);
 	}
 
 	/**
@@ -102,6 +113,22 @@ public abstract class RedirectEntryServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setServiceUtilService(
+		RedirectEntryService redirectEntryService) {
+
+		try {
+			Field field = RedirectEntryServiceUtil.class.getDeclaredField(
+				"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, redirectEntryService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

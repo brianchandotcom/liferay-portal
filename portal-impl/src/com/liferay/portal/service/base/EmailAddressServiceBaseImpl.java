@@ -24,12 +24,15 @@ import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.service.EmailAddressService;
+import com.liferay.portal.kernel.service.EmailAddressServiceUtil;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.EmailAddressPersistence;
 import com.liferay.portal.kernel.service.persistence.ListTypePersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
+
+import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
 
@@ -51,7 +54,7 @@ public abstract class EmailAddressServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>EmailAddressService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.kernel.service.EmailAddressServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>EmailAddressService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>EmailAddressServiceUtil</code>.
 	 */
 
 	/**
@@ -349,9 +352,11 @@ public abstract class EmailAddressServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
+		_setServiceUtilService(emailAddressService);
 	}
 
 	public void destroy() {
+		_setServiceUtilService(null);
 	}
 
 	/**
@@ -393,6 +398,22 @@ public abstract class EmailAddressServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setServiceUtilService(
+		EmailAddressService emailAddressService) {
+
+		try {
+			Field field = EmailAddressServiceUtil.class.getDeclaredField(
+				"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, emailAddressService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

@@ -14,9 +14,16 @@
 
 package com.liferay.portal.tools.service.builder.test.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.tools.service.builder.test.model.CacheDisabledEntry;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for CacheDisabledEntry. This utility wraps
@@ -48,11 +55,8 @@ public class CacheDisabledEntryLocalServiceUtil {
 	 * @param cacheDisabledEntry the cache disabled entry
 	 * @return the cache disabled entry that was added
 	 */
-	public static
-		com.liferay.portal.tools.service.builder.test.model.CacheDisabledEntry
-			addCacheDisabledEntry(
-				com.liferay.portal.tools.service.builder.test.model.
-					CacheDisabledEntry cacheDisabledEntry) {
+	public static CacheDisabledEntry addCacheDisabledEntry(
+		CacheDisabledEntry cacheDisabledEntry) {
 
 		return getService().addCacheDisabledEntry(cacheDisabledEntry);
 	}
@@ -63,9 +67,8 @@ public class CacheDisabledEntryLocalServiceUtil {
 	 * @param cacheDisabledEntryId the primary key for the new cache disabled entry
 	 * @return the new cache disabled entry
 	 */
-	public static
-		com.liferay.portal.tools.service.builder.test.model.CacheDisabledEntry
-			createCacheDisabledEntry(long cacheDisabledEntryId) {
+	public static CacheDisabledEntry createCacheDisabledEntry(
+		long cacheDisabledEntryId) {
 
 		return getService().createCacheDisabledEntry(cacheDisabledEntryId);
 	}
@@ -73,9 +76,9 @@ public class CacheDisabledEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -90,11 +93,8 @@ public class CacheDisabledEntryLocalServiceUtil {
 	 * @param cacheDisabledEntry the cache disabled entry
 	 * @return the cache disabled entry that was removed
 	 */
-	public static
-		com.liferay.portal.tools.service.builder.test.model.CacheDisabledEntry
-			deleteCacheDisabledEntry(
-				com.liferay.portal.tools.service.builder.test.model.
-					CacheDisabledEntry cacheDisabledEntry) {
+	public static CacheDisabledEntry deleteCacheDisabledEntry(
+		CacheDisabledEntry cacheDisabledEntry) {
 
 		return getService().deleteCacheDisabledEntry(cacheDisabledEntry);
 	}
@@ -110,10 +110,9 @@ public class CacheDisabledEntryLocalServiceUtil {
 	 * @return the cache disabled entry that was removed
 	 * @throws PortalException if a cache disabled entry with the primary key could not be found
 	 */
-	public static
-		com.liferay.portal.tools.service.builder.test.model.CacheDisabledEntry
-				deleteCacheDisabledEntry(long cacheDisabledEntryId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CacheDisabledEntry deleteCacheDisabledEntry(
+			long cacheDisabledEntryId)
+		throws PortalException {
 
 		return getService().deleteCacheDisabledEntry(cacheDisabledEntryId);
 	}
@@ -121,23 +120,18 @@ public class CacheDisabledEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -147,9 +141,7 @@ public class CacheDisabledEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -165,9 +157,8 @@ public class CacheDisabledEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -185,10 +176,9 @@ public class CacheDisabledEntryLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -200,9 +190,7 @@ public class CacheDisabledEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -214,15 +202,14 @@ public class CacheDisabledEntryLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static
-		com.liferay.portal.tools.service.builder.test.model.CacheDisabledEntry
-			fetchCacheDisabledEntry(long cacheDisabledEntryId) {
+	public static CacheDisabledEntry fetchCacheDisabledEntry(
+		long cacheDisabledEntryId) {
 
 		return getService().fetchCacheDisabledEntry(cacheDisabledEntryId);
 	}
@@ -244,9 +231,8 @@ public class CacheDisabledEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of cache disabled entries (not inclusive)
 	 * @return the range of cache disabled entries
 	 */
-	public static java.util.List
-		<com.liferay.portal.tools.service.builder.test.model.CacheDisabledEntry>
-			getCacheDisabledEntries(int start, int end) {
+	public static List<CacheDisabledEntry> getCacheDisabledEntries(
+		int start, int end) {
 
 		return getService().getCacheDisabledEntries(start, end);
 	}
@@ -267,10 +253,9 @@ public class CacheDisabledEntryLocalServiceUtil {
 	 * @return the cache disabled entry
 	 * @throws PortalException if a cache disabled entry with the primary key could not be found
 	 */
-	public static
-		com.liferay.portal.tools.service.builder.test.model.CacheDisabledEntry
-				getCacheDisabledEntry(long cacheDisabledEntryId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CacheDisabledEntry getCacheDisabledEntry(
+			long cacheDisabledEntryId)
+		throws PortalException {
 
 		return getService().getCacheDisabledEntry(cacheDisabledEntryId);
 	}
@@ -294,9 +279,8 @@ public class CacheDisabledEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -311,39 +295,16 @@ public class CacheDisabledEntryLocalServiceUtil {
 	 * @param cacheDisabledEntry the cache disabled entry
 	 * @return the cache disabled entry that was updated
 	 */
-	public static
-		com.liferay.portal.tools.service.builder.test.model.CacheDisabledEntry
-			updateCacheDisabledEntry(
-				com.liferay.portal.tools.service.builder.test.model.
-					CacheDisabledEntry cacheDisabledEntry) {
+	public static CacheDisabledEntry updateCacheDisabledEntry(
+		CacheDisabledEntry cacheDisabledEntry) {
 
 		return getService().updateCacheDisabledEntry(cacheDisabledEntry);
 	}
 
 	public static CacheDisabledEntryLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CacheDisabledEntryLocalService, CacheDisabledEntryLocalService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CacheDisabledEntryLocalService.class);
-
-		ServiceTracker
-			<CacheDisabledEntryLocalService, CacheDisabledEntryLocalService>
-				serviceTracker =
-					new ServiceTracker
-						<CacheDisabledEntryLocalService,
-						 CacheDisabledEntryLocalService>(
-							 bundle.getBundleContext(),
-							 CacheDisabledEntryLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CacheDisabledEntryLocalService _service;
 
 }

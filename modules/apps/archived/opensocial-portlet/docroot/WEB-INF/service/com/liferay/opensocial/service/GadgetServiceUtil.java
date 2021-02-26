@@ -14,7 +14,8 @@
 
 package com.liferay.opensocial.service;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
+import com.liferay.opensocial.model.Gadget;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * Provides the remote service utility for Gadget. This utility wraps
@@ -35,10 +36,10 @@ public class GadgetServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.opensocial.service.impl.GadgetServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.opensocial.model.Gadget addGadget(
+	public static Gadget addGadget(
 			long companyId, String url, String portletCategoryNames,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addGadget(
 			companyId, url, portletCategoryNames, serviceContext);
@@ -47,7 +48,7 @@ public class GadgetServiceUtil {
 	public static void deleteGadget(
 			long gadgetId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteGadget(gadgetId, serviceContext);
 	}
@@ -64,7 +65,7 @@ public class GadgetServiceUtil {
 	public static void updateGadget(
 			long gadgetId, String portletCategoryNames,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().updateGadget(
 			gadgetId, portletCategoryNames, serviceContext);
@@ -75,15 +76,9 @@ public class GadgetServiceUtil {
 	}
 
 	public static GadgetService getService() {
-		if (_service == null) {
-			_service = (GadgetService)PortletBeanLocatorUtil.locate(
-				ServletContextUtil.getServletContextName(),
-				GadgetService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static GadgetService _service;
+	private static volatile GadgetService _service;
 
 }

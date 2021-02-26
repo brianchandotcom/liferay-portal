@@ -14,9 +14,16 @@
 
 package com.liferay.redirect.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.redirect.model.RedirectEntry;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for RedirectEntry. This utility wraps
@@ -38,40 +45,40 @@ public class RedirectEntryLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.redirect.service.impl.RedirectEntryLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static void addEntryResources(
-			com.liferay.redirect.model.RedirectEntry entry,
-			boolean addGroupPermissions, boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
+			RedirectEntry entry, boolean addGroupPermissions,
+			boolean addGuestPermissions)
+		throws PortalException {
 
 		getService().addEntryResources(
 			entry, addGroupPermissions, addGuestPermissions);
 	}
 
 	public static void addEntryResources(
-			com.liferay.redirect.model.RedirectEntry entry,
+			RedirectEntry entry,
 			com.liferay.portal.kernel.service.permission.ModelPermissions
 				modelPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().addEntryResources(entry, modelPermissions);
 	}
 
-	public static com.liferay.redirect.model.RedirectEntry addRedirectEntry(
+	public static RedirectEntry addRedirectEntry(
 			long groupId, String destinationURL, java.util.Date expirationDate,
 			boolean permanent, String sourceURL,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addRedirectEntry(
 			groupId, destinationURL, expirationDate, permanent, sourceURL,
 			serviceContext);
 	}
 
-	public static com.liferay.redirect.model.RedirectEntry addRedirectEntry(
+	public static RedirectEntry addRedirectEntry(
 			long groupId, String destinationURL, java.util.Date expirationDate,
 			String groupBaseURL, boolean permanent, String sourceURL,
 			boolean updateChainedRedirectEntries,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addRedirectEntry(
 			groupId, destinationURL, expirationDate, groupBaseURL, permanent,
@@ -88,18 +95,16 @@ public class RedirectEntryLocalServiceUtil {
 	 * @param redirectEntry the redirect entry
 	 * @return the redirect entry that was added
 	 */
-	public static com.liferay.redirect.model.RedirectEntry addRedirectEntry(
-		com.liferay.redirect.model.RedirectEntry redirectEntry) {
-
+	public static RedirectEntry addRedirectEntry(RedirectEntry redirectEntry) {
 		return getService().addRedirectEntry(redirectEntry);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -110,19 +115,16 @@ public class RedirectEntryLocalServiceUtil {
 	 * @param redirectEntryId the primary key for the new redirect entry
 	 * @return the new redirect entry
 	 */
-	public static com.liferay.redirect.model.RedirectEntry createRedirectEntry(
-		long redirectEntryId) {
-
+	public static RedirectEntry createRedirectEntry(long redirectEntryId) {
 		return getService().createRedirectEntry(redirectEntryId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
@@ -138,9 +140,8 @@ public class RedirectEntryLocalServiceUtil {
 	 * @return the redirect entry that was removed
 	 * @throws PortalException if a redirect entry with the primary key could not be found
 	 */
-	public static com.liferay.redirect.model.RedirectEntry deleteRedirectEntry(
-			long redirectEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static RedirectEntry deleteRedirectEntry(long redirectEntryId)
+		throws PortalException {
 
 		return getService().deleteRedirectEntry(redirectEntryId);
 	}
@@ -155,21 +156,17 @@ public class RedirectEntryLocalServiceUtil {
 	 * @param redirectEntry the redirect entry
 	 * @return the redirect entry that was removed
 	 */
-	public static com.liferay.redirect.model.RedirectEntry deleteRedirectEntry(
-		com.liferay.redirect.model.RedirectEntry redirectEntry) {
+	public static RedirectEntry deleteRedirectEntry(
+		RedirectEntry redirectEntry) {
 
 		return getService().deleteRedirectEntry(redirectEntry);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -179,9 +176,7 @@ public class RedirectEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -197,9 +192,8 @@ public class RedirectEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -217,10 +211,9 @@ public class RedirectEntryLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -232,9 +225,7 @@ public class RedirectEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -246,25 +237,23 @@ public class RedirectEntryLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.redirect.model.RedirectEntry fetchRedirectEntry(
-		long redirectEntryId) {
-
+	public static RedirectEntry fetchRedirectEntry(long redirectEntryId) {
 		return getService().fetchRedirectEntry(redirectEntryId);
 	}
 
-	public static com.liferay.redirect.model.RedirectEntry fetchRedirectEntry(
+	public static RedirectEntry fetchRedirectEntry(
 		long groupId, String sourceURL) {
 
 		return getService().fetchRedirectEntry(groupId, sourceURL);
 	}
 
-	public static com.liferay.redirect.model.RedirectEntry fetchRedirectEntry(
+	public static RedirectEntry fetchRedirectEntry(
 		long groupId, String sourceURL, boolean updateLastOccurrenceDate) {
 
 		return getService().fetchRedirectEntry(
@@ -278,8 +267,8 @@ public class RedirectEntryLocalServiceUtil {
 	 * @param groupId the primary key of the group
 	 * @return the matching redirect entry, or <code>null</code> if a matching redirect entry could not be found
 	 */
-	public static com.liferay.redirect.model.RedirectEntry
-		fetchRedirectEntryByUuidAndGroupId(String uuid, long groupId) {
+	public static RedirectEntry fetchRedirectEntryByUuidAndGroupId(
+		String uuid, long groupId) {
 
 		return getService().fetchRedirectEntryByUuidAndGroupId(uuid, groupId);
 	}
@@ -317,9 +306,8 @@ public class RedirectEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -335,24 +323,20 @@ public class RedirectEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of redirect entries (not inclusive)
 	 * @return the range of redirect entries
 	 */
-	public static java.util.List<com.liferay.redirect.model.RedirectEntry>
-		getRedirectEntries(int start, int end) {
-
+	public static List<RedirectEntry> getRedirectEntries(int start, int end) {
 		return getService().getRedirectEntries(start, end);
 	}
 
-	public static java.util.List<com.liferay.redirect.model.RedirectEntry>
-		getRedirectEntries(
-			long groupId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.redirect.model.RedirectEntry> orderByComparator) {
+	public static List<RedirectEntry> getRedirectEntries(
+		long groupId, int start, int end,
+		OrderByComparator<RedirectEntry> orderByComparator) {
 
 		return getService().getRedirectEntries(
 			groupId, start, end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.redirect.model.RedirectEntry>
-		getRedirectEntries(long groupId, String destinationURL) {
+	public static List<RedirectEntry> getRedirectEntries(
+		long groupId, String destinationURL) {
 
 		return getService().getRedirectEntries(groupId, destinationURL);
 	}
@@ -364,8 +348,8 @@ public class RedirectEntryLocalServiceUtil {
 	 * @param companyId the primary key of the company
 	 * @return the matching redirect entries, or an empty list if no matches were found
 	 */
-	public static java.util.List<com.liferay.redirect.model.RedirectEntry>
-		getRedirectEntriesByUuidAndCompanyId(String uuid, long companyId) {
+	public static List<RedirectEntry> getRedirectEntriesByUuidAndCompanyId(
+		String uuid, long companyId) {
 
 		return getService().getRedirectEntriesByUuidAndCompanyId(
 			uuid, companyId);
@@ -381,11 +365,9 @@ public class RedirectEntryLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the range of matching redirect entries, or an empty list if no matches were found
 	 */
-	public static java.util.List<com.liferay.redirect.model.RedirectEntry>
-		getRedirectEntriesByUuidAndCompanyId(
-			String uuid, long companyId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.redirect.model.RedirectEntry> orderByComparator) {
+	public static List<RedirectEntry> getRedirectEntriesByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<RedirectEntry> orderByComparator) {
 
 		return getService().getRedirectEntriesByUuidAndCompanyId(
 			uuid, companyId, start, end, orderByComparator);
@@ -411,9 +393,8 @@ public class RedirectEntryLocalServiceUtil {
 	 * @return the redirect entry
 	 * @throws PortalException if a redirect entry with the primary key could not be found
 	 */
-	public static com.liferay.redirect.model.RedirectEntry getRedirectEntry(
-			long redirectEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static RedirectEntry getRedirectEntry(long redirectEntryId)
+		throws PortalException {
 
 		return getService().getRedirectEntry(redirectEntryId);
 	}
@@ -426,29 +407,29 @@ public class RedirectEntryLocalServiceUtil {
 	 * @return the matching redirect entry
 	 * @throws PortalException if a matching redirect entry could not be found
 	 */
-	public static com.liferay.redirect.model.RedirectEntry
-			getRedirectEntryByUuidAndGroupId(String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static RedirectEntry getRedirectEntryByUuidAndGroupId(
+			String uuid, long groupId)
+		throws PortalException {
 
 		return getService().getRedirectEntryByUuidAndGroupId(uuid, groupId);
 	}
 
-	public static com.liferay.redirect.model.RedirectEntry updateRedirectEntry(
+	public static RedirectEntry updateRedirectEntry(
 			long redirectEntryId, String destinationURL,
 			java.util.Date expirationDate, boolean permanent, String sourceURL)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateRedirectEntry(
 			redirectEntryId, destinationURL, expirationDate, permanent,
 			sourceURL);
 	}
 
-	public static com.liferay.redirect.model.RedirectEntry updateRedirectEntry(
+	public static RedirectEntry updateRedirectEntry(
 			long redirectEntryId, String destinationURL,
 			java.util.Date expirationDate, String groupBaseURL,
 			boolean permanent, String sourceURL,
 			boolean updateChainedRedirectEntries)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateRedirectEntry(
 			redirectEntryId, destinationURL, expirationDate, groupBaseURL,
@@ -465,33 +446,16 @@ public class RedirectEntryLocalServiceUtil {
 	 * @param redirectEntry the redirect entry
 	 * @return the redirect entry that was updated
 	 */
-	public static com.liferay.redirect.model.RedirectEntry updateRedirectEntry(
-		com.liferay.redirect.model.RedirectEntry redirectEntry) {
+	public static RedirectEntry updateRedirectEntry(
+		RedirectEntry redirectEntry) {
 
 		return getService().updateRedirectEntry(redirectEntry);
 	}
 
 	public static RedirectEntryLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<RedirectEntryLocalService, RedirectEntryLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			RedirectEntryLocalService.class);
-
-		ServiceTracker<RedirectEntryLocalService, RedirectEntryLocalService>
-			serviceTracker =
-				new ServiceTracker
-					<RedirectEntryLocalService, RedirectEntryLocalService>(
-						bundle.getBundleContext(),
-						RedirectEntryLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile RedirectEntryLocalService _service;
 
 }

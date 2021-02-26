@@ -14,7 +14,8 @@
 
 package com.liferay.exportimport.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * Provides the remote service utility for ExportImportConfiguration. This utility wraps
@@ -37,7 +38,7 @@ public class ExportImportConfigurationServiceUtil {
 	 */
 	public static void deleteExportImportConfiguration(
 			long exportImportConfigurationId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteExportImportConfiguration(
 			exportImportConfigurationId);
@@ -52,36 +53,28 @@ public class ExportImportConfigurationServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static
-		com.liferay.exportimport.kernel.model.ExportImportConfiguration
-				moveExportImportConfigurationToTrash(
-					long exportImportConfigurationId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static ExportImportConfiguration
+			moveExportImportConfigurationToTrash(
+				long exportImportConfigurationId)
+		throws PortalException {
 
 		return getService().moveExportImportConfigurationToTrash(
 			exportImportConfigurationId);
 	}
 
-	public static
-		com.liferay.exportimport.kernel.model.ExportImportConfiguration
-				restoreExportImportConfigurationFromTrash(
-					long exportImportConfigurationId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static ExportImportConfiguration
+			restoreExportImportConfigurationFromTrash(
+				long exportImportConfigurationId)
+		throws PortalException {
 
 		return getService().restoreExportImportConfigurationFromTrash(
 			exportImportConfigurationId);
 	}
 
 	public static ExportImportConfigurationService getService() {
-		if (_service == null) {
-			_service =
-				(ExportImportConfigurationService)PortalBeanLocatorUtil.locate(
-					ExportImportConfigurationService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static ExportImportConfigurationService _service;
+	private static volatile ExportImportConfigurationService _service;
 
 }

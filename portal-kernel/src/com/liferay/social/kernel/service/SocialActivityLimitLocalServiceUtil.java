@@ -14,7 +14,16 @@
 
 package com.liferay.social.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.social.kernel.model.SocialActivityLimit;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for SocialActivityLimit. This utility wraps
@@ -35,11 +44,10 @@ public class SocialActivityLimitLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portlet.social.service.impl.SocialActivityLimitLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.social.kernel.model.SocialActivityLimit
-			addActivityLimit(
-				long userId, long groupId, long classNameId, long classPK,
-				int activityType, String activityCounterName, int limitPeriod)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static SocialActivityLimit addActivityLimit(
+			long userId, long groupId, long classNameId, long classPK,
+			int activityType, String activityCounterName, int limitPeriod)
+		throws PortalException {
 
 		return getService().addActivityLimit(
 			userId, groupId, classNameId, classPK, activityType,
@@ -56,10 +64,8 @@ public class SocialActivityLimitLocalServiceUtil {
 	 * @param socialActivityLimit the social activity limit
 	 * @return the social activity limit that was added
 	 */
-	public static com.liferay.social.kernel.model.SocialActivityLimit
-		addSocialActivityLimit(
-			com.liferay.social.kernel.model.SocialActivityLimit
-				socialActivityLimit) {
+	public static SocialActivityLimit addSocialActivityLimit(
+		SocialActivityLimit socialActivityLimit) {
 
 		return getService().addSocialActivityLimit(socialActivityLimit);
 	}
@@ -67,9 +73,9 @@ public class SocialActivityLimitLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -80,8 +86,8 @@ public class SocialActivityLimitLocalServiceUtil {
 	 * @param activityLimitId the primary key for the new social activity limit
 	 * @return the new social activity limit
 	 */
-	public static com.liferay.social.kernel.model.SocialActivityLimit
-		createSocialActivityLimit(long activityLimitId) {
+	public static SocialActivityLimit createSocialActivityLimit(
+		long activityLimitId) {
 
 		return getService().createSocialActivityLimit(activityLimitId);
 	}
@@ -89,10 +95,9 @@ public class SocialActivityLimitLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
@@ -108,9 +113,9 @@ public class SocialActivityLimitLocalServiceUtil {
 	 * @return the social activity limit that was removed
 	 * @throws PortalException if a social activity limit with the primary key could not be found
 	 */
-	public static com.liferay.social.kernel.model.SocialActivityLimit
-			deleteSocialActivityLimit(long activityLimitId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static SocialActivityLimit deleteSocialActivityLimit(
+			long activityLimitId)
+		throws PortalException {
 
 		return getService().deleteSocialActivityLimit(activityLimitId);
 	}
@@ -125,23 +130,17 @@ public class SocialActivityLimitLocalServiceUtil {
 	 * @param socialActivityLimit the social activity limit
 	 * @return the social activity limit that was removed
 	 */
-	public static com.liferay.social.kernel.model.SocialActivityLimit
-		deleteSocialActivityLimit(
-			com.liferay.social.kernel.model.SocialActivityLimit
-				socialActivityLimit) {
+	public static SocialActivityLimit deleteSocialActivityLimit(
+		SocialActivityLimit socialActivityLimit) {
 
 		return getService().deleteSocialActivityLimit(socialActivityLimit);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -151,9 +150,7 @@ public class SocialActivityLimitLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -169,9 +166,8 @@ public class SocialActivityLimitLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -189,10 +185,9 @@ public class SocialActivityLimitLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -204,9 +199,7 @@ public class SocialActivityLimitLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -218,24 +211,23 @@ public class SocialActivityLimitLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.social.kernel.model.SocialActivityLimit
-		fetchActivityLimit(
-			long groupId, long userId, long classNameId, long classPK,
-			int activityType, String activityCounterName) {
+	public static SocialActivityLimit fetchActivityLimit(
+		long groupId, long userId, long classNameId, long classPK,
+		int activityType, String activityCounterName) {
 
 		return getService().fetchActivityLimit(
 			groupId, userId, classNameId, classPK, activityType,
 			activityCounterName);
 	}
 
-	public static com.liferay.social.kernel.model.SocialActivityLimit
-		fetchSocialActivityLimit(long activityLimitId) {
+	public static SocialActivityLimit fetchSocialActivityLimit(
+		long activityLimitId) {
 
 		return getService().fetchSocialActivityLimit(activityLimitId);
 	}
@@ -265,9 +257,8 @@ public class SocialActivityLimitLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -279,9 +270,9 @@ public class SocialActivityLimitLocalServiceUtil {
 	 * @return the social activity limit
 	 * @throws PortalException if a social activity limit with the primary key could not be found
 	 */
-	public static com.liferay.social.kernel.model.SocialActivityLimit
-			getSocialActivityLimit(long activityLimitId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static SocialActivityLimit getSocialActivityLimit(
+			long activityLimitId)
+		throws PortalException {
 
 		return getService().getSocialActivityLimit(activityLimitId);
 	}
@@ -297,9 +288,8 @@ public class SocialActivityLimitLocalServiceUtil {
 	 * @param end the upper bound of the range of social activity limits (not inclusive)
 	 * @return the range of social activity limits
 	 */
-	public static java.util.List
-		<com.liferay.social.kernel.model.SocialActivityLimit>
-			getSocialActivityLimits(int start, int end) {
+	public static List<SocialActivityLimit> getSocialActivityLimits(
+		int start, int end) {
 
 		return getService().getSocialActivityLimits(start, end);
 	}
@@ -323,24 +313,16 @@ public class SocialActivityLimitLocalServiceUtil {
 	 * @param socialActivityLimit the social activity limit
 	 * @return the social activity limit that was updated
 	 */
-	public static com.liferay.social.kernel.model.SocialActivityLimit
-		updateSocialActivityLimit(
-			com.liferay.social.kernel.model.SocialActivityLimit
-				socialActivityLimit) {
+	public static SocialActivityLimit updateSocialActivityLimit(
+		SocialActivityLimit socialActivityLimit) {
 
 		return getService().updateSocialActivityLimit(socialActivityLimit);
 	}
 
 	public static SocialActivityLimitLocalService getService() {
-		if (_service == null) {
-			_service =
-				(SocialActivityLimitLocalService)PortalBeanLocatorUtil.locate(
-					SocialActivityLimitLocalService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static SocialActivityLimitLocalService _service;
+	private static volatile SocialActivityLimitLocalService _service;
 
 }

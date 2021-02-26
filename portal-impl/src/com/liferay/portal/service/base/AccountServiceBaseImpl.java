@@ -23,9 +23,12 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.Account;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.AccountService;
+import com.liferay.portal.kernel.service.AccountServiceUtil;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.service.persistence.AccountPersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
+
+import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
 
@@ -46,7 +49,7 @@ public abstract class AccountServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>AccountService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.kernel.service.AccountServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>AccountService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>AccountServiceUtil</code>.
 	 */
 
 	/**
@@ -132,9 +135,11 @@ public abstract class AccountServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
+		_setServiceUtilService(accountService);
 	}
 
 	public void destroy() {
+		_setServiceUtilService(null);
 	}
 
 	/**
@@ -176,6 +181,19 @@ public abstract class AccountServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setServiceUtilService(AccountService accountService) {
+		try {
+			Field field = AccountServiceUtil.class.getDeclaredField("_service");
+
+			field.setAccessible(true);
+
+			field.set(null, accountService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

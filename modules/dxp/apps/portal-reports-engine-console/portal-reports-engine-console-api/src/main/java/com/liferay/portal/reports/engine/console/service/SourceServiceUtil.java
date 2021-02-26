@@ -14,9 +14,12 @@
 
 package com.liferay.portal.reports.engine.console.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.reports.engine.console.model.Source;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the remote service utility for Source. This utility wraps
@@ -37,23 +40,19 @@ public class SourceServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.reports.engine.console.service.impl.SourceServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.reports.engine.console.model.Source
-			addSource(
-				long groupId, java.util.Map<java.util.Locale, String> nameMap,
-				String driverClassName, String driverUrl, String driverUserName,
-				String driverPassword,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static Source addSource(
+			long groupId, Map<java.util.Locale, String> nameMap,
+			String driverClassName, String driverUrl, String driverUserName,
+			String driverPassword,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addSource(
 			groupId, nameMap, driverClassName, driverUrl, driverUserName,
 			driverPassword, serviceContext);
 	}
 
-	public static com.liferay.portal.reports.engine.console.model.Source
-			deleteSource(long sourceId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static Source deleteSource(long sourceId) throws PortalException {
 		return getService().deleteSource(sourceId);
 	}
 
@@ -66,21 +65,14 @@ public class SourceServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.portal.reports.engine.console.model.Source
-			getSource(long sourceId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static Source getSource(long sourceId) throws PortalException {
 		return getService().getSource(sourceId);
 	}
 
-	public static java.util.List
-		<com.liferay.portal.reports.engine.console.model.Source> getSources(
-				long groupId, String name, String driverUrl, boolean andSearch,
-				int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.portal.reports.engine.console.model.Source>
-						orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<Source> getSources(
+			long groupId, String name, String driverUrl, boolean andSearch,
+			int start, int end, OrderByComparator<Source> orderByComparator)
+		throws PortalException {
 
 		return getService().getSources(
 			groupId, name, driverUrl, andSearch, start, end, orderByComparator);
@@ -93,13 +85,12 @@ public class SourceServiceUtil {
 			groupId, name, driverUrl, andSearch);
 	}
 
-	public static com.liferay.portal.reports.engine.console.model.Source
-			updateSource(
-				long sourceId, java.util.Map<java.util.Locale, String> nameMap,
-				String driverClassName, String driverUrl, String driverUserName,
-				String driverPassword,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static Source updateSource(
+			long sourceId, Map<java.util.Locale, String> nameMap,
+			String driverClassName, String driverUrl, String driverUserName,
+			String driverPassword,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().updateSource(
 			sourceId, nameMap, driverClassName, driverUrl, driverUserName,
@@ -107,21 +98,9 @@ public class SourceServiceUtil {
 	}
 
 	public static SourceService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<SourceService, SourceService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(SourceService.class);
-
-		ServiceTracker<SourceService, SourceService> serviceTracker =
-			new ServiceTracker<SourceService, SourceService>(
-				bundle.getBundleContext(), SourceService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile SourceService _service;
 
 }

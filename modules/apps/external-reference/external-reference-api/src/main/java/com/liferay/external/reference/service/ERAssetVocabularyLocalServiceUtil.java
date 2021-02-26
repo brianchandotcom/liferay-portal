@@ -14,9 +14,9 @@
 
 package com.liferay.external.reference.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.Map;
 
 /**
  * Provides the local service utility for ERAssetVocabulary. This utility wraps
@@ -40,11 +40,10 @@ public class ERAssetVocabularyLocalServiceUtil {
 	public static com.liferay.asset.kernel.model.AssetVocabulary
 			addOrUpdateVocabulary(
 				String externalReferenceCode, long userId, long groupId,
-				String title, java.util.Map<java.util.Locale, String> titleMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				String settings,
+				String title, Map<java.util.Locale, String> titleMap,
+				Map<java.util.Locale, String> descriptionMap, String settings,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addOrUpdateVocabulary(
 			externalReferenceCode, userId, groupId, title, titleMap,
@@ -61,29 +60,9 @@ public class ERAssetVocabularyLocalServiceUtil {
 	}
 
 	public static ERAssetVocabularyLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<ERAssetVocabularyLocalService, ERAssetVocabularyLocalService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			ERAssetVocabularyLocalService.class);
-
-		ServiceTracker
-			<ERAssetVocabularyLocalService, ERAssetVocabularyLocalService>
-				serviceTracker =
-					new ServiceTracker
-						<ERAssetVocabularyLocalService,
-						 ERAssetVocabularyLocalService>(
-							 bundle.getBundleContext(),
-							 ERAssetVocabularyLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile ERAssetVocabularyLocalService _service;
 
 }

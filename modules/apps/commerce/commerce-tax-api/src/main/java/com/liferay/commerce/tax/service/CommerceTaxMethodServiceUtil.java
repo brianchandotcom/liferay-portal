@@ -14,9 +14,11 @@
 
 package com.liferay.commerce.tax.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.tax.model.CommerceTaxMethod;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the remote service utility for CommerceTaxMethod. This utility wraps
@@ -37,13 +39,11 @@ public class CommerceTaxMethodServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.tax.service.impl.CommerceTaxMethodServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.commerce.tax.model.CommerceTaxMethod
-			addCommerceTaxMethod(
-				long userId, long groupId,
-				java.util.Map<java.util.Locale, String> nameMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				String engineKey, boolean percentage, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceTaxMethod addCommerceTaxMethod(
+			long userId, long groupId, Map<java.util.Locale, String> nameMap,
+			Map<java.util.Locale, String> descriptionMap, String engineKey,
+			boolean percentage, boolean active)
+		throws PortalException {
 
 		return getService().addCommerceTaxMethod(
 			userId, groupId, nameMap, descriptionMap, engineKey, percentage,
@@ -54,59 +54,55 @@ public class CommerceTaxMethodServiceUtil {
 	 * @deprecated As of Athanasius (7.3.x)
 	 */
 	@Deprecated
-	public static com.liferay.commerce.tax.model.CommerceTaxMethod
-			addCommerceTaxMethod(
-				java.util.Map<java.util.Locale, String> nameMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				String engineKey, boolean percentage, boolean active,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceTaxMethod addCommerceTaxMethod(
+			Map<java.util.Locale, String> nameMap,
+			Map<java.util.Locale, String> descriptionMap, String engineKey,
+			boolean percentage, boolean active,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCommerceTaxMethod(
 			nameMap, descriptionMap, engineKey, percentage, active,
 			serviceContext);
 	}
 
-	public static com.liferay.commerce.tax.model.CommerceTaxMethod
-			createCommerceTaxMethod(long groupId, long commerceTaxMethodId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceTaxMethod createCommerceTaxMethod(
+			long groupId, long commerceTaxMethodId)
+		throws PortalException {
 
 		return getService().createCommerceTaxMethod(
 			groupId, commerceTaxMethodId);
 	}
 
 	public static void deleteCommerceTaxMethod(long commerceTaxMethodId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommerceTaxMethod(commerceTaxMethodId);
 	}
 
-	public static com.liferay.commerce.tax.model.CommerceTaxMethod
-			fetchCommerceTaxMethod(long groupId, String engineKey)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceTaxMethod fetchCommerceTaxMethod(
+			long groupId, String engineKey)
+		throws PortalException {
 
 		return getService().fetchCommerceTaxMethod(groupId, engineKey);
 	}
 
-	public static com.liferay.commerce.tax.model.CommerceTaxMethod
-			getCommerceTaxMethod(long commerceTaxMethodId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceTaxMethod getCommerceTaxMethod(
+			long commerceTaxMethodId)
+		throws PortalException {
 
 		return getService().getCommerceTaxMethod(commerceTaxMethodId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.tax.model.CommerceTaxMethod>
-				getCommerceTaxMethods(long groupId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommerceTaxMethod> getCommerceTaxMethods(long groupId)
+		throws PortalException {
 
 		return getService().getCommerceTaxMethods(groupId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.tax.model.CommerceTaxMethod>
-				getCommerceTaxMethods(long groupId, boolean active)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommerceTaxMethod> getCommerceTaxMethods(
+			long groupId, boolean active)
+		throws PortalException {
 
 		return getService().getCommerceTaxMethods(groupId, active);
 	}
@@ -120,45 +116,27 @@ public class CommerceTaxMethodServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.commerce.tax.model.CommerceTaxMethod setActive(
+	public static CommerceTaxMethod setActive(
 			long commerceTaxMethodId, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().setActive(commerceTaxMethodId, active);
 	}
 
-	public static com.liferay.commerce.tax.model.CommerceTaxMethod
-			updateCommerceTaxMethod(
-				long commerceTaxMethodId,
-				java.util.Map<java.util.Locale, String> nameMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				boolean percentage, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceTaxMethod updateCommerceTaxMethod(
+			long commerceTaxMethodId, Map<java.util.Locale, String> nameMap,
+			Map<java.util.Locale, String> descriptionMap, boolean percentage,
+			boolean active)
+		throws PortalException {
 
 		return getService().updateCommerceTaxMethod(
 			commerceTaxMethodId, nameMap, descriptionMap, percentage, active);
 	}
 
 	public static CommerceTaxMethodService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceTaxMethodService, CommerceTaxMethodService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(CommerceTaxMethodService.class);
-
-		ServiceTracker<CommerceTaxMethodService, CommerceTaxMethodService>
-			serviceTracker =
-				new ServiceTracker
-					<CommerceTaxMethodService, CommerceTaxMethodService>(
-						bundle.getBundleContext(),
-						CommerceTaxMethodService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceTaxMethodService _service;
 
 }

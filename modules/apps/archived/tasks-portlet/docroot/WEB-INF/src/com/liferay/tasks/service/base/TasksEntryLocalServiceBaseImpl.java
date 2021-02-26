@@ -45,10 +45,13 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.social.kernel.service.persistence.SocialActivityPersistence;
 import com.liferay.tasks.model.TasksEntry;
 import com.liferay.tasks.service.TasksEntryLocalService;
+import com.liferay.tasks.service.TasksEntryLocalServiceUtil;
 import com.liferay.tasks.service.persistence.TasksEntryFinder;
 import com.liferay.tasks.service.persistence.TasksEntryPersistence;
 
 import java.io.Serializable;
+
+import java.lang.reflect.Field;
 
 import java.util.List;
 
@@ -72,7 +75,7 @@ public abstract class TasksEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>TasksEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.tasks.service.TasksEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>TasksEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>TasksEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -695,11 +698,15 @@ public abstract class TasksEntryLocalServiceBaseImpl
 	public void afterPropertiesSet() {
 		PersistedModelLocalServiceRegistryUtil.register(
 			"com.liferay.tasks.model.TasksEntry", tasksEntryLocalService);
+
+		_setLocalServiceUtilService(tasksEntryLocalService);
 	}
 
 	public void destroy() {
 		PersistedModelLocalServiceRegistryUtil.unregister(
 			"com.liferay.tasks.model.TasksEntry");
+
+		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -741,6 +748,22 @@ public abstract class TasksEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		TasksEntryLocalService tasksEntryLocalService) {
+
+		try {
+			Field field = TasksEntryLocalServiceUtil.class.getDeclaredField(
+				"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, tasksEntryLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

@@ -14,7 +14,16 @@
 
 package com.liferay.powwow.service;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.powwow.model.PowwowServer;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for PowwowServer. This utility wraps
@@ -35,11 +44,11 @@ public class PowwowServerLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.powwow.service.impl.PowwowServerLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.powwow.model.PowwowServer addPowwowServer(
+	public static PowwowServer addPowwowServer(
 			long userId, String name, String providerType, String url,
 			String apiKey, String secret,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addPowwowServer(
 			userId, name, providerType, url, apiKey, secret, serviceContext);
@@ -55,9 +64,7 @@ public class PowwowServerLocalServiceUtil {
 	 * @param powwowServer the powwow server
 	 * @return the powwow server that was added
 	 */
-	public static com.liferay.powwow.model.PowwowServer addPowwowServer(
-		com.liferay.powwow.model.PowwowServer powwowServer) {
-
+	public static PowwowServer addPowwowServer(PowwowServer powwowServer) {
 		return getService().addPowwowServer(powwowServer);
 	}
 
@@ -68,9 +75,9 @@ public class PowwowServerLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -81,19 +88,16 @@ public class PowwowServerLocalServiceUtil {
 	 * @param powwowServerId the primary key for the new powwow server
 	 * @return the new powwow server
 	 */
-	public static com.liferay.powwow.model.PowwowServer createPowwowServer(
-		long powwowServerId) {
-
+	public static PowwowServer createPowwowServer(long powwowServerId) {
 		return getService().createPowwowServer(powwowServerId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
@@ -109,9 +113,8 @@ public class PowwowServerLocalServiceUtil {
 	 * @return the powwow server that was removed
 	 * @throws PortalException if a powwow server with the primary key could not be found
 	 */
-	public static com.liferay.powwow.model.PowwowServer deletePowwowServer(
-			long powwowServerId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PowwowServer deletePowwowServer(long powwowServerId)
+		throws PortalException {
 
 		return getService().deletePowwowServer(powwowServerId);
 	}
@@ -126,21 +129,15 @@ public class PowwowServerLocalServiceUtil {
 	 * @param powwowServer the powwow server
 	 * @return the powwow server that was removed
 	 */
-	public static com.liferay.powwow.model.PowwowServer deletePowwowServer(
-		com.liferay.powwow.model.PowwowServer powwowServer) {
-
+	public static PowwowServer deletePowwowServer(PowwowServer powwowServer) {
 		return getService().deletePowwowServer(powwowServer);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -150,9 +147,7 @@ public class PowwowServerLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -168,9 +163,8 @@ public class PowwowServerLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -188,10 +182,9 @@ public class PowwowServerLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -203,9 +196,7 @@ public class PowwowServerLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -217,15 +208,13 @@ public class PowwowServerLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.powwow.model.PowwowServer fetchPowwowServer(
-		long powwowServerId) {
-
+	public static PowwowServer fetchPowwowServer(long powwowServerId) {
 		return getService().fetchPowwowServer(powwowServerId);
 	}
 
@@ -254,9 +243,8 @@ public class PowwowServerLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -268,9 +256,8 @@ public class PowwowServerLocalServiceUtil {
 	 * @return the powwow server
 	 * @throws PortalException if a powwow server with the primary key could not be found
 	 */
-	public static com.liferay.powwow.model.PowwowServer getPowwowServer(
-			long powwowServerId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PowwowServer getPowwowServer(long powwowServerId)
+		throws PortalException {
 
 		return getService().getPowwowServer(powwowServerId);
 	}
@@ -286,23 +273,18 @@ public class PowwowServerLocalServiceUtil {
 	 * @param end the upper bound of the range of powwow servers (not inclusive)
 	 * @return the range of powwow servers
 	 */
-	public static java.util.List<com.liferay.powwow.model.PowwowServer>
-		getPowwowServers(int start, int end) {
-
+	public static List<PowwowServer> getPowwowServers(int start, int end) {
 		return getService().getPowwowServers(start, end);
 	}
 
-	public static java.util.List<com.liferay.powwow.model.PowwowServer>
-		getPowwowServers(
-			int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.powwow.model.PowwowServer> orderByComparator) {
+	public static List<PowwowServer> getPowwowServers(
+		int start, int end, OrderByComparator<PowwowServer> orderByComparator) {
 
 		return getService().getPowwowServers(start, end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.powwow.model.PowwowServer>
-		getPowwowServers(String providerType, boolean active) {
+	public static List<PowwowServer> getPowwowServers(
+		String providerType, boolean active) {
 
 		return getService().getPowwowServers(providerType, active);
 	}
@@ -322,11 +304,11 @@ public class PowwowServerLocalServiceUtil {
 		return getService().getPowwowServersCount(providerType, active);
 	}
 
-	public static com.liferay.powwow.model.PowwowServer updatePowwowServer(
+	public static PowwowServer updatePowwowServer(
 			long powwowServerId, String name, String providerType, String url,
 			String apiKey, String secret,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updatePowwowServer(
 			powwowServerId, name, providerType, url, apiKey, secret,
@@ -343,9 +325,7 @@ public class PowwowServerLocalServiceUtil {
 	 * @param powwowServer the powwow server
 	 * @return the powwow server that was updated
 	 */
-	public static com.liferay.powwow.model.PowwowServer updatePowwowServer(
-		com.liferay.powwow.model.PowwowServer powwowServer) {
-
+	public static PowwowServer updatePowwowServer(PowwowServer powwowServer) {
 		return getService().updatePowwowServer(powwowServer);
 	}
 
@@ -354,15 +334,9 @@ public class PowwowServerLocalServiceUtil {
 	}
 
 	public static PowwowServerLocalService getService() {
-		if (_service == null) {
-			_service = (PowwowServerLocalService)PortletBeanLocatorUtil.locate(
-				ServletContextUtil.getServletContextName(),
-				PowwowServerLocalService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static PowwowServerLocalService _service;
+	private static volatile PowwowServerLocalService _service;
 
 }

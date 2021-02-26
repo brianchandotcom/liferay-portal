@@ -14,9 +14,11 @@
 
 package com.liferay.commerce.shipping.engine.fixed.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for CommerceShippingFixedOptionRel. This utility wraps
@@ -37,15 +39,15 @@ public class CommerceShippingFixedOptionRelServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.shipping.engine.fixed.service.impl.CommerceShippingFixedOptionRelServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.commerce.shipping.engine.fixed.model.
-		CommerceShippingFixedOptionRel addCommerceShippingFixedOptionRel(
+	public static CommerceShippingFixedOptionRel
+			addCommerceShippingFixedOptionRel(
 				long userId, long groupId, long commerceShippingMethodId,
 				long commerceShippingFixedOptionId,
 				long commerceInventoryWarehouseId, long commerceCountryId,
 				long commerceRegionId, String zip, double weightFrom,
 				double weightTo, java.math.BigDecimal fixedPrice,
 				java.math.BigDecimal rateUnitWeightPrice, double ratePercentage)
-			throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addCommerceShippingFixedOptionRel(
 			userId, groupId, commerceShippingMethodId,
@@ -58,8 +60,8 @@ public class CommerceShippingFixedOptionRelServiceUtil {
 	 * @deprecated As of Athanasius (7.3.x)
 	 */
 	@Deprecated
-	public static com.liferay.commerce.shipping.engine.fixed.model.
-		CommerceShippingFixedOptionRel addCommerceShippingFixedOptionRel(
+	public static CommerceShippingFixedOptionRel
+			addCommerceShippingFixedOptionRel(
 				long commerceShippingMethodId,
 				long commerceShippingFixedOptionId,
 				long commerceInventoryWarehouseId, long commerceCountryId,
@@ -67,7 +69,7 @@ public class CommerceShippingFixedOptionRelServiceUtil {
 				double weightTo, java.math.BigDecimal fixedPrice,
 				java.math.BigDecimal rateUnitWeightPrice, double ratePercentage,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-			throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addCommerceShippingFixedOptionRel(
 			commerceShippingMethodId, commerceShippingFixedOptionId,
@@ -78,31 +80,27 @@ public class CommerceShippingFixedOptionRelServiceUtil {
 
 	public static void deleteCommerceShippingFixedOptionRel(
 			long commerceShippingFixedOptionRelId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommerceShippingFixedOptionRel(
 			commerceShippingFixedOptionRelId);
 	}
 
-	public static com.liferay.commerce.shipping.engine.fixed.model.
-		CommerceShippingFixedOptionRel fetchCommerceShippingFixedOptionRel(
+	public static CommerceShippingFixedOptionRel
+			fetchCommerceShippingFixedOptionRel(
 				long commerceShippingFixedOptionRelId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().fetchCommerceShippingFixedOptionRel(
 			commerceShippingFixedOptionRelId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.shipping.engine.fixed.model.
-			CommerceShippingFixedOptionRel>
-					getCommerceShippingMethodFixedOptionRels(
-						long commerceShippingMethodId, int start, int end,
-						com.liferay.portal.kernel.util.OrderByComparator
-							<com.liferay.commerce.shipping.engine.fixed.model.
-								CommerceShippingFixedOptionRel>
-									orderByComparator)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommerceShippingFixedOptionRel>
+			getCommerceShippingMethodFixedOptionRels(
+				long commerceShippingMethodId, int start, int end,
+				OrderByComparator<CommerceShippingFixedOptionRel>
+					orderByComparator)
+		throws PortalException {
 
 		return getService().getCommerceShippingMethodFixedOptionRels(
 			commerceShippingMethodId, start, end, orderByComparator);
@@ -110,7 +108,7 @@ public class CommerceShippingFixedOptionRelServiceUtil {
 
 	public static int getCommerceShippingMethodFixedOptionRelsCount(
 			long commerceShippingMethodId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCommerceShippingMethodFixedOptionRelsCount(
 			commerceShippingMethodId);
@@ -125,14 +123,14 @@ public class CommerceShippingFixedOptionRelServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.commerce.shipping.engine.fixed.model.
-		CommerceShippingFixedOptionRel updateCommerceShippingFixedOptionRel(
+	public static CommerceShippingFixedOptionRel
+			updateCommerceShippingFixedOptionRel(
 				long commerceShippingFixedOptionRelId,
 				long commerceInventoryWarehouseId, long commerceCountryId,
 				long commerceRegionId, String zip, double weightFrom,
 				double weightTo, java.math.BigDecimal fixedPrice,
 				java.math.BigDecimal rateUnitWeightPrice, double ratePercentage)
-			throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateCommerceShippingFixedOptionRel(
 			commerceShippingFixedOptionRelId, commerceInventoryWarehouseId,
@@ -141,29 +139,9 @@ public class CommerceShippingFixedOptionRelServiceUtil {
 	}
 
 	public static CommerceShippingFixedOptionRelService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceShippingFixedOptionRelService,
-		 CommerceShippingFixedOptionRelService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommerceShippingFixedOptionRelService.class);
-
-		ServiceTracker
-			<CommerceShippingFixedOptionRelService,
-			 CommerceShippingFixedOptionRelService> serviceTracker =
-				new ServiceTracker
-					<CommerceShippingFixedOptionRelService,
-					 CommerceShippingFixedOptionRelService>(
-						 bundle.getBundleContext(),
-						 CommerceShippingFixedOptionRelService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceShippingFixedOptionRelService _service;
 
 }

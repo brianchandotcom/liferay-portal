@@ -14,7 +14,16 @@
 
 package com.liferay.asset.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for AssetEntry. This utility wraps
@@ -46,16 +55,12 @@ public class AssetEntryLocalServiceUtil {
 	 * @param assetEntry the asset entry
 	 * @return the asset entry that was added
 	 */
-	public static com.liferay.asset.kernel.model.AssetEntry addAssetEntry(
-		com.liferay.asset.kernel.model.AssetEntry assetEntry) {
-
+	public static AssetEntry addAssetEntry(AssetEntry assetEntry) {
 		return getService().addAssetEntry(assetEntry);
 	}
 
 	public static void addAssetTagAssetEntries(
-		long tagId,
-		java.util.List<com.liferay.asset.kernel.model.AssetEntry>
-			assetEntries) {
+		long tagId, List<AssetEntry> assetEntries) {
 
 		getService().addAssetTagAssetEntries(tagId, assetEntries);
 	}
@@ -65,7 +70,7 @@ public class AssetEntryLocalServiceUtil {
 	}
 
 	public static void addAssetTagAssetEntry(
-		long tagId, com.liferay.asset.kernel.model.AssetEntry assetEntry) {
+		long tagId, AssetEntry assetEntry) {
 
 		getService().addAssetTagAssetEntry(tagId, assetEntry);
 	}
@@ -84,18 +89,16 @@ public class AssetEntryLocalServiceUtil {
 	 * @param entryId the primary key for the new asset entry
 	 * @return the new asset entry
 	 */
-	public static com.liferay.asset.kernel.model.AssetEntry createAssetEntry(
-		long entryId) {
-
+	public static AssetEntry createAssetEntry(long entryId) {
 		return getService().createAssetEntry(entryId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -110,9 +113,7 @@ public class AssetEntryLocalServiceUtil {
 	 * @param assetEntry the asset entry
 	 * @return the asset entry that was removed
 	 */
-	public static com.liferay.asset.kernel.model.AssetEntry deleteAssetEntry(
-		com.liferay.asset.kernel.model.AssetEntry assetEntry) {
-
+	public static AssetEntry deleteAssetEntry(AssetEntry assetEntry) {
 		return getService().deleteAssetEntry(assetEntry);
 	}
 
@@ -127,17 +128,14 @@ public class AssetEntryLocalServiceUtil {
 	 * @return the asset entry that was removed
 	 * @throws PortalException if a asset entry with the primary key could not be found
 	 */
-	public static com.liferay.asset.kernel.model.AssetEntry deleteAssetEntry(
-			long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AssetEntry deleteAssetEntry(long entryId)
+		throws PortalException {
 
 		return getService().deleteAssetEntry(entryId);
 	}
 
 	public static void deleteAssetTagAssetEntries(
-		long tagId,
-		java.util.List<com.liferay.asset.kernel.model.AssetEntry>
-			assetEntries) {
+		long tagId, List<AssetEntry> assetEntries) {
 
 		getService().deleteAssetTagAssetEntries(tagId, assetEntries);
 	}
@@ -147,7 +145,7 @@ public class AssetEntryLocalServiceUtil {
 	}
 
 	public static void deleteAssetTagAssetEntry(
-		long tagId, com.liferay.asset.kernel.model.AssetEntry assetEntry) {
+		long tagId, AssetEntry assetEntry) {
 
 		getService().deleteAssetTagAssetEntry(tagId, assetEntry);
 	}
@@ -156,51 +154,39 @@ public class AssetEntryLocalServiceUtil {
 		getService().deleteAssetTagAssetEntry(tagId, entryId);
 	}
 
-	public static void deleteEntry(
-			com.liferay.asset.kernel.model.AssetEntry entry)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static void deleteEntry(AssetEntry entry) throws PortalException {
 		getService().deleteEntry(entry);
 	}
 
-	public static void deleteEntry(long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static void deleteEntry(long entryId) throws PortalException {
 		getService().deleteEntry(entryId);
 	}
 
 	public static void deleteEntry(String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteEntry(className, classPK);
 	}
 
-	public static void deleteGroupEntries(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static void deleteGroupEntries(long groupId) throws PortalException {
 		getService().deleteGroupEntries(groupId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -210,9 +196,7 @@ public class AssetEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -228,9 +212,8 @@ public class AssetEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -248,10 +231,9 @@ public class AssetEntryLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -263,9 +245,7 @@ public class AssetEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -277,39 +257,29 @@ public class AssetEntryLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.asset.kernel.model.AssetEntry fetchAssetEntry(
-		long entryId) {
-
+	public static AssetEntry fetchAssetEntry(long entryId) {
 		return getService().fetchAssetEntry(entryId);
 	}
 
-	public static com.liferay.asset.kernel.model.AssetEntry fetchEntry(
-		long entryId) {
-
+	public static AssetEntry fetchEntry(long entryId) {
 		return getService().fetchEntry(entryId);
 	}
 
-	public static com.liferay.asset.kernel.model.AssetEntry fetchEntry(
-		long classNameId, long classPK) {
-
+	public static AssetEntry fetchEntry(long classNameId, long classPK) {
 		return getService().fetchEntry(classNameId, classPK);
 	}
 
-	public static com.liferay.asset.kernel.model.AssetEntry fetchEntry(
-		long groupId, String classUuid) {
-
+	public static AssetEntry fetchEntry(long groupId, String classUuid) {
 		return getService().fetchEntry(groupId, classUuid);
 	}
 
-	public static com.liferay.asset.kernel.model.AssetEntry fetchEntry(
-		String className, long classPK) {
-
+	public static AssetEntry fetchEntry(String className, long classPK) {
 		return getService().fetchEntry(className, classPK);
 	}
 
@@ -319,9 +289,8 @@ public class AssetEntryLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
-	public static java.util.List<com.liferay.asset.kernel.model.AssetEntry>
-			getAncestorEntries(long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<AssetEntry> getAncestorEntries(long entryId)
+		throws PortalException {
 
 		return getService().getAncestorEntries(entryId);
 	}
@@ -337,9 +306,7 @@ public class AssetEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of asset entries (not inclusive)
 	 * @return the range of asset entries
 	 */
-	public static java.util.List<com.liferay.asset.kernel.model.AssetEntry>
-		getAssetEntries(int start, int end) {
-
+	public static List<AssetEntry> getAssetEntries(int start, int end) {
 		return getService().getAssetEntries(start, end);
 	}
 
@@ -359,30 +326,25 @@ public class AssetEntryLocalServiceUtil {
 	 * @return the asset entry
 	 * @throws PortalException if a asset entry with the primary key could not be found
 	 */
-	public static com.liferay.asset.kernel.model.AssetEntry getAssetEntry(
-			long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AssetEntry getAssetEntry(long entryId)
+		throws PortalException {
 
 		return getService().getAssetEntry(entryId);
 	}
 
-	public static java.util.List<com.liferay.asset.kernel.model.AssetEntry>
-		getAssetTagAssetEntries(long tagId) {
-
+	public static List<AssetEntry> getAssetTagAssetEntries(long tagId) {
 		return getService().getAssetTagAssetEntries(tagId);
 	}
 
-	public static java.util.List<com.liferay.asset.kernel.model.AssetEntry>
-		getAssetTagAssetEntries(long tagId, int start, int end) {
+	public static List<AssetEntry> getAssetTagAssetEntries(
+		long tagId, int start, int end) {
 
 		return getService().getAssetTagAssetEntries(tagId, start, end);
 	}
 
-	public static java.util.List<com.liferay.asset.kernel.model.AssetEntry>
-		getAssetTagAssetEntries(
-			long tagId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.asset.kernel.model.AssetEntry> orderByComparator) {
+	public static List<AssetEntry> getAssetTagAssetEntries(
+		long tagId, int start, int end,
+		OrderByComparator<AssetEntry> orderByComparator) {
 
 		return getService().getAssetTagAssetEntries(
 			tagId, start, end, orderByComparator);
@@ -402,15 +364,14 @@ public class AssetEntryLocalServiceUtil {
 		return getService().getAssetTagPrimaryKeys(entryId);
 	}
 
-	public static java.util.List<com.liferay.asset.kernel.model.AssetEntry>
-			getChildEntries(long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<AssetEntry> getChildEntries(long entryId)
+		throws PortalException {
 
 		return getService().getChildEntries(entryId);
 	}
 
-	public static java.util.List<com.liferay.asset.kernel.model.AssetEntry>
-		getCompanyEntries(long companyId, int start, int end) {
+	public static List<AssetEntry> getCompanyEntries(
+		long companyId, int start, int end) {
 
 		return getService().getCompanyEntries(companyId, start, end);
 	}
@@ -419,21 +380,19 @@ public class AssetEntryLocalServiceUtil {
 		return getService().getCompanyEntriesCount(companyId);
 	}
 
-	public static java.util.List<com.liferay.asset.kernel.model.AssetEntry>
-		getEntries(
-			com.liferay.asset.kernel.service.persistence.AssetEntryQuery
-				entryQuery) {
+	public static List<AssetEntry> getEntries(
+		com.liferay.asset.kernel.service.persistence.AssetEntryQuery
+			entryQuery) {
 
 		return getService().getEntries(entryQuery);
 	}
 
-	public static java.util.List<com.liferay.asset.kernel.model.AssetEntry>
-		getEntries(
-			long[] groupIds, long[] classNameIds, long[] classTypeIds,
-			String keywords, String userName, String title, String description,
-			Boolean listable, boolean advancedSearch, boolean andOperator,
-			int start, int end, String orderByCol1, String orderByCol2,
-			String orderByType1, String orderByType2) {
+	public static List<AssetEntry> getEntries(
+		long[] groupIds, long[] classNameIds, long[] classTypeIds,
+		String keywords, String userName, String title, String description,
+		Boolean listable, boolean advancedSearch, boolean andOperator,
+		int start, int end, String orderByCol1, String orderByCol2,
+		String orderByType1, String orderByType2) {
 
 		return getService().getEntries(
 			groupIds, classNameIds, classTypeIds, keywords, userName, title,
@@ -441,13 +400,12 @@ public class AssetEntryLocalServiceUtil {
 			orderByCol1, orderByCol2, orderByType1, orderByType2);
 	}
 
-	public static java.util.List<com.liferay.asset.kernel.model.AssetEntry>
-		getEntries(
-			long[] groupIds, long[] classNameIds, String keywords,
-			String userName, String title, String description, Boolean listable,
-			boolean advancedSearch, boolean andOperator, int start, int end,
-			String orderByCol1, String orderByCol2, String orderByType1,
-			String orderByType2) {
+	public static List<AssetEntry> getEntries(
+		long[] groupIds, long[] classNameIds, String keywords, String userName,
+		String title, String description, Boolean listable,
+		boolean advancedSearch, boolean andOperator, int start, int end,
+		String orderByCol1, String orderByCol2, String orderByType1,
+		String orderByType2) {
 
 		return getService().getEntries(
 			groupIds, classNameIds, keywords, userName, title, description,
@@ -482,23 +440,18 @@ public class AssetEntryLocalServiceUtil {
 			listable, advancedSearch, andOperator);
 	}
 
-	public static com.liferay.asset.kernel.model.AssetEntry getEntry(
-			long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static AssetEntry getEntry(long entryId) throws PortalException {
 		return getService().getEntry(entryId);
 	}
 
-	public static com.liferay.asset.kernel.model.AssetEntry getEntry(
-			long groupId, String classUuid)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AssetEntry getEntry(long groupId, String classUuid)
+		throws PortalException {
 
 		return getService().getEntry(groupId, classUuid);
 	}
 
-	public static com.liferay.asset.kernel.model.AssetEntry getEntry(
-			String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AssetEntry getEntry(String className, long classPK)
+		throws PortalException {
 
 		return getService().getEntry(className, classPK);
 	}
@@ -511,9 +464,7 @@ public class AssetEntryLocalServiceUtil {
 		return getService().getEntryPriority(className, classPK);
 	}
 
-	public static java.util.List<com.liferay.asset.kernel.model.AssetEntry>
-		getGroupEntries(long groupId) {
-
+	public static List<AssetEntry> getGroupEntries(long groupId) {
 		return getService().getGroupEntries(groupId);
 	}
 
@@ -524,10 +475,7 @@ public class AssetEntryLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
-	public static com.liferay.asset.kernel.model.AssetEntry getNextEntry(
-			long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static AssetEntry getNextEntry(long entryId) throws PortalException {
 		return getService().getNextEntry(entryId);
 	}
 
@@ -540,9 +488,8 @@ public class AssetEntryLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.asset.kernel.model.AssetEntry getParentEntry(
-			long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AssetEntry getParentEntry(long entryId)
+		throws PortalException {
 
 		return getService().getParentEntry(entryId);
 	}
@@ -550,29 +497,26 @@ public class AssetEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static com.liferay.asset.kernel.model.AssetEntry getPreviousEntry(
-			long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AssetEntry getPreviousEntry(long entryId)
+		throws PortalException {
 
 		return getService().getPreviousEntry(entryId);
 	}
 
-	public static java.util.List<com.liferay.asset.kernel.model.AssetEntry>
-		getTopViewedEntries(String className, boolean asc, int start, int end) {
+	public static List<AssetEntry> getTopViewedEntries(
+		String className, boolean asc, int start, int end) {
 
 		return getService().getTopViewedEntries(className, asc, start, end);
 	}
 
-	public static java.util.List<com.liferay.asset.kernel.model.AssetEntry>
-		getTopViewedEntries(
-			String[] className, boolean asc, int start, int end) {
+	public static List<AssetEntry> getTopViewedEntries(
+		String[] className, boolean asc, int start, int end) {
 
 		return getService().getTopViewedEntries(className, asc, start, end);
 	}
@@ -585,17 +529,15 @@ public class AssetEntryLocalServiceUtil {
 		return getService().hasAssetTagAssetEntry(tagId, entryId);
 	}
 
-	public static void incrementViewCounter(
-			long userId, com.liferay.asset.kernel.model.AssetEntry assetEntry)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static void incrementViewCounter(long userId, AssetEntry assetEntry)
+		throws PortalException {
 
 		getService().incrementViewCounter(userId, assetEntry);
 	}
 
-	public static com.liferay.asset.kernel.model.AssetEntry
-			incrementViewCounter(
-				long companyId, long userId, String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AssetEntry incrementViewCounter(
+			long companyId, long userId, String className, long classPK)
+		throws PortalException {
 
 		return getService().incrementViewCounter(
 			companyId, userId, className, classPK);
@@ -609,9 +551,8 @@ public class AssetEntryLocalServiceUtil {
 			companyId, userId, className, classPK, increment);
 	}
 
-	public static void reindex(
-			java.util.List<com.liferay.asset.kernel.model.AssetEntry> entries)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static void reindex(List<AssetEntry> entries)
+		throws PortalException {
 
 		getService().reindex(entries);
 	}
@@ -794,13 +735,11 @@ public class AssetEntryLocalServiceUtil {
 	 * @param assetEntry the asset entry
 	 * @return the asset entry that was updated
 	 */
-	public static com.liferay.asset.kernel.model.AssetEntry updateAssetEntry(
-		com.liferay.asset.kernel.model.AssetEntry assetEntry) {
-
+	public static AssetEntry updateAssetEntry(AssetEntry assetEntry) {
 		return getService().updateAssetEntry(assetEntry);
 	}
 
-	public static com.liferay.asset.kernel.model.AssetEntry updateEntry(
+	public static AssetEntry updateEntry(
 			long userId, long groupId, java.util.Date createDate,
 			java.util.Date modifiedDate, String className, long classPK,
 			String classUuid, long classTypeId, long[] categoryIds,
@@ -810,7 +749,7 @@ public class AssetEntryLocalServiceUtil {
 			String mimeType, String title, String description, String summary,
 			String url, String layoutUuid, int height, int width,
 			Double priority)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateEntry(
 			userId, groupId, createDate, modifiedDate, className, classPK,
@@ -819,34 +758,33 @@ public class AssetEntryLocalServiceUtil {
 			description, summary, url, layoutUuid, height, width, priority);
 	}
 
-	public static com.liferay.asset.kernel.model.AssetEntry updateEntry(
+	public static AssetEntry updateEntry(
 			long userId, long groupId, String className, long classPK,
 			long[] categoryIds, String[] tagNames)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateEntry(
 			userId, groupId, className, classPK, categoryIds, tagNames);
 	}
 
-	public static com.liferay.asset.kernel.model.AssetEntry updateEntry(
+	public static AssetEntry updateEntry(
 			String className, long classPK, java.util.Date publishDate,
 			java.util.Date expirationDate, boolean listable, boolean visible)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateEntry(
 			className, classPK, publishDate, expirationDate, listable, visible);
 	}
 
-	public static com.liferay.asset.kernel.model.AssetEntry updateVisible(
-			com.liferay.asset.kernel.model.AssetEntry entry, boolean visible)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AssetEntry updateVisible(AssetEntry entry, boolean visible)
+		throws PortalException {
 
 		return getService().updateVisible(entry, visible);
 	}
 
-	public static com.liferay.asset.kernel.model.AssetEntry updateVisible(
+	public static AssetEntry updateVisible(
 			String className, long classPK, boolean visible)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateVisible(className, classPK, visible);
 	}
@@ -854,7 +792,7 @@ public class AssetEntryLocalServiceUtil {
 	public static void validate(
 			long groupId, String className, long classPK, long classTypePK,
 			long[] categoryIds, String[] tagNames)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().validate(
 			groupId, className, classPK, classTypePK, categoryIds, tagNames);
@@ -863,21 +801,16 @@ public class AssetEntryLocalServiceUtil {
 	public static void validate(
 			long groupId, String className, long classTypePK,
 			long[] categoryIds, String[] tagNames)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().validate(
 			groupId, className, classTypePK, categoryIds, tagNames);
 	}
 
 	public static AssetEntryLocalService getService() {
-		if (_service == null) {
-			_service = (AssetEntryLocalService)PortalBeanLocatorUtil.locate(
-				AssetEntryLocalService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static AssetEntryLocalService _service;
+	private static volatile AssetEntryLocalService _service;
 
 }

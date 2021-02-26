@@ -14,7 +14,17 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.Region;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for Region. This utility wraps
@@ -35,10 +45,10 @@ public class RegionLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.service.impl.RegionLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.kernel.model.Region addRegion(
+	public static Region addRegion(
 			long countryId, boolean active, String name, double position,
 			String regionCode, ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addRegion(
 			countryId, active, name, position, regionCode, serviceContext);
@@ -54,18 +64,16 @@ public class RegionLocalServiceUtil {
 	 * @param region the region
 	 * @return the region that was added
 	 */
-	public static com.liferay.portal.kernel.model.Region addRegion(
-		com.liferay.portal.kernel.model.Region region) {
-
+	public static Region addRegion(Region region) {
 		return getService().addRegion(region);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -76,9 +84,7 @@ public class RegionLocalServiceUtil {
 	 * @param regionId the primary key for the new region
 	 * @return the new region
 	 */
-	public static com.liferay.portal.kernel.model.Region createRegion(
-		long regionId) {
-
+	public static Region createRegion(long regionId) {
 		return getService().createRegion(regionId);
 	}
 
@@ -89,10 +95,9 @@ public class RegionLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
@@ -108,10 +113,7 @@ public class RegionLocalServiceUtil {
 	 * @return the region that was removed
 	 * @throws PortalException if a region with the primary key could not be found
 	 */
-	public static com.liferay.portal.kernel.model.Region deleteRegion(
-			long regionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static Region deleteRegion(long regionId) throws PortalException {
 		return getService().deleteRegion(regionId);
 	}
 
@@ -126,22 +128,15 @@ public class RegionLocalServiceUtil {
 	 * @return the region that was removed
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.Region deleteRegion(
-			com.liferay.portal.kernel.model.Region region)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static Region deleteRegion(Region region) throws PortalException {
 		return getService().deleteRegion(region);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -151,9 +146,7 @@ public class RegionLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -169,9 +162,8 @@ public class RegionLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -189,10 +181,9 @@ public class RegionLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -204,9 +195,7 @@ public class RegionLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -218,21 +207,17 @@ public class RegionLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.portal.kernel.model.Region fetchRegion(
-		long regionId) {
-
+	public static Region fetchRegion(long regionId) {
 		return getService().fetchRegion(regionId);
 	}
 
-	public static com.liferay.portal.kernel.model.Region fetchRegion(
-		long countryId, String regionCode) {
-
+	public static Region fetchRegion(long countryId, String regionCode) {
 		return getService().fetchRegion(countryId, regionCode);
 	}
 
@@ -243,8 +228,8 @@ public class RegionLocalServiceUtil {
 	 * @param companyId the primary key of the company
 	 * @return the matching region, or <code>null</code> if a matching region could not be found
 	 */
-	public static com.liferay.portal.kernel.model.Region
-		fetchRegionByUuidAndCompanyId(String uuid, long companyId) {
+	public static Region fetchRegionByUuidAndCompanyId(
+		String uuid, long companyId) {
 
 		return getService().fetchRegionByUuidAndCompanyId(uuid, companyId);
 	}
@@ -288,9 +273,8 @@ public class RegionLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -302,16 +286,12 @@ public class RegionLocalServiceUtil {
 	 * @return the region
 	 * @throws PortalException if a region with the primary key could not be found
 	 */
-	public static com.liferay.portal.kernel.model.Region getRegion(
-			long regionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static Region getRegion(long regionId) throws PortalException {
 		return getService().getRegion(regionId);
 	}
 
-	public static com.liferay.portal.kernel.model.Region getRegion(
-			long countryId, String regionCode)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static Region getRegion(long countryId, String regionCode)
+		throws PortalException {
 
 		return getService().getRegion(countryId, regionCode);
 	}
@@ -324,23 +304,22 @@ public class RegionLocalServiceUtil {
 	 * @return the matching region
 	 * @throws PortalException if a matching region could not be found
 	 */
-	public static com.liferay.portal.kernel.model.Region
-			getRegionByUuidAndCompanyId(String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static Region getRegionByUuidAndCompanyId(
+			String uuid, long companyId)
+		throws PortalException {
 
 		return getService().getRegionByUuidAndCompanyId(uuid, companyId);
 	}
 
 	public static com.liferay.portal.kernel.model.RegionLocalization
 			getRegionLocalization(long regionId, String languageId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getRegionLocalization(regionId, languageId);
 	}
 
-	public static java.util.List
-		<com.liferay.portal.kernel.model.RegionLocalization>
-			getRegionLocalizations(long regionId) {
+	public static List<com.liferay.portal.kernel.model.RegionLocalization>
+		getRegionLocalizations(long regionId) {
 
 		return getService().getRegionLocalizations(regionId);
 	}
@@ -356,42 +335,35 @@ public class RegionLocalServiceUtil {
 	 * @param end the upper bound of the range of regions (not inclusive)
 	 * @return the range of regions
 	 */
-	public static java.util.List<com.liferay.portal.kernel.model.Region>
-		getRegions(int start, int end) {
-
+	public static List<Region> getRegions(int start, int end) {
 		return getService().getRegions(start, end);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.Region>
-			getRegions(long countryId, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<Region> getRegions(long countryId, boolean active)
+		throws PortalException {
 
 		return getService().getRegions(countryId, active);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.Region>
-		getRegions(
-			long countryId, boolean active, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.portal.kernel.model.Region> orderByComparator) {
+	public static List<Region> getRegions(
+		long countryId, boolean active, int start, int end,
+		OrderByComparator<Region> orderByComparator) {
 
 		return getService().getRegions(
 			countryId, active, start, end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.Region>
-		getRegions(
-			long countryId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.portal.kernel.model.Region> orderByComparator) {
+	public static List<Region> getRegions(
+		long countryId, int start, int end,
+		OrderByComparator<Region> orderByComparator) {
 
 		return getService().getRegions(
 			countryId, start, end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.Region>
-			getRegions(long companyId, String a2, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<Region> getRegions(
+			long companyId, String a2, boolean active)
+		throws PortalException {
 
 		return getService().getRegions(companyId, a2, active);
 	}
@@ -413,17 +385,16 @@ public class RegionLocalServiceUtil {
 		return getService().getRegionsCount(countryId, active);
 	}
 
-	public static com.liferay.portal.kernel.model.Region updateActive(
-			long regionId, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static Region updateActive(long regionId, boolean active)
+		throws PortalException {
 
 		return getService().updateActive(regionId, active);
 	}
 
-	public static com.liferay.portal.kernel.model.Region updateRegion(
+	public static Region updateRegion(
 			long regionId, boolean active, String name, double position,
 			String regionCode)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateRegion(
 			regionId, active, name, position, regionCode);
@@ -439,40 +410,30 @@ public class RegionLocalServiceUtil {
 	 * @param region the region
 	 * @return the region that was updated
 	 */
-	public static com.liferay.portal.kernel.model.Region updateRegion(
-		com.liferay.portal.kernel.model.Region region) {
-
+	public static Region updateRegion(Region region) {
 		return getService().updateRegion(region);
 	}
 
 	public static com.liferay.portal.kernel.model.RegionLocalization
 			updateRegionLocalization(
-				com.liferay.portal.kernel.model.Region region,
-				String languageId, String title)
-		throws com.liferay.portal.kernel.exception.PortalException {
+				Region region, String languageId, String title)
+		throws PortalException {
 
 		return getService().updateRegionLocalization(region, languageId, title);
 	}
 
-	public static java.util.List
-		<com.liferay.portal.kernel.model.RegionLocalization>
-				updateRegionLocalizations(
-					com.liferay.portal.kernel.model.Region region,
-					java.util.Map<String, String> titleMap)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<com.liferay.portal.kernel.model.RegionLocalization>
+			updateRegionLocalizations(
+				Region region, Map<String, String> titleMap)
+		throws PortalException {
 
 		return getService().updateRegionLocalizations(region, titleMap);
 	}
 
 	public static RegionLocalService getService() {
-		if (_service == null) {
-			_service = (RegionLocalService)PortalBeanLocatorUtil.locate(
-				RegionLocalService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static RegionLocalService _service;
+	private static volatile RegionLocalService _service;
 
 }

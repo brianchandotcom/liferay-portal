@@ -14,10 +14,6 @@
 
 package com.liferay.layout.seo.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-
 /**
  * Provides the remote service utility for LayoutSEOSite. This utility wraps
  * <code>com.liferay.layout.seo.service.impl.LayoutSEOSiteServiceImpl</code> and is an
@@ -43,29 +39,14 @@ public class LayoutSEOSiteServiceUtil {
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static String getOSGiServiceIdentifier() {
+	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static LayoutSEOSiteService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<LayoutSEOSiteService, LayoutSEOSiteService>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(LayoutSEOSiteService.class);
-
-		ServiceTracker<LayoutSEOSiteService, LayoutSEOSiteService>
-			serviceTracker =
-				new ServiceTracker<LayoutSEOSiteService, LayoutSEOSiteService>(
-					bundle.getBundleContext(), LayoutSEOSiteService.class,
-					null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile LayoutSEOSiteService _service;
 
 }

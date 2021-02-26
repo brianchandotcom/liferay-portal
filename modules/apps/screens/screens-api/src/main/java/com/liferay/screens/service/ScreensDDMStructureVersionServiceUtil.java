@@ -14,9 +14,7 @@
 
 package com.liferay.screens.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * Provides the remote service utility for ScreensDDMStructureVersion. This utility wraps
@@ -39,7 +37,7 @@ public class ScreensDDMStructureVersionServiceUtil {
 	 */
 	public static com.liferay.portal.kernel.json.JSONObject
 			getDDMStructureVersion(long structureId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getDDMStructureVersion(structureId);
 	}
@@ -54,29 +52,9 @@ public class ScreensDDMStructureVersionServiceUtil {
 	}
 
 	public static ScreensDDMStructureVersionService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<ScreensDDMStructureVersionService, ScreensDDMStructureVersionService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			ScreensDDMStructureVersionService.class);
-
-		ServiceTracker
-			<ScreensDDMStructureVersionService,
-			 ScreensDDMStructureVersionService> serviceTracker =
-				new ServiceTracker
-					<ScreensDDMStructureVersionService,
-					 ScreensDDMStructureVersionService>(
-						 bundle.getBundleContext(),
-						 ScreensDDMStructureVersionService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile ScreensDDMStructureVersionService _service;
 
 }

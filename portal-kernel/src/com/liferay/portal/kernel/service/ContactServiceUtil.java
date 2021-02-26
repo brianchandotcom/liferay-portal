@@ -14,7 +14,11 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Contact;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for Contact. This utility wraps
@@ -35,9 +39,9 @@ public class ContactServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.service.impl.ContactServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static java.util.List<com.liferay.portal.kernel.model.Contact>
-			getCompanyContacts(long companyId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<Contact> getCompanyContacts(
+			long companyId, int start, int end)
+		throws PortalException {
 
 		return getService().getCompanyContacts(companyId, start, end);
 	}
@@ -46,26 +50,21 @@ public class ContactServiceUtil {
 		return getService().getCompanyContactsCount(companyId);
 	}
 
-	public static com.liferay.portal.kernel.model.Contact getContact(
-			long contactId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static Contact getContact(long contactId) throws PortalException {
 		return getService().getContact(contactId);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.Contact>
-			getContacts(
-				long classNameId, long classPK, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.portal.kernel.model.Contact> orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<Contact> getContacts(
+			long classNameId, long classPK, int start, int end,
+			OrderByComparator<Contact> orderByComparator)
+		throws PortalException {
 
 		return getService().getContacts(
 			classNameId, classPK, start, end, orderByComparator);
 	}
 
 	public static int getContactsCount(long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getContactsCount(classNameId, classPK);
 	}
@@ -80,14 +79,9 @@ public class ContactServiceUtil {
 	}
 
 	public static ContactService getService() {
-		if (_service == null) {
-			_service = (ContactService)PortalBeanLocatorUtil.locate(
-				ContactService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static ContactService _service;
+	private static volatile ContactService _service;
 
 }

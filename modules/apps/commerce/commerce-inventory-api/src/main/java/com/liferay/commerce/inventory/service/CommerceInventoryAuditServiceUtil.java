@@ -14,9 +14,10 @@
 
 package com.liferay.commerce.inventory.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.inventory.model.CommerceInventoryAudit;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for CommerceInventoryAudit. This utility wraps
@@ -37,11 +38,9 @@ public class CommerceInventoryAuditServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.inventory.service.impl.CommerceInventoryAuditServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static java.util.List
-		<com.liferay.commerce.inventory.model.CommerceInventoryAudit>
-				getCommerceInventoryAudits(
-					long companyId, String sku, int start, int end)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommerceInventoryAudit> getCommerceInventoryAudits(
+			long companyId, String sku, int start, int end)
+		throws PortalException {
 
 		return getService().getCommerceInventoryAudits(
 			companyId, sku, start, end);
@@ -49,7 +48,7 @@ public class CommerceInventoryAuditServiceUtil {
 
 	public static int getCommerceInventoryAuditsCount(
 			long companyId, String sku)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCommerceInventoryAuditsCount(companyId, sku);
 	}
@@ -64,29 +63,9 @@ public class CommerceInventoryAuditServiceUtil {
 	}
 
 	public static CommerceInventoryAuditService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceInventoryAuditService, CommerceInventoryAuditService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommerceInventoryAuditService.class);
-
-		ServiceTracker
-			<CommerceInventoryAuditService, CommerceInventoryAuditService>
-				serviceTracker =
-					new ServiceTracker
-						<CommerceInventoryAuditService,
-						 CommerceInventoryAuditService>(
-							 bundle.getBundleContext(),
-							 CommerceInventoryAuditService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceInventoryAuditService _service;
 
 }

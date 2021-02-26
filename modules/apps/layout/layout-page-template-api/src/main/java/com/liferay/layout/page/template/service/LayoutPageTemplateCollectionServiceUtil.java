@@ -14,9 +14,11 @@
 
 package com.liferay.layout.page.template.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for LayoutPageTemplateCollection. This utility wraps
@@ -37,23 +39,19 @@ public class LayoutPageTemplateCollectionServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.layout.page.template.service.impl.LayoutPageTemplateCollectionServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static
-		com.liferay.layout.page.template.model.LayoutPageTemplateCollection
-				addLayoutPageTemplateCollection(
-					long groupId, String name, String description,
-					com.liferay.portal.kernel.service.ServiceContext
-						serviceContext)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static LayoutPageTemplateCollection addLayoutPageTemplateCollection(
+			long groupId, String name, String description,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addLayoutPageTemplateCollection(
 			groupId, name, description, serviceContext);
 	}
 
-	public static
-		com.liferay.layout.page.template.model.LayoutPageTemplateCollection
-				deleteLayoutPageTemplateCollection(
-					long layoutPageTemplateCollectionId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static LayoutPageTemplateCollection
+			deleteLayoutPageTemplateCollection(
+				long layoutPageTemplateCollectionId)
+		throws PortalException {
 
 		return getService().deleteLayoutPageTemplateCollection(
 			layoutPageTemplateCollectionId);
@@ -61,56 +59,47 @@ public class LayoutPageTemplateCollectionServiceUtil {
 
 	public static void deleteLayoutPageTemplateCollections(
 			long[] layoutPageTemplateCollectionIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteLayoutPageTemplateCollections(
 			layoutPageTemplateCollectionIds);
 	}
 
-	public static
-		com.liferay.layout.page.template.model.LayoutPageTemplateCollection
-				fetchLayoutPageTemplateCollection(
-					long layoutPageTemplateCollectionId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static LayoutPageTemplateCollection
+			fetchLayoutPageTemplateCollection(
+				long layoutPageTemplateCollectionId)
+		throws PortalException {
 
 		return getService().fetchLayoutPageTemplateCollection(
 			layoutPageTemplateCollectionId);
 	}
 
-	public static java.util.List
-		<com.liferay.layout.page.template.model.LayoutPageTemplateCollection>
-			getLayoutPageTemplateCollections(long groupId) {
+	public static List<LayoutPageTemplateCollection>
+		getLayoutPageTemplateCollections(long groupId) {
 
 		return getService().getLayoutPageTemplateCollections(groupId);
 	}
 
-	public static java.util.List
-		<com.liferay.layout.page.template.model.LayoutPageTemplateCollection>
-			getLayoutPageTemplateCollections(long groupId, int start, int end) {
+	public static List<LayoutPageTemplateCollection>
+		getLayoutPageTemplateCollections(long groupId, int start, int end) {
 
 		return getService().getLayoutPageTemplateCollections(
 			groupId, start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.layout.page.template.model.LayoutPageTemplateCollection>
-			getLayoutPageTemplateCollections(
-				long groupId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.layout.page.template.model.
-						LayoutPageTemplateCollection> orderByComparator) {
+	public static List<LayoutPageTemplateCollection>
+		getLayoutPageTemplateCollections(
+			long groupId, int start, int end,
+			OrderByComparator<LayoutPageTemplateCollection> orderByComparator) {
 
 		return getService().getLayoutPageTemplateCollections(
 			groupId, start, end, orderByComparator);
 	}
 
-	public static java.util.List
-		<com.liferay.layout.page.template.model.LayoutPageTemplateCollection>
-			getLayoutPageTemplateCollections(
-				long groupId, String name, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.layout.page.template.model.
-						LayoutPageTemplateCollection> orderByComparator) {
+	public static List<LayoutPageTemplateCollection>
+		getLayoutPageTemplateCollections(
+			long groupId, String name, int start, int end,
+			OrderByComparator<LayoutPageTemplateCollection> orderByComparator) {
 
 		return getService().getLayoutPageTemplateCollections(
 			groupId, name, start, end, orderByComparator);
@@ -136,41 +125,20 @@ public class LayoutPageTemplateCollectionServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static
-		com.liferay.layout.page.template.model.LayoutPageTemplateCollection
-				updateLayoutPageTemplateCollection(
-					long layoutPageTemplateCollectionId, String name,
-					String description)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static LayoutPageTemplateCollection
+			updateLayoutPageTemplateCollection(
+				long layoutPageTemplateCollectionId, String name,
+				String description)
+		throws PortalException {
 
 		return getService().updateLayoutPageTemplateCollection(
 			layoutPageTemplateCollectionId, name, description);
 	}
 
 	public static LayoutPageTemplateCollectionService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<LayoutPageTemplateCollectionService,
-		 LayoutPageTemplateCollectionService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			LayoutPageTemplateCollectionService.class);
-
-		ServiceTracker
-			<LayoutPageTemplateCollectionService,
-			 LayoutPageTemplateCollectionService> serviceTracker =
-				new ServiceTracker
-					<LayoutPageTemplateCollectionService,
-					 LayoutPageTemplateCollectionService>(
-						 bundle.getBundleContext(),
-						 LayoutPageTemplateCollectionService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile LayoutPageTemplateCollectionService _service;
 
 }

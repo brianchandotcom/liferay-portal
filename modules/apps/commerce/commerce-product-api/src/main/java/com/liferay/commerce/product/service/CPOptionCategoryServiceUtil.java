@@ -14,9 +14,10 @@
 
 package com.liferay.commerce.product.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.product.model.CPOptionCategory;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.Map;
 
 /**
  * Provides the remote service utility for CPOptionCategory. This utility wraps
@@ -37,34 +38,32 @@ public class CPOptionCategoryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CPOptionCategoryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.commerce.product.model.CPOptionCategory
-			addCPOptionCategory(
-				java.util.Map<java.util.Locale, String> titleMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				double priority, String key,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPOptionCategory addCPOptionCategory(
+			Map<java.util.Locale, String> titleMap,
+			Map<java.util.Locale, String> descriptionMap, double priority,
+			String key,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCPOptionCategory(
 			titleMap, descriptionMap, priority, key, serviceContext);
 	}
 
 	public static void deleteCPOptionCategory(long cpOptionCategoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCPOptionCategory(cpOptionCategoryId);
 	}
 
-	public static com.liferay.commerce.product.model.CPOptionCategory
-			fetchCPOptionCategory(long cpOptionCategoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPOptionCategory fetchCPOptionCategory(
+			long cpOptionCategoryId)
+		throws PortalException {
 
 		return getService().fetchCPOptionCategory(cpOptionCategoryId);
 	}
 
-	public static com.liferay.commerce.product.model.CPOptionCategory
-			getCPOptionCategory(long cpOptionCategoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPOptionCategory getCPOptionCategory(long cpOptionCategoryId)
+		throws PortalException {
 
 		return getService().getCPOptionCategory(cpOptionCategoryId);
 	}
@@ -79,48 +78,29 @@ public class CPOptionCategoryServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
-		<com.liferay.commerce.product.model.CPOptionCategory>
-				searchCPOptionCategories(
-					long companyId, String keywords, int start, int end,
-					com.liferay.portal.kernel.search.Sort sort)
-			throws com.liferay.portal.kernel.exception.PortalException {
+		<CPOptionCategory> searchCPOptionCategories(
+				long companyId, String keywords, int start, int end,
+				com.liferay.portal.kernel.search.Sort sort)
+			throws PortalException {
 
 		return getService().searchCPOptionCategories(
 			companyId, keywords, start, end, sort);
 	}
 
-	public static com.liferay.commerce.product.model.CPOptionCategory
-			updateCPOptionCategory(
-				long cpOptionCategoryId,
-				java.util.Map<java.util.Locale, String> titleMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				double priority, String key)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CPOptionCategory updateCPOptionCategory(
+			long cpOptionCategoryId, Map<java.util.Locale, String> titleMap,
+			Map<java.util.Locale, String> descriptionMap, double priority,
+			String key)
+		throws PortalException {
 
 		return getService().updateCPOptionCategory(
 			cpOptionCategoryId, titleMap, descriptionMap, priority, key);
 	}
 
 	public static CPOptionCategoryService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CPOptionCategoryService, CPOptionCategoryService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(CPOptionCategoryService.class);
-
-		ServiceTracker<CPOptionCategoryService, CPOptionCategoryService>
-			serviceTracker =
-				new ServiceTracker
-					<CPOptionCategoryService, CPOptionCategoryService>(
-						bundle.getBundleContext(),
-						CPOptionCategoryService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CPOptionCategoryService _service;
 
 }

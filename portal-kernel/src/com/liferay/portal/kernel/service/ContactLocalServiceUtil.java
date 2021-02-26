@@ -14,7 +14,16 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Contact;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for Contact. This utility wraps
@@ -46,19 +55,17 @@ public class ContactLocalServiceUtil {
 	 * @param contact the contact
 	 * @return the contact that was added
 	 */
-	public static com.liferay.portal.kernel.model.Contact addContact(
-		com.liferay.portal.kernel.model.Contact contact) {
-
+	public static Contact addContact(Contact contact) {
 		return getService().addContact(contact);
 	}
 
-	public static com.liferay.portal.kernel.model.Contact addContact(
+	public static Contact addContact(
 			long userId, String className, long classPK, String emailAddress,
 			String firstName, String middleName, String lastName, long prefixId,
 			long suffixId, boolean male, int birthdayMonth, int birthdayDay,
 			int birthdayYear, String smsSn, String facebookSn, String jabberSn,
 			String skypeSn, String twitterSn, String jobTitle)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addContact(
 			userId, className, classPK, emailAddress, firstName, middleName,
@@ -73,18 +80,16 @@ public class ContactLocalServiceUtil {
 	 * @param contactId the primary key for the new contact
 	 * @return the new contact
 	 */
-	public static com.liferay.portal.kernel.model.Contact createContact(
-		long contactId) {
-
+	public static Contact createContact(long contactId) {
 		return getService().createContact(contactId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -99,9 +104,7 @@ public class ContactLocalServiceUtil {
 	 * @param contact the contact
 	 * @return the contact that was removed
 	 */
-	public static com.liferay.portal.kernel.model.Contact deleteContact(
-		com.liferay.portal.kernel.model.Contact contact) {
-
+	public static Contact deleteContact(Contact contact) {
 		return getService().deleteContact(contact);
 	}
 
@@ -116,33 +119,25 @@ public class ContactLocalServiceUtil {
 	 * @return the contact that was removed
 	 * @throws PortalException if a contact with the primary key could not be found
 	 */
-	public static com.liferay.portal.kernel.model.Contact deleteContact(
-			long contactId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static Contact deleteContact(long contactId) throws PortalException {
 		return getService().deleteContact(contactId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -152,9 +147,7 @@ public class ContactLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -170,9 +163,8 @@ public class ContactLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -190,10 +182,9 @@ public class ContactLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -205,9 +196,7 @@ public class ContactLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -219,15 +208,13 @@ public class ContactLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.portal.kernel.model.Contact fetchContact(
-		long contactId) {
-
+	public static Contact fetchContact(long contactId) {
 		return getService().fetchContact(contactId);
 	}
 
@@ -237,8 +224,8 @@ public class ContactLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.Contact>
-		getCompanyContacts(long companyId, int start, int end) {
+	public static List<Contact> getCompanyContacts(
+		long companyId, int start, int end) {
 
 		return getService().getCompanyContacts(companyId, start, end);
 	}
@@ -254,10 +241,7 @@ public class ContactLocalServiceUtil {
 	 * @return the contact
 	 * @throws PortalException if a contact with the primary key could not be found
 	 */
-	public static com.liferay.portal.kernel.model.Contact getContact(
-			long contactId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static Contact getContact(long contactId) throws PortalException {
 		return getService().getContact(contactId);
 	}
 
@@ -272,17 +256,13 @@ public class ContactLocalServiceUtil {
 	 * @param end the upper bound of the range of contacts (not inclusive)
 	 * @return the range of contacts
 	 */
-	public static java.util.List<com.liferay.portal.kernel.model.Contact>
-		getContacts(int start, int end) {
-
+	public static List<Contact> getContacts(int start, int end) {
 		return getService().getContacts(start, end);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.Contact>
-		getContacts(
-			long classNameId, long classPK, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.portal.kernel.model.Contact> orderByComparator) {
+	public static List<Contact> getContacts(
+		long classNameId, long classPK, int start, int end,
+		OrderByComparator<Contact> orderByComparator) {
 
 		return getService().getContacts(
 			classNameId, classPK, start, end, orderByComparator);
@@ -320,9 +300,8 @@ public class ContactLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -337,19 +316,17 @@ public class ContactLocalServiceUtil {
 	 * @param contact the contact
 	 * @return the contact that was updated
 	 */
-	public static com.liferay.portal.kernel.model.Contact updateContact(
-		com.liferay.portal.kernel.model.Contact contact) {
-
+	public static Contact updateContact(Contact contact) {
 		return getService().updateContact(contact);
 	}
 
-	public static com.liferay.portal.kernel.model.Contact updateContact(
+	public static Contact updateContact(
 			long contactId, String emailAddress, String firstName,
 			String middleName, String lastName, long prefixId, long suffixId,
 			boolean male, int birthdayMonth, int birthdayDay, int birthdayYear,
 			String smsSn, String facebookSn, String jabberSn, String skypeSn,
 			String twitterSn, String jobTitle)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateContact(
 			contactId, emailAddress, firstName, middleName, lastName, prefixId,
@@ -358,14 +335,9 @@ public class ContactLocalServiceUtil {
 	}
 
 	public static ContactLocalService getService() {
-		if (_service == null) {
-			_service = (ContactLocalService)PortalBeanLocatorUtil.locate(
-				ContactLocalService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static ContactLocalService _service;
+	private static volatile ContactLocalService _service;
 
 }

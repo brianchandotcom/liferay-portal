@@ -16,6 +16,7 @@ package com.liferay.app.builder.workflow.service.base;
 
 import com.liferay.app.builder.workflow.model.AppBuilderWorkflowTaskLink;
 import com.liferay.app.builder.workflow.service.AppBuilderWorkflowTaskLinkLocalService;
+import com.liferay.app.builder.workflow.service.AppBuilderWorkflowTaskLinkLocalServiceUtil;
 import com.liferay.app.builder.workflow.service.persistence.AppBuilderWorkflowTaskLinkPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -44,10 +45,13 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -69,7 +73,7 @@ public abstract class AppBuilderWorkflowTaskLinkLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>AppBuilderWorkflowTaskLinkLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.app.builder.workflow.service.AppBuilderWorkflowTaskLinkLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>AppBuilderWorkflowTaskLinkLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>AppBuilderWorkflowTaskLinkLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -399,6 +403,11 @@ public abstract class AppBuilderWorkflowTaskLinkLocalServiceBaseImpl
 			appBuilderWorkflowTaskLink);
 	}
 
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
+	}
+
 	@Override
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
@@ -411,6 +420,8 @@ public abstract class AppBuilderWorkflowTaskLinkLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		appBuilderWorkflowTaskLinkLocalService =
 			(AppBuilderWorkflowTaskLinkLocalService)aopProxy;
+
+		_setLocalServiceUtilService(appBuilderWorkflowTaskLinkLocalService);
 	}
 
 	/**
@@ -453,6 +464,24 @@ public abstract class AppBuilderWorkflowTaskLinkLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		AppBuilderWorkflowTaskLinkLocalService
+			appBuilderWorkflowTaskLinkLocalService) {
+
+		try {
+			Field field =
+				AppBuilderWorkflowTaskLinkLocalServiceUtil.class.
+					getDeclaredField("_service");
+
+			field.setAccessible(true);
+
+			field.set(null, appBuilderWorkflowTaskLinkLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

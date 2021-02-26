@@ -14,9 +14,16 @@
 
 package com.liferay.layout.page.template.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for LayoutPageTemplateCollection. This utility wraps
@@ -48,23 +55,17 @@ public class LayoutPageTemplateCollectionLocalServiceUtil {
 	 * @param layoutPageTemplateCollection the layout page template collection
 	 * @return the layout page template collection that was added
 	 */
-	public static
-		com.liferay.layout.page.template.model.LayoutPageTemplateCollection
-			addLayoutPageTemplateCollection(
-				com.liferay.layout.page.template.model.
-					LayoutPageTemplateCollection layoutPageTemplateCollection) {
+	public static LayoutPageTemplateCollection addLayoutPageTemplateCollection(
+		LayoutPageTemplateCollection layoutPageTemplateCollection) {
 
 		return getService().addLayoutPageTemplateCollection(
 			layoutPageTemplateCollection);
 	}
 
-	public static
-		com.liferay.layout.page.template.model.LayoutPageTemplateCollection
-				addLayoutPageTemplateCollection(
-					long userId, long groupId, String name, String description,
-					com.liferay.portal.kernel.service.ServiceContext
-						serviceContext)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static LayoutPageTemplateCollection addLayoutPageTemplateCollection(
+			long userId, long groupId, String name, String description,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addLayoutPageTemplateCollection(
 			userId, groupId, name, description, serviceContext);
@@ -76,10 +77,9 @@ public class LayoutPageTemplateCollectionLocalServiceUtil {
 	 * @param layoutPageTemplateCollectionId the primary key for the new layout page template collection
 	 * @return the new layout page template collection
 	 */
-	public static
-		com.liferay.layout.page.template.model.LayoutPageTemplateCollection
-			createLayoutPageTemplateCollection(
-				long layoutPageTemplateCollectionId) {
+	public static LayoutPageTemplateCollection
+		createLayoutPageTemplateCollection(
+			long layoutPageTemplateCollectionId) {
 
 		return getService().createLayoutPageTemplateCollection(
 			layoutPageTemplateCollectionId);
@@ -88,9 +88,9 @@ public class LayoutPageTemplateCollectionLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -106,13 +106,10 @@ public class LayoutPageTemplateCollectionLocalServiceUtil {
 	 * @return the layout page template collection that was removed
 	 * @throws PortalException
 	 */
-	public static
-		com.liferay.layout.page.template.model.LayoutPageTemplateCollection
-				deleteLayoutPageTemplateCollection(
-					com.liferay.layout.page.template.model.
-						LayoutPageTemplateCollection
-							layoutPageTemplateCollection)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static LayoutPageTemplateCollection
+			deleteLayoutPageTemplateCollection(
+				LayoutPageTemplateCollection layoutPageTemplateCollection)
+		throws PortalException {
 
 		return getService().deleteLayoutPageTemplateCollection(
 			layoutPageTemplateCollection);
@@ -129,11 +126,10 @@ public class LayoutPageTemplateCollectionLocalServiceUtil {
 	 * @return the layout page template collection that was removed
 	 * @throws PortalException if a layout page template collection with the primary key could not be found
 	 */
-	public static
-		com.liferay.layout.page.template.model.LayoutPageTemplateCollection
-				deleteLayoutPageTemplateCollection(
-					long layoutPageTemplateCollectionId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static LayoutPageTemplateCollection
+			deleteLayoutPageTemplateCollection(
+				long layoutPageTemplateCollectionId)
+		throws PortalException {
 
 		return getService().deleteLayoutPageTemplateCollection(
 			layoutPageTemplateCollectionId);
@@ -142,23 +138,18 @@ public class LayoutPageTemplateCollectionLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -168,9 +159,7 @@ public class LayoutPageTemplateCollectionLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -186,9 +175,8 @@ public class LayoutPageTemplateCollectionLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -206,10 +194,9 @@ public class LayoutPageTemplateCollectionLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -221,9 +208,7 @@ public class LayoutPageTemplateCollectionLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -235,25 +220,22 @@ public class LayoutPageTemplateCollectionLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static
-		com.liferay.layout.page.template.model.LayoutPageTemplateCollection
-			fetchLayoutPageTemplateCollection(
-				long layoutPageTemplateCollectionId) {
+	public static LayoutPageTemplateCollection
+		fetchLayoutPageTemplateCollection(long layoutPageTemplateCollectionId) {
 
 		return getService().fetchLayoutPageTemplateCollection(
 			layoutPageTemplateCollectionId);
 	}
 
-	public static
-		com.liferay.layout.page.template.model.LayoutPageTemplateCollection
-			fetchLayoutPageTemplateCollection(
-				long groupId, String layoutPageTemplateCollectionKey) {
+	public static LayoutPageTemplateCollection
+		fetchLayoutPageTemplateCollection(
+			long groupId, String layoutPageTemplateCollectionKey) {
 
 		return getService().fetchLayoutPageTemplateCollection(
 			groupId, layoutPageTemplateCollectionKey);
@@ -266,10 +248,9 @@ public class LayoutPageTemplateCollectionLocalServiceUtil {
 	 * @param groupId the primary key of the group
 	 * @return the matching layout page template collection, or <code>null</code> if a matching layout page template collection could not be found
 	 */
-	public static
-		com.liferay.layout.page.template.model.LayoutPageTemplateCollection
-			fetchLayoutPageTemplateCollectionByUuidAndGroupId(
-				String uuid, long groupId) {
+	public static LayoutPageTemplateCollection
+		fetchLayoutPageTemplateCollectionByUuidAndGroupId(
+			String uuid, long groupId) {
 
 		return getService().fetchLayoutPageTemplateCollectionByUuidAndGroupId(
 			uuid, groupId);
@@ -303,11 +284,9 @@ public class LayoutPageTemplateCollectionLocalServiceUtil {
 	 * @return the layout page template collection
 	 * @throws PortalException if a layout page template collection with the primary key could not be found
 	 */
-	public static
-		com.liferay.layout.page.template.model.LayoutPageTemplateCollection
-				getLayoutPageTemplateCollection(
-					long layoutPageTemplateCollectionId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static LayoutPageTemplateCollection getLayoutPageTemplateCollection(
+			long layoutPageTemplateCollectionId)
+		throws PortalException {
 
 		return getService().getLayoutPageTemplateCollection(
 			layoutPageTemplateCollectionId);
@@ -321,11 +300,10 @@ public class LayoutPageTemplateCollectionLocalServiceUtil {
 	 * @return the matching layout page template collection
 	 * @throws PortalException if a matching layout page template collection could not be found
 	 */
-	public static
-		com.liferay.layout.page.template.model.LayoutPageTemplateCollection
-				getLayoutPageTemplateCollectionByUuidAndGroupId(
-					String uuid, long groupId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static LayoutPageTemplateCollection
+			getLayoutPageTemplateCollectionByUuidAndGroupId(
+				String uuid, long groupId)
+		throws PortalException {
 
 		return getService().getLayoutPageTemplateCollectionByUuidAndGroupId(
 			uuid, groupId);
@@ -342,40 +320,32 @@ public class LayoutPageTemplateCollectionLocalServiceUtil {
 	 * @param end the upper bound of the range of layout page template collections (not inclusive)
 	 * @return the range of layout page template collections
 	 */
-	public static java.util.List
-		<com.liferay.layout.page.template.model.LayoutPageTemplateCollection>
-			getLayoutPageTemplateCollections(int start, int end) {
+	public static List<LayoutPageTemplateCollection>
+		getLayoutPageTemplateCollections(int start, int end) {
 
 		return getService().getLayoutPageTemplateCollections(start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.layout.page.template.model.LayoutPageTemplateCollection>
-			getLayoutPageTemplateCollections(long groupId, int start, int end) {
+	public static List<LayoutPageTemplateCollection>
+		getLayoutPageTemplateCollections(long groupId, int start, int end) {
 
 		return getService().getLayoutPageTemplateCollections(
 			groupId, start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.layout.page.template.model.LayoutPageTemplateCollection>
-			getLayoutPageTemplateCollections(
-				long groupId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.layout.page.template.model.
-						LayoutPageTemplateCollection> orderByComparator) {
+	public static List<LayoutPageTemplateCollection>
+		getLayoutPageTemplateCollections(
+			long groupId, int start, int end,
+			OrderByComparator<LayoutPageTemplateCollection> orderByComparator) {
 
 		return getService().getLayoutPageTemplateCollections(
 			groupId, start, end, orderByComparator);
 	}
 
-	public static java.util.List
-		<com.liferay.layout.page.template.model.LayoutPageTemplateCollection>
-			getLayoutPageTemplateCollections(
-				long groupId, String name, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.layout.page.template.model.
-						LayoutPageTemplateCollection> orderByComparator) {
+	public static List<LayoutPageTemplateCollection>
+		getLayoutPageTemplateCollections(
+			long groupId, String name, int start, int end,
+			OrderByComparator<LayoutPageTemplateCollection> orderByComparator) {
 
 		return getService().getLayoutPageTemplateCollections(
 			groupId, name, start, end, orderByComparator);
@@ -388,10 +358,9 @@ public class LayoutPageTemplateCollectionLocalServiceUtil {
 	 * @param companyId the primary key of the company
 	 * @return the matching layout page template collections, or an empty list if no matches were found
 	 */
-	public static java.util.List
-		<com.liferay.layout.page.template.model.LayoutPageTemplateCollection>
-			getLayoutPageTemplateCollectionsByUuidAndCompanyId(
-				String uuid, long companyId) {
+	public static List<LayoutPageTemplateCollection>
+		getLayoutPageTemplateCollectionsByUuidAndCompanyId(
+			String uuid, long companyId) {
 
 		return getService().getLayoutPageTemplateCollectionsByUuidAndCompanyId(
 			uuid, companyId);
@@ -407,13 +376,10 @@ public class LayoutPageTemplateCollectionLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the range of matching layout page template collections, or an empty list if no matches were found
 	 */
-	public static java.util.List
-		<com.liferay.layout.page.template.model.LayoutPageTemplateCollection>
-			getLayoutPageTemplateCollectionsByUuidAndCompanyId(
-				String uuid, long companyId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.layout.page.template.model.
-						LayoutPageTemplateCollection> orderByComparator) {
+	public static List<LayoutPageTemplateCollection>
+		getLayoutPageTemplateCollectionsByUuidAndCompanyId(
+			String uuid, long companyId, int start, int end,
+			OrderByComparator<LayoutPageTemplateCollection> orderByComparator) {
 
 		return getService().getLayoutPageTemplateCollectionsByUuidAndCompanyId(
 			uuid, companyId, start, end, orderByComparator);
@@ -440,9 +406,8 @@ public class LayoutPageTemplateCollectionLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -457,51 +422,28 @@ public class LayoutPageTemplateCollectionLocalServiceUtil {
 	 * @param layoutPageTemplateCollection the layout page template collection
 	 * @return the layout page template collection that was updated
 	 */
-	public static
-		com.liferay.layout.page.template.model.LayoutPageTemplateCollection
-			updateLayoutPageTemplateCollection(
-				com.liferay.layout.page.template.model.
-					LayoutPageTemplateCollection layoutPageTemplateCollection) {
+	public static LayoutPageTemplateCollection
+		updateLayoutPageTemplateCollection(
+			LayoutPageTemplateCollection layoutPageTemplateCollection) {
 
 		return getService().updateLayoutPageTemplateCollection(
 			layoutPageTemplateCollection);
 	}
 
-	public static
-		com.liferay.layout.page.template.model.LayoutPageTemplateCollection
-				updateLayoutPageTemplateCollection(
-					long layoutPageTemplateCollectionId, String name,
-					String description)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static LayoutPageTemplateCollection
+			updateLayoutPageTemplateCollection(
+				long layoutPageTemplateCollectionId, String name,
+				String description)
+		throws PortalException {
 
 		return getService().updateLayoutPageTemplateCollection(
 			layoutPageTemplateCollectionId, name, description);
 	}
 
 	public static LayoutPageTemplateCollectionLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<LayoutPageTemplateCollectionLocalService,
-		 LayoutPageTemplateCollectionLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			LayoutPageTemplateCollectionLocalService.class);
-
-		ServiceTracker
-			<LayoutPageTemplateCollectionLocalService,
-			 LayoutPageTemplateCollectionLocalService> serviceTracker =
-				new ServiceTracker
-					<LayoutPageTemplateCollectionLocalService,
-					 LayoutPageTemplateCollectionLocalService>(
-						 bundle.getBundleContext(),
-						 LayoutPageTemplateCollectionLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile LayoutPageTemplateCollectionLocalService _service;
 
 }

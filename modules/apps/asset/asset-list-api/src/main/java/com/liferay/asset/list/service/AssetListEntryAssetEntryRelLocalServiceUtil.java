@@ -14,9 +14,16 @@
 
 package com.liferay.asset.list.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.asset.list.model.AssetListEntryAssetEntryRel;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for AssetListEntryAssetEntryRel. This utility wraps
@@ -48,32 +55,28 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 	 * @param assetListEntryAssetEntryRel the asset list entry asset entry rel
 	 * @return the asset list entry asset entry rel that was added
 	 */
-	public static com.liferay.asset.list.model.AssetListEntryAssetEntryRel
-		addAssetListEntryAssetEntryRel(
-			com.liferay.asset.list.model.AssetListEntryAssetEntryRel
-				assetListEntryAssetEntryRel) {
+	public static AssetListEntryAssetEntryRel addAssetListEntryAssetEntryRel(
+		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel) {
 
 		return getService().addAssetListEntryAssetEntryRel(
 			assetListEntryAssetEntryRel);
 	}
 
-	public static com.liferay.asset.list.model.AssetListEntryAssetEntryRel
-			addAssetListEntryAssetEntryRel(
-				long assetListEntryId, long assetEntryId, long segmentsEntryId,
-				int position,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AssetListEntryAssetEntryRel addAssetListEntryAssetEntryRel(
+			long assetListEntryId, long assetEntryId, long segmentsEntryId,
+			int position,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addAssetListEntryAssetEntryRel(
 			assetListEntryId, assetEntryId, segmentsEntryId, position,
 			serviceContext);
 	}
 
-	public static com.liferay.asset.list.model.AssetListEntryAssetEntryRel
-			addAssetListEntryAssetEntryRel(
-				long assetListEntryId, long assetEntryId, long segmentsEntryId,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AssetListEntryAssetEntryRel addAssetListEntryAssetEntryRel(
+			long assetListEntryId, long assetEntryId, long segmentsEntryId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addAssetListEntryAssetEntryRel(
 			assetListEntryId, assetEntryId, segmentsEntryId, serviceContext);
@@ -85,8 +88,8 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 	 * @param assetListEntryAssetEntryRelId the primary key for the new asset list entry asset entry rel
 	 * @return the new asset list entry asset entry rel
 	 */
-	public static com.liferay.asset.list.model.AssetListEntryAssetEntryRel
-		createAssetListEntryAssetEntryRel(long assetListEntryAssetEntryRelId) {
+	public static AssetListEntryAssetEntryRel createAssetListEntryAssetEntryRel(
+		long assetListEntryAssetEntryRelId) {
 
 		return getService().createAssetListEntryAssetEntryRel(
 			assetListEntryAssetEntryRelId);
@@ -95,9 +98,9 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -112,10 +115,8 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 	 * @param assetListEntryAssetEntryRel the asset list entry asset entry rel
 	 * @return the asset list entry asset entry rel that was removed
 	 */
-	public static com.liferay.asset.list.model.AssetListEntryAssetEntryRel
-		deleteAssetListEntryAssetEntryRel(
-			com.liferay.asset.list.model.AssetListEntryAssetEntryRel
-				assetListEntryAssetEntryRel) {
+	public static AssetListEntryAssetEntryRel deleteAssetListEntryAssetEntryRel(
+		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel) {
 
 		return getService().deleteAssetListEntryAssetEntryRel(
 			assetListEntryAssetEntryRel);
@@ -132,19 +133,17 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 	 * @return the asset list entry asset entry rel that was removed
 	 * @throws PortalException if a asset list entry asset entry rel with the primary key could not be found
 	 */
-	public static com.liferay.asset.list.model.AssetListEntryAssetEntryRel
-			deleteAssetListEntryAssetEntryRel(
-				long assetListEntryAssetEntryRelId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AssetListEntryAssetEntryRel deleteAssetListEntryAssetEntryRel(
+			long assetListEntryAssetEntryRelId)
+		throws PortalException {
 
 		return getService().deleteAssetListEntryAssetEntryRel(
 			assetListEntryAssetEntryRelId);
 	}
 
-	public static com.liferay.asset.list.model.AssetListEntryAssetEntryRel
-			deleteAssetListEntryAssetEntryRel(
-				long assetListEntryId, long segmentsEntryId, int position)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AssetListEntryAssetEntryRel deleteAssetListEntryAssetEntryRel(
+			long assetListEntryId, long segmentsEntryId, int position)
+		throws PortalException {
 
 		return getService().deleteAssetListEntryAssetEntryRel(
 			assetListEntryId, segmentsEntryId, position);
@@ -160,23 +159,18 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -186,9 +180,7 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -204,9 +196,8 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -224,10 +215,9 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -239,9 +229,7 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -253,14 +241,14 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.asset.list.model.AssetListEntryAssetEntryRel
-		fetchAssetListEntryAssetEntryRel(long assetListEntryAssetEntryRelId) {
+	public static AssetListEntryAssetEntryRel fetchAssetListEntryAssetEntryRel(
+		long assetListEntryAssetEntryRelId) {
 
 		return getService().fetchAssetListEntryAssetEntryRel(
 			assetListEntryAssetEntryRelId);
@@ -273,7 +261,7 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 	 * @param groupId the primary key of the group
 	 * @return the matching asset list entry asset entry rel, or <code>null</code> if a matching asset list entry asset entry rel could not be found
 	 */
-	public static com.liferay.asset.list.model.AssetListEntryAssetEntryRel
+	public static AssetListEntryAssetEntryRel
 		fetchAssetListEntryAssetEntryRelByUuidAndGroupId(
 			String uuid, long groupId) {
 
@@ -294,9 +282,9 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 	 * @return the asset list entry asset entry rel
 	 * @throws PortalException if a asset list entry asset entry rel with the primary key could not be found
 	 */
-	public static com.liferay.asset.list.model.AssetListEntryAssetEntryRel
-			getAssetListEntryAssetEntryRel(long assetListEntryAssetEntryRelId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AssetListEntryAssetEntryRel getAssetListEntryAssetEntryRel(
+			long assetListEntryAssetEntryRelId)
+		throws PortalException {
 
 		return getService().getAssetListEntryAssetEntryRel(
 			assetListEntryAssetEntryRelId);
@@ -310,10 +298,10 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 	 * @return the matching asset list entry asset entry rel
 	 * @throws PortalException if a matching asset list entry asset entry rel could not be found
 	 */
-	public static com.liferay.asset.list.model.AssetListEntryAssetEntryRel
+	public static AssetListEntryAssetEntryRel
 			getAssetListEntryAssetEntryRelByUuidAndGroupId(
 				String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getAssetListEntryAssetEntryRelByUuidAndGroupId(
 			uuid, groupId);
@@ -330,47 +318,41 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
 	 * @return the range of asset list entry asset entry rels
 	 */
-	public static java.util.List
-		<com.liferay.asset.list.model.AssetListEntryAssetEntryRel>
-			getAssetListEntryAssetEntryRels(int start, int end) {
+	public static List<AssetListEntryAssetEntryRel>
+		getAssetListEntryAssetEntryRels(int start, int end) {
 
 		return getService().getAssetListEntryAssetEntryRels(start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.asset.list.model.AssetListEntryAssetEntryRel>
-			getAssetListEntryAssetEntryRels(
-				long assetListEntryId, int start, int end) {
+	public static List<AssetListEntryAssetEntryRel>
+		getAssetListEntryAssetEntryRels(
+			long assetListEntryId, int start, int end) {
 
 		return getService().getAssetListEntryAssetEntryRels(
 			assetListEntryId, start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.asset.list.model.AssetListEntryAssetEntryRel>
-			getAssetListEntryAssetEntryRels(
-				long assetListEntryId, long segmentsEntryId, int start,
-				int end) {
+	public static List<AssetListEntryAssetEntryRel>
+		getAssetListEntryAssetEntryRels(
+			long assetListEntryId, long segmentsEntryId, int start, int end) {
 
 		return getService().getAssetListEntryAssetEntryRels(
 			assetListEntryId, segmentsEntryId, start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.asset.list.model.AssetListEntryAssetEntryRel>
-			getAssetListEntryAssetEntryRels(
-				long assetListEntryId, long[] segmentsEntryIds, int start,
-				int end) {
+	public static List<AssetListEntryAssetEntryRel>
+		getAssetListEntryAssetEntryRels(
+			long assetListEntryId, long[] segmentsEntryIds, int start,
+			int end) {
 
 		return getService().getAssetListEntryAssetEntryRels(
 			assetListEntryId, segmentsEntryIds, start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.asset.list.model.AssetListEntryAssetEntryRel>
-			getAssetListEntryAssetEntryRels(
-				long assetListEntryId, long[] segmentsEntryIds,
-				long[][] assetCategoryIds, int start, int end) {
+	public static List<AssetListEntryAssetEntryRel>
+		getAssetListEntryAssetEntryRels(
+			long assetListEntryId, long[] segmentsEntryIds,
+			long[][] assetCategoryIds, int start, int end) {
 
 		return getService().getAssetListEntryAssetEntryRels(
 			assetListEntryId, segmentsEntryIds, assetCategoryIds, start, end);
@@ -383,10 +365,9 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 	 * @param companyId the primary key of the company
 	 * @return the matching asset list entry asset entry rels, or an empty list if no matches were found
 	 */
-	public static java.util.List
-		<com.liferay.asset.list.model.AssetListEntryAssetEntryRel>
-			getAssetListEntryAssetEntryRelsByUuidAndCompanyId(
-				String uuid, long companyId) {
+	public static List<AssetListEntryAssetEntryRel>
+		getAssetListEntryAssetEntryRelsByUuidAndCompanyId(
+			String uuid, long companyId) {
 
 		return getService().getAssetListEntryAssetEntryRelsByUuidAndCompanyId(
 			uuid, companyId);
@@ -402,13 +383,10 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the range of matching asset list entry asset entry rels, or an empty list if no matches were found
 	 */
-	public static java.util.List
-		<com.liferay.asset.list.model.AssetListEntryAssetEntryRel>
-			getAssetListEntryAssetEntryRelsByUuidAndCompanyId(
-				String uuid, long companyId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.asset.list.model.AssetListEntryAssetEntryRel>
-						orderByComparator) {
+	public static List<AssetListEntryAssetEntryRel>
+		getAssetListEntryAssetEntryRelsByUuidAndCompanyId(
+			String uuid, long companyId, int start, int end,
+			OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator) {
 
 		return getService().getAssetListEntryAssetEntryRelsByUuidAndCompanyId(
 			uuid, companyId, start, end, orderByComparator);
@@ -486,18 +464,16 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static com.liferay.asset.list.model.AssetListEntryAssetEntryRel
-			moveAssetListEntryAssetEntryRel(
-				long assetListEntryId, long segmentsEntryId, int position,
-				int newPosition)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AssetListEntryAssetEntryRel moveAssetListEntryAssetEntryRel(
+			long assetListEntryId, long segmentsEntryId, int position,
+			int newPosition)
+		throws PortalException {
 
 		return getService().moveAssetListEntryAssetEntryRel(
 			assetListEntryId, segmentsEntryId, position, newPosition);
@@ -513,20 +489,17 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 	 * @param assetListEntryAssetEntryRel the asset list entry asset entry rel
 	 * @return the asset list entry asset entry rel that was updated
 	 */
-	public static com.liferay.asset.list.model.AssetListEntryAssetEntryRel
-		updateAssetListEntryAssetEntryRel(
-			com.liferay.asset.list.model.AssetListEntryAssetEntryRel
-				assetListEntryAssetEntryRel) {
+	public static AssetListEntryAssetEntryRel updateAssetListEntryAssetEntryRel(
+		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel) {
 
 		return getService().updateAssetListEntryAssetEntryRel(
 			assetListEntryAssetEntryRel);
 	}
 
-	public static com.liferay.asset.list.model.AssetListEntryAssetEntryRel
-			updateAssetListEntryAssetEntryRel(
-				long assetListEntryAssetEntryRelId, long assetListEntryId,
-				long assetEntryId, long segmentsEntryId, int position)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AssetListEntryAssetEntryRel updateAssetListEntryAssetEntryRel(
+			long assetListEntryAssetEntryRelId, long assetListEntryId,
+			long assetEntryId, long segmentsEntryId, int position)
+		throws PortalException {
 
 		return getService().updateAssetListEntryAssetEntryRel(
 			assetListEntryAssetEntryRelId, assetListEntryId, assetEntryId,
@@ -534,29 +507,9 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 	}
 
 	public static AssetListEntryAssetEntryRelLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<AssetListEntryAssetEntryRelLocalService,
-		 AssetListEntryAssetEntryRelLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			AssetListEntryAssetEntryRelLocalService.class);
-
-		ServiceTracker
-			<AssetListEntryAssetEntryRelLocalService,
-			 AssetListEntryAssetEntryRelLocalService> serviceTracker =
-				new ServiceTracker
-					<AssetListEntryAssetEntryRelLocalService,
-					 AssetListEntryAssetEntryRelLocalService>(
-						 bundle.getBundleContext(),
-						 AssetListEntryAssetEntryRelLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile AssetListEntryAssetEntryRelLocalService _service;
 
 }

@@ -16,6 +16,7 @@ package com.liferay.multi.factor.authentication.fido2.credential.service.base;
 
 import com.liferay.multi.factor.authentication.fido2.credential.model.MFAFIDO2CredentialEntry;
 import com.liferay.multi.factor.authentication.fido2.credential.service.MFAFIDO2CredentialEntryLocalService;
+import com.liferay.multi.factor.authentication.fido2.credential.service.MFAFIDO2CredentialEntryLocalServiceUtil;
 import com.liferay.multi.factor.authentication.fido2.credential.service.persistence.MFAFIDO2CredentialEntryPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -44,10 +45,13 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -69,7 +73,7 @@ public abstract class MFAFIDO2CredentialEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>MFAFIDO2CredentialEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.multi.factor.authentication.fido2.credential.service.MFAFIDO2CredentialEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>MFAFIDO2CredentialEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>MFAFIDO2CredentialEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -399,6 +403,11 @@ public abstract class MFAFIDO2CredentialEntryLocalServiceBaseImpl
 			mfaFIDO2CredentialEntry);
 	}
 
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
+	}
+
 	@Override
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
@@ -411,6 +420,8 @@ public abstract class MFAFIDO2CredentialEntryLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		mfaFIDO2CredentialEntryLocalService =
 			(MFAFIDO2CredentialEntryLocalService)aopProxy;
+
+		_setLocalServiceUtilService(mfaFIDO2CredentialEntryLocalService);
 	}
 
 	/**
@@ -453,6 +464,24 @@ public abstract class MFAFIDO2CredentialEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		MFAFIDO2CredentialEntryLocalService
+			mfaFIDO2CredentialEntryLocalService) {
+
+		try {
+			Field field =
+				MFAFIDO2CredentialEntryLocalServiceUtil.class.getDeclaredField(
+					"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, mfaFIDO2CredentialEntryLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

@@ -14,9 +14,11 @@
 
 package com.liferay.dynamic.data.mapping.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for DDMStructureLayout. This utility wraps
@@ -47,10 +49,9 @@ public class DDMStructureLayoutServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static java.util.List
-		<com.liferay.dynamic.data.mapping.model.DDMStructureLayout>
-				getStructureLayouts(long groupId, int start, int end)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<DDMStructureLayout> getStructureLayouts(
+			long groupId, int start, int end)
+		throws PortalException {
 
 		return getService().getStructureLayouts(groupId, start, end);
 	}
@@ -59,14 +60,11 @@ public class DDMStructureLayoutServiceUtil {
 		return getService().getStructureLayoutsCount(groupId);
 	}
 
-	public static java.util.List
-		<com.liferay.dynamic.data.mapping.model.DDMStructureLayout> search(
-				long companyId, long[] groupIds, long classNameId,
-				String keywords, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.dynamic.data.mapping.model.DDMStructureLayout>
-						orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<DDMStructureLayout> search(
+			long companyId, long[] groupIds, long classNameId, String keywords,
+			int start, int end,
+			OrderByComparator<DDMStructureLayout> orderByComparator)
+		throws PortalException {
 
 		return getService().search(
 			companyId, groupIds, classNameId, keywords, start, end,
@@ -74,26 +72,9 @@ public class DDMStructureLayoutServiceUtil {
 	}
 
 	public static DDMStructureLayoutService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<DDMStructureLayoutService, DDMStructureLayoutService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			DDMStructureLayoutService.class);
-
-		ServiceTracker<DDMStructureLayoutService, DDMStructureLayoutService>
-			serviceTracker =
-				new ServiceTracker
-					<DDMStructureLayoutService, DDMStructureLayoutService>(
-						bundle.getBundleContext(),
-						DDMStructureLayoutService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile DDMStructureLayoutService _service;
 
 }

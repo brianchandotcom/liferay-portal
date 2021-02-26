@@ -14,9 +14,16 @@
 
 package com.liferay.html.preview.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.html.preview.model.HtmlPreviewEntry;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for HtmlPreviewEntry. This utility wraps
@@ -48,19 +55,17 @@ public class HtmlPreviewEntryLocalServiceUtil {
 	 * @param htmlPreviewEntry the html preview entry
 	 * @return the html preview entry that was added
 	 */
-	public static com.liferay.html.preview.model.HtmlPreviewEntry
-		addHtmlPreviewEntry(
-			com.liferay.html.preview.model.HtmlPreviewEntry htmlPreviewEntry) {
+	public static HtmlPreviewEntry addHtmlPreviewEntry(
+		HtmlPreviewEntry htmlPreviewEntry) {
 
 		return getService().addHtmlPreviewEntry(htmlPreviewEntry);
 	}
 
-	public static com.liferay.html.preview.model.HtmlPreviewEntry
-			addHtmlPreviewEntry(
-				long userId, long groupId, long classNameId, long classPK,
-				String content, String mimeType,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static HtmlPreviewEntry addHtmlPreviewEntry(
+			long userId, long groupId, long classNameId, long classPK,
+			String content, String mimeType,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addHtmlPreviewEntry(
 			userId, groupId, classNameId, classPK, content, mimeType,
@@ -73,8 +78,8 @@ public class HtmlPreviewEntryLocalServiceUtil {
 	 * @param htmlPreviewEntryId the primary key for the new html preview entry
 	 * @return the new html preview entry
 	 */
-	public static com.liferay.html.preview.model.HtmlPreviewEntry
-		createHtmlPreviewEntry(long htmlPreviewEntryId) {
+	public static HtmlPreviewEntry createHtmlPreviewEntry(
+		long htmlPreviewEntryId) {
 
 		return getService().createHtmlPreviewEntry(htmlPreviewEntryId);
 	}
@@ -82,9 +87,9 @@ public class HtmlPreviewEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -100,11 +105,9 @@ public class HtmlPreviewEntryLocalServiceUtil {
 	 * @return the html preview entry that was removed
 	 * @throws PortalException
 	 */
-	public static com.liferay.html.preview.model.HtmlPreviewEntry
-			deleteHtmlPreviewEntry(
-				com.liferay.html.preview.model.HtmlPreviewEntry
-					htmlPreviewEntry)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static HtmlPreviewEntry deleteHtmlPreviewEntry(
+			HtmlPreviewEntry htmlPreviewEntry)
+		throws PortalException {
 
 		return getService().deleteHtmlPreviewEntry(htmlPreviewEntry);
 	}
@@ -120,9 +123,9 @@ public class HtmlPreviewEntryLocalServiceUtil {
 	 * @return the html preview entry that was removed
 	 * @throws PortalException if a html preview entry with the primary key could not be found
 	 */
-	public static com.liferay.html.preview.model.HtmlPreviewEntry
-			deleteHtmlPreviewEntry(long htmlPreviewEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static HtmlPreviewEntry deleteHtmlPreviewEntry(
+			long htmlPreviewEntryId)
+		throws PortalException {
 
 		return getService().deleteHtmlPreviewEntry(htmlPreviewEntryId);
 	}
@@ -130,23 +133,18 @@ public class HtmlPreviewEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -156,9 +154,7 @@ public class HtmlPreviewEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -174,9 +170,8 @@ public class HtmlPreviewEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -194,10 +189,9 @@ public class HtmlPreviewEntryLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -209,9 +203,7 @@ public class HtmlPreviewEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -223,14 +215,14 @@ public class HtmlPreviewEntryLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.html.preview.model.HtmlPreviewEntry
-		fetchHtmlPreviewEntry(long htmlPreviewEntryId) {
+	public static HtmlPreviewEntry fetchHtmlPreviewEntry(
+		long htmlPreviewEntryId) {
 
 		return getService().fetchHtmlPreviewEntry(htmlPreviewEntryId);
 	}
@@ -252,9 +244,8 @@ public class HtmlPreviewEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of html preview entries (not inclusive)
 	 * @return the range of html preview entries
 	 */
-	public static java.util.List
-		<com.liferay.html.preview.model.HtmlPreviewEntry> getHtmlPreviewEntries(
-			int start, int end) {
+	public static List<HtmlPreviewEntry> getHtmlPreviewEntries(
+		int start, int end) {
 
 		return getService().getHtmlPreviewEntries(start, end);
 	}
@@ -275,9 +266,8 @@ public class HtmlPreviewEntryLocalServiceUtil {
 	 * @return the html preview entry
 	 * @throws PortalException if a html preview entry with the primary key could not be found
 	 */
-	public static com.liferay.html.preview.model.HtmlPreviewEntry
-			getHtmlPreviewEntry(long htmlPreviewEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static HtmlPreviewEntry getHtmlPreviewEntry(long htmlPreviewEntryId)
+		throws PortalException {
 
 		return getService().getHtmlPreviewEntry(htmlPreviewEntryId);
 	}
@@ -301,9 +291,8 @@ public class HtmlPreviewEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -318,47 +307,25 @@ public class HtmlPreviewEntryLocalServiceUtil {
 	 * @param htmlPreviewEntry the html preview entry
 	 * @return the html preview entry that was updated
 	 */
-	public static com.liferay.html.preview.model.HtmlPreviewEntry
-		updateHtmlPreviewEntry(
-			com.liferay.html.preview.model.HtmlPreviewEntry htmlPreviewEntry) {
+	public static HtmlPreviewEntry updateHtmlPreviewEntry(
+		HtmlPreviewEntry htmlPreviewEntry) {
 
 		return getService().updateHtmlPreviewEntry(htmlPreviewEntry);
 	}
 
-	public static com.liferay.html.preview.model.HtmlPreviewEntry
-			updateHtmlPreviewEntry(
-				long htmlPreviewEntryId, String content, String mimeType,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static HtmlPreviewEntry updateHtmlPreviewEntry(
+			long htmlPreviewEntryId, String content, String mimeType,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().updateHtmlPreviewEntry(
 			htmlPreviewEntryId, content, mimeType, serviceContext);
 	}
 
 	public static HtmlPreviewEntryLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<HtmlPreviewEntryLocalService, HtmlPreviewEntryLocalService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			HtmlPreviewEntryLocalService.class);
-
-		ServiceTracker
-			<HtmlPreviewEntryLocalService, HtmlPreviewEntryLocalService>
-				serviceTracker =
-					new ServiceTracker
-						<HtmlPreviewEntryLocalService,
-						 HtmlPreviewEntryLocalService>(
-							 bundle.getBundleContext(),
-							 HtmlPreviewEntryLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile HtmlPreviewEntryLocalService _service;
 
 }

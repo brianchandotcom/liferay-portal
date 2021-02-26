@@ -14,7 +14,8 @@
 
 package com.liferay.announcements.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.announcements.kernel.model.AnnouncementsFlag;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * Provides the remote service utility for AnnouncementsFlag. This utility wraps
@@ -35,21 +36,16 @@ public class AnnouncementsFlagServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portlet.announcements.service.impl.AnnouncementsFlagServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static void addFlag(long entryId, int value)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static void addFlag(long entryId, int value) throws PortalException {
 		getService().addFlag(entryId, value);
 	}
 
-	public static void deleteFlag(long flagId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static void deleteFlag(long flagId) throws PortalException {
 		getService().deleteFlag(flagId);
 	}
 
-	public static com.liferay.announcements.kernel.model.AnnouncementsFlag
-			getFlag(long entryId, int value)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AnnouncementsFlag getFlag(long entryId, int value)
+		throws PortalException {
 
 		return getService().getFlag(entryId, value);
 	}
@@ -64,14 +60,9 @@ public class AnnouncementsFlagServiceUtil {
 	}
 
 	public static AnnouncementsFlagService getService() {
-		if (_service == null) {
-			_service = (AnnouncementsFlagService)PortalBeanLocatorUtil.locate(
-				AnnouncementsFlagService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static AnnouncementsFlagService _service;
+	private static volatile AnnouncementsFlagService _service;
 
 }

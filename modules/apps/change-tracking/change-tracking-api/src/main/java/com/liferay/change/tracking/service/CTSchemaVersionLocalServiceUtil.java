@@ -14,9 +14,16 @@
 
 package com.liferay.change.tracking.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.change.tracking.model.CTSchemaVersion;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for CTSchemaVersion. This utility wraps
@@ -48,16 +55,13 @@ public class CTSchemaVersionLocalServiceUtil {
 	 * @param ctSchemaVersion the ct schema version
 	 * @return the ct schema version that was added
 	 */
-	public static com.liferay.change.tracking.model.CTSchemaVersion
-		addCTSchemaVersion(
-			com.liferay.change.tracking.model.CTSchemaVersion ctSchemaVersion) {
+	public static CTSchemaVersion addCTSchemaVersion(
+		CTSchemaVersion ctSchemaVersion) {
 
 		return getService().addCTSchemaVersion(ctSchemaVersion);
 	}
 
-	public static com.liferay.change.tracking.model.CTSchemaVersion
-		addLatestCTSchemaVersion(long companyId) {
-
+	public static CTSchemaVersion addLatestCTSchemaVersion(long companyId) {
 		return getService().addLatestCTSchemaVersion(companyId);
 	}
 
@@ -67,18 +71,16 @@ public class CTSchemaVersionLocalServiceUtil {
 	 * @param schemaVersionId the primary key for the new ct schema version
 	 * @return the new ct schema version
 	 */
-	public static com.liferay.change.tracking.model.CTSchemaVersion
-		createCTSchemaVersion(long schemaVersionId) {
-
+	public static CTSchemaVersion createCTSchemaVersion(long schemaVersionId) {
 		return getService().createCTSchemaVersion(schemaVersionId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -93,9 +95,8 @@ public class CTSchemaVersionLocalServiceUtil {
 	 * @param ctSchemaVersion the ct schema version
 	 * @return the ct schema version that was removed
 	 */
-	public static com.liferay.change.tracking.model.CTSchemaVersion
-		deleteCTSchemaVersion(
-			com.liferay.change.tracking.model.CTSchemaVersion ctSchemaVersion) {
+	public static CTSchemaVersion deleteCTSchemaVersion(
+		CTSchemaVersion ctSchemaVersion) {
 
 		return getService().deleteCTSchemaVersion(ctSchemaVersion);
 	}
@@ -111,9 +112,8 @@ public class CTSchemaVersionLocalServiceUtil {
 	 * @return the ct schema version that was removed
 	 * @throws PortalException if a ct schema version with the primary key could not be found
 	 */
-	public static com.liferay.change.tracking.model.CTSchemaVersion
-			deleteCTSchemaVersion(long schemaVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CTSchemaVersion deleteCTSchemaVersion(long schemaVersionId)
+		throws PortalException {
 
 		return getService().deleteCTSchemaVersion(schemaVersionId);
 	}
@@ -121,23 +121,18 @@ public class CTSchemaVersionLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -147,9 +142,7 @@ public class CTSchemaVersionLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -165,9 +158,8 @@ public class CTSchemaVersionLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -185,10 +177,9 @@ public class CTSchemaVersionLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -200,9 +191,7 @@ public class CTSchemaVersionLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -214,15 +203,13 @@ public class CTSchemaVersionLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.change.tracking.model.CTSchemaVersion
-		fetchCTSchemaVersion(long schemaVersionId) {
-
+	public static CTSchemaVersion fetchCTSchemaVersion(long schemaVersionId) {
 		return getService().fetchCTSchemaVersion(schemaVersionId);
 	}
 
@@ -239,9 +226,8 @@ public class CTSchemaVersionLocalServiceUtil {
 	 * @return the ct schema version
 	 * @throws PortalException if a ct schema version with the primary key could not be found
 	 */
-	public static com.liferay.change.tracking.model.CTSchemaVersion
-			getCTSchemaVersion(long schemaVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CTSchemaVersion getCTSchemaVersion(long schemaVersionId)
+		throws PortalException {
 
 		return getService().getCTSchemaVersion(schemaVersionId);
 	}
@@ -257,9 +243,8 @@ public class CTSchemaVersionLocalServiceUtil {
 	 * @param end the upper bound of the range of ct schema versions (not inclusive)
 	 * @return the range of ct schema versions
 	 */
-	public static java.util.List
-		<com.liferay.change.tracking.model.CTSchemaVersion> getCTSchemaVersions(
-			int start, int end) {
+	public static List<CTSchemaVersion> getCTSchemaVersions(
+		int start, int end) {
 
 		return getService().getCTSchemaVersions(start, end);
 	}
@@ -280,9 +265,7 @@ public class CTSchemaVersionLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
-	public static com.liferay.change.tracking.model.CTSchemaVersion
-		getLatestCTSchemaVersion(long companyId) {
-
+	public static CTSchemaVersion getLatestCTSchemaVersion(long companyId) {
 		return getService().getLatestCTSchemaVersion(companyId);
 	}
 
@@ -298,16 +281,14 @@ public class CTSchemaVersionLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	public static boolean isLatestCTSchemaVersion(
-		com.liferay.change.tracking.model.CTSchemaVersion ctSchemaVersion,
-		boolean strict) {
+		CTSchemaVersion ctSchemaVersion, boolean strict) {
 
 		return getService().isLatestCTSchemaVersion(ctSchemaVersion, strict);
 	}
@@ -326,35 +307,16 @@ public class CTSchemaVersionLocalServiceUtil {
 	 * @param ctSchemaVersion the ct schema version
 	 * @return the ct schema version that was updated
 	 */
-	public static com.liferay.change.tracking.model.CTSchemaVersion
-		updateCTSchemaVersion(
-			com.liferay.change.tracking.model.CTSchemaVersion ctSchemaVersion) {
+	public static CTSchemaVersion updateCTSchemaVersion(
+		CTSchemaVersion ctSchemaVersion) {
 
 		return getService().updateCTSchemaVersion(ctSchemaVersion);
 	}
 
 	public static CTSchemaVersionLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CTSchemaVersionLocalService, CTSchemaVersionLocalService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CTSchemaVersionLocalService.class);
-
-		ServiceTracker<CTSchemaVersionLocalService, CTSchemaVersionLocalService>
-			serviceTracker =
-				new ServiceTracker
-					<CTSchemaVersionLocalService, CTSchemaVersionLocalService>(
-						bundle.getBundleContext(),
-						CTSchemaVersionLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CTSchemaVersionLocalService _service;
 
 }

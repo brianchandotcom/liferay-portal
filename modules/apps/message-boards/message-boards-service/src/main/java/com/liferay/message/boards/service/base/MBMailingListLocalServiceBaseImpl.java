@@ -21,6 +21,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.message.boards.model.MBMailingList;
 import com.liferay.message.boards.service.MBMailingListLocalService;
+import com.liferay.message.boards.service.MBMailingListLocalServiceUtil;
 import com.liferay.message.boards.service.persistence.MBMailingListPersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -53,10 +54,13 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -77,7 +81,7 @@ public abstract class MBMailingListLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>MBMailingListLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.message.boards.service.MBMailingListLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>MBMailingListLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>MBMailingListLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -506,6 +510,11 @@ public abstract class MBMailingListLocalServiceBaseImpl
 		return mbMailingListPersistence.update(mbMailingList);
 	}
 
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
+	}
+
 	@Override
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
@@ -517,6 +526,8 @@ public abstract class MBMailingListLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		mbMailingListLocalService = (MBMailingListLocalService)aopProxy;
+
+		_setLocalServiceUtilService(mbMailingListLocalService);
 	}
 
 	/**
@@ -573,6 +584,22 @@ public abstract class MBMailingListLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		MBMailingListLocalService mbMailingListLocalService) {
+
+		try {
+			Field field = MBMailingListLocalServiceUtil.class.getDeclaredField(
+				"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, mbMailingListLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

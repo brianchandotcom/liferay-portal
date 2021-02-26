@@ -14,9 +14,16 @@
 
 package com.liferay.commerce.discount.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.discount.model.CommerceDiscountRule;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for CommerceDiscountRule. This utility wraps
@@ -48,30 +55,26 @@ public class CommerceDiscountRuleLocalServiceUtil {
 	 * @param commerceDiscountRule the commerce discount rule
 	 * @return the commerce discount rule that was added
 	 */
-	public static com.liferay.commerce.discount.model.CommerceDiscountRule
-		addCommerceDiscountRule(
-			com.liferay.commerce.discount.model.CommerceDiscountRule
-				commerceDiscountRule) {
+	public static CommerceDiscountRule addCommerceDiscountRule(
+		CommerceDiscountRule commerceDiscountRule) {
 
 		return getService().addCommerceDiscountRule(commerceDiscountRule);
 	}
 
-	public static com.liferay.commerce.discount.model.CommerceDiscountRule
-			addCommerceDiscountRule(
-				long commerceDiscountId, String type, String typeSettings,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceDiscountRule addCommerceDiscountRule(
+			long commerceDiscountId, String type, String typeSettings,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCommerceDiscountRule(
 			commerceDiscountId, type, typeSettings, serviceContext);
 	}
 
-	public static com.liferay.commerce.discount.model.CommerceDiscountRule
-			addCommerceDiscountRule(
-				long commerceDiscountId, String name, String type,
-				String typeSettings,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceDiscountRule addCommerceDiscountRule(
+			long commerceDiscountId, String name, String type,
+			String typeSettings,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCommerceDiscountRule(
 			commerceDiscountId, name, type, typeSettings, serviceContext);
@@ -83,8 +86,8 @@ public class CommerceDiscountRuleLocalServiceUtil {
 	 * @param commerceDiscountRuleId the primary key for the new commerce discount rule
 	 * @return the new commerce discount rule
 	 */
-	public static com.liferay.commerce.discount.model.CommerceDiscountRule
-		createCommerceDiscountRule(long commerceDiscountRuleId) {
+	public static CommerceDiscountRule createCommerceDiscountRule(
+		long commerceDiscountRuleId) {
 
 		return getService().createCommerceDiscountRule(commerceDiscountRuleId);
 	}
@@ -92,9 +95,9 @@ public class CommerceDiscountRuleLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -110,11 +113,9 @@ public class CommerceDiscountRuleLocalServiceUtil {
 	 * @return the commerce discount rule that was removed
 	 * @throws PortalException
 	 */
-	public static com.liferay.commerce.discount.model.CommerceDiscountRule
-			deleteCommerceDiscountRule(
-				com.liferay.commerce.discount.model.CommerceDiscountRule
-					commerceDiscountRule)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceDiscountRule deleteCommerceDiscountRule(
+			CommerceDiscountRule commerceDiscountRule)
+		throws PortalException {
 
 		return getService().deleteCommerceDiscountRule(commerceDiscountRule);
 	}
@@ -130,15 +131,15 @@ public class CommerceDiscountRuleLocalServiceUtil {
 	 * @return the commerce discount rule that was removed
 	 * @throws PortalException if a commerce discount rule with the primary key could not be found
 	 */
-	public static com.liferay.commerce.discount.model.CommerceDiscountRule
-			deleteCommerceDiscountRule(long commerceDiscountRuleId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceDiscountRule deleteCommerceDiscountRule(
+			long commerceDiscountRuleId)
+		throws PortalException {
 
 		return getService().deleteCommerceDiscountRule(commerceDiscountRuleId);
 	}
 
 	public static void deleteCommerceDiscountRules(long commerceDiscountId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommerceDiscountRules(commerceDiscountId);
 	}
@@ -146,23 +147,18 @@ public class CommerceDiscountRuleLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -172,9 +168,7 @@ public class CommerceDiscountRuleLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -190,9 +184,8 @@ public class CommerceDiscountRuleLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -210,10 +203,9 @@ public class CommerceDiscountRuleLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -225,9 +217,7 @@ public class CommerceDiscountRuleLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -239,14 +229,14 @@ public class CommerceDiscountRuleLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.commerce.discount.model.CommerceDiscountRule
-		fetchCommerceDiscountRule(long commerceDiscountRuleId) {
+	public static CommerceDiscountRule fetchCommerceDiscountRule(
+		long commerceDiscountRuleId) {
 
 		return getService().fetchCommerceDiscountRule(commerceDiscountRuleId);
 	}
@@ -264,9 +254,9 @@ public class CommerceDiscountRuleLocalServiceUtil {
 	 * @return the commerce discount rule
 	 * @throws PortalException if a commerce discount rule with the primary key could not be found
 	 */
-	public static com.liferay.commerce.discount.model.CommerceDiscountRule
-			getCommerceDiscountRule(long commerceDiscountRuleId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceDiscountRule getCommerceDiscountRule(
+			long commerceDiscountRuleId)
+		throws PortalException {
 
 		return getService().getCommerceDiscountRule(commerceDiscountRuleId);
 	}
@@ -282,30 +272,23 @@ public class CommerceDiscountRuleLocalServiceUtil {
 	 * @param end the upper bound of the range of commerce discount rules (not inclusive)
 	 * @return the range of commerce discount rules
 	 */
-	public static java.util.List
-		<com.liferay.commerce.discount.model.CommerceDiscountRule>
-			getCommerceDiscountRules(int start, int end) {
+	public static List<CommerceDiscountRule> getCommerceDiscountRules(
+		int start, int end) {
 
 		return getService().getCommerceDiscountRules(start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.discount.model.CommerceDiscountRule>
-			getCommerceDiscountRules(
-				long commerceDiscountId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.commerce.discount.model.CommerceDiscountRule>
-						orderByComparator) {
+	public static List<CommerceDiscountRule> getCommerceDiscountRules(
+		long commerceDiscountId, int start, int end,
+		OrderByComparator<CommerceDiscountRule> orderByComparator) {
 
 		return getService().getCommerceDiscountRules(
 			commerceDiscountId, start, end, orderByComparator);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.discount.model.CommerceDiscountRule>
-				getCommerceDiscountRules(
-					long commerceDiscountId, String name, int start, int end)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommerceDiscountRule> getCommerceDiscountRules(
+			long commerceDiscountId, String name, int start, int end)
+		throws PortalException {
 
 		return getService().getCommerceDiscountRules(
 			commerceDiscountId, name, start, end);
@@ -326,7 +309,7 @@ public class CommerceDiscountRuleLocalServiceUtil {
 
 	public static int getCommerceDiscountRulesCount(
 			long commerceDiscountId, String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCommerceDiscountRulesCount(
 			commerceDiscountId, name);
@@ -351,9 +334,8 @@ public class CommerceDiscountRuleLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -368,57 +350,33 @@ public class CommerceDiscountRuleLocalServiceUtil {
 	 * @param commerceDiscountRule the commerce discount rule
 	 * @return the commerce discount rule that was updated
 	 */
-	public static com.liferay.commerce.discount.model.CommerceDiscountRule
-		updateCommerceDiscountRule(
-			com.liferay.commerce.discount.model.CommerceDiscountRule
-				commerceDiscountRule) {
+	public static CommerceDiscountRule updateCommerceDiscountRule(
+		CommerceDiscountRule commerceDiscountRule) {
 
 		return getService().updateCommerceDiscountRule(commerceDiscountRule);
 	}
 
-	public static com.liferay.commerce.discount.model.CommerceDiscountRule
-			updateCommerceDiscountRule(
-				long commerceDiscountRuleId, String type, String typeSettings)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceDiscountRule updateCommerceDiscountRule(
+			long commerceDiscountRuleId, String type, String typeSettings)
+		throws PortalException {
 
 		return getService().updateCommerceDiscountRule(
 			commerceDiscountRuleId, type, typeSettings);
 	}
 
-	public static com.liferay.commerce.discount.model.CommerceDiscountRule
-			updateCommerceDiscountRule(
-				long commerceDiscountRuleId, String name, String type,
-				String typeSettings)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceDiscountRule updateCommerceDiscountRule(
+			long commerceDiscountRuleId, String name, String type,
+			String typeSettings)
+		throws PortalException {
 
 		return getService().updateCommerceDiscountRule(
 			commerceDiscountRuleId, name, type, typeSettings);
 	}
 
 	public static CommerceDiscountRuleLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceDiscountRuleLocalService, CommerceDiscountRuleLocalService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommerceDiscountRuleLocalService.class);
-
-		ServiceTracker
-			<CommerceDiscountRuleLocalService, CommerceDiscountRuleLocalService>
-				serviceTracker =
-					new ServiceTracker
-						<CommerceDiscountRuleLocalService,
-						 CommerceDiscountRuleLocalService>(
-							 bundle.getBundleContext(),
-							 CommerceDiscountRuleLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceDiscountRuleLocalService _service;
 
 }

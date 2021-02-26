@@ -14,9 +14,11 @@
 
 package com.liferay.journal.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.journal.model.JournalFolder;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for JournalFolder. This utility wraps
@@ -37,130 +39,122 @@ public class JournalFolderServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.journal.service.impl.JournalFolderServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.journal.model.JournalFolder addFolder(
+	public static JournalFolder addFolder(
 			long groupId, long parentFolderId, String name, String description,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addFolder(
 			groupId, parentFolderId, name, description, serviceContext);
 	}
 
-	public static void deleteFolder(long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static void deleteFolder(long folderId) throws PortalException {
 		getService().deleteFolder(folderId);
 	}
 
 	public static void deleteFolder(
 			long folderId, boolean includeTrashedEntries)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteFolder(folderId, includeTrashedEntries);
 	}
 
-	public static com.liferay.journal.model.JournalFolder fetchFolder(
-			long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static JournalFolder fetchFolder(long folderId)
+		throws PortalException {
 
 		return getService().fetchFolder(folderId);
 	}
 
-	public static java.util.List
-		<com.liferay.dynamic.data.mapping.model.DDMStructure> getDDMStructures(
+	public static List<com.liferay.dynamic.data.mapping.model.DDMStructure>
+			getDDMStructures(
 				long[] groupIds, long folderId, int restrictionType)
-			throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getDDMStructures(
 			groupIds, folderId, restrictionType);
 	}
 
-	public static java.util.List
-		<com.liferay.dynamic.data.mapping.model.DDMStructure> getDDMStructures(
+	public static List<com.liferay.dynamic.data.mapping.model.DDMStructure>
+			getDDMStructures(
 				long[] groupIds, long folderId, int restrictionType,
-				com.liferay.portal.kernel.util.OrderByComparator
+				OrderByComparator
 					<com.liferay.dynamic.data.mapping.model.DDMStructure>
 						orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getDDMStructures(
 			groupIds, folderId, restrictionType, orderByComparator);
 	}
 
-	public static com.liferay.journal.model.JournalFolder getFolder(
-			long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static JournalFolder getFolder(long folderId)
+		throws PortalException {
 
 		return getService().getFolder(folderId);
 	}
 
-	public static java.util.List<Long> getFolderIds(long groupId, long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<Long> getFolderIds(long groupId, long folderId)
+		throws PortalException {
 
 		return getService().getFolderIds(groupId, folderId);
 	}
 
-	public static java.util.List<com.liferay.journal.model.JournalFolder>
-		getFolders(long groupId) {
-
+	public static List<JournalFolder> getFolders(long groupId) {
 		return getService().getFolders(groupId);
 	}
 
-	public static java.util.List<com.liferay.journal.model.JournalFolder>
-		getFolders(long groupId, long parentFolderId) {
+	public static List<JournalFolder> getFolders(
+		long groupId, long parentFolderId) {
 
 		return getService().getFolders(groupId, parentFolderId);
 	}
 
-	public static java.util.List<com.liferay.journal.model.JournalFolder>
-		getFolders(long groupId, long parentFolderId, int status) {
+	public static List<JournalFolder> getFolders(
+		long groupId, long parentFolderId, int status) {
 
 		return getService().getFolders(groupId, parentFolderId, status);
 	}
 
-	public static java.util.List<com.liferay.journal.model.JournalFolder>
-		getFolders(long groupId, long parentFolderId, int start, int end) {
+	public static List<JournalFolder> getFolders(
+		long groupId, long parentFolderId, int start, int end) {
 
 		return getService().getFolders(groupId, parentFolderId, start, end);
 	}
 
-	public static java.util.List<com.liferay.journal.model.JournalFolder>
-		getFolders(
-			long groupId, long parentFolderId, int status, int start, int end) {
+	public static List<JournalFolder> getFolders(
+		long groupId, long parentFolderId, int status, int start, int end) {
 
 		return getService().getFolders(
 			groupId, parentFolderId, status, start, end);
 	}
 
-	public static java.util.List<Object> getFoldersAndArticles(
+	public static List<Object> getFoldersAndArticles(
 		long groupId, long folderId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<?> orderByComparator) {
+		OrderByComparator<?> orderByComparator) {
 
 		return getService().getFoldersAndArticles(
 			groupId, folderId, status, start, end, orderByComparator);
 	}
 
-	public static java.util.List<Object> getFoldersAndArticles(
+	public static List<Object> getFoldersAndArticles(
 		long groupId, long folderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<?> orderByComparator) {
+		OrderByComparator<?> orderByComparator) {
 
 		return getService().getFoldersAndArticles(
 			groupId, folderId, start, end, orderByComparator);
 	}
 
-	public static java.util.List<Object> getFoldersAndArticles(
+	public static List<Object> getFoldersAndArticles(
 		long groupId, long userId, long folderId, int status, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<?> orderByComparator) {
+		int end, OrderByComparator<?> orderByComparator) {
 
 		return getService().getFoldersAndArticles(
 			groupId, userId, folderId, status, start, end, orderByComparator);
 	}
 
-	public static java.util.List<Object> getFoldersAndArticles(
+	public static List<Object> getFoldersAndArticles(
 		long groupId, long userId, long folderId, int status,
 		java.util.Locale locale, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<?> orderByComparator) {
+		OrderByComparator<?> orderByComparator) {
 
 		return getService().getFoldersAndArticles(
 			groupId, userId, folderId, status, locale, start, end,
@@ -168,7 +162,7 @@ public class JournalFolderServiceUtil {
 	}
 
 	public static int getFoldersAndArticlesCount(
-		long groupId, java.util.List<Long> folderIds, int status) {
+		long groupId, List<Long> folderIds, int status) {
 
 		return getService().getFoldersAndArticlesCount(
 			groupId, folderIds, status);
@@ -212,58 +206,55 @@ public class JournalFolderServiceUtil {
 	}
 
 	public static void getSubfolderIds(
-		java.util.List<Long> folderIds, long groupId, long folderId,
-		boolean recurse) {
+		List<Long> folderIds, long groupId, long folderId, boolean recurse) {
 
 		getService().getSubfolderIds(folderIds, groupId, folderId, recurse);
 	}
 
-	public static java.util.List<Long> getSubfolderIds(
+	public static List<Long> getSubfolderIds(
 		long groupId, long folderId, boolean recurse) {
 
 		return getService().getSubfolderIds(groupId, folderId, recurse);
 	}
 
-	public static com.liferay.journal.model.JournalFolder moveFolder(
+	public static JournalFolder moveFolder(
 			long folderId, long parentFolderId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().moveFolder(
 			folderId, parentFolderId, serviceContext);
 	}
 
-	public static com.liferay.journal.model.JournalFolder moveFolderFromTrash(
+	public static JournalFolder moveFolderFromTrash(
 			long folderId, long parentFolderId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().moveFolderFromTrash(
 			folderId, parentFolderId, serviceContext);
 	}
 
-	public static com.liferay.journal.model.JournalFolder moveFolderToTrash(
-			long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static JournalFolder moveFolderToTrash(long folderId)
+		throws PortalException {
 
 		return getService().moveFolderToTrash(folderId);
 	}
 
 	public static void restoreFolderFromTrash(long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().restoreFolderFromTrash(folderId);
 	}
 
-	public static java.util.List
-		<com.liferay.dynamic.data.mapping.model.DDMStructure>
-				searchDDMStructures(
-					long companyId, long[] groupIds, long folderId,
-					int restrictionType, String keywords, int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						<com.liferay.dynamic.data.mapping.model.DDMStructure>
-							orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<com.liferay.dynamic.data.mapping.model.DDMStructure>
+			searchDDMStructures(
+				long companyId, long[] groupIds, long folderId,
+				int restrictionType, String keywords, int start, int end,
+				OrderByComparator
+					<com.liferay.dynamic.data.mapping.model.DDMStructure>
+						orderByComparator)
+		throws PortalException {
 
 		return getService().searchDDMStructures(
 			companyId, groupIds, folderId, restrictionType, keywords, start,
@@ -271,34 +262,34 @@ public class JournalFolderServiceUtil {
 	}
 
 	public static void subscribe(long groupId, long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().subscribe(groupId, folderId);
 	}
 
 	public static void unsubscribe(long groupId, long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().unsubscribe(groupId, folderId);
 	}
 
-	public static com.liferay.journal.model.JournalFolder updateFolder(
+	public static JournalFolder updateFolder(
 			long groupId, long folderId, long parentFolderId, String name,
 			String description, boolean mergeWithParentFolder,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateFolder(
 			groupId, folderId, parentFolderId, name, description,
 			mergeWithParentFolder, serviceContext);
 	}
 
-	public static com.liferay.journal.model.JournalFolder updateFolder(
+	public static JournalFolder updateFolder(
 			long groupId, long folderId, long parentFolderId, String name,
 			String description, long[] ddmStructureIds, int restrictionType,
 			boolean mergeWithParentFolder,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateFolder(
 			groupId, folderId, parentFolderId, name, description,
@@ -307,24 +298,9 @@ public class JournalFolderServiceUtil {
 	}
 
 	public static JournalFolderService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<JournalFolderService, JournalFolderService>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(JournalFolderService.class);
-
-		ServiceTracker<JournalFolderService, JournalFolderService>
-			serviceTracker =
-				new ServiceTracker<JournalFolderService, JournalFolderService>(
-					bundle.getBundleContext(), JournalFolderService.class,
-					null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile JournalFolderService _service;
 
 }

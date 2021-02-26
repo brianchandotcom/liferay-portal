@@ -14,9 +14,9 @@
 
 package com.liferay.commerce.inventory.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for CommerceInventoryBookedQuantity. This utility wraps
@@ -37,11 +37,10 @@ public class CommerceInventoryBookedQuantityServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.inventory.service.impl.CommerceInventoryBookedQuantityServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static java.util.List
-		<com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity>
-				getCommerceInventoryBookedQuantities(
-					long companyId, String sku, int start, int end)
-			throws com.liferay.portal.kernel.security.auth.PrincipalException {
+	public static List<CommerceInventoryBookedQuantity>
+			getCommerceInventoryBookedQuantities(
+				long companyId, String sku, int start, int end)
+		throws com.liferay.portal.kernel.security.auth.PrincipalException {
 
 		return getService().getCommerceInventoryBookedQuantities(
 			companyId, sku, start, end);
@@ -65,29 +64,9 @@ public class CommerceInventoryBookedQuantityServiceUtil {
 	}
 
 	public static CommerceInventoryBookedQuantityService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceInventoryBookedQuantityService,
-		 CommerceInventoryBookedQuantityService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommerceInventoryBookedQuantityService.class);
-
-		ServiceTracker
-			<CommerceInventoryBookedQuantityService,
-			 CommerceInventoryBookedQuantityService> serviceTracker =
-				new ServiceTracker
-					<CommerceInventoryBookedQuantityService,
-					 CommerceInventoryBookedQuantityService>(
-						 bundle.getBundleContext(),
-						 CommerceInventoryBookedQuantityService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceInventoryBookedQuantityService _service;
 
 }

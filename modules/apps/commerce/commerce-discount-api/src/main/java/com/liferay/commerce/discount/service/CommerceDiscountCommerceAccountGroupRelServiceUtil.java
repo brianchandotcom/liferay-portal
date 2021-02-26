@@ -14,9 +14,11 @@
 
 package com.liferay.commerce.discount.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.discount.model.CommerceDiscountCommerceAccountGroupRel;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for CommerceDiscountCommerceAccountGroupRel. This utility wraps
@@ -37,14 +39,11 @@ public class CommerceDiscountCommerceAccountGroupRelServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.discount.service.impl.CommerceDiscountCommerceAccountGroupRelServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static
-		com.liferay.commerce.discount.model.
-			CommerceDiscountCommerceAccountGroupRel
-					addCommerceDiscountCommerceAccountGroupRel(
-						long commerceDiscountId, long commerceAccountGroupId,
-						com.liferay.portal.kernel.service.ServiceContext
-							serviceContext)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceDiscountCommerceAccountGroupRel
+			addCommerceDiscountCommerceAccountGroupRel(
+				long commerceDiscountId, long commerceAccountGroupId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCommerceDiscountCommerceAccountGroupRel(
 			commerceDiscountId, commerceAccountGroupId, serviceContext);
@@ -52,7 +51,7 @@ public class CommerceDiscountCommerceAccountGroupRelServiceUtil {
 
 	public static void deleteCommerceDiscountCommerceAccountGroupRel(
 			long commerceDiscountCommerceAccountGroupRelId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommerceDiscountCommerceAccountGroupRel(
 			commerceDiscountCommerceAccountGroupRelId);
@@ -61,55 +60,45 @@ public class CommerceDiscountCommerceAccountGroupRelServiceUtil {
 	public static void
 			deleteCommerceDiscountCommerceAccountGroupRelsByCommerceDiscountId(
 				long commerceDiscountId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().
 			deleteCommerceDiscountCommerceAccountGroupRelsByCommerceDiscountId(
 				commerceDiscountId);
 	}
 
-	public static
-		com.liferay.commerce.discount.model.
-			CommerceDiscountCommerceAccountGroupRel
-					fetchCommerceDiscountCommerceAccountGroupRel(
-						long commerceDiscountId, long commerceAccountGroupId)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceDiscountCommerceAccountGroupRel
+			fetchCommerceDiscountCommerceAccountGroupRel(
+				long commerceDiscountId, long commerceAccountGroupId)
+		throws PortalException {
 
 		return getService().fetchCommerceDiscountCommerceAccountGroupRel(
 			commerceDiscountId, commerceAccountGroupId);
 	}
 
-	public static
-		com.liferay.commerce.discount.model.
-			CommerceDiscountCommerceAccountGroupRel
-					getCommerceDiscountCommerceAccountGroupRel(
-						long commerceDiscountCommerceAccountGroupRelId)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceDiscountCommerceAccountGroupRel
+			getCommerceDiscountCommerceAccountGroupRel(
+				long commerceDiscountCommerceAccountGroupRelId)
+		throws PortalException {
 
 		return getService().getCommerceDiscountCommerceAccountGroupRel(
 			commerceDiscountCommerceAccountGroupRelId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.discount.model.
-			CommerceDiscountCommerceAccountGroupRel>
-					getCommerceDiscountCommerceAccountGroupRels(
-						long commerceDiscountId, int start, int end,
-						com.liferay.portal.kernel.util.OrderByComparator
-							<com.liferay.commerce.discount.model.
-								CommerceDiscountCommerceAccountGroupRel>
-									orderByComparator)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommerceDiscountCommerceAccountGroupRel>
+			getCommerceDiscountCommerceAccountGroupRels(
+				long commerceDiscountId, int start, int end,
+				OrderByComparator<CommerceDiscountCommerceAccountGroupRel>
+					orderByComparator)
+		throws PortalException {
 
 		return getService().getCommerceDiscountCommerceAccountGroupRels(
 			commerceDiscountId, start, end, orderByComparator);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.discount.model.
-			CommerceDiscountCommerceAccountGroupRel>
-				getCommerceDiscountCommerceAccountGroupRels(
-					long commerceDiscountId, String name, int start, int end) {
+	public static List<CommerceDiscountCommerceAccountGroupRel>
+		getCommerceDiscountCommerceAccountGroupRels(
+			long commerceDiscountId, String name, int start, int end) {
 
 		return getService().getCommerceDiscountCommerceAccountGroupRels(
 			commerceDiscountId, name, start, end);
@@ -117,7 +106,7 @@ public class CommerceDiscountCommerceAccountGroupRelServiceUtil {
 
 	public static int getCommerceDiscountCommerceAccountGroupRelsCount(
 			long commerceDiscountId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCommerceDiscountCommerceAccountGroupRelsCount(
 			commerceDiscountId);
@@ -140,30 +129,10 @@ public class CommerceDiscountCommerceAccountGroupRelServiceUtil {
 	}
 
 	public static CommerceDiscountCommerceAccountGroupRelService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceDiscountCommerceAccountGroupRelService,
-		 CommerceDiscountCommerceAccountGroupRelService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommerceDiscountCommerceAccountGroupRelService.class);
-
-		ServiceTracker
-			<CommerceDiscountCommerceAccountGroupRelService,
-			 CommerceDiscountCommerceAccountGroupRelService> serviceTracker =
-				new ServiceTracker
-					<CommerceDiscountCommerceAccountGroupRelService,
-					 CommerceDiscountCommerceAccountGroupRelService>(
-						 bundle.getBundleContext(),
-						 CommerceDiscountCommerceAccountGroupRelService.class,
-						 null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceDiscountCommerceAccountGroupRelService
+		_service;
 
 }

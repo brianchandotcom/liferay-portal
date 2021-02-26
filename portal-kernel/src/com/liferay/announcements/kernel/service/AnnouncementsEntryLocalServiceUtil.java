@@ -14,7 +14,16 @@
 
 package com.liferay.announcements.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.announcements.kernel.model.AnnouncementsEntry;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for AnnouncementsEntry. This utility wraps
@@ -46,36 +55,30 @@ public class AnnouncementsEntryLocalServiceUtil {
 	 * @param announcementsEntry the announcements entry
 	 * @return the announcements entry that was added
 	 */
-	public static com.liferay.announcements.kernel.model.AnnouncementsEntry
-		addAnnouncementsEntry(
-			com.liferay.announcements.kernel.model.AnnouncementsEntry
-				announcementsEntry) {
+	public static AnnouncementsEntry addAnnouncementsEntry(
+		AnnouncementsEntry announcementsEntry) {
 
 		return getService().addAnnouncementsEntry(announcementsEntry);
 	}
 
-	public static com.liferay.announcements.kernel.model.AnnouncementsEntry
-			addEntry(
-				long userId, long classNameId, long classPK, String title,
-				String content, String url, String type,
-				java.util.Date displayDate, java.util.Date expirationDate,
-				int priority, boolean alert)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AnnouncementsEntry addEntry(
+			long userId, long classNameId, long classPK, String title,
+			String content, String url, String type, java.util.Date displayDate,
+			java.util.Date expirationDate, int priority, boolean alert)
+		throws PortalException {
 
 		return getService().addEntry(
 			userId, classNameId, classPK, title, content, url, type,
 			displayDate, expirationDate, priority, alert);
 	}
 
-	public static void checkEntries()
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static void checkEntries() throws PortalException {
 		getService().checkEntries();
 	}
 
 	public static void checkEntries(
 			java.util.Date startDate, java.util.Date endDate)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().checkEntries(startDate, endDate);
 	}
@@ -86,18 +89,16 @@ public class AnnouncementsEntryLocalServiceUtil {
 	 * @param entryId the primary key for the new announcements entry
 	 * @return the new announcements entry
 	 */
-	public static com.liferay.announcements.kernel.model.AnnouncementsEntry
-		createAnnouncementsEntry(long entryId) {
-
+	public static AnnouncementsEntry createAnnouncementsEntry(long entryId) {
 		return getService().createAnnouncementsEntry(entryId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -112,10 +113,8 @@ public class AnnouncementsEntryLocalServiceUtil {
 	 * @param announcementsEntry the announcements entry
 	 * @return the announcements entry that was removed
 	 */
-	public static com.liferay.announcements.kernel.model.AnnouncementsEntry
-		deleteAnnouncementsEntry(
-			com.liferay.announcements.kernel.model.AnnouncementsEntry
-				announcementsEntry) {
+	public static AnnouncementsEntry deleteAnnouncementsEntry(
+		AnnouncementsEntry announcementsEntry) {
 
 		return getService().deleteAnnouncementsEntry(announcementsEntry);
 	}
@@ -131,9 +130,8 @@ public class AnnouncementsEntryLocalServiceUtil {
 	 * @return the announcements entry that was removed
 	 * @throws PortalException if a announcements entry with the primary key could not be found
 	 */
-	public static com.liferay.announcements.kernel.model.AnnouncementsEntry
-			deleteAnnouncementsEntry(long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AnnouncementsEntry deleteAnnouncementsEntry(long entryId)
+		throws PortalException {
 
 		return getService().deleteAnnouncementsEntry(entryId);
 	}
@@ -143,51 +141,43 @@ public class AnnouncementsEntryLocalServiceUtil {
 	}
 
 	public static void deleteEntries(long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteEntries(classNameId, classPK);
 	}
 
 	public static void deleteEntries(
 			long companyId, long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteEntries(companyId, classNameId, classPK);
 	}
 
-	public static void deleteEntry(
-			com.liferay.announcements.kernel.model.AnnouncementsEntry entry)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static void deleteEntry(AnnouncementsEntry entry)
+		throws PortalException {
 
 		getService().deleteEntry(entry);
 	}
 
-	public static void deleteEntry(long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static void deleteEntry(long entryId) throws PortalException {
 		getService().deleteEntry(entryId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -197,9 +187,7 @@ public class AnnouncementsEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -215,9 +203,8 @@ public class AnnouncementsEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -235,10 +222,9 @@ public class AnnouncementsEntryLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -250,9 +236,7 @@ public class AnnouncementsEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -264,15 +248,13 @@ public class AnnouncementsEntryLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.announcements.kernel.model.AnnouncementsEntry
-		fetchAnnouncementsEntry(long entryId) {
-
+	public static AnnouncementsEntry fetchAnnouncementsEntry(long entryId) {
 		return getService().fetchAnnouncementsEntry(entryId);
 	}
 
@@ -283,8 +265,8 @@ public class AnnouncementsEntryLocalServiceUtil {
 	 * @param companyId the primary key of the company
 	 * @return the matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
 	 */
-	public static com.liferay.announcements.kernel.model.AnnouncementsEntry
-		fetchAnnouncementsEntryByUuidAndCompanyId(String uuid, long companyId) {
+	public static AnnouncementsEntry fetchAnnouncementsEntryByUuidAndCompanyId(
+		String uuid, long companyId) {
 
 		return getService().fetchAnnouncementsEntryByUuidAndCompanyId(
 			uuid, companyId);
@@ -307,9 +289,8 @@ public class AnnouncementsEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of announcements entries (not inclusive)
 	 * @return the range of announcements entries
 	 */
-	public static java.util.List
-		<com.liferay.announcements.kernel.model.AnnouncementsEntry>
-			getAnnouncementsEntries(int start, int end) {
+	public static List<AnnouncementsEntry> getAnnouncementsEntries(
+		int start, int end) {
 
 		return getService().getAnnouncementsEntries(start, end);
 	}
@@ -330,9 +311,8 @@ public class AnnouncementsEntryLocalServiceUtil {
 	 * @return the announcements entry
 	 * @throws PortalException if a announcements entry with the primary key could not be found
 	 */
-	public static com.liferay.announcements.kernel.model.AnnouncementsEntry
-			getAnnouncementsEntry(long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AnnouncementsEntry getAnnouncementsEntry(long entryId)
+		throws PortalException {
 
 		return getService().getAnnouncementsEntry(entryId);
 	}
@@ -345,31 +325,29 @@ public class AnnouncementsEntryLocalServiceUtil {
 	 * @return the matching announcements entry
 	 * @throws PortalException if a matching announcements entry could not be found
 	 */
-	public static com.liferay.announcements.kernel.model.AnnouncementsEntry
-			getAnnouncementsEntryByUuidAndCompanyId(String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AnnouncementsEntry getAnnouncementsEntryByUuidAndCompanyId(
+			String uuid, long companyId)
+		throws PortalException {
 
 		return getService().getAnnouncementsEntryByUuidAndCompanyId(
 			uuid, companyId);
 	}
 
-	public static java.util.List
-		<com.liferay.announcements.kernel.model.AnnouncementsEntry> getEntries(
-			long userId, java.util.LinkedHashMap<Long, long[]> scopes,
-			boolean alert, int flagValue, int start, int end) {
+	public static List<AnnouncementsEntry> getEntries(
+		long userId, java.util.LinkedHashMap<Long, long[]> scopes,
+		boolean alert, int flagValue, int start, int end) {
 
 		return getService().getEntries(
 			userId, scopes, alert, flagValue, start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.announcements.kernel.model.AnnouncementsEntry> getEntries(
-			long userId, java.util.LinkedHashMap<Long, long[]> scopes,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute, boolean alert,
-			int flagValue, int start, int end) {
+	public static List<AnnouncementsEntry> getEntries(
+		long userId, java.util.LinkedHashMap<Long, long[]> scopes,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean alert, int flagValue, int start,
+		int end) {
 
 		return getService().getEntries(
 			userId, scopes, displayDateMonth, displayDateDay, displayDateYear,
@@ -378,23 +356,21 @@ public class AnnouncementsEntryLocalServiceUtil {
 			expirationDateMinute, alert, flagValue, start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.announcements.kernel.model.AnnouncementsEntry> getEntries(
-			long companyId, long classNameId, long classPK, boolean alert,
-			int start, int end) {
+	public static List<AnnouncementsEntry> getEntries(
+		long companyId, long classNameId, long classPK, boolean alert,
+		int start, int end) {
 
 		return getService().getEntries(
 			companyId, classNameId, classPK, alert, start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.announcements.kernel.model.AnnouncementsEntry> getEntries(
-			long userId, long classNameId, long[] classPKs,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute, boolean alert,
-			int flagValue, int start, int end) {
+	public static List<AnnouncementsEntry> getEntries(
+		long userId, long classNameId, long[] classPKs, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean alert, int flagValue, int start,
+		int end) {
 
 		return getService().getEntries(
 			userId, classNameId, classPKs, displayDateMonth, displayDateDay,
@@ -454,9 +430,8 @@ public class AnnouncementsEntryLocalServiceUtil {
 			expirationDateHour, expirationDateMinute, alert, flagValue);
 	}
 
-	public static com.liferay.announcements.kernel.model.AnnouncementsEntry
-			getEntry(long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AnnouncementsEntry getEntry(long entryId)
+		throws PortalException {
 
 		return getService().getEntry(entryId);
 	}
@@ -488,16 +463,14 @@ public class AnnouncementsEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static java.util.List
-		<com.liferay.announcements.kernel.model.AnnouncementsEntry>
-			getUserEntries(long userId, int start, int end) {
+	public static List<AnnouncementsEntry> getUserEntries(
+		long userId, int start, int end) {
 
 		return getService().getUserEntries(userId, start, end);
 	}
@@ -516,20 +489,17 @@ public class AnnouncementsEntryLocalServiceUtil {
 	 * @param announcementsEntry the announcements entry
 	 * @return the announcements entry that was updated
 	 */
-	public static com.liferay.announcements.kernel.model.AnnouncementsEntry
-		updateAnnouncementsEntry(
-			com.liferay.announcements.kernel.model.AnnouncementsEntry
-				announcementsEntry) {
+	public static AnnouncementsEntry updateAnnouncementsEntry(
+		AnnouncementsEntry announcementsEntry) {
 
 		return getService().updateAnnouncementsEntry(announcementsEntry);
 	}
 
-	public static com.liferay.announcements.kernel.model.AnnouncementsEntry
-			updateEntry(
-				long entryId, String title, String content, String url,
-				String type, java.util.Date displayDate,
-				java.util.Date expirationDate, int priority)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AnnouncementsEntry updateEntry(
+			long entryId, String title, String content, String url, String type,
+			java.util.Date displayDate, java.util.Date expirationDate,
+			int priority)
+		throws PortalException {
 
 		return getService().updateEntry(
 			entryId, title, content, url, type, displayDate, expirationDate,
@@ -537,15 +507,9 @@ public class AnnouncementsEntryLocalServiceUtil {
 	}
 
 	public static AnnouncementsEntryLocalService getService() {
-		if (_service == null) {
-			_service =
-				(AnnouncementsEntryLocalService)PortalBeanLocatorUtil.locate(
-					AnnouncementsEntryLocalService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static AnnouncementsEntryLocalService _service;
+	private static volatile AnnouncementsEntryLocalService _service;
 
 }

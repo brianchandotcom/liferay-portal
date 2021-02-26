@@ -14,9 +14,17 @@
 
 package com.liferay.commerce.currency.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for CommerceCurrency. This utility wraps
@@ -48,24 +56,19 @@ public class CommerceCurrencyLocalServiceUtil {
 	 * @param commerceCurrency the commerce currency
 	 * @return the commerce currency that was added
 	 */
-	public static com.liferay.commerce.currency.model.CommerceCurrency
-		addCommerceCurrency(
-			com.liferay.commerce.currency.model.CommerceCurrency
-				commerceCurrency) {
+	public static CommerceCurrency addCommerceCurrency(
+		CommerceCurrency commerceCurrency) {
 
 		return getService().addCommerceCurrency(commerceCurrency);
 	}
 
-	public static com.liferay.commerce.currency.model.CommerceCurrency
-			addCommerceCurrency(
-				long userId, String code,
-				java.util.Map<java.util.Locale, String> nameMap, String symbol,
-				java.math.BigDecimal rate,
-				java.util.Map<java.util.Locale, String> formatPatternMap,
-				int maxFractionDigits, int minFractionDigits,
-				String roundingMode, boolean primary, double priority,
-				boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceCurrency addCommerceCurrency(
+			long userId, String code, Map<java.util.Locale, String> nameMap,
+			String symbol, java.math.BigDecimal rate,
+			Map<java.util.Locale, String> formatPatternMap,
+			int maxFractionDigits, int minFractionDigits, String roundingMode,
+			boolean primary, double priority, boolean active)
+		throws PortalException {
 
 		return getService().addCommerceCurrency(
 			userId, code, nameMap, symbol, rate, formatPatternMap,
@@ -79,8 +82,8 @@ public class CommerceCurrencyLocalServiceUtil {
 	 * @param commerceCurrencyId the primary key for the new commerce currency
 	 * @return the new commerce currency
 	 */
-	public static com.liferay.commerce.currency.model.CommerceCurrency
-		createCommerceCurrency(long commerceCurrencyId) {
+	public static CommerceCurrency createCommerceCurrency(
+		long commerceCurrencyId) {
 
 		return getService().createCommerceCurrency(commerceCurrencyId);
 	}
@@ -88,9 +91,9 @@ public class CommerceCurrencyLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -109,10 +112,8 @@ public class CommerceCurrencyLocalServiceUtil {
 	 * @param commerceCurrency the commerce currency
 	 * @return the commerce currency that was removed
 	 */
-	public static com.liferay.commerce.currency.model.CommerceCurrency
-		deleteCommerceCurrency(
-			com.liferay.commerce.currency.model.CommerceCurrency
-				commerceCurrency) {
+	public static CommerceCurrency deleteCommerceCurrency(
+		CommerceCurrency commerceCurrency) {
 
 		return getService().deleteCommerceCurrency(commerceCurrency);
 	}
@@ -128,9 +129,9 @@ public class CommerceCurrencyLocalServiceUtil {
 	 * @return the commerce currency that was removed
 	 * @throws PortalException if a commerce currency with the primary key could not be found
 	 */
-	public static com.liferay.commerce.currency.model.CommerceCurrency
-			deleteCommerceCurrency(long commerceCurrencyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceCurrency deleteCommerceCurrency(
+			long commerceCurrencyId)
+		throws PortalException {
 
 		return getService().deleteCommerceCurrency(commerceCurrencyId);
 	}
@@ -138,23 +139,18 @@ public class CommerceCurrencyLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -164,9 +160,7 @@ public class CommerceCurrencyLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -182,9 +176,8 @@ public class CommerceCurrencyLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -202,10 +195,9 @@ public class CommerceCurrencyLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -217,9 +209,7 @@ public class CommerceCurrencyLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -231,14 +221,14 @@ public class CommerceCurrencyLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.commerce.currency.model.CommerceCurrency
-		fetchCommerceCurrency(long commerceCurrencyId) {
+	public static CommerceCurrency fetchCommerceCurrency(
+		long commerceCurrencyId) {
 
 		return getService().fetchCommerceCurrency(commerceCurrencyId);
 	}
@@ -250,15 +240,15 @@ public class CommerceCurrencyLocalServiceUtil {
 	 * @param companyId the primary key of the company
 	 * @return the matching commerce currency, or <code>null</code> if a matching commerce currency could not be found
 	 */
-	public static com.liferay.commerce.currency.model.CommerceCurrency
-		fetchCommerceCurrencyByUuidAndCompanyId(String uuid, long companyId) {
+	public static CommerceCurrency fetchCommerceCurrencyByUuidAndCompanyId(
+		String uuid, long companyId) {
 
 		return getService().fetchCommerceCurrencyByUuidAndCompanyId(
 			uuid, companyId);
 	}
 
-	public static com.liferay.commerce.currency.model.CommerceCurrency
-		fetchPrimaryCommerceCurrency(long companyId) {
+	public static CommerceCurrency fetchPrimaryCommerceCurrency(
+		long companyId) {
 
 		return getService().fetchPrimaryCommerceCurrency(companyId);
 	}
@@ -280,39 +270,29 @@ public class CommerceCurrencyLocalServiceUtil {
 	 * @param end the upper bound of the range of commerce currencies (not inclusive)
 	 * @return the range of commerce currencies
 	 */
-	public static java.util.List
-		<com.liferay.commerce.currency.model.CommerceCurrency>
-			getCommerceCurrencies(int start, int end) {
+	public static List<CommerceCurrency> getCommerceCurrencies(
+		int start, int end) {
 
 		return getService().getCommerceCurrencies(start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.currency.model.CommerceCurrency>
-			getCommerceCurrencies(long companyId, boolean active) {
+	public static List<CommerceCurrency> getCommerceCurrencies(
+		long companyId, boolean active) {
 
 		return getService().getCommerceCurrencies(companyId, active);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.currency.model.CommerceCurrency>
-			getCommerceCurrencies(
-				long companyId, boolean active, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.commerce.currency.model.CommerceCurrency>
-						orderByComparator) {
+	public static List<CommerceCurrency> getCommerceCurrencies(
+		long companyId, boolean active, int start, int end,
+		OrderByComparator<CommerceCurrency> orderByComparator) {
 
 		return getService().getCommerceCurrencies(
 			companyId, active, start, end, orderByComparator);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.currency.model.CommerceCurrency>
-			getCommerceCurrencies(
-				long companyId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.commerce.currency.model.CommerceCurrency>
-						orderByComparator) {
+	public static List<CommerceCurrency> getCommerceCurrencies(
+		long companyId, int start, int end,
+		OrderByComparator<CommerceCurrency> orderByComparator) {
 
 		return getService().getCommerceCurrencies(
 			companyId, start, end, orderByComparator);
@@ -344,15 +324,14 @@ public class CommerceCurrencyLocalServiceUtil {
 	 * @return the commerce currency
 	 * @throws PortalException if a commerce currency with the primary key could not be found
 	 */
-	public static com.liferay.commerce.currency.model.CommerceCurrency
-			getCommerceCurrency(long commerceCurrencyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceCurrency getCommerceCurrency(long commerceCurrencyId)
+		throws PortalException {
 
 		return getService().getCommerceCurrency(commerceCurrencyId);
 	}
 
-	public static com.liferay.commerce.currency.model.CommerceCurrency
-			getCommerceCurrency(long companyId, String code)
+	public static CommerceCurrency getCommerceCurrency(
+			long companyId, String code)
 		throws com.liferay.commerce.currency.exception.NoSuchCurrencyException {
 
 		return getService().getCommerceCurrency(companyId, code);
@@ -366,9 +345,9 @@ public class CommerceCurrencyLocalServiceUtil {
 	 * @return the matching commerce currency
 	 * @throws PortalException if a matching commerce currency could not be found
 	 */
-	public static com.liferay.commerce.currency.model.CommerceCurrency
-			getCommerceCurrencyByUuidAndCompanyId(String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceCurrency getCommerceCurrencyByUuidAndCompanyId(
+			String uuid, long companyId)
+		throws PortalException {
 
 		return getService().getCommerceCurrencyByUuidAndCompanyId(
 			uuid, companyId);
@@ -401,9 +380,8 @@ public class CommerceCurrencyLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -415,16 +393,16 @@ public class CommerceCurrencyLocalServiceUtil {
 		getService().importDefaultValues(serviceContext);
 	}
 
-	public static com.liferay.commerce.currency.model.CommerceCurrency
-			setActive(long commerceCurrencyId, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceCurrency setActive(
+			long commerceCurrencyId, boolean active)
+		throws PortalException {
 
 		return getService().setActive(commerceCurrencyId, active);
 	}
 
-	public static com.liferay.commerce.currency.model.CommerceCurrency
-			setPrimary(long commerceCurrencyId, boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceCurrency setPrimary(
+			long commerceCurrencyId, boolean primary)
+		throws PortalException {
 
 		return getService().setPrimary(commerceCurrencyId, primary);
 	}
@@ -439,25 +417,21 @@ public class CommerceCurrencyLocalServiceUtil {
 	 * @param commerceCurrency the commerce currency
 	 * @return the commerce currency that was updated
 	 */
-	public static com.liferay.commerce.currency.model.CommerceCurrency
-		updateCommerceCurrency(
-			com.liferay.commerce.currency.model.CommerceCurrency
-				commerceCurrency) {
+	public static CommerceCurrency updateCommerceCurrency(
+		CommerceCurrency commerceCurrency) {
 
 		return getService().updateCommerceCurrency(commerceCurrency);
 	}
 
-	public static com.liferay.commerce.currency.model.CommerceCurrency
-			updateCommerceCurrency(
-				long commerceCurrencyId, String code,
-				java.util.Map<java.util.Locale, String> nameMap, String symbol,
-				java.math.BigDecimal rate,
-				java.util.Map<java.util.Locale, String> formatPatternMap,
-				int maxFractionDigits, int minFractionDigits,
-				String roundingMode, boolean primary, double priority,
-				boolean active,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceCurrency updateCommerceCurrency(
+			long commerceCurrencyId, String code,
+			Map<java.util.Locale, String> nameMap, String symbol,
+			java.math.BigDecimal rate,
+			Map<java.util.Locale, String> formatPatternMap,
+			int maxFractionDigits, int minFractionDigits, String roundingMode,
+			boolean primary, double priority, boolean active,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().updateCommerceCurrency(
 			commerceCurrencyId, code, nameMap, symbol, rate, formatPatternMap,
@@ -465,10 +439,9 @@ public class CommerceCurrencyLocalServiceUtil {
 			priority, active, serviceContext);
 	}
 
-	public static com.liferay.commerce.currency.model.CommerceCurrency
-			updateCommerceCurrencyRate(
-				long commerceCurrencyId, java.math.BigDecimal rate)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceCurrency updateCommerceCurrencyRate(
+			long commerceCurrencyId, java.math.BigDecimal rate)
+		throws PortalException {
 
 		return getService().updateCommerceCurrencyRate(
 			commerceCurrencyId, rate);
@@ -476,42 +449,20 @@ public class CommerceCurrencyLocalServiceUtil {
 
 	public static void updateExchangeRate(
 			long commerceCurrencyId, String exchangeRateProviderKey)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().updateExchangeRate(
 			commerceCurrencyId, exchangeRateProviderKey);
 	}
 
-	public static void updateExchangeRates()
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static void updateExchangeRates() throws PortalException {
 		getService().updateExchangeRates();
 	}
 
 	public static CommerceCurrencyLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceCurrencyLocalService, CommerceCurrencyLocalService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommerceCurrencyLocalService.class);
-
-		ServiceTracker
-			<CommerceCurrencyLocalService, CommerceCurrencyLocalService>
-				serviceTracker =
-					new ServiceTracker
-						<CommerceCurrencyLocalService,
-						 CommerceCurrencyLocalService>(
-							 bundle.getBundleContext(),
-							 CommerceCurrencyLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceCurrencyLocalService _service;
 
 }

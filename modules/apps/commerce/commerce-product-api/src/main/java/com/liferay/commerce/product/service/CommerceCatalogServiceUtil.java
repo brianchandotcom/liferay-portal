@@ -14,9 +14,10 @@
 
 package com.liferay.commerce.product.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.product.model.CommerceCatalog;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for CommerceCatalog. This utility wraps
@@ -37,58 +38,51 @@ public class CommerceCatalogServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CommerceCatalogServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.commerce.product.model.CommerceCatalog
-			addCommerceCatalog(
-				String externalReferenceCode, String name,
-				String commerceCurrencyCode, String catalogDefaultLanguageId,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceCatalog addCommerceCatalog(
+			String externalReferenceCode, String name,
+			String commerceCurrencyCode, String catalogDefaultLanguageId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCommerceCatalog(
 			externalReferenceCode, name, commerceCurrencyCode,
 			catalogDefaultLanguageId, serviceContext);
 	}
 
-	public static com.liferay.commerce.product.model.CommerceCatalog
-			deleteCommerceCatalog(long commerceCatalogId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceCatalog deleteCommerceCatalog(long commerceCatalogId)
+		throws PortalException {
 
 		return getService().deleteCommerceCatalog(commerceCatalogId);
 	}
 
-	public static com.liferay.commerce.product.model.CommerceCatalog
-			fetchByExternalReferenceCode(
-				String externalReferenceCode, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceCatalog fetchByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
 
 		return getService().fetchByExternalReferenceCode(
 			externalReferenceCode, companyId);
 	}
 
-	public static com.liferay.commerce.product.model.CommerceCatalog
-			fetchCommerceCatalog(long commerceCatalogId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceCatalog fetchCommerceCatalog(long commerceCatalogId)
+		throws PortalException {
 
 		return getService().fetchCommerceCatalog(commerceCatalogId);
 	}
 
-	public static com.liferay.commerce.product.model.CommerceCatalog
-			fetchCommerceCatalogByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceCatalog fetchCommerceCatalogByGroupId(long groupId)
+		throws PortalException {
 
 		return getService().fetchCommerceCatalogByGroupId(groupId);
 	}
 
-	public static com.liferay.commerce.product.model.CommerceCatalog
-			getCommerceCatalog(long commerceCatalogId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceCatalog getCommerceCatalog(long commerceCatalogId)
+		throws PortalException {
 
 		return getService().getCommerceCatalog(commerceCatalogId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.product.model.CommerceCatalog>
-			getCommerceCatalogs(long companyId, int start, int end) {
+	public static List<CommerceCatalog> getCommerceCatalogs(
+		long companyId, int start, int end) {
 
 		return getService().getCommerceCatalogs(companyId, start, end);
 	}
@@ -102,12 +96,10 @@ public class CommerceCatalogServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.product.model.CommerceCatalog>
-				searchCommerceCatalogs(
-					long companyId, String keywords, int start, int end,
-					com.liferay.portal.kernel.search.Sort sort)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommerceCatalog> searchCommerceCatalogs(
+			long companyId, String keywords, int start, int end,
+			com.liferay.portal.kernel.search.Sort sort)
+		throws PortalException {
 
 		return getService().searchCommerceCatalogs(
 			companyId, keywords, start, end, sort);
@@ -115,51 +107,33 @@ public class CommerceCatalogServiceUtil {
 
 	public static int searchCommerceCatalogsCount(
 			long companyId, String keywords)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().searchCommerceCatalogsCount(companyId, keywords);
 	}
 
-	public static com.liferay.commerce.product.model.CommerceCatalog
-			updateCommerceCatalog(
-				long commerceCatalogId, String name,
-				String commerceCurrencyCode, String catalogDefaultLanguageId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceCatalog updateCommerceCatalog(
+			long commerceCatalogId, String name, String commerceCurrencyCode,
+			String catalogDefaultLanguageId)
+		throws PortalException {
 
 		return getService().updateCommerceCatalog(
 			commerceCatalogId, name, commerceCurrencyCode,
 			catalogDefaultLanguageId);
 	}
 
-	public static com.liferay.commerce.product.model.CommerceCatalog
-			updateCommerceCatalogExternalReferenceCode(
-				String externalReferenceCode, long commerceCatalogId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceCatalog updateCommerceCatalogExternalReferenceCode(
+			String externalReferenceCode, long commerceCatalogId)
+		throws PortalException {
 
 		return getService().updateCommerceCatalogExternalReferenceCode(
 			externalReferenceCode, commerceCatalogId);
 	}
 
 	public static CommerceCatalogService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceCatalogService, CommerceCatalogService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(CommerceCatalogService.class);
-
-		ServiceTracker<CommerceCatalogService, CommerceCatalogService>
-			serviceTracker =
-				new ServiceTracker
-					<CommerceCatalogService, CommerceCatalogService>(
-						bundle.getBundleContext(), CommerceCatalogService.class,
-						null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceCatalogService _service;
 
 }

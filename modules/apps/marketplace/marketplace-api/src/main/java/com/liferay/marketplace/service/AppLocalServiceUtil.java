@@ -14,9 +14,17 @@
 
 package com.liferay.marketplace.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.marketplace.model.App;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for App. This utility wraps
@@ -48,9 +56,7 @@ public class AppLocalServiceUtil {
 	 * @param app the app
 	 * @return the app that was added
 	 */
-	public static com.liferay.marketplace.model.App addApp(
-		com.liferay.marketplace.model.App app) {
-
+	public static App addApp(App app) {
 		return getService().addApp(app);
 	}
 
@@ -64,16 +70,16 @@ public class AppLocalServiceUtil {
 	 * @param appId the primary key for the new app
 	 * @return the new app
 	 */
-	public static com.liferay.marketplace.model.App createApp(long appId) {
+	public static App createApp(long appId) {
 		return getService().createApp(appId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -88,9 +94,7 @@ public class AppLocalServiceUtil {
 	 * @param app the app
 	 * @return the app that was removed
 	 */
-	public static com.liferay.marketplace.model.App deleteApp(
-		com.liferay.marketplace.model.App app) {
-
+	public static App deleteApp(App app) {
 		return getService().deleteApp(app);
 	}
 
@@ -105,32 +109,25 @@ public class AppLocalServiceUtil {
 	 * @return the app that was removed
 	 * @throws PortalException if a app with the primary key could not be found
 	 */
-	public static com.liferay.marketplace.model.App deleteApp(long appId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static App deleteApp(long appId) throws PortalException {
 		return getService().deleteApp(appId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -140,9 +137,7 @@ public class AppLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -158,9 +153,8 @@ public class AppLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -178,10 +172,9 @@ public class AppLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -193,9 +186,7 @@ public class AppLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -207,13 +198,13 @@ public class AppLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.marketplace.model.App fetchApp(long appId) {
+	public static App fetchApp(long appId) {
 		return getService().fetchApp(appId);
 	}
 
@@ -224,15 +215,11 @@ public class AppLocalServiceUtil {
 	 * @param companyId the primary key of the company
 	 * @return the matching app, or <code>null</code> if a matching app could not be found
 	 */
-	public static com.liferay.marketplace.model.App fetchAppByUuidAndCompanyId(
-		String uuid, long companyId) {
-
+	public static App fetchAppByUuidAndCompanyId(String uuid, long companyId) {
 		return getService().fetchAppByUuidAndCompanyId(uuid, companyId);
 	}
 
-	public static com.liferay.marketplace.model.App fetchRemoteApp(
-		long remoteAppId) {
-
+	public static App fetchRemoteApp(long remoteAppId) {
 		return getService().fetchRemoteApp(remoteAppId);
 	}
 
@@ -249,9 +236,7 @@ public class AppLocalServiceUtil {
 	 * @return the app
 	 * @throws PortalException if a app with the primary key could not be found
 	 */
-	public static com.liferay.marketplace.model.App getApp(long appId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static App getApp(long appId) throws PortalException {
 		return getService().getApp(appId);
 	}
 
@@ -263,9 +248,8 @@ public class AppLocalServiceUtil {
 	 * @return the matching app
 	 * @throws PortalException if a matching app could not be found
 	 */
-	public static com.liferay.marketplace.model.App getAppByUuidAndCompanyId(
-			String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static App getAppByUuidAndCompanyId(String uuid, long companyId)
+		throws PortalException {
 
 		return getService().getAppByUuidAndCompanyId(uuid, companyId);
 	}
@@ -281,15 +265,11 @@ public class AppLocalServiceUtil {
 	 * @param end the upper bound of the range of apps (not inclusive)
 	 * @return the range of apps
 	 */
-	public static java.util.List<com.liferay.marketplace.model.App> getApps(
-		int start, int end) {
-
+	public static List<App> getApps(int start, int end) {
 		return getService().getApps(start, end);
 	}
 
-	public static java.util.List<com.liferay.marketplace.model.App> getApps(
-		String category) {
-
+	public static List<App> getApps(String category) {
 		return getService().getApps(category);
 	}
 
@@ -317,15 +297,11 @@ public class AppLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
-	public static java.util.List<com.liferay.marketplace.model.App>
-		getInstalledApps() {
-
+	public static List<App> getInstalledApps() {
 		return getService().getInstalledApps();
 	}
 
-	public static java.util.List<com.liferay.marketplace.model.App>
-		getInstalledApps(String category) {
-
+	public static List<App> getInstalledApps(String category) {
 		return getService().getInstalledApps(category);
 	}
 
@@ -341,26 +317,21 @@ public class AppLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static java.util.Map<String, String> getPrepackagedApps() {
+	public static Map<String, String> getPrepackagedApps() {
 		return getService().getPrepackagedApps();
 	}
 
-	public static void installApp(long remoteAppId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static void installApp(long remoteAppId) throws PortalException {
 		getService().installApp(remoteAppId);
 	}
 
-	public static void uninstallApp(long remoteAppId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static void uninstallApp(long remoteAppId) throws PortalException {
 		getService().uninstallApp(remoteAppId);
 	}
 
@@ -374,24 +345,21 @@ public class AppLocalServiceUtil {
 	 * @param app the app
 	 * @return the app that was updated
 	 */
-	public static com.liferay.marketplace.model.App updateApp(
-		com.liferay.marketplace.model.App app) {
-
+	public static App updateApp(App app) {
 		return getService().updateApp(app);
 	}
 
-	public static com.liferay.marketplace.model.App updateApp(
-			long userId, java.io.File file)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static App updateApp(long userId, java.io.File file)
+		throws PortalException {
 
 		return getService().updateApp(userId, file);
 	}
 
-	public static com.liferay.marketplace.model.App updateApp(
+	public static App updateApp(
 			long userId, long remoteAppId, String title, String description,
 			String category, String iconURL, String version, boolean required,
 			java.io.File file)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateApp(
 			userId, remoteAppId, title, description, category, iconURL, version,
@@ -399,22 +367,9 @@ public class AppLocalServiceUtil {
 	}
 
 	public static AppLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<AppLocalService, AppLocalService>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(AppLocalService.class);
-
-		ServiceTracker<AppLocalService, AppLocalService> serviceTracker =
-			new ServiceTracker<AppLocalService, AppLocalService>(
-				bundle.getBundleContext(), AppLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile AppLocalService _service;
 
 }

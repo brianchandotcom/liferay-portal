@@ -14,7 +14,8 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.LayoutRevision;
 
 /**
  * Provides the remote service utility for LayoutRevision. This utility wraps
@@ -35,16 +36,15 @@ public class LayoutRevisionServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.service.impl.LayoutRevisionServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.kernel.model.LayoutRevision
-			addLayoutRevision(
-				long userId, long layoutSetBranchId, long layoutBranchId,
-				long parentLayoutRevisionId, boolean head, long plid,
-				long portletPreferencesPlid, boolean privateLayout, String name,
-				String title, String description, String keywords,
-				String robots, String typeSettings, boolean iconImage,
-				long iconImageId, String themeId, String colorSchemeId,
-				String css, ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static LayoutRevision addLayoutRevision(
+			long userId, long layoutSetBranchId, long layoutBranchId,
+			long parentLayoutRevisionId, boolean head, long plid,
+			long portletPreferencesPlid, boolean privateLayout, String name,
+			String title, String description, String keywords, String robots,
+			String typeSettings, boolean iconImage, long iconImageId,
+			String themeId, String colorSchemeId, String css,
+			ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addLayoutRevision(
 			userId, layoutSetBranchId, layoutBranchId, parentLayoutRevisionId,
@@ -63,14 +63,9 @@ public class LayoutRevisionServiceUtil {
 	}
 
 	public static LayoutRevisionService getService() {
-		if (_service == null) {
-			_service = (LayoutRevisionService)PortalBeanLocatorUtil.locate(
-				LayoutRevisionService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static LayoutRevisionService _service;
+	private static volatile LayoutRevisionService _service;
 
 }

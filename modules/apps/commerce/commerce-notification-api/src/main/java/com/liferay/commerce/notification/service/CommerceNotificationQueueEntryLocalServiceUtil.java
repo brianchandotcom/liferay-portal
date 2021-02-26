@@ -14,9 +14,16 @@
 
 package com.liferay.commerce.notification.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.notification.model.CommerceNotificationQueueEntry;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for CommerceNotificationQueueEntry. This utility wraps
@@ -48,12 +55,9 @@ public class CommerceNotificationQueueEntryLocalServiceUtil {
 	 * @param commerceNotificationQueueEntry the commerce notification queue entry
 	 * @return the commerce notification queue entry that was added
 	 */
-	public static
-		com.liferay.commerce.notification.model.CommerceNotificationQueueEntry
-			addCommerceNotificationQueueEntry(
-				com.liferay.commerce.notification.model.
-					CommerceNotificationQueueEntry
-						commerceNotificationQueueEntry) {
+	public static CommerceNotificationQueueEntry
+		addCommerceNotificationQueueEntry(
+			CommerceNotificationQueueEntry commerceNotificationQueueEntry) {
 
 		return getService().addCommerceNotificationQueueEntry(
 			commerceNotificationQueueEntry);
@@ -63,28 +67,26 @@ public class CommerceNotificationQueueEntryLocalServiceUtil {
 	 * @deprecated As of Mueller (7.2.x), this method will be replaced
 	 */
 	@Deprecated
-	public static
-		com.liferay.commerce.notification.model.CommerceNotificationQueueEntry
-				addCommerceNotificationQueueEntry(
-					long userId, long groupId,
-					long commerceNotificationTemplateId, String from,
-					String fromName, String to, String toName, String cc,
-					String bcc, String subject, String body, double priority)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceNotificationQueueEntry
+			addCommerceNotificationQueueEntry(
+				long userId, long groupId, long commerceNotificationTemplateId,
+				String from, String fromName, String to, String toName,
+				String cc, String bcc, String subject, String body,
+				double priority)
+		throws PortalException {
 
 		return getService().addCommerceNotificationQueueEntry(
 			userId, groupId, commerceNotificationTemplateId, from, fromName, to,
 			toName, cc, bcc, subject, body, priority);
 	}
 
-	public static
-		com.liferay.commerce.notification.model.CommerceNotificationQueueEntry
-				addCommerceNotificationQueueEntry(
-					long userId, long groupId, String className, long classPK,
-					long commerceNotificationTemplateId, String from,
-					String fromName, String to, String toName, String cc,
-					String bcc, String subject, String body, double priority)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceNotificationQueueEntry
+			addCommerceNotificationQueueEntry(
+				long userId, long groupId, String className, long classPK,
+				long commerceNotificationTemplateId, String from,
+				String fromName, String to, String toName, String cc,
+				String bcc, String subject, String body, double priority)
+		throws PortalException {
 
 		return getService().addCommerceNotificationQueueEntry(
 			userId, groupId, className, classPK, commerceNotificationTemplateId,
@@ -97,10 +99,9 @@ public class CommerceNotificationQueueEntryLocalServiceUtil {
 	 * @param commerceNotificationQueueEntryId the primary key for the new commerce notification queue entry
 	 * @return the new commerce notification queue entry
 	 */
-	public static
-		com.liferay.commerce.notification.model.CommerceNotificationQueueEntry
-			createCommerceNotificationQueueEntry(
-				long commerceNotificationQueueEntryId) {
+	public static CommerceNotificationQueueEntry
+		createCommerceNotificationQueueEntry(
+			long commerceNotificationQueueEntryId) {
 
 		return getService().createCommerceNotificationQueueEntry(
 			commerceNotificationQueueEntryId);
@@ -109,20 +110,17 @@ public class CommerceNotificationQueueEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
 
-	public static
-		com.liferay.commerce.notification.model.CommerceNotificationQueueEntry
-				deleteCommerceNotificationQueue(
-					com.liferay.commerce.notification.model.
-						CommerceNotificationQueueEntry
-							commerceNotificationQueueEntry)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceNotificationQueueEntry
+			deleteCommerceNotificationQueue(
+				CommerceNotificationQueueEntry commerceNotificationQueueEntry)
+		throws PortalException {
 
 		return getService().deleteCommerceNotificationQueue(
 			commerceNotificationQueueEntry);
@@ -135,7 +133,7 @@ public class CommerceNotificationQueueEntryLocalServiceUtil {
 	}
 
 	public static void deleteCommerceNotificationQueueEntries(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommerceNotificationQueueEntries(groupId);
 	}
@@ -150,12 +148,9 @@ public class CommerceNotificationQueueEntryLocalServiceUtil {
 	 * @param commerceNotificationQueueEntry the commerce notification queue entry
 	 * @return the commerce notification queue entry that was removed
 	 */
-	public static
-		com.liferay.commerce.notification.model.CommerceNotificationQueueEntry
-			deleteCommerceNotificationQueueEntry(
-				com.liferay.commerce.notification.model.
-					CommerceNotificationQueueEntry
-						commerceNotificationQueueEntry) {
+	public static CommerceNotificationQueueEntry
+		deleteCommerceNotificationQueueEntry(
+			CommerceNotificationQueueEntry commerceNotificationQueueEntry) {
 
 		return getService().deleteCommerceNotificationQueueEntry(
 			commerceNotificationQueueEntry);
@@ -172,11 +167,10 @@ public class CommerceNotificationQueueEntryLocalServiceUtil {
 	 * @return the commerce notification queue entry that was removed
 	 * @throws PortalException if a commerce notification queue entry with the primary key could not be found
 	 */
-	public static
-		com.liferay.commerce.notification.model.CommerceNotificationQueueEntry
-				deleteCommerceNotificationQueueEntry(
-					long commerceNotificationQueueEntryId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceNotificationQueueEntry
+			deleteCommerceNotificationQueueEntry(
+				long commerceNotificationQueueEntryId)
+		throws PortalException {
 
 		return getService().deleteCommerceNotificationQueueEntry(
 			commerceNotificationQueueEntryId);
@@ -185,23 +179,18 @@ public class CommerceNotificationQueueEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -211,9 +200,7 @@ public class CommerceNotificationQueueEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -229,9 +216,8 @@ public class CommerceNotificationQueueEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -249,10 +235,9 @@ public class CommerceNotificationQueueEntryLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -264,9 +249,7 @@ public class CommerceNotificationQueueEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -278,16 +261,15 @@ public class CommerceNotificationQueueEntryLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static
-		com.liferay.commerce.notification.model.CommerceNotificationQueueEntry
-			fetchCommerceNotificationQueueEntry(
-				long commerceNotificationQueueEntryId) {
+	public static CommerceNotificationQueueEntry
+		fetchCommerceNotificationQueueEntry(
+			long commerceNotificationQueueEntryId) {
 
 		return getService().fetchCommerceNotificationQueueEntry(
 			commerceNotificationQueueEntryId);
@@ -299,9 +281,8 @@ public class CommerceNotificationQueueEntryLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.notification.model.CommerceNotificationQueueEntry>
-			getCommerceNotificationQueueEntries(boolean sent) {
+	public static List<CommerceNotificationQueueEntry>
+		getCommerceNotificationQueueEntries(boolean sent) {
 
 		return getService().getCommerceNotificationQueueEntries(sent);
 	}
@@ -317,33 +298,28 @@ public class CommerceNotificationQueueEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of commerce notification queue entries (not inclusive)
 	 * @return the range of commerce notification queue entries
 	 */
-	public static java.util.List
-		<com.liferay.commerce.notification.model.CommerceNotificationQueueEntry>
-			getCommerceNotificationQueueEntries(int start, int end) {
+	public static List<CommerceNotificationQueueEntry>
+		getCommerceNotificationQueueEntries(int start, int end) {
 
 		return getService().getCommerceNotificationQueueEntries(start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.notification.model.CommerceNotificationQueueEntry>
-			getCommerceNotificationQueueEntries(
-				long groupId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.commerce.notification.model.
-						CommerceNotificationQueueEntry> orderByComparator) {
+	public static List<CommerceNotificationQueueEntry>
+		getCommerceNotificationQueueEntries(
+			long groupId, int start, int end,
+			OrderByComparator<CommerceNotificationQueueEntry>
+				orderByComparator) {
 
 		return getService().getCommerceNotificationQueueEntries(
 			groupId, start, end, orderByComparator);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.notification.model.CommerceNotificationQueueEntry>
-			getCommerceNotificationQueueEntries(
-				long groupId, String className, long classPK, boolean sent,
-				int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.commerce.notification.model.
-						CommerceNotificationQueueEntry> orderByComparator) {
+	public static List<CommerceNotificationQueueEntry>
+		getCommerceNotificationQueueEntries(
+			long groupId, String className, long classPK, boolean sent,
+			int start, int end,
+			OrderByComparator<CommerceNotificationQueueEntry>
+				orderByComparator) {
 
 		return getService().getCommerceNotificationQueueEntries(
 			groupId, className, classPK, sent, start, end, orderByComparator);
@@ -376,11 +352,10 @@ public class CommerceNotificationQueueEntryLocalServiceUtil {
 	 * @return the commerce notification queue entry
 	 * @throws PortalException if a commerce notification queue entry with the primary key could not be found
 	 */
-	public static
-		com.liferay.commerce.notification.model.CommerceNotificationQueueEntry
-				getCommerceNotificationQueueEntry(
-					long commerceNotificationQueueEntryId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceNotificationQueueEntry
+			getCommerceNotificationQueueEntry(
+				long commerceNotificationQueueEntryId)
+		throws PortalException {
 
 		return getService().getCommerceNotificationQueueEntry(
 			commerceNotificationQueueEntryId);
@@ -405,18 +380,16 @@ public class CommerceNotificationQueueEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static
-		com.liferay.commerce.notification.model.CommerceNotificationQueueEntry
-				resendCommerceNotificationQueueEntry(
-					long commerceNotificationQueueEntryId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceNotificationQueueEntry
+			resendCommerceNotificationQueueEntry(
+				long commerceNotificationQueueEntryId)
+		throws PortalException {
 
 		return getService().resendCommerceNotificationQueueEntry(
 			commerceNotificationQueueEntryId);
@@ -443,50 +416,25 @@ public class CommerceNotificationQueueEntryLocalServiceUtil {
 	 * @param commerceNotificationQueueEntry the commerce notification queue entry
 	 * @return the commerce notification queue entry that was updated
 	 */
-	public static
-		com.liferay.commerce.notification.model.CommerceNotificationQueueEntry
-			updateCommerceNotificationQueueEntry(
-				com.liferay.commerce.notification.model.
-					CommerceNotificationQueueEntry
-						commerceNotificationQueueEntry) {
+	public static CommerceNotificationQueueEntry
+		updateCommerceNotificationQueueEntry(
+			CommerceNotificationQueueEntry commerceNotificationQueueEntry) {
 
 		return getService().updateCommerceNotificationQueueEntry(
 			commerceNotificationQueueEntry);
 	}
 
-	public static
-		com.liferay.commerce.notification.model.CommerceNotificationQueueEntry
-				updateSent(long commerceNotificationQueueEntryId, boolean sent)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceNotificationQueueEntry updateSent(
+			long commerceNotificationQueueEntryId, boolean sent)
+		throws PortalException {
 
 		return getService().updateSent(commerceNotificationQueueEntryId, sent);
 	}
 
 	public static CommerceNotificationQueueEntryLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceNotificationQueueEntryLocalService,
-		 CommerceNotificationQueueEntryLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommerceNotificationQueueEntryLocalService.class);
-
-		ServiceTracker
-			<CommerceNotificationQueueEntryLocalService,
-			 CommerceNotificationQueueEntryLocalService> serviceTracker =
-				new ServiceTracker
-					<CommerceNotificationQueueEntryLocalService,
-					 CommerceNotificationQueueEntryLocalService>(
-						 bundle.getBundleContext(),
-						 CommerceNotificationQueueEntryLocalService.class,
-						 null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceNotificationQueueEntryLocalService _service;
 
 }

@@ -14,9 +14,12 @@
 
 package com.liferay.commerce.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.model.CommerceAvailabilityEstimate;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the remote service utility for CommerceAvailabilityEstimate. This utility wraps
@@ -37,12 +40,10 @@ public class CommerceAvailabilityEstimateServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.service.impl.CommerceAvailabilityEstimateServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.commerce.model.CommerceAvailabilityEstimate
-			addCommerceAvailabilityEstimate(
-				java.util.Map<java.util.Locale, String> titleMap,
-				double priority,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceAvailabilityEstimate addCommerceAvailabilityEstimate(
+			Map<java.util.Locale, String> titleMap, double priority,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCommerceAvailabilityEstimate(
 			titleMap, priority, serviceContext);
@@ -50,35 +51,33 @@ public class CommerceAvailabilityEstimateServiceUtil {
 
 	public static void deleteCommerceAvailabilityEstimate(
 			long commerceAvailabilityEstimateId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommerceAvailabilityEstimate(
 			commerceAvailabilityEstimateId);
 	}
 
-	public static com.liferay.commerce.model.CommerceAvailabilityEstimate
-			getCommerceAvailabilityEstimate(long commerceAvailabilityEstimateId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceAvailabilityEstimate getCommerceAvailabilityEstimate(
+			long commerceAvailabilityEstimateId)
+		throws PortalException {
 
 		return getService().getCommerceAvailabilityEstimate(
 			commerceAvailabilityEstimateId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.model.CommerceAvailabilityEstimate>
-				getCommerceAvailabilityEstimates(
-					long companyId, int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						<com.liferay.commerce.model.
-							CommerceAvailabilityEstimate> orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommerceAvailabilityEstimate>
+			getCommerceAvailabilityEstimates(
+				long companyId, int start, int end,
+				OrderByComparator<CommerceAvailabilityEstimate>
+					orderByComparator)
+		throws PortalException {
 
 		return getService().getCommerceAvailabilityEstimates(
 			companyId, start, end, orderByComparator);
 	}
 
 	public static int getCommerceAvailabilityEstimatesCount(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCommerceAvailabilityEstimatesCount(companyId);
 	}
@@ -92,42 +91,21 @@ public class CommerceAvailabilityEstimateServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.commerce.model.CommerceAvailabilityEstimate
+	public static CommerceAvailabilityEstimate
 			updateCommerceAvailabilityEstimate(
 				long commerceAvailabilityEstimateId,
-				java.util.Map<java.util.Locale, String> titleMap,
-				double priority,
+				Map<java.util.Locale, String> titleMap, double priority,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateCommerceAvailabilityEstimate(
 			commerceAvailabilityEstimateId, titleMap, priority, serviceContext);
 	}
 
 	public static CommerceAvailabilityEstimateService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceAvailabilityEstimateService,
-		 CommerceAvailabilityEstimateService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommerceAvailabilityEstimateService.class);
-
-		ServiceTracker
-			<CommerceAvailabilityEstimateService,
-			 CommerceAvailabilityEstimateService> serviceTracker =
-				new ServiceTracker
-					<CommerceAvailabilityEstimateService,
-					 CommerceAvailabilityEstimateService>(
-						 bundle.getBundleContext(),
-						 CommerceAvailabilityEstimateService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceAvailabilityEstimateService _service;
 
 }

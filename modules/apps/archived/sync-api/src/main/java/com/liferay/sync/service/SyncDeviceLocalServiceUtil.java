@@ -14,9 +14,16 @@
 
 package com.liferay.sync.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.sync.model.SyncDevice;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for SyncDevice. This utility wraps
@@ -37,10 +44,10 @@ public class SyncDeviceLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.sync.service.impl.SyncDeviceLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.sync.model.SyncDevice addSyncDevice(
+	public static SyncDevice addSyncDevice(
 			long userId, String type, long buildNumber, String hostname,
 			int featureSet)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addSyncDevice(
 			userId, type, buildNumber, hostname, featureSet);
@@ -56,18 +63,16 @@ public class SyncDeviceLocalServiceUtil {
 	 * @param syncDevice the sync device
 	 * @return the sync device that was added
 	 */
-	public static com.liferay.sync.model.SyncDevice addSyncDevice(
-		com.liferay.sync.model.SyncDevice syncDevice) {
-
+	public static SyncDevice addSyncDevice(SyncDevice syncDevice) {
 		return getService().addSyncDevice(syncDevice);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -78,19 +83,16 @@ public class SyncDeviceLocalServiceUtil {
 	 * @param syncDeviceId the primary key for the new sync device
 	 * @return the new sync device
 	 */
-	public static com.liferay.sync.model.SyncDevice createSyncDevice(
-		long syncDeviceId) {
-
+	public static SyncDevice createSyncDevice(long syncDeviceId) {
 		return getService().createSyncDevice(syncDeviceId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
@@ -106,9 +108,8 @@ public class SyncDeviceLocalServiceUtil {
 	 * @return the sync device that was removed
 	 * @throws PortalException if a sync device with the primary key could not be found
 	 */
-	public static com.liferay.sync.model.SyncDevice deleteSyncDevice(
-			long syncDeviceId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static SyncDevice deleteSyncDevice(long syncDeviceId)
+		throws PortalException {
 
 		return getService().deleteSyncDevice(syncDeviceId);
 	}
@@ -123,21 +124,15 @@ public class SyncDeviceLocalServiceUtil {
 	 * @param syncDevice the sync device
 	 * @return the sync device that was removed
 	 */
-	public static com.liferay.sync.model.SyncDevice deleteSyncDevice(
-		com.liferay.sync.model.SyncDevice syncDevice) {
-
+	public static SyncDevice deleteSyncDevice(SyncDevice syncDevice) {
 		return getService().deleteSyncDevice(syncDevice);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -147,9 +142,7 @@ public class SyncDeviceLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -165,9 +158,8 @@ public class SyncDeviceLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -185,10 +177,9 @@ public class SyncDeviceLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -200,9 +191,7 @@ public class SyncDeviceLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -214,15 +203,13 @@ public class SyncDeviceLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.sync.model.SyncDevice fetchSyncDevice(
-		long syncDeviceId) {
-
+	public static SyncDevice fetchSyncDevice(long syncDeviceId) {
 		return getService().fetchSyncDevice(syncDeviceId);
 	}
 
@@ -233,8 +220,8 @@ public class SyncDeviceLocalServiceUtil {
 	 * @param companyId the primary key of the company
 	 * @return the matching sync device, or <code>null</code> if a matching sync device could not be found
 	 */
-	public static com.liferay.sync.model.SyncDevice
-		fetchSyncDeviceByUuidAndCompanyId(String uuid, long companyId) {
+	public static SyncDevice fetchSyncDeviceByUuidAndCompanyId(
+		String uuid, long companyId) {
 
 		return getService().fetchSyncDeviceByUuidAndCompanyId(uuid, companyId);
 	}
@@ -272,9 +259,8 @@ public class SyncDeviceLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -286,9 +272,8 @@ public class SyncDeviceLocalServiceUtil {
 	 * @return the sync device
 	 * @throws PortalException if a sync device with the primary key could not be found
 	 */
-	public static com.liferay.sync.model.SyncDevice getSyncDevice(
-			long syncDeviceId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static SyncDevice getSyncDevice(long syncDeviceId)
+		throws PortalException {
 
 		return getService().getSyncDevice(syncDeviceId);
 	}
@@ -301,9 +286,9 @@ public class SyncDeviceLocalServiceUtil {
 	 * @return the matching sync device
 	 * @throws PortalException if a matching sync device could not be found
 	 */
-	public static com.liferay.sync.model.SyncDevice
-			getSyncDeviceByUuidAndCompanyId(String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static SyncDevice getSyncDeviceByUuidAndCompanyId(
+			String uuid, long companyId)
+		throws PortalException {
 
 		return getService().getSyncDeviceByUuidAndCompanyId(uuid, companyId);
 	}
@@ -319,18 +304,14 @@ public class SyncDeviceLocalServiceUtil {
 	 * @param end the upper bound of the range of sync devices (not inclusive)
 	 * @return the range of sync devices
 	 */
-	public static java.util.List<com.liferay.sync.model.SyncDevice>
-		getSyncDevices(int start, int end) {
-
+	public static List<SyncDevice> getSyncDevices(int start, int end) {
 		return getService().getSyncDevices(start, end);
 	}
 
-	public static java.util.List<com.liferay.sync.model.SyncDevice>
-			getSyncDevices(
-				long userId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.sync.model.SyncDevice> orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<SyncDevice> getSyncDevices(
+			long userId, int start, int end,
+			OrderByComparator<SyncDevice> orderByComparator)
+		throws PortalException {
 
 		return getService().getSyncDevices(
 			userId, start, end, orderByComparator);
@@ -345,25 +326,24 @@ public class SyncDeviceLocalServiceUtil {
 		return getService().getSyncDevicesCount();
 	}
 
-	public static java.util.List<com.liferay.sync.model.SyncDevice> search(
+	public static List<SyncDevice> search(
 		long companyId, String keywords, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<com.liferay.sync.model.SyncDevice> orderByComparator) {
+		OrderByComparator<SyncDevice> orderByComparator) {
 
 		return getService().search(
 			companyId, keywords, start, end, orderByComparator);
 	}
 
 	public static void updateStatus(long syncDeviceId, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().updateStatus(syncDeviceId, status);
 	}
 
-	public static com.liferay.sync.model.SyncDevice updateSyncDevice(
+	public static SyncDevice updateSyncDevice(
 			long syncDeviceId, String type, long buildNumber, int featureSet,
 			String hostname, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateSyncDevice(
 			syncDeviceId, type, buildNumber, featureSet, hostname, status);
@@ -379,32 +359,14 @@ public class SyncDeviceLocalServiceUtil {
 	 * @param syncDevice the sync device
 	 * @return the sync device that was updated
 	 */
-	public static com.liferay.sync.model.SyncDevice updateSyncDevice(
-		com.liferay.sync.model.SyncDevice syncDevice) {
-
+	public static SyncDevice updateSyncDevice(SyncDevice syncDevice) {
 		return getService().updateSyncDevice(syncDevice);
 	}
 
 	public static SyncDeviceLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<SyncDeviceLocalService, SyncDeviceLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(SyncDeviceLocalService.class);
-
-		ServiceTracker<SyncDeviceLocalService, SyncDeviceLocalService>
-			serviceTracker =
-				new ServiceTracker
-					<SyncDeviceLocalService, SyncDeviceLocalService>(
-						bundle.getBundleContext(), SyncDeviceLocalService.class,
-						null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile SyncDeviceLocalService _service;
 
 }

@@ -14,9 +14,8 @@
 
 package com.liferay.journal.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.journal.model.JournalFeed;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * Provides the remote service utility for JournalFeed. This utility wraps
@@ -37,7 +36,7 @@ public class JournalFeedServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.journal.service.impl.JournalFeedServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.journal.model.JournalFeed addFeed(
+	public static JournalFeed addFeed(
 			long groupId, String feedId, boolean autoFeedId, String name,
 			String description, String ddmStructureKey, String ddmTemplateKey,
 			String ddmRendererTemplateKey, int delta, String orderByCol,
@@ -45,7 +44,7 @@ public class JournalFeedServiceUtil {
 			String targetPortletId, String contentField, String feedType,
 			double feedVersion,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addFeed(
 			groupId, feedId, autoFeedId, name, description, ddmStructureKey,
@@ -54,27 +53,22 @@ public class JournalFeedServiceUtil {
 			feedType, feedVersion, serviceContext);
 	}
 
-	public static void deleteFeed(long feedId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static void deleteFeed(long feedId) throws PortalException {
 		getService().deleteFeed(feedId);
 	}
 
 	public static void deleteFeed(long groupId, String feedId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteFeed(groupId, feedId);
 	}
 
-	public static com.liferay.journal.model.JournalFeed getFeed(long feedId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static JournalFeed getFeed(long feedId) throws PortalException {
 		return getService().getFeed(feedId);
 	}
 
-	public static com.liferay.journal.model.JournalFeed getFeed(
-			long groupId, String feedId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static JournalFeed getFeed(long groupId, String feedId)
+		throws PortalException {
 
 		return getService().getFeed(groupId, feedId);
 	}
@@ -88,7 +82,7 @@ public class JournalFeedServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.journal.model.JournalFeed updateFeed(
+	public static JournalFeed updateFeed(
 			long groupId, String feedId, String name, String description,
 			String ddmStructureKey, String ddmTemplateKey,
 			String ddmRendererTemplateKey, int delta, String orderByCol,
@@ -96,7 +90,7 @@ public class JournalFeedServiceUtil {
 			String targetPortletId, String contentField, String feedType,
 			double feedVersion,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateFeed(
 			groupId, feedId, name, description, ddmStructureKey, ddmTemplateKey,
@@ -106,22 +100,9 @@ public class JournalFeedServiceUtil {
 	}
 
 	public static JournalFeedService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<JournalFeedService, JournalFeedService>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(JournalFeedService.class);
-
-		ServiceTracker<JournalFeedService, JournalFeedService> serviceTracker =
-			new ServiceTracker<JournalFeedService, JournalFeedService>(
-				bundle.getBundleContext(), JournalFeedService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile JournalFeedService _service;
 
 }

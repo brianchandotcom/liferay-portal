@@ -14,9 +14,10 @@
 
 package com.liferay.commerce.account.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.account.model.CommerceAccountGroupCommerceAccountRel;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for CommerceAccountGroupCommerceAccountRel. This utility wraps
@@ -37,14 +38,11 @@ public class CommerceAccountGroupCommerceAccountRelServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.account.service.impl.CommerceAccountGroupCommerceAccountRelServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static
-		com.liferay.commerce.account.model.
-			CommerceAccountGroupCommerceAccountRel
-					addCommerceAccountGroupCommerceAccountRel(
-						long commerceAccountGroupId, long commerceAccountId,
-						com.liferay.portal.kernel.service.ServiceContext
-							serviceContext)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceAccountGroupCommerceAccountRel
+			addCommerceAccountGroupCommerceAccountRel(
+				long commerceAccountGroupId, long commerceAccountId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCommerceAccountGroupCommerceAccountRel(
 			commerceAccountGroupId, commerceAccountId, serviceContext);
@@ -52,29 +50,25 @@ public class CommerceAccountGroupCommerceAccountRelServiceUtil {
 
 	public static void deleteCommerceAccountGroupCommerceAccountRel(
 			long commerceAccountGroupCommerceAccountRelId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommerceAccountGroupCommerceAccountRel(
 			commerceAccountGroupCommerceAccountRelId);
 	}
 
-	public static
-		com.liferay.commerce.account.model.
-			CommerceAccountGroupCommerceAccountRel
-					getCommerceAccountGroupCommerceAccountRel(
-						long commerceAccountGroupId, long commerceAccountId)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceAccountGroupCommerceAccountRel
+			getCommerceAccountGroupCommerceAccountRel(
+				long commerceAccountGroupId, long commerceAccountId)
+		throws PortalException {
 
 		return getService().getCommerceAccountGroupCommerceAccountRel(
 			commerceAccountGroupId, commerceAccountId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.account.model.
-			CommerceAccountGroupCommerceAccountRel>
-					getCommerceAccountGroupCommerceAccountRels(
-						long commerceAccountGroupId, int start, int end)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommerceAccountGroupCommerceAccountRel>
+			getCommerceAccountGroupCommerceAccountRels(
+				long commerceAccountGroupId, int start, int end)
+		throws PortalException {
 
 		return getService().getCommerceAccountGroupCommerceAccountRels(
 			commerceAccountGroupId, start, end);
@@ -82,7 +76,7 @@ public class CommerceAccountGroupCommerceAccountRelServiceUtil {
 
 	public static int getCommerceAccountGroupCommerceAccountRelsCount(
 			long commerceAccountGroupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCommerceAccountGroupCommerceAccountRelsCount(
 			commerceAccountGroupId);
@@ -98,30 +92,10 @@ public class CommerceAccountGroupCommerceAccountRelServiceUtil {
 	}
 
 	public static CommerceAccountGroupCommerceAccountRelService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceAccountGroupCommerceAccountRelService,
-		 CommerceAccountGroupCommerceAccountRelService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommerceAccountGroupCommerceAccountRelService.class);
-
-		ServiceTracker
-			<CommerceAccountGroupCommerceAccountRelService,
-			 CommerceAccountGroupCommerceAccountRelService> serviceTracker =
-				new ServiceTracker
-					<CommerceAccountGroupCommerceAccountRelService,
-					 CommerceAccountGroupCommerceAccountRelService>(
-						 bundle.getBundleContext(),
-						 CommerceAccountGroupCommerceAccountRelService.class,
-						 null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceAccountGroupCommerceAccountRelService
+		_service;
 
 }

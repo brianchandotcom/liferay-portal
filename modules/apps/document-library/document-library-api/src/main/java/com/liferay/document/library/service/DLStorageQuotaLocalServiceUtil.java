@@ -14,9 +14,16 @@
 
 package com.liferay.document.library.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.document.library.model.DLStorageQuota;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for DLStorageQuota. This utility wraps
@@ -48,9 +55,8 @@ public class DLStorageQuotaLocalServiceUtil {
 	 * @param dlStorageQuota the dl storage quota
 	 * @return the dl storage quota that was added
 	 */
-	public static com.liferay.document.library.model.DLStorageQuota
-		addDLStorageQuota(
-			com.liferay.document.library.model.DLStorageQuota dlStorageQuota) {
+	public static DLStorageQuota addDLStorageQuota(
+		DLStorageQuota dlStorageQuota) {
 
 		return getService().addDLStorageQuota(dlStorageQuota);
 	}
@@ -61,18 +67,16 @@ public class DLStorageQuotaLocalServiceUtil {
 	 * @param dlStorageQuotaId the primary key for the new dl storage quota
 	 * @return the new dl storage quota
 	 */
-	public static com.liferay.document.library.model.DLStorageQuota
-		createDLStorageQuota(long dlStorageQuotaId) {
-
+	public static DLStorageQuota createDLStorageQuota(long dlStorageQuotaId) {
 		return getService().createDLStorageQuota(dlStorageQuotaId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -87,9 +91,8 @@ public class DLStorageQuotaLocalServiceUtil {
 	 * @param dlStorageQuota the dl storage quota
 	 * @return the dl storage quota that was removed
 	 */
-	public static com.liferay.document.library.model.DLStorageQuota
-		deleteDLStorageQuota(
-			com.liferay.document.library.model.DLStorageQuota dlStorageQuota) {
+	public static DLStorageQuota deleteDLStorageQuota(
+		DLStorageQuota dlStorageQuota) {
 
 		return getService().deleteDLStorageQuota(dlStorageQuota);
 	}
@@ -105,9 +108,8 @@ public class DLStorageQuotaLocalServiceUtil {
 	 * @return the dl storage quota that was removed
 	 * @throws PortalException if a dl storage quota with the primary key could not be found
 	 */
-	public static com.liferay.document.library.model.DLStorageQuota
-			deleteDLStorageQuota(long dlStorageQuotaId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static DLStorageQuota deleteDLStorageQuota(long dlStorageQuotaId)
+		throws PortalException {
 
 		return getService().deleteDLStorageQuota(dlStorageQuotaId);
 	}
@@ -115,23 +117,18 @@ public class DLStorageQuotaLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -141,9 +138,7 @@ public class DLStorageQuotaLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -159,9 +154,8 @@ public class DLStorageQuotaLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -179,10 +173,9 @@ public class DLStorageQuotaLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -194,9 +187,7 @@ public class DLStorageQuotaLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -208,15 +199,13 @@ public class DLStorageQuotaLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.document.library.model.DLStorageQuota
-		fetchDLStorageQuota(long dlStorageQuotaId) {
-
+	public static DLStorageQuota fetchDLStorageQuota(long dlStorageQuotaId) {
 		return getService().fetchDLStorageQuota(dlStorageQuotaId);
 	}
 
@@ -226,9 +215,8 @@ public class DLStorageQuotaLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
-	public static com.liferay.document.library.model.DLStorageQuota
-			getCompanyDLStorageQuota(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static DLStorageQuota getCompanyDLStorageQuota(long companyId)
+		throws PortalException {
 
 		return getService().getCompanyDLStorageQuota(companyId);
 	}
@@ -240,9 +228,8 @@ public class DLStorageQuotaLocalServiceUtil {
 	 * @return the dl storage quota
 	 * @throws PortalException if a dl storage quota with the primary key could not be found
 	 */
-	public static com.liferay.document.library.model.DLStorageQuota
-			getDLStorageQuota(long dlStorageQuotaId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static DLStorageQuota getDLStorageQuota(long dlStorageQuotaId)
+		throws PortalException {
 
 		return getService().getDLStorageQuota(dlStorageQuotaId);
 	}
@@ -258,10 +245,7 @@ public class DLStorageQuotaLocalServiceUtil {
 	 * @param end the upper bound of the range of dl storage quotas (not inclusive)
 	 * @return the range of dl storage quotas
 	 */
-	public static java.util.List
-		<com.liferay.document.library.model.DLStorageQuota> getDLStorageQuotas(
-			int start, int end) {
-
+	public static List<DLStorageQuota> getDLStorageQuotas(int start, int end) {
 		return getService().getDLStorageQuotas(start, end);
 	}
 
@@ -293,9 +277,8 @@ public class DLStorageQuotaLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -314,9 +297,8 @@ public class DLStorageQuotaLocalServiceUtil {
 	 * @param dlStorageQuota the dl storage quota
 	 * @return the dl storage quota that was updated
 	 */
-	public static com.liferay.document.library.model.DLStorageQuota
-		updateDLStorageQuota(
-			com.liferay.document.library.model.DLStorageQuota dlStorageQuota) {
+	public static DLStorageQuota updateDLStorageQuota(
+		DLStorageQuota dlStorageQuota) {
 
 		return getService().updateDLStorageQuota(dlStorageQuota);
 	}
@@ -326,33 +308,15 @@ public class DLStorageQuotaLocalServiceUtil {
 	}
 
 	public static void validateStorageQuota(long companyId, long increment)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().validateStorageQuota(companyId, increment);
 	}
 
 	public static DLStorageQuotaLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<DLStorageQuotaLocalService, DLStorageQuotaLocalService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			DLStorageQuotaLocalService.class);
-
-		ServiceTracker<DLStorageQuotaLocalService, DLStorageQuotaLocalService>
-			serviceTracker =
-				new ServiceTracker
-					<DLStorageQuotaLocalService, DLStorageQuotaLocalService>(
-						bundle.getBundleContext(),
-						DLStorageQuotaLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile DLStorageQuotaLocalService _service;
 
 }

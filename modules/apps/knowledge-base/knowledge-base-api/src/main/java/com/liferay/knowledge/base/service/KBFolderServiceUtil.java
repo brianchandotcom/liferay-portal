@@ -14,9 +14,11 @@
 
 package com.liferay.knowledge.base.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.knowledge.base.model.KBFolder;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for KBFolder. This utility wraps
@@ -37,87 +39,75 @@ public class KBFolderServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.knowledge.base.service.impl.KBFolderServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.knowledge.base.model.KBFolder addKBFolder(
+	public static KBFolder addKBFolder(
 			long groupId, long parentResourceClassNameId,
 			long parentResourcePrimKey, String name, String description,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addKBFolder(
 			groupId, parentResourceClassNameId, parentResourcePrimKey, name,
 			description, serviceContext);
 	}
 
-	public static com.liferay.knowledge.base.model.KBFolder deleteKBFolder(
-			long kbFolderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static KBFolder deleteKBFolder(long kbFolderId)
+		throws PortalException {
 
 		return getService().deleteKBFolder(kbFolderId);
 	}
 
-	public static com.liferay.knowledge.base.model.KBFolder
-			fetchFirstChildKBFolder(long groupId, long kbFolderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static KBFolder fetchFirstChildKBFolder(
+			long groupId, long kbFolderId)
+		throws PortalException {
 
 		return getService().fetchFirstChildKBFolder(groupId, kbFolderId);
 	}
 
-	public static com.liferay.knowledge.base.model.KBFolder
-			fetchFirstChildKBFolder(
-				long groupId, long kbFolderId,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.knowledge.base.model.KBFolder>
-						orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static KBFolder fetchFirstChildKBFolder(
+			long groupId, long kbFolderId,
+			OrderByComparator<KBFolder> orderByComparator)
+		throws PortalException {
 
 		return getService().fetchFirstChildKBFolder(
 			groupId, kbFolderId, orderByComparator);
 	}
 
-	public static com.liferay.knowledge.base.model.KBFolder fetchKBFolder(
-			long kbFolderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static KBFolder fetchKBFolder(long kbFolderId)
+		throws PortalException {
 
 		return getService().fetchKBFolder(kbFolderId);
 	}
 
-	public static com.liferay.knowledge.base.model.KBFolder
-			fetchKBFolderByUrlTitle(
-				long groupId, long parentKbFolderId, String urlTitle)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static KBFolder fetchKBFolderByUrlTitle(
+			long groupId, long parentKbFolderId, String urlTitle)
+		throws PortalException {
 
 		return getService().fetchKBFolderByUrlTitle(
 			groupId, parentKbFolderId, urlTitle);
 	}
 
-	public static com.liferay.knowledge.base.model.KBFolder getKBFolder(
-			long kbFolderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static KBFolder getKBFolder(long kbFolderId) throws PortalException {
 		return getService().getKBFolder(kbFolderId);
 	}
 
-	public static com.liferay.knowledge.base.model.KBFolder
-			getKBFolderByUrlTitle(
-				long groupId, long parentKbFolderId, String urlTitle)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static KBFolder getKBFolderByUrlTitle(
+			long groupId, long parentKbFolderId, String urlTitle)
+		throws PortalException {
 
 		return getService().getKBFolderByUrlTitle(
 			groupId, parentKbFolderId, urlTitle);
 	}
 
-	public static java.util.List<com.liferay.knowledge.base.model.KBFolder>
-			getKBFolders(
-				long groupId, long parentKBFolderId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<KBFolder> getKBFolders(
+			long groupId, long parentKBFolderId, int start, int end)
+		throws PortalException {
 
 		return getService().getKBFolders(groupId, parentKBFolderId, start, end);
 	}
 
-	public static java.util.List<Object> getKBFoldersAndKBArticles(
+	public static List<Object> getKBFoldersAndKBArticles(
 		long groupId, long parentResourcePrimKey, int status, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<?> orderByComparator) {
+		int end, OrderByComparator<?> orderByComparator) {
 
 		return getService().getKBFoldersAndKBArticles(
 			groupId, parentResourcePrimKey, status, start, end,
@@ -132,7 +122,7 @@ public class KBFolderServiceUtil {
 	}
 
 	public static int getKBFoldersCount(long groupId, long parentKBFolderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getKBFoldersCount(groupId, parentKBFolderId);
 	}
@@ -147,16 +137,16 @@ public class KBFolderServiceUtil {
 	}
 
 	public static void moveKBFolder(long kbFolderId, long parentKBFolderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().moveKBFolder(kbFolderId, parentKBFolderId);
 	}
 
-	public static com.liferay.knowledge.base.model.KBFolder updateKBFolder(
+	public static KBFolder updateKBFolder(
 			long parentResourceClassNameId, long parentResourcePrimKey,
 			long kbFolderId, String name, String description,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateKBFolder(
 			parentResourceClassNameId, parentResourcePrimKey, kbFolderId, name,
@@ -164,22 +154,9 @@ public class KBFolderServiceUtil {
 	}
 
 	public static KBFolderService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<KBFolderService, KBFolderService>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(KBFolderService.class);
-
-		ServiceTracker<KBFolderService, KBFolderService> serviceTracker =
-			new ServiceTracker<KBFolderService, KBFolderService>(
-				bundle.getBundleContext(), KBFolderService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile KBFolderService _service;
 
 }

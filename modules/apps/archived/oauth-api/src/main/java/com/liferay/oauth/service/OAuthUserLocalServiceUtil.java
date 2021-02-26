@@ -14,9 +14,16 @@
 
 package com.liferay.oauth.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.oauth.model.OAuthUser;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for OAuthUser. This utility wraps
@@ -37,11 +44,11 @@ public class OAuthUserLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.oauth.service.impl.OAuthUserLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.oauth.model.OAuthUser addOAuthUser(
+	public static OAuthUser addOAuthUser(
 			long userId, long oAuthApplicationId, String accessToken,
 			String accessSecret,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addOAuthUser(
 			userId, oAuthApplicationId, accessToken, accessSecret,
@@ -58,9 +65,7 @@ public class OAuthUserLocalServiceUtil {
 	 * @param oAuthUser the o auth user
 	 * @return the o auth user that was added
 	 */
-	public static com.liferay.oauth.model.OAuthUser addOAuthUser(
-		com.liferay.oauth.model.OAuthUser oAuthUser) {
-
+	public static OAuthUser addOAuthUser(OAuthUser oAuthUser) {
 		return getService().addOAuthUser(oAuthUser);
 	}
 
@@ -70,18 +75,16 @@ public class OAuthUserLocalServiceUtil {
 	 * @param oAuthUserId the primary key for the new o auth user
 	 * @return the new o auth user
 	 */
-	public static com.liferay.oauth.model.OAuthUser createOAuthUser(
-		long oAuthUserId) {
-
+	public static OAuthUser createOAuthUser(long oAuthUserId) {
 		return getService().createOAuthUser(oAuthUserId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -97,16 +100,15 @@ public class OAuthUserLocalServiceUtil {
 	 * @return the o auth user that was removed
 	 * @throws PortalException if a o auth user with the primary key could not be found
 	 */
-	public static com.liferay.oauth.model.OAuthUser deleteOAuthUser(
-			long oAuthUserId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static OAuthUser deleteOAuthUser(long oAuthUserId)
+		throws PortalException {
 
 		return getService().deleteOAuthUser(oAuthUserId);
 	}
 
-	public static com.liferay.oauth.model.OAuthUser deleteOAuthUser(
+	public static OAuthUser deleteOAuthUser(
 			long userId, long oAuthApplicationId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().deleteOAuthUser(userId, oAuthApplicationId);
 	}
@@ -122,9 +124,8 @@ public class OAuthUserLocalServiceUtil {
 	 * @return the o auth user that was removed
 	 * @throws PortalException
 	 */
-	public static com.liferay.oauth.model.OAuthUser deleteOAuthUser(
-			com.liferay.oauth.model.OAuthUser oAuthUser)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static OAuthUser deleteOAuthUser(OAuthUser oAuthUser)
+		throws PortalException {
 
 		return getService().deleteOAuthUser(oAuthUser);
 	}
@@ -132,23 +133,18 @@ public class OAuthUserLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -158,9 +154,7 @@ public class OAuthUserLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -176,9 +170,8 @@ public class OAuthUserLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -196,10 +189,9 @@ public class OAuthUserLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -211,9 +203,7 @@ public class OAuthUserLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -225,27 +215,23 @@ public class OAuthUserLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.oauth.model.OAuthUser fetchOAuthUser(
-		long oAuthUserId) {
-
+	public static OAuthUser fetchOAuthUser(long oAuthUserId) {
 		return getService().fetchOAuthUser(oAuthUserId);
 	}
 
-	public static com.liferay.oauth.model.OAuthUser fetchOAuthUser(
+	public static OAuthUser fetchOAuthUser(
 		long userId, long oAuthApplicationId) {
 
 		return getService().fetchOAuthUser(userId, oAuthApplicationId);
 	}
 
-	public static com.liferay.oauth.model.OAuthUser fetchOAuthUser(
-		String accessToken) {
-
+	public static OAuthUser fetchOAuthUser(String accessToken) {
 		return getService().fetchOAuthUser(accessToken);
 	}
 
@@ -262,11 +248,9 @@ public class OAuthUserLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
-	public static java.util.List<com.liferay.oauth.model.OAuthUser>
-		getOAuthApplicationOAuthUsers(
-			long oAuthApplicationId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.oauth.model.OAuthUser> orderByComparator) {
+	public static List<OAuthUser> getOAuthApplicationOAuthUsers(
+		long oAuthApplicationId, int start, int end,
+		OrderByComparator<OAuthUser> orderByComparator) {
 
 		return getService().getOAuthApplicationOAuthUsers(
 			oAuthApplicationId, start, end, orderByComparator);
@@ -286,23 +270,20 @@ public class OAuthUserLocalServiceUtil {
 	 * @return the o auth user
 	 * @throws PortalException if a o auth user with the primary key could not be found
 	 */
-	public static com.liferay.oauth.model.OAuthUser getOAuthUser(
-			long oAuthUserId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static OAuthUser getOAuthUser(long oAuthUserId)
+		throws PortalException {
 
 		return getService().getOAuthUser(oAuthUserId);
 	}
 
-	public static com.liferay.oauth.model.OAuthUser getOAuthUser(
-			long userId, long oAuthApplicationId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static OAuthUser getOAuthUser(long userId, long oAuthApplicationId)
+		throws PortalException {
 
 		return getService().getOAuthUser(userId, oAuthApplicationId);
 	}
 
-	public static com.liferay.oauth.model.OAuthUser getOAuthUser(
-			String accessToken)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static OAuthUser getOAuthUser(String accessToken)
+		throws PortalException {
 
 		return getService().getOAuthUser(accessToken);
 	}
@@ -318,9 +299,7 @@ public class OAuthUserLocalServiceUtil {
 	 * @param end the upper bound of the range of o auth users (not inclusive)
 	 * @return the range of o auth users
 	 */
-	public static java.util.List<com.liferay.oauth.model.OAuthUser>
-		getOAuthUsers(int start, int end) {
-
+	public static List<OAuthUser> getOAuthUsers(int start, int end) {
 		return getService().getOAuthUsers(start, end);
 	}
 
@@ -345,18 +324,15 @@ public class OAuthUserLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static java.util.List<com.liferay.oauth.model.OAuthUser>
-		getUserOAuthUsers(
-			long userId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.oauth.model.OAuthUser> orderByComparator) {
+	public static List<OAuthUser> getUserOAuthUsers(
+		long userId, int start, int end,
+		OrderByComparator<OAuthUser> orderByComparator) {
 
 		return getService().getUserOAuthUsers(
 			userId, start, end, orderByComparator);
@@ -366,11 +342,11 @@ public class OAuthUserLocalServiceUtil {
 		return getService().getUserOAuthUsersCount(userId);
 	}
 
-	public static com.liferay.oauth.model.OAuthUser updateOAuthUser(
+	public static OAuthUser updateOAuthUser(
 			long userId, long oAuthApplicationId, String accessToken,
 			String accessSecret,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateOAuthUser(
 			userId, oAuthApplicationId, accessToken, accessSecret,
@@ -387,32 +363,14 @@ public class OAuthUserLocalServiceUtil {
 	 * @param oAuthUser the o auth user
 	 * @return the o auth user that was updated
 	 */
-	public static com.liferay.oauth.model.OAuthUser updateOAuthUser(
-		com.liferay.oauth.model.OAuthUser oAuthUser) {
-
+	public static OAuthUser updateOAuthUser(OAuthUser oAuthUser) {
 		return getService().updateOAuthUser(oAuthUser);
 	}
 
 	public static OAuthUserLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<OAuthUserLocalService, OAuthUserLocalService>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(OAuthUserLocalService.class);
-
-		ServiceTracker<OAuthUserLocalService, OAuthUserLocalService>
-			serviceTracker =
-				new ServiceTracker
-					<OAuthUserLocalService, OAuthUserLocalService>(
-						bundle.getBundleContext(), OAuthUserLocalService.class,
-						null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile OAuthUserLocalService _service;
 
 }

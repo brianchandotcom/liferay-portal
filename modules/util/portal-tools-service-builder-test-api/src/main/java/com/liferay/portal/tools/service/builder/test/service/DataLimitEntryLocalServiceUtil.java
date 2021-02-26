@@ -14,9 +14,16 @@
 
 package com.liferay.portal.tools.service.builder.test.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.tools.service.builder.test.model.DataLimitEntry;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for DataLimitEntry. This utility wraps
@@ -48,11 +55,8 @@ public class DataLimitEntryLocalServiceUtil {
 	 * @param dataLimitEntry the data limit entry
 	 * @return the data limit entry that was added
 	 */
-	public static
-		com.liferay.portal.tools.service.builder.test.model.DataLimitEntry
-			addDataLimitEntry(
-				com.liferay.portal.tools.service.builder.test.model.
-					DataLimitEntry dataLimitEntry) {
+	public static DataLimitEntry addDataLimitEntry(
+		DataLimitEntry dataLimitEntry) {
 
 		return getService().addDataLimitEntry(dataLimitEntry);
 	}
@@ -63,19 +67,16 @@ public class DataLimitEntryLocalServiceUtil {
 	 * @param dataLimitEntryId the primary key for the new data limit entry
 	 * @return the new data limit entry
 	 */
-	public static
-		com.liferay.portal.tools.service.builder.test.model.DataLimitEntry
-			createDataLimitEntry(long dataLimitEntryId) {
-
+	public static DataLimitEntry createDataLimitEntry(long dataLimitEntryId) {
 		return getService().createDataLimitEntry(dataLimitEntryId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -90,11 +91,8 @@ public class DataLimitEntryLocalServiceUtil {
 	 * @param dataLimitEntry the data limit entry
 	 * @return the data limit entry that was removed
 	 */
-	public static
-		com.liferay.portal.tools.service.builder.test.model.DataLimitEntry
-			deleteDataLimitEntry(
-				com.liferay.portal.tools.service.builder.test.model.
-					DataLimitEntry dataLimitEntry) {
+	public static DataLimitEntry deleteDataLimitEntry(
+		DataLimitEntry dataLimitEntry) {
 
 		return getService().deleteDataLimitEntry(dataLimitEntry);
 	}
@@ -110,10 +108,8 @@ public class DataLimitEntryLocalServiceUtil {
 	 * @return the data limit entry that was removed
 	 * @throws PortalException if a data limit entry with the primary key could not be found
 	 */
-	public static
-		com.liferay.portal.tools.service.builder.test.model.DataLimitEntry
-				deleteDataLimitEntry(long dataLimitEntryId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static DataLimitEntry deleteDataLimitEntry(long dataLimitEntryId)
+		throws PortalException {
 
 		return getService().deleteDataLimitEntry(dataLimitEntryId);
 	}
@@ -121,23 +117,18 @@ public class DataLimitEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -147,9 +138,7 @@ public class DataLimitEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -165,9 +154,8 @@ public class DataLimitEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -185,10 +173,9 @@ public class DataLimitEntryLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -200,9 +187,7 @@ public class DataLimitEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -214,16 +199,13 @@ public class DataLimitEntryLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static
-		com.liferay.portal.tools.service.builder.test.model.DataLimitEntry
-			fetchDataLimitEntry(long dataLimitEntryId) {
-
+	public static DataLimitEntry fetchDataLimitEntry(long dataLimitEntryId) {
 		return getService().fetchDataLimitEntry(dataLimitEntryId);
 	}
 
@@ -244,10 +226,7 @@ public class DataLimitEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of data limit entries (not inclusive)
 	 * @return the range of data limit entries
 	 */
-	public static java.util.List
-		<com.liferay.portal.tools.service.builder.test.model.DataLimitEntry>
-			getDataLimitEntries(int start, int end) {
-
+	public static List<DataLimitEntry> getDataLimitEntries(int start, int end) {
 		return getService().getDataLimitEntries(start, end);
 	}
 
@@ -267,10 +246,8 @@ public class DataLimitEntryLocalServiceUtil {
 	 * @return the data limit entry
 	 * @throws PortalException if a data limit entry with the primary key could not be found
 	 */
-	public static
-		com.liferay.portal.tools.service.builder.test.model.DataLimitEntry
-				getDataLimitEntry(long dataLimitEntryId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static DataLimitEntry getDataLimitEntry(long dataLimitEntryId)
+		throws PortalException {
 
 		return getService().getDataLimitEntry(dataLimitEntryId);
 	}
@@ -294,9 +271,8 @@ public class DataLimitEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -311,37 +287,16 @@ public class DataLimitEntryLocalServiceUtil {
 	 * @param dataLimitEntry the data limit entry
 	 * @return the data limit entry that was updated
 	 */
-	public static
-		com.liferay.portal.tools.service.builder.test.model.DataLimitEntry
-			updateDataLimitEntry(
-				com.liferay.portal.tools.service.builder.test.model.
-					DataLimitEntry dataLimitEntry) {
+	public static DataLimitEntry updateDataLimitEntry(
+		DataLimitEntry dataLimitEntry) {
 
 		return getService().updateDataLimitEntry(dataLimitEntry);
 	}
 
 	public static DataLimitEntryLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<DataLimitEntryLocalService, DataLimitEntryLocalService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			DataLimitEntryLocalService.class);
-
-		ServiceTracker<DataLimitEntryLocalService, DataLimitEntryLocalService>
-			serviceTracker =
-				new ServiceTracker
-					<DataLimitEntryLocalService, DataLimitEntryLocalService>(
-						bundle.getBundleContext(),
-						DataLimitEntryLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile DataLimitEntryLocalService _service;
 
 }

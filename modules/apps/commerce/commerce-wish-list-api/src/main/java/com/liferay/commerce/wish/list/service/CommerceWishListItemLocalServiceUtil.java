@@ -14,9 +14,16 @@
 
 package com.liferay.commerce.wish.list.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.wish.list.model.CommerceWishListItem;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for CommerceWishListItem. This utility wraps
@@ -48,10 +55,8 @@ public class CommerceWishListItemLocalServiceUtil {
 	 * @param commerceWishListItem the commerce wish list item
 	 * @return the commerce wish list item that was added
 	 */
-	public static com.liferay.commerce.wish.list.model.CommerceWishListItem
-		addCommerceWishListItem(
-			com.liferay.commerce.wish.list.model.CommerceWishListItem
-				commerceWishListItem) {
+	public static CommerceWishListItem addCommerceWishListItem(
+		CommerceWishListItem commerceWishListItem) {
 
 		return getService().addCommerceWishListItem(commerceWishListItem);
 	}
@@ -60,24 +65,22 @@ public class CommerceWishListItemLocalServiceUtil {
 	 * @deprecated As of Mueller (7.2.x)
 	 */
 	@Deprecated
-	public static com.liferay.commerce.wish.list.model.CommerceWishListItem
-			addCommerceWishListItem(
-				long commerceWishListId, long cpDefinitionId, long cpInstanceId,
-				String json,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceWishListItem addCommerceWishListItem(
+			long commerceWishListId, long cpDefinitionId, long cpInstanceId,
+			String json,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCommerceWishListItem(
 			commerceWishListId, cpDefinitionId, cpInstanceId, json,
 			serviceContext);
 	}
 
-	public static com.liferay.commerce.wish.list.model.CommerceWishListItem
-			addCommerceWishListItem(
-				long commerceWishListId, long cProductId, String cpInstanceUuid,
-				String json,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceWishListItem addCommerceWishListItem(
+			long commerceWishListId, long cProductId, String cpInstanceUuid,
+			String json,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCommerceWishListItem(
 			commerceWishListId, cProductId, cpInstanceUuid, json,
@@ -90,8 +93,8 @@ public class CommerceWishListItemLocalServiceUtil {
 	 * @param commerceWishListItemId the primary key for the new commerce wish list item
 	 * @return the new commerce wish list item
 	 */
-	public static com.liferay.commerce.wish.list.model.CommerceWishListItem
-		createCommerceWishListItem(long commerceWishListItemId) {
+	public static CommerceWishListItem createCommerceWishListItem(
+		long commerceWishListItemId) {
 
 		return getService().createCommerceWishListItem(commerceWishListItemId);
 	}
@@ -99,9 +102,9 @@ public class CommerceWishListItemLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -116,10 +119,8 @@ public class CommerceWishListItemLocalServiceUtil {
 	 * @param commerceWishListItem the commerce wish list item
 	 * @return the commerce wish list item that was removed
 	 */
-	public static com.liferay.commerce.wish.list.model.CommerceWishListItem
-		deleteCommerceWishListItem(
-			com.liferay.commerce.wish.list.model.CommerceWishListItem
-				commerceWishListItem) {
+	public static CommerceWishListItem deleteCommerceWishListItem(
+		CommerceWishListItem commerceWishListItem) {
 
 		return getService().deleteCommerceWishListItem(commerceWishListItem);
 	}
@@ -135,9 +136,9 @@ public class CommerceWishListItemLocalServiceUtil {
 	 * @return the commerce wish list item that was removed
 	 * @throws PortalException if a commerce wish list item with the primary key could not be found
 	 */
-	public static com.liferay.commerce.wish.list.model.CommerceWishListItem
-			deleteCommerceWishListItem(long commerceWishListItemId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceWishListItem deleteCommerceWishListItem(
+			long commerceWishListItemId)
+		throws PortalException {
 
 		return getService().deleteCommerceWishListItem(commerceWishListItemId);
 	}
@@ -170,23 +171,18 @@ public class CommerceWishListItemLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -196,9 +192,7 @@ public class CommerceWishListItemLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -214,9 +208,8 @@ public class CommerceWishListItemLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -234,10 +227,9 @@ public class CommerceWishListItemLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -249,9 +241,7 @@ public class CommerceWishListItemLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -263,14 +253,14 @@ public class CommerceWishListItemLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.commerce.wish.list.model.CommerceWishListItem
-		fetchCommerceWishListItem(long commerceWishListItemId) {
+	public static CommerceWishListItem fetchCommerceWishListItem(
+		long commerceWishListItemId) {
 
 		return getService().fetchCommerceWishListItem(commerceWishListItemId);
 	}
@@ -288,17 +278,16 @@ public class CommerceWishListItemLocalServiceUtil {
 	 * @return the commerce wish list item
 	 * @throws PortalException if a commerce wish list item with the primary key could not be found
 	 */
-	public static com.liferay.commerce.wish.list.model.CommerceWishListItem
-			getCommerceWishListItem(long commerceWishListItemId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceWishListItem getCommerceWishListItem(
+			long commerceWishListItemId)
+		throws PortalException {
 
 		return getService().getCommerceWishListItem(commerceWishListItemId);
 	}
 
-	public static com.liferay.commerce.wish.list.model.CommerceWishListItem
-			getCommerceWishListItem(
-				long commerceWishListId, String cpInstanceUuid, long cProductId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceWishListItem getCommerceWishListItem(
+			long commerceWishListId, String cpInstanceUuid, long cProductId)
+		throws PortalException {
 
 		return getService().getCommerceWishListItem(
 			commerceWishListId, cpInstanceUuid, cProductId);
@@ -329,20 +318,15 @@ public class CommerceWishListItemLocalServiceUtil {
 	 * @param end the upper bound of the range of commerce wish list items (not inclusive)
 	 * @return the range of commerce wish list items
 	 */
-	public static java.util.List
-		<com.liferay.commerce.wish.list.model.CommerceWishListItem>
-			getCommerceWishListItems(int start, int end) {
+	public static List<CommerceWishListItem> getCommerceWishListItems(
+		int start, int end) {
 
 		return getService().getCommerceWishListItems(start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.wish.list.model.CommerceWishListItem>
-			getCommerceWishListItems(
-				long commerceWishListId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.commerce.wish.list.model.CommerceWishListItem>
-						orderByComparator) {
+	public static List<CommerceWishListItem> getCommerceWishListItems(
+		long commerceWishListId, int start, int end,
+		OrderByComparator<CommerceWishListItem> orderByComparator) {
 
 		return getService().getCommerceWishListItems(
 			commerceWishListId, start, end, orderByComparator);
@@ -380,9 +364,8 @@ public class CommerceWishListItemLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -397,38 +380,16 @@ public class CommerceWishListItemLocalServiceUtil {
 	 * @param commerceWishListItem the commerce wish list item
 	 * @return the commerce wish list item that was updated
 	 */
-	public static com.liferay.commerce.wish.list.model.CommerceWishListItem
-		updateCommerceWishListItem(
-			com.liferay.commerce.wish.list.model.CommerceWishListItem
-				commerceWishListItem) {
+	public static CommerceWishListItem updateCommerceWishListItem(
+		CommerceWishListItem commerceWishListItem) {
 
 		return getService().updateCommerceWishListItem(commerceWishListItem);
 	}
 
 	public static CommerceWishListItemLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceWishListItemLocalService, CommerceWishListItemLocalService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommerceWishListItemLocalService.class);
-
-		ServiceTracker
-			<CommerceWishListItemLocalService, CommerceWishListItemLocalService>
-				serviceTracker =
-					new ServiceTracker
-						<CommerceWishListItemLocalService,
-						 CommerceWishListItemLocalService>(
-							 bundle.getBundleContext(),
-							 CommerceWishListItemLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceWishListItemLocalService _service;
 
 }

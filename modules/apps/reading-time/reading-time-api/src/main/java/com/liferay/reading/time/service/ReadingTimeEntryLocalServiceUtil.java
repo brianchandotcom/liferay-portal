@@ -14,9 +14,16 @@
 
 package com.liferay.reading.time.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.reading.time.model.ReadingTimeEntry;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for ReadingTimeEntry. This utility wraps
@@ -37,19 +44,17 @@ public class ReadingTimeEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.reading.time.service.impl.ReadingTimeEntryLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.reading.time.model.ReadingTimeEntry
-		addReadingTimeEntry(
-			com.liferay.portal.kernel.model.GroupedModel groupedModel,
-			java.time.Duration readingTimeDuration) {
+	public static ReadingTimeEntry addReadingTimeEntry(
+		com.liferay.portal.kernel.model.GroupedModel groupedModel,
+		java.time.Duration readingTimeDuration) {
 
 		return getService().addReadingTimeEntry(
 			groupedModel, readingTimeDuration);
 	}
 
-	public static com.liferay.reading.time.model.ReadingTimeEntry
-		addReadingTimeEntry(
-			long groupId, long classNameId, long classPK,
-			java.time.Duration readingTimeDuration) {
+	public static ReadingTimeEntry addReadingTimeEntry(
+		long groupId, long classNameId, long classPK,
+		java.time.Duration readingTimeDuration) {
 
 		return getService().addReadingTimeEntry(
 			groupId, classNameId, classPK, readingTimeDuration);
@@ -65,9 +70,8 @@ public class ReadingTimeEntryLocalServiceUtil {
 	 * @param readingTimeEntry the reading time entry
 	 * @return the reading time entry that was added
 	 */
-	public static com.liferay.reading.time.model.ReadingTimeEntry
-		addReadingTimeEntry(
-			com.liferay.reading.time.model.ReadingTimeEntry readingTimeEntry) {
+	public static ReadingTimeEntry addReadingTimeEntry(
+		ReadingTimeEntry readingTimeEntry) {
 
 		return getService().addReadingTimeEntry(readingTimeEntry);
 	}
@@ -75,9 +79,9 @@ public class ReadingTimeEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -88,8 +92,8 @@ public class ReadingTimeEntryLocalServiceUtil {
 	 * @param readingTimeEntryId the primary key for the new reading time entry
 	 * @return the new reading time entry
 	 */
-	public static com.liferay.reading.time.model.ReadingTimeEntry
-		createReadingTimeEntry(long readingTimeEntryId) {
+	public static ReadingTimeEntry createReadingTimeEntry(
+		long readingTimeEntryId) {
 
 		return getService().createReadingTimeEntry(readingTimeEntryId);
 	}
@@ -97,17 +101,15 @@ public class ReadingTimeEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static com.liferay.reading.time.model.ReadingTimeEntry
-		deleteReadingTimeEntry(
-			com.liferay.portal.kernel.model.GroupedModel groupedModel) {
+	public static ReadingTimeEntry deleteReadingTimeEntry(
+		com.liferay.portal.kernel.model.GroupedModel groupedModel) {
 
 		return getService().deleteReadingTimeEntry(groupedModel);
 	}
@@ -123,15 +125,15 @@ public class ReadingTimeEntryLocalServiceUtil {
 	 * @return the reading time entry that was removed
 	 * @throws PortalException if a reading time entry with the primary key could not be found
 	 */
-	public static com.liferay.reading.time.model.ReadingTimeEntry
-			deleteReadingTimeEntry(long readingTimeEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static ReadingTimeEntry deleteReadingTimeEntry(
+			long readingTimeEntryId)
+		throws PortalException {
 
 		return getService().deleteReadingTimeEntry(readingTimeEntryId);
 	}
 
-	public static com.liferay.reading.time.model.ReadingTimeEntry
-		deleteReadingTimeEntry(long groupId, long classNameId, long classPK) {
+	public static ReadingTimeEntry deleteReadingTimeEntry(
+		long groupId, long classNameId, long classPK) {
 
 		return getService().deleteReadingTimeEntry(
 			groupId, classNameId, classPK);
@@ -147,22 +149,17 @@ public class ReadingTimeEntryLocalServiceUtil {
 	 * @param readingTimeEntry the reading time entry
 	 * @return the reading time entry that was removed
 	 */
-	public static com.liferay.reading.time.model.ReadingTimeEntry
-		deleteReadingTimeEntry(
-			com.liferay.reading.time.model.ReadingTimeEntry readingTimeEntry) {
+	public static ReadingTimeEntry deleteReadingTimeEntry(
+		ReadingTimeEntry readingTimeEntry) {
 
 		return getService().deleteReadingTimeEntry(readingTimeEntry);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -172,9 +169,7 @@ public class ReadingTimeEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -190,9 +185,8 @@ public class ReadingTimeEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -210,10 +204,9 @@ public class ReadingTimeEntryLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -225,9 +218,7 @@ public class ReadingTimeEntryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -239,34 +230,32 @@ public class ReadingTimeEntryLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.reading.time.model.ReadingTimeEntry
-		fetchOrAddReadingTimeEntry(
-			com.liferay.portal.kernel.model.GroupedModel groupedModel) {
+	public static ReadingTimeEntry fetchOrAddReadingTimeEntry(
+		com.liferay.portal.kernel.model.GroupedModel groupedModel) {
 
 		return getService().fetchOrAddReadingTimeEntry(groupedModel);
 	}
 
-	public static com.liferay.reading.time.model.ReadingTimeEntry
-		fetchReadingTimeEntry(
-			com.liferay.portal.kernel.model.GroupedModel groupedModel) {
+	public static ReadingTimeEntry fetchReadingTimeEntry(
+		com.liferay.portal.kernel.model.GroupedModel groupedModel) {
 
 		return getService().fetchReadingTimeEntry(groupedModel);
 	}
 
-	public static com.liferay.reading.time.model.ReadingTimeEntry
-		fetchReadingTimeEntry(long readingTimeEntryId) {
+	public static ReadingTimeEntry fetchReadingTimeEntry(
+		long readingTimeEntryId) {
 
 		return getService().fetchReadingTimeEntry(readingTimeEntryId);
 	}
 
-	public static com.liferay.reading.time.model.ReadingTimeEntry
-		fetchReadingTimeEntry(long groupId, long classNameId, long classPK) {
+	public static ReadingTimeEntry fetchReadingTimeEntry(
+		long groupId, long classNameId, long classPK) {
 
 		return getService().fetchReadingTimeEntry(
 			groupId, classNameId, classPK);
@@ -279,8 +268,8 @@ public class ReadingTimeEntryLocalServiceUtil {
 	 * @param groupId the primary key of the group
 	 * @return the matching reading time entry, or <code>null</code> if a matching reading time entry could not be found
 	 */
-	public static com.liferay.reading.time.model.ReadingTimeEntry
-		fetchReadingTimeEntryByUuidAndGroupId(String uuid, long groupId) {
+	public static ReadingTimeEntry fetchReadingTimeEntryByUuidAndGroupId(
+		String uuid, long groupId) {
 
 		return getService().fetchReadingTimeEntryByUuidAndGroupId(
 			uuid, groupId);
@@ -319,9 +308,8 @@ public class ReadingTimeEntryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -337,9 +325,8 @@ public class ReadingTimeEntryLocalServiceUtil {
 	 * @param end the upper bound of the range of reading time entries (not inclusive)
 	 * @return the range of reading time entries
 	 */
-	public static java.util.List
-		<com.liferay.reading.time.model.ReadingTimeEntry> getReadingTimeEntries(
-			int start, int end) {
+	public static List<ReadingTimeEntry> getReadingTimeEntries(
+		int start, int end) {
 
 		return getService().getReadingTimeEntries(start, end);
 	}
@@ -351,10 +338,8 @@ public class ReadingTimeEntryLocalServiceUtil {
 	 * @param companyId the primary key of the company
 	 * @return the matching reading time entries, or an empty list if no matches were found
 	 */
-	public static java.util.List
-		<com.liferay.reading.time.model.ReadingTimeEntry>
-			getReadingTimeEntriesByUuidAndCompanyId(
-				String uuid, long companyId) {
+	public static List<ReadingTimeEntry>
+		getReadingTimeEntriesByUuidAndCompanyId(String uuid, long companyId) {
 
 		return getService().getReadingTimeEntriesByUuidAndCompanyId(
 			uuid, companyId);
@@ -370,13 +355,10 @@ public class ReadingTimeEntryLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the range of matching reading time entries, or an empty list if no matches were found
 	 */
-	public static java.util.List
-		<com.liferay.reading.time.model.ReadingTimeEntry>
-			getReadingTimeEntriesByUuidAndCompanyId(
-				String uuid, long companyId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.reading.time.model.ReadingTimeEntry>
-						orderByComparator) {
+	public static List<ReadingTimeEntry>
+		getReadingTimeEntriesByUuidAndCompanyId(
+			String uuid, long companyId, int start, int end,
+			OrderByComparator<ReadingTimeEntry> orderByComparator) {
 
 		return getService().getReadingTimeEntriesByUuidAndCompanyId(
 			uuid, companyId, start, end, orderByComparator);
@@ -398,9 +380,8 @@ public class ReadingTimeEntryLocalServiceUtil {
 	 * @return the reading time entry
 	 * @throws PortalException if a reading time entry with the primary key could not be found
 	 */
-	public static com.liferay.reading.time.model.ReadingTimeEntry
-			getReadingTimeEntry(long readingTimeEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static ReadingTimeEntry getReadingTimeEntry(long readingTimeEntryId)
+		throws PortalException {
 
 		return getService().getReadingTimeEntry(readingTimeEntryId);
 	}
@@ -413,24 +394,22 @@ public class ReadingTimeEntryLocalServiceUtil {
 	 * @return the matching reading time entry
 	 * @throws PortalException if a matching reading time entry could not be found
 	 */
-	public static com.liferay.reading.time.model.ReadingTimeEntry
-			getReadingTimeEntryByUuidAndGroupId(String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static ReadingTimeEntry getReadingTimeEntryByUuidAndGroupId(
+			String uuid, long groupId)
+		throws PortalException {
 
 		return getService().getReadingTimeEntryByUuidAndGroupId(uuid, groupId);
 	}
 
-	public static com.liferay.reading.time.model.ReadingTimeEntry
-		updateReadingTimeEntry(
-			com.liferay.portal.kernel.model.GroupedModel groupedModel) {
+	public static ReadingTimeEntry updateReadingTimeEntry(
+		com.liferay.portal.kernel.model.GroupedModel groupedModel) {
 
 		return getService().updateReadingTimeEntry(groupedModel);
 	}
 
-	public static com.liferay.reading.time.model.ReadingTimeEntry
-		updateReadingTimeEntry(
-			long groupId, long classNameId, long classPK,
-			java.time.Duration readingTimeDuration) {
+	public static ReadingTimeEntry updateReadingTimeEntry(
+		long groupId, long classNameId, long classPK,
+		java.time.Duration readingTimeDuration) {
 
 		return getService().updateReadingTimeEntry(
 			groupId, classNameId, classPK, readingTimeDuration);
@@ -446,37 +425,16 @@ public class ReadingTimeEntryLocalServiceUtil {
 	 * @param readingTimeEntry the reading time entry
 	 * @return the reading time entry that was updated
 	 */
-	public static com.liferay.reading.time.model.ReadingTimeEntry
-		updateReadingTimeEntry(
-			com.liferay.reading.time.model.ReadingTimeEntry readingTimeEntry) {
+	public static ReadingTimeEntry updateReadingTimeEntry(
+		ReadingTimeEntry readingTimeEntry) {
 
 		return getService().updateReadingTimeEntry(readingTimeEntry);
 	}
 
 	public static ReadingTimeEntryLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<ReadingTimeEntryLocalService, ReadingTimeEntryLocalService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			ReadingTimeEntryLocalService.class);
-
-		ServiceTracker
-			<ReadingTimeEntryLocalService, ReadingTimeEntryLocalService>
-				serviceTracker =
-					new ServiceTracker
-						<ReadingTimeEntryLocalService,
-						 ReadingTimeEntryLocalService>(
-							 bundle.getBundleContext(),
-							 ReadingTimeEntryLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile ReadingTimeEntryLocalService _service;
 
 }

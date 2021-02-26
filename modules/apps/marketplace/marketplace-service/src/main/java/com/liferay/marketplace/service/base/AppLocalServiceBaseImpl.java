@@ -21,6 +21,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.marketplace.model.App;
 import com.liferay.marketplace.service.AppLocalService;
+import com.liferay.marketplace.service.AppLocalServiceUtil;
 import com.liferay.marketplace.service.persistence.AppPersistence;
 import com.liferay.marketplace.service.persistence.ModulePersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -51,10 +52,13 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -75,7 +79,7 @@ public abstract class AppLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>AppLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.marketplace.service.AppLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>AppLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>AppLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -456,6 +460,11 @@ public abstract class AppLocalServiceBaseImpl
 		return appPersistence.update(app);
 	}
 
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
+	}
+
 	@Override
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
@@ -467,6 +476,8 @@ public abstract class AppLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		appLocalService = (AppLocalService)aopProxy;
+
+		_setLocalServiceUtilService(appLocalService);
 	}
 
 	/**
@@ -508,6 +519,20 @@ public abstract class AppLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(AppLocalService appLocalService) {
+		try {
+			Field field = AppLocalServiceUtil.class.getDeclaredField(
+				"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, appLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

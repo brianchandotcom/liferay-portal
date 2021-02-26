@@ -14,9 +14,10 @@
 
 package com.liferay.dispatch.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.dispatch.model.DispatchTrigger;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for DispatchTrigger. This utility wraps
@@ -37,12 +38,12 @@ public class DispatchTriggerServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.dispatch.service.impl.DispatchTriggerServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.dispatch.model.DispatchTrigger addDispatchTrigger(
+	public static DispatchTrigger addDispatchTrigger(
 			long userId, String dispatchTaskExecutorType,
 			com.liferay.portal.kernel.util.UnicodeProperties
 				dispatchTaskSettingsUnicodeProperties,
 			String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addDispatchTrigger(
 			userId, dispatchTaskExecutorType,
@@ -50,21 +51,18 @@ public class DispatchTriggerServiceUtil {
 	}
 
 	public static void deleteDispatchTrigger(long dispatchTriggerId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteDispatchTrigger(dispatchTriggerId);
 	}
 
-	public static java.util.List<com.liferay.dispatch.model.DispatchTrigger>
-			getDispatchTriggers(int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<DispatchTrigger> getDispatchTriggers(int start, int end)
+		throws PortalException {
 
 		return getService().getDispatchTriggers(start, end);
 	}
 
-	public static int getDispatchTriggersCount()
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static int getDispatchTriggersCount() throws PortalException {
 		return getService().getDispatchTriggersCount();
 	}
 
@@ -77,16 +75,15 @@ public class DispatchTriggerServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.dispatch.model.DispatchTrigger
-			updateDispatchTrigger(
-				long dispatchTriggerId, boolean active, String cronExpression,
-				com.liferay.dispatch.executor.DispatchTaskClusterMode
-					dispatchTaskClusterMode,
-				int endDateMonth, int endDateDay, int endDateYear,
-				int endDateHour, int endDateMinute, boolean neverEnd,
-				boolean overlapAllowed, int startDateMonth, int startDateDay,
-				int startDateYear, int startDateHour, int startDateMinute)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static DispatchTrigger updateDispatchTrigger(
+			long dispatchTriggerId, boolean active, String cronExpression,
+			com.liferay.dispatch.executor.DispatchTaskClusterMode
+				dispatchTaskClusterMode,
+			int endDateMonth, int endDateDay, int endDateYear, int endDateHour,
+			int endDateMinute, boolean neverEnd, boolean overlapAllowed,
+			int startDateMonth, int startDateDay, int startDateYear,
+			int startDateHour, int startDateMinute)
+		throws PortalException {
 
 		return getService().updateDispatchTrigger(
 			dispatchTriggerId, active, cronExpression, dispatchTaskClusterMode,
@@ -95,38 +92,21 @@ public class DispatchTriggerServiceUtil {
 			startDateYear, startDateHour, startDateMinute);
 	}
 
-	public static com.liferay.dispatch.model.DispatchTrigger
-			updateDispatchTrigger(
-				long dispatchTriggerId,
-				com.liferay.portal.kernel.util.UnicodeProperties
-					dispatchTaskSettingsUnicodeProperties,
-				String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static DispatchTrigger updateDispatchTrigger(
+			long dispatchTriggerId,
+			com.liferay.portal.kernel.util.UnicodeProperties
+				dispatchTaskSettingsUnicodeProperties,
+			String name)
+		throws PortalException {
 
 		return getService().updateDispatchTrigger(
 			dispatchTriggerId, dispatchTaskSettingsUnicodeProperties, name);
 	}
 
 	public static DispatchTriggerService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<DispatchTriggerService, DispatchTriggerService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(DispatchTriggerService.class);
-
-		ServiceTracker<DispatchTriggerService, DispatchTriggerService>
-			serviceTracker =
-				new ServiceTracker
-					<DispatchTriggerService, DispatchTriggerService>(
-						bundle.getBundleContext(), DispatchTriggerService.class,
-						null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile DispatchTriggerService _service;
 
 }

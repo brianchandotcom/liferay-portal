@@ -14,7 +14,17 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.WorkflowInstanceLink;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for WorkflowInstanceLink. This utility wraps
@@ -35,11 +45,10 @@ public class WorkflowInstanceLinkLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.service.impl.WorkflowInstanceLinkLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.kernel.model.WorkflowInstanceLink
-			addWorkflowInstanceLink(
-				long userId, long companyId, long groupId, String className,
-				long classPK, long workflowInstanceId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static WorkflowInstanceLink addWorkflowInstanceLink(
+			long userId, long companyId, long groupId, String className,
+			long classPK, long workflowInstanceId)
+		throws PortalException {
 
 		return getService().addWorkflowInstanceLink(
 			userId, companyId, groupId, className, classPK, workflowInstanceId);
@@ -55,10 +64,8 @@ public class WorkflowInstanceLinkLocalServiceUtil {
 	 * @param workflowInstanceLink the workflow instance link
 	 * @return the workflow instance link that was added
 	 */
-	public static com.liferay.portal.kernel.model.WorkflowInstanceLink
-		addWorkflowInstanceLink(
-			com.liferay.portal.kernel.model.WorkflowInstanceLink
-				workflowInstanceLink) {
+	public static WorkflowInstanceLink addWorkflowInstanceLink(
+		WorkflowInstanceLink workflowInstanceLink) {
 
 		return getService().addWorkflowInstanceLink(workflowInstanceLink);
 	}
@@ -66,9 +73,9 @@ public class WorkflowInstanceLinkLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -79,8 +86,8 @@ public class WorkflowInstanceLinkLocalServiceUtil {
 	 * @param workflowInstanceLinkId the primary key for the new workflow instance link
 	 * @return the new workflow instance link
 	 */
-	public static com.liferay.portal.kernel.model.WorkflowInstanceLink
-		createWorkflowInstanceLink(long workflowInstanceLinkId) {
+	public static WorkflowInstanceLink createWorkflowInstanceLink(
+		long workflowInstanceLinkId) {
 
 		return getService().createWorkflowInstanceLink(workflowInstanceLinkId);
 	}
@@ -88,10 +95,9 @@ public class WorkflowInstanceLinkLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
@@ -107,17 +113,16 @@ public class WorkflowInstanceLinkLocalServiceUtil {
 	 * @return the workflow instance link that was removed
 	 * @throws PortalException if a workflow instance link with the primary key could not be found
 	 */
-	public static com.liferay.portal.kernel.model.WorkflowInstanceLink
-			deleteWorkflowInstanceLink(long workflowInstanceLinkId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static WorkflowInstanceLink deleteWorkflowInstanceLink(
+			long workflowInstanceLinkId)
+		throws PortalException {
 
 		return getService().deleteWorkflowInstanceLink(workflowInstanceLinkId);
 	}
 
-	public static com.liferay.portal.kernel.model.WorkflowInstanceLink
-			deleteWorkflowInstanceLink(
-				long companyId, long groupId, String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static WorkflowInstanceLink deleteWorkflowInstanceLink(
+			long companyId, long groupId, String className, long classPK)
+		throws PortalException {
 
 		return getService().deleteWorkflowInstanceLink(
 			companyId, groupId, className, classPK);
@@ -134,32 +139,26 @@ public class WorkflowInstanceLinkLocalServiceUtil {
 	 * @return the workflow instance link that was removed
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.WorkflowInstanceLink
-			deleteWorkflowInstanceLink(
-				com.liferay.portal.kernel.model.WorkflowInstanceLink
-					workflowInstanceLink)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static WorkflowInstanceLink deleteWorkflowInstanceLink(
+			WorkflowInstanceLink workflowInstanceLink)
+		throws PortalException {
 
 		return getService().deleteWorkflowInstanceLink(workflowInstanceLink);
 	}
 
 	public static void deleteWorkflowInstanceLinks(
 			long companyId, long groupId, String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteWorkflowInstanceLinks(
 			companyId, groupId, className, classPK);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -169,9 +168,7 @@ public class WorkflowInstanceLinkLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -187,9 +184,8 @@ public class WorkflowInstanceLinkLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -207,10 +203,9 @@ public class WorkflowInstanceLinkLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -222,9 +217,7 @@ public class WorkflowInstanceLinkLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -236,21 +229,20 @@ public class WorkflowInstanceLinkLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.portal.kernel.model.WorkflowInstanceLink
-		fetchWorkflowInstanceLink(long workflowInstanceLinkId) {
+	public static WorkflowInstanceLink fetchWorkflowInstanceLink(
+		long workflowInstanceLinkId) {
 
 		return getService().fetchWorkflowInstanceLink(workflowInstanceLinkId);
 	}
 
-	public static com.liferay.portal.kernel.model.WorkflowInstanceLink
-		fetchWorkflowInstanceLink(
-			long companyId, long groupId, String className, long classPK) {
+	public static WorkflowInstanceLink fetchWorkflowInstanceLink(
+		long companyId, long groupId, String className, long classPK) {
 
 		return getService().fetchWorkflowInstanceLink(
 			companyId, groupId, className, classPK);
@@ -281,16 +273,15 @@ public class WorkflowInstanceLinkLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	public static String getState(
 			long companyId, long groupId, String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getState(companyId, groupId, className, classPK);
 	}
@@ -302,17 +293,16 @@ public class WorkflowInstanceLinkLocalServiceUtil {
 	 * @return the workflow instance link
 	 * @throws PortalException if a workflow instance link with the primary key could not be found
 	 */
-	public static com.liferay.portal.kernel.model.WorkflowInstanceLink
-			getWorkflowInstanceLink(long workflowInstanceLinkId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static WorkflowInstanceLink getWorkflowInstanceLink(
+			long workflowInstanceLinkId)
+		throws PortalException {
 
 		return getService().getWorkflowInstanceLink(workflowInstanceLinkId);
 	}
 
-	public static com.liferay.portal.kernel.model.WorkflowInstanceLink
-			getWorkflowInstanceLink(
-				long companyId, long groupId, String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static WorkflowInstanceLink getWorkflowInstanceLink(
+			long companyId, long groupId, String className, long classPK)
+		throws PortalException {
 
 		return getService().getWorkflowInstanceLink(
 			companyId, groupId, className, classPK);
@@ -329,17 +319,14 @@ public class WorkflowInstanceLinkLocalServiceUtil {
 	 * @param end the upper bound of the range of workflow instance links (not inclusive)
 	 * @return the range of workflow instance links
 	 */
-	public static java.util.List
-		<com.liferay.portal.kernel.model.WorkflowInstanceLink>
-			getWorkflowInstanceLinks(int start, int end) {
+	public static List<WorkflowInstanceLink> getWorkflowInstanceLinks(
+		int start, int end) {
 
 		return getService().getWorkflowInstanceLinks(start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.portal.kernel.model.WorkflowInstanceLink>
-			getWorkflowInstanceLinks(
-				long companyId, long groupId, String className, long classPK) {
+	public static List<WorkflowInstanceLink> getWorkflowInstanceLinks(
+		long companyId, long groupId, String className, long classPK) {
 
 		return getService().getWorkflowInstanceLinks(
 			companyId, groupId, className, classPK);
@@ -363,16 +350,15 @@ public class WorkflowInstanceLinkLocalServiceUtil {
 
 	public static boolean isEnded(
 			long companyId, long groupId, String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().isEnded(companyId, groupId, className, classPK);
 	}
 
 	public static void startWorkflowInstance(
 			long companyId, long groupId, long userId, String className,
-			long classPK,
-			java.util.Map<String, java.io.Serializable> workflowContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+			long classPK, Map<String, Serializable> workflowContext)
+		throws PortalException {
 
 		getService().startWorkflowInstance(
 			companyId, groupId, userId, className, classPK, workflowContext);
@@ -381,7 +367,7 @@ public class WorkflowInstanceLinkLocalServiceUtil {
 	public static void updateClassPK(
 			long companyId, long groupId, String className, long oldClassPK,
 			long newClassPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().updateClassPK(
 			companyId, groupId, className, oldClassPK, newClassPK);
@@ -397,24 +383,16 @@ public class WorkflowInstanceLinkLocalServiceUtil {
 	 * @param workflowInstanceLink the workflow instance link
 	 * @return the workflow instance link that was updated
 	 */
-	public static com.liferay.portal.kernel.model.WorkflowInstanceLink
-		updateWorkflowInstanceLink(
-			com.liferay.portal.kernel.model.WorkflowInstanceLink
-				workflowInstanceLink) {
+	public static WorkflowInstanceLink updateWorkflowInstanceLink(
+		WorkflowInstanceLink workflowInstanceLink) {
 
 		return getService().updateWorkflowInstanceLink(workflowInstanceLink);
 	}
 
 	public static WorkflowInstanceLinkLocalService getService() {
-		if (_service == null) {
-			_service =
-				(WorkflowInstanceLinkLocalService)PortalBeanLocatorUtil.locate(
-					WorkflowInstanceLinkLocalService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static WorkflowInstanceLinkLocalService _service;
+	private static volatile WorkflowInstanceLinkLocalService _service;
 
 }

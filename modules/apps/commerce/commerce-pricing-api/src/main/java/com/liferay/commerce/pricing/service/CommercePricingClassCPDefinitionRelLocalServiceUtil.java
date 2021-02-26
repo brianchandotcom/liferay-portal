@@ -14,9 +14,16 @@
 
 package com.liferay.commerce.pricing.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for CommercePricingClassCPDefinitionRel. This utility wraps
@@ -48,24 +55,20 @@ public class CommercePricingClassCPDefinitionRelLocalServiceUtil {
 	 * @param commercePricingClassCPDefinitionRel the commerce pricing class cp definition rel
 	 * @return the commerce pricing class cp definition rel that was added
 	 */
-	public static
-		com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel
-			addCommercePricingClassCPDefinitionRel(
-				com.liferay.commerce.pricing.model.
-					CommercePricingClassCPDefinitionRel
-						commercePricingClassCPDefinitionRel) {
+	public static CommercePricingClassCPDefinitionRel
+		addCommercePricingClassCPDefinitionRel(
+			CommercePricingClassCPDefinitionRel
+				commercePricingClassCPDefinitionRel) {
 
 		return getService().addCommercePricingClassCPDefinitionRel(
 			commercePricingClassCPDefinitionRel);
 	}
 
-	public static
-		com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel
-				addCommercePricingClassCPDefinitionRel(
-					long commercePricingClassId, long cpDefinitionId,
-					com.liferay.portal.kernel.service.ServiceContext
-						serviceContext)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePricingClassCPDefinitionRel
+			addCommercePricingClassCPDefinitionRel(
+				long commercePricingClassId, long cpDefinitionId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCommercePricingClassCPDefinitionRel(
 			commercePricingClassId, cpDefinitionId, serviceContext);
@@ -77,10 +80,9 @@ public class CommercePricingClassCPDefinitionRelLocalServiceUtil {
 	 * @param CommercePricingClassCPDefinitionRelId the primary key for the new commerce pricing class cp definition rel
 	 * @return the new commerce pricing class cp definition rel
 	 */
-	public static
-		com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel
-			createCommercePricingClassCPDefinitionRel(
-				long CommercePricingClassCPDefinitionRelId) {
+	public static CommercePricingClassCPDefinitionRel
+		createCommercePricingClassCPDefinitionRel(
+			long CommercePricingClassCPDefinitionRelId) {
 
 		return getService().createCommercePricingClassCPDefinitionRel(
 			CommercePricingClassCPDefinitionRelId);
@@ -89,9 +91,9 @@ public class CommercePricingClassCPDefinitionRelLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -107,13 +109,11 @@ public class CommercePricingClassCPDefinitionRelLocalServiceUtil {
 	 * @return the commerce pricing class cp definition rel that was removed
 	 * @throws PortalException
 	 */
-	public static
-		com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel
-				deleteCommercePricingClassCPDefinitionRel(
-					com.liferay.commerce.pricing.model.
-						CommercePricingClassCPDefinitionRel
-							commercePricingClassCPDefinitionRel)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePricingClassCPDefinitionRel
+			deleteCommercePricingClassCPDefinitionRel(
+				CommercePricingClassCPDefinitionRel
+					commercePricingClassCPDefinitionRel)
+		throws PortalException {
 
 		return getService().deleteCommercePricingClassCPDefinitionRel(
 			commercePricingClassCPDefinitionRel);
@@ -130,11 +130,10 @@ public class CommercePricingClassCPDefinitionRelLocalServiceUtil {
 	 * @return the commerce pricing class cp definition rel that was removed
 	 * @throws PortalException if a commerce pricing class cp definition rel with the primary key could not be found
 	 */
-	public static
-		com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel
-				deleteCommercePricingClassCPDefinitionRel(
-					long CommercePricingClassCPDefinitionRelId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePricingClassCPDefinitionRel
+			deleteCommercePricingClassCPDefinitionRel(
+				long CommercePricingClassCPDefinitionRelId)
+		throws PortalException {
 
 		return getService().deleteCommercePricingClassCPDefinitionRel(
 			CommercePricingClassCPDefinitionRelId);
@@ -142,7 +141,7 @@ public class CommercePricingClassCPDefinitionRelLocalServiceUtil {
 
 	public static void deleteCommercePricingClassCPDefinitionRels(
 			long commercePricingClassId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommercePricingClassCPDefinitionRels(
 			commercePricingClassId);
@@ -151,23 +150,18 @@ public class CommercePricingClassCPDefinitionRelLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -177,9 +171,7 @@ public class CommercePricingClassCPDefinitionRelLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -195,9 +187,8 @@ public class CommercePricingClassCPDefinitionRelLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -215,10 +206,9 @@ public class CommercePricingClassCPDefinitionRelLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -230,9 +220,7 @@ public class CommercePricingClassCPDefinitionRelLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -244,25 +232,23 @@ public class CommercePricingClassCPDefinitionRelLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static
-		com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel
-			fetchCommercePricingClassCPDefinitionRel(
-				long CommercePricingClassCPDefinitionRelId) {
+	public static CommercePricingClassCPDefinitionRel
+		fetchCommercePricingClassCPDefinitionRel(
+			long CommercePricingClassCPDefinitionRelId) {
 
 		return getService().fetchCommercePricingClassCPDefinitionRel(
 			CommercePricingClassCPDefinitionRelId);
 	}
 
-	public static
-		com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel
-			fetchCommercePricingClassCPDefinitionRel(
-				long commercePricingClassId, long cpDefinitionId) {
+	public static CommercePricingClassCPDefinitionRel
+		fetchCommercePricingClassCPDefinitionRel(
+			long commercePricingClassId, long cpDefinitionId) {
 
 		return getService().fetchCommercePricingClassCPDefinitionRel(
 			commercePricingClassId, cpDefinitionId);
@@ -274,9 +260,8 @@ public class CommercePricingClassCPDefinitionRelLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel>
-			getCommercePricingClassByCPDefinitionId(long cpDefinitionId) {
+	public static List<CommercePricingClassCPDefinitionRel>
+		getCommercePricingClassByCPDefinitionId(long cpDefinitionId) {
 
 		return getService().getCommercePricingClassByCPDefinitionId(
 			cpDefinitionId);
@@ -289,11 +274,10 @@ public class CommercePricingClassCPDefinitionRelLocalServiceUtil {
 	 * @return the commerce pricing class cp definition rel
 	 * @throws PortalException if a commerce pricing class cp definition rel with the primary key could not be found
 	 */
-	public static
-		com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel
-				getCommercePricingClassCPDefinitionRel(
-					long CommercePricingClassCPDefinitionRelId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePricingClassCPDefinitionRel
+			getCommercePricingClassCPDefinitionRel(
+				long CommercePricingClassCPDefinitionRelId)
+		throws PortalException {
 
 		return getService().getCommercePricingClassCPDefinitionRel(
 			CommercePricingClassCPDefinitionRelId);
@@ -310,30 +294,24 @@ public class CommercePricingClassCPDefinitionRelLocalServiceUtil {
 	 * @param end the upper bound of the range of commerce pricing class cp definition rels (not inclusive)
 	 * @return the range of commerce pricing class cp definition rels
 	 */
-	public static java.util.List
-		<com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel>
-			getCommercePricingClassCPDefinitionRels(int start, int end) {
+	public static List<CommercePricingClassCPDefinitionRel>
+		getCommercePricingClassCPDefinitionRels(int start, int end) {
 
 		return getService().getCommercePricingClassCPDefinitionRels(start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel>
-			getCommercePricingClassCPDefinitionRels(
-				long commercePricingClassId) {
+	public static List<CommercePricingClassCPDefinitionRel>
+		getCommercePricingClassCPDefinitionRels(long commercePricingClassId) {
 
 		return getService().getCommercePricingClassCPDefinitionRels(
 			commercePricingClassId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel>
-			getCommercePricingClassCPDefinitionRels(
-				long commercePricingClassId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.commerce.pricing.model.
-						CommercePricingClassCPDefinitionRel>
-							orderByComparator) {
+	public static List<CommercePricingClassCPDefinitionRel>
+		getCommercePricingClassCPDefinitionRels(
+			long commercePricingClassId, int start, int end,
+			OrderByComparator<CommercePricingClassCPDefinitionRel>
+				orderByComparator) {
 
 		return getService().getCommercePricingClassCPDefinitionRels(
 			commercePricingClassId, start, end, orderByComparator);
@@ -385,18 +363,16 @@ public class CommercePricingClassCPDefinitionRelLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel>
-			searchByCommercePricingClassId(
-				long commercePricingClassId, String name, String languageId,
-				int start, int end) {
+	public static List<CommercePricingClassCPDefinitionRel>
+		searchByCommercePricingClassId(
+			long commercePricingClassId, String name, String languageId,
+			int start, int end) {
 
 		return getService().searchByCommercePricingClassId(
 			commercePricingClassId, name, languageId, start, end);
@@ -412,42 +388,20 @@ public class CommercePricingClassCPDefinitionRelLocalServiceUtil {
 	 * @param commercePricingClassCPDefinitionRel the commerce pricing class cp definition rel
 	 * @return the commerce pricing class cp definition rel that was updated
 	 */
-	public static
-		com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel
-			updateCommercePricingClassCPDefinitionRel(
-				com.liferay.commerce.pricing.model.
-					CommercePricingClassCPDefinitionRel
-						commercePricingClassCPDefinitionRel) {
+	public static CommercePricingClassCPDefinitionRel
+		updateCommercePricingClassCPDefinitionRel(
+			CommercePricingClassCPDefinitionRel
+				commercePricingClassCPDefinitionRel) {
 
 		return getService().updateCommercePricingClassCPDefinitionRel(
 			commercePricingClassCPDefinitionRel);
 	}
 
 	public static CommercePricingClassCPDefinitionRelLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommercePricingClassCPDefinitionRelLocalService,
-		 CommercePricingClassCPDefinitionRelLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommercePricingClassCPDefinitionRelLocalService.class);
-
-		ServiceTracker
-			<CommercePricingClassCPDefinitionRelLocalService,
-			 CommercePricingClassCPDefinitionRelLocalService> serviceTracker =
-				new ServiceTracker
-					<CommercePricingClassCPDefinitionRelLocalService,
-					 CommercePricingClassCPDefinitionRelLocalService>(
-						 bundle.getBundleContext(),
-						 CommercePricingClassCPDefinitionRelLocalService.class,
-						 null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommercePricingClassCPDefinitionRelLocalService
+		_service;
 
 }

@@ -16,6 +16,7 @@ package com.liferay.opensocial.service.base;
 
 import com.liferay.opensocial.model.Gadget;
 import com.liferay.opensocial.service.GadgetService;
+import com.liferay.opensocial.service.GadgetServiceUtil;
 import com.liferay.opensocial.service.persistence.GadgetPersistence;
 import com.liferay.opensocial.service.persistence.OAuthConsumerPersistence;
 import com.liferay.opensocial.service.persistence.OAuthTokenPersistence;
@@ -31,6 +32,8 @@ import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.PortletPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
+
+import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
 
@@ -51,7 +54,7 @@ public abstract class GadgetServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>GadgetService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.opensocial.service.GadgetServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>GadgetService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>GadgetServiceUtil</code>.
 	 */
 
 	/**
@@ -433,9 +436,11 @@ public abstract class GadgetServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
+		_setServiceUtilService(gadgetService);
 	}
 
 	public void destroy() {
+		_setServiceUtilService(null);
 	}
 
 	/**
@@ -477,6 +482,19 @@ public abstract class GadgetServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setServiceUtilService(GadgetService gadgetService) {
+		try {
+			Field field = GadgetServiceUtil.class.getDeclaredField("_service");
+
+			field.setAccessible(true);
+
+			field.set(null, gadgetService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

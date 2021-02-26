@@ -41,9 +41,12 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.model.CacheDisabledEntry;
 import com.liferay.portal.tools.service.builder.test.service.CacheDisabledEntryLocalService;
+import com.liferay.portal.tools.service.builder.test.service.CacheDisabledEntryLocalServiceUtil;
 import com.liferay.portal.tools.service.builder.test.service.persistence.CacheDisabledEntryPersistence;
 
 import java.io.Serializable;
+
+import java.lang.reflect.Field;
 
 import java.util.List;
 
@@ -67,7 +70,7 @@ public abstract class CacheDisabledEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CacheDisabledEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.tools.service.builder.test.service.CacheDisabledEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CacheDisabledEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CacheDisabledEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -454,11 +457,15 @@ public abstract class CacheDisabledEntryLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry.register(
 			"com.liferay.portal.tools.service.builder.test.model.CacheDisabledEntry",
 			cacheDisabledEntryLocalService);
+
+		_setLocalServiceUtilService(cacheDisabledEntryLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.portal.tools.service.builder.test.model.CacheDisabledEntry");
+
+		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -501,6 +508,23 @@ public abstract class CacheDisabledEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		CacheDisabledEntryLocalService cacheDisabledEntryLocalService) {
+
+		try {
+			Field field =
+				CacheDisabledEntryLocalServiceUtil.class.getDeclaredField(
+					"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, cacheDisabledEntryLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

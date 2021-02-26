@@ -14,7 +14,10 @@
 
 package com.liferay.document.library.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.document.library.kernel.model.DLFileVersion;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for DLFileVersion. This utility wraps
@@ -35,37 +38,34 @@ public class DLFileVersionServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portlet.documentlibrary.service.impl.DLFileVersionServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.document.library.kernel.model.DLFileVersion
-			getFileVersion(long fileVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static DLFileVersion getFileVersion(long fileVersionId)
+		throws PortalException {
 
 		return getService().getFileVersion(fileVersionId);
 	}
 
-	public static java.util.List
-		<com.liferay.document.library.kernel.model.DLFileVersion>
-				getFileVersions(long fileEntryId, int status)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<DLFileVersion> getFileVersions(
+			long fileEntryId, int status)
+		throws PortalException {
 
 		return getService().getFileVersions(fileEntryId, status);
 	}
 
 	public static int getFileVersionsCount(long fileEntryId, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getFileVersionsCount(fileEntryId, status);
 	}
 
-	public static com.liferay.document.library.kernel.model.DLFileVersion
-			getLatestFileVersion(long fileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static DLFileVersion getLatestFileVersion(long fileEntryId)
+		throws PortalException {
 
 		return getService().getLatestFileVersion(fileEntryId);
 	}
 
-	public static com.liferay.document.library.kernel.model.DLFileVersion
-			getLatestFileVersion(long fileEntryId, boolean excludeWorkingCopy)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static DLFileVersion getLatestFileVersion(
+			long fileEntryId, boolean excludeWorkingCopy)
+		throws PortalException {
 
 		return getService().getLatestFileVersion(
 			fileEntryId, excludeWorkingCopy);
@@ -81,14 +81,9 @@ public class DLFileVersionServiceUtil {
 	}
 
 	public static DLFileVersionService getService() {
-		if (_service == null) {
-			_service = (DLFileVersionService)PortalBeanLocatorUtil.locate(
-				DLFileVersionService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static DLFileVersionService _service;
+	private static volatile DLFileVersionService _service;
 
 }

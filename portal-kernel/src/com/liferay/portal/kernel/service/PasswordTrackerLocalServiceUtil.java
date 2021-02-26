@@ -14,7 +14,16 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PasswordTracker;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for PasswordTracker. This utility wraps
@@ -46,9 +55,8 @@ public class PasswordTrackerLocalServiceUtil {
 	 * @param passwordTracker the password tracker
 	 * @return the password tracker that was added
 	 */
-	public static com.liferay.portal.kernel.model.PasswordTracker
-		addPasswordTracker(
-			com.liferay.portal.kernel.model.PasswordTracker passwordTracker) {
+	public static PasswordTracker addPasswordTracker(
+		PasswordTracker passwordTracker) {
 
 		return getService().addPasswordTracker(passwordTracker);
 	}
@@ -59,8 +67,8 @@ public class PasswordTrackerLocalServiceUtil {
 	 * @param passwordTrackerId the primary key for the new password tracker
 	 * @return the new password tracker
 	 */
-	public static com.liferay.portal.kernel.model.PasswordTracker
-		createPasswordTracker(long passwordTrackerId) {
+	public static PasswordTracker createPasswordTracker(
+		long passwordTrackerId) {
 
 		return getService().createPasswordTracker(passwordTrackerId);
 	}
@@ -68,9 +76,9 @@ public class PasswordTrackerLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -86,9 +94,8 @@ public class PasswordTrackerLocalServiceUtil {
 	 * @return the password tracker that was removed
 	 * @throws PortalException if a password tracker with the primary key could not be found
 	 */
-	public static com.liferay.portal.kernel.model.PasswordTracker
-			deletePasswordTracker(long passwordTrackerId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PasswordTracker deletePasswordTracker(long passwordTrackerId)
+		throws PortalException {
 
 		return getService().deletePasswordTracker(passwordTrackerId);
 	}
@@ -103,9 +110,8 @@ public class PasswordTrackerLocalServiceUtil {
 	 * @param passwordTracker the password tracker
 	 * @return the password tracker that was removed
 	 */
-	public static com.liferay.portal.kernel.model.PasswordTracker
-		deletePasswordTracker(
-			com.liferay.portal.kernel.model.PasswordTracker passwordTracker) {
+	public static PasswordTracker deletePasswordTracker(
+		PasswordTracker passwordTracker) {
 
 		return getService().deletePasswordTracker(passwordTracker);
 	}
@@ -117,23 +123,18 @@ public class PasswordTrackerLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -143,9 +144,7 @@ public class PasswordTrackerLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -161,9 +160,8 @@ public class PasswordTrackerLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -181,10 +179,9 @@ public class PasswordTrackerLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -196,9 +193,7 @@ public class PasswordTrackerLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -210,15 +205,13 @@ public class PasswordTrackerLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.portal.kernel.model.PasswordTracker
-		fetchPasswordTracker(long passwordTrackerId) {
-
+	public static PasswordTracker fetchPasswordTracker(long passwordTrackerId) {
 		return getService().fetchPasswordTracker(passwordTrackerId);
 	}
 
@@ -251,9 +244,8 @@ public class PasswordTrackerLocalServiceUtil {
 	 * @return the password tracker
 	 * @throws PortalException if a password tracker with the primary key could not be found
 	 */
-	public static com.liferay.portal.kernel.model.PasswordTracker
-			getPasswordTracker(long passwordTrackerId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PasswordTracker getPasswordTracker(long passwordTrackerId)
+		throws PortalException {
 
 		return getService().getPasswordTracker(passwordTrackerId);
 	}
@@ -269,9 +261,8 @@ public class PasswordTrackerLocalServiceUtil {
 	 * @param end the upper bound of the range of password trackers (not inclusive)
 	 * @return the range of password trackers
 	 */
-	public static java.util.List
-		<com.liferay.portal.kernel.model.PasswordTracker> getPasswordTrackers(
-			int start, int end) {
+	public static List<PasswordTracker> getPasswordTrackers(
+		int start, int end) {
 
 		return getService().getPasswordTrackers(start, end);
 	}
@@ -288,28 +279,27 @@ public class PasswordTrackerLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	public static boolean isSameAsCurrentPassword(
 			long userId, String newClearTextPwd)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().isSameAsCurrentPassword(userId, newClearTextPwd);
 	}
 
 	public static boolean isValidPassword(long userId, String newClearTextPwd)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().isValidPassword(userId, newClearTextPwd);
 	}
 
 	public static void trackPassword(long userId, String encPassword)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().trackPassword(userId, encPassword);
 	}
@@ -324,23 +314,16 @@ public class PasswordTrackerLocalServiceUtil {
 	 * @param passwordTracker the password tracker
 	 * @return the password tracker that was updated
 	 */
-	public static com.liferay.portal.kernel.model.PasswordTracker
-		updatePasswordTracker(
-			com.liferay.portal.kernel.model.PasswordTracker passwordTracker) {
+	public static PasswordTracker updatePasswordTracker(
+		PasswordTracker passwordTracker) {
 
 		return getService().updatePasswordTracker(passwordTracker);
 	}
 
 	public static PasswordTrackerLocalService getService() {
-		if (_service == null) {
-			_service =
-				(PasswordTrackerLocalService)PortalBeanLocatorUtil.locate(
-					PasswordTrackerLocalService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static PasswordTrackerLocalService _service;
+	private static volatile PasswordTrackerLocalService _service;
 
 }

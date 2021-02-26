@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.segments.model.SegmentsExperimentRel;
 import com.liferay.segments.service.SegmentsExperimentRelLocalService;
+import com.liferay.segments.service.SegmentsExperimentRelLocalServiceUtil;
 import com.liferay.segments.service.persistence.SegmentsEntryPersistence;
 import com.liferay.segments.service.persistence.SegmentsEntryRelPersistence;
 import com.liferay.segments.service.persistence.SegmentsEntryRolePersistence;
@@ -53,10 +54,13 @@ import com.liferay.segments.service.persistence.SegmentsExperimentRelPersistence
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -78,7 +82,7 @@ public abstract class SegmentsExperimentRelLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>SegmentsExperimentRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.segments.service.SegmentsExperimentRelLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>SegmentsExperimentRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>SegmentsExperimentRelLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -403,6 +407,11 @@ public abstract class SegmentsExperimentRelLocalServiceBaseImpl
 		return segmentsExperimentRelPersistence.update(segmentsExperimentRel);
 	}
 
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
+	}
+
 	@Override
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
@@ -416,6 +425,8 @@ public abstract class SegmentsExperimentRelLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		segmentsExperimentRelLocalService =
 			(SegmentsExperimentRelLocalService)aopProxy;
+
+		_setLocalServiceUtilService(segmentsExperimentRelLocalService);
 	}
 
 	/**
@@ -473,6 +484,23 @@ public abstract class SegmentsExperimentRelLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		SegmentsExperimentRelLocalService segmentsExperimentRelLocalService) {
+
+		try {
+			Field field =
+				SegmentsExperimentRelLocalServiceUtil.class.getDeclaredField(
+					"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, segmentsExperimentRelLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

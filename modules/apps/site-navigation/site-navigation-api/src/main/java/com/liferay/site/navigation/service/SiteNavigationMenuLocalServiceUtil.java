@@ -14,9 +14,16 @@
 
 package com.liferay.site.navigation.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.site.navigation.model.SiteNavigationMenu;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for SiteNavigationMenu. This utility wraps
@@ -37,31 +44,28 @@ public class SiteNavigationMenuLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.site.navigation.service.impl.SiteNavigationMenuLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.site.navigation.model.SiteNavigationMenu
-			addSiteNavigationMenu(
-				long userId, long groupId, String name, int type, boolean auto,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static SiteNavigationMenu addSiteNavigationMenu(
+			long userId, long groupId, String name, int type, boolean auto,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addSiteNavigationMenu(
 			userId, groupId, name, type, auto, serviceContext);
 	}
 
-	public static com.liferay.site.navigation.model.SiteNavigationMenu
-			addSiteNavigationMenu(
-				long userId, long groupId, String name, int type,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static SiteNavigationMenu addSiteNavigationMenu(
+			long userId, long groupId, String name, int type,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addSiteNavigationMenu(
 			userId, groupId, name, type, serviceContext);
 	}
 
-	public static com.liferay.site.navigation.model.SiteNavigationMenu
-			addSiteNavigationMenu(
-				long userId, long groupId, String name,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static SiteNavigationMenu addSiteNavigationMenu(
+			long userId, long groupId, String name,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addSiteNavigationMenu(
 			userId, groupId, name, serviceContext);
@@ -77,10 +81,8 @@ public class SiteNavigationMenuLocalServiceUtil {
 	 * @param siteNavigationMenu the site navigation menu
 	 * @return the site navigation menu that was added
 	 */
-	public static com.liferay.site.navigation.model.SiteNavigationMenu
-		addSiteNavigationMenu(
-			com.liferay.site.navigation.model.SiteNavigationMenu
-				siteNavigationMenu) {
+	public static SiteNavigationMenu addSiteNavigationMenu(
+		SiteNavigationMenu siteNavigationMenu) {
 
 		return getService().addSiteNavigationMenu(siteNavigationMenu);
 	}
@@ -88,9 +90,9 @@ public class SiteNavigationMenuLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -101,8 +103,8 @@ public class SiteNavigationMenuLocalServiceUtil {
 	 * @param siteNavigationMenuId the primary key for the new site navigation menu
 	 * @return the new site navigation menu
 	 */
-	public static com.liferay.site.navigation.model.SiteNavigationMenu
-		createSiteNavigationMenu(long siteNavigationMenuId) {
+	public static SiteNavigationMenu createSiteNavigationMenu(
+		long siteNavigationMenuId) {
 
 		return getService().createSiteNavigationMenu(siteNavigationMenuId);
 	}
@@ -110,10 +112,9 @@ public class SiteNavigationMenuLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
@@ -129,9 +130,9 @@ public class SiteNavigationMenuLocalServiceUtil {
 	 * @return the site navigation menu that was removed
 	 * @throws PortalException if a site navigation menu with the primary key could not be found
 	 */
-	public static com.liferay.site.navigation.model.SiteNavigationMenu
-			deleteSiteNavigationMenu(long siteNavigationMenuId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static SiteNavigationMenu deleteSiteNavigationMenu(
+			long siteNavigationMenuId)
+		throws PortalException {
 
 		return getService().deleteSiteNavigationMenu(siteNavigationMenuId);
 	}
@@ -147,11 +148,9 @@ public class SiteNavigationMenuLocalServiceUtil {
 	 * @return the site navigation menu that was removed
 	 * @throws PortalException
 	 */
-	public static com.liferay.site.navigation.model.SiteNavigationMenu
-			deleteSiteNavigationMenu(
-				com.liferay.site.navigation.model.SiteNavigationMenu
-					siteNavigationMenu)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static SiteNavigationMenu deleteSiteNavigationMenu(
+			SiteNavigationMenu siteNavigationMenu)
+		throws PortalException {
 
 		return getService().deleteSiteNavigationMenu(siteNavigationMenu);
 	}
@@ -160,15 +159,11 @@ public class SiteNavigationMenuLocalServiceUtil {
 		getService().deleteSiteNavigationMenus(groupId);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -178,9 +173,7 @@ public class SiteNavigationMenuLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -196,9 +189,8 @@ public class SiteNavigationMenuLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -216,10 +208,9 @@ public class SiteNavigationMenuLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -231,9 +222,7 @@ public class SiteNavigationMenuLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -245,26 +234,26 @@ public class SiteNavigationMenuLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.site.navigation.model.SiteNavigationMenu
-		fetchPrimarySiteNavigationMenu(long groupId) {
+	public static SiteNavigationMenu fetchPrimarySiteNavigationMenu(
+		long groupId) {
 
 		return getService().fetchPrimarySiteNavigationMenu(groupId);
 	}
 
-	public static com.liferay.site.navigation.model.SiteNavigationMenu
-		fetchSiteNavigationMenu(long siteNavigationMenuId) {
+	public static SiteNavigationMenu fetchSiteNavigationMenu(
+		long siteNavigationMenuId) {
 
 		return getService().fetchSiteNavigationMenu(siteNavigationMenuId);
 	}
 
-	public static com.liferay.site.navigation.model.SiteNavigationMenu
-		fetchSiteNavigationMenu(long groupId, int type) {
+	public static SiteNavigationMenu fetchSiteNavigationMenu(
+		long groupId, int type) {
 
 		return getService().fetchSiteNavigationMenu(groupId, type);
 	}
@@ -276,8 +265,8 @@ public class SiteNavigationMenuLocalServiceUtil {
 	 * @param groupId the primary key of the group
 	 * @return the matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
 	 */
-	public static com.liferay.site.navigation.model.SiteNavigationMenu
-		fetchSiteNavigationMenuByUuidAndGroupId(String uuid, long groupId) {
+	public static SiteNavigationMenu fetchSiteNavigationMenuByUuidAndGroupId(
+		String uuid, long groupId) {
 
 		return getService().fetchSiteNavigationMenuByUuidAndGroupId(
 			uuid, groupId);
@@ -289,9 +278,8 @@ public class SiteNavigationMenuLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
-	public static java.util.List
-		<com.liferay.site.navigation.model.SiteNavigationMenu>
-			getAutoSiteNavigationMenus(long groupId) {
+	public static List<SiteNavigationMenu> getAutoSiteNavigationMenus(
+		long groupId) {
 
 		return getService().getAutoSiteNavigationMenus(groupId);
 	}
@@ -323,9 +311,8 @@ public class SiteNavigationMenuLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -337,9 +324,9 @@ public class SiteNavigationMenuLocalServiceUtil {
 	 * @return the site navigation menu
 	 * @throws PortalException if a site navigation menu with the primary key could not be found
 	 */
-	public static com.liferay.site.navigation.model.SiteNavigationMenu
-			getSiteNavigationMenu(long siteNavigationMenuId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static SiteNavigationMenu getSiteNavigationMenu(
+			long siteNavigationMenuId)
+		throws PortalException {
 
 		return getService().getSiteNavigationMenu(siteNavigationMenuId);
 	}
@@ -352,9 +339,9 @@ public class SiteNavigationMenuLocalServiceUtil {
 	 * @return the matching site navigation menu
 	 * @throws PortalException if a matching site navigation menu could not be found
 	 */
-	public static com.liferay.site.navigation.model.SiteNavigationMenu
-			getSiteNavigationMenuByUuidAndGroupId(String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static SiteNavigationMenu getSiteNavigationMenuByUuidAndGroupId(
+			String uuid, long groupId)
+		throws PortalException {
 
 		return getService().getSiteNavigationMenuByUuidAndGroupId(
 			uuid, groupId);
@@ -371,39 +358,29 @@ public class SiteNavigationMenuLocalServiceUtil {
 	 * @param end the upper bound of the range of site navigation menus (not inclusive)
 	 * @return the range of site navigation menus
 	 */
-	public static java.util.List
-		<com.liferay.site.navigation.model.SiteNavigationMenu>
-			getSiteNavigationMenus(int start, int end) {
+	public static List<SiteNavigationMenu> getSiteNavigationMenus(
+		int start, int end) {
 
 		return getService().getSiteNavigationMenus(start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.site.navigation.model.SiteNavigationMenu>
-			getSiteNavigationMenus(long groupId) {
+	public static List<SiteNavigationMenu> getSiteNavigationMenus(
+		long groupId) {
 
 		return getService().getSiteNavigationMenus(groupId);
 	}
 
-	public static java.util.List
-		<com.liferay.site.navigation.model.SiteNavigationMenu>
-			getSiteNavigationMenus(
-				long groupId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.site.navigation.model.SiteNavigationMenu>
-						orderByComparator) {
+	public static List<SiteNavigationMenu> getSiteNavigationMenus(
+		long groupId, int start, int end,
+		OrderByComparator<SiteNavigationMenu> orderByComparator) {
 
 		return getService().getSiteNavigationMenus(
 			groupId, start, end, orderByComparator);
 	}
 
-	public static java.util.List
-		<com.liferay.site.navigation.model.SiteNavigationMenu>
-			getSiteNavigationMenus(
-				long groupId, String keywords, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.site.navigation.model.SiteNavigationMenu>
-						orderByComparator) {
+	public static List<SiteNavigationMenu> getSiteNavigationMenus(
+		long groupId, String keywords, int start, int end,
+		OrderByComparator<SiteNavigationMenu> orderByComparator) {
 
 		return getService().getSiteNavigationMenus(
 			groupId, keywords, start, end, orderByComparator);
@@ -416,10 +393,8 @@ public class SiteNavigationMenuLocalServiceUtil {
 	 * @param companyId the primary key of the company
 	 * @return the matching site navigation menus, or an empty list if no matches were found
 	 */
-	public static java.util.List
-		<com.liferay.site.navigation.model.SiteNavigationMenu>
-			getSiteNavigationMenusByUuidAndCompanyId(
-				String uuid, long companyId) {
+	public static List<SiteNavigationMenu>
+		getSiteNavigationMenusByUuidAndCompanyId(String uuid, long companyId) {
 
 		return getService().getSiteNavigationMenusByUuidAndCompanyId(
 			uuid, companyId);
@@ -435,13 +410,10 @@ public class SiteNavigationMenuLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the range of matching site navigation menus, or an empty list if no matches were found
 	 */
-	public static java.util.List
-		<com.liferay.site.navigation.model.SiteNavigationMenu>
-			getSiteNavigationMenusByUuidAndCompanyId(
-				String uuid, long companyId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.site.navigation.model.SiteNavigationMenu>
-						orderByComparator) {
+	public static List<SiteNavigationMenu>
+		getSiteNavigationMenusByUuidAndCompanyId(
+			String uuid, long companyId, int start, int end,
+			OrderByComparator<SiteNavigationMenu> orderByComparator) {
 
 		return getService().getSiteNavigationMenusByUuidAndCompanyId(
 			uuid, companyId, start, end, orderByComparator);
@@ -466,31 +438,28 @@ public class SiteNavigationMenuLocalServiceUtil {
 		return getService().getSiteNavigationMenusCount(groupId, keywords);
 	}
 
-	public static com.liferay.site.navigation.model.SiteNavigationMenu
-			updateSiteNavigationMenu(
-				long userId, long siteNavigationMenuId, int type, boolean auto,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static SiteNavigationMenu updateSiteNavigationMenu(
+			long userId, long siteNavigationMenuId, int type, boolean auto,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().updateSiteNavigationMenu(
 			userId, siteNavigationMenuId, type, auto, serviceContext);
 	}
 
-	public static com.liferay.site.navigation.model.SiteNavigationMenu
-			updateSiteNavigationMenu(
-				long userId, long siteNavigationMenuId, long groupId,
-				String name, int type, boolean auto)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static SiteNavigationMenu updateSiteNavigationMenu(
+			long userId, long siteNavigationMenuId, long groupId, String name,
+			int type, boolean auto)
+		throws PortalException {
 
 		return getService().updateSiteNavigationMenu(
 			userId, siteNavigationMenuId, groupId, name, type, auto);
 	}
 
-	public static com.liferay.site.navigation.model.SiteNavigationMenu
-			updateSiteNavigationMenu(
-				long userId, long siteNavigationMenuId, String name,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static SiteNavigationMenu updateSiteNavigationMenu(
+			long userId, long siteNavigationMenuId, String name,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().updateSiteNavigationMenu(
 			userId, siteNavigationMenuId, name, serviceContext);
@@ -506,38 +475,16 @@ public class SiteNavigationMenuLocalServiceUtil {
 	 * @param siteNavigationMenu the site navigation menu
 	 * @return the site navigation menu that was updated
 	 */
-	public static com.liferay.site.navigation.model.SiteNavigationMenu
-		updateSiteNavigationMenu(
-			com.liferay.site.navigation.model.SiteNavigationMenu
-				siteNavigationMenu) {
+	public static SiteNavigationMenu updateSiteNavigationMenu(
+		SiteNavigationMenu siteNavigationMenu) {
 
 		return getService().updateSiteNavigationMenu(siteNavigationMenu);
 	}
 
 	public static SiteNavigationMenuLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<SiteNavigationMenuLocalService, SiteNavigationMenuLocalService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			SiteNavigationMenuLocalService.class);
-
-		ServiceTracker
-			<SiteNavigationMenuLocalService, SiteNavigationMenuLocalService>
-				serviceTracker =
-					new ServiceTracker
-						<SiteNavigationMenuLocalService,
-						 SiteNavigationMenuLocalService>(
-							 bundle.getBundleContext(),
-							 SiteNavigationMenuLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile SiteNavigationMenuLocalService _service;
 
 }

@@ -14,7 +14,10 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.LayoutSet;
+
+import java.io.InputStream;
 
 /**
  * Provides the remote service utility for LayoutSet. This utility wraps
@@ -67,7 +70,7 @@ public class LayoutSetServiceUtil {
 			long groupId, boolean privateLayout,
 			boolean layoutSetPrototypeLinkEnabled,
 			String layoutSetPrototypeUuid)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().updateLayoutSetPrototypeLinkEnabled(
 			groupId, privateLayout, layoutSetPrototypeLinkEnabled,
@@ -76,7 +79,7 @@ public class LayoutSetServiceUtil {
 
 	public static void updateLogo(
 			long groupId, boolean privateLayout, boolean hasLogo, byte[] bytes)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().updateLogo(groupId, privateLayout, hasLogo, bytes);
 	}
@@ -84,62 +87,57 @@ public class LayoutSetServiceUtil {
 	public static void updateLogo(
 			long groupId, boolean privateLayout, boolean hasLogo,
 			java.io.File file)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().updateLogo(groupId, privateLayout, hasLogo, file);
 	}
 
 	public static void updateLogo(
 			long groupId, boolean privateLayout, boolean hasLogo,
-			java.io.InputStream inputStream)
-		throws com.liferay.portal.kernel.exception.PortalException {
+			InputStream inputStream)
+		throws PortalException {
 
 		getService().updateLogo(groupId, privateLayout, hasLogo, inputStream);
 	}
 
 	public static void updateLogo(
 			long groupId, boolean privateLayout, boolean hasLogo,
-			java.io.InputStream inputStream, boolean cleanUpStream)
-		throws com.liferay.portal.kernel.exception.PortalException {
+			InputStream inputStream, boolean cleanUpStream)
+		throws PortalException {
 
 		getService().updateLogo(
 			groupId, privateLayout, hasLogo, inputStream, cleanUpStream);
 	}
 
-	public static com.liferay.portal.kernel.model.LayoutSet updateLookAndFeel(
+	public static LayoutSet updateLookAndFeel(
 			long groupId, boolean privateLayout, String themeId,
 			String colorSchemeId, String css)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateLookAndFeel(
 			groupId, privateLayout, themeId, colorSchemeId, css);
 	}
 
-	public static com.liferay.portal.kernel.model.LayoutSet updateSettings(
+	public static LayoutSet updateSettings(
 			long groupId, boolean privateLayout, String settings)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateSettings(groupId, privateLayout, settings);
 	}
 
-	public static com.liferay.portal.kernel.model.LayoutSet updateVirtualHosts(
+	public static LayoutSet updateVirtualHosts(
 			long groupId, boolean privateLayout,
 			java.util.TreeMap<String, String> virtualHostnames)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateVirtualHosts(
 			groupId, privateLayout, virtualHostnames);
 	}
 
 	public static LayoutSetService getService() {
-		if (_service == null) {
-			_service = (LayoutSetService)PortalBeanLocatorUtil.locate(
-				LayoutSetService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static LayoutSetService _service;
+	private static volatile LayoutSetService _service;
 
 }

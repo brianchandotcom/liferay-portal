@@ -14,7 +14,16 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PasswordPolicy;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for PasswordPolicy. This utility wraps
@@ -35,18 +44,17 @@ public class PasswordPolicyLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.service.impl.PasswordPolicyLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.kernel.model.PasswordPolicy
-			addPasswordPolicy(
-				long userId, boolean defaultPolicy, String name,
-				String description, boolean changeable, boolean changeRequired,
-				long minAge, boolean checkSyntax, boolean allowDictionaryWords,
-				int minAlphanumeric, int minLength, int minLowerCase,
-				int minNumbers, int minSymbols, int minUpperCase, String regex,
-				boolean history, int historyCount, boolean expireable,
-				long maxAge, long warningTime, int graceLimit, boolean lockout,
-				int maxFailure, long lockoutDuration, long resetFailureCount,
-				long resetTicketMaxAge, ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PasswordPolicy addPasswordPolicy(
+			long userId, boolean defaultPolicy, String name, String description,
+			boolean changeable, boolean changeRequired, long minAge,
+			boolean checkSyntax, boolean allowDictionaryWords,
+			int minAlphanumeric, int minLength, int minLowerCase,
+			int minNumbers, int minSymbols, int minUpperCase, String regex,
+			boolean history, int historyCount, boolean expireable, long maxAge,
+			long warningTime, int graceLimit, boolean lockout, int maxFailure,
+			long lockoutDuration, long resetFailureCount,
+			long resetTicketMaxAge, ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addPasswordPolicy(
 			userId, defaultPolicy, name, description, changeable,
@@ -67,15 +75,14 @@ public class PasswordPolicyLocalServiceUtil {
 	 * @param passwordPolicy the password policy
 	 * @return the password policy that was added
 	 */
-	public static com.liferay.portal.kernel.model.PasswordPolicy
-		addPasswordPolicy(
-			com.liferay.portal.kernel.model.PasswordPolicy passwordPolicy) {
+	public static PasswordPolicy addPasswordPolicy(
+		PasswordPolicy passwordPolicy) {
 
 		return getService().addPasswordPolicy(passwordPolicy);
 	}
 
 	public static void checkDefaultPasswordPolicy(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().checkDefaultPasswordPolicy(companyId);
 	}
@@ -86,24 +93,22 @@ public class PasswordPolicyLocalServiceUtil {
 	 * @param passwordPolicyId the primary key for the new password policy
 	 * @return the new password policy
 	 */
-	public static com.liferay.portal.kernel.model.PasswordPolicy
-		createPasswordPolicy(long passwordPolicyId) {
-
+	public static PasswordPolicy createPasswordPolicy(long passwordPolicyId) {
 		return getService().createPasswordPolicy(passwordPolicyId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
 
 	public static void deleteNondefaultPasswordPolicies(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteNondefaultPasswordPolicies(companyId);
 	}
@@ -119,9 +124,8 @@ public class PasswordPolicyLocalServiceUtil {
 	 * @return the password policy that was removed
 	 * @throws PortalException if a password policy with the primary key could not be found
 	 */
-	public static com.liferay.portal.kernel.model.PasswordPolicy
-			deletePasswordPolicy(long passwordPolicyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PasswordPolicy deletePasswordPolicy(long passwordPolicyId)
+		throws PortalException {
 
 		return getService().deletePasswordPolicy(passwordPolicyId);
 	}
@@ -137,10 +141,9 @@ public class PasswordPolicyLocalServiceUtil {
 	 * @return the password policy that was removed
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PasswordPolicy
-			deletePasswordPolicy(
-				com.liferay.portal.kernel.model.PasswordPolicy passwordPolicy)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PasswordPolicy deletePasswordPolicy(
+			PasswordPolicy passwordPolicy)
+		throws PortalException {
 
 		return getService().deletePasswordPolicy(passwordPolicy);
 	}
@@ -148,23 +151,18 @@ public class PasswordPolicyLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -174,9 +172,7 @@ public class PasswordPolicyLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -192,9 +188,8 @@ public class PasswordPolicyLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -212,10 +207,9 @@ public class PasswordPolicyLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -227,9 +221,7 @@ public class PasswordPolicyLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -241,20 +233,18 @@ public class PasswordPolicyLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.portal.kernel.model.PasswordPolicy
-		fetchPasswordPolicy(long passwordPolicyId) {
-
+	public static PasswordPolicy fetchPasswordPolicy(long passwordPolicyId) {
 		return getService().fetchPasswordPolicy(passwordPolicyId);
 	}
 
-	public static com.liferay.portal.kernel.model.PasswordPolicy
-		fetchPasswordPolicy(long companyId, String name) {
+	public static PasswordPolicy fetchPasswordPolicy(
+		long companyId, String name) {
 
 		return getService().fetchPasswordPolicy(companyId, name);
 	}
@@ -266,8 +256,8 @@ public class PasswordPolicyLocalServiceUtil {
 	 * @param companyId the primary key of the company
 	 * @return the matching password policy, or <code>null</code> if a matching password policy could not be found
 	 */
-	public static com.liferay.portal.kernel.model.PasswordPolicy
-		fetchPasswordPolicyByUuidAndCompanyId(String uuid, long companyId) {
+	public static PasswordPolicy fetchPasswordPolicyByUuidAndCompanyId(
+		String uuid, long companyId) {
 
 		return getService().fetchPasswordPolicyByUuidAndCompanyId(
 			uuid, companyId);
@@ -279,9 +269,8 @@ public class PasswordPolicyLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
-	public static com.liferay.portal.kernel.model.PasswordPolicy
-			getDefaultPasswordPolicy(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PasswordPolicy getDefaultPasswordPolicy(long companyId)
+		throws PortalException {
 
 		return getService().getDefaultPasswordPolicy(companyId);
 	}
@@ -321,9 +310,7 @@ public class PasswordPolicyLocalServiceUtil {
 	 * @param end the upper bound of the range of password policies (not inclusive)
 	 * @return the range of password policies
 	 */
-	public static java.util.List<com.liferay.portal.kernel.model.PasswordPolicy>
-		getPasswordPolicies(int start, int end) {
-
+	public static List<PasswordPolicy> getPasswordPolicies(int start, int end) {
 		return getService().getPasswordPolicies(start, end);
 	}
 
@@ -343,37 +330,35 @@ public class PasswordPolicyLocalServiceUtil {
 	 * @return the password policy
 	 * @throws PortalException if a password policy with the primary key could not be found
 	 */
-	public static com.liferay.portal.kernel.model.PasswordPolicy
-			getPasswordPolicy(long passwordPolicyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PasswordPolicy getPasswordPolicy(long passwordPolicyId)
+		throws PortalException {
 
 		return getService().getPasswordPolicy(passwordPolicyId);
 	}
 
-	public static com.liferay.portal.kernel.model.PasswordPolicy
-			getPasswordPolicy(long companyId, boolean defaultPolicy)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PasswordPolicy getPasswordPolicy(
+			long companyId, boolean defaultPolicy)
+		throws PortalException {
 
 		return getService().getPasswordPolicy(companyId, defaultPolicy);
 	}
 
-	public static com.liferay.portal.kernel.model.PasswordPolicy
-			getPasswordPolicy(long companyId, long[] organizationIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PasswordPolicy getPasswordPolicy(
+			long companyId, long[] organizationIds)
+		throws PortalException {
 
 		return getService().getPasswordPolicy(companyId, organizationIds);
 	}
 
-	public static com.liferay.portal.kernel.model.PasswordPolicy
-			getPasswordPolicyByUser(com.liferay.portal.kernel.model.User user)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PasswordPolicy getPasswordPolicyByUser(
+			com.liferay.portal.kernel.model.User user)
+		throws PortalException {
 
 		return getService().getPasswordPolicyByUser(user);
 	}
 
-	public static com.liferay.portal.kernel.model.PasswordPolicy
-			getPasswordPolicyByUserId(long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PasswordPolicy getPasswordPolicyByUserId(long userId)
+		throws PortalException {
 
 		return getService().getPasswordPolicyByUserId(userId);
 	}
@@ -386,9 +371,9 @@ public class PasswordPolicyLocalServiceUtil {
 	 * @return the matching password policy
 	 * @throws PortalException if a matching password policy could not be found
 	 */
-	public static com.liferay.portal.kernel.model.PasswordPolicy
-			getPasswordPolicyByUuidAndCompanyId(String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PasswordPolicy getPasswordPolicyByUuidAndCompanyId(
+			String uuid, long companyId)
+		throws PortalException {
 
 		return getService().getPasswordPolicyByUuidAndCompanyId(
 			uuid, companyId);
@@ -397,19 +382,15 @@ public class PasswordPolicyLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.PasswordPolicy>
-		search(
-			long companyId, String name, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.portal.kernel.model.PasswordPolicy>
-					orderByComparator) {
+	public static List<PasswordPolicy> search(
+		long companyId, String name, int start, int end,
+		OrderByComparator<PasswordPolicy> orderByComparator) {
 
 		return getService().search(
 			companyId, name, start, end, orderByComparator);
@@ -419,18 +400,17 @@ public class PasswordPolicyLocalServiceUtil {
 		return getService().searchCount(companyId, name);
 	}
 
-	public static com.liferay.portal.kernel.model.PasswordPolicy
-			updatePasswordPolicy(
-				long passwordPolicyId, String name, String description,
-				boolean changeable, boolean changeRequired, long minAge,
-				boolean checkSyntax, boolean allowDictionaryWords,
-				int minAlphanumeric, int minLength, int minLowerCase,
-				int minNumbers, int minSymbols, int minUpperCase, String regex,
-				boolean history, int historyCount, boolean expireable,
-				long maxAge, long warningTime, int graceLimit, boolean lockout,
-				int maxFailure, long lockoutDuration, long resetFailureCount,
-				long resetTicketMaxAge, ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PasswordPolicy updatePasswordPolicy(
+			long passwordPolicyId, String name, String description,
+			boolean changeable, boolean changeRequired, long minAge,
+			boolean checkSyntax, boolean allowDictionaryWords,
+			int minAlphanumeric, int minLength, int minLowerCase,
+			int minNumbers, int minSymbols, int minUpperCase, String regex,
+			boolean history, int historyCount, boolean expireable, long maxAge,
+			long warningTime, int graceLimit, boolean lockout, int maxFailure,
+			long lockoutDuration, long resetFailureCount,
+			long resetTicketMaxAge, ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().updatePasswordPolicy(
 			passwordPolicyId, name, description, changeable, changeRequired,
@@ -451,22 +431,16 @@ public class PasswordPolicyLocalServiceUtil {
 	 * @param passwordPolicy the password policy
 	 * @return the password policy that was updated
 	 */
-	public static com.liferay.portal.kernel.model.PasswordPolicy
-		updatePasswordPolicy(
-			com.liferay.portal.kernel.model.PasswordPolicy passwordPolicy) {
+	public static PasswordPolicy updatePasswordPolicy(
+		PasswordPolicy passwordPolicy) {
 
 		return getService().updatePasswordPolicy(passwordPolicy);
 	}
 
 	public static PasswordPolicyLocalService getService() {
-		if (_service == null) {
-			_service = (PasswordPolicyLocalService)PortalBeanLocatorUtil.locate(
-				PasswordPolicyLocalService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static PasswordPolicyLocalService _service;
+	private static volatile PasswordPolicyLocalService _service;
 
 }

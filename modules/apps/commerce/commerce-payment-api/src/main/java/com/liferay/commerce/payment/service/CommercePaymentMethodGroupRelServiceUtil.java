@@ -14,9 +14,12 @@
 
 package com.liferay.commerce.payment.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the remote service utility for CommercePaymentMethodGroupRel. This utility wraps
@@ -40,7 +43,7 @@ public class CommercePaymentMethodGroupRelServiceUtil {
 	public static com.liferay.commerce.model.CommerceAddressRestriction
 			addCommerceAddressRestriction(
 				long userId, long groupId, long classPK, long commerceCountryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addCommerceAddressRestriction(
 			userId, groupId, classPK, commerceCountryId);
@@ -54,21 +57,20 @@ public class CommercePaymentMethodGroupRelServiceUtil {
 			addCommerceAddressRestriction(
 				long classPK, long commerceCountryId,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addCommerceAddressRestriction(
 			classPK, commerceCountryId, serviceContext);
 	}
 
-	public static
-		com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel
-				addCommercePaymentMethodGroupRel(
-					long userId, long groupId,
-					java.util.Map<java.util.Locale, String> nameMap,
-					java.util.Map<java.util.Locale, String> descriptionMap,
-					java.io.File imageFile, String engineKey, double priority,
-					boolean active)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePaymentMethodGroupRel
+			addCommercePaymentMethodGroupRel(
+				long userId, long groupId,
+				Map<java.util.Locale, String> nameMap,
+				Map<java.util.Locale, String> descriptionMap,
+				java.io.File imageFile, String engineKey, double priority,
+				boolean active)
+		throws PortalException {
 
 		return getService().addCommercePaymentMethodGroupRel(
 			userId, groupId, nameMap, descriptionMap, imageFile, engineKey,
@@ -77,7 +79,7 @@ public class CommercePaymentMethodGroupRelServiceUtil {
 
 	public static void deleteCommerceAddressRestriction(
 			long commerceAddressRestrictionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommerceAddressRestriction(
 			commerceAddressRestrictionId);
@@ -85,7 +87,7 @@ public class CommercePaymentMethodGroupRelServiceUtil {
 
 	public static void deleteCommerceAddressRestrictions(
 			long commercePaymentMethodGroupRelId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommerceAddressRestrictions(
 			commercePaymentMethodGroupRelId);
@@ -93,131 +95,118 @@ public class CommercePaymentMethodGroupRelServiceUtil {
 
 	public static void deleteCommercePaymentMethodGroupRel(
 			long commercePaymentMethodGroupRelId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommercePaymentMethodGroupRel(
 			commercePaymentMethodGroupRelId);
 	}
 
-	public static
-		com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel
-				fetchCommercePaymentMethodGroupRel(
-					long groupId, String engineKey)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePaymentMethodGroupRel
+			fetchCommercePaymentMethodGroupRel(long groupId, String engineKey)
+		throws PortalException {
 
 		return getService().fetchCommercePaymentMethodGroupRel(
 			groupId, engineKey);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.model.CommerceAddressRestriction>
-				getCommerceAddressRestrictions(
-					long classPK, int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						<com.liferay.commerce.model.CommerceAddressRestriction>
-							orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<com.liferay.commerce.model.CommerceAddressRestriction>
+			getCommerceAddressRestrictions(
+				long classPK, int start, int end,
+				OrderByComparator
+					<com.liferay.commerce.model.CommerceAddressRestriction>
+						orderByComparator)
+		throws PortalException {
 
 		return getService().getCommerceAddressRestrictions(
 			classPK, start, end, orderByComparator);
 	}
 
 	public static int getCommerceAddressRestrictionsCount(long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCommerceAddressRestrictionsCount(classPK);
 	}
 
-	public static
-		com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel
-				getCommercePaymentMethodGroupRel(
-					long commercePaymentMethodGroupRelId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePaymentMethodGroupRel
+			getCommercePaymentMethodGroupRel(
+				long commercePaymentMethodGroupRelId)
+		throws PortalException {
 
 		return getService().getCommercePaymentMethodGroupRel(
 			commercePaymentMethodGroupRelId);
 	}
 
-	public static
-		com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel
-				getCommercePaymentMethodGroupRel(long groupId, String engineKey)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePaymentMethodGroupRel
+			getCommercePaymentMethodGroupRel(long groupId, String engineKey)
+		throws PortalException {
 
 		return getService().getCommercePaymentMethodGroupRel(
 			groupId, engineKey);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel>
-				getCommercePaymentMethodGroupRels(long groupId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommercePaymentMethodGroupRel>
+			getCommercePaymentMethodGroupRels(long groupId)
+		throws PortalException {
 
 		return getService().getCommercePaymentMethodGroupRels(groupId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel>
-				getCommercePaymentMethodGroupRels(long groupId, boolean active)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommercePaymentMethodGroupRel>
+			getCommercePaymentMethodGroupRels(long groupId, boolean active)
+		throws PortalException {
 
 		return getService().getCommercePaymentMethodGroupRels(groupId, active);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel>
-				getCommercePaymentMethodGroupRels(
-					long groupId, boolean active, int start, int end)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommercePaymentMethodGroupRel>
+			getCommercePaymentMethodGroupRels(
+				long groupId, boolean active, int start, int end)
+		throws PortalException {
 
 		return getService().getCommercePaymentMethodGroupRels(
 			groupId, active, start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel>
-				getCommercePaymentMethodGroupRels(
-					long groupId, boolean active, int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						<com.liferay.commerce.payment.model.
-							CommercePaymentMethodGroupRel> orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommercePaymentMethodGroupRel>
+			getCommercePaymentMethodGroupRels(
+				long groupId, boolean active, int start, int end,
+				OrderByComparator<CommercePaymentMethodGroupRel>
+					orderByComparator)
+		throws PortalException {
 
 		return getService().getCommercePaymentMethodGroupRels(
 			groupId, active, start, end, orderByComparator);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel>
-				getCommercePaymentMethodGroupRels(
-					long groupId, int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						<com.liferay.commerce.payment.model.
-							CommercePaymentMethodGroupRel> orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommercePaymentMethodGroupRel>
+			getCommercePaymentMethodGroupRels(
+				long groupId, int start, int end,
+				OrderByComparator<CommercePaymentMethodGroupRel>
+					orderByComparator)
+		throws PortalException {
 
 		return getService().getCommercePaymentMethodGroupRels(
 			groupId, start, end, orderByComparator);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel>
-				getCommercePaymentMethodGroupRels(
-					long groupId, long commerceCountryId, boolean active)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommercePaymentMethodGroupRel>
+			getCommercePaymentMethodGroupRels(
+				long groupId, long commerceCountryId, boolean active)
+		throws PortalException {
 
 		return getService().getCommercePaymentMethodGroupRels(
 			groupId, commerceCountryId, active);
 	}
 
 	public static int getCommercePaymentMethodGroupRelsCount(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCommercePaymentMethodGroupRelsCount(groupId);
 	}
 
 	public static int getCommercePaymentMethodGroupRelsCount(
 			long groupId, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCommercePaymentMethodGroupRelsCount(
 			groupId, active);
@@ -232,22 +221,20 @@ public class CommercePaymentMethodGroupRelServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static
-		com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel
-				setActive(long commercePaymentMethodGroupRelId, boolean active)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePaymentMethodGroupRel setActive(
+			long commercePaymentMethodGroupRelId, boolean active)
+		throws PortalException {
 
 		return getService().setActive(commercePaymentMethodGroupRelId, active);
 	}
 
-	public static
-		com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel
-				updateCommercePaymentMethodGroupRel(
-					long commercePaymentMethodGroupRelId,
-					java.util.Map<java.util.Locale, String> nameMap,
-					java.util.Map<java.util.Locale, String> descriptionMap,
-					java.io.File imageFile, double priority, boolean active)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommercePaymentMethodGroupRel
+			updateCommercePaymentMethodGroupRel(
+				long commercePaymentMethodGroupRelId,
+				Map<java.util.Locale, String> nameMap,
+				Map<java.util.Locale, String> descriptionMap,
+				java.io.File imageFile, double priority, boolean active)
+		throws PortalException {
 
 		return getService().updateCommercePaymentMethodGroupRel(
 			commercePaymentMethodGroupRelId, nameMap, descriptionMap, imageFile,
@@ -255,29 +242,9 @@ public class CommercePaymentMethodGroupRelServiceUtil {
 	}
 
 	public static CommercePaymentMethodGroupRelService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommercePaymentMethodGroupRelService,
-		 CommercePaymentMethodGroupRelService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommercePaymentMethodGroupRelService.class);
-
-		ServiceTracker
-			<CommercePaymentMethodGroupRelService,
-			 CommercePaymentMethodGroupRelService> serviceTracker =
-				new ServiceTracker
-					<CommercePaymentMethodGroupRelService,
-					 CommercePaymentMethodGroupRelService>(
-						 bundle.getBundleContext(),
-						 CommercePaymentMethodGroupRelService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommercePaymentMethodGroupRelService _service;
 
 }

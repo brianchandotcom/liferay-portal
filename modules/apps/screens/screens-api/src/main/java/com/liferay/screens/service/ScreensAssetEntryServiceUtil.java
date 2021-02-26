@@ -14,9 +14,7 @@
 
 package com.liferay.screens.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * Provides the remote service utility for ScreensAssetEntry. This utility wraps
@@ -41,7 +39,7 @@ public class ScreensAssetEntryServiceUtil {
 			com.liferay.asset.kernel.service.persistence.AssetEntryQuery
 				assetEntryQuery,
 			java.util.Locale locale)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getAssetEntries(assetEntryQuery, locale);
 	}
@@ -49,7 +47,7 @@ public class ScreensAssetEntryServiceUtil {
 	public static com.liferay.portal.kernel.json.JSONArray getAssetEntries(
 			long companyId, long groupId, String portletItemName,
 			java.util.Locale locale, int max)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getAssetEntries(
 			companyId, groupId, portletItemName, locale, max);
@@ -57,14 +55,14 @@ public class ScreensAssetEntryServiceUtil {
 
 	public static com.liferay.portal.kernel.json.JSONObject getAssetEntry(
 			long entryId, java.util.Locale locale)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getAssetEntry(entryId, locale);
 	}
 
 	public static com.liferay.portal.kernel.json.JSONObject getAssetEntry(
 			String className, long classPK, java.util.Locale locale)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getAssetEntry(className, classPK, locale);
 	}
@@ -79,25 +77,9 @@ public class ScreensAssetEntryServiceUtil {
 	}
 
 	public static ScreensAssetEntryService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<ScreensAssetEntryService, ScreensAssetEntryService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(ScreensAssetEntryService.class);
-
-		ServiceTracker<ScreensAssetEntryService, ScreensAssetEntryService>
-			serviceTracker =
-				new ServiceTracker
-					<ScreensAssetEntryService, ScreensAssetEntryService>(
-						bundle.getBundleContext(),
-						ScreensAssetEntryService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile ScreensAssetEntryService _service;
 
 }

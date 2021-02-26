@@ -14,9 +14,8 @@
 
 package com.liferay.polls.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.polls.model.PollsVote;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * Provides the remote service utility for PollsVote. This utility wraps
@@ -37,10 +36,10 @@ public class PollsVoteServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.polls.service.impl.PollsVoteServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.polls.model.PollsVote addVote(
+	public static PollsVote addVote(
 			long questionId, long choiceId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addVote(questionId, choiceId, serviceContext);
 	}
@@ -55,22 +54,9 @@ public class PollsVoteServiceUtil {
 	}
 
 	public static PollsVoteService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<PollsVoteService, PollsVoteService>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(PollsVoteService.class);
-
-		ServiceTracker<PollsVoteService, PollsVoteService> serviceTracker =
-			new ServiceTracker<PollsVoteService, PollsVoteService>(
-				bundle.getBundleContext(), PollsVoteService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile PollsVoteService _service;
 
 }

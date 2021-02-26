@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * Provides the local service utility for DLTrash. This utility wraps
@@ -50,7 +50,7 @@ public class DLTrashLocalServiceUtil {
 				long userId, long repositoryId, long fileEntryId,
 				long newFolderId,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().moveFileEntryFromTrash(
 			userId, repositoryId, fileEntryId, newFolderId, serviceContext);
@@ -59,7 +59,7 @@ public class DLTrashLocalServiceUtil {
 	public static com.liferay.portal.kernel.repository.model.FileEntry
 			moveFileEntryToTrash(
 				long userId, long repositoryId, long fileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().moveFileEntryToTrash(
 			userId, repositoryId, fileEntryId);
@@ -67,21 +67,16 @@ public class DLTrashLocalServiceUtil {
 
 	public static void restoreFileEntryFromTrash(
 			long userId, long repositoryId, long fileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().restoreFileEntryFromTrash(
 			userId, repositoryId, fileEntryId);
 	}
 
 	public static DLTrashLocalService getService() {
-		if (_service == null) {
-			_service = (DLTrashLocalService)PortalBeanLocatorUtil.locate(
-				DLTrashLocalService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static DLTrashLocalService _service;
+	private static volatile DLTrashLocalService _service;
 
 }

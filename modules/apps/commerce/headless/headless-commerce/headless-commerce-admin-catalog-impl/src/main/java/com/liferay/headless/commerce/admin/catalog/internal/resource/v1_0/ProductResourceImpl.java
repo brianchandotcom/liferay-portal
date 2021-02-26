@@ -757,7 +757,7 @@ public class ProductResourceImpl
 			GetterUtil.getBoolean(product.getNeverExpire(), true),
 			product.getDefaultSku(),
 			GetterUtil.getBoolean(subscriptionConfiguration.getEnable()),
-			GetterUtil.getInteger(subscriptionConfiguration.getLength()),
+			GetterUtil.getInteger(subscriptionConfiguration.getLength(),1),
 			GetterUtil.getString(
 				subscriptionConfiguration.getSubscriptionTypeAsString()),
 			null,

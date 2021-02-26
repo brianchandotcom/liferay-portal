@@ -404,7 +404,7 @@ public class CPDefinitionsImporter {
 		long weight = jsonObject.getLong("Weight");
 
 		boolean subscriptionEnabled = false;
-		int subscriptionLength = 0;
+		int subscriptionLength = 1;
 		String subscriptionType = null;
 		long maxSubscriptionCycles = 0;
 

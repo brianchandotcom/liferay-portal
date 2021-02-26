@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormFieldOptionsTestUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
@@ -69,6 +70,8 @@ public class SelectDDMFormFieldTemplateContextContributorTest
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
+
+		PropsTestUtil.setProps("collator.rules", "<<<");
 
 		_setUpHtmlUtil();
 		_setUpJSONFactory();

@@ -2552,11 +2552,11 @@ jdbc.default.password=${database.password}</echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="prepare-saas-properties">
+	<macrodef name="prepare-liferay-online-properties">
 		<sequential>
 			<echo append="true" file="portal-impl/src/portal-ext.properties">
 ##
-## SaaS
+## Liferay Online
 ##
 
 data.limit.max.dl.storage.size=1073741824
@@ -9304,12 +9304,12 @@ cluster.link.bind.addr["cluster-link-udp"]=${ip.address}</echo>
 			</then>
 		</if>
 
-		<get-testcase-property property.name="saas.properties" />
+		<get-testcase-property property.name="liferay.online.properties" />
 
 		<if>
-			<isset property="saas.properties" />
+			<isset property="liferay.online.properties" />
 			<then>
-				<prepare-saas-properties />
+				<prepare-liferay-online-properties />
 			</then>
 		</if>
 

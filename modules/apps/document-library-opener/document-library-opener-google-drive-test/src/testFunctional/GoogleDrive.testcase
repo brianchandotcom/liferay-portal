@@ -542,7 +542,7 @@ definition {
 
 		SelectFrameTop();
 
-		GoogleDoc.saveAndExit();
+		GoogleDoc.discardChanges();
 
 		Navigator.openURL();
 

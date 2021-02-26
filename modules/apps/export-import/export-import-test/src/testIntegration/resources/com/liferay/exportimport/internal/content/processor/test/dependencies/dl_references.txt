@@ -95,3 +95,15 @@ HTML reference with single quotes:
 <a href='[$WEB_ID$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]'>Link</a>
 <a href='[$WEB_ID$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]'>Link</a>
 <a href='[$WEB_ID$]/documents/portlet_file_entry/[$GROUP_ID$]/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]'>Link</a>
+
+HTML reference with escaped double quotes:
+
+<a href=\"/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]\">Link</a>
+<a href=\"/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]\">Link</a>
+<a href=\"/documents/portlet_file_entry/[$GROUP_ID$]/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]\">Link</a>
+
+HTML reference with escaped single quotes:
+
+<a href=\'/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]\'>Link</a>
+<a href=\'/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]\'>Link</a>
+<a href=\'/documents/portlet_file_entry/[$GROUP_ID$]/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]\'>Link</a>

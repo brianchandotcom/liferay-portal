@@ -30,4 +30,7 @@ public interface FFLayoutContentPageEditorConfiguration {
 	@Meta.AD(deflt = "false", required = false)
 	public boolean containerItemFlexEnabled();
 
+	@Meta.AD(deflt = "false", required = false)
+	public boolean layoutMappingEnabled();
+
 }

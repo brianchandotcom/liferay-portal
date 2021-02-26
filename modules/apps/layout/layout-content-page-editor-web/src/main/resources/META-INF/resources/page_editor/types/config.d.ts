@@ -128,9 +128,9 @@ export interface Config {
 	getPageContentsURL: string;
 	imageSelectorURL: string;
 	infoItemSelectorURL: string;
-
-	layoutItemSelectorURL: String;
 	layoutConversionWarningMessages: string[] | null;
+	layoutItemSelectorURL: String;
+	layoutMappingEnabled: boolean;
 	layoutType: LayoutTypes[keyof LayoutTypes];
 	lookAndFeelURL: string;
 	mappingFieldsURL: string;

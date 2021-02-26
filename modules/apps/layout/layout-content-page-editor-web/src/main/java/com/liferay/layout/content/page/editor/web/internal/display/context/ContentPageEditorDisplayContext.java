@@ -455,6 +455,9 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"layoutItemSelectorURL", _getLayoutItemSelectorURL()
 			).put(
+				"layoutMappingEnabled",
+				_ffLayoutContentPageEditorConfiguration.layoutMappingEnabled()
+			).put(
 				"layoutType", String.valueOf(_getLayoutType())
 			).put(
 				"lookAndFeelURL", _getLookAndFeelURL()

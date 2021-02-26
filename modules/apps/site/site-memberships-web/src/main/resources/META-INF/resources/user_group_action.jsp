@@ -95,11 +95,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 		assignRolesLink.addEventListener('click', (event) => {
 			event.preventDefault();
 
-			var target = event.target;
-
-			if (!target.dataset.href) {
-				target = target.parentElement;
-			}
+			var target = event.currentTarget;
 
 			var addUserGroupGroupRoleFm =
 				document.<portlet:namespace />addUserGroupGroupRoleFm;
@@ -138,11 +134,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 		unassignRolesLink.addEventListener('click', (event) => {
 			event.preventDefault();
 
-			var target = event.target;
-
-			if (!target.dataset.href) {
-				target = target.parentElement;
-			}
+			var target = event.currentTarget;
 
 			var unassignUserGroupGroupRoleFm =
 				document.<portlet:namespace />unassignUserGroupGroupRoleFm;

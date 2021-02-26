@@ -25,19 +25,6 @@ import java.net.URL;
  */
 public class TestrayS3Object {
 
-	public TestrayS3Object(TestrayS3Bucket testrayS3Bucket, String key) {
-		_testrayS3Bucket = testrayS3Bucket;
-		_key = key;
-
-		try {
-			_url = new URL(
-				_testrayS3Bucket.getTestrayS3BaseURL() + "/" + getKey());
-		}
-		catch (MalformedURLException malformedURLException) {
-			throw new RuntimeException(malformedURLException);
-		}
-	}
-
 	public boolean exists() {
 		if (_exists != null) {
 			return _exists;
@@ -81,6 +68,19 @@ public class TestrayS3Object {
 	@Override
 	public String toString() {
 		return String.valueOf(getURL());
+	}
+
+	protected TestrayS3Object(TestrayS3Bucket testrayS3Bucket, String key) {
+		_testrayS3Bucket = testrayS3Bucket;
+		_key = key;
+
+		try {
+			_url = new URL(
+				_testrayS3Bucket.getTestrayS3BaseURL() + "/" + getKey());
+		}
+		catch (MalformedURLException malformedURLException) {
+			throw new RuntimeException(malformedURLException);
+		}
 	}
 
 	private Boolean _exists;

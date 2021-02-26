@@ -81,7 +81,8 @@ public class TestrayS3Bucket {
 
 			_amazonS3.putObject(putObjectRequest);
 
-			TestrayS3Object testrayS3Object = new TestrayS3Object(this, key);
+			TestrayS3Object testrayS3Object =
+				TestrayS3ObjectFactory.newTestrayS3Object(this, key);
 
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
@@ -120,7 +121,8 @@ public class TestrayS3Bucket {
 
 			_amazonS3.putObject(putObjectRequest);
 
-			TestrayS3Object testrayS3Object = new TestrayS3Object(this, key);
+			TestrayS3Object testrayS3Object =
+				TestrayS3ObjectFactory.newTestrayS3Object(this, key);
 
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
@@ -162,7 +164,8 @@ public class TestrayS3Bucket {
 	}
 
 	public void deleteTestrayS3Object(String key) {
-		deleteTestrayS3Object(new TestrayS3Object(this, key));
+		deleteTestrayS3Object(
+			TestrayS3ObjectFactory.newTestrayS3Object(this, key));
 	}
 
 	public void deleteTestrayS3Object(TestrayS3Object testrayS3Object) {

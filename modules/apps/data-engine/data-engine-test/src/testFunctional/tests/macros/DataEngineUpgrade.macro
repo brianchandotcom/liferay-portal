@@ -1,0 +1,92 @@
+definition {
+        
+	macro validateFieldLabelsTranslatedInStructure {
+
+                // TODO LPS-126229 validateFieldLabelsTranslatedInStructure pending implementation
+
+        }
+	
+        macro validateFieldLabelsTranslatedInStructureWithFieldGroup {
+
+                // TODO LPS-127412 validateFieldLabelsTranslatedInStructureWithFieldGroup pending implementation
+
+        }
+
+        macro validateNStructure {
+
+                // TODO LPS-127401 validateNStructure pending implementation
+
+        }
+
+        macro editAnUpgradedStructureWithFieldGroup {
+
+                // TODO LPS-126231 editAnUpgradedStructureWithFieldGroup pending implementation
+
+        }
+
+        macro validateFieldLabelsTranslatedInStructureWithFieldSet {
+
+                // TODO LPS-126230 validateFieldLabelsTranslatedInStructureWithFieldSet pending implementation
+
+        }
+
+        macro editAnUpgradedStructureWithFieldset {
+
+                // TODO LPS-127393 editAnUpgradedStructureWithFieldset pending implementation
+
+        }
+
+        macro createNewStructureUsingAnUpgradedStructureAsFieldset {
+
+                // TODO LPS-126232 createNewStructureUsingAnUpgradedStructureAsFieldset pending implementation
+
+        }
+
+        macro validateWebContentWithAllFieldsTranslated {
+
+                // TODO LPS-126235 validateWebContentWithAllFieldsTranslated pending implementation
+
+        }
+
+        macro validateWebContentWithFieldGroupLevel2AndTranslations {
+
+                // TODO LPS-126250 validateWebContentWithFieldGroupLevel2AndTranslations pending implementation
+
+        }
+
+        macro validateWebContentWithRepeatableFieldGroupAndTranslations {
+
+                // TODO LPS-126251 validateWebContentWithRepeatableFieldGroupAndTranslations pending implementation
+
+        }
+
+        macro validateWebContentWithFieldsetLevel2AndTranslations {
+
+                // TODO LPS-126236 validateWebContentWithFieldsetLevel2AndTranslations pending implementation
+
+        }
+        
+        macro validateNWebContent {
+
+                // TODO LPS-127521 validateNWebContent pending implementation
+
+        }
+        
+        macro editAnUpgradedWebContentWithTranslations {
+
+                // TODO LPS-126237 editAnUpgradedWebContentWithTranslations pending implementation
+
+        }
+        
+        macro createNewWebContentUsingAnUpgradedStructure {
+
+                // TODO LPS-126238 createNewWebContentUsingAnUpgradedStructure pending implementation
+
+        }
+
+        macro createNewWebContentUsingAnUpgradedStructureWithFieldset {
+
+                // TODO LPS-126249 createNewWebContentUsingAnUpgradedStructureWithFieldset pending implementation
+
+        }
+}

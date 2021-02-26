@@ -159,7 +159,7 @@ definition {
 
 	@description = "This test asserts that tags are added to the images when they are uploaded on both nodes with tensorflow enabled on a clustered configuration."
 	@priority = "4"
-	test AutoTaggingImagesOnSeparateNodes {
+	test AutoTagImagesOnSeparateNodes {
 		property app.server.bundles.size = "1";
 		property cluster.enabled = "true";
 		property test.name.skip.portal.instance = "DMAutoTagging#AutoTaggingImagesOnSeparateNodes";

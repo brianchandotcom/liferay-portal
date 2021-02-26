@@ -60,6 +60,7 @@ import com.liferay.dynamic.data.mapping.util.DDMXML;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidator;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -168,21 +169,26 @@ public class DDMStructureLocalServiceImpl
 			structureKey = StringUtil.toUpperCase(structureKey.trim());
 		}
 
-		long parentStructureLayoutId = 0;
+		if (classNameId == classNameLocalService.getClassNameId(
+				JournalArticle.class)) {
 
-		if (parentStructureId > 0) {
-			DDMStructure ddmStructure = fetchDDMStructure(parentStructureId);
+			long parentStructureLayoutId = 0;
 
-			parentStructureLayoutId =
-				ddmStructure.getDefaultDDMStructureLayoutId();
+			if (parentStructureId > 0) {
+				DDMStructure ddmStructure = fetchDDMStructure(
+					parentStructureId);
+
+				parentStructureLayoutId =
+					ddmStructure.getDefaultDDMStructureLayoutId();
+			}
+
+			ddmForm = _ddmDataDefinitionConverter.convertDDMFormDataDefinition(
+				ddmForm, parentStructureId, parentStructureLayoutId);
+
+			ddmFormLayout =
+				_ddmDataDefinitionConverter.convertDDMFormLayoutDataDefinition(
+					ddmForm, ddmFormLayout);
 		}
-
-		ddmForm = _ddmDataDefinitionConverter.convertDDMFormDataDefinition(
-			ddmForm, parentStructureId, parentStructureLayoutId);
-
-		ddmFormLayout =
-			_ddmDataDefinitionConverter.convertDDMFormLayoutDataDefinition(
-				ddmForm, ddmFormLayout);
 
 		validate(
 			groupId, parentStructureId, classNameId, structureKey, nameMap,

@@ -175,6 +175,28 @@ definition {
 		ReportsAdmin.viewNoReportEntryFile(reportsFileName = "reports_admin_template_source_sample_class_name");
 	}
 
+	@description = "LRQA-64780 - Automate LPS-127390: Filter and Order options in Reports Admin do not function properly"
+	@priority = "5"
+	test CheckFilterAndOrderOption {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			portlet = "Reports Admin");
+
+		ReportsAdmin.gotoDefinitions();
+
+		ReportsAdmin.addReportDefinition(
+			dataSource = "Portal",
+			reportsDefinitionDescription = "Reports Definition Description",
+			reportsDefinitionName = "Reports Definition Name",
+			templateFile = "reports_admin_template_source_sample_class_name.jrxml");
+
+		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+		MenuItem.click(menuItem = "All");
+		ReportsAdmin.assertReportEntryPresent(reportsDefinitionName = "Reports Definition Name");
+	}
+
 	@priority = "4"
 	test DeleteReportFile {
 		Navigator.openURL();

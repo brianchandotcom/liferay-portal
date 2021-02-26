@@ -135,6 +135,14 @@ definition {
 		}
 	}
 
+	macro assertReportEntryPresent {
+		var key_reportsDefinitionName = "${reportsDefinitionName}";
+
+		AssertElementPresent(
+			locator1 = "ReportsAdmin#REPORTS_ENTRY_TABLE_DEFINITION_NAME",
+			value1 = "${reportsDefinitionName}");
+	}
+
 	macro configureDeliveryEmail {
 		AssertClick(
 			locator1 = "ReportsAdminConfiguration#NAVIGATION_DELIVERY_EMAIL",

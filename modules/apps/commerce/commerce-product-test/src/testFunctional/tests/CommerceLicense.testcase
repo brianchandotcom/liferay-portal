@@ -137,6 +137,18 @@ definition {
 		CommerceLicense.viewCommerceAvailable();
 	}
 
+	@priority = "4"
+	test ModuleLicenseExpiration {
+		property commerce.enabled = "true";
+		property custom.commerce.license = "commerce-license-developer-custom-expiration.xml";
+
+		CommerceLicense.viewCommerceAvailable();
+
+		Pause(locator1 = "300000");
+
+		CommerceLicense.viewCommerceMissing();
+	}
+
 	@description = "This is a test for covering the following LPS-113419"
 	@priority = "4"
 	test ModuleLicenseExpirationWarning {

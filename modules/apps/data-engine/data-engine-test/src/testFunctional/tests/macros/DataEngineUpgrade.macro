@@ -1,64 +1,108 @@
 definition {
 
 	macro createNewStructureUsingAnUpgradedStructureAsFieldset {
+
 		// TODO LPS-126232 createNewStructureUsingAnUpgradedStructureAsFieldset pending implementation
 
+		echo("empty stub");
 	}
 
 	macro createNewWebContentUsingAnUpgradedStructure {
+
 		// TODO LPS-126238 createNewWebContentUsingAnUpgradedStructure pending implementation
+
+		echo("empty stub");
 	}
 
 	macro createNewWebContentUsingAnUpgradedStructureWithFieldset {
+
 		// TODO LPS-126249 createNewWebContentUsingAnUpgradedStructureWithFieldset pending implementation
+
+		echo("empty stub");
 	}
 
 	macro editAnUpgradedStructureWithFieldGroup {
+
 		// TODO LPS-126231 editAnUpgradedStructureWithFieldGroup pending implementation
+
+		echo("empty stub");
 	}
 
 	macro editAnUpgradedStructureWithFieldset {
+
 		// TODO LPS-127393 editAnUpgradedStructureWithFieldset pending implementation
+
+		echo("empty stub");
 	}
 
 	macro editAnUpgradedWebContentWithTranslations {
+
 		// TODO LPS-126237 editAnUpgradedWebContentWithTranslations pending implementation
+
+		echo("empty stub");
 	}
 
 	macro validateFieldLabelsTranslatedInStructure {
+
 		// TODO LPS-126229 validateFieldLabelsTranslatedInStructure pending implementation
+
+		echo("empty stub");
 	}
 
 	macro validateFieldLabelsTranslatedInStructureWithFieldGroup {
+
 		// TODO LPS-127412 validateFieldLabelsTranslatedInStructureWithFieldGroup pending implementation
+
+		echo("empty stub");
 	}
 
 	macro validateFieldLabelsTranslatedInStructureWithFieldSet {
+
 		// TODO LPS-126230 validateFieldLabelsTranslatedInStructureWithFieldSet pending implementation
+
+		echo("empty stub");
 	}
 
 	macro validateNStructure {
+
 		// TODO LPS-127401 validateNStructure pending implementation
+
+		echo("empty stub");
 	}
 
 	macro validateNWebContent {
+
 		// TODO LPS-127521 validateNWebContent pending implementation
+
+		echo("empty stub");
 	}
 
 	macro validateWebContentWithAllFieldsTranslated {
+
 		// TODO LPS-126235 validateWebContentWithAllFieldsTranslated pending implementation
+
+		echo("empty stub");
 	}
 
 	macro validateWebContentWithFieldGroupLevel2AndTranslations {
+
 		// TODO LPS-126250 validateWebContentWithFieldGroupLevel2AndTranslations pending implementation
+
+		echo("empty stub");
 	}
 
 	macro validateWebContentWithFieldsetLevel2AndTranslations {
+
 		// TODO LPS-126236 validateWebContentWithFieldsetLevel2AndTranslations pending implementation
+
+		echo("empty stub");
 	}
 
 	macro validateWebContentWithRepeatableFieldGroupAndTranslations {
+
 		// TODO LPS-126251 validateWebContentWithRepeatableFieldGroupAndTranslations pending implementation
+
+		echo("empty stub");
 	}
 
 }

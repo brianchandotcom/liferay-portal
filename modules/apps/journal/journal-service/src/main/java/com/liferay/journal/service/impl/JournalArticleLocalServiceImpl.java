@@ -7029,7 +7029,7 @@ public class JournalArticleLocalServiceImpl
 
 					for (JournalArticle currentArticle : currentArticles) {
 						if ((currentArticle.getExpirationDate() == null) ||
-							(currentArticle.getVersion() >
+							(currentArticle.getVersion() >=
 								article.getVersion())) {
 
 							continue;

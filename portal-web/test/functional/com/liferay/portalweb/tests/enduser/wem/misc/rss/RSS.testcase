@@ -282,7 +282,14 @@ definition {
 
 			Button.clickSave();
 
-			AssertVisible(locator1 = "Message#ERROR");
+			AssertElementNotPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
+
+			AssertElementNotPresent(locator1 = "Message#ERROR");
+
+			AssertTextEquals(
+				key_fieldLabel = "# of Entries Per Feed",
+				locator1 = "FormFields#NUMBER_FIELD",
+				value1 = "");
 		}
 	}
 

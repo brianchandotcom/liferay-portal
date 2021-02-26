@@ -18,10 +18,7 @@ import FormBuilderWithLayoutProvider from 'dynamic-data-mapping-form-builder';
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 import React from 'react';
 
-import {
-	getDDMFormField,
-	getDataDefinitionAndDataLayout,
-} from '../utils/dataConverter.es';
+import {getDataDefinitionAndDataLayout} from '../utils/dataConverter.es';
 import EventEmitter from './EventEmitter.es';
 import saveDefinitionAndLayout from './saveDefinitionAndLayout.es';
 
@@ -116,23 +113,6 @@ class DataLayoutBuilder extends React.Component {
 
 	emit(event, payload, error = false) {
 		this.eventEmitter.emit(event, payload, error);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by DataConverter.getDDMFormField()
-	 */
-	getDDMFormField(dataDefinition, fieldName) {
-		const {
-			editingLanguageId = themeDisplay.getDefaultLanguageId(),
-			fieldTypes,
-		} = this.props;
-
-		return getDDMFormField({
-			dataDefinition,
-			editingLanguageId,
-			fieldName,
-			fieldTypes,
-		});
 	}
 
 	getFormData() {

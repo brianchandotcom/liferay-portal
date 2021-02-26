@@ -7032,7 +7032,7 @@ public class JournalArticleLocalServiceImpl
 							new ArticleVersionComparator(true));
 
 					for (JournalArticle currentArticle : currentArticles) {
-						if (currentArticle.getVersion() >
+						if (currentArticle.getVersion() >=
 								article.getVersion()) {
 
 							continue;

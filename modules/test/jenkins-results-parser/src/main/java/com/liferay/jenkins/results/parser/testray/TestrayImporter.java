@@ -375,7 +375,7 @@ public class TestrayImporter {
 		return _topLevelBuild;
 	}
 
-	public void recordTestrayCases() {
+	public void recordTestrayCaseResults() {
 		Job job = getJob();
 
 		List<AxisTestClassGroup> axisTestClassGroups =
@@ -388,7 +388,7 @@ public class TestrayImporter {
 				batchDependentJob.getDependentAxisTestClassGroups());
 		}
 
-		List<TestrayCase> testrayCases = new ArrayList<>();
+		List<TestrayCaseResult> testrayCaseResults = new ArrayList<>();
 
 		for (AxisTestClassGroup axisTestClassGroup : axisTestClassGroups) {
 			if (axisTestClassGroup instanceof CucumberAxisTestClassGroup ||
@@ -398,8 +398,8 @@ public class TestrayImporter {
 				for (TestClassGroup.TestClass testClass :
 						axisTestClassGroup.getTestClasses()) {
 
-					testrayCases.add(
-						TestrayCaseFactory.newTestrayCase(
+					testrayCaseResults.add(
+						TestrayCaseResultFactory.newTestrayCaseResult(
 							getTestrayBuild(), getTopLevelBuild(),
 							axisTestClassGroup, testClass));
 				}
@@ -407,14 +407,14 @@ public class TestrayImporter {
 				continue;
 			}
 
-			testrayCases.add(
-				TestrayCaseFactory.newTestrayCase(
+			testrayCaseResults.add(
+				TestrayCaseResultFactory.newTestrayCaseResult(
 					getTestrayBuild(), getTopLevelBuild(), axisTestClassGroup,
 					null));
 		}
 
-		for (TestrayCase testrayCase : testrayCases) {
-			System.out.println(testrayCase);
+		for (TestrayCaseResult testrayCaseResult : testrayCaseResults) {
+			System.out.println(testrayCaseResult);
 		}
 	}
 

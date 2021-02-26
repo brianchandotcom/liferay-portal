@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser.testray;
 
+import com.liferay.jenkins.results.parser.TopLevelBuild;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,14 +29,22 @@ public class TestrayCaseResult {
 
 	public TestrayCaseResult(TestrayBuild testrayBuild, JSONObject jsonObject) {
 		_testrayBuild = testrayBuild;
-		_jsonObject = jsonObject;
+		this.jsonObject = jsonObject;
+	}
+
+	public TestrayCaseResult(
+		TestrayBuild testrayBuild, TopLevelBuild topLevelBuild) {
+
+		_testrayBuild = testrayBuild;
+		_topLevelBuild = topLevelBuild;
+		jsonObject = new JSONObject();
 	}
 
 	public Map<String, String> getAttachments() {
 		Map<String, String> attachments = new HashMap<>();
 
-		if (_jsonObject.optJSONObject("attachments") != null) {
-			JSONObject attachmentsJSONObject = _jsonObject.optJSONObject(
+		if (jsonObject.optJSONObject("attachments") != null) {
+			JSONObject attachmentsJSONObject = jsonObject.optJSONObject(
 				"attachments");
 
 			for (String key : attachmentsJSONObject.keySet()) {
@@ -46,39 +56,41 @@ public class TestrayCaseResult {
 	}
 
 	public String getCaseID() {
-		return _jsonObject.optString("testrayCaseId");
+		return jsonObject.optString("testrayCaseId");
 	}
 
 	public String getErrors() {
-		return _jsonObject.optString("errors");
+		return jsonObject.optString("errors");
 	}
 
 	public String getID() {
-		return _jsonObject.optString("testrayCaseResultId");
+		return jsonObject.optString("testrayCaseResultId");
 	}
 
 	public JSONObject getJSONObject() {
-		return _jsonObject;
+		return jsonObject;
 	}
 
 	public String getName() {
-		return _jsonObject.optString("testrayCaseName");
+		return jsonObject.optString("testrayCaseName");
 	}
 
-	public String getStatus() {
-		int statusID = _jsonObject.optInt("status");
+	public Status getStatus() {
+		int statusID = jsonObject.optInt("status");
 
-		Status status = Status.get(statusID);
-
-		return status.getName();
+		return Status.get(statusID);
 	}
 
 	public TestrayBuild getTestrayBuild() {
 		return _testrayBuild;
 	}
 
+	public TopLevelBuild getTopLevelBuild() {
+		return _topLevelBuild;
+	}
+
 	public String[] getWarnings() {
-		JSONArray jsonArray = _jsonObject.optJSONArray("warnings");
+		JSONArray jsonArray = jsonObject.optJSONArray("warnings");
 
 		if (jsonArray == null) {
 			return null;
@@ -127,7 +139,9 @@ public class TestrayCaseResult {
 
 	}
 
-	private final JSONObject _jsonObject;
+	protected final JSONObject jsonObject;
+
 	private final TestrayBuild _testrayBuild;
+	private TopLevelBuild _topLevelBuild;
 
 }

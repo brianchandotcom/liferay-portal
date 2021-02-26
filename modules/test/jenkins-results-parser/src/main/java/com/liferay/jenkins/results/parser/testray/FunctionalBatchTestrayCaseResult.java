@@ -15,55 +15,70 @@
 package com.liferay.jenkins.results.parser.testray;
 
 import com.liferay.jenkins.results.parser.Build;
-import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.TestClassResult;
+import com.liferay.jenkins.results.parser.TestResult;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
+import com.liferay.jenkins.results.parser.test.clazz.group.FunctionalBatchTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroup;
 
 /**
  * @author Michael Hashimoto
  */
-public class JUnitBatchTestrayCase extends BatchTestrayCase {
+public class FunctionalBatchTestrayCaseResult extends BatchTestrayCaseResult {
 
-	public JUnitBatchTestrayCase(
+	public FunctionalBatchTestrayCaseResult(
 		TestrayBuild testrayBuild, TopLevelBuild topLevelBuild,
 		AxisTestClassGroup axisTestClassGroup,
 		TestClassGroup.TestClass testClass) {
 
 		super(testrayBuild, topLevelBuild, axisTestClassGroup);
 
-		_testClass = testClass;
+		if (!(testClass instanceof
+				FunctionalBatchTestClassGroup.FunctionalTestClass)) {
+
+			throw new RuntimeException(
+				"TestClass needs to be an instance of FunctionalTestClass");
+		}
+
+		_functionalTestClass =
+			(FunctionalBatchTestClassGroup.FunctionalTestClass)testClass;
 	}
 
 	@Override
 	public String getName() {
-		String testClassName = JenkinsResultsParserUtil.getCanonicalPath(
-			_testClass.getTestClassFile());
-
-		testClassName = testClassName.replaceAll(
-			".*/(com/liferay.*)\\.java", "$1");
-
-		return testClassName.replace("/", ".");
+		return _functionalTestClass.getTestClassMethodName();
 	}
 
 	@Override
-	public String getStatus() {
-		TestClassResult testClassResult = getTestClassResult();
+	public Status getStatus() {
+		TestResult testResult = getTestResult();
 
-		if ((testClassResult == null) || testClassResult.isFailing()) {
-			return "failed";
+		if ((testResult == null) || testResult.isFailing()) {
+			return Status.FAILED;
 		}
 
-		return "passed";
+		return Status.PASSED;
 	}
 
-	public TestClassResult getTestClassResult() {
+	public TestResult getTestResult() {
 		Build build = getBuild();
 
-		return build.getTestClassResult(getName());
+		if (build == null) {
+			return null;
+		}
+
+		TestClassResult testClassResult = build.getTestClassResult(
+			"com.liferay.poshi.runner.PoshiRunner");
+
+		if (testClassResult == null) {
+			return null;
+		}
+
+		return testClassResult.getTestResult("test[" + getName() + "]");
 	}
 
-	private final TestClassGroup.TestClass _testClass;
+	private final FunctionalBatchTestClassGroup.FunctionalTestClass
+		_functionalTestClass;
 
 }

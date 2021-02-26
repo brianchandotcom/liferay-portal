@@ -21,9 +21,9 @@ import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 /**
  * @author Michael Hashimoto
  */
-public class BatchTestrayCase extends BaseTestrayCase {
+public class BatchTestrayCaseResult extends TestrayCaseResult {
 
-	public BatchTestrayCase(
+	public BatchTestrayCaseResult(
 		TestrayBuild testrayBuild, TopLevelBuild topLevelBuild,
 		AxisTestClassGroup axisTestClassGroup) {
 
@@ -32,24 +32,31 @@ public class BatchTestrayCase extends BaseTestrayCase {
 		_axisTestClassGroup = axisTestClassGroup;
 	}
 
-	public String getAxisName() {
-		return _axisTestClassGroup.getAxisName();
-	}
-
 	public String getBatchName() {
 		return _axisTestClassGroup.getBatchName();
 	}
 
-	@Override
 	public Build getBuild() {
 		TopLevelBuild topLevelBuild = getTopLevelBuild();
 
-		return topLevelBuild.getDownstreamAxisBuild(getAxisName());
+		return topLevelBuild.getDownstreamAxisBuild(
+			_axisTestClassGroup.getAxisName());
 	}
 
 	@Override
 	public String getName() {
-		return getAxisName();
+		return _axisTestClassGroup.getAxisName();
+	}
+
+	@Override
+	public Status getStatus() {
+		Build build = getBuild();
+
+		if ((build == null) || build.isFailing()) {
+			return Status.FAILED;
+		}
+
+		return Status.PASSED;
 	}
 
 	@Override

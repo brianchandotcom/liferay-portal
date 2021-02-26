@@ -23,9 +23,9 @@ import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroup;
 /**
  * @author Michael Hashimoto
  */
-public class TestrayCaseFactory {
+public class TestrayCaseResultFactory {
 
-	public static TestrayCase newTestrayCase(
+	public static TestrayCaseResult newTestrayCaseResult(
 		TestrayBuild testrayBuild, TopLevelBuild topLevelBuild,
 		AxisTestClassGroup axisTestClassGroup,
 		TestClassGroup.TestClass testClass) {
@@ -44,16 +44,16 @@ public class TestrayCaseFactory {
 
 		if (testClass != null) {
 			if (axisTestClassGroup instanceof FunctionalAxisTestClassGroup) {
-				return new FunctionalBatchTestrayCase(
+				return new FunctionalBatchTestrayCaseResult(
 					testrayBuild, topLevelBuild, axisTestClassGroup, testClass);
 			}
 			else if (axisTestClassGroup instanceof JUnitAxisTestClassGroup) {
-				return new JUnitBatchTestrayCase(
+				return new JUnitBatchTestrayCaseResult(
 					testrayBuild, topLevelBuild, axisTestClassGroup, testClass);
 			}
 		}
 
-		return new BatchTestrayCase(
+		return new BatchTestrayCaseResult(
 			testrayBuild, topLevelBuild, axisTestClassGroup);
 	}
 

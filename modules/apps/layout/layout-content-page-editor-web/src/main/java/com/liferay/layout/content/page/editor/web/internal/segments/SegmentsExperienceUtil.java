@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -69,6 +70,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -136,9 +138,13 @@ public class SegmentsExperienceUtil {
 				addedDefault = true;
 			}
 
-			String[] languageIds = StringUtil.split(
-				typeSettingsUnicodeProperties.getProperty(
-					PropsKeys.LOCALES, StringPool.BLANK));
+			Set<String> languageIds = SetUtil.fromArray(
+				StringUtil.split(
+					typeSettingsUnicodeProperties.getProperty(
+						PropsKeys.LOCALES, StringPool.BLANK)));
+
+			languageIds.add(
+				LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()));
 
 			availableSegmentsExperiences.put(
 				String.valueOf(segmentsExperience.getSegmentsExperienceId()),
@@ -146,7 +152,7 @@ public class SegmentsExperienceUtil {
 					"hasLockedSegmentsExperiment",
 					segmentsExperience.hasSegmentsExperiment()
 				).put(
-					"languageIds", languageIds
+					"languageIds", languageIds.toArray()
 				).put(
 					"name", segmentsExperience.getName(themeDisplay.getLocale())
 				).put(

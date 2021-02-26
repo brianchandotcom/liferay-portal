@@ -799,6 +799,37 @@ definition {
 		Questions.answerQuestion(contentField = "This is my answer2");
 	}
 
+	@description = "Validate if the user can add a comment to an answer, it also covers that the published dates for responses can be shown."
+	@priority = "4"
+	test ReplyToAnAnswer {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		Questions.addQuestionByAPI(
+			bodyField = "Question Body Text",
+			categoryName = "Questions Test Category",
+			tagField = "Tag",
+			titleField = "Where is your hometown?");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Where is your hometown?");
+
+		Questions.answerQuestion(
+			answeredLabel = "true",
+			contentField = "This is my answer text.");
+
+		Questions.replyToComment(
+			commentReply = "This is my reply text.",
+			repliedLabel = "true");
+	}
+
 	@description = "Validate if the user can search for the questions."
 	@priority = "4"
 	test SearchForQuestions {

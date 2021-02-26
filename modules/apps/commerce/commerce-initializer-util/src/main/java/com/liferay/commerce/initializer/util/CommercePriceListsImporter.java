@@ -181,7 +181,7 @@ public class CommercePriceListsImporter {
 
 					CommerceAccountGroup commerceAccountGroup =
 						_commerceAccountGroupLocalService.
-							fetchCommerceAccountGroupByReferenceCode(
+							fetchByExternalReferenceCode(
 								serviceContext.getCompanyId(),
 								accountGroupExternalReferenceCode);
 

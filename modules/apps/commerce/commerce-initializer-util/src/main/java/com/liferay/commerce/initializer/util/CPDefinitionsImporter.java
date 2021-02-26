@@ -673,7 +673,7 @@ public class CPDefinitionsImporter {
 
 				CommerceAccountGroup commerceAccountGroup =
 					_commerceAccountGroupLocalService.
-						fetchCommerceAccountGroupByReferenceCode(
+						fetchByExternalReferenceCode(
 							company.getCompanyId(),
 							accountGroupExternalReferenceCode);
 

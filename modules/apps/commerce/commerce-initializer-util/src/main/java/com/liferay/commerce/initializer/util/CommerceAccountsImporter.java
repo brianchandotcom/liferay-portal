@@ -284,7 +284,7 @@ public class CommerceAccountsImporter {
 
 					CommerceAccountGroup commerceAccountGroup =
 						_commerceAccountGroupLocalService.
-							fetchCommerceAccountGroupByReferenceCode(
+							fetchByExternalReferenceCode(
 								serviceContext.getCompanyId(),
 								externalReferenceCode);
 

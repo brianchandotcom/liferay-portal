@@ -447,6 +447,7 @@ renderResponse.setTitle(headerTitle);
 												dataDefinitionId="<%= ddmStructure.getStructureId() %>"
 												dataRecordValues="<%= ddmFormValuesToMapConverter.convert(ddmFormValues, DDMStructureLocalServiceUtil.getStructure(ddmStructure.getStructureId())) %>"
 												namespace="<%= liferayPortletResponse.getNamespace() + ddmStructure.getStructureId() + StringPool.UNDERLINE %>"
+												persisted="<%= fileEntry != null %>"
 											/>
 										</div>
 

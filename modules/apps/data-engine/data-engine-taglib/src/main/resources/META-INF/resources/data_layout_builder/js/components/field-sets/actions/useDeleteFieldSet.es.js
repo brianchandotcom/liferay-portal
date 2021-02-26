@@ -68,7 +68,10 @@ export default ({dataLayoutBuilder}) => {
 					fieldName,
 				};
 				if (visitor.containsField(fieldName, true)) {
-					dataLayoutBuilder.dispatch('fieldDeleted', event);
+					dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider?.dispatch?.(
+						'fieldDeleted',
+						event
+					);
 				}
 				else {
 					dispatch({

@@ -28,7 +28,10 @@ export default ({dataLayoutBuilder}) => {
 		const visitor = new PagesVisitor(pages);
 
 		if (visitor.containsField(event.fieldName, true)) {
-			dataLayoutBuilder.dispatch('fieldDeleted', event);
+			dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider?.dispatch?.(
+				'fieldDeleted',
+				event
+			);
 		}
 		else {
 			dispatch(deleteDefinitionField(event.fieldName));

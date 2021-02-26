@@ -236,10 +236,14 @@ describe('EditFormView', () => {
 
 		fireEvent.dblClick(fieldTypeName);
 
-		expect(dataLayoutBuilderProps.dispatch.mock.calls.length).toBe(1);
-		expect(dataLayoutBuilderProps.dispatch.mock.calls[0][0]).toBe(
-			'fieldAdded'
-		);
+		expect(
+			dataLayoutBuilderProps.formBuilderWithLayoutProvider.refs
+				.layoutProvider.dispatch.mock.calls.length
+		).toBe(1);
+		expect(
+			dataLayoutBuilderProps.formBuilderWithLayoutProvider.refs
+				.layoutProvider.dispatch.mock.calls[0][0]
+		).toBe('fieldAdded');
 
 		const saveButton = queryByText('save');
 
@@ -474,7 +478,10 @@ describe('EditFormView', () => {
 			fireEvent.click(deleteField);
 		});
 
-		const [action, payload] = dataLayoutBuilderProps.dispatch.mock.calls[0];
+		const [
+			action,
+			payload,
+		] = dataLayoutBuilderProps.formBuilderWithLayoutProvider.refs.layoutProvider.dispatch.mock.calls[0];
 
 		expect(action).toEqual('fieldDeleted');
 		expect(payload).toStrictEqual({activePage: 0, fieldName: 'Text'});

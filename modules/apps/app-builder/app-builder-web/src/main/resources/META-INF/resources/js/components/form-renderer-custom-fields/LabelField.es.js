@@ -134,11 +134,14 @@ export default function LabelField({
 
 	useEffect(() => {
 		if (containsFieldInsideFormBuilder(dataLayoutBuilder, state)) {
-			dataLayoutBuilder.dispatch('fieldEdited', {
-				propertyName: PROPERTY_NAME,
-				propertyValue:
-					value[editingLanguageId] || value[defaultLanguageId],
-			});
+			dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider?.dispatch?.(
+				'fieldEdited',
+				{
+					propertyName: PROPERTY_NAME,
+					propertyValue:
+						value[editingLanguageId] || value[defaultLanguageId],
+				}
+			);
 		}
 
 		const callbackFn = (fn) => fn(state, dispatch);

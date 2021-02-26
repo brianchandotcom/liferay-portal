@@ -104,7 +104,10 @@ export default function useDuplicateField({dataLayoutBuilder}) {
 	);
 
 	return (event) => {
-		dataLayoutBuilder.dispatch('fieldDuplicated', event);
+		dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider?.dispatch?.(
+			'fieldDuplicated',
+			event
+		);
 
 		const dataLayoutFields = {...dataLayout.dataLayoutFields};
 

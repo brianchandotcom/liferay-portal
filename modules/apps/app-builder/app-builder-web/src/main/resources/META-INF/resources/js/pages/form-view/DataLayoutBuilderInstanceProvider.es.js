@@ -81,7 +81,10 @@ export default ({children, dataLayoutBuilder}) => {
 					type: DataLayoutBuilderActions.DELETE_DATA_LAYOUT_FIELD,
 				});
 
-				dataLayoutBuilder.dispatch('fieldDeleted', event);
+				dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider?.dispatch?.(
+					'fieldDeleted',
+					event
+				);
 			},
 			label: Liferay.Language.get('remove'),
 		};
@@ -160,9 +163,14 @@ export default ({children, dataLayoutBuilder}) => {
 		}
 	}, [dispatch, dataDefinitionLoaded, dataLayoutLoaded]);
 
+	const dataLayoutBuilderDispatch = (...args) =>
+		dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider?.dispatch?.(
+			...args
+		);
+
 	return (
 		<DataLayoutBuilderContext.Provider
-			value={[dataLayoutBuilder, dataLayoutBuilder.dispatch]}
+			value={[dataLayoutBuilder, dataLayoutBuilderDispatch]}
 		>
 			{children}
 		</DataLayoutBuilderContext.Provider>

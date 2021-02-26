@@ -39,7 +39,13 @@ const SaveAsFieldSetWrapper = ({dispatch, fieldName, onClick}) => {
 	const saveAsFieldSet = useSaveAsFieldset({
 		dataLayoutBuilder: {
 			...dataLayoutBuilder,
-			dispatch,
+			formBuilderWithLayoutProvider: {
+				refs: {
+					layoutProvider: {
+						dispatch,
+					},
+				},
+			},
 		},
 	});
 

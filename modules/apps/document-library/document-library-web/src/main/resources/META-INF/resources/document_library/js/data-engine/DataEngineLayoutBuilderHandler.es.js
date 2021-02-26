@@ -86,15 +86,16 @@ export default function ({defaultLanguageId, namespace}) {
 
 	form.addEventListener('submit', saveDataEngineStructure);
 
-	const detectClickOutside = (event) => {
+	const detectClickOutside = async (event) => {
 		if (
 			!event.target.closest(
 				'.ddm-form-builder-wrapper, .multi-panel-sidebar'
 			)
 		) {
-			getDataLayoutBuilder().then((dataLayoutBuilder) => {
-				dataLayoutBuilder.dispatch('sidebarFieldBlurred');
-			});
+			const dataLayoutBuilder = await getDataLayoutBuilder();
+			dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider?.dispatch?.(
+				'sidebarFieldBlurred'
+			);
 		}
 	};
 

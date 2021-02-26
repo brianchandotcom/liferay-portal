@@ -121,10 +121,13 @@ export default function RequiredField({dataLayoutBuilder, dispatch, state}) {
 		setToggle(toggle);
 
 		if (containsFieldInsideFormBuilder(dataLayoutBuilder, state)) {
-			dataLayoutBuilder.dispatch('fieldEdited', {
-				propertyName: PROPERTY_NAME,
-				propertyValue: toggle,
-			});
+			dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider?.dispatch?.(
+				'fieldEdited',
+				{
+					propertyName: PROPERTY_NAME,
+					propertyValue: toggle,
+				}
+			);
 		}
 
 		if (toggle) {

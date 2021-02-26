@@ -219,7 +219,7 @@ const CustomObjectFieldsList = ({keywords}) => {
 		} = findFieldByName(dataDefinitionFields, name);
 
 		if (fieldType === 'fieldset') {
-			return dataLayoutBuilder.dispatch(
+			return dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider?.dispatch?.(
 				'fieldSetAdded',
 				DataLayoutBuilderActions.dropFieldSet({
 					dataLayoutBuilder,
@@ -241,7 +241,7 @@ const CustomObjectFieldsList = ({keywords}) => {
 			);
 		}
 
-		dataLayoutBuilder.dispatch(
+		dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider?.dispatch?.(
 			'fieldAdded',
 			DataLayoutBuilderActions.dropCustomObjectField({
 				addedToPlaceholder: true,

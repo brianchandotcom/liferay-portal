@@ -110,11 +110,14 @@ export default ({dataLayoutBuilder}) => {
 					type: DataLayoutBuilderActions.UPDATE_DATA_DEFINITION,
 				});
 
-				dataLayoutBuilder.dispatch('fieldEdited', {
-					fieldName,
-					propertyName: 'ddmStructureId',
-					propertyValue: ddmStructureId,
-				});
+				dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider?.dispatch?.(
+					'fieldEdited',
+					{
+						fieldName,
+						propertyName: 'ddmStructureId',
+						propertyValue: ddmStructureId,
+					}
+				);
 
 				successToast(Liferay.Language.get('fieldset-saved'));
 			})

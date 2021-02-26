@@ -121,9 +121,14 @@ export default ({children, dataLayoutBuilder}) => {
 		dispatch({payload: {fieldTypes}, type: UPDATE_FIELD_TYPES});
 	}, [dataLayoutBuilder, dispatch]);
 
+	const dataLayoutBuilderDispatch = (...args) =>
+		dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider?.dispatch?.(
+			...args
+		);
+
 	return (
 		<DataLayoutBuilderContext.Provider
-			value={[dataLayoutBuilder, dataLayoutBuilder.dispatch]}
+			value={[dataLayoutBuilder, dataLayoutBuilderDispatch]}
 		>
 			{children}
 		</DataLayoutBuilderContext.Provider>

@@ -76,20 +76,10 @@ definition {
 	}
 
 	@priority = "5"
-	test SmokeWithRuntimeJSPCompile {
-		property delete.precompiled.jsps = "true";
-		property portal.smoke = "false";
-
-		Smoke.viewWelcomeContentPage();
-
-		Smoke.runSmoke();
-	}
-
-	@priority = "5"
-	test SmokeWithSaasProperties {
+	test SmokeWithLiferayOnlineProperties {
+		property liferay.online.properties = "true";
 		property portal.acceptance = "true";
 		property portal.smoke = "true";
-		property saas.properties = "true";
 
 		AssertConsoleTextPresent(value1 = "Stopping blacklisted bundle");
 
@@ -208,6 +198,16 @@ definition {
 
 			WebContent.viewTitle(webContentTitle = "${webContentTitle}");
 		}
+	}
+
+	@priority = "5"
+	test SmokeWithRuntimeJSPCompile {
+		property delete.precompiled.jsps = "true";
+		property portal.smoke = "false";
+
+		Smoke.viewWelcomeContentPage();
+
+		Smoke.runSmoke();
 	}
 
 	@priority = "5"

@@ -163,6 +163,10 @@ public class PermissionCacheUtil {
 	}
 
 	public static UserBag getUserBag(long userId) {
+		if (!CTCollectionThreadLocal.isProductionMode()) {
+			return null;
+		}
+
 		return _userBagPortalCache.get(userId);
 	}
 
@@ -221,8 +225,10 @@ public class PermissionCacheUtil {
 	}
 
 	public static void putUserBag(long userId, UserBag userBag) {
-		PortalCacheHelperUtil.putWithoutReplicator(
-			_userBagPortalCache, userId, userBag);
+		if (CTCollectionThreadLocal.isProductionMode()) {
+			PortalCacheHelperUtil.putWithoutReplicator(
+				_userBagPortalCache, userId, userBag);
+		}
 	}
 
 	public static void putUserGroupRoleIds(

@@ -48,6 +48,14 @@ definition {
 	}
 
 	tearDown {
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoPortlet(portlet = "Staging");
+
+		Depot.deactivateStaging(siteName = "Test Depot Name");
+
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if ("${testPortalInstance}" == "true") {

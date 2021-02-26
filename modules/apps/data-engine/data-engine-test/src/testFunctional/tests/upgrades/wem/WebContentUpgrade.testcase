@@ -1,0 +1,397 @@
+@component-name = "portal-upgrades"
+definition {
+
+	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Data Engine";
+	property testray.main.component.name = "Upgrades Data Engine";
+
+	setUp {
+		SignIn.signIn();
+
+		Smoke.viewWelcomePage();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+	}
+
+    @description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
+    @ignore = "true"
+    @priority = "4"
+	test ValidateWebContentWithAllFieldsTranslatedAfterUpgrade621021 {
+        property data.archive.type = "data-archive-data-engine-web-content";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "6.2.10.21";
+
+        DataEngineUpgrade.validateWebContentWithAllFieldsTranslated();
+    }
+
+    @description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
+    @ignore = "true"
+    @priority = "4"
+	test ValidateWebContentWithFieldGroupLevel2AndTranslationsAfterUpgrade621021 {
+        property data.archive.type = "data-archive-data-engine-web-content";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "6.2.10.21";
+
+        DataEngineUpgrade.validateWebContentWithFieldGroupLevel2AndTranslations();
+    }
+
+    @description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
+    @ignore = "true"
+    @priority = "4"
+	test ValidateWebContentWithRepeatableFieldGroupAndTranslationsAfterUpgrade621021 {
+        property data.archive.type = "data-archive-data-engine-web-content";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "6.2.10.21";
+
+        DataEngineUpgrade.validateWebContentWithRepeatableFieldGroupAndTranslations();
+    }
+
+    @description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
+    @ignore = "true"
+    @priority = "4"
+	test ValidateNWebContentAfterUpgrade621021 {
+        property data.archive.type = "data-archive-data-engine-web-content";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "6.2.10.21";
+
+        DataEngineUpgrade.validateNWebContent();
+
+    }
+
+    @description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
+    @ignore = "true"
+    @priority = "4"
+	test EditAnUpgradedWebContentWithTranslationsAfterUpgrade621021 {
+        property data.archive.type = "data-archive-data-engine-web-content";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "6.2.10.21";
+
+        DataEngineUpgrade.editAnUpgradedWebContentWithTranslations();
+    }
+
+    @description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
+    @ignore = "true"
+    @priority = "4"
+	test CreateNewWebContentUsingAnUpgradedStructureAfterUpgrade621021 {
+        property data.archive.type = "data-archive-data-engine-web-content";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "6.2.10.21";
+
+        DataEngineUpgrade.createNewWebContentUsingAnUpgradedStructure();
+    }
+
+    @description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
+    @ignore = "true"
+    @priority = "4"
+	test ValidateWebContentWithAllFieldsTranslatedAfterUpgrade701014 {
+        property data.archive.type = "data-archive-data-engine-web-content";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.0.10.14";
+
+        DataEngineUpgrade.validateWebContentWithAllFieldsTranslated();
+    }
+
+    @description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
+    @ignore = "true"
+    @priority = "4"
+	test ValidateWebContentWithFieldGroupLevel2AndTranslationsAfterUpgrade701014 {
+        property data.archive.type = "data-archive-data-engine-web-content";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.0.10.14";
+
+        DataEngineUpgrade.validateWebContentWithFieldGroupLevel2AndTranslations();
+    }
+
+    @description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
+    @ignore = "true"
+    @priority = "4"
+	test ValidateWebContentWithRepeatableFieldGroupAndTranslationsAfterUpgrade701014 {
+        property data.archive.type = "data-archive-data-engine-web-content";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.0.10.14";
+
+        DataEngineUpgrade.validateWebContentWithRepeatableFieldGroupAndTranslations();
+    }
+
+    @description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
+    @ignore = "true"
+    @priority = "4"
+	test ValidateWebContentWithFieldsetLevel2AndTranslationsAfterUpgrade701014 {
+        property data.archive.type = "data-archive-data-engine-web-content";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.0.10.14";
+
+        DataEngineUpgrade.validateWebContentWithFieldsetLevel2AndTranslations();
+    }
+
+    @description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
+    @ignore = "true"
+    @priority = "4"
+	test ValidateNWebContentAfterUpgrade701014 {
+        property data.archive.type = "data-archive-data-engine-web-content";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.0.10.14";
+
+        DataEngineUpgrade.validateNWebContent();
+    }
+
+    @description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
+    @ignore = "true"
+    @priority = "4"
+	test EditAnUpgradedWebContentWithTranslationsAfterUpgrade701014 {
+        property data.archive.type = "data-archive-data-engine-web-content";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.0.10.14";
+
+        DataEngineUpgrade.editAnUpgradedWebContentWithTranslations();
+    }
+
+    @description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
+    @ignore = "true"
+    @priority = "4"
+	test CreateNewWebContentUsingAnUpgradedStructureWithFieldsetAfterUpgrade701014 {
+        property data.archive.type = "data-archive-data-engine-web-content";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.0.10.14";
+
+        DataEngineUpgrade.createNewWebContentUsingAnUpgradedStructureWithFieldset();
+    }
+
+    @description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
+    @ignore = "true"
+    @priority = "4"
+	test ValidateWebContentWithAllFieldsTranslatedAfterUpgrade71103 {
+        property data.archive.type = "data-archive-data-engine-web-content";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.1.10.3";
+
+        DataEngineUpgrade.validateWebContentWithAllFieldsTranslated();
+    }
+
+    @description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
+    @ignore = "true"
+    @priority = "4"
+	test ValidateWebContentWithFieldGroupLevel2AndTranslationsAfterUpgrade71103 {
+        property data.archive.type = "data-archive-data-engine-web-content";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.1.10.3";
+
+        DataEngineUpgrade.validateWebContentWithFieldGroupLevel2AndTranslations();
+    }
+
+    @description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
+    @ignore = "true"
+    @priority = "4"
+	test ValidateWebContentWithRepeatableFieldGroupAndTranslationsAfterUpgrade71103 {
+        property data.archive.type = "data-archive-data-engine-web-content";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.1.10.3";
+
+        DataEngineUpgrade.validateWebContentWithRepeatableFieldGroupAndTranslations();
+    }
+
+    @description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
+    @ignore = "true"
+    @priority = "4"
+	test ValidateWebContentWithFieldsetLevel2AndTranslationsAfterUpgrade71103 {
+        property data.archive.type = "data-archive-data-engine-web-content";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.1.10.3";
+
+        DataEngineUpgrade.validateWebContentWithFieldsetLevel2AndTranslations();
+    }
+
+    @description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
+    @ignore = "true"
+    @priority = "4"
+	test ValidateNWebContentAfterUpgrade71103 {
+        property data.archive.type = "data-archive-data-engine-web-content";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.1.10.3";
+
+        DataEngineUpgrade.validateNWebContent();
+    }
+
+    @description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
+    @ignore = "true"
+    @priority = "4"
+	test EditAnUpgradedWebContentWithTranslationsAfterUpgrade71103 {
+        property data.archive.type = "data-archive-data-engine-web-content";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.1.10.3";
+
+        DataEngineUpgrade.editAnUpgradedWebContentWithTranslations();
+    }
+
+    @description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
+    @ignore = "true"
+    @priority = "4"
+	test CreateNewWebContentUsingAnUpgradedStructureWithFieldsetAfterUpgrade71103 {
+        property data.archive.type = "data-archive-data-engine-web-content";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.1.10.3";
+
+        DataEngineUpgrade.createNewWebContentUsingAnUpgradedStructureWithFieldset();
+    }
+
+    @description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
+    @ignore = "true"
+    @priority = "4"
+	test ValidateWebContentWithAllFieldsTranslatedAfterUpgrade72101 {
+        property data.archive.type = "data-archive-data-engine-web-content";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.2.10.1";
+
+        DataEngineUpgrade.validateWebContentWithAllFieldsTranslated();
+    }
+
+    @description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
+    @ignore = "true"
+    @priority = "4"
+	test ValidateWebContentWithFieldGroupLevel2AndTranslationsAfterUpgrade72101 {
+        property data.archive.type = "data-archive-data-engine-web-content";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.2.10.1";
+
+        DataEngineUpgrade.validateWebContentWithFieldGroupLevel2AndTranslations();
+    }
+
+    @description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
+    @ignore = "true"
+    @priority = "4"
+	test ValidateWebContentWithRepeatableFieldGroupAndTranslationsAfterUpgrade72101 {
+        property data.archive.type = "data-archive-data-engine-web-content";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.2.10.1";
+
+        DataEngineUpgrade.validateWebContentWithRepeatableFieldGroupAndTranslations();
+    }
+
+    @description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
+    @ignore = "true"
+    @priority = "4"
+	test ValidateWebContentWithFieldsetLevel2AndTranslationsAfterUpgrade72101 {
+        property data.archive.type = "data-archive-data-engine-web-content";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.2.10.1";
+
+        DataEngineUpgrade.validateWebContentWithFieldsetLevel2AndTranslations();
+    }
+
+    @description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
+    @ignore = "true"
+    @priority = "4"
+	test ValidateNWebContentAfterUpgrade72101 {
+        property data.archive.type = "data-archive-data-engine-web-content";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.2.10.1";
+
+        DataEngineUpgrade.validateNWebContent();
+    }
+
+    @description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
+    @ignore = "true"
+    @priority = "4"
+	test EditAnUpgradedWebContentWithTranslationsAfterUpgrade72101 {
+        property data.archive.type = "data-archive-data-engine-web-content";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.2.10.1";
+
+        DataEngineUpgrade.editAnUpgradedWebContentWithTranslations();
+    }
+
+    @description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
+    @ignore = "true"
+    @priority = "4"
+	test CreateNewWebContentUsingAnUpgradedStructureWithFieldsetAfterUpgrade72101 {
+        property data.archive.type = "data-archive-data-engine-web-content";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.2.10.1";
+
+        DataEngineUpgrade.createNewWebContentUsingAnUpgradedStructureWithFieldset();
+    }
+
+    @description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
+    @ignore = "true"
+    @priority = "4"
+	test ValidateWebContentWithAllFieldsTranslatedAfterUpgrade7310 {
+        property data.archive.type = "data-archive-data-engine-web-content";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.3.10";
+
+        DataEngineUpgrade.validateWebContentWithAllFieldsTranslated();
+    }
+
+    @description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
+    @ignore = "true"
+    @priority = "4"
+	test ValidateWebContentWithFieldGroupLevel2AndTranslationsAfterUpgrade7310 {
+        property data.archive.type = "data-archive-data-engine-web-content";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.3.10";
+
+        DataEngineUpgrade.validateWebContentWithFieldGroupLevel2AndTranslations();
+    }
+
+    @description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
+    @ignore = "true"
+    @priority = "4"
+	test ValidateWebContentWithRepeatableFieldGroupAndTranslationsAfterUpgrade7310 {
+        property data.archive.type = "data-archive-data-engine-web-content";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.3.10";
+
+        DataEngineUpgrade.validateWebContentWithRepeatableFieldGroupAndTranslations();
+    }
+
+    @description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
+    @ignore = "true"
+    @priority = "4"
+	test ValidateWebContentWithFieldsetLevel2AndTranslationsAfterUpgrade7310 {
+        property data.archive.type = "data-archive-data-engine-web-content";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.3.10";
+
+        DataEngineUpgrade.validateWebContentWithFieldsetLevel2AndTranslations();
+    }
+
+    @description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
+    @ignore = "true"
+    @priority = "4"
+	test ValidateNWebContentAfterUpgrade7310 {
+        property data.archive.type = "data-archive-data-engine-web-content";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.3.10";
+
+        DataEngineUpgrade.validateNWebContent();
+    }
+
+    @description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
+    @ignore = "true"
+    @priority = "4"
+	test EditAnUpgradedWebContentWithTranslationsAfterUpgrade7310 {
+        property data.archive.type = "data-archive-data-engine-web-content";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.3.10";
+
+        DataEngineUpgrade.editAnUpgradedWebContentWithTranslations();
+    }
+
+    @description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."
+    @ignore = "true"
+    @priority = "4"
+	test CreateNewWebContentUsingAnUpgradedStructureWithFieldsetAfterUpgrade7310 {
+        property data.archive.type = "data-archive-data-engine-web-content";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.3.10";
+
+        DataEngineUpgrade.createNewWebContentUsingAnUpgradedStructureWithFieldset();
+    }
+}

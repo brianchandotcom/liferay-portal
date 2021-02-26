@@ -20,6 +20,8 @@ import com.liferay.headless.delivery.dto.v1_0.NavigationMenuItem;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.delivery.resource.v1_0.NavigationMenuResource;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutFriendlyURL;
+import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -487,6 +489,31 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 						return layout.getFriendlyURL(
 							contextAcceptLanguage.getPreferredLocale());
 					});
+				setLink_i18n(
+					() -> {
+						if ((layout == null) ||
+							!contextAcceptLanguage.isAcceptAllLanguages()) {
+
+							return null;
+						}
+
+						Map<String, String> i18nMap = new HashMap<>();
+
+						List<LayoutFriendlyURL> layoutFriendlyURLs =
+							_layoutFriendlyURLLocalService.
+								getLayoutFriendlyURLs(layout.getPlid());
+
+						for (LayoutFriendlyURL layoutFriendlyURL :
+								layoutFriendlyURLs) {
+
+							i18nMap.put(
+								LocaleUtil.toBCP47LanguageId(
+									layoutFriendlyURL.getLanguageId()),
+								layoutFriendlyURL.getFriendlyURL());
+						}
+
+						return i18nMap;
+					});
 				setName(
 					() -> {
 						String name = _getName(unicodeProperties);
@@ -622,6 +649,9 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 				siteNavigationMenuItem.getSiteNavigationMenuItemId());
 		}
 	}
+
+	@Reference
+	private LayoutFriendlyURLLocalService _layoutFriendlyURLLocalService;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

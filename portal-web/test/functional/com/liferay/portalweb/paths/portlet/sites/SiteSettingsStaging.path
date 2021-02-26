@@ -25,6 +25,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENABLED_ON_LOCAL_LIVE_CHECKBOX</td>
+	<td>//label[contains(.,'Local Live')]/input[@checked]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENABLED_ON_PUBLIC_PAGES_CHECKBOX</td>
 	<td>//span[contains(.,'Public Pages')]</td>
 	<td></td>

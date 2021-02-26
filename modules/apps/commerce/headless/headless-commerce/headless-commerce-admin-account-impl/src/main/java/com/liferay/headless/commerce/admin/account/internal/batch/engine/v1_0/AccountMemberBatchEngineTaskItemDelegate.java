@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.commerce.admin.account.internal.batch.v1_0;
+package com.liferay.headless.commerce.admin.account.internal.batch.engine.v1_0;
 
 import com.liferay.batch.engine.BaseBatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;

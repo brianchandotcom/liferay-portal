@@ -2294,6 +2294,11 @@ components:
                         A link to a page on the server.
                     format: uri
                     type: string
+                link_i18n:
+                    additionalProperties:
+                        format: uri
+                        type: string
+                    type: object
                 name:
                     type: string
                 name_i18n:

@@ -566,6 +566,58 @@ definition {
 			value1 = "You do not have the roles required to access this portlet.");
 	}
 
+	@description = "This is a use case for LPS-102469"
+	@priority = "5"
+	test LoginSuccessfulAfterResetPasswordAsEndUser {
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Multi-Factor Authentication",
+			configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
+			configurationScope = "Virtual Instance Scope");
+
+		MultiFactorAuthentication.configureOTPEmailSender(
+			emailAddress = "test@liferay.com",
+			emailSenderName = "Joe Bloggs");
+
+		MultiFactorAuthentication.viewOTPEmailSenderCP(
+			emailAddress = "test@liferay.com",
+			emailSenderName = "Joe Bloggs");
+
+		MultiFactorAuthentication.configureOTP(enableOTP = "true");
+
+		SignOut.signOut();
+
+		User.forgotPasswordSendResetLink(userEmailAddress = "userea@liferay.com");
+
+		MockMock.openBodyLink(
+			asset = "${portalURL}: Reset Your Password",
+			content = "You can reset your password for ${portalURL}",
+			subject = "${portalURL}: Reset Your Password");
+
+		User.setPasswordByResetLink(
+			newPassword1 = "test",
+			newPassword2 = "test");
+
+		User.logoutPG();
+
+		SignIn.signIn(userEmailAddress = "userea@liferay.com");
+
+		MultiFactorAuthentication.sendOTPEmailPG();
+
+		MultiFactorAuthentication.verifyOTP(
+			portalURL = "${portalURL}",
+			recipient = "userfn userln",
+			userEmailAddress = "userea@liferay.com",
+			userPassword = "test");
+	}
+
 	@description = "This is a use case for LPS-92659"
 	@priority = "5"
 	test LoginSuccessfulAfterRetryTimeout {

@@ -50,7 +50,7 @@ public class TestrayS3Bucket {
 	}
 
 	public TestrayS3Object createTestrayS3Object(String key, File file) {
-		long start = System.currentTimeMillis();
+		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		try {
 			ObjectMetadata objectMetadata = new ObjectMetadata();
@@ -88,7 +88,8 @@ public class TestrayS3Bucket {
 					"Created S3 Object ",
 					String.valueOf(testrayS3Object.getURL()), " in ",
 					JenkinsResultsParserUtil.toDurationString(
-						System.currentTimeMillis() - start)));
+						JenkinsResultsParserUtil.getCurrentTimeMillis() -
+							start)));
 
 			return testrayS3Object;
 		}
@@ -98,7 +99,7 @@ public class TestrayS3Bucket {
 	}
 
 	public TestrayS3Object createTestrayS3Object(String key, String value) {
-		long start = System.currentTimeMillis();
+		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		InputStream inputStream = new ByteArrayInputStream(value.getBytes());
 
@@ -127,7 +128,8 @@ public class TestrayS3Bucket {
 					"Created S3 Object ",
 					String.valueOf(testrayS3Object.getURL()), " in ",
 					JenkinsResultsParserUtil.toDurationString(
-						System.currentTimeMillis() - start)));
+						JenkinsResultsParserUtil.getCurrentTimeMillis() -
+							start)));
 
 			return testrayS3Object;
 		}
@@ -166,7 +168,7 @@ public class TestrayS3Bucket {
 	}
 
 	public void deleteTestrayS3Object(TestrayS3Object testrayS3Object) {
-		long start = System.currentTimeMillis();
+		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		_amazonS3.deleteObject(_bucket.getName(), testrayS3Object.getKey());
 
@@ -175,7 +177,7 @@ public class TestrayS3Bucket {
 				"Deleted S3 Object ", String.valueOf(testrayS3Object.getURL()),
 				" in ",
 				JenkinsResultsParserUtil.toDurationString(
-					System.currentTimeMillis() - start)));
+					JenkinsResultsParserUtil.getCurrentTimeMillis() - start)));
 	}
 
 	public void deleteTestrayS3Objects(List<TestrayS3Object> testrayS3Objects) {

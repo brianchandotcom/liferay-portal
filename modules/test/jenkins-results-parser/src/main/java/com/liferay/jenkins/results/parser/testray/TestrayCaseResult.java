@@ -17,6 +17,8 @@ package com.liferay.jenkins.results.parser.testray;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
 
+import java.io.IOException;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -92,6 +94,33 @@ public class TestrayCaseResult {
 
 	public TestrayBuild getTestrayBuild() {
 		return _testrayBuild;
+	}
+
+	public TestrayCase getTestrayCase() {
+		if (_testrayCase != null) {
+			return _testrayCase;
+		}
+
+		TestrayServer testrayServer = getTestrayServer();
+
+		String testrayCaseURL = JenkinsResultsParserUtil.combine(
+			String.valueOf(testrayServer.getURL()), "/home/-/testray/cases/",
+			getCaseID(), ".json");
+
+		try {
+			_testrayCase = new TestrayCase(
+				getTestrayProject(),
+				JenkinsResultsParserUtil.toJSONObject(testrayCaseURL));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		return _testrayCase;
+	}
+
+	public TestrayProject getTestrayProject() {
+		return _testrayBuild.getTestrayProject();
 	}
 
 	public TestrayServer getTestrayServer() {
@@ -209,6 +238,7 @@ public class TestrayCaseResult {
 	protected final JSONObject jsonObject;
 
 	private final TestrayBuild _testrayBuild;
+	private TestrayCase _testrayCase;
 	private TopLevelBuild _topLevelBuild;
 
 }

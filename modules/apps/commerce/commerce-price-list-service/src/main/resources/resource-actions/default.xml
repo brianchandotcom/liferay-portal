@@ -5,7 +5,6 @@
 	<model-resource>
 		<model-name>com.liferay.commerce.price.list</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_commerce_price_list_web_internal_portlet_CommercePriceListPortlet</portlet-name>
 			<portlet-name>com_liferay_commerce_pricing_web_internal_portlet_CommercePriceListPortlet</portlet-name>
 		</portlet-ref>
 		<root>true</root>
@@ -24,7 +23,6 @@
 	<model-resource>
 		<model-name>com.liferay.commerce.price.list.model.CommercePriceList</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_commerce_price_list_web_internal_portlet_CommercePriceListPortlet</portlet-name>
 			<portlet-name>com_liferay_commerce_pricing_web_internal_portlet_CommercePriceListPortlet</portlet-name>
 			<portlet-name>com_liferay_commerce_pricing_web_internal_portlet_CommercePricingClassesPortlet</portlet-name>
 		</portlet-ref>

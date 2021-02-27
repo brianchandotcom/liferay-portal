@@ -70,6 +70,10 @@ public class TestrayCaseResult {
 		return jsonObject.optString("testrayCaseId");
 	}
 
+	public String getComponent() {
+		return jsonObject.getString("testrayComponentName");
+	}
+
 	public String getErrors() {
 		return jsonObject.optString("errors");
 	}

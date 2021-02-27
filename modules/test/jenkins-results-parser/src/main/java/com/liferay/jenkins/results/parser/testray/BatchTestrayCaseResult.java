@@ -21,6 +21,8 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 
+import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -68,6 +70,18 @@ public class BatchTestrayCaseResult extends TestrayCaseResult {
 
 	public Build getBuild() {
 		return getAxisBuild();
+	}
+
+	@Override
+	public String getComponent() {
+		try {
+			return JenkinsResultsParserUtil.getProperty(
+				JenkinsResultsParserUtil.getBuildProperties(),
+				"testray.case.component", getBatchName());
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	@Override

@@ -90,6 +90,26 @@ public class BatchTestrayCaseResult extends TestrayCaseResult {
 	}
 
 	@Override
+	public int getPriority() {
+		try {
+			String testrayCasePriority = JenkinsResultsParserUtil.getProperty(
+				JenkinsResultsParserUtil.getBuildProperties(),
+				"testray.case.priority", getBatchName());
+
+			if ((testrayCasePriority != null) &&
+				testrayCasePriority.matches("\\d+")) {
+
+				return Integer.parseInt(testrayCasePriority);
+			}
+
+			return 5;
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
+	@Override
 	public Status getStatus() {
 		Build build = getBuild();
 

@@ -85,6 +85,18 @@ public class FunctionalBatchTestrayCaseResult extends BatchTestrayCaseResult {
 	}
 
 	@Override
+	public int getPriority() {
+		String priority = JenkinsResultsParserUtil.getProperty(
+			_functionalTestClass.getPoshiProperties(), "priority");
+
+		if ((priority != null) && priority.matches("\\d+")) {
+			return Integer.parseInt(priority);
+		}
+
+		return 5;
+	}
+
+	@Override
 	public Status getStatus() {
 		TestResult testResult = getTestResult();
 

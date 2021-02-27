@@ -90,6 +90,12 @@ public class TestrayCaseResult {
 		return jsonObject.optString("testrayCaseName");
 	}
 
+	public int getPriority() {
+		TestrayCase testrayCase = getTestrayCase();
+
+		return testrayCase.getPriority();
+	}
+
 	public Status getStatus() {
 		int statusID = jsonObject.optInt("status");
 

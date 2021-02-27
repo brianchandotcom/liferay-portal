@@ -144,36 +144,6 @@ public class BatchTestrayCaseResult extends TestrayCaseResult {
 		}
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(getStatus());
-		sb.append(" ");
-		sb.append(getBatchName());
-		sb.append(" ");
-		sb.append(getName());
-		sb.append(" ");
-
-		Build build = getBuild();
-
-		if (build != null) {
-			sb.append(build.getBuildURL());
-		}
-		else {
-			sb.append(" No build found");
-		}
-
-		for (TestrayCaseResult.Attachment attachment : getAttachments()) {
-			sb.append("\n* ");
-			sb.append(attachment.getName());
-			sb.append("=");
-			sb.append(attachment.getURL());
-		}
-
-		return sb.toString();
-	}
-
 	protected String getAxisBuildURLPath() {
 		AxisBuild axisBuild = getAxisBuild();
 

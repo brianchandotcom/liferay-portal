@@ -145,6 +145,12 @@ public class TestrayCaseResult {
 		return _topLevelBuild;
 	}
 
+	public String getType() {
+		TestrayCase testrayCase = getTestrayCase();
+
+		return testrayCase.getType();
+	}
+
 	public String[] getWarnings() {
 		JSONArray jsonArray = jsonObject.optJSONArray("warnings");
 

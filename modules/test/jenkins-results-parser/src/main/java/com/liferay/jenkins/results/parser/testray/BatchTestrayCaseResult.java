@@ -101,6 +101,18 @@ public class BatchTestrayCaseResult extends TestrayCaseResult {
 	}
 
 	@Override
+	public String getTeam() {
+		try {
+			return JenkinsResultsParserUtil.getProperty(
+				JenkinsResultsParserUtil.getBuildProperties(),
+				"testray.case.team", getBatchName());
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
+	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 

@@ -16,6 +16,7 @@ package com.liferay.jenkins.results.parser.testray;
 
 import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.TestClassResult;
 import com.liferay.jenkins.results.parser.TestResult;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
@@ -26,6 +27,9 @@ import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroup;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Properties;
+
+import org.apache.commons.lang.WordUtils;
 
 /**
  * @author Michael Hashimoto
@@ -89,6 +93,49 @@ public class FunctionalBatchTestrayCaseResult extends BatchTestrayCaseResult {
 		}
 
 		return Status.PASSED;
+	}
+
+	@Override
+	public String getTeam() {
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		Job job = topLevelBuild.getJob();
+
+		Properties jobProperties = job.getJobProperties();
+
+		String testrayTeamNames = JenkinsResultsParserUtil.getProperty(
+			jobProperties, "testray.team.names");
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(testrayTeamNames)) {
+			return super.getTeam();
+		}
+
+		String component = getComponent();
+
+		for (String testrayTeamName : testrayTeamNames.split(",")) {
+			String testrayTeamComponentNames =
+				JenkinsResultsParserUtil.getProperty(
+					jobProperties,
+					"testray.team." + testrayTeamName + ".component.names");
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(
+					testrayTeamComponentNames)) {
+
+				continue;
+			}
+
+			for (String testrayTeamComponentName :
+					testrayTeamComponentNames.split(",")) {
+
+				if (testrayTeamComponentName.equals(component)) {
+					testrayTeamName = testrayTeamName.replace("-", " ");
+
+					return WordUtils.capitalize(testrayTeamName);
+				}
+			}
+		}
+
+		return super.getTeam();
 	}
 
 	public TestResult getTestResult() {

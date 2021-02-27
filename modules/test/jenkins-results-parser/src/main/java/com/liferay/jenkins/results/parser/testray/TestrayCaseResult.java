@@ -96,6 +96,10 @@ public class TestrayCaseResult {
 		return Status.get(statusID);
 	}
 
+	public String getTeam() {
+		return jsonObject.getString("testrayTeamName");
+	}
+
 	public TestrayBuild getTestrayBuild() {
 		return _testrayBuild;
 	}

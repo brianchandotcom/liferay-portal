@@ -73,6 +73,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.EmailAddressValidator;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -282,6 +283,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public <T, E extends Exception> Stream applyForEachCompanyId(
 		UnsafeFunction<Long, T, E> unsafeFunction,
 		BiConsumer<Long, E> biConsumer) {
@@ -457,6 +459,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public <E extends Exception> void forEach(
 			UnsafeConsumer<Company, E> unsafeConsumer)
 		throws E {
@@ -465,6 +468,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public <E extends Exception> void forEach(
 		UnsafeConsumer<Company, E> unsafeConsumer,
 		BiConsumer<Company, E> biConsumer) {
@@ -473,6 +477,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public <E extends Exception> void forEach(
 		UnsafeConsumer<Company, E> unsafeConsumer,
 		BiConsumer<Company, E> biConsumer, List<Company> companies) {
@@ -491,6 +496,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public <E extends Exception> void forEach(
 			UnsafeConsumer<Company, E> unsafeConsumer, List<Company> companies)
 		throws E {
@@ -501,6 +507,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public <E extends Exception> void forEachCompanyId(
 			UnsafeConsumer<Long, E> unsafeConsumer)
 		throws E {
@@ -509,6 +516,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public <E extends Exception> void forEachCompanyId(
 		UnsafeConsumer<Long, E> unsafeConsumer,
 		BiConsumer<Long, E> biConsumer) {
@@ -517,6 +525,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public <E extends Exception> void forEachCompanyId(
 		UnsafeConsumer<Long, E> unsafeConsumer, BiConsumer<Long, E> biConsumer,
 		long[] companyIds) {
@@ -534,6 +543,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public <E extends Exception> void forEachCompanyId(
 			UnsafeConsumer<Long, E> unsafeConsumer, long[] companyIds)
 		throws E {

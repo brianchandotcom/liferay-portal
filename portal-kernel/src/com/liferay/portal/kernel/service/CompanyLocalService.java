@@ -124,6 +124,7 @@ public interface CompanyLocalService
 			int maxUsers, boolean active)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public <T, E extends Exception> Stream applyForEachCompanyId(
 		UnsafeFunction<Long, T, E> unsafeFunction,
 		BiConsumer<Long, E> biConsumer);
@@ -313,33 +314,41 @@ public interface CompanyLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Company fetchCompanyByVirtualHost(String virtualHostname);
 
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public <E extends Exception> void forEach(
 			UnsafeConsumer<Company, E> unsafeConsumer)
 		throws E;
 
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public <E extends Exception> void forEach(
 		UnsafeConsumer<Company, E> unsafeConsumer,
 		BiConsumer<Company, E> biConsumer);
 
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public <E extends Exception> void forEach(
 		UnsafeConsumer<Company, E> unsafeConsumer,
 		BiConsumer<Company, E> biConsumer, List<Company> companies);
 
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public <E extends Exception> void forEach(
 			UnsafeConsumer<Company, E> unsafeConsumer, List<Company> companies)
 		throws E;
 
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public <E extends Exception> void forEachCompanyId(
 			UnsafeConsumer<Long, E> unsafeConsumer)
 		throws E;
 
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public <E extends Exception> void forEachCompanyId(
 		UnsafeConsumer<Long, E> unsafeConsumer, BiConsumer<Long, E> biConsumer);
 
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public <E extends Exception> void forEachCompanyId(
 		UnsafeConsumer<Long, E> unsafeConsumer, BiConsumer<Long, E> biConsumer,
 		long[] companyIds);
 
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public <E extends Exception> void forEachCompanyId(
 			UnsafeConsumer<Long, E> unsafeConsumer, long[] companyIds)
 		throws E;

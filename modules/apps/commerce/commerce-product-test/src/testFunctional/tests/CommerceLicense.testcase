@@ -153,22 +153,14 @@ definition {
 	@priority = "4"
 	test ModuleLicenseExpirationNotShownToNonAdmin {
 		property commerce.enabled = "true";
+		property custom.commerce.license = "commerce-license-developer-custom-expiration.xml";
 		property custom.properties = "company.security.strangers.verify=false${line.separator}login.secure.forgot.password=false";
-
-		// Require property to generate license with modify expiration date
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
-
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
 
-		Alert.viewErrorMessage(errorMessage = "Update your activation key for Liferay Commerce Subscription Development, it will expire");
+		Alert.viewErrorMessage(errorMessage = "Update your activation key for Liferay Commerce Subscription Development");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -210,7 +202,7 @@ definition {
 
 		AssertElementNotPresent(
 			locator1 = "Message#ERROR",
-			value1 = "Update your activation key for Liferay Commerce Subscription Development, it will expire");
+			value1 = "Update your activation key for Liferay Commerce Subscription Development");
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -218,7 +210,7 @@ definition {
 
 		AssertElementNotPresent(
 			locator1 = "Message#ERROR",
-			value1 = "Update your activation key for Liferay Commerce Subscription Development, it will expire");
+			value1 = "Update your activation key for Liferay Commerce Subscription Development");
 	}
 
 	@description = "This is a test for covering the following LPS-113419"

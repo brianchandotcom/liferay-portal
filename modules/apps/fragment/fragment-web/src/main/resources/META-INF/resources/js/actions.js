@@ -12,11 +12,7 @@
  * details.
  */
 
-import {
-	normalizeFriendlyURL,
-	openModal,
-	openSelectionModal,
-} from 'frontend-js-web';
+import {openModal, openSelectionModal} from 'frontend-js-web';
 
 export const ACTIONS = {
 	deleteCollections({
@@ -30,10 +26,7 @@ export const ACTIONS = {
 			viewDeleteFragmentCollectionsURL,
 			(selectedItems) => {
 				const fragmentCollectionsForm = document.getElementById(
-					normalizeFriendlyURL(
-						portletNamespace,
-						'fragmentCollectionsFm'
-					)
+					`${portletNamespace}fragmentCollectionsFm`
 				);
 
 				if (
@@ -73,10 +66,7 @@ export const ACTIONS = {
 			viewExportFragmentCollectionsURL,
 			(selectedItems) => {
 				const fragmentCollectionsForm = document.getElementById(
-					normalizeFriendlyURL(
-						portletNamespace,
-						'fragmentCollectionsFm'
-					)
+					`${portletNamespace}fragmentCollectionsFm`
 				);
 
 				selectedItems.forEach((item) => {
@@ -124,10 +114,7 @@ export const ACTIONS = {
 					callback(selectedItem);
 				}
 			},
-			selectEventName: normalizeFriendlyURL(
-				portletNamespace,
-				'selectCollections'
-			),
+			selectEventName: `${portletNamespace}selectCollections`,
 			title: dialogTitle,
 			url: dialogURL,
 		});
@@ -146,7 +133,7 @@ export const ACTIONS = {
 					type: 'submit',
 				},
 			],
-			id: normalizeFriendlyURL(portletNamespace, 'openImportView'),
+			id: `${portletNamespace}openImportView`,
 			onClose: () => {
 				window.location.reload();
 			},

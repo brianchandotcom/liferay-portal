@@ -63,13 +63,15 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Page Name");
 
-		Navigator.gotoSitePage(
-			pageName = "Page Name",
-			siteName = "Site Name");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page Name",
+			widgetName = "Search Bar");
 
-		Portlet.addPG(portletName = "Search Bar");
-
-		Portlet.addPG(portletName = "Search Results");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page Name",
+			widgetName = "Search Results");
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",

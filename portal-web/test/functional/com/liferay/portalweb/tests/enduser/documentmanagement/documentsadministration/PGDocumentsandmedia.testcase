@@ -986,7 +986,7 @@ definition {
 	@description = "This ensures that users can not upload files that exceed the storage quota through the multiple upload."
 	@priority = "5"
 	test ExceedStorageQuotaMultipleUpload {
-		property data.limit.max.dl.storage.size = "1048576";
+		property data.limit.dl.storage.max.size = "1048576";
 
 		DMDocument.addMultiplePG(dmDocumentFileList = "Document_1.doc");
 

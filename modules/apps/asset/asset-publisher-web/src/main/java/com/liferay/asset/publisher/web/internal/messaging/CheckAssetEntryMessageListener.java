@@ -97,7 +97,9 @@ public class CheckAssetEntryMessageListener extends BaseMessageListener {
 					className, className, null, null, checkCronExpression);
 			}
 			catch (RuntimeException runtimeException) {
-				_log.error(runtimeException, runtimeException);
+				if (_log.isWarnEnabled()) {
+					_log.warn(runtimeException, runtimeException);
+				}
 			}
 		}
 

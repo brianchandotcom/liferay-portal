@@ -91,7 +91,8 @@
 }
 
 .product-menu {
-	a {
+	a,
+	button.list-group-heading.navigation-link {
 		color: $product-menu-nav-link-color;
 		outline: 0;
 		position: relative;
@@ -222,7 +223,8 @@
 		}
 	}
 
-	.list-group-heading {
+	a.list-group-heading,
+	button.list-group-heading.navigation-link {
 		background-color: $product-menu-list-group-item-bg;
 		font-weight: 600;
 		overflow: hidden;
@@ -268,6 +270,10 @@
 
 			&:before {
 				right: 4px;
+			}
+
+			&.btn {
+				width: 100%;
 			}
 
 			.lexicon-icon {

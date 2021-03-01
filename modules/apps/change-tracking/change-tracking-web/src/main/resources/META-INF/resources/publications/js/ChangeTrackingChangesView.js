@@ -164,6 +164,10 @@ class ChangeTrackingChangesView extends React.Component {
 	_clone(json) {
 		const clone = {};
 
+		if (typeof json !== 'object') {
+			return null;
+		}
+
 		const keys = Object.keys(json);
 
 		for (let i = 0; i < keys.length; i++) {
@@ -644,6 +648,10 @@ class ChangeTrackingChangesView extends React.Component {
 			}
 
 			const model = this._clone(this.models[modelKey.toString()]);
+
+			if (model === null) {
+				continue;
+			}
 
 			model.nodeId = nodeId;
 

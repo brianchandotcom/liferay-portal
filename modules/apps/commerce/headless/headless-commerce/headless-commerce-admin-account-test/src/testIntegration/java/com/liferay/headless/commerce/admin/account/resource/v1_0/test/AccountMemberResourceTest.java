@@ -187,9 +187,12 @@ public class AccountMemberResourceTest
 		assertEquals(accountMember1, accountMember2);
 	}
 
+	@Override
 	@Test
-	public void testPostAccountByExternalReferenceCodeAccountMemberWithEmail()
+	public void testPostAccountByExternalReferenceCodeAccountMember()
 		throws Exception {
+
+		super.testPostAccountByExternalReferenceCodeAccountMember();
 
 		AccountMember accountMember1 = _randomAccountMember();
 
@@ -210,8 +213,11 @@ public class AccountMemberResourceTest
 		assertEquals(accountMember1, accountMember2);
 	}
 
+	@Override
 	@Test
-	public void testPostAccountIdAccountMemberWithEmail() throws Exception {
+	public void testPostAccountIdAccountMember() throws Exception {
+		super.testPostAccountIdAccountMember();
+
 		AccountMember accountMember1 = _randomAccountMember();
 
 		accountMember1 = accountMemberResource.postAccountIdAccountMember(

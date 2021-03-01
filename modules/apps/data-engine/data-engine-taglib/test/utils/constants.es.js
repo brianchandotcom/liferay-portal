@@ -569,7 +569,6 @@ export const FORM_VIEW = {
 	getDataLayoutBuilderProps() {
 		return {
 			...dataLayoutBuilder,
-			dispatchAction: jest.fn(),
 			formBuilderWithLayoutProvider: {
 				refs: {
 					layoutProvider: {

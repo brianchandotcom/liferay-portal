@@ -364,9 +364,16 @@ definition {
 
 	macro validateNStructure {
 
-		// TODO LPS-127401 validateNStructure pending implementation
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		echo("empty stub");
+		NavItem.gotoStructures();
+       
+        for (var structureTitle : list "My Structure with all fields,My Structure with nested fields,My Structure with fieldsets level 0,My Structure with fieldsets level 1,My Structure with fieldsets level 2") {		
+            AssertTextEquals(
+			key_ddlDataDefinitionName = "${structureTitle}",
+			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK",
+            value1 = "${structureTitle}");
+		}
 	}
 
 	macro validateNWebContent {

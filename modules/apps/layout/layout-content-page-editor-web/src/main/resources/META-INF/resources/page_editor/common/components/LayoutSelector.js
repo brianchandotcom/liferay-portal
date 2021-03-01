@@ -43,11 +43,6 @@ export const LayoutSelector = ({mappedLayout, onLayoutSelect}) => {
 };
 
 LayoutSelector.propTypes = {
-	mappedLayout: PropTypes.shape({
-		groupId: PropTypes.string.isRequired,
-		layoutId: PropTypes.string.isRequired,
-		name: PropTypes.string.isRequired,
-		privateLayout: PropTypes.bool.isRequired,
-	}),
+	mappedLayout: PropTypes.shape({name: PropTypes.string.isRequired}),
 	onLayoutSelect: PropTypes.func.isRequired,
 };

@@ -13,5 +13,5 @@
  */
 
 export default function isMappedToLayout(editable) {
-	return !!(editable?.layout?.layoutId && editable?.layout?.groupId);
+	return !!editable?.layout;
 }

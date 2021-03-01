@@ -1627,7 +1627,7 @@ definition {
 
 		Click(locator1 = "Pagination#NEXT_LINK");
 
-		Click(locator1 = "DocumentsAndMedia#TOOLBAR_SELECT_ALL_CHECKBOX");
+		Click.clickNoWaitForVisible(locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT");
 
 		AssertTextEquals(
 			locator1 = "ManagementBar#NAVBAR_TEXT",

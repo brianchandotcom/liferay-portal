@@ -41,7 +41,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "view-form"));
 	cssClass="ddm-form-builder-app form-entry"
 >
 	<react:component
-		module="admin/js/index.es"
+		module="admin/js/FormView.link.es"
 		props="<%= ddmFormAdminDisplayContext.getDDMFormContext(renderRequest) %>"
 	/>
 </clay:container-fluid>

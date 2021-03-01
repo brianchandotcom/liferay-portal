@@ -77,7 +77,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "view-form"));
 
 		<div id="<%= containerId %>">
 			<react:component
-				module="admin/js/index.es"
+				module="admin/js/FormView.link.es"
 				props="<%= ddmFormContext %>"
 			/>
 		</div>

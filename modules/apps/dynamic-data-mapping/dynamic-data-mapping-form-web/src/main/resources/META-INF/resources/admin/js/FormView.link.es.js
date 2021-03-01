@@ -14,4 +14,10 @@
 
 import {FormView} from 'dynamic-data-mapping-form-renderer';
 
+// This is just a link to allow the react:component Taglib to render the
+// component that is in another module so as not to have problems with
+// name resolution.
+//
+// The .link nomenclature is just to symbolize the creation of a symlink file.
+
 export default FormView;

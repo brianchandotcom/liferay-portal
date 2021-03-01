@@ -22,7 +22,7 @@ DDMFormViewFormInstanceRecordDisplayContext ddmFormViewFormInstanceRecordDisplay
 
 <clay:container-fluid>
 	<react:component
-		module="admin/js/index.es"
+		module="admin/js/FormView.link.es"
 		props="<%= ddmFormViewFormInstanceRecordDisplayContext.getDDMFormContext(renderRequest) %>"
 	/>
 </clay:container-fluid>

@@ -181,7 +181,7 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 							id="<%= ddmFormDisplayContext.getContainerId() %>"
 						>
 							<react:component
-								module="admin/js/index.es"
+								module="admin/js/FormView.link.es"
 								props="<%= ddmFormDisplayContext.getDDMFormContext() %>"
 							/>
 						</clay:container-fluid>

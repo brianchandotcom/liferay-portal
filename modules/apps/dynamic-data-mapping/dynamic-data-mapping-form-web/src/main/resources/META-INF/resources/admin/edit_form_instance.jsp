@@ -219,7 +219,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 		id='<%= liferayPortletResponse.getNamespace() + "settings" %>'
 	>
 		<react:component
-			module="admin/js/index.es"
+			module="admin/js/FormView.link.es"
 			props="<%= ddmFormAdminDisplayContext.getDDMFormSettingsContext(pageContext) %>"
 		/>
 	</clay:container-fluid>

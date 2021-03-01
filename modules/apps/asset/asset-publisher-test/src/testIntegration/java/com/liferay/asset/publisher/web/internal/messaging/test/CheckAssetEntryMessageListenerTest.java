@@ -87,6 +87,22 @@ public class CheckAssetEntryMessageListenerTest {
 		Assert.assertEquals("HOUR", repeatIntervalUnit.toString());
 	}
 
+	@Test
+	public void testGetTriggerValidCronExpression() {
+		String cronExpression = "0 20 10 ? * * *";
+		int repeatInterval = 3;
+
+		Trigger trigger = ReflectionTestUtil.invoke(
+			_messageListener, "_getTrigger",
+			new Class<?>[] {String.class, int.class}, cronExpression,
+			repeatInterval);
+
+		String actualCronExpression = ReflectionTestUtil.invoke(
+			trigger.getWrappedTrigger(), "getCronExpression", new Class<?>[0]);
+
+		Assert.assertEquals(cronExpression, actualCronExpression);
+	}
+
 	@Inject(filter = "component.name=*.CheckAssetEntryMessageListener")
 	private MessageListener _messageListener;
 

@@ -13,12 +13,13 @@
  */
 
 import {ClassicEditor} from 'frontend-editor-ckeditor-web';
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 import {useSyncValue} from '../hooks/useSyncValue.es';
 
 const RichText = ({
+	editingLanguageId,
 	editorConfig,
 	id,
 	name,
@@ -36,6 +37,19 @@ const RichText = ({
 	const [dirty, setDirty] = useState(false);
 
 	const editorRef = useRef();
+
+	useEffect(() => {
+		const editor = editorRef.current?.editor;
+
+		if (editor) {
+			editor.config.contentsLangDirection =
+				Liferay.Language.direction[editingLanguageId];
+
+			editor.config.contentsLanguage = editingLanguageId;
+
+			editor.setData(editor.getData());
+		}
+	}, [editingLanguageId, editorRef]);
 
 	return (
 		<FieldBase

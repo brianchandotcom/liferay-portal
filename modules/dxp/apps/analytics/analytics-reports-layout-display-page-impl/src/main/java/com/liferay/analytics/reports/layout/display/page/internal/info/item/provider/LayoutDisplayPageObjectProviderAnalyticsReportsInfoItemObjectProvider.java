@@ -14,6 +14,7 @@
 
 package com.liferay.analytics.reports.layout.display.page.internal.info.item.provider;
 
+import com.liferay.analytics.reports.info.item.ClassNameClassPKInfoItemIdentifier;
 import com.liferay.analytics.reports.info.item.provider.AnalyticsReportsInfoItemObjectProvider;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
@@ -36,13 +37,26 @@ public class
 	public LayoutDisplayPageObjectProvider<?> getAnalyticsReportsInfoItemObject(
 		InfoItemReference infoItemReference) {
 
-		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-			_layoutDisplayPageProviderTracker.
-				getLayoutDisplayPageProviderByClassName(
-					infoItemReference.getClassName());
+		if (infoItemReference.getInfoItemIdentifier() instanceof
+				ClassNameClassPKInfoItemIdentifier) {
 
-		return layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
-			infoItemReference);
+			ClassNameClassPKInfoItemIdentifier
+				classNameClassPKInfoItemIdentifier =
+					(ClassNameClassPKInfoItemIdentifier)
+						infoItemReference.getInfoItemIdentifier();
+
+			LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
+				_layoutDisplayPageProviderTracker.
+					getLayoutDisplayPageProviderByClassName(
+						classNameClassPKInfoItemIdentifier.getClassName());
+
+			return layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
+				new InfoItemReference(
+					classNameClassPKInfoItemIdentifier.getClassName(),
+					classNameClassPKInfoItemIdentifier.getClassPK()));
+		}
+
+		return null;
 	}
 
 	@Override

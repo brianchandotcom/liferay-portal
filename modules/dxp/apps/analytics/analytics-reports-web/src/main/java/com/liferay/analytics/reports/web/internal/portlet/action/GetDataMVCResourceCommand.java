@@ -16,12 +16,14 @@ package com.liferay.analytics.reports.web.internal.portlet.action;
 
 import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItem;
 import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItemTracker;
+import com.liferay.analytics.reports.info.item.ClassNameClassPKInfoItemIdentifier;
 import com.liferay.analytics.reports.info.item.provider.AnalyticsReportsInfoItemObjectProvider;
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPortletKeys;
 import com.liferay.analytics.reports.web.internal.data.provider.AnalyticsReportsDataProvider;
 import com.liferay.analytics.reports.web.internal.info.item.provider.AnalyticsReportsInfoItemObjectProviderTracker;
 import com.liferay.analytics.reports.web.internal.model.TimeRange;
 import com.liferay.analytics.reports.web.internal.model.TimeSpan;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
@@ -205,11 +207,27 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 		return classPK;
 	}
 
+	private String _getClassTypeName(HttpServletRequest httpServletRequest) {
+		return ParamUtil.getString(httpServletRequest, "classTypeName");
+	}
+
 	private InfoItemReference _getInfoItemReference(
 		HttpServletRequest httpServletRequest) {
 
-		return new InfoItemReference(
-			_getClassName(httpServletRequest), _getClassPK(httpServletRequest));
+		return Optional.ofNullable(
+			_getClassTypeName(httpServletRequest)
+		).filter(
+			Validator::isNotNull
+		).map(
+			classTypeName -> new InfoItemReference(
+				_getClassName(httpServletRequest),
+				new ClassNameClassPKInfoItemIdentifier(
+					classTypeName, _getClassPK(httpServletRequest)))
+		).orElseGet(
+			() -> new InfoItemReference(
+				_getClassName(httpServletRequest),
+				_getClassPK(httpServletRequest))
+		);
 	}
 
 	private JSONObject _getJSONObject(
@@ -316,8 +334,34 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 
 		resourceURL.setParameter("languageId", LocaleUtil.toLanguageId(locale));
 		resourceURL.setParameter("className", infoItemReference.getClassName());
-		resourceURL.setParameter(
-			"classPK", String.valueOf(infoItemReference.getClassPK()));
+
+		if (infoItemReference.getInfoItemIdentifier() instanceof
+				ClassNameClassPKInfoItemIdentifier) {
+
+			ClassNameClassPKInfoItemIdentifier
+				classNameClassPKInfoItemIdentifier =
+					(ClassNameClassPKInfoItemIdentifier)
+						infoItemReference.getInfoItemIdentifier();
+
+			resourceURL.setParameter(
+				"classPK",
+				String.valueOf(
+					classNameClassPKInfoItemIdentifier.getClassPK()));
+			resourceURL.setParameter(
+				"classTypeName",
+				classNameClassPKInfoItemIdentifier.getClassName());
+		}
+		else if (infoItemReference.getInfoItemIdentifier() instanceof
+					ClassPKInfoItemIdentifier) {
+
+			ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+				(ClassPKInfoItemIdentifier)
+					infoItemReference.getInfoItemIdentifier();
+
+			resourceURL.setParameter(
+				"classPK",
+				String.valueOf(classPKInfoItemIdentifier.getClassPK()));
+		}
 
 		resourceURL.setResourceID(resourceID);
 

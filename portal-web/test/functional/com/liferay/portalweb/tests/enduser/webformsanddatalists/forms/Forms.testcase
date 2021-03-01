@@ -2252,7 +2252,7 @@ definition {
 	test PreviewAndPublishForm {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property portal.upstream = "true";
 
 		Navigator.openURL();
@@ -2598,7 +2598,7 @@ definition {
 
 	@priority = "5"
 	test SubmitFormAfterEditingFields {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "Forms#SubmitFormAfterEditingFields";
 		property testray.component.names = "Training";
@@ -3165,7 +3165,7 @@ definition {
 	@description = "This is a use case for LPS-64798."
 	@priority = "5"
 	test SubmitFormWithAllFieldTypesAndThreePages {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "Forms#SubmitFormWithAllFieldTypesAndThreePages";
 		property testray.component.names = "Training";
@@ -3655,7 +3655,7 @@ definition {
 
 	@priority = "4"
 	test SubmitFormWithMultipleFieldsAndViewEntriesViaDescriptiveDisplay {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "Forms#SubmitFormWithMultipleFieldsAndViewEntriesViaDescriptiveDisplay";
 

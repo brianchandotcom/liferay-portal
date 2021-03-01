@@ -623,6 +623,7 @@
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Finds missing LiferayUnitTestRule." />
 			<message key="test.rule.missing" value="Missing test rule ''LiferayUnitTestRule''" />
+			<property name="enabled" value="false" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.ThreadLocalUtilCheck">
 			<property name="category" value="Performance" />

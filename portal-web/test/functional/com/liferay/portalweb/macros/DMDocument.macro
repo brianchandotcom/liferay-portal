@@ -750,7 +750,7 @@ definition {
 
 		Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
 
-		Click(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
+		Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Checkin");
 
@@ -2774,7 +2774,7 @@ definition {
 
 		Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
 
-		Click(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
+		Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
 
 		MenuItem.viewPresent(menuItem = "Download");
 

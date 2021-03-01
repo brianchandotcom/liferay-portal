@@ -201,8 +201,14 @@ public class PortletPreferencesFactoryImpl
 
 		Map<String, Preference> preferencesMap = toPreferencesMap(xml);
 
+		Map<String, String[]> preferences = new HashMap<>();
+
+		for (Preference preference : preferencesMap.values()) {
+			preferences.put(preference.getName(), preference.getValues());
+		}
+
 		return new PortalPreferencesImpl(
-			ownerId, ownerType, xml, preferencesMap, false);
+			ownerId, ownerType, xml, preferences, false);
 	}
 
 	@Override

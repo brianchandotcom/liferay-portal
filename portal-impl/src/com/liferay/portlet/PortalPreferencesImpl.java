@@ -78,12 +78,22 @@ public class PortalPreferencesImpl
 		com.liferay.portal.kernel.model.PortalPreferences portalPreferences,
 		boolean signedIn) {
 
-		this(
-			portalPreferences.getOwnerId(), portalPreferences.getOwnerType(),
-			portalPreferences.getPreferences(),
+		_ownerId = portalPreferences.getOwnerId();
+		_ownerType = portalPreferences.getOwnerType();
+		_originalXML = portalPreferences.getPreferences();
+		_signedIn = signedIn;
+
+		Map<String, Preference> preferencesMap =
 			PortletPreferencesFactoryImpl.createPreferencesMap(
-				portalPreferences.getPreferences()),
-			signedIn);
+				portalPreferences.getPreferences());
+
+		Map<String, String[]> preferences = new HashMap<>();
+
+		for (Preference preference : preferencesMap.values()) {
+			preferences.put(preference.getName(), preference.getValues());
+		}
+
+		_originalPreferences = preferences;
 
 		_portalPreferences =
 			(com.liferay.portal.kernel.model.PortalPreferences)
@@ -92,7 +102,7 @@ public class PortalPreferencesImpl
 
 	public PortalPreferencesImpl(
 		long ownerId, int ownerType, String xml,
-		Map<String, Preference> preferences, boolean signedIn) {
+		Map<String, String[]> preferences, boolean signedIn) {
 
 		_ownerId = ownerId;
 		_ownerType = ownerType;
@@ -150,23 +160,13 @@ public class PortalPreferencesImpl
 	}
 
 	public Map<String, String[]> getMap() {
-		Map<String, Preference> preferences = getPreferences();
+		Map<String, String[]> preferences = getPreferences();
 
 		if (preferences.isEmpty()) {
 			return Collections.emptyMap();
 		}
 
-		Map<String, String[]> map = new HashMap<>();
-
-		for (Map.Entry<String, Preference> entry : preferences.entrySet()) {
-			String key = entry.getKey();
-
-			Preference preference = entry.getValue();
-
-			map.put(key, _getActualValues(preference.getValues()));
-		}
-
-		return map;
+		return new HashMap<>(preferences);
 	}
 
 	public long getMvccVersion() {
@@ -178,7 +178,7 @@ public class PortalPreferencesImpl
 	}
 
 	public Enumeration<String> getNames() {
-		Map<String, Preference> preferences = getPreferences();
+		Map<String, String[]> preferences = getPreferences();
 
 		return Collections.enumeration(preferences.keySet());
 	}
@@ -191,7 +191,7 @@ public class PortalPreferencesImpl
 		return _ownerType;
 	}
 
-	public Map<String, Preference> getPreferences() {
+	public Map<String, String[]> getPreferences() {
 		if (_modifiedPreferences != null) {
 			return _modifiedPreferences;
 		}
@@ -217,15 +217,9 @@ public class PortalPreferencesImpl
 			throw new IllegalArgumentException();
 		}
 
-		Map<String, Preference> preferences = getPreferences();
+		Map<String, String[]> preferences = getPreferences();
 
-		Preference preference = preferences.get(key);
-
-		if (preference == null) {
-			return defaultValue;
-		}
-
-		String[] values = preference.getValues();
+		String[] values = preferences.get(key);
 
 		if (_isNull(values)) {
 			return defaultValue;
@@ -253,15 +247,9 @@ public class PortalPreferencesImpl
 			throw new IllegalArgumentException();
 		}
 
-		Map<String, Preference> preferences = getPreferences();
+		Map<String, String[]> preferences = getPreferences();
 
-		Preference preference = preferences.get(key);
-
-		if (preference == null) {
-			return def;
-		}
-
-		String[] values = preference.getValues();
+		String[] values = preferences.get(key);
 
 		if (_isNull(values)) {
 			return def;
@@ -296,7 +284,7 @@ public class PortalPreferencesImpl
 
 			@Override
 			public Void call() {
-				Map<String, Preference> modifiedPreferences =
+				Map<String, String[]> modifiedPreferences =
 					_getModifiedPreferences();
 
 				modifiedPreferences.remove(key);
@@ -321,10 +309,10 @@ public class PortalPreferencesImpl
 
 	@Override
 	public void resetValues(String namespace) {
-		Map<String, Preference> preferences = getPreferences();
+		Map<String, String[]> preferences = getPreferences();
 
 		try {
-			for (Map.Entry<String, Preference> entry : preferences.entrySet()) {
+			for (Map.Entry<String, String[]> entry : preferences.entrySet()) {
 				String key = entry.getKey();
 
 				if (key.startsWith(namespace)) {
@@ -359,9 +347,9 @@ public class PortalPreferencesImpl
 
 		value = _getXMLSafeValue(value);
 
-		Map<String, Preference> modifiedPreferences = _getModifiedPreferences();
+		Map<String, String[]> modifiedPreferences = _getModifiedPreferences();
 
-		modifiedPreferences.put(key, new Preference(key, value));
+		modifiedPreferences.put(key, new String[] {value});
 	}
 
 	@Override
@@ -482,14 +470,14 @@ public class PortalPreferencesImpl
 
 		values = _getXMLSafeValues(values);
 
-		Map<String, Preference> modifiedPreferences = _getModifiedPreferences();
+		Map<String, String[]> modifiedPreferences = _getModifiedPreferences();
 
-		modifiedPreferences.put(key, new Preference(key, values));
+		modifiedPreferences.put(key, values);
 	}
 
 	@Override
 	public int size() {
-		Map<String, Preference> preferences = getPreferences();
+		Map<String, String[]> preferences = getPreferences();
 
 		return preferences.size();
 	}
@@ -554,7 +542,7 @@ public class PortalPreferencesImpl
 		return actualValues;
 	}
 
-	private Map<String, Preference> _getModifiedPreferences() {
+	private Map<String, String[]> _getModifiedPreferences() {
 		if (_modifiedPreferences == null) {
 			_modifiedPreferences = new ConcurrentHashMap<>(
 				_originalPreferences);
@@ -563,7 +551,7 @@ public class PortalPreferencesImpl
 		return _modifiedPreferences;
 	}
 
-	private Map<String, Preference> _getOriginalPreferences() {
+	private Map<String, String[]> _getOriginalPreferences() {
 		return _originalPreferences;
 	}
 
@@ -678,7 +666,7 @@ public class PortalPreferencesImpl
 			return _originalXML;
 		}
 
-		Map<String, Preference> preferences = getPreferences();
+		Map<String, String[]> preferences = getPreferences();
 
 		if ((preferences == null) || preferences.isEmpty()) {
 			return PortletConstants.DEFAULT_PREFERENCES;
@@ -687,15 +675,15 @@ public class PortalPreferencesImpl
 		Element portletPreferencesElement = new Element(
 			"portlet-preferences", false);
 
-		for (Map.Entry<String, Preference> entry : preferences.entrySet()) {
-			Preference preference = entry.getValue();
+		for (Map.Entry<String, String[]> entry : preferences.entrySet()) {
+			String[] values = entry.getValue();
 
 			Element preferenceElement = portletPreferencesElement.addElement(
 				"preference");
 
-			preferenceElement.addElement("name", preference.getName());
+			preferenceElement.addElement("name", entry.getKey());
 
-			for (String value : preference.getValues()) {
+			for (String value : values) {
 				preferenceElement.addElement("value", value);
 			}
 		}
@@ -739,8 +727,8 @@ public class PortalPreferencesImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalPreferencesImpl.class);
 
-	private Map<String, Preference> _modifiedPreferences;
-	private Map<String, Preference> _originalPreferences;
+	private Map<String, String[]> _modifiedPreferences;
+	private Map<String, String[]> _originalPreferences;
 	private String _originalXML;
 	private final long _ownerId;
 	private final int _ownerType;

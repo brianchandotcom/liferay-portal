@@ -23,8 +23,6 @@ import java.util.Enumeration;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
-import javax.portlet.ReadOnlyException;
-import javax.portlet.ValidatorException;
 
 /**
  * @author Alexander Chow
@@ -74,11 +72,11 @@ public class PortalPreferencesWrapper
 
 	@Override
 	public boolean isReadOnly(String key) {
-		return _portalPreferencesImpl.isReadOnly(key);
+		return false;
 	}
 
 	@Override
-	public void reset(String key) throws ReadOnlyException {
+	public void reset(String key) {
 		_portalPreferencesImpl.reset(key);
 	}
 
@@ -88,19 +86,17 @@ public class PortalPreferencesWrapper
 	}
 
 	@Override
-	public void setValue(String key, String value) throws ReadOnlyException {
+	public void setValue(String key, String value) {
 		_portalPreferencesImpl.setValue(key, value);
 	}
 
 	@Override
-	public void setValues(String key, String[] values)
-		throws ReadOnlyException {
-
+	public void setValues(String key, String[] values) {
 		_portalPreferencesImpl.setValues(key, values);
 	}
 
 	@Override
-	public void store() throws IOException, ValidatorException {
+	public void store() throws IOException {
 		_portalPreferencesImpl.store();
 	}
 

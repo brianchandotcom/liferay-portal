@@ -48,8 +48,6 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 
-import javax.portlet.ReadOnlyException;
-
 import org.hibernate.StaleObjectStateException;
 
 /**
@@ -282,32 +280,12 @@ public class PortalPreferencesImpl
 		return hashCode;
 	}
 
-	public boolean isReadOnly(String key) {
-		if (key == null) {
-			throw new IllegalArgumentException();
-		}
-
-		Map<String, Preference> preferences = getPreferences();
-
-		Preference preference = preferences.get(key);
-
-		if ((preference != null) && preference.isReadOnly()) {
-			return true;
-		}
-
-		return false;
-	}
-
 	@Override
 	public boolean isSignedIn() {
 		return _signedIn;
 	}
 
-	public void reset(String key) throws ReadOnlyException {
-		if (isReadOnly(key)) {
-			throw new ReadOnlyException(key);
-		}
-
+	public void reset(String key) {
 		String[] values = _getValues(key, null);
 
 		if (values == null) {
@@ -349,7 +327,7 @@ public class PortalPreferencesImpl
 			for (Map.Entry<String, Preference> entry : preferences.entrySet()) {
 				String key = entry.getKey();
 
-				if (key.startsWith(namespace) && !isReadOnly(key)) {
+				if (key.startsWith(namespace)) {
 					reset(key);
 				}
 			}
@@ -374,7 +352,7 @@ public class PortalPreferencesImpl
 		_userId = userId;
 	}
 
-	public void setValue(String key, String value) throws ReadOnlyException {
+	public void setValue(String key, String value) {
 		if (key == null) {
 			throw new IllegalArgumentException();
 		}
@@ -382,12 +360,6 @@ public class PortalPreferencesImpl
 		value = _getXMLSafeValue(value);
 
 		Map<String, Preference> modifiedPreferences = _getModifiedPreferences();
-
-		Preference preference = modifiedPreferences.get(key);
-
-		if ((preference != null) && preference.isReadOnly()) {
-			throw new ReadOnlyException(key);
-		}
 
 		modifiedPreferences.put(key, new Preference(key, value));
 	}
@@ -418,7 +390,7 @@ public class PortalPreferencesImpl
 			Callable<Void> callable = new Callable<Void>() {
 
 				@Override
-				public Void call() throws ReadOnlyException {
+				public Void call() {
 					setValue(encodedKey, value);
 
 					return null;
@@ -478,7 +450,7 @@ public class PortalPreferencesImpl
 			Callable<Void> callable = new Callable<Void>() {
 
 				@Override
-				public Void call() throws ReadOnlyException {
+				public Void call() {
 					setValues(encodedKey, values);
 
 					return null;
@@ -503,9 +475,7 @@ public class PortalPreferencesImpl
 		}
 	}
 
-	public void setValues(String key, String[] values)
-		throws ReadOnlyException {
-
+	public void setValues(String key, String[] values) {
 		if (key == null) {
 			throw new IllegalArgumentException();
 		}
@@ -513,12 +483,6 @@ public class PortalPreferencesImpl
 		values = _getXMLSafeValues(values);
 
 		Map<String, Preference> modifiedPreferences = _getModifiedPreferences();
-
-		Preference preference = modifiedPreferences.get(key);
-
-		if ((preference != null) && preference.isReadOnly()) {
-			throw new ReadOnlyException(key);
-		}
 
 		modifiedPreferences.put(key, new Preference(key, values));
 	}
@@ -733,10 +697,6 @@ public class PortalPreferencesImpl
 
 			for (String value : preference.getValues()) {
 				preferenceElement.addElement("value", value);
-			}
-
-			if (preference.isReadOnly()) {
-				preferenceElement.addElement("read-only", Boolean.TRUE);
 			}
 		}
 

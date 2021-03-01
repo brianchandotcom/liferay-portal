@@ -352,6 +352,12 @@
 			if (currentElement) {
 				const url = currentElement.getAttribute('href');
 
+				// LPS-127302
+
+				if (url === 'javascript:;') {
+					return;
+				}
+
 				const newWindow =
 					currentElement.getAttribute('target') == '_blank';
 

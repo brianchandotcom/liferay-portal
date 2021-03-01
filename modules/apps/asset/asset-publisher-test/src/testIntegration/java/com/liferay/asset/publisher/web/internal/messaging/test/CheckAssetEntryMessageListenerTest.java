@@ -41,6 +41,29 @@ public class CheckAssetEntryMessageListenerTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
+	@Test
+	public void testGetTriggerEmptyCronExpression() {
+		String cronExpression = "";
+		int repeatInterval = 3;
+
+		Trigger trigger = ReflectionTestUtil.invoke(
+			_messageListener, "_getTrigger",
+			new Class<?>[] {String.class, int.class}, cronExpression,
+			repeatInterval);
+
+		Serializable wrappedTrigger = trigger.getWrappedTrigger();
+
+		Integer actualRepeatInterval = ReflectionTestUtil.invoke(
+			wrappedTrigger, "getRepeatInterval", new Class<?>[0]);
+
+		Assert.assertEquals(repeatInterval, actualRepeatInterval.intValue());
+
+		Object repeatIntervalUnit = ReflectionTestUtil.invoke(
+			wrappedTrigger, "getRepeatIntervalUnit", new Class<?>[0]);
+
+		Assert.assertEquals("HOUR", repeatIntervalUnit.toString());
+	}
+
 	@Inject(filter = "component.name=*.CheckAssetEntryMessageListener")
 	private MessageListener _messageListener;
 

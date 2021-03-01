@@ -62,6 +62,7 @@ public class PortletPreferencesImpl
 		_ownerType = ownerType;
 		_plid = plid;
 		_portletId = portletId;
+
 		_originalXML = xml;
 		_originalPreferences = preferences;
 	}
@@ -348,6 +349,61 @@ public class PortletPreferencesImpl
 		return _companyId;
 	}
 
+	protected Map<String, Preference> getModifiedPreferences() {
+		if (_modifiedPreferences == null) {
+			_modifiedPreferences = new ConcurrentHashMap<>(
+				_originalPreferences);
+		}
+
+		return _modifiedPreferences;
+	}
+
+	protected Map<String, Preference> getOriginalPreferences() {
+		return _originalPreferences;
+	}
+
+	protected String getOriginalXML() {
+		return _originalXML;
+	}
+
+	protected String getPortletId() {
+		return _portletId;
+	}
+
+	protected String toXML() {
+		if ((_modifiedPreferences == null) && (_originalXML != null)) {
+			return _originalXML;
+		}
+
+		Map<String, Preference> preferences = getPreferences();
+
+		if ((preferences == null) || preferences.isEmpty()) {
+			return PortletConstants.DEFAULT_PREFERENCES;
+		}
+
+		Element portletPreferencesElement = new Element(
+			"portlet-preferences", false);
+
+		for (Map.Entry<String, Preference> entry : preferences.entrySet()) {
+			Preference preference = entry.getValue();
+
+			Element preferenceElement = portletPreferencesElement.addElement(
+				"preference");
+
+			preferenceElement.addElement("name", preference.getName());
+
+			for (String value : preference.getValues()) {
+				preferenceElement.addElement("value", value);
+			}
+
+			if (preference.isReadOnly()) {
+				preferenceElement.addElement("read-only", Boolean.TRUE);
+			}
+		}
+
+		return portletPreferencesElement.toXMLString();
+	}
+
 	private String _getActualValue(String value) {
 		if ((value == null) || value.equals(_NULL_VALUE)) {
 			return null;
@@ -382,27 +438,6 @@ public class PortletPreferencesImpl
 		}
 
 		return actualValues;
-	}
-
-	protected Map<String, Preference> getModifiedPreferences() {
-		if (_modifiedPreferences == null) {
-			_modifiedPreferences = new ConcurrentHashMap<>(
-				_originalPreferences);
-		}
-
-		return _modifiedPreferences;
-	}
-
-	protected Map<String, Preference> getOriginalPreferences() {
-		return _originalPreferences;
-	}
-
-	protected String getOriginalXML() {
-		return _originalXML;
-	}
-
-	protected String getPortletId() {
-		return _portletId;
 	}
 
 	private String _getXMLSafeValue(String value) {
@@ -441,42 +476,6 @@ public class PortletPreferencesImpl
 		return false;
 	}
 
-	protected String toXML() {
-		if ((_modifiedPreferences == null) && (_originalXML != null)) {
-			return _originalXML;
-		}
-
-		Map<String, Preference> preferences = getPreferences();
-
-		if ((preferences == null) || preferences.isEmpty()) {
-			return PortletConstants.DEFAULT_PREFERENCES;
-		}
-
-		Element portletPreferencesElement = new Element(
-			"portlet-preferences", false);
-
-		for (Map.Entry<String, Preference> entry : preferences.entrySet()) {
-			Preference preference = entry.getValue();
-
-			Element preferenceElement = portletPreferencesElement.addElement(
-				"preference");
-
-			preferenceElement.addElement("name", preference.getName());
-
-			for (String value : preference.getValues()) {
-				preferenceElement.addElement("value", value);
-			}
-
-			if (preference.isReadOnly()) {
-				preferenceElement.addElement("read-only", Boolean.TRUE);
-			}
-		}
-
-		return portletPreferencesElement.toXMLString();
-	}
-
-	private final long _companyId;
-
 	private static final String _NULL_ELEMENT = "NULL_ELEMENT";
 
 	private static final String _NULL_VALUE = "NULL_VALUE";
@@ -484,6 +483,7 @@ public class PortletPreferencesImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletPreferencesImpl.class);
 
+	private final long _companyId;
 	private PortletPreferences _defaultPreferences;
 	private Map<String, Preference> _modifiedPreferences;
 	private final Map<String, Preference> _originalPreferences;

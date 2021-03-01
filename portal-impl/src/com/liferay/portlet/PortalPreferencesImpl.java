@@ -79,10 +79,11 @@ public class PortalPreferencesImpl
 		com.liferay.portal.kernel.model.PortalPreferences portalPreferences,
 		boolean signedIn) {
 
+		_signedIn = signedIn;
+
 		_ownerId = portalPreferences.getOwnerId();
 		_ownerType = portalPreferences.getOwnerType();
 		_originalXML = portalPreferences.getPreferences();
-		_signedIn = signedIn;
 
 		Map<String, Preference> preferencesMap =
 			PortletPreferencesFactoryImpl.createPreferencesMap(
@@ -107,9 +108,10 @@ public class PortalPreferencesImpl
 
 		_ownerId = ownerId;
 		_ownerType = ownerType;
+		_signedIn = signedIn;
+
 		_originalXML = xml;
 		_originalPreferences = preferences;
-		_signedIn = signedIn;
 	}
 
 	@Override
@@ -178,8 +180,8 @@ public class PortalPreferencesImpl
 				}
 			}
 			else if ((key.length() > namespace.length()) &&
-					  key.startsWith(namespace) &&
-					  (key.charAt(namespace.length()) == CharPool.POUND)) {
+					 key.startsWith(namespace) &&
+					 (key.charAt(namespace.length()) == CharPool.POUND)) {
 
 				preferenceMap.put(key, entry.getValue());
 			}
@@ -259,22 +261,6 @@ public class PortalPreferencesImpl
 		key = _encodeKey(namespace, key);
 
 		return _getValues(key, defaultValue);
-	}
-
-	private String[] _getValues(String key, String[] def) {
-		if (key == null) {
-			throw new IllegalArgumentException();
-		}
-
-		Map<String, String[]> preferences = getPreferences();
-
-		String[] values = preferences.get(key);
-
-		if (_isNull(values)) {
-			return def;
-		}
-
-		return _getActualValues(values);
 	}
 
 	@Override
@@ -519,6 +505,44 @@ public class PortalPreferencesImpl
 		}
 	}
 
+	protected String toXML() {
+		if ((_modifiedPreferences == null) && (_originalXML != null)) {
+			return _originalXML;
+		}
+
+		Map<String, String[]> preferences = getPreferences();
+
+		if ((preferences == null) || preferences.isEmpty()) {
+			return PortletConstants.DEFAULT_PREFERENCES;
+		}
+
+		Element portletPreferencesElement = new Element(
+			"portlet-preferences", false);
+
+		for (Map.Entry<String, String[]> entry : preferences.entrySet()) {
+			String[] values = entry.getValue();
+
+			Element preferenceElement = portletPreferencesElement.addElement(
+				"preference");
+
+			preferenceElement.addElement("name", entry.getKey());
+
+			for (String value : values) {
+				preferenceElement.addElement("value", value);
+			}
+		}
+
+		return portletPreferencesElement.toXMLString();
+	}
+
+	private String _encodeKey(String namespace, String key) {
+		if (Validator.isNull(namespace)) {
+			return key;
+		}
+
+		return StringBundler.concat(namespace, StringPool.POUND, key);
+	}
+
 	private String _getActualValue(String value) {
 		if ((value == null) || value.equals(_NULL_VALUE)) {
 			return null;
@@ -566,6 +590,22 @@ public class PortalPreferencesImpl
 
 	private Map<String, String[]> _getOriginalPreferences() {
 		return _originalPreferences;
+	}
+
+	private String[] _getValues(String key, String[] def) {
+		if (key == null) {
+			throw new IllegalArgumentException();
+		}
+
+		Map<String, String[]> preferences = getPreferences();
+
+		String[] values = preferences.get(key);
+
+		if (_isNull(values)) {
+			return def;
+		}
+
+		return _getActualValues(values);
 	}
 
 	private String _getXMLSafeValue(String value) {
@@ -624,6 +664,25 @@ public class PortalPreferencesImpl
 		return false;
 	}
 
+	private com.liferay.portal.kernel.model.PortalPreferences _reload(
+			final long ownerId, final int ownerType)
+		throws Throwable {
+
+		return TransactionInvokerUtil.invoke(
+			SUPPORTS_TRANSACTION_CONFIG,
+			new Callable<com.liferay.portal.kernel.model.PortalPreferences>() {
+
+				@Override
+				public com.liferay.portal.kernel.model.PortalPreferences
+					call() {
+
+					return PortalPreferencesUtil.fetchByO_O(
+						ownerId, ownerType, false);
+				}
+
+			});
+	}
+
 	private void _retryableStore(Callable<?> callable, String key)
 		throws Throwable {
 
@@ -672,63 +731,6 @@ public class PortalPreferencesImpl
 				}
 			}
 		}
-	}
-
-	protected String toXML() {
-		if ((_modifiedPreferences == null) && (_originalXML != null)) {
-			return _originalXML;
-		}
-
-		Map<String, String[]> preferences = getPreferences();
-
-		if ((preferences == null) || preferences.isEmpty()) {
-			return PortletConstants.DEFAULT_PREFERENCES;
-		}
-
-		Element portletPreferencesElement = new Element(
-			"portlet-preferences", false);
-
-		for (Map.Entry<String, String[]> entry : preferences.entrySet()) {
-			String[] values = entry.getValue();
-
-			Element preferenceElement = portletPreferencesElement.addElement(
-				"preference");
-
-			preferenceElement.addElement("name", entry.getKey());
-
-			for (String value : values) {
-				preferenceElement.addElement("value", value);
-			}
-		}
-
-		return portletPreferencesElement.toXMLString();
-	}
-
-	private String _encodeKey(String namespace, String key) {
-		if (Validator.isNull(namespace)) {
-			return key;
-		}
-
-		return StringBundler.concat(namespace, StringPool.POUND, key);
-	}
-
-	private com.liferay.portal.kernel.model.PortalPreferences _reload(
-			final long ownerId, final int ownerType)
-		throws Throwable {
-
-		return TransactionInvokerUtil.invoke(
-			SUPPORTS_TRANSACTION_CONFIG,
-			new Callable<com.liferay.portal.kernel.model.PortalPreferences>() {
-
-				@Override
-				public com.liferay.portal.kernel.model.PortalPreferences
-					call() {
-
-					return PortalPreferencesUtil.fetchByO_O(
-						ownerId, ownerType, false);
-				}
-
-			});
 	}
 
 	private static final String _NULL_ELEMENT = "NULL_ELEMENT";

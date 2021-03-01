@@ -14,12 +14,15 @@
 
 import ClayButton from '@clayui/button';
 import ClayLink from '@clayui/link';
+import {Context as ModalContext} from '@clayui/modal';
 import {
 	Pages,
 	useConfig,
+	useForm,
 	useFormState,
 } from 'dynamic-data-mapping-form-renderer';
-import React, {useCallback, useEffect, useRef} from 'react';
+import {EVENT_TYPES as CORE_EVENT_TYPES} from 'dynamic-data-mapping-form-renderer/js/core/actions/eventTypes.es';
+import React, {useCallback, useContext, useEffect, useRef} from 'react';
 
 import {FormInfo} from '../components/FormInfo.es';
 import {ManagementToolbar} from '../components/ManagementToolbar.es';
@@ -27,6 +30,7 @@ import {MetalSidebarAdapter} from '../components/MetalSidebarAdapter.es';
 import {TranslationManager} from '../components/TranslationManager.es';
 import {useAutoSave} from '../hooks/useAutoSave.es';
 import {useToast} from '../hooks/useToast.es';
+import fieldDelete from '../thunks/fieldDelete.es';
 import {createFormURL} from '../util/form.es';
 
 export const FormBuilder = () => {
@@ -49,6 +53,9 @@ export const FormBuilder = () => {
 		pages,
 		rules,
 	} = useFormState();
+	const [{onClose}, modalDispatch] = useContext(ModalContext);
+
+	const dispatch = useForm();
 
 	const {doSave, doSyncInput} = useAutoSave();
 
@@ -64,7 +71,7 @@ export const FormBuilder = () => {
 
 	useEffect(() => {
 		const currentPage = pages[activePage];
-		const isEmpty = currentPage.rows[0].columns[0].fields.length === 0;
+		const isEmpty = currentPage.rows[0]?.columns[0].fields.length === 0;
 
 		if (isEmpty && sidebarRef.current) {
 			sidebarRef.current.current.open();
@@ -202,7 +209,40 @@ export const FormBuilder = () => {
 				<div className="container ddm-paginated-builder top">
 					<div className="ddm-form-builder-wrapper moveable resizeable">
 						<div className="container ddm-form-builder">
-							<Pages editable={true} />
+							<Pages
+								editable={true}
+								fieldActions={[
+									{
+										action: (payload) =>
+											dispatch({
+												payload,
+												type:
+													CORE_EVENT_TYPES.FIELD
+														.DUPLICATE,
+											}),
+										label: Liferay.Language.get(
+											'duplicate'
+										),
+									},
+									{
+										action: (payload) =>
+											dispatch(
+												fieldDelete({
+													action: {
+														payload,
+														type:
+															CORE_EVENT_TYPES
+																.FIELD.DELETE,
+													},
+													modalDispatch,
+													onClose,
+													rules,
+												})
+											),
+										label: Liferay.Language.get('delete'),
+									},
+								]}
+							/>
 						</div>
 					</div>
 				</div>

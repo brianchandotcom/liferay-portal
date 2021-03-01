@@ -56,7 +56,9 @@ export const Column = ({
 
 	const firstField = column.fields[0];
 
-	const [{activeId, hoveredId}] = useActions();
+	const {
+		state: {activeId, hoveredId},
+	} = useActions();
 
 	const {canDrop, drop, overTarget} = useDrop({
 		columnIndex,

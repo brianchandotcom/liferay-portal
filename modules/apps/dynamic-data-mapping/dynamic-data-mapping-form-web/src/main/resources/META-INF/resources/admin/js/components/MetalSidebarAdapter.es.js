@@ -16,7 +16,16 @@ import ClayButton from '@clayui/button';
 import {Context as ModalContext} from '@clayui/modal';
 import {Sidebar} from 'dynamic-data-mapping-form-builder';
 import {useConfig, useForm} from 'dynamic-data-mapping-form-renderer';
-import React, {useContext, useEffect, useImperativeHandle, useRef} from 'react';
+import {EVENT_TYPES as CORE_EVENT_TYPES} from 'dynamic-data-mapping-form-renderer/js/core/actions/eventTypes.es';
+import React, {
+	useCallback,
+	useContext,
+	useEffect,
+	useImperativeHandle,
+	useRef,
+} from 'react';
+
+import fieldDelete from '../thunks/fieldDelete.es';
 
 class NoRender extends React.Component {
 	shouldComponentUpdate() {
@@ -51,59 +60,75 @@ const createRevertFieldChanges = (onClose) => ({onClick, type}) => ({
 	type,
 });
 
-export const MetalSidebarAdapter = React.forwardRef((props, ref) => {
-	const {
-		defaultLanguageId,
-		fieldSetDefinitionURL,
-		fieldTypes,
-		portletNamespace,
-		spritemap,
-		view,
-	} = useConfig();
-	const dispatch = useForm();
-	const [{onClose}, modalDispatch] = useContext(ModalContext);
+export const MetalSidebarAdapter = React.forwardRef(
+	({rules, ...otherProps}, ref) => {
+		const {
+			defaultLanguageId,
+			fieldSetDefinitionURL,
+			fieldTypes,
+			portletNamespace,
+			spritemap,
+			view,
+		} = useConfig();
+		const dispatch = useForm();
+		const [{onClose}, modalDispatch] = useContext(ModalContext);
 
-	const component = useRef(null);
-	const container = useRef(null);
+		const component = useRef(null);
+		const container = useRef(null);
 
-	useEffect(() => {
-		if (!component.current && container.current) {
-			component.current = new Sidebar(
-				{
-					...props,
-					defaultLanguageId,
-					dispatch: (type, event) => dispatch({payload: event, type}),
-					fieldSetDefinitionURL,
-					fieldTypes,
-					modalDispatch,
-					portletNamespace,
-					revertFieldChanges: createRevertFieldChanges(onClose),
-					spritemap,
-					view,
-				},
-				container.current
-			);
-		}
+		const onDelete = useCallback(
+			(payload) => {
+				const action = {payload, type: CORE_EVENT_TYPES.FIELD.DELETE};
 
-		return () => {
-			if (component.current) {
-				component.current.dispose();
+				dispatch(fieldDelete({action, modalDispatch, onClose, rules}));
+			},
+			[dispatch, onClose, modalDispatch, rules]
+		);
+
+		useEffect(() => {
+			if (!component.current && container.current) {
+				component.current = new Sidebar(
+					{
+						...otherProps,
+						defaultLanguageId,
+						dispatch: (type, event) =>
+							dispatch({payload: event, type}),
+						fieldSetDefinitionURL,
+						fieldTypes,
+						modalDispatch,
+						onDelete,
+						portletNamespace,
+						revertFieldChanges: createRevertFieldChanges(onClose),
+						rules,
+						spritemap,
+						view,
+					},
+					container.current
+				);
 			}
-		};
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
 
-	useEffect(() => {
-		if (component.current) {
-			component.current.props = {
-				...component.current.props,
-				...props,
+			return () => {
+				if (component.current) {
+					component.current.dispose();
+				}
 			};
-			component.current.forceUpdate();
-		}
-	}, [component, props]);
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+		}, []);
 
-	useImperativeHandle(ref, () => component, []);
+		useEffect(() => {
+			if (component.current) {
+				component.current.props = {
+					...component.current.props,
+					...otherProps,
+					onDelete,
+					rules,
+				};
+				component.current.forceUpdate();
+			}
+		}, [component, rules, onDelete, otherProps]);
 
-	return <NoRender forwardRef={container} />;
-});
+		useImperativeHandle(ref, () => component, []);
+
+		return <NoRender forwardRef={container} />;
+	}
+);

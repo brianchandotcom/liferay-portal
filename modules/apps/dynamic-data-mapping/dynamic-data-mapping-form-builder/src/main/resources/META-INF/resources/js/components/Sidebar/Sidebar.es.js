@@ -376,9 +376,9 @@ class Sidebar extends Component {
 	}
 
 	_deleteField(fieldName) {
-		const {dispatch} = this.props;
+		const {onDelete} = this.props;
 
-		dispatch('field_delete', {fieldName});
+		onDelete({fieldName});
 	}
 
 	dispatchFieldBlurred() {

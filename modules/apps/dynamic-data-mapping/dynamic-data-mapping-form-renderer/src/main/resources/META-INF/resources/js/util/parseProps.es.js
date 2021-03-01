@@ -35,6 +35,7 @@ export const parseProps = ({
 	redirectURL,
 	restrictedFormURL,
 	rolesURL,
+	rules,
 	shareFormInstanceURL,
 	sharedFormURL,
 	showCancelButton,
@@ -78,5 +79,6 @@ export const parseProps = ({
 	state: {
 		...otherProps,
 		...context,
+		rules,
 	},
 });

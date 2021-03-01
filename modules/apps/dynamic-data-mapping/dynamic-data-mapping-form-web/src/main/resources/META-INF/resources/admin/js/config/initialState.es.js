@@ -13,23 +13,12 @@
  */
 
 import {getUid} from 'dynamic-data-mapping-form-renderer';
-import {EVENT_TYPES as CORE_EVENT_TYPES} from 'dynamic-data-mapping-form-renderer/js/core/actions/eventTypes.es';
 import {INITIAL_STATE} from 'dynamic-data-mapping-form-renderer/js/core/config/index.es';
 
 export const BUILDER_INITIAL_STATE = {
 	...INITIAL_STATE,
 	availableLanguageIds: [themeDisplay.getLanguageId()],
 	editingLanguageId: themeDisplay.getDefaultLanguageId(),
-	fieldActions: [
-		{
-			label: Liferay.Language.get('duplicate'),
-			type: CORE_EVENT_TYPES.FIELD.DUPLICATE,
-		},
-		{
-			label: Liferay.Language.get('delete'),
-			type: CORE_EVENT_TYPES.FIELD.DELETE,
-		},
-	],
 	fieldSets: [],
 	fieldTypes: [],
 	focusedField: {},

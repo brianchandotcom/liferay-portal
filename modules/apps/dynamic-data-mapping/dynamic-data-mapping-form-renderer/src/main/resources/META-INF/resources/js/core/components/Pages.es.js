@@ -29,76 +29,81 @@ function getDisplayableValue({containerId, readOnly, viewMode}) {
 	);
 }
 
-const Pages = React.forwardRef(({editable, ...otherProps}, ref) => {
-	const {containerId, portletNamespace, view} = useConfig();
-	const {
-		activePage,
-		displayable: initialDisplayableValue,
-		editingLanguageId,
-		focusedField,
-		forceAriaUpdate,
-		invalidFormMessage,
-		pages,
-		paginationMode,
-		readOnly,
-		viewMode,
-	} = useFormState();
+const Pages = React.forwardRef(
+	({editable, fieldActions, ...otherProps}, ref) => {
+		const {containerId, portletNamespace, view} = useConfig();
+		const {
+			activePage,
+			displayable: initialDisplayableValue,
+			editingLanguageId,
+			focusedField,
+			forceAriaUpdate,
+			invalidFormMessage,
+			pages,
+			paginationMode,
+			readOnly,
+			viewMode,
+		} = useFormState();
 
-	const {resource: fieldTypes} = useFieldTypesResource();
+		const {resource: fieldTypes} = useFieldTypesResource();
 
-	const containerFallbackRef = useRef();
+		const containerFallbackRef = useRef();
 
-	const displayable =
-		initialDisplayableValue ||
-		getDisplayableValue({containerId, readOnly, viewMode});
+		const displayable =
+			initialDisplayableValue ||
+			getDisplayableValue({containerId, readOnly, viewMode});
 
-	if (!displayable) {
-		return null;
-	}
+		if (!displayable) {
+			return null;
+		}
 
-	const containerElementRef = ref ?? containerFallbackRef;
+		const containerElementRef = ref ?? containerFallbackRef;
 
-	return (
-		<div
-			className={classNames({sheet: view === 'fieldSets'})}
-			ref={containerElementRef}
-		>
+		return (
 			<div
-				className={classNames(
-					'lfr-ddm-form-container position-relative',
-					{
-						'ddm-user-view-content': !editable,
-					}
-				)}
+				className={classNames({sheet: view === 'fieldSets'})}
+				ref={containerElementRef}
 			>
-				<ActionsProvider focusedFieldId={focusedField?.fieldName}>
-					{pages.map((page, index) => (
-						<Page
-							{...otherProps}
-							activePage={activePage}
-							containerElement={containerElementRef}
-							editable={editable}
-							editingLanguageId={editingLanguageId}
-							fieldTypes={fieldTypes}
-							forceAriaUpdate={forceAriaUpdate}
-							invalidFormMessage={invalidFormMessage}
-							key={page.id}
-							page={page}
-							pageIndex={index}
-							pages={pages}
-							paginationMode={paginationMode}
-							portletNamespace={portletNamespace}
-							readOnly={readOnly}
-							total={pages.length}
-							view={view}
-							viewMode={viewMode}
-						/>
-					))}
-				</ActionsProvider>
+				<div
+					className={classNames(
+						'lfr-ddm-form-container position-relative',
+						{
+							'ddm-user-view-content': !editable,
+						}
+					)}
+				>
+					<ActionsProvider
+						actions={fieldActions}
+						focusedFieldId={focusedField?.fieldName}
+					>
+						{pages.map((page, index) => (
+							<Page
+								{...otherProps}
+								activePage={activePage}
+								containerElement={containerElementRef}
+								editable={editable}
+								editingLanguageId={editingLanguageId}
+								fieldTypes={fieldTypes}
+								forceAriaUpdate={forceAriaUpdate}
+								invalidFormMessage={invalidFormMessage}
+								key={page.id}
+								page={page}
+								pageIndex={index}
+								pages={pages}
+								paginationMode={paginationMode}
+								portletNamespace={portletNamespace}
+								readOnly={readOnly}
+								total={pages.length}
+								view={view}
+								viewMode={viewMode}
+							/>
+						))}
+					</ActionsProvider>
+				</div>
 			</div>
-		</div>
-	);
-});
+		);
+	}
+);
 
 Pages.displayName = 'Pages';
 

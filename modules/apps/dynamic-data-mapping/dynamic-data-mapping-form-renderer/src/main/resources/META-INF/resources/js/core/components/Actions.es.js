@@ -29,7 +29,7 @@ import React, {
 
 import {useConfig} from '../../core/hooks/useConfig.es';
 import {EVENT_TYPES} from '../actions/eventTypes.es';
-import {useForm, useFormState} from '../hooks/useForm.es';
+import {useForm} from '../hooks/useForm.es';
 import {useResizeObserver} from '../hooks/useResizeObserver.es';
 
 const ActionsContext = createContext({});
@@ -64,7 +64,7 @@ const reducer = (state, action) => {
 /**
  * ActionsContext is responsible for store which field is being hovered or active
  */
-export const ActionsProvider = ({children, focusedFieldId}) => {
+export const ActionsProvider = ({actions, children, focusedFieldId}) => {
 	const [state, dispatch] = useReducer(reducer, ACTIONS_INITAL_REDUCER);
 	const dispatchForm = useForm();
 
@@ -102,7 +102,9 @@ export const ActionsProvider = ({children, focusedFieldId}) => {
 	}, [focusedFieldId]);
 
 	return (
-		<ActionsContext.Provider value={[state, newDispatch]}>
+		<ActionsContext.Provider
+			value={{actions, dispatch: newDispatch, state}}
+		>
 			{children}
 		</ActionsContext.Provider>
 	);
@@ -123,7 +125,10 @@ export const ActionsControls = ({
 	columnRef,
 	field,
 }) => {
-	const [{activeId, hoveredId}, dispatch] = useActions();
+	const {
+		dispatch,
+		state: {activeId, hoveredId},
+	} = useActions();
 	const contentRect = useResizeObserver(columnRef);
 
 	useLayoutEffect(() => {
@@ -188,8 +193,7 @@ export const Actions = forwardRef(
 		actionsRef
 	) => {
 		const {fieldTypes} = useConfig();
-		const {fieldActions} = useFormState();
-		const dispatch = useForm();
+		const {actions} = useActions();
 
 		const label = useMemo(() => {
 			if (isFieldSet) {
@@ -210,30 +214,15 @@ export const Actions = forwardRef(
 
 				<ClayDropDownWithItems
 					className="dropdown-action"
-					items={fieldActions.map(
-						({action, type, ...otherProps}) => ({
-							onClick: () => {
-								if (action) {
-									action({
-										activePage,
-										fieldName: fieldId,
-										parentFieldName,
-									});
-								}
-								else {
-									dispatch({
-										payload: {
-											activePage,
-											fieldName: fieldId,
-											parentFieldName,
-										},
-										type,
-									});
-								}
-							},
-							...otherProps,
-						})
-					)}
+					items={actions.map(({action, ...otherProps}) => ({
+						onClick: () =>
+							action({
+								activePage,
+								fieldName: fieldId,
+								parentFieldName,
+							}),
+						...otherProps,
+					}))}
 					trigger={
 						<ClayButtonWithIcon
 							aria-label={Liferay.Language.get('actions')}

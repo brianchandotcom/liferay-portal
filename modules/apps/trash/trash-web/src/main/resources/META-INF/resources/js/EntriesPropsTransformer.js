@@ -12,7 +12,7 @@
  * details.
  */
 
-import {normalizeFriendlyURL, openSelectionModal} from 'frontend-js-web';
+import {openSelectionModal} from 'frontend-js-web';
 
 const ACTIONS = {
 	deleteEntry(itemData) {
@@ -71,10 +71,7 @@ const ACTIONS = {
 					submitForm(selectContainerForm);
 				}
 			},
-			selectEventName: normalizeFriendlyURL(
-				portletNamespace,
-				'selectContainer'
-			),
+			selectEventName: `${portletNamespace}selectContainer`,
 			title: Liferay.Language.get('warning'),
 			url: itemData.moveEntryURL,
 		});

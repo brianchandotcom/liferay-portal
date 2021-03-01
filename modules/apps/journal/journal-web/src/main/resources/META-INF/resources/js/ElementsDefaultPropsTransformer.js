@@ -12,12 +12,7 @@
  * details.
  */
 
-import {
-	addParams,
-	normalizeFriendlyURL,
-	openModal,
-	openSelectionModal,
-} from 'frontend-js-web';
+import {addParams, openModal, openSelectionModal} from 'frontend-js-web';
 
 const ACTIONS = {
 	compareVersions({itemData, portletNamespace}) {
@@ -36,9 +31,7 @@ const ACTIONS = {
 
 				location.href = url;
 			},
-			selectEventName: normalizeFriendlyURL(
-				`${portletNamespace}selectVersionFm`
-			),
+			selectEventName: `${portletNamespace}selectVersionFm`,
 			title: Liferay.Language.get('compare-versions'),
 			url: itemData.compareVersionsURL,
 		});
@@ -88,9 +81,7 @@ const ACTIONS = {
 					}
 				}
 			},
-			selectEventName: normalizeFriendlyURL(
-				`${portletNamespace}selectTranslations`
-			),
+			selectEventName: `${portletNamespace}selectTranslations`,
 			title: Liferay.Language.get('delete-translations'),
 			url: itemData.selectArticleTranslationsURL,
 		});

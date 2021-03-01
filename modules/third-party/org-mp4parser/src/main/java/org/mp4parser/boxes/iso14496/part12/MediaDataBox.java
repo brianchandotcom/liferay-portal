@@ -23,6 +23,7 @@ import org.mp4parser.support.DoNotParseDetail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -32,6 +33,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
+import java.nio.file.Files;
 
 /**
  * <h1>4cc = "{@value #TYPE}"</h1>
@@ -45,7 +47,7 @@ import java.nio.channels.WritableByteChannel;
  * so Media Data Box headers and free space may easily be skipped, and files without any box structure may
  * also be referenced and used.
  */
-public final class MediaDataBox implements ParsableBox {
+public final class MediaDataBox implements ParsableBox, Closeable {
     public static final String TYPE = "mdat";
     private static Logger LOG = LoggerFactory.getLogger(MediaDataBox.class);
     ByteBuffer header;
@@ -77,9 +79,6 @@ public final class MediaDataBox implements ParsableBox {
     @DoNotParseDetail
     public void parse(ReadableByteChannel dataSource, ByteBuffer header, long contentSize, BoxParser boxParser) throws IOException {
         dataFile = File.createTempFile("MediaDataBox", super.toString());
-        
-        // make sure to clean up temp file
-        dataFile.deleteOnExit();
 
         this.header = ByteBuffer.allocate(header.limit());
         this.header.put(header);
@@ -92,5 +91,16 @@ public final class MediaDataBox implements ParsableBox {
 
     }
 
-
+    @Override
+    public void close() throws IOException {
+        // make sure to clean up temp file
+        try {
+            Files.delete(dataFile.toPath());
+        } catch (IOException e) {
+            LOG.warn("failed to delete: "+dataFile.getAbsolutePath() +
+                    ". I'll try to delete it on exit.", e);
+            dataFile.deleteOnExit();
+        }
+    }
 }
+/* @generated */

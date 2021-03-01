@@ -62,7 +62,7 @@ public class TrustedApplicationClientTest extends BaseClientTestCase {
 
 		URI locationURI = response.getLocation();
 
-		Assert.assertNotEquals(locationURI.toString(), _OAUTH2_DECISION_URL);
+		Assert.assertNotEquals(locationURI.toString(), _URL);
 
 		response = getCodeResponse(
 			"test@liferay.com", "test", null,
@@ -77,7 +77,7 @@ public class TrustedApplicationClientTest extends BaseClientTestCase {
 
 		locationURI = response.getLocation();
 
-		Assert.assertNotEquals(locationURI.toString(), _OAUTH2_DECISION_URL);
+		Assert.assertNotEquals(locationURI.toString(), _URL);
 	}
 
 	@Test
@@ -95,7 +95,7 @@ public class TrustedApplicationClientTest extends BaseClientTestCase {
 
 		URI locationURI = response.getLocation();
 
-		Assert.assertEquals(locationURI.toString(), _OAUTH2_DECISION_URL);
+		Assert.assertEquals(locationURI.toString(), _URL);
 
 		response = getCodeResponse(
 			"test@liferay.com", "test", null,
@@ -110,7 +110,7 @@ public class TrustedApplicationClientTest extends BaseClientTestCase {
 
 		locationURI = response.getLocation();
 
-		Assert.assertEquals(locationURI.toString(), _OAUTH2_DECISION_URL);
+		Assert.assertEquals(locationURI.toString(), _URL);
 	}
 
 	public static class TrustedApplicationClientTestPreparatorBundleActivator
@@ -151,7 +151,7 @@ public class TrustedApplicationClientTest extends BaseClientTestCase {
 			TrustedApplicationClientTestPreparatorBundleActivator();
 	}
 
-	private static final String _OAUTH2_DECISION_URL =
+	private static final String _URL =
 		"http://localhost:8080/o/oauth2/authorize/decision";
 
 }

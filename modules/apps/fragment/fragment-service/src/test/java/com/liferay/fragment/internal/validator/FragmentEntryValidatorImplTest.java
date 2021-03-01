@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.language.LanguageImpl;
 import com.liferay.registry.BasicRegistryImpl;
@@ -55,11 +56,17 @@ public class FragmentEntryValidatorImplTest {
 		Registry registry = new BasicRegistryImpl();
 
 		RegistryUtil.setRegistry(registry);
+
+		_classLoader = PortalClassLoaderUtil.getClassLoader();
+
+		PortalClassLoaderUtil.setClassLoader(null);
 	}
 
 	@AfterClass
 	public static void tearDownClass() {
 		RegistryUtil.setRegistry(null);
+
+		PortalClassLoaderUtil.setClassLoader(_classLoader);
 	}
 
 	@Before
@@ -781,6 +788,8 @@ public class FragmentEntryValidatorImplTest {
 		return new String(
 			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
 	}
+
+	private static ClassLoader _classLoader;
 
 	private FragmentEntryValidatorImpl _fragmentEntryValidatorImpl;
 

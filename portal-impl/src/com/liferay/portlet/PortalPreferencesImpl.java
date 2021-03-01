@@ -15,6 +15,7 @@
 package com.liferay.portlet;
 
 import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.xml.XMLUtil;
@@ -159,14 +160,32 @@ public class PortalPreferencesImpl
 		return false;
 	}
 
-	public Map<String, String[]> getMap() {
+	public Map<String, String[]> getMap(String namespace) {
 		Map<String, String[]> preferences = getPreferences();
 
 		if (preferences.isEmpty()) {
 			return Collections.emptyMap();
 		}
 
-		return new HashMap<>(preferences);
+		Map<String, String[]> preferenceMap = new HashMap<>();
+
+		for (Map.Entry<String, String[]> entry : preferences.entrySet()) {
+			String key = entry.getKey();
+
+			if (Validator.isNull(namespace)) {
+				if (key.indexOf(CharPool.POUND) < 0) {
+					preferenceMap.put(key, entry.getValue());
+				}
+			}
+			else if ((key.length() > namespace.length()) &&
+					  key.startsWith(namespace) &&
+					  (key.charAt(namespace.length()) == CharPool.POUND)) {
+
+				preferenceMap.put(key, entry.getValue());
+			}
+		}
+
+		return preferenceMap;
 	}
 
 	public long getMvccVersion() {
@@ -177,8 +196,8 @@ public class PortalPreferencesImpl
 		return _portalPreferences.getMvccVersion();
 	}
 
-	public Enumeration<String> getNames() {
-		Map<String, String[]> preferences = getPreferences();
+	public Enumeration<String> getNames(String namespace) {
+		Map<String, String[]> preferences = getMap(namespace);
 
 		return Collections.enumeration(preferences.keySet());
 	}
@@ -273,8 +292,10 @@ public class PortalPreferencesImpl
 		return _signedIn;
 	}
 
-	public void reset(String key) {
-		String[] values = _getValues(key, null);
+	public void reset(String namespace, String key) {
+		String encodedKey = _encodeKey(namespace, key);
+
+		String[] values = _getValues(encodedKey, null);
 
 		if (values == null) {
 			return;
@@ -287,7 +308,7 @@ public class PortalPreferencesImpl
 				Map<String, String[]> modifiedPreferences =
 					_getModifiedPreferences();
 
-				modifiedPreferences.remove(key);
+				modifiedPreferences.remove(encodedKey);
 
 				return null;
 			}
@@ -295,7 +316,7 @@ public class PortalPreferencesImpl
 		};
 
 		try {
-			_retryableStore(callable, key);
+			_retryableStore(callable, encodedKey);
 		}
 		catch (ConcurrentModificationException
 					concurrentModificationException) {
@@ -315,8 +336,16 @@ public class PortalPreferencesImpl
 			for (Map.Entry<String, String[]> entry : preferences.entrySet()) {
 				String key = entry.getKey();
 
-				if (key.startsWith(namespace)) {
-					reset(key);
+				if (Validator.isNull(namespace)) {
+					if (key.indexOf(CharPool.POUND) < 0) {
+						reset(null, key);
+					}
+				}
+				else if ((key.length() > namespace.length()) &&
+						 key.startsWith(namespace) &&
+						 (key.charAt(namespace.length()) == CharPool.POUND)) {
+
+					reset(namespace, key.substring(namespace.length() + 1));
 				}
 			}
 		}
@@ -340,32 +369,20 @@ public class PortalPreferencesImpl
 		_userId = userId;
 	}
 
-	public void setValue(String key, String value) {
-		if (key == null) {
-			throw new IllegalArgumentException();
-		}
-
-		value = _getXMLSafeValue(value);
-
-		Map<String, String[]> modifiedPreferences = _getModifiedPreferences();
-
-		modifiedPreferences.put(key, new String[] {value});
-	}
-
 	@Override
-	public void setValue(String namespace, String key, final String value) {
+	public void setValue(String namespace, String key, String value) {
 		if (Validator.isNull(key) || key.equals(_RANDOM_KEY)) {
 			return;
 		}
 
-		final String encodedKey = _encodeKey(namespace, key);
-
 		try {
 			if (value == null) {
-				reset(encodedKey);
+				reset(namespace, key);
 
 				return;
 			}
+
+			String encodedKey = _encodeKey(namespace, key);
 
 			String[] oldValues = _getValues(encodedKey, null);
 
@@ -379,7 +396,11 @@ public class PortalPreferencesImpl
 
 				@Override
 				public Void call() {
-					setValue(encodedKey, value);
+					Map<String, String[]> modifiedPreferences =
+						_getModifiedPreferences();
+
+					modifiedPreferences.put(
+						encodedKey, new String[] {_getXMLSafeValue(value)});
 
 					return null;
 				}
@@ -409,11 +430,9 @@ public class PortalPreferencesImpl
 			return;
 		}
 
-		final String encodedKey = _encodeKey(namespace, key);
-
 		try {
 			if (values == null) {
-				reset(encodedKey);
+				reset(namespace, key);
 
 				return;
 			}
@@ -423,6 +442,8 @@ public class PortalPreferencesImpl
 
 				return;
 			}
+
+			String encodedKey = _encodeKey(namespace, key);
 
 			String[] oldValues = _getValues(encodedKey, null);
 
@@ -439,7 +460,11 @@ public class PortalPreferencesImpl
 
 				@Override
 				public Void call() {
-					setValues(encodedKey, values);
+					Map<String, String[]> modifiedPreferences =
+						_getModifiedPreferences();
+
+					modifiedPreferences.put(
+						encodedKey, _getXMLSafeValues(values));
 
 					return null;
 				}
@@ -461,18 +486,6 @@ public class PortalPreferencesImpl
 		catch (Throwable throwable) {
 			_log.error(throwable, throwable);
 		}
-	}
-
-	public void setValues(String key, String[] values) {
-		if (key == null) {
-			throw new IllegalArgumentException();
-		}
-
-		values = _getXMLSafeValues(values);
-
-		Map<String, String[]> modifiedPreferences = _getModifiedPreferences();
-
-		modifiedPreferences.put(key, values);
 	}
 
 	@Override

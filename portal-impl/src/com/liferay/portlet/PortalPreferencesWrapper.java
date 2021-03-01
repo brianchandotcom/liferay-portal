@@ -43,7 +43,7 @@ public class PortalPreferencesWrapper
 
 	@Override
 	public Map<String, String[]> getMap() {
-		return _portalPreferencesImpl.getMap();
+		return _portalPreferencesImpl.getMap(null);
 	}
 
 	@Override
@@ -53,7 +53,7 @@ public class PortalPreferencesWrapper
 
 	@Override
 	public Enumeration<String> getNames() {
-		return _portalPreferencesImpl.getNames();
+		return _portalPreferencesImpl.getNames(null);
 	}
 
 	public PortalPreferencesImpl getPortalPreferencesImpl() {
@@ -77,7 +77,7 @@ public class PortalPreferencesWrapper
 
 	@Override
 	public void reset(String key) {
-		_portalPreferencesImpl.reset(key);
+		_portalPreferencesImpl.reset(null, key);
 	}
 
 	@Override
@@ -87,12 +87,12 @@ public class PortalPreferencesWrapper
 
 	@Override
 	public void setValue(String key, String value) {
-		_portalPreferencesImpl.setValue(key, value);
+		_portalPreferencesImpl.setValue(null, key, value);
 	}
 
 	@Override
 	public void setValues(String key, String[] values) {
-		_portalPreferencesImpl.setValues(key, values);
+		_portalPreferencesImpl.setValues(null, key, values);
 	}
 
 	@Override

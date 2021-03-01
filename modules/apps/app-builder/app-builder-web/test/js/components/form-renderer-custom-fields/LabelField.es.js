@@ -12,94 +12,106 @@
  * details.
  */
 
-import {act, cleanup, fireEvent, render} from '@testing-library/react';
+import {cleanup, fireEvent, render} from '@testing-library/react';
 import React, {createContext} from 'react';
 
 import LabelField from '../../../../src/main/resources/META-INF/resources/js/components/form-renderer-custom-fields/LabelField.es';
-import * as utils from '../../../../src/main/resources/META-INF/resources/js/components/form-renderer-custom-fields/shared/utils.es';
 import {FORM_VIEW} from '../../constants.es';
-const {getDataLayoutBuilderProps} = FORM_VIEW;
 
-const INITIAL_STATE = {
+const DEFAULT_STATE = {
+	editingLanguageId: 'en_US',
+	focusedCustomObjectField: {},
+	focusedField: {
+		fieldName: 'TextName',
+	},
+};
+
+const DATA_DEFINITION_FIELD = (label) => ({
+	label: {
+		en_US: label,
+	},
+	name: `Text${label}`,
+});
+
+const STRUCTURE_LEVEL_STATE = {
+	...DEFAULT_STATE,
 	dataDefinition: {
 		dataDefinitionFields: [
 			{
+				...DATA_DEFINITION_FIELD('Name'),
 				customProperties: {
-					labelAtStructureLevel: true
+					labelAtStructureLevel: true,
 				},
-				label: {
-					en_US: 'Text',
-				},
-				name: 'Text11111',
 			},
 			{
+				...DATA_DEFINITION_FIELD('Email'),
 				customProperties: {
-					labelAtStructureLevel: true
+					labelAtStructureLevel: true,
 				},
-				label: {
-					en_US: 'Text 2',
-				},
-				name: 'Text22222',
 			},
 		],
 	},
 	dataLayout: {
 		dataLayoutFields: {},
 	},
-	editingLanguageId: 'en_US',
-	focusedCustomObjectField: {},
-	focusedField: {
-		fieldName: 'Text11111',
-	},
 };
 
-const INITIAL_STATE_FORM_VIEW = {
-	...INITIAL_STATE,
+const VIEW_LEVEL_STATE = {
+	...DEFAULT_STATE,
 	dataDefinition: {
 		dataDefinitionFields: [
 			{
-				...INITIAL_STATE.dataDefinition.dataDefinitionFields[0],
+				...DATA_DEFINITION_FIELD('Name'),
 				customProperties: {
-					labelAtStructureLevel: false
+					labelAtStructureLevel: false,
+				},
+			},
+			{
+				...DATA_DEFINITION_FIELD('Email'),
+				customProperties: {
+					labelAtStructureLevel: false,
 				},
 			},
 		],
 	},
 	dataLayout: {
 		dataLayoutFields: {
-			Text11111: {
+			TextEmail: {
 				label: {
-					en_US: 'Text Form View Level',
+					en_US: 'Login',
+				},
+			},
+			TextName: {
+				label: {
+					en_US: 'Username',
 				},
 			},
 		},
 	},
 };
 
-const INITIAL_FIELD = {
-	value: 'asdf',
-};
-
-const Context = createContext();
+const AppContext = createContext();
 
 const LabelFieldWrapper = ({
-	initialState = INITIAL_STATE,
-	field = INITIAL_FIELD,
-	dataLayoutBuilder = getDataLayoutBuilderProps(),
+	state = STRUCTURE_LEVEL_STATE,
+	dataLayoutBuilder = FORM_VIEW.getDataLayoutBuilderProps(),
 }) => (
-	<Context.Provider value={[initialState, jest.fn()]}>
+	<AppContext.Provider value={[state, jest.fn()]}>
 		<LabelField
-			AppContext={Context}
+			AppContext={AppContext}
 			dataLayoutBuilder={dataLayoutBuilder}
-			field={field}
+			field={{
+				label: 'Label',
+				name: 'LabelName',
+				placeholder: 'Enter a field label.',
+				tooltip:
+					'Enter a descriptive field label that guides users to enter the information you want.',
+			}}
 		/>
-	</Context.Provider>
+	</AppContext.Provider>
 );
 
 describe('LabelField', () => {
-	let setPropertyAtStructureLevel;
-	let setPropertyAtViewLevel;
-
 	beforeEach(() => {
 		jest.useFakeTimers();
 	});
@@ -109,154 +121,133 @@ describe('LabelField', () => {
 
 		jest.clearAllTimers();
 		jest.restoreAllMocks();
-		setPropertyAtStructureLevel = jest
-			.fn()
-			.mockImplementation(() => jest.fn());
-		jest.spyOn(utils, 'setPropertyAtStructureLevel').mockImplementation(
-			setPropertyAtStructureLevel
-		);
-		setPropertyAtViewLevel = jest.fn().mockImplementation(() => jest.fn());
-		jest.spyOn(utils, 'setPropertyAtViewLevel').mockImplementation(
-			setPropertyAtViewLevel
-		);
 	});
 
 	afterAll(() => {
 		jest.useRealTimers();
 	});
 
-	it('renders with object-level', () => {
+	it('renders with structure-level', () => {
 		const {asFragment} = render(<LabelFieldWrapper />);
 
 		expect(asFragment()).toMatchSnapshot();
 	});
 
-	it('display object-level label and do not render the object-field-label message', () => {
-		const {container, queryByText} = render(<LabelFieldWrapper />);
-
-		const input = container.querySelector('.form-control.ddm-field-text');
-
-		expect(input.value).toEqual('Text');
-		expect(queryByText('object-field-label-x')).toBeFalsy();
-	});
-
-	it('renders with form-view-level', () => {
+	it('renders with view-level', () => {
 		const {asFragment} = render(
-			<LabelFieldWrapper initialState={INITIAL_STATE_FORM_VIEW} />
+			<LabelFieldWrapper state={VIEW_LEVEL_STATE} />
 		);
 		expect(asFragment()).toMatchSnapshot();
 	});
 
-	it('display form-view-level label and render the message object-field-label', () => {
-		const {container, queryByText} = render(
-			<LabelFieldWrapper initialState={INITIAL_STATE_FORM_VIEW} />
+	it('renders with structure-level passing the focusedCustomObjectField', () => {
+		const {container} = render(
+			<LabelFieldWrapper
+				state={{
+					...STRUCTURE_LEVEL_STATE,
+					focusedCustomObjectField: {
+						name: 'TextName',
+					},
+					focusedField: {},
+				}}
+			/>
 		);
 
-		const input = container.querySelector('.form-control.ddm-field-text');
+		const input = container.querySelector('.ddm-field-text');
 
-		expect(input.value).toEqual('Text Form View Level');
+		expect(input.value).toBe('Name');
+	});
+
+	it('display structure-level label and do not render the object-field-label message', () => {
+		const {container, queryByText} = render(<LabelFieldWrapper />);
+
+		const input = container.querySelector('.ddm-field-text');
+
+		expect(input.value).toEqual('Name');
+		expect(queryByText('object-field-label-x')).toBeFalsy();
+	});
+
+	it('display view-level label and render the message object-field-label', () => {
+		const {container, queryByText} = render(
+			<LabelFieldWrapper state={VIEW_LEVEL_STATE} />
+		);
+
+		const input = container.querySelector('.ddm-field-text');
+
+		expect(input.value).toEqual('Username');
 		expect(queryByText('object-field-label-x')).toBeTruthy();
 	});
 
-	it('change object-level label text', async () => {
+	it('renders the popover with structure level option selected', () => {
 		const {container} = render(<LabelFieldWrapper />);
 
-		const input = container.querySelector('.form-control.ddm-field-text');
+		const dropdownButton = container.querySelector(
+			'.form-renderer-label-field__button'
+		);
+		const popover = container.querySelector(
+			'.form-renderer-label-field__popover'
+		);
+		const options = document.querySelectorAll(
+			'.form-renderer-label-field input.custom-control-input'
+		);
 
-		fireEvent.change(input, {target: {value: 'New Object Level Text'}});
+		expect(popover.classList.contains('show')).toBeFalsy();
 
-		await act(async () => {
-			jest.runAllTimers();
-		});
+		fireEvent.click(dropdownButton);
 
-		expect(setPropertyAtStructureLevel).toHaveBeenCalledWith('label', {
-			en_US: 'New Object Level Text',
-		});
-		expect(setPropertyAtViewLevel).not.toBeCalled();
+		expect(popover.classList.contains('show')).toBeTruthy();
+
+		// Structure level option
+
+		expect(options[0].checked).toBeTruthy();
 	});
 
-	it('change form-view-level label text', async () => {
+	it('renders the popover with view level option selected', () => {
 		const {container} = render(
-			<LabelFieldWrapper initialState={INITIAL_STATE_FORM_VIEW} />
+			<LabelFieldWrapper state={VIEW_LEVEL_STATE} />
 		);
 
-		const input = container.querySelector('.form-control.ddm-field-text');
+		const dropdownButton = container.querySelector(
+			'.form-renderer-label-field__button'
+		);
+		const popover = container.querySelector(
+			'.form-renderer-label-field__popover'
+		);
+		const options = document.querySelectorAll(
+			'.form-renderer-label-field input.custom-control-input'
+		);
 
-		fireEvent.change(input, {target: {value: 'New Form View Level Text'}});
+		expect(popover.classList.contains('show')).toBeFalsy();
 
-		await act(async () => {
-			jest.runAllTimers();
-		});
+		fireEvent.click(dropdownButton);
 
-		expect(setPropertyAtStructureLevel).not.toBeCalled();
-		expect(setPropertyAtViewLevel).toHaveBeenCalledWith('label', {
-			en_US: 'New Form View Level Text',
-		});
+		expect(popover.classList.contains('show')).toBeTruthy();
+
+		// View level option
+
+		expect(options[1].checked).toBeTruthy();
 	});
 
-	it('change to object-level label', async () => {
-		const {queryByLabelText} = render(
-			<LabelFieldWrapper initialState={INITIAL_STATE_FORM_VIEW} />
-		);
-
-		const radioObjectLevel = queryByLabelText(
-			'label-for-all-forms-using-this-field'
-		);
-
-		fireEvent.click(radioObjectLevel);
-
-		await act(async () => {
-			jest.runAllTimers();
-		});
-
-		expect(setPropertyAtStructureLevel).toHaveBeenCalledWith('label', {
-			en_US: 'Text',
-		});
-	});
-
-	it('change to form-view-level label', async () => {
-		const {queryByLabelText} = render(<LabelFieldWrapper />);
-
-		const radioFormView = queryByLabelText('label-for-only-this-form');
-		
-		await fireEvent.click(radioFormView);
-		
-		await act(async () => {
-			jest.runAllTimers();
-		});
-
-		expect(setPropertyAtViewLevel).toHaveBeenCalledWith('label', {
-			en_US: 'Text',
-		});
-	});
-
-	it('update FormBuilder field', async () => {
-		const containsFieldInsideFormBuilder = jest
-			.fn()
-			.mockImplementation(() => true);
-		jest.spyOn(utils, 'containsFieldInsideFormBuilder').mockImplementation(
-			containsFieldInsideFormBuilder
-		);
-
-		const dataLayoutBuilder = getDataLayoutBuilderProps();
-
+	it('change the label after choose the popover option', () => {
 		const {container} = render(
-			<LabelFieldWrapper dataLayoutBuilder={dataLayoutBuilder} />
+			<LabelFieldWrapper state={VIEW_LEVEL_STATE} />
 		);
 
-		const input = container.querySelector('.form-control.ddm-field-text');
+		const options = document.querySelectorAll(
+			'.form-renderer-label-field input.custom-control-input'
+		);
+		const input = container.querySelector('.ddm-field-text');
 
-		fireEvent.change(input, {target: {value: 'New Text'}});
+		// Structure level option
 
-		await act(async () => {
-			jest.runAllTimers();
-		});
+		fireEvent.click(options[0]);
 
-		expect(dataLayoutBuilder.dispatch).toHaveBeenCalledWith('fieldEdited', {
-			propertyName: 'label',
-			propertyValue: 'New Text',
-		});
+		expect(input.value).toBe('Name');
+
+		// View Level option
+
+		fireEvent.click(options[1]);
+
+		expect(input.value).toBe('Username');
 	});
 });
-
-

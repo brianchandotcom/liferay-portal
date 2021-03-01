@@ -45,7 +45,7 @@ export default function FormViewUpperToolbar({newCustomObject, popUpWindow}) {
 		dataDefinitionId,
 		dataLayout,
 		dataLayoutId,
-		initialAvailableLanguageIds,
+		initialAvailableLanguageIds = [],
 	} = state;
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
 

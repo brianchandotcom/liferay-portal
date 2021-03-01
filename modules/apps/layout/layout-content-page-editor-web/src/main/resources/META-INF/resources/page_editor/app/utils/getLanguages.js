@@ -22,6 +22,7 @@ export default function getLanguages(
 	if (
 		!availableSegmentsExperiences ||
 		!segmentsExperienceId ||
+		!availableSegmentsExperiences[segmentsExperienceId] ||
 		segmentsExperienceId === config.defaultSegmentsExperienceId
 	) {
 		return availableLanguages;

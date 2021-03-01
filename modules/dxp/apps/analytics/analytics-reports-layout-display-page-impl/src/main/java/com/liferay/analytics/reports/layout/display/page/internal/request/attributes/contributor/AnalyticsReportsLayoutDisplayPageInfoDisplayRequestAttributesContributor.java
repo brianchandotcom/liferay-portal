@@ -15,12 +15,16 @@
 package com.liferay.analytics.reports.layout.display.page.internal.request.attributes.contributor;
 
 import com.liferay.analytics.reports.constants.AnalyticsReportsWebKeys;
+import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItemTracker;
+import com.liferay.analytics.reports.info.item.ClassNameClassPKInfoItemIdentifier;
 import com.liferay.info.display.request.attributes.contributor.InfoDisplayRequestAttributesContributor;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -50,10 +54,24 @@ public class
 
 		httpServletRequest.setAttribute(
 			AnalyticsReportsWebKeys.INFO_ITEM_REFERENCE,
-			new InfoItemReference(
-				className.getClassName(),
-				layoutDisplayPageObjectProvider.getClassPK()));
+			Optional.ofNullable(
+				_analyticsReportsInfoItemTracker.getAnalyticsReportsInfoItem(
+					className.getClassName())
+			).map(
+				analyticsReportsInfoItem -> new InfoItemReference(
+					className.getClassName(),
+					layoutDisplayPageObjectProvider.getClassPK())
+			).orElseGet(
+				() -> new InfoItemReference(
+					LayoutDisplayPageObjectProvider.class.getName(),
+					new ClassNameClassPKInfoItemIdentifier(
+						className.getClassName(),
+						layoutDisplayPageObjectProvider.getClassPK()))
+			));
 	}
+
+	@Reference
+	private AnalyticsReportsInfoItemTracker _analyticsReportsInfoItemTracker;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

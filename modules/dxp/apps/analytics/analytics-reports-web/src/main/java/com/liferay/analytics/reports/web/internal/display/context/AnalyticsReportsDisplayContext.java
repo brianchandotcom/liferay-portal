@@ -14,7 +14,9 @@
 
 package com.liferay.analytics.reports.web.internal.display.context;
 
+import com.liferay.analytics.reports.info.item.ClassNameClassPKInfoItemIdentifier;
 import com.liferay.analytics.reports.web.internal.util.AnalyticsReportsUtil;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -99,8 +101,34 @@ public class AnalyticsReportsDisplayContext<T> {
 
 		resourceURL.setParameter(
 			"className", _infoItemReference.getClassName());
-		resourceURL.setParameter(
-			"classPK", String.valueOf(_infoItemReference.getClassPK()));
+
+		if (_infoItemReference.getInfoItemIdentifier() instanceof
+				ClassNameClassPKInfoItemIdentifier) {
+
+			ClassNameClassPKInfoItemIdentifier
+				classNameClassPKInfoItemIdentifier =
+					(ClassNameClassPKInfoItemIdentifier)
+						_infoItemReference.getInfoItemIdentifier();
+
+			resourceURL.setParameter(
+				"classPK",
+				String.valueOf(
+					classNameClassPKInfoItemIdentifier.getClassPK()));
+			resourceURL.setParameter(
+				"classTypeName",
+				classNameClassPKInfoItemIdentifier.getClassName());
+		}
+		else if (_infoItemReference.getInfoItemIdentifier() instanceof
+					ClassPKInfoItemIdentifier) {
+
+			ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+				(ClassPKInfoItemIdentifier)
+					_infoItemReference.getInfoItemIdentifier();
+
+			resourceURL.setParameter(
+				"classPK",
+				String.valueOf(classPKInfoItemIdentifier.getClassPK()));
+		}
 
 		resourceURL.setResourceID(resourceID);
 

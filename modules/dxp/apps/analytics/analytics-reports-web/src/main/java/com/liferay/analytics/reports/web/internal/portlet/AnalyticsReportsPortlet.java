@@ -15,6 +15,7 @@
 package com.liferay.analytics.reports.web.internal.portlet;
 
 import com.liferay.analytics.reports.constants.AnalyticsReportsWebKeys;
+import com.liferay.analytics.reports.info.item.ClassNameClassPKInfoItemIdentifier;
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPortletKeys;
 import com.liferay.analytics.reports.web.internal.display.context.AnalyticsReportsDisplayContext;
 import com.liferay.info.item.InfoItemReference;
@@ -125,6 +126,10 @@ public class AnalyticsReportsPortlet extends MVCPortlet {
 		return classPK;
 	}
 
+	private String _getclassTypeName(HttpServletRequest httpServletRequest) {
+		return ParamUtil.getString(httpServletRequest, "classTypeName");
+	}
+
 	private InfoItemReference _getInfoItemReference(
 		HttpServletRequest httpServletRequest) {
 
@@ -132,9 +137,20 @@ public class AnalyticsReportsPortlet extends MVCPortlet {
 			(InfoItemReference)httpServletRequest.getAttribute(
 				AnalyticsReportsWebKeys.INFO_ITEM_REFERENCE)
 		).orElseGet(
-			() -> new InfoItemReference(
-				_getClassName(httpServletRequest),
-				_getClassPK(httpServletRequest))
+			() -> Optional.ofNullable(
+				_getclassTypeName(httpServletRequest)
+			).filter(
+				Validator::isNotNull
+			).map(
+				classTypeName -> new InfoItemReference(
+					_getClassName(httpServletRequest),
+					new ClassNameClassPKInfoItemIdentifier(
+						classTypeName, _getClassPK(httpServletRequest)))
+			).orElseGet(
+				() -> new InfoItemReference(
+					_getClassName(httpServletRequest),
+					_getClassPK(httpServletRequest))
+			)
 		);
 	}
 

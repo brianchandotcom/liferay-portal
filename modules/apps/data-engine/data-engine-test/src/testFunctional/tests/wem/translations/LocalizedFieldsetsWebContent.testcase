@@ -311,7 +311,7 @@ definition {
 			value1 = "WC Title Test");
 	}
 
-	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"
+	@description = "This is a test for LPS-126217. Check when user translates the title, the default language title persists"
 	@priority = "4"
 	test DefaultTitlePersistsAfterTranslatingForAnotherLocale {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");

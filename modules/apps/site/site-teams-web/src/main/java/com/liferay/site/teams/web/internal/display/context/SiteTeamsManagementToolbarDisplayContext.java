@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.TeamPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
@@ -120,6 +122,17 @@ public class SiteTeamsManagementToolbarDisplayContext
 	@Override
 	public String getSearchContainerId() {
 		return "teams";
+	}
+
+	@Override
+	public Boolean isDisabled() {
+		if (Validator.isNotNull(
+				ParamUtil.getString(httpServletRequest, "keywords"))) {
+
+			return false;
+		}
+
+		return super.isDisabled();
 	}
 
 	@Override

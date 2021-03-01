@@ -40,6 +40,8 @@ import com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyU
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.memberships.web.internal.util.GroupUtil;
 
@@ -294,6 +296,17 @@ public class UsersManagementToolbarDisplayContext
 	@Override
 	public String getSearchContainerId() {
 		return "users";
+	}
+
+	@Override
+	public Boolean isDisabled() {
+		if (Validator.isNotNull(
+				ParamUtil.getString(httpServletRequest, "keywords"))) {
+
+			return false;
+		}
+
+		return super.isDisabled();
 	}
 
 	@Override

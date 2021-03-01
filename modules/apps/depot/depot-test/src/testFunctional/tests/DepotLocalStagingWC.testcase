@@ -559,7 +559,43 @@ definition {
 	@description = "This test ensures that a depot WC with an embedded video added from the item selector can be published on a connected local staging site."
 	@priority = "4"
 	test PublishWCWithEmbeddedVideo {
-		DepotNavigator.openDepotWebContentAdminStaging(depotName = "Test Depot Name");
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Embedded Video Depot Name");
+
+		JSONGroup.addGroup(groupName = "Test Embedded Video Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Embedded Video Site Name",
+			layoutName = "Test Page");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			depotName = "Test Embedded Video Depot Name",
+			portlet = "Settings");
+
+		DepotNavigator.gotoSites(depotName = "Test Embedded Video Depot Name");
+
+		Depot.connectSite(siteList = "Test Embedded Video Site Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(depotName = "Test Embedded Video Depot Name");
+
+		DepotNavigator.gotoPortlet(portlet = "Staging");
+
+		Depot.activateStaging(depotName = "Test Embedded Video Depot Name");
+
+		Navigator.openSiteURL(siteName = "Test Embedded Video Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			portlet = "Staging");
+
+		Staging.activateStagingCP(siteName = "Test Embedded Video Site Name");
+
+		DepotNavigator.openDepotWebContentAdminStaging(depotName = "Test Embedded Video Depot Name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -575,7 +611,7 @@ definition {
 
 		PortletEntry.publish();
 
-		DepotNavigator.openDepotWebContentAdminStaging(depotName = "Test Depot Name");
+		DepotNavigator.openDepotWebContentAdminStaging(depotName = "Test Embedded Video Depot Name");
 
 		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
 
@@ -583,17 +619,17 @@ definition {
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page",
-			siteName = "Site Name");
+			siteName = "Test Embedded Video Site Name");
 
 		Portlet.addPG(portletName = "Web Content Display");
 
 		WebContentDisplayPortlet.selectWebContent(
-			depotName = "Test Depot Name",
+			depotName = "Test Embedded Video Depot Name",
 			webContentTitle = "WC WebContent Title");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page",
-			siteName = "Site Name");
+			siteName = "Test Embedded Video Site Name");
 
 		AssertVisible(
 			key_service = "youtube",
@@ -605,7 +641,7 @@ definition {
 
 		Navigator.gotoSitePage(
 			pageName = "Test Page",
-			siteName = "Site Name");
+			siteName = "Test Embedded Video Site Name");
 
 		AssertVisible(
 			key_service = "youtube",

@@ -84,7 +84,17 @@ definition {
 	@description = "This test ensures that a YouTube shortened URL video added via item selector can be embedded when adding a depot WC."
 	@priority = "4"
 	test AddWithShortenedURLToWCViaItemSelector {
-		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Shortened URL Depot Name");
+
+		JSONGroup.addGroup(groupName = "Test Shortened URL Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Shortened URL Site Name",
+			layoutName = "Test Shortened URL Page Name");
+
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Shortened URL Depot Name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -100,7 +110,7 @@ definition {
 
 		PortletEntry.publish();
 
-		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Shortened URL Depot Name");
 
 		WebContentNavigator.gotoPreviewEntryCP(webContentTitle = "WC WebContent Title");
 

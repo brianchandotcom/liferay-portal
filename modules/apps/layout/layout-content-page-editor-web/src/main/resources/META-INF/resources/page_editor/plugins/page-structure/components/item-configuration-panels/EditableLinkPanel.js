@@ -42,52 +42,70 @@ export default function EditableLinkPanel({item}) {
 	);
 
 	const editableValue = useSelectorCallback(
-		(state) => {
-			const editableValue =
-				selectEditableValue(
-					state,
-					item.fragmentEntryLinkId,
-					item.editableId,
-					EDITABLE_FRAGMENT_ENTRY_PROCESSOR
-				) || {};
-
-			if (!editableValue.config) {
-				editableValue.config = {};
-			}
-
-			return editableValue;
-		},
+		(state) =>
+			selectEditableValue(
+				state,
+				item.fragmentEntryLinkId,
+				item.editableId,
+				EDITABLE_FRAGMENT_ENTRY_PROCESSOR
+			) || {},
 		[item.fragmentEntryLinkId, item.editableId],
 		deepEqual
 	);
 
-	const [linkValue, setLinkValue] = useState({});
+	const [linkConfig, setLinkConfig] = useState({});
+	const [linkValue, setLinkValue] = useState({href: '', target: ''});
+	const [imageConfig, setImageConfig] = useState({});
 
-	useEffect(
-		() =>
-			setLinkValue(
-				editableValue.config[languageId] ||
-					editableValue.config[config.defaultLanguageId] ||
-					editableValue.config
-			),
-		[editableValue.config, languageId]
-	);
+	useEffect(() => {
+		const linkConfig = {
+			...(editableValue.config || {}),
+		};
 
-	const handleValueSelect = (_, nextConfig) => {
-		let config = nextConfig;
+		if (Object.keys(linkConfig).length > 0) {
+			setImageConfig({
+				alt: linkConfig.alt,
+				imageConfiguration: linkConfig.imageConfiguration,
+			});
 
-		if (!isMapped(nextConfig) && !isMapped(editableValue.config)) {
-			config = {
-				...editableValue.config,
-				[languageId]: nextConfig,
+			delete linkConfig.alt;
+			delete linkConfig.imageConfiguration;
+
+			setLinkConfig(linkConfig);
+
+			setLinkValue({
+				...linkConfig,
+				href:
+					linkConfig[languageId] ||
+					linkConfig[config.defaultLanguageId] ||
+					'',
+				target: linkConfig.target || '',
+			});
+		}
+		else {
+			setImageConfig({});
+			setLinkConfig({});
+			setLinkValue({href: '', target: ''});
+		}
+	}, [editableValue.config, languageId]);
+
+	const handleValueSelect = (_, nextLinkConfig) => {
+		let nextConfig;
+
+		if (isMapped(nextLinkConfig) || isMapped(linkConfig)) {
+			nextConfig = {...imageConfig, ...nextLinkConfig};
+		}
+		else {
+			nextConfig = {
+				...imageConfig,
+				...(linkConfig || {}),
+				[languageId]: nextLinkConfig.href,
+				target: nextLinkConfig.target || '',
 			};
 		}
 
-		if (
-			Object.keys(nextConfig).length > 0 &&
-			item.type !== EDITABLE_TYPES.link
-		) {
-			config.mapperType = 'link';
+		if (item.type !== EDITABLE_TYPES.link) {
+			nextConfig.mapperType = 'link';
 		}
 
 		dispatch(
@@ -96,7 +114,10 @@ export default function EditableLinkPanel({item}) {
 					...editableValues,
 					[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {
 						...editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR],
-						[item.editableId]: {...editableValue, config},
+						[item.editableId]: {
+							...editableValue,
+							config: nextConfig,
+						},
 					},
 				},
 				fragmentEntryLinkId: item.fragmentEntryLinkId,

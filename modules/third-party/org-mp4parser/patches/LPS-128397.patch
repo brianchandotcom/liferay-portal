@@ -1,0 +1,80 @@
+diff --git a/org/mp4parser/IsoFile.java b/org/mp4parser/IsoFile.java
+index b87fd7fe9e80..2dfbd1dca7c1 100644
+--- a/org/mp4parser/IsoFile.java
++++ b/org/mp4parser/IsoFile.java
+@@ -106,7 +106,13 @@ public class IsoFile extends BasicContainer implements Closeable {
+     }
+ 
+     public void close() throws IOException {
++		for (Box box : getBoxes()) {
++            if (box instanceof Closeable) {
++                ((Closeable) box).close();
++            }
++        }
+         this.readableByteChannel.close();
++
+     }
+ 
+     @Override
+@@ -114,3 +120,4 @@ public class IsoFile extends BasicContainer implements Closeable {
+         return "model(" + readableByteChannel.toString() + ")";
+     }
+ }
++/* @generated */
+diff --git a/org/mp4parser/boxes/iso14496/part12/MediaDataBox.java b/org/mp4parser/boxes/iso14496/part12/MediaDataBox.java
+index eca3940b8570..7dab82f9b6ff 100644
+--- a/org/mp4parser/boxes/iso14496/part12/MediaDataBox.java
++++ b/org/mp4parser/boxes/iso14496/part12/MediaDataBox.java
+@@ -23,6 +23,7 @@ import org.mp4parser.support.DoNotParseDetail;
+ import org.slf4j.Logger;
+ import org.slf4j.LoggerFactory;
+ 
++import java.io.Closeable;
+ import java.io.File;
+ import java.io.FileInputStream;
+ import java.io.IOException;
+@@ -32,6 +33,7 @@ import java.nio.ByteBuffer;
+ import java.nio.channels.FileChannel;
+ import java.nio.channels.ReadableByteChannel;
+ import java.nio.channels.WritableByteChannel;
++import java.nio.file.Files;
+ 
+ /**
+  * <h1>4cc = "{@value #TYPE}"</h1>
+@@ -45,7 +47,7 @@ import java.nio.channels.WritableByteChannel;
+  * so Media Data Box headers and free space may easily be skipped, and files without any box structure may
+  * also be referenced and used.
+  */
+-public final class MediaDataBox implements ParsableBox {
++public final class MediaDataBox implements ParsableBox, Closeable {
+     public static final String TYPE = "mdat";
+     private static Logger LOG = LoggerFactory.getLogger(MediaDataBox.class);
+     ByteBuffer header;
+@@ -77,9 +79,6 @@ public final class MediaDataBox implements ParsableBox {
+     @DoNotParseDetail
+     public void parse(ReadableByteChannel dataSource, ByteBuffer header, long contentSize, BoxParser boxParser) throws IOException {
+         dataFile = File.createTempFile("MediaDataBox", super.toString());
+-        
+-        // make sure to clean up temp file
+-        dataFile.deleteOnExit();
+ 
+         this.header = ByteBuffer.allocate(header.limit());
+         this.header.put(header);
+@@ -92,5 +91,16 @@ public final class MediaDataBox implements ParsableBox {
+ 
+     }
+ 
+-
++    @Override
++    public void close() throws IOException {
++        // make sure to clean up temp file
++        try {
++            Files.delete(dataFile.toPath());
++        } catch (IOException e) {
++            LOG.warn("failed to delete: "+dataFile.getAbsolutePath() +
++                    ". I'll try to delete it on exit.", e);
++            dataFile.deleteOnExit();
++        }
++    }
+ }
++/* @generated */

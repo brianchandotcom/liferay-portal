@@ -1708,9 +1708,7 @@ definition {
 
 		DMDocument.checkDocumentCheckboxCP(dmDocumentTitle = "DM Document2 Title");
 
-		AssertElementPresent(locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT");
-
-		AssertElementPresent(locator1 = "Checkbox#LEXICON_SELECT_ALL_CHECKED");
+		AssertChecked.assertCheckedNotVisible(locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT");
 	}
 
 }

@@ -76,7 +76,7 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social
 					dropdownItems="<%= SocialBookmarksTagUtil.getDropdownItems(request.getLocale(), remainingTypes, className, classPK, title, url) %>"
 					icon="share"
 					monospaced="<%= true %>"
-					propsTransformer="bookmarks/SocialBookmarksDropdownPropsTransformer"
+					propsTransformer="js/SocialBookmarksDropdownPropsTransformer"
 					small="<%= true %>"
 					title="share"
 				/>
@@ -87,20 +87,8 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social
 	<liferay-util:html-bottom
 		outputKey="social_bookmarks"
 	>
-		<aui:script require='<%= npmResolvedPackageName + "/bookmarks/openSocialBookmark as openSocialBookmark" %>'>
-			window.socialBookmarks_handleItemClick = function(
-				event,
-				className,
-				classPK,
-				type,
-				postURL,
-				url
-			) {
-				event.preventDefault();
-				event.stopPropagation();
-
-				openSocialBookmark.default({className, classPK, postURL, type, url});
-			};
-		</aui:script>
+		<liferay-frontend:component
+			module="js/SocialBookmarksHandleItemClick"
+		/>
 	</liferay-util:html-bottom>
 </div>

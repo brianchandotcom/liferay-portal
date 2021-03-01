@@ -32,6 +32,8 @@ patch {
 	}
 
 	fileNames "org/mp4parser/BasicContainer.java"
+	fileNames "org/mp4parser/IsoFile.java"
+	fileNames "org/mp4parser/boxes/iso14496/part12/MediaDataBox.java"
 
 	originalLibModuleName = "isoparser"
 	originalLibSrcBaseUrl = "https://repository-cdn.liferay.com/nexus/content/groups/public/org/tallison/"

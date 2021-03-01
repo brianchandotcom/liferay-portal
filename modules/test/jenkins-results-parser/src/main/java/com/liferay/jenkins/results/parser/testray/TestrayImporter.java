@@ -713,6 +713,13 @@ public class TestrayImporter {
 		string = string.replace(
 			"$(portal.profile)", buildProfile.toDisplayString());
 
+		if (buildProfile == Job.BuildProfile.PORTAL) {
+			string = string.replace("$(portal.type)", "CE");
+		}
+		else {
+			string = string.replace("$(portal.type)", "EE");
+		}
+
 		PortalGitWorkingDirectory portalGitWorkingDirectory =
 			_getPortalGitWorkingDirectory();
 
@@ -761,6 +768,17 @@ public class TestrayImporter {
 				string = string.replace(
 					"$(portal.release.tomcat.name)",
 					matcher.group("releaseFileName"));
+			}
+
+			String portalReleaseBuildVersion = _topLevelBuild.getParameterValue(
+				"TEST_PORTAL_RELEASE_VERSION");
+
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(
+					portalReleaseBuildVersion)) {
+
+				string = string.replace(
+					"$(portal.release.build.version)",
+					portalReleaseBuildVersion);
 			}
 		}
 

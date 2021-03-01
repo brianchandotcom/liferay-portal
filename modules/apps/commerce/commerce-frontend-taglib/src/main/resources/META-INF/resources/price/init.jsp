@@ -33,5 +33,5 @@ boolean compact = (boolean)request.getAttribute("commerce-ui:price:compact");
 boolean displayDiscountLevels = (boolean)request.getAttribute("commerce-ui:price:displayDiscountLevels");
 String namespace = (String)request.getAttribute("commerce-ui:price:namespace");
 boolean netPrice = (boolean)request.getAttribute("commerce-ui:price:netPrice");
-PriceModel prices = (PriceModel)request.getAttribute("commerce-ui:price:prices");
+PriceModel priceModel = (PriceModel)request.getAttribute("commerce-ui:price:priceModel");
 %>

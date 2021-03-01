@@ -22,24 +22,24 @@
 	<c:choose>
 		<c:when test="<%= compact %>">
 			<c:choose>
-				<c:when test="<%= Validator.isNull(prices.getDiscount()) %>">
-					<c:if test="<%= Validator.isNotNull(prices.getPromoPrice()) %>">
+				<c:when test="<%= Validator.isNull(priceModel.getDiscount()) %>">
+					<c:if test="<%= Validator.isNotNull(priceModel.getPromoPrice()) %>">
 						<liferay-util:include page="/price/promo.jsp" servletContext="<%= application %>" />
 					</c:if>
 				</c:when>
 				<c:otherwise>
-					<c:if test="<%= Validator.isNotNull(prices.getFinalPrice()) %>">
+					<c:if test="<%= Validator.isNotNull(priceModel.getFinalPrice()) %>">
 						<liferay-util:include page="/price/discount.jsp" servletContext="<%= application %>" />
 					</c:if>
 				</c:otherwise>
 			</c:choose>
 		</c:when>
 		<c:otherwise>
-			<c:if test="<%= Validator.isNotNull(prices.getPromoPrice()) %>">
+			<c:if test="<%= Validator.isNotNull(priceModel.getPromoPrice()) %>">
 				<liferay-util:include page="/price/promo.jsp" servletContext="<%= application %>" />
 			</c:if>
 
-			<c:if test="<%= Validator.isNotNull(prices.getFinalPrice()) %>">
+			<c:if test="<%= Validator.isNotNull(priceModel.getFinalPrice()) %>">
 				<liferay-util:include page="/price/discount.jsp" servletContext="<%= application %>" />
 			</c:if>
 		</c:otherwise>

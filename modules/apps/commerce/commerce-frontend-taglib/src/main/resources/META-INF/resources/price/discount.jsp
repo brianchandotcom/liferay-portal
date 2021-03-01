@@ -17,7 +17,7 @@
 <%@ include file="/price/init.jsp" %>
 
 <%
-String[] discountPercentages = prices.getDiscountPercentages();
+String[] discountPercentages = priceModel.getDiscountPercentages();
 %>
 
 <c:if test="<%= !compact %>">
@@ -32,7 +32,7 @@ String[] discountPercentages = prices.getDiscountPercentages();
 				</c:forEach>
 			</c:when>
 			<c:otherwise>
-				&ndash;<%= prices.getDiscountPercentage() %>
+				&ndash;<%= priceModel.getDiscountPercentage() %>
 			</c:otherwise>
 		</c:choose>
 	</span>
@@ -49,5 +49,5 @@ String[] discountPercentages = prices.getDiscountPercentages();
 	</c:choose>
 </span>
 <span class="price-value price-value-final">
-	<%= prices.getFinalPrice() %>
+	<%= priceModel.getFinalPrice() %>
 </span>

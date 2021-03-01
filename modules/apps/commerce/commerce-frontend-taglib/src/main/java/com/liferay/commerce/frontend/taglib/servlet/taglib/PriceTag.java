@@ -79,7 +79,7 @@ public class PriceTag extends IncludeTag {
 
 			_displayDiscountLevels = _isDisplayDiscountLevels();
 			_netPrice = _isNetPrice(commerceContext.getCommerceChannelId());
-			_prices = _getPriceModel(commerceContext, cpInstanceId);
+			_priceModel = _getPriceModel(commerceContext, cpInstanceId);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -142,7 +142,7 @@ public class PriceTag extends IncludeTag {
 		_displayDiscountLevels = false;
 		_namespace = StringPool.BLANK;
 		_netPrice = true;
-		_prices = null;
+		_priceModel = null;
 		_productHelper = null;
 		_quantity = 0;
 	}
@@ -161,7 +161,8 @@ public class PriceTag extends IncludeTag {
 			"commerce-ui:price:namespace", _namespace);
 		httpServletRequest.setAttribute(
 			"commerce-ui:price:netPrice", _netPrice);
-		httpServletRequest.setAttribute("commerce-ui:price:prices", _prices);
+		httpServletRequest.setAttribute(
+			"commerce-ui:price:priceModel", _priceModel);
 	}
 
 	protected CommerceChannelLocalService commerceChannelLocalService;
@@ -222,7 +223,7 @@ public class PriceTag extends IncludeTag {
 	private boolean _displayDiscountLevels;
 	private String _namespace = StringPool.BLANK;
 	private boolean _netPrice = true;
-	private PriceModel _prices;
+	private PriceModel _priceModel;
 	private ProductHelper _productHelper;
 	private int _quantity;
 

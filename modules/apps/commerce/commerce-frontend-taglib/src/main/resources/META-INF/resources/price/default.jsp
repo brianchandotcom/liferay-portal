@@ -19,7 +19,7 @@
 <%
 String inactivePriceCssClass = StringPool.BLANK;
 
-if (Validator.isNotNull(prices.getPromoPrice()) || displayDiscountLevels) {
+if (Validator.isNotNull(priceModel.getPromoPrice()) || displayDiscountLevels) {
 	inactivePriceCssClass = StringPool.SPACE + "price-value-inactive";
 }
 %>
@@ -28,5 +28,5 @@ if (Validator.isNotNull(prices.getPromoPrice()) || displayDiscountLevels) {
 	<%= LanguageUtil.get(request, "list-price") %>
 </span>
 <span class="price-value<%= inactivePriceCssClass %>">
-	<%= prices.getPrice() %>
+	<%= priceModel.getPrice() %>
 </span>

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.test.util;
+package com.liferay.commerce.test.util.context;
 
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.context.CommerceContext;

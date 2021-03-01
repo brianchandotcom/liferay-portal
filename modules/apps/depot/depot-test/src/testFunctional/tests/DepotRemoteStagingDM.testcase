@@ -876,6 +876,8 @@ definition {
 	@description = "This ensures that the image in depot can be removed and republished in web content when enabling remote staging."
 	@priority = "5"
 	test DeleteWebContentImageInDepot {
+		property test.name.skip.portal.instance = "DepotRemoteStagingDM#DeleteWebContentImageInDepot";
+
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMDocument.addCP(
@@ -1951,6 +1953,8 @@ definition {
 	@description = "This ensures that the image in depot can be replaced and republished in web content when enabling remote staging."
 	@priority = "5"
 	test EditWebContentImage {
+		property test.name.skip.portal.instance = "DepotRemoteStagingDM#EditWebContentImage";
+
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		for (var num : list "1,2") {

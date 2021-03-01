@@ -51,7 +51,7 @@ public interface CommerceOrderHttpHelper {
 			HttpServletRequest httpServletRequest)
 		throws PortalException;
 
-	public String getCookieName(long groupId);
+	public String getCookieName(long commerceChannelId);
 
 	public CommerceOrder getCurrentCommerceOrder(
 			HttpServletRequest httpServletRequest)

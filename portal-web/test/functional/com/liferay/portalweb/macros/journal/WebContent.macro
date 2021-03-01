@@ -2417,12 +2417,6 @@ definition {
 			value1 = "Site Members");
 	}
 
-	macro viewWebContentTitle {
-		AssertTextEquals(
-			locator1 = "TextInput#TITLE",
-			value1 = "${title}");
-	}
-
 	macro viewWithStructureCP {
 		if (!(isSet(predefinedValue))) {
 			LexiconEntry.changeDisplayStyle(displayStyle = "list");

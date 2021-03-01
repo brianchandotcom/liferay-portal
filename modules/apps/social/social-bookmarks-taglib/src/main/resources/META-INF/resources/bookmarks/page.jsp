@@ -48,7 +48,7 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social
 					String styleClass = "taglib-social-bookmark-" + types[i];
 				%>
 
-					<li class="taglib-social-bookmark <%= styleClass %>" onClick="<%= SocialBookmarksTagUtil.getClickJSCall(className, classPK, types[i], socialBookmark.getPostURL(title, url), url) + " return false;" %>">
+					<li class="taglib-social-bookmark <%= styleClass %>" onClick="<%= SocialBookmarksTagUtil.getClickJSCall(className, classPK, types[i], socialBookmark.getPostURL(title, url), url) %>">
 						<liferay-social-bookmarks:bookmark
 							displayStyle="<%= displayStyle %>"
 							target="<%= target %>"
@@ -88,7 +88,19 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social
 		outputKey="social_bookmarks"
 	>
 		<aui:script require='<%= npmResolvedPackageName + "/bookmarks/openSocialBookmark as openSocialBookmark" %>'>
-			window.socialBookmarks_handleItemClick = openSocialBookmark.default;
+			window.socialBookmarks_handleItemClick = function(
+				event,
+				className,
+				classPK,
+				type,
+				postURL,
+				url
+			) {
+				event.preventDefault();
+				event.stopPropagation();
+
+				openSocialBookmark.default({className, classPK, postURL, type, url});
+			};
 		</aui:script>
 	</liferay-util:html-bottom>
 </div>

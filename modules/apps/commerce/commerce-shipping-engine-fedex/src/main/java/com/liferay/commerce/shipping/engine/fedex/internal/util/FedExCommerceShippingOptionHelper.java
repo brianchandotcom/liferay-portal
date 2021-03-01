@@ -225,15 +225,15 @@ public class FedExCommerceShippingOptionHelper {
 			if (!commerceCurrencyCode.equals(
 					commerceChannel.getCommerceCurrencyCode())) {
 
-				CommerceCurrency channelCommerceCurrency =
+				CommerceCurrency commerceChannelCommerceCurrency =
 					_commerceCurrencyLocalService.getCommerceCurrency(
 						_commerceOrder.getCompanyId(),
 						commerceChannel.getCommerceCurrencyCode());
 
 				amount = amount.divide(
-					channelCommerceCurrency.getRate(),
+					commerceChannelCommerceCurrency.getRate(),
 					RoundingMode.valueOf(
-						channelCommerceCurrency.getRoundingMode()));
+						commerceChannelCommerceCurrency.getRoundingMode()));
 
 				amount = amount.multiply(commerceCurrency.getRate());
 			}

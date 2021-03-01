@@ -187,15 +187,15 @@ public class ByWeightCommerceShippingEngine implements CommerceShippingEngine {
 		if (!commerceCurrencyCode.equals(
 				commerceChannel.getCommerceCurrencyCode())) {
 
-			CommerceCurrency channelCommerceCurrency =
+			CommerceCurrency commerceChannelCommerceCurrency =
 				_commerceCurrencyService.getCommerceCurrency(
 					commerceOrder.getCompanyId(),
 					commerceChannel.getCommerceCurrencyCode());
 
 			amount = amount.divide(
-				channelCommerceCurrency.getRate(),
+				commerceChannelCommerceCurrency.getRate(),
 				RoundingMode.valueOf(
-					channelCommerceCurrency.getRoundingMode()));
+					commerceChannelCommerceCurrency.getRoundingMode()));
 
 			amount = amount.multiply(commerceCurrency.getRate());
 		}

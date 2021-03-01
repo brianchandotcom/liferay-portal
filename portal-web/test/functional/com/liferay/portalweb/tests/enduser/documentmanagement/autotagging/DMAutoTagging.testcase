@@ -166,6 +166,8 @@ definition {
 
 		Clustering.viewClusterStatusInConsole();
 
+		Navigator.openURL();
+
 		Page.assertNodePortPG(nodePort = "8080");
 
 		User.logoutPG(

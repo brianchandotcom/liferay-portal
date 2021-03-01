@@ -319,17 +319,45 @@ definition {
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		WebContentNavigator.gotoAddCP();
+		NavItem.gotoStructures();
 
-		PortletEntry.inputTitle(title = "EN Title");
+		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		PortletEntry.changeLocale(locale = "zh-CN");
+		DataEngine.gotoCreateNewFieldset();
 
-		PortletEntry.inputTitle(title = "测试标题");
+		Type(
+			locator1 = "FormViewBuilder#FIELD_SET_NAME",
+			value1 = "Fieldset Default Title");
 
-		PortletEntry.changeLocale(locale = "en-US");
+		DataEngine.addFields(fieldNameList = "Text");
 
-		WebContent.viewWebContentTitle(title = "EN Title");
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			modal = "true");
+
+		Type(
+			locator1 = "FormViewBuilder#FIELD_SET_NAME",
+			value1 = "测试标题");
+
+		Click(locator1 = "Modal#SAVE_BUTTON");
+
+		DataEngine.addFieldsets(fieldsetName = "Fieldset Default Title");
+
+		WebContentStructures.saveCP();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		WebContent.addCP(webContentTitle = "Web Content Title");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		AssertVisible(
+			key_fieldsetLabel = "Fieldset Default Title",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
 	}
 
 	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"

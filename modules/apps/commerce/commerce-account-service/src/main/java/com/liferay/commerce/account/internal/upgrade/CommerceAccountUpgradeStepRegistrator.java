@@ -25,10 +25,12 @@ import com.liferay.commerce.account.internal.upgrade.v4_0_0.CommerceAccountOrgan
 import com.liferay.commerce.account.internal.upgrade.v5_0_0.CommerceAccountUserRelUpgradeProcess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -90,5 +92,10 @@ public class CommerceAccountUpgradeStepRegistrator
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceAccountUpgradeStepRegistrator.class);
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.account.service)(release.schema.version>=2.1.0))"
+	)
+	private Release _release;
 
 }

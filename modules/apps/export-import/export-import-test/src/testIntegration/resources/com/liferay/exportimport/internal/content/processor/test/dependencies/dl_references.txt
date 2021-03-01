@@ -4,10 +4,10 @@ CREOLE image reference:
 {{/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]}}
 {{/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]}}
 {{/documents/portlet_file_entry/[$GROUP_ID$]/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]}}
-{{/image/image_gallery?uuid=[$UUID$]&groupId=[$GROUP_ID$][$TIMESTAMP$]}}
+{{/image/image_gallery?i_id=[$IMAGE_ID$][$TIMESTAMP$]}}
 {{/image/image_gallery?image_id=[$IMAGE_ID$][$TIMESTAMP$]}}
 {{/image/image_gallery?img_id=[$IMAGE_ID$][$TIMESTAMP$]}}
-{{/image/image_gallery?i_id=[$IMAGE_ID$][$TIMESTAMP$]}}
+{{/image/image_gallery?uuid=[$UUID$]&groupId=[$GROUP_ID$][$TIMESTAMP$]}}
 {{[$WEB_ID$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]}}
 {{[$WEB_ID$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]}}
 {{[$WEB_ID$]/documents/portlet_file_entry/[$GROUP_ID$]/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]}}
@@ -18,10 +18,10 @@ CREOLE link with text:
 [[/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]|Link]]
 [[/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]|Link]]
 [[/documents/portlet_file_entry/[$GROUP_ID$]/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]|Link]]
-[[/image/image_gallery?uuid=[$UUID$]&groupId=[$GROUP_ID$][$TIMESTAMP$]|Link]]
+[[/image/image_gallery?i_id=[$IMAGE_ID$][$TIMESTAMP$]|Link]]
 [[/image/image_gallery?image_id=[$IMAGE_ID$][$TIMESTAMP$]|Link]]
 [[/image/image_gallery?img_id=[$IMAGE_ID$][$TIMESTAMP$]|Link]]
-[[/image/image_gallery?i_id=[$IMAGE_ID$][$TIMESTAMP$]|Link]]
+[[/image/image_gallery?uuid=[$UUID$]&groupId=[$GROUP_ID$][$TIMESTAMP$]|Link]]
 [[[$WEB_ID$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]|Link]]
 [[[$WEB_ID$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]|Link]]
 [[[$WEB_ID$]/documents/portlet_file_entry/[$GROUP_ID$]/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]|Link]]
@@ -32,10 +32,10 @@ CREOLE link without text:
 [[/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]]]
 [[/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]]]
 [[/documents/portlet_file_entry/[$GROUP_ID$]/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]]]
-[[/image/image_gallery?uuid=[$UUID$]&groupId=[$GROUP_ID$][$TIMESTAMP$]]]
+[[/image/image_gallery?i_id=[$IMAGE_ID$][$TIMESTAMP$]]]
 [[/image/image_gallery?image_id=[$IMAGE_ID$][$TIMESTAMP$]]]
 [[/image/image_gallery?img_id=[$IMAGE_ID$][$TIMESTAMP$]]]
-[[/image/image_gallery?i_id=[$IMAGE_ID$][$TIMESTAMP$]]]
+[[/image/image_gallery?uuid=[$UUID$]&groupId=[$GROUP_ID$][$TIMESTAMP$]]]
 [[[$WEB_ID$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]]]
 [[[$WEB_ID$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]]]
 [[[$WEB_ID$]/documents/portlet_file_entry/[$GROUP_ID$]/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]]]
@@ -46,10 +46,10 @@ HTML reference with no quotes:
 <a href=/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]>Link</a>
 <a href=/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]>Link</a>
 <a href=/documents/portlet_file_entry/[$GROUP_ID$]/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]>Link</a>
-<a href=/image/image_gallery?uuid=[$UUID$]&groupId=[$GROUP_ID$][$TIMESTAMP$]>Link</a>
+<a href=/image/image_gallery?i_id=[$IMAGE_ID$][$TIMESTAMP$]>Link</a>
 <a href=/image/image_gallery?image_id=[$IMAGE_ID$][$TIMESTAMP$]>Link</a>
 <a href=/image/image_gallery?img_id=[$IMAGE_ID$][$TIMESTAMP$]>Link</a>
-<a href=/image/image_gallery?i_id=[$IMAGE_ID$][$TIMESTAMP$]>Link</a>
+<a href=/image/image_gallery?uuid=[$UUID$]&groupId=[$GROUP_ID$][$TIMESTAMP$]>Link</a>
 <a href=[$WEB_ID$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]>Link</a>
 <a href=[$WEB_ID$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]>Link</a>
 <a href=[$WEB_ID$]/documents/portlet_file_entry/[$GROUP_ID$]/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]>Link</a>
@@ -60,10 +60,10 @@ HTML reference with no quotes but space:
 <a href=/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$] style=mustkeep>Link</a>
 <a href=/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$] style=mustkeep>Link</a>
 <a href=/documents/portlet_file_entry/[$GROUP_ID$]/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$] style=mustkeep>Link</a>
-<a href=/image/image_gallery?uuid=[$UUID$]&groupId=[$GROUP_ID$][$TIMESTAMP$] style=mustkeep>Link</a>
+<a href=/image/image_gallery?i_id=[$IMAGE_ID$][$TIMESTAMP$] style=mustkeep>Link</a>
 <a href=/image/image_gallery?image_id=[$IMAGE_ID$][$TIMESTAMP$] style=mustkeep>Link</a>
 <a href=/image/image_gallery?img_id=[$IMAGE_ID$][$TIMESTAMP$] style=mustkeep>Link</a>
-<a href=/image/image_gallery?i_id=[$IMAGE_ID$][$TIMESTAMP$] style=mustkeep>Link</a>
+<a href=/image/image_gallery?uuid=[$UUID$]&groupId=[$GROUP_ID$][$TIMESTAMP$] style=mustkeep>Link</a>
 <a href=[$WEB_ID$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$] style=mustkeep>Link</a>
 <a href=[$WEB_ID$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$] style=mustkeep>Link</a>
 <a href=[$WEB_ID$]/documents/portlet_file_entry/[$GROUP_ID$]/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$] style=mustkeep>Link</a>
@@ -74,10 +74,10 @@ HTML reference with double quotes:
 <a href="/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]">Link</a>
 <a href="/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]">Link</a>
 <a href="/documents/portlet_file_entry/[$GROUP_ID$]/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]">Link</a>
-<a href="/image/image_gallery?uuid=[$UUID$]&groupId=[$GROUP_ID$][$TIMESTAMP$]">Link</a>
+<a href="/image/image_gallery?i_id=[$IMAGE_ID$][$TIMESTAMP$]">Link</a>
 <a href="/image/image_gallery?image_id=[$IMAGE_ID$][$TIMESTAMP$]">Link</a>
 <a href="/image/image_gallery?img_id=[$IMAGE_ID$][$TIMESTAMP$]">Link</a>
-<a href="/image/image_gallery?i_id=[$IMAGE_ID$][$TIMESTAMP$]">Link</a>
+<a href="/image/image_gallery?uuid=[$UUID$]&groupId=[$GROUP_ID$][$TIMESTAMP$]">Link</a>
 <a href="[$WEB_ID$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]">Link</a>
 <a href="[$WEB_ID$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]">Link</a>
 <a href="[$WEB_ID$]/documents/portlet_file_entry/[$GROUP_ID$]/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]">Link</a>
@@ -88,21 +88,21 @@ HTML reference with single quotes:
 <a href='/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]'>Link</a>
 <a href='/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]'>Link</a>
 <a href='/documents/portlet_file_entry/[$GROUP_ID$]/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]'>Link</a>
-<a href='/image/image_gallery?uuid=[$UUID$]&groupId=[$GROUP_ID$][$TIMESTAMP$]'>Link</a>
+<a href='/image/image_gallery?i_id=[$IMAGE_ID$][$TIMESTAMP$]'>Link</a>
 <a href='/image/image_gallery?image_id=[$IMAGE_ID$][$TIMESTAMP$]'>Link</a>
 <a href='/image/image_gallery?img_id=[$IMAGE_ID$][$TIMESTAMP$]'>Link</a>
-<a href='/image/image_gallery?i_id=[$IMAGE_ID$][$TIMESTAMP$]'>Link</a>
+<a href='/image/image_gallery?uuid=[$UUID$]&groupId=[$GROUP_ID$][$TIMESTAMP$]'>Link</a>
 <a href='[$WEB_ID$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]'>Link</a>
 <a href='[$WEB_ID$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]'>Link</a>
 <a href='[$WEB_ID$]/documents/portlet_file_entry/[$GROUP_ID$]/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]'>Link</a>
 
-HTML reference with escaped double quotes:
+Non-legacy HTML reference with escaped double quotes:
 
 <a href=\"/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]\">Link</a>
 <a href=\"/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]\">Link</a>
 <a href=\"/documents/portlet_file_entry/[$GROUP_ID$]/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]\">Link</a>
 
-HTML reference with escaped single quotes:
+Non-legacy HTML reference with escaped single quotes:
 
 <a href=\'/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]\'>Link</a>
 <a href=\'/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]\'>Link</a>

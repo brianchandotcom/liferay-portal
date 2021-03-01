@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.internal.trash;
 
+import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.model.DLFileShortcutConstants;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.capabilities.UnsupportedCapabilityException;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -191,6 +193,22 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 		catch (NoSuchFolderException noSuchFolderException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(noSuchFolderException, noSuchFolderException);
+			}
+
+			return false;
+		}
+
+		try {
+			FileEntry toFileEntry = _dlAppLocalService.getFileEntry(
+				dlFileShortcut.getToFileEntryId());
+
+			if (toFileEntry.isInTrash()) {
+				return false;
+			}
+		}
+		catch (NoSuchFileEntryException noSuchFileEntryException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchFileEntryException, noSuchFileEntryException);
 			}
 
 			return false;

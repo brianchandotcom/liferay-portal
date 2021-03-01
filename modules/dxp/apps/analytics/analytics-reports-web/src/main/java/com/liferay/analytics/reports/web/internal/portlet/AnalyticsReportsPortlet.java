@@ -130,7 +130,8 @@ public class AnalyticsReportsPortlet extends MVCPortlet {
 
 		return Optional.ofNullable(
 			(InfoItemReference)httpServletRequest.getAttribute(
-				AnalyticsReportsWebKeys.INFO_ITEM_REFERENCE)
+				com.liferay.analytics.reports.constants.AnalyticsReportsWebKeys.
+					INFO_ITEM_REFERENCE)
 		).orElseGet(
 			() -> new InfoItemReference(
 				_getClassName(httpServletRequest),

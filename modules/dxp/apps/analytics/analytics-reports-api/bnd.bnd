@@ -2,6 +2,7 @@ Bundle-Name: Liferay Analytics Reports API
 Bundle-SymbolicName: com.liferay.analytics.reports.api
 Bundle-Version: 2.0.0
 Export-Package:\
+	com.liferay.analytics.reports.constants,\
 	com.liferay.analytics.reports.info.action.provider,\
 	com.liferay.analytics.reports.info.item,\
 	com.liferay.analytics.reports.info.item.provider

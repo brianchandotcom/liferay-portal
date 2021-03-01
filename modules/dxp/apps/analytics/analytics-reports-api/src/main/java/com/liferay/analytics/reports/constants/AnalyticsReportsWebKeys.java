@@ -12,14 +12,13 @@
  *
  */
 
-package com.liferay.analytics.reports.web.internal.constants;
+package com.liferay.analytics.reports.constants;
 
 /**
- * @author Sarai Díaz
+ * @author Cristina González
  */
 public class AnalyticsReportsWebKeys {
 
-	public static final String ANALYTICS_REPORTS_DISPLAY_CONTEXT =
-		"ANALYTICS_REPORTS_DISPLAY_CONTEXT";
+	public static final String INFO_ITEM_REFERENCE = "INFO_ITEM_REFERENCE";
 
 }

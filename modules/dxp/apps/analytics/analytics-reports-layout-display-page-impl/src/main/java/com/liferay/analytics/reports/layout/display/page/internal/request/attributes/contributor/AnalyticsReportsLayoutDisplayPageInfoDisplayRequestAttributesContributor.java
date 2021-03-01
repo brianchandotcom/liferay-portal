@@ -12,9 +12,9 @@
  *
  */
 
-package com.liferay.analytics.reports.web.internal.request.attributes.contributor;
+package com.liferay.analytics.reports.layout.display.page.internal.request.attributes.contributor;
 
-import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsWebKeys;
+import com.liferay.analytics.reports.constants.AnalyticsReportsWebKeys;
 import com.liferay.info.display.request.attributes.contributor.InfoDisplayRequestAttributesContributor;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
@@ -31,8 +31,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Cristina González
  */
 @Component(service = InfoDisplayRequestAttributesContributor.class)
-public class AnalyticsReportsInfoDisplayRequestAttributesContributor
-	implements InfoDisplayRequestAttributesContributor {
+public class
+	AnalyticsReportsLayoutDisplayPageInfoDisplayRequestAttributesContributor
+		implements InfoDisplayRequestAttributesContributor {
 
 	@Override
 	public void addAttributes(HttpServletRequest httpServletRequest) {

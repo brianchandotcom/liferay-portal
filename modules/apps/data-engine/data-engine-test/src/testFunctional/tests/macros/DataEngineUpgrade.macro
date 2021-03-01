@@ -23,7 +23,36 @@ definition {
 
 	macro editAnUpgradedStructureWithFieldGroup {
 
-		// TODO LPS-126231 editAnUpgradedStructureWithFieldGroup pending implementation
+		fieldList = "Text,Date,Number";
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		NavItem.gotoStructures();
+
+		WebContentNavigator.gotoEditStructure(structureName = "My Structure with nested fields");
+
+
+		for (var structureFieldName : list "${fieldList}") {
+			DataEngine.editFieldLabel(
+			fieldFieldLabel = "${structureFieldName}",
+			fieldFieldLabelEdit = "${structureFieldName} Edited");
+		}
+
+		WebContentStructures.saveCP(structureName = "My Structure with nested fields");
+
+		WebContentNavigator.gotoEditStructure(structureName = "My Structure with nested fields");
+
+		DataEngine.viewField(
+		fieldName = "Text",
+		fieldFieldLabel = "Text Edited");
+
+		DataEngine.viewField(
+		fieldName = "Date",
+		fieldFieldLabel = "Date Edited");
+
+		DataEngine.viewField(
+		fieldName = "Numeric",
+		fieldFieldLabel = "Number Edited");
 
 		echo("empty stub");
 	}

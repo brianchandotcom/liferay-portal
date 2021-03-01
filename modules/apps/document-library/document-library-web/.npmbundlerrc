@@ -4,6 +4,9 @@
 			"asset-taglib": {
 				"/": ">=4.0.0"
 			},
+			"data-engine-taglib": {
+				"/": ">=2.0.0"
+			},
 			"frontend-taglib-clay": {
 				"clay-autocomplete": ">=2.9.0",
 				"clay-button": ">=2.9.0",

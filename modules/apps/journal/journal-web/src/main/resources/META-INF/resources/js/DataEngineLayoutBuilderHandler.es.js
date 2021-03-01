@@ -12,6 +12,8 @@
  * details.
  */
 
+import {DataConverter} from 'data-engine-taglib';
+
 export default function ({defaultLanguageId, namespace}) {
 	const form = document.getElementById(`${namespace}fm`);
 
@@ -92,7 +94,21 @@ export default function ({defaultLanguageId, namespace}) {
 
 			const description = getInputLocalizedValues('description');
 
-			const formData = dataLayoutBuilder.getFormData();
+			const {availableLanguageIds} = dataLayoutBuilder.props;
+			const {
+				availableLanguageIds: availableLanguageIdsState,
+			} = dataLayoutBuilder.state;
+
+			const layoutProvider =
+				dataLayoutBuilder.formBuilderWithLayoutProvider.refs
+					.layoutProvider;
+
+			const formData = DataConverter.getFormData({
+				availableLanguageIds,
+				availableLanguageIdsState,
+				defaultLanguageId,
+				layoutProvider,
+			});
 
 			const dataDefinition = formData.definition;
 

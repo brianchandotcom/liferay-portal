@@ -385,6 +385,76 @@ export function getFieldSetDDMForm({
 	});
 }
 
+export function getFormData({
+	availableLanguageIds,
+	availableLanguageIdsState,
+	defaultLanguageId,
+	layoutProvider,
+}) {
+	const {
+		props: {defaultLanguageId: layoutDefaultLanguageId},
+		state: {pages: layoutProviderPages, rules},
+	} = layoutProvider;
+
+	const pagesVisitor = new PagesVisitor(layoutProviderPages);
+
+	const pages = pagesVisitor.mapFields(
+		(field) => {
+			const {settingsContext} = field;
+
+			const settingsContextPagesVisitor = new PagesVisitor(
+				settingsContext.pages
+			);
+
+			const newSettingsContext = {
+				...settingsContext,
+				pages: settingsContextPagesVisitor.mapFields(
+					(settingsField) => {
+						if (settingsField.type === 'options') {
+							const {value} = settingsField;
+							const newValue = {};
+
+							Object.keys(value).forEach((locale) => {
+								newValue[locale] = value[locale]?.filter(
+									(localizedValue) =>
+										localizedValue.value !== '' &&
+										localizedValue.label !== ''
+								);
+							});
+
+							if (!newValue[layoutDefaultLanguageId]) {
+								newValue[layoutDefaultLanguageId] = [];
+							}
+
+							settingsField = {
+								...settingsField,
+								value: newValue,
+							};
+						}
+
+						return settingsField;
+					}
+				),
+			};
+
+			return {
+				...field,
+				settingsContext: newSettingsContext,
+			};
+		},
+		true,
+		true
+	);
+
+	return getDataDefinitionAndDataLayout({
+		availableLanguageIds: availableLanguageIdsState ?? availableLanguageIds,
+		defaultLanguageId,
+		pages,
+		paginationMode: layoutProvider.getPaginationMode(),
+		rules,
+	});
+}
+
 // private
 
 function _fromDDMFormToDataDefinitionPropertyName(propertyName) {

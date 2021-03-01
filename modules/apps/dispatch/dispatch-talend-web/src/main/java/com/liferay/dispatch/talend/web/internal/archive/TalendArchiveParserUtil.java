@@ -87,6 +87,31 @@ public class TalendArchiveParserUtil {
 		}
 	}
 
+	private static Properties _getContextProperties(
+			String contextName, String jobExecutableJarPath)
+		throws IOException {
+
+		Properties properties = new Properties();
+
+		String contextPropertiesSuffix = contextName + ".properties";
+
+		try (ZipFile zipFile = new ZipFile(new File(jobExecutableJarPath))) {
+			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
+
+			while (enumeration.hasMoreElements()) {
+				ZipEntry zipEntry = enumeration.nextElement();
+
+				String name = zipEntry.getName();
+
+				if (name.endsWith(contextPropertiesSuffix)) {
+					properties.load(zipFile.getInputStream(zipEntry));
+				}
+			}
+		}
+
+		return properties;
+	}
+
 	private static File _getJobDirectory(InputStream jobArchiveInputStream)
 		throws IOException {
 
@@ -293,13 +318,19 @@ public class TalendArchiveParserUtil {
 
 		talendArchiveBuilder.classPathEntries(
 			_getJobLibEntries(jobDirectoryPath));
-		talendArchiveBuilder.contextName(
-			(String)jobProperties.get("contextName"));
-		talendArchiveBuilder.jobDirectory(jobDirectory.getAbsolutePath());
+
+		String contextName = (String)jobProperties.get("contextName");
+
+		talendArchiveBuilder.contextName(contextName);
 
 		String jobName = (String)jobProperties.get("job");
 
 		Path jobJarPath = _getJobJarPath(jobName, jobDirectoryPath);
+
+		talendArchiveBuilder.contextProperties(
+			_getContextProperties(contextName, jobJarPath.toString()));
+
+		talendArchiveBuilder.jobDirectory(jobDirectory.getAbsolutePath());
 
 		talendArchiveBuilder.jobJarPath(jobJarPath.toString());
 		talendArchiveBuilder.jobMainClassFQN(

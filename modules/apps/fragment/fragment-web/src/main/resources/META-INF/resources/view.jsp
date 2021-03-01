@@ -245,7 +245,6 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 									additionalProps="<%= fragmentDisplayContext.getFragmentCollectionsViewContext() %>"
 									animationType="<%= EmptyResultMessageKeys.AnimationType.NONE %>"
 									buttonPropsTransformer="js/FragmentCollectionViewButtonPropsTransformer"
-									defaultEventHandler="FragmentCollectionsViewDefaultEventHandler"
 									description='<%= LanguageUtil.get(request, "collections-are-needed-to-create-fragments") %>'
 									elementType='<%= LanguageUtil.get(request, "collections") %>'
 									propsTransformer="js/FragmentCollectionViewDefaultPropsTransformer"
@@ -314,9 +313,3 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 
 <aui:form cssClass="hide" name="fragmentCollectionsFm">
 </aui:form>
-
-<liferay-frontend:component
-	componentId="FragmentCollectionsViewDefaultEventHandler"
-	context="<%= fragmentDisplayContext.getFragmentCollectionsViewContext() %>"
-	module="js/FragmentCollectionsViewDefaultEventHandler.es"
-/>

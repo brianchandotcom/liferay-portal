@@ -14,8 +14,8 @@
 
 package com.liferay.analytics.reports.web.internal.portlet;
 
+import com.liferay.analytics.reports.constants.AnalyticsReportsWebKeys;
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPortletKeys;
-import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsWebKeys;
 import com.liferay.analytics.reports.web.internal.display.context.AnalyticsReportsDisplayContext;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.kernel.language.Language;

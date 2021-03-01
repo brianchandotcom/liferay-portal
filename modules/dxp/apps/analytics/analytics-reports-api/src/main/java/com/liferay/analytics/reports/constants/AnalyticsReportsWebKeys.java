@@ -12,10 +12,10 @@
  *
  */
 
-package com.liferay.analytics.reports.web.internal.constants;
+package com.liferay.analytics.reports.constants;
 
 /**
- * @author Sarai Díaz
+ * @author Cristina González
  */
 public class AnalyticsReportsWebKeys {
 

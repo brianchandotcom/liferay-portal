@@ -132,7 +132,7 @@ public class CPInstanceTierPriceEntriesScreenNavigationCategory
 
 		_jspRenderer.renderJSP(
 			_setServletContext, httpServletRequest, httpServletResponse,
-			"/price_lists/cp_instance/tier_price_entries.jsp");
+			"/price_lists/cp_instance/commerce_tier_price_entries.jsp");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

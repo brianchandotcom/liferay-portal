@@ -61,6 +61,7 @@ productSkusURL.setParameter("screenNavigationCategoryKey", "skus");
 			namespace="<%= liferayPortletResponse.getNamespace() %>"
 			pageNumber="<%= 1 %>"
 			portletURL="<%= portletURL %>"
+			selectedItemsKey="priceEntryId"
 			style="stacked"
 		/>
 	</aui:form>

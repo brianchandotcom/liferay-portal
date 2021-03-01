@@ -74,7 +74,11 @@ portletURL.setParameter("eventName", eventName);
 			<liferay-ui:search-container-column-text
 				colspan="<%= 2 %>"
 			>
-				<h5><%= HtmlUtil.escape(fileEntryType.getName(locale)) %></h5>
+				<h5>
+					<aui:a href="#">
+						<%= HtmlUtil.escape(fileEntryType.getName(locale)) %>
+					</aui:a>
+				</h5>
 
 				<h6 class="text-default">
 					<span><%= fileEntryType.getDescription(locale) %></span>

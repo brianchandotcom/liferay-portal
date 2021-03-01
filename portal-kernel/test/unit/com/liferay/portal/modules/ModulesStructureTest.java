@@ -144,7 +144,8 @@ public class ModulesStructureTest {
 					}
 
 					Files.move(
-						path, path.resolve("../.lfrbuild-portal-deprecated"));
+						path,
+						path.resolveSibling(".lfrbuild-portal-deprecated"));
 
 					StringBundler sb = new StringBundler(3);
 

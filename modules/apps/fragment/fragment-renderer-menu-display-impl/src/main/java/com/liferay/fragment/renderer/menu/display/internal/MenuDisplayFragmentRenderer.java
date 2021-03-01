@@ -22,9 +22,11 @@ import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.renderer.menu.display.internal.MenuDisplayFragmentConfiguration.ContextualMenu;
 import com.liferay.fragment.renderer.menu.display.internal.MenuDisplayFragmentConfiguration.DisplayStyle;
 import com.liferay.fragment.renderer.menu.display.internal.MenuDisplayFragmentConfiguration.SiteNavigationMenuSource;
+import com.liferay.fragment.renderer.menu.display.internal.configuration.FFFragmentRendererMenuDisplayConfiguration;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -48,6 +50,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -56,12 +59,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Víctor Galán
  */
-@Component(service = FragmentRenderer.class)
+@Component(
+	configurationPid = "com.liferay.fragment.renderer.menu.display.internal.configuration.FFFragmentRendererMenuDisplayConfiguration",
+	service = FragmentRenderer.class
+)
 public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 
 	@Override
@@ -102,6 +109,11 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 			"content.Language", getClass());
 
 		return LanguageUtil.get(resourceBundle, "menu-display");
+	}
+
+	@Override
+	public boolean isSelectable(HttpServletRequest httpServletRequest) {
+		return _ffFragmentRendererMenuDisplayConfiguration.enabled();
 	}
 
 	@Override
@@ -151,6 +163,13 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 	)
 	public void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;
+	}
+
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_ffFragmentRendererMenuDisplayConfiguration =
+			ConfigurableUtil.createConfigurable(
+				FFFragmentRendererMenuDisplayConfiguration.class, properties);
 	}
 
 	private void _configureMenu(
@@ -311,6 +330,9 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private DDMTemplateService _ddmTemplateService;
+
+	private FFFragmentRendererMenuDisplayConfiguration
+		_ffFragmentRendererMenuDisplayConfiguration;
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;

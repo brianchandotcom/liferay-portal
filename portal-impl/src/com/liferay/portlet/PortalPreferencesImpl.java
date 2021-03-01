@@ -46,7 +46,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.hibernate.StaleObjectStateException;
@@ -287,22 +286,15 @@ public class PortalPreferencesImpl
 			return;
 		}
 
-		Callable<Void> callable = new Callable<Void>() {
+		Runnable runnable = () -> {
+			Map<String, String[]> modifiedPreferences =
+				_getModifiedPreferences();
 
-			@Override
-			public Void call() {
-				Map<String, String[]> modifiedPreferences =
-					_getModifiedPreferences();
-
-				modifiedPreferences.remove(encodedKey);
-
-				return null;
-			}
-
+			modifiedPreferences.remove(encodedKey);
 		};
 
 		try {
-			_retryableStore(callable, encodedKey);
+			_retryableStore(runnable, encodedKey);
 		}
 		catch (ConcurrentModificationException
 					concurrentModificationException) {
@@ -378,26 +370,19 @@ public class PortalPreferencesImpl
 				return;
 			}
 
-			Callable<Void> callable = new Callable<Void>() {
+			Runnable runnable = () -> {
+				Map<String, String[]> modifiedPreferences =
+					_getModifiedPreferences();
 
-				@Override
-				public Void call() {
-					Map<String, String[]> modifiedPreferences =
-						_getModifiedPreferences();
-
-					modifiedPreferences.put(
-						encodedKey, new String[] {_getXMLSafeValue(value)});
-
-					return null;
-				}
-
+				modifiedPreferences.put(
+					encodedKey, new String[] {_getXMLSafeValue(value)});
 			};
 
 			if (_signedIn) {
-				_retryableStore(callable, encodedKey);
+				_retryableStore(runnable, encodedKey);
 			}
 			else {
-				callable.call();
+				runnable.run();
 			}
 		}
 		catch (ConcurrentModificationException
@@ -411,7 +396,7 @@ public class PortalPreferencesImpl
 	}
 
 	@Override
-	public void setValues(String namespace, String key, final String[] values) {
+	public void setValues(String namespace, String key, String[] values) {
 		if (Validator.isNull(key) || key.equals(_RANDOM_KEY)) {
 			return;
 		}
@@ -442,26 +427,18 @@ public class PortalPreferencesImpl
 				}
 			}
 
-			Callable<Void> callable = new Callable<Void>() {
+			Runnable runnable = () -> {
+				Map<String, String[]> modifiedPreferences =
+					_getModifiedPreferences();
 
-				@Override
-				public Void call() {
-					Map<String, String[]> modifiedPreferences =
-						_getModifiedPreferences();
-
-					modifiedPreferences.put(
-						encodedKey, _getXMLSafeValues(values));
-
-					return null;
-				}
-
+				modifiedPreferences.put(encodedKey, _getXMLSafeValues(values));
 			};
 
 			if (_signedIn) {
-				_retryableStore(callable, encodedKey);
+				_retryableStore(runnable, encodedKey);
 			}
 			else {
-				callable.call();
+				runnable.run();
 			}
 		}
 		catch (ConcurrentModificationException
@@ -665,32 +642,22 @@ public class PortalPreferencesImpl
 	}
 
 	private com.liferay.portal.kernel.model.PortalPreferences _reload(
-			final long ownerId, final int ownerType)
+			long ownerId, int ownerType)
 		throws Throwable {
 
 		return TransactionInvokerUtil.invoke(
 			SUPPORTS_TRANSACTION_CONFIG,
-			new Callable<com.liferay.portal.kernel.model.PortalPreferences>() {
-
-				@Override
-				public com.liferay.portal.kernel.model.PortalPreferences
-					call() {
-
-					return PortalPreferencesUtil.fetchByO_O(
-						ownerId, ownerType, false);
-				}
-
-			});
+			() -> PortalPreferencesUtil.fetchByO_O(ownerId, ownerType, false));
 	}
 
-	private void _retryableStore(Callable<?> callable, String key)
+	private void _retryableStore(Runnable runnable, String key)
 		throws Throwable {
 
 		String[] originalValues = _getValues(key, null);
 
 		while (true) {
 			try {
-				callable.call();
+				runnable.run();
 
 				store();
 

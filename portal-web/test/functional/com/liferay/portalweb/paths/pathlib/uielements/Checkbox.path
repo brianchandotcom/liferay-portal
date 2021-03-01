@@ -299,11 +299,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>LEXICON_SELECT_ALL_CHECKED</td>
-	<td>//nav[contains(@class,'management-bar')]//input[@type='checkbox' and @checked=""]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>LEXICON_SELECT_ALL_INPUT</td>
 	<td>//nav[contains(@class,'management-bar')]//input[@type='checkbox']</td>
 	<td></td>

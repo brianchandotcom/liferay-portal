@@ -206,11 +206,11 @@ public class CommerceOrderTest {
 			commerceContext.getCommerceCurrency(),
 			commerceOrder.getCommerceCurrency());
 
-		CommerceCurrency orderCommerceCurrency =
+		CommerceCurrency commerceOrderCommerceCurrency =
 			commerceOrder.getCommerceCurrency();
 
 		Assert.assertNotEquals(
-			orderCommerceCurrency.getCode(),
+			commerceOrderCommerceCurrency.getCode(),
 			_commerceChannel.getCommerceCurrencyCode());
 	}
 

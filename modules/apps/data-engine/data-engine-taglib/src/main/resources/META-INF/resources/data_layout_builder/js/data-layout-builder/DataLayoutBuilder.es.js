@@ -15,10 +15,12 @@
 import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
 import FormBuilderWithLayoutProvider from 'dynamic-data-mapping-form-builder';
-import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 import React from 'react';
 
-import {getDataDefinitionAndDataLayout} from '../utils/dataConverter.es';
+import {
+	getDataDefinitionAndDataLayout,
+	getFormData,
+} from '../utils/dataConverter.es';
 import EventEmitter from './EventEmitter.es';
 import saveDefinitionAndLayout from './saveDefinitionAndLayout.es';
 
@@ -106,77 +108,6 @@ class DataLayoutBuilder extends React.Component {
 		this.eventEmitter.emit(event, payload, error);
 	}
 
-	getFormData() {
-		const {availableLanguageIds, defaultLanguageId} = this.props;
-		const {availableLanguageIds: availableLanguageIdsState} = this.state;
-
-		const layoutProvider = this.formBuilderWithLayoutProvider.refs
-			.layoutProvider;
-		const {
-			props: {defaultLanguageId: layoutDefaultLanguageId},
-			state: {pages: layoutProviderPages, rules},
-		} = layoutProvider;
-
-		const pagesVisitor = new PagesVisitor(layoutProviderPages);
-
-		const pages = pagesVisitor.mapFields(
-			(field) => {
-				const {settingsContext} = field;
-
-				const settingsContextPagesVisitor = new PagesVisitor(
-					settingsContext.pages
-				);
-
-				const newSettingsContext = {
-					...settingsContext,
-					pages: settingsContextPagesVisitor.mapFields(
-						(settingsField) => {
-							if (settingsField.type === 'options') {
-								const {value} = settingsField;
-								const newValue = {};
-
-								Object.keys(value).forEach((locale) => {
-									newValue[locale] = value[locale]?.filter(
-										(localizedValue) =>
-											localizedValue.value !== '' &&
-											localizedValue.label !== ''
-									);
-								});
-
-								if (!newValue[layoutDefaultLanguageId]) {
-									newValue[layoutDefaultLanguageId] = [];
-								}
-
-								settingsField = {
-									...settingsField,
-									value: newValue,
-								};
-							}
-
-							return settingsField;
-						}
-					),
-				};
-
-				return {
-					...field,
-					settingsContext: newSettingsContext,
-				};
-			},
-			true,
-			true
-		);
-
-		return getDataDefinitionAndDataLayout({
-			availableLanguageIds:
-				availableLanguageIdsState ?? availableLanguageIds,
-			defaultLanguageId,
-			pages,
-			paginationMode: layoutProvider.getPaginationMode(),
-			rules,
-		});
-	}
-
 	on(eventName, listener) {
 		this.eventEmitter.on(eventName, listener);
 	}
@@ -251,15 +182,25 @@ class DataLayoutBuilder extends React.Component {
 
 	save(params = {}) {
 		const {
+			availableLanguageIds,
 			contentType,
 			dataDefinitionId,
 			dataLayoutId,
+			defaultLanguageId,
 			groupId,
 		} = this.props;
-		const {
-			definition: dataDefinition,
-			layout: dataLayout,
-		} = this.getFormData();
+
+		const {availableLanguageIds: availableLanguageIdsState} = this.state;
+
+		const layoutProvider = this.formBuilderWithLayoutProvider.refs
+			.layoutProvider;
+
+		const {definition: dataDefinition, layout: dataLayout} = getFormData({
+			availableLanguageIds,
+			availableLanguageIdsState,
+			defaultLanguageId,
+			layoutProvider,
+		});
 
 		return saveDefinitionAndLayout({
 			contentType,

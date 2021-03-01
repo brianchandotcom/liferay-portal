@@ -69,7 +69,9 @@ class AutoSize {
 			this.template.style.width = this.computedStyle.width;
 		}
 
-		this.template.innerHTML = inputElement.value + DEFAULT_APPEND_CONTENT;
+		this.template.innerHTML =
+			Liferay.Util.escapeHTML(inputElement.value) +
+			DEFAULT_APPEND_CONTENT;
 
 		inputElement.style.height = `${
 			this.template.scrollHeight < this.minHeight

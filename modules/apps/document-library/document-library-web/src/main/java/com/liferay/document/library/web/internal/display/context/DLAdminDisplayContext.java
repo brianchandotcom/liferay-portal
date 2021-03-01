@@ -29,6 +29,7 @@ import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.document.library.kernel.util.comparator.RepositoryModelModifiedDateComparator;
 import com.liferay.document.library.kernel.versioning.VersioningStrategy;
 import com.liferay.document.library.web.internal.display.context.logic.DLPortletInstanceSettingsHelper;
 import com.liferay.document.library.web.internal.display.context.util.DLRequestHelper;
@@ -485,6 +486,10 @@ public class DLAdminDisplayContext {
 			DLUtil.getRepositoryModelOrderByComparator(
 				orderByCol, orderByType, orderByModel);
 
+		if (navigation.equals("recent")) {
+			orderByComparator = new RepositoryModelModifiedDateComparator();
+		}
+
 		dlSearchContainer.setOrderByCol(orderByCol);
 		dlSearchContainer.setOrderByComparator(orderByComparator);
 		dlSearchContainer.setOrderByType(orderByType);
@@ -627,10 +632,10 @@ public class DLAdminDisplayContext {
 									dlSearchContainer.getOrderByComparator());
 				}
 			}
-			else if (navigation.equals("mine")) {
+			else if (navigation.equals("mine") || navigation.equals("recent")) {
 				long groupFileEntriesUserId = 0;
 
-				if (_themeDisplay.isSignedIn()) {
+				if (navigation.equals("mine") && _themeDisplay.isSignedIn()) {
 					groupFileEntriesUserId = _themeDisplay.getUserId();
 
 					status = WorkflowConstants.STATUS_ANY;

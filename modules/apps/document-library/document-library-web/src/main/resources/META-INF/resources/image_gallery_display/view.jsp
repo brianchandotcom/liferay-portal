@@ -226,12 +226,12 @@ String[] mediaGalleryMimeTypes = dlPortletInstanceSettings.getMimeTypes();
 			%>
 
 		</c:when>
-		<c:when test='<%= topLink.equals("mine") %>'>
+		<c:when test='<%= topLink.equals("mine") || topLink.equals("recent") %>'>
 
 			<%
 			long groupImagesUserId = 0;
 
-			if (themeDisplay.isSignedIn()) {
+			if (topLink.equals("mine") && themeDisplay.isSignedIn()) {
 				groupImagesUserId = user.getUserId();
 			}
 

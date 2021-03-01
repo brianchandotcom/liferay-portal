@@ -13,7 +13,7 @@
  */
 
 import {ClassicEditor} from 'frontend-editor-ckeditor-web';
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 import {useSyncValue} from '../hooks/useSyncValue.es';
@@ -34,6 +34,8 @@ const RichText = ({
 	);
 
 	const [dirty, setDirty] = useState(false);
+
+	const editorRef = useRef();
 
 	return (
 		<FieldBase
@@ -75,6 +77,7 @@ const RichText = ({
 					}
 				}}
 				readOnly={readOnly}
+				ref={editorRef}
 			/>
 
 			<input

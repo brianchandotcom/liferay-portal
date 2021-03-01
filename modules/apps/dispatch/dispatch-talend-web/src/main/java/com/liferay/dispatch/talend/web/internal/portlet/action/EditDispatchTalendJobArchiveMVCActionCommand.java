@@ -43,6 +43,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
+import java.util.Properties;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
@@ -164,6 +166,21 @@ public class EditDispatchTalendJobArchiveMVCActionCommand
 		}
 
 		dispatchTaskSettingsUnicodeProperties.put("JAVA_OPTS", newJVMOptions);
+
+		Properties contextProperties = talendArchive.getContextProperties();
+
+		for (String propertyName : contextProperties.stringPropertyNames()) {
+			if (dispatchTaskSettingsUnicodeProperties.containsKey(
+					propertyName)) {
+
+				continue;
+			}
+
+			dispatchTaskSettingsUnicodeProperties.put(
+				propertyName,
+				contextProperties.getProperty(propertyName) +
+					" (Automatic Copy)");
+		}
 
 		_dispatchTriggerLocalService.updateDispatchTrigger(
 			dispatchTriggerId, dispatchTaskSettingsUnicodeProperties,

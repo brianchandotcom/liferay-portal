@@ -25,6 +25,8 @@ import com.liferay.portal.util.FileImpl;
 import java.io.File;
 import java.io.IOException;
 
+import java.util.Properties;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -65,6 +67,14 @@ public class TalendArchiveParserUtilTest {
 		String classPath = talendArchive.getClassPath();
 
 		Assert.assertTrue(classPath.startsWith(sb.toString()));
+
+		Properties contextProperties = talendArchive.getContextProperties();
+
+		Assert.assertNotNull(contextProperties);
+
+		Assert.assertEquals(
+			"2011", contextProperties.getProperty("multiplier"));
+		Assert.assertEquals("Liferay", contextProperties.getProperty("prefix"));
 
 		Assert.assertEquals(
 			jobDirectory + _JOB_JAR_PATH, talendArchive.getJobJarPath());

@@ -786,9 +786,13 @@ export const FORM_VIEW = {
 	},
 	FORM_VIEW_CONTEXT,
 	getDataLayoutBuilderProps() {
+		const props = {
+			...dataLayoutBuilder.props,
+			appContext: [FORM_VIEW_CONTEXT, jest.fn()],
+		};
+
 		return {
 			...dataLayoutBuilder,
-			dispatchAction: jest.fn(),
 			formBuilderWithLayoutProvider: {
 				refs: {
 					layoutProvider: {
@@ -805,6 +809,7 @@ export const FORM_VIEW = {
 			},
 			on: jest.fn(),
 			onEditingLanguageIdChange: jest.fn(),
+			props,
 			removeEventListener: jest.fn(),
 		};
 	},

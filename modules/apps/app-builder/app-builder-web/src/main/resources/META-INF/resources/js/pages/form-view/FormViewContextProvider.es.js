@@ -39,7 +39,9 @@ export default ({children, dataLayoutBuilder}) => {
 
 	const dispatch = useCallback(
 		(action) => {
-			dataLayoutBuilder.dispatchAction(action);
+			const [, dispatch] = dataLayoutBuilder.props.appContext;
+
+			dispatch?.(action);
 		},
 		[dataLayoutBuilder]
 	);

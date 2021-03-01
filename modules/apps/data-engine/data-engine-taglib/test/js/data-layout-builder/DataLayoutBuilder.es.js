@@ -99,23 +99,6 @@ describe('DataLayoutBuilder', () => {
 		component.emit(event, payload);
 	});
 
-	it('is dispatching action', () => {
-		component = new DataLayoutBuilder(props);
-		const action = 'action:test';
-		component.dispatchAction(action);
-
-		expect(props.appContext[0].action).toBe(action);
-	});
-
-	it('is dispatching action without context', () => {
-		component = new DataLayoutBuilder(props);
-		const action = 'action:test';
-		component.props.appContext[1] = null;
-		component.dispatchAction(action);
-
-		expect(props.appContext[0].action).toBe(action);
-	});
-
 	it('is getting fieldTypes', () => {
 		component = new DataLayoutBuilder(props);
 

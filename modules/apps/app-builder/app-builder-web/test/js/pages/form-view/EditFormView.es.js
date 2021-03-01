@@ -30,7 +30,7 @@ const {
 	getDataLayoutBuilderProps,
 } = FORM_VIEW;
 
-const setDataLayoutBuilderProps = (props) => {
+const setDataLayoutBuilderMock = (props) => {
 	window.Liferay = {
 		...window.Liferay,
 		componentReady: async () => await props,
@@ -56,14 +56,15 @@ const EditFormViewWrapper = ({trackingIndicator = false, ...otherProps}) => (
 );
 
 describe('EditFormView', () => {
-	let dataLayoutBuilderProps;
+	let dataLayoutBuilderMock;
 	let dataLayoutVisitorSpy;
+	let dispatchAction;
 	let successToastSpy;
 
 	beforeEach(() => {
 		jest.useFakeTimers();
 
-		dataLayoutBuilderProps = getDataLayoutBuilderProps();
+		dataLayoutBuilderMock = getDataLayoutBuilderProps();
 
 		jest.spyOn(
 			DataConverter,
@@ -78,7 +79,8 @@ describe('EditFormView', () => {
 			.spyOn(toast, 'successToast')
 			.mockImplementation(() => {});
 
-		setDataLayoutBuilderProps(dataLayoutBuilderProps);
+		dispatchAction = dataLayoutBuilderMock.props.appContext[1];
+		setDataLayoutBuilderMock(dataLayoutBuilderMock);
 	});
 
 	afterEach(() => {
@@ -132,12 +134,12 @@ describe('EditFormView', () => {
 		};
 
 		const props = {
-			...dataLayoutBuilderProps.props,
+			...dataLayoutBuilderMock.props,
 			appContext: [context],
 		};
 
-		setDataLayoutBuilderProps({
-			...dataLayoutBuilderProps,
+		setDataLayoutBuilderMock({
+			...dataLayoutBuilderMock,
 			props,
 		});
 
@@ -158,7 +160,7 @@ describe('EditFormView', () => {
 
 		context.dataDefinition.dataDefinitionFields[0].required = false;
 
-		setDataLayoutBuilderProps(dataLayoutBuilderProps);
+		setDataLayoutBuilderMock(dataLayoutBuilderMock);
 
 		rerender(<EditFormViewWrapper />);
 
@@ -181,26 +183,21 @@ describe('EditFormView', () => {
 
 		fireEvent.click(fieldDate);
 
-		expect(
-			dataLayoutBuilderProps.dispatchAction.mock.calls[2][0]
-		).toStrictEqual({
+		expect(dispatchAction.mock.calls[2][0]).toStrictEqual({
 			payload: {
 				fieldTypeName: 'date',
 			},
 			type: 'ADD_CUSTOM_OBJECT_FIELD',
 		});
 
-		expect(dataLayoutBuilderProps.dispatchAction.mock.calls.length).toBe(3);
-
+		expect(dispatchAction.mock.calls.length).toBe(3);
 		const formName = queryByPlaceholderText('untitled-form-view');
 
 		expect(formName.value).toBe('FormView');
 
 		fireEvent.change(formName, {target: {value: 'My Form View'}});
 
-		expect(
-			dataLayoutBuilderProps.dispatchAction.mock.calls[3][0]
-		).toStrictEqual({
+		expect(dispatchAction.mock.calls[3][0]).toStrictEqual({
 			payload: {
 				name: {
 					en_US: 'My Form View',
@@ -209,7 +206,7 @@ describe('EditFormView', () => {
 			type: 'UPDATE_DATA_LAYOUT_NAME',
 		});
 
-		expect(dataLayoutBuilderProps.dispatchAction.mock.calls.length).toBe(4);
+		expect(dispatchAction.mock.calls.length).toBe(4);
 
 		expect(dataLayoutVisitorSpy.mock.calls.length).toBe(1);
 	});
@@ -237,11 +234,11 @@ describe('EditFormView', () => {
 		fireEvent.dblClick(fieldTypeName);
 
 		expect(
-			dataLayoutBuilderProps.formBuilderWithLayoutProvider.refs
+			dataLayoutBuilderMock.formBuilderWithLayoutProvider.refs
 				.layoutProvider.dispatch.mock.calls.length
 		).toBe(1);
 		expect(
-			dataLayoutBuilderProps.formBuilderWithLayoutProvider.refs
+			dataLayoutBuilderMock.formBuilderWithLayoutProvider.refs
 				.layoutProvider.dispatch.mock.calls[0][0]
 		).toBe('fieldAdded');
 
@@ -329,7 +326,7 @@ describe('EditFormView', () => {
 			jest.runAllTimers();
 		});
 
-		expect(dataLayoutBuilderProps.dispatchAction.mock.calls.length).toBe(2);
+		expect(dispatchAction.mock.calls.length).toBe(2);
 		expect(dataLayoutVisitorSpy.mock.calls.length).toBe(1);
 
 		expect(container.querySelector('.menu-indicator-enabled')).toBeFalsy();
@@ -356,9 +353,7 @@ describe('EditFormView', () => {
 			fireEvent.click(deleteField);
 		});
 
-		expect(
-			dataLayoutBuilderProps.dispatchAction.mock.calls[2][0]
-		).toStrictEqual({
+		expect(dispatchAction.mock.calls[2][0]).toStrictEqual({
 			payload: {
 				fieldName: 'SelectFromList',
 			},
@@ -385,7 +380,7 @@ describe('EditFormView', () => {
 			},
 		};
 
-		dataLayoutBuilderProps.props.appContext[0] = context;
+		dataLayoutBuilderMock.props.appContext[0] = context;
 
 		const {container, queryByText, rerender} = render(
 			<EditFormViewWrapper />
@@ -450,7 +445,7 @@ describe('EditFormView', () => {
 			jest.runAllTimers();
 		});
 
-		expect(dataLayoutBuilderProps.dispatchAction.mock.calls.length).toBe(2);
+		expect(dispatchAction.mock.calls.length).toBe(2);
 		expect(dataLayoutVisitorSpy.mock.calls.length).toBe(1);
 
 		const deleteButton = container.querySelector(
@@ -481,7 +476,7 @@ describe('EditFormView', () => {
 		const [
 			action,
 			payload,
-		] = dataLayoutBuilderProps.formBuilderWithLayoutProvider.refs.layoutProvider.dispatch.mock.calls[0];
+		] = dataLayoutBuilderMock.formBuilderWithLayoutProvider.refs.layoutProvider.dispatch.mock.calls[0];
 
 		expect(action).toEqual('fieldDeleted');
 		expect(payload).toStrictEqual({activePage: 0, fieldName: 'Text'});

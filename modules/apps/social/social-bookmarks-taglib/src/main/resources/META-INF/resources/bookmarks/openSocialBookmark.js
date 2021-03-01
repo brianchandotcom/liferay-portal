@@ -12,18 +12,33 @@
  * details.
  */
 
-import openSocialBookmark from './openSocialBookmark';
+const SHARE_WINDOW_HEIGHT = 436;
+const SHARE_WINDOW_WIDTH = 626;
 
-export default function propsTransformer({items, ...otherProps}) {
-	return {
-		...otherProps,
-		items: items.map(({data, ...rest}) => {
-			return {
-				...rest,
-				onClick() {
-					openSocialBookmark(data);
-				},
-			};
-		}),
-	};
+export default function openSocialBookmark({
+	className,
+	classPK,
+	postURL,
+	type,
+	url,
+}) {
+	const shareWindowFeatures = `
+		height=${SHARE_WINDOW_HEIGHT},
+		left=${window.innerWidth / 2 - SHARE_WINDOW_WIDTH / 2},
+		status=0,
+		toolbar=0,
+		top=${window.innerHeight / 2 - SHARE_WINDOW_HEIGHT / 2},
+		width=${SHARE_WINDOW_WIDTH}
+	`;
+
+	window.open(postURL, null, shareWindowFeatures).focus();
+
+	Liferay.fire('socialBookmarks:share', {
+		className,
+		classPK,
+		type,
+		url,
+	});
+
+	return false;
 }

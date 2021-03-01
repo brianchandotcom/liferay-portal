@@ -41,10 +41,10 @@ public class CPInstanceTierPriceEntryClayTableDataSetDisplayView
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
 
-		ClayTableSchemaField priceField =
+		ClayTableSchemaField priceClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField("price", "price");
 
-		priceField.setContentRenderer("actionLink");
+		priceClayTableSchemaField.setContentRenderer("actionLink");
 
 		clayTableSchemaBuilder.addClayTableSchemaField(
 			"minQuantity", "min-quantity");

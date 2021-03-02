@@ -30,25 +30,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
-	@ignore = "true"
-	@priority = "4"
-	test AddFieldsetOnBuilderWithSameFieldType {
-		property portal.acceptance = "false";
-
-		// TODO LPS-107630 AddFieldsetOnBuilderWithSameFieldType pending implementatio
-
-	}
-
-	@description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
-	@ignore = "true"
-	@priority = "4"
-	test AddFieldsetOnOtherFieldsetAlreadyOnBuilder {
-		property portal.acceptance = "false";
-
-		// TODO LPS-107630 AddFieldsetOnOtherFieldsetAlreadyOnBuilder pending implementation
-	}
-
 	@description = "This is a test for LPS-107630. Make sure Fieldsets can be duplicated"
 	@priority = "5"
 	test DuplicateFieldset {
@@ -311,15 +292,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "CKEditor#BODY",
 			value1 = "");
-	}
-
-	@description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
-	@ignore = "true"
-	@priority = "4"
-	test SaveStructureAddingBackFieldset {
-		property portal.acceptance = "false";
-
-		// TODO LPS-107630 SaveStructureAddingBackFieldset pending implementation
 	}
 
 	@description = "This is a test for LPS-107630. Make sure Fieldset Label can be shown or hidden"

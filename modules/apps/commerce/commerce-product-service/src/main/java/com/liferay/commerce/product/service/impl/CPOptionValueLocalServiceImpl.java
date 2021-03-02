@@ -65,7 +65,7 @@ public class CPOptionValueLocalServiceImpl
 			String key, ServiceContext serviceContext)
 		throws PortalException {
 
-		return addCPOptionValue(
+		return cpOptionValueLocalService.addCPOptionValue(
 			StringPool.BLANK, cpOptionId, nameMap, priority, key,
 			serviceContext);
 	}
@@ -300,13 +300,13 @@ public class CPOptionValueLocalServiceImpl
 				serviceContext.getCompanyId(), externalReferenceCode);
 
 			if (cpOptionValue != null) {
-				return updateCPOptionValue(
+				return cpOptionValueLocalService.updateCPOptionValue(
 					cpOptionValue.getCPOptionValueId(), nameMap, priority, key,
 					serviceContext);
 			}
 		}
 
-		return addCPOptionValue(
+		return cpOptionValueLocalService.addCPOptionValue(
 			externalReferenceCode, cpOptionId, nameMap, priority, key,
 			serviceContext);
 	}

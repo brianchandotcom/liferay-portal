@@ -1,5 +1,5 @@
 <div class="product-highlight speedwell-slider" data-will-load>
-	<#if Image2x9w.getSiblings()?has_content>
+	<#if (Image2x9w)?? && Image2x9w.getSiblings()?has_content>
 <script class="slider-dataset" type="application/ld+json">
 			[
 			<#list Image2x9w.getSiblings() as cur_Image2x9w>

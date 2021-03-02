@@ -124,7 +124,7 @@
 			"tip": {
 				"[$LOCALE$]": ""
 			},
-			"type": "ddm-image"
+			"type": "image"
 		}
 	]
 }

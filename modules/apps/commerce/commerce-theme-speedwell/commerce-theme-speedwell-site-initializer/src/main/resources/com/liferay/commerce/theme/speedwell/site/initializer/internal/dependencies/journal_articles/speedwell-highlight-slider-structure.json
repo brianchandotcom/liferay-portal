@@ -36,7 +36,7 @@
 					"tip": {
 						"[$LOCALE$]": ""
 					},
-					"type": "ddm-image"
+					"type": "image"
 				},
 				{
 					"dataType": "string",
@@ -108,7 +108,7 @@
 					"type": "text"
 				},
 				{
-					"dataType": "link-to-page",
+					"dataType": "string",
 					"fieldNamespace": "ddm",
 					"indexType": "keyword",
 					"label": {
@@ -129,7 +129,7 @@
 					"tip": {
 						"[$LOCALE$]": ""
 					},
-					"type": "ddm-link-to-page"
+					"type": "text"
 				}
 			],
 			"predefinedValue": {
@@ -145,7 +145,7 @@
 			"tip": {
 				"[$LOCALE$]": ""
 			},
-			"type": "ddm-image"
+			"type": "image"
 		}
 	]
 }

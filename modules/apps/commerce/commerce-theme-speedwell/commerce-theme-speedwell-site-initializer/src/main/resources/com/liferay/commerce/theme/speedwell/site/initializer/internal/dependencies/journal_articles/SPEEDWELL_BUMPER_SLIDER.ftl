@@ -1,5 +1,5 @@
 <div class="bumper speedwell-slider" data-will-load>
-	<#if Image2x9w.getSiblings()?has_content>
+	<#if (Image2x9w)?? && Image2x9w.getSiblings()?has_content>
 <script class="slider-dataset" type="application/ld+json">
 			[
 			<#list Image2x9w.getSiblings() as cur_Image2x9w>
@@ -41,7 +41,7 @@
 		<button class="bumper-controls__control bumper-controls__control--next"></button>
 	</div>
 
-	<#if StaticHighlight.getSiblings()?has_content>
+	<#if (StaticHighlight)?? && StaticHighlight.getSiblings()?has_content>
 	<div class="bumper__overlay">
 		<div class="container">
 		<#list StaticHighlight.getSiblings() as cur_StaticHighlight>

@@ -164,6 +164,13 @@ export default function LabelField({AppContext, dataLayoutBuilder, field}) {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [debounce]);
 
+	useEffect(() => {
+		setSelectedValue(getInitialSelectedValue(formattedState));
+		setValue(getInitialValue(selectedValue, formattedState));
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [field.name]);
+
 	return (
 		<FieldBase
 			className="form-renderer-label-field"

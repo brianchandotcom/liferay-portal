@@ -15,7 +15,10 @@
 import {ADD_FRAGMENT_COMPOSITION, INIT} from '../actions/types';
 import {LAYOUT_DATA_ITEM_TYPE_LABELS} from '../config/constants/layoutDataItemTypeLabels';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
+import {config} from '../config/index';
 
+const BASIC_COMPONENT_COLLECTION_ID = 'BASIC_COMPONENT';
+const DROPDOWN_FRAGMENT_ENTRY_KEY = `${BASIC_COMPONENT_COLLECTION_ID}-dropdown`;
 const CONTENT_DISPLAY_COLLECTION_ID = 'content-display';
 
 const DEFAULT_CONTENT_DISPLAY_COLLECTION = {
@@ -66,7 +69,7 @@ export default function fragmentsReducer(fragments = [], action) {
 					CONTENT_DISPLAY_COLLECTION_ID
 			);
 
-			const newFragments = fragments.filter(
+			let newFragments = fragments.filter(
 				(fragment) =>
 					fragment.fragmentCollectionId !==
 					CONTENT_DISPLAY_COLLECTION_ID
@@ -118,6 +121,26 @@ export default function fragmentsReducer(fragments = [], action) {
 					},
 				],
 			});
+
+			if (!config.dropdownFragmentEnabled) {
+				newFragments = newFragments.map((fragmentCollection) => {
+					if (
+						fragmentCollection.fragmentCollectionId ===
+						BASIC_COMPONENT_COLLECTION_ID
+					) {
+						return {
+							...fragmentCollection,
+							fragmentEntries: fragmentCollection.fragmentEntries.filter(
+								(fragment) =>
+									fragment.fragmentEntryKey !==
+									DROPDOWN_FRAGMENT_ENTRY_KEY
+							),
+						};
+					}
+
+					return fragmentCollection;
+				});
+			}
 
 			return newFragments;
 		}

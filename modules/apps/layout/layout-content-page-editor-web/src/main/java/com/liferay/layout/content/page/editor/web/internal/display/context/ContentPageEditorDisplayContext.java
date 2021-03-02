@@ -345,6 +345,10 @@ public class ContentPageEditorDisplayContext {
 					return layout.isDraft();
 				}
 			).put(
+				"dropdownFragmentEnabled",
+				_ffLayoutContentPageEditorConfiguration.
+					dropdownFragmentEnabled()
+			).put(
 				"duplicateItemURL",
 				getFragmentEntryActionURL(
 					"/layout_content_page_editor/duplicate_item")

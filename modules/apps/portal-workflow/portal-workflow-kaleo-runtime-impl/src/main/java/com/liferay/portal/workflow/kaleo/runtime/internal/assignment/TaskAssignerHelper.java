@@ -68,7 +68,7 @@ public class TaskAssignerHelper {
 				executionContext.getWorkflowContext(),
 				executionContext.getServiceContext());
 
-		_kaleoLogLocalService.addTaskAssignmentKaleoLog(
+		_kaleoLogLocalService.addTaskAssignmentKaleoLogs(
 			previousTaskAssignmentInstances, kaleoTaskInstanceToken, null,
 			executionContext.getWorkflowContext(),
 			executionContext.getServiceContext());

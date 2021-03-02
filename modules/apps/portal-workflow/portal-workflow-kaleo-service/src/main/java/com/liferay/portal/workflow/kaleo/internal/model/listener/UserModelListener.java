@@ -147,7 +147,7 @@ public class UserModelListener extends BaseModelListener<User> {
 			KaleoNode.class.getName(), kaleoTask.getKaleoNodeId(),
 			ExecutionType.ON_ASSIGNMENT, executionContext);
 
-		_kaleoLogLocalService.addTaskAssignmentKaleoLog(
+		_kaleoLogLocalService.addTaskAssignmentKaleoLogs(
 			previousTaskAssignmentInstances, kaleoTaskInstanceToken, null,
 			executionContext.getWorkflowContext(),
 			executionContext.getServiceContext());

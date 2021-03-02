@@ -85,31 +85,11 @@ public class LayoutAnalyticsReportsInfoItemTest {
 				StringPool.BLANK,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-			Assert.assertEquals(
-				user.getFullName(),
-				_analyticsReportsInfoItem.getAuthorName(layout));
+			Assert.assertNull(_analyticsReportsInfoItem.getAuthorName(layout));
 		}
 		finally {
 			_userLocalService.deleteUser(user);
 		}
-	}
-
-	@Test
-	public void testGetAuthorNameWithDeletedUser() throws Exception {
-		User user = UserTestUtil.addUser(_group.getGroupId());
-
-		Layout layout = _layoutLocalService.addLayout(
-			user.getUserId(), _group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			StringPool.BLANK, LayoutConstants.TYPE_CONTENT, false,
-			StringPool.BLANK,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		_userLocalService.deleteUser(user);
-
-		Assert.assertEquals(
-			StringPool.BLANK, _analyticsReportsInfoItem.getAuthorName(layout));
 	}
 
 	@Test
@@ -126,30 +106,11 @@ public class LayoutAnalyticsReportsInfoItemTest {
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 			Assert.assertEquals(
-				user.getUserId(),
-				_analyticsReportsInfoItem.getAuthorUserId(layout));
+				0L, _analyticsReportsInfoItem.getAuthorUserId(layout));
 		}
 		finally {
 			_userLocalService.deleteUser(user);
 		}
-	}
-
-	@Test
-	public void testGetAuthorUserIdWithDeletedUser() throws Exception {
-		User user = UserTestUtil.addUser(_group.getGroupId());
-
-		Layout layout = _layoutLocalService.addLayout(
-			user.getUserId(), _group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			StringPool.BLANK, LayoutConstants.TYPE_CONTENT, false,
-			StringPool.BLANK,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		_userLocalService.deleteUser(user);
-
-		Assert.assertEquals(
-			0L, _analyticsReportsInfoItem.getAuthorUserId(layout));
 	}
 
 	@Test

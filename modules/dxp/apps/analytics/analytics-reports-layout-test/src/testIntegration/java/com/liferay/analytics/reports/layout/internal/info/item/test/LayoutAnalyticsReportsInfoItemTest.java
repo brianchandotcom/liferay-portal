@@ -163,26 +163,22 @@ public class LayoutAnalyticsReportsInfoItemTest {
 
 	@Test
 	public void testGetDefaultLocale() throws Exception {
-		Locale locale = LocaleThreadLocal.getSiteDefaultLocale();
+		Layout layout = _layoutLocalService.addLayout(
+			TestPropsValues.getUserId(), _group.getGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			StringPool.BLANK, LayoutConstants.TYPE_CONTENT, false,
+			StringPool.BLANK,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		try {
-			LocaleThreadLocal.setSiteDefaultLocale(LocaleUtil.SPAIN);
+		GroupTestUtil.updateDisplaySettings(
+			_group.getGroupId(),
+			Arrays.asList(LocaleUtil.BRAZIL, LocaleUtil.SPAIN),
+			LocaleUtil.SPAIN);
 
-			Layout layout = _layoutLocalService.addLayout(
-				TestPropsValues.getUserId(), _group.getGroupId(), false,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				StringPool.BLANK, LayoutConstants.TYPE_CONTENT, false,
-				StringPool.BLANK,
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-			Assert.assertEquals(
-				LocaleUtil.SPAIN,
-				_analyticsReportsInfoItem.getDefaultLocale(layout));
-		}
-		finally {
-			LocaleThreadLocal.setSiteDefaultLocale(locale);
-		}
+		Assert.assertEquals(
+			LocaleUtil.SPAIN,
+			_analyticsReportsInfoItem.getDefaultLocale(layout));
 	}
 
 	@Test

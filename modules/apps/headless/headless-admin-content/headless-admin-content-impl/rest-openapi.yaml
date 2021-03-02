@@ -366,7 +366,6 @@ paths:
             # @review
             description:
                 Retrieves all versions of a structured content via its ID.
-            operationId: getStructuredContentVersionsPage
             parameters:
                 - in: path
                   name: structuredContentId

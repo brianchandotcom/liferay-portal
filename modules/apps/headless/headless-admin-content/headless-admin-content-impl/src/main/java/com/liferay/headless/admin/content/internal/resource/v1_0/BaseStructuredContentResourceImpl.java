@@ -105,6 +105,33 @@ public abstract class BaseStructuredContentResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-content/v1.0/structured-contents/{structuredContentId}/versions'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@GET
+	@Operation(
+		description = "Retrieves all versions of a structured content via its ID."
+	)
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "structuredContentId")
+		}
+	)
+	@Path("/structured-contents/{structuredContentId}/versions")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "StructuredContent")})
+	public Page<com.liferay.headless.delivery.dto.v1_0.StructuredContent>
+			getStructuredContentsVersionsPage(
+				@NotNull @Parameter(hidden = true)
+				@PathParam("structuredContentId") Long structuredContentId)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}

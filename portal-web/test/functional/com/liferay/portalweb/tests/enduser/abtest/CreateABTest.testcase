@@ -64,6 +64,8 @@ definition {
 	@description = "Validate if the user can create an A/B Test"
 	@priority = "5"
 	test CreateABTestByBounceRate {
+		property minimum.slave.ram = "32";
+
 		ABTest.createABTest(
 			goal = "Bounce Rate",
 			testTitle = "AB test title");
@@ -104,6 +106,8 @@ definition {
 	@description = "Validate if, in the AB Test by Click, the sidebar informs the user that the element id is mandatory"
 	@priority = "5"
 	test CreateABTestByClick {
+		property minimum.slave.ram = "32";
+
 		ContentPages.clickPencil();
 
 		PageEditor.addFragment(
@@ -156,6 +160,8 @@ definition {
 	@description = "Validate if, in the AB Test by Click, the sidebar informs the user that the element id is mandatory"
 	@priority = "5"
 	test CreateABTestByClickInvalidId {
+		property minimum.slave.ram = "32";
+
 		ABTest.createABTest(
 			goal = "Click",
 			testTitle = "AB test title");
@@ -170,6 +176,8 @@ definition {
 	@description = "Validate if, in the AB Test, the sidebar informs the user that minimum one variant is mandatory to test against Control if the user add variants and remove all variants"
 	@priority = "5"
 	test CreateABTestRunWithDeletedVariants {
+		property minimum.slave.ram = "32";
+
 		ABTest.createABTest(
 			goal = "Bounce Rate",
 			testTitle = "AB test title");
@@ -188,6 +196,8 @@ definition {
 	@description = "Validate if, in the AB Test, the sidebar informs the user that minimum one variant is mandatory to test against Control"
 	@priority = "5"
 	test CreateABTestRunWithNoVariants {
+		property minimum.slave.ram = "32";
+		
 		ABTest.createABTest(
 			goal = "Bounce Rate",
 			testTitle = "AB test title");

@@ -76,29 +76,7 @@ definition {
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 	}
 
-<<<<<<< HEAD
-	@description = "This test ensures that is possible to disable the searchable property of the field."
-	@priority = "4"
-	test DisableSearchablePropertyOfColorField {
-		property portal.acceptance = "false";
-
-		DataEngine.editFieldSearchable(
-			fieldFieldLabel = "Color",
-			searchableType = "Disable");
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "Structure Name");
-
-		DataEngine.viewFieldSearchable(
-			fieldFieldLabel = "Color",
-			searchableType = "Disable");
-	}
-
-	@description = "This test ensures that a user can duplicate the Color field."
-=======
-	@description = "This is a test for LPS-98070. Duplicate color Field (using kebab on the top of the field)"
->>>>>>> 5b285d4f21c4 (LRQA-64853 Remove already covered test DisableSearchablePropertyOfColorField)
+	@description = "This test ensures that a user can duplicate the Color field on builder."
 	@priority = "4"
 	test DuplicateColorFieldOnBuilder {
 		property portal.acceptance = "false";
@@ -178,28 +156,9 @@ definition {
 			value1 = "Color_Test");
 	}
 
-	@description = "This test ensures that a user can edit the help text of Color field."
-	@priority = "4"
-	test EditHelpTextOfColorField {
-		property portal.acceptance = "false";
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Color",
-			fieldHelp = "Help Test");
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "Structure Name");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Color",
-			fieldHelp = "Help Test",
-			fieldName = "Color");
-	}
-
-	@description = "This test ensures that a user can edit the label of Color field."
+	@description = "This test ensures that a user can add a Color field on a form using drag and drop, edit it's label and help text."
 	@priority = "5"
-	test EditLabelOfColorField {
+	test EditLabelAndHelpTextOfColorField {
 		property portal.acceptance = "false";
 
 		WebContentStructures.saveCP();
@@ -208,10 +167,19 @@ definition {
 
 		DataEngine.editFieldLabel(
 			fieldFieldLabel = "Color",
-			fieldFieldLabelEdit = "Color Edited");
+			fieldFieldLabelEdit = "Edited Color");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Edited Color",
+			fieldHelp = "Help");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "Structure Name");
 
 		DataEngine.viewField(
-			fieldFieldLabel = "Color Edited",
+			fieldFieldLabel = "Edited Color",
+			fieldHelp = "Help",
 			fieldName = "Color");
 	}
 

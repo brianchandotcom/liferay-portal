@@ -8,10 +8,77 @@ definition {
 	}
 
 	macro createNewWebContentUsingAnUpgradedStructure {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
-		// TODO LPS-126238 createNewWebContentUsingAnUpgradedStructure pending implementation
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "My Structure with nested fields");
 
-		echo("empty stub");
+		WebContent.addWithStructureCP(
+			webContentTitle = "My Web Content based on My Structure with nested fields",
+			webContentText = "Text - en_US",
+			webContentDate = "02/22/2021",
+			webContentNumeric = "1.1",
+			webContentNumericFieldLabel = "Number",
+			webContentTextFieldLabel = "Text",
+			webContentDateFieldLabel = "Date");
+
+		PortletEntry.changeLocale(locale = "pt_BR");
+
+		WebContent.addWithStructureCP(
+			webContentTitle = "My Web Content based on My Structure with nested fields - pt_BR",
+			webContentText = "Text - pt_BR",
+			webContentDate = "23/02/2021",
+			webContentNumeric = "1,2",
+			webContentNumericFieldLabel = "Number - pt_BR",
+			webContentTextFieldLabel = "Text - pt_BR",
+			webContentDateFieldLabel = "Date - pt_BR");
+
+		PortletEntry.changeLocale(locale = "ca_ES");
+
+		WebContent.addWithStructureCP(
+			webContentTitle = "My Web Content based on My Structure with nested fields - ca_ES",
+			webContentText = "Text - ca_ES",
+			webContentDate = "24/02/2021",
+			webContentNumeric = "1,3",
+			webContentNumericFieldLabel = "Number - ca_ES",
+			webContentTextFieldLabel = "Text - ca_ES",
+			webContentDateFieldLabel = "Date - ca_ES");
+
+		PortletEntry.publish();
+
+		WebContent.viewWithStructureCP(
+			webContentTitle = "My Web Content based on My Structure with nested fields",
+			webContentText = "Text - en_US",
+			webContentDate = "02/22/2021",
+			webContentNumeric = "1.1",
+			webContentNumericFieldLabel = "Number",
+			webContentTextFieldLabel = "Text",
+			webContentDateFieldLabel = "Date");
+
+		PortletEntry.publish();
+
+		WebContent.viewWithStructureCP(
+			webContentLocaleFieldLabel = "pt_BR",
+			webContentTitle = "My Web Content based on My Structure with nested fields",
+			webContentTitleTranslated = "My Web Content based on My Structure with nested fields - pt_BR",
+			webContentText = "Text - pt_BR",
+			webContentDate = "23/02/2021",
+			webContentNumeric = "1,2",
+			webContentNumericFieldLabel = "Number - pt_BR",
+			webContentTextFieldLabel = "Text - pt_BR",
+			webContentDateFieldLabel = "Date - pt_BR");
+
+		PortletEntry.publish();
+
+		WebContent.viewWithStructureCP(
+			webContentLocaleFieldLabel = "ca_ES",
+			webContentTitle = "My Web Content based on My Structure with nested fields",
+			webContentTitleTranslated = "My Web Content based on My Structure with nested fields - ca_ES",
+			webContentText = "Text - ca_ES",
+			webContentDate = "24/02/2021",
+			webContentNumeric = "1,3",
+			webContentNumericFieldLabel = "Number - ca_ES",
+			webContentTextFieldLabel = "Text - ca_ES",
+			webContentDateFieldLabel = "Date - ca_ES");
 	}
 
 	macro createNewWebContentUsingAnUpgradedStructureWithFieldset {

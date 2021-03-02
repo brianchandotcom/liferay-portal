@@ -100,37 +100,9 @@ definition {
 			fieldName = "Color");
 	}
 
-	@description = "This test ensures that a user cannot edit field name with invalid characters."
+	@description = "This test validates the input of valid and invalid characters on Field Reference."
 	@priority = "4"
-	test EditColorFieldNameWithInvalidCharacters {
-		property portal.acceptance = "false";
-
-		DataEngine.editFieldReference(
-			assertFieldReference = "ColorTest1",
-			fieldFieldLabel = "Color",
-			fieldReference = "%Color*Test @1");
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "Structure Name");
-
-		AssertClick.assertPartialTextClickAt(
-			key_fieldFieldLabel = "Color",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = "Color");
-
-		Navigator.gotoNavTab(navTab = "Advanced");
-
-		AssertTextEquals.assertValue(
-			key_fieldLabel = "Field Reference",
-			key_fieldName = "fieldReference",
-			locator1 = "Sidebar#TEXT_INPUT",
-			value1 = "ColorTest1");
-	}
-
-	@description = "This test ensures that a user can edit field name with valid characters."
-	@priority = "3"
-	test EditColorFieldNameWithValidCharacters {
+	test EditColorFieldNameWithValidAndInvalidCharacters {
 		property portal.acceptance = "false";
 
 		DataEngine.editFieldReference(
@@ -154,6 +126,28 @@ definition {
 			key_fieldName = "fieldReference",
 			locator1 = "Sidebar#TEXT_INPUT",
 			value1 = "Color_Test");
+
+		DataEngine.editFieldReference(
+			assertFieldReference = "ColorTest1",
+			fieldFieldLabel = "Color",
+			fieldReference = "%Color*Test @1");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "Structure Name");
+
+		AssertClick.assertPartialTextClickAt(
+			key_fieldFieldLabel = "Color",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
+			value1 = "Color");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertTextEquals.assertValue(
+			key_fieldLabel = "Field Reference",
+			key_fieldName = "fieldReference",
+			locator1 = "Sidebar#TEXT_INPUT",
+			value1 = "ColorTest1");
 	}
 
 	@description = "This test ensures that a user can add a Color field on a form using drag and drop, edit it's label and help text."

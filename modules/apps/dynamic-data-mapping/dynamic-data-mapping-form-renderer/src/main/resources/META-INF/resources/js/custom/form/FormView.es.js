@@ -279,6 +279,14 @@ export const Form = React.forwardRef(({unstable_onEventRef}, ref) => {
 Form.displayName = 'Form';
 
 /**
+ * Maps the representation of pagination mode in the builder environment
+ * in the form view.
+ */
+const PAGINATION_MODE_MAPPED = {
+	multi_pages: 'wizard',
+};
+
+/**
  * Exports the default application to render the form
  * for the user.
  */
@@ -297,9 +305,11 @@ export const FormView = React.forwardRef((props, ref) => {
 	return (
 		<ConfigProvider config={config} initialConfig={INITIAL_CONFIG_STATE}>
 			<FormProvider
-				init={(props) => ({
-					...props,
-					paginationMode: 'wizard',
+				init={({paginationMode, ...otherProps}) => ({
+					...otherProps,
+					paginationMode:
+						PAGINATION_MODE_MAPPED[paginationMode] ??
+						paginationMode,
 				})}
 				initialState={INITIAL_STATE}
 				onAction={(action) => {

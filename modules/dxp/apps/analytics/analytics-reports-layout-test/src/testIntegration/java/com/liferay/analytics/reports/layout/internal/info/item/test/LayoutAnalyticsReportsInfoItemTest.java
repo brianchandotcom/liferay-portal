@@ -16,6 +16,7 @@ package com.liferay.analytics.reports.layout.internal.info.item.test;
 
 import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItem;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -242,6 +243,39 @@ public class LayoutAnalyticsReportsInfoItemTest {
 				StringPool.BLANK, LayoutConstants.TYPE_CONTENT, false,
 				StringPool.BLANK,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+			MockHttpServletRequest mockHttpServletRequest =
+				new MockHttpServletRequest();
+
+			ThemeDisplay themeDisplay = new ThemeDisplay();
+
+			themeDisplay.setRequest(mockHttpServletRequest);
+
+			mockHttpServletRequest.setAttribute(
+				WebKeys.THEME_DISPLAY, themeDisplay);
+
+			serviceContext.setRequest(mockHttpServletRequest);
+
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+			Assert.assertTrue(_analyticsReportsInfoItem.isShow(layout));
+		}
+		finally {
+			_userLocalService.deleteUser(user);
+
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	@Test
+	public void testIsShowWithPortletLayout() throws Exception {
+		User user = UserTestUtil.addUser(_group.getGroupId());
+
+		try {
+			Layout layout = LayoutTestUtil.addLayout(_group.getGroupId());
 
 			ServiceContext serviceContext =
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId());

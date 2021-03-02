@@ -16,10 +16,10 @@ definition {
 
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(structureName = "Structure Name Test");
+		WebContentStructures.addCP(structureName = "Structure Name");
 
 		DataEngine.addField(
-			fieldFieldLabel = "Color Test",
+			fieldFieldLabel = "Color",
 			fieldName = "Color");
 	}
 
@@ -57,14 +57,14 @@ definition {
 	test DeleteColorFieldOnBuilder {
 		property portal.acceptance = "false";
 
-		WebContentStructures.saveCP(structureName = "Structure Name Test");
+		WebContentStructures.saveCP(structureName = "Structure Name");
 
-		WebContentNavigator.gotoEditStructure(structureName = "Structure Name Test");
+		WebContentNavigator.gotoEditStructure(structureName = "Structure Name");
 
-		DataEngine.delete(fieldFieldLabel = "Color Test");
+		DataEngine.delete(fieldFieldLabel = "Color");
 
 		AssertElementNotPresent(
-			key_fieldFieldLabel = "Color Test",
+			key_fieldFieldLabel = "Color",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 	}
 
@@ -74,15 +74,15 @@ definition {
 		property portal.acceptance = "false";
 
 		DataEngine.editFieldSearchable(
-			fieldFieldLabel = "Color Test",
+			fieldFieldLabel = "Color",
 			searchableType = "Disable");
 
-		WebContentStructures.saveCP(structureName = "Structure Name Test");
+		WebContentStructures.saveCP(structureName = "Structure Name");
 
-		WebContentNavigator.gotoEditStructure(structureName = "Structure Name Test");
+		WebContentNavigator.gotoEditStructure(structureName = "Structure Name");
 
 		DataEngine.viewFieldSearchable(
-			fieldFieldLabel = "Color Test",
+			fieldFieldLabel = "Color",
 			searchableType = "Disable");
 	}
 
@@ -91,22 +91,22 @@ definition {
 	test DuplicateColorFieldOnBuilder {
 		property portal.acceptance = "false";
 
-		WebContentStructures.saveCP(structureName = "Structure Name Test");
+		WebContentStructures.saveCP(structureName = "Structure Name");
 
-		WebContentNavigator.gotoEditStructure(structureName = "Structure Name Test");
+		WebContentNavigator.gotoEditStructure(structureName = "Structure Name");
 
-		DataEngine.duplicate(fieldFieldLabel = "Color Test");
+		DataEngine.duplicate(fieldFieldLabel = "Color");
 
-		WebContentStructures.saveCP(structureName = "Structure Name Test");
+		WebContentStructures.saveCP(structureName = "Structure Name");
 
-		WebContentNavigator.gotoEditStructure(structureName = "Structure Name Test");
+		WebContentNavigator.gotoEditStructure(structureName = "Structure Name");
 
 		DataEngine.viewField(
-			fieldFieldLabel = "Color Test",
+			fieldFieldLabel = "Color",
 			fieldName = "Color");
 
 		DataEngine.viewField(
-			fieldFieldLabel = "Copy of Color Test",
+			fieldFieldLabel = "Copy of Color",
 			fieldName = "Color");
 	}
 
@@ -117,17 +117,17 @@ definition {
 
 		DataEngine.editFieldReference(
 			assertFieldReference = "ColorTest1",
-			fieldFieldLabel = "Color Test",
+			fieldFieldLabel = "Color",
 			fieldReference = "%Color*Test @1");
 
-		WebContentStructures.saveCP(structureName = "Structure Name Test");
+		WebContentStructures.saveCP(structureName = "Structure Name");
 
-		WebContentNavigator.gotoEditStructure(structureName = "Structure Name Test");
+		WebContentNavigator.gotoEditStructure(structureName = "Structure Name");
 
 		AssertClick.assertPartialTextClickAt(
-			key_fieldFieldLabel = "Color Test",
+			key_fieldFieldLabel = "Color",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = "Color Test");
+			value1 = "Color");
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 
@@ -145,17 +145,17 @@ definition {
 
 		DataEngine.editFieldReference(
 			assertFieldReference = "Color_Test",
-			fieldFieldLabel = "Color Test",
+			fieldFieldLabel = "Color",
 			fieldReference = "Color_Test");
 
-		WebContentStructures.saveCP(structureName = "Structure Name Test");
+		WebContentStructures.saveCP(structureName = "Structure Name");
 
-		WebContentNavigator.gotoEditStructure(structureName = "Structure Name Test");
+		WebContentNavigator.gotoEditStructure(structureName = "Structure Name");
 
 		AssertClick.assertPartialTextClickAt(
-			key_fieldFieldLabel = "Color Test",
+			key_fieldFieldLabel = "Color",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = "Color Test");
+			value1 = "Color");
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 
@@ -172,15 +172,15 @@ definition {
 		property portal.acceptance = "false";
 
 		DataEngine.editFieldTip(
-			fieldFieldLabel = "Color Test",
+			fieldFieldLabel = "Color",
 			fieldHelp = "Help Test");
 
-		WebContentStructures.saveCP(structureName = "Structure Name Test");
+		WebContentStructures.saveCP(structureName = "Structure Name");
 
-		WebContentNavigator.gotoEditStructure(structureName = "Structure Name Test");
+		WebContentNavigator.gotoEditStructure(structureName = "Structure Name");
 
 		DataEngine.viewField(
-			fieldFieldLabel = "Color Test",
+			fieldFieldLabel = "Color",
 			fieldHelp = "Help Test",
 			fieldName = "Color");
 	}
@@ -190,16 +190,16 @@ definition {
 	test EditLabelOfColorField {
 		property portal.acceptance = "false";
 
-		WebContentStructures.saveCP(structureName = "Structure Name Test");
+		WebContentStructures.saveCP(structureName = "Structure Name");
 
-		WebContentNavigator.gotoEditStructure(structureName = "Structure Name Test");
+		WebContentNavigator.gotoEditStructure(structureName = "Structure Name");
 
 		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Color Test",
-			fieldFieldLabelEdit = "Color Test Edited");
+			fieldFieldLabel = "Color",
+			fieldFieldLabelEdit = "Color Edited");
 
 		DataEngine.viewField(
-			fieldFieldLabel = "Color Test Edited",
+			fieldFieldLabel = "Color Edited",
 			fieldName = "Color");
 	}
 
@@ -208,20 +208,20 @@ definition {
 	test SetColorFieldAsRequired {
 		property portal.acceptance = "false";
 
-		DataEngine.editFieldRequired(fieldFieldLabel = "Color Test");
+		DataEngine.editFieldRequired(fieldFieldLabel = "Color");
 
-		WebContentStructures.saveCP(structureName = "Structure Name Test");
+		WebContentStructures.saveCP(structureName = "Structure Name");
 
 		NavItem.click(navItem = "Web Content");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name");
 
 		PortletEntry.inputTitle(title = "Web Content Title");
 
 		Button.clickPublish();
 
 		AssertTextEquals(
-			key_fieldFieldLabel = "Color Test",
+			key_fieldFieldLabel = "Color",
 			locator1 = "WCEditWebContent#FIELD_REQUIRED_ALERT",
 			value1 = "This field is required.");
 	}
@@ -232,27 +232,27 @@ definition {
 		property portal.acceptance = "false";
 
 		DataEngine.editFieldSearchable(
-			fieldFieldLabel = "Color Test",
+			fieldFieldLabel = "Color",
 			searchableType = "Disable");
 
-		WebContentStructures.saveCP(structureName = "Structure Name Test");
+		WebContentStructures.saveCP(structureName = "Structure Name");
 
-		WebContentNavigator.gotoEditStructure(structureName = "Structure Name Test");
+		WebContentNavigator.gotoEditStructure(structureName = "Structure Name");
 
 		DataEngine.viewFieldSearchable(
-			fieldFieldLabel = "Color Test",
+			fieldFieldLabel = "Color",
 			searchableType = "Disable");
 
 		DataEngine.editFieldSearchable(
-			fieldFieldLabel = "Color Test",
+			fieldFieldLabel = "Color",
 			searchableType = "Keyword");
 
-		WebContentStructures.saveCP(structureName = "Structure Name Test");
+		WebContentStructures.saveCP(structureName = "Structure Name");
 
-		WebContentNavigator.gotoEditStructure(structureName = "Structure Name Test");
+		WebContentNavigator.gotoEditStructure(structureName = "Structure Name");
 
 		DataEngine.viewFieldSearchable(
-			fieldFieldLabel = "Color Test",
+			fieldFieldLabel = "Color",
 			searchableType = "Keyword");
 	}
 

@@ -190,7 +190,7 @@ definition {
 
 		ReportsAdmin.addReportEntry(
 			emailNotificationsAddress = PropsUtil.get("email.address.4"),
-			emailRecipientAddress = PropsUtil.get("email.address.3"),
+			emailRecipientAddress = PropsUtil.get("email.address.5"),
 			reportFormat = "pdf",
 			reportsDefinitionName = "Reports Definition Name");
 
@@ -213,8 +213,8 @@ definition {
 		Gmail.deleteSpecificMail(gmailMessageTitleList = "New Report From QA: reports_admin_template_source_sample_class_name.pdf");
 
 		Gmail.logoutAndLogin(
-			userEmailAddress = PropsUtil.get("email.address.3"),
-			userPassword = PropsUtil.get("email.password.3"));
+			userEmailAddress = PropsUtil.get("email.address.5"),
+			userPassword = PropsUtil.get("email.password.5"));
 
 		Gmail.gotoHtmlMode();
 

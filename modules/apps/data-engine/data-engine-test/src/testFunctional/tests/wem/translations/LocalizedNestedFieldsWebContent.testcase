@@ -680,6 +680,7 @@ definition {
 
 		WebContent.addWithStructureCP(
 			webContentColor = "000000",
+			webContentDate = "03/02/2021",
 			webContentMultipleSelection = "Option 2",
 			webContentNumeric = "13",
 			webContentRichText = "Este é um campo de texto completo",
@@ -691,21 +692,17 @@ definition {
 		PortletEntry.publish();
 
 		WebContent.viewWithStructureCP(
-			webContentColor = "FF0D0D",
-			webContentDate = "02/19/2021",
-			webContentMultipleSelection = "Option 1",
-			webContentNumeric = "17",
-			webContentSelectFromList = "Option 2",
-			webContentSingleSelection = "Option 1",
-			webContentText = "This is a Text field",
-			webContentTitle = "Web Content Title");
-
-		SelectFrame.selectFrameNoLoading(
-			key_fieldLabel = "Rich Text",
-			locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
-		AssertTextEquals(
-			locator1 = "CKEditor#BODY",
-			value1 = "This is a Rich Text field");
+			webContentLocaleFieldLabel = "pt_BR",
+			webContentColor = "000000",
+			webContentTitle = "Web Content Title",
+			webContentTitleTranslated = "Título do Web Content",
+			webContentDate = "03/02/2021",
+			webContentMultipleSelection = "Option 2",
+			webContentNumeric = "13",
+			webContentRichText = "Este é um campo de texto completo",
+			webContentSelectFromList = "Option 1",
+			webContentSingleSelection = "Option 2",
+			webContentText = "Este é um campo de texto");
 	}
 
 	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"

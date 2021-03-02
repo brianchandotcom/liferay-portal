@@ -217,9 +217,9 @@ definition {
 		var portalURL = PropsUtil.get("portal.url");
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Test Page Name");
+		SitePages.openPagesAdmin(siteURLKey = "Guest");
+
+		SitePages.addPublicPage(pageName = "Test Page Name");
 
 		SitePages.openPagesAdmin(siteURLKey = "Guest");
 

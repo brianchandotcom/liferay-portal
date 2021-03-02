@@ -25,7 +25,6 @@ import com.liferay.analytics.reports.web.internal.model.TimeRange;
 import com.liferay.analytics.reports.web.internal.model.TimeSpan;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
-import com.liferay.info.type.WebImage;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
@@ -158,24 +157,35 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 		AnalyticsReportsInfoItem<Object> analyticsReportsInfoItem,
 		Locale locale, Object object) {
 
-		String authorProfileImage = null;
+		return Optional.ofNullable(
+			analyticsReportsInfoItem.getAuthorWebImage(object, locale)
+		).filter(
+			webImage -> Validator.isNotNull(webImage.getUrl())
+		).map(
+			webImage -> {
+				long portraitId = GetterUtil.getLong(
+					_http.getParameter(
+						HtmlUtil.escape(webImage.getUrl()), "img_id"));
 
-		WebImage webImage = analyticsReportsInfoItem.getAuthorWebImage(
-			object, locale);
+				if (portraitId > 0) {
+					return JSONUtil.put(
+						"authorId",
+						analyticsReportsInfoItem.getAuthorUserId(object)
+					).put(
+						"name", analyticsReportsInfoItem.getAuthorName(object)
+					).put(
+						"url", webImage.getUrl()
+					);
+				}
 
-		long portraitId = GetterUtil.getLong(
-			_http.getParameter(HtmlUtil.escape(webImage.getUrl()), "img_id"));
-
-		if (portraitId > 0) {
-			authorProfileImage = webImage.getUrl();
-		}
-
-		return JSONUtil.put(
-			"authorId", analyticsReportsInfoItem.getAuthorUserId(object)
-		).put(
-			"name", analyticsReportsInfoItem.getAuthorName(object)
-		).put(
-			"url", authorProfileImage
+				return JSONUtil.put(
+					"authorId", analyticsReportsInfoItem.getAuthorUserId(object)
+				).put(
+					"name", analyticsReportsInfoItem.getAuthorName(object)
+				);
+			}
+		).orElse(
+			null
 		);
 	}
 

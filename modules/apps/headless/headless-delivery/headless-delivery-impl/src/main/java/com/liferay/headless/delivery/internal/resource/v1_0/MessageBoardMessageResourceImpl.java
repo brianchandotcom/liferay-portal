@@ -360,8 +360,7 @@ public class MessageBoardMessageResourceImpl
 		throws Exception {
 
 		if (messageBoardMessage.getParentMessageBoardMessageId() == null) {
-			throw new BadRequestException(
-				"Missing required property \"parentMessageBoardMessageId\"");
+			throw new BadRequestException("Parent message board ID is null");
 		}
 
 		return _upsertMessageBoardMessageByExternalReferenceCode(
@@ -654,7 +653,7 @@ public class MessageBoardMessageResourceImpl
 			(messageBoardMessage.getHeadline() == null)) {
 
 			throw new BadRequestException(
-				"Headline and article body are both null");
+				"Article body and headline are both null");
 		}
 
 		MBMessage mbMessage = _mbMessageService.getMessage(

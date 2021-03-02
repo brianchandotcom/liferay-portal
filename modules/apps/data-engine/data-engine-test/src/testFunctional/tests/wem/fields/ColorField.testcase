@@ -213,4 +213,5 @@ definition {
 			fieldFieldLabel = "Color",
 			searchableType = "Keyword");
 	}
+
 }

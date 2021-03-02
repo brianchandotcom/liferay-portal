@@ -292,7 +292,7 @@ public class PortletPreferencesImpl
 	}
 
 	@Override
-	public void setValues(String key, String[] values)
+	public void setValues(String key, String... values)
 		throws ReadOnlyException {
 
 		if (key == null) {

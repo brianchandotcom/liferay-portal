@@ -91,7 +91,7 @@ public class PortalPreferencesWrapper
 	}
 
 	@Override
-	public void setValues(String key, String[] values) {
+	public void setValues(String key, String... values) {
 		_portalPreferencesImpl.setValues(null, key, values);
 	}
 

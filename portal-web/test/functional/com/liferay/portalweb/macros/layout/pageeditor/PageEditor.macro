@@ -1597,7 +1597,8 @@ definition {
 					if (isSet(entryTitle)) {
 						PageEditorMapping.mapEditableFieldToAsset(
 							entryTitle = "${entryTitle}",
-							navItem = "${navItem}");
+							navItem = "${navItem}",
+							uploadFileName = "${uploadFileName}");
 
 						if ("${navItem}" == "Documents and Media") {
 							Select(

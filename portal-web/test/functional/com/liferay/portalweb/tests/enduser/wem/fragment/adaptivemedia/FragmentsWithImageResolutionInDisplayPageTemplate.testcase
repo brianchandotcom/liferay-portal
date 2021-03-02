@@ -531,4 +531,127 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-125191. The image resolution is applied to mapping image of a fragment with editable field in display page template."
+	@priority = "5"
+	test ViewAutoImageResolutionForMappingImageInCard {
+		task ("Add a web content structure with an Image field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Image",
+				fieldName = "Image");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("Add a display page template based on Web Content Article and new structure") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.addDisplayPage(
+				contentType = "Web Content Article",
+				displayPageName = "Display Page Name",
+				subType = "WC Structure Name");
+		}
+
+		task ("Add a Card fragment to display page template") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Card");
+		}
+
+		task ("Map the Image field to image editable field") {
+			PageEditorMapping.mapEditableTextToField(
+				field = "Image",
+				fragmentName = "Card",
+				id = "01-img");
+		}
+
+		task ("Assert Resolution field is not shown") {
+			AssertElementNotPresent(
+				key_fieldLabel = "Resolution",
+				locator1 = "Select#GENERIC_SELECT_FIELD");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a web content based on new structure") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+		}
+
+		task ("Select an image with width greater than 2000px in Image field") {
+			WebContent.addWithStructureCP(
+				navTab = "Web Content Images",
+				webContentImage = "high_resolution_photo.jpg",
+				webContentTitle = "Web Content Title");
+		}
+
+		task ("Select Display Page Name as Specific Display Page Template") {
+			WebContent.editDisplayPage(
+				pageName = "Display Page Name",
+				pageType = "Display Page Templates");
+
+			PortletEntry.publish();
+		}
+
+		task ("View Content in display page template") {
+			WebContentNavigator.gotoEntryMenuItem(
+				entry = "Web Content Title",
+				menuItem = "View Content");
+
+			AssertTextEquals(
+				locator1 = "ControlMenu#HEADING",
+				value1 = "Display Page Name");
+		}
+
+		task ("Select Desktop Device in simulation menu") {
+			MobileDevice.previewPG(deviceType = "desktop");
+		}
+
+		task ("Assert the mapping image is shown in Preview modal") {
+			PageEditor.viewFragmentEditableImage(
+				id = "01-img",
+				imageDescription = "",
+				imageFileName = "high_resolution_photo.jpg");
+		}
+
+		task ("Assert the orignal image is selected automatically") {
+			PageEditor.assertAutoImageResolution(
+				adaptiveMediaName = "/documents/",
+				element = "//img[contains(@data-lfr-editable-id,'01-img') and contains(@src,'high_resolution_photo.jpg')]");
+		}
+
+		task ("Change to the Tablet Device in simulation menu") {
+			SelectFrameTop();
+
+			Click(
+				key_deviceType = "tablet",
+				locator1 = "ControlMenuPreviewPanel#PREVIEW_DATA_DEVICE_BUTTON");
+
+			AssertElementPresent(
+				key_deviceType = "tablet",
+				locator1 = "ControlMenuPreviewPanel#PREVIEW_DEVICE_IFRAME");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "//iframe[@id='simulationDeviceIframe']");
+		}
+
+		task ("Assert the mapping image is shown in Preview modal") {
+			PageEditor.viewFragmentEditableImage(
+				id = "01-img",
+				imageDescription = "",
+				imageFileName = "high_resolution_photo.jpg");
+		}
+
+		task ("Assert the Preview-1000x0 is selected automatically") {
+			PageEditor.assertAutoImageResolution(
+				adaptiveMediaName = "/Preview-1000x0/",
+				element = "//img[contains(@data-lfr-editable-id,'01-img') and contains(@src,'high_resolution_photo.jpg')]");
+		}
+	}
+
 }

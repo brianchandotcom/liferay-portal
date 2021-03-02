@@ -55,12 +55,12 @@ definition {
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 
 		CommerceEntry.viewOptionsEntry(
-            optionDescription = "Option Description",
-            optionName = "Color");
+			optionDescription = "Option Description",
+			optionName = "Color");
 
 		CPCommerceCatalog.addOptionValues(
-            optionEntryName = "Color",
-            optionValuesList = "Black:1");
+			optionEntryName = "Color",
+			optionValuesList = "Black:1");
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

@@ -15,7 +15,6 @@
 module.exports = {
 	federation: {
 		bridges: ['recharts'],
-		runLegacyBuild: false,
+		mode: 'default',
 	},
-	preset: '@liferay/npm-scripts/src/presets/standard',
 };

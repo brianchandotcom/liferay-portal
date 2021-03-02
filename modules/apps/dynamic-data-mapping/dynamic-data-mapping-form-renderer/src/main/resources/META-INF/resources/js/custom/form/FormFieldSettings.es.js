@@ -12,6 +12,7 @@
  * details.
  */
 
+import {ClayIconSpriteContext} from '@clayui/icon';
 import React, {useEffect, useRef} from 'react';
 
 import {EVENT_TYPES as CORE_EVENT_TYPES} from '../../core/actions/eventTypes.es';
@@ -104,16 +105,18 @@ FormFieldSettings.displayName = 'FormFieldSettings';
  * of a field in Form Builder.
  */
 export const FormFieldSettingsAdapter = getConnectedReactComponentAdapter(
-	React.forwardRef(({instance, ...otherProps}, ref) => {
+	React.forwardRef(({instance, spritemap, ...otherProps}, ref) => {
 		const defaultRef = useRef(null);
 
 		return (
-			<FormFieldSettings
-				{...otherProps}
-				onAction={({payload, type}) => instance.emit(type, payload)}
-			>
-				<Form ref={ref ?? defaultRef} />
-			</FormFieldSettings>
+			<ClayIconSpriteContext.Provider value={spritemap}>
+				<FormFieldSettings
+					{...otherProps}
+					onAction={({payload, type}) => instance.emit(type, payload)}
+				>
+					<Form ref={ref ?? defaultRef} />
+				</FormFieldSettings>
+			</ClayIconSpriteContext.Provider>
 		);
 	})
 );

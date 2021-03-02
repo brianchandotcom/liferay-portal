@@ -51,6 +51,7 @@ export const parseProps = ({
 		autocompleteUserURL,
 		cancelLabel,
 		containerId,
+		dataEngineSidebar,
 		dataProviderInstanceParameterSettingsURL,
 		dataProviderInstancesURL,
 		defaultLanguageId,

@@ -27,7 +27,7 @@ export {getConnectedReactComponentAdapter} from './util/ReactComponentAdapter.es
 export {getUid} from './util/formId.es';
 export {parseProps} from './util/parseProps.es';
 export {makeFetch, convertToFormData} from './util/fetch.es';
-export {default as setDataRecord} from './js/util/setDataRecord.es';
+export {default as setDataRecord} from './util/setDataRecord.es';
 
 // Form/Data Engine Core
 

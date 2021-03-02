@@ -12,6 +12,7 @@
  * details.
  */
 
+import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {sub} from 'dynamic-data-mapping-form-builder/js/util/strings.es';
 import {
 	FormSupport,
@@ -20,7 +21,6 @@ import {
 	useConfig,
 	useFormState,
 } from 'dynamic-data-mapping-form-renderer';
-import {useIsMounted} from 'frontend-js-react-web';
 import objectHash from 'object-hash';
 import React, {useCallback, useContext, useEffect, useRef} from 'react';
 

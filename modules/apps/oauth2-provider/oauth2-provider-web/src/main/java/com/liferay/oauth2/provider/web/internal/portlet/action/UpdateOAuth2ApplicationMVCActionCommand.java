@@ -140,9 +140,6 @@ public class UpdateOAuth2ApplicationMVCActionCommand
 			request, "trustedApplication");
 
 		try {
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				OAuth2Application.class.getName(), request);
-
 			if (oAuth2ApplicationId == 0) {
 				if (Validator.isBlank(clientId)) {
 					clientId = OAuth2SecureRandomGenerator.generateClientId();
@@ -154,6 +151,10 @@ public class UpdateOAuth2ApplicationMVCActionCommand
 							OAuth2SecureRandomGenerator.generateClientSecret();
 					}
 				}
+
+				ServiceContext serviceContext =
+					ServiceContextFactory.getInstance(
+						OAuth2Application.class.getName(), request);
 
 				OAuth2Application oAuth2Application =
 					_oAuth2ApplicationService.addOAuth2Application(
@@ -173,13 +174,12 @@ public class UpdateOAuth2ApplicationMVCActionCommand
 						oAuth2ApplicationId);
 
 				_oAuth2ApplicationService.updateOAuth2Application(
-					oAuth2ApplicationId, allowedGrantTypesList,
-					clientCredentialUserId, clientId, clientProfile.id(),
-					clientSecret, description, featuresList, homePageURL,
-					oAuth2Application.getIconFileEntryId(), name,
-					privacyPolicyURL, redirectURIsList,
+					oAuth2ApplicationId,
 					oAuth2Application.getOAuth2ApplicationScopeAliasesId(),
-					trustedApplication, serviceContext);
+					allowedGrantTypesList, clientCredentialUserId, clientId,
+					clientProfile.id(), clientSecret, description, featuresList,
+					homePageURL, oAuth2Application.getIconFileEntryId(), name,
+					privacyPolicyURL, redirectURIsList, trustedApplication);
 
 				long fileEntryId = ParamUtil.getLong(request, "fileEntryId");
 

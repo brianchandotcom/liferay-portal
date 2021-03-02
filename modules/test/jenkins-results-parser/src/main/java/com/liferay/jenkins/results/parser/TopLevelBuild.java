@@ -1833,7 +1833,8 @@ public abstract class TopLevelBuild extends BaseBuild {
 		"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js";
 
 	private static final String _URL_CI_SYSTEM_STATUS =
-		"http://test-1-0/userContent/reports/ci-system-status/index.html";
+		"http://test-1-0.liferay.com/userContent/reports/ci-system-status" +
+			"/index.html";
 
 	private static final ExecutorService _executorService =
 		JenkinsResultsParserUtil.getNewThreadPoolExecutor(10, true);

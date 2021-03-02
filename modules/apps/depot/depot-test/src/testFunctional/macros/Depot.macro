@@ -39,6 +39,10 @@ definition {
 			while (IsElementNotPresent(locator1 = "Staging#PROCESS_SUCCESSFUL")) {
 				Pause(locator1 = "1000");
 			}
+
+			AssertTextEquals(
+				locator1 = "Staging#STAGING_INDICATOR_TITLE_DEPOT",
+				value1 = "Staging");
 		}
 
 		else {
@@ -51,6 +55,10 @@ definition {
 			AssertTextEquals(
 				locator1 = "Staging#PROCESS_RESULT",
 				value1 = "SUCCESSFUL");
+
+			AssertTextEquals(
+				locator1 = "Staging#STAGING_INDICATOR_TITLE_DEPOT",
+				value1 = "Staging");
 		}
 	}
 

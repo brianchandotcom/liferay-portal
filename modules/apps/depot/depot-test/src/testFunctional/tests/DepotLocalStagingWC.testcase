@@ -253,7 +253,15 @@ definition {
 	test EditImageInDepot {
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
+		AssertTextEquals(
+			locator1 = "Staging#STAGING_INDICATOR_TITLE_DEPOT",
+			value1 = "Live");
+
 		DepotNavigator.switchStagingStatus(stagingItem = "Staging");
+
+		AssertTextEquals(
+			locator1 = "Staging#STAGING_INDICATOR_TITLE_DEPOT",
+			value1 = "Staging");
 
 		DepotNavigator.gotoPortlet(portlet = "Documents and Media");
 

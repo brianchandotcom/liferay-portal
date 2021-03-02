@@ -17,24 +17,19 @@ package com.liferay.analytics.reports.layout.internal.info.item;
 import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItem;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.type.WebImage;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -60,50 +55,17 @@ public class LayoutAnalyticsReportsInfoItem
 
 	@Override
 	public String getAuthorName(Layout layout) {
-		return _getUserOptional(
-			layout
-		).map(
-			User::getFullName
-		).orElse(
-			StringPool.BLANK
-		);
+		return null;
 	}
 
 	@Override
 	public long getAuthorUserId(Layout layout) {
-		return _getUserOptional(
-			layout
-		).map(
-			User::getUserId
-		).orElse(
-			0L
-		);
+		return 0L;
 	}
 
 	@Override
 	public WebImage getAuthorWebImage(Layout layout, Locale locale) {
-		ThemeDisplay themeDisplay = _getThemeDisplay();
-
-		if (themeDisplay == null) {
-			return new WebImage(StringPool.BLANK);
-		}
-
-		Optional<User> userOptional = _getUserOptional(layout);
-
-		return userOptional.map(
-			user -> {
-				try {
-					return new WebImage(user.getPortraitURL(themeDisplay));
-				}
-				catch (PortalException portalException) {
-					_log.error(portalException, portalException);
-
-					return new WebImage(StringPool.BLANK);
-				}
-			}
-		).orElse(
-			new WebImage(StringPool.BLANK)
-		);
+		return null;
 	}
 
 	@Override
@@ -173,22 +135,6 @@ public class LayoutAnalyticsReportsInfoItem
 		}
 
 		return true;
-	}
-
-	private ThemeDisplay _getThemeDisplay() {
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		if (serviceContext != null) {
-			return serviceContext.getThemeDisplay();
-		}
-
-		return null;
-	}
-
-	private Optional<User> _getUserOptional(Layout layout) {
-		return Optional.ofNullable(
-			_userLocalService.fetchUser(layout.getUserId()));
 	}
 
 	private boolean _hasEditPermission(

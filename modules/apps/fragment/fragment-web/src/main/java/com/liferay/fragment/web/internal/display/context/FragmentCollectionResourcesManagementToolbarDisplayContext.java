@@ -127,6 +127,11 @@ public class FragmentCollectionResourcesManagementToolbarDisplayContext
 	}
 
 	@Override
+	public String getSortingURL() {
+		return null;
+	}
+
+	@Override
 	public Boolean isShowCreationMenu() {
 		if (FragmentPermission.contains(
 				_themeDisplay.getPermissionChecker(),

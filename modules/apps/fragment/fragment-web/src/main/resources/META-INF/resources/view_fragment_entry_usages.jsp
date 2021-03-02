@@ -25,8 +25,6 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(fragmentEntryLinkDisplayContext.getRedirect());
 
 renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x", fragmentEntry.getName()));
-
-FragmentEntryUsageManagementToolbarDisplayContext fragmentEntryUsageManagementToolbarDisplayContext = new FragmentEntryUsageManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, fragmentEntryLinkDisplayContext.getSearchContainer());
 %>
 
 <clay:container-fluid
@@ -142,8 +140,9 @@ FragmentEntryUsageManagementToolbarDisplayContext fragmentEntryUsageManagementTo
 					</clay:content-row>
 				</h2>
 
-				<clay:management-toolbar-v2
-					displayContext="<%= fragmentEntryUsageManagementToolbarDisplayContext %>"
+				<clay:management-toolbar
+					managementToolbarDisplayContext="<%= new FragmentEntryUsageManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, fragmentEntryLinkDisplayContext.getSearchContainer()) %>"
+					propsTransformer="js/FragmentEntryUsagesManagementToolbarPropsTransformer"
 				/>
 
 				<portlet:actionURL name="/fragment/propagate_fragment_entry_changes" var="propagateFragmentEntryChangesURL">
@@ -195,8 +194,3 @@ FragmentEntryUsageManagementToolbarDisplayContext fragmentEntryUsageManagementTo
 		</clay:col>
 	</clay:row>
 </clay:container-fluid>
-
-<liferay-frontend:component
-	componentId="<%= fragmentEntryUsageManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/FragmentEntryUsageManagementToolbarDefaultEventHandler.es"
-/>

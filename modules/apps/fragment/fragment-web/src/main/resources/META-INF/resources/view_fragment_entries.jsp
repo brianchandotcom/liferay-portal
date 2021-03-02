@@ -24,8 +24,10 @@ FragmentManagementToolbarDisplayContext fragmentManagementToolbarDisplayContext 
 
 <liferay-ui:error exception="<%= RequiredFragmentEntryException.class %>" message="the-fragment-entry-cannot-be-deleted-because-it-is-required-by-one-or-more-page-templates" />
 
-<clay:management-toolbar-v2
-	displayContext="<%= fragmentManagementToolbarDisplayContext %>"
+<clay:management-toolbar
+	additionalProps="<%= fragmentManagementToolbarDisplayContext.getComponentContext() %>"
+	managementToolbarDisplayContext="<%= fragmentManagementToolbarDisplayContext %>"
+	propsTransformer="js/ViewFragmentEntriesManagementToolbarPropsTransformer"
 />
 
 <aui:form name="fm">
@@ -93,19 +95,3 @@ FragmentManagementToolbarDisplayContext fragmentManagementToolbarDisplayContext 
 	<aui:input name="fragmentEntryId" type="hidden" />
 	<aui:input name="fileEntryId" type="hidden" />
 </aui:form>
-
-<liferay-frontend:component
-	componentId="<%= FragmentWebKeys.FRAGMENT_COMPOSITION_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
-	module="js/FragmentCompositionDropdownDefaultEventHandler.es"
-/>
-
-<liferay-frontend:component
-	componentId="<%= FragmentWebKeys.FRAGMENT_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
-	module="js/FragmentEntryDropdownDefaultEventHandler.es"
-/>
-
-<liferay-frontend:component
-	componentId="<%= fragmentManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	context="<%= fragmentManagementToolbarDisplayContext.getComponentContext() %>"
-	module="js/ManagementToolbarDefaultEventHandler.es"
-/>

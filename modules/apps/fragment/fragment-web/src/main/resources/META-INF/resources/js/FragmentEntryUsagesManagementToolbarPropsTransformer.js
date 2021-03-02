@@ -12,11 +12,19 @@
  * details.
  */
 
-import {DefaultEventHandler} from 'frontend-js-web';
+export default function propsTransformer({portletNamespace, ...otherProps}) {
+	return {
+		...otherProps,
+		onActionButtonClick(event, {item}) {
+			const action = item.data?.action;
 
-class FragmentEntryUsageManagementToolbarDefaultEventHandler extends DefaultEventHandler {
-	propagate() {
-		submitForm(this.one('#fm'));
-	}
+			if (action === 'propagate') {
+				const form = document.getElementById(`${portletNamespace}fm`);
+
+				if (form) {
+					submitForm(form);
+				}
+			}
+		},
+	};
 }
-export default FragmentEntryUsageManagementToolbarDefaultEventHandler;

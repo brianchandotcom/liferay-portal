@@ -20,8 +20,10 @@
 ContributedFragmentManagementToolbarDisplayContext contributedFragmentManagementToolbarDisplayContext = new ContributedFragmentManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, fragmentDisplayContext);
 %>
 
-<clay:management-toolbar-v2
-	displayContext="<%= contributedFragmentManagementToolbarDisplayContext %>"
+<clay:management-toolbar
+	additionalProps="<%= contributedFragmentManagementToolbarDisplayContext.getComponentContext() %>"
+	managementToolbarDisplayContext="<%= contributedFragmentManagementToolbarDisplayContext %>"
+	propsTransformer="js/ViewContributedFragmentEntriesManagementToolbarPropsTransformer"
 />
 
 <aui:form name="fm">
@@ -55,10 +57,4 @@ ContributedFragmentManagementToolbarDisplayContext contributedFragmentManagement
 <liferay-frontend:component
 	componentId="<%= FragmentWebKeys.FRAGMENT_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
 	module="js/FragmentEntryDropdownDefaultEventHandler.es"
-/>
-
-<liferay-frontend:component
-	componentId="<%= contributedFragmentManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	context="<%= contributedFragmentManagementToolbarDisplayContext.getComponentContext() %>"
-	module="js/ManagementToolbarDefaultEventHandler.es"
 />

@@ -18,12 +18,11 @@
 
 <%
 FragmentCollectionResourcesDisplayContext fragmentCollectionResourcesDisplayContext = new FragmentCollectionResourcesDisplayContext(request, renderRequest, renderResponse, fragmentDisplayContext);
-
-FragmentCollectionResourcesManagementToolbarDisplayContext fragmentCollectionResourcesManagementToolbarDisplayContext = new FragmentCollectionResourcesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, fragmentCollectionResourcesDisplayContext);
 %>
 
-<clay:management-toolbar-v2
-	displayContext="<%= fragmentCollectionResourcesManagementToolbarDisplayContext %>"
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= new FragmentCollectionResourcesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, fragmentCollectionResourcesDisplayContext) %>"
+	propsTransformer="js/FragmentCollectionResourcesManagementToolbarPropsTransformer"
 />
 
 <portlet:actionURL name="/fragment/delete_fragment_collection_resources" var="deleteFragmentCollectionResourcesURL">
@@ -68,8 +67,3 @@ FragmentCollectionResourcesManagementToolbarDisplayContext fragmentCollectionRes
 		module="js/FragmentCollectionResourceDropdownDefaultEventHandler.es"
 	/>
 </c:if>
-
-<liferay-frontend:component
-	componentId="<%= fragmentCollectionResourcesManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/FragmentCollectionResourcesManagementToolbarDefaultEventHandler.es"
-/>

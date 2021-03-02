@@ -126,6 +126,16 @@ public abstract class BaseOAuth2PortletDisplayContext {
 		return hasPermission(oAuth2Application, ActionKeys.PERMISSIONS);
 	}
 
+	public boolean hasRememberDevicePermission() {
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		return permissionChecker.hasPermission(
+			0, OAuth2ProviderConstants.RESOURCE_NAME,
+			OAuth2ProviderConstants.RESOURCE_NAME,
+			OAuth2ProviderActionKeys.ACTION_ADD_REMEMBER_DEVICE);
+	}
+
 	public boolean hasRevokeTokenPermission(
 		OAuth2Application oAuth2Application) {
 

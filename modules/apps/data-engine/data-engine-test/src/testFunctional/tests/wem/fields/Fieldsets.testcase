@@ -120,7 +120,9 @@ definition {
 
 		Click(locator1 = "Modal#SAVE_BUTTON");
 
-		Click(locator1 = "Modal#PROPAGATE_BUTTON");
+		Click(
+			key_text = "Propagate",
+			locator1 = "Button#ANY");
 
 		Alert.viewSuccessMessage();
 

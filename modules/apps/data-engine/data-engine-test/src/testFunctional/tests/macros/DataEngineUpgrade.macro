@@ -245,10 +245,27 @@ definition {
 	}
 
 	macro validateWebContentWithAllFieldsTranslated {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
-		// TODO LPS-126235 validateWebContentWithAllFieldsTranslated pending implementation
+		WebContentNavigator.gotoEditCP(webContentTitle = "My Web Content based on My Structure with all fields");
 
-		echo("empty stub");
+		var localeCodeList = "pt_BR,ca_ES";
+
+		for (var fieldLabel : list "${fieldList}") {
+			AssertElementPresent(
+				key_fieldName = "${fieldLabel}",
+				locator1 = "Form#FIELD_LABEL");
+		}
+
+		for (var localeCode : list "${localeCodeList}") {
+			PortletEntry.changeLocale(locale = "${localeCode}");
+
+			for (var fieldLabel : list "${fieldList}") {
+				AssertElementPresent(
+					key_fieldName = "${fieldLabel} - ${localeCode}",
+					locator1 = "Form#FIELD_LABEL");
+			}
+		}
 	}
 
 	macro validateWebContentWithFieldGroupLevel2AndTranslations {

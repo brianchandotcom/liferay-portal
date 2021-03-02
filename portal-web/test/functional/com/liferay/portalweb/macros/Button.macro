@@ -29,7 +29,7 @@ definition {
 	macro clickCheckOut {
 		Click(locator1 = "Button#CHECKOUT");
 	}
-	
+
 	macro clickCollapse {
 		Click(
 			key_label = "${label}",

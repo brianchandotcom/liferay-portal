@@ -32,16 +32,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"
-	@ignore = "true"
-	@priority = "5"
-	test ChangeFieldGroupPositionOnForm {
-		property portal.acceptance = "false";
-
-		// TODO LPS-98077 ChangeFieldGroupPositionOnForm pending implementation
-
-	}
-
 	@description = "This is a test for LPS-98077. Make sure data inserted on a Group Field persists"
 	@priority = "3"
 	test CheckIfFieldGroupDataPersists {
@@ -73,15 +63,6 @@ definition {
 			webContentNumeric = "12345",
 			webContentText = "This is Text Field",
 			webContentTitle = "WC Web Content Title");
-	}
-
-	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"
-	@ignore = "true"
-	@priority = "3"
-	test CheckWebContentUponDeletingFieldGroup {
-		property portal.acceptance = "false";
-
-		// TODO LPS-98077 CheckWebContentUponDeletingFieldGroup pending implementation
 	}
 
 	@description = "This is a test for LPS-98077. Group two or more fields into a FieldGroup"
@@ -268,15 +249,6 @@ definition {
 		FormFields.assertFieldsVisibleInFieldGroup(
 			fieldGroupLabel = "Copy of Fields Group",
 			fieldGroupLabelList = "Copy of Numeric,Copy of Date");
-	}
-
-	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"
-	@ignore = "true"
-	@priority = "5"
-	test DuplicateFieldGroupOnStructure {
-		property portal.acceptance = "false";
-
-		// TODO LPS-98077 DuplicateFieldGroupOnStructure pending implementation
 	}
 
 	@description = "This is a test for LPS-98077. Edit the label of the FieldGroup"

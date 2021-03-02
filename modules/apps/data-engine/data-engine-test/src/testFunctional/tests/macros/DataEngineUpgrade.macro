@@ -30,7 +30,182 @@ definition {
 
 	macro editAnUpgradedStructureWithFieldset {
 
-		// TODO LPS-127393 editAnUpgradedStructureWithFieldset pending implementation
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		NavItem.gotoStructures();
+
+		WebContentNavigator.gotoEditStructure(structureName = "My Structure with Fieldsets level 0");
+		
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "Text Edited");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text - pt_BR",
+			fieldFieldLabelEdit = "Text - pt_BR Edited");
+
+		PortletEntry.changeLocale(locale = "ca_ES");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text - ca_ES",
+			fieldFieldLabelEdit = "Text - ca_ES Edited");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "My Structure with Fieldsets level 0");
+		
+		DataEngine.viewField(
+		fieldName = "Text",
+		fieldFieldLabel = "Text Edited");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.viewField(
+		fieldName = "Text",
+		fieldFieldLabel = "Text - pt_BR Edited");
+
+		PortletEntry.changeLocale(locale = "ca_ES");
+
+		DataEngine.viewField(
+		fieldName = "Text",
+		fieldFieldLabel = "Text - ca_ES Edited");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "My Structure with Fieldsets level 1");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "My Structure with Fieldsets level 0",
+			fieldFieldLabelEdit = "My Structure with Fieldsets level 0 Edited");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Date",
+			fieldFieldLabelEdit = "Date Edited");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "My Structure with Fieldsets level 0 - pt_BR",
+			fieldFieldLabelEdit = "My Structure with Fieldsets level 0 - pt_BR Edited");
+		
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Date - pt_BR",
+			fieldFieldLabelEdit = "Date - pt_BR Edited");
+
+		PortletEntry.changeLocale(locale = "ca_ES");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "My Structure with Fieldsets level 0 - ca_ES",
+			fieldFieldLabelEdit = "My Structure with Fieldsets level 0 - ca_ES Edited");
+		
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Date - ca_ES",
+			fieldFieldLabelEdit = "Date - ca_ES Edited");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "My Structure with Fieldsets level 1");
+
+		AssertElementPresent(
+			key_fieldsetLabel = "My Structure with Fieldsets level 0 Edited",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL",
+			value1 = "My Structure with Fieldsets level 0 Edited");
+
+		DataEngine.viewField(
+		fieldName = "Date",
+		fieldFieldLabel = "Date Edited");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		AssertElementPresent(
+			key_fieldsetLabel = "My Structure with Fieldsets level 0 - pt_BR Edited",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL",
+			value1 = "My Structure with Fieldsets level 0 - pt_BR Edited");
+
+		DataEngine.viewField(
+		fieldName = "Date",
+		fieldFieldLabel = "Date - pt_BR Edited");
+
+		PortletEntry.changeLocale(locale = "ca_ES");
+
+		AssertElementPresent(
+			key_fieldsetLabel = "My Structure with Fieldsets level 0 - ca_ES Edited",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL",
+			value1 = "My Structure with Fieldsets level 0 - ca_ES Edited");
+
+		DataEngine.viewField(
+		fieldName = "Date",
+		fieldFieldLabel = "Date - ca_ES Edited");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "My Structure with Fieldsets level 2");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "My Structure with Fieldsets level 1",
+			fieldFieldLabelEdit = "My Structure with Fieldsets level 1 Edited");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Number",
+			fieldFieldLabelEdit = "Number Edited");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "My Structure with Fieldsets level 1 - pt_BR",
+			fieldFieldLabelEdit = "My Structure with Fieldsets level 1 - pt_BR Edited");
+		
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Number - pt_BR",
+			fieldFieldLabelEdit = "Number - pt_BR Edited");
+
+		PortletEntry.changeLocale(locale = "ca_ES");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "My Structure with Fieldsets level 1 - ca_ES",
+			fieldFieldLabelEdit = "My Structure with Fieldsets level 1 - ca_ES Edited");
+		
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Number - ca_ES",
+			fieldFieldLabelEdit = "Number - ca_ES Edited");
+
+		WebContentStructures.saveCP();
+		
+
+		WebContentNavigator.gotoEditStructure(structureName = "My Structure with Fieldsets level 2");
+
+		AssertElementPresent(
+			key_fieldsetLabel = "My Structure with Fieldsets level 1 Edited",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL",
+			value1 = "My Structure with Fieldsets level 1 Edited");
+
+		DataEngine.viewField(
+		fieldName = "Numeric",
+		fieldFieldLabel = "Number Edited");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		AssertElementPresent(
+			key_fieldsetLabel = "My Structure with Fieldsets level 1 - pt_BR Edited",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL",
+			value1 = "My Structure with Fieldsets level 1 - pt_BR Edited");
+
+		DataEngine.viewField(
+		fieldName = "Numeric",
+		fieldFieldLabel = "Number - pt_BR Edited");
+
+		PortletEntry.changeLocale(locale = "ca_ES");
+
+		AssertElementPresent(
+			key_fieldsetLabel = "My Structure with Fieldsets level 1 - ca_ES Edited",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL",
+			value1 = "My Structure with Fieldsets level 1 - ca_ES Edited");
+
+		DataEngine.viewField(
+		fieldName = "Numeric",
+		fieldFieldLabel = "Number - ca_ES Edited");
 
 		echo("empty stub");
 	}

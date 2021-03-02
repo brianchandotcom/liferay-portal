@@ -14,30 +14,20 @@
 
 package com.liferay.portal.kernel.test.rule;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.rules.TestRule;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * @author Matthew Tambara
  */
-public class LiferayUnitTestRule extends AggregateTestRule {
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.METHOD, ElementType.TYPE})
+public @interface InitializeKernelUtil {
 
-	public static final LiferayUnitTestRule INSTANCE =
-		new LiferayUnitTestRule();
-
-	public LiferayUnitTestRule() {
-		super(false, _getTestRules());
-	}
-
-	private static TestRule[] _getTestRules() {
-		List<TestRule> testRules = new ArrayList<>();
-
-		testRules.add(InitializeKernelUtilTestRule.INSTANCE);
-		testRules.add(NewEnvTestRule.INSTANCE);
-
-		return testRules.toArray(new TestRule[0]);
-	}
+	public String[] properties();
 
 }

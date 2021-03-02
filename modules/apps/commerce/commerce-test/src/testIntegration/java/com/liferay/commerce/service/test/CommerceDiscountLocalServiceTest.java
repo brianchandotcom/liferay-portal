@@ -43,7 +43,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -72,6 +72,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Riccardo Alberti
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class CommerceDiscountLocalServiceTest {
 
@@ -743,10 +744,7 @@ public class CommerceDiscountLocalServiceTest {
 			commerceDiscount.getCommerceDiscountId());
 	}
 
-	@DeleteAfterTestRun
 	private CommerceAccount _commerceAccount;
-
-	@DeleteAfterTestRun
 	private CommerceAccountGroup _commerceAccountGroup;
 
 	@Inject
@@ -757,8 +755,6 @@ public class CommerceDiscountLocalServiceTest {
 
 	private CommerceCatalog _commerceCatalog;
 	private CommerceChannel _commerceChannel;
-
-	@DeleteAfterTestRun
 	private CommerceCurrency _commerceCurrency;
 
 	@Inject
@@ -769,8 +765,6 @@ public class CommerceDiscountLocalServiceTest {
 
 	private final List<CommerceOrder> _commerceOrders = new ArrayList<>();
 	private CommercePricingConfiguration _commercePricingConfiguration;
-
-	@DeleteAfterTestRun
 	private Company _company;
 
 	@Inject
@@ -781,8 +775,6 @@ public class CommerceDiscountLocalServiceTest {
 
 	private Group _group;
 	private ServiceContext _serviceContext;
-
-	@DeleteAfterTestRun
 	private User _user;
 
 }

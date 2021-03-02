@@ -15,22 +15,39 @@
 package com.liferay.portal.model.impl;
 
 /**
- * The extended model implementation for the PortalPreferenceValue service. Represents a row in the &quot;PortalPreferenceValue&quot; database table, with each column mapped to a property of this class.
- *
- * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the <code>com.liferay.portal.kernel.model.PortalPreferenceValue</code> interface.
- * </p>
- *
- * @author Brian Wing Shun Chan
+ * @author Preston Crary
  */
 public class PortalPreferenceValueImpl extends PortalPreferenceValueBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a portal preference value model instance should use the {@link com.liferay.portal.kernel.model.PortalPreferenceValue} interface instead.
-	 */
-	public PortalPreferenceValueImpl() {
+	public static final int SMALL_VALUE_MAX_LENGTH = 255;
+
+	@Override
+	public String getValue() {
+		String value = getLargeValue();
+
+		if (value.isEmpty()) {
+			value = getSmallValue();
+		}
+
+		return value;
+	}
+
+	@Override
+	public void setValue(String value) {
+		String largeValue = null;
+		String smallValue = null;
+
+		if (value != null) {
+			if (value.length() > SMALL_VALUE_MAX_LENGTH) {
+				largeValue = value;
+			}
+			else {
+				smallValue = value;
+			}
+		}
+
+		setLargeValue(largeValue);
+		setSmallValue(smallValue);
 	}
 
 }

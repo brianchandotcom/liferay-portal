@@ -15,17 +15,29 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.PortalPreferenceValue;
 import com.liferay.portal.kernel.model.PortalPreferences;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.base.PortalPreferencesLocalServiceBaseImpl;
+import com.liferay.portlet.PortalPreferenceKey;
 import com.liferay.portlet.PortalPreferencesImpl;
 import com.liferay.portlet.PortalPreferencesWrapper;
 import com.liferay.portlet.PortalPreferencesWrapperCacheUtil;
+
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.PortletPreferences;
 
@@ -62,7 +74,17 @@ public class PortalPreferencesLocalServiceImpl
 			defaultPreferences = PortletConstants.DEFAULT_PREFERENCES;
 		}
 
-		portalPreferences.setPreferences(defaultPreferences);
+		if (!Objects.equals(
+				PortletConstants.DEFAULT_PREFERENCES, defaultPreferences)) {
+
+			PortalPreferencesImpl portalPreferencesImpl =
+				(PortalPreferencesImpl)PortletPreferencesFactoryUtil.fromXML(
+					ownerId, ownerType, defaultPreferences);
+
+			_updatePortalPreferences(
+				portalPreferences, Collections.emptyMap(),
+				portalPreferencesImpl.getPreferences());
+		}
 
 		try {
 			portalPreferences = portalPreferencesPersistence.update(
@@ -85,6 +107,28 @@ public class PortalPreferencesLocalServiceImpl
 		}
 
 		return portalPreferences;
+	}
+
+	@Indexable(type = IndexableType.DELETE)
+	@Override
+	public PortalPreferences deletePortalPreferences(long portalPreferencesId)
+		throws PortalException {
+
+		portalPreferenceValuePersistence.removeByPortalPreferencesId(
+			portalPreferencesId);
+
+		return super.deletePortalPreferences(portalPreferencesId);
+	}
+
+	@Indexable(type = IndexableType.DELETE)
+	@Override
+	public PortalPreferences deletePortalPreferences(
+		PortalPreferences portalPreferences) {
+
+		portalPreferenceValuePersistence.removeByPortalPreferencesId(
+			portalPreferences.getPortalPreferencesId());
+
+		return super.deletePortalPreferences(portalPreferences);
 	}
 
 	@Override
@@ -119,8 +163,10 @@ public class PortalPreferencesLocalServiceImpl
 					ownerId, ownerType, defaultPreferences);
 		}
 
-		PortalPreferencesImpl portalPreferencesImpl = new PortalPreferencesImpl(
-			portalPreferences, false);
+		PortalPreferencesImpl portalPreferencesImpl =
+			(PortalPreferencesImpl)
+				portalPreferenceValueLocalService.getPortalPreferences(
+					portalPreferences, false);
 
 		portalPreferencesWrapper = new PortalPreferencesWrapper(
 			portalPreferencesImpl);
@@ -136,36 +182,190 @@ public class PortalPreferencesLocalServiceImpl
 		long ownerId, int ownerType,
 		com.liferay.portal.kernel.portlet.PortalPreferences portalPreferences) {
 
-		String xml = PortletPreferencesFactoryUtil.toXML(portalPreferences);
+		PortalPreferencesImpl portalPreferencesImpl =
+			(PortalPreferencesImpl)portalPreferences;
 
-		return updatePreferences(ownerId, ownerType, xml);
+		return _updatePortalPreferences(
+			ownerId, ownerType, portalPreferencesImpl.getPreferences());
 	}
 
 	@Override
 	public PortalPreferences updatePreferences(
 		long ownerId, int ownerType, String xml) {
 
+		PortalPreferencesImpl portalPreferencesImpl =
+			(PortalPreferencesImpl)PortletPreferencesFactoryUtil.fromXML(
+				ownerId, ownerType, xml);
+
+		return _updatePortalPreferences(
+			ownerId, ownerType, portalPreferencesImpl.getPreferences());
+	}
+
+	private PortalPreferences _updatePortalPreferences(
+		long ownerId, int ownerType,
+		Map<PortalPreferenceKey, String[]> preferencesMap) {
+
 		PortalPreferencesWrapperCacheUtil.remove(ownerId, ownerType);
 
-		PortalPreferences portalPreferences =
+		PortalPreferences portalPreferencesModel =
 			portalPreferencesPersistence.fetchByO_O(ownerId, ownerType);
 
-		if (portalPreferences == null) {
+		Map<PortalPreferenceKey, List<PortalPreferenceValue>>
+			portalPreferenceValuesMap = Collections.emptyMap();
+
+		if (portalPreferencesModel == null) {
 			long portalPreferencesId = counterLocalService.increment();
 
-			portalPreferences = portalPreferencesPersistence.create(
+			portalPreferencesModel = portalPreferencesPersistence.create(
 				portalPreferencesId);
 
-			portalPreferences.setOwnerId(ownerId);
-			portalPreferences.setOwnerType(ownerType);
+			portalPreferencesModel.setOwnerId(ownerId);
+			portalPreferencesModel.setOwnerType(ownerType);
+		}
+		else {
+			portalPreferenceValuesMap =
+				PortalPreferenceValueLocalServiceImpl.
+					getPortalPreferenceValuesMap(
+						portalPreferenceValuePersistence,
+						portalPreferencesModel.getPortalPreferencesId(), true);
 		}
 
-		portalPreferences.setPreferences(xml);
+		_updatePortalPreferences(
+			portalPreferencesModel, portalPreferenceValuesMap, preferencesMap);
 
-		return portalPreferencesPersistence.update(portalPreferences);
+		return portalPreferencesPersistence.update(portalPreferencesModel);
+	}
+
+	private void _updatePortalPreferences(
+		PortalPreferences portalPreferences,
+		Map<PortalPreferenceKey, List<PortalPreferenceValue>>
+			portalPreferenceValueMap,
+		Map<PortalPreferenceKey, String[]> preferencesMap) {
+
+		List<Map.Entry<List<PortalPreferenceValue>, PortalPreference>>
+			preferenceEntries = new ArrayList<>(preferencesMap.size());
+
+		int newCount = 0;
+
+		for (Map.Entry<PortalPreferenceKey, String[]> entry :
+				preferencesMap.entrySet()) {
+
+			String[] values = entry.getValue();
+
+			if (values == null) {
+				continue;
+			}
+
+			int size = 0;
+
+			List<PortalPreferenceValue> portalPreferenceValues =
+				portalPreferenceValueMap.remove(entry.getKey());
+
+			if (portalPreferenceValues != null) {
+				size = portalPreferenceValues.size();
+			}
+
+			if (values.length > size) {
+				newCount += values.length - size;
+			}
+
+			preferenceEntries.add(
+				new AbstractMap.SimpleImmutableEntry<>(
+					portalPreferenceValues,
+					new PortalPreference(entry.getKey(), values)));
+		}
+
+		for (List<PortalPreferenceValue> portalPreferenceValues :
+				portalPreferenceValueMap.values()) {
+
+			for (PortalPreferenceValue portalPreferenceValue :
+					portalPreferenceValues) {
+
+				portalPreferenceValuePersistence.remove(portalPreferenceValue);
+			}
+		}
+
+		long batchCounter = 0;
+
+		if (newCount > 0) {
+			batchCounter = counterLocalService.increment(
+				PortalPreferenceValue.class.getName(), newCount);
+
+			batchCounter -= newCount;
+		}
+
+		for (Map.Entry<List<PortalPreferenceValue>, PortalPreference> entry :
+				preferenceEntries) {
+
+			List<PortalPreferenceValue> portalPreferenceValues = entry.getKey();
+
+			PortalPreference portalPreference = entry.getValue();
+
+			PortalPreferenceKey portalPreferenceKey =
+				portalPreference._portalPreferenceKey;
+			String[] newValues = portalPreference._values;
+
+			int oldSize = 0;
+
+			if (portalPreferenceValues != null) {
+				oldSize = portalPreferenceValues.size();
+			}
+
+			for (int i = 0; i < newValues.length; i++) {
+				String value = newValues[i];
+
+				if (oldSize > i) {
+					PortalPreferenceValue portalPreferenceValue =
+						portalPreferenceValues.get(i);
+
+					if (!Objects.equals(
+							newValues[i], portalPreferenceValue.getValue())) {
+
+						portalPreferenceValue.setValue(value);
+
+						portalPreferenceValuePersistence.update(
+							portalPreferenceValue);
+					}
+				}
+				else {
+					PortalPreferenceValue portalPreferenceValue =
+						portalPreferenceValuePersistence.create(++batchCounter);
+
+					portalPreferenceValue.setPortalPreferencesId(
+						portalPreferences.getPortalPreferencesId());
+					portalPreferenceValue.setIndex(i);
+					portalPreferenceValue.setKey(portalPreferenceKey.getKey());
+					portalPreferenceValue.setNamespace(
+						portalPreferenceKey.getNamespace());
+					portalPreferenceValue.setValue(value);
+
+					portalPreferenceValuePersistence.update(
+						portalPreferenceValue);
+				}
+			}
+
+			for (int i = newValues.length; i < oldSize; i++) {
+				portalPreferenceValuePersistence.remove(
+					portalPreferenceValues.get(i));
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalPreferencesLocalServiceImpl.class);
+
+	private static class PortalPreference {
+
+		private PortalPreference(
+			PortalPreferenceKey portalPreferenceKey, String[] values) {
+
+			_portalPreferenceKey = portalPreferenceKey;
+			_values = values;
+		}
+
+		private final PortalPreferenceKey _portalPreferenceKey;
+		private final String[] _values;
+
+	}
 
 }

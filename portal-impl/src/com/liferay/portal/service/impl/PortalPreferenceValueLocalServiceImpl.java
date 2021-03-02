@@ -14,28 +14,95 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.model.PortalPreferenceValue;
+import com.liferay.portal.kernel.model.PortalPreferences;
+import com.liferay.portal.kernel.service.persistence.PortalPreferenceValuePersistence;
 import com.liferay.portal.service.base.PortalPreferenceValueLocalServiceBaseImpl;
+import com.liferay.portlet.PortalPreferenceKey;
+import com.liferay.portlet.PortalPreferencesImpl;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
- * The implementation of the portal preference value local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the <code>com.liferay.portal.kernel.service.PortalPreferenceValueLocalService</code> interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see PortalPreferenceValueLocalServiceBaseImpl
+ * @author Preston Crary
  */
 public class PortalPreferenceValueLocalServiceImpl
 	extends PortalPreferenceValueLocalServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Use <code>com.liferay.portal.kernel.service.PortalPreferenceValueLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.kernel.service.PortalPreferenceValueLocalServiceUtil</code>.
-	 */
+	public static Map<PortalPreferenceKey, String[]> getPreferenceMap(
+		PortalPreferenceValuePersistence portalPreferenceValuePersistence,
+		long portalPreferencesId, boolean useFinderCache) {
+
+		Map<PortalPreferenceKey, List<PortalPreferenceValue>>
+			portalPreferenceValuesMap = getPortalPreferenceValuesMap(
+				portalPreferenceValuePersistence, portalPreferencesId,
+				useFinderCache);
+
+		Map<PortalPreferenceKey, String[]> preferenceMap = new HashMap<>();
+
+		for (Map.Entry<PortalPreferenceKey, List<PortalPreferenceValue>> entry :
+				portalPreferenceValuesMap.entrySet()) {
+
+			List<PortalPreferenceValue> portalPreferenceValues =
+				entry.getValue();
+
+			String[] values = new String[portalPreferenceValues.size()];
+
+			for (int i = 0; i < portalPreferenceValues.size(); i++) {
+				PortalPreferenceValue portalPreferenceValue =
+					portalPreferenceValues.get(i);
+
+				values[i] = portalPreferenceValue.getValue();
+			}
+
+			preferenceMap.put(entry.getKey(), values);
+		}
+
+		return preferenceMap;
+	}
+
+	@Override
+	public com.liferay.portal.kernel.portlet.PortalPreferences
+		getPortalPreferences(
+			PortalPreferences portalPreferences, boolean signedIn) {
+
+		Map<PortalPreferenceKey, String[]> preferenceMap = getPreferenceMap(
+			portalPreferenceValuePersistence,
+			portalPreferences.getPortalPreferencesId(), true);
+
+		return new PortalPreferencesImpl(
+			portalPreferences.getOwnerId(), portalPreferences.getOwnerType(),
+			preferenceMap, signedIn);
+	}
+
+	protected static Map<PortalPreferenceKey, List<PortalPreferenceValue>>
+		getPortalPreferenceValuesMap(
+			PortalPreferenceValuePersistence portalPreferenceValuePersistence,
+			long portalPreferencesId, boolean useFinderCache) {
+
+		Map<PortalPreferenceKey, List<PortalPreferenceValue>>
+			portalPreferenceValuesMap = new HashMap<>();
+
+		for (PortalPreferenceValue portalPreferenceValue :
+				portalPreferenceValuePersistence.findByPortalPreferencesId(
+					portalPreferencesId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null, useFinderCache)) {
+
+			List<PortalPreferenceValue> portalPreferenceValues =
+				portalPreferenceValuesMap.computeIfAbsent(
+					new PortalPreferenceKey(
+						portalPreferenceValue.getNamespace(),
+						portalPreferenceValue.getKey()),
+					key -> new ArrayList<>(1));
+
+			portalPreferenceValues.add(portalPreferenceValue);
+		}
+
+		return portalPreferenceValuesMap;
+	}
 
 }

@@ -816,6 +816,7 @@
 		<reference entity="LayoutSetPrototype" package-path="com.liferay.portal" />
 		<reference entity="PluginSetting" package-path="com.liferay.portal" />
 		<reference entity="PortalPreferences" package-path="com.liferay.portal" />
+		<reference entity="PortalPreferenceValue" package-path="com.liferay.portal" />
 		<reference entity="PortletPreferences" package-path="com.liferay.portal" />
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="ResourcePermission" package-path="com.liferay.portal" />
@@ -1777,6 +1778,58 @@
 		<finder name="O_O" return-type="PortalPreferences">
 			<finder-column name="ownerId" />
 			<finder-column name="ownerType" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="PortalPreferenceValue" package-path="com.liferay.portal" />
+	</entity>
+	<entity local-service="true" name="PortalPreferenceValue" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="portalPreferenceValueId" primary="true" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="portalPreferencesId" type="long" />
+		<column name="index" type="int" />
+		<column name="key" type="String" />
+		<column name="largeValue" type="String" />
+		<column name="namespace" type="String" />
+		<column name="smallValue" type="String" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="index" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="PortalPreferencesId" return-type="Collection">
+			<finder-column name="portalPreferencesId" />
+		</finder>
+		<finder name="P_N" return-type="Collection">
+			<finder-column name="portalPreferencesId" />
+			<finder-column name="namespace" />
+		</finder>
+		<finder name="P_K_N" return-type="Collection">
+			<finder-column name="portalPreferencesId" />
+			<finder-column name="key" />
+			<finder-column name="namespace" />
+		</finder>
+		<finder name="P_I_K_N" return-type="PortalPreferenceValue" unique="true">
+			<finder-column name="portalPreferencesId" />
+			<finder-column name="index" />
+			<finder-column name="key" />
+			<finder-column name="namespace" />
+		</finder>
+		<finder name="P_K_N_SV" return-type="Collection">
+			<finder-column name="portalPreferencesId" />
+			<finder-column name="key" />
+			<finder-column name="namespace" />
+			<finder-column name="smallValue" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="Portlet" remote-service="true">

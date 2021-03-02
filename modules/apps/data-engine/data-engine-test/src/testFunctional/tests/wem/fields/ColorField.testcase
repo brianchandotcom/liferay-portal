@@ -114,18 +114,10 @@ definition {
 
 		WebContentNavigator.gotoEditStructure(structureName = "Structure Name");
 
-		AssertClick.assertPartialTextClickAt(
-			key_fieldFieldLabel = "Color",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = "Color");
-
-		Navigator.gotoNavTab(navTab = "Advanced");
-
-		AssertTextEquals.assertValue(
-			key_fieldLabel = "Field Reference",
-			key_fieldName = "fieldReference",
-			locator1 = "Sidebar#TEXT_INPUT",
-			value1 = "Color_Test");
+		DataEngine.viewFieldReference(
+			fieldFieldLabel = "Color",
+			fieldName = "Color",
+			fieldReference = "Color_Test");
 
 		DataEngine.editFieldReference(
 			assertFieldReference = "ColorTest1",
@@ -136,18 +128,10 @@ definition {
 
 		WebContentNavigator.gotoEditStructure(structureName = "Structure Name");
 
-		AssertClick.assertPartialTextClickAt(
-			key_fieldFieldLabel = "Color",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = "Color");
-
-		Navigator.gotoNavTab(navTab = "Advanced");
-
-		AssertTextEquals.assertValue(
-			key_fieldLabel = "Field Reference",
-			key_fieldName = "fieldReference",
-			locator1 = "Sidebar#TEXT_INPUT",
-			value1 = "ColorTest1");
+		DataEngine.viewFieldReference(
+			fieldFieldLabel = "Color",
+			fieldName = "Color",
+			fieldReference = "ColorTest1");
 	}
 
 	@description = "This test ensures that a user can add a Color field on a form using drag and drop, edit it's label and help text."

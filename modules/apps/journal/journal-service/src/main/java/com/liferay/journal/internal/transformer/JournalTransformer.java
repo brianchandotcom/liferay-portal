@@ -322,6 +322,8 @@ public class JournalTransformer {
 							themeDisplay.getResponse(), unsyncStringWriter));
 				}
 
+				template.put("groupId", articleGroupId);
+
 				if (propagateException) {
 					template.processTemplate(unsyncStringWriter);
 				}

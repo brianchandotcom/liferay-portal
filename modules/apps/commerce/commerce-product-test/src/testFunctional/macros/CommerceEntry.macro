@@ -332,7 +332,7 @@ definition {
 
 		Type(
 			locator1 = "CommerceEntry#PRIORITY_FIELD",
-			value1 = "${valuePriority}");
+			value1 = "${valuePosition}");
 	}
 
 	macro addPricingEntry {

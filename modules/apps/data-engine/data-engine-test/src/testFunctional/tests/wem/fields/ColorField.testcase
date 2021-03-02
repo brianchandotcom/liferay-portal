@@ -57,11 +57,19 @@ definition {
 	test DeleteColorFieldOnBuilder {
 		property portal.acceptance = "false";
 
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
 		WebContentStructures.saveCP(structureName = "Structure Name");
 
 		WebContentNavigator.gotoEditStructure(structureName = "Structure Name");
 
 		DataEngine.delete(fieldFieldLabel = "Color");
+
+		WebContentStructures.saveCP(structureName = "Structure Name");
+
+		WebContentNavigator.gotoEditStructure(structureName = "Structure Name");
 
 		AssertElementNotPresent(
 			key_fieldFieldLabel = "Color",

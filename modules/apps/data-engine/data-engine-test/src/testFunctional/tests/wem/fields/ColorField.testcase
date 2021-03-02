@@ -51,16 +51,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
-	@ignore = "true"
-	@priority = "3"
-	test CancelChangesOnColorField {
-		property portal.acceptance = "false";
-
-		// TODO LPS-98070 CancelChangesOnColorField pending implementation
-
-	}
-
-	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
 	@priority = "5"
 	test DeleteColorFieldOnBuilder {
 		property portal.acceptance = "false";
@@ -78,15 +68,6 @@ definition {
 		AssertElementNotPresent(
 			key_fieldFieldLabel = "Color Test",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
-	}
-
-	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
-	@ignore = "true"
-	@priority = "5"
-	test DeleteColorFieldOnSidebar {
-		property portal.acceptance = "false";
-
-		// TODO LPS-98070 DeleteColorFieldOnSidebar pending implementation
 	}
 
 	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
@@ -141,15 +122,6 @@ definition {
 		DataEngine.viewField(
 			fieldFieldLabel = "Copy of Color Test",
 			fieldName = "Color");
-	}
-
-	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
-	@ignore = "true"
-	@priority = "4"
-	test DuplicateColorFieldOnSidebar {
-		property portal.acceptance = "false";
-
-		// TODO LPS-98070 DuplicateColorFieldOnSidebar pending implementation
 	}
 
 	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"

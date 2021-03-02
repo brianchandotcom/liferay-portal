@@ -107,6 +107,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>STAGING_INDICATOR_TITLE_DEPOT</td>
+	<td>//span[contains(@class,'staging-indicator-title')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>STAGING_PUBLICATION_PERMISSION</td>
 	<td>//span[contains(@class,'label-text') and contains(.,'Publish Permissions')]</td>
 	<td></td>

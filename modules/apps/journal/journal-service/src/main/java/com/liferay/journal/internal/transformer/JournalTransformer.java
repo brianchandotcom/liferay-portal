@@ -185,7 +185,7 @@ public class JournalTransformer {
 				siteGroupId = themeDisplay.getSiteGroupId();
 			}
 
-			String templateId = tokens.get("template_id");
+			String templateId = tokens.get("ddm_template_id");
 
 			templateId = getTemplateId(
 				templateId, companyId, companyGroupId, articleGroupId);

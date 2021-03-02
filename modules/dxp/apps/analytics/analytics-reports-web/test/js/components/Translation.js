@@ -97,6 +97,5 @@ describe('Translation', () => {
 		expect(getByText('default')).toBeInTheDocument();
 
 		expect(getByText('es-ES')).toBeInTheDocument();
-		expect(getByText('translated')).toBeInTheDocument();
 	});
 });

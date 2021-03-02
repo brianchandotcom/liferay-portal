@@ -1,20 +1,13 @@
 <?xml version="1.0"?>
-<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 
-<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
-	<category name="com.liferay.message.boards.internal.pop.MessageListenerImpl">
-		<priority value="ERROR" />
-	</category>
+<Configuration strict="true">
+	<Loggers>
+		<Logger level="ERROR" name="com.liferay.message.boards.internal.pop.MessageListenerImpl" />
 
-	<category name="com.liferay.message.boards.service.impl.MBCategoryLocalServiceImpl">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.message.boards.service.impl.MBCategoryLocalServiceImpl" />
 
-	<category name="com.liferay.message.boards.service.impl.MBMessageLocalServiceImpl">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.message.boards.service.impl.MBMessageLocalServiceImpl" />
 
-	<category name="com.liferay.message.boards.util.MBUtil">
-		<priority value="ERROR" />
-	</category>
-</log4j:configuration>
+		<Logger level="ERROR" name="com.liferay.message.boards.util.MBUtil" />
+	</Loggers>
+</Configuration>

@@ -1,16 +1,11 @@
 <?xml version="1.0"?>
-<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 
-<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
-	<category name="org.apache.aries.jax.rs.whiteboard">
-		<priority value="WARN" />
-	</category>
+<Configuration strict="true">
+	<Loggers>
+		<Logger level="WARN" name="org.apache.aries.jax.rs.whiteboard" />
 
-	<category name="org.apache.cxf">
-		<priority value="INFO" />
-	</category>
+		<Logger level="INFO" name="org.apache.cxf" />
 
-	<category name="org.apache.cxf.endpoint.ServerImpl">
-		<priority value="WARN" />
-	</category>
-</log4j:configuration>
+		<Logger level="WARN" name="org.apache.cxf.endpoint.ServerImpl" />
+	</Loggers>
+</Configuration>

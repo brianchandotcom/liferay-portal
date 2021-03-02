@@ -1,7 +1,7 @@
-<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<?xml version="1.0"?>
 
-<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
-	<category name="com.liferay.oauth2.provider.jsonws.internal">
-		<priority value="INFO" />
-	</category>
-</log4j:configuration>
+<Configuration strict="true">
+	<Loggers>
+		<Logger level="INFO" name="com.liferay.oauth2.provider.jsonws.internal" />
+	</Loggers>
+</Configuration>

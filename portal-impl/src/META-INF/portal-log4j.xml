@@ -1,1102 +1,565 @@
 <?xml version="1.0"?>
-<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
-
-<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
-	<appender class="org.apache.log4j.ConsoleAppender" name="CONSOLE">
-		<layout class="org.apache.log4j.EnhancedPatternLayout">
-			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p [%t][%c{1}:%L] %m%n" />
-		</layout>
-	</appender>
-
-	<appender class="org.apache.log4j.rolling.RollingFileAppender" name="TEXT_FILE">
-		<rollingPolicy class="org.apache.log4j.rolling.TimeBasedRollingPolicy">
-			<param name="FileNamePattern" value="@liferay.home@/logs/liferay.%d{yyyy-MM-dd}.log" />
-		</rollingPolicy>
-
-		<layout class="org.apache.log4j.EnhancedPatternLayout">
-			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p [%t][%c{1}:%L] %m%n" />
-		</layout>
-	</appender>
-
-	<appender class="org.apache.log4j.rolling.RollingFileAppender" name="XML_FILE">
-		<rollingPolicy class="org.apache.log4j.rolling.TimeBasedRollingPolicy">
-			<param name="FileNamePattern" value="@liferay.home@/logs/liferay.%d{yyyy-MM-dd}.xml" />
-		</rollingPolicy>
-
-		<layout class="org.apache.log4j.xml.XMLLayout">
-			<param name="LocationInfo" value="true" />
-		</layout>
-	</appender>
-
-	<category name="aQute.bnd.osgi">
-		<priority value="WARN" />
-	</category>
-
-	<category name="com.browseengine.bobo">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.ecyrd.jspwiki">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.bean.portlet">
-		<priority value="INFO" />
-	</category>
-
-	<category name="com.liferay.jdbc">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.mail.messaging">
-		<priority value="WARN" />
-	</category>
-
-	<category name="com.liferay.mail.service.impl.MailServiceImpl">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.mail.util">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.mail.util.DummyHook">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.mail.util.HookFactory">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.mail.util.MailSessionFactoryBean">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.petra.mail">
-		<priority value="WARN" />
-	</category>
-
-	<category name="com.liferay.portal.action.JSONServiceAction">
-		<priority value="INFO" />
-	</category>
-
-	<category name="com.liferay.portal.action.LayoutAction">
-		<priority value="WARN" />
-	</category>
-
-	<category name="com.liferay.portal.bean.BeanLocatorImpl">
-		<priority value="WARN" />
-	</category>
-
-	<category name="com.liferay.portal.bootstrap.ModuleFrameworkImpl">
-		<priority value="INFO" />
-	</category>
-
-	<category name="com.liferay.portal.captcha.CaptchaImpl">
-		<priority value="INFO" />
-	</category>
-
-	<category name="com.liferay.portal.cluster">
-		<priority value="INFO" />
-	</category>
 
-	<category name="com.liferay.portal.configuration.ConfigurationImpl">
-		<priority value="WARN" />
-	</category>
+<Configuration strict="true">
+	<Appenders>
+		<Appender name="CONSOLE" type="Console">
+			<Layout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p [%t][%c{1}:%L] %m%n" type="PatternLayout" />
+		</Appender>
 
-	<category name="com.liferay.portal.convert">
-		<priority value="DEBUG" />
-	</category>
+		<Appender filePattern="@liferay.home@/logs/liferay.%d{yyyy-MM-dd}.log" ignoreExceptions="false" name="TEXT_FILE" type="RollingFile">
+			<Layout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p [%t][%c{1}:%L] %m%n" type="PatternLayout" />
 
-	<category name="com.liferay.portal.dao.db">
-		<priority value="INFO" />
-	</category>
+			<TimeBasedTriggeringPolicy />
 
-	<category name="com.liferay.portal.dao.db.BaseDB">
-		<priority value="INFO" />
-	</category>
+			<DirectWriteRolloverStrategy />
+		</Appender>
 
-	<category name="com.liferay.portal.dao.init.DBInitUtil">
-		<priority value="INFO" />
-	</category>
+		<Appender filePattern="@liferay.home@/logs/liferay.%d{yyyy-MM-dd}.xml" ignoreExceptions="false" name="XML_FILE" type="RollingFile">
+			<Log4j1XmlLayout locationInfo="true" />
 
-	<category name="com.liferay.portal.dao.jdbc.DataSourceFactoryImpl">
-		<priority value="INFO" />
-	</category>
+			<TimeBasedTriggeringPolicy />
 
-	<category name="com.liferay.portal.dao.jdbc.aop">
-		<priority value="ERROR" />
-	</category>
+			<DirectWriteRolloverStrategy />
+		</Appender>
+	</Appenders>
 
-	<category name="com.liferay.portal.dao.jdbc.pool">
-		<priority value="ERROR" />
-	</category>
+	<Loggers>
+		<Logger level="WARN" name="aQute.bnd.osgi" />
 
-	<category name="com.liferay.portal.dao.orm.common.SQLTransformer">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.browseengine.bobo" />
 
-	<category name="com.liferay.portal.dao.orm.hibernate.SessionFactoryImpl">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.ecyrd.jspwiki" />
 
-	<category name="com.liferay.portal.dao.orm.hibernate.VerifySessionFactoryWrapper">
-		<priority value="FATAL" />
-	</category>
+		<Logger level="ERROR" name="com.liferay" />
 
-	<category name="com.liferay.portal.deploy">
-		<priority value="INFO" />
-	</category>
+		<Logger level="INFO" name="com.liferay.bean.portlet" />
 
-	<category name="com.liferay.portal.deploy.hot.HookHotDeployListener">
-		<priority value="INFO" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.jdbc" />
 
-	<category name="com.liferay.portal.deploy.hot.PluginPackageHotDeployListener">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="WARN" name="com.liferay.mail.messaging" />
 
-	<category name="com.liferay.portal.deploy.hot.ThemeLoaderHotDeployListener">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.mail.service.impl.MailServiceImpl" />
 
-	<category name="com.liferay.portal.deploy.hot.messaging.HotDeployMessageListener">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.mail.util" />
 
-	<category name="com.liferay.portal.editor">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.mail.util.DummyHook" />
 
-	<category name="com.liferay.portal.equinox.log.bridge.internal">
-		<priority value="INFO" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.mail.util.HookFactory" />
 
-	<category name="com.liferay.portal.events.ChannelHubAppShutdownAction">
-		<priority value="INFO" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.mail.util.MailSessionFactoryBean" />
 
-	<category name="com.liferay.portal.events.ChannelHubAppStartupAction">
-		<priority value="INFO" />
-	</category>
+		<Logger level="WARN" name="com.liferay.petra.mail" />
 
-	<category name="com.liferay.portal.events.ChannelLoginPostAction">
-		<priority value="INFO" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.action.JSONServiceAction" />
 
-	<category name="com.liferay.portal.events.ChannelSessionDestroyAction">
-		<priority value="INFO" />
-	</category>
+		<Logger level="WARN" name="com.liferay.portal.action.LayoutAction" />
 
-	<category name="com.liferay.portal.events.EventsProcessor">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="WARN" name="com.liferay.portal.bean.BeanLocatorImpl" />
 
-	<category name="com.liferay.portal.events.FixOracleAction">
-		<priority value="INFO" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.bootstrap.ModuleFrameworkImpl" />
 
-	<category name="com.liferay.portal.events.GarbageCollectorAction">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.captcha.CaptchaImpl" />
 
-	<category name="com.liferay.portal.events.GlobalStartupAction">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.cluster" />
 
-	<category name="com.liferay.portal.events.LogMemoryUsageAction">
-		<priority value="DEBUG" />
-	</category>
+		<Logger level="WARN" name="com.liferay.portal.configuration.ConfigurationImpl" />
 
-	<category name="com.liferay.portal.events.LogSessionIdAction">
-		<priority value="DEBUG" />
-	</category>
+		<Logger level="DEBUG" name="com.liferay.portal.convert" />
 
-	<category name="com.liferay.portal.events.LogThreadCountAction">
-		<priority value="DEBUG" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.dao.db" />
 
-	<category name="com.liferay.portal.events.LoginPostAction">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.dao.db.BaseDB" />
 
-	<category name="com.liferay.portal.events.LoginPreAction">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.dao.init.DBInitUtil" />
 
-	<category name="com.liferay.portal.events.LogoutPostAction">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.dao.jdbc.DataSourceFactoryImpl" />
 
-	<category name="com.liferay.portal.events.LogoutPreAction">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.dao.jdbc.aop" />
 
-	<category name="com.liferay.portal.events.ServicePreAction">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.dao.jdbc.pool" />
 
-	<category name="com.liferay.portal.events.ShutdownHook">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.dao.orm.common.SQLTransformer" />
 
-	<category name="com.liferay.portal.events.StartupAction">
-		<priority value="INFO" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.dao.orm.hibernate.SessionFactoryImpl" />
 
-	<category name="com.liferay.portal.events.StartupHelperUtil">
-		<priority value="INFO" />
-	</category>
+		<Logger level="FATAL" name="com.liferay.portal.dao.orm.hibernate.VerifySessionFactoryWrapper" />
 
-	<category name="com.liferay.portal.fabric">
-		<priority value="INFO" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.deploy" />
 
-	<category name="com.liferay.portal.image.HookFactory">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.deploy.hot.HookHotDeployListener" />
 
-	<category name="com.liferay.portal.image.ImageToolImpl">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.deploy.hot.PluginPackageHotDeployListener" />
 
-	<category name="com.liferay.portal.image.SpriteProcessorImpl">
-		<priority value="WARN" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.deploy.hot.ThemeLoaderHotDeployListener" />
 
-	<category name="com.liferay.portal.internal.servlet.MainServlet">
-		<priority value="INFO" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.deploy.hot.messaging.HotDeployMessageListener" />
 
-	<category name="com.liferay.portal.json.jabsorb.serializer.LiferayJSONDeserializationWhitelist">
-		<priority value="WARN" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.editor" />
 
-	<category name="com.liferay.portal.jsonwebservice.JSONWebServiceActionsManagerImpl">
-		<priority value="WARN" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.equinox.log.bridge.internal" />
 
-	<category name="com.liferay.portal.kernel.bean.PortalBeanLocatorUtil">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.events.ChannelHubAppShutdownAction" />
 
-	<category name="com.liferay.portal.kernel.cache.cluster.BasePortalCacheClusterChannel">
-		<priority value="WARN" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.events.ChannelHubAppStartupAction" />
 
-	<category name="com.liferay.portal.kernel.cluster">
-		<priority value="WARN" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.events.ChannelLoginPostAction" />
 
-	<category name="com.liferay.portal.kernel.dao.orm.QueryUtil">
-		<priority value="WARN" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.events.ChannelSessionDestroyAction" />
 
-	<category name="com.liferay.portal.kernel.deploy">
-		<priority value="INFO" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.events.EventsProcessor" />
 
-	<category name="com.liferay.portal.kernel.lar">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.events.FixOracleAction" />
 
-	<category name="com.liferay.portal.kernel.messaging.config.BaseMessagingConfigurator">
-		<priority value="INFO" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.events.GarbageCollectorAction" />
 
-	<category name="com.liferay.portal.kernel.messaging.proxy.ProxyMessageListener">
-		<priority value="WARN" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.events.GlobalStartupAction" />
 
-	<category name="com.liferay.portal.kernel.model.Image">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="DEBUG" name="com.liferay.portal.events.LogMemoryUsageAction" />
 
-	<category name="com.liferay.portal.kernel.portlet.InvokerPortlet">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="DEBUG" name="com.liferay.portal.events.LogSessionIdAction" />
 
-	<category name="com.liferay.portal.kernel.portlet.RestrictPortletServletRequest">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="DEBUG" name="com.liferay.portal.events.LogThreadCountAction" />
 
-	<category name="com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet">
-		<priority value="WARN" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.events.LoginPostAction" />
 
-	<category name="com.liferay.portal.kernel.process">
-		<priority value="INFO" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.events.LoginPreAction" />
 
-	<category name="com.liferay.portal.kernel.search.HitsOpenSearchImpl">
-		<priority value="WARN" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.events.LogoutPostAction" />
 
-	<category name="com.liferay.portal.kernel.security.auth.CompanyThreadLocal">
-		<priority value="WARN" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.events.LogoutPreAction" />
 
-	<category name="com.liferay.portal.kernel.servlet.PipingServletResponse">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.events.ServicePreAction" />
 
-	<category name="com.liferay.portal.kernel.servlet.PluginContextListener">
-		<priority value="WARN" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.events.ShutdownHook" />
 
-	<category name="com.liferay.portal.kernel.servlet.SecurePluginContextListener">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.events.StartupAction" />
 
-	<category name="com.liferay.portal.kernel.servlet.ServletContextPool">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.events.StartupHelperUtil" />
 
-	<category name="com.liferay.portal.kernel.servlet.ServletContextUtil">
-		<priority value="INFO" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.fabric" />
 
-	<category name="com.liferay.portal.kernel.servlet.ServletRequestUtil">
-		<priority value="INFO" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.image.HookFactory" />
 
-	<category name="com.liferay.portal.kernel.servlet.ServletResponseUtil">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.image.ImageToolImpl" />
 
-	<category name="com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilter">
-		<priority value="FATAL" />
-	</category>
+		<Logger level="WARN" name="com.liferay.portal.image.SpriteProcessorImpl" />
 
-	<category name="com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilterHelper">
-		<priority value="FATAL" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.internal.servlet.MainServlet" />
 
-	<category name="com.liferay.portal.kernel.test.plugins.PluginIntegrationTestHotDeployListener">
-		<priority value="INFO" />
-	</category>
+		<Logger level="WARN" name="com.liferay.portal.json.jabsorb.serializer.LiferayJSONDeserializationWhitelist" />
 
-	<category name="com.liferay.portal.kernel.upgrade">
-		<priority value="INFO" />
-	</category>
+		<Logger level="WARN" name="com.liferay.portal.jsonwebservice.JSONWebServiceActionsManagerImpl" />
 
-	<category name="com.liferay.portal.kernel.util.ClassUtil">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.kernel.bean.PortalBeanLocatorUtil" />
 
-	<category name="com.liferay.portal.kernel.util.JavaDetector">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="WARN" name="com.liferay.portal.kernel.cache.cluster.BasePortalCacheClusterChannel" />
 
-	<category name="com.liferay.portal.kernel.util.LoggingTimer">
-		<priority value="INFO" />
-	</category>
+		<Logger level="WARN" name="com.liferay.portal.kernel.cluster" />
 
-	<category name="com.liferay.portal.kernel.util.ReferenceRegistry">
-		<priority value="WARN" />
-	</category>
+		<Logger level="WARN" name="com.liferay.portal.kernel.dao.orm.QueryUtil" />
 
-	<category name="com.liferay.portal.kernel.util.ServerDetector">
-		<priority value="INFO" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.kernel.deploy" />
 
-	<category name="com.liferay.portal.kernel.util.ServiceProxyFactory">
-		<priority value="INFO" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.kernel.lar" />
 
-	<category name="com.liferay.portal.language.LanguageResources">
-		<priority value="WARN" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.kernel.messaging.config.BaseMessagingConfigurator" />
 
-	<category name="com.liferay.portal.lar">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="WARN" name="com.liferay.portal.kernel.messaging.proxy.ProxyMessageListener" />
 
-	<category name="com.liferay.portal.license">
-		<priority value="INFO" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.kernel.model.Image" />
 
-	<category name="com.liferay.portal.metadata.TikaRawMetadataProcessor">
-		<priority value="WARN" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.kernel.portlet.InvokerPortlet" />
 
-	<category name="com.liferay.portal.microsofttranslator">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.kernel.portlet.RestrictPortletServletRequest" />
 
-	<category name="com.liferay.portal.model.DefaultModelHintsImpl">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="WARN" name="com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet" />
 
-	<category name="com.liferay.portal.patcher.PatcherImpl">
-		<priority value="WARN" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.kernel.process" />
 
-	<category name="com.liferay.portal.plugin.PluginPackageUtil">
-		<priority value="INFO" />
-	</category>
+		<Logger level="WARN" name="com.liferay.portal.kernel.search.HitsOpenSearchImpl" />
 
-	<category name="com.liferay.portal.pop">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="WARN" name="com.liferay.portal.kernel.security.auth.CompanyThreadLocal" />
 
-	<category name="com.liferay.portal.repository.cmis">
-		<priority value="WARN" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.kernel.servlet.PipingServletResponse" />
 
-	<category name="com.liferay.portal.sanitizer.DummySanitizerImpl">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="WARN" name="com.liferay.portal.kernel.servlet.PluginContextListener" />
 
-	<category name="com.liferay.portal.search.lucene">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.kernel.servlet.SecurePluginContextListener" />
 
-	<category name="com.liferay.portal.search.lucene.LuceneIndexSearcherImpl">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.kernel.servlet.ServletContextPool" />
 
-	<category name="com.liferay.portal.search.lucene.LuceneIndexWriterImpl">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.kernel.servlet.ServletContextUtil" />
 
-	<category name="com.liferay.portal.security">
-		<priority value="WARN" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.kernel.servlet.ServletRequestUtil" />
 
-	<category name="com.liferay.portal.security.auth.EmailAddressGeneratorFactory">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.kernel.servlet.ServletResponseUtil" />
 
-	<category name="com.liferay.portal.security.auth.EmailAddressValidatorFactory">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="FATAL" name="com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilter" />
 
-	<category name="com.liferay.portal.security.auth.PrincipalThreadLocal">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="FATAL" name="com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilterHelper" />
 
-	<category name="com.liferay.portal.security.auth.ScreenNameGeneratorFactory">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.kernel.test.plugins.PluginIntegrationTestHotDeployListener" />
 
-	<category name="com.liferay.portal.security.auth.ScreenNameValidatorFactory">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.kernel.upgrade" />
 
-	<category name="com.liferay.portal.security.auth.SiteMinderAutoLogin">
-		<priority value="WARN" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.kernel.util.ClassUtil" />
 
-	<category name="com.liferay.portal.security.permission.AdvancedPermissionChecker">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.kernel.util.JavaDetector" />
 
-	<category name="com.liferay.portal.security.permission.BasicPermissionChecker">
-		<priority value="INFO" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.kernel.util.LoggingTimer" />
 
-	<category name="com.liferay.portal.security.permission.ResourceActionsImpl">
-		<priority value="WARN" />
-	</category>
+		<Logger level="WARN" name="com.liferay.portal.kernel.util.ReferenceRegistry" />
 
-	<category name="com.liferay.portal.security.pwd.RegExpToolkit">
-		<priority value="WARN" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.kernel.util.ServerDetector" />
 
-	<category name="com.liferay.portal.server.capabilities.ServerCapabilitiesUtil">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.kernel.util.ServiceProxyFactory" />
 
-	<category name="com.liferay.portal.service.impl.LayoutLocalServiceImpl">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="WARN" name="com.liferay.portal.language.LanguageResources" />
 
-	<category name="com.liferay.portal.service.impl.PermissionLocalServiceImpl">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.lar" />
 
-	<category name="com.liferay.portal.service.impl.PortalLocalServiceImpl">
-		<priority value="INFO" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.license" />
 
-	<category name="com.liferay.portal.service.impl.PortalServiceImpl">
-		<priority value="INFO" />
-	</category>
+		<Logger level="WARN" name="com.liferay.portal.metadata.TikaRawMetadataProcessor" />
 
-	<category name="com.liferay.portal.service.impl.PortletLocalServiceImpl">
-		<priority value="WARN" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.microsofttranslator" />
 
-	<category name="com.liferay.portal.service.impl.ReleaseLocalServiceImpl">
-		<priority value="INFO" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.model.DefaultModelHintsImpl" />
 
-	<category name="com.liferay.portal.service.impl.RepositoryLocalServiceImpl">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="WARN" name="com.liferay.portal.patcher.PatcherImpl" />
 
-	<category name="com.liferay.portal.service.impl.ResourceLocalServiceImpl">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.plugin.PluginPackageUtil" />
 
-	<category name="com.liferay.portal.service.impl.ServiceComponentLocalServiceImpl">
-		<priority value="INFO" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.pop" />
 
-	<category name="com.liferay.portal.service.impl.ThemeLocalServiceImpl">
-		<priority value="INFO" />
-	</category>
+		<Logger level="WARN" name="com.liferay.portal.repository.cmis" />
 
-	<category name="com.liferay.portal.service.impl.ThemeServiceImpl">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.sanitizer.DummySanitizerImpl" />
 
-	<category name="com.liferay.portal.service.persistence.PermissionPool">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.search.lucene" />
 
-	<category name="com.liferay.portal.service.persistence.ResourcePool">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.search.lucene.LuceneIndexSearcherImpl" />
 
-	<category name="com.liferay.portal.service.persistence.impl">
-		<priority value="WARN " />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.search.lucene.LuceneIndexWriterImpl" />
 
-	<category name="com.liferay.portal.servlet">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="WARN" name="com.liferay.portal.security" />
 
-	<category name="com.liferay.portal.servlet.LanguageServlet">
-		<priority value="WARN" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.security.auth.EmailAddressGeneratorFactory" />
 
-	<category name="com.liferay.portal.servlet.PortalSessionCreator">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.security.auth.EmailAddressValidatorFactory" />
 
-	<category name="com.liferay.portal.servlet.PortalSessionDestroyer">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.security.auth.PrincipalThreadLocal" />
 
-	<category name="com.liferay.portal.servlet.SharedSessionUtil">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.security.auth.ScreenNameGeneratorFactory" />
 
-	<category name="com.liferay.portal.servlet.filters">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.security.auth.ScreenNameValidatorFactory" />
 
-	<category name="com.liferay.portal.servlet.filters.autologin.AutoLoginFilter">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="WARN" name="com.liferay.portal.security.auth.SiteMinderAutoLogin" />
 
-	<category name="com.liferay.portal.servlet.filters.cache">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.security.permission.AdvancedPermissionChecker" />
 
-	<category name="com.liferay.portal.servlet.filters.dynamiccss">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.security.permission.BasicPermissionChecker" />
 
-	<category name="com.liferay.portal.servlet.filters.dynamiccss.DynamicCSSFilter">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="WARN" name="com.liferay.portal.security.permission.ResourceActionsImpl" />
 
-	<category name="com.liferay.portal.servlet.filters.dynamiccss.DynamicCSSUtil">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="WARN" name="com.liferay.portal.security.pwd.RegExpToolkit" />
 
-	<category name="com.liferay.portal.servlet.filters.fragment">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.server.capabilities.ServerCapabilitiesUtil" />
 
-	<category name="com.liferay.portal.servlet.filters.gzip">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.service.impl.LayoutLocalServiceImpl" />
 
-	<category name="com.liferay.portal.servlet.filters.language">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.service.impl.PermissionLocalServiceImpl" />
 
-	<category name="com.liferay.portal.servlet.filters.minifier">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.service.impl.PortalLocalServiceImpl" />
 
-	<category name="com.liferay.portal.servlet.filters.sessionid.SessionIdFilter">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.service.impl.PortalServiceImpl" />
 
-	<category name="com.liferay.portal.servlet.filters.sessionid.SessionIdServletRequest">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="WARN" name="com.liferay.portal.service.impl.PortletLocalServiceImpl" />
 
-	<category name="com.liferay.portal.servlet.filters.strip">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.service.impl.ReleaseLocalServiceImpl" />
 
-	<category name="com.liferay.portal.servlet.filters.threaddump">
-		<priority value="INFO" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.service.impl.RepositoryLocalServiceImpl" />
 
-	<category name="com.liferay.portal.servlet.filters.virtualhost.VirtualHostFilter">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.service.impl.ResourceLocalServiceImpl" />
 
-	<category name="com.liferay.portal.setup.SetupWizardSampleDataUtil">
-		<priority value="INFO" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.service.impl.ServiceComponentLocalServiceImpl" />
 
-	<category name="com.liferay.portal.sharepoint">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.service.impl.ThemeLocalServiceImpl" />
 
-	<category name="com.liferay.portal.spring">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.service.impl.ThemeServiceImpl" />
 
-	<category name="com.liferay.portal.spring.context.ArrayApplicationContext">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.service.persistence.PermissionPool" />
 
-	<category name="com.liferay.portal.spring.context.PortalApplicationContext">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.service.persistence.ResourcePool" />
 
-	<category name="com.liferay.portal.spring.context.PortalContextLoaderListener">
-		<priority value="INFO" />
-	</category>
+		<Logger level="WARN" name="com.liferay.portal.service.persistence.impl" />
 
-	<category name="com.liferay.portal.spring.context.TunnelApplicationContext">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.servlet" />
 
-	<category name="com.liferay.portal.spring.hibernate.DialectDetector">
-		<priority value="INFO" />
-	</category>
+		<Logger level="WARN" name="com.liferay.portal.servlet.LanguageServlet" />
 
-	<category name="com.liferay.portal.staging">
-		<priority value="WARN" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.servlet.PortalSessionCreator" />
 
-	<category name="com.liferay.portal.struts">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.servlet.PortalSessionDestroyer" />
 
-	<category name="com.liferay.portal.struts.JSONAction">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.servlet.SharedSessionUtil" />
 
-	<category name="com.liferay.portal.struts.MultiMessageResources">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.servlet.filters" />
 
-	<category name="com.liferay.portal.struts.PortalRequestProcessor">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.servlet.filters.autologin.AutoLoginFilter" />
 
-	<category name="com.liferay.portal.struts.PortletRequestProcessor">
-		<priority value="WARN" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.servlet.filters.cache" />
 
-	<category name="com.liferay.portal.struts.StrutsURLEncoder">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.servlet.filters.dynamiccss" />
 
-	<category name="com.liferay.portal.struts.StrutsUtil">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.servlet.filters.dynamiccss.DynamicCSSFilter" />
 
-	<category name="com.liferay.portal.template.URLResourceParser">
-		<priority value="INFO" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.servlet.filters.dynamiccss.DynamicCSSUtil" />
 
-	<category name="com.liferay.portal.theme.ThemeLoader">
-		<priority value="INFO" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.servlet.filters.fragment" />
 
-	<category name="com.liferay.portal.tools.DBUpgrader">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.servlet.filters.gzip" />
 
-	<category name="com.liferay.portal.tools.deploy.BaseDeployer">
-		<priority value="INFO" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.servlet.filters.language" />
 
-	<category name="com.liferay.portal.tools.deploy.PortletDeployer">
-		<priority value="INFO" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.servlet.filters.minifier" />
 
-	<category name="com.liferay.portal.tools.deploy.ThemeDeployer">
-		<priority value="INFO" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.servlet.filters.sessionid.SessionIdFilter" />
 
-	<category name="com.liferay.portal.tools.sql">
-		<priority value="INFO" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.servlet.filters.sessionid.SessionIdServletRequest" />
 
-	<category name="com.liferay.portal.upgrade">
-		<priority value="INFO" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.servlet.filters.strip" />
 
-	<category name="com.liferay.portal.upgrade.UpgradeProcessUtil">
-		<priority value="INFO" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.servlet.filters.threaddump" />
 
-	<category name="com.liferay.portal.upgrade.v7_0_0.UpgradePortletSettings">
-		<priority value="INFO" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.servlet.filters.virtualhost.VirtualHostFilter" />
 
-	<category name="com.liferay.portal.upload.UploadServletRequestImpl">
-		<priority value="WARN" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.setup.SetupWizardSampleDataUtil" />
 
-	<category name="com.liferay.portal.util">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.sharepoint" />
 
-	<category name="com.liferay.portal.util.EntityResolver">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.spring" />
 
-	<category name="com.liferay.portal.util.ExtRegistry">
-		<priority value="INFO" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.spring.context.ArrayApplicationContext" />
 
-	<category name="com.liferay.portal.util.FileImpl">
-		<priority value="WARN" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.spring.context.PortalApplicationContext" />
 
-	<category name="com.liferay.portal.util.HttpImpl">
-		<priority value="INFO" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.spring.context.PortalContextLoaderListener" />
 
-	<category name="com.liferay.portal.util.JarUtil">
-		<priority value="INFO" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.spring.context.TunnelApplicationContext" />
 
-	<category name="com.liferay.portal.util.MaintenanceUtil">
-		<priority value="DEBUG" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.spring.hibernate.DialectDetector" />
 
-	<category name="com.liferay.portal.util.MimeTypesUtil">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="WARN" name="com.liferay.portal.staging" />
 
-	<category name="com.liferay.portal.util.PortalImpl">
-		<priority value="INFO" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.struts" />
 
-	<category name="com.liferay.portal.util.PortalInstances">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.struts.JSONAction" />
 
-	<category name="com.liferay.portal.util.PropsUtil">
-		<priority value="INFO" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.struts.MultiMessageResources" />
 
-	<category name="com.liferay.portal.velocity">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.struts.PortalRequestProcessor" />
 
-	<category name="com.liferay.portal.velocity.LiferayResourceLoader">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="WARN" name="com.liferay.portal.struts.PortletRequestProcessor" />
 
-	<category name="com.liferay.portal.verify">
-		<priority value="INFO" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.struts.StrutsURLEncoder" />
 
-	<category name="com.liferay.portal.webdav">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.struts.StrutsUtil" />
 
-	<category name="com.liferay.portal.webserver.WebServerServlet">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.template.URLResourceParser" />
 
-	<category name="com.liferay.portal.xml.SAXReaderFactory">
-		<priority value="WARN" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.theme.ThemeLoader" />
 
-	<category name="com.liferay.portlet.PortletPreferencesImpl">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.tools.DBUpgrader" />
 
-	<category name="com.liferay.portlet.RenderRequestFactory">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.tools.deploy.BaseDeployer" />
 
-	<category name="com.liferay.portlet.RenderResponseFactory">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.tools.deploy.PortletDeployer" />
 
-	<category name="com.liferay.portlet.SecurityPortletContainerWrapper">
-		<priority value="WARN" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.tools.deploy.ThemeDeployer" />
 
-	<category name="com.liferay.portlet.admin">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.tools.sql" />
 
-	<category name="com.liferay.portlet.admin.action.EditServerAction">
-		<priority value="INFO" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.upgrade" />
 
-	<category name="com.liferay.portlet.amazonrankings.AmazonRankingsPreferencesValidator">
-		<priority value="INFO" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.upgrade.UpgradeProcessUtil" />
 
-	<category name="com.liferay.portlet.documentlibrary.lar">
-		<priority value="WARN" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.upgrade.v7_0_0.UpgradePortletSettings" />
 
-	<category name="com.liferay.portlet.documentlibrary.messaging">
-		<priority value="WARN" />
-	</category>
+		<Logger level="WARN" name="com.liferay.portal.upload.UploadServletRequestImpl" />
 
-	<category name="com.liferay.portlet.documentlibrary.sharepoint">
-		<priority value="WARN" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.util" />
 
-	<category name="com.liferay.portlet.documentlibrary.store">
-		<priority value="INFO" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.util.EntityResolver" />
 
-	<category name="com.liferay.portlet.documentlibrary.util">
-		<priority value="WARN" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.util.ExtRegistry" />
 
-	<category name="com.liferay.portlet.documentlibrary.util.DLIndexer">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="WARN" name="com.liferay.portal.util.FileImpl" />
 
-	<category name="com.liferay.portlet.documentlibrary.webdav">
-		<priority value="WARN" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.util.HttpImpl" />
 
-	<category name="com.liferay.portlet.mail">
-		<priority value="WARN" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.util.JarUtil" />
 
-	<category name="com.liferay.portlet.portletconfiguration.action">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="DEBUG" name="com.liferay.portal.util.MaintenanceUtil" />
 
-	<category name="com.liferay.portlet.usersadmin.action.EditUserPortraitAction">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.util.MimeTypesUtil" />
 
-	<category name="com.liferay.portlet.usersadmin.util.OrganizationSearchTerms">
-		<priority value="WARN" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.util.PortalImpl" />
 
-	<category name="com.liferay.portlet.webproxy">
-		<priority value="INFO" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.util.PortalInstances" />
 
-	<category name="com.liferay.resourcesimporter">
-		<priority value="INFO" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.util.PropsUtil" />
 
-	<category name="com.liferay.samplestruts">
-		<priority value="INFO" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.velocity" />
 
-	<category name="com.liferay.sampletest">
-		<priority value="INFO" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.velocity.LiferayResourceLoader" />
 
-	<category name="com.liferay.testhook">
-		<priority value="INFO" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portal.verify" />
 
-	<category name="com.liferay.util.JNDIUtil">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.webdav" />
 
-	<category name="com.liferay.util.dao">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.webserver.WebServerServlet" />
 
-	<category name="com.liferay.util.dao.orm.CustomSQLUtil">
-		<priority value="INFO" />
-	</category>
+		<Logger level="WARN" name="com.liferay.portal.xml.SAXReaderFactory" />
 
-	<category name="com.mchange">
-		<priority value="WARN" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portlet.PortletPreferencesImpl" />
 
-	<category name="com.opensymphony.oscache">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portlet.RenderRequestFactory" />
 
-	<category name="com.opensymphony.oscache.plugins.clustersupport.JavaGroupsBroadcastingListener">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portlet.RenderResponseFactory" />
 
-	<category name="com.sample">
-		<priority value="INFO" />
-	</category>
+		<Logger level="WARN" name="com.liferay.portlet.SecurityPortletContainerWrapper" />
 
-	<category name="com.sun">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portlet.admin" />
 
-	<category name="com.sun.faces">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portlet.admin.action.EditServerAction" />
 
-	<category name="com.zaxxer.hikari">
-		<priority value="WARN" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portlet.amazonrankings.AmazonRankingsPreferencesValidator" />
 
-	<category name="de.hunsicker">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="WARN" name="com.liferay.portlet.documentlibrary.lar" />
 
-	<category name="de.nava.informa">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="WARN" name="com.liferay.portlet.documentlibrary.messaging" />
 
-	<category name="freemarker.beans">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="WARN" name="com.liferay.portlet.documentlibrary.sharepoint" />
 
-	<category name="httpclient.wire">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="INFO" name="com.liferay.portlet.documentlibrary.store" />
 
-	<category name="net.htmlparser.jericho">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="WARN" name="com.liferay.portlet.documentlibrary.util" />
 
-	<category name="net.sf.ehcache">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portlet.documentlibrary.util.DLIndexer" />
 
-	<category name="net.sf.ehcache.config.ConfigurationFactory">
-		<priority value="INFO" />
-	</category>
+		<Logger level="WARN" name="com.liferay.portlet.documentlibrary.webdav" />
 
-	<category name="net.sf.ehcache.config.DiskStoreConfiguration">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="WARN" name="com.liferay.portlet.mail" />
 
-	<category name="net.sf.hibernate">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portlet.portletconfiguration.action" />
 
-	<category name="org.apache.aries.jax.rs.whiteboard.activator.CxfJaxrsBundleActivator">
-		<priority value="WARN" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portlet.usersadmin.action.EditUserPortraitAction" />
 
-	<category name="org.apache.axis">
-		<priority value="INFO" />
-	</category>
+		<Logger level="WARN" name="com.liferay.portlet.usersadmin.util.OrganizationSearchTerms" />
 
-	<category name="org.apache.bsf">
-		<priority value="FATAL" />
-	</category>
-
-	<category name="org.apache.chemistry.opencmis.client.bindings.spi.atompub.HttpUtils">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="org.apache.commons.beanutils">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="org.apache.commons.digester">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="org.apache.commons.fileupload">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="org.apache.commons.validator">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="org.apache.pdfbox">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="org.apache.velocity">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="org.apache.xbean">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="org.hibernate">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="org.hibernate.event.def.AbstractFlushingEventListener">
-		<priority value="OFF" />
-	</category>
-
-	<category name="org.hibernate.util.JDBCExceptionReporter">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="org.jabsorb">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="org.jgroups">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="org.openid4java">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="org.pdfbox">
-		<priority value="INFO" />
-	</category>
-
-	<category name="org.portletbridge">
-		<priority value="INFO" />
-	</category>
-
-	<category name="org.quartz">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="org.springframework">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="org.springframework.aop.support.AopUtils">
-		<priority value="INFO" />
-	</category>
-
-	<category name="osgi.logging">
-		<priority value="WARN" />
-	</category>
-
-	<category name="osgi.logging.org_eclipse_osgi">
-		<priority value="WARN" />
-	</category>
-
-	<category name="portal-web.docroot.errors.404.jsp">
-		<priority value="WARN" />
-	</category>
-
-	<root>
-		<priority value="INFO" />
-
-		<appender-ref ref="CONSOLE" />
-		<appender-ref ref="TEXT_FILE" />
-		<appender-ref ref="XML_FILE" />
-	</root>
-</log4j:configuration>
+		<Logger level="INFO" name="com.liferay.portlet.webproxy" />
+
+		<Logger level="INFO" name="com.liferay.resourcesimporter" />
+
+		<Logger level="INFO" name="com.liferay.samplestruts" />
+
+		<Logger level="INFO" name="com.liferay.sampletest" />
+
+		<Logger level="INFO" name="com.liferay.testhook" />
+
+		<Logger level="ERROR" name="com.liferay.util.JNDIUtil" />
+
+		<Logger level="ERROR" name="com.liferay.util.dao" />
+
+		<Logger level="INFO" name="com.liferay.util.dao.orm.CustomSQLUtil" />
+
+		<Logger level="WARN" name="com.mchange" />
+
+		<Logger level="ERROR" name="com.opensymphony.oscache" />
+
+		<Logger level="ERROR" name="com.opensymphony.oscache.plugins.clustersupport.JavaGroupsBroadcastingListener" />
+
+		<Logger level="INFO" name="com.sample" />
+
+		<Logger level="ERROR" name="com.sun" />
+
+		<Logger level="ERROR" name="com.sun.faces" />
+
+		<Logger level="WARN" name="com.zaxxer.hikari" />
+
+		<Logger level="ERROR" name="de.hunsicker" />
+
+		<Logger level="ERROR" name="de.nava.informa" />
+
+		<Logger level="ERROR" name="freemarker.beans" />
+
+		<Logger level="ERROR" name="httpclient.wire" />
+
+		<Logger level="ERROR" name="net.htmlparser.jericho" />
+
+		<Logger level="ERROR" name="net.sf.ehcache" />
+
+		<Logger level="INFO" name="net.sf.ehcache.config.ConfigurationFactory" />
+
+		<Logger level="ERROR" name="net.sf.ehcache.config.DiskStoreConfiguration" />
+
+		<Logger level="ERROR" name="net.sf.hibernate" />
+
+		<Logger level="WARN" name="org.apache.aries.jax.rs.whiteboard.activator.CxfJaxrsBundleActivator" />
+
+		<Logger level="INFO" name="org.apache.axis" />
+
+		<Logger level="FATAL" name="org.apache.bsf" />
+
+		<Logger level="ERROR" name="org.apache.chemistry.opencmis.client.bindings.spi.atompub.HttpUtils" />
+
+		<Logger level="ERROR" name="org.apache.commons.beanutils" />
+
+		<Logger level="ERROR" name="org.apache.commons.digester" />
+
+		<Logger level="ERROR" name="org.apache.commons.fileupload" />
+
+		<Logger level="ERROR" name="org.apache.commons.validator" />
+
+		<Logger level="ERROR" name="org.apache.pdfbox" />
+
+		<Logger level="ERROR" name="org.apache.velocity" />
+
+		<Logger level="ERROR" name="org.apache.xbean" />
+
+		<Logger level="ERROR" name="org.hibernate" />
+
+		<Logger level="OFF" name="org.hibernate.event.def.AbstractFlushingEventListener" />
+
+		<Logger level="ERROR" name="org.hibernate.util.JDBCExceptionReporter" />
+
+		<Logger level="ERROR" name="org.jabsorb" />
+
+		<Logger level="ERROR" name="org.jgroups" />
+
+		<Logger level="ERROR" name="org.openid4java" />
+
+		<Logger level="INFO" name="org.pdfbox" />
+
+		<Logger level="INFO" name="org.portletbridge" />
+
+		<Logger level="ERROR" name="org.quartz" />
+
+		<Logger level="ERROR" name="org.springframework" />
+
+		<Logger level="INFO" name="org.springframework.aop.support.AopUtils" />
+
+		<Logger level="WARN" name="osgi.logging" />
+
+		<Logger level="WARN" name="osgi.logging.org_eclipse_osgi" />
+
+		<Logger level="WARN" name="portal-web.docroot.errors.404.jsp" />
+
+		<Root level="INFO">
+			<AppenderRef ref="CONSOLE" />
+			<AppenderRef ref="TEXT_FILE" />
+			<AppenderRef ref="XML_FILE" />
+		</Root>
+	</Loggers>
+</Configuration>

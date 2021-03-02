@@ -1,52 +1,29 @@
 <?xml version="1.0"?>
-<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 
-<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
-	<category name="com.liferay.journal">
-		<priority value="ERROR" />
-	</category>
+<Configuration strict="true">
+	<Loggers>
+		<Logger level="ERROR" name="com.liferay.journal" />
 
-	<category name="com.liferay.journal.internal.transformer.RegexTransformerListener">
-		<priority value="INFO" />
-	</category>
+		<Logger level="INFO" name="com.liferay.journal.internal.transformer.RegexTransformerListener" />
 
-	<category name="com.liferay.journal.internal.upgrade.util.JournalArticleImageUpgradeHelper">
-		<priority value="WARN" />
-	</category>
+		<Logger level="WARN" name="com.liferay.journal.internal.upgrade.util.JournalArticleImageUpgradeHelper" />
 
-	<category name="com.liferay.journal.internal.upgrade.v0_0_8.UpgradeArticleAssets">
-		<priority value="WARN" />
-	</category>
+		<Logger level="WARN" name="com.liferay.journal.internal.upgrade.v0_0_8.UpgradeArticleAssets" />
 
-	<category name="com.liferay.journal.internal.upgrade.v1_1_0.UpgradeImageTypeContent">
-		<priority value="INFO" />
-	</category>
+		<Logger level="INFO" name="com.liferay.journal.internal.upgrade.v1_1_0.UpgradeImageTypeContent" />
 
-	<category name="com.liferay.journal.internal.upgrade.v1_1_0.UpgradeJournalArticleLocalizedValues">
-		<priority value="WARN" />
-	</category>
+		<Logger level="WARN" name="com.liferay.journal.internal.upgrade.v1_1_0.UpgradeJournalArticleLocalizedValues" />
 
-	<category name="com.liferay.journal.internal.upgrade.v1_1_5.UpgradeContentImages">
-		<priority value="WARN" />
-	</category>
+		<Logger level="WARN" name="com.liferay.journal.internal.upgrade.v1_1_5.UpgradeContentImages" />
 
-	<category name="com.liferay.journal.internal.upgrade.v3_0_0.UpgradeJournalArticleImage">
-		<priority value="INFO" />
-	</category>
+		<Logger level="INFO" name="com.liferay.journal.internal.upgrade.v3_0_0.UpgradeJournalArticleImage" />
 
-	<category name="com.liferay.journal.internal.util.JournalUtil">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.journal.internal.util.JournalUtil" />
 
-	<category name="com.liferay.journal.lar">
-		<priority value="WARN" />
-	</category>
+		<Logger level="WARN" name="com.liferay.journal.lar" />
 
-	<category name="com.liferay.journal.service.impl.JournalContentSearchLocalServiceImpl">
-		<priority value="INFO" />
-	</category>
+		<Logger level="INFO" name="com.liferay.journal.service.impl.JournalContentSearchLocalServiceImpl" />
 
-	<category name="com.liferay.journal.util.JournalContent">
-		<priority value="ERROR" />
-	</category>
-</log4j:configuration>
+		<Logger level="ERROR" name="com.liferay.journal.util.JournalContent" />
+	</Loggers>
+</Configuration>

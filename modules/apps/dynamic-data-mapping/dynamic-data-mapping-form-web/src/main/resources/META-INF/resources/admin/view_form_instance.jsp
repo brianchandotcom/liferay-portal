@@ -161,7 +161,7 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 	</aui:form>
 </clay:container-fluid>
 
-<aui:script require='<%= mainRequire + "/admin/js/components/ShareFormModal/ShareFormModal.es as ShareFormModal" %>'>
+<aui:script require='<%= mainRequire + "/admin/js/components/ShareFormModal/openShareFormModal.es as Modal" %>'>
 	var spritemap = themeDisplay.getPathThemeImages() + '/clay/icons.svg';
 
 	var afterOpenShareFormModal = function (data) {
@@ -170,31 +170,15 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 			spritemap: spritemap,
 		};
 
-		var shareFormModal = new ShareFormModal.default({
+		Modal.openShareFormModal({
 			autocompleteUserURL:
 				'<%= ddmFormAdminDisplayContext.getAutocompleteUserURL() %>',
-			events: {
-				shareFormModalClosed: function (event) {
-					event.preventDefault();
-					event.stopPropagation();
-
-					var overlayElement = document.querySelector('.modal-backdrop');
-
-					if (overlayElement) {
-						overlayElement.remove();
-					}
-
-					shareFormModal.dispose();
-				},
-			},
 			localizedName: data.localizedName,
 			portletNamespace: '<portlet:namespace />',
 			shareFormInstanceURL: data.shareFormInstanceURL,
 			spritemap: spritemap,
 			url: data.url,
 		});
-
-		shareFormModal.open();
 	};
 
 	Liferay.after(

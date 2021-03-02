@@ -35,14 +35,17 @@ import React, {
 import {FormInfo} from '../components/FormInfo.es';
 import {ManagementToolbar} from '../components/ManagementToolbar.es';
 import {MetalSidebarAdapter} from '../components/MetalSidebarAdapter.es';
+import ShareFormModalBody from '../components/ShareFormModal/ShareFormModalBody.es';
 import {TranslationManager} from '../components/TranslationManager.es';
 import {useAutoSave} from '../hooks/useAutoSave.es';
 import {useToast} from '../hooks/useToast.es';
 import fieldDelete from '../thunks/fieldDelete.es';
 import {createFormURL} from '../util/form.es';
+import {submitEmailContent} from '../util/submitEmailContent.es';
 
 export const FormBuilder = () => {
 	const {
+		autocompleteUserURL,
 		dataEngineSidebar,
 		formInstanceId,
 		portletNamespace,
@@ -50,16 +53,19 @@ export const FormBuilder = () => {
 		published,
 		redirectURL,
 		restrictedFormURL,
+		shareFormInstanceURL,
 		sharedFormURL,
 		showPublishAlert,
 		sidebarPanels,
 		view,
 	} = useConfig();
+
 	const {
 		activePage,
 		editingLanguageId,
 		fieldSets,
 		focusedField,
+		localizedName,
 		pages,
 		rules,
 	} = useFormState();
@@ -71,6 +77,15 @@ export const FormBuilder = () => {
 	});
 
 	const dispatch = useForm();
+
+	const emailContent = useRef({
+		addresses: [],
+		message: Liferay.Util.sub(
+			Liferay.Language.get('please-fill-out-this-form-x'),
+			sharedFormURL
+		),
+		subject: localizedName[themeDisplay.getLanguageId()],
+	});
 
 	const {doSave, doSyncInput} = useAutoSave();
 
@@ -206,7 +221,62 @@ export const FormBuilder = () => {
 		[portletNamespace, subtmitForm]
 	);
 
-	const onShareClick = useCallback(() => {}, []);
+	const onShareClick = useCallback(async () => {
+		const url = await getFormUrl();
+
+		if (published) {
+			modalDispatch({
+				payload: {
+					body: (
+						<ShareFormModalBody
+							autocompleteUserURL={autocompleteUserURL}
+							emailContent={emailContent}
+							localizedName={localizedName}
+							url={url}
+						/>
+					),
+					footer: [
+						null,
+						null,
+						<ClayButton.Group key={1} spaced>
+							<ClayButton
+								displayType="secondary"
+								onClick={() => onClose()}
+							>
+								{Liferay.Language.get('cancel')}
+							</ClayButton>
+							<ClayButton
+								displayType="primary"
+								onClick={() => {
+									submitEmailContent({
+										...emailContent.current,
+										portletNamespace,
+										shareFormInstanceURL,
+									});
+
+									onClose();
+								}}
+							>
+								{Liferay.Language.get('done')}
+							</ClayButton>
+						</ClayButton.Group>,
+					],
+					header: Liferay.Language.get('share'),
+					size: 'lg',
+				},
+				type: 1,
+			});
+		}
+	}, [
+		autocompleteUserURL,
+		getFormUrl,
+		localizedName,
+		modalDispatch,
+		onClose,
+		portletNamespace,
+		published,
+		shareFormInstanceURL,
+	]);
 
 	return (
 		<>

@@ -148,7 +148,7 @@ export const ManagementToolbar = ({
 		'click',
 		onShareClick,
 		true,
-		document.querySelector('.lfr-ddm-save-button')
+		document.querySelector('.lfr-ddm-share-url-button')
 	);
 
 	return null;

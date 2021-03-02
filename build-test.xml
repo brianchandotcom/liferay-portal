@@ -5509,9 +5509,20 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 				todir="${liferay.home}/deploy"
 			/>
 
-			<get-ip-address />
-			<get-mac-address />
+			<if>
+				<equals arg1="@{custom.commerce.license}" arg2="commerce-license-developer-ipaddress.xml" />
+				<then>
+					<get-ip-address />
+				</then>
+			</if>
 
+			<if>
+				<equals arg1="@{custom.commerce.license}" arg2="commerce-license-developer-macaddress.xml" />
+				<then>
+					<get-mac-address />
+				</then>
+			</if>
+			
 			<beanshell>
 				<![CDATA[
 					import java.time.format.DateTimeFormatter;

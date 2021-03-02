@@ -18,4 +18,7 @@ package com.liferay.petra.portlet.url;
  * @author Hugo Huijser
  */
 public interface PortletURL extends javax.portlet.PortletURL {
+
+	public void setParameter(String name, Object value);
+
 }

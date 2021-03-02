@@ -87,6 +87,11 @@ public class PortletURLImpl implements PortletURL {
 	}
 
 	@Override
+	public void setParameter(String name, Object value) {
+		_liferayPortletURL.setParameter(name, String.valueOf(value));
+	}
+
+	@Override
 	public void setParameter(String name, String value) {
 		_liferayPortletURL.setParameter(name, value);
 	}

@@ -1198,6 +1198,10 @@ public abstract class TopLevelBuild extends BaseBuild {
 		Element summaryElement = Dom4JUtil.getNewElement(
 			"div", null,
 			Dom4JUtil.getNewElement(
+				"p", null,
+				Dom4JUtil.getNewAnchorElement(
+					_URL_CI_SYSTEM_STATUS, "CI System Status")),
+			Dom4JUtil.getNewElement(
 				"p", null, "Start Time: ",
 				toJenkinsReportDateString(
 					new Date(getStartTime()), getJenkinsReportTimeZoneName())),
@@ -1827,6 +1831,9 @@ public abstract class TopLevelBuild extends BaseBuild {
 
 	private static final String _URL_CHART_JS =
 		"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js";
+
+	private static final String _URL_CI_SYSTEM_STATUS =
+		"http://test-1-0/userContent/reports/ci-system-status/index.html";
 
 	private static final ExecutorService _executorService =
 		JenkinsResultsParserUtil.getNewThreadPoolExecutor(10, true);

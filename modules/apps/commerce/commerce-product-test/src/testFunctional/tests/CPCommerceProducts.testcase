@@ -48,9 +48,19 @@ definition {
 		CPCommerceCatalog.newOptionsEntry(
 			optionDescription = "Option Description",
 			optionFieldType = "Select from List",
-			optionName = "Color",
-			optionValuesList = "Black",
-			valuePriority = "1");
+			optionName = "Color");
+
+		Button.clickSave();
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+
+		CommerceEntry.viewOptionsEntry(
+            optionDescription = "Option Description",
+            optionName = "Color");
+
+		CPCommerceCatalog.addOptionValues(
+            optionEntryName = "Color",
+            optionValuesList = "Black:1");
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

@@ -40,6 +40,12 @@ definition {
 			locator1 = "Translation#LOCALIZATION_NAME");
 	}
 
+	macro checkOut {
+		Button.clickCheckOut();
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro clickEditFromEllipsis {
 		Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 

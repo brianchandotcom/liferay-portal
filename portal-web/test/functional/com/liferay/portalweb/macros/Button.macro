@@ -26,6 +26,10 @@ definition {
 		Button.click(button = "Cancel");
 	}
 
+	macro clickCheckOut {
+		Click(locator1 = "Button#CHECKOUT");
+	}
+
 	macro clickComment {
 		Click(locator1 = "Button#COMMENT");
 	}

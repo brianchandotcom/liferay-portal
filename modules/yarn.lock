@@ -1600,45 +1600,10 @@
     source-map "^0.7.3"
     webpack "^5.4.0"
 
-"@liferay/npm-bundler-preset-liferay-dev@4.7.0":
-  version "4.7.0"
-  resolved "https://registry.yarnpkg.com/@liferay/npm-bundler-preset-liferay-dev/-/npm-bundler-preset-liferay-dev-4.7.0.tgz#454c8f6397b0dddd40c2cf707530aad4b157d782"
-  integrity sha512-sC5Jz2tM4EFy5o8KUZ0CRObWfW+LnNWMKvmzgBoJAvZ7zo0QcWXTfAIo328hkNh4JKo2Cbpv0iq9PSeV7U6QPQ==
-  dependencies:
-    babel-preset-liferay-standard "2.23.0"
-    liferay-npm-bundler-loader-css-loader "2.23.0"
-    liferay-npm-bundler-plugin-exclude-imports "2.23.0"
-    liferay-npm-bundler-plugin-inject-imports-dependencies "2.23.0"
-    liferay-npm-bundler-plugin-inject-peer-dependencies "2.23.0"
-    liferay-npm-bundler-plugin-namespace-packages "2.23.0"
-    liferay-npm-bundler-plugin-replace-browser-modules "2.23.0"
-    liferay-npm-bundler-plugin-resolve-linked-dependencies "2.23.0"
-
-"@liferay/npm-bundler@3.1.0-pre.0":
-  version "3.1.0-pre.0"
-  resolved "https://registry.yarnpkg.com/@liferay/npm-bundler/-/npm-bundler-3.1.0-pre.0.tgz#fa872926080fac751c4c998abd01d5f4a1b48276"
-  integrity sha512-FY+pX7kywrao81vbWy7l7MvszG56Lgl/NC1nVXxyST4UKB2xSN3H7GGayfzEHjsav9oVIxlSNinWrnt3K1mbrg==
-  dependencies:
-    "@liferay/js-toolkit-core" "3.0.1-pre.1"
-    acorn "^6.2.1"
-    cross-spawn "^7.0.0"
-    ejs "^2.6.1"
-    escodegen "^1.14.1"
-    estraverse "^4.3.0"
-    fs-extra "^8.1.0"
-    globby "^11.0.1"
-    jszip "^3.1.5"
-    pretty-time "^1.1.0"
-    read-json-sync "^2.0.1"
-    source-map "^0.7.3"
-    webpack "^5.4.0"
-    xml-js "^1.6.8"
-    yargs "^14.0.0"
-
-"@liferay/npm-scripts@37.1.2":
-  version "37.1.2"
-  resolved "https://registry.yarnpkg.com/@liferay/npm-scripts/-/npm-scripts-37.1.2.tgz#60e815043cd7b88c5c71d30f8fe5c7ea8933e286"
-  integrity sha512-SNJ/6QvB405C4CLU3QNchlKu4dhFY/eA0m5CtaDwEFXXNzkOP619wch2It7hQhcNV2tJPv107n0kn/MymKfSDg==
+"@liferay/npm-scripts@38.0.0":
+  version "38.0.0"
+  resolved "https://registry.yarnpkg.com/@liferay/npm-scripts/-/npm-scripts-38.0.0.tgz#490cc60b4c645f4cb6fec958b7504a53ac617e0b"
+  integrity sha512-dXj0170En5TmW9XrTkN3h92hywKSOXj6SKUPA9INiVxGcX+Mrtijk9PUEjHN6NosCgkVyov0adf8dGKqvPZZ8A==
   dependencies:
     "@babel/cli" "^7.2.3"
     "@babel/core" "^7.8.3"
@@ -1653,7 +1618,6 @@
     "@liferay/eslint-config" "21.3.0"
     "@liferay/jest-junit-reporter" "1.2.0"
     "@liferay/js-toolkit-core" "3.0.1-pre.1"
-    "@liferay/npm-bundler-preset-liferay-dev" "4.7.0"
     "@testing-library/dom" "^5.6.1"
     "@testing-library/jest-dom" "^4.2.4"
     "@testing-library/react" "^8.0.9"
@@ -1664,6 +1628,7 @@
     babel-jest "^25.1.0"
     babel-loader "^8.1.0"
     babel-plugin-transform-react-remove-prop-types "0.4.24"
+    babel-preset-liferay-standard "2.23.0"
     bourbon "4.2.3"
     cosmiconfig "^7.0.0"
     cross-env "^7.0.0"
@@ -1683,7 +1648,14 @@
     liferay-lang-key-dev-loader "^1.0.3"
     liferay-npm-bridge-generator "2.23.0"
     liferay-npm-bundler "2.23.0"
-    liferay-theme-tasks "10.2.0"
+    liferay-npm-bundler-loader-css-loader "2.23.0"
+    liferay-npm-bundler-plugin-exclude-imports "2.23.0"
+    liferay-npm-bundler-plugin-inject-imports-dependencies "2.23.0"
+    liferay-npm-bundler-plugin-inject-peer-dependencies "2.23.0"
+    liferay-npm-bundler-plugin-namespace-packages "2.23.0"
+    liferay-npm-bundler-plugin-replace-browser-modules "2.23.0"
+    liferay-npm-bundler-plugin-resolve-linked-dependencies "2.23.0"
+    liferay-theme-tasks "10.3.0"
     metal-tools-soy "4.3.2"
     mini-css-extract-plugin "0.11.2"
     minimist "^1.2.0"
@@ -5615,11 +5587,6 @@ ee-first@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
   integrity sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=
-
-ejs@^2.6.1:
-  version "2.7.4"
-  resolved "https://registry.yarnpkg.com/ejs/-/ejs-2.7.4.tgz#48661287573dcc53e366c7a1ae52c3a120eec9ba"
-  integrity sha512-7vmuyh5+kuUyJKePhQfRQBhXV5Ce+RnaeeQArKu1EAMpL3WbgMt5WG6uQZpEVvYSSsxMXRKOewtDk9RaTKXRlA==
 
 electron-to-chromium@^1.3.591:
   version "1.3.597"
@@ -9608,10 +9575,10 @@ liferay-npm-bundler@2.23.0:
     xml-js "^1.6.8"
     yargs "^14.0.0"
 
-liferay-theme-tasks@10.2.0:
-  version "10.2.0"
-  resolved "https://registry.yarnpkg.com/liferay-theme-tasks/-/liferay-theme-tasks-10.2.0.tgz#b4132b9f655889afca8eee184702d29556a9009e"
-  integrity sha512-ra1bqaGX4Pw3I5UaqyYronyP6MkhZFKe+2wtOpYqwSlXkvfpQKf9B4xG7i7D+1G5SPCerjg6WRd5iBJnbnDeqQ==
+liferay-theme-tasks@10.3.0:
+  version "10.3.0"
+  resolved "https://registry.yarnpkg.com/liferay-theme-tasks/-/liferay-theme-tasks-10.3.0.tgz#4436d52ea80ba459fabfdeaa54e95c58fda431d2"
+  integrity sha512-Qc+Ysb1IDRv4fxiZ28hRpZU0ExPSAMlJDT4fhbO80gRXcpWWwB80NTxfwfbvxFm7jQSRqWJf+qtHP4p2+4lhew==
   dependencies:
     ansi-colors "^4.1.1"
     async "^2.6.1"
@@ -9648,6 +9615,7 @@ liferay-theme-tasks@10.2.0:
     plugin-error "^1.0.1"
     portfinder "^1.0.20"
     resolve "^1.15.1"
+    sass "^1.30.0"
     tar-fs "^1.16.3"
     through2 "^2.0.0"
     tiny-lr "^1.1.1"
@@ -12327,11 +12295,6 @@ qs@^6.4.0, qs@^6.9.4, qs@^6.9.6:
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.9.6.tgz#26ed3c8243a431b2924aca84cc90471f35d5a0ee"
   integrity sha512-TIRk4aqYLNoJUbd+g2lEdz5kLWIuTMRagAXxl78Q0RiVjAOugHmeKNGdd3cwo/ktpf9aL9epCfFqWDEKysUlLQ==
 
-qs@^6.9.6:
-  version "6.9.6"
-  resolved "https://registry.yarnpkg.com/qs/-/qs-6.9.6.tgz#26ed3c8243a431b2924aca84cc90471f35d5a0ee"
-  integrity sha512-TIRk4aqYLNoJUbd+g2lEdz5kLWIuTMRagAXxl78Q0RiVjAOugHmeKNGdd3cwo/ktpf9aL9epCfFqWDEKysUlLQ==
-
 qs@~6.5.2:
   version "6.5.2"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.2.tgz#cb3ae806e8740444584ef154ce8ee98d403f3e36"
@@ -13445,10 +13408,10 @@ sass-loader@^8.0.2:
     schema-utils "^2.6.1"
     semver "^6.3.0"
 
-sass@^1.29.0:
-  version "1.32.2"
-  resolved "https://registry.yarnpkg.com/sass/-/sass-1.32.2.tgz#66dc0250bc86c15d19ddee7135e93d0cf3d3257b"
-  integrity sha512-u1pUuzqwz3SAgvHSWp1k0mRhX82b2DdlVnP6UIetQPZtYbuJUDaPQhZE12jyjB7vYeOScfz9WPsZJB6Rpk7heA==
+sass@^1.29.0, sass@^1.30.0:
+  version "1.32.8"
+  resolved "https://registry.yarnpkg.com/sass/-/sass-1.32.8.tgz#f16a9abd8dc530add8834e506878a2808c037bdc"
+  integrity sha512-Sl6mIeGpzjIUZqvKnKETfMf0iDAswD9TNlv13A7aAF3XZlRPMq4VvJWBC2N2DXbp94MQVdNSFG6LfF/iOXrPHQ==
   dependencies:
     chokidar ">=2.0.0 <4.0.0"
 

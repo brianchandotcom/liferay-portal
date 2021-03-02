@@ -166,27 +166,27 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 			String testrayProjectName = _getTestrayProjectName(testSuiteName);
 
 			if (testrayProjectName != null) {
-				String testrayBuildType = JenkinsResultsParserUtil.combine(
+				String testrayRoutineName = JenkinsResultsParserUtil.combine(
 					"[", buildData.getPortalUpstreamBranchName(), "] ci:test:",
 					testSuiteName);
 
 				String testraybuildName = JenkinsResultsParserUtil.combine(
-					testrayBuildType, " - ",
+					testrayRoutineName, " - ",
 					String.valueOf(buildData.getBuildNumber()), " - ",
 					JenkinsResultsParserUtil.toDateString(
 						new Date(buildData.getStartTime()),
 						"yyyy-MM-dd[HH:mm:ss]", "America/Los_Angeles"));
 
-				if (_getTestrayBuildType(testSuiteName) != null) {
-					testrayBuildType = _getTestrayBuildType(testSuiteName);
+				if (_getTestrayRoutineName(testSuiteName) != null) {
+					testrayRoutineName = _getTestrayRoutineName(testSuiteName);
 				}
 
 				invocationParameters.put(
 					"TESTRAY_BUILD_NAME", testraybuildName);
 				invocationParameters.put(
-					"TESTRAY_BUILD_TYPE", testrayBuildType);
-				invocationParameters.put(
 					"TESTRAY_PROJECT_NAME", testrayProjectName);
+				invocationParameters.put(
+					"TESTRAY_ROUTINE_NAME", testrayRoutineName);
 			}
 
 			invocationParameters.putAll(buildData.getBuildParameters());
@@ -350,24 +350,6 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 		return _selectedTestSuiteNames;
 	}
 
-	private String _getTestrayBuildType(String testSuite) {
-		try {
-			Properties buildProperties =
-				JenkinsResultsParserUtil.getBuildProperties();
-
-			S buildData = getBuildData();
-
-			return buildProperties.getProperty(
-				JenkinsResultsParserUtil.combine(
-					"portal.testsuite.upstream.testray.build.type[",
-					buildData.getPortalUpstreamBranchName(), "][", testSuite,
-					"]"));
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-	}
-
 	private String _getTestrayProjectName(String testSuite) {
 		try {
 			Properties buildProperties =
@@ -380,6 +362,36 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 					"portal.testsuite.upstream.testray.project.name[",
 					buildData.getPortalUpstreamBranchName(), "][", testSuite,
 					"]"));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
+	private String _getTestrayRoutineName(String testSuite) {
+		try {
+			Properties buildProperties =
+				JenkinsResultsParserUtil.getBuildProperties();
+
+			S buildData = getBuildData();
+
+			String testrayRoutineName = JenkinsResultsParserUtil.getProperty(
+				buildProperties,
+				JenkinsResultsParserUtil.combine(
+					"portal.testsuite.upstream.testray.routine.name[",
+					buildData.getPortalUpstreamBranchName(), "][", testSuite,
+					"]"));
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(testrayRoutineName)) {
+				testrayRoutineName = JenkinsResultsParserUtil.getProperty(
+					buildProperties,
+					JenkinsResultsParserUtil.combine(
+						"portal.testsuite.upstream.testray.build.type[",
+						buildData.getPortalUpstreamBranchName(), "][",
+						testSuite, "]"));
+			}
+
+			return testrayRoutineName;
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

@@ -152,9 +152,9 @@ public class PortalTestSuiteUpstreamControllerSingleSuiteBuildRunner
 			invocationParameters.put(
 				"TESTRAY_BUILD_NAME", buildData.getTestrayBuildName());
 			invocationParameters.put(
-				"TESTRAY_BUILD_TYPE", buildData.getTestrayBuildType());
-			invocationParameters.put(
 				"TESTRAY_PROJECT_NAME", testrayProjectName);
+			invocationParameters.put(
+				"TESTRAY_ROUTINE_NAME", buildData.getTestrayRoutineName());
 		}
 
 		invocationParameters.putAll(buildData.getBuildParameters());

@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
 import java.util.Date;
@@ -139,7 +140,13 @@ public class LayoutAnalyticsReportsInfoItem
 
 	@Override
 	public String getTitle(Layout layout, Locale locale) {
-		return layout.getTitle(locale);
+		return Optional.ofNullable(
+			layout.getTitle(locale)
+		).filter(
+			Validator::isNotNull
+		).orElseGet(
+			() -> layout.getName(locale)
+		);
 	}
 
 	@Override

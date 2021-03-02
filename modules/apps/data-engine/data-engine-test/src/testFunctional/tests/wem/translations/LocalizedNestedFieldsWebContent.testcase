@@ -661,101 +661,7 @@ definition {
 			structureDescription = "Testing",
 			structureName = "Testing");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
-
-		DataEngine.addFieldNested(
-			fieldFieldLabel = "Select from List",
-			fieldName = "Select from List",
-			targetFieldLabel = "Text");
-
-		var index = "1";
-		for (var optionValue : list "List 1,List 2") {
-			DataEngine.addFieldOption(
-				fieldFieldLabel = "Select from List",
-				index = "${index}",
-				optionValue = "${optionValue}");
-			var index = ${index} + 1;
-		}
-
-		DataEngine.addFieldNested(
-			fieldFieldLabel = "Single Selection",
-			fieldName = "Single Selection",
-			targetFieldGroupLabel = "Fields Group");
-
-		var index = "1";
-		for (var optionValue : list "Choice 1,Choice 2") {
-			DataEngine.addFieldOption(
-				fieldFieldLabel = "Single Selection",
-				index = "${index}",
-				optionValue = "${optionValue}");
-			var index = ${index} + 1;
-		}
-
-		DataEngine.addFieldNested(
-			fieldFieldLabel = "Multiple Selection",
-			fieldName = "Multiple Selection",
-			targetFieldGroupLabel = "Fields Group");
-
-		var index = "1";
-		for (var optionValue : list "Value 1,Value 2") {
-			DataEngine.addFieldOption(
-				fieldFieldLabel = "Multiple Selection",
-				index = "${index}",
-				optionValue = "${optionValue}");
-			var index = ${index} + 1;
-		}
-
-		DataEngine.addFieldNested(
-			fieldFieldLabel = "Numeric",
-			fieldName = "Numeric",
-			targetFieldGroupLabel = "Fields Group");
-
-		DataEngine.addFieldNested(
-			fieldFieldLabel = "Date",
-			fieldName = "Date",
-			targetFieldGroupLabel = "Fields Group");
-
-		DataEngine.addFieldNested(
-			fieldFieldLabel = "Image",
-			fieldName = "Image",
-			targetFieldGroupLabel = "Fields Group");
-
-		DataEngine.addFieldNested(
-			fieldFieldLabel = "Rich Text",
-			fieldName = "Rich Text",
-			targetFieldGroupLabel = "Fields Group");
-
-		DataEngine.addFieldNested(
-			fieldFieldLabel = "Upload",
-			fieldName = "Upload",
-			targetFieldGroupLabel = "Fields Group");
-
-		DataEngine.addFieldNested(
-			fieldFieldLabel = "Color",
-			fieldName = "Color",
-			targetFieldGroupLabel = "Fields Group");
-
-		DataEngine.addFieldNested(
-			fieldFieldLabel = "Web Content",
-			fieldName = "Web Content",
-			targetFieldGroupLabel = "Fields Group");
-
-		DataEngine.addFieldNested(
-			fieldFieldLabel = "Geolocation",
-			fieldName = "Geolocation",
-			targetFieldGroupLabel = "Fields Group");
-
-		DataEngine.addFieldNested(
-			fieldFieldLabel = "Link to Page",
-			fieldName = "Link to Page",
-			targetFieldGroupLabel = "Fields Group");
-
-		DataEngine.addFieldNested(
-			fieldFieldLabel = "Separator",
-			fieldName = "Separator",
-			targetFieldGroupLabel = "Fields Group");
+		DataEngine.addFieldGroupWithFields(fieldNameList = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page,Separator");
 
 		WebContentStructures.saveCP(structureName = "Testing");
 
@@ -768,11 +674,11 @@ definition {
 		WebContent.addWithStructureCP(
 			webContentColor = "FF0D0D",
 			webContentDate = "02/19/2021",
-			webContentMultipleSelection = "Value 1",
+			webContentMultipleSelection = "Option 1",
 			webContentNumeric = "17",
 			webContentRichText = "This is a Rich Text field",
-			webContentSelectFromList = "List 2",
-			webContentSingleSelection = "Choice 1",
+			webContentSelectFromList = "Option 2",
+			webContentSingleSelection = "Option 1",
 			webContentText = "This is a Text field",
 			webContentTitle = "Testing");
 
@@ -780,11 +686,11 @@ definition {
 
 		WebContent.addWithStructureCP(
 			webContentColor = "000000",
-			webContentMultipleSelection = "Value 2",
+			webContentMultipleSelection = "Option 2",
 			webContentNumeric = "13",
 			webContentRichText = "Este é um campo de texto completo",
-			webContentSelectFromList = "List 1",
-			webContentSingleSelection = "Choice 2",
+			webContentSelectFromList = "Option 1",
+			webContentSingleSelection = "Option 2",
 			webContentText = "Este é um campo de texto",
 			webContentTitle = "Testando");
 
@@ -793,10 +699,10 @@ definition {
 		WebContent.viewWithStructureCP(
 			webContentColor = "FF0D0D",
 			webContentDate = "02/19/2021",
-			webContentMultipleSelection = "Value 1",
+			webContentMultipleSelection = "Option 1",
 			webContentNumeric = "17",
-			webContentSelectFromList = "List 2",
-			webContentSingleSelection = "Choice 1",
+			webContentSelectFromList = "Option 2",
+			webContentSingleSelection = "Option 1",
 			webContentText = "This is a Text field",
 			webContentTitle = "Testing");
 

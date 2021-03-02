@@ -80,7 +80,13 @@ export default function ImageSourcePanel({item}) {
 					editableValues: setIn(
 						editableValues,
 						[item.editableValueNamespace, item.editableId],
-						{}
+						{
+							config: {
+								...(editableValue.config || {}),
+								alt: {},
+								imageConfiguration: {},
+							},
+						}
 					),
 					fragmentEntryLinkId: item.fragmentEntryLinkId,
 					languageId,
@@ -172,21 +178,28 @@ function DirectImagePanel({item}) {
 			: editableConfig.alt || '';
 
 	const handleImageChanged = (nextImage) => {
-		const nextEditableValue = {
-			...editableValue,
+		let nextEditableValue;
 
-			config: {
-				alt: {[languageId]: ''},
-				imageConfiguration: {},
-			},
-			[languageId]: nextImage,
-		};
+		if (isMapped(editableValue) || isMapped(nextImage)) {
+			nextEditableValue = {
+				config: setIn(editableValue.config, ['alt'], {}),
+				...nextImage,
+			};
+		}
+		else {
+			nextEditableValue = setIn(
+				editableValue,
+				['config', 'alt', languageId],
+				''
+			);
 
-		delete nextEditableValue.classNameId;
-		delete nextEditableValue.classPK;
-		delete nextEditableValue.collectionFieldId;
-		delete nextEditableValue.fieldId;
-		delete nextEditableValue.mappedField;
+			if (nextImage) {
+				nextEditableValue[languageId] = nextImage;
+			}
+			else {
+				delete nextEditableValue[languageId];
+			}
+		}
 
 		dispatch(
 			updateEditableValuesThunk({
@@ -239,11 +252,7 @@ function DirectImagePanel({item}) {
 				imageTitle={imageTitle}
 				label={Liferay.Language.get('image')}
 				onClearButtonPressed={() => {
-					handleImageChanged({
-						fileEntryId: '',
-						title: '',
-						url: '',
-					});
+					handleImageChanged(null);
 				}}
 				onImageSelected={handleImageChanged}
 			/>

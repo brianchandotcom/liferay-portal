@@ -204,4 +204,167 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-125191. The image resolution is applied to directly selected image in fragment with image editable field in display page template."
+	@priority = "5"
+	test ViewAutoImageResolutionForImageDirectlySelectedInCard {
+		task ("Add a display page template with Web Content Article and Basic Web Content") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+		}
+
+		task ("Add a Card fragment to display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Card");
+		}
+
+		task ("Directly select an image with width greater than 2000px in Card fragment") {
+			PageEditor.editFragmentImage(
+				fileName = "high_resolution_photo.jpg",
+				fragmentName = "Card",
+				id = "01-img");
+
+			PageEditor.viewFragmentEditableImage(
+				id = "01-img",
+				imageDescription = "",
+				imageFileName = "high_resolution_photo.jpg");
+		}
+
+		task ("Take down the Width and File Size of image resolution in Desktop viewport") {
+			var fileSizeDesktop = PageEditor.getFileSizeOfSelectedImageResolution();
+			var width = PageEditor.getWidthOfSelectedImageResolution();
+		}
+
+		task ("Assert Auto image resolution is selected") {
+			AssertSelectedLabel(
+				key_fieldLabel = "Resolution",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Auto");
+		}
+
+		task ("Assert the Width and File Size of image resolution equal with orignal image") {
+			TestUtils.assertEquals(
+				actual = "${width}",
+				expected = "5464");
+
+			TestUtils.assertEquals(
+				actual = "${fileSizeDesktop}",
+				expected = "4405");
+		}
+
+		task ("Change to the Landscape Phone viewport") {
+			Click(
+				key_deviceType = "Landscape Phone",
+				locator1 = "PageEditor#DEVICE_TYPE");
+
+			Pause(locator1 = "3000");
+		}
+
+		task ("Take down the Width and File Size of image resolution in Landscape Phone viewport") {
+			var fileSizeLandscapePhone = PageEditor.getFileSizeOfSelectedImageResolution();
+			var width = PageEditor.getWidthOfSelectedImageResolution();
+		}
+
+		task ("Assert Auto image resolution is selected") {
+			AssertSelectedLabel(
+				key_fieldLabel = "Resolution",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Auto");
+		}
+
+		task ("Assert the Width of selected image resolution is 1000px") {
+			TestUtils.assertEquals(
+				actual = "${width}",
+				expected = "1000");
+		}
+
+		task ("Assert the File Size become smaller than Desktop viewport") {
+			TestUtils.isGreaterThan(
+				actual = "${fileSizeDesktop}",
+				expected = "${fileSizeLandscapePhone}");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a web content based on Basic Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Select Display Page Name as Specific Display Page Template") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+			WebContent.editDisplayPage(
+				pageName = "Display Page Name",
+				pageType = "Display Page Templates");
+
+			PortletEntry.publish();
+		}
+
+		task ("View Content in display page template") {
+			WebContentNavigator.gotoEntryMenuItem(
+				entry = "Web Content Title",
+				menuItem = "View Content");
+
+			AssertTextEquals(
+				locator1 = "ControlMenu#HEADING",
+				value1 = "Display Page Name");
+		}
+
+		task ("Select Desktop Device in simulation menu") {
+			MobileDevice.previewPG(deviceType = "desktop");
+		}
+
+		task ("Assert the mapping image is shown in Preview modal") {
+			PageEditor.viewFragmentEditableImage(
+				id = "01-img",
+				imageDescription = "",
+				imageFileName = "high_resolution_photo.jpg");
+		}
+
+		task ("Assert the orignal image is selected automatically") {
+			PageEditor.assertAutoImageResolution(
+				adaptiveMediaName = "/documents/",
+				element = "//img[contains(@data-lfr-editable-id,'01-img') and contains(@src,'high_resolution_photo.jpg')]");
+		}
+
+		task ("Change to the Tablet Device in simulation menu") {
+			SelectFrameTop();
+
+			Click(
+				key_deviceType = "tablet",
+				locator1 = "ControlMenuPreviewPanel#PREVIEW_DATA_DEVICE_BUTTON");
+
+			AssertElementPresent(
+				key_deviceType = "tablet",
+				locator1 = "ControlMenuPreviewPanel#PREVIEW_DEVICE_IFRAME");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "//iframe[@id='simulationDeviceIframe']");
+		}
+
+		task ("Assert the mapping image is shown in Preview modal") {
+			PageEditor.viewFragmentEditableImage(
+				id = "01-img",
+				imageDescription = "",
+				imageFileName = "high_resolution_photo.jpg");
+		}
+
+		task ("Assert the Preview-1000x0 is selected automatically") {
+			PageEditor.assertAutoImageResolution(
+				adaptiveMediaName = "/Preview-1000x0/",
+				element = "//img[contains(@data-lfr-editable-id,'01-img') and contains(@src,'high_resolution_photo.jpg')]");
+		}
+	}
+
 }

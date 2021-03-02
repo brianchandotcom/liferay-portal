@@ -651,25 +651,19 @@ definition {
 	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
 	@priority = "5"
 	test TranslateWebContentWithAllFieldsNested {
-		property portal.acceptance = "false";
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(
-			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name");
+		WebContentStructures.addCP(structureName = "WC Structure Name");
 
 		DataEngine.addFieldGroupWithFields(fieldNameList = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page,Separator");
 
-		WebContentStructures.saveCP(structureName = "WC Structure Name");
+		WebContentStructures.saveCP();
 
 		NavItem.gotoWebContent();
 
 		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "WC Structure Name");
-
-		PortletEntry.inputTitle(title = "Web Content Title");
 
 		WebContent.addWithStructureCP(
 			webContentColor = "FF0D0D",

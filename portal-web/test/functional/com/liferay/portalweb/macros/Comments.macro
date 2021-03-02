@@ -110,24 +110,44 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
 
-		Type(
-			locator1 = "CKEditor#BODY",
-			value1 = "${entryCommentEdit}");
+		if (isSet(addMention)) {
+			Type(
+				locator1 = "CKEditor#BODY",
+				value1 = "${entryCommentEdit} @${mentionsUserScreenName}");
 
-		SelectFrame(value1 = "relative=top");
+			SelectFrame(value1 = "relative=top");
 
-		AssertClick(
-			key_text = "Save",
-			locator1 = "Comments#ANY_BUTTON_IN_COMMENT",
-			value1 = "Save");
+			Click.clickNoMouseOver(
+				key_mentionsUserScreenName = "${mentionsUserScreenName}",
+				locator1 = "Mentions#MENTIONS_USER_DISPLAY_OPTION");
 
-		var key_entryComment = "${entryCommentEdit}";
+			AssertClick(
+				key_text = "Save",
+				locator1 = "Comments#ANY_BUTTON_IN_COMMENT",
+				value1 = "Save");
 
-		Alert.viewSuccessMessage();
+			Alert.viewSuccessMessage();
+		}
+		else {
+			Type(
+				locator1 = "CKEditor#BODY",
+				value1 = "${entryCommentEdit}");
 
-		AssertTextEquals(
-			locator1 = "Comments#COMMENT_BODY_SPECIFIC",
-			value1 = "${entryCommentEdit}");
+			SelectFrame(value1 = "relative=top");
+
+			AssertClick(
+				key_text = "Save",
+				locator1 = "Comments#ANY_BUTTON_IN_COMMENT",
+				value1 = "Save");
+
+			var key_entryComment = "${entryCommentEdit}";
+
+			Alert.viewSuccessMessage();
+
+			AssertTextEquals(
+				locator1 = "Comments#COMMENT_BODY_SPECIFIC",
+				value1 = "${entryCommentEdit}");
+		}
 	}
 
 	macro subscribePG {

@@ -14,12 +14,14 @@
 
 package com.liferay.commerce.account.group.admin.web.internal.portlet.action;
 
+import com.liferay.account.model.AccountGroup;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.constants.CommerceAccountPortletKeys;
 import com.liferay.commerce.account.exception.CommerceAccountGroupNameException;
 import com.liferay.commerce.account.exception.NoSuchAccountGroupException;
 import com.liferay.commerce.account.model.CommerceAccountGroup;
 import com.liferay.commerce.account.service.CommerceAccountGroupService;
+import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -27,12 +29,15 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+
+import java.io.Serializable;
+
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -166,8 +171,7 @@ public class EditCommerceAccountGroupMVCActionCommand
 
 		String name = ParamUtil.getString(actionRequest, "name");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CommerceAccountGroup.class.getName(), actionRequest);
+		ServiceContext serviceContext = _getServiceContext(actionRequest);
 
 		CommerceAccountGroup commerceAccountGroup = null;
 
@@ -188,6 +192,27 @@ public class EditCommerceAccountGroupMVCActionCommand
 		}
 
 		return commerceAccountGroup;
+	}
+
+	private ServiceContext _getServiceContext(ActionRequest actionRequest)
+		throws Exception {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setCompanyId(_portal.getCompanyId(actionRequest));
+		serviceContext.setScopeGroupId(_portal.getScopeGroupId(actionRequest));
+		serviceContext.setUserId(_portal.getUserId(actionRequest));
+
+		Map<String, Serializable> expandoBridgeAttributes =
+			_portal.getExpandoBridgeAttributes(
+				ExpandoBridgeFactoryUtil.getExpandoBridge(
+					serviceContext.getCompanyId(),
+					AccountGroup.class.getName()),
+				actionRequest);
+
+		serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
+
+		return serviceContext;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

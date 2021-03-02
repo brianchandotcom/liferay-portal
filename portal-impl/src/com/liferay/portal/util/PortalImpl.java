@@ -8758,23 +8758,14 @@ public class PortalImpl implements Portal {
 		String siteGroupFriendlyURL, String layoutFriendlyURL,
 		String groupFriendlyURL) {
 
-		boolean groupFriendlyURlContainsPubicFriendlyURLPath =
-			groupFriendlyURL.contains("/web");
+		if (groupFriendlyURL.contains("/web")) {
+			if (groupFriendlyURL.contains(
+					"/web" + siteGroupFriendlyURL + layoutFriendlyURL)) {
 
-		boolean
-			groupFriendlyURLContainsLayoutFriendlyURLandSiteGroupFriendlyURL =
-				groupFriendlyURL.contains(
-					"/web" + siteGroupFriendlyURL + layoutFriendlyURL);
-
-		if (groupFriendlyURlContainsPubicFriendlyURLPath &&
-			groupFriendlyURLContainsLayoutFriendlyURLandSiteGroupFriendlyURL) {
-
-			return true;
+				return true;
+			}
 		}
-
-		if (!groupFriendlyURlContainsPubicFriendlyURLPath &&
-			groupFriendlyURL.contains(layoutFriendlyURL)) {
-
+		else if (groupFriendlyURL.contains(layoutFriendlyURL)) {
 			return true;
 		}
 

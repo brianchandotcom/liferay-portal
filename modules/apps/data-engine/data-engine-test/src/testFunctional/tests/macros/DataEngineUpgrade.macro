@@ -204,8 +204,6 @@ definition {
 		DataEngine.viewField(
 			fieldFieldLabel = "Number - ca_ES Edited",
 			fieldName = "Numeric");
-
-		echo("empty stub");
 	}
 
 	macro editAnUpgradedWebContentWithTranslations {

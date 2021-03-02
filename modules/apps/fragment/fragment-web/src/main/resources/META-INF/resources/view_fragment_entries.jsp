@@ -95,3 +95,13 @@ FragmentManagementToolbarDisplayContext fragmentManagementToolbarDisplayContext 
 	<aui:input name="fragmentEntryId" type="hidden" />
 	<aui:input name="fileEntryId" type="hidden" />
 </aui:form>
+
+<liferay-frontend:component
+	componentId="<%= FragmentWebKeys.FRAGMENT_COMPOSITION_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+	module="js/FragmentCompositionDropdownDefaultEventHandler.es"
+/>
+
+<liferay-frontend:component
+	componentId="<%= FragmentWebKeys.FRAGMENT_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+	module="js/FragmentEntryDropdownDefaultEventHandler.es"
+/>

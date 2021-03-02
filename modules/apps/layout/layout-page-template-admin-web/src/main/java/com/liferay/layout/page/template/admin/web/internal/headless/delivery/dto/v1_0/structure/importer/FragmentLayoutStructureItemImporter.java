@@ -1038,7 +1038,16 @@ public class FragmentLayoutStructureItemImporter
 		}
 
 		for (Map.Entry<String, Object> entry : fragmentConfigMap.entrySet()) {
-			if (entry.getValue() instanceof String) {
+			if (entry.getValue() instanceof HashMap) {
+				Map<String, Object> childFragmentConfigMap =
+					(Map<String, Object>)entry.getValue();
+
+				jsonObject.put(
+					entry.getKey(),
+					_toFreeMarkerFragmentEntryProcessorJSONObject(
+						configurationTypes, childFragmentConfigMap));
+			}
+			else {
 				String type = configurationTypes.get(entry.getKey());
 
 				if (Objects.equals(type, "colorPalette")) {
@@ -1049,15 +1058,6 @@ public class FragmentLayoutStructureItemImporter
 				else {
 					jsonObject.put(entry.getKey(), entry.getValue());
 				}
-			}
-			else if (entry.getValue() instanceof HashMap) {
-				Map<String, Object> childFragmentConfigMap =
-					(Map<String, Object>)entry.getValue();
-
-				jsonObject.put(
-					entry.getKey(),
-					_toFreeMarkerFragmentEntryProcessorJSONObject(
-						configurationTypes, childFragmentConfigMap));
 			}
 		}
 

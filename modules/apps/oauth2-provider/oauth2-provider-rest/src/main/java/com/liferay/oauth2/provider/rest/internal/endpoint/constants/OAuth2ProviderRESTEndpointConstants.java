@@ -32,6 +32,9 @@ public class OAuth2ProviderRESTEndpointConstants {
 
 	public static final String PROPERTY_KEY_CLIENT_FEATURES = "features";
 
+	public static final String PROPERTY_KEY_CLIENT_REMEMBER_DEVICE =
+		"remember_device";
+
 	public static final String PROPERTY_KEY_CLIENT_REMOTE_ADDR =
 		"client.remote.addr";
 

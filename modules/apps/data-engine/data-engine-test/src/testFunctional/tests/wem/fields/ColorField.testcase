@@ -61,13 +61,13 @@ definition {
 			fieldFieldLabel = "Text",
 			fieldName = "Text");
 
-		WebContentStructures.saveCP(structureName = "Structure Name");
+		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "Structure Name");
 
 		DataEngine.delete(fieldFieldLabel = "Color");
 
-		WebContentStructures.saveCP(structureName = "Structure Name");
+		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "Structure Name");
 
@@ -85,7 +85,7 @@ definition {
 			fieldFieldLabel = "Color",
 			searchableType = "Disable");
 
-		WebContentStructures.saveCP(structureName = "Structure Name");
+		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "Structure Name");
 
@@ -99,13 +99,13 @@ definition {
 	test DuplicateColorFieldOnBuilder {
 		property portal.acceptance = "false";
 
-		WebContentStructures.saveCP(structureName = "Structure Name");
+		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "Structure Name");
 
 		DataEngine.duplicate(fieldFieldLabel = "Color");
 
-		WebContentStructures.saveCP(structureName = "Structure Name");
+		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "Structure Name");
 
@@ -128,7 +128,7 @@ definition {
 			fieldFieldLabel = "Color",
 			fieldReference = "%Color*Test @1");
 
-		WebContentStructures.saveCP(structureName = "Structure Name");
+		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "Structure Name");
 
@@ -156,7 +156,7 @@ definition {
 			fieldFieldLabel = "Color",
 			fieldReference = "Color_Test");
 
-		WebContentStructures.saveCP(structureName = "Structure Name");
+		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "Structure Name");
 
@@ -183,7 +183,7 @@ definition {
 			fieldFieldLabel = "Color",
 			fieldHelp = "Help Test");
 
-		WebContentStructures.saveCP(structureName = "Structure Name");
+		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "Structure Name");
 
@@ -198,7 +198,7 @@ definition {
 	test EditLabelOfColorField {
 		property portal.acceptance = "false";
 
-		WebContentStructures.saveCP(structureName = "Structure Name");
+		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "Structure Name");
 
@@ -218,7 +218,7 @@ definition {
 
 		DataEngine.editFieldRequired(fieldFieldLabel = "Color");
 
-		WebContentStructures.saveCP(structureName = "Structure Name");
+		WebContentStructures.saveCP();
 
 		NavItem.click(navItem = "Web Content");
 
@@ -243,7 +243,7 @@ definition {
 			fieldFieldLabel = "Color",
 			searchableType = "Disable");
 
-		WebContentStructures.saveCP(structureName = "Structure Name");
+		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "Structure Name");
 
@@ -255,7 +255,7 @@ definition {
 			fieldFieldLabel = "Color",
 			searchableType = "Keyword");
 
-		WebContentStructures.saveCP(structureName = "Structure Name");
+		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "Structure Name");
 

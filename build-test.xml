@@ -8554,9 +8554,9 @@ ${update.properties}</echo>
 			replace="=&quot;7\1&quot;"
 		/>
 
-		<copy
-			file="${project.dir}/lib/portal/log4j.jar"
-			tofile="${app.server.parent.dir}/gateway/tomcat-${app.server.tomcat.version}/lib/log4j.jar"
+		<mirrors-get
+			dest="${app.server.parent.dir}/gateway/tomcat-${app.server.tomcat.version}/lib/log4j.jar"
+			src="https://repo1.maven.org/maven2/log4j/log4j/1.2.17/log4j-1.2.17.jar"
 		/>
 
 		<copy
@@ -8700,9 +8700,9 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 			replace="=&quot;9\1&quot;"
 		/>
 
-		<copy
-			file="${project.dir}/lib/portal/log4j.jar"
-			tofile="${app.server.parent.dir}/processor/tomcat-${app.server.tomcat.version}/lib/log4j.jar"
+		<mirrors-get
+			dest="${app.server.parent.dir}/processor/tomcat-${app.server.tomcat.version}/lib/log4j.jar"
+			src="https://repo1.maven.org/maven2/log4j/log4j/1.2.17/log4j-1.2.17.jar"
 		/>
 
 		<copy

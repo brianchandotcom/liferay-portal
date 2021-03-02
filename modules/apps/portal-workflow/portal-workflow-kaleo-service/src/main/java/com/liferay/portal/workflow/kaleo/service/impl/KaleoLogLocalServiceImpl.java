@@ -229,6 +229,12 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 		return kaleoLogPersistence.update(kaleoLog);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *              #addTaskAssignmentKaleoLog(List, KaleoTaskInstanceToken,
+	 * 	             KaleoTaskAssignmentInstance, String, Map, ServiceContext)}}
+	 */
+	@Deprecated
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public KaleoLog addTaskAssignmentKaleoLog(

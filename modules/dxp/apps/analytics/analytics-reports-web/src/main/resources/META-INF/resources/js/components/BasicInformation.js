@@ -94,11 +94,13 @@ function BasicInformation({
 				</ClayLayout.ContentCol>
 			</ClayLayout.ContentRow>
 
-			<ClayLayout.ContentRow>
-				<ClayLayout.ContentCol expand>
-					<Author author={author} />
-				</ClayLayout.ContentCol>
-			</ClayLayout.ContentRow>
+			{author && (
+				<ClayLayout.ContentRow>
+					<ClayLayout.ContentCol expand>
+						<Author author={author} />
+					</ClayLayout.ContentCol>
+				</ClayLayout.ContentRow>
+			)}
 		</div>
 	);
 }

@@ -17,12 +17,7 @@ import classNames from 'classnames';
 import FormBuilderWithLayoutProvider from 'dynamic-data-mapping-form-builder';
 import React from 'react';
 
-import {
-	getDataDefinitionAndDataLayout,
-	getFormData,
-} from '../utils/dataConverter.es';
 import EventEmitter from './EventEmitter.es';
-import saveDefinitionAndLayout from './saveDefinitionAndLayout.es';
 
 /**
  * Data Layout Builder.
@@ -178,58 +173,6 @@ class DataLayoutBuilder extends React.Component {
 				<ClayLayout.Sheet ref={this.containerRef} />
 			</div>
 		);
-	}
-
-	save(params = {}) {
-		const {
-			availableLanguageIds,
-			contentType,
-			dataDefinitionId,
-			dataLayoutId,
-			defaultLanguageId,
-			groupId,
-		} = this.props;
-
-		const {availableLanguageIds: availableLanguageIdsState} = this.state;
-
-		const layoutProvider = this.formBuilderWithLayoutProvider.refs
-			.layoutProvider;
-
-		const {definition: dataDefinition, layout: dataLayout} = getFormData({
-			availableLanguageIds,
-			availableLanguageIdsState,
-			defaultLanguageId,
-			layoutProvider,
-		});
-
-		return saveDefinitionAndLayout({
-			contentType,
-			dataDefinition,
-			dataDefinitionId,
-			dataLayout,
-			dataLayoutId,
-			groupId,
-			params,
-		});
-	}
-
-	serialize(pages, rules) {
-		const {availableLanguageIds, defaultLanguageId} = this.props;
-		const {availableLanguageIds: availableLanguageIdsState} = this.state;
-
-		const {definition, layout} = getDataDefinitionAndDataLayout({
-			availableLanguageIds:
-				availableLanguageIdsState ?? availableLanguageIds,
-			defaultLanguageId,
-			pages,
-			paginationMode: this.formBuilderWithLayoutProvider.refs.layoutProvider.getPaginationMode(),
-			rules,
-		});
-
-		return {
-			definition: JSON.stringify(definition),
-			layout: JSON.stringify(layout),
-		};
 	}
 
 	_onLocaleChange(event) {

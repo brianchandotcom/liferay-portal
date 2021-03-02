@@ -136,16 +136,4 @@ describe('DataLayoutBuilder', () => {
 			payload
 		);
 	});
-
-	it('is serializing pages', () => {
-		component = new DataLayoutBuilder(props);
-		component.componentDidMount();
-
-		expect(component.serialize([], [])).toMatchObject({
-			definition:
-				'{"availableLanguageIds":["en_US"],"dataDefinitionFields":[],"defaultLanguageId":"en_US"}',
-			layout:
-				'{"dataLayoutPages":[],"dataRules":[],"paginationMode":"wizard"}',
-		});
-	});
 });

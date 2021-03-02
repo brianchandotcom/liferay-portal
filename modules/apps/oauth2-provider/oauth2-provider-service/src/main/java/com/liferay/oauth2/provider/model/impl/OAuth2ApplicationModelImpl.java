@@ -84,7 +84,7 @@ public class OAuth2ApplicationModelImpl
 		{"features", Types.VARCHAR}, {"homePageURL", Types.VARCHAR},
 		{"iconFileEntryId", Types.BIGINT}, {"name", Types.VARCHAR},
 		{"privacyPolicyURL", Types.VARCHAR}, {"redirectURIs", Types.VARCHAR},
-		{"trustedApplication", Types.BOOLEAN}
+		{"rememberDevice", Types.BOOLEAN}, {"trustedApplication", Types.BOOLEAN}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -111,11 +111,12 @@ public class OAuth2ApplicationModelImpl
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("privacyPolicyURL", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("redirectURIs", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("rememberDevice", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("trustedApplication", Types.BOOLEAN);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table OAuth2Application (oAuth2ApplicationId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,oA2AScopeAliasesId LONG,allowedGrantTypes VARCHAR(75) null,clientCredentialUserId LONG,clientCredentialUserName VARCHAR(75) null,clientId VARCHAR(75) null,clientProfile INTEGER,clientSecret VARCHAR(75) null,description STRING null,features STRING null,homePageURL STRING null,iconFileEntryId LONG,name VARCHAR(75) null,privacyPolicyURL STRING null,redirectURIs STRING null,trustedApplication BOOLEAN)";
+		"create table OAuth2Application (oAuth2ApplicationId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,oA2AScopeAliasesId LONG,allowedGrantTypes VARCHAR(75) null,clientCredentialUserId LONG,clientCredentialUserName VARCHAR(75) null,clientId VARCHAR(75) null,clientProfile INTEGER,clientSecret VARCHAR(75) null,description STRING null,features STRING null,homePageURL STRING null,iconFileEntryId LONG,name VARCHAR(75) null,privacyPolicyURL STRING null,redirectURIs STRING null,rememberDevice BOOLEAN,trustedApplication BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table OAuth2Application";
 
@@ -201,6 +202,7 @@ public class OAuth2ApplicationModelImpl
 		model.setName(soapModel.getName());
 		model.setPrivacyPolicyURL(soapModel.getPrivacyPolicyURL());
 		model.setRedirectURIs(soapModel.getRedirectURIs());
+		model.setRememberDevice(soapModel.isRememberDevice());
 		model.setTrustedApplication(soapModel.isTrustedApplication());
 
 		return model;
@@ -477,6 +479,12 @@ public class OAuth2ApplicationModelImpl
 			"redirectURIs",
 			(BiConsumer<OAuth2Application, String>)
 				OAuth2Application::setRedirectURIs);
+		attributeGetterFunctions.put(
+			"rememberDevice", OAuth2Application::getRememberDevice);
+		attributeSetterBiConsumers.put(
+			"rememberDevice",
+			(BiConsumer<OAuth2Application, Boolean>)
+				OAuth2Application::setRememberDevice);
 		attributeGetterFunctions.put(
 			"trustedApplication", OAuth2Application::getTrustedApplication);
 		attributeSetterBiConsumers.put(
@@ -907,6 +915,27 @@ public class OAuth2ApplicationModelImpl
 
 	@JSON
 	@Override
+	public boolean getRememberDevice() {
+		return _rememberDevice;
+	}
+
+	@JSON
+	@Override
+	public boolean isRememberDevice() {
+		return _rememberDevice;
+	}
+
+	@Override
+	public void setRememberDevice(boolean rememberDevice) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_rememberDevice = rememberDevice;
+	}
+
+	@JSON
+	@Override
 	public boolean getTrustedApplication() {
 		return _trustedApplication;
 	}
@@ -1004,6 +1033,7 @@ public class OAuth2ApplicationModelImpl
 		oAuth2ApplicationImpl.setName(getName());
 		oAuth2ApplicationImpl.setPrivacyPolicyURL(getPrivacyPolicyURL());
 		oAuth2ApplicationImpl.setRedirectURIs(getRedirectURIs());
+		oAuth2ApplicationImpl.setRememberDevice(isRememberDevice());
 		oAuth2ApplicationImpl.setTrustedApplication(isTrustedApplication());
 
 		oAuth2ApplicationImpl.resetOriginalValues();
@@ -1213,6 +1243,8 @@ public class OAuth2ApplicationModelImpl
 			oAuth2ApplicationCacheModel.redirectURIs = null;
 		}
 
+		oAuth2ApplicationCacheModel.rememberDevice = isRememberDevice();
+
 		oAuth2ApplicationCacheModel.trustedApplication = isTrustedApplication();
 
 		return oAuth2ApplicationCacheModel;
@@ -1309,6 +1341,7 @@ public class OAuth2ApplicationModelImpl
 	private String _name;
 	private String _privacyPolicyURL;
 	private String _redirectURIs;
+	private boolean _rememberDevice;
 	private boolean _trustedApplication;
 
 	public <T> T getColumnValue(String columnName) {
@@ -1363,6 +1396,7 @@ public class OAuth2ApplicationModelImpl
 		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("privacyPolicyURL", _privacyPolicyURL);
 		_columnOriginalValues.put("redirectURIs", _redirectURIs);
+		_columnOriginalValues.put("rememberDevice", _rememberDevice);
 		_columnOriginalValues.put("trustedApplication", _trustedApplication);
 	}
 
@@ -1428,7 +1462,9 @@ public class OAuth2ApplicationModelImpl
 
 		columnBitmasks.put("redirectURIs", 524288L);
 
-		columnBitmasks.put("trustedApplication", 1048576L);
+		columnBitmasks.put("rememberDevice", 1048576L);
+
+		columnBitmasks.put("trustedApplication", 2097152L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

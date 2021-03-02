@@ -12,18 +12,29 @@
  * details.
  */
 
-import {DefaultEventHandler} from 'frontend-js-web';
+export default function propsTransformer({portletNamespace, ...otherProps}) {
+	return {
+		...otherProps,
+		onActionButtonClick(event, {item}) {
+			const action = item.data?.action;
 
-class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
-	deleteArchivedSettings() {
-		if (
-			confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
-			)
-		) {
-			submitForm(this.one('#fm'));
-		}
-	}
+			if (action === 'deleteArchivedSettings') {
+				if (
+					confirm(
+						Liferay.Language.get(
+							'are-you-sure-you-want-to-delete-this'
+						)
+					)
+				) {
+					const form = document.getElementById(
+						`${portletNamespace}fm`
+					);
+
+					if (form) {
+						submitForm(form);
+					}
+				}
+			}
+		},
+	};
 }
-
-export default ManagementToolbarDefaultEventHandler;

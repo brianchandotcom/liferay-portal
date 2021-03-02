@@ -41,8 +41,12 @@ import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.TransformUtil;
@@ -91,7 +95,6 @@ public class BlogPostingDTOConverter
 				dateCreated = blogsEntry.getCreateDate();
 				dateModified = blogsEntry.getModifiedDate();
 				datePublished = blogsEntry.getDisplayDate();
-				description = blogsEntry.getDescription();
 				encodingFormat = "text/html";
 				friendlyUrlPath = blogsEntry.getUrlTitle();
 				headline = blogsEntry.getTitle();
@@ -116,6 +119,20 @@ public class BlogPostingDTOConverter
 						TaxonomyCategoryBriefUtil.toTaxonomyCategoryBrief(
 							assetCategory, dtoConverterContext),
 					TaxonomyCategoryBrief.class);
+
+				setDescription(
+					() -> {
+						String description = blogsEntry.getDescription();
+
+						if (Validator.isNotNull(description)) {
+							return description;
+						}
+
+						return HtmlUtil.stripHtml(
+							StringUtil.shorten(
+								blogsEntry.getContent(),
+								PropsValues.BLOGS_PAGE_ABSTRACT_LENGTH));
+					});
 
 				setRenderedContents(
 					() -> DisplayPageRendererUtil.getRenderedContent(

@@ -79,6 +79,71 @@ definition {
 		Click(locator1 = "Sidebar#BACK");
 	}
 
+	macro addFieldGroupWithFields {
+		var index = "1";
+		var firstFieldLabel = "";
+		for (var fieldName : list "${fieldNameList}") {
+			if ("${index}" == "1") {
+				firstFieldLabel = "${fieldName}";
+				DataEngine.addField(
+					fieldFieldLabel = "${fieldName}",
+					fieldName = "${fieldName}");
+			}
+			else if ("${index}" == "2") {
+				DataEngine.addFieldNested(
+					fieldFieldLabel = "${fieldName}",
+					fieldName = "${fieldName}",
+					targetFieldLabel = "${firstFieldLabel}");
+			}
+			else {
+				DataEngine.addFieldNested(
+					fieldFieldLabel = "${fieldName}",
+					fieldName = "${fieldName}",
+					targetFieldGroupLabel = "Fields Group");
+			}
+
+			if ("${fieldName}" == "Select from List" || "${fieldName}" == "Single Selection" || "${fieldName}" == "Multiple Selection") {
+				for (var i : list "1,2,3") {
+					DataEngine.addFieldOption(
+						fieldFieldLabel = "${fieldName}",
+						index = "${i}",
+						optionValue = "Option ${i}");
+				}
+			}
+			else if ("${fieldName}" == "Grid") {
+				for (var i : list "1,2") {
+					DataEngine.addFieldOption(
+						fieldFieldLabel = "${fieldName}",
+						index = "${i}",
+						optionFieldLabel = "Rows",
+						optionValue = "Row ${i}");
+
+					DataEngine.editFieldReferenceOfFieldOption(
+						fieldFieldLabel = "${fieldName}",
+						fieldReferenceOfFieldOption = "R${i}",
+						index = "${i}",
+						optionFieldLabel = "Rows");
+				}
+
+				for (var i : list "1,2") {
+					DataEngine.addFieldOption(
+						fieldFieldLabel = "${fieldName}",
+						index = "${i}",
+						optionFieldLabel = "Columns",
+						optionValue = "Column ${i}");
+
+					DataEngine.editFieldReferenceOfFieldOption(
+						fieldFieldLabel = "${fieldName}",
+						fieldReferenceOfFieldOption = "C${i}",
+						index = "${i}",
+						optionFieldLabel = "Columns");
+				}
+			}
+
+			var index = ${index} + 1;
+		}
+	}
+
 	macro addFieldNested {
 		if (IsElementNotPresent(key_tabName = "Builder", locator1 = "Sidebar#ACTIVE_TAB")) {
 			Navigator.gotoSidebarTab(tabName = "Builder");

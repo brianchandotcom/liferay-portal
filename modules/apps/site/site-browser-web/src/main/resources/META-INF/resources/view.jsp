@@ -20,8 +20,8 @@
 	navigationItems="<%= siteBrowserDisplayContext.getNavigationItems() %>"
 />
 
-<clay:management-toolbar-v2
-	displayContext="<%= new SiteBrowserManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, siteBrowserDisplayContext) %>"
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= new SiteBrowserManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, siteBrowserDisplayContext) %>"
 />
 
 <aui:form action="<%= siteBrowserDisplayContext.getPortletURL() %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="selectGroupFm">

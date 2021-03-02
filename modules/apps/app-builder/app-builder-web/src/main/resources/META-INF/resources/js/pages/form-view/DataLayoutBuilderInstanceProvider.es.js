@@ -15,7 +15,7 @@
 import {DataLayoutBuilderActions} from 'data-engine-taglib';
 import React, {useContext, useEffect} from 'react';
 
-import customFields from '../../utils/formRendererCustomFields.es';
+import customFields from '../../components/form-renderer-custom-fields/index.es';
 import DataLayoutBuilderContext from './DataLayoutBuilderInstanceContext.es';
 import FormViewContext from './FormViewContext.es';
 import useDeleteDefinitionField from './useDeleteDefinitionField.es';

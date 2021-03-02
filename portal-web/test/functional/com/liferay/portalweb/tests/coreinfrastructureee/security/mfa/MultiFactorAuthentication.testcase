@@ -145,6 +145,7 @@ definition {
 	@priority = "5"
 	test BlockedAfterReachAllowedFailedAttempts {
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property test.name.skip.portal.instance = "MultiFactorAuthentication#BlockedAfterReachAllowedFailedAttempts";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -569,6 +570,8 @@ definition {
 	@description = "This is a use case for LPS-102469"
 	@priority = "5"
 	test LoginSuccessfulAfterResetPasswordAsEndUser {
+		property test.name.skip.portal.instance = "MultiFactorAuthentication#LoginSuccessfulAfterResetPasswordAsEndUser";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		JSONUser.addUser(
@@ -622,6 +625,7 @@ definition {
 	@priority = "5"
 	test LoginSuccessfulAfterRetryTimeout {
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property test.name.skip.portal.instance = "MultiFactorAuthentication#LoginSuccessfulAfterRetryTimeout";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -843,6 +847,7 @@ definition {
 	@priority = "5"
 	test LoginWithOTPEnabled {
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property test.name.skip.portal.instance = "MultiFactorAuthentication#LoginWithOTPEnabled";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -1173,7 +1178,7 @@ definition {
 	@description = "This is a use case for LPS-89360"
 	@priority = "4"
 	test ViewOrderOfOTPVerifier {
-		property test.name.skip.portal.instance = "ViewOrderOfOTPVerifier";
+		property test.name.skip.portal.instance = "MultiFactorAuthentication#ViewOrderOfOTPVerifier";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -1205,6 +1210,8 @@ definition {
 	@description = "This is a use case for LPS-92658"
 	@priority = "4"
 	test ViewResourceActionsOfOTPVerificationFailure {
+		property test.name.skip.portal.instance = "MultiFactorAuthentication#ViewResourceActionsOfOTPVerificationFailure";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		PortalSettings.gotoConfiguration(

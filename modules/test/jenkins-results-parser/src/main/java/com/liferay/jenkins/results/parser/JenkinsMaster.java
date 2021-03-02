@@ -279,7 +279,7 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		return onlineJenkinsSlavesCount;
 	}
 
-	public List<String> getQueuedBuildURLs() {
+	public Map<String, JSONObject> getQueuedBuildURLs() {
 		return _queuedBuildURLs;
 	}
 
@@ -325,7 +325,7 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 				JenkinsResultsParserUtil.getLocalURL(
 					JenkinsResultsParserUtil.combine(
 						_masterURL,
-						"/queue/api/json?tree=items[task[name,url],why]")),
+						"/queue/api/json?tree=items[task[name,url],url,why]")),
 				false, 5000);
 		}
 		catch (Exception exception) {
@@ -424,8 +424,10 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 					continue;
 				}
 
-				if ((taskJSONObject != null) && taskJSONObject.has("url")) {
-					_queuedBuildURLs.add(taskJSONObject.getString("url"));
+				if (itemJSONObject.has("url")) {
+					_queuedBuildURLs.put(
+						getURL() + "/" + itemJSONObject.getString("url"),
+						itemJSONObject);
 				}
 			}
 
@@ -467,7 +469,7 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	private final String _masterName;
 	private final String _masterURL;
 	private int _queueCount;
-	private final List<String> _queuedBuildURLs = new ArrayList<>();
+	private final Map<String, JSONObject> _queuedBuildURLs = new HashMap<>();
 	private int _reportedAvailableSlavesCount;
 	private final Integer _slaveRAM;
 	private final Integer _slavesPerHost;

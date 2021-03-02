@@ -225,9 +225,62 @@ definition {
 
 	macro validateFieldLabelsTranslatedInStructureWithFieldSet {
 
-		// TODO LPS-126230 validateFieldLabelsTranslatedInStructureWithFieldSet pending implementation
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
-		echo("empty stub");
+		NavItem.gotoStructures();
+
+		WebContentStructures.viewCP(structureName = "My Structure with Fieldsets level 2");
+
+		LexiconEntry.gotoEntry(rowEntry = "My Structure with Fieldsets level 2");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Text",
+			key_fieldsGroupLabel = "My Structure with Fieldsets level 1",
+			locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+		
+		AssertVisible(
+			key_fieldFieldLabel = "Date",
+			key_fieldsGroupLabel = "My Structure with Fieldsets level 1",
+			locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+
+		AssertTextEquals(
+			fieldLabel = "Numeric",
+			locator1 = "FormViewBuilder#FIELD_LABEL",
+			value1 = "Numeric");
+
+		PortletEntry.changeLocale(locale = "ca-ES");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Text - ca-ES",
+			key_fieldsGroupLabel = "My Structure with Fieldsets level 1 - ca-ES",
+			locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+		
+		AssertVisible(
+			key_fieldFieldLabel = "Date - ca-ES",
+			key_fieldsGroupLabel = "My Structure with Fieldsets level 1 - ca-ES",
+			locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+		
+		AssertTextEquals(
+			fieldLabel = "Numeric - ca-ES",
+			locator1 = "FormViewBuilder#FIELD_LABEL",
+			value1 = "Numeric - ca-ES");
+		
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Text - pt-BR",
+			key_fieldsGroupLabel = "My Structure with Fieldsets level 1 - pt-BR",
+			locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+		
+		AssertVisible(
+			key_fieldFieldLabel = "Date - pt-BR",
+			key_fieldsGroupLabel = "My Structure with Fieldsets level 1 - pt-BR",
+			locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+		
+		AssertTextEquals(
+			fieldLabel = "Numeric - pt-BR",
+			locator1 = "FormViewBuilder#FIELD_LABEL",
+			value1 = "Numeric - pt-BR");
 	}
 
 	macro validateNStructure {

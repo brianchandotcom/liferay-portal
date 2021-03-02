@@ -2,9 +2,33 @@ definition {
 
 	macro createNewStructureUsingAnUpgradedStructureAsFieldset {
 
-		// TODO LPS-126232 createNewStructureUsingAnUpgradedStructureAsFieldset pending implementation
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		echo("empty stub");
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "Structure Title");
+
+        DataEngine.addFieldsets(fieldsetName = "My structure with nested fields");
+
+		Button.clickSave();
+
+        WebContentNavigator.gotoEditStructure(
+            structureName = "Structure Title");
+        
+        AssertVisible(
+			key_fieldsetLabel = "My structure with nested fields",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
+
+        AssertVisible(
+			key_fieldFieldLabel = "Fields Group",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		for (var fieldFieldLabel : list "Text,Date,Number") {
+			AssertVisible(
+				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldsGroupLabel = "Fields Group",
+				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+		}
 	}
 
 	macro createNewWebContentUsingAnUpgradedStructure {

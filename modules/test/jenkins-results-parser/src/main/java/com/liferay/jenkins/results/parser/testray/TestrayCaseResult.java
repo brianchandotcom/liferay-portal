@@ -151,6 +151,20 @@ public class TestrayCaseResult {
 		return testrayCase.getType();
 	}
 
+	public URL getURL() {
+		TestrayServer testrayServer = getTestrayServer();
+
+		try {
+			return new URL(
+				testrayServer.getURL(),
+				JenkinsResultsParserUtil.combine(
+					"home/-/testray/case_results/", getID()));
+		}
+		catch (MalformedURLException malformedURLException) {
+			throw new RuntimeException(malformedURLException);
+		}
+	}
+
 	public String[] getWarnings() {
 		JSONArray jsonArray = jsonObject.optJSONArray("warnings");
 

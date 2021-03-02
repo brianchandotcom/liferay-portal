@@ -17,12 +17,11 @@ package com.liferay.portal.dao.db;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.test.BaseDBTestCase;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.rule.InitializeKernelUtil;
 import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.kernel.util.PropsKeys;
 
 import java.lang.reflect.Method;
-
-import java.util.Properties;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -32,19 +31,14 @@ import org.junit.Test;
  * @author Miguel Pastor
  * @author Alberto Chaparro
  */
+@InitializeKernelUtil(
+	properties = PropsKeys.DATABASE_STRING_INDEX_MAX_LENGTH + "=-1"
+)
 public class SybaseDBTest extends BaseDBTestCase {
 
 	@ClassRule
 	public static LiferayUnitTestRule liferayUnitTestRule =
-		new LiferayUnitTestRule() {
-
-			@Override
-			public void addProperties(Properties properties) {
-				properties.setProperty(
-					PropsKeys.DATABASE_STRING_INDEX_MAX_LENGTH, "-1");
-			}
-
-		};
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testApplyMaxStringIndexLengthLimitation() throws Exception {

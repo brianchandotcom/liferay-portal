@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -556,10 +555,7 @@ public class CommercePriceListFinderTest {
 	private static final String _TYPE =
 		CommercePriceListConstants.TYPE_PRICE_LIST;
 
-	@DeleteAfterTestRun
 	private CommerceAccount _commerceAccount;
-
-	@DeleteAfterTestRun
 	private CommerceAccountGroup _commerceAccountGroup;
 
 	@Inject
@@ -573,8 +569,6 @@ public class CommercePriceListFinderTest {
 
 	private CommerceCatalog _commerceCatalog;
 	private CommerceChannel _commerceChannel;
-
-	@DeleteAfterTestRun
 	private CommerceCurrency _commerceCurrency;
 
 	@Inject
@@ -592,7 +586,6 @@ public class CommercePriceListFinderTest {
 	@Inject
 	private CommercePriceListLocalService _commercePriceListLocalService;
 
-	@DeleteAfterTestRun
 	private Company _company;
 
 	@Inject

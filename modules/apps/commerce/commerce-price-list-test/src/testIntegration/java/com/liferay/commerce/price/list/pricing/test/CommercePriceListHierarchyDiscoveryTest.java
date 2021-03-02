@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -589,31 +588,14 @@ public class CommercePriceListHierarchyDiscoveryTest {
 	private static final String _TYPE =
 		CommercePriceListConstants.TYPE_PRICE_LIST;
 
-	@DeleteAfterTestRun
 	private CommerceCatalog _catalog;
-
-	@DeleteAfterTestRun
 	private CommerceAccount _commerceAccount1;
-
-	@DeleteAfterTestRun
 	private CommerceAccount _commerceAccount2;
-
-	@DeleteAfterTestRun
 	private CommerceAccount _commerceAccount3;
-
-	@DeleteAfterTestRun
 	private CommerceAccount _commerceAccount4;
-
-	@DeleteAfterTestRun
 	private CommerceAccount _commerceAccount5;
-
-	@DeleteAfterTestRun
 	private CommerceAccount _commerceAccount6;
-
-	@DeleteAfterTestRun
 	private CommerceAccount _commerceAccount7;
-
-	@DeleteAfterTestRun
 	private CommerceAccountGroup _commerceAccountGroup;
 
 	@Inject
@@ -637,9 +619,7 @@ public class CommercePriceListHierarchyDiscoveryTest {
 	@Inject
 	private CommerceChannelLocalService _commerceChannelLocalService;
 
-	@DeleteAfterTestRun
 	private CommerceCurrency _commerceCurrency;
-
 	private CommercePriceList _commercePriceList1;
 	private CommercePriceList _commercePriceList2;
 	private CommercePriceList _commercePriceList3;
@@ -654,9 +634,7 @@ public class CommercePriceListHierarchyDiscoveryTest {
 	@Inject
 	private CommercePriceListLocalService _commercePriceListLocalService;
 
-	@DeleteAfterTestRun
 	private Company _company;
-
 	private Group _group;
 	private ServiceContext _serviceContext;
 	private User _user;

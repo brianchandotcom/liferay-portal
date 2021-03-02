@@ -370,10 +370,14 @@ definition {
 	}
 
 	macro validateNWebContent {
-
-		// TODO LPS-127521 validateNWebContent pending implementation
-
-		echo("empty stub");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		
+		for (var wcTitle : list "My Web Content based on My Structure with Fieldsets level 2,My Web Content based on My Structure with all fields,My Web Content based on My Structure with nested fields,My Web Content based on My Structure with repeated fields") {
+			AssertTextEquals(
+				key_webContentTitle = "${wcTitle}",
+				locator1 = "WC#ENTRY_LIST_TITLE",
+				value1 = "${wcTitle}");
+		}
 	}
 
 	macro validateWebContentWithAllFieldsTranslated {

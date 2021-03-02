@@ -50,7 +50,7 @@ dependencies {
 	compileOnly project(":apps:layout:layout-taglib")
 	compileOnly project(":apps:message-boards:message-boards-api")
 	compileOnly project(":apps:petra:petra-model-adapter")
-	compileOnly project(":apps:petra:petra-portlet-url-builder")
+	compileOnly project(":apps:petra:petra-portlet-url")
 	compileOnly project(":apps:portal:portal-aop-api")
 	compileOnly project(":apps:portlet-display-template:portlet-display-template-api")
 	compileOnly project(":apps:rss:rss-api")

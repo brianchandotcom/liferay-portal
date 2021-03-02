@@ -104,6 +104,29 @@ public interface KaleoLogLocalService
 	public KaleoLog addTaskAssignmentKaleoLog(
 			List<KaleoTaskAssignmentInstance>
 				previousKaleoTaskAssignmentInstances,
+			KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance,
+			KaleoTaskInstanceToken kaleoTaskInstanceToken, String comment,
+			Map<String, Serializable> workflowContext,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addTaskAssignmentKaleoLog(List, KaleoTaskAssignmentInstance,
+	 KaleoTaskInstanceToken, String, Map, ServiceContext)}}
+	 */
+	@Deprecated
+	@Indexable(type = IndexableType.REINDEX)
+	public KaleoLog addTaskAssignmentKaleoLog(
+			List<KaleoTaskAssignmentInstance>
+				previousKaleoTaskAssignmentInstances,
+			KaleoTaskInstanceToken kaleoTaskInstanceToken, String comment,
+			Map<String, Serializable> workflowContext,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	public List<KaleoLog> addTaskAssignmentKaleoLogs(
+			List<KaleoTaskAssignmentInstance> previousTaskAssignmentInstances,
 			KaleoTaskInstanceToken kaleoTaskInstanceToken, String comment,
 			Map<String, Serializable> workflowContext,
 			ServiceContext serviceContext)

@@ -52,8 +52,9 @@ public class OAuth2ApplicationServiceImpl
 			String clientId, int clientProfile, String clientSecret,
 			String description, List<String> featuresList, String homePageURL,
 			long iconFileEntryId, String name, String privacyPolicyURL,
-			List<String> redirectURIsList, List<String> scopeAliasesList,
-			boolean trustedApplication, ServiceContext serviceContext)
+			List<String> redirectURIsList, boolean rememberDevice,
+			List<String> scopeAliasesList, boolean trustedApplication,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		ModelResourcePermissionUtil.check(
@@ -80,14 +81,15 @@ public class OAuth2ApplicationServiceImpl
 			allowedGrantTypesList, clientCredentialUserId, clientId,
 			clientProfile, clientSecret, description, featuresList, homePageURL,
 			iconFileEntryId, name, privacyPolicyURL, redirectURIsList,
-			scopeAliasesList, trustedApplication, serviceContext);
+			rememberDevice, scopeAliasesList, trustedApplication,
+			serviceContext);
 	}
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 *             #addOAuth2Application(List, long, String, int, String,
-	 *             String, List, String, long, String, String, List, List,
-	 *             boolean, ServiceContext)}
+	 *             String, List, String, long, String, String, List, boolean,
+	 *             List, boolean, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -110,7 +112,7 @@ public class OAuth2ApplicationServiceImpl
 			user.getCompanyId(), user.getUserId(), user.getFullName(),
 			allowedGrantTypesList, clientCredentialUserId, clientId,
 			clientProfile, clientSecret, description, featuresList, homePageURL,
-			iconFileEntryId, name, privacyPolicyURL, redirectURIsList,
+			iconFileEntryId, name, privacyPolicyURL, redirectURIsList, false,
 			scopeAliasesList, false, serviceContext);
 	}
 
@@ -232,9 +234,9 @@ public class OAuth2ApplicationServiceImpl
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #updateOAuth2Application(long, List, long, String, int,
+	 *             #updateOAuth2Application(long, long, List, long, String, int,
 	 *             String, String, List, String, long, String, String, List,
-	 *             long, ServiceContext)}
+	 *             boolean, boolean)}
 	 */
 	@Deprecated
 	@Override
@@ -258,7 +260,8 @@ public class OAuth2ApplicationServiceImpl
 			oAuth2ApplicationId, oAuth2ApplicationScopeAliasesId,
 			allowedGrantTypesList, clientCredentialUserId, clientId,
 			clientProfile, clientSecret, description, featuresList, homePageURL,
-			iconFileEntryId, name, privacyPolicyURL, redirectURIsList, false);
+			iconFileEntryId, name, privacyPolicyURL, redirectURIsList, false,
+			false);
 	}
 
 	/**
@@ -297,7 +300,8 @@ public class OAuth2ApplicationServiceImpl
 			String clientId, int clientProfile, String clientSecret,
 			String description, List<String> featuresList, String homePageURL,
 			long iconFileEntryId, String name, String privacyPolicyURL,
-			List<String> redirectURIsList, boolean trustedApplication)
+			List<String> redirectURIsList, boolean rememberDevice,
+			boolean trustedApplication)
 		throws PortalException {
 
 		_oAuth2ApplicationModelResourcePermission.check(
@@ -322,7 +326,7 @@ public class OAuth2ApplicationServiceImpl
 			allowedGrantTypesList, clientCredentialUserId, clientId,
 			clientProfile, clientSecret, description, featuresList, homePageURL,
 			iconFileEntryId, name, privacyPolicyURL, redirectURIsList,
-			trustedApplication);
+			rememberDevice, trustedApplication);
 	}
 
 	@Override

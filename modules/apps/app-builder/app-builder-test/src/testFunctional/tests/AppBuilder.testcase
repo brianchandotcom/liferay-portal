@@ -2993,7 +2993,6 @@ definition {
 	@priority = "5"
 	test SetAppBuilderManagePermissionFor2RolesAndPerformCRUD {
 		property portal.acceptance = "quarantine";
-		property portal.upstream = "quarantine";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -3144,7 +3143,6 @@ definition {
 	@priority = "5"
 	test SetPermissionsFor2RolesAndPerformCRUD {
 		property portal.acceptance = "quarantine";
-		property portal.upstream = "quarantine";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -3625,7 +3623,6 @@ definition {
 	@priority = "5"
 	test UpdateDeployment {
 		property portal.acceptance = "quarantine";
-		property portal.upstream = "quarantine";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",
@@ -4132,7 +4129,6 @@ definition {
 	@priority = "5"
 	test ViewEntryDetails {
 		property portal.acceptance = "quarantine";
-		property portal.upstream = "quarantine";
 
 		var myFormViewName = "My Registration form";
 		var myTableViewName = "My display table";

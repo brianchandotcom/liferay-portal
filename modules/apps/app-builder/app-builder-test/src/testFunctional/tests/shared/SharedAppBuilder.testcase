@@ -323,7 +323,6 @@ definition {
 	@priority = "5"
 	test CreateRemoveUpdateDeleteEntriesOfStandaloneApp {
 		property portal.acceptance = "quarantine";
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "AppBuilder#CreateRemoveUpdateDeleteEntriesOfStandaloneApp";
 
 		var myFormViewName = "My Registration form";
@@ -582,7 +581,6 @@ definition {
 	@priority = "5"
 	test CreateRemoveUpdateDeleteEntriesOfWidgetApp {
 		property portal.acceptance = "quarantine";
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "AppBuilder#CreateRemoveUpdateDeleteEntriesOfWidgetApp";
 
 		var myFormViewName = "My Registration form";
@@ -1281,7 +1279,6 @@ definition {
 	@priority = "5"
 	test ReuseExistingFormViewFields {
 		property portal.acceptance = "quarantine";
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "AppBuilder#ReuseExistingFormViewFields";
 
 		AppBuilderAdmin.addCustomObject(

@@ -76,10 +76,15 @@ export default function EditableLinkPanel({item}) {
 			setLinkValue({
 				...linkConfig,
 				href:
-					linkConfig[languageId] ||
-					linkConfig[config.defaultLanguageId] ||
+					linkConfig.href ||
+					linkConfig[languageId]?.href ||
+					linkConfig[config.defaultLanguageId]?.href ||
 					'',
-				target: linkConfig.target || '',
+				target:
+					linkConfig.target ||
+					linkConfig[languageId]?.target ||
+					linkConfig[config.defaultLanguageId]?.target ||
+					'',
 			});
 		}
 		else {
@@ -99,8 +104,10 @@ export default function EditableLinkPanel({item}) {
 			nextConfig = {
 				...imageConfig,
 				...(linkConfig || {}),
-				[languageId]: nextLinkConfig.href,
-				target: nextLinkConfig.target || '',
+				[languageId]: {
+					href: nextLinkConfig.href,
+					target: nextLinkConfig.target || '',
+				},
 			};
 		}
 

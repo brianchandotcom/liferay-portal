@@ -202,7 +202,7 @@ public class EditCommerceShipmentMVCActionCommand extends BaseMVCActionCommand {
 
 		return _commerceShipmentService.updateAddress(
 			commerceShipmentId, name, description, street1, street2, street3,
-			city, zip, regionId, countryId, phoneNumber);
+			city, zip, regionId, countryId, phoneNumber, null);
 	}
 
 	protected CommerceShipment updateCarrierDetails(ActionRequest actionRequest)

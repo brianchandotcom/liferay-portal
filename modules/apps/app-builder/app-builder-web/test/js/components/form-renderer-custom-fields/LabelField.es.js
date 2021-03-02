@@ -13,9 +13,10 @@
  */
 
 import {cleanup, fireEvent, render} from '@testing-library/react';
-import React, {createContext} from 'react';
+import React from 'react';
 
 import LabelField from '../../../../src/main/resources/META-INF/resources/js/components/form-renderer-custom-fields/LabelField.es';
+import {getFormattedState} from '../../../../src/main/resources/META-INF/resources/js/components/form-renderer-custom-fields/shared/utils.es';
 import {FORM_VIEW} from '../../constants.es';
 
 const DEFAULT_STATE = {
@@ -90,25 +91,22 @@ const VIEW_LEVEL_STATE = {
 	},
 };
 
-const AppContext = createContext();
-
 const LabelFieldWrapper = ({
 	state = STRUCTURE_LEVEL_STATE,
 	dataLayoutBuilder = FORM_VIEW.getDataLayoutBuilderProps(),
 }) => (
-	<AppContext.Provider value={[state, jest.fn()]}>
-		<LabelField
-			AppContext={AppContext}
-			dataLayoutBuilder={dataLayoutBuilder}
-			field={{
-				label: 'Label',
-				name: 'LabelName',
-				placeholder: 'Enter a field label.',
-				tooltip:
-					'Enter a descriptive field label that guides users to enter the information you want.',
-			}}
-		/>
-	</AppContext.Provider>
+	<LabelField
+		dataLayoutBuilder={dataLayoutBuilder}
+		dispatch={jest.fn()}
+		field={{
+			label: 'Label',
+			name: 'LabelName',
+			placeholder: 'Enter a field label.',
+			tooltip:
+				'Enter a descriptive field label that guides users to enter the information you want.',
+		}}
+		state={getFormattedState(state)}
+	/>
 );
 
 describe('LabelField', () => {

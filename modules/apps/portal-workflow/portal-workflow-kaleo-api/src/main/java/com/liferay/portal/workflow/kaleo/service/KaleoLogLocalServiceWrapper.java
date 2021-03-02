@@ -101,6 +101,33 @@ public class KaleoLogLocalServiceWrapper
 					<com.liferay.portal.workflow.kaleo.model.
 						KaleoTaskAssignmentInstance>
 							previousKaleoTaskAssignmentInstances,
+				com.liferay.portal.workflow.kaleo.model.
+					KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance,
+				com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken
+					kaleoTaskInstanceToken,
+				String comment,
+				java.util.Map<String, java.io.Serializable> workflowContext,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _kaleoLogLocalService.addTaskAssignmentKaleoLog(
+			previousKaleoTaskAssignmentInstances, kaleoTaskAssignmentInstance,
+			kaleoTaskInstanceToken, comment, workflowContext, serviceContext);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addTaskAssignmentKaleoLog(List, KaleoTaskAssignmentInstance,
+	 KaleoTaskInstanceToken, String, Map, ServiceContext)}}
+	 */
+	@Deprecated
+	@Override
+	public com.liferay.portal.workflow.kaleo.model.KaleoLog
+			addTaskAssignmentKaleoLog(
+				java.util.List
+					<com.liferay.portal.workflow.kaleo.model.
+						KaleoTaskAssignmentInstance>
+							previousKaleoTaskAssignmentInstances,
 				com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken
 					kaleoTaskInstanceToken,
 				String comment,
@@ -111,6 +138,25 @@ public class KaleoLogLocalServiceWrapper
 		return _kaleoLogLocalService.addTaskAssignmentKaleoLog(
 			previousKaleoTaskAssignmentInstances, kaleoTaskInstanceToken,
 			comment, workflowContext, serviceContext);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoLog>
+			addTaskAssignmentKaleoLogs(
+				java.util.List
+					<com.liferay.portal.workflow.kaleo.model.
+						KaleoTaskAssignmentInstance>
+							previousTaskAssignmentInstances,
+				com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken
+					kaleoTaskInstanceToken,
+				String comment,
+				java.util.Map<String, java.io.Serializable> workflowContext,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _kaleoLogLocalService.addTaskAssignmentKaleoLogs(
+			previousTaskAssignmentInstances, kaleoTaskInstanceToken, comment,
+			workflowContext, serviceContext);
 	}
 
 	@Override

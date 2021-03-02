@@ -298,9 +298,39 @@ definition {
 
 	macro validateFieldLabelsTranslatedInStructureWithFieldGroup {
 
-		// TODO LPS-127412 validateFieldLabelsTranslatedInStructureWithFieldGroup pending implementation
+	WebContentNavigator.gotoEditStructure(structureName = "My Structure with nested fields");
 
-		echo("empty stub");
+        for (var language : list "pt_BR,ca_ES") {
+
+        PortletEntry.changeLocale(locale = "${language}");
+        
+        AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "My Structure with nested fields - ${language}");
+
+        Navigator.gotoSidebarTab(tabName = "Properties");
+
+		AssertTextEquals(
+			locator1 = "TextInput#DESCRIPTION",
+			value1 = "WC Structure Description - ${language}");
+        
+        Navigator.gotoSidebarTab(tabName = "Builder");
+
+        AssertVisible(
+			key_fieldFieldLabel = "Text - ${language}",
+			key_fieldsGroupLabel = "Fields Group - ${language}",
+			locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+
+        AssertVisible(
+			key_fieldFieldLabel = "Date - ${language}",
+			key_fieldsGroupLabel = "Fields Group - ${language}",
+			locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+
+        AssertVisible(
+            key_fieldFieldLabel = "Number - ${language}",
+            key_fieldsGroupLabel = "Fields Group - ${language}",
+            locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");    
+        }
 	}
 
 	macro validateFieldLabelsTranslatedInStructureWithFieldSet {

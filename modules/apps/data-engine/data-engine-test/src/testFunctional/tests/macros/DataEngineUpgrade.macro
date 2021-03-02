@@ -38,6 +38,22 @@ definition {
 			fieldFieldLabelEdit = "${structureFieldName} Edited");
 		}
 
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		for (var structureFieldName : list "${fieldList}") {
+			DataEngine.editFieldLabel(
+			fieldFieldLabel = "${structureFieldName} - pt_BR",
+			fieldFieldLabelEdit = "${structureFieldName} - pt_BR Edited");
+		}
+
+		PortletEntry.changeLocale(locale = "ca_ES");
+
+		for (var structureFieldName : list "${fieldList}") {
+			DataEngine.editFieldLabel(
+			fieldFieldLabel = "${structureFieldName} - ca_ES",
+			fieldFieldLabelEdit = "${structureFieldName} - ca_ES Edited");
+		}
+
 		WebContentStructures.saveCP(structureName = "My Structure with nested fields");
 
 		WebContentNavigator.gotoEditStructure(structureName = "My Structure with nested fields");
@@ -54,7 +70,33 @@ definition {
 		fieldName = "Numeric",
 		fieldFieldLabel = "Number Edited");
 
-		echo("empty stub");
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.viewField(
+		fieldName = "Text",
+		fieldFieldLabel = "Text - pt_BR Edited");
+
+		DataEngine.viewField(
+		fieldName = "Date",
+		fieldFieldLabel = "Date - pt_BR Edited");
+
+		DataEngine.viewField(
+		fieldName = "Numeric",
+		fieldFieldLabel = "Number - pt_BR Edited");
+
+		PortletEntry.changeLocale(locale = "ca_ES");
+
+		DataEngine.viewField(
+		fieldName = "Text",
+		fieldFieldLabel = "Text - ca_ES Edited");
+
+		DataEngine.viewField(
+		fieldName = "Date",
+		fieldFieldLabel = "Date - ca_ES Edited");
+
+		DataEngine.viewField(
+		fieldName = "Numeric",
+		fieldFieldLabel = "Number - ca_ES Edited");
 	}
 
 	macro editAnUpgradedStructureWithFieldset {

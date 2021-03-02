@@ -185,9 +185,12 @@ public class DDMStructureLocalServiceImpl
 			ddmForm = _ddmDataDefinitionConverter.convertDDMFormDataDefinition(
 				ddmForm, parentStructureId, parentStructureLayoutId);
 
-			ddmFormLayout =
-				_ddmDataDefinitionConverter.convertDDMFormLayoutDataDefinition(
-					ddmForm, ddmFormLayout);
+			if (ddmFormLayout != null) {
+				ddmFormLayout =
+					_ddmDataDefinitionConverter.
+						convertDDMFormLayoutDataDefinition(
+							ddmForm, ddmFormLayout);
+			}
 		}
 
 		validate(

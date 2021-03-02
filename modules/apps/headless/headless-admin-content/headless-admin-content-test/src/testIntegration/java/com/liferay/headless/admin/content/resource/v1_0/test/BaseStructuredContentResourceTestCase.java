@@ -521,6 +521,79 @@ public abstract class BaseStructuredContentResourceTestCase {
 		Assert.assertTrue(false);
 	}
 
+	@Test
+	public void testGetStructuredContentsVersionsPage() throws Exception {
+		Page<StructuredContent> page =
+			structuredContentResource.getStructuredContentsVersionsPage(
+				testGetStructuredContentsVersionsPage_getStructuredContentId());
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		Long structuredContentId =
+			testGetStructuredContentsVersionsPage_getStructuredContentId();
+		Long irrelevantStructuredContentId =
+			testGetStructuredContentsVersionsPage_getIrrelevantStructuredContentId();
+
+		if ((irrelevantStructuredContentId != null)) {
+			StructuredContent irrelevantStructuredContent =
+				testGetStructuredContentsVersionsPage_addStructuredContent(
+					irrelevantStructuredContentId,
+					randomIrrelevantStructuredContent());
+
+			page = structuredContentResource.getStructuredContentsVersionsPage(
+				irrelevantStructuredContentId);
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantStructuredContent),
+				(List<StructuredContent>)page.getItems());
+			assertValid(page);
+		}
+
+		StructuredContent structuredContent1 =
+			testGetStructuredContentsVersionsPage_addStructuredContent(
+				structuredContentId, randomStructuredContent());
+
+		StructuredContent structuredContent2 =
+			testGetStructuredContentsVersionsPage_addStructuredContent(
+				structuredContentId, randomStructuredContent());
+
+		page = structuredContentResource.getStructuredContentsVersionsPage(
+			structuredContentId);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(structuredContent1, structuredContent2),
+			(List<StructuredContent>)page.getItems());
+		assertValid(page);
+	}
+
+	protected StructuredContent
+			testGetStructuredContentsVersionsPage_addStructuredContent(
+				Long structuredContentId, StructuredContent structuredContent)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGetStructuredContentsVersionsPage_getStructuredContentId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGetStructuredContentsVersionsPage_getIrrelevantStructuredContentId()
+		throws Exception {
+
+		return null;
+	}
+
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 

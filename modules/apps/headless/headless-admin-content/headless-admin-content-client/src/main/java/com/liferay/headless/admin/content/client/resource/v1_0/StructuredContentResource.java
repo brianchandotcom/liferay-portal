@@ -53,6 +53,15 @@ public interface StructuredContentResource {
 			Pagination pagination, String sortString)
 		throws Exception;
 
+	public Page<StructuredContent> getStructuredContentsVersionsPage(
+			Long structuredContentId)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			getStructuredContentsVersionsPageHttpResponse(
+				Long structuredContentId)
+		throws Exception;
+
 	public static class Builder {
 
 		public Builder authentication(String login, String password) {
@@ -213,6 +222,73 @@ public interface StructuredContentResource {
 						"/o/headless-admin-content/v1.0/sites/{siteId}/structured-contents");
 
 			httpInvoker.path("siteId", siteId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public Page<StructuredContent> getStructuredContentsVersionsPage(
+				Long structuredContentId)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getStructuredContentsVersionsPageHttpResponse(
+					structuredContentId);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return Page.of(content, StructuredContentSerDes::toDTO);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				getStructuredContentsVersionsPageHttpResponse(
+					Long structuredContentId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-admin-content/v1.0/structured-contents/{structuredContentId}/versions");
+
+			httpInvoker.path("structuredContentId", structuredContentId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

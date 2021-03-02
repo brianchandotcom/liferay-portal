@@ -273,6 +273,41 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
+	@description = "This test ensures that a user is able to embed an external Twitch video in a WC article."
+	@priority = "5"
+	test AddWCWithEmbeddedTwitchVideo {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		VideoShortcut.addCP(
+			videoShortcutTitle = "Test Twitch Video Name",
+			videoURL = "https://www.twitch.tv/videos/806178790");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			embedVideo = "true",
+			navTab = "Documents and Media",
+			videoShortcutTitle = "Test Twitch Video Name",
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContentNavigator.gotoPreviewEntryCP(webContentTitle = "WC WebContent Title");
+
+		Pause(locator1 = "5000");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		AssertVisible(
+			key_service = "twitch",
+			locator1 = "BlogsEntry#CONTENT_VIDEO");
+	}
+
 	@description = "This test ensures that a user is able to embed an external video in web content."
 	@priority = "5"
 	test AddWCWithEmbeddedVideo {

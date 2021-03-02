@@ -76,6 +76,7 @@ definition {
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 	}
 
+<<<<<<< HEAD
 	@description = "This test ensures that is possible to disable the searchable property of the field."
 	@priority = "4"
 	test DisableSearchablePropertyOfColorField {
@@ -95,6 +96,9 @@ definition {
 	}
 
 	@description = "This test ensures that a user can duplicate the Color field."
+=======
+	@description = "This is a test for LPS-98070. Duplicate color Field (using kebab on the top of the field)"
+>>>>>>> 5b285d4f21c4 (LRQA-64853 Remove already covered test DisableSearchablePropertyOfColorField)
 	@priority = "4"
 	test DuplicateColorFieldOnBuilder {
 		property portal.acceptance = "false";
@@ -234,7 +238,7 @@ definition {
 			value1 = "This field is required.");
 	}
 
-	@description = "This test ensures that a user can set Searchable of color field by keyword."
+	@description = "This test ensures that a user can set the Searchable property of color field."
 	@priority = "4"
 	test SetSearchablePropertyOfColorField {
 		property portal.acceptance = "false";

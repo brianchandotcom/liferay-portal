@@ -88,12 +88,22 @@ definition {
 			Navigator.gotoNavTab(navTab = "Fields");
 		}
 
-		DragAndDrop.javaScriptDragAndDropToObject(
-			key_fieldFieldLabel = "${targetFieldLabel}",
-			key_fieldName = "${fieldName}",
-			locator1 = "Sidebar#ADD_FIELD_NAME",
-			locator2 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = "${fieldName}");
+		if (isSet(targetFieldGroupLabel)) {
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_fieldFieldGroupLabel = "${targetFieldGroupLabel}",
+				key_fieldName = "${fieldName}",
+				locator1 = "Sidebar#ADD_FIELD_NAME",
+				locator2 = "DDMEditStructure#FORM_FIELD_GROUP_TARGET",
+				value1 = "${fieldName}");
+		}
+		else {
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_fieldFieldLabel = "${targetFieldLabel}",
+				key_fieldName = "${fieldName}",
+				locator1 = "Sidebar#ADD_FIELD_NAME",
+				locator2 = "DDMEditStructure#FORM_FIELD_CONTAINER",
+				value1 = "${fieldName}");
+		}
 
 		Pause(locator1 = "3000");
 

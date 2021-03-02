@@ -1,16 +1,11 @@
 <?xml version="1.0"?>
-<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 
-<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
-	<category name="com.liferay.dynamic.data.mapping.internal.storage.JSONDDMStorageAdapter">
-		<priority value="WARN" />
-	</category>
+<Configuration strict="true">
+	<Loggers>
+		<Logger level="WARN" name="com.liferay.dynamic.data.mapping.internal.storage.JSONDDMStorageAdapter" />
 
-	<category name="com.liferay.dynamic.data.mapping.internal.storage.JSONStorageAdapter">
-		<priority value="WARN" />
-	</category>
+		<Logger level="WARN" name="com.liferay.dynamic.data.mapping.internal.storage.JSONStorageAdapter" />
 
-	<category name="com.liferay.dynamic.data.mapping.verify.DDMServiceVerifyProcess">
-		<priority value="WARN" />
-	</category>
-</log4j:configuration>
+		<Logger level="WARN" name="com.liferay.dynamic.data.mapping.verify.DDMServiceVerifyProcess" />
+	</Loggers>
+</Configuration>

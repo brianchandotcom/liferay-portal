@@ -1,20 +1,13 @@
 <?xml version="1.0"?>
-<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 
-<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
-	<category name="com.liferay.portal.vulcan.internal.jaxrs.container.request.filter.LogContainerRequestFilter">
-		<priority value="ERROR" />
-	</category>
+<Configuration strict="true">
+	<Loggers>
+		<Logger level="ERROR" name="com.liferay.portal.vulcan.internal.jaxrs.container.request.filter.LogContainerRequestFilter" />
 
-	<category name="com.liferay.portal.vulcan.internal.jaxrs.context.provider.FilterContextProvider">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.vulcan.internal.jaxrs.context.provider.FilterContextProvider" />
 
-	<category name="com.liferay.portal.vulcan.internal.jaxrs.context.provider.SortContextProvider">
-		<priority value="ERROR" />
-	</category>
+		<Logger level="ERROR" name="com.liferay.portal.vulcan.internal.jaxrs.context.provider.SortContextProvider" />
 
-	<category name="com.liferay.portal.vulcan.internal.resource.EntityModelResourceRegistry">
-		<priority value="ERROR" />
-	</category>
-</log4j:configuration>
+		<Logger level="ERROR" name="com.liferay.portal.vulcan.internal.resource.EntityModelResourceRegistry" />
+	</Loggers>
+</Configuration>

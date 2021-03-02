@@ -596,13 +596,27 @@ definition {
 	}
 
 	macro assertAutoImageResolution {
-		var currentSrc = selenium.getAttribute("${element}@currentSrc");
+		if ("${type}" == "backgroundImage") {
+			var backgroundImage = Css.getCssValue(
+				attribute = "background-image",
+				element = "${element}");
 
-		if (contains("${currentSrc}", "${adaptiveMediaName}")) {
-			echo("The auto image resolution is right.");
+			if (contains("${backgroundImage}", "${adaptiveMediaName}")) {
+				echo("The auto image resolution is right.");
+			}
+			else {
+				fail("The auto image resolution is wrong.");
+			}
 		}
 		else {
-			fail("The auto image resolution is wrong.");
+			var currentSrc = selenium.getAttribute("${element}@currentSrc");
+
+			if (contains("${currentSrc}", "${adaptiveMediaName}")) {
+				echo("The auto image resolution is right.");
+			}
+			else {
+				fail("The auto image resolution is wrong.");
+			}
 		}
 	}
 

@@ -232,6 +232,30 @@ public class LayoutAnalyticsReportsInfoItemTest {
 	}
 
 	@Test
+	public void testGetTitleWithEmptyTitle() throws Exception {
+		Locale locale = LocaleThreadLocal.getSiteDefaultLocale();
+
+		try {
+			LocaleThreadLocal.setSiteDefaultLocale(LocaleUtil.SPAIN);
+
+			Layout layout = _layoutLocalService.addLayout(
+				TestPropsValues.getUserId(), _group.getGroupId(), false,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+				RandomTestUtil.randomString(), StringPool.BLANK,
+				StringPool.BLANK, LayoutConstants.TYPE_CONTENT, false,
+				StringPool.BLANK,
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+			Assert.assertEquals(
+				layout.getName(LocaleUtil.SPAIN),
+				_analyticsReportsInfoItem.getTitle(layout, LocaleUtil.SPAIN));
+		}
+		finally {
+			LocaleThreadLocal.setSiteDefaultLocale(locale);
+		}
+	}
+
+	@Test
 	public void testIsShow() throws Exception {
 		User user = UserTestUtil.addUser(_group.getGroupId());
 

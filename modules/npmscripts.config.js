@@ -92,7 +92,7 @@ module.exports = {
 							util: '>=0.10.3',
 							'vm-browserify': '>=0.0.4',
 						},
-						'frontend-js-react-web': {
+						'@liferay/frontend-js-react-web': {
 							'/': '>=1.0.0',
 							classnames: '>=2.2.6',
 							formik: '>=1.4.3',
@@ -116,7 +116,7 @@ module.exports = {
 							svg4everybody: '>=2.1.9',
 							uuid: '>=3.3.2',
 						},
-						'frontend-taglib': {
+						'@liferay/frontend-taglib': {
 							'/': '>=1.0.0',
 						},
 						'frontend-taglib-chart': {
@@ -284,10 +284,16 @@ module.exports = {
 			remotes: [
 				'frontend-js-components-web',
 				'frontend-js-metal-web',
-				'frontend-js-react-web',
+				{
+					name: '@liferay/frontend-js-react-web',
+					webContextPath: 'frontend-js-react-web'
+				},
 				'frontend-js-spa-web',
 				'frontend-js-web',
-				'frontend-taglib',
+				{
+					name: '@liferay/frontend-taglib',
+					webContextPath: 'frontend-taglib'
+				},
 				'frontend-taglib-chart',
 				'frontend-taglib-clay',
 			],

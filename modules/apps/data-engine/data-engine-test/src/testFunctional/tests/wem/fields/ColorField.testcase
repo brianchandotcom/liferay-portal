@@ -16,9 +16,7 @@ definition {
 
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(
-			structureDescription = "Structure Description Test",
-			structureName = "Structure Name Test");
+		WebContentStructures.addCP(structureName = "Structure Name Test");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Color Test",
@@ -94,10 +92,6 @@ definition {
 		property portal.acceptance = "false";
 
 		WebContentStructures.saveCP(structureName = "Structure Name Test");
-
-		WebContentStructures.viewTableEntryCP(
-			structureDescription = "Structure Description Test",
-			structureName = "Structure Name Test");
 
 		WebContentNavigator.gotoEditStructure(structureName = "Structure Name Test");
 

@@ -4,6 +4,9 @@
 	<dynamic-element index-type="text" instance-id="svxv" name="ContentImage" type="image">
 		<dynamic-content language-id="[$LOCALE$]"><![CDATA[[$minium_splash_image_overlay.png$]]]></dynamic-content>
 	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="svxv" name="Heading" type="text">
+		<dynamic-content language-id="[$LOCALE$]"><![CDATA[Summer Sales]]></dynamic-content>
+	</dynamic-element>
 	<dynamic-element index-type="keyword" instance-id="pawt" name="CTA" type="text">
 		<dynamic-content language-id="[$LOCALE$]"><![CDATA[/group/null/catalog?q=brake]]></dynamic-content>
 	</dynamic-element>

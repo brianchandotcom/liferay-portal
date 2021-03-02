@@ -26,7 +26,30 @@
 			"tip": {
 				"[$LOCALE$]": ""
 			},
-			"type": "ddm-image"
+			"type": "image"
+		},
+		{
+			"dataType": "string",
+			"indexType": "text",
+			"label": {
+				"[$LOCALE$]": "Heading"
+			},
+			"localizable": true,
+			"name": "Heading",
+			"predefinedValue": {
+				"[$LOCALE$]": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"style": {
+				"[$LOCALE$]": ""
+			},
+			"tip": {
+				"[$LOCALE$]": ""
+			},
+			"type": "text"
 		},
 		{
 			"dataType": "string",

@@ -78,7 +78,9 @@
 	<div class="banner-content-section" style="background-image: linear-gradient(180deg, rgba(47, 51, 59, 0) 0%, #2F333B 100%), url(${ContentImage.getData()}); border-radius: 8px;">
 		<div class="banner-content-container">
 			<h1 class="content-preview-title minium-h1">
-				${.vars['reserved-article-title'].data}
+				<#if (Heading.getData())??>
+					${Heading.getData()}
+				</#if>
 			</h1>
 
 			<a class="minium-cta-link" onclick="getRelativeURL()">

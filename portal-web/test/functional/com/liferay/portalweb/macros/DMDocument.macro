@@ -815,20 +815,38 @@ definition {
 	macro checkoutCP {
 		var key_dmDocumentTitle = "${dmDocumentTitle}";
 
-		Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");
+		if (isSet(editStatus)) {
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "${dmDocumentTitle}");
 
-		MenuItem.click(menuItem = "Checkout");
+			PortletEntry.checkOut();
+		}
+		else {
+			Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");
 
-		Alert.viewSuccessMessage();
+			MenuItem.click(menuItem = "Checkout");
 
-		AssertClick(
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
-			value1 = "${dmDocumentTitle}");
+			Alert.viewSuccessMessage();
+
+			AssertClick(
+				locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
+				value1 = "${dmDocumentTitle}");
+		}
 
 		if ("${dmRepositoryName}" == "true") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#CHECKOUT_SUCCESS",
 				value1 = "You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire.");
+		}
+		if (isSet(editStatus)) {
+			AssertClick(
+				locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
+				value1 = "${dmDocumentTitle}");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#CHECKOUT_SUCCESS",
+				value1 = "You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day.");
 		}
 		else {
 			AssertTextEquals.assertPartialText(
@@ -2015,7 +2033,7 @@ definition {
 			DMDocument.gotoEntry(dmDocumentTitle = "${dmDocumentTitle}");
 
 			AssertTextEquals(
-				locator1 = "TextInput#TITLE",
+				locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_TITLE",
 				value1 = "${dmDocumentTitle}");
 		}
 	}

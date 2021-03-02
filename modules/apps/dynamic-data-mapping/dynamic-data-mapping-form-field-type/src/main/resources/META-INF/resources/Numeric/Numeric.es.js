@@ -65,7 +65,9 @@ const getValue = (dataType, symbols, value) => {
 		decimalSymbol = ',';
 	}
 
-	newValue = newValue.replace('$[DECIMAL_SYMBOL]', decimalSymbol);
+	newValue = newValue
+		? newValue.replace('$[DECIMAL_SYMBOL]', decimalSymbol)
+		: newValue;
 
 	if (dataType === 'integer' && newValue) {
 		newValue = String(Math.round(newValue.replace(decimalSymbol, '.')));

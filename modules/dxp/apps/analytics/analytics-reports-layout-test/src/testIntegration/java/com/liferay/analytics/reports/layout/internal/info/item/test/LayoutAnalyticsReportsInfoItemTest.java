@@ -22,18 +22,24 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.Arrays;
 import java.util.Locale;
@@ -43,8 +49,9 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
+
+import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Cristina González
@@ -54,7 +61,10 @@ public class LayoutAnalyticsReportsInfoItemTest {
 
 	@ClassRule
 	@Rule
-	public static final TestRule testRule = new LiferayIntegrationTestRule();
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -217,6 +227,45 @@ public class LayoutAnalyticsReportsInfoItemTest {
 		}
 		finally {
 			LocaleThreadLocal.setSiteDefaultLocale(locale);
+		}
+	}
+
+	@Test
+	public void testIsShow() throws Exception {
+		User user = UserTestUtil.addUser(_group.getGroupId());
+
+		try {
+			Layout layout = _layoutLocalService.addLayout(
+				user.getUserId(), _group.getGroupId(), false,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				StringPool.BLANK, LayoutConstants.TYPE_CONTENT, false,
+				StringPool.BLANK,
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+			MockHttpServletRequest mockHttpServletRequest =
+				new MockHttpServletRequest();
+
+			ThemeDisplay themeDisplay = new ThemeDisplay();
+
+			themeDisplay.setRequest(mockHttpServletRequest);
+
+			mockHttpServletRequest.setAttribute(
+				WebKeys.THEME_DISPLAY, themeDisplay);
+
+			serviceContext.setRequest(mockHttpServletRequest);
+
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+			Assert.assertTrue(_analyticsReportsInfoItem.isShow(layout));
+		}
+		finally {
+			_userLocalService.deleteUser(user);
+
+			ServiceContextThreadLocal.popServiceContext();
 		}
 	}
 

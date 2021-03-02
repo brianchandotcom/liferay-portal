@@ -36,19 +36,6 @@ create table CommerceAccount (
 	statusDate DATE null
 );
 
-create table CommerceAccountGroup (
-	externalReferenceCode VARCHAR(75) null,
-	commerceAccountGroupId LONG not null primary key,
-	companyId LONG,
-	userId LONG,
-	userName VARCHAR(75) null,
-	createDate DATE null,
-	modifiedDate DATE null,
-	name VARCHAR(75) null,
-	type_ INTEGER,
-	system_ BOOLEAN
-);
-
 create table CommerceAccountGroupRel (
 	commerceAccountGroupRelId LONG not null primary key,
 	companyId LONG,

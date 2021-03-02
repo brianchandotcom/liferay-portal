@@ -20,7 +20,7 @@ import vanillaTextMask from 'vanilla-text-mask';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 
-const getGenericValue = (symbols, value) => {
+const getGenericValue = (symbols, value = '') => {
 	if (typeof value === 'number' || !symbols) {
 		return value;
 	}

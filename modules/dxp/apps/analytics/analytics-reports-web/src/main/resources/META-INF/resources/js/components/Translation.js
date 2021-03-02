@@ -86,23 +86,11 @@ export default function Translation({
 									<ClayLayout.ContentCol expand>
 										<span>{language.languageId}</span>
 									</ClayLayout.ContentCol>
-									<ClayLayout.ContentCol>
-										<ClayLabel
-											displayType={
-												language.default
-													? 'primary'
-													: 'success'
-											}
-										>
-											{language.default
-												? Liferay.Language.get(
-														'default'
-												  )
-												: Liferay.Language.get(
-														'translated'
-												  )}
+									{language.default && (
+										<ClayLabel displayType="primary">
+											{Liferay.Language.get('default')}
 										</ClayLabel>
-									</ClayLayout.ContentCol>
+									)}
 								</ClayLayout.ContentRow>
 							</ClayDropDown.Item>
 						))}

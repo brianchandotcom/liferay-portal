@@ -20,8 +20,8 @@
 RoleItemSelectorViewDisplayContext roleItemSelectorViewDisplayContext = (RoleItemSelectorViewDisplayContext)request.getAttribute(RoleItemSelectorViewConstants.ROLE_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT);
 %>
 
-<clay:management-toolbar-v2
-	displayContext="<%= roleItemSelectorViewDisplayContext %>"
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= roleItemSelectorViewDisplayContext %>"
 />
 
 <clay:container-fluid

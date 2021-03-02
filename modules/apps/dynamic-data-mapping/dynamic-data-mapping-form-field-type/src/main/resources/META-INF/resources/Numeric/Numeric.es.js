@@ -48,7 +48,7 @@ const getMaskConfig = (dataType, symbols) => {
 	return config;
 };
 
-const getValue = (dataType, symbols, value) => {
+const getValue = (dataType, symbols, value = '') => {
 	let decimalSymbol = symbols.decimalSymbol;
 
 	let newValue;
@@ -65,9 +65,7 @@ const getValue = (dataType, symbols, value) => {
 		decimalSymbol = ',';
 	}
 
-	newValue = newValue
-		? newValue.replace('$[DECIMAL_SYMBOL]', decimalSymbol)
-		: newValue;
+	newValue = newValue.replace('$[DECIMAL_SYMBOL]', decimalSymbol);
 
 	if (dataType === 'integer' && newValue) {
 		newValue = String(Math.round(newValue.replace(decimalSymbol, '.')));

@@ -14,8 +14,6 @@
 
 module.exports = {
 	build: {
-		dependencies: [
-			'commerce-product-options-web',
-		],
+		dependencies: ['commerce-product-options-web'],
 	},
 };

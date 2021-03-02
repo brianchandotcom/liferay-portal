@@ -14,8 +14,6 @@
 
 module.exports = {
 	build: {
-		dependencies: [
-			'dynamic-data-mapping-form-renderer',
-		],
+		dependencies: ['dynamic-data-mapping-form-renderer'],
 	},
 };

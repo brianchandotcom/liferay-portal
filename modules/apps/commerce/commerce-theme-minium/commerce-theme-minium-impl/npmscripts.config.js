@@ -14,8 +14,6 @@
 
 module.exports = {
 	build: {
-		dependencies: [
-			'commerce-frontend-taglib',
-		],
+		dependencies: ['commerce-frontend-taglib'],
 	},
 };

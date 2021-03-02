@@ -284,13 +284,13 @@ module.exports = {
 			'frontend-js-metal-web',
 			{
 				name: '@liferay/frontend-js-react-web',
-				webContextPath: 'frontend-js-react-web'
+				webContextPath: 'frontend-js-react-web',
 			},
 			'frontend-js-spa-web',
 			'frontend-js-web',
 			{
 				name: '@liferay/frontend-taglib',
-				webContextPath: 'frontend-taglib'
+				webContextPath: 'frontend-taglib',
 			},
 			'frontend-taglib-chart',
 			'frontend-taglib-clay',
@@ -417,7 +417,7 @@ module.exports = {
 			'svg4everybody',
 			'uuid',
 			'xss-filters',
-		]
+		],
 	},
 	global: {
 		check: CHECK_AND_FIX_GLOBS,

@@ -403,6 +403,28 @@ public class MessageBoardMessageResourceImpl
 		return _toMessageBoardMessage(mbMessage);
 	}
 
+	private MessageBoardMessage
+			_addOrUpdateMessageBoardMessageByExternalReferenceCode(
+				String externalReferenceCode, long groupId,
+				MessageBoardMessage messageBoardMessage)
+		throws Exception {
+
+		MBMessage mbMessage =
+			_mbMessageLocalService.fetchMBMessageByReferenceCode(
+				groupId, externalReferenceCode);
+
+		if (mbMessage == null) {
+			messageBoardMessage.setExternalReferenceCode(externalReferenceCode);
+
+			return _addMessageBoardMessage(
+				messageBoardMessage.getParentMessageBoardMessageId(),
+				messageBoardMessage);
+		}
+
+		return _updateMessageBoardMessage(
+			mbMessage.getMessageId(), messageBoardMessage);
+	}
+
 	private void _deleteMessageBoardMessageByExternalReferenceCode(
 			String externalReferenceCode, long groupId)
 		throws Exception {
@@ -681,28 +703,6 @@ public class MessageBoardMessageResourceImpl
 		}
 
 		return _toMessageBoardMessage(mbMessage);
-	}
-
-	private MessageBoardMessage
-			_addOrUpdateMessageBoardMessageByExternalReferenceCode(
-				String externalReferenceCode, long groupId,
-				MessageBoardMessage messageBoardMessage)
-		throws Exception {
-
-		MBMessage mbMessage =
-			_mbMessageLocalService.fetchMBMessageByReferenceCode(
-				groupId, externalReferenceCode);
-
-		if (mbMessage == null) {
-			messageBoardMessage.setExternalReferenceCode(externalReferenceCode);
-
-			return _addMessageBoardMessage(
-				messageBoardMessage.getParentMessageBoardMessageId(),
-				messageBoardMessage);
-		}
-
-		return _updateMessageBoardMessage(
-			mbMessage.getMessageId(), messageBoardMessage);
 	}
 
 	@Reference

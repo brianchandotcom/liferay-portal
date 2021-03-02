@@ -13,6 +13,7 @@
  */
 
 import {ClayIconSpriteContext} from '@clayui/icon';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -70,9 +71,11 @@ export default function render(renderable, renderData, container) {
 
 		// eslint-disable-next-line @liferay/portal/no-react-dom-render
 		ReactDOM.render(
-			<ClayIconSpriteContext.Provider value={spritemap}>
-				{Component ? <Component {...renderData} /> : renderable}
-			</ClayIconSpriteContext.Provider>,
+			<ClayTooltipProvider>
+				<ClayIconSpriteContext.Provider value={spritemap}>
+					{Component ? <Component {...renderData} /> : renderable}
+				</ClayIconSpriteContext.Provider>
+			</ClayTooltipProvider>,
 			container
 		);
 	}

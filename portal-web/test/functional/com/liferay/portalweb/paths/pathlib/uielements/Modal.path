@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DEVICE_TYPE</td>
+	<td>//div[contains(@class, 'modal-dialog')]//button[contains(@class,'btn')][@aria-label='${key_deviceType}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LOCALIZATION_DROPDOWN_TOGGLE</td>
 	<td>//div[contains(@class, 'modal-dialog')]//div[contains(@class,'localizable-dropdown')]//button[contains(@class,'dropdown-toggle')]</td>
 	<td></td>

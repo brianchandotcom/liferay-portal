@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Petra Portlet URL
+Bundle-SymbolicName: com.liferay.petra.portlet.url
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.petra.portlet.url,\
+	com.liferay.petra.portlet.url.builder

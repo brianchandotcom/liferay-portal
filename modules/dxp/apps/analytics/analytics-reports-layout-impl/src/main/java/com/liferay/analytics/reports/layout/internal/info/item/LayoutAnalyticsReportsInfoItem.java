@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 
@@ -121,7 +122,14 @@ public class LayoutAnalyticsReportsInfoItem
 
 	@Override
 	public Locale getDefaultLocale(Layout layout) {
-		return LocaleUtil.fromLanguageId(layout.getDefaultLanguageId());
+		try {
+			return _portal.getSiteDefaultLocale(layout.getGroupId());
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
+		}
+
+		return LocaleUtil.getDefault();
 	}
 
 	@Override
@@ -220,6 +228,9 @@ public class LayoutAnalyticsReportsInfoItem
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private UserLocalService _userLocalService;

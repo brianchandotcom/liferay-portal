@@ -238,6 +238,19 @@ public abstract class BaseTestPreparatorBundleActivator
 
 	protected OAuth2Application createOAuth2Application(
 			long companyId, User user, String clientId,
+			List<GrantType> allowedGrantTypesList, boolean rememberDevice,
+			List<String> scopeAliasesList, boolean trustedApplication)
+		throws PortalException {
+
+		return createOAuth2Application(
+			companyId, user, clientId, "oauthTestApplicationSecret",
+			allowedGrantTypesList,
+			Collections.singletonList("http://redirecturi:8080"),
+			rememberDevice, scopeAliasesList, trustedApplication);
+	}
+
+	protected OAuth2Application createOAuth2Application(
+			long companyId, User user, String clientId,
 			List<GrantType> allowedGrantTypesList,
 			List<String> scopeAliasesList)
 		throws PortalException {
@@ -251,19 +264,6 @@ public abstract class BaseTestPreparatorBundleActivator
 
 	protected OAuth2Application createOAuth2Application(
 			long companyId, User user, String clientId,
-			List<GrantType> allowedGrantTypesList,
-			List<String> scopeAliasesList, boolean trustedApplication)
-		throws PortalException {
-
-		return createOAuth2Application(
-			companyId, user, clientId, "oauthTestApplicationSecret",
-			allowedGrantTypesList,
-			Collections.singletonList("http://redirecturi:8080"),
-			scopeAliasesList, trustedApplication);
-	}
-
-	protected OAuth2Application createOAuth2Application(
-			long companyId, User user, String clientId,
 			List<String> scopeAliasesList)
 		throws PortalException {
 
@@ -272,25 +272,14 @@ public abstract class BaseTestPreparatorBundleActivator
 			Arrays.asList(
 				GrantType.CLIENT_CREDENTIALS,
 				GrantType.RESOURCE_OWNER_PASSWORD),
-			scopeAliasesList, false);
+			false, scopeAliasesList, false);
 	}
 
 	protected OAuth2Application createOAuth2Application(
 			long companyId, User user, String clientId, String clientSecret,
 			List<GrantType> allowedGrantTypesList,
-			List<String> redirectURIsList, List<String> scopeAliasesList)
-		throws PortalException {
-
-		return createOAuth2Application(
-			companyId, user, clientId, clientSecret, allowedGrantTypesList,
-			redirectURIsList, scopeAliasesList, false);
-	}
-
-	protected OAuth2Application createOAuth2Application(
-			long companyId, User user, String clientId, String clientSecret,
-			List<GrantType> allowedGrantTypesList,
-			List<String> redirectURIsList, List<String> scopeAliasesList,
-			boolean trustedApplication)
+			List<String> redirectURIsList, boolean rememberDevice,
+			List<String> scopeAliasesList, boolean trustedApplication)
 		throws PortalException {
 
 		ServiceReference<OAuth2ApplicationLocalService> serviceReference =
@@ -309,14 +298,25 @@ public abstract class BaseTestPreparatorBundleActivator
 				clientSecret, "test oauth application",
 				Collections.singletonList("token_introspection"),
 				"http://localhost:8080", 0, "test application",
-				"http://localhost:8080", redirectURIsList, scopeAliasesList,
-				trustedApplication, new ServiceContext());
+				"http://localhost:8080", redirectURIsList, rememberDevice,
+				scopeAliasesList, trustedApplication, new ServiceContext());
 
 		autoCloseables.add(
 			() -> oAuth2ApplicationLocalService.deleteOAuth2Application(
 				oAuth2Application.getOAuth2ApplicationId()));
 
 		return oAuth2Application;
+	}
+
+	protected OAuth2Application createOAuth2Application(
+			long companyId, User user, String clientId, String clientSecret,
+			List<GrantType> allowedGrantTypesList,
+			List<String> redirectURIsList, List<String> scopeAliasesList)
+		throws PortalException {
+
+		return createOAuth2Application(
+			companyId, user, clientId, clientSecret, allowedGrantTypesList,
+			redirectURIsList, false, scopeAliasesList, false);
 	}
 
 	protected void createServiceAccessProfile(

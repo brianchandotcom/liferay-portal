@@ -284,6 +284,14 @@ public abstract class BaseClientTestCase {
 		getCodeFunction(
 			Function<WebTarget, WebTarget> authorizeRequestFunction) {
 
+		return getCodeFunction(authorizeRequestFunction, null);
+	}
+
+	protected Function<Function<WebTarget, Invocation.Builder>, Response>
+		getCodeFunction(
+			Function<WebTarget, WebTarget> authorizeRequestFunction,
+			MultivaluedMap<String, String> extraParameters) {
+
 		return invocationBuilderFunction -> {
 			Invocation.Builder invocationBuilder =
 				invocationBuilderFunction.apply(
@@ -318,6 +326,10 @@ public abstract class BaseClientTestCase {
 
 				formData.add(
 					key.substring("oauth2_".length()), entry.getValue()[0]);
+			}
+
+			if (extraParameters != null) {
+				formData.putAll(extraParameters);
 			}
 
 			invocationBuilder = invocationBuilderFunction.apply(

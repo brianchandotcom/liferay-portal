@@ -14,7 +14,10 @@
 
 package com.liferay.petra.portlet.url.builder;
 
+import com.liferay.petra.portlet.url.PortletURL;
+import com.liferay.petra.portlet.url.impl.PortletURLImpl;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 
 import java.util.Map;
 
@@ -23,7 +26,6 @@ import javax.portlet.MimeResponse;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
 import javax.portlet.PortletSecurityException;
-import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 
@@ -32,8 +34,12 @@ import javax.portlet.WindowStateException;
  */
 public class PortletURLBuilder {
 
+	public static PortletURLStep create(javax.portlet.PortletURL portletURL) {
+		return new PortletURLStep((LiferayPortletURL)portletURL);
+	}
+
 	public static PortletURLStep create(PortletURL portletURL) {
-		return new PortletURLStep(portletURL);
+		return new PortletURLStep((LiferayPortletURL)portletURL);
 	}
 
 	public static PortletURLStep createActionURL(
@@ -45,7 +51,8 @@ public class PortletURLBuilder {
 	public static PortletURLStep createActionURL(
 		LiferayPortletResponse liferayPortletResponse, MimeResponse.Copy copy) {
 
-		return new PortletURLStep(liferayPortletResponse.createActionURL(copy));
+		return new PortletURLStep(
+			(LiferayPortletURL)liferayPortletResponse.createActionURL(copy));
 	}
 
 	public static PortletURLStep createActionURL(
@@ -70,7 +77,8 @@ public class PortletURLBuilder {
 	public static PortletURLStep createActionURL(
 		MimeResponse mimeResponse, MimeResponse.Copy copy) {
 
-		return new PortletURLStep(mimeResponse.createActionURL(copy));
+		return new PortletURLStep(
+			(LiferayPortletURL)mimeResponse.createActionURL(copy));
 	}
 
 	public static PortletURLStep createLiferayPortletURL(
@@ -144,7 +152,8 @@ public class PortletURLBuilder {
 	public static PortletURLStep createRenderURL(
 		LiferayPortletResponse liferayPortletResponse, MimeResponse.Copy copy) {
 
-		return new PortletURLStep(liferayPortletResponse.createRenderURL(copy));
+		return new PortletURLStep(
+			(LiferayPortletURL)liferayPortletResponse.createRenderURL(copy));
 	}
 
 	public static PortletURLStep createRenderURL(
@@ -169,7 +178,8 @@ public class PortletURLBuilder {
 	public static PortletURLStep createRenderURL(
 		MimeResponse mimeResponse, MimeResponse.Copy copy) {
 
-		return new PortletURLStep(mimeResponse.createRenderURL(copy));
+		return new PortletURLStep(
+			(LiferayPortletURL)mimeResponse.createRenderURL(copy));
 	}
 
 	public static class PortletURLStep
@@ -180,18 +190,20 @@ public class PortletURLBuilder {
 				   MVCRenderCommandNameStep, ParameterStep, PortletModeStep,
 				   RedirectStep, SecureStep, WindowStateStep {
 
-		public PortletURLStep(PortletURL portletURL) {
-			_portletURL = portletURL;
+		public PortletURLStep(LiferayPortletURL liferayPortletURL) {
+			_portletURLImpl = new PortletURLImpl(liferayPortletURL);
 		}
 
 		@Override
 		public PortletURL build() {
-			return _portletURL;
+			return (PortletURL)_portletURLImpl;
 		}
 
 		@Override
 		public String buildString() {
-			return _portletURL.toString();
+			PortletURL portletURL = (PortletURL)_portletURLImpl;
+
+			return portletURL.toString();
 		}
 
 		@Override
@@ -253,14 +265,14 @@ public class PortletURLBuilder {
 
 		@Override
 		public AfterParameterStep setParameter(String name, String value) {
-			_portletURL.setParameter(name, value);
+			_portletURLImpl.setParameter(name, value);
 
 			return this;
 		}
 
 		@Override
 		public AfterParameterStep setParameter(String name, String... values) {
-			_portletURL.setParameter(name, values);
+			_portletURLImpl.setParameter(name, values);
 
 			return this;
 		}
@@ -294,7 +306,7 @@ public class PortletURLBuilder {
 		public AfterParameterStep setParameters(
 			Map<String, String[]> parameters) {
 
-			_portletURL.setParameters(parameters);
+			_portletURLImpl.setParameters(parameters);
 
 			return this;
 		}
@@ -303,7 +315,7 @@ public class PortletURLBuilder {
 		public AfterPortletModeStep setPortletMode(PortletMode portletMode)
 			throws PortletModeException {
 
-			_portletURL.setPortletMode(portletMode);
+			_portletURLImpl.setPortletMode(portletMode);
 
 			return this;
 		}
@@ -328,7 +340,7 @@ public class PortletURLBuilder {
 		public AfterSecureStep setSecure(boolean secure)
 			throws PortletSecurityException {
 
-			_portletURL.setSecure(secure);
+			_portletURLImpl.setSecure(secure);
 
 			return this;
 		}
@@ -337,12 +349,12 @@ public class PortletURLBuilder {
 		public AfterWindowStateStep setWindowState(WindowState windowState)
 			throws WindowStateException {
 
-			_portletURL.setWindowState(windowState);
+			_portletURLImpl.setWindowState(windowState);
 
 			return this;
 		}
 
-		private final PortletURL _portletURL;
+		private final PortletURLImpl _portletURLImpl;
 
 	}
 

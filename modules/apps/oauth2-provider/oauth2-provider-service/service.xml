@@ -33,6 +33,7 @@
 		<column name="name" type="String" />
 		<column name="privacyPolicyURL" type="String" />
 		<column name="redirectURIs" type="String" />
+		<column name="rememberDevice" type="boolean" />
 		<column name="trustedApplication" type="boolean" />
 
 		<!-- Finder methods -->

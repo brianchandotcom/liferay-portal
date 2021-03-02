@@ -205,6 +205,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -2399,7 +2401,13 @@ public class JournalArticleLocalServiceImpl
 
 		Date displayDate = article.getDisplayDate();
 
-		if ((displayDate != null) && displayDate.after(now)) {
+		HttpServletRequest httpServletRequest = themeDisplay.getRequest();
+
+		String view_mode = httpServletRequest.getParameter("p_l_mode");
+
+		if ((displayDate != null) && displayDate.after(now) &&
+			!view_mode.equals("preview")) {
+
 			return null;
 		}
 

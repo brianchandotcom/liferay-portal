@@ -52,17 +52,22 @@ import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoLog;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance;
+import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstanceModel;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 import com.liferay.portal.workflow.kaleo.service.base.KaleoLogLocalServiceBaseImpl;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -174,8 +179,9 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 	public KaleoLog addTaskAssignmentKaleoLog(
 			List<KaleoTaskAssignmentInstance>
 				previousKaleoTaskAssignmentInstances,
-			KaleoTaskInstanceToken kaleoTaskInstanceToken, String comment,
-			Map<String, Serializable> workflowContext,
+			KaleoTaskInstanceToken kaleoTaskInstanceToken,
+			KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance,
+			String comment, Map<String, Serializable> workflowContext,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -200,22 +206,16 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 		if ((previousKaleoTaskAssignmentInstances != null) &&
 			(previousKaleoTaskAssignmentInstances.size() == 1)) {
 
-			KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance =
+			KaleoTaskAssignmentInstance previousKaleoTaskAssignmentInstance =
 				previousKaleoTaskAssignmentInstances.get(0);
 
 			kaleoLog.setPreviousAssigneeClassName(
-				kaleoTaskAssignmentInstance.getAssigneeClassName());
+				previousKaleoTaskAssignmentInstance.getAssigneeClassName());
 			kaleoLog.setPreviousAssigneeClassPK(
-				kaleoTaskAssignmentInstance.getAssigneeClassPK());
+				previousKaleoTaskAssignmentInstance.getAssigneeClassPK());
 		}
 
-		List<KaleoTaskAssignmentInstance> kaleoTaskAssignmentInstances =
-			kaleoTaskInstanceToken.getKaleoTaskAssignmentInstances();
-
-		if (!kaleoTaskAssignmentInstances.isEmpty()) {
-			KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance =
-				kaleoTaskAssignmentInstances.get(0);
-
+		if (kaleoTaskAssignmentInstance != null) {
 			kaleoLog.setCurrentAssigneeClassName(
 				kaleoTaskAssignmentInstance.getAssigneeClassName());
 			kaleoLog.setCurrentAssigneeClassPK(
@@ -227,6 +227,77 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 			WorkflowContextUtil.convert(workflowContext));
 
 		return kaleoLogPersistence.update(kaleoLog);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public KaleoLog addTaskAssignmentKaleoLog(
+			List<KaleoTaskAssignmentInstance>
+				previousKaleoTaskAssignmentInstances,
+			KaleoTaskInstanceToken kaleoTaskInstanceToken, String comment,
+			Map<String, Serializable> workflowContext,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance = null;
+
+		List<KaleoTaskAssignmentInstance> kaleoTaskAssignmentInstances =
+			kaleoTaskInstanceToken.getKaleoTaskAssignmentInstances();
+
+		if (ListUtil.isNotEmpty(kaleoTaskAssignmentInstances)) {
+			kaleoTaskAssignmentInstance = kaleoTaskAssignmentInstances.get(0);
+		}
+
+		return addTaskAssignmentKaleoLog(
+			previousKaleoTaskAssignmentInstances, kaleoTaskInstanceToken,
+			kaleoTaskAssignmentInstance, comment, workflowContext,
+			serviceContext);
+	}
+
+	@Override
+	public List<KaleoLog> addTaskAssignmentKaleoLogs(
+			List<KaleoTaskAssignmentInstance> previousTaskAssignmentInstances,
+			KaleoTaskInstanceToken kaleoTaskInstanceToken, String comment,
+			Map<String, Serializable> workflowContext,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		List<KaleoLog> kaleoLogs = new ArrayList<>();
+
+		List<KaleoTaskAssignmentInstance> kaleoTaskAssignmentInstances =
+			kaleoTaskInstanceToken.getKaleoTaskAssignmentInstances();
+
+		if (ListUtil.isNotEmpty(kaleoTaskAssignmentInstances)) {
+			Stream<KaleoTaskAssignmentInstance>
+				kaleoTaskAssignmentInstancesStream =
+					kaleoTaskAssignmentInstances.stream();
+
+			Set<KaleoTaskAssignmentInstance> kaleoTaskAssignmentInstancesSet =
+				kaleoTaskAssignmentInstancesStream.collect(
+					Collectors.toCollection(
+						() -> new TreeSet<>(
+							Comparator.comparingLong(
+								KaleoTaskAssignmentInstanceModel::
+									getAssigneeClassPK))));
+
+			for (KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance :
+					kaleoTaskAssignmentInstancesSet) {
+
+				kaleoLogs.add(
+					kaleoLogLocalService.addTaskAssignmentKaleoLog(
+						previousTaskAssignmentInstances, kaleoTaskInstanceToken,
+						kaleoTaskAssignmentInstance, comment, workflowContext,
+						serviceContext));
+			}
+		}
+		else {
+			kaleoLogs.add(
+				kaleoLogLocalService.addTaskAssignmentKaleoLog(
+					previousTaskAssignmentInstances, kaleoTaskInstanceToken,
+					null, comment, workflowContext, serviceContext));
+		}
+
+		return kaleoLogs;
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

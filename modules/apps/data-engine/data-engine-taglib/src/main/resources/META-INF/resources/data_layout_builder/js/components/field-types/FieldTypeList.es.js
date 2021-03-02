@@ -15,6 +15,7 @@
 import classNames from 'classnames';
 import React from 'react';
 
+import {getSearchRegex} from '../../utils/search.es';
 import CollapsablePanel from '../collapsable-panel/CollapsablePanel.es';
 import EmptyState from '../empty-state/EmptyState.es';
 import FieldType from './FieldType.es';
@@ -42,17 +43,20 @@ const FieldTypeList = ({
 	onDoubleClick,
 	showEmptyState = true,
 }) => {
-	const regex = new RegExp(keywords, 'i');
+	const regex = getSearchRegex(keywords);
 
-	const filteredFieldTypes = fieldTypes
-		.filter(({system}) => !system)
-		.filter(({description, label}) => {
+	const filteredFieldTypes = fieldTypes.filter(
+		({description, label, system}) => {
+			if (system) {
+				return false;
+			}
 			if (!keywords) {
 				return true;
 			}
 
 			return regex.test(description) || regex.test(label);
-		});
+		}
+	);
 
 	if (showEmptyState && !filteredFieldTypes.length) {
 		return <EmptyState emptyState={emptyState} keywords={keywords} small />;

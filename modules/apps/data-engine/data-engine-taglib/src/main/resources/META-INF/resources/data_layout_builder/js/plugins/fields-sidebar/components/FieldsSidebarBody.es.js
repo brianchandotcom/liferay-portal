@@ -24,8 +24,9 @@ export default function ({
 	keywords,
 	onDoubleClick,
 	setKeywords,
+	tabs = [],
 }) {
-	const tabs = [
+	const sidebarTabs = [
 		{
 			label: Liferay.Language.get('fields'),
 			render: () => (
@@ -39,11 +40,19 @@ export default function ({
 	];
 
 	if (allowFieldSets) {
-		tabs.push({
+		sidebarTabs.push({
 			label: Liferay.Language.get('fieldsets'),
 			render: () => <FieldSets keywords={keywords} />,
 		});
 	}
 
-	return <Sidebar.Tabs setKeywords={setKeywords} tabs={tabs} />;
+	sidebarTabs.push(...tabs);
+
+	return (
+		<Sidebar.Tabs
+			searchTerm={keywords}
+			setKeywords={setKeywords}
+			tabs={sidebarTabs}
+		/>
+	);
 }

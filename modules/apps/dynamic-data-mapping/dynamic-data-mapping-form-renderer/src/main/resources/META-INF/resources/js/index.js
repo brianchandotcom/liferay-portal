@@ -37,6 +37,7 @@ export {FieldStateless} from './core/components/Field/FieldStateless.es';
 export {EVENT_TYPES, MAPPED_EVENT_TYPES} from './core/actions/eventTypes.es';
 export {PageProvider, usePage} from './core/hooks/usePage.es';
 export {useFieldTypesResource} from './core/hooks/useResource.es';
+export {elementSetAdded} from './core/thunks/elementSetAdded.es';
 export {FormProvider, useForm, useFormState} from './core/hooks/useForm.es';
 export {ConfigProvider, useConfig} from './core/hooks/useConfig.es';
 export {Layout} from './core/components/PageRenderer/Layout.es';

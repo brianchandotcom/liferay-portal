@@ -21,16 +21,19 @@ import {EVENT_TYPES} from '../eventTypes.es';
  * NOTE: This is a literal copy of the old LayoutProvider logic. Small changes
  * were made only to adapt to the reducer.
  */
-export default (state, action) => {
-	switch (action.type) {
+export default (state, {payload, type}) => {
+	switch (type) {
 		case EVENT_TYPES.ELEMENT_SET_ADD: {
-			const {fieldSetPages, indexes} = action.payload;
-			const {pages} = state;
-			const {pageIndex, rowIndex} = indexes;
+			const {elementSetPages, indexes} = payload;
+			const {activePage, pages} = state;
+			const {pageIndex, rowIndex} = indexes ?? {
+				pageIndex: activePage,
+				rowIndex: pages[activePage].rows.length,
+			};
 
-			const visitor = new PagesVisitor(fieldSetPages);
+			const visitor = new PagesVisitor(elementSetPages);
 
-			const newFieldsetPages = visitor.mapFields((field) => {
+			const newElementSetPages = visitor.mapFields((field) => {
 				const name = FieldUtil.generateFieldName(
 					pages,
 					field.fieldName
@@ -75,7 +78,7 @@ export default (state, action) => {
 							...page,
 							rows: [
 								...rows.slice(0, rowIndex + 1),
-								...newFieldsetPages[0].rows,
+								...newElementSetPages[0].rows,
 								...rows.slice(rowIndex + 1),
 							],
 						};

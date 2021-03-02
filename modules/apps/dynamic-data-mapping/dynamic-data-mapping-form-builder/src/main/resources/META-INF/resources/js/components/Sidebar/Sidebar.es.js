@@ -590,8 +590,8 @@ class Sidebar extends Component {
 			this._fetchElementSet(fieldSetId).then((pages) => {
 				dispatch('element_set_add', {
 					data,
+					elementSetPages: pages,
 					fieldSetId,
-					fieldSetPages: pages,
 					indexes,
 				});
 			});

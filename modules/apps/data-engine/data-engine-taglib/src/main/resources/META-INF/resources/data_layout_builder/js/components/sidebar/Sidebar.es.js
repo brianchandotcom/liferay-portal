@@ -66,6 +66,7 @@ const SidebarSearchInput = ({children, onSearch, searchText}) => (
 
 const SidebarTabs = ({
 	initialSelectedTab = 0,
+	searchTerm,
 	setKeywords = () => {},
 	tabs,
 }) => {
@@ -82,7 +83,9 @@ const SidebarTabs = ({
 				tabs={tabs}
 			/>
 
-			<SidebarTabContent>{tabs[selectedTab].render()}</SidebarTabContent>
+			<SidebarTabContent>
+				{tabs[selectedTab].render({searchTerm})}
+			</SidebarTabContent>
 		</>
 	);
 };

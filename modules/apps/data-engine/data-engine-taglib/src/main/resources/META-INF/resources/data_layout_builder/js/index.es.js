@@ -16,6 +16,7 @@ import App from './App.es';
 import DataLayoutBuilderContext from './AppContext.es';
 import DataLayoutBuilderContextProvider from './AppContextProvider.es';
 import * as DataLayoutBuilderActions from './actions.es';
+import EmptyState from './components/empty-state/EmptyState.es';
 import FieldType from './components/field-types/FieldType.es';
 import FieldTypeList from './components/field-types/FieldTypeList.es';
 import {Editor as RuleEditor} from './components/rules/editor/Editor.es';
@@ -35,6 +36,7 @@ import * as DataConverter from './utils/dataConverter.es';
 import * as DataDefinitionUtils from './utils/dataDefinition.es';
 import * as DataLayoutVisitor from './utils/dataLayoutVisitor.es';
 import * as LangUtil from './utils/lang.es';
+import * as SearchUtils from './utils/search.es';
 
 export {
 	DataConverter,
@@ -46,6 +48,7 @@ export {
 	DataLayoutVisitor,
 	DragLayer,
 	DragTypes,
+	EmptyState,
 	FieldsSidebar,
 	FieldType,
 	FieldTypeList,
@@ -55,6 +58,7 @@ export {
 	RuleEditor,
 	SearchInput,
 	SearchInputWithForm,
+	SearchUtils,
 	Sidebar,
 	TranslationManager,
 	withDragAndDropContext,

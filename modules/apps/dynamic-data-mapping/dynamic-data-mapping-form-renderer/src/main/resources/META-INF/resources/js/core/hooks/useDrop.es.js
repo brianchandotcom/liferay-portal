@@ -16,6 +16,7 @@ import {DataConverter, DragTypes} from 'data-engine-taglib';
 import {useDrop as useDndDrop} from 'react-dnd';
 
 import {EVENT_TYPES} from '../actions/eventTypes.es';
+import {elementSetAdded} from '../thunks/elementSetAdded.es';
 import {useConfig} from './useConfig.es';
 import {useForm, useFormState} from './useForm.es';
 
@@ -23,6 +24,8 @@ export const DND_ORIGIN_TYPE = {
 	EMPTY: 'empty',
 	FIELD: 'field',
 };
+
+const DRAG_ELEMENT_SET_ADD = 'elementSet:add';
 
 const isSameIndexes = (target, source) =>
 	target.pageIndex === source.pageIndex &&
@@ -103,14 +106,16 @@ export const useDrop = ({
 
 	const dispatch = useForm();
 
+	const indexes = {columnIndex, pageIndex, rowIndex};
+	const {
+		DRAG_DATA_DEFINITION_FIELD_ADD,
+		DRAG_FIELD_TYPE_ADD,
+		DRAG_FIELD_TYPE_MOVE,
+		DRAG_FIELDSET_ADD,
+	} = DragTypes;
+
 	const [{canDrop, overTarget}, drop] = useDndDrop({
-		accept: [
-			DragTypes.DRAG_FIELD_TYPE_ADD,
-			DragTypes.DRAG_FIELD_TYPE_MOVE,
-			DragTypes.DRAG_DATA_DEFINITION_FIELD_ADD,
-			DragTypes.DRAG_FIELD_TYPE_ADD,
-			DragTypes.DRAG_FIELDSET_ADD,
-		],
+		accept: [...Object.values(DragTypes), DRAG_ELEMENT_SET_ADD],
 		canDrop: (item) =>
 			!isSameField(field, item.data) &&
 			!isDroppingFieldGroupIntoField(field, item.data) &&
@@ -135,7 +140,7 @@ export const useDrop = ({
 			}
 
 			switch (type) {
-				case DragTypes.DRAG_FIELD_TYPE_ADD:
+				case DRAG_FIELD_TYPE_ADD:
 					dispatch({
 						payload: {
 							data: {
@@ -148,7 +153,7 @@ export const useDrop = ({
 								}),
 								editable: true,
 							},
-							indexes: {columnIndex, pageIndex, rowIndex},
+							indexes,
 						},
 						type:
 							origin === DND_ORIGIN_TYPE.EMPTY
@@ -156,23 +161,21 @@ export const useDrop = ({
 								: EVENT_TYPES.SECTION.ADD,
 					});
 					break;
-				case DragTypes.DRAG_FIELD_TYPE_MOVE:
+
+				case DRAG_FIELD_TYPE_MOVE:
 					dispatch({
 						payload: {
 							sourceFieldName: data.fieldName,
 							sourceFieldPage: sourceIndexes.pageIndex,
 							targetFieldName: field?.fieldName,
-							targetIndexes: {
-								columnIndex,
-								pageIndex,
-								rowIndex,
-							},
+							targetIndexes: indexes,
 							targetParentFieldName: parentField?.fieldName,
 						},
 						type: EVENT_TYPES.DND.MOVE,
 					});
 					break;
-				case DragTypes.DRAG_DATA_DEFINITION_FIELD_ADD: {
+
+				case DRAG_DATA_DEFINITION_FIELD_ADD: {
 					const {dataDefinition, name} = data;
 
 					const {
@@ -204,7 +207,7 @@ export const useDrop = ({
 									],
 								settingsContext,
 							},
-							indexes: {columnIndex, pageIndex, rowIndex},
+							indexes,
 							skipFieldNameGeneration: true,
 						},
 						type:
@@ -214,7 +217,7 @@ export const useDrop = ({
 					});
 					break;
 				}
-				case DragTypes.DRAG_FIELDSET_ADD: {
+				case DRAG_FIELDSET_ADD: {
 					const {fieldSet, properties, useFieldName} = data;
 
 					const {availableLanguageIds, defaultLanguageId} = fieldSet;
@@ -224,7 +227,7 @@ export const useDrop = ({
 							availableLanguageIds,
 							defaultLanguageId,
 							fieldName: field?.fieldName,
-							indexes: {columnIndex, pageIndex, rowIndex},
+							indexes,
 							parentFieldName: parentField?.fieldName,
 							properties,
 							useFieldName,
@@ -241,6 +244,11 @@ export const useDrop = ({
 					});
 					break;
 				}
+
+				case DRAG_ELEMENT_SET_ADD:
+					dispatch(elementSetAdded({indexes, ...data.payload}));
+					break;
+
 				default:
 					break;
 			}

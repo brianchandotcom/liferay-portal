@@ -22,6 +22,7 @@ import {DRAG_FIELDSET_ADD} from '../../drag-and-drop/dragTypes.es';
 import {getFieldSetDDMForm} from '../../utils/dataConverter.es';
 import {containsFieldSet} from '../../utils/dataDefinition.es';
 import {getLocalizedValue} from '../../utils/lang.es';
+import {getSearchRegex} from '../../utils/search.es';
 import EmptyState from '../empty-state/EmptyState.es';
 import FieldType from '../field-types/FieldType.es';
 import {getPluralMessage} from './../../utils/lang.es';
@@ -39,11 +40,10 @@ function getSortedFieldsets(fieldsets) {
 }
 
 function getFilteredFieldsets(fieldsets, keywords) {
-	const filteredFieldsets = fieldsets.filter(({defaultLanguageId, name}) => {
-		return new RegExp(keywords, 'ig').test(
-			getLocalizedValue(defaultLanguageId, name)
-		);
-	});
+	const regex = getSearchRegex(keywords);
+	const filteredFieldsets = fieldsets.filter(({defaultLanguageId, name}) =>
+		regex.test(getLocalizedValue(defaultLanguageId, name))
+	);
 
 	return getSortedFieldsets(filteredFieldsets);
 }

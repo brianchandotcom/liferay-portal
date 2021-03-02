@@ -198,6 +198,7 @@ export const FieldsSidebar = ({
 						keywords={keywords}
 						onDoubleClick={onDoubleClick}
 						setKeywords={setKeywords}
+						tabs={config.tabs}
 					/>
 				)}
 			</Sidebar.Body>

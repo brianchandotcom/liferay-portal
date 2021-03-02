@@ -22,7 +22,7 @@ definition {
 				value1 = "${dmDocumentFile}");
 		}
 		else if ("${nullFile}" == "true") {
-			AssertElementPresent(locator1 = "TextInput#FILE");
+			AssertElementNotPresent(locator1 = "TextInput#FILE_PRESENT");
 		}
 		else {
 			if (isSet(dmDocumentFile)) {

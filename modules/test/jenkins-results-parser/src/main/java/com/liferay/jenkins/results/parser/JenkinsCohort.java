@@ -401,21 +401,11 @@ public class JenkinsCohort {
 					JenkinsCohort.this.getQueuedBuildCount());
 		}
 
-		public void incrementQueuedJobCount() {
-			_queuedBuildCount = _queuedBuildCount + 1;
-		}
-
-		public void incrementRunningJobCount() {
-			_runningBuildCount = _runningBuildCount + 1;
-		}
-
 		private final String _jenkinsCohortJobName;
 		private List<String> _otherBuildURLs = new ArrayList<>();
-		private int _queuedBuildCount;
 		private Map<String, JSONObject> _queuedOtherBuildURLs = new HashMap<>();
 		private Map<String, JSONObject> _queuedTopLevelBuildURLs =
 			new HashMap<>();
-		private int _runningBuildCount;
 		private List<String> _topLevelBuildURLs = new ArrayList<>();
 
 	}

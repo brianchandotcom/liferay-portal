@@ -376,7 +376,30 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 		Stream<Locale> stream = locales.stream();
 
 		return JSONUtil.putAll(
-			stream.map(
+			stream.sorted(
+				(locale1, locale2) -> {
+					if (Objects.equals(
+							locale1,
+							analyticsReportsInfoItem.getDefaultLocale(
+								object))) {
+
+						return -1;
+					}
+
+					if (Objects.equals(
+							locale2,
+							analyticsReportsInfoItem.getDefaultLocale(
+								object))) {
+
+						return 1;
+					}
+
+					String languageId1 = LocaleUtil.toBCP47LanguageId(locale1);
+					String languageId2 = LocaleUtil.toBCP47LanguageId(locale2);
+
+					return languageId1.compareToIgnoreCase(languageId2);
+				}
+			).map(
 				locale -> JSONUtil.put(
 					"default",
 					Objects.equals(

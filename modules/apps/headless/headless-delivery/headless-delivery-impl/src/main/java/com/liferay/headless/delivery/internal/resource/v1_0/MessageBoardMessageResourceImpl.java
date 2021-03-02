@@ -349,7 +349,7 @@ public class MessageBoardMessageResourceImpl
 				mbThread.getRootMessageId());
 		}
 
-		return _upsertMessageBoardMessageByExternalReferenceCode(
+		return _addOrUpdateMessageBoardMessageByExternalReferenceCode(
 			externalReferenceCode, mbThread.getGroupId(), messageBoardMessage);
 	}
 
@@ -363,7 +363,7 @@ public class MessageBoardMessageResourceImpl
 			throw new BadRequestException("Parent message board ID is null");
 		}
 
-		return _upsertMessageBoardMessageByExternalReferenceCode(
+		return _addOrUpdateMessageBoardMessageByExternalReferenceCode(
 			externalReferenceCode, siteId, messageBoardMessage);
 	}
 
@@ -684,7 +684,7 @@ public class MessageBoardMessageResourceImpl
 	}
 
 	private MessageBoardMessage
-			_upsertMessageBoardMessageByExternalReferenceCode(
+			_addOrUpdateMessageBoardMessageByExternalReferenceCode(
 				String externalReferenceCode, long groupId,
 				MessageBoardMessage messageBoardMessage)
 		throws Exception {

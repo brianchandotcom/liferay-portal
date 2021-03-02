@@ -326,7 +326,7 @@ public class JournalArticleActionDropdownItemsProvider {
 					).setParameter(
 						"version", _article.getVersion()
 					).setParameter(
-						"autoArticleId", Boolean.TRUE.toString()
+						"autoArticleId", true
 					).buildString());
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "copy"));

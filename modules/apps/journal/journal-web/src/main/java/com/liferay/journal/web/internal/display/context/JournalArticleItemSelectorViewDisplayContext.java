@@ -31,6 +31,7 @@ import com.liferay.journal.web.internal.item.selector.JournalArticleItemSelector
 import com.liferay.journal.web.internal.search.JournalSearcher;
 import com.liferay.journal.web.internal.util.JournalPortletUtil;
 import com.liferay.journal.web.internal.util.SiteConnectedGroupUtil;
+import com.liferay.petra.portlet.url.PortletURL;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -72,7 +73,6 @@ import java.util.Objects;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
@@ -205,8 +205,7 @@ public class JournalArticleItemSelectorViewDisplayContext {
 
 			folderBreadcrumbEntry.setTitle(ancestorFolder.getName());
 
-			portletURL.setParameter(
-				"folderId", String.valueOf(ancestorFolder.getFolderId()));
+			portletURL.setParameter("folderId", ancestorFolder.getFolderId());
 
 			folderBreadcrumbEntry.setURL(portletURL.toString());
 
@@ -222,8 +221,7 @@ public class JournalArticleItemSelectorViewDisplayContext {
 
 			folderBreadcrumbEntry.setTitle(unescapedFolder.getName());
 
-			portletURL.setParameter(
-				"folderId", String.valueOf(folder.getFolderId()));
+			portletURL.setParameter("folderId", folder.getFolderId());
 
 			folderBreadcrumbEntry.setURL(portletURL.toString());
 

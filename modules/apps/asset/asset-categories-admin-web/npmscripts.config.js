@@ -19,7 +19,7 @@ module.exports = {
 			'<inputDir>/js/AssetCategoriesManagementToolbarDefaultEventHandler.es.js',
 			'<inputDir>/js/AssetCategoriesSelectorTag.es.js',
 		],
-		mode: 'incompatible',
+		mode: 'default',
 		remotes: ['asset-taglib'],
 	},
 };

@@ -20,6 +20,6 @@ module.exports = {
 			'<inputDir>/asset_categories_selector/AssetCategoriesSelectorTag.es.js',
 			'<inputDir>/asset_tags_selector/AssetTagsSelectorTag.es.js',
 		],
-		mode: 'incompatible',
+		mode: 'default',
 	},
 };

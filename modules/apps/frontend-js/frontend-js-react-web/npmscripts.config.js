@@ -23,6 +23,6 @@ module.exports = {
 			'react-dnd-html5-backend',
 			'react-dom',
 		],
-		mode: 'incompatible',
+		mode: 'default',
 	},
 };

@@ -15,6 +15,6 @@
 module.exports = {
 	federation: {
 		bridges: true,
-		mode: 'incompatible',
+		mode: 'default',
 	},
 };

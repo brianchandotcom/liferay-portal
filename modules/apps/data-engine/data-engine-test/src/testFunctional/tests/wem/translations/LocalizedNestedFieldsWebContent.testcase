@@ -679,9 +679,10 @@ definition {
 			var index = ${index} + 1;
 		}
 
-		DataEngine.addField(
+		DataEngine.addFieldNested(
 			fieldFieldLabel = "Single Selection",
-			fieldName = "Single Selection");
+			fieldName = "Single Selection",
+			targetFieldGroupLabel = "Fields Group");
 
 		var index = "1";
 		for (var optionValue : list "Choice 1,Choice 2") {
@@ -695,7 +696,7 @@ definition {
 		DataEngine.addFieldNested(
 			fieldFieldLabel = "Multiple Selection",
 			fieldName = "Multiple Selection",
-			targetFieldLabel = "Single Selection");
+			targetFieldGroupLabel = "Fields Group");
 
 		var index = "1";
 		for (var optionValue : list "Value 1,Value 2") {
@@ -706,51 +707,55 @@ definition {
 			var index = ${index} + 1;
 		}
 
-		DataEngine.addField(
+		DataEngine.addFieldNested(
 			fieldFieldLabel = "Numeric",
-			fieldName = "Numeric");
+			fieldName = "Numeric",
+			targetFieldGroupLabel = "Fields Group");
 
 		DataEngine.addFieldNested(
 			fieldFieldLabel = "Date",
 			fieldName = "Date",
-			targetFieldLabel = "Numeric");
+			targetFieldGroupLabel = "Fields Group");
 
 		DataEngine.addFieldNested(
 			fieldFieldLabel = "Image",
 			fieldName = "Image",
-			targetFieldLabel = "Numeric");
+			targetFieldGroupLabel = "Fields Group");
 
-		DataEngine.addField(
+		DataEngine.addFieldNested(
 			fieldFieldLabel = "Rich Text",
-			fieldName = "Rich Text");
+			fieldName = "Rich Text",
+			targetFieldGroupLabel = "Fields Group");
 
 		DataEngine.addFieldNested(
 			fieldFieldLabel = "Upload",
 			fieldName = "Upload",
-			targetFieldLabel = "Rich Text");
+			targetFieldGroupLabel = "Fields Group");
 
-		DataEngine.addField(
+		DataEngine.addFieldNested(
 			fieldFieldLabel = "Color",
-			fieldName = "Color");
+			fieldName = "Color",
+			targetFieldGroupLabel = "Fields Group");
 
 		DataEngine.addFieldNested(
 			fieldFieldLabel = "Web Content",
 			fieldName = "Web Content",
-			targetFieldLabel = "Color");
+			targetFieldGroupLabel = "Fields Group");
 
-		DataEngine.addField(
+		DataEngine.addFieldNested(
 			fieldFieldLabel = "Geolocation",
-			fieldName = "Geolocation");
+			fieldName = "Geolocation",
+			targetFieldGroupLabel = "Fields Group");
 
 		DataEngine.addFieldNested(
 			fieldFieldLabel = "Link to Page",
 			fieldName = "Link to Page",
-			targetFieldLabel = "Geolocation");
+			targetFieldGroupLabel = "Fields Group");
 
 		DataEngine.addFieldNested(
 			fieldFieldLabel = "Separator",
 			fieldName = "Separator",
-			targetFieldLabel = "Geolocation");
+			targetFieldGroupLabel = "Fields Group");
 
 		WebContentStructures.saveCP(structureName = "Testing");
 

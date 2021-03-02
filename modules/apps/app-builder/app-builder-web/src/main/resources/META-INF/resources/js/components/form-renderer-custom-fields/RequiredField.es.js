@@ -13,13 +13,12 @@
  */
 
 import {ClayToggle} from '@clayui/form';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import FieldBase from './shared/FieldBase.es';
 import {STRUCTURE_LEVEL, VIEW_LEVEL} from './shared/constants.es';
 import {
 	containsFieldInsideFormBuilder,
-	getFormattedState,
 	setPropertyAtStructureLevel,
 	setPropertyAtViewLevel,
 } from './shared/utils.es';
@@ -94,25 +93,23 @@ function isRequiredAtObjectViewLevel({dataDefinitionField}) {
 	return isRequiredField(dataDefinitionField);
 }
 
-export default function RequiredField({AppContext, dataLayoutBuilder}) {
-	const [state, dispatch] = useContext(AppContext);
+export default function RequiredField({dataLayoutBuilder, dispatch, state}) {
 	const [showPopover, setShowPopover] = useState(false);
-	const formattedState = getFormattedState(state);
 	const [selectedValue, setSelectedValue] = useState(
-		initialLevelSelected(formattedState)
+		initialLevelSelected(state)
 	);
-	const [toggled, setToggle] = useState(initialToggledValue(formattedState));
+	const [toggled, setToggle] = useState(initialToggledValue(state));
 
 	useEffect(() => {
-		setToggle(initialToggledValue(formattedState));
-		setSelectedValue(initialLevelSelected(formattedState));
+		setToggle(initialToggledValue(state));
+		setSelectedValue(initialLevelSelected(state));
 
-		if (!initialToggledValue(formattedState)) {
+		if (!initialToggledValue(state)) {
 			setShowPopover(false);
 		}
-	}, [formattedState]);
+	}, [state]);
 
-	const callbackFn = (fn) => fn(formattedState, dispatch);
+	const callbackFn = (fn) => fn(state, dispatch);
 
 	const onSelectedValueChange = (level) => {
 		setSelectedValue(level);
@@ -123,7 +120,7 @@ export default function RequiredField({AppContext, dataLayoutBuilder}) {
 	const onToggle = (toggle) => {
 		setToggle(toggle);
 
-		if (containsFieldInsideFormBuilder(dataLayoutBuilder, formattedState)) {
+		if (containsFieldInsideFormBuilder(dataLayoutBuilder, state)) {
 			dataLayoutBuilder.dispatch('fieldEdited', {
 				propertyName: PROPERTY_NAME,
 				propertyValue: toggle,

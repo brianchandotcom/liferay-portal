@@ -17,8 +17,8 @@ import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 
 /**
  * Check if contains field inside the FormBuilder
- * @param {Object} dataLayoutBuilder
- * @param {Object} state
+ * @param {object} dataLayoutBuilder
+ * @param {object} state
  */
 export function containsFieldInsideFormBuilder(dataLayoutBuilder, {fieldName}) {
 	const {pages} = dataLayoutBuilder.getStore();
@@ -27,33 +27,54 @@ export function containsFieldInsideFormBuilder(dataLayoutBuilder, {fieldName}) {
 	return visitor.containsField(fieldName);
 }
 
+function getFieldName({focusedCustomObjectField, focusedField}) {
+	const {name: focusedCustomObjectFieldName} = focusedCustomObjectField;
+	const {fieldName: focusedFieldName} = focusedField;
+
+	return focusedFieldName || focusedCustomObjectFieldName;
+}
+
+/**
+ * Get data definition field
+ * @param {object} state
+ */
+export function getDataDefinitionField({
+	dataDefinition: {dataDefinitionFields},
+	...state
+}) {
+	const fieldName = getFieldName(state);
+
+	return dataDefinitionFields.find(({name}) => name === fieldName);
+}
+
 /**
  * Return the formatted state
  * @param {object} state
  */
-export function getFormattedState({
-	dataDefinition: {dataDefinitionFields, defaultLanguageId},
-	dataLayout: {dataLayoutFields},
-	editingLanguageId,
-	focusedCustomObjectField: {name: focusedCustomObjectFieldName},
-	focusedField: {fieldName: focusedFieldName},
-}) {
-	const fieldName = focusedFieldName || focusedCustomObjectFieldName;
+export function getFormattedState(state) {
+	const {
+		dataDefinition: {dataDefinitionFields, defaultLanguageId},
+		dataLayout: {dataLayoutFields},
+		editingLanguageId,
+	} = state;
 
-	const dataDefinitionField = dataDefinitionFields.find(
-		({name}) => name === fieldName
-	);
+	const fieldName = getFieldName(state);
+	const dataDefinitionField = getDataDefinitionField(state);
 
-	const dataLayoutField = dataLayoutFields[fieldName];
+	const getLabel = (dataLayoutField) => {
+		if (Object.values(dataLayoutField?.label || {}).length) {
+			return dataLayoutField.label;
+		}
+
+		return dataDefinitionField.label;
+	};
 
 	return {
 		dataDefinitionField,
 		dataDefinitionFields,
 		dataLayoutField: {
-			...dataLayoutField,
-			label: Object.values(dataLayoutField?.label || {}).length
-				? dataLayoutField.label
-				: dataDefinitionField.label,
+			...dataLayoutFields[fieldName],
+			label: getLabel(dataLayoutFields[fieldName]),
 		},
 		dataLayoutFields,
 		defaultLanguageId,

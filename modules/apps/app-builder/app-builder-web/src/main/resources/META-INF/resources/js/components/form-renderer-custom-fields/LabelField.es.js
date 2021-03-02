@@ -15,7 +15,7 @@
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {DataLayoutBuilderActions} from 'data-engine-taglib';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import useDebounce from '../../hooks/useDebounce.es';
 import {sub} from '../../utils/lang.es';
@@ -23,7 +23,6 @@ import FieldBase from './shared/FieldBase.es';
 import {STRUCTURE_LEVEL, VIEW_LEVEL} from './shared/constants.es';
 import {
 	containsFieldInsideFormBuilder,
-	getFormattedState,
 	setPropertyAtStructureLevel,
 	setPropertyAtViewLevel,
 } from './shared/utils.es';
@@ -111,30 +110,29 @@ function updateLabelAtStructureLevel(
 	});
 }
 
-export default function LabelField({AppContext, dataLayoutBuilder, field}) {
-	const [state, dispatch] = useContext(AppContext);
-
-	const formattedState = getFormattedState(state);
-
+export default function LabelField({
+	dataLayoutBuilder,
+	dispatch,
+	field,
+	state,
+}) {
 	const [selectedValue, setSelectedValue] = useState(
-		getInitialSelectedValue(formattedState)
+		getInitialSelectedValue(state)
 	);
 
-	const [value, setValue] = useState(
-		getInitialValue(selectedValue, formattedState)
-	);
+	const [value, setValue] = useState(getInitialValue(selectedValue, state));
 
 	const {
 		dataDefinitionField,
 		dataLayoutField,
 		defaultLanguageId,
 		editingLanguageId,
-	} = formattedState;
+	} = state;
 
 	const debounce = useDebounce(value);
 
 	useEffect(() => {
-		if (containsFieldInsideFormBuilder(dataLayoutBuilder, formattedState)) {
+		if (containsFieldInsideFormBuilder(dataLayoutBuilder, state)) {
 			dataLayoutBuilder.dispatch('fieldEdited', {
 				propertyName: PROPERTY_NAME,
 				propertyValue:
@@ -142,7 +140,7 @@ export default function LabelField({AppContext, dataLayoutBuilder, field}) {
 			});
 		}
 
-		const callbackFn = (fn) => fn(formattedState, dispatch);
+		const callbackFn = (fn) => fn(state, dispatch);
 
 		if (selectedValue === VIEW_LEVEL) {
 			callbackFn(
@@ -165,8 +163,8 @@ export default function LabelField({AppContext, dataLayoutBuilder, field}) {
 	}, [debounce]);
 
 	useEffect(() => {
-		setSelectedValue(getInitialSelectedValue(formattedState));
-		setValue(getInitialValue(selectedValue, formattedState));
+		setSelectedValue(getInitialSelectedValue(state));
+		setValue(getInitialValue(selectedValue, state));
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [field.name]);
@@ -176,24 +174,15 @@ export default function LabelField({AppContext, dataLayoutBuilder, field}) {
 			className="form-renderer-label-field"
 			onSelectedValueChange={(selectedValue) => {
 				if (selectedValue === VIEW_LEVEL) {
-					setValue(
-						getLocalizedValue(dataLayoutField.label, formattedState)
-					);
+					setValue(getLocalizedValue(dataLayoutField.label, state));
 				}
 				else {
 					setValue(
-						getLocalizedValue(
-							dataDefinitionField.label,
-							formattedState
-						)
+						getLocalizedValue(dataDefinitionField.label, state)
 					);
 				}
 
-				updateLabelAtStructureLevel(
-					formattedState,
-					dispatch,
-					selectedValue
-				);
+				updateLabelAtStructureLevel(state, dispatch, selectedValue);
 
 				setSelectedValue(selectedValue);
 			}}
@@ -231,10 +220,9 @@ export default function LabelField({AppContext, dataLayoutBuilder, field}) {
 				<ClayForm.FeedbackGroup>
 					<ClayForm.FeedbackItem>
 						{sub(Liferay.Language.get('object-field-label-x'), [
-							getLocalizedValue(
-								dataDefinitionField.label,
-								formattedState
-							)[editingLanguageId],
+							getLocalizedValue(dataDefinitionField.label, state)[
+								editingLanguageId
+							],
 						])}
 					</ClayForm.FeedbackItem>
 				</ClayForm.FeedbackGroup>

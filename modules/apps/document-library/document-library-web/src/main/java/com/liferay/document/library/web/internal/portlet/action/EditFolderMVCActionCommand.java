@@ -170,7 +170,7 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 				if (folder.isRepositoryCapabilityProvided(
 						TrashCapability.class)) {
 
-					_dlTrashService.moveFolderToTrash(deleteFolderId);
+					folder = _dlTrashService.moveFolderToTrash(deleteFolderId);
 
 					trashedModels.add((DLFolder)folder.getModel());
 				}

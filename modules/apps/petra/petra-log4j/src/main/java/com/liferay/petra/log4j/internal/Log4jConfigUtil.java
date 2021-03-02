@@ -83,6 +83,24 @@ public class Log4jConfigUtil {
 					_centralizedConfiguration.getLoggerContext(),
 					_getConfigurationSource(document));
 			}
+			else {
+				_removeAppender(
+					rootElement, "appender-ref", "appender",
+					removedAppenderNames);
+
+				for (Element childElement : rootElement.elements("category")) {
+					Element priorityElement = childElement.element("priority");
+
+					priorities.put(
+						childElement.attributeValue("name"),
+						priorityElement.attributeValue("value"));
+				}
+
+				abstractConfiguration =
+					new org.apache.log4j.xml.XmlConfiguration(
+						_centralizedConfiguration.getLoggerContext(),
+						_getConfigurationSource(document), 0);
+			}
 
 			_centralizedConfiguration.addConfiguration(abstractConfiguration);
 

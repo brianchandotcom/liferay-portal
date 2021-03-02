@@ -32,6 +32,7 @@ import org.apache.logging.log4j.core.config.AbstractConfiguration;
 import org.apache.logging.log4j.core.config.AppenderRef;
 import org.apache.logging.log4j.core.config.ConfigurationSource;
 import org.apache.logging.log4j.core.config.LoggerConfig;
+import org.apache.logging.log4j.core.config.plugins.util.PluginManager;
 import org.apache.logging.log4j.core.filter.AbstractFilterable;
 
 /**
@@ -44,6 +45,8 @@ public class CentralizedConfiguration extends AbstractConfiguration {
 		super(
 			(LoggerContext)LogManager.getContext(),
 			ConfigurationSource.COMPOSITE_SOURCE);
+
+		PluginManager.addPackage("com.liferay.petra.log4j");
 
 		LoggerContext loggerContext = getLoggerContext();
 

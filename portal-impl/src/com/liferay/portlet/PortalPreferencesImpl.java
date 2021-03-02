@@ -82,11 +82,11 @@ public class PortalPreferencesImpl
 
 		_ownerId = portalPreferences.getOwnerId();
 		_ownerType = portalPreferences.getOwnerType();
+
 		_originalXML = portalPreferences.getPreferences();
 
 		Map<String, Preference> preferencesMap =
-			PortletPreferencesFactoryImpl.createPreferencesMap(
-				portalPreferences.getPreferences());
+			PortletPreferencesFactoryImpl.createPreferencesMap(_originalXML);
 
 		Map<String, String[]> preferences = new HashMap<>();
 

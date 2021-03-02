@@ -16,8 +16,8 @@
 
 <%@ include file="/init.jsp" %>
 
-<clay:management-toolbar-v2
-	displayContext="<%= new AssetBrowserManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, assetBrowserDisplayContext) %>"
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= new AssetBrowserManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, assetBrowserDisplayContext) %>"
 />
 
 <aui:form action="<%= assetBrowserDisplayContext.getPortletURL() %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="selectAssetFm">

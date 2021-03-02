@@ -16,16 +16,19 @@ package com.liferay.oauth2.provider.client.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.oauth2.provider.constants.GrantType;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.net.URI;
-
 import java.util.Collections;
+import java.util.Map;
 
+import javax.ws.rs.core.MultivaluedHashMap;
+import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
 
 import org.junit.Assert;
@@ -40,7 +43,7 @@ import org.osgi.framework.BundleActivator;
  * @author Marta Medio
  */
 @RunWith(Arquillian.class)
-public class TrustedApplicationClientTest extends BaseClientTestCase {
+public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 
 	@ClassRule
 	@Rule
@@ -48,7 +51,7 @@ public class TrustedApplicationClientTest extends BaseClientTestCase {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testResponseCodeLocationApplication() {
+	public void testResponseCookieApplication() {
 		Response response = getCodeResponse(
 			"test@liferay.com", "test", null,
 			getCodeFunction(
@@ -58,11 +61,12 @@ public class TrustedApplicationClientTest extends BaseClientTestCase {
 					"redirect_uri", "http://redirecturi:8080"
 				).queryParam(
 					"response_type", "code"
-				)));
+				),
+				_getExtraParameterForRememeberDevice()));
 
-		URI locationURI = response.getLocation();
+		Map<String, NewCookie> cookies = response.getCookies();
 
-		Assert.assertNotEquals(locationURI.toString(), _URL);
+		Assert.assertFalse(cookies.containsKey(_COOKIE_REMEMBER_DEVICE));
 
 		response = getCodeResponse(
 			"test@liferay.com", "test", null,
@@ -73,47 +77,83 @@ public class TrustedApplicationClientTest extends BaseClientTestCase {
 					"redirect_uri", "http://redirecturi:8080"
 				).queryParam(
 					"response_type", "code"
-				)));
+				),
+				_getExtraParameterForRememeberDevice()));
 
-		locationURI = response.getLocation();
+		cookies = response.getCookies();
 
-		Assert.assertNotEquals(locationURI.toString(), _URL);
+		Assert.assertFalse(cookies.containsKey(_COOKIE_REMEMBER_DEVICE));
 	}
 
 	@Test
-	public void testResponseCodeLocationTrustedApplication() {
+	public void testResponseCookieRememberApplication() {
 		Response response = getCodeResponse(
 			"test@liferay.com", "test", null,
 			getCodeFunction(
 				webTarget -> webTarget.queryParam(
-					"client_id", "oauthTestTrustedApplicationCode"
+					"client_id", "oauthTestRememberApplicationCode"
 				).queryParam(
 					"redirect_uri", "http://redirecturi:8080"
 				).queryParam(
 					"response_type", "code"
-				)));
+				),
+				_getExtraParameterForRememeberDevice()));
 
-		URI locationURI = response.getLocation();
+		Map<String, NewCookie> cookies = response.getCookies();
 
-		Assert.assertEquals(locationURI.toString(), _URL);
+		Assert.assertTrue(cookies.containsKey(_COOKIE_REMEMBER_DEVICE));
 
 		response = getCodeResponse(
 			"test@liferay.com", "test", null,
 			getCodeFunction(
 				webTarget -> webTarget.queryParam(
-					"client_id", "oauthTestTrustedApplicationCodePKCE"
+					"client_id", "oauthTestRememberApplicationCode"
 				).queryParam(
 					"redirect_uri", "http://redirecturi:8080"
 				).queryParam(
 					"response_type", "code"
 				)));
 
-		locationURI = response.getLocation();
+		cookies = response.getCookies();
 
-		Assert.assertEquals(locationURI.toString(), _URL);
+		Assert.assertFalse(cookies.containsKey(_COOKIE_REMEMBER_DEVICE));
 	}
 
-	public static class TrustedApplicationClientTestPreparatorBundleActivator
+	@Test
+	public void testResponseCookieRememberApplicationPKCE() {
+		Response response = getCodeResponse(
+			"test@liferay.com", "test", null,
+			getCodeFunction(
+				webTarget -> webTarget.queryParam(
+					"client_id", "oauthTestRememberApplicationCodePKCE"
+				).queryParam(
+					"redirect_uri", "http://redirecturi:8080"
+				).queryParam(
+					"response_type", "code"
+				),
+				_getExtraParameterForRememeberDevice()));
+
+		Map<String, NewCookie> cookies = response.getCookies();
+
+		Assert.assertTrue(cookies.containsKey(_COOKIE_REMEMBER_DEVICE));
+
+		response = getCodeResponse(
+			"test@liferay.com", "test", null,
+			getCodeFunction(
+				webTarget -> webTarget.queryParam(
+					"client_id", "oauthTestRememberApplicationCodePKCE"
+				).queryParam(
+					"redirect_uri", "http://redirecturi:8080"
+				).queryParam(
+					"response_type", "code"
+				)));
+
+		cookies = response.getCookies();
+
+		Assert.assertFalse(cookies.containsKey(_COOKIE_REMEMBER_DEVICE));
+	}
+
+	public static class RememberApplicationClientTestPreparatorBundleActivator
 		extends BaseTestPreparatorBundleActivator {
 
 		@Override
@@ -129,30 +169,45 @@ public class TrustedApplicationClientTest extends BaseClientTestCase {
 			createOAuth2Application(
 				defaultCompanyId, user, "oauthTestApplicationCodePKCE", null,
 				Collections.singletonList(GrantType.AUTHORIZATION_CODE_PKCE),
+				Collections.singletonList("everything"),
 				Collections.singletonList("http://redirecturi:8080"), false,
+				false);
+			createOAuth2Application(
+				defaultCompanyId, user, "oauthTestRememberApplicationCode",
+				Collections.singletonList(GrantType.AUTHORIZATION_CODE), true,
 				Collections.singletonList("everything"), false);
-
 			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestTrustedApplicationCode",
-				Collections.singletonList(GrantType.AUTHORIZATION_CODE), false,
-				Collections.singletonList("everything"), true);
-			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestTrustedApplicationCodePKCE",
+				defaultCompanyId, user, "oauthTestRememberApplicationCodePKCE",
 				null,
 				Collections.singletonList(GrantType.AUTHORIZATION_CODE_PKCE),
-				Collections.singletonList("http://redirecturi:8080"), false,
-				Collections.singletonList("everything"), true);
+				Collections.singletonList("everything"),
+				Collections.singletonList("http://redirecturi:8080"), true,
+				false);
 		}
 
 	}
 
 	@Override
 	protected BundleActivator getBundleActivator() {
-		return new TrustedApplicationClientTest.
-			TrustedApplicationClientTestPreparatorBundleActivator();
+		return new RememberApplicationClientTestPreparatorBundleActivator();
 	}
 
-	private static final String _URL =
-		"http://localhost:8080/o/oauth2/authorize/decision";
+	private MultivaluedMap<String, String>
+		_getExtraParameterForRememeberDevice() {
+
+		MultivaluedMap<String, String> extraParameters =
+			new MultivaluedHashMap<>();
+
+		extraParameters.add(_REMEMBER_DEVICE_PARAMETER, StringPool.TRUE);
+
+		return extraParameters;
+	}
+
+	private static final String _COOKIE_REMEMBER_DEVICE =
+		"OAUTH2_REMEMBER_DEVICE";
+
+	private static final String _REMEMBER_DEVICE_PARAMETER =
+		"_com_liferay_oauth2_provider_web_internal_portlet_" +
+			"OAuth2AuthorizePortlet_rememberDevice";
 
 }

@@ -371,7 +371,7 @@ definition {
 
 	macro validateNWebContent {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
-		
+
 		for (var wcTitle : list "My Web Content based on My Structure with Fieldsets level 2,My Web Content based on My Structure with all fields,My Web Content based on My Structure with nested fields,My Web Content based on My Structure with repeated fields") {
 			AssertTextEquals(
 				key_webContentTitle = "${wcTitle}",

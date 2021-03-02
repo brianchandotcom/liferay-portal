@@ -441,7 +441,7 @@ public class TestrayImporter {
 			if ((testrayRoutine == null) &&
 				!JenkinsResultsParserUtil.isNullOrEmpty(testrayRoutineName)) {
 
-				testrayRoutine = testrayProject.getTestrayRoutineByName(
+				testrayRoutine = testrayProject.createTestrayRoutine(
 					_replaceEnvVars(testrayRoutineName));
 			}
 
@@ -459,7 +459,7 @@ public class TestrayImporter {
 			if ((testrayRoutine == null) &&
 				!JenkinsResultsParserUtil.isNullOrEmpty(testrayRoutineName)) {
 
-				testrayRoutine = testrayProject.getTestrayRoutineByName(
+				testrayRoutine = testrayProject.createTestrayRoutine(
 					_replaceEnvVars(testrayRoutineName));
 			}
 
@@ -468,7 +468,7 @@ public class TestrayImporter {
 			if ((testrayRoutine == null) &&
 				!JenkinsResultsParserUtil.isNullOrEmpty(testrayRoutineName)) {
 
-				testrayRoutine = testrayProject.getTestrayRoutineByName(
+				testrayRoutine = testrayProject.createTestrayRoutine(
 					_replaceEnvVars(testrayRoutineName));
 			}
 
@@ -492,7 +492,7 @@ public class TestrayImporter {
 			if ((testrayRoutine == null) &&
 				!JenkinsResultsParserUtil.isNullOrEmpty(testrayRoutineName)) {
 
-				testrayRoutine = testrayProject.getTestrayRoutineByName(
+				testrayRoutine = testrayProject.createTestrayRoutine(
 					_replaceEnvVars(testrayRoutineName));
 			}
 		}

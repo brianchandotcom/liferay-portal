@@ -93,6 +93,44 @@ public class TestrayProject {
 		}
 	}
 
+	public TestrayRoutine createTestrayRoutine(String testrayRoutineName) {
+		if (JenkinsResultsParserUtil.isNullOrEmpty(testrayRoutineName)) {
+			throw new RuntimeException("Please set a Testray routine name");
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("name=");
+		sb.append(testrayRoutineName);
+		sb.append("&testrayProjectId=");
+		sb.append(getID());
+
+		String routineAddURL = JenkinsResultsParserUtil.combine(
+			String.valueOf(_testrayServer.getURL()),
+			"/home/-/testray/routines/add.json");
+
+		try {
+			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
+				routineAddURL, sb.toString());
+
+			if (jsonObject.has("data")) {
+				return new TestrayRoutine(
+					this, jsonObject.getJSONObject("data"));
+			}
+
+			String message = jsonObject.optString("message", "");
+
+			if (!message.equals("The routine name already exists.")) {
+				throw new RuntimeException("Failed to create a routine");
+			}
+
+			return getTestrayRoutineByName(testrayRoutineName);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
 	public String getDescription() {
 		return _jsonObject.getString("description");
 	}

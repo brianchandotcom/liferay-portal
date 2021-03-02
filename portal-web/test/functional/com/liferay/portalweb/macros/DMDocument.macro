@@ -180,6 +180,8 @@ definition {
 				value1 = "${validationError}");
 		}
 		else if (isSet(validateFileNameRestriction)) {
+			AssertElementPresent(locator1 = "TextInput#FILE_PRESENT");
+
 			Button.clickPublish();
 
 			Alert.viewRequestFailedToComplete();
@@ -193,6 +195,8 @@ definition {
 				key_alertMessage = "Please select the file again.",
 				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE",
 				value1 = "Please select the file again.");
+
+			AssertElementNotPresent(locator1 = "TextInput#FILE_PRESENT");
 		}
 		else if (isSet(emptyFileNameRestriction)) {
 			Button.clickPublish();

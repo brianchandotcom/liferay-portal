@@ -228,42 +228,6 @@ public class OAuth2ApplicationServiceImpl
 			oAuth2ApplicationId, inputStream);
 	}
 
-	@Override
-	public OAuth2Application updateOAuth2Application(
-			long oAuth2ApplicationId, List<GrantType> allowedGrantTypesList,
-			long clientCredentialUserId, String clientId, int clientProfile,
-			String clientSecret, String description, List<String> featuresList,
-			String homePageURL, long iconFileEntryId, String name,
-			String privacyPolicyURL, List<String> redirectURIsList,
-			long oAuth2ApplicationScopeAliasesId, boolean trustedApplication,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		_oAuth2ApplicationModelResourcePermission.check(
-			getPermissionChecker(),
-			oAuth2ApplicationLocalService.getOAuth2Application(
-				oAuth2ApplicationId),
-			ActionKeys.UPDATE);
-
-		if (trustedApplication) {
-			ModelResourcePermissionUtil.check(
-				_oAuth2ApplicationModelResourcePermission,
-				getPermissionChecker(), 0, 0,
-				OAuth2ProviderActionKeys.ACTION_ADD_TRUSTED_APPLICATION);
-		}
-
-		if (allowedGrantTypesList.contains(GrantType.CLIENT_CREDENTIALS)) {
-			_checkCanImpersonateClientCredentialUser(clientCredentialUserId);
-		}
-
-		return oAuth2ApplicationLocalService.updateOAuth2Application(
-			oAuth2ApplicationId, allowedGrantTypesList, clientCredentialUserId,
-			clientId, clientProfile, clientSecret, description, featuresList,
-			homePageURL, iconFileEntryId, name, privacyPolicyURL,
-			redirectURIsList, oAuth2ApplicationScopeAliasesId,
-			trustedApplication, serviceContext);
-	}
-
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 * #updateOAuth2Application(long, List, long, String, int, String, String, List, String, long, String, String, List, long, ServiceContext)}
@@ -287,11 +251,10 @@ public class OAuth2ApplicationServiceImpl
 			getPermissionChecker(), oAuth2Application, ActionKeys.UPDATE);
 
 		return oAuth2ApplicationLocalService.updateOAuth2Application(
-			oAuth2ApplicationId, allowedGrantTypesList, clientCredentialUserId,
-			clientId, clientProfile, clientSecret, description, featuresList,
-			homePageURL, iconFileEntryId, name, privacyPolicyURL,
-			redirectURIsList, oAuth2ApplicationScopeAliasesId, false,
-			serviceContext);
+			oAuth2ApplicationId, oAuth2ApplicationScopeAliasesId,
+			allowedGrantTypesList, clientCredentialUserId, clientId,
+			clientProfile, clientSecret, description, featuresList, homePageURL,
+			iconFileEntryId, name, privacyPolicyURL, redirectURIsList, false);
 	}
 
 	/**
@@ -321,6 +284,41 @@ public class OAuth2ApplicationServiceImpl
 			clientProfile, clientSecret, description, featuresList, homePageURL,
 			iconFileEntryId, name, privacyPolicyURL, redirectURIsList,
 			oAuth2ApplicationScopeAliasesId, serviceContext);
+	}
+
+	@Override
+	public OAuth2Application updateOAuth2Application(
+			long oAuth2ApplicationId, long oAuth2ApplicationScopeAliasesId,
+			List<GrantType> allowedGrantTypesList, long clientCredentialUserId,
+			String clientId, int clientProfile, String clientSecret,
+			String description, List<String> featuresList, String homePageURL,
+			long iconFileEntryId, String name, String privacyPolicyURL,
+			List<String> redirectURIsList, boolean trustedApplication)
+		throws PortalException {
+
+		_oAuth2ApplicationModelResourcePermission.check(
+			getPermissionChecker(),
+			oAuth2ApplicationLocalService.getOAuth2Application(
+				oAuth2ApplicationId),
+			ActionKeys.UPDATE);
+
+		if (trustedApplication) {
+			ModelResourcePermissionUtil.check(
+				_oAuth2ApplicationModelResourcePermission,
+				getPermissionChecker(), 0, 0,
+				OAuth2ProviderActionKeys.ACTION_ADD_TRUSTED_APPLICATION);
+		}
+
+		if (allowedGrantTypesList.contains(GrantType.CLIENT_CREDENTIALS)) {
+			_checkCanImpersonateClientCredentialUser(clientCredentialUserId);
+		}
+
+		return oAuth2ApplicationLocalService.updateOAuth2Application(
+			oAuth2ApplicationId, oAuth2ApplicationScopeAliasesId,
+			allowedGrantTypesList, clientCredentialUserId, clientId,
+			clientProfile, clientSecret, description, featuresList, homePageURL,
+			iconFileEntryId, name, privacyPolicyURL, redirectURIsList,
+			trustedApplication);
 	}
 
 	@Override

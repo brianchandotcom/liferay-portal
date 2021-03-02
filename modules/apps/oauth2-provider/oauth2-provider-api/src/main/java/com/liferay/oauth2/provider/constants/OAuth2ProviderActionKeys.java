@@ -21,6 +21,9 @@ public class OAuth2ProviderActionKeys {
 
 	public static final String ACTION_ADD_APPLICATION = "ADD_APPLICATION";
 
+	public static final String ACTION_ADD_REMEMBER_DEVICE =
+		"ADD_REMEMBER_DEVICE";
+
 	public static final String ACTION_ADD_TRUSTED_APPLICATION =
 		"ADD_TRUSTED_APPLICATION";
 

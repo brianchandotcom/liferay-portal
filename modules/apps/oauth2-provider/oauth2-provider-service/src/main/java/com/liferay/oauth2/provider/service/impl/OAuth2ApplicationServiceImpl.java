@@ -61,6 +61,13 @@ public class OAuth2ApplicationServiceImpl
 			_oAuth2ApplicationModelResourcePermission, getPermissionChecker(),
 			0, 0, OAuth2ProviderActionKeys.ACTION_ADD_APPLICATION);
 
+		if (rememberDevice) {
+			ModelResourcePermissionUtil.check(
+				_oAuth2ApplicationModelResourcePermission,
+				getPermissionChecker(), 0, 0,
+				OAuth2ProviderActionKeys.ACTION_ADD_REMEMBER_DEVICE);
+		}
+
 		if (trustedApplication) {
 			ModelResourcePermissionUtil.check(
 				_oAuth2ApplicationModelResourcePermission,
@@ -309,6 +316,13 @@ public class OAuth2ApplicationServiceImpl
 			oAuth2ApplicationLocalService.getOAuth2Application(
 				oAuth2ApplicationId),
 			ActionKeys.UPDATE);
+
+		if (rememberDevice) {
+			ModelResourcePermissionUtil.check(
+				_oAuth2ApplicationModelResourcePermission,
+				getPermissionChecker(), 0, 0,
+				OAuth2ProviderActionKeys.ACTION_ADD_REMEMBER_DEVICE);
+		}
 
 		if (trustedApplication) {
 			ModelResourcePermissionUtil.check(

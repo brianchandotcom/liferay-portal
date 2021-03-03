@@ -682,16 +682,49 @@ public class FragmentEntryProcessorEditableTest {
 				fileName);
 	}
 
-	private FragmentEntryProcessorContext _getFragmentEntryProcessorContext() {
+	private FragmentEntryProcessorContext _getFragmentEntryProcessorContext()
+		throws Exception {
+
 		return _getFragmentEntryProcessorContext(
 			LocaleUtil.getMostRelevantLocale());
 	}
 
 	private FragmentEntryProcessorContext _getFragmentEntryProcessorContext(
-		Locale locale) {
+			Locale locale)
+		throws Exception {
 
 		return new DefaultFragmentEntryProcessorContext(
-			null, null, FragmentEntryLinkConstants.EDIT, locale);
+			_getHttpServletRequest(), null, FragmentEntryLinkConstants.EDIT,
+			locale);
+	}
+
+	private HttpServletRequest _getHttpServletRequest() throws Exception {
+		MockHttpServletRequest httpServletRequest =
+			new MockHttpServletRequest();
+
+		httpServletRequest.setAttribute(
+			JavaConstants.JAVAX_PORTLET_RESPONSE,
+			new MockLiferayPortletRenderResponse());
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setCompany(_company);
+		themeDisplay.setLayout(_layout);
+
+		LayoutSet layoutSet = _group.getPublicLayoutSet();
+
+		themeDisplay.setLookAndFeel(
+			layoutSet.getTheme(), layoutSet.getColorScheme());
+
+		themeDisplay.setRealUser(TestPropsValues.getUser());
+		themeDisplay.setRequest(httpServletRequest);
+		themeDisplay.setResponse(new MockHttpServletResponse());
+		themeDisplay.setScopeGroupId(_group.getGroupId());
+		themeDisplay.setUser(TestPropsValues.getUser());
+
+		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+
+		return httpServletRequest;
 	}
 
 	private String _getJsonFileAsString(String jsonFileName) throws Exception {

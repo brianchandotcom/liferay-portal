@@ -305,6 +305,25 @@ public class FragmentEntryProcessorEditableTest {
 	}
 
 	@Test
+	public void testFragmentEntryProcessorEditableMappedDLImageFileEntryId()
+		throws Exception {
+
+		FileEntry fileEntry = _addImageFileEntry();
+
+		String editableValues = _getEditableFieldValues(
+			_portal.getClassNameId(FileEntry.class), fileEntry.getFileEntryId(),
+			"fileURL", "fragment_entry_link_mapped_asset_field_image.json");
+
+		Element element = _getElement(
+			"data-lfr-editable-id", "image-square", editableValues,
+			"fragment_entry_image.html");
+
+		Assert.assertEquals(
+			fileEntry.getFileEntryId(),
+			GetterUtil.getLong(element.attr("data-fileentryid")));
+	}
+
+	@Test
 	public void testFragmentEntryProcessorEditableMappedJournalArticleBackgroundImageFileEntryId()
 		throws Exception {
 

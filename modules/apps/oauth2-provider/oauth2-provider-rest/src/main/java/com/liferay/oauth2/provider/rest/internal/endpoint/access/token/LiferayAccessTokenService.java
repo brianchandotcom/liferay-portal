@@ -15,6 +15,7 @@
 package com.liferay.oauth2.provider.rest.internal.endpoint.access.token;
 
 import com.liferay.oauth2.provider.rest.internal.endpoint.constants.OAuth2ProviderRESTEndpointConstants;
+import com.liferay.oauth2.provider.rest.internal.endpoint.liferay.LiferayOAuthDataProvider;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.InetAddressUtil;
@@ -37,6 +38,7 @@ import javax.ws.rs.core.Response;
 
 import org.apache.cxf.jaxrs.ext.MessageContext;
 import org.apache.cxf.rs.security.oauth2.common.Client;
+import org.apache.cxf.rs.security.oauth2.common.ClientAccessToken;
 import org.apache.cxf.rs.security.oauth2.services.AccessTokenService;
 
 /**
@@ -51,7 +53,30 @@ public class LiferayAccessTokenService extends AccessTokenService {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response handleTokenRequest(MultivaluedMap<String, String> params) {
-		return super.handleTokenRequest(params);
+		Response response = super.handleTokenRequest(params);
+
+		if (response.getStatus() == Response.Status.OK.getStatusCode()) {
+			ClientAccessToken clientAccessToken = response.readEntity(
+				ClientAccessToken.class);
+
+			Map<String, String> parameters = clientAccessToken.getParameters();
+
+			if (parameters.containsKey(
+					OAuth2ProviderRESTEndpointConstants.
+						COOKIE_REMEMBER_DEVICE)) {
+
+				LiferayOAuthDataProvider liferayOAuthDataProvider =
+					(LiferayOAuthDataProvider)getDataProvider();
+
+				liferayOAuthDataProvider.setRememberDeviceContent(
+					clientAccessToken.getRefreshToken(),
+					parameters.get(
+						OAuth2ProviderRESTEndpointConstants.
+							COOKIE_REMEMBER_DEVICE));
+			}
+		}
+
+		return response;
 	}
 
 	@Override

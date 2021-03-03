@@ -37,7 +37,7 @@ public class JournalArticleContentUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement ps1 = connection.prepareStatement(
-				"select id_, content from JournalArticle")) {
+				"select id_, groupId, content from JournalArticle")) {
 
 			ResultSet rs1 = ps1.executeQuery();
 
@@ -45,6 +45,9 @@ public class JournalArticleContentUpgradeProcess extends UpgradeProcess {
 				long id = rs1.getLong("id_");
 
 				String content = rs1.getString("content");
+
+				_journalContentCompatibilityConverter.setGroupId(
+					rs1.getLong("groupId"));
 
 				content = _journalContentCompatibilityConverter.convert(
 					content);

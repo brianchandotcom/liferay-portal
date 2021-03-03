@@ -11,13 +11,14 @@ definition {
 		SignIn.signIn();
 
 		Smoke.viewWelcomePage();
-
+		/*
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Search");
 
 		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+		*/
 	}
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
@@ -127,7 +128,9 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.3.10";
 
-		DataEngineUpgrade.validateFieldLabelsTranslatedInStructure();
+		var allFields = "Text,Text Box,Select,Boolean,Radio,Date,Integer,Decimal,Number,Image,HTML,Documents and Media,Color,Web Content,Geolocation,Link to Page,Separator";
+
+		DataEngineUpgrade.validateFieldLabelsTranslatedInStructure(allFields = "${allFields}");
 	}
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
@@ -138,7 +141,9 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.1.10.3";
 
-		DataEngineUpgrade.validateFieldLabelsTranslatedInStructure();
+		var allFields = "Text,Text Box,Select,Boolean,Radio,Date,Integer,Decimal,Number,Image,HTML,Documents and Media,Color,Web Content,Geolocation,Link to Page,Separator";
+
+		DataEngineUpgrade.validateFieldLabelsTranslatedInStructure(allFields = "${allFields}");
 	}
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
@@ -149,7 +154,9 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.2.10.1";
 
-		DataEngineUpgrade.validateFieldLabelsTranslatedInStructure();
+		var allFields = "Text,Text Box,Select,Boolean,Radio,Date,Integer,Decimal,Number,Image,HTML,Documents and Media,Color,Web Content,Geolocation,Link to Page,Separator";
+
+		DataEngineUpgrade.validateFieldLabelsTranslatedInStructure(allFields = "${allFields}");
 	}
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
@@ -160,7 +167,9 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "6.2.10.21";
 
-		DataEngineUpgrade.validateFieldLabelsTranslatedInStructure();
+		var allFields = "Text,Text Box,Select,Boolean,Radio,Date,Integer,Decimal,Number,Image,HTML,Documents and Media,Link to Page,Separator";
+
+		DataEngineUpgrade.validateFieldLabelsTranslatedInStructure(allFields = "${allFields}");
 	}
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
@@ -171,7 +180,9 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.0.10.14";
 
-		DataEngineUpgrade.validateFieldLabelsTranslatedInStructure();
+		var allFields = "Text,Text Box,Select,Boolean,Radio,Date,Integer,Decimal,Number,Image,HTML,Documents and Media,Link to Page,Separator,Web Content,Geolocation";
+		
+		DataEngineUpgrade.validateFieldLabelsTranslatedInStructure(allFields = "${allFields}");
 	}
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."

@@ -44,9 +44,42 @@ definition {
 
 	macro validateFieldLabelsTranslatedInStructure {
 
-		// TODO LPS-126229 validateFieldLabelsTranslatedInStructure pending implementation
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
-		echo("empty stub");
+		NavItem.gotoStructures();
+        
+        WebContentNavigator.gotoEditStructure(structureName = "My Structure with all fields");
+
+        for(var fields: list "${allFields}"){
+            Click(
+				key_fieldFieldLabel = "${fields}",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+            AssertTextEquals(
+                key_fieldLabel = "Label",
+                locator1 = "TextInput#GENERIC_TEXT_INPUT",
+                value1 = "${fields}");
+        }
+        
+        for(var locale: list "pt_BR,ca_ES"){
+            PortletEntry.changeLocale(locale = "${locale}");
+
+            AssertTextEquals(
+                locator1 = "TextInput#NAME",
+			    value1 = "My Structure with all fields - ${locale}"
+            );
+
+            for(var fields: list "${allFields}"){
+                Click(
+				key_fieldFieldLabel = "${fields} - ${locale}",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+                AssertTextEquals(
+                    key_fieldLabel = "Label",
+                    locator1 = "TextInput#GENERIC_TEXT_INPUT",
+                    value1 = "${fields} - ${locale}");
+            }
+        }
 	}
 
 	macro validateFieldLabelsTranslatedInStructureWithFieldGroup {

@@ -16,6 +16,10 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.IOException;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -48,6 +52,42 @@ public class JenkinsAPIUtil {
 		catch (IOException ioException) {
 			throw new RuntimeException("Unable to get build JSON", ioException);
 		}
+	}
+
+	public static Map<String, String> getBuildParameters(
+		JSONObject jsonObject) {
+
+		Map<String, String> buildParameters = new HashMap<>();
+
+		JSONArray actionsJSONArray = jsonObject.getJSONArray("actions");
+
+		for (int i = 0; i < actionsJSONArray.length(); i++) {
+			Object actions = actionsJSONArray.get(i);
+
+			if (actions == JSONObject.NULL) {
+				continue;
+			}
+
+			JSONObject actionJSONObject = actionsJSONArray.getJSONObject(i);
+
+			if (!actionJSONObject.has("parameters")) {
+				continue;
+			}
+
+			JSONArray parametersJSONArray = actionJSONObject.getJSONArray(
+				"parameters");
+
+			for (int j = 0; j < parametersJSONArray.length(); j++) {
+				JSONObject parameterJSONObject =
+					parametersJSONArray.getJSONObject(j);
+
+				buildParameters.put(
+					parameterJSONObject.getString("name"),
+					parameterJSONObject.getString("value"));
+			}
+		}
+
+		return buildParameters;
 	}
 
 }

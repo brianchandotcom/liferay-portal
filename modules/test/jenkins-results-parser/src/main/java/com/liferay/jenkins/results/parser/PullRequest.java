@@ -40,6 +40,21 @@ import org.json.JSONObject;
  */
 public class PullRequest {
 
+	public static String getURL(
+		String username, String repositoryName, String pullRequestNumber) {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("https://github.com/");
+		sb.append(username);
+		sb.append("/");
+		sb.append(repositoryName);
+		sb.append("/pull/");
+		sb.append(pullRequestNumber);
+
+		return sb.toString();
+	}
+
 	public static boolean isValidGitHubPullRequestURL(String gitHubURL) {
 		Matcher matcher = _gitHubPullRequestURLPattern.matcher(gitHubURL);
 

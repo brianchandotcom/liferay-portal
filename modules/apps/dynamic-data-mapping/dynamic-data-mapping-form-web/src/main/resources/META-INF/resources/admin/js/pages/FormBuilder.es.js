@@ -35,8 +35,8 @@ import React, {
 import {FormInfo} from '../components/FormInfo.es';
 import {ManagementToolbar} from '../components/ManagementToolbar.es';
 import {MetalSidebarAdapter} from '../components/MetalSidebarAdapter.es';
-import ShareFormModalBody from '../components/ShareFormModal/ShareFormModalBody.es';
 import {TranslationManager} from '../components/TranslationManager.es';
+import {ShareFormModalBody} from '../components/share-form/ShareFormModalBody.es';
 import {useAutoSave} from '../hooks/useAutoSave.es';
 import {useToast} from '../hooks/useToast.es';
 import fieldDelete from '../thunks/fieldDelete.es';

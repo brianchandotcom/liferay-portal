@@ -17,7 +17,7 @@ import React, {useState} from 'react';
 import Email from './Email.es';
 import Link from './Link.es';
 
-const ShareFormModalBody = ({
+export const ShareFormModalBody = ({
 	autocompleteUserURL,
 	emailContent,
 	localizedName,
@@ -65,5 +65,3 @@ const ShareFormModalBody = ({
 		</div>
 	);
 };
-
-export default ShareFormModalBody;

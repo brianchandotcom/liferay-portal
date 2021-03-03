@@ -20,7 +20,7 @@ import React, {useRef} from 'react';
 import {unmountComponentAtNode} from 'react-dom';
 
 import {submitEmailContent} from '../../util/submitEmailContent.es';
-import ShareFormModalBody from './ShareFormModalBody.es';
+import {ShareFormModalBody} from './ShareFormModalBody.es';
 
 function Modal({
 	autocompleteUserURL,
@@ -122,5 +122,3 @@ function cleanUp() {
 		container = null;
 	}
 }
-
-export default openShareFormModal;

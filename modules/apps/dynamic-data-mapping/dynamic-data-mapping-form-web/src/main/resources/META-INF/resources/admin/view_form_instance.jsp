@@ -161,7 +161,7 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 	</aui:form>
 </clay:container-fluid>
 
-<aui:script require='<%= mainRequire + "/admin/js/components/ShareFormModal/openShareFormModal.es as Modal" %>'>
+<aui:script require='<%= mainRequire + "/admin/js/components/share-form/openShareFormModal.es as Modal" %>'>
 	var spritemap = themeDisplay.getPathThemeImages() + '/clay/icons.svg';
 
 	var afterOpenShareFormModal = function (data) {

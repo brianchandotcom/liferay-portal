@@ -1,0 +1,51 @@
+{
+	"analysis": {
+		"analyzer": {
+			"custom_liferay_analyzer_fr": {
+				"filter": [
+					"french_elision",
+					"lowercase",
+					"french_stop",
+					"custom-synonym-filter-fr",
+					"french_stemmer"
+				],
+				"tokenizer": "standard"
+			}
+		},
+		"filter": {
+			"custom-synonym-filter-fr": {
+				"lenient": true,
+				"synonyms": [
+				],
+				"type": "synonym_graph"
+			},
+			"french_elision": {
+				"articles": [
+					"l",
+					"m",
+					"t",
+					"qu",
+					"n",
+					"s",
+					"j",
+					"d",
+					"c",
+					"jusqu",
+					"quoiqu",
+					"lorsqu",
+					"puisqu"
+				],
+				"articles_case": true,
+				"type": "elision"
+			},
+			"french_stemmer": {
+				"language": "light_french",
+				"type": "stemmer"
+			},
+			"french_stop": {
+				"stopwords": "_french_",
+				"type": "stop"
+			}
+		}
+	}
+}

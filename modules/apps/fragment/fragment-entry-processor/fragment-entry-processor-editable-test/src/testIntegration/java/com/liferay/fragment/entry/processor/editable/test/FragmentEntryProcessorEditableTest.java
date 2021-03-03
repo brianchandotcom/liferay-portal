@@ -898,6 +898,11 @@ public class FragmentEntryProcessorEditableTest {
 			return new MockHttpServletResponse();
 		}
 
+		@Override
+		public ThemeDisplay getThemeDisplay() {
+			return _themeDisplay;
+		}
+
 		private final Layout _layout;
 		private final ThemeDisplay _themeDisplay;
 

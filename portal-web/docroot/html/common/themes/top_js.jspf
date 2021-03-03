@@ -514,7 +514,7 @@ for (String analyticsType : analyticsTypes) {
 		<c:otherwise>
 
 			<%
-			String analyticsScript = HtmlUtil.escape(groupTypeSettings.getProperty(Sites.ANALYTICS_PREFIX + analyticsType));
+			String analyticsScript = groupTypeSettings.getProperty(Sites.ANALYTICS_PREFIX + analyticsType);
 			%>
 
 			<c:if test="<%= Validator.isNotNull(analyticsScript) %>">

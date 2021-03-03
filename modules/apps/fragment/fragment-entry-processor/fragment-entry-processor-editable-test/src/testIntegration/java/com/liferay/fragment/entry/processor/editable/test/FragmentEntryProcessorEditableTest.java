@@ -732,6 +732,27 @@ public class FragmentEntryProcessorEditableTest {
 		return httpServletRequest;
 	}
 
+	private String _getJournalArticleEditableFieldValues(
+			String editableValuesFileName, String fieldId, FileEntry fileEntry)
+		throws Exception {
+
+		String ddmStructureContent = _getJsonFileAsString("ddm_structure.json");
+
+		ddmStructureContent = StringUtil.replace(
+			ddmStructureContent, "FIELD_NAME", fieldId);
+
+		DDMStructure ddmStructure = _addDDMStructure(
+			_group, ddmStructureContent);
+
+		JournalArticle journalArticle = _addJournalArticle(
+			ddmStructure, fieldId, fileEntry);
+
+		return _getEditableFieldValues(
+			_portal.getClassNameId(JournalArticle.class),
+			journalArticle.getResourcePrimKey(), fieldId,
+			editableValuesFileName);
+	}
+
 	private String _getJsonFileAsString(String jsonFileName) throws Exception {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			_getFileAsString(jsonFileName));

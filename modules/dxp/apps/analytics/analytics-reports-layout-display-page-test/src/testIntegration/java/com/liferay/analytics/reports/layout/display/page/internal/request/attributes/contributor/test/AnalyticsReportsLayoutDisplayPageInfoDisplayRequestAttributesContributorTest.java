@@ -15,6 +15,7 @@
 package com.liferay.analytics.reports.layout.display.page.internal.request.attributes.contributor.test;
 
 import com.liferay.analytics.reports.constants.AnalyticsReportsWebKeys;
+import com.liferay.analytics.reports.info.item.ClassNameClassPKInfoItemIdentifier;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.info.display.request.attributes.contributor.InfoDisplayRequestAttributesContributor;
 import com.liferay.info.item.InfoItemReference;
@@ -129,7 +130,19 @@ public class
 					AnalyticsReportsWebKeys.INFO_ITEM_REFERENCE);
 
 			Assert.assertEquals(
-				MockObject.class.getName(), infoItemReference.getClassName());
+				LayoutDisplayPageObjectProvider.class.getName(),
+				infoItemReference.getClassName());
+
+			ClassNameClassPKInfoItemIdentifier
+				classNameClassPKInfoItemIdentifier =
+					(ClassNameClassPKInfoItemIdentifier)
+						infoItemReference.getInfoItemIdentifier();
+
+			Assert.assertEquals(
+				MockObject.class.getName(),
+				classNameClassPKInfoItemIdentifier.getClassName());
+			Assert.assertEquals(
+				0L, classNameClassPKInfoItemIdentifier.getClassPK());
 		}
 		finally {
 			_classNameLocalService.deleteClassName(className);

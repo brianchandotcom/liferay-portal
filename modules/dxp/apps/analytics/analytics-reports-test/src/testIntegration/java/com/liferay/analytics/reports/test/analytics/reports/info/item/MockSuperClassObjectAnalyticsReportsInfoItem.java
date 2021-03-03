@@ -15,7 +15,7 @@
 package com.liferay.analytics.reports.test.analytics.reports.info.item;
 
 import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItem;
-import com.liferay.analytics.reports.test.MockObject;
+import com.liferay.analytics.reports.test.MockSuperClassObject;
 import com.liferay.info.type.WebImage;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -29,45 +29,51 @@ import java.util.Locale;
 /**
  * @author Cristina González
  */
-public class MockAnalyticsReportsInfoItem
-	implements AnalyticsReportsInfoItem<MockObject> {
+public class MockSuperClassObjectAnalyticsReportsInfoItem
+	implements AnalyticsReportsInfoItem<MockSuperClassObject> {
 
 	public static Builder builder() {
 		return new Builder();
 	}
 
 	@Override
-	public String getAuthorName(MockObject mockObject) {
+	public String getAuthorName(MockSuperClassObject mockSuperClassObject) {
 		return _authorName;
 	}
 
 	@Override
-	public WebImage getAuthorWebImage(MockObject mockObject, Locale locale) {
+	public WebImage getAuthorWebImage(
+		MockSuperClassObject mockSuperClassObject, Locale locale) {
+
 		return new WebImage(_authorProfileImage);
 	}
 
 	@Override
-	public List<Locale> getAvailableLocales(MockObject mockObject) {
+	public List<Locale> getAvailableLocales(
+		MockSuperClassObject mockSuperClassObject) {
+
 		return _locales;
 	}
 
 	@Override
-	public Locale getDefaultLocale(MockObject mockObject) {
+	public Locale getDefaultLocale(MockSuperClassObject mockSuperClassObject) {
 		return _locales.get(0);
 	}
 
 	@Override
-	public Date getPublishDate(MockObject mockObjec) {
+	public Date getPublishDate(MockSuperClassObject mockSuperClassObject) {
 		return _publishDate;
 	}
 
 	@Override
-	public String getTitle(MockObject mockObject, Locale locale) {
+	public String getTitle(
+		MockSuperClassObject mockSuperClassObject, Locale locale) {
+
 		return _title;
 	}
 
 	@Override
-	public boolean isShow(MockObject mockObject) {
+	public boolean isShow(MockSuperClassObject mockSuperClassObject) {
 		return _show;
 	}
 
@@ -85,8 +91,8 @@ public class MockAnalyticsReportsInfoItem
 			return this;
 		}
 
-		public MockAnalyticsReportsInfoItem build() {
-			return new MockAnalyticsReportsInfoItem(
+		public MockSuperClassObjectAnalyticsReportsInfoItem build() {
+			return new MockSuperClassObjectAnalyticsReportsInfoItem(
 				_authorName, _authorProfileImage, _locales, _publishDate, _show,
 				_title);
 		}
@@ -124,7 +130,7 @@ public class MockAnalyticsReportsInfoItem
 
 	}
 
-	private MockAnalyticsReportsInfoItem(
+	private MockSuperClassObjectAnalyticsReportsInfoItem(
 		String authorName, String authorProfileImage, List<Locale> locales,
 		Date publishDate, boolean show, String title) {
 

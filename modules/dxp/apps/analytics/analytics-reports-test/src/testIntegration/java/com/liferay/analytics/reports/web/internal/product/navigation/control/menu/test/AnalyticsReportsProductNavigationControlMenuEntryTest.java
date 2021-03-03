@@ -15,7 +15,7 @@
 package com.liferay.analytics.reports.web.internal.product.navigation.control.menu.test;
 
 import com.liferay.analytics.reports.test.MockObject;
-import com.liferay.analytics.reports.test.analytics.reports.info.item.MockAnalyticsReportsInfoItem;
+import com.liferay.analytics.reports.test.analytics.reports.info.item.MockObjectAnalyticsReportsInfoItem;
 import com.liferay.analytics.reports.test.util.MockContextUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.info.item.InfoItemReference;
@@ -78,12 +78,13 @@ public class AnalyticsReportsProductNavigationControlMenuEntryTest {
 	@Test
 	public void testIsShow() throws Exception {
 		MockContextUtil.testWithMockContext(
-			new MockContextUtil.MockContext.Builder().analyticsReportsInfoItem(
-				MockAnalyticsReportsInfoItem.builder(
-				).show(
-					true
-				).build()
-			).build(),
+			new MockContextUtil.MockContext.Builder().
+				mockObjectAnalyticsReportsInfoItem(
+					MockObjectAnalyticsReportsInfoItem.builder(
+					).show(
+						true
+					).build()
+				).build(),
 			() -> Assert.assertTrue(
 				_productNavigationControlMenuEntry.isShow(
 					_getHttpServletRequest())));
@@ -94,12 +95,13 @@ public class AnalyticsReportsProductNavigationControlMenuEntryTest {
 		throws Exception {
 
 		MockContextUtil.testWithMockContext(
-			new MockContextUtil.MockContext.Builder().analyticsReportsInfoItem(
-				MockAnalyticsReportsInfoItem.builder(
-				).show(
-					false
-				).build()
-			).build(),
+			new MockContextUtil.MockContext.Builder().
+				mockObjectAnalyticsReportsInfoItem(
+					MockObjectAnalyticsReportsInfoItem.builder(
+					).show(
+						false
+					).build()
+				).build(),
 			() -> Assert.assertFalse(
 				_productNavigationControlMenuEntry.isShow(
 					_getHttpServletRequest())));
@@ -120,8 +122,8 @@ public class AnalyticsReportsProductNavigationControlMenuEntryTest {
 		try {
 			MockContextUtil.testWithMockContext(
 				new MockContextUtil.MockContext.Builder().
-					analyticsReportsInfoItem(
-						MockAnalyticsReportsInfoItem.builder(
+					mockObjectAnalyticsReportsInfoItem(
+						MockObjectAnalyticsReportsInfoItem.builder(
 						).show(
 							true
 						).build()
@@ -151,8 +153,8 @@ public class AnalyticsReportsProductNavigationControlMenuEntryTest {
 		try {
 			MockContextUtil.testWithMockContext(
 				new MockContextUtil.MockContext.Builder().
-					analyticsReportsInfoItem(
-						MockAnalyticsReportsInfoItem.builder(
+					mockObjectAnalyticsReportsInfoItem(
+						MockObjectAnalyticsReportsInfoItem.builder(
 						).show(
 							true
 						).build()
@@ -190,8 +192,8 @@ public class AnalyticsReportsProductNavigationControlMenuEntryTest {
 		try {
 			MockContextUtil.testWithMockContext(
 				new MockContextUtil.MockContext.Builder().
-					analyticsReportsInfoItem(
-						MockAnalyticsReportsInfoItem.builder(
+					mockObjectAnalyticsReportsInfoItem(
+						MockObjectAnalyticsReportsInfoItem.builder(
 						).show(
 							true
 						).build()

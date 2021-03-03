@@ -16,7 +16,7 @@ package com.liferay.analytics.reports.web.internal.item.action.provider.test;
 
 import com.liferay.analytics.reports.info.action.provider.AnalyticsReportsContentDashboardItemActionProvider;
 import com.liferay.analytics.reports.test.MockObject;
-import com.liferay.analytics.reports.test.analytics.reports.info.item.MockAnalyticsReportsInfoItem;
+import com.liferay.analytics.reports.test.analytics.reports.info.item.MockObjectAnalyticsReportsInfoItem;
 import com.liferay.analytics.reports.test.util.MockContextUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.info.item.InfoItemReference;
@@ -70,12 +70,13 @@ public class AnalyticsReportsContentDashboardItemActionProviderTest {
 	@Test
 	public void testIsShowContentDashboardItemAction() throws Exception {
 		MockContextUtil.testWithMockContext(
-			new MockContextUtil.MockContext.Builder().analyticsReportsInfoItem(
-				MockAnalyticsReportsInfoItem.builder(
-				).show(
-					true
-				).build()
-			).build(),
+			new MockContextUtil.MockContext.Builder().
+				mockObjectAnalyticsReportsInfoItem(
+					MockObjectAnalyticsReportsInfoItem.builder(
+					).show(
+						true
+					).build()
+				).build(),
 			() -> Assert.assertTrue(
 				_analyticsReportsContentDashboardItemActionProvider.
 					isShowContentDashboardItemAction(
@@ -88,12 +89,13 @@ public class AnalyticsReportsContentDashboardItemActionProviderTest {
 		throws Exception {
 
 		MockContextUtil.testWithMockContext(
-			new MockContextUtil.MockContext.Builder().analyticsReportsInfoItem(
-				MockAnalyticsReportsInfoItem.builder(
-				).show(
-					true
-				).build()
-			).build(),
+			new MockContextUtil.MockContext.Builder().
+				mockObjectAnalyticsReportsInfoItem(
+					MockObjectAnalyticsReportsInfoItem.builder(
+					).show(
+						true
+					).build()
+				).build(),
 			() -> Assert.assertFalse(
 				_analyticsReportsContentDashboardItemActionProvider.
 					isShowContentDashboardItemAction(

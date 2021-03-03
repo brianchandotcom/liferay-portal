@@ -86,7 +86,7 @@ AnnouncementsAdminViewManagementToolbarDisplayContext announcementsAdminViewMana
 	filterLabelItems="<%= announcementsAdminViewManagementToolbarDisplayContext.getFilterLabelItems() %>"
 	itemsTotal="<%= announcementsAdminViewManagementToolbarDisplayContext.getTotal() %>"
 	propsTransformer="announcements_admin/js/AnnouncementsManagementToolbarPropsTransformer"
-	searchContainerId="announcementsEntries"
+	searchContainerId="<%= announcementsAdminViewManagementToolbarDisplayContext.getSearchContainerId() %>"
 	selectable="<%= true %>"
 	showSearch="<%= false %>"
 />
@@ -97,7 +97,7 @@ AnnouncementsAdminViewManagementToolbarDisplayContext announcementsAdminViewMana
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 		<liferay-ui:search-container
-			id="announcementsEntries"
+			id="<%= announcementsAdminViewManagementToolbarDisplayContext.getSearchContainerId() %>"
 			searchContainer="<%= announcementsEntriesSearchContainer %>"
 			total="<%= announcementsEntriesSearchContainer.getTotal() %>"
 		>

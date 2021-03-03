@@ -39,6 +39,7 @@ import com.liferay.portlet.announcements.service.permission.AnnouncementsEntryPe
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 
@@ -175,6 +176,14 @@ public class AnnouncementsAdminViewManagementToolbarDisplayContext {
 						getCurrentDistributionScopeLabel());
 			}
 		).build();
+	}
+
+	public String getSearchContainerId() {
+		if (Objects.equals(_getNavigation(), "alerts")) {
+			return "alertsEntries";
+		}
+
+		return "announcementsEntries";
 	}
 
 	public int getTotal() {

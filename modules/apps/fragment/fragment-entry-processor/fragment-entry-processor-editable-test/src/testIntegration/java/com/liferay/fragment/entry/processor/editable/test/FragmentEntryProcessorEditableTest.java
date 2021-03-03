@@ -160,6 +160,9 @@ public class FragmentEntryProcessorEditableTest {
 		LocaleThreadLocal.setSiteDefaultLocale(LocaleUtil.US);
 
 		LocaleThreadLocal.setThemeDisplayLocale(LocaleUtil.US);
+
+		ServiceContextThreadLocal.pushServiceContext(
+			new MockServiceContext(_layout, _getThemeDisplay()));
 	}
 
 	@After
@@ -167,6 +170,8 @@ public class FragmentEntryProcessorEditableTest {
 		LocaleThreadLocal.setSiteDefaultLocale(_originalSiteDefaultLocale);
 		LocaleThreadLocal.setThemeDisplayLocale(
 			_originalThemeDisplayDefaultLocale);
+
+		ServiceContextThreadLocal.popServiceContext();
 	}
 
 	@Test(expected = FragmentEntryContentException.class)

@@ -26,19 +26,18 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-
 			if (isSet(optionValues)) {
 				var optionValue = StringUtil.extractFirst("${optionValues}", ",");
 
-				if("${optionValue}" == "") {
+				if ("${optionValue}" == "") {
 					optionValue = "${optionValues}";
 				}
 
 				CommerceEntry.selectAssociatedOptionsValue(optionValue = "${optionValue}");
-				
+
 				var optionValues = StringUtil.replaceFirst("${optionValues}", "${optionValue},", "");
 			}
-				
+
 			CommerceEntry.publishProductImage();
 
 			Click(locator1 = "Icon#CLOSE");
@@ -47,8 +46,8 @@ definition {
 
 			if (isSet(validationImage)) {
 				CommerceEntry.checkImageName(
-					number = "${number}",
 					image = "${image}",
+					number = "${number}",
 					uploadFileName = "${uploadFileName}");
 			}
 		}

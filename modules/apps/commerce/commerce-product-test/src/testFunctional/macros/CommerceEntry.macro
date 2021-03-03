@@ -378,6 +378,20 @@ definition {
 		CommerceEntry.selectAssociatedOptionsValue(optionValue = "${optionValue}");
 	}
 
+	macro checkImageName {
+		echo("number is: ${number} image is: ${image} uploadFileName is: ${uploadFileName}");
+		if ("${number}" != "") {
+			AssertElementPresent(
+				key_entry = "Commerce_${image} (${number}).jpg",
+				locator1 = "CommerceNavigation#ANY_ENTRY_NAME_WITHOUT_CONTAINS");
+		}
+		else {
+			AssertElementPresent(
+				key_entry = "${uploadFileName}",
+				locator1 = "CommerceNavigation#ANY_ENTRY_NAME_WITHOUT_CONTAINS");
+		}
+	}
+
 	macro clickNoError {
 		ClickNoError(
 			key_menuItem = "${menuItem}",
@@ -1051,20 +1065,6 @@ definition {
 			AssertElementPresent(
 				key_rowEntry = "${specificationLabelsEntry}",
 				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK");
-		}
-	}
-
-	macro checkImageName {
-		echo("number is: ${number} image is: ${image} uploadFileName is: ${uploadFileName}");
-		if ("${number}" != "") {
-			AssertElementPresent(
-				key_entry = "Commerce_${image} (${number}).jpg",
-				locator1 = "CommerceNavigation#ANY_ENTRY_NAME_WITHOUT_CONTAINS");
-		}
-		else {
-			AssertElementPresent(
-				key_entry = "${uploadFileName}",
-				locator1 = "CommerceNavigation#ANY_ENTRY_NAME_WITHOUT_CONTAINS");
 		}
 	}
 

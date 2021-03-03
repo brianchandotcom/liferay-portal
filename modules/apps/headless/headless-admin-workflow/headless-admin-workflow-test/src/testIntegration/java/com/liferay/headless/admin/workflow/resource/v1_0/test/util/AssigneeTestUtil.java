@@ -15,7 +15,6 @@
 package com.liferay.headless.admin.workflow.resource.v1_0.test.util;
 
 import com.liferay.headless.admin.workflow.client.dto.v1_0.Assignee;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -34,7 +33,7 @@ public class AssigneeTestUtil {
 		User user = UserTestUtil.addUser(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 			RandomTestUtil.randomString(),
-			RandomTestUtil.randomString() + StringPool.AT + "liferay.com",
+			RandomTestUtil.randomString() + "@liferay.com",
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
 			ServiceContextTestUtil.getServiceContext());

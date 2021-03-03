@@ -1,0 +1,102 @@
+@component-name = "portal-commerce"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Commerce";
+
+    setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "COMMERCE-5912. As a buyer, I want to select an item in Product Details for compare in Product Widget"
+	@ignore = "true"
+	@priority = "3"
+	test AddComparisonItemFromProductDetailsPage {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-5912 AddComparisonItemFromProductDetailsPage pending implementation
+
+	}
+
+	@description = "COMMERCE-5911. As a buyer, I want to select items in Search Results page for compare and see those items in MiniCompare widget at the bottom pf the page"
+	@ignore = "true"
+	@priority = "3"
+	test AssertComparisonItemsAreVisibleOnMiniCompare {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-5911 AssertComparisonItemsAreVisibleOnMiniCompare pending implementation
+
+	}
+
+	@description = "COMMERCE-5915. As a buyer, I want to see max number of compare items allowed in Compare page"
+	@ignore = "true"
+	@priority = "3"
+	test EditMaxNumberOfComparisonItemsInComparePage {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-5915 EditMaxNumberOfComparisonItemsInComparePage pending implementation
+
+	}
+
+	@description = "COMMERCE-5916. As a buyer, I want to see max number of compare items allowed in MiniCompare widget"
+	@ignore = "true"
+	@priority = "3"
+	test EditMaxNumberOfComparisonItemsInMiniCompare {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-5916 EditMaxNumberOfComparisonItemsInMiniCompare pending implementation
+
+	}
+
+	@description = "COMMERCE-5918. As a buyer, I want to deselect a item in Product Compare page"
+	@ignore = "true"
+	@priority = "3"
+	test RemoveComparisonItemFromComparePage {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-5918 RemoveComparisonItemFromComparePage pending implementation
+
+	}
+
+	@description = "COMMERCE-5913. As a buyer, I want to deselect items in Catalog for compare in MiniCompare widget"
+	@ignore = "true"
+	@priority = "3"
+	test RemoveComparisonItemFromMiniCompare {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-5913 RemoveComparisonItemFromMiniCompare pending implementation
+
+	}
+
+	@description = "COMMERCE-5914. As a buyer, I want to deselect a item in Product Details for compare in Product Widget"
+	@ignore = "true"
+	@priority = "3"
+	test RemoveComparisonItemFromProductDetailsPage {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-5914 RemoveComparisonItemFromProductDetailsPage pending implementation
+
+	}
+
+	@description = "COMMERCE-5919. As a buyer, when comparing items in Compare page, I want to view product options and specifications, if set"
+	@ignore = "true"
+	@priority = "3"
+	test ViewProductOptionsAndSpecificationsWhenComparingItemsInComparePage {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-5919 ViewProductOptionsAndSpecificationsWhenComparingItemsInComparePage pending implementation
+
+	}
+
+}

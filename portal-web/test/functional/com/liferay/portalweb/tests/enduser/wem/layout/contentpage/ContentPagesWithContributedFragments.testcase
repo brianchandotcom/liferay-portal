@@ -1341,6 +1341,112 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-127706. Assert the mapped image to background image of Container in collection display is shown in view mode."
+	@priority = "3"
+	test MapImageToBackgroundImageOfContainerInCollectionDisplay {
+		task ("Add a custom structure with image field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Image",
+				fieldName = "Image");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("Add a web content article based on new structure and select an image") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
+				navTab = "Web Content Images",
+				webContentImage = "Document_1.jpg",
+				webContentTitle = "Web Content Title");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a manual collecton with Web Content Article item type and WC Structure Name item subtype") {
+			JSONAssetlist.addManualAssetListEntry(
+				groupName = "Test Site Name",
+				title = "Manual Collection");
+
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.selectAsset(
+				assetListName = "Manual Collection",
+				assetName = "Web Content Title",
+				assetType = "WC Structure Name",
+				itemSubtype = "WC Structure Name",
+				itemType = "Web Content Article");
+		}
+
+		task ("Add a Collection Display to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the Highest Rated Assets") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Manual Collection",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Add a Container element to the cell of Collection Display") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Layout Elements",
+				entryTitle = "Web Content Title",
+				fragmentName = "Container");
+		}
+
+		task ("Add a Paragraph fragment into Container") {
+			PageEditor.addElementToContainer(
+				collectionName = "Basic Components",
+				fragmentName = "Paragraph",
+				navTab = "Fragments");
+		}
+
+		task ("Map image field of web content article to background image of Container") {
+			PageEditor.editLayoutContainer(
+				backgroundImage = "Mapping",
+				fieldName = "Image",
+				panel = "Styles");
+		}
+
+		task ("Assert the mapping image is shown in Container") {
+			PageEditor.viewContainerStyle(
+				backgroundImage = "Document_1.jpg",
+				position = "1");
+		}
+
+		task ("Assert the image is shown in view mode") {
+			PageEditor.clickPublish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			AssertTextEquals(
+				key_fragmentName = "paragraph",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "A paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.");
+
+			AssertVisible(
+				key_imageName = "Document_1.jpg",
+				locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
+		}
+	}
+
 	@description = "This is a use case for LPS-120309. Assert the mapped image to Image fragment in collection display is shown in view mode."
 	@priority = "4"
 	test MapImageToImageTypeEditableFieldInCollectionDisplay {

@@ -13,7 +13,6 @@
  */
 
 import {act, cleanup, fireEvent, render} from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import * as toast from 'data-engine-js-components-web/js/utils/toast.es';
 import {createMemoryHistory} from 'history';
 import React from 'react';
@@ -180,8 +179,8 @@ describe('EditTableView', () => {
 		).toBeTruthy();
 
 		act(() => {
-			userEvent.dblClick(columnName);
-			userEvent.dblClick(columnOptions);
+			fireEvent.dblClick(columnName);
+			fireEvent.dblClick(columnOptions);
 		});
 
 		expect(
@@ -286,8 +285,8 @@ describe('EditTableView', () => {
 		const [columnOptions] = queryAllByText('Options');
 
 		act(() => {
-			userEvent.dblClick(columnName);
-			userEvent.dblClick(columnOptions);
+			fireEvent.dblClick(columnName);
+			fireEvent.dblClick(columnOptions);
 		});
 
 		const [search] = queryAllByPlaceholderText('search...');
@@ -444,7 +443,7 @@ describe('EditTableView', () => {
 		expect(localizableDropdown.textContent).toEqual('pt-BR');
 
 		await act(async () => {
-			userEvent.click(localizableDropdown);
+			fireEvent.click(localizableDropdown);
 		});
 
 		expect(

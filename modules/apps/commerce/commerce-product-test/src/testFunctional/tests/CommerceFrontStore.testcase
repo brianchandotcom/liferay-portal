@@ -56,7 +56,7 @@ definition {
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
-			portlet = "Options");
+			portlet = "Products");
 
 		CPCommerceCatalog.newProductsEntry(
 			productName = "Simple T-Shirt",

@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.admin.shipment.internal.jaxrs.exception.mapper;
 
-import com.liferay.commerce.exception.CommerceAddressZipException;
+import com.liferay.commerce.exception.CommerceAddressNameException;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
@@ -31,18 +31,18 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Shipment)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Shipment.CommerceAddressZipException"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Shipment.ShippingAddressNameException"
 	},
 	service = ExceptionMapper.class
 )
-public class CommerceAddressZipExceptionMapper
-	extends BaseExceptionMapper<CommerceAddressZipException> {
+public class ShippingAddressNameExceptionMapper
+	extends BaseExceptionMapper<CommerceAddressNameException> {
 
 	@Override
 	protected Problem getProblem(
-		CommerceAddressZipException commerceAddressZipException) {
+		CommerceAddressNameException commerceAddressNameException) {
 
-		return new Problem(Response.Status.BAD_REQUEST, "Invalid address zip");
+		return new Problem(Response.Status.BAD_REQUEST, "Invalid address name");
 	}
 
 }

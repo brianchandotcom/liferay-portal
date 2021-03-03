@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.admin.shipment.internal.jaxrs.exception.mapper;
 
-import com.liferay.commerce.exception.CommerceAddressStreetException;
+import com.liferay.commerce.exception.CommerceAddressCountryException;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
@@ -31,19 +31,19 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Shipment)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Shipment.CommerceAddressStreetException"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Shipment.ShippingAddressCountryException"
 	},
 	service = ExceptionMapper.class
 )
-public class CommerceAddressStreetExceptionMapper
-	extends BaseExceptionMapper<CommerceAddressStreetException> {
+public class ShippingAddressCountryExceptionMapper
+	extends BaseExceptionMapper<CommerceAddressCountryException> {
 
 	@Override
 	protected Problem getProblem(
-		CommerceAddressStreetException commerceAddressStreetException) {
+		CommerceAddressCountryException commerceAddressCountryException) {
 
 		return new Problem(
-			Response.Status.BAD_REQUEST, "Invalid address street");
+			Response.Status.BAD_REQUEST, "Invalid address country");
 	}
 
 }

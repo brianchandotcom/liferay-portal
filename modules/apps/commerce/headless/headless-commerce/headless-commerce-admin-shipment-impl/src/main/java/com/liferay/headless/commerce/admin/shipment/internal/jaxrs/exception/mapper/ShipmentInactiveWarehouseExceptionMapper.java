@@ -31,11 +31,11 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Shipment)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Shipment.CommerceShipmentInactiveWarehouseException"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Shipment.ShipmentInactiveWarehouseException"
 	},
 	service = ExceptionMapper.class
 )
-public class CommerceShipmentInactiveWarehouseExceptionMapper
+public class ShipmentInactiveWarehouseExceptionMapper
 	extends BaseExceptionMapper<CommerceShipmentInactiveWarehouseException> {
 
 	@Override

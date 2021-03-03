@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.admin.shipment.internal.jaxrs.exception.mapper;
 
-import com.liferay.commerce.exception.CommerceShipmentItemQuantityException;
+import com.liferay.commerce.exception.CommerceShipmentStatusException;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
@@ -31,20 +31,19 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Shipment)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Shipment.CommerceShipmentItemQuantityException"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Shipment.ShipmentStatusException"
 	},
 	service = ExceptionMapper.class
 )
-public class CommerceShipmentItemQuantityExceptionMapper
-	extends BaseExceptionMapper<CommerceShipmentItemQuantityException> {
+public class ShipmentStatusExceptionMapper
+	extends BaseExceptionMapper<CommerceShipmentStatusException> {
 
 	@Override
 	protected Problem getProblem(
-		CommerceShipmentItemQuantityException
-			commerceShipmentItemQuantityException) {
+		CommerceShipmentStatusException commerceShipmentStatusException) {
 
 		return new Problem(
-			Response.Status.BAD_REQUEST, "Shipment Item quantity error");
+			Response.Status.BAD_REQUEST, "The shipment is in a wrong status");
 	}
 
 }

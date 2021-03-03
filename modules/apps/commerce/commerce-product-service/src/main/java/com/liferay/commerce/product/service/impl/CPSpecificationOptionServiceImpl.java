@@ -96,6 +96,21 @@ public class CPSpecificationOptionServiceImpl
 	}
 
 	@Override
+	public CPSpecificationOption getCPSpecificationOption(
+			long companyId, String key)
+		throws PortalException {
+
+		CPSpecificationOption cpSpecificationOption =
+			cpSpecificationOptionLocalService.getCPSpecificationOption(
+				companyId, key);
+
+		_cpSpecificationOptionModelResourcePermission.check(
+			getPermissionChecker(), cpSpecificationOption, ActionKeys.VIEW);
+
+		return cpSpecificationOption;
+	}
+
+	@Override
 	public BaseModelSearchResult<CPSpecificationOption>
 			searchCPSpecificationOptions(
 				long companyId, Boolean facetable, String keywords, int start,

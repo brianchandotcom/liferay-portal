@@ -14,6 +14,7 @@
 
 import {
 	PagesVisitor,
+	RulesVisitor,
 	generateInstanceId,
 	generateName,
 	getRepeatedIndex,
@@ -177,6 +178,38 @@ class LayoutProvider extends Component {
 		}
 
 		return 'single-page';
+	}
+
+	getRules() {
+		let {rules} = this.state;
+
+		if (rules) {
+			const visitor = new RulesVisitor(rules);
+
+			rules = visitor.mapConditions((condition) => {
+				if (condition.operands[0].type == 'list') {
+					condition = {
+						...condition,
+						operands: [
+							{
+								label: 'user',
+								repeatable: false,
+								type: 'user',
+								value: 'user',
+							},
+							{
+								...condition.operands[0],
+								label: condition.operands[0].value,
+							},
+						],
+					};
+				}
+
+				return condition;
+			});
+		}
+
+		return rules;
 	}
 
 	render() {

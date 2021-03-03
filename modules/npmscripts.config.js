@@ -29,6 +29,19 @@ module.exports = {
 		bundler: {
 			config: {
 				imports: {
+					'@liferay/frontend-js-react-web': {
+						'/': '>=1.0.0',
+						classnames: '>=2.2.6',
+						formik: '>=1.4.3',
+						'prop-types': '>=15.7.2',
+						react: '>=16.8.6',
+						'react-dnd': '>=7.0.2',
+						'react-dnd-html5-backend': '>=7.0.2',
+						'react-dom': '>=16.8.6',
+					},
+					'@liferay/frontend-taglib': {
+						'/': '>=1.0.0',
+					},
 					'frontend-js-components-web': {
 						'/': '>=1.0.0',
 					},
@@ -90,16 +103,6 @@ module.exports = {
 						util: '>=0.10.3',
 						'vm-browserify': '>=0.0.4',
 					},
-					'@liferay/frontend-js-react-web': {
-						'/': '>=1.0.0',
-						classnames: '>=2.2.6',
-						formik: '>=1.4.3',
-						'prop-types': '>=15.7.2',
-						react: '>=16.8.6',
-						'react-dnd': '>=7.0.2',
-						'react-dnd-html5-backend': '>=7.0.2',
-						'react-dom': '>=16.8.6',
-					},
 					'frontend-js-spa-web': {
 						senna: '>=2.6.1',
 					},
@@ -113,9 +116,6 @@ module.exports = {
 						'lodash.unescape': '>=4.0.1',
 						svg4everybody: '>=2.1.9',
 						uuid: '>=3.3.2',
-					},
-					'@liferay/frontend-taglib': {
-						'/': '>=1.0.0',
 					},
 					'frontend-taglib-chart': {
 						'clay-charts': '>=2.9.0',

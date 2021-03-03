@@ -22,8 +22,8 @@ SiteNavigationMenuItemSelectorViewDisplayContext siteNavigationMenuItemSelectorV
 String displayStyle = siteNavigationMenuItemSelectorViewDisplayContext.getDisplayStyle();
 %>
 
-<clay:management-toolbar-v2
-	displayContext="<%= new SiteNavigationMenuItemSelectorViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, siteNavigationMenuItemSelectorViewDisplayContext) %>"
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= new SiteNavigationMenuItemSelectorViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, siteNavigationMenuItemSelectorViewDisplayContext) %>"
 />
 
 <aui:form action="<%= siteNavigationMenuItemSelectorViewDisplayContext.getPortletURL() %>" cssClass="container-fluid container-fluid-max-xl" name="selectSiteNavigationMenuFm">

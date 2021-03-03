@@ -23,6 +23,7 @@ import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Alessio Antonio Rendina
@@ -66,12 +67,10 @@ public class ProductSpecificationUtil {
 		throws PortalException {
 
 		CPSpecificationOption cpSpecificationOption =
-			cpSpecificationOptionService.fetchCPSpecificationOption(
-				companyId, productSpecification.getSpecificationKey());
-
-		if (cpSpecificationOption == null) {
-			return 0;
-		}
+			cpSpecificationOptionService.getCPSpecificationOption(
+				companyId,
+				StringUtil.toLowerCase(
+					productSpecification.getSpecificationKey()));
 
 		return cpSpecificationOption.getCPSpecificationOptionId();
 	}

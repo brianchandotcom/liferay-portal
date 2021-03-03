@@ -276,23 +276,9 @@ public class JenkinsCohort {
 						}
 					}
 
-					long currentTimeMillis = System.currentTimeMillis();
-
-					if (JenkinsResultsParserUtil.isCINode()) {
-						Matcher matcher = _jobURLPattern.matcher(buildURL);
-
-						matcher.find();
-
-						long currentTimeSeconds =
-							JenkinsResultsParserUtil.
-								getRemoteCurrentTimeSeconds(
-									matcher.group("masterHostname"));
-
-						currentTimeMillis = currentTimeSeconds * 1000;
-					}
-
 					long duration =
-						currentTimeMillis - jsonObject.getLong("timestamp");
+						JenkinsResultsParserUtil.getCurrentTimeMillis() -
+							jsonObject.getLong("timestamp");
 
 					pullRequestDataTableJSONArray.put(
 						_createpullRequestDataTableRow(
@@ -316,23 +302,8 @@ public class JenkinsCohort {
 
 						String jobURL = taskJSONObject.getString("url");
 
-						long currentTimeMillis = System.currentTimeMillis();
-
-						if (JenkinsResultsParserUtil.isCINode()) {
-							Matcher matcher = _jobURLPattern.matcher(jobURL);
-
-							matcher.find();
-
-							long currentTimeSeconds =
-								JenkinsResultsParserUtil.
-									getRemoteCurrentTimeSeconds(
-										matcher.group("masterHostname"));
-
-							currentTimeMillis = currentTimeSeconds * 1000;
-						}
-
 						long queueDuration =
-							currentTimeMillis -
+							JenkinsResultsParserUtil.getCurrentTimeMillis() -
 								jsonObject.optLong("inQueueSince");
 
 						pullRequestDataTableJSONArray.put(
@@ -497,11 +468,6 @@ public class JenkinsCohort {
 		".*\\/([0-9]+)");
 	private static final Pattern _jobNamePattern = Pattern.compile(
 		"https?:.*job\\/(.*?)\\/");
-	private static final Pattern _jobURLPattern = Pattern.compile(
-		JenkinsResultsParserUtil.combine(
-			"(?<jobURL>https?://(?<masterHostname>",
-			"(?<cohortName>test-\\d+)-\\d+)(\\.liferay\\.com)?/job/",
-			"(?<jobName>[^/]+)/(.*/)?)/?"));
 
 	private final Map<String, JenkinsCohortJob> _jenkinsCohortJobsMap =
 		new HashMap<>();

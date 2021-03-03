@@ -131,6 +131,91 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-110144. Configure the Heading fragment in content page template."
+	@priority = "5"
+	test ConfigureBasicComponentHeading {
+		task ("Add a content page template") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
+
+			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection",
+				layoutPageTemplateEntryName = "Page Template Name",
+				layoutPageTemplateStatus = "Draft",
+				layoutPageTemplateType = "Content Page Template");
+
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+			PageEditor.assertFragmentSidebarLoaded();
+		}
+
+		task ("Add a Heading fragment to content page template") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Configure the fragment") {
+			PageEditor.gotoStyle(fragmentName = "Heading");
+
+			PageEditor.configureFragment(
+				alignment = "Center",
+				textColor = "Success");
+
+			PageEditor.gotoConfiguration(fragmentName = "Heading");
+
+			PageEditor.configureFragment(headingLevel = "H2");
+		}
+
+		task ("View the fragment style") {
+			PageEditor.viewFragmentStyle(
+				alignment = "center",
+				fragmentName = "heading",
+				headingLevel = "h2",
+				textColor = "success");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a page based on content page template") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(
+				collectionName = "Page Template Collection",
+				pageName = "Test Page Name",
+				pageTemplateName = "Page Template Name");
+		}
+
+		task ("View the fragment style") {
+			PageEditor.viewFragmentStyle(
+				alignment = "center",
+				fragmentName = "heading",
+				headingLevel = "h2",
+				textColor = "success");
+		}
+
+		task ("Assert the fragment styles are shown in view mode") {
+			PageEditor.clickPublish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssertVisible(locator1 = "//div[contains(@class,'text-center')][//h2[contains(@class,'component-heading')]]");
+
+			AssertCssValue(
+				locator1 = "//div[contains(@class,'text-center')][//h2[contains(@class,'component-heading')]]",
+				locator2 = "color",
+				value1 = "rgba(40, 125, 60, 1)");
+		}
+	}
+
 	@description = "Delete a page template collection."
 	@priority = "5"
 	test DeleteCollection {

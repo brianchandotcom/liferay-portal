@@ -2428,7 +2428,7 @@ definition {
 			if (isSet(webContentLocaleFieldLabel)) {
 				PortletEntry.changeLocale(locale = "${webContentLocaleFieldLabel}");
 			}
-
+			
 			if (isSet(webContentTitleTranslated)) {
 				AssertTextEquals(
 					locator1 = "TextInput#TITLE",

@@ -57,7 +57,9 @@ public class OAuth2ApplicationServiceWrapper
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addOAuth2Application(List, long, String, int, String, String, List, String, long, String, String, List, List, boolean, ServiceContext)}
+	 #addOAuth2Application(List, long, String, int, String,
+	 String, List, String, long, String, String, List, List,
+	 boolean, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -180,7 +182,9 @@ public class OAuth2ApplicationServiceWrapper
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #updateOAuth2Application(long, List, long, String, int, String, String, List, String, long, String, String, List, long, ServiceContext)}
+	 #updateOAuth2Application(long, List, long, String, int,
+	 String, String, List, String, long, String, String, List,
+	 long, ServiceContext)}
 	 */
 	@Deprecated
 	@Override

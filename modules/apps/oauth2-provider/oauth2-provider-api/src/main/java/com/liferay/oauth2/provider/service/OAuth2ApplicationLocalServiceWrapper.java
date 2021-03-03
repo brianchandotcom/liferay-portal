@@ -61,7 +61,9 @@ public class OAuth2ApplicationLocalServiceWrapper
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addOAuth2Application(long, long, String, List, long, String, int, String, String, List, String, long, String, String, List, boolean, Consumer, ServiceContext)}
+	 #addOAuth2Application(long, long, String, List, long, String,
+	 int, String, String, List, String, long, String, String,
+	 List, boolean, Consumer, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -115,8 +117,9 @@ public class OAuth2ApplicationLocalServiceWrapper
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addOAuth2Application(long, long, String, List, long, String, int, String, String, List, String, long, String, String, List, List, boolean, ServiceContext)} (String,
-	 long)}
+	 #addOAuth2Application(long, long, String, List, long, String,
+	 int, String, String, List, String, long, String, String,
+	 List, List, boolean, ServiceContext)} (String, long)}
 	 */
 	@Deprecated
 	@Override
@@ -493,7 +496,9 @@ public class OAuth2ApplicationLocalServiceWrapper
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #updateOAuth2Application(long, long, List, long, String, int, String, String, List, String, long, String, String, List, boolean)}
+	 #updateOAuth2Application(long, long, List, long, String, int,
+	 String, String, List, String, long, String, String, List,
+	 boolean)}
 	 */
 	@Deprecated
 	@Override

@@ -98,7 +98,9 @@ public class OAuth2ApplicationServiceSoap {
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addOAuth2Application(List, long, String, int, String, String, List, String, long, String, String, List, List, boolean, ServiceContext)}
+	 #addOAuth2Application(List, long, String, int, String,
+	 String, List, String, long, String, String, List, List,
+	 boolean, ServiceContext)}
 	 */
 	@Deprecated
 	public static com.liferay.oauth2.provider.model.OAuth2ApplicationSoap
@@ -286,7 +288,9 @@ public class OAuth2ApplicationServiceSoap {
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #updateOAuth2Application(long, List, long, String, int, String, String, List, String, long, String, String, List, long, ServiceContext)}
+	 #updateOAuth2Application(long, List, long, String, int,
+	 String, String, List, String, long, String, String, List,
+	 long, ServiceContext)}
 	 */
 	@Deprecated
 	public static com.liferay.oauth2.provider.model.OAuth2ApplicationSoap

@@ -61,7 +61,9 @@ public class OAuth2ApplicationServiceUtil {
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addOAuth2Application(List, long, String, int, String, String, List, String, long, String, String, List, List, boolean, ServiceContext)}
+	 #addOAuth2Application(List, long, String, int, String,
+	 String, List, String, long, String, String, List, List,
+	 boolean, ServiceContext)}
 	 */
 	@Deprecated
 	public static OAuth2Application addOAuth2Application(
@@ -161,7 +163,9 @@ public class OAuth2ApplicationServiceUtil {
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #updateOAuth2Application(long, List, long, String, int, String, String, List, String, long, String, String, List, long, ServiceContext)}
+	 #updateOAuth2Application(long, List, long, String, int,
+	 String, String, List, String, long, String, String, List,
+	 long, ServiceContext)}
 	 */
 	@Deprecated
 	public static OAuth2Application updateOAuth2Application(

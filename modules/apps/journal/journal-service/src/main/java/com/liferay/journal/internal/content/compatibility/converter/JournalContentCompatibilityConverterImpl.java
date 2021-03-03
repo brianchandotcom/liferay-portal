@@ -224,11 +224,18 @@ public class JournalContentCompatibilityConverterImpl
 
 		String[] values = StringUtil.split(value, CharPool.AT);
 
-		if (ArrayUtil.isEmpty(values) || (values.length <= 2)) {
+		if (ArrayUtil.isEmpty(values) ||
+			((values.length <= 2) && (_groupId == 0))) {
+
 			return StringPool.BLANK;
 		}
 
-		long groupId = GetterUtil.getLong(values[2]);
+		long groupId = _groupId;
+
+		if (values.length > 2) {
+			groupId = GetterUtil.getLong(values[2]);
+		}
+
 		boolean privateLayout = !Objects.equals(values[1], "public");
 		long layoutId = GetterUtil.getLong(values[0]);
 

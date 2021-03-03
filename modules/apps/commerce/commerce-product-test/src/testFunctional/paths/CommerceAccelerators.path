@@ -186,6 +186,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHECKOUT_PORTLET_BODY</td>
+	<td>//div[@id='main-content']//div[contains(@class,'portlet')]//section[contains(@id,'Checkout')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHECKOUT_SUCCESS_MESSAGE</td>
 	<td>//div[@class='success-message']</td>
 	<td></td>

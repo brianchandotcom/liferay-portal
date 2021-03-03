@@ -259,6 +259,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DISABLE_PROPAGATION</td>
+	<td>//a[contains(@class,'btn')][contains(.,'Disable Propagation')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DONE</td>
 	<td>//button[contains(.,'Done')]</td>
 	<td></td>
@@ -286,6 +291,11 @@
 <tr>
 	<td>EDIT_ROW</td>
 	<td>//*[@data-qa-id='row' and contains(.,'${key_rowEntry}')]//*[normalize-space(text())='Edit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_PROPAGATION</td>
+	<td>//a[contains(@class,'btn')][contains(.,'Ready for Propagation')]</td>
 	<td></td>
 </tr>
 <tr>

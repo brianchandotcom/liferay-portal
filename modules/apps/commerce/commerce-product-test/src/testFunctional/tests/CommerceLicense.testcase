@@ -100,7 +100,6 @@ definition {
 		CommerceLicense.viewCommerceMissing();
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test DeployModuleLicenseToLCSPortal {
 		property commerce.enabled = "true";

@@ -15,6 +15,9 @@
 export default function ({defaultLanguageId, namespace}) {
 	const form = document.getElementById(`${namespace}fm`);
 
+	// Clean the input if the language is not considered translated when
+	// submitting the form
+
 	const clearNameInputIfNeeded = () => {
 		const inputComponent = Liferay.component(`${namespace}name`);
 

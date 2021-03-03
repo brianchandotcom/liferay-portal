@@ -233,7 +233,7 @@ public class JenkinsCohort {
 		pullRequestDataTableJSONArray.put(
 			Arrays.asList(
 				"Pull Request URL", "Sender Username", "Branch Name",
-				"Test Suite", "Status"));
+				"Test Suite", "Status", "Queued Duration", "Duration"));
 
 		for (JenkinsCohortJob jenkinsCohortJob :
 				_jenkinsCohortJobsMap.values()) {
@@ -247,10 +247,58 @@ public class JenkinsCohort {
 					JSONObject jsonObject = JenkinsAPIUtil.getBuildJSONObject(
 						buildURL);
 
+					long queuedDuration = 0;
+
+					JSONArray actionsJSONArray = jsonObject.getJSONArray(
+						"actions");
+
+					for (int i = 0; i < actionsJSONArray.length(); i++) {
+						Object actions = actionsJSONArray.get(i);
+
+						if (actions == JSONObject.NULL) {
+							continue;
+						}
+
+						JSONObject actionJSONObject =
+							actionsJSONArray.getJSONObject(i);
+
+						if (actionJSONObject.has("_class")) {
+							String clazz = actionJSONObject.getString("_class");
+
+							if (clazz.equals(
+									"jenkins.metrics.impl.TimeInQueueAction")) {
+
+								queuedDuration = actionJSONObject.getLong(
+									"buildableDurationMillis");
+
+								break;
+							}
+						}
+					}
+
+					long currentTimeMillis = System.currentTimeMillis();
+
+					if (JenkinsResultsParserUtil.isCINode()) {
+						Matcher matcher = _jobURLPattern.matcher(buildURL);
+
+						matcher.find();
+
+						long currentTimeSeconds =
+							JenkinsResultsParserUtil.
+								getRemoteCurrentTimeSeconds(
+									matcher.group("masterHostname"));
+
+						currentTimeMillis = currentTimeSeconds * 1000;
+					}
+
+					long duration =
+						currentTimeMillis - jsonObject.getLong("timestamp");
+
 					pullRequestDataTableJSONArray.put(
 						_createpullRequestDataTableRow(
 							buildURL,
-							JenkinsAPIUtil.getBuildParameters(jsonObject)));
+							JenkinsAPIUtil.getBuildParameters(jsonObject),
+							queuedDuration, duration));
 				}
 
 				Map<String, JSONObject> queuedTopLevelBuildsJsonMap =
@@ -268,9 +316,28 @@ public class JenkinsCohort {
 
 						String jobURL = taskJSONObject.getString("url");
 
+						long currentTimeMillis = System.currentTimeMillis();
+
+						if (JenkinsResultsParserUtil.isCINode()) {
+							Matcher matcher = _jobURLPattern.matcher(jobURL);
+
+							matcher.find();
+
+							long currentTimeSeconds =
+								JenkinsResultsParserUtil.
+									getRemoteCurrentTimeSeconds(
+										matcher.group("masterHostname"));
+
+							currentTimeMillis = currentTimeSeconds * 1000;
+						}
+
+						long queueDuration =
+							currentTimeMillis -
+								jsonObject.optLong("inQueueSince");
+
 						pullRequestDataTableJSONArray.put(
 							_createpullRequestDataTableRow(
-								jobURL, buildParameters));
+								jobURL, buildParameters, queueDuration, 0));
 					}
 					catch (JSONException jsonException) {
 						System.out.println(jsonObject.toString());
@@ -297,7 +364,8 @@ public class JenkinsCohort {
 	}
 
 	private List<Object> _createpullRequestDataTableRow(
-		String buildURL, Map<String, String> buildParameters) {
+		String buildURL, Map<String, String> buildParameters,
+		long queueDuration, long duration) {
 
 		String githubReceiverUsername = buildParameters.get(
 			"GITHUB_RECEIVER_USERNAME");
@@ -338,7 +406,12 @@ public class JenkinsCohort {
 					githubReceiverUsername, repositoryName,
 					githubPullRequestNumber)),
 			githubSenderUsername, githubUpstreamBranchName, ciTestSuite,
-			_createJSONArray(status, buildURL));
+			_createJSONArray(status, buildURL),
+			_createJSONArray(
+				queueDuration,
+				JenkinsResultsParserUtil.toDurationString(queueDuration)),
+			_createJSONArray(
+				duration, JenkinsResultsParserUtil.toDurationString(duration)));
 	}
 
 	private String _formatBuildCountText(
@@ -424,6 +497,11 @@ public class JenkinsCohort {
 		".*\\/([0-9]+)");
 	private static final Pattern _jobNamePattern = Pattern.compile(
 		"https?:.*job\\/(.*?)\\/");
+	private static final Pattern _jobURLPattern = Pattern.compile(
+		JenkinsResultsParserUtil.combine(
+			"(?<jobURL>https?://(?<masterHostname>",
+			"(?<cohortName>test-\\d+)-\\d+)(\\.liferay\\.com)?/job/",
+			"(?<jobName>[^/]+)/(.*/)?)/?"));
 
 	private final Map<String, JenkinsCohortJob> _jenkinsCohortJobsMap =
 		new HashMap<>();

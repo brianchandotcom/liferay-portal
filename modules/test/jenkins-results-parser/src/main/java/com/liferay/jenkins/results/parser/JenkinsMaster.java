@@ -325,7 +325,8 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 				JenkinsResultsParserUtil.getLocalURL(
 					JenkinsResultsParserUtil.combine(
 						_masterURL,
-						"/queue/api/json?tree=items[task[name,url],url,why]")),
+						"/queue/api/json?tree=items[actions[parameters",
+						"[name,value]],task[name,url],url,why]")),
 				false, 5000);
 		}
 		catch (Exception exception) {

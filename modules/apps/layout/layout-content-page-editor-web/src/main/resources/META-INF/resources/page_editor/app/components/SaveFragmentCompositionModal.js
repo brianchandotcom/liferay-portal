@@ -20,7 +20,6 @@ import ClayLayout from '@clayui/layout';
 import ClayModal, {useModal} from '@clayui/modal';
 import ClaySticker from '@clayui/sticker';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
-import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
@@ -89,13 +88,6 @@ const SaveFragmentCompositionModal = ({onCloseModal}) => {
 					onClose();
 				})
 				.catch(() => {
-					openToast({
-						message: Liferay.Language.get(
-							'an-unexpected-error-occurred'
-						),
-						type: 'danger',
-					});
-
 					setLoading(false);
 				});
 		}

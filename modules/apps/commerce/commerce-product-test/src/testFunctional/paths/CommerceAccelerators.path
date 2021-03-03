@@ -79,7 +79,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MINIUM_CARD_NAME</td>
+	<td>PRODUCT_CARD_NAME</td>
 	<td>//p[@class='card-title']//span[text() = '${key_productName}']</td>
 	<td></td>
 </tr>

@@ -30,6 +30,7 @@ import selectLanguageId from '../../selectors/selectLanguageId';
 import {useSelector} from '../../store/index';
 import isMapped from '../../utils/editable-value/isMapped';
 import isMappedToLayout from '../../utils/editable-value/isMappedToLayout';
+import isMappedToStructure from '../../utils/editable-value/isMappedToStructure';
 import resolveEditableValue from '../../utils/editable-value/resolveEditableValue';
 import {useId} from '../../utils/useId';
 import {useGetFieldValue} from '../CollectionItemContext';
@@ -91,7 +92,7 @@ export default function LinkField({field, onValueSelect, value}) {
 	const targetInputId = useId();
 
 	useEffect(() => {
-		if (isMapped(nextValue)) {
+		if (isMapped(nextValue) && !isMappedToStructure(nextValue)) {
 			setMappedHrefPreview('');
 
 			resolveEditableValue(nextValue, languageId, getFieldValue).then(

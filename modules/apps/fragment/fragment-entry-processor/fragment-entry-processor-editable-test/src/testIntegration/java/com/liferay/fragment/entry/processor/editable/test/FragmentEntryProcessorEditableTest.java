@@ -304,6 +304,25 @@ public class FragmentEntryProcessorEditableTest {
 		Assert.assertEquals(0, count);
 	}
 
+	@Test
+	public void testFragmentEntryProcessorEditableMappedJournalArticleImageFileEntryId()
+		throws Exception {
+
+		FileEntry fileEntry = _addImageFileEntry();
+
+		String editableValues = _getJournalArticleEditableFieldValues(
+			"fragment_entry_link_mapped_asset_field_image.json",
+			"ImageFieldName", fileEntry);
+
+		Element element = _getElement(
+			"data-lfr-editable-id", "image-square", editableValues,
+			"fragment_entry_image.html");
+
+		Assert.assertEquals(
+			fileEntry.getFileEntryId(),
+			GetterUtil.getLong(element.attr("data-fileentryid")));
+	}
+
 	@Test(expected = FragmentEntryContentException.class)
 	public void testFragmentEntryProcessorEditableWithDuplicateIds()
 		throws Exception {

@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
-import java.text.NumberFormat;
+import java.text.DecimalFormat;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -221,16 +221,21 @@ public class FieldsToDDMFormValuesConverterImpl
 		else if ((fieldValue instanceof Number) &&
 				 !(fieldValue instanceof Integer)) {
 
-			NumberFormat numberFormat = NumberFormat.getInstance(locale);
+			DecimalFormat decimalFormat =
+				(DecimalFormat)DecimalFormat.getInstance(locale);
+
+			decimalFormat.setGroupingUsed(false);
+			decimalFormat.setMaximumFractionDigits(Integer.MAX_VALUE);
+			decimalFormat.setParseBigDecimal(true);
 
 			Number number = (Number)fieldValue;
 
 			if (number instanceof Double || number instanceof Float) {
-				numberFormat.setMaximumFractionDigits(Integer.MAX_VALUE);
-				numberFormat.setMinimumFractionDigits(1);
+				decimalFormat.setMaximumFractionDigits(Integer.MAX_VALUE);
+				decimalFormat.setMinimumFractionDigits(1);
 			}
 
-			return numberFormat.format(number.doubleValue());
+			return decimalFormat.format(number.doubleValue());
 		}
 
 		return String.valueOf(fieldValue);

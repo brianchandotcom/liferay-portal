@@ -20,7 +20,7 @@
 String inactivePriceCssClass = StringPool.BLANK;
 
 if (Validator.isNotNull(priceModel.getPromoPrice()) || displayDiscountLevels) {
-	inactivePriceCssClass = StringPool.SPACE + "price-value-inactive";
+	inactivePriceCssClass = " price-value-inactive";
 }
 %>
 

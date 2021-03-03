@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.product.service;
 
-import com.liferay.commerce.product.exception.NoSuchCPSpecificationOptionException;
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.petra.sql.dsl.query.DSLQuery;

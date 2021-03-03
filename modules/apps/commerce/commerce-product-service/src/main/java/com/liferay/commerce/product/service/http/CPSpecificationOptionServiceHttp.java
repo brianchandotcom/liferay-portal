@@ -222,6 +222,49 @@ public class CPSpecificationOptionServiceHttp {
 		}
 	}
 
+	public static com.liferay.commerce.product.model.CPSpecificationOption
+			getCPSpecificationOption(
+				HttpPrincipal httpPrincipal, long companyId, String key)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CPSpecificationOptionServiceUtil.class,
+				"getCPSpecificationOption",
+				_getCPSpecificationOptionParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, companyId, key);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.commerce.product.model.CPSpecificationOption)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<com.liferay.commerce.product.model.CPSpecificationOption>
 				searchCPSpecificationOptions(
@@ -234,7 +277,7 @@ public class CPSpecificationOptionServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CPSpecificationOptionServiceUtil.class,
 				"searchCPSpecificationOptions",
-				_searchCPSpecificationOptionsParameterTypes4);
+				_searchCPSpecificationOptionsParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, facetable, keywords, start, end, sort);
@@ -283,7 +326,7 @@ public class CPSpecificationOptionServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CPSpecificationOptionServiceUtil.class,
 				"updateCPSpecificationOption",
-				_updateCPSpecificationOptionParameterTypes5);
+				_updateCPSpecificationOptionParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpSpecificationOptionId, cpOptionCategoryId,
@@ -332,13 +375,15 @@ public class CPSpecificationOptionServiceHttp {
 		new Class[] {long.class, String.class};
 	private static final Class<?>[] _getCPSpecificationOptionParameterTypes3 =
 		new Class[] {long.class};
+	private static final Class<?>[] _getCPSpecificationOptionParameterTypes4 =
+		new Class[] {long.class, String.class};
 	private static final Class<?>[]
-		_searchCPSpecificationOptionsParameterTypes4 = new Class[] {
+		_searchCPSpecificationOptionsParameterTypes5 = new Class[] {
 			long.class, Boolean.class, String.class, int.class, int.class,
 			com.liferay.portal.kernel.search.Sort.class
 		};
 	private static final Class<?>[]
-		_updateCPSpecificationOptionParameterTypes5 = new Class[] {
+		_updateCPSpecificationOptionParameterTypes6 = new Class[] {
 			long.class, long.class, java.util.Map.class, java.util.Map.class,
 			boolean.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class

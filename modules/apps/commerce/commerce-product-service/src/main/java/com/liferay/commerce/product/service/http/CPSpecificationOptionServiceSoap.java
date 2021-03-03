@@ -153,6 +153,26 @@ public class CPSpecificationOptionServiceSoap {
 	}
 
 	public static com.liferay.commerce.product.model.CPSpecificationOptionSoap
+			getCPSpecificationOption(long companyId, String key)
+		throws RemoteException {
+
+		try {
+			com.liferay.commerce.product.model.CPSpecificationOption
+				returnValue =
+					CPSpecificationOptionServiceUtil.getCPSpecificationOption(
+						companyId, key);
+
+			return com.liferay.commerce.product.model.CPSpecificationOptionSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPSpecificationOptionSoap
 			updateCPSpecificationOption(
 				long cpSpecificationOptionId, long cpOptionCategoryId,
 				String[] titleMapLanguageIds, String[] titleMapValues,

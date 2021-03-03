@@ -74,6 +74,15 @@ public class CPSpecificationOptionServiceWrapper
 			cpSpecificationOptionId);
 	}
 
+	@Override
+	public com.liferay.commerce.product.model.CPSpecificationOption
+			getCPSpecificationOption(long companyId, String key)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpSpecificationOptionService.getCPSpecificationOption(
+			companyId, key);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

@@ -70,6 +70,13 @@ public class CPSpecificationOptionServiceUtil {
 		return getService().getCPSpecificationOption(cpSpecificationOptionId);
 	}
 
+	public static CPSpecificationOption getCPSpecificationOption(
+			long companyId, String key)
+		throws PortalException {
+
+		return getService().getCPSpecificationOption(companyId, key);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

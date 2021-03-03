@@ -2425,11 +2425,9 @@ definition {
 				webContentTitle = "${webContentTitle}",
 				webContentTitleEscapeCharacter = "${webContentTitleEscapeCharacter}");
 
-			if (!(isSet(webContentLocaleFieldLabel))) {
-				var webContentLocaleFieldLabel = "en_US";
+			if (isSet(webContentLocaleFieldLabel)) {
+				PortletEntry.changeLocale(locale = "${webContentLocaleFieldLabel}");
 			}
-
-			PortletEntry.changeLocale(locale = "${webContentLocaleFieldLabel}");
 
 			if (isSet(webContentTitleTranslated)) {
 				AssertTextEquals(

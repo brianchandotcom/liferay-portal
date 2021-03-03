@@ -855,6 +855,8 @@ definition {
 	@description = "This is a use case for LPS-118276. Map single vocabulary with single category from asset entry to editable field."
 	@priority = "5"
 	test MapSingleCategoryFromAssetEntryToEditableField {
+		property portal.acceptance = "true";
+
 		task ("Add a new vocabulary") {
 			JSONCategory.addVocabulary(
 				groupName = "Test Site Name",

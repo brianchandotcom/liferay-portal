@@ -235,6 +235,7 @@ definition {
 
 	@priority = "5"
 	test DisableShowCurrentSite {
+		property portal.acceptance = "true";
 		property testray.component.names = "Breadcrumb";
 
 		JSONGroup.addGroup(groupName = "Site Name");

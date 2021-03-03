@@ -41,6 +41,8 @@ definition {
 	@description = "This is a test for LPS-80503 and LPS-108566. Assert that when lfr is typed within a tag, a list of choices to autocomplete the fragment are presented. Assert the available variables and taglibs are shown in the IntelliSense and autocomplete works."
 	@priority = "5"
 	test AutocompleteFragment {
+		property portal.acceptance = "true";
+
 		task ("Navigate to the fragment collection") {
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 		}
@@ -93,6 +95,8 @@ definition {
 	@description = "This is a test for LPS-108566. The IntelliSense for available resources will popup when the current collection has resources and Auto-Complete works."
 	@priority = "5"
 	test AutocompleteFragmentWithCollectionResource {
+		property portal.acceptance = "true";
+
 		task ("Navigate to the fragment collection") {
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 		}

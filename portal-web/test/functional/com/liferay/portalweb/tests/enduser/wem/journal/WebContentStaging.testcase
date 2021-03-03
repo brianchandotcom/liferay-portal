@@ -172,7 +172,7 @@ definition {
 	@description = "Publish in Staging a Web Content From Structure"
 	@priority = "5"
 	test PublishInStagingWebContentFromStructure {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Add a web content structure with all fields") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");

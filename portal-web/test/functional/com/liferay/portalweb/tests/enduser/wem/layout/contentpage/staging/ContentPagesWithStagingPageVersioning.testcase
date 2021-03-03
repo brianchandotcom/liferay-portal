@@ -39,6 +39,8 @@ definition {
 	@description = "This is a test for LPS-125755. Can switch to specific Site Pages Variation on content page when enable page versioning."
 	@priority = "5"
 	test ChangeSitePagesVariationInViewMode {
+		property portal.acceptance = "true";
+
 		task ("Add a public content page") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
 
@@ -110,6 +112,8 @@ definition {
 	@description = "This is a test for LPS-125755. Can manage Site Pages Navigation on content page when enable page versioning."
 	@priority = "5"
 	test ManageSitePagesVariationInViewMode {
+		property portal.acceptance = "true";
+
 		task ("Add a public content page") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
 

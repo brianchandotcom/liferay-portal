@@ -967,6 +967,7 @@ definition {
 	@priority = "5"
 	test ViewTypesDuringCreation {
 		property osgi.app.includes = "document-library-google-docs";
+		property portal.acceptance = "true";
 
 		task ("Add a custom Web Content structure") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");

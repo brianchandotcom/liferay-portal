@@ -54,6 +54,7 @@ definition {
 	@priority = "5"
 	test AddCollectionPageViaPageFinder {
 		property osgi.app.includes = "bookmarks,document-library-google-docs";
+		property portal.acceptance = "true";
 
 		task ("Add three Web Content Articles based on Basic Web Content") {
 			for (var entryTitle : list "First Web Content,Second Web Content,Third Web Content") {
@@ -142,7 +143,9 @@ definition {
 
 	@description = "This is a test for LPS-107775. Can add new collections when add a collection page from page tree panel."
 	@priority = "5"
-	test AddcollectionViaAddingCollectionPage {
+	test AddCollectionViaAddingCollectionPage {
+		property portal.acceptance = "true";
+
 		ProductMenu.gotoSite(site = "Test Site Name");
 
 		PagesFinder.goToFindAPage();

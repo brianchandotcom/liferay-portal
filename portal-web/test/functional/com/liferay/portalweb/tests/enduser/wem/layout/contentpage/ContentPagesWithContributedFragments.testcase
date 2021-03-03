@@ -2300,6 +2300,8 @@ definition {
 	@description = "This is a test for LPS-112094. TThe abstract of asset entries should be shown when select Abstract as List Item Style for different List styles."
 	@priority = "5"
 	test ViewAbstractListItemStyleInDifferentListStyles {
+		property portal.acceptance = "true";
+
 		task ("Add a Web Content Article,a Blogs Entry and a document") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
@@ -3191,6 +3193,8 @@ definition {
 	@description = "This is a test for LPS-112094. The full content of asset entries should be shown when select Full Content as List Item Style for different List styles."
 	@priority = "5"
 	test ViewFullContentListItemStyleInDifferentListStyles {
+		property portal.acceptance = "true";
+
 		task ("Add a Web Content Article,a Blogs Entry and a document") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
@@ -4244,7 +4248,7 @@ definition {
 	@priority = "5"
 	test ViewWebContentWithCustomTemplateViaContentDisplayInCollectionDisplay {
 		property osgi.app.includes = "bookmarks,document-library-google-docs";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 

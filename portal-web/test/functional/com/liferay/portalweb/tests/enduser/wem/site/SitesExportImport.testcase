@@ -123,6 +123,8 @@ definition {
 	@description = "This is a test for LPS-122296. Can export and import a site containing a content page with a mapped image."
 	@priority = "5"
 	test ExportImportSiteWithMappedImage {
+		property portal.acceptance = "true";
+
 		task ("Add a page based on Blank") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",

@@ -873,7 +873,7 @@ definition {
 
 	@priority = "5"
 	test WebContentAdministrationSitesPageTypes {
-		property portal.release = "false";
+		property portal.acceptance = "true";
 		property testray.component.names = "Site Pages Administration,Training";
 
 		var portalURL = PropsUtil.get("portal.url");

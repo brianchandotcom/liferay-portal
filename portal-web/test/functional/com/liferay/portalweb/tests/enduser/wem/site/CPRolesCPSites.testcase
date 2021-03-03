@@ -101,6 +101,7 @@ definition {
 
 	@priority = "5"
 	test SearchPermissions {
+		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
 		ApplicationsMenu.gotoPortlet(

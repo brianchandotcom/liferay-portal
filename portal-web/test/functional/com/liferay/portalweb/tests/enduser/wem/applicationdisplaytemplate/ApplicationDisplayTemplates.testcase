@@ -27,6 +27,7 @@ definition {
 	@description = "This is a use case for LPS-116076. The New button should be hidden when disable template creation in Dynamic Data Mapping. The user is able to save changes in existing template when disable template creation in Dynamic Data Mapping."
 	@priority = "5"
 	test CannotAddTemplateButCanSaveChangesInExistingTemplateWhenDisableTemplateCreation {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ApplicationDisplayTemplates#CannotAddTemplateButCanSaveChangesInExistingTemplateWhenDisableTemplateCreation";
 
 		task ("Add a widget template for Asset Publisher") {

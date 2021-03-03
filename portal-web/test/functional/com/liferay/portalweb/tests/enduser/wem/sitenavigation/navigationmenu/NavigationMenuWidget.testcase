@@ -39,6 +39,8 @@ definition {
 	@description = "This is a test for LPS-120277. When add an URL type item, the blank target is set up after checking Open in a new tab."
 	@priority = "5"
 	test AddURLNavigationMenuItemWithBlankTarget {
+		property portal.acceptance = "true";
+
 		task ("Add a page to the site") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",

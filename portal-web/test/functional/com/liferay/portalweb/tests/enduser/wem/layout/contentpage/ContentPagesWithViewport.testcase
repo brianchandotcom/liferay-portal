@@ -315,6 +315,8 @@ definition {
 	@description = "This is a test for LPS-110723. When change to other viewports, there are only limited common fragment style categories available."
 	@priority = "5"
 	test ViewCommonFragmentStyleFieldSets {
+		property portal.acceptance = "true";
+
 		task ("Add a Heading to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",

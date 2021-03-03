@@ -205,7 +205,7 @@ definition {
 	@description = "This is a use case for LPS-69560."
 	@priority = "5"
 	test AddStructureWithWebContentAndGeolocationFields {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 		property testray.component.names = "Web Content Administration";
 
 		JSONWebcontent.addWebContent(
@@ -2138,6 +2138,8 @@ definition {
 	@description = "This is a test for LPS-125933. Create, read, update and delete a Web Content from a Structure with all possible fields and using a Template with all posible fields."
 	@priority = "5"
 	test ViewAndEditAsWellAsDeleteContentWithTitleAndAllFields {
+		property portal.acceptance = "true";
+
 		task ("Add two widget pages") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",

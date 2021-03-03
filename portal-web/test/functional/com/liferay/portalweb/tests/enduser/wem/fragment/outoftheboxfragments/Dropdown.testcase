@@ -33,6 +33,8 @@ definition {
 	@description = "This is a test for LPS-120190. Can add fragments into drop zone of Dropdown fragment."
 	@priority = "5"
 	test AddFragmentIntoDropdownPanel {
+		property portal.acceptance = "true";
+
 		task ("Add a custom master page") {
 			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
 				groupName = "Test Site Name",
@@ -124,6 +126,8 @@ definition {
 	@description = "This is a test for LPS-120190. Can define the displayed behavior of dropdown panel in Dropdown fragment."
 	@priority = "5"
 	test DefineDisplayedBehaviorOfDropdownPanel {
+		property portal.acceptance = "true";
+
 		task ("Add a custom master page") {
 			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
 				groupName = "Test Site Name",
@@ -323,6 +327,8 @@ definition {
 	@description = "This is a test for LPS-120190. Can define the panel type of Dropdown fragment."
 	@priority = "5"
 	test DefinePanelType {
+		property portal.acceptance = "true";
+
 		task ("Add a custom master page") {
 			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
 				groupName = "Test Site Name",
@@ -402,6 +408,8 @@ definition {
 	@description = "This is a test for LPS-120190. Can edit the text of dropdown button in Dropdown fragment."
 	@priority = "5"
 	test EditInlineContent {
+		property portal.acceptance = "true";
+
 		task ("Add a custom master page") {
 			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
 				groupName = "Test Site Name",

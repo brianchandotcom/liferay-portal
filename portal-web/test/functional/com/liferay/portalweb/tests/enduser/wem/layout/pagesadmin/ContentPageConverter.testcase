@@ -692,7 +692,7 @@ definition {
 	@description = "This is a test for LPS-105943. When convert a widget page with a non-standard layout, there will be a warning message shown in conversion preview"
 	@priority = "5"
 	test ConvertWidgetPageWithNonStandardLayout {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ContentPageConverter#ConvertWidgetPageWithNonStandardLayout";
 
 		ApplicationsMenu.gotoPortlet(

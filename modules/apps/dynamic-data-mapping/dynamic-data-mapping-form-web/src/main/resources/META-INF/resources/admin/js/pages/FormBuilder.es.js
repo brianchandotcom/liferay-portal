@@ -156,7 +156,7 @@ export const FormBuilder = () => {
 				title: Liferay.Language.get('success'),
 			});
 		}
-	}, [showPublishAlert, published, getFormUrl]);
+	}, [addToast, showPublishAlert, published, getFormUrl]);
 
 	const onOpenSidebar = useCallback(() => {
 		if (sidebarRef.current) {
@@ -185,7 +185,7 @@ export const FormBuilder = () => {
 				});
 			}
 		},
-		[doSave, getFormUrl]
+		[addToast, doSave, getFormUrl]
 	);
 
 	const subtmitForm = useCallback(

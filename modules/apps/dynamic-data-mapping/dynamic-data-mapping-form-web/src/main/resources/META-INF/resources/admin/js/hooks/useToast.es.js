@@ -24,9 +24,12 @@ export const ToastProvider = ({children}) => {
 
 	const addToast = useCallback(
 		(item) => {
-			setToastItems([...toastItems, {id: getUid(), ...item}]);
+			setToastItems((prevItems) => [
+				...prevItems,
+				{id: getUid(), ...item},
+			]);
 		},
-		[toastItems, setToastItems]
+		[setToastItems]
 	);
 
 	return (

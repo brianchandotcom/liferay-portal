@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.aui;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.servlet.taglib.BodyContentWrapper;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
@@ -143,33 +144,64 @@ public class ScriptTag extends BaseScriptTag {
 			}
 
 			if (load != null) {
+				StringBundler sb;
+
 				String[] modulesAndVariables = StringUtil.split(load);
 
-				StringBundler sb = new StringBundler(
-					3 + (8 * modulesAndVariables.length));
+				if (modulesAndVariables.length == 1) {
+					sb = new StringBundler(10);
 
-				sb.append("(function() {");
+					sb.append("(function() {window[Symbol.for('");
+					sb.append("__LIFERAY_WEBPACK_GET_MODULE__')](");
 
-				for (String moduleAndVariable : modulesAndVariables) {
+					String moduleAndVariable = modulesAndVariables[0];
+
 					String[] parts = StringUtil.split(
 						moduleAndVariable, " as ");
 
-					sb.append("window[");
-					sb.append("Symbol.for('__LIFERAY_WEBPACK_GET_MODULE__')");
-					sb.append("]('");
+					sb.append(StringPool.APOSTROPHE);
 					sb.append(parts[0]);
-					sb.append("').then((");
+					sb.append(StringPool.APOSTROPHE);
+
+					sb.append(").then((");
+
 					sb.append(parts[1]);
+
 					sb.append(") => {");
+					sb.append(bodyContentSB);
+					sb.append("});})();");
 				}
+				else {
+					sb = new StringBundler(
+						6 + (5 * modulesAndVariables.length));
 
-				sb.append(bodyContentSB);
+					sb.append("(function() {Promise.all([");
 
-				for (int i = 0; i < modulesAndVariables.length; i++) {
-					sb.append("});");
+					for (String moduleAndVariable : modulesAndVariables) {
+						String[] parts = StringUtil.split(
+							moduleAndVariable, " as ");
+
+						sb.append(StringPool.APOSTROPHE);
+						sb.append(parts[0]);
+						sb.append("', ");
+					}
+
+					sb.append("].map(window[Symbol.for('");
+					sb.append("__LIFERAY_WEBPACK_GET_MODULE__')])).then(([");
+
+					for (String moduleAndVariable : modulesAndVariables) {
+						String[] parts = StringUtil.split(
+							moduleAndVariable, " as ");
+
+						sb.append(parts[1]);
+
+						sb.append(StringPool.COMMA);
+					}
+
+					sb.append("]) => {");
+					sb.append(bodyContentSB);
+					sb.append("});})();");
 				}
-
-				sb.append("})();");
 
 				bodyContentSB = sb;
 			}

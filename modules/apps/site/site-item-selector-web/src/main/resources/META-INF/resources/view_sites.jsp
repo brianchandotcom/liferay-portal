@@ -27,8 +27,8 @@ GroupItemSelectorCriterion groupItemSelectorCriterion = siteItemSelectorViewDisp
 String target = ParamUtil.getString(request, "target", groupItemSelectorCriterion.getTarget());
 %>
 
-<clay:management-toolbar-v2
-	displayContext="<%= new SitesItemSelectorViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, siteItemSelectorViewDisplayContext) %>"
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= new SitesItemSelectorViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, siteItemSelectorViewDisplayContext) %>"
 />
 
 <aui:form action="<%= siteItemSelectorViewDisplayContext.getPortletURL() %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="selectGroupFm">

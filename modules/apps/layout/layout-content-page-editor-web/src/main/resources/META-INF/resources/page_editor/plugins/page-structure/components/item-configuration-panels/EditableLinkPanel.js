@@ -64,8 +64,8 @@ export default function EditableLinkPanel({item}) {
 
 		if (Object.keys(linkConfig).length > 0) {
 			setImageConfig({
-				alt: linkConfig.alt,
-				imageConfiguration: linkConfig.imageConfiguration,
+				alt: linkConfig.alt || '',
+				imageConfiguration: linkConfig.imageConfiguration || {},
 			});
 
 			delete linkConfig.alt;

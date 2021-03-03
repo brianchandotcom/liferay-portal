@@ -244,7 +244,11 @@ describe('EditableLinkPanel', () => {
 			});
 		});
 
-		expect(editableConfig).toEqual({});
+		expect(editableConfig).toEqual({
+			alt: '',
+			imageConfiguration: {},
+			mapperType: 'link',
+		});
 
 		expect(getByLabelText(document.body, 'url')).toHaveValue('');
 		expect(
@@ -273,12 +277,13 @@ describe('EditableLinkPanel', () => {
 		expect(editableConfig).toEqual({
 			en_US: {
 				href: 'http://google.com',
+				target: '',
 			},
 			mapperType: 'link',
 		});
 	});
 
-	it('calls dispatch withouth mapperType when editable type is link', async () => {
+	it('calls dispatch without mapperType when editable type is link', async () => {
 		let editableConfig;
 		updateEditableValues.mockImplementation(({editableValues}) => {
 			editableConfig = getEditableConfig(editableValues);
@@ -300,6 +305,7 @@ describe('EditableLinkPanel', () => {
 		expect(editableConfig).toEqual({
 			en_US: {
 				href: 'http://google.com',
+				target: '',
 			},
 		});
 	});

@@ -70,9 +70,7 @@ public class AnalyticsReportsContentDashboardItemActionProviderTest {
 	@Test
 	public void testIsShowContentDashboardItemAction() throws Exception {
 		MockContextUtil.testWithMockContext(
-			new MockContextUtil.MockContext.Builder(
-				_classNameLocalService
-			).analyticsReportsInfoItem(
+			new MockContextUtil.MockContext.Builder().analyticsReportsInfoItem(
 				MockAnalyticsReportsInfoItem.builder(
 				).show(
 					true
@@ -90,9 +88,7 @@ public class AnalyticsReportsContentDashboardItemActionProviderTest {
 		throws Exception {
 
 		MockContextUtil.testWithMockContext(
-			new MockContextUtil.MockContext.Builder(
-				_classNameLocalService
-			).analyticsReportsInfoItem(
+			new MockContextUtil.MockContext.Builder().analyticsReportsInfoItem(
 				MockAnalyticsReportsInfoItem.builder(
 				).show(
 					true

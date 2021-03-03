@@ -23,7 +23,7 @@ String icon = PropsUtil.get(PropsKeys.SOCIAL_BOOKMARK_ICON, new Filter(type));
 <liferay-ui:icon
 	image="<%= icon %>"
 	label="<%= false %>"
-	linkCssClass="btn btn-borderless btn-monospaced btn-outline-borderless btn-outline-secondary btn-sm"
+	linkCssClass="btn btn-borderless btn-outline-borderless btn-outline-secondary btn-sm c-px-2"
 	message="<%= socialBookmark.getName(locale) %>"
 	method="get"
 	src="<%= icon %>"

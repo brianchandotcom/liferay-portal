@@ -2083,8 +2083,6 @@ rerun your task.
 					<propertyref name="liferay.releng.public" />
 					<propertyref name="liferay.releng.supported" />
 					<propertyref name="project.templates.test.builds" />
-					<propertyref name="release.dxp.api.version" />
-					<propertyref name="release.portal.api.version" />
 					<propertyref name="release.versions.test.other.dir" />
 					<propertyref name="release.versions.test.other.dir.names" />
 					<propertyref name="sass.compiler.class.name" />

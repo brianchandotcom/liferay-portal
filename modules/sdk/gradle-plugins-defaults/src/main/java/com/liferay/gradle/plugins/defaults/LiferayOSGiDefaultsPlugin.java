@@ -2590,23 +2590,17 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 						return;
 					}
 
-					String releaseAPIVersion = GradleUtil.getProperty(
-						project, name + ".version", (String)null);
+					String releaseAPIVersion = null;
 
-					if (Validator.isNull(releaseAPIVersion)) {
-						File rootDir = GradleUtil.getRootDir(
-							project.getProjectDir(), "release-api.properties");
+					File rootDir = GradleUtil.getRootDir(
+						project.getProjectDir(), "release-api.properties");
 
-						if (rootDir != null) {
-							File propertiesFile = new File(
-								rootDir, "release-api.properties");
+					if (rootDir != null) {
+						Properties properties = GUtil.loadProperties(
+							new File(rootDir, "release-api.properties"));
 
-							Properties properties = GUtil.loadProperties(
-								propertiesFile);
-
-							releaseAPIVersion = properties.getProperty(
-								"release.api.version");
-						}
+						releaseAPIVersion = properties.getProperty(
+							"release.api.version");
 					}
 
 					StringBuilder sb = new StringBuilder();

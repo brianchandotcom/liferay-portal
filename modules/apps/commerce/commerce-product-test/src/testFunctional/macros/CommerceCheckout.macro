@@ -1,9 +1,7 @@
 definition {
 
 	macro initializersCheckout {
-		WaitForElementPresent(
-			key_portletName = "Checkout",
-			locator1 = "Portlet#BODY");
+		WaitForElementPresent(locator1 = "CommerceAccelerators#CHECKOUT_PORTLET_BODY");
 
 		if (isSet(newAddressName)) {
 			Type(

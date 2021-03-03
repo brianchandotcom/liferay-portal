@@ -384,6 +384,12 @@ public class CommerceShipmentServiceSoap {
 		}
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #updateAddress(long, String, String, String, String, String, String,
+	 String, long, long, String, ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.commerce.model.CommerceShipmentSoap updateAddress(
 			long commerceShipmentId, String name, String description,
 			String street1, String street2, String street3, String city,
@@ -395,6 +401,30 @@ public class CommerceShipmentServiceSoap {
 				CommerceShipmentServiceUtil.updateAddress(
 					commerceShipmentId, name, description, street1, street2,
 					street3, city, zip, regionId, countryId, phoneNumber);
+
+			return com.liferay.commerce.model.CommerceShipmentSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceShipmentSoap updateAddress(
+			long commerceShipmentId, String name, String description,
+			String street1, String street2, String street3, String city,
+			String zip, long regionId, long countryId, String phoneNumber,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.commerce.model.CommerceShipment returnValue =
+				CommerceShipmentServiceUtil.updateAddress(
+					commerceShipmentId, name, description, street1, street2,
+					street3, city, zip, regionId, countryId, phoneNumber,
+					serviceContext);
 
 			return com.liferay.commerce.model.CommerceShipmentSoap.toSoapModel(
 				returnValue);

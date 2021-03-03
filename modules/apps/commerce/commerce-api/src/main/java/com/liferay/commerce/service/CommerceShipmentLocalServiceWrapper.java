@@ -490,6 +490,12 @@ public class CommerceShipmentLocalServiceWrapper
 			searchContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #updateAddress(long, String, String, String, String, String, String,
+	 String, long, long, String, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.model.CommerceShipment updateAddress(
 			long commerceShipmentId, String name, String description,
@@ -500,6 +506,19 @@ public class CommerceShipmentLocalServiceWrapper
 		return _commerceShipmentLocalService.updateAddress(
 			commerceShipmentId, name, description, street1, street2, street3,
 			city, zip, regionId, countryId, phoneNumber);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceShipment updateAddress(
+			long commerceShipmentId, String name, String description,
+			String street1, String street2, String street3, String city,
+			String zip, long regionId, long countryId, String phoneNumber,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShipmentLocalService.updateAddress(
+			commerceShipmentId, name, description, street1, street2, street3,
+			city, zip, regionId, countryId, phoneNumber, serviceContext);
 	}
 
 	@Override

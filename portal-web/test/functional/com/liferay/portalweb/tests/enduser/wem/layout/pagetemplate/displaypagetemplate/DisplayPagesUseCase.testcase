@@ -631,7 +631,7 @@ definition {
 	@description = "This is a test for LPS-86550. Users should be able to map author name and author profile image to a fragment editable field in a display page."
 	@priority = "5"
 	test MapWebContentAuthor {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 
 		task ("Add a display page with author name and profile fields mapped") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(

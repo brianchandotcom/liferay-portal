@@ -203,7 +203,6 @@ export default function FormViewUpperToolbar({newCustomObject, popUpWindow}) {
 				</UpperToolbar.Group>
 
 				<UpperToolbar.Input
-					autoFocus
 					onChange={onDataLayoutNameChange}
 					onKeyDown={onKeyDown}
 					placeholder={Liferay.Language.get('untitled-form-view')}

@@ -12,9 +12,7 @@
 import ClayBadge from '@clayui/badge';
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import UpperToolbar, {
-	UpperToolbarInput,
-} from 'app-builder-web/js/components/upper-toolbar/UpperToolbar.es';
+import UpperToolbar from 'app-builder-web/js/components/upper-toolbar/UpperToolbar.es';
 import useDeployApp from 'app-builder-web/js/hooks/useDeployApp.es';
 import EditAppContext, {
 	UPDATE_APP,
@@ -137,7 +135,7 @@ export default function EditAppToolbar({isSaving, onCancel, onSave}) {
 				translatedLanguageIds={app.name}
 			/>
 
-			<UpperToolbarInput
+			<UpperToolbar.Input
 				maxLength={30}
 				onChange={onAppNameChange}
 				placeholder={Liferay.Language.get('untitled-app')}

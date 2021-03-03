@@ -61,6 +61,7 @@ export default ({
 					}}
 					translatedLanguageIds={name}
 				/>
+
 				<UpperToolbarInput
 					maxLength={30}
 					onChange={onAppNameChange}

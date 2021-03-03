@@ -90,7 +90,7 @@
 </tr>
 <tr>
 	<td>DATA_SET_ENTRY_NAME</td>
-	<td>//div[@class='data-set-display-content-wrapper']//td[text()='${key_entryName}']</td>
+	<td>//div[@class='data-set-display-content-wrapper']//a[text()='${key_entryName}']</td>
 	<td></td>
 </tr>
 </tbody>

@@ -1,0 +1,184 @@
+@component-name = "portal-document-management"
+definition {
+
+	property custom.properties = "default.layout.template.id=1_column";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Documents Management";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Documents and Media",
+			configurationName = "Google Drive",
+			configurationScope = "Virtual Instance Scope");
+
+		var googleClientID = PropsUtil.get("google.client.id.4");
+		var googleClientSecret = PropsUtil.get("google.client.secret.4");
+		var googlePickerAPIKey = PropsUtil.get("google.api.key.4");
+
+		PortalSettings.configureGoogleDrive(
+			googleClientID = "${googleClientID}",
+			googleClientSecret = "${googleClientSecret}",
+			googlePickerAPIKey = "${googlePickerAPIKey}");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Documents and Media Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			DMDocument.tearDownCP();
+
+			DMFolder.tearDownCP();
+
+			DMDocumentType.tearDownCP();
+
+			Page.tearDownCP();
+		}
+	}
+
+	@priority = "5"
+	test EditAndDeleteGoogleDoc {
+		property test.name.skip.portal.instance = "GoogleDriveShortcut#EditAndDeleteGoogleDoc";
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		Portlet.clickPortletPlusIconPG(portletName = "Documents and Media");
+
+		MenuItem.click(menuItem = "Google Drive Shortcut");
+
+		GoogleDrive.gotoDrive(
+			userEmailAddress = PropsUtil.get("email.address.4"),
+			userPassword = PropsUtil.get("email.password.4"),
+			windowTitle = "New Google Drive Shortcut - ${siteName}");
+
+		GoogleDrive.selectDocument(
+			googleDocName = "liferay.txt",
+			googleDocTitle = "liferay");
+
+		PortletEntry.publish();
+
+		DMDocument.viewPG(dmDocumentTitle = "liferay");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.deletePG(dmDocumentTitle = "liferay");
+	}
+
+	@description = "This test makes sure that the Google Drive Shortcut can be added in a depot."
+	@priority = "4"
+	test EditAndDeleteGoogleDocDepot {
+		property test.name.skip.portal.instance = "GoogleDriveShortcut#EditAndDeleteGoogleDocDepot";
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "Google Drive Shortcut");
+
+		GoogleDrive.gotoDrive(
+			userEmailAddress = PropsUtil.get("email.address.4"),
+			userPassword = PropsUtil.get("email.password.4"),
+			windowTitle = "New Google Drive Shortcut - Test Depot Name - ${siteName}");
+
+		GoogleDrive.selectDocument(
+			googleDocName = "liferay.txt",
+			googleDocTitle = "liferay");
+
+		PortletEntry.publish();
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "liferay");
+
+		AssertTextEquals(
+			key_fieldLabel = "Title",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "liferay");
+
+		AssertTextEquals(
+			key_fieldLabel = "File Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "liferay.txt");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "liferay");
+
+		DMDocument.viewCP(
+			dmDocumentFileName = "liferay.txt",
+			dmDocumentTitle = "liferay");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMDocument.deleteCP(dmDocumentTitle = "liferay");
+	}
+
+	@priority = "5"
+	test MoveGoogleDocToFolder {
+		property test.name.skip.portal.instance = "GoogleDriveShortcut#MoveGoogleDocToFolder";
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		Portlet.clickPortletPlusIconPG(portletName = "Documents and Media");
+
+		MenuItem.click(menuItem = "Google Drive Shortcut");
+
+		GoogleDrive.gotoDrive(
+			userEmailAddress = PropsUtil.get("email.address.4"),
+			userPassword = PropsUtil.get("email.password.4"),
+			windowTitle = "New Google Drive Shortcut - ${siteName}");
+
+		GoogleDrive.selectDocument(
+			googleDocName = "liferay.txt",
+			googleDocTitle = "liferay");
+
+		PortletEntry.publish();
+
+		JSONDocument.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.moveToFolderPG(
+			dmDocumentTitle = "liferay",
+			dmFolderName = "DM Folder Name");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		DMDocument.viewPG(dmDocumentTitle = "liferay");
+	}
+
+}

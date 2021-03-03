@@ -748,51 +748,6 @@ definition {
 	}
 
 	@priority = "5"
-	test EditAndDeleteGoogleDoc {
-		property portal.release = "false";
-		property test.name.skip.portal.instance = "PGDocumentsandmedia#EditAndDeleteGoogleDoc";
-
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "Documents and Media",
-			configurationName = "Google Drive",
-			configurationScope = "Virtual Instance Scope");
-
-		var googleClientID = PropsUtil.get("google.client.id.4");
-		var googleClientSecret = PropsUtil.get("google.client.secret.4");
-		var googlePickerAPIKey = PropsUtil.get("google.api.key.4");
-
-		PortalSettings.configureGoogleDrive(
-			googleClientID = "${googleClientID}",
-			googleClientSecret = "${googleClientSecret}",
-			googlePickerAPIKey = "${googlePickerAPIKey}");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		Portlet.clickPortletPlusIconPG(portletName = "Documents and Media");
-
-		MenuItem.click(menuItem = "Google Drive Shortcut");
-
-		GoogleDrive.gotoDrive(
-			userEmailAddress = PropsUtil.get("email.address.4"),
-			userPassword = PropsUtil.get("email.password.4"),
-			windowTitle = "New Google Drive Shortcut - ${siteName}");
-
-		GoogleDrive.selectDocument(
-			googleDocName = "liferay.txt",
-			googleDocTitle = "liferay");
-
-		PortletEntry.publish();
-
-		DMDocument.viewPG(dmDocumentTitle = "liferay");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.deletePG(dmDocumentTitle = "liferay");
-	}
-
-	@priority = "5"
 	test EditDocument {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -1120,60 +1075,6 @@ definition {
 			dmDocumentTitle = "DM Document Title",
 			dmFolderName = "DM Folder2 Name",
 			locationFieldName = "true");
-	}
-
-	@priority = "5"
-	test MoveGoogleDocToFolder {
-		property portal.release = "false";
-		property test.name.skip.portal.instance = "PGDocumentsandmedia#MoveGoogleDocToFolder";
-
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "Documents and Media",
-			configurationName = "Google Drive",
-			configurationScope = "Virtual Instance Scope");
-
-		var googleClientID = PropsUtil.get("google.client.id.4");
-		var googleClientSecret = PropsUtil.get("google.client.secret.4");
-		var googlePickerAPIKey = PropsUtil.get("google.api.key.4");
-
-		PortalSettings.configureGoogleDrive(
-			googleClientID = "${googleClientID}",
-			googleClientSecret = "${googleClientSecret}",
-			googlePickerAPIKey = "${googlePickerAPIKey}");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		Portlet.clickPortletPlusIconPG(portletName = "Documents and Media");
-
-		MenuItem.click(menuItem = "Google Drive Shortcut");
-
-		GoogleDrive.gotoDrive(
-			userEmailAddress = PropsUtil.get("email.address.4"),
-			userPassword = PropsUtil.get("email.password.4"),
-			windowTitle = "New Google Drive Shortcut - ${siteName}");
-
-		GoogleDrive.selectDocument(
-			googleDocName = "liferay.txt",
-			googleDocTitle = "liferay");
-
-		PortletEntry.publish();
-
-		JSONDocument.addFolder(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name",
-			groupName = "Guest");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.moveToFolderPG(
-			dmDocumentTitle = "liferay",
-			dmFolderName = "DM Folder Name");
-
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
-
-		DMDocument.viewPG(dmDocumentTitle = "liferay");
 	}
 
 	@priority = "5"

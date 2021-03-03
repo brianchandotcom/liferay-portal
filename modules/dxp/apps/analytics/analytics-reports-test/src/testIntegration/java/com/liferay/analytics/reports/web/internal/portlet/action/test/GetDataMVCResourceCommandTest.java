@@ -98,10 +98,6 @@ public class GetDataMVCResourceCommandTest {
 			).analyticsReportsInfoItem(
 				MockAnalyticsReportsInfoItem.builder(
 				).build()
-			).layoutDisplayPageProvider(
-				MockLayoutDisplayPageProvider.builder(
-					_classNameLocalService
-				).build()
 			).build(),
 			() -> {
 				MockLiferayResourceRequest mockLiferayResourceRequest =
@@ -130,10 +126,7 @@ public class GetDataMVCResourceCommandTest {
 				JSONObject contextJSONObject = jsonObject.getJSONObject(
 					"context");
 
-				JSONObject authorJSONObject = contextJSONObject.getJSONObject(
-					"author");
-
-				Assert.assertNull(authorJSONObject.get("url"));
+				Assert.assertNull(contextJSONObject.getJSONObject("author"));
 			});
 	}
 

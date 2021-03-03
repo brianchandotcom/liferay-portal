@@ -52,8 +52,6 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Collections;
 
-import javax.validation.constraints.NotNull;
-
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -71,15 +69,13 @@ public class StructuredContentResourceImpl
 	extends BaseStructuredContentResourceImpl implements EntityModelResource {
 
 	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
 		return new StructuredContentEntityModel();
 	}
 
 	@Override
 	public Page<StructuredContent> getSiteStructuredContentsPage(
-			@NotNull Long siteId, Boolean flatten, String search,
+			Long siteId, Boolean flatten, String search,
 			Aggregation aggregation, Filter filter, Pagination pagination,
 			Sort[] sorts)
 		throws Exception {
@@ -111,8 +107,9 @@ public class StructuredContentResourceImpl
 			searchContext -> {
 				searchContext.addVulcanAggregation(aggregation);
 				searchContext.setAttribute(
-					Field.STATUS, WorkflowConstants.STATUS_APPROVED);
-				searchContext.setAttribute("head", Boolean.TRUE);
+					Field.STATUS, WorkflowConstants.STATUS_ANY);
+				searchContext.setAttribute("head", Boolean.FALSE);
+				searchContext.setAttribute("latest", Boolean.TRUE);
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 
 				if (siteId != null) {

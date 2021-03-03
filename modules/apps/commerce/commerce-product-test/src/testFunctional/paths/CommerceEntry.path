@@ -380,7 +380,7 @@
 </tr>
 <tr>
 	<td>BODY_VERTICAL_ELLIPSIS</td>
-	<td>//tr[contains(.,'${key_value}')]//*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
+	<td>//div[@class='table-list-title']/a[contains(.,'${key_value}')]/../../../div//*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
 	<td></td>
 </tr>
 <tr>

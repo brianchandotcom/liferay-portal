@@ -213,6 +213,41 @@ definition {
 		VideoShortcut.viewPG(videoShortcutTitle = "Test Twitch Video Name");
 	}
 
+	@description = "This test ensures that a Twitch video added via item selector can be embedded when adding a WC."
+	@priority = "5"
+	test AddTwitchToWCViaItemSelector {
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			embedVideo = "true",
+			videoShortcutDescription = "Video Shortcut Description",
+			videoShortcutPreview = "https://player.twitch.tv",
+			videoShortcutTitle = "Test Twitch Video Name",
+			videoURL = "https://www.twitch.tv/videos/806178790",
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+
+		WebContentNavigator.gotoPreviewEntryCP(webContentTitle = "WC WebContent Title");
+
+		Pause(locator1 = "3000");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		AssertVisible(
+			key_service = "https://player.twitch.tv",
+			locator1 = "WCPreview#BODY_FIELD_VIDEO");
+	}
+
 	@description = "This ensures that a video shortcut can be added with Vimeo."
 	@priority = "5"
 	test AddVimeoCP {

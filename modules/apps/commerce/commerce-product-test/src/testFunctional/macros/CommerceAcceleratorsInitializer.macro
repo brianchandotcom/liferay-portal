@@ -84,7 +84,7 @@ definition {
 	macro gotoMiniumProductDetailsPage {
 		Click(
 			key_productName = "${productName}",
-			locator1 = "CommerceAccelerators#MINIUM_CARD_NAME");
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
 	}
 
 	macro inviteNewMemberWithRoleToAccount {
@@ -203,7 +203,7 @@ definition {
 	macro viewMiniumCardName {
 		AssertTextEquals(
 			key_productName = "${productName}",
-			locator1 = "CommerceAccelerators#MINIUM_CARD_NAME",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME",
 			value1 = "${productName}");
 	}
 

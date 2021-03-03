@@ -140,7 +140,7 @@ definition {
 	@priority = "4"
 	test ModuleLicenseExpiration {
 		property commerce.enabled = "true";
-		property custom.commerce.license = "commerce-license-developer-custom-expiration.xml";
+		property custom.commerce.license = "commerce-license-developer-custom-expiration-2-day-expired.xml";
 
 		CommerceLicense.viewCommerceAvailable();
 
@@ -153,7 +153,7 @@ definition {
 	@priority = "4"
 	test ModuleLicenseExpirationNotShownToNonAdmin {
 		property commerce.enabled = "true";
-		property custom.commerce.license = "commerce-license-developer-custom-expiration.xml";
+		property custom.commerce.license = "commerce-license-developer-custom-expiration-2-day-expired.xml";
 		property custom.properties = "company.security.strangers.verify=false${line.separator}login.secure.forgot.password=false";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -217,7 +217,7 @@ definition {
 	@priority = "4"
 	test ModuleLicenseExpirationWarning {
 		property commerce.enabled = "true";
-		property custom.commerce.license = "commerce-license-developer-custom-expiration.xml";
+		property custom.commerce.license = "commerce-license-developer-custom-expiration-30-day.xml";
 
 		CommerceLicense.viewCommerceAvailable();
 

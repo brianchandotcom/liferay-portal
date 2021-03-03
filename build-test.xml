@@ -5498,6 +5498,10 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		</sequential>
 	</macrodef>
 
+	<target name="kyle">
+		<swap-commerce-license custom.commerce.license="commerce-license-developer-custom-expiration.xml" />
+	</target>
+
 	<macrodef name="swap-commerce-license">
 		<attribute name="custom.commerce.license" />
 
@@ -5522,29 +5526,60 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					<get-mac-address />
 				</then>
 			</if>
-			
-			<beanshell>
-				<![CDATA[
-					import java.time.format.DateTimeFormatter;
-					import java.time.ZonedDateTime;
-					import java.time.ZoneId;
 
-					DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("EEEE, MMMM dd, yyyy HH:mm:ss a zz");
+			<var name="expiration.leeway" value="2" />
 
-					ZoneId GMT = ZoneId.of("GMT");
+			<if>
+				<equals arg1="@{custom.commerce.license}" arg2="commerce-license-developer-custom-expiration-30-day.xml" />
+				<then>
+					<beanshell>
+						<![CDATA[
+							import java.time.format.DateTimeFormatter;
+							import java.time.ZonedDateTime;
+							import java.time.ZoneId;
 
-					ZonedDateTime now = ZonedDateTime.now(GMT);
+							DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("EEEE, MMMM dd, yyyy HH:mm:ss a zz");
 
-					//License expiration leeway
-					ZonedDateTime expiration = now.minusDays(2);
+							ZoneId GMT = ZoneId.of("GMT");
 
-					//License expiration delay
-					expiration = expiration.plusMinutes(5);
+							ZonedDateTime now = ZonedDateTime.now(GMT);
 
-					System.out.println(dateTimeFormatter.format(expiration));
-					project.setProperty("expiration.date", dateTimeFormatter.format(expiration));
-				]]>
-			</beanshell>
+							//License expiration leeway
+							ZonedDateTime expiration = now.plusDays(30);
+
+							//License expiration delay
+							expiration = expiration.plusMinutes(5);
+
+							System.out.println(dateTimeFormatter.format(expiration));
+							project.setProperty("expiration.date", dateTimeFormatter.format(expiration));
+						]]>
+					</beanshell>
+				</then>
+				<else>
+					<beanshell>
+						<![CDATA[
+							import java.time.format.DateTimeFormatter;
+							import java.time.ZonedDateTime;
+							import java.time.ZoneId;
+
+							DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("EEEE, MMMM dd, yyyy HH:mm:ss a zz");
+
+							ZoneId GMT = ZoneId.of("GMT");
+
+							ZonedDateTime now = ZonedDateTime.now(GMT);
+
+							//License expiration leeway
+							ZonedDateTime expiration = now.minusDays(2);
+
+							//License expiration delay
+							expiration = expiration.plusMinutes(5);
+
+							System.out.println(dateTimeFormatter.format(expiration));
+							project.setProperty("expiration.date", dateTimeFormatter.format(expiration));
+						]]>
+					</beanshell>
+				</else>
+			</if>
 
 			<replace
 				file="${liferay.home}/deploy/@{custom.commerce.license}"

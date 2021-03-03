@@ -222,7 +222,69 @@ definition {
 			value1 = "Text Help Text pt-BR");
 	}
 
-	@description = "This test ensures fieldset default values are displayed upon locale change on the Web Content."
+	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"
+	@priority = "5"
+	test CheckTranslationOfDuplicatedFieldsetOnWebContent {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Name");
+
+		DataEngine.createNewFieldset(
+			fieldNameList = "Text,Color",
+			fieldsetName = "New Fieldset",
+			localeList = "pt-BR");
+
+		DataEngine.addFieldsets(fieldsetName = "New Fieldset");
+
+		DataEngine.editFieldsetRepeatable(fieldsetLabel = "New Fieldset");
+
+		PortletEntry.changeLocale(locale = "pt_BR");
+
+		WebContentStructures.addName(structureName = "WC Structure Name pt-BR");
+
+		WebContentStructures.saveCP();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addCP(webContentTitle = "Web Content Title");
+
+		DataEngine.addRepeatableFieldset(fieldsetLabel = "New Fieldset");
+
+		PortletEntry.changeLocale(locale = "pt_BR");
+
+		WebContent.addCP(webContentTitle = "Web Content Title pt-BR");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		PortletEntry.changeLocale(locale = "pt_BR");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "Web Content Title pt-BR");
+
+		for (var i : list "1,2") {
+			AssertElementPresent(
+				key_fieldFieldLabel = "New Fieldset pt-BR",
+				key_index = "${i}",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL_ANY");
+
+			AssertElementPresent(
+				key_fieldFieldLabel = "Text pt-BR",
+				key_index = "${i}",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL_ANY");
+
+			AssertElementPresent(
+				key_fieldFieldLabel = "Color pt-BR",
+				key_index = "${i}",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL_ANY");
+		}
+	}
+
+	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fieldset when creating a new Web Content"
 	@priority = "4"
 	test DefaultTitleIsDisplayedUponLocaleChange {
 		NavItem.gotoStructures();

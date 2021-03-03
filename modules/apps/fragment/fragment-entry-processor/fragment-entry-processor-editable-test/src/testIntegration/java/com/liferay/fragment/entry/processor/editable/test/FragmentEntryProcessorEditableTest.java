@@ -305,6 +305,28 @@ public class FragmentEntryProcessorEditableTest {
 	}
 
 	@Test
+	public void testFragmentEntryProcessorEditableMappedJournalArticleBackgroundImageFileEntryId()
+		throws Exception {
+
+		FileEntry fileEntry = _addImageFileEntry();
+
+		String editableValues = _getJournalArticleEditableFieldValues(
+			"fragment_entry_link_mapped_asset_field_background_image.json",
+			"fileURL", fileEntry);
+
+		Element element = _getElement(
+			"data-lfr-background-image-id", "background-image", editableValues,
+			"fragment_entry_background_image.html");
+
+		String style = element.attr("style");
+
+		Assert.assertTrue(
+			style.contains(
+				"--background-image-file-entry-id: " +
+					fileEntry.getFileEntryId() + ";"));
+	}
+
+	@Test
 	public void testFragmentEntryProcessorEditableMappedJournalArticleImageFileEntryId()
 		throws Exception {
 

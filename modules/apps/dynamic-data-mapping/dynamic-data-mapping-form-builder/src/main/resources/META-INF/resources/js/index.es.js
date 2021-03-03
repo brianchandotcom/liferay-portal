@@ -24,4 +24,3 @@ export * as RulesUtil from '../js/components/LayoutProvider/util/rules.es';
 export * as FieldUtil from '../js/components/LayoutProvider/util/fields.es';
 export * as FieldSetUtil from '../js/components/LayoutProvider/util/fieldset.es';
 export {FieldSupport, RulesSupport};
-export {default as Sidebar} from './components/Sidebar/Sidebar.es';

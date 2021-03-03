@@ -12,7 +12,7 @@
  * details.
  */
 
-import './FormsRuleList.scss';
+import './RuleList.scss';
 
 import ClayButton from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
@@ -20,10 +20,9 @@ import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayList from '@clayui/list';
-import RulesSupport from 'dynamic-data-mapping-form-builder/js/components/RuleBuilder/RulesSupport.es';
+import {LangUtil} from 'data-engine-taglib';
+import {RulesSupport} from 'dynamic-data-mapping-form-builder';
 import React, {useMemo} from 'react';
-
-import * as Lang from '../../utils/lang.es';
 
 const LOGICAL_OPERATOR = {
 	AND: Liferay.Language.get('and'),
@@ -161,7 +160,7 @@ const ActionAutoFill = ({
 	return (
 		<span className="inline-item">
 			<b>
-				{Lang.subComp(
+				{LangUtil.subComp(
 					Liferay.Language.get('autofill-x-from-data-provider-x'),
 					[labels, dataProviderName]
 				)}
@@ -184,7 +183,7 @@ const ActionJumpToPage = ({pages, target}) => (
 const ActionCalculate = ({expression, fields, target}) => (
 	<span className="inline-item">
 		<b>
-			{Lang.subComp(Liferay.Language.get('calculate-field-x-as-x'), [
+			{LangUtil.subComp(Liferay.Language.get('calculate-field-x-as-x'), [
 				<ClayLabelCustom displayType="secondary" key={expression} large>
 					{RulesSupport.replaceFieldNameByFieldLabel(
 						expression,
@@ -420,12 +419,7 @@ const ListItem = ({dataProvider, fields, onDelete, onEdit, pages, rule}) => {
 	);
 };
 
-export const FormsRuleList = ({
-	rules = [],
-	onDelete,
-	onEdit,
-	...otherProps
-}) => (
+export const RuleList = ({rules = [], onDelete, onEdit, ...otherProps}) => (
 	<div className="form-rule-list">
 		<h1 className="text-default">{Liferay.Language.get('rule-builder')}</h1>
 
@@ -446,4 +440,4 @@ export const FormsRuleList = ({
 	</div>
 );
 
-FormsRuleList.displayName = 'FormsRuleList';
+RuleList.displayName = 'RuleList';

@@ -13,19 +13,35 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, render} from '@testing-library/react';
+import {cleanup, fireEvent, getByText, render} from '@testing-library/react';
 import Select from 'dynamic-data-mapping-form-field-type/Select/Select.es';
+import {RuleEditor} from 'dynamic-data-mapping-form-web/admin/js/pages/RuleEditor.es';
 import React from 'react';
 
-import {FormsRuleEditor} from '../../../../../src/main/resources/META-INF/resources/data_layout_builder/js/components/rule-builder/FormsRuleEditor.es';
-import {DEFAULT_RULE} from '../../../../../src/main/resources/META-INF/resources/data_layout_builder/js/components/rule-builder/editor/config.es';
-import {
-	FIELDS,
-	FIELDS_TYPES,
-	OPERATORS_BY_TYPE,
-} from '../../../../mock/fields.es';
+import {FIELDS, FIELDS_TYPES, OPERATORS_BY_TYPE} from '../__mock__/fields.es';
 
 global.fetch.enableFetchMocks();
+
+const DEFAULT_RULE = {
+	actions: [
+		{
+			target: '',
+			type: '',
+		},
+	],
+	conditions: [
+		{
+			operands: [
+				{
+					type: '',
+					value: '',
+				},
+			],
+			operator: '',
+		},
+	],
+	logicalOperator: 'OR',
+};
 
 const pages = [
 	{
@@ -74,9 +90,12 @@ const rule = {
 	'logical-operator': 'OR',
 };
 
-describe('FormsRuleEditor', () => {
+describe('RuleEditor', () => {
 	const originalLiferayLoader = window.Liferay.Loader;
+
 	afterEach(() => {
+		fireEvent.click(getByText(document, 'cancel'));
+
 		cleanup();
 		jest.restoreAllMocks();
 	});
@@ -108,8 +127,8 @@ describe('FormsRuleEditor', () => {
 
 	describe('Rule Editor', () => {
 		it('disables save button when there is no rule completely set', () => {
-			const {getByText} = render(
-				<FormsRuleEditor
+			const {container} = render(
+				<RuleEditor
 					fields={FIELDS}
 					onCancel={() => {}}
 					onSave={() => {}}
@@ -119,12 +138,12 @@ describe('FormsRuleEditor', () => {
 				/>
 			);
 
-			expect(getByText('save')).toBeDisabled();
+			expect(getByText(container, 'save')).toBeDisabled();
 		});
 
 		it('enabled save button there is a rule completely set', () => {
-			const {getByText} = render(
-				<FormsRuleEditor
+			const {container} = render(
+				<RuleEditor
 					fields={FIELDS}
 					onCancel={() => {}}
 					onSave={() => {}}
@@ -134,7 +153,7 @@ describe('FormsRuleEditor', () => {
 				/>
 			);
 
-			expect(getByText('save')).toBeEnabled();
+			expect(getByText(container, 'save')).toBeEnabled();
 		});
 	});
 });

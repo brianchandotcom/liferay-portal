@@ -14,7 +14,6 @@
 
 import {useResource} from '@clayui/data-provider';
 import ClayLayout from '@clayui/layout';
-import {FormsRuleEditor, FormsRuleList} from 'data-engine-taglib';
 import {
 	PagesVisitor,
 	useConfig,
@@ -27,6 +26,8 @@ import {Route, Switch} from 'react-router-dom';
 
 import {ManagementToolbar} from '../components/ManagementToolbar.es';
 import {EVENT_TYPES} from '../eventTypes.es';
+import {RuleEditor} from './RuleEditor.es';
+import {RuleList} from './RuleList.es';
 
 export const RuleBuilder = ({history, location}) => {
 	const {
@@ -138,7 +139,7 @@ export const RuleBuilder = ({history, location}) => {
 			/>
 			<Switch>
 				<Route exact path="/rules">
-					<FormsRuleList
+					<RuleList
 						dataProvider={dataProvider}
 						fields={fields}
 						onDelete={(ruleId) =>
@@ -159,7 +160,7 @@ export const RuleBuilder = ({history, location}) => {
 					/>
 				</Route>
 				<Route path="/rules/editor">
-					<FormsRuleEditor
+					<RuleEditor
 						dataProvider={dataProvider}
 						dataProviderInstanceParameterSettingsURL={
 							dataProviderInstanceParameterSettingsURL

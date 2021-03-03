@@ -15,7 +15,7 @@
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
-import Calculator from '../../../../../../src/main/resources/META-INF/resources/data_layout_builder/js/components/rule-builder/editor/Calculator.es';
+import Calculator from '../../../../../../src/main/resources/META-INF/resources/data_layout_builder/js/components/rules/editor/Calculator.es';
 
 const SIGNALS = ['+', '-', '*', '/'];
 const PARENTHESIS = ['(', ')'];

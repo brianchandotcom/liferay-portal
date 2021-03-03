@@ -18,6 +18,9 @@
 	"jest": {
 		"modulePathIgnorePatterns": [
 			"/__mock__/"
+		],
+		"setupFilesAfterEnv": [
+			"<rootDir>/jest-setup.config.js"
 		]
 	},
 	"main": "admin/js/App.es.js",

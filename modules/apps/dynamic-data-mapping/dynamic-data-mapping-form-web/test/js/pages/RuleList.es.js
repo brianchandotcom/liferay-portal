@@ -13,9 +13,8 @@
  */
 
 import {cleanup, render} from '@testing-library/react';
+import {RuleList} from 'dynamic-data-mapping-form-web/admin/js/pages/RuleList.es';
 import React from 'react';
-
-import {FormsRuleList} from '../../../../../src/main/resources/META-INF/resources/data_layout_builder/js/components/rule-builder/FormsRuleList.es';
 
 const DEFAULT_ACTIONS = {
 	action: 'enable',
@@ -118,7 +117,7 @@ describe('RuleList', () => {
 		afterEach(cleanup);
 
 		it('renders the empty state when there are no rules', () => {
-			const {container} = render(<FormsRuleList />);
+			const {container} = render(<RuleList />);
 
 			expect(
 				container.querySelector('.sheet-text > .text-default').innerHTML
@@ -140,7 +139,7 @@ describe('RuleList', () => {
 			};
 
 			const {container} = render(
-				<FormsRuleList
+				<RuleList
 					{...defaultProps([
 						createRule([
 							{
@@ -177,7 +176,7 @@ describe('RuleList', () => {
 			};
 
 			const {container} = render(
-				<FormsRuleList
+				<RuleList
 					{...defaultProps([
 						createRule(
 							[
@@ -219,7 +218,7 @@ describe('RuleList', () => {
 			};
 
 			const {container} = render(
-				<FormsRuleList
+				<RuleList
 					{...defaultProps([
 						createRule(
 							[
@@ -260,7 +259,7 @@ describe('RuleList', () => {
 			};
 
 			const {container} = render(
-				<FormsRuleList
+				<RuleList
 					{...defaultProps([
 						createRule(
 							[
@@ -301,7 +300,7 @@ describe('RuleList', () => {
 			};
 
 			const {container} = render(
-				<FormsRuleList
+				<RuleList
 					{...defaultProps([
 						createRule(
 							[

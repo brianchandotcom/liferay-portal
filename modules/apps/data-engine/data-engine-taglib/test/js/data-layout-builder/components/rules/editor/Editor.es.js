@@ -32,8 +32,8 @@ import Text from 'dynamic-data-mapping-form-field-type/Text/Text.es';
 import 'frontend-editor-ckeditor-web';
 import React from 'react';
 
-import {Editor} from '../../../../../../src/main/resources/META-INF/resources/data_layout_builder/js/components/rule-builder/editor/Editor.es';
-import {DEFAULT_RULE} from '../../../../../../src/main/resources/META-INF/resources/data_layout_builder/js/components/rule-builder/editor/config.es';
+import {Editor} from '../../../../../../src/main/resources/META-INF/resources/data_layout_builder/js/components/rules/editor/Editor.es';
+import {DEFAULT_RULE} from '../../../../../../src/main/resources/META-INF/resources/data_layout_builder/js/components/rules/editor/config.es';
 import {
 	FIELDS,
 	FIELDS_TYPES,

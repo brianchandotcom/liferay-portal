@@ -18,8 +18,7 @@ import DataLayoutBuilderContextProvider from './AppContextProvider.es';
 import * as DataLayoutBuilderActions from './actions.es';
 import FieldType from './components/field-types/FieldType.es';
 import FieldTypeList from './components/field-types/FieldTypeList.es';
-import {FormsRuleEditor} from './components/rule-builder/FormsRuleEditor.es';
-import {FormsRuleList} from './components/rule-builder/FormsRuleList.es';
+import {Editor as RuleEditor} from './components/rules/editor/Editor.es';
 import SearchInput, {
 	SearchInputWithForm,
 } from './components/search-input/SearchInput.es';
@@ -35,6 +34,7 @@ import {FieldsSidebar} from './plugins/fields-sidebar/components/FieldsSidebar.e
 import * as DataConverter from './utils/dataConverter.es';
 import * as DataDefinitionUtils from './utils/dataDefinition.es';
 import * as DataLayoutVisitor from './utils/dataLayoutVisitor.es';
+import * as LangUtil from './utils/lang.es';
 
 export {
 	DataConverter,
@@ -49,10 +49,10 @@ export {
 	FieldsSidebar,
 	FieldType,
 	FieldTypeList,
-	FormsRuleEditor,
-	FormsRuleList,
+	LangUtil,
 	MultiPanelSidebar,
 	PluginComponent,
+	RuleEditor,
 	SearchInput,
 	SearchInputWithForm,
 	Sidebar,

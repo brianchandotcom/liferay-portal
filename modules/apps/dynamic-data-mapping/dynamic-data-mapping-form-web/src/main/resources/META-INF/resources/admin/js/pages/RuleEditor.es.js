@@ -12,12 +12,11 @@
  * details.
  */
 
-import './FormsRuleEditor.scss';
+import './RuleEditor.scss';
 
 import ClayButton from '@clayui/button';
+import {RuleEditor as DataEngineRuleEditor} from 'data-engine-taglib';
 import React, {useState} from 'react';
-
-import {Editor} from './editor/Editor.es';
 
 // A simple implementation of local storage outside
 // the React lifecycle to maintain the state of the
@@ -28,7 +27,7 @@ const localDataStorage = {
 	rule: undefined,
 };
 
-export const FormsRuleEditor = ({onCancel, onSave, rule, ...otherProps}) => {
+export const RuleEditor = ({onCancel, onSave, rule, ...otherProps}) => {
 	const [disabled, setDisabled] = useState(true);
 
 	return (
@@ -42,7 +41,7 @@ export const FormsRuleEditor = ({onCancel, onSave, rule, ...otherProps}) => {
 					)}
 				</h4>
 			</div>
-			<Editor
+			<DataEngineRuleEditor
 				onChange={({logicalOperator, ...otherProps}) => {
 					localDataStorage.rule = {
 						...otherProps,

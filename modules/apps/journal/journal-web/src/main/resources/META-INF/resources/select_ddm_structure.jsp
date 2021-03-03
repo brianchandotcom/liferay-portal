@@ -22,8 +22,8 @@ JournalSelectDDMStructureDisplayContext journalSelectDDMStructureDisplayContext 
 SearchContainer<DDMStructure> ddmStructureSearch = journalSelectDDMStructureDisplayContext.getDDMStructureSearch();
 %>
 
-<clay:management-toolbar-v2
-	displayContext="<%= new JournalSelectDDMStructureManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, journalSelectDDMStructureDisplayContext) %>"
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= new JournalSelectDDMStructureManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, journalSelectDDMStructureDisplayContext) %>"
 />
 
 <aui:form cssClass="container-fluid container-fluid-max-xl" method="post" name="selectDDMStructureFm">

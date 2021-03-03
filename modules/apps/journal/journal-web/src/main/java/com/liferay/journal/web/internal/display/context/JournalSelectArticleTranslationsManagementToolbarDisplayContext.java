@@ -87,6 +87,11 @@ public class JournalSelectArticleTranslationsManagementToolbarDisplayContext
 	}
 
 	@Override
+	public String getSortingURL() {
+		return null;
+	}
+
+	@Override
 	protected String[] getDisplayViews() {
 		return new String[] {"list"};
 	}

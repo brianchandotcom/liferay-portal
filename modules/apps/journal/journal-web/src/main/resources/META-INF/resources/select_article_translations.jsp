@@ -16,8 +16,8 @@
 
 <%@ include file="/init.jsp" %>
 
-<clay:management-toolbar-v2
-	displayContext="<%= new JournalSelectArticleTranslationsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, journalDisplayContext) %>"
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= new JournalSelectArticleTranslationsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, journalDisplayContext) %>"
 />
 
 <aui:form cssClass="container-fluid container-fluid-max-xl" name="fm">

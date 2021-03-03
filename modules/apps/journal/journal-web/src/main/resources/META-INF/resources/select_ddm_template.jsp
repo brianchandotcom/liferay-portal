@@ -20,8 +20,8 @@
 JournalSelectDDMTemplateDisplayContext journalSelectDDMTemplateDisplayContext = new JournalSelectDDMTemplateDisplayContext(renderRequest, renderResponse);
 %>
 
-<clay:management-toolbar-v2
-	displayContext="<%= new JournalSelectDDMTemplateManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, journalSelectDDMTemplateDisplayContext) %>"
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= new JournalSelectDDMTemplateManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, journalSelectDDMTemplateDisplayContext) %>"
 />
 
 <aui:form cssClass="container-fluid container-fluid-max-xl" method="post" name="selectDDMTemplateFm">

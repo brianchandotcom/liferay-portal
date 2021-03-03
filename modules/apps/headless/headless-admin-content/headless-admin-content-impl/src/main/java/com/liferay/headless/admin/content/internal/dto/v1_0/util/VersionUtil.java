@@ -20,6 +20,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
 import java.util.Locale;
 import java.util.Set;
@@ -31,7 +32,9 @@ import java.util.stream.Stream;
  */
 public class VersionUtil {
 
-	public static Version toVersion(JournalArticle journalArticle) {
+	public static Version toVersion(
+		AcceptLanguage acceptLanguage, JournalArticle journalArticle) {
+
 		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(
 			journalArticle.getGroupId());
 
@@ -47,11 +50,18 @@ public class VersionUtil {
 					{
 						code = journalArticle.getStatus();
 						label = statusLabel;
-						label_i18n = availableLocalesStream.collect(
-							Collectors.toMap(
-								LocaleUtil::toBCP47LanguageId,
-								locale -> LanguageUtil.get(
-									locale, statusLabel)));
+						setLabel_i18n(
+							() -> {
+								if (acceptLanguage.isAcceptAllLanguages()) {
+									return availableLocalesStream.collect(
+										Collectors.toMap(
+											LocaleUtil::toBCP47LanguageId,
+											locale -> LanguageUtil.get(
+												locale, statusLabel)));
+								}
+
+								return null;
+							});
 					}
 				};
 			}

@@ -47,7 +47,6 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
-import com.liferay.portal.vulcan.util.ContentLanguageUtil;
 import com.liferay.portal.vulcan.util.EntityExtensionUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
@@ -147,11 +146,6 @@ public class StructuredContentResourceImpl
 			JournalArticle journalArticle)
 		throws Exception {
 
-		ContentLanguageUtil.addContentLanguageHeader(
-			journalArticle.getAvailableLanguageIds(),
-			journalArticle.getDefaultLanguageId(), contextHttpServletResponse,
-			contextAcceptLanguage.getPreferredLocale());
-
 		DTOConverter<JournalArticle, StructuredContent> dtoConverter =
 			(DTOConverter<JournalArticle, StructuredContent>)
 				_dtoConverterRegistry.getDTOConverter(
@@ -174,7 +168,7 @@ public class StructuredContentResourceImpl
 			structuredContent, StructuredContent.class,
 			ExtensionStructuredContent.class,
 			ExtensionStructuredContent -> ExtensionStructuredContent.setVersion(
-				VersionUtil.toVersion(journalArticle)));
+				VersionUtil.toVersion(contextAcceptLanguage, journalArticle)));
 	}
 
 	@Reference

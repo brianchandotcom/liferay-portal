@@ -97,6 +97,11 @@ public class JournalContentCompatibilityConverterImpl
 		}
 	}
 
+	@Override
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+	}
+
 	private void _convertDDMFields(Locale defaultLocale, Element element) {
 		String type = element.attributeValue("type");
 
@@ -302,6 +307,8 @@ public class JournalContentCompatibilityConverterImpl
 	}
 
 	private static final String _LATEST_CONTENT_VERSION = "1.0";
+
+	private long _groupId;
 
 	@Reference(unbind = "-")
 	private LayoutLocalService _layoutLocalService;

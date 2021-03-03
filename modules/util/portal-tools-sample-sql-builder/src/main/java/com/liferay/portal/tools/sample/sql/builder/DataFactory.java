@@ -420,7 +420,6 @@ public class DataFactory {
 		_defaultJournalDDMStructureId = _counter.get();
 		_defaultJournalDDMStructureVersionId = _counter.get();
 		_defaultJournalDDMTemplateId = _counter.get();
-		_defaultUserId = _counter.get();
 		_globalGroupId = _counter.get();
 		_guestGroupId = _counter.get();
 		_sampleUserId = _counter.get();
@@ -3507,6 +3506,8 @@ public class DataFactory {
 	}
 
 	public UserModel newDefaultUserModel() {
+		_defaultUserId = _counter.get();
+
 		return newUserModel(
 			_defaultUserId, StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, true);
@@ -7007,7 +7008,7 @@ public class DataFactory {
 	private final long _defaultJournalDDMStructureId;
 	private final long _defaultJournalDDMStructureVersionId;
 	private final long _defaultJournalDDMTemplateId;
-	private final long _defaultUserId;
+	private long _defaultUserId;
 	private final String _dlDDMStructureContent;
 	private final String _dlDDMStructureLayoutContent;
 	private List<String> _firstNames;

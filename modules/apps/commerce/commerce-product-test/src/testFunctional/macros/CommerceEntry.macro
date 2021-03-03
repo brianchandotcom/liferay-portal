@@ -587,26 +587,18 @@ definition {
 	}
 
 	macro selectAssociatedOptionsValue {
-		if (IsElementPresent(locator1 = "CommerceEntry#OPTION_SELECT")) {
-			Click(locator1 = "CommerceEntry#OPTION_SELECT");
-
-			Click(
-				key_selectValue = "${optionValue}",
-				locator1 = "CommerceEntry#OPTIONS_SELECT_LIST");
-		}
-
-		if (IsElementPresent(locator1 = "CommerceEntry#OPTION_VALUE", key_optionType = "checkbox_multiple", key_optionValue = "${optionValue}")) {
-			Click(
-				key_optionType = "checkbox_multiple",
-				key_optionValue = "${optionValue}",
-				locator1 = "CommerceEntry#OPTION_VALUE");
-		}
-
 		if (IsElementPresent(locator1 = "CommerceEntry#OPTION_VALUE", key_optionType = "radio", key_optionValue = "${optionValue}")) {
 			Click(
 				key_optionType = "radio",
 				key_optionValue = "${optionValue}",
 				locator1 = "CommerceEntry#OPTION_VALUE");
+		}
+		else {
+			Click(locator1 = "CommerceEntry#OPTION_SELECT");
+
+			Click(
+				key_selectValue = "${optionValue}",
+				locator1 = "CommerceEntry#OPTIONS_SELECT_LIST");
 		}
 	}
 

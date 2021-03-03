@@ -108,7 +108,7 @@ export default function LinkField({field, onValueSelect, value}) {
 
 	const handleChange = (value) => {
 		const updatedValue = {
-			...nextValue,
+			...(Object.keys(value).length && nextValue),
 			...value,
 		};
 

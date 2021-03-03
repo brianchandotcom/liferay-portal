@@ -17,10 +17,15 @@ package com.liferay.analytics.reports.test.util;
 import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItem;
 import com.liferay.analytics.reports.info.item.provider.AnalyticsReportsInfoItemObjectProvider;
 import com.liferay.analytics.reports.test.MockObject;
-import com.liferay.analytics.reports.test.analytics.reports.info.item.MockAnalyticsReportsInfoItem;
+import com.liferay.analytics.reports.test.MockSuperClassObject;
+import com.liferay.analytics.reports.test.analytics.reports.info.item.MockObjectAnalyticsReportsInfoItem;
+import com.liferay.analytics.reports.test.analytics.reports.info.item.MockSuperClassObjectAnalyticsReportsInfoItem;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -40,13 +45,10 @@ public class MockContextUtil {
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		ServiceRegistration<AnalyticsReportsInfoItemObjectProvider>
-			analyticsReportsInfoItemObjectProviderServiceRegistration = null;
-		ServiceRegistration<AnalyticsReportsInfoItem<MockObject>>
-			analyticsReportsInfoItemServiceRegistration = null;
+		List<ServiceRegistration<?>> serviceRegistrations = new ArrayList<>();
 
 		try {
-			analyticsReportsInfoItemObjectProviderServiceRegistration =
+			serviceRegistrations.add(
 				bundleContext.registerService(
 					AnalyticsReportsInfoItemObjectProvider.class,
 					new AnalyticsReportsInfoItemObjectProvider<MockObject>() {
@@ -64,25 +66,48 @@ public class MockContextUtil {
 						}
 
 					},
-					new HashMapDictionary<>());
-			analyticsReportsInfoItemServiceRegistration =
+					new HashMapDictionary<>()));
+			serviceRegistrations.add(
 				bundleContext.registerService(
 					(Class<AnalyticsReportsInfoItem<MockObject>>)
 						(Class<?>)AnalyticsReportsInfoItem.class,
-					mockContext.getAnalyticsReportsInfoItem(),
-					new HashMapDictionary<>());
+					mockContext.getMockObjectAnalyticsReportsInfoItem(),
+					new HashMapDictionary<>()));
+			serviceRegistrations.add(
+				bundleContext.registerService(
+					AnalyticsReportsInfoItemObjectProvider.class,
+					new AnalyticsReportsInfoItemObjectProvider
+						<MockSuperClassObject>() {
+
+						@Override
+						public MockSuperClassObject
+							getAnalyticsReportsInfoItemObject(
+								InfoItemReference infoItemReference) {
+
+							return new MockSuperClassObject();
+						}
+
+						@Override
+						public String getClassName() {
+							return MockSuperClassObject.class.getName();
+						}
+
+					},
+					new HashMapDictionary<>()));
+			serviceRegistrations.add(
+				bundleContext.registerService(
+					(Class<AnalyticsReportsInfoItem<MockSuperClassObject>>)
+						(Class<?>)AnalyticsReportsInfoItem.class,
+					mockContext.
+						getMockSuperClassObjectAnalyticsReportsInfoItem(),
+					new HashMapDictionary<>()));
 			unsafeRunnable.run();
 		}
 		finally {
-			if (analyticsReportsInfoItemObjectProviderServiceRegistration !=
-					null) {
+			for (ServiceRegistration<?> serviceRegistration :
+					serviceRegistrations) {
 
-				analyticsReportsInfoItemObjectProviderServiceRegistration.
-					unregister();
-			}
-
-			if (analyticsReportsInfoItemServiceRegistration != null) {
-				analyticsReportsInfoItemServiceRegistration.unregister();
+				serviceRegistration.unregister();
 			}
 		}
 	}
@@ -94,9 +119,15 @@ public class MockContextUtil {
 		}
 
 		public AnalyticsReportsInfoItem<MockObject>
-			getAnalyticsReportsInfoItem() {
+			getMockObjectAnalyticsReportsInfoItem() {
 
-			return _analyticsReportsInfoItem;
+			return _mockObjectAnalyticsReportsInfoItem;
+		}
+
+		public AnalyticsReportsInfoItem<MockSuperClassObject>
+			getMockSuperClassObjectAnalyticsReportsInfoItem() {
+
+			return _mockSuperClassObjectAnalyticsReportsInfoItem;
 		}
 
 		public static class Builder {
@@ -104,38 +135,70 @@ public class MockContextUtil {
 			public Builder() {
 			}
 
-			public Builder analyticsReportsInfoItem(
-				AnalyticsReportsInfoItem<MockObject> analyticsReportsInfoItem) {
+			public MockContext build() {
+				return new MockContext(
+					_mockObjectAnalyticsReportsInfoItem,
+					_mockSuperClassObjectAnalyticsReportsInfoItem);
+			}
 
-				_analyticsReportsInfoItem = analyticsReportsInfoItem;
+			public Builder mockObjectAnalyticsReportsInfoItem(
+				AnalyticsReportsInfoItem<MockObject>
+					mockObjectAnalyticsReportsInfoItem) {
+
+				_mockObjectAnalyticsReportsInfoItem =
+					mockObjectAnalyticsReportsInfoItem;
 
 				return this;
 			}
 
-			public MockContext build() {
-				return new MockContext(_analyticsReportsInfoItem);
+			public Builder mockSuperClassObjectAnalyticsReportsInfoItem(
+				AnalyticsReportsInfoItem<MockSuperClassObject>
+					mockSuperClassObjectAnalyticsReportsInfoItem) {
+
+				_mockSuperClassObjectAnalyticsReportsInfoItem =
+					mockSuperClassObjectAnalyticsReportsInfoItem;
+
+				return this;
 			}
 
 			private AnalyticsReportsInfoItem<MockObject>
-				_analyticsReportsInfoItem;
+				_mockObjectAnalyticsReportsInfoItem;
+			private AnalyticsReportsInfoItem<MockSuperClassObject>
+				_mockSuperClassObjectAnalyticsReportsInfoItem;
 
 		}
 
 		private MockContext(
-			AnalyticsReportsInfoItem<MockObject> analyticsReportsInfoItem) {
+			AnalyticsReportsInfoItem<MockObject>
+				mockObjectAnalyticsReportsInfoItem,
+			AnalyticsReportsInfoItem<MockSuperClassObject>
+				mockSuperClassObjectAnalyticsReportsInfoItem) {
 
-			if (analyticsReportsInfoItem == null) {
-				_analyticsReportsInfoItem =
-					MockAnalyticsReportsInfoItem.builder(
+			if (mockObjectAnalyticsReportsInfoItem == null) {
+				_mockObjectAnalyticsReportsInfoItem =
+					MockObjectAnalyticsReportsInfoItem.builder(
 					).build();
 			}
 			else {
-				_analyticsReportsInfoItem = analyticsReportsInfoItem;
+				_mockObjectAnalyticsReportsInfoItem =
+					mockObjectAnalyticsReportsInfoItem;
+			}
+
+			if (mockSuperClassObjectAnalyticsReportsInfoItem == null) {
+				_mockSuperClassObjectAnalyticsReportsInfoItem =
+					MockSuperClassObjectAnalyticsReportsInfoItem.builder(
+					).build();
+			}
+			else {
+				_mockSuperClassObjectAnalyticsReportsInfoItem =
+					mockSuperClassObjectAnalyticsReportsInfoItem;
 			}
 		}
 
 		private final AnalyticsReportsInfoItem<MockObject>
-			_analyticsReportsInfoItem;
+			_mockObjectAnalyticsReportsInfoItem;
+		private final AnalyticsReportsInfoItem<MockSuperClassObject>
+			_mockSuperClassObjectAnalyticsReportsInfoItem;
 
 	}
 

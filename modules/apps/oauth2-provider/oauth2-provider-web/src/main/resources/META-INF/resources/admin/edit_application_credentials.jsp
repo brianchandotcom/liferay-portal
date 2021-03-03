@@ -238,6 +238,22 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 </div>
 
 <aui:script use="aui-modal,liferay-form,node,node-event-simulate">
+	<portlet:namespace />areAdminApplicationSectionsRequired = function () {
+		var selectedClientProfile = <portlet:namespace />getSelectedClientProfile();
+		return (
+			A.all(
+				'#<portlet:namespace />allowedGrantTypes .client-profile-' +
+					selectedClientProfile.val() +
+					' input:checked[name=<%= liferayPortletResponse.getNamespace() + "grant-" + GrantType.AUTHORIZATION_CODE.name() %>]'
+			).size() > 0 ||
+			A.all(
+				'#<portlet:namespace />allowedGrantTypes .client-profile-' +
+					selectedClientProfile.val() +
+					' input:checked[name=<%= liferayPortletResponse.getNamespace() + "grant-" + GrantType.AUTHORIZATION_CODE_PKCE.name() %>]'
+			).size() > 0
+		);
+	};
+
 	<portlet:namespace />generateRandomSecret = function () {
 		Liferay.Util.fetch(
 			'<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/oauth2_provider/generate_random_secret" />',
@@ -296,23 +312,6 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 				'#<portlet:namespace />allowedGrantTypes .client-profile-' +
 					selectedClientProfile.val() +
 					' input:checked[data-isredirect="true"]'
-			).size() > 0
-		);
-	};
-
-	<portlet:namespace />isTrustedApplicationSectionRequired = function () {
-		var selectedClientProfile = <portlet:namespace />getSelectedClientProfile();
-
-		return (
-			A.all(
-				'#<portlet:namespace />allowedGrantTypes .client-profile-' +
-					selectedClientProfile.val() +
-					' input:checked[name=<%= liferayPortletResponse.getNamespace() + "grant-" + GrantType.AUTHORIZATION_CODE.name() %>]'
-			).size() > 0 ||
-			A.all(
-				'#<portlet:namespace />allowedGrantTypes .client-profile-' +
-					selectedClientProfile.val() +
-					' input:checked[name=<%= liferayPortletResponse.getNamespace() + "grant-" + GrantType.AUTHORIZATION_CODE_PKCE.name() %>]'
 			).size() > 0
 		);
 	};
@@ -450,6 +449,43 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 		modal.show();
 	};
 
+	<portlet:namespace />updateAdminOptionsApplicationSection = function () {
+		var rememberApplicationSection = A.one(
+			'#<portlet:namespace />rememberDeviceSection'
+		);
+
+		var rememberApplicationCheckbox = document.querySelector(
+			'input[name^="<portlet:namespace />rememberDevice"]'
+		);
+
+		var trustedApplicationSection = A.one(
+			'#<portlet:namespace />trustedApplicationSection'
+		);
+
+		var trustedApplicationCheckbox = document.querySelector(
+			'input[name^="<portlet:namespace />trustedApplication"]'
+		);
+
+		if (<portlet:namespace />areAdminApplicationSectionsRequired()) {
+			trustedApplicationSection.show();
+
+			if (trustedApplicationCheckbox.checked) {
+				rememberApplicationCheckbox.checked = false;
+				rememberApplicationSection.hide();
+			}
+			else {
+				rememberApplicationSection.show();
+			}
+		}
+		else {
+			rememberApplicationCheckbox.checked = false;
+			rememberApplicationSection.hide();
+
+			trustedApplicationCheckbox.checked = false;
+			trustedApplicationSection.hide();
+		}
+	};
+
 	<portlet:namespace />updateAllowedGrantTypes = function (clientProfile) {
 		A.all('#<portlet:namespace />allowedGrantTypes .allowedGrantType').hide();
 		A.all(
@@ -458,8 +494,8 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 		).show();
 
 		<portlet:namespace />requiredRedirectURIs();
+		<portlet:namespace />updateAdminOptionsApplicationSection();
 		<portlet:namespace />updateClientCredentialsSection();
-		<portlet:namespace />updateTrustedApplicationSection();
 	};
 
 	<portlet:namespace />updateClientCredentialsSection = function () {
@@ -524,24 +560,6 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 		}
 	};
 
-	<portlet:namespace />updateTrustedApplicationSection = function () {
-		var trustedApplicationSection = A.one(
-			'#<portlet:namespace />trustedApplicationSection'
-		);
-
-		var trustedApplicationCheckbox = document.querySelector(
-			'input[name^="<portlet:namespace />trustedApplication"]'
-		);
-
-		if (<portlet:namespace />isTrustedApplicationSectionRequired()) {
-			trustedApplicationSection.show();
-		}
-		else {
-			trustedApplicationCheckbox.checked = false;
-			trustedApplicationSection.hide();
-		}
-	};
-
 	var clientProfile = A.one('#<portlet:namespace />clientProfile');
 
 	clientProfile.delegate(
@@ -581,5 +599,5 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 
 	form.set('fieldRules', fieldRules);
 
-	<portlet:namespace />updateTrustedApplicationSection();
+	<portlet:namespace />updateAdminOptionsApplicationSection();
 </aui:script>

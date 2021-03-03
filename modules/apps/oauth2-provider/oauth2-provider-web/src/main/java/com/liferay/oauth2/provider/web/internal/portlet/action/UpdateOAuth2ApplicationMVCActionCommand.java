@@ -136,6 +136,8 @@ public class UpdateOAuth2ApplicationMVCActionCommand
 			StringUtil.splitLines(
 				ParamUtil.get(request, "redirectURIs", StringPool.BLANK)));
 		List<String> scopeAliasesList = Collections.emptyList();
+		boolean rememberDevice = ParamUtil.getBoolean(
+			request, "rememberDevice");
 		boolean trustedApplication = ParamUtil.getBoolean(
 			request, "trustedApplication");
 
@@ -161,8 +163,8 @@ public class UpdateOAuth2ApplicationMVCActionCommand
 						allowedGrantTypesList, clientCredentialUserId, clientId,
 						clientProfile.id(), clientSecret, description,
 						featuresList, homePageURL, 0, name, privacyPolicyURL,
-						redirectURIsList, scopeAliasesList, trustedApplication,
-						serviceContext);
+						redirectURIsList, rememberDevice, scopeAliasesList,
+						trustedApplication, serviceContext);
 
 				response.setRenderParameter(
 					"oAuth2ApplicationId",
@@ -179,7 +181,8 @@ public class UpdateOAuth2ApplicationMVCActionCommand
 					allowedGrantTypesList, clientCredentialUserId, clientId,
 					clientProfile.id(), clientSecret, description, featuresList,
 					homePageURL, oAuth2Application.getIconFileEntryId(), name,
-					privacyPolicyURL, redirectURIsList, trustedApplication);
+					privacyPolicyURL, redirectURIsList, rememberDevice,
+					trustedApplication);
 
 				long fileEntryId = ParamUtil.getLong(request, "fileEntryId");
 

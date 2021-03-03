@@ -975,8 +975,8 @@ definition {
 
 			Refresh();
 
-			AssertTextEquals(
-				key_entryName = "${sku}",
+			AssertElementPresent(
+				key_entryName = "${sku}SKU",
 				locator1 = "CommerceNavigation#DATA_SET_ENTRY_NAME");
 
 			Click(
@@ -987,7 +987,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "CommerceEntry#SKU_FIELD",
-				value1 = "${sku}");
+				value1 = "${sku}SKU");
 
 			AssertTextEquals(
 				locator1 = "CommerceEntry#INPUT_PRICE",

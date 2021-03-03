@@ -57,7 +57,7 @@ function generatedOrderDetailURL() {
 	baseURL.searchParams.append('p_p_lifecycle', '0');
 	baseURL.searchParams.append(
 		`_${DEFAULT_ORDER_DETAILS_PORTLET_ID}_mvcRenderCommandName`,
-		'editCommerceOrder'
+		'/commerce_open_order_content/edit_commerce_order'
 	);
 	baseURL.searchParams.append(
 		`_${DEFAULT_ORDER_DETAILS_PORTLET_ID}_commerceOrderUuid`,

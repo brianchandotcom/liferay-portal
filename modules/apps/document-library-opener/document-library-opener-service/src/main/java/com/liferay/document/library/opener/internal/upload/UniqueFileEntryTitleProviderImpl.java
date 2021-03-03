@@ -44,12 +44,8 @@ public class UniqueFileEntryTitleProviderImpl
 	public String provide(long groupId, long folderId, Locale locale)
 		throws PortalException {
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			locale, UniqueFileEntryTitleProviderImpl.class);
-
 		return _provide(
-			groupId, folderId, StringPool.BLANK,
-			_language.get(resourceBundle, "untitled"));
+			groupId, folderId, StringPool.BLANK, _getDefaultTitle(locale));
 	}
 
 	/**
@@ -64,6 +60,14 @@ public class UniqueFileEntryTitleProviderImpl
 		return _uniqueFileNameProvider.provide(
 			title,
 			generatedTitle -> _titleExists(groupId, folderId, generatedTitle));
+	}
+
+	@Override
+	public String provide(
+			long groupId, long folderId, String extension, Locale locale)
+		throws PortalException {
+
+		return _provide(groupId, folderId, extension, _getDefaultTitle(locale));
 	}
 
 	@Override
@@ -98,6 +102,13 @@ public class UniqueFileEntryTitleProviderImpl
 		return _exists(
 			() -> _dlAppLocalService.getFileEntryByFileName(
 				groupId, folderId, fileName));
+	}
+
+	private String _getDefaultTitle(Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			locale, UniqueFileEntryTitleProviderImpl.class);
+
+		return _language.get(resourceBundle, "untitled");
 	}
 
 	private String _provide(

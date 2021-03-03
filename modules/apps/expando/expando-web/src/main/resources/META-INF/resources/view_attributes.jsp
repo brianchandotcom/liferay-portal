@@ -49,10 +49,12 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "view-at
 	navigationItems='<%= expandoDisplayContext.getNavigationItems("fields") %>'
 />
 
-<clay:management-toolbar-v2
+<clay:management-toolbar
 	actionDropdownItems="<%= expandoDisplayContext.getActionDropdownItems() %>"
+	additionalProps="<%= expandoDisplayContext.getAdditionalProps() %>"
 	creationMenu="<%= expandoDisplayContext.getCreationMenu() %>"
 	disabled="<%= attributeNames.size() == 0 %>"
+	propsTransformer="js/ExpandoManagementToolbarPropsTransformer"
 	searchContainerId="customFields"
 	selectable="<%= true %>"
 	showCreationMenu="<%= expandoDisplayContext.showCreationMenu() %>"
@@ -123,24 +125,3 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "view-at
 		/>
 	</liferay-ui:search-container>
 </aui:form>
-
-<aui:script>
-	function <portlet:namespace />deleteCustomFields() {
-		var form = document.getElementById('<portlet:namespace />fm');
-
-		if (form) {
-			var columnIds = form.querySelector('#<portlet:namespace />columnIds');
-
-			if (columnIds) {
-				var checkedIds = Liferay.Util.listCheckedExcept(
-					form,
-					'<portlet:namespace />allRowIds'
-				);
-
-				columnIds.setAttribute('value', checkedIds);
-
-				submitForm(form, '<portlet:actionURL name="deleteExpandos" />');
-			}
-		}
-	}
-</aui:script>

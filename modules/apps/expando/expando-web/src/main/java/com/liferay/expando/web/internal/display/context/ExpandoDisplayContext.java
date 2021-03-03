@@ -21,21 +21,24 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
+import java.util.Map;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletResponse;
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -51,19 +54,33 @@ public class ExpandoDisplayContext {
 	public List<DropdownItem> getActionDropdownItems() {
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
-				PortletResponse portletResponse =
-					(PortletResponse)_httpServletRequest.getAttribute(
-						JavaConstants.JAVAX_PORTLET_RESPONSE);
-
-				dropdownItem.setHref(
-					StringBundler.concat(
-						"javascript:", portletResponse.getNamespace(),
-						"deleteCustomFields();"));
-
+				dropdownItem.putData("action", "deleteCustomFields");
 				dropdownItem.setIcon("trash");
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "delete"));
 				dropdownItem.setQuickAction(true);
+			}
+		).build();
+	}
+
+	public Map<String, Object> getAdditionalProps() {
+		return HashMapBuilder.<String, Object>put(
+			"deleteExpandosURL",
+			() -> {
+				PortletResponse portletResponse =
+					(PortletResponse)_httpServletRequest.getAttribute(
+						JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+				LiferayPortletResponse liferayPortletResponse =
+					PortalUtil.getLiferayPortletResponse(portletResponse);
+
+				PortletURL deleteExpandosURL =
+					liferayPortletResponse.createActionURL();
+
+				deleteExpandosURL.setParameter(
+					ActionRequest.ACTION_NAME, "deleteExpandos");
+
+				return deleteExpandosURL.toString();
 			}
 		).build();
 	}

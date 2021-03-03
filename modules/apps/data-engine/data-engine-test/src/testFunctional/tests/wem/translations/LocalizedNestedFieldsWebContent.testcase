@@ -648,13 +648,61 @@ definition {
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 	}
 
-	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
-	@ignore = "true"
+	@description = "This is a test for LPS-123537. Validate the translations on a Web Content created with all fields including nested ones"
 	@priority = "5"
 	test TranslateWebContentWithAllFieldsNested {
-		property portal.acceptance = "false";
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		// TODO LPS-123537 TranslateWebContentWithAllFieldsNested pending implementation
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Name");
+
+		DataEngine.addFieldGroupWithFields(fieldNameList = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page,Separator");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			webContentColor = "FF0D0D",
+			webContentDate = "02/19/2021",
+			webContentMultipleSelection = "Option 1",
+			webContentNumeric = "17",
+			webContentRichText = "This is a Rich Text field",
+			webContentSelectFromList = "Option 2",
+			webContentSingleSelection = "Option 1",
+			webContentText = "This is a Text field",
+			webContentTitle = "Web Content Title");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		WebContent.addWithStructureCP(
+			webContentColor = "000000",
+			webContentDate = "03/02/2021",
+			webContentMultipleSelection = "Option 2",
+			webContentNumeric = "13",
+			webContentRichText = "Este é um campo de texto completo",
+			webContentSelectFromList = "Option 1",
+			webContentSingleSelection = "Option 2",
+			webContentText = "Este é um campo de texto",
+			webContentTitle = "Título do Web Content");
+
+		PortletEntry.publish();
+
+		WebContent.viewWithStructureCP(
+			webContentColor = "000000",
+			webContentDate = "03/02/2021",
+			webContentLocaleFieldLabel = "pt_BR",
+			webContentMultipleSelection = "Option 2",
+			webContentNumeric = "13",
+			webContentRichText = "Este é um campo de texto completo",
+			webContentSelectFromList = "Option 1",
+			webContentSingleSelection = "Option 2",
+			webContentText = "Este é um campo de texto",
+			webContentTitle = "Web Content Title",
+			webContentTitleTranslated = "Título do Web Content");
 	}
 
 	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"

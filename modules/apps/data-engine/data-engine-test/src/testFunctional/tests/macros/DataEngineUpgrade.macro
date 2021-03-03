@@ -402,9 +402,43 @@ definition {
 
 	macro validateWebContentWithFieldGroupLevel2AndTranslations {
 
-		// TODO LPS-126250 validateWebContentWithFieldGroupLevel2AndTranslations pending implementation
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		
+		WebContent.viewWithStructureCP(
+			webContentTitle = "My Web Content based on My Structure with nested fields",
+			webContentText = "Text - en_US",
+			webContentDate = "02/22/2021",	
+			webContentNumeric = "1.1",
+			webContentNumericFieldLabel = "Number",
+			webContentTextFieldLabel = "Text",
+			webContentDateFieldLabel = "Date");
 
-		echo("empty stub");
+		PortletEntry.publish();
+
+		WebContent.viewWithStructureCP(
+			webContentLocaleFieldLabel = "pt_BR",
+			webContentTitle = "My Web Content based on My Structure with nested fields",
+			webContentTitleTranslated = "My Web Content based on My Structure with nested fields - pt_BR",
+			webContentText = "Text - pt_BR",
+			webContentDate = "02/23/2021",
+			webContentNumeric = "2,1",
+			webContentNumericFieldLabel = "Number - pt_BR",
+			webContentTextFieldLabel = "Text - pt_BR",
+			webContentDateFieldLabel = "Date - pt_BR");
+
+		PortletEntry.publish();
+
+		WebContent.viewWithStructureCP(
+			webContentLocaleFieldLabel = "ca_ES",
+			webContentTitle = "My Web Content based on My Structure with nested fields",
+			webContentTitleTranslated = "My Web Content based on My Structure with nested fields - ca_ES",
+			webContentText = "Text - ca_ES",
+			webContentDate = "02/24/2021",
+			webContentNumeric = "3,1",
+			webContentNumericFieldLabel = "Number - ca_ES",
+			webContentTextFieldLabel = "Text - ca_ES",
+			webContentDateFieldLabel = "Date - ca_ES");
+
 	}
 
 	macro validateWebContentWithFieldsetLevel2AndTranslations {

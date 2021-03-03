@@ -834,8 +834,6 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static Map<String, String> getBuildParameters(String buildURL) {
-		Map<String, String> buildParameters = new HashMap<>();
-
 		if (!buildURL.endsWith("/")) {
 			buildURL += "/";
 		}
@@ -846,39 +844,11 @@ public class JenkinsResultsParserUtil {
 		try {
 			JSONObject jsonObject = toJSONObject(buildParametersURL);
 
-			JSONArray actionsJSONArray = jsonObject.getJSONArray("actions");
-
-			for (int i = 0; i < actionsJSONArray.length(); i++) {
-				Object actions = actionsJSONArray.get(i);
-
-				if (actions == JSONObject.NULL) {
-					continue;
-				}
-
-				JSONObject actionJSONObject = actionsJSONArray.getJSONObject(i);
-
-				if (!actionJSONObject.has("parameters")) {
-					continue;
-				}
-
-				JSONArray parametersJSONArray = actionJSONObject.getJSONArray(
-					"parameters");
-
-				for (int j = 0; j < parametersJSONArray.length(); j++) {
-					JSONObject parameterJSONObject =
-						parametersJSONArray.getJSONObject(j);
-
-					buildParameters.put(
-						parameterJSONObject.getString("name"),
-						parameterJSONObject.getString("value"));
-				}
-			}
+			return JenkinsAPIUtil.getBuildParameters(jsonObject);
 		}
 		catch (IOException ioException) {
-			throw new RuntimeException();
+			throw new RuntimeException(ioException);
 		}
-
-		return buildParameters;
 	}
 
 	public static Properties getBuildProperties() throws IOException {

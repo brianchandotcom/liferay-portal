@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>ACCOUNT_MANAGEMENT_MEMBER_ACTIONS_DROPDOWN</td>
-	<td>//tr/td[contains(.,'${key_memberEmailAddress}')]/..//following-sibling::td//button</td>
+	<td>//div[contains(.,'${key_memberEmailAddress}')]/../div[contains(@class,'item-actions')]//button</td>
 	<td></td>
 </tr>
 <tr>

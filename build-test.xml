@@ -5541,7 +5541,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 							import java.time.ZonedDateTime;
 							import java.time.ZoneId;
 
-							DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("EEEE, MMMM dd, yyyy HH:mm:ss a zz");
+							DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("EEEE, MMMM dd, yyyy hh:mm:ss a zz");
 
 							ZoneId GMT = ZoneId.of("GMT");
 
@@ -5565,7 +5565,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 							import java.time.ZonedDateTime;
 							import java.time.ZoneId;
 
-							DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("EEEE, MMMM dd, yyyy HH:mm:ss a zz");
+							DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("EEEE, MMMM dd, yyyy hh:mm:ss a zz");
 
 							ZoneId GMT = ZoneId.of("GMT");
 

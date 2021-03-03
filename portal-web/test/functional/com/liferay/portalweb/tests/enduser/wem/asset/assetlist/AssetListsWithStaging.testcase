@@ -32,32 +32,35 @@ definition {
 		}
 	}
 
-	@description = "Assert that Asset Lists administration is only accessible on the staging site."
-	@ignore = "true"
+	@description = "Assert the Collections administration is writen accessible on the staging site while read-only accessible on live site."
 	@priority = "5"
-	test AssertAssetListsAreOnlyEditableInStagingView {
+	test AssertCollectionsAdminInStagingAndLiveSite {
 		property portal.acceptance = "true";
 
-		task ("Navigate to asset list administration in the staging site.") {
-			ProductMenuHelper.openProductMenu();
-
-			ProductMenuHelper.expandCategory(category = "Site Builder");
-
-			AssertVisible(
-				key_portlet = "Collections",
-				locator1 = "ProductMenu#PORTLET");
+		task ("Navigate to Collections administration in the staging site") {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Collections");
 		}
 
-		task ("Assert we cannot navigate to asset list administration in the live site.") {
+		task ("Assert Collections admin is writen accessible") {
+			AssertVisible(locator1 = "Dropdown#EMPTY_MESSAGE_DROPDOWN");
+
+			AssertVisible(locator1 = "Button#PLUS");
+		}
+
+		task ("Navigate to Collections administration in the live site") {
 			ProductMenu.gotoLiveSite(site = "Test Site Name");
 
-			ProductMenuHelper.openProductMenu();
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Collections");
+		}
 
-			ProductMenuHelper.expandCategory(category = "Site Builder");
+		task ("Assert Collections admin is read-only accessible") {
+			AssertElementNotPresent(locator1 = "Dropdown#EMPTY_MESSAGE_DROPDOWN");
 
-			AssertElementNotPresent(
-				key_portlet = "Collections",
-				locator1 = "ProductMenu#PORTLET");
+			AssertElementNotPresent(locator1 = "Button#PLUS");
 		}
 	}
 

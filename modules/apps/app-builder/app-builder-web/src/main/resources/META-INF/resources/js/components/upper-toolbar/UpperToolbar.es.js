@@ -46,16 +46,18 @@ const UpperToolbarButton = ({children, ...otherProps}) => {
 };
 
 const UpperToolbarInput = ({
+	autoFocus = true,
 	onChange = () => {},
 	placeholder,
 	...otherProps
 }) => {
 	return (
-		<UpperToolbarItem expand={true}>
+		<UpperToolbarItem expand>
 			<ClayInput.Group>
 				<ClayInput.GroupItem>
 					<ClayInput
 						aria-label={placeholder}
+						autoFocus={autoFocus}
 						className="form-control-inline"
 						onChange={onChange}
 						placeholder={placeholder}

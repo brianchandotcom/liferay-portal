@@ -26,6 +26,7 @@ page import="com.liferay.portal.kernel.util.PortalUtil" %>
 
 <%
 String block = (String)request.getAttribute("liferay-commerce:add-to-cart:block");
+String disabled = (String)request.getAttribute("liferay-commerce:add-to-cart:disabled");
 String commerceAccountId = (String)request.getAttribute("liferay-commerce:add-to-cart:commerceAccountId");
 String commerceChannelId = (String)request.getAttribute("liferay-commerce:add-to-cart:commerceChannelId");
 String commerceCurrencyCode = (String)request.getAttribute("liferay-commerce:add-to-cart:commerceCurrencyCode");

@@ -86,6 +86,7 @@ public class AddToCartTag extends IncludeTag {
 
 			if ((cpSku != null) && !hasChildCPDefinitions) {
 				_cpInstanceId = cpSku.getCPInstanceId();
+				_disabled = !cpSku.isPurchasable();
 				sku = cpSku.getSku();
 
 				if (commerceOrder != null) {
@@ -165,6 +166,7 @@ public class AddToCartTag extends IncludeTag {
 			httpServletRequest, "commerceOrderId", _commerceOrderId);
 		setNamespacedAttribute(
 			httpServletRequest, "cpInstanceId", _cpInstanceId);
+		setNamespacedAttribute(httpServletRequest, "disabled", _disabled);
 		setNamespacedAttribute(httpServletRequest, "inCart", _inCart);
 		setNamespacedAttribute(httpServletRequest, "options", _options);
 
@@ -232,6 +234,7 @@ public class AddToCartTag extends IncludeTag {
 		_cpCatalogEntry = null;
 		_cpContentHelper = null;
 		_cpInstanceId = 0;
+		_disabled = false;
 		_inCart = false;
 		_options = null;
 		_spritemap = null;
@@ -261,6 +264,7 @@ public class AddToCartTag extends IncludeTag {
 	private CPCatalogEntry _cpCatalogEntry;
 	private CPContentHelper _cpContentHelper;
 	private long _cpInstanceId;
+	private boolean _disabled;
 	private boolean _inCart;
 	private String _options;
 	private String _spritemap;

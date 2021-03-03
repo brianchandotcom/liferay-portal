@@ -57,6 +57,7 @@ else {
 		orderId: <%= commerceOrderId %>,
 		settings: {
 			block: <%= block %>,
+			disabled: <%= disabled %>,
 			willUpdate: <%= willUpdate %>,
 			withQuantity: {
 				forceDropdown: true,

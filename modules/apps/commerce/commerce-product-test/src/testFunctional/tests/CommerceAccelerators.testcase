@@ -296,6 +296,8 @@ definition {
 			category = "Product Management",
 			portlet = "Options");
 
+		CommerceNavigator.gotoEntry(entryName = "Package Quantity");
+
 		CommerceEntry.viewOptionsEntry(optionName = "Package Quantity");
 
 		CommerceNavigator.gotoPortlet(
@@ -349,6 +351,8 @@ definition {
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
 			portlet = "Options");
+
+		CommerceNavigator.gotoEntry(entryName = "Package Quantity");
 
 		CommerceEntry.viewOptionsEntry(optionName = "Package Quantity");
 

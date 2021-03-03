@@ -201,6 +201,14 @@ function DirectImagePanel({item}) {
 			}
 		}
 
+		if (!nextEditableValue.config?.imageConfiguration) {
+			nextEditableValue = setIn(
+				nextEditableValue,
+				['config', 'imageConfiguration'],
+				{}
+			);
+		}
+
 		dispatch(
 			updateEditableValuesThunk({
 				editableValues: setIn(

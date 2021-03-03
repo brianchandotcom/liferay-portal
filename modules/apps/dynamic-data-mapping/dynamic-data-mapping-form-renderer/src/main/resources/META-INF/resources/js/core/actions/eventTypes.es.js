@@ -60,12 +60,16 @@ const LANGUAGE = {
  * the LayoutProvider component.
  */
 export const MAPPED_EVENT_TYPES = {
+	[DND.MOVE]: 'fieldMoved',
+	[DND.RESIZE]: 'columnResized',
+	[FIELD.ADD]: 'fieldAdded',
 	[FIELD.BLUR]: 'fieldBlurred',
 	[FIELD.CHANGE]: 'fieldEdited',
 	[FIELD.CLICK]: 'fieldClicked',
 	[FIELD.DELETE]: 'fieldDeleted',
 	[FIELD.DUPLICATE]: 'fieldDuplicated',
 	[FIELD.HOVER]: 'fieldHovered',
+	[FIELD_SET.ADD]: 'fieldSetAdded',
 	[SECTION.ADD]: 'sectionAdded',
 };
 

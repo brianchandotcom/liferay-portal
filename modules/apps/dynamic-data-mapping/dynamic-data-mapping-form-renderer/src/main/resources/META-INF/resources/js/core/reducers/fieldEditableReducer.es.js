@@ -207,17 +207,17 @@ export default (state, action, config) => {
 			};
 		}
 		case EVENT_TYPES.FIELD.BLUR: {
-			const {fieldInstance, value} = action.payload;
+			const {propertyName, propertyValue} = action.payload;
 
 			let focusedField = state.focusedField;
 
 			if (
-				fieldInstance.fieldName === 'fieldReference' &&
-				(value === '' ||
+				propertyName === 'fieldReference' &&
+				(propertyValue === '' ||
 					FieldUtil.findInvalidFieldReference(
 						focusedField,
 						state.pages,
-						value
+						propertyValue
 					))
 			) {
 				focusedField = SettingsContext.updateFieldReference(

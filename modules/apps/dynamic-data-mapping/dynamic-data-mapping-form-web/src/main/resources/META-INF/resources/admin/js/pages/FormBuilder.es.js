@@ -15,6 +15,8 @@
 import ClayButton from '@clayui/button';
 import ClayLink from '@clayui/link';
 import {Context as ModalContext} from '@clayui/modal';
+import classNames from 'classnames';
+import {MultiPanelSidebar} from 'data-engine-taglib';
 import {
 	Pages,
 	useConfig,
@@ -22,7 +24,13 @@ import {
 	useFormState,
 } from 'dynamic-data-mapping-form-renderer';
 import {EVENT_TYPES as CORE_EVENT_TYPES} from 'dynamic-data-mapping-form-renderer/js/core/actions/eventTypes.es';
-import React, {useCallback, useContext, useEffect, useRef} from 'react';
+import React, {
+	useCallback,
+	useContext,
+	useEffect,
+	useRef,
+	useState,
+} from 'react';
 
 import {FormInfo} from '../components/FormInfo.es';
 import {ManagementToolbar} from '../components/ManagementToolbar.es';
@@ -35,6 +43,7 @@ import {createFormURL} from '../util/form.es';
 
 export const FormBuilder = () => {
 	const {
+		dataEngineSidebar,
 		formInstanceId,
 		portletNamespace,
 		publishFormInstanceURL,
@@ -43,6 +52,7 @@ export const FormBuilder = () => {
 		restrictedFormURL,
 		sharedFormURL,
 		showPublishAlert,
+		sidebarPanels,
 		view,
 	} = useConfig();
 	const {
@@ -54,6 +64,11 @@ export const FormBuilder = () => {
 		rules,
 	} = useFormState();
 	const [{onClose}, modalDispatch] = useContext(ModalContext);
+
+	const [{currentPanelId, sidebarOpen}, setSidebarStatus] = useState({
+		currentPanelId: 'fields',
+		sidebarOpen: true,
+	});
 
 	const dispatch = useForm();
 
@@ -208,7 +223,15 @@ export const FormBuilder = () => {
 			<div className="ddm-form-builder">
 				<div className="container ddm-paginated-builder top">
 					<div className="ddm-form-builder-wrapper moveable resizeable">
-						<div className="container ddm-form-builder">
+						<div
+							className={classNames(
+								'container ddm-form-builder',
+								{
+									'ddm-form-builder--sidebar-open':
+										dataEngineSidebar && sidebarOpen,
+								}
+							)}
+						>
 							<Pages
 								editable={true}
 								fieldActions={[
@@ -246,13 +269,39 @@ export const FormBuilder = () => {
 						</div>
 					</div>
 				</div>
-				<MetalSidebarAdapter
-					editingLanguageId={editingLanguageId}
-					fieldSets={fieldSets}
-					focusedField={focusedField}
-					ref={sidebarRef}
-					rules={rules}
-				/>
+
+				{dataEngineSidebar ? (
+					<MultiPanelSidebar
+						createPlugin={({
+							panel,
+							sidebarOpen,
+							sidebarPanelId,
+						}) => ({
+							panel,
+							sidebarOpen,
+							sidebarPanelId,
+						})}
+						currentPanelId={currentPanelId}
+						onChange={({sidebarOpen, sidebarPanelId}) =>
+							setSidebarStatus({
+								currentPanelId: sidebarPanelId,
+								sidebarOpen,
+							})
+						}
+						open={sidebarOpen}
+						panels={[['fields']]}
+						sidebarPanels={sidebarPanels}
+						variant="light"
+					/>
+				) : (
+					<MetalSidebarAdapter
+						editingLanguageId={editingLanguageId}
+						fieldSets={fieldSets}
+						focusedField={focusedField}
+						ref={sidebarRef}
+						rules={rules}
+					/>
+				)}
 			</div>
 
 			{view === 'fieldSets' && (

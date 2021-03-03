@@ -13,6 +13,7 @@
  */
 
 import {ClayModalProvider} from '@clayui/modal';
+import {DragLayer} from 'data-engine-taglib';
 import {
 	ConfigProvider,
 	FormProvider,
@@ -80,6 +81,7 @@ export const App = ({autosaveInterval, autosaveURL, ...otherProps}) => {
 							url={autosaveURL}
 						>
 							<ToastProvider>
+								<DragLayer />
 								<Router>
 									<Switch>
 										<Route

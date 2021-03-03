@@ -17,7 +17,6 @@ import ClayLayout from '@clayui/layout';
 import {
 	EVENT_TYPES,
 	FormFieldSettings,
-	MAPPED_EVENT_TYPES,
 	Pages,
 } from 'dynamic-data-mapping-form-renderer';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
@@ -148,7 +147,7 @@ export default function ({
 							break;
 						case EVENT_TYPES.FIELD.BLUR:
 						case EVENT_TYPES.FIELD.CHANGE:
-							dispatchEvent(MAPPED_EVENT_TYPES[type], {
+							dispatchEvent(type, {
 								editingLanguageId:
 									settingsContext.editingLanguageId,
 								propertyName: payload.fieldInstance.fieldName,

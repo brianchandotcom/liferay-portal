@@ -729,10 +729,13 @@ class Sidebar extends Component {
 		);
 	}
 
-	_handleSettingsFieldBlurred(event) {
+	_handleSettingsFieldBlurred({fieldInstance, value}) {
 		const {dispatch} = this.props;
 
-		dispatch('field_blur', event);
+		dispatch('field_blur', {
+			propertyName: fieldInstance.fieldName,
+			propertyValue: value,
+		});
 	}
 
 	_handleSettingsFieldEdited({fieldInstance, value}) {

@@ -13,30 +13,38 @@
  */
 
 import classNames from 'classnames';
-import React, {useContext} from 'react';
+import {FieldsSidebar} from 'data-engine-taglib';
+import {
+	useConfig,
+	useForm,
+	useFormState,
+} from 'dynamic-data-mapping-form-renderer';
+import {EVENT_TYPES as CORE_EVENT_TYPES} from 'dynamic-data-mapping-form-renderer/js/core/actions/eventTypes.es';
+import React from 'react';
 
-import {FormsSidebarPluginContext} from '../../../components/sidebar/MultiPanelSidebarFormsProxy.es';
-import {FieldsSidebar} from '../../fields-sidebar/components/FieldsSidebar.es';
+import {EVENT_TYPES} from '../../../../eventTypes.es';
 
 const sortFieldTypes = (fieldTypes) =>
 	fieldTypes.sort(({displayOrder: a}, {displayOrder: b}) => a - b);
 
 export const FormsFieldSidebar = ({title}) => {
 	const {
-		activePage,
 		dataProviderInstanceParameterSettingsURL,
 		dataProviderInstancesURL,
 		defaultLanguageId,
-		dispatch,
-		editingLanguageId,
 		fieldTypes,
-		focusedCustomObjectField,
-		focusedField,
 		functionsMetadata,
 		functionsURL,
+	} = useConfig();
+	const {
+		activePage,
+		editingLanguageId,
+		focusedField,
 		pages,
 		rules,
-	} = useContext(FormsSidebarPluginContext);
+	} = useFormState();
+
+	const dispatch = useForm();
 
 	const config = {
 		allowFieldSets: false,
@@ -73,18 +81,18 @@ export const FormsFieldSidebar = ({title}) => {
 				paginationMode: 'single-page',
 			}}
 			defaultLanguageId={defaultLanguageId}
-			dispatchEvent={dispatch}
+			dispatchEvent={(type, payload) => dispatch({payload, type})}
 			displaySettings={Object.keys(focusedField).length > 0}
 			editingLanguageId={editingLanguageId}
 			fieldTypes={sortFieldTypes(
 				fieldTypes.filter(({group}) => group === 'basic')
 			)}
-			focusedCustomObjectField={focusedCustomObjectField}
+			focusedCustomObjectField={{}}
 			focusedField={focusedField}
 			hasFocusedCustomObjectField={() => false}
-			onClick={() => dispatch('sidebarFieldBlurred')}
+			onClick={() => dispatch({type: EVENT_TYPES.SIDEBAR.BLUR})}
 			onDoubleClick={({name: fieldTypeName}) =>
-				dispatch('fieldAdded', {
+				dispatch(CORE_EVENT_TYPES.FIELD.ADD, {
 					data: {
 						fieldName: '',
 						parentFieldName: '',

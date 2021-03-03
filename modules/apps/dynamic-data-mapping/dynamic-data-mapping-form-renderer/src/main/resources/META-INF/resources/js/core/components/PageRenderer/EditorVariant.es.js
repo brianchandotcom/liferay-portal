@@ -35,7 +35,6 @@ import ResizableColumn from '../ResizableColumn.es';
 import * as DefaultVariant from './DefaultVariant.es';
 
 export const Column = ({
-	activePage,
 	allowNestedFields,
 	children,
 	column,
@@ -84,7 +83,7 @@ export const Column = ({
 
 	const handleResize = useCallback((resizing) => setResizing(resizing), []);
 
-	if (editable && column.fields.length === 0 && activePage === pageIndex) {
+	if (editable && column.fields.length === 0) {
 		return (
 			<Placeholder
 				columnIndex={columnIndex}

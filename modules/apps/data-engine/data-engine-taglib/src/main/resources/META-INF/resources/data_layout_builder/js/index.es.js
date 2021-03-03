@@ -23,13 +23,15 @@ import {FormsRuleList} from './components/rule-builder/FormsRuleList.es';
 import SearchInput, {
 	SearchInputWithForm,
 } from './components/search-input/SearchInput.es';
-import {ReactMultiPanelSidebarAdapter} from './components/sidebar/MultiPanelSidebarFormsProxy.es';
+import MultiPanelSidebar from './components/sidebar/MultiPanelSidebar.es';
 import Sidebar from './components/sidebar/Sidebar.es';
 import TranslationManager from './components/translation-manager/TranslationManager.es';
 import * as DataLayoutBuilder from './data-layout-builder/DataLayoutBuilder.es';
 import DragLayer from './drag-and-drop/DragLayer.es';
 import * as DragTypes from './drag-and-drop/dragTypes.es';
 import withDragAndDropContext from './drag-and-drop/withDragAndDropContext.es';
+import {Component as PluginComponent} from './plugins/PluginContext.es';
+import {FieldsSidebar} from './plugins/fields-sidebar/components/FieldsSidebar.es';
 import * as DataConverter from './utils/dataConverter.es';
 import * as DataDefinitionUtils from './utils/dataDefinition.es';
 import * as DataLayoutVisitor from './utils/dataLayoutVisitor.es';
@@ -44,11 +46,13 @@ export {
 	DataLayoutVisitor,
 	DragLayer,
 	DragTypes,
+	FieldsSidebar,
 	FieldType,
 	FieldTypeList,
 	FormsRuleEditor,
 	FormsRuleList,
-	ReactMultiPanelSidebarAdapter,
+	MultiPanelSidebar,
+	PluginComponent,
 	SearchInput,
 	SearchInputWithForm,
 	Sidebar,

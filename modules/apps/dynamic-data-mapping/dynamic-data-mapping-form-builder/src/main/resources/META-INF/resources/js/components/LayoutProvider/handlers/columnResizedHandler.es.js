@@ -210,7 +210,7 @@ export const handleResizeRight = (props, state, indexes, columnTarget) => {
 	return pages;
 };
 
-const handleResizeLeft = (props, state, indexes, columnTarget) => {
+export const handleResizeLeft = (props, state, indexes, columnTarget) => {
 	const {pages} = state;
 
 	const {columnIndex, pageIndex, rowIndex} = indexes[indexes.length - 1];

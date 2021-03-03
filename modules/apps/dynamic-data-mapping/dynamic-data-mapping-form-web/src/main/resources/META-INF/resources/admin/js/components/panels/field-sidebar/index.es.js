@@ -12,18 +12,17 @@
  * details.
  */
 
+import {PluginComponent} from 'data-engine-taglib';
 import React from 'react';
 
-import {Component} from '../PluginContext.es';
 import {FormsFieldSidebar} from './components/FormsFieldSidebar.es';
 
 /**
  * Entry-point for "FormsFieldSidebar" (sidebar panel) functionality.
  */
-
 export default class {
 	constructor({app, panel}) {
-		this.Component = Component(app);
+		this.Component = PluginComponent(app);
 		this.title = panel.label;
 	}
 

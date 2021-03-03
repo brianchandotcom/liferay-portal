@@ -14,6 +14,7 @@
 
 import ClayForm from '@clayui/form';
 import classNames from 'classnames';
+import {MAPPED_EVENT_TYPES} from 'dynamic-data-mapping-form-renderer';
 import React, {useContext, useState} from 'react';
 
 import AppContext from '../../../AppContext.es';
@@ -69,7 +70,7 @@ export const DataEngineFieldsSidebar = ({title}) => {
 			dataLayout={dataLayout}
 			defaultLanguageId={dataLayoutBuilder.props.defaultLanguageId}
 			dispatchEvent={(type, payload) => {
-				if (type === 'fieldEdited') {
+				if (type === 'field_change') {
 					const {editingLanguageId} = payload;
 
 					if (
@@ -92,7 +93,7 @@ export const DataEngineFieldsSidebar = ({title}) => {
 
 				if (!hasFocusedCustomObjectField(focusedCustomObjectField)) {
 					dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider?.dispatch?.(
-						type,
+						MAPPED_EVENT_TYPES[type] ?? type,
 						payload
 					);
 				}

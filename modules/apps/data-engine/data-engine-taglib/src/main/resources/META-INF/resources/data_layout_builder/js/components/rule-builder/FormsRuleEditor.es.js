@@ -15,7 +15,7 @@
 import './FormsRuleEditor.scss';
 
 import ClayButton from '@clayui/button';
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 
 import {Editor} from './editor/Editor.es';
 
@@ -30,7 +30,6 @@ const localDataStorage = {
 
 export const FormsRuleEditor = ({onCancel, onSave, rule, ...otherProps}) => {
 	const [disabled, setDisabled] = useState(true);
-	const ruleRef = useRef(null);
 
 	return (
 		<div className="form-rule-builder">
@@ -45,14 +44,13 @@ export const FormsRuleEditor = ({onCancel, onSave, rule, ...otherProps}) => {
 			</div>
 			<Editor
 				onChange={({logicalOperator, ...otherProps}) => {
-					ruleRef.current = {
+					localDataStorage.rule = {
 						...otherProps,
 						['logical-operator']: logicalOperator,
 					};
-					localDataStorage.rule = ruleRef.current;
 				}}
 				onValidator={(value) => setDisabled(!value)}
-				rule={rule ?? localDataStorage.rule}
+				rule={localDataStorage.rule ?? rule}
 				{...otherProps}
 			/>
 			<div className="form-rule-builder-footer">
@@ -61,8 +59,8 @@ export const FormsRuleEditor = ({onCancel, onSave, rule, ...otherProps}) => {
 						disabled={disabled}
 						displayType="primary"
 						onClick={() => {
+							onSave(localDataStorage.rule);
 							localDataStorage.rule = undefined;
-							onSave(ruleRef.current);
 						}}
 					>
 						{Liferay.Language.get('save')}

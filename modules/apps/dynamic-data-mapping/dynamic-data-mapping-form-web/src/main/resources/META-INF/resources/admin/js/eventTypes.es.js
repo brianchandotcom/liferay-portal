@@ -16,6 +16,7 @@ const RULE = {
 	ADD: 'rule_add',
 	CHANGE: 'rule_change',
 	DELETE: 'rule_delete',
+	EDIT: 'rule_edit',
 };
 
 const SIDEBAR = {

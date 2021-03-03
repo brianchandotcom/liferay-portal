@@ -24,6 +24,7 @@ export default (state, action) => {
 			const {rules} = state;
 
 			return {
+				currentRuleLoc: null,
 				rules: [...rules, action.payload],
 			};
 		}
@@ -44,6 +45,7 @@ export default (state, action) => {
 			});
 
 			return {
+				currentRuleLoc: null,
 				rules,
 			};
 		}
@@ -52,6 +54,13 @@ export default (state, action) => {
 
 			return {
 				rules: rules.filter((rule, index) => index !== action.payload),
+			};
+		}
+		case EVENT_TYPES.RULE.EDIT: {
+			const {loc} = action.payload;
+
+			return {
+				currentRuleLoc: loc,
 			};
 		}
 		default:

@@ -12,12 +12,17 @@
  * details.
  */
 
+import {RulesSupport} from 'dynamic-data-mapping-form-builder';
 import {getUid} from 'dynamic-data-mapping-form-renderer';
 import {INITIAL_STATE} from 'dynamic-data-mapping-form-renderer/js/core/config/index.es';
 
 export const BUILDER_INITIAL_STATE = {
 	...INITIAL_STATE,
 	availableLanguageIds: [themeDisplay.getLanguageId()],
+
+	// Flag that indicates the index of the rule being edited.
+
+	currentRuleLoc: null,
 	editingLanguageId: themeDisplay.getDefaultLanguageId(),
 	fieldSets: [],
 	fieldTypes: [],
@@ -68,12 +73,20 @@ export const initState = (
 		initialSuccessPageSettings,
 		pages: initialPages,
 		paginationMode: initialPaginationMode,
+		rules: initialRules,
 		successPageSettings: initialSuccessPage,
 		...otherProps
 	},
 	{view}
 ) => {
 	const pages = initialPages.length ? initialPages : INITIAL_PAGES;
+
+	// Before starting the application formats the rules there may be a broken rule with
+	// an invalid field and it is necessary to remove it from the rule.
+
+	const rules = initialRules.length
+		? RulesSupport.formatRules(pages, initialRules)
+		: initialRules;
 
 	// The Forms application is also rendered for Element Set, so we have to configure some
 	// components to behave differently. This can be removed when Element Set is deprecated.
@@ -134,6 +147,7 @@ export const initState = (
 				: false,
 		].filter(Boolean),
 		paginationMode,
+		rules,
 		successPageSettings,
 		...otherProps,
 	};

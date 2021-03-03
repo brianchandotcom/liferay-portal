@@ -22,7 +22,7 @@ import {
 	useFormState,
 } from 'dynamic-data-mapping-form-renderer';
 import {fetch} from 'frontend-js-web';
-import React, {useCallback, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo} from 'react';
 import {Route, Switch} from 'react-router-dom';
 
 import {ManagementToolbar} from '../components/ManagementToolbar.es';
@@ -38,10 +38,8 @@ export const RuleBuilder = ({history, location}) => {
 		portletNamespace,
 		rolesURL,
 	} = useConfig();
-	const {pages, rules} = useFormState();
+	const {currentRuleLoc, pages, rules} = useFormState();
 	const dispatch = useForm();
-
-	const [rule, setRule] = useState(null);
 
 	const {resource: resourceDataProvider} = useResource({
 		fetch,
@@ -112,7 +110,23 @@ export const RuleBuilder = ({history, location}) => {
 		[history, location.pathname]
 	);
 
-	const onAddRule = useCallback(() => navigate('/rules/editor'), [navigate]);
+	useEffect(() => {
+
+		// Redirects the user to the edit page if a rule is being edited or created.
+		// - `undefined` indicates that a new rule is being created
+		// - `0...9` indicates the index of the rule
+		// - `null` indicates that no rules are in progress
+
+		if (currentRuleLoc !== null) {
+			navigate('/rules/editor');
+		}
+	}, [currentRuleLoc, navigate]);
+
+	const onAddRule = useCallback(() => {
+		dispatch({payload: {loc: undefined}, type: EVENT_TYPES.RULE.EDIT});
+
+		navigate('/rules/editor');
+	}, [dispatch, navigate]);
 
 	return (
 		<ClayLayout.Container>
@@ -134,7 +148,10 @@ export const RuleBuilder = ({history, location}) => {
 							})
 						}
 						onEdit={(index) => {
-							setRule(index);
+							dispatch({
+								payload: {loc: index},
+								type: EVENT_TYPES.RULE.EDIT,
+							});
 							navigate('/rules/editor');
 						}}
 						pages={pageOptions}
@@ -151,32 +168,34 @@ export const RuleBuilder = ({history, location}) => {
 						functionsURL={functionsURL}
 						onCancel={() => {
 							navigate('/rules');
-							setRule(null);
+							dispatch({
+								payload: {loc: null},
+								type: EVENT_TYPES.RULE.EDIT,
+							});
 						}}
 						onSave={(event) => {
-							if (rule !== null) {
-								dispatch({
-									payload: {
-										loc: rule,
-										rule: event,
-									},
-									type: EVENT_TYPES.RULE.CHANGE,
-								});
-							}
-							else {
+							if (currentRuleLoc === undefined) {
 								dispatch({
 									payload: event,
 									type: EVENT_TYPES.RULE.ADD,
 								});
 							}
+							else {
+								dispatch({
+									payload: {
+										loc: currentRuleLoc,
+										rule: event,
+									},
+									type: EVENT_TYPES.RULE.CHANGE,
+								});
+							}
 
 							navigate('/rules');
-							setRule(null);
 						}}
 						operatorsByType={functionsMetadata}
 						pages={pageOptions}
 						roles={roles}
-						rule={rules[rule]}
+						rule={rules[currentRuleLoc]}
 					/>
 				</Route>
 			</Switch>

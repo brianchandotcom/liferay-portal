@@ -91,6 +91,7 @@ public class ShipmentResourceTest extends BaseShipmentResourceTestCase {
 		return new ArrayList<>();
 	}
 
+	@Override
 	protected Shipment randomShipment() throws Exception {
 		return new Shipment() {
 			{

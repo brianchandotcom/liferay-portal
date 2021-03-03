@@ -111,6 +111,7 @@ public class ShipmentItemResourceTest extends BaseShipmentItemResourceTestCase {
 		return new String[] {"quantity", "warehouseId"};
 	}
 
+	@Override
 	protected ShipmentItem randomShipmentItem() throws Exception {
 		CommerceOrderItem commerceOrderItem =
 			CommerceTestUtil.addCommerceOrderItem(

@@ -27,6 +27,7 @@ import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.headless.commerce.admin.shipment.client.dto.v1_0.ShippingAddress;
 import com.liferay.headless.commerce.admin.shipment.client.serdes.v1_0.ShippingAddressSerDes;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
@@ -42,11 +43,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.lang.reflect.InvocationTargetException;
-
 import java.math.BigDecimal;
-
-import org.apache.commons.beanutils.BeanUtilsBean;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -133,9 +130,6 @@ public class ShippingAddressResourceTest
 
 	@Test
 	public void testPatchShipmentShippingAddress() throws Exception {
-		ShippingAddress postShippingAddress = _toShippingAddress(
-			_commerceShipment.fetchCommerceAddress());
-
 		ShippingAddress randomPatchShippingAddress =
 			randomPatchShippingAddress();
 
@@ -144,9 +138,9 @@ public class ShippingAddressResourceTest
 			randomPatchShippingAddress);
 
 		ShippingAddress expectedPatchShippingAddress =
-			postShippingAddress.clone();
+			randomPatchShippingAddress.clone();
 
-		_beanUtilsBean.copyProperties(
+		BeanPropertiesUtil.copyProperties(
 			expectedPatchShippingAddress, randomPatchShippingAddress);
 
 		ShippingAddress getShippingAddress =
@@ -224,19 +218,6 @@ public class ShippingAddressResourceTest
 			}
 		};
 	}
-
-	private static final BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
-
-		@Override
-		public void copyProperty(Object bean, String name, Object value)
-			throws IllegalAccessException, InvocationTargetException {
-
-			if (value != null) {
-				super.copyProperty(bean, name, value);
-			}
-		}
-
-	};
 
 	@DeleteAfterTestRun
 	private CommerceChannel _commerceChannel;

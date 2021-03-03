@@ -182,7 +182,7 @@ definition {
 			webContentDate = "02/22/2021",
 			webContentDateFieldLabel = "Date",
 			webContentNumeric = "1.1",
-			webContentNumericFieldLabel = "Decimal",
+			webContentNumericFieldLabel = "Number",
 			webContentText = "Text - en_US",
 			webContentTextFieldLabel = "Text",
 			webContentTitle = "My Web Content based on My Structure with repeated fields");
@@ -193,7 +193,7 @@ definition {
 			webContentDate = "23/02/2021",
 			webContentDateFieldLabel = "Date - pt_BR",
 			webContentNumeric = "1,2",
-			webContentNumericFieldLabel = "Decimal - pt_BR",
+			webContentNumericFieldLabel = "Number - pt_BR",
 			webContentText = "Text - pt_BR",
 			webContentTextFieldLabel = "Text - pt_BR",
 			webContentTitle = "My Web Content based on My Structure with repeated fields - pt_BR");
@@ -204,7 +204,7 @@ definition {
 			webContentDate = "23/02/2021",
 			webContentDateFieldLabel = "Date - ca_ES",
 			webContentNumeric = "1,2",
-			webContentNumericFieldLabel = "Decimal - ca_ES",
+			webContentNumericFieldLabel = "Number - ca_ES",
 			webContentText = "Text - ca_ES",
 			webContentTextFieldLabel = "Text - ca_ES",
 			webContentTitle = "My Web Content based on My Structure with repeated fields - ca_ES");
@@ -215,7 +215,7 @@ definition {
 			webContentDate = "02/22/2021",
 			webContentDateFieldLabel = "Date",
 			webContentNumeric = "1.1",
-			webContentNumericFieldLabel = "Decimal",
+			webContentNumericFieldLabel = "Number",
 			webContentText = "Text - en_US",
 			webContentTextFieldLabel = "Text",
 			webContentTitle = "My Web Content based on My Structure with repeated fields");
@@ -227,7 +227,7 @@ definition {
 			webContentDateFieldLabel = "Date - pt_BR",
 			webContentLocaleFieldLabel = "pt_BR",
 			webContentNumeric = "1,2",
-			webContentNumericFieldLabel = "Decimal - pt_BR",
+			webContentNumericFieldLabel = "Number - pt_BR",
 			webContentText = "Text - pt_BR",
 			webContentTextFieldLabel = "Text - pt_BR",
 			webContentTitle = "My Web Content based on My Structure with repeated fields",
@@ -240,7 +240,7 @@ definition {
 			webContentDateFieldLabel = "Date - ca_ES",
 			webContentLocaleFieldLabel = "ca_ES",
 			webContentNumeric = "1,2",
-			webContentNumericFieldLabel = "Decimal - ca_ES",
+			webContentNumericFieldLabel = "Number - ca_ES",
 			webContentText = "Text - ca_ES",
 			webContentTextFieldLabel = "Text - ca_ES",
 			webContentTitle = "My Web Content based on My Structure with repeated fields",

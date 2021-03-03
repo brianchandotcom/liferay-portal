@@ -71,7 +71,7 @@ public class OAuth2ApplicationServiceSoap {
 				String clientSecret, String description,
 				java.util.List<String> featuresList, String homePageURL,
 				long iconFileEntryId, String name, String privacyPolicyURL,
-				java.util.List<String> redirectURIsList,
+				java.util.List<String> redirectURIsList, boolean rememberDevice,
 				java.util.List<String> scopeAliasesList,
 				boolean trustedApplication,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -83,8 +83,8 @@ public class OAuth2ApplicationServiceSoap {
 					allowedGrantTypesList, clientCredentialUserId, clientId,
 					clientProfile, clientSecret, description, featuresList,
 					homePageURL, iconFileEntryId, name, privacyPolicyURL,
-					redirectURIsList, scopeAliasesList, trustedApplication,
-					serviceContext);
+					redirectURIsList, rememberDevice, scopeAliasesList,
+					trustedApplication, serviceContext);
 
 			return com.liferay.oauth2.provider.model.OAuth2ApplicationSoap.
 				toSoapModel(returnValue);
@@ -99,8 +99,8 @@ public class OAuth2ApplicationServiceSoap {
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 #addOAuth2Application(List, long, String, int, String,
-	 String, List, String, long, String, String, List, List,
-	 boolean, ServiceContext)}
+	 String, List, String, long, String, String, List, boolean,
+	 List, boolean, ServiceContext)}
 	 */
 	@Deprecated
 	public static com.liferay.oauth2.provider.model.OAuth2ApplicationSoap
@@ -288,9 +288,9 @@ public class OAuth2ApplicationServiceSoap {
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #updateOAuth2Application(long, List, long, String, int,
+	 #updateOAuth2Application(long, long, List, long, String, int,
 	 String, String, List, String, long, String, String, List,
-	 long, ServiceContext)}
+	 boolean, boolean)}
 	 */
 	@Deprecated
 	public static com.liferay.oauth2.provider.model.OAuth2ApplicationSoap
@@ -372,7 +372,7 @@ public class OAuth2ApplicationServiceSoap {
 				String clientSecret, String description,
 				java.util.List<String> featuresList, String homePageURL,
 				long iconFileEntryId, String name, String privacyPolicyURL,
-				java.util.List<String> redirectURIsList,
+				java.util.List<String> redirectURIsList, boolean rememberDevice,
 				boolean trustedApplication)
 		throws RemoteException {
 
@@ -383,7 +383,7 @@ public class OAuth2ApplicationServiceSoap {
 					allowedGrantTypesList, clientCredentialUserId, clientId,
 					clientProfile, clientSecret, description, featuresList,
 					homePageURL, iconFileEntryId, name, privacyPolicyURL,
-					redirectURIsList, trustedApplication);
+					redirectURIsList, rememberDevice, trustedApplication);
 
 			return com.liferay.oauth2.provider.model.OAuth2ApplicationSoap.
 				toSoapModel(returnValue);

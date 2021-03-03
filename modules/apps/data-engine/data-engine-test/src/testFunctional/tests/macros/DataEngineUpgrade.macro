@@ -243,9 +243,9 @@ definition {
 			locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 
 		AssertTextEquals(
-			fieldLabel = "Numeric",
+			fieldLabel = "Number",
 			locator1 = "FormViewBuilder#FIELD_LABEL",
-			value1 = "Numeric");
+			value1 = "Number");
 
 		PortletEntry.changeLocale(locale = "ca-ES");
 
@@ -260,9 +260,9 @@ definition {
 			locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 
 		AssertTextEquals(
-			fieldLabel = "Numeric - ca-ES",
+			fieldLabel = "Number - ca-ES",
 			locator1 = "FormViewBuilder#FIELD_LABEL",
-			value1 = "Numeric - ca-ES");
+			value1 = "Number - ca-ES");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
@@ -277,9 +277,9 @@ definition {
 			locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 
 		AssertTextEquals(
-			fieldLabel = "Numeric - pt-BR",
+			fieldLabel = "Number - pt-BR",
 			locator1 = "FormViewBuilder#FIELD_LABEL",
-			value1 = "Numeric - pt-BR");
+			value1 = "Number - pt-BR");
 	}
 
 	macro validateNStructure {

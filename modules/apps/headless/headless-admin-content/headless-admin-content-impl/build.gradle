@@ -16,6 +16,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	compileOnly project(":apps:fragment:fragment-api")
+	compileOnly project(":apps:friendly-url:friendly-url-api")
 	compileOnly project(":apps:headless:headless-admin-content:headless-admin-content-api")
 	compileOnly project(":apps:headless:headless-common-spi")
 	compileOnly project(":apps:headless:headless-delivery:headless-delivery-api")

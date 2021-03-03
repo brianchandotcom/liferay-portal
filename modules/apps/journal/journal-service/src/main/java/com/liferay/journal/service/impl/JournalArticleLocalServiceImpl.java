@@ -7022,7 +7022,7 @@ public class JournalArticleLocalServiceImpl
 
 				if (isExpireAllArticleVersions(companyId)) {
 					List<JournalArticle> currentArticles =
-						journalArticlePersistence.findByG_A(
+						journalArticleLocalService.getArticles(
 							article.getGroupId(), article.getArticleId(),
 							QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 							new ArticleVersionComparator(true));
@@ -7046,7 +7046,8 @@ public class JournalArticleLocalServiceImpl
 
 				article.setStatus(WorkflowConstants.STATUS_EXPIRED);
 
-				article = journalArticlePersistence.update(article);
+				article = journalArticleLocalService.updateJournalArticle(
+					article);
 
 				updatePreviousApprovedArticle(article);
 

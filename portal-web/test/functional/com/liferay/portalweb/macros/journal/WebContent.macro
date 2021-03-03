@@ -2438,8 +2438,8 @@ definition {
 			}
 			else {
 				AssertTextEquals(
-				locator1 = "TextInput#TITLE",
-				value1 = "${webContentTitle}");
+					locator1 = "TextInput#TITLE",
+					value1 = "${webContentTitle}");
 			}
 
 			if (isSet(description)) {

@@ -648,7 +648,7 @@ definition {
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 	}
 
-	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
+	@description = "This is a test for LPS-123537. Validate the translations on a Web Content created with all fields including nested ones"
 	@priority = "5"
 	test TranslateWebContentWithAllFieldsNested {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -692,17 +692,17 @@ definition {
 		PortletEntry.publish();
 
 		WebContent.viewWithStructureCP(
-			webContentLocaleFieldLabel = "pt_BR",
 			webContentColor = "000000",
-			webContentTitle = "Web Content Title",
-			webContentTitleTranslated = "Título do Web Content",
 			webContentDate = "03/02/2021",
+			webContentLocaleFieldLabel = "pt_BR",
 			webContentMultipleSelection = "Option 2",
 			webContentNumeric = "13",
 			webContentRichText = "Este é um campo de texto completo",
 			webContentSelectFromList = "Option 1",
 			webContentSingleSelection = "Option 2",
-			webContentText = "Este é um campo de texto");
+			webContentText = "Este é um campo de texto",
+			webContentTitle = "Web Content Title",
+			webContentTitleTranslated = "Título do Web Content");
 	}
 
 	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"

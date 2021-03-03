@@ -799,12 +799,17 @@ public class FragmentEntryProcessorEditableTest {
 		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 			_group.getGroupId(), false);
 
+		themeDisplay.setLayoutSet(layoutSet);
+
 		Theme theme = _themeLocalService.getTheme(
 			_company.getCompanyId(), layoutSet.getThemeId());
 
 		themeDisplay.setLayoutTypePortlet(
 			(LayoutTypePortlet)_layout.getLayoutType());
 		themeDisplay.setLookAndFeel(theme, null);
+
+		themeDisplay.setRequest(_getHttpServletRequest());
+		themeDisplay.setResponse(new MockHttpServletResponse());
 
 		themeDisplay.setRealUser(TestPropsValues.getUser());
 		themeDisplay.setUser(TestPropsValues.getUser());

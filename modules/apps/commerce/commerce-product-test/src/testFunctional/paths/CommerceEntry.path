@@ -405,7 +405,7 @@
 </tr>
 <tr>
 	<td>ENTRY_NAME_BODY_VERTICAL_ELLIPSIS</td>
-	<td>//div[@class='data-set-display-wrapper' or @class='searchcontainer-content']//a[text()='${key_entryName}']/../../following-sibling::td//button</td>
+	<td>//div[@class='data-set-display-wrapper' or @class='searchcontainer-content']//a[text()='${key_entryName}']/../../following-sibling::div//button</td>
 	<td></td>
 </tr>
 <tr>

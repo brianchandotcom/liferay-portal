@@ -59,8 +59,4 @@ Export-Package:\
 	com.liferay.portal.search.suggest,\
 	com.liferay.portal.search.summary,\
 	com.liferay.portal.search.synonym
-Import-Package:\
-	com.liferay.portal.kernel.search;version="[8.1.0,9.6.0)",\
-	\
-	*
 -dsannotations-options: inherit

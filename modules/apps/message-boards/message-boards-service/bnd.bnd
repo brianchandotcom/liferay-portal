@@ -1,10 +1,6 @@
 Bundle-Name: Liferay Message Boards Service
 Bundle-SymbolicName: com.liferay.message.boards.service
 Bundle-Version: 5.0.4
-Import-Package:\
-	com.liferay.portal.kernel.search;version="[8.1.0,9.6.0)",\
-	\
-	*
 Liferay-Require-SchemaVersion: 5.2.0
 Liferay-Service: true
 -dsannotations-options: inherit

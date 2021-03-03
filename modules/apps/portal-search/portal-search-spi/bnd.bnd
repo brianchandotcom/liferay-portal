@@ -14,7 +14,3 @@ Export-Package:\
 	com.liferay.portal.search.spi.reindexer,\
 	com.liferay.portal.search.spi.searcher,\
 	com.liferay.portal.search.spi.settings
-Import-Package:\
-	com.liferay.portal.kernel.search;version="[8.1.0,9.6.0)",\
-	\
-	*

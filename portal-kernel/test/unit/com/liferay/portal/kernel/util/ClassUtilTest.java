@@ -16,10 +16,11 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.test.CaptureHandler;
-import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,7 +44,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -178,29 +178,28 @@ public class ClassUtilTest {
 
 		//Test log output
 
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					ClassUtil.class.getName(), Level.FINE)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
+				ClassUtil.class.getName(), Level.FINE)) {
 
 			ClassUtil.getParentPath(classLoader, "java.lang.String");
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logRecords.toString(), 3, logRecords.size());
+			Assert.assertEquals(logEntries.toString(), 3, logEntries.size());
 
-			LogRecord logRecord = logRecords.get(0);
-
-			Assert.assertEquals(
-				"Class name java.lang.String", logRecord.getMessage());
-
-			logRecord = logRecords.get(1);
-
-			Assert.assertEquals("URI " + uri, logRecord.getMessage());
-
-			logRecord = logRecords.get(2);
+			LogEntry logEntry = logEntries.get(0);
 
 			Assert.assertEquals(
-				"Parent path " + expectedParentPath, logRecord.getMessage());
+				"Class name java.lang.String", logEntry.getMessage());
+
+			logEntry = logEntries.get(1);
+
+			Assert.assertEquals("URI " + uri, logEntry.getMessage());
+
+			logEntry = logEntries.get(2);
+
+			Assert.assertEquals(
+				"Parent path " + expectedParentPath, logEntry.getMessage());
 		}
 	}
 
@@ -238,9 +237,8 @@ public class ClassUtilTest {
 
 		// logging
 
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					ClassUtil.class.getName(), Level.FINE)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
+				ClassUtil.class.getName(), Level.FINE)) {
 
 			ReflectionTestUtil.invoke(
 				ClassUtil.class, "_getPathURIFromURL",
@@ -249,16 +247,16 @@ public class ClassUtilTest {
 					"jar:file:/opt/liferay/tomcat/lib/servlet-api.jar" +
 						"!/javax/servlet/Servlet.class"));
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
-			LogRecord logRecord = logRecords.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
 			Assert.assertEquals(
 				"URI file:/opt/liferay/tomcat/lib/servlet-api.jar!/javax" +
 					"/servlet/Servlet.class",
-				logRecord.getMessage());
+				logEntry.getMessage());
 		}
 	}
 

@@ -39,9 +39,9 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.test.log.CaptureAppender;
-import com.liferay.portal.test.log.Log4JLoggerTestUtil;
-import com.liferay.portal.test.log.LogEvent;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -172,16 +172,14 @@ public class CTSQLTransformerTest {
 
 		CTModelRegistry.unregisterCTModel("ReferenceTable");
 
-		try (CaptureAppender captureAppender1 =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					"com.liferay.change.tracking.service.impl." +
-						"CTCollectionLocalServiceImpl",
-					Log4JLoggerTestUtil.WARN);
-			CaptureAppender captureAppender2 =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					"com.liferay.change.tracking.internal.search." +
-						"CTSearchEventListener",
-					Log4JLoggerTestUtil.WARN)) {
+		try (LogCapture logCapture1 = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.change.tracking.service.impl." +
+					"CTCollectionLocalServiceImpl",
+				LoggerTestUtil.WARN);
+			LogCapture logCapture2 = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.change.tracking.internal.search." +
+					"CTSearchEventListener",
+				LoggerTestUtil.WARN)) {
 
 			for (CTCollection ctCollection : _ctCollections) {
 				_ctCollectionLocalService.deleteCTCollection(ctCollection);
@@ -1211,23 +1209,22 @@ public class CTSQLTransformerTest {
 					_classNameLocalService.getClassNameId(ReferenceTable.class))
 			).build());
 
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					"com.liferay.portal.change.tracking.internal." +
-						"CTSQLTransformerImpl",
-					Log4JLoggerTestUtil.WARN)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.change.tracking.internal." +
+					"CTSQLTransformerImpl",
+				LoggerTestUtil.WARN)) {
 
 			String newSQL = _ctSQLTransformer.transform(inputSQL);
 
 			Assert.assertEquals(expectedOutputSQL, newSQL);
 
-			List<LogEvent> logEvents = captureAppender.getLogEvents();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
 			if (expectedOutputSQLFile.endsWith("_ct.sql")) {
-				Assert.assertFalse(newSQL, logEvents.isEmpty());
+				Assert.assertFalse(newSQL, logEntries.isEmpty());
 			}
 			else {
-				Assert.assertTrue(newSQL, logEvents.isEmpty());
+				Assert.assertTrue(newSQL, logEntries.isEmpty());
 			}
 
 			return newSQL;

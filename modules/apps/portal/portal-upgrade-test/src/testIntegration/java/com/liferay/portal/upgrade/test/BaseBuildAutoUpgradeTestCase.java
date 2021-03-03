@@ -32,9 +32,9 @@ import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.aop.AopInvocationHandler;
-import com.liferay.portal.test.log.CaptureAppender;
-import com.liferay.portal.test.log.Log4JLoggerTestUtil;
-import com.liferay.portal.test.log.LogEvent;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.test.model.impl.BuildAutoUpgradeTestEntityModelImpl;
@@ -443,16 +443,14 @@ public abstract class BaseBuildAutoUpgradeTestCase {
 		ENTITY_PATH = path.concat(".class");
 	}
 
-	private String _assertAndGetFirstLogRecordMessage(
-		CaptureAppender captureAppender) {
+	private String _assertAndGetFirstLogRecordMessage(LogCapture logCapture) {
+		List<LogEntry> logEntries = logCapture.getLogEntries();
 
-		List<LogEvent> logEvents = captureAppender.getLogEvents();
+		Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
-		Assert.assertEquals(logEvents.toString(), 1, logEvents.size());
+		LogEntry logEntry = logEntries.get(0);
 
-		LogEvent logEvent = logEvents.get(0);
-
-		return logEvent.getMessage();
+		return logEntry.getMessage();
 	}
 
 	private void _initTableColumns(
@@ -504,26 +502,24 @@ public abstract class BaseBuildAutoUpgradeTestCase {
 	}
 
 	private void _updateBundle(InputStream inputStream) throws Exception {
-		try (CaptureAppender serviceComponentCaptureHandler =
-				Log4JLoggerTestUtil.configureLog4JLogger(
+		try (LogCapture serviceComponentLogCapture =
+				LoggerTestUtil.configureLog4JLogger(
 					"com.liferay.portal.service.impl." +
 						"ServiceComponentLocalServiceImpl",
-					Log4JLoggerTestUtil.WARN);
-			CaptureAppender baseDBCaptureHandler =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					"com.liferay.portal.dao.db.BaseDB",
-					Log4JLoggerTestUtil.WARN)) {
+					LoggerTestUtil.WARN);
+			LogCapture baseDBLogCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.dao.db.BaseDB", LoggerTestUtil.WARN)) {
 
 			_bundle.update(inputStream);
 
 			String message = _assertAndGetFirstLogRecordMessage(
-				serviceComponentCaptureHandler);
+				serviceComponentLogCapture);
 
 			Assert.assertTrue(
 				message,
 				message.startsWith("Auto upgrading BuildAutoUpgradeTest"));
 
-			message = _assertAndGetFirstLogRecordMessage(baseDBCaptureHandler);
+			message = _assertAndGetFirstLogRecordMessage(baseDBLogCapture);
 
 			Assert.assertTrue(
 				message,

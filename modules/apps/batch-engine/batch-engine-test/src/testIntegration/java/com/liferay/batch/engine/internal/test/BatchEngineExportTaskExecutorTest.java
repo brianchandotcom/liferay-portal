@@ -29,9 +29,9 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.test.log.CaptureAppender;
-import com.liferay.portal.test.log.Log4JLoggerTestUtil;
-import com.liferay.portal.test.log.LogEvent;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 
 import java.io.InputStream;
@@ -102,15 +102,14 @@ public class BatchEngineExportTaskExecutorTest
 	public void testExportBlogPostingsToCSVFileWithEmptyFieldNames()
 		throws Exception {
 
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					_CLASS_NAME_BATCH_ENGINE_EXPORT_TASK_EXECUTOR_IMPL,
-					Log4JLoggerTestUtil.ERROR)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_CLASS_NAME_BATCH_ENGINE_EXPORT_TASK_EXECUTOR_IMPL,
+				LoggerTestUtil.ERROR)) {
 
 			_testExportBlogPostingsToCSVFile(
 				Collections.emptyList(), line -> new Object[0], _parameters);
 
-			_assertEmptyFieldNames(captureAppender);
+			_assertEmptyFieldNames(logCapture);
 		}
 	}
 
@@ -244,10 +243,9 @@ public class BatchEngineExportTaskExecutorTest
 	public void testExportBlogPostingsToXLSFileWithEmptyFieldNames()
 		throws Exception {
 
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					_CLASS_NAME_BATCH_ENGINE_EXPORT_TASK_EXECUTOR_IMPL,
-					Log4JLoggerTestUtil.ERROR)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_CLASS_NAME_BATCH_ENGINE_EXPORT_TASK_EXECUTOR_IMPL,
+				LoggerTestUtil.ERROR)) {
 
 			_testExportBlogPostingsToXLSFile(
 				Collections.emptyList(), rowValues -> new Object[0],
@@ -284,16 +282,16 @@ public class BatchEngineExportTaskExecutorTest
 
 	}
 
-	private void _assertEmptyFieldNames(CaptureAppender captureAppender) {
-		List<LogEvent> logEvents = captureAppender.getLogEvents();
+	private void _assertEmptyFieldNames(LogCapture logCapture) {
+		List<LogEntry> logEntries = logCapture.getLogEntries();
 
-		Assert.assertEquals(logEvents.toString(), 1, logEvents.size());
+		Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
-		LogEvent logEvent = logEvents.get(0);
+		LogEntry logEntry = logEntries.get(0);
 
-		Assert.assertEquals(Log4JLoggerTestUtil.ERROR, logEvent.getPriority());
+		Assert.assertEquals(LoggerTestUtil.ERROR, logEntry.getPriority());
 
-		String message = logEvent.getMessage();
+		String message = logEntry.getMessage();
 
 		Assert.assertTrue(
 			message.startsWith("Unable to update batch engine export task"));

@@ -23,12 +23,13 @@ import com.liferay.portal.fabric.netty.fileserver.CompressionLevel;
 import com.liferay.portal.fabric.netty.fileserver.FileHelperUtil;
 import com.liferay.portal.fabric.netty.fileserver.FileResponse;
 import com.liferay.portal.kernel.nio.FileChannelWrapper;
-import com.liferay.portal.kernel.test.CaptureHandler;
-import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.AdviseWith;
 import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
 
@@ -58,7 +59,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -371,9 +371,8 @@ public class FileUploadChannelHandlerTest {
 				});
 		}
 
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					FileUploadChannelHandler.class.getName(), Level.SEVERE)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
+				FileUploadChannelHandler.class.getName(), Level.SEVERE)) {
 
 			try {
 				if (inEventloop) {
@@ -433,15 +432,15 @@ public class FileUploadChannelHandlerTest {
 
 			shutdown(inEventloop, fileUploadChannelHandler.eventExecutor);
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
 			if (fail) {
-				LogRecord logRecord = logRecords.remove(0);
+				LogEntry logEntry = logEntries.remove(0);
 
 				Assert.assertEquals(
-					"File upload failure", logRecord.getMessage());
+					"File upload failure", logEntry.getMessage());
 
-				Throwable throwable = logRecord.getThrown();
+				Throwable throwable = logEntry.getThrowable();
 
 				if (folder) {
 					Assert.assertEquals(
@@ -454,15 +453,15 @@ public class FileUploadChannelHandlerTest {
 			}
 
 			if (!postAsyncBroker) {
-				LogRecord logRecord = logRecords.remove(0);
+				LogEntry logEntry = logEntries.remove(0);
 
 				if (fail) {
 					Assert.assertEquals(
 						"Unable to place exception because no future exists " +
 							"with ID " + fileResponse.getPath(),
-						logRecord.getMessage());
+						logEntry.getMessage());
 
-					Throwable throwable = logRecord.getThrown();
+					Throwable throwable = logEntry.getThrowable();
 
 					if (folder) {
 						Assert.assertEquals(
@@ -479,11 +478,11 @@ public class FileUploadChannelHandlerTest {
 							"Unable to place result ", fileResponse,
 							" because no future exists with ID ",
 							fileResponse.getPath()),
-						logRecord.getMessage());
+						logEntry.getMessage());
 				}
 			}
 
-			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
+			Assert.assertTrue(logEntries.toString(), logEntries.isEmpty());
 			Assert.assertSame(channelPipeline.first(), channelPipeline.last());
 		}
 

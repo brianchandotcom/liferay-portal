@@ -25,12 +25,13 @@ import com.liferay.portal.kernel.nio.intraband.IntrabandTestUtil;
 import com.liferay.portal.kernel.nio.intraband.RecordCompletionHandler;
 import com.liferay.portal.kernel.nio.intraband.RecordDatagramReceiveHandler;
 import com.liferay.portal.kernel.nio.intraband.RegistrationReference;
-import com.liferay.portal.kernel.test.CaptureHandler;
-import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.AdviseWith;
 import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
 
@@ -57,7 +58,6 @@ import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
 
 import org.aspectj.lang.annotation.Aspect;
 
@@ -99,13 +99,12 @@ public class SelectorIntrabandTest {
 
 	@Test
 	public void testCreateAndDestroy() throws Exception {
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					SelectorIntraband.class.getName(), Level.INFO)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
+				SelectorIntraband.class.getName(), Level.INFO)) {
 
 			// Close selector, with log
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
 			Thread wakeUpThread = new Thread(
 				new WakeUpRunnable(_selectorIntraband));
@@ -128,22 +127,22 @@ public class SelectorIntrabandTest {
 
 			pollingThread.join();
 
-			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
 			String pollingThreadName = pollingThread.getName();
 
-			LogRecord logRecord = logRecords.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
 			Assert.assertEquals(
 				pollingThreadName.concat(
 					" exiting gracefully on selector closure"),
-				logRecord.getMessage());
+				logEntry.getMessage());
 
 			// Close selector, without log
 
 			_selectorIntraband = new SelectorIntraband(_DEFAULT_TIMEOUT);
 
-			logRecords = captureHandler.resetLogLevel(Level.OFF);
+			logEntries = logCapture.resetPriority(String.valueOf(Level.OFF));
 
 			wakeUpThread = new Thread(new WakeUpRunnable(_selectorIntraband));
 
@@ -165,7 +164,7 @@ public class SelectorIntrabandTest {
 
 			pollingThread.join();
 
-			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
+			Assert.assertTrue(logEntries.toString(), logEntries.isEmpty());
 		}
 	}
 
@@ -188,13 +187,12 @@ public class SelectorIntrabandTest {
 
 		long sequenceId = 100;
 
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					BaseIntraband.class.getName(), Level.WARNING)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
+				BaseIntraband.class.getName(), Level.WARNING)) {
 
 			// Receive ACK response, no ACK request, with log
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
 			Jdk14LogImplAdvice.reset();
 
@@ -207,14 +205,14 @@ public class SelectorIntrabandTest {
 				Jdk14LogImplAdvice.waitUntilWarnCalled();
 			}
 
-			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
 			IntrabandTestUtil.assertMessageStartWith(
-				logRecords.get(0), "Dropped ownerless ACK response ");
+				logEntries.get(0), "Dropped ownerless ACK response ");
 
 			// Receive ACK response, no ACK request, without log
 
-			logRecords = captureHandler.resetLogLevel(Level.OFF);
+			logEntries = logCapture.resetPriority(String.valueOf(Level.OFF));
 
 			Jdk14LogImplAdvice.reset();
 
@@ -227,7 +225,7 @@ public class SelectorIntrabandTest {
 				Jdk14LogImplAdvice.waitUntilIsWarnEnableCalled();
 			}
 
-			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
+			Assert.assertTrue(logEntries.toString(), logEntries.isEmpty());
 
 			// Receive ACK response, with ACK request
 
@@ -260,7 +258,8 @@ public class SelectorIntrabandTest {
 
 			// Receive response, no request, with log
 
-			logRecords = captureHandler.resetLogLevel(Level.WARNING);
+			logEntries = logCapture.resetPriority(
+				String.valueOf(Level.WARNING));
 
 			Jdk14LogImplAdvice.reset();
 
@@ -273,14 +272,14 @@ public class SelectorIntrabandTest {
 				Jdk14LogImplAdvice.waitUntilWarnCalled();
 			}
 
-			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
 			IntrabandTestUtil.assertMessageStartWith(
-				logRecords.get(0), "Dropped ownerless response ");
+				logEntries.get(0), "Dropped ownerless response ");
 
 			// Receive response, no request, without log
 
-			logRecords = captureHandler.resetLogLevel(Level.OFF);
+			logEntries = logCapture.resetPriority(String.valueOf(Level.OFF));
 
 			Jdk14LogImplAdvice.reset();
 
@@ -297,7 +296,7 @@ public class SelectorIntrabandTest {
 				Jdk14LogImplAdvice.waitUntilIsWarnEnableCalled();
 			}
 
-			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
+			Assert.assertTrue(logEntries.toString(), logEntries.isEmpty());
 
 			// Receive response, with request, with replied completion handler
 
@@ -332,7 +331,8 @@ public class SelectorIntrabandTest {
 			// Receive response, with request, without replied completion
 			// handler, with log
 
-			logRecords = captureHandler.resetLogLevel(Level.WARNING);
+			logEntries = logCapture.resetPriority(
+				String.valueOf(Level.WARNING));
 
 			requestDatagram = Datagram.createRequestDatagram(_TYPE, _DATA);
 
@@ -362,15 +362,15 @@ public class SelectorIntrabandTest {
 				Jdk14LogImplAdvice.waitUntilWarnCalled();
 			}
 
-			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
 			IntrabandTestUtil.assertMessageStartWith(
-				logRecords.get(0), "Dropped unconcerned response ");
+				logEntries.get(0), "Dropped unconcerned response ");
 
 			// Receive response, with request, without replied completion
 			// handler, without log
 
-			logRecords = captureHandler.resetLogLevel(Level.OFF);
+			logEntries = logCapture.resetPriority(String.valueOf(Level.OFF));
 
 			requestDatagram = Datagram.createRequestDatagram(_TYPE, _DATA);
 
@@ -400,12 +400,13 @@ public class SelectorIntrabandTest {
 				Jdk14LogImplAdvice.waitUntilIsWarnEnableCalled();
 			}
 
-			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
+			Assert.assertTrue(logEntries.toString(), logEntries.isEmpty());
 
 			// Receive request, requires ACK, no datagram receive handler,
 			// with log
 
-			logRecords = captureHandler.resetLogLevel(Level.WARNING);
+			logEntries = logCapture.resetPriority(
+				String.valueOf(Level.WARNING));
 
 			requestDatagram = Datagram.createRequestDatagram(_TYPE, _DATA);
 
@@ -432,14 +433,14 @@ public class SelectorIntrabandTest {
 
 			Assert.assertEquals(0, dataByteBuffer.capacity());
 
-			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
 			IntrabandTestUtil.assertMessageStartWith(
-				logRecords.get(0), "Dropped ownerless request ");
+				logEntries.get(0), "Dropped ownerless request ");
 
 			// Receive request, no datagram receive handler, without log
 
-			logRecords = captureHandler.resetLogLevel(Level.OFF);
+			logEntries = logCapture.resetPriority(String.valueOf(Level.OFF));
 
 			requestDatagram = Datagram.createRequestDatagram(_TYPE, _DATA);
 
@@ -454,11 +455,11 @@ public class SelectorIntrabandTest {
 				Jdk14LogImplAdvice.waitUntilIsWarnEnableCalled();
 			}
 
-			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
+			Assert.assertTrue(logEntries.toString(), logEntries.isEmpty());
 
 			// Receive request, with datagram receive handler,
 
-			logRecords = captureHandler.resetLogLevel(Level.SEVERE);
+			logEntries = logCapture.resetPriority(String.valueOf(Level.SEVERE));
 
 			requestDatagram = Datagram.createRequestDatagram(_TYPE, _DATA);
 
@@ -490,10 +491,10 @@ public class SelectorIntrabandTest {
 
 			Assert.assertArrayEquals(_DATA, dataByteBuffer.array());
 
-			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
 			IntrabandTestUtil.assertMessageStartWith(
-				logRecords.get(0), "Unable to dispatch");
+				logEntries.get(0), "Unable to dispatch");
 
 			_unregisterChannels(registrationReference);
 
@@ -953,13 +954,12 @@ public class SelectorIntrabandTest {
 
 		Assert.assertArrayEquals(_DATA, dataByteBuffer.array());
 
-		try (CaptureHandler captureHandler1 =
-				JDKLoggerTestUtil.configureJDKLogger(
-					BaseIntraband.class.getName(), Level.WARNING)) {
+		try (LogCapture logCapture1 = LoggerTestUtil.configureJDKLogger(
+				BaseIntraband.class.getName(), Level.WARNING)) {
 
 			// Callback timeout, with log
 
-			List<LogRecord> logRecords = captureHandler1.getLogRecords();
+			List<LogEntry> logEntries = logCapture1.getLogEntries();
 
 			recordCompletionHandler = new RecordCompletionHandler<>();
 
@@ -975,14 +975,14 @@ public class SelectorIntrabandTest {
 
 			Assert.assertSame(
 				attachment, recordCompletionHandler.getAttachment());
-			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
 			IntrabandTestUtil.assertMessageStartWith(
-				logRecords.get(0), "Removed timeout response waiting datagram");
+				logEntries.get(0), "Removed timeout response waiting datagram");
 
 			// Callback timeout, without log
 
-			logRecords = captureHandler1.resetLogLevel(Level.OFF);
+			logEntries = logCapture1.resetPriority(String.valueOf(Level.OFF));
 
 			recordCompletionHandler = new RecordCompletionHandler<>();
 
@@ -997,16 +997,15 @@ public class SelectorIntrabandTest {
 			Assert.assertSame(
 				attachment, recordCompletionHandler.getAttachment());
 
-			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
+			Assert.assertTrue(logEntries.toString(), logEntries.isEmpty());
 		}
 
 		// Callback timeout, completion handler causes NPE
 
-		try (CaptureHandler captureHandler1 =
-				JDKLoggerTestUtil.configureJDKLogger(
-					SelectorIntraband.class.getName(), Level.SEVERE)) {
+		try (LogCapture logCapture1 = LoggerTestUtil.configureJDKLogger(
+				SelectorIntraband.class.getName(), Level.SEVERE)) {
 
-			List<LogRecord> logRecords1 = captureHandler1.getLogRecords();
+			List<LogEntry> logEntries1 = logCapture1.getLogEntries();
 
 			recordCompletionHandler = new RecordCompletionHandler<Object>() {
 
@@ -1032,33 +1031,31 @@ public class SelectorIntrabandTest {
 					recordCompletionHandler, 10, TimeUnit.MILLISECONDS);
 			}
 			finally {
-				try (CaptureHandler captureHandler2 =
-						JDKLoggerTestUtil.configureJDKLogger(
-							BaseIntraband.class.getName(), Level.WARNING)) {
+				try (LogCapture logCapture2 = LoggerTestUtil.configureJDKLogger(
+						BaseIntraband.class.getName(), Level.WARNING)) {
 
 					recordCompletionHandler.waitUntilTimeouted(selector);
 
-					List<LogRecord> logRecords2 =
-						captureHandler2.getLogRecords();
+					List<LogEntry> logEntries2 = logCapture2.getLogEntries();
 
 					Assert.assertEquals(
-						logRecords2.toString(), 1, logRecords2.size());
+						logEntries2.toString(), 1, logEntries2.size());
 
-					LogRecord logRecord = logRecords2.get(0);
+					LogEntry logEntry = logEntries2.get(0);
 
 					Assert.assertEquals(
 						"Removed timeout response waiting datagram " + datagram,
-						logRecord.getMessage());
+						logEntry.getMessage());
 				}
 
 				Jdk14LogImplAdvice.waitUntilErrorCalled();
 			}
 
 			Assert.assertFalse(selector.isOpen());
-			Assert.assertEquals(logRecords1.toString(), 1, logRecords1.size());
+			Assert.assertEquals(logEntries1.toString(), 1, logEntries1.size());
 
 			IntrabandTestUtil.assertMessageStartWith(
-				logRecords1.get(0),
+				logEntries1.get(0),
 				SelectorIntraband.class +
 					".threadFactory-1 exiting exceptionally");
 

@@ -29,9 +29,9 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.osgi.web.portlet.container.test.util.PortletContainerTestUtil;
 import com.liferay.portal.security.auth.AuthTokenWhitelistImpl;
 import com.liferay.portal.security.auth.SessionAuthToken;
-import com.liferay.portal.test.log.CaptureAppender;
-import com.liferay.portal.test.log.Log4JLoggerTestUtil;
-import com.liferay.portal.test.log.LogEvent;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.SecurityPortletContainerWrapper;
 
@@ -178,19 +178,18 @@ public class ActionRequestPortletContainerTest
 				TEST_PORTLET_ID, layout.getPlid(),
 				PortletRequest.ACTION_PHASE));
 
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					SecurityPortletContainerWrapper.class.getName(),
-					Log4JLoggerTestUtil.WARN)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				SecurityPortletContainerWrapper.class.getName(),
+				LoggerTestUtil.WARN)) {
 
 			PortletContainerTestUtil.Response response =
 				PortletContainerTestUtil.request(url);
 
-			List<LogEvent> logEvents = captureAppender.getLogEvents();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logEvents.toString(), 1, logEvents.size());
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
-			LogEvent logEvent = logEvents.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
 			Assert.assertEquals(
 				StringBundler.concat(
@@ -199,7 +198,7 @@ public class ActionRequestPortletContainerTest
 					TEST_PORTLET_ID, ": User 0 did not provide a valid CSRF ",
 					"token for ",
 					"com.liferay.portlet.SecurityPortletContainerWrapper"),
-				logEvent.getMessage());
+				logEntry.getMessage());
 
 			Assert.assertEquals(403, response.getCode());
 			Assert.assertFalse(testPortlet.isCalledAction());

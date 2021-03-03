@@ -25,8 +25,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.kernel.workflow.WorkflowException;
-import com.liferay.portal.test.log.CaptureAppender;
-import com.liferay.portal.test.log.Log4JLoggerTestUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -52,10 +52,8 @@ public class WorkflowDefinitionManagerTest {
 
 	@Test(expected = WorkflowException.class)
 	public void testDeleteSaveWorkflowDefinition() throws Exception {
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					ProxyMessageListener.class.getName(),
-					Log4JLoggerTestUtil.OFF)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				ProxyMessageListener.class.getName(), LoggerTestUtil.OFF)) {
 
 			WorkflowDefinition workflowDefinition = _saveWorkflowDefinition();
 
@@ -449,10 +447,8 @@ public class WorkflowDefinitionManagerTest {
 	private String _assertInvalid(InputStream inputStream) throws Exception {
 		byte[] bytes = FileUtil.getBytes(inputStream);
 
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					ProxyMessageListener.class.getName(),
-					Log4JLoggerTestUtil.OFF)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				ProxyMessageListener.class.getName(), LoggerTestUtil.OFF)) {
 
 			_workflowDefinitionManager.validateWorkflowDefinition(bytes);
 

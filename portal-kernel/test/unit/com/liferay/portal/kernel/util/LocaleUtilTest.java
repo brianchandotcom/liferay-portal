@@ -15,13 +15,13 @@
 package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.test.CaptureHandler;
-import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -48,25 +48,24 @@ public class LocaleUtilTest extends PowerMockito {
 			true
 		);
 
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					LocaleUtil.class.getName(), Level.WARNING)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
+				LocaleUtil.class.getName(), Level.WARNING)) {
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
 			Assert.assertEquals(Locale.US, LocaleUtil.fromLanguageId("en_US"));
-			Assert.assertEquals(logRecords.toString(), 0, logRecords.size());
+			Assert.assertEquals(logEntries.toString(), 0, logEntries.size());
 
-			logRecords.clear();
+			logEntries.clear();
 
 			LocaleUtil.fromLanguageId("en");
 
-			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
-			LogRecord logRecord = logRecords.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
 			Assert.assertEquals(
-				"en is not a valid language id", logRecord.getMessage());
+				"en is not a valid language id", logEntry.getMessage());
 		}
 	}
 

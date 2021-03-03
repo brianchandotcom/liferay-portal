@@ -16,10 +16,11 @@ package com.liferay.portal.fabric.netty.util;
 
 import com.liferay.petra.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.fabric.netty.NettyTestUtil;
-import com.liferay.portal.kernel.test.CaptureHandler;
-import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
@@ -39,7 +40,6 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -59,9 +59,8 @@ public class NettyUtilTest {
 		MockEventLoopGroup masterEventLoopGroup = new MockEventLoopGroup();
 		MockEventLoopGroup salveEventLoopGroup = new MockEventLoopGroup();
 
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					NettyUtil.class.getName(), Level.WARNING)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
+				NettyUtil.class.getName(), Level.WARNING)) {
 
 			NettyUtil.bindShutdown(
 				masterEventLoopGroup, salveEventLoopGroup, 0, 10);
@@ -80,9 +79,9 @@ public class NettyUtilTest {
 
 			Assert.assertTrue(slaveFuture.isSuccess());
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
+			Assert.assertTrue(logEntries.toString(), logEntries.isEmpty());
 		}
 	}
 
@@ -98,9 +97,8 @@ public class NettyUtilTest {
 
 		};
 
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					NettyUtil.class.getName(), Level.WARNING)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
+				NettyUtil.class.getName(), Level.WARNING)) {
 
 			NettyUtil.bindShutdown(
 				masterEventLoopGroup, salveEventLoopGroup, 0, 10);
@@ -119,15 +117,15 @@ public class NettyUtilTest {
 
 			Assert.assertTrue(slaveFuture.isSuccess());
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
-			LogRecord logRecord = logRecords.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
 			Assert.assertEquals(
 				"Bind shutdown timeout " + salveEventLoopGroup,
-				logRecord.getMessage());
+				logEntry.getMessage());
 		}
 	}
 
@@ -165,9 +163,8 @@ public class NettyUtilTest {
 		DefaultNoticeableFuture<Object> defaultNoticeableFuture =
 			new DefaultNoticeableFuture<>();
 
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					NettyUtil.class.getName(), Level.OFF)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
+				NettyUtil.class.getName(), Level.OFF)) {
 
 			NettyUtil.scheduleCancellation(
 				_embeddedChannel, defaultNoticeableFuture,
@@ -184,18 +181,17 @@ public class NettyUtilTest {
 			Assert.assertTrue(scheduledFuture.isDone());
 			Assert.assertTrue(scheduledFuture.isCancelled());
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
+			Assert.assertTrue(logEntries.toString(), logEntries.isEmpty());
 		}
 
 		// Normal finish with log
 
 		defaultNoticeableFuture = new DefaultNoticeableFuture<>();
 
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					NettyUtil.class.getName(), Level.FINEST)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
+				NettyUtil.class.getName(), Level.FINEST)) {
 
 			NettyUtil.scheduleCancellation(
 				_embeddedChannel, defaultNoticeableFuture,
@@ -212,25 +208,24 @@ public class NettyUtilTest {
 			Assert.assertTrue(scheduledFuture.isDone());
 			Assert.assertTrue(scheduledFuture.isCancelled());
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
-			LogRecord logRecord = logRecords.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
 			Assert.assertEquals(
 				"Cancelled scheduled cancellation for " +
 					defaultNoticeableFuture,
-				logRecord.getMessage());
+				logEntry.getMessage());
 		}
 
 		// Timeout cancel without log
 
 		defaultNoticeableFuture = new DefaultNoticeableFuture<>();
 
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					NettyUtil.class.getName(), Level.OFF)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
+				NettyUtil.class.getName(), Level.OFF)) {
 
 			NettyUtil.scheduleCancellation(
 				_embeddedChannel, defaultNoticeableFuture, 0);
@@ -246,18 +241,17 @@ public class NettyUtilTest {
 
 			Assert.assertTrue(defaultNoticeableFuture.isCancelled());
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
+			Assert.assertTrue(logEntries.toString(), logEntries.isEmpty());
 		}
 
 		// Timeout cancel with log
 
 		defaultNoticeableFuture = new DefaultNoticeableFuture<>();
 
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					NettyUtil.class.getName(), Level.WARNING)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
+				NettyUtil.class.getName(), Level.WARNING)) {
 
 			NettyUtil.scheduleCancellation(
 				_embeddedChannel, defaultNoticeableFuture, 0);
@@ -273,15 +267,15 @@ public class NettyUtilTest {
 
 			Assert.assertTrue(defaultNoticeableFuture.isCancelled());
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
-			LogRecord logRecord = logRecords.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
 			Assert.assertEquals(
 				"Cancelled timeout " + defaultNoticeableFuture,
-				logRecord.getMessage());
+				logEntry.getMessage());
 		}
 
 		mockEventLoopGroup.shutdownGracefully();

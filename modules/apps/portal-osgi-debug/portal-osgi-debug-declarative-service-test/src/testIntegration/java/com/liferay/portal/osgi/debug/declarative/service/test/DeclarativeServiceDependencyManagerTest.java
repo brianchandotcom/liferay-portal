@@ -27,9 +27,9 @@ import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.osgi.debug.declarative.service.test.component.DeclarativeServiceTestComponent;
 import com.liferay.portal.osgi.debug.declarative.service.test.reference.DeclarativeServiceTestReference;
-import com.liferay.portal.test.log.CaptureAppender;
-import com.liferay.portal.test.log.Log4JLoggerTestUtil;
-import com.liferay.portal.test.log.LogEvent;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -105,29 +105,27 @@ public class DeclarativeServiceDependencyManagerTest {
 	public void testDeclarativeServiceDependencyManagerResolvedDependencies()
 		throws Exception {
 
-		try (CaptureAppender captureAppender = _configureLog4JLogger()) {
-			_captureLog(captureAppender);
+		try (LogCapture logCapture = _configureLog4JLogger()) {
+			_captureLog(logCapture);
 
-			List<LogEvent> logEvents = captureAppender.getLogEvents();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logEvents.toString(), 2, logEvents.size());
+			Assert.assertEquals(logEntries.toString(), 2, logEntries.size());
 
-			LogEvent logEvent = logEvents.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
 			Assert.assertEquals(
 				"All declarative service components are satisfied",
-				logEvent.getMessage());
-			Assert.assertEquals(
-				Log4JLoggerTestUtil.INFO, logEvent.getPriority());
+				logEntry.getMessage());
+			Assert.assertEquals(LoggerTestUtil.INFO, logEntry.getPriority());
 
-			logEvent = logEvents.get(1);
+			logEntry = logEntries.get(1);
 
 			Assert.assertEquals(
 				"Stopped scanning for unsatisfied declarative service " +
 					"components",
-				logEvent.getMessage());
-			Assert.assertEquals(
-				Log4JLoggerTestUtil.INFO, logEvent.getPriority());
+				logEntry.getMessage());
+			Assert.assertEquals(LoggerTestUtil.INFO, logEntry.getPriority());
 		}
 	}
 
@@ -140,16 +138,16 @@ public class DeclarativeServiceDependencyManagerTest {
 
 		bundle.start();
 
-		try (CaptureAppender captureAppender = _configureLog4JLogger()) {
-			_captureLog(captureAppender);
+		try (LogCapture logCapture = _configureLog4JLogger()) {
+			_captureLog(logCapture);
 
-			List<LogEvent> logEvents = captureAppender.getLogEvents();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logEvents.toString(), 2, logEvents.size());
+			Assert.assertEquals(logEntries.toString(), 2, logEntries.size());
 
-			LogEvent logEvent = logEvents.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
-			String message = logEvent.getMessage();
+			String message = logEntry.getMessage();
 
 			message = message.replaceAll("\\s", "");
 			message = message.replaceAll("\\n", "");
@@ -167,40 +165,36 @@ public class DeclarativeServiceDependencyManagerTest {
 			Assert.assertTrue(
 				message, message.contains(s.replaceAll("\\s", "")));
 
-			Assert.assertEquals(
-				Log4JLoggerTestUtil.WARN, logEvent.getPriority());
+			Assert.assertEquals(LoggerTestUtil.WARN, logEntry.getPriority());
 
-			logEvent = logEvents.get(1);
+			logEntry = logEntries.get(1);
 
 			Assert.assertEquals(
 				"Stopped scanning for unsatisfied declarative service " +
 					"components",
-				logEvent.getMessage());
-			Assert.assertEquals(
-				Log4JLoggerTestUtil.INFO, logEvent.getPriority());
+				logEntry.getMessage());
+			Assert.assertEquals(LoggerTestUtil.INFO, logEntry.getPriority());
 		}
 		finally {
 			bundle.uninstall();
 		}
 	}
 
-	private static void _captureLog(CaptureAppender captureAppender)
-		throws Exception {
-
+	private static void _captureLog(LogCapture logCapture) throws Exception {
 		AtomicReference<Thread> scanningThreadReference =
 			new AtomicReference<>();
 
 		CountDownLatch countDownLatch = new CountDownLatch(1);
 
 		ReflectionTestUtil.setFieldValue(
-			captureAppender, "_logEvents",
-			new CopyOnWriteArrayList<LogEvent>() {
+			logCapture, "_logEntries",
+			new CopyOnWriteArrayList<LogEntry>() {
 
 				@Override
-				public boolean add(LogEvent logEvent) {
-					boolean added = super.add(logEvent);
+				public boolean add(LogEntry logEntry) {
+					boolean added = super.add(logEntry);
 
-					String message = logEvent.getMessage();
+					String message = logEntry.getMessage();
 
 					if (message.equals(
 							"Stopped scanning for unsatisfied declarative " +
@@ -244,16 +238,16 @@ public class DeclarativeServiceDependencyManagerTest {
 		scanningThread.join();
 	}
 
-	private static CaptureAppender _configureLog4JLogger() {
-		return Log4JLoggerTestUtil.configureLog4JLogger(
+	private static LogCapture _configureLog4JLogger() {
+		return LoggerTestUtil.configureLog4JLogger(
 			"com.liferay.portal.osgi.debug.declarative.service.internal." +
 				"UnsatisfiedComponentScanner",
-			Log4JLoggerTestUtil.INFO);
+			LoggerTestUtil.INFO);
 	}
 
 	private static void _ensureStopScanning() throws Exception {
-		try (CaptureAppender captureAppender = _configureLog4JLogger()) {
-			_captureLog(captureAppender);
+		try (LogCapture logCapture = _configureLog4JLogger()) {
+			_captureLog(logCapture);
 		}
 	}
 

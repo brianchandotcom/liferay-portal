@@ -18,9 +18,10 @@ import com.liferay.petra.concurrent.DefaultNoticeableFuture;
 import com.liferay.petra.concurrent.NoticeableFuture;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.fabric.netty.NettyTestUtil;
-import com.liferay.portal.kernel.test.CaptureHandler;
-import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelOutboundHandlerAdapter;
@@ -33,7 +34,6 @@ import java.nio.channels.ClosedChannelException;
 import java.util.List;
 import java.util.Queue;
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -115,19 +115,18 @@ public class RPCRequestTest {
 		RPCResponse<String> rpcResponse = new RPCResponse<>(
 			_ID, true, null, null);
 
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					RPCRequest.class.getName(), Level.SEVERE)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
+				RPCRequest.class.getName(), Level.SEVERE)) {
 
 			rpcRequest.sendRPCResponse(_embeddedChannel, rpcResponse);
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			LogRecord logRecord = logRecords.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
 			Assert.assertEquals(
 				"Cancelled on sending RPC response: " + rpcResponse,
-				logRecord.getMessage());
+				logEntry.getMessage());
 		}
 	}
 
@@ -141,21 +140,20 @@ public class RPCRequestTest {
 		RPCResponse<String> rpcResponse = new RPCResponse<>(
 			_ID, true, null, null);
 
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					RPCRequest.class.getName(), Level.SEVERE)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
+				RPCRequest.class.getName(), Level.SEVERE)) {
 
 			rpcRequest.sendRPCResponse(_embeddedChannel, rpcResponse);
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			LogRecord logRecord = logRecords.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
 			Assert.assertEquals(
 				"Unable to send RPC response: " + rpcResponse,
-				logRecord.getMessage());
+				logEntry.getMessage());
 
-			Throwable throwable = logRecord.getThrown();
+			Throwable throwable = logEntry.getThrowable();
 
 			Assert.assertTrue(throwable instanceof ClosedChannelException);
 		}

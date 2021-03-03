@@ -15,16 +15,16 @@
 package com.liferay.portal.internal.increment;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.test.CaptureHandler;
-import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.util.PropsUtil;
 
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -55,35 +55,33 @@ public class BufferedIncrementConfigurationTest {
 
 	@Test
 	public void testInvalidSettingWithLog() {
-		try (CaptureHandler captureHandler = _testInvalidSetting(
-				Level.WARNING)) {
+		try (LogCapture logCapture = _testInvalidSetting(Level.WARNING)) {
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+			Assert.assertEquals(logEntries.toString(), 2, logEntries.size());
 
-			Assert.assertEquals(logRecords.toString(), 2, logRecords.size());
-
-			LogRecord logRecord1 = logRecords.get(0);
+			LogEntry logEntry1 = logEntries.get(0);
 
 			Assert.assertEquals(
 				PropsKeys.BUFFERED_INCREMENT_THREADPOOL_KEEP_ALIVE_TIME +
 					"[]=-3. Auto reset to 0.",
-				logRecord1.getMessage());
+				logEntry1.getMessage());
 
-			LogRecord logRecord2 = logRecords.get(1);
+			LogEntry logEntry2 = logEntries.get(1);
 
 			Assert.assertEquals(
 				PropsKeys.BUFFERED_INCREMENT_THREADPOOL_MAX_SIZE +
 					"[]=-4. Auto reset to 1.",
-				logRecord2.getMessage());
+				logEntry2.getMessage());
 		}
 	}
 
 	@Test
 	public void testInvalidSettingWithoutLog() {
-		try (CaptureHandler captureHandler = _testInvalidSetting(Level.OFF)) {
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+		try (LogCapture logCapture = _testInvalidSetting(Level.OFF)) {
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
+			Assert.assertTrue(logEntries.toString(), logEntries.isEmpty());
 		}
 	}
 
@@ -150,7 +148,7 @@ public class BufferedIncrementConfigurationTest {
 		Assert.assertEquals(0, standbyTime);
 	}
 
-	private CaptureHandler _testInvalidSetting(Level level) {
+	private LogCapture _testInvalidSetting(Level level) {
 		if (level == Level.OFF) {
 			_properties.put(
 				PropsKeys.BUFFERED_INCREMENT_STANDBY_QUEUE_THRESHOLD, "1");
@@ -168,7 +166,7 @@ public class BufferedIncrementConfigurationTest {
 			PropsKeys.BUFFERED_INCREMENT_THREADPOOL_KEEP_ALIVE_TIME, "-3");
 		_properties.put(PropsKeys.BUFFERED_INCREMENT_THREADPOOL_MAX_SIZE, "-4");
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+		LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
 			BufferedIncrementConfiguration.class.getName(), level);
 
 		BufferedIncrementConfiguration bufferedIncrementConfiguration =
@@ -201,7 +199,7 @@ public class BufferedIncrementConfigurationTest {
 				"Standby is disabled", illegalStateException.getMessage());
 		}
 
-		return captureHandler;
+		return logCapture;
 	}
 
 	private Properties _properties;

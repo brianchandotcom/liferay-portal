@@ -36,8 +36,8 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
-import com.liferay.portal.test.log.CaptureAppender;
-import com.liferay.portal.test.log.Log4JLoggerTestUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.List;
@@ -74,10 +74,8 @@ public class AppWorkflowResourceTest extends BaseAppWorkflowResourceTestCase {
 			appWorkflowResource.deleteAppWorkflowHttpResponse(
 				appWorkflow.getAppId()));
 
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					ProxyMessageListener.class.getName(),
-					Log4JLoggerTestUtil.OFF)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				ProxyMessageListener.class.getName(), LoggerTestUtil.OFF)) {
 
 			assertHttpResponseStatusCode(
 				404,
@@ -174,14 +172,11 @@ public class AppWorkflowResourceTest extends BaseAppWorkflowResourceTestCase {
 						).build())),
 				"JSONObject/data", "Object/deleteAppWorkflow"));
 
-		try (CaptureAppender captureAppender1 =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					"graphql.execution.SimpleDataFetcherExceptionHandler",
-					Log4JLoggerTestUtil.WARN);
-			CaptureAppender captureAppender2 =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					ProxyMessageListener.class.getName(),
-					Log4JLoggerTestUtil.OFF)) {
+		try (LogCapture logCapture1 = LoggerTestUtil.configureLog4JLogger(
+				"graphql.execution.SimpleDataFetcherExceptionHandler",
+				LoggerTestUtil.WARN);
+			LogCapture logCapture2 = LoggerTestUtil.configureLog4JLogger(
+				ProxyMessageListener.class.getName(), LoggerTestUtil.OFF)) {
 
 			JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
 				invokeGraphQLQuery(

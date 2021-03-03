@@ -30,8 +30,8 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.test.log.CaptureAppender;
-import com.liferay.portal.test.log.Log4JLoggerTestUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 
 import java.util.ArrayList;
@@ -165,9 +165,8 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 			roleResource.postOrganizationRoleUserAccountAssociationHttpResponse(
 				0L, _user.getUserId(), organization.getOrganizationId()));
 
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					_CLASS_NAME_EXCEPTION_MAPPER, Log4JLoggerTestUtil.ERROR)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_CLASS_NAME_EXCEPTION_MAPPER, LoggerTestUtil.ERROR)) {
 
 			assertHttpResponseStatusCode(
 				500,
@@ -199,9 +198,8 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 			roleResource.postRoleUserAccountAssociationHttpResponse(
 				0L, _user.getUserId()));
 
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					_CLASS_NAME_EXCEPTION_MAPPER, Log4JLoggerTestUtil.ERROR)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_CLASS_NAME_EXCEPTION_MAPPER, LoggerTestUtil.ERROR)) {
 
 			assertHttpResponseStatusCode(
 				500,
@@ -231,9 +229,8 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 			roleResource.postSiteRoleUserAccountAssociationHttpResponse(
 				0L, _user.getUserId(), testGroup.getGroupId()));
 
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					_CLASS_NAME_EXCEPTION_MAPPER, Log4JLoggerTestUtil.ERROR)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_CLASS_NAME_EXCEPTION_MAPPER, LoggerTestUtil.ERROR)) {
 
 			assertHttpResponseStatusCode(
 				500,

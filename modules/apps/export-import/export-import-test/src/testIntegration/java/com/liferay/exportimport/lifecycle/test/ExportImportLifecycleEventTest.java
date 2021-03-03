@@ -44,9 +44,9 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
-import com.liferay.portal.test.log.CaptureAppender;
-import com.liferay.portal.test.log.Log4JLoggerTestUtil;
-import com.liferay.portal.test.log.LogEvent;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
@@ -167,11 +167,10 @@ public class ExportImportLifecycleEventTest {
 
 	@Test
 	public void testFailedLayoutLocalPublishing() throws Exception {
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					"com.liferay.portal.background.task.internal.messaging." +
-						"BackgroundTaskMessageListener",
-					Log4JLoggerTestUtil.ERROR)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.background.task.internal.messaging." +
+					"BackgroundTaskMessageListener",
+				LoggerTestUtil.ERROR)) {
 
 			long targetGroupId = RandomTestUtil.nextLong();
 
@@ -179,14 +178,14 @@ public class ExportImportLifecycleEventTest {
 				TestPropsValues.getUserId(), _group.getGroupId(), targetGroupId,
 				false, new long[0], _parameterMap);
 
-			List<LogEvent> logEvents = captureAppender.getLogEvents();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			LogEvent logEvent = logEvents.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
 			Assert.assertEquals(
-				"Unable to execute background task", logEvent.getMessage());
+				"Unable to execute background task", logEntry.getMessage());
 
-			Throwable throwable = logEvent.getThrowable();
+			Throwable throwable = logEntry.getThrowable();
 
 			Assert.assertSame(NoSuchGroupException.class, throwable.getClass());
 		}
@@ -269,24 +268,23 @@ public class ExportImportLifecycleEventTest {
 	public void testFailedPortletLocalPublishing() throws Exception {
 		User user = TestPropsValues.getUser();
 
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					"com.liferay.portal.background.task.internal.messaging." +
-						"BackgroundTaskMessageListener",
-					Log4JLoggerTestUtil.ERROR)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.background.task.internal.messaging." +
+					"BackgroundTaskMessageListener",
+				LoggerTestUtil.ERROR)) {
 
 			StagingUtil.publishPortlet(
 				user.getUserId(), _group.getGroupId(), _liveGroup.getGroupId(),
 				0, 0, StringPool.BLANK, _parameterMap);
 
-			List<LogEvent> logEvents = captureAppender.getLogEvents();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			LogEvent logEvent = logEvents.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
 			Assert.assertEquals(
-				"Unable to execute background task", logEvent.getMessage());
+				"Unable to execute background task", logEntry.getMessage());
 
-			Throwable throwable = logEvent.getThrowable();
+			Throwable throwable = logEntry.getThrowable();
 
 			Assert.assertSame(
 				NoSuchLayoutException.class, throwable.getClass());

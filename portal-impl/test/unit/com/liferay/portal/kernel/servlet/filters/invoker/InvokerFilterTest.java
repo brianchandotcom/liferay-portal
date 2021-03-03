@@ -15,19 +15,19 @@
 package com.liferay.portal.kernel.servlet.filters.invoker;
 
 import com.liferay.portal.kernel.servlet.HttpMethods;
-import com.liferay.portal.kernel.test.CaptureHandler;
-import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.tools.ToolDependencies;
 import com.liferay.portal.util.HttpImpl;
 import com.liferay.portal.util.PropsImpl;
 
 import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -128,9 +128,8 @@ public class InvokerFilterTest {
 
 		MockFilterChain mockFilterChain = new MockFilterChain();
 
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					InvokerFilter.class.getName(), Level.WARNING)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
+				InvokerFilter.class.getName(), Level.WARNING)) {
 
 			invokerFilter.doFilter(
 				mockHttpServletRequest, mockHttpServletResponse,
@@ -140,13 +139,13 @@ public class InvokerFilterTest {
 				HttpServletResponse.SC_REQUEST_URI_TOO_LONG,
 				mockHttpServletResponse.getStatus());
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
-			LogRecord logRecord = logRecords.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
-			String message = logRecord.getMessage();
+			String message = logEntry.getMessage();
 
 			Assert.assertTrue(message.startsWith("Rejected " + urlPrefix));
 		}

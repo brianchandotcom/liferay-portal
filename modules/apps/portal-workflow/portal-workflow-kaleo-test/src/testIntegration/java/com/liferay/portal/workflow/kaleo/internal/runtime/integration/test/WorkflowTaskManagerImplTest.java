@@ -116,8 +116,8 @@ import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUt
 import com.liferay.portal.kernel.workflow.search.WorkflowModelSearchResult;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.security.permission.SimplePermissionChecker;
-import com.liferay.portal.test.log.CaptureAppender;
-import com.liferay.portal.test.log.Log4JLoggerTestUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -1441,10 +1441,8 @@ public class WorkflowTaskManagerImplTest {
 	}
 
 	private void _createJoinXorWorkflow() throws Exception {
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					_CLASS_NAME_PROXY_MESSAGE_LISTENER,
-					Log4JLoggerTestUtil.OFF)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_CLASS_NAME_PROXY_MESSAGE_LISTENER, LoggerTestUtil.OFF)) {
 
 			_workflowDefinitionManager.getWorkflowDefinition(
 				_adminUser.getCompanyId(), _JOIN_XOR, 1);
@@ -1477,10 +1475,8 @@ public class WorkflowTaskManagerImplTest {
 	}
 
 	private void _createScriptedAssignmentWorkflow() throws Exception {
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					_CLASS_NAME_PROXY_MESSAGE_LISTENER,
-					Log4JLoggerTestUtil.OFF)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_CLASS_NAME_PROXY_MESSAGE_LISTENER, LoggerTestUtil.OFF)) {
 
 			_workflowDefinitionManager.getWorkflowDefinition(
 				_adminUser.getCompanyId(), _SCRIPTED_SINGLE_APPROVER, 1);
@@ -1501,10 +1497,8 @@ public class WorkflowTaskManagerImplTest {
 	}
 
 	private void _createSiteMemberWorkflow() throws Exception {
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					_CLASS_NAME_PROXY_MESSAGE_LISTENER,
-					Log4JLoggerTestUtil.OFF)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_CLASS_NAME_PROXY_MESSAGE_LISTENER, LoggerTestUtil.OFF)) {
 
 			_workflowDefinitionManager.getWorkflowDefinition(
 				_adminUser.getCompanyId(), _SITE_MEMBER_SINGLE_APPROVER, 1);

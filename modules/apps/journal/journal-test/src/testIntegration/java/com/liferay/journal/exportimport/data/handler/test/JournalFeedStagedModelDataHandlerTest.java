@@ -43,9 +43,9 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.test.log.CaptureAppender;
-import com.liferay.portal.test.log.Log4JLoggerTestUtil;
-import com.liferay.portal.test.log.LogEvent;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.LinkedHashMap;
@@ -136,21 +136,20 @@ public class JournalFeedStagedModelDataHandlerTest
 	@Override
 	@Test
 	public void testCleanStagedModelDataHandler() throws Exception {
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					"com.liferay.journal.internal.exportimport.data.handler." +
-						"JournalFeedStagedModelDataHandler",
-					Log4JLoggerTestUtil.WARN)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.journal.internal.exportimport.data.handler." +
+					"JournalFeedStagedModelDataHandler",
+				LoggerTestUtil.WARN)) {
 
 			super.testCleanStagedModelDataHandler();
 
-			List<LogEvent> logEvents = captureAppender.getLogEvents();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logEvents.toString(), 1, logEvents.size());
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
-			LogEvent logEvent = logEvents.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
-			String message = logEvent.getMessage();
+			String message = logEntry.getMessage();
 
 			Assert.assertTrue(
 				message, message.startsWith("A feed with the ID "));
@@ -199,21 +198,20 @@ public class JournalFeedStagedModelDataHandlerTest
 	@Override
 	@Test
 	public void testStagedModelDataHandler() throws Exception {
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					"com.liferay.journal.internal.exportimport.data.handler." +
-						"JournalFeedStagedModelDataHandler",
-					Log4JLoggerTestUtil.WARN)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.journal.internal.exportimport.data.handler." +
+					"JournalFeedStagedModelDataHandler",
+				LoggerTestUtil.WARN)) {
 
 			super.testStagedModelDataHandler();
 
-			List<LogEvent> logEvents = captureAppender.getLogEvents();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logEvents.toString(), 1, logEvents.size());
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
-			LogEvent logEvent = logEvents.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
-			String message = logEvent.getMessage();
+			String message = logEntry.getMessage();
 
 			Assert.assertTrue(
 				message, message.startsWith("A feed with the ID "));

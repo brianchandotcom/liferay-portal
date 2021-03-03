@@ -16,10 +16,11 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.test.CaptureHandler;
-import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 
 import java.io.UnsupportedEncodingException;
 
@@ -37,7 +38,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.function.Function;
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -169,25 +169,24 @@ public class URLCodecTest {
 			Charset.class, "cache1",
 			new Object[] {_testCharset.name(), _testCharset});
 
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					URLCodec.class.getName(), Level.ALL)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
+				URLCodec.class.getName(), Level.ALL)) {
 
 			Assert.assertEquals(
 				"URLCodec returns blank string when ChaesetEncoder/Decoder" +
 					"throws CharacterCodingException during encoding/decoding",
 				StringPool.BLANK, codecFunction.apply("test-charset"));
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
-			LogRecord logRecord = logRecords.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
 			Assert.assertEquals(
 				"java.nio.charset.UnmappableCharacterException: Input length " +
 					"= 1",
-				logRecord.getMessage());
+				logEntry.getMessage());
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(

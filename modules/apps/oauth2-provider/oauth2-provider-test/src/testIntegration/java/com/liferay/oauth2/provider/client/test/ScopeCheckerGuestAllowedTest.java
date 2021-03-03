@@ -25,8 +25,8 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.test.log.CaptureAppender;
-import com.liferay.portal.test.log.Log4JLoggerTestUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.net.URISyntaxException;
@@ -68,10 +68,8 @@ public class ScopeCheckerGuestAllowedTest extends BaseClientTestCase {
 
 		testApplication("/annotated-guest-default/no-scope", "no-scope", 200);
 
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					"portal_web.docroot.errors.code_jsp",
-					Log4JLoggerTestUtil.WARN)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"portal_web.docroot.errors.code_jsp", LoggerTestUtil.WARN)) {
 
 			testApplication(
 				"/annotated-guest-not-allowed/", "everything.read", 403);
@@ -84,10 +82,8 @@ public class ScopeCheckerGuestAllowedTest extends BaseClientTestCase {
 
 		testApplication("/default-jaxrs-app-guest-default/", "get", 200);
 
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					"portal_web.docroot.errors.code_jsp",
-					Log4JLoggerTestUtil.WARN)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"portal_web.docroot.errors.code_jsp", LoggerTestUtil.WARN)) {
 
 			testApplication(
 				"/default-jaxrs-app-guest-not-allowed/", "get", 403);
@@ -97,10 +93,8 @@ public class ScopeCheckerGuestAllowedTest extends BaseClientTestCase {
 
 		testApplication("/methods-guest-default/", "get", 200);
 
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					"portal_web.docroot.errors.code_jsp",
-					Log4JLoggerTestUtil.WARN)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"portal_web.docroot.errors.code_jsp", LoggerTestUtil.WARN)) {
 
 			testApplication("/methods-guest-not-allowed/", "get", 403);
 		}

@@ -19,8 +19,8 @@ import com.liferay.app.builder.workflow.web.internal.portlet.test.BaseAppBuilder
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.messaging.proxy.ProxyMessageListener;
 import com.liferay.portal.kernel.test.rule.DataGuard;
-import com.liferay.portal.test.log.CaptureAppender;
-import com.liferay.portal.test.log.Log4JLoggerTestUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -48,10 +48,8 @@ public class DeleteAppBuilderAppMVCResourceCommandTest
 
 		addDataRecord(app);
 
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					ProxyMessageListener.class.getName(),
-					Log4JLoggerTestUtil.OFF)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				ProxyMessageListener.class.getName(), LoggerTestUtil.OFF)) {
 
 			Assert.assertFalse(deleteApp(app));
 		}

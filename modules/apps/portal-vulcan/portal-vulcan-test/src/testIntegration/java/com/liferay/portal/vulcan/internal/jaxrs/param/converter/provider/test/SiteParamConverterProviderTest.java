@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.test.log.CaptureAppender;
-import com.liferay.portal.test.log.Log4JLoggerTestUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.internal.test.util.URLConnectionUtil;
@@ -88,10 +88,9 @@ public class SiteParamConverterProviderTest {
 
 	@Test(expected = FileNotFoundException.class)
 	public void testInValidGroup() throws Exception {
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					_CLASS_NAME_WEB_APPLICATION_EXCEPTION_MAPPER,
-					Log4JLoggerTestUtil.ERROR)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_CLASS_NAME_WEB_APPLICATION_EXCEPTION_MAPPER,
+				LoggerTestUtil.ERROR)) {
 
 			URLConnectionUtil.read(
 				"http://localhost:8080/o/test-vulcan/0/name");

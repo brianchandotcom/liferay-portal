@@ -15,11 +15,12 @@
 package com.liferay.pmd;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.test.CaptureHandler;
-import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.ci.AutoBalanceTestCase;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 
 import java.io.File;
 import java.io.FileReader;
@@ -32,7 +33,6 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
 
 import net.sourceforge.pmd.ant.Formatter;
 import net.sourceforge.pmd.ant.PMDTask;
@@ -125,22 +125,21 @@ public class PMDTest extends AutoBalanceTestCase {
 
 		_pmdTask.addConfiguredSourceLanguage(sourceLanguage);
 
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					ClassTypeResolver.class.getName(), Level.SEVERE)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
+				ClassTypeResolver.class.getName(), Level.SEVERE)) {
 
 			_pmdTask.execute();
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			if (!logRecords.isEmpty()) {
+			if (!logEntries.isEmpty()) {
 				AssertionError assertionError = new AssertionError(
 					"PMD Java log error");
 
-				for (LogRecord logRecord : logRecords) {
+				for (LogEntry logEntry : logEntries) {
 					assertionError.addSuppressed(
 						new Throwable(
-							logRecord.getMessage(), logRecord.getThrown()));
+							logEntry.getMessage(), logEntry.getThrowable()));
 				}
 
 				throw assertionError;

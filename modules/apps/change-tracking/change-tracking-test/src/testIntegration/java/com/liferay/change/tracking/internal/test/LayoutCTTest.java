@@ -41,9 +41,9 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.test.log.CaptureAppender;
-import com.liferay.portal.test.log.Log4JLoggerTestUtil;
-import com.liferay.portal.test.log.LogEvent;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -549,23 +549,22 @@ public class LayoutCTTest {
 
 		layout2 = _layoutLocalService.updateLayout(layout2);
 
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					"com.liferay.portal.background.task.internal.messaging." +
-						"BackgroundTaskMessageListener",
-					Log4JLoggerTestUtil.ERROR)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.background.task.internal.messaging." +
+					"BackgroundTaskMessageListener",
+				LoggerTestUtil.ERROR)) {
 
 			_ctProcessLocalService.addCTProcess(
 				_ctCollection.getUserId(), _ctCollection.getCtCollectionId());
 
-			List<LogEvent> logEvents = captureAppender.getLogEvents();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logEvents.toString(), 1, logEvents.size());
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
-			LogEvent logEvent = logEvents.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
 			Assert.assertEquals(
-				"Unable to execute background task", logEvent.getMessage());
+				"Unable to execute background task", logEntry.getMessage());
 		}
 
 		try (SafeClosable safeClosable =
@@ -606,22 +605,21 @@ public class LayoutCTTest {
 
 		layout = _layoutLocalService.updateLayout(layout);
 
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					"com.liferay.portal.background.task.internal.messaging." +
-						"BackgroundTaskMessageListener",
-					Log4JLoggerTestUtil.ERROR)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.background.task.internal.messaging." +
+					"BackgroundTaskMessageListener",
+				LoggerTestUtil.ERROR)) {
 
 			_ctProcessLocalService.addCTProcess(
 				_ctCollection.getUserId(), _ctCollection.getCtCollectionId());
 
-			List<LogEvent> logEvents = captureAppender.getLogEvents();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logEvents.toString(), 1, logEvents.size());
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
-			LogEvent logEvent = logEvents.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
-			Throwable throwable = logEvent.getThrowable();
+			Throwable throwable = logEntry.getThrowable();
 
 			Assert.assertNotNull(throwable);
 
@@ -823,22 +821,21 @@ public class LayoutCTTest {
 
 		_layoutLocalService.deleteLayout(layout);
 
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					"com.liferay.portal.background.task.internal.messaging." +
-						"BackgroundTaskMessageListener",
-					Log4JLoggerTestUtil.ERROR)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.background.task.internal.messaging." +
+					"BackgroundTaskMessageListener",
+				LoggerTestUtil.ERROR)) {
 
 			_ctProcessLocalService.addCTProcess(
 				_ctCollection.getUserId(), _ctCollection.getCtCollectionId());
 
-			List<LogEvent> logEvents = captureAppender.getLogEvents();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logEvents.toString(), 1, logEvents.size());
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
-			LogEvent logEvent = logEvents.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
-			Throwable throwable = logEvent.getThrowable();
+			Throwable throwable = logEntry.getThrowable();
 
 			Assert.assertNotNull(throwable);
 

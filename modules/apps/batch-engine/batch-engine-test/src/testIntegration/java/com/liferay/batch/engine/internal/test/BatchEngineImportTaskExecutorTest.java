@@ -27,9 +27,9 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.test.log.CaptureAppender;
-import com.liferay.portal.test.log.Log4JLoggerTestUtil;
-import com.liferay.portal.test.log.LogEvent;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 
 import java.io.ByteArrayOutputStream;
@@ -114,10 +114,9 @@ public class BatchEngineImportTaskExecutorTest
 
 		String content = sb.toString();
 
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					_CLASS_NAME_BATCH_ENGINE_IMPORT_TASK_EXECUTOR_IMPL,
-					Log4JLoggerTestUtil.ERROR)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_CLASS_NAME_BATCH_ENGINE_IMPORT_TASK_EXECUTOR_IMPL,
+				LoggerTestUtil.ERROR)) {
 
 			_importBlogPostings(
 				BatchEngineTaskOperation.CREATE,
@@ -125,7 +124,7 @@ public class BatchEngineImportTaskExecutorTest
 					content.getBytes(StandardCharsets.UTF_8), "CSV"),
 				"CSV", null);
 
-			_assertInvalidFile(captureAppender);
+			_assertInvalidFile(logCapture);
 		}
 	}
 
@@ -147,10 +146,9 @@ public class BatchEngineImportTaskExecutorTest
 
 		String content = sb.toString();
 
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					_CLASS_NAME_BATCH_ENGINE_IMPORT_TASK_EXECUTOR_IMPL,
-					Log4JLoggerTestUtil.ERROR)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_CLASS_NAME_BATCH_ENGINE_IMPORT_TASK_EXECUTOR_IMPL,
+				LoggerTestUtil.ERROR)) {
 
 			_importBlogPostings(
 				BatchEngineTaskOperation.CREATE,
@@ -158,7 +156,7 @@ public class BatchEngineImportTaskExecutorTest
 					content.getBytes(StandardCharsets.UTF_8), "JSON"),
 				"JSON", null);
 
-			_assertInvalidFile(captureAppender);
+			_assertInvalidFile(logCapture);
 		}
 	}
 
@@ -176,10 +174,9 @@ public class BatchEngineImportTaskExecutorTest
 
 		String content = sb.toString();
 
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					_CLASS_NAME_BATCH_ENGINE_IMPORT_TASK_EXECUTOR_IMPL,
-					Log4JLoggerTestUtil.ERROR)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_CLASS_NAME_BATCH_ENGINE_IMPORT_TASK_EXECUTOR_IMPL,
+				LoggerTestUtil.ERROR)) {
 
 			_importBlogPostings(
 				BatchEngineTaskOperation.CREATE,
@@ -187,7 +184,7 @@ public class BatchEngineImportTaskExecutorTest
 					content.getBytes(StandardCharsets.UTF_8), "JSONL"),
 				"JSONL", null);
 
-			_assertInvalidFile(captureAppender);
+			_assertInvalidFile(logCapture);
 		}
 	}
 
@@ -206,16 +203,15 @@ public class BatchEngineImportTaskExecutorTest
 			dateFormat.format(new Date(baseDate.getTime())), "headline",
 			group.getGroupId(), "unknownValue");
 
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					_CLASS_NAME_BATCH_ENGINE_IMPORT_TASK_EXECUTOR_IMPL,
-					Log4JLoggerTestUtil.ERROR)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_CLASS_NAME_BATCH_ENGINE_IMPORT_TASK_EXECUTOR_IMPL,
+				LoggerTestUtil.ERROR)) {
 
 			_importBlogPostings(
 				BatchEngineTaskOperation.CREATE, _toContent(xssfWorkbook),
 				"XLS", null);
 
-			_assertInvalidFile(captureAppender);
+			_assertInvalidFile(logCapture);
 		}
 	}
 
@@ -422,18 +418,18 @@ public class BatchEngineImportTaskExecutorTest
 		}
 	}
 
-	private void _assertInvalidFile(CaptureAppender captureAppender) {
+	private void _assertInvalidFile(LogCapture logCapture) {
 		Assert.assertEquals(0, blogsEntryLocalService.getBlogsEntriesCount());
 
-		List<LogEvent> logEvents = captureAppender.getLogEvents();
+		List<LogEntry> logEntries = logCapture.getLogEntries();
 
-		Assert.assertEquals(logEvents.toString(), 1, logEvents.size());
+		Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
-		LogEvent logEvent = logEvents.get(0);
+		LogEntry logEntry = logEntries.get(0);
 
-		Assert.assertEquals(Log4JLoggerTestUtil.ERROR, logEvent.getPriority());
+		Assert.assertEquals(LoggerTestUtil.ERROR, logEntry.getPriority());
 
-		String message = logEvent.getMessage();
+		String message = logEntry.getMessage();
 
 		Assert.assertTrue(
 			message.startsWith("Unable to update batch engine import task"));

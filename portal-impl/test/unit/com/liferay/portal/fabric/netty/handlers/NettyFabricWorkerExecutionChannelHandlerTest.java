@@ -48,13 +48,14 @@ import com.liferay.portal.fabric.netty.worker.NettyFabricWorkerConfig;
 import com.liferay.portal.fabric.netty.worker.NettyFabricWorkerStub;
 import com.liferay.portal.fabric.repository.MockRepository;
 import com.liferay.portal.fabric.worker.FabricWorker;
-import com.liferay.portal.kernel.test.CaptureHandler;
-import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.AdviseWith;
 import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
 
@@ -89,7 +90,6 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -168,10 +168,9 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 		ReflectionTestUtil.setFieldValue(
 			nettyFabricWorkerConfig, "_processConfig", null);
 
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					NettyFabricWorkerExecutionChannelHandler.class.getName(),
-					Level.INFO)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
+				NettyFabricWorkerExecutionChannelHandler.class.getName(),
+				Level.INFO)) {
 
 			String embeddedChannelToString = _embeddedChannel.toString();
 
@@ -179,24 +178,24 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 			Assert.assertFalse(_embeddedChannel.isOpen());
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logRecords.toString(), 2, logRecords.size());
+			Assert.assertEquals(logEntries.toString(), 2, logEntries.size());
 
-			LogRecord logRecord = logRecords.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
 			Assert.assertEquals(
 				"Closing " + embeddedChannelToString + " due to:",
-				logRecord.getMessage());
+				logEntry.getMessage());
 
-			Throwable throwable = logRecord.getThrown();
+			Throwable throwable = logEntry.getThrowable();
 
 			Assert.assertSame(NullPointerException.class, throwable.getClass());
 
-			logRecord = logRecords.get(1);
+			logEntry = logEntries.get(1);
 
 			Assert.assertEquals(
-				_embeddedChannel + " is closed", logRecord.getMessage());
+				_embeddedChannel + " is closed", logEntry.getMessage());
 		}
 	}
 
@@ -603,10 +602,9 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 		ObjectGraphUtil.walkObjectGraph(
 			processCallable, fabricPathMappingVisitor);
 
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					NettyFabricWorkerExecutionChannelHandler.class.getName(),
-					Level.WARNING)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
+				NettyFabricWorkerExecutionChannelHandler.class.getName(),
+				Level.WARNING)) {
 
 			NoticeableFuture<LoadedPaths> noticeableFuture =
 				nettyFabricWorkerExecutionChannelHandler.loadPaths(
@@ -617,16 +615,16 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 			LoadedPaths loadedPaths = noticeableFuture.get();
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
-			LogRecord logRecord = logRecords.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
 			Assert.assertEquals(
 				"Incomplete bootstrap classpath loaded, missed: " +
 					Arrays.asList(bootstrapPath2, bootstrapPath3),
-				logRecord.getMessage());
+				logEntry.getMessage());
 
 			Map<Path, Path> loadedInputPaths = loadedPaths.getInputPaths();
 
@@ -645,10 +643,9 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 		// Without log
 
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					NettyFabricWorkerExecutionChannelHandler.class.getName(),
-					Level.OFF)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
+				NettyFabricWorkerExecutionChannelHandler.class.getName(),
+				Level.OFF)) {
 
 			NoticeableFuture<LoadedPaths> noticeableFuture =
 				nettyFabricWorkerExecutionChannelHandler.loadPaths(
@@ -659,9 +656,9 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 			LoadedPaths loadedPaths = noticeableFuture.get();
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
+			Assert.assertTrue(logEntries.toString(), logEntries.isEmpty());
 
 			Map<Path, Path> loadedInputPaths = loadedPaths.getInputPaths();
 
@@ -808,10 +805,9 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 		ObjectGraphUtil.walkObjectGraph(
 			processCallable, fabricPathMappingVisitor);
 
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					NettyFabricWorkerExecutionChannelHandler.class.getName(),
-					Level.WARNING)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
+				NettyFabricWorkerExecutionChannelHandler.class.getName(),
+				Level.WARNING)) {
 
 			NoticeableFuture<LoadedPaths> noticeableFuture =
 				nettyFabricWorkerExecutionChannelHandler.loadPaths(
@@ -822,16 +818,16 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 			LoadedPaths loadedPaths = noticeableFuture.get();
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
-			LogRecord logRecord = logRecords.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
 			Assert.assertEquals(
 				"Incomplete runtime classpath loaded, missed: " +
 					Arrays.asList(runtimePath2),
-				logRecord.getMessage());
+				logEntry.getMessage());
 
 			Map<Path, Path> loadedInputPaths = loadedPaths.getInputPaths();
 
@@ -850,10 +846,9 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 		// Without log
 
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					NettyFabricWorkerExecutionChannelHandler.class.getName(),
-					Level.OFF)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
+				NettyFabricWorkerExecutionChannelHandler.class.getName(),
+				Level.OFF)) {
 
 			NoticeableFuture<LoadedPaths> noticeableFuture =
 				nettyFabricWorkerExecutionChannelHandler.loadPaths(
@@ -864,9 +859,9 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 			LoadedPaths loadedPaths = noticeableFuture.get();
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
+			Assert.assertTrue(logEntries.toString(), logEntries.isEmpty());
 
 			Map<Path, Path> loadedInputPaths = loadedPaths.getInputPaths();
 
@@ -952,22 +947,21 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 		defaultPromise.setSuccess(fabricWorker);
 
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					NettyFabricWorkerExecutionChannelHandler.class.getName(),
-					Level.SEVERE)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
+				NettyFabricWorkerExecutionChannelHandler.class.getName(),
+				Level.SEVERE)) {
 
 			defaultPromise.addListener(postFabricWorkerExecutionFutureListener);
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
-			LogRecord logRecord = logRecords.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
 			Assert.assertEquals(
 				"Unable to finish fabric worker startup",
-				logRecord.getMessage());
+				logEntry.getMessage());
 		}
 
 		Assert.assertSame(
@@ -1217,24 +1211,23 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 		channel.close();
 
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					NettyFabricWorkerExecutionChannelHandler.class.getName(),
-					Level.SEVERE)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
+				NettyFabricWorkerExecutionChannelHandler.class.getName(),
+				Level.SEVERE)) {
 
 			nettyFabricWorkerExecutionChannelHandler.sendResult(
 				channel, 0, StringPool.BLANK, null);
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
-			LogRecord logRecord = logRecords.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
 			Assert.assertEquals(
 				"Unable to send back fabric worker result {id=0, result=, " +
 					"throwable=null}",
-				logRecord.getMessage());
+				logEntry.getMessage());
 		}
 
 		// Send back result

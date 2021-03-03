@@ -20,9 +20,9 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.test.log.CaptureAppender;
-import com.liferay.portal.test.log.Log4JLoggerTestUtil;
-import com.liferay.portal.test.log.LogEvent;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
@@ -155,27 +155,26 @@ public class FileInstallConfigTest {
 			PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR,
 			configurationPidDeprecated.concat(".cfg"));
 
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					"com.liferay.portal.file.install.internal.configuration." +
-						"ConfigurationFileInstaller",
-					Log4JLoggerTestUtil.WARN)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.file.install.internal.configuration." +
+					"ConfigurationFileInstaller",
+				LoggerTestUtil.WARN)) {
 
 			Files.write(configPathDeprecated, contentDeprecated.getBytes());
 
 			_configuration = _createConfiguration(configurationPid, content);
 
-			List<LogEvent> logEvents = captureAppender.getLogEvents();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logEvents.toString(), 1, logEvents.size());
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
-			LogEvent logEvent = logEvents.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
 			Assert.assertEquals(
 				StringBundler.concat(
 					"Unable to install .cfg file ", configPathDeprecated,
 					", please use .config file instead."),
-				logEvent.getMessage());
+				logEntry.getMessage());
 
 			Configuration configurationDeprecated =
 				_configurationAdmin.getConfiguration(

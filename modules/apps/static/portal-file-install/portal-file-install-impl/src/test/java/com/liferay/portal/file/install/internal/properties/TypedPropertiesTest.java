@@ -16,12 +16,13 @@ package com.liferay.portal.file.install.internal.properties;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.test.CaptureHandler;
-import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -31,7 +32,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -151,22 +151,21 @@ public class TypedPropertiesTest {
 
 	@Test
 	public void testLoadandSaveMultipleComments() throws IOException {
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					TypedProperties.class.getName(), Level.WARNING)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
+				TypedProperties.class.getName(), Level.WARNING)) {
 
 			TypedProperties typedProperties = _createTypedProperties(
 				"#comment1\n#comment2\ntestKey = \"testValue\"");
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
-			LogRecord logRecord = logRecords.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
 			Assert.assertEquals(
 				"Multiple comment lines found: [#comment1, #comment2]",
-				logRecord.getMessage());
+				logEntry.getMessage());
 
 			Assert.assertEquals("testValue", typedProperties.get("testKey"));
 
@@ -206,22 +205,21 @@ public class TypedPropertiesTest {
 
 	@Test
 	public void testLoadandSaveTrailingComment() throws IOException {
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					TypedProperties.class.getName(), Level.WARNING)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
+				TypedProperties.class.getName(), Level.WARNING)) {
 
 			TypedProperties typedProperties = _createTypedProperties(
 				"testKey = \"testValue\"\n#comment");
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
-			LogRecord logRecord = logRecords.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
 			Assert.assertEquals(
 				"Comment must be at beginning of config file: #comment",
-				logRecord.getMessage());
+				logEntry.getMessage());
 
 			Assert.assertEquals("testValue", typedProperties.get("testKey"));
 
@@ -245,20 +243,19 @@ public class TypedPropertiesTest {
 	public void testLoadBadLine() throws IOException {
 		String line = "testKey = K\"testValue\"";
 
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					TypedProperties.class.getName(), Level.WARNING)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
+				TypedProperties.class.getName(), Level.WARNING)) {
 
 			TypedProperties typedProperties = _createTypedProperties(line);
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
-			LogRecord logRecord = logRecords.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
 			Assert.assertEquals(
-				"Unable to parse config line: " + line, logRecord.getMessage());
+				"Unable to parse config line: " + line, logEntry.getMessage());
 
 			Assert.assertEquals(null, typedProperties.get("testKey"));
 

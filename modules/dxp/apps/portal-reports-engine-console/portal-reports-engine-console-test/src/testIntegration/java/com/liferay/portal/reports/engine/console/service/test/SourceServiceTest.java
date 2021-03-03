@@ -41,8 +41,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.reports.engine.console.model.Source;
 import com.liferay.portal.reports.engine.console.service.SourceLocalServiceUtil;
 import com.liferay.portal.reports.engine.console.service.SourceServiceUtil;
-import com.liferay.portal.test.log.CaptureAppender;
-import com.liferay.portal.test.log.Log4JLoggerTestUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.List;
@@ -164,10 +164,9 @@ public class SourceServiceTest {
 	}
 
 	protected void setUpSource() throws Exception {
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					"com.liferay.portal.spring.hibernate.DialectDetector",
-					Log4JLoggerTestUtil.OFF)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.spring.hibernate.DialectDetector",
+				LoggerTestUtil.OFF)) {
 
 			ServiceContext serviceContext =
 				ServiceContextTestUtil.getServiceContext();

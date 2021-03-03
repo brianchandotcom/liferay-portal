@@ -48,9 +48,9 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.security.permission.DoAsUserThread;
-import com.liferay.portal.test.log.CaptureAppender;
-import com.liferay.portal.test.log.Log4JLoggerTestUtil;
-import com.liferay.portal.test.log.LogEvent;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
@@ -143,27 +143,19 @@ public class MBMessageServiceTest {
 				_users[i].getUserId(), subject);
 		}
 
-		try (CaptureAppender captureAppender1 =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					BasePersistenceImpl.class.getName(),
-					Log4JLoggerTestUtil.ERROR);
-			CaptureAppender captureAppender2 =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					"com.liferay.portal.spring.transaction." +
-						"DefaultTransactionExecutor",
-					Log4JLoggerTestUtil.ERROR);
-			CaptureAppender captureAppender3 =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					DoAsUserThread.class.getName(), Log4JLoggerTestUtil.ERROR);
-			CaptureAppender captureAppender4 =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					JDBCExceptionReporter.class.getName(),
-					Log4JLoggerTestUtil.ERROR);
-			CaptureAppender captureAppender5 =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					"com.liferay.portal.messaging.internal." +
-						"SynchronousDestination",
-					Log4JLoggerTestUtil.ERROR)) {
+		try (LogCapture logCapture1 = LoggerTestUtil.configureLog4JLogger(
+				BasePersistenceImpl.class.getName(), LoggerTestUtil.ERROR);
+			LogCapture logCapture2 = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.spring.transaction." +
+					"DefaultTransactionExecutor",
+				LoggerTestUtil.ERROR);
+			LogCapture logCapture3 = LoggerTestUtil.configureLog4JLogger(
+				DoAsUserThread.class.getName(), LoggerTestUtil.ERROR);
+			LogCapture logCapture4 = LoggerTestUtil.configureLog4JLogger(
+				JDBCExceptionReporter.class.getName(), LoggerTestUtil.ERROR);
+			LogCapture logCapture5 = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.messaging.internal.SynchronousDestination",
+				LoggerTestUtil.ERROR)) {
 
 			for (DoAsUserThread doAsUserThread : doAsUserThreads) {
 				doAsUserThread.start();
@@ -176,8 +168,8 @@ public class MBMessageServiceTest {
 			DB db = DBManagerUtil.getDB();
 
 			if (db.getDBType() == DBType.HYPERSONIC) {
-				for (LogEvent logEvent : captureAppender2.getLogEvents()) {
-					String message = logEvent.getMessage();
+				for (LogEntry logEntry : logCapture2.getLogEntries()) {
+					String message = logEntry.getMessage();
 
 					Assert.assertTrue(
 						message.startsWith(
@@ -185,23 +177,23 @@ public class MBMessageServiceTest {
 								"exception"));
 				}
 
-				for (LogEvent logEvent : captureAppender5.getLogEvents()) {
-					String message = logEvent.getMessage();
+				for (LogEntry logEntry : logCapture5.getLogEntries()) {
+					String message = logEntry.getMessage();
 
 					Assert.assertTrue(
 						message.startsWith("Unable to process message"));
 				}
 			}
 			else if (db.getDBType() == DBType.SYBASE) {
-				for (LogEvent logEvent : captureAppender1.getLogEvents()) {
-					String message = logEvent.getMessage();
+				for (LogEntry logEntry : logCapture1.getLogEntries()) {
+					String message = logEntry.getMessage();
 
 					Assert.assertTrue(
 						message.startsWith("Caught unexpected exception"));
 				}
 
-				for (LogEvent logEvent : captureAppender3.getLogEvents()) {
-					String message = logEvent.getMessage();
+				for (LogEntry logEntry : logCapture3.getLogEntries()) {
+					String message = logEntry.getMessage();
 
 					StringBundler sb = new StringBundler(2);
 
@@ -211,8 +203,8 @@ public class MBMessageServiceTest {
 					Assert.assertTrue(message.startsWith(sb.toString()));
 				}
 
-				for (LogEvent logEvent : captureAppender4.getLogEvents()) {
-					String message = logEvent.getMessage();
+				for (LogEntry logEntry : logCapture4.getLogEntries()) {
+					String message = logEntry.getMessage();
 
 					Assert.assertTrue(
 						message, message.contains("Your server command"));

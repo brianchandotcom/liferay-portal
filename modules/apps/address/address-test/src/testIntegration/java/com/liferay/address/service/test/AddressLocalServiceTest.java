@@ -37,9 +37,9 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.test.log.CaptureAppender;
-import com.liferay.portal.test.log.Log4JLoggerTestUtil;
-import com.liferay.portal.test.log.LogEvent;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -137,9 +137,8 @@ public class AddressLocalServiceTest {
 		Address address = _addAddress(
 			RandomTestUtil.randomString(), businessType.getListTypeId(), null);
 
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					_LOG_NAME, Log4JLoggerTestUtil.DEBUG)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_LOG_NAME, LoggerTestUtil.DEBUG)) {
 
 			String typeName = RandomTestUtil.randomString();
 
@@ -152,16 +151,16 @@ public class AddressLocalServiceTest {
 					"typeNames",
 					new String[] {businessType.getName(), typeName}));
 
-			List<LogEvent> logEvents = captureAppender.getLogEvents();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			LogEvent logEvent = logEvents.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
 			Assert.assertEquals(
 				StringBundler.concat(
 					"No list type found for ",
 					ListTypeConstants.CONTACT_ADDRESS, " with the name: ",
 					typeName),
-				logEvent.getMessage());
+				logEntry.getMessage());
 		}
 	}
 

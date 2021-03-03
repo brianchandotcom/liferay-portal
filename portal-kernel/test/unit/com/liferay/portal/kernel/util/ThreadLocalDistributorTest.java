@@ -16,10 +16,11 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
-import com.liferay.portal.kernel.test.CaptureHandler;
-import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -29,7 +30,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -72,33 +72,32 @@ public class ThreadLocalDistributorTest {
 		threadLocalDistributor.setClassLoader(getClassLoader());
 		threadLocalDistributor.setThreadLocalSources(_keyValuePairs);
 
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					ThreadLocalDistributor.class.getName(), Level.WARNING)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
+				ThreadLocalDistributor.class.getName(), Level.WARNING)) {
 
 			// With log
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
 			threadLocalDistributor.afterPropertiesSet();
 
-			Assert.assertEquals(logRecords.toString(), 3, logRecords.size());
+			Assert.assertEquals(logEntries.toString(), 3, logEntries.size());
 
-			LogRecord logRecord1 = logRecords.get(0);
+			LogEntry logEntry1 = logEntries.get(0);
 
 			Assert.assertEquals(
 				"_nonstatic is not a static ThreadLocal",
-				logRecord1.getMessage());
+				logEntry1.getMessage());
 
-			LogRecord logRecord2 = logRecords.get(1);
-
-			Assert.assertEquals(
-				"_nullValue is not initialized", logRecord2.getMessage());
-
-			LogRecord logRecord3 = logRecords.get(2);
+			LogEntry logEntry2 = logEntries.get(1);
 
 			Assert.assertEquals(
-				"_object is not of type ThreadLocal", logRecord3.getMessage());
+				"_nullValue is not initialized", logEntry2.getMessage());
+
+			LogEntry logEntry3 = logEntries.get(2);
+
+			Assert.assertEquals(
+				"_object is not of type ThreadLocal", logEntry3.getMessage());
 
 			List<ThreadLocal<Serializable>> threadLocals =
 				ReflectionTestUtil.getFieldValue(
@@ -110,7 +109,7 @@ public class ThreadLocalDistributorTest {
 
 			// Without log
 
-			logRecords = captureHandler.resetLogLevel(Level.OFF);
+			logEntries = logCapture.resetPriority(String.valueOf(Level.OFF));
 
 			threadLocalDistributor = new ThreadLocalDistributor();
 
@@ -119,7 +118,7 @@ public class ThreadLocalDistributorTest {
 
 			threadLocalDistributor.afterPropertiesSet();
 
-			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
+			Assert.assertTrue(logEntries.toString(), logEntries.isEmpty());
 
 			threadLocals = ReflectionTestUtil.getFieldValue(
 				threadLocalDistributor, "_threadLocals");
@@ -150,31 +149,30 @@ public class ThreadLocalDistributorTest {
 		threadLocalDistributor.setClassLoader(getClassLoader());
 		threadLocalDistributor.setThreadLocalSources(_keyValuePairs);
 
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					ThreadLocalDistributor.class.getName(), Level.WARNING)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
+				ThreadLocalDistributor.class.getName(), Level.WARNING)) {
 
 			threadLocalDistributor.afterPropertiesSet();
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logRecords.toString(), 3, logRecords.size());
+			Assert.assertEquals(logEntries.toString(), 3, logEntries.size());
 
-			LogRecord logRecord = logRecords.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
 			Assert.assertEquals(
 				"_nonstatic is not a static ThreadLocal",
-				logRecord.getMessage());
+				logEntry.getMessage());
 
-			logRecord = logRecords.get(1);
-
-			Assert.assertEquals(
-				"_nullValue is not initialized", logRecord.getMessage());
-
-			logRecord = logRecords.get(2);
+			logEntry = logEntries.get(1);
 
 			Assert.assertEquals(
-				"_object is not of type ThreadLocal", logRecord.getMessage());
+				"_nullValue is not initialized", logEntry.getMessage());
+
+			logEntry = logEntries.get(2);
+
+			Assert.assertEquals(
+				"_object is not of type ThreadLocal", logEntry.getMessage());
 		}
 
 		String testValue = "testValue";

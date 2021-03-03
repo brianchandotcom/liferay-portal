@@ -39,9 +39,9 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.search.test.util.SearchTestRule;
-import com.liferay.portal.test.log.CaptureAppender;
-import com.liferay.portal.test.log.Log4JLoggerTestUtil;
-import com.liferay.portal.test.log.LogEvent;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
@@ -83,9 +83,8 @@ public class MBMessageIndexerTest {
 
 	@Test
 	public void testNotReindexGroupNotContainingMBMessages() throws Exception {
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					_LOG_NAME, Log4JLoggerTestUtil.DEBUG)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_LOG_NAME, LoggerTestUtil.DEBUG)) {
 
 			GroupTestUtil.addGroup(
 				_company1.getCompanyId(), _user1.getUserId(),
@@ -94,17 +93,16 @@ public class MBMessageIndexerTest {
 			_indexer.reindex(
 				new String[] {String.valueOf(_company1.getCompanyId())});
 
-			List<LogEvent> logEvents = captureAppender.getLogEvents();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logEvents.toString(), 0, logEvents.size());
+			Assert.assertEquals(logEntries.toString(), 0, logEntries.size());
 		}
 	}
 
 	@Test
 	public void testReindexGroupContainingMBDiscussion() throws Exception {
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					_LOG_NAME, Log4JLoggerTestUtil.DEBUG)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_LOG_NAME, LoggerTestUtil.DEBUG)) {
 
 			Group group = GroupTestUtil.addGroup(
 				_company1.getCompanyId(), _user1.getUserId(),
@@ -122,26 +120,25 @@ public class MBMessageIndexerTest {
 			_indexer.reindex(
 				new String[] {String.valueOf(_company1.getCompanyId())});
 
-			List<LogEvent> logEvents = captureAppender.getLogEvents();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logEvents.toString(), 2, logEvents.size());
+			Assert.assertEquals(logEntries.toString(), 2, logEntries.size());
 
-			LogEvent logEvent = logEvents.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
 			Assert.assertEquals(
 				StringBundler.concat(
 					"Reindexing message boards messages for message board ",
 					"category ID ", MBCategoryConstants.DISCUSSION_CATEGORY_ID,
 					" and group ID ", group.getGroupId()),
-				logEvent.getMessage());
+				logEntry.getMessage());
 		}
 	}
 
 	@Test
 	public void testReindexGroupContainingMBMessage() throws Exception {
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					_LOG_NAME, Log4JLoggerTestUtil.DEBUG)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_LOG_NAME, LoggerTestUtil.DEBUG)) {
 
 			Group group = GroupTestUtil.addGroup(
 				_company1.getCompanyId(), _user1.getUserId(),
@@ -166,11 +163,11 @@ public class MBMessageIndexerTest {
 			_indexer.reindex(
 				new String[] {String.valueOf(_company1.getCompanyId())});
 
-			List<LogEvent> logEvents = captureAppender.getLogEvents();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logEvents.toString(), 1, logEvents.size());
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
-			LogEvent logEvent = logEvents.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
 			Assert.assertEquals(
 				StringBundler.concat(
@@ -178,7 +175,7 @@ public class MBMessageIndexerTest {
 					"category ID ",
 					MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 					" and group ID ", group.getGroupId()),
-				logEvent.getMessage());
+				logEntry.getMessage());
 		}
 	}
 

@@ -19,9 +19,9 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.SystemProperties;
-import com.liferay.portal.test.log.CaptureAppender;
-import com.liferay.portal.test.log.Log4JLoggerTestUtil;
-import com.liferay.portal.test.log.LogEvent;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.verify.VerifyProperties;
 import com.liferay.portal.verify.test.util.BaseVerifyProcessTestCase;
@@ -56,25 +56,23 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 			"_MIGRATED_PORTAL_KEYS",
 			new String[][] {{migratedPortalKey, migratedPortalKey}});
 
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					VerifyProperties.class.getName(),
-					Log4JLoggerTestUtil.ERROR)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				VerifyProperties.class.getName(), LoggerTestUtil.ERROR)) {
 
 			doVerify();
 
-			List<LogEvent> logEvents = captureAppender.getLogEvents();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logEvents.toString(), 1, logEvents.size());
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
-			LogEvent logEvent = logEvents.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
 			Assert.assertEquals(
 				StringBundler.concat(
 					"Portal property \"", migratedPortalKey,
 					"\" was migrated to the system property \"",
 					migratedPortalKey, "\""),
-				logEvent.getMessage());
+				logEntry.getMessage());
 		}
 		finally {
 			_setPropertyKeys(
@@ -90,25 +88,23 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 			"_MIGRATED_SYSTEM_KEYS",
 			new String[][] {{migratedSystemKey, migratedSystemKey}});
 
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					VerifyProperties.class.getName(),
-					Log4JLoggerTestUtil.ERROR)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				VerifyProperties.class.getName(), LoggerTestUtil.ERROR)) {
 
 			doVerify();
 
-			List<LogEvent> logEvents = captureAppender.getLogEvents();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logEvents.toString(), 1, logEvents.size());
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
-			LogEvent logEvent = logEvents.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
 			Assert.assertEquals(
 				StringBundler.concat(
 					"System property \"", migratedSystemKey,
 					"\" was migrated to the portal property \"",
 					migratedSystemKey, "\""),
-				logEvent.getMessage());
+				logEntry.getMessage());
 		}
 		finally {
 			_setPropertyKeys(
@@ -129,25 +125,23 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 				}
 			});
 
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					VerifyProperties.class.getName(),
-					Log4JLoggerTestUtil.ERROR)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				VerifyProperties.class.getName(), LoggerTestUtil.ERROR)) {
 
 			doVerify();
 
-			List<LogEvent> logEvents = captureAppender.getLogEvents();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logEvents.toString(), 1, logEvents.size());
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
-			LogEvent logEvent = logEvents.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
 			Assert.assertEquals(
 				StringBundler.concat(
 					"Portal property \"", modularizedPortalKey,
 					"\" was modularized to ", modularizedPortalKey, " as \"",
 					modularizedPortalKey, "\""),
-				logEvent.getMessage());
+				logEntry.getMessage());
 		}
 		finally {
 			_setPropertyKeys(
@@ -162,22 +156,20 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 		String[] originalObsoletePortalKeys = _setPropertyKeys(
 			"_OBSOLETE_PORTAL_KEYS", new String[] {obsoletePortalKey});
 
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					VerifyProperties.class.getName(),
-					Log4JLoggerTestUtil.ERROR)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				VerifyProperties.class.getName(), LoggerTestUtil.ERROR)) {
 
 			doVerify();
 
-			List<LogEvent> logEvents = captureAppender.getLogEvents();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logEvents.toString(), 1, logEvents.size());
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
-			LogEvent logEvent = logEvents.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
 			Assert.assertEquals(
 				"Portal property \"" + obsoletePortalKey + "\" is obsolete",
-				logEvent.getMessage());
+				logEntry.getMessage());
 		}
 		finally {
 			_setPropertyKeys(
@@ -192,22 +184,20 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 		String[] originalObsoleteSystemKeys = _setPropertyKeys(
 			"_OBSOLETE_SYSTEM_KEYS", new String[] {obsoleteSystemKey});
 
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					VerifyProperties.class.getName(),
-					Log4JLoggerTestUtil.ERROR)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				VerifyProperties.class.getName(), LoggerTestUtil.ERROR)) {
 
 			doVerify();
 
-			List<LogEvent> logEvents = captureAppender.getLogEvents();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logEvents.toString(), 1, logEvents.size());
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
-			LogEvent logEvent = logEvents.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
 			Assert.assertEquals(
 				"System property \"" + obsoleteSystemKey + "\" is obsolete",
-				logEvent.getMessage());
+				logEntry.getMessage());
 		}
 		finally {
 			_setPropertyKeys(
@@ -223,24 +213,22 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 			"_RENAMED_PORTAL_KEYS",
 			new String[][] {new String[] {renamedPortalKey, renamedPortalKey}});
 
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					VerifyProperties.class.getName(),
-					Log4JLoggerTestUtil.ERROR)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				VerifyProperties.class.getName(), LoggerTestUtil.ERROR)) {
 
 			doVerify();
 
-			List<LogEvent> logEvents = captureAppender.getLogEvents();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logEvents.toString(), 1, logEvents.size());
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
-			LogEvent logEvent = logEvents.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
 			Assert.assertEquals(
 				StringBundler.concat(
 					"Portal property \"", renamedPortalKey,
 					"\" was renamed to \"", renamedPortalKey, "\""),
-				logEvent.getMessage());
+				logEntry.getMessage());
 		}
 		finally {
 			_setPropertyKeys("_RENAMED_PORTAL_KEYS", originalRenamedPortalKeys);
@@ -255,24 +243,22 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 			"_RENAMED_SYSTEM_KEYS",
 			new String[][] {new String[] {renamedSystemKey, renamedSystemKey}});
 
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					VerifyProperties.class.getName(),
-					Log4JLoggerTestUtil.ERROR)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				VerifyProperties.class.getName(), LoggerTestUtil.ERROR)) {
 
 			doVerify();
 
-			List<LogEvent> logEvents = captureAppender.getLogEvents();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logEvents.toString(), 1, logEvents.size());
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
-			LogEvent logEvent = logEvents.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
 			Assert.assertEquals(
 				StringBundler.concat(
 					"System property \"", renamedSystemKey,
 					"\" was renamed to \"", renamedSystemKey, "\""),
-				logEvent.getMessage());
+				logEntry.getMessage());
 		}
 		finally {
 			_setPropertyKeys("_RENAMED_SYSTEM_KEYS", originalRenamedSystemKeys);
@@ -282,16 +268,14 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 	@Override
 	@Test
 	public void testVerify() throws Exception {
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					VerifyProperties.class.getName(),
-					Log4JLoggerTestUtil.ERROR)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				VerifyProperties.class.getName(), LoggerTestUtil.ERROR)) {
 
 			doVerify();
 
-			List<LogEvent> logEvents = captureAppender.getLogEvents();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertTrue(logEvents.toString(), logEvents.isEmpty());
+			Assert.assertTrue(logEntries.toString(), logEntries.isEmpty());
 		}
 	}
 

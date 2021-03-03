@@ -23,9 +23,9 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.osgi.web.portlet.container.test.util.PortletContainerTestUtil;
-import com.liferay.portal.test.log.CaptureAppender;
-import com.liferay.portal.test.log.Log4JLoggerTestUtil;
-import com.liferay.portal.test.log.LogEvent;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.SecurityPortletContainerWrapper;
 
@@ -76,27 +76,26 @@ public class RenderRequestPortletContainerTest
 			"?p_p_id=", URLCodec.encodeURL("'\"><script>alert(1)</script>"),
 			"&p_p_lifecycle=0&p_p_state=exclusive");
 
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					SecurityPortletContainerWrapper.class.getName(),
-					Log4JLoggerTestUtil.WARN)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				SecurityPortletContainerWrapper.class.getName(),
+				LoggerTestUtil.WARN)) {
 
 			PortletContainerTestUtil.Response response =
 				PortletContainerTestUtil.request(url);
 
-			List<LogEvent> logEvents = captureAppender.getLogEvents();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
 			int totalExpectedEvents = 2;
 
 			Assert.assertEquals(
-				logEvents.toString(), totalExpectedEvents, logEvents.size());
+				logEntries.toString(), totalExpectedEvents, logEntries.size());
 
 			for (int i = 0; i < totalExpectedEvents; i++) {
-				LogEvent logEvent = logEvents.get(i);
+				LogEntry logEntry = logEntries.get(i);
 
 				Assert.assertEquals(
 					"Invalid portlet ID '\"><script>alert(1)</script>",
-					logEvent.getMessage());
+					logEntry.getMessage());
 			}
 
 			Assert.assertEquals(200, response.getCode());

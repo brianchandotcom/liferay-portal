@@ -21,9 +21,9 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
 import com.liferay.portal.kernel.test.rule.AbstractTestRule;
-import com.liferay.portal.test.log.CaptureAppender;
-import com.liferay.portal.test.log.Log4JLoggerTestUtil;
-import com.liferay.portal.test.log.LogEvent;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,7 +39,7 @@ import org.junit.runner.Description;
  * @author Shuyang Zhou
  */
 public class LogAssertionTestRule
-	extends AbstractTestRule<List<CaptureAppender>, List<CaptureAppender>> {
+	extends AbstractTestRule<List<LogCapture>, List<LogCapture>> {
 
 	public static final LogAssertionTestRule INSTANCE =
 		new LogAssertionTestRule();
@@ -59,18 +59,17 @@ public class LogAssertionTestRule
 	}
 
 	public static void endAssert(
-		List<ExpectedLogs> expectedLogsList,
-		List<CaptureAppender> captureAppenders) {
+		List<ExpectedLogs> expectedLogsList, List<LogCapture> logCaptures) {
 
 		uninstallLog4jAppender();
 		uninstallJdk14Handler();
 
 		StringBundler sb = new StringBundler();
 
-		for (CaptureAppender captureAppender : captureAppenders) {
+		for (LogCapture logCapture : logCaptures) {
 			try {
-				for (LogEvent logEvent : captureAppender.getLogEvents()) {
-					String message = logEvent.getMessage();
+				for (LogEntry logEntry : logCapture.getLogEntries()) {
+					String message = logEntry.getMessage();
 
 					if (!isExpected(expectedLogsList, message)) {
 						sb.append(message);
@@ -79,7 +78,7 @@ public class LogAssertionTestRule
 				}
 			}
 			finally {
-				captureAppender.close();
+				logCapture.close();
 			}
 		}
 
@@ -126,7 +125,7 @@ public class LogAssertionTestRule
 		}
 	}
 
-	public static List<CaptureAppender> startAssert(
+	public static List<LogCapture> startAssert(
 		List<ExpectedLogs> expectedLogsList) {
 
 		_thread = Thread.currentThread();
@@ -137,26 +136,25 @@ public class LogAssertionTestRule
 			new LogAssertionUncaughtExceptionHandler(
 				_uncaughtExceptionHandler));
 
-		List<CaptureAppender> captureAppenders = new ArrayList<>(
-			expectedLogsList.size());
+		List<LogCapture> logCaptures = new ArrayList<>(expectedLogsList.size());
 
 		for (ExpectedLogs expectedLogs : expectedLogsList) {
 			Class<?> clazz = expectedLogs.loggerClass();
 
-			captureAppenders.add(
-				Log4JLoggerTestUtil.configureLog4JLogger(
+			logCaptures.add(
+				LoggerTestUtil.configureLog4JLogger(
 					clazz.getName(), expectedLogs.level()));
 		}
 
 		installJdk14Handler();
 		installLog4jAppender();
 
-		return captureAppenders;
+		return logCaptures;
 	}
 
 	@Override
 	public void afterClass(
-		Description description, List<CaptureAppender> captureAppenders) {
+		Description description, List<LogCapture> logCaptures) {
 
 		ExpectedMultipleLogs expectedMultipleLogs = description.getAnnotation(
 			ExpectedMultipleLogs.class);
@@ -176,19 +174,18 @@ public class LogAssertionTestRule
 				expectedLogsList, expectedMultipleLogs.expectedMultipleLogs());
 		}
 
-		endAssert(expectedLogsList, captureAppenders);
+		endAssert(expectedLogsList, logCaptures);
 	}
 
 	@Override
 	public void afterMethod(
-		Description description, List<CaptureAppender> captureAppenders,
-		Object target) {
+		Description description, List<LogCapture> logCaptures, Object target) {
 
-		afterClass(description, captureAppenders);
+		afterClass(description, logCaptures);
 	}
 
 	@Override
-	public List<CaptureAppender> beforeClass(Description description) {
+	public List<LogCapture> beforeClass(Description description) {
 		ExpectedMultipleLogs expectedMultipleLogs = description.getAnnotation(
 			ExpectedMultipleLogs.class);
 
@@ -211,7 +208,7 @@ public class LogAssertionTestRule
 	}
 
 	@Override
-	public List<CaptureAppender> beforeMethod(
+	public List<LogCapture> beforeMethod(
 		Description description, Object target) {
 
 		return beforeClass(description);

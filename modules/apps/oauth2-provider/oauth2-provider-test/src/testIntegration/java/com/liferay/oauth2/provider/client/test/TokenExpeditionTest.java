@@ -21,8 +21,8 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.test.log.CaptureAppender;
-import com.liferay.portal.test.log.Log4JLoggerTestUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Dictionary;
@@ -65,20 +65,17 @@ public class TokenExpeditionTest extends BaseClientTestCase {
 		formData.add("client_secret", "");
 		formData.add("grant_type", "client_credentials");
 
-		try (CaptureAppender captureAppender1 =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					"com.liferay.oauth2.provider.rest.internal.endpoint." +
-						"liferay.LiferayOAuthDataProvider",
-					Log4JLoggerTestUtil.WARN);
-			CaptureAppender captureAppender2 =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					"org.apache.cxf.jaxrs.impl.WebApplicationExceptionMapper",
-					Log4JLoggerTestUtil.WARN);
-			CaptureAppender captureAppender3 =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					"org.apache.cxf.rs.security.oauth2.services." +
-						"AbstractOAuthService",
-					Log4JLoggerTestUtil.WARN)) {
+		try (LogCapture logCapture1 = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.oauth2.provider.rest.internal.endpoint.liferay." +
+					"LiferayOAuthDataProvider",
+				LoggerTestUtil.WARN);
+			LogCapture logCapture2 = LoggerTestUtil.configureLog4JLogger(
+				"org.apache.cxf.jaxrs.impl.WebApplicationExceptionMapper",
+				LoggerTestUtil.WARN);
+			LogCapture logCapture3 = LoggerTestUtil.configureLog4JLogger(
+				"org.apache.cxf.rs.security.oauth2.services." +
+					"AbstractOAuthService",
+				LoggerTestUtil.WARN)) {
 
 			Response response = invocationBuilder.post(Entity.form(formData));
 
@@ -149,10 +146,8 @@ public class TokenExpeditionTest extends BaseClientTestCase {
 			"Authorization", "Bearer "
 		);
 
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					"portal_web.docroot.errors.code_jsp",
-					Log4JLoggerTestUtil.WARN)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"portal_web.docroot.errors.code_jsp", LoggerTestUtil.WARN)) {
 
 			Response response = invocationBuilder.get();
 

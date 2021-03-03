@@ -22,10 +22,11 @@ import com.liferay.portal.fabric.netty.fileserver.handlers.FileServerTestUtil;
 import com.liferay.portal.kernel.nio.FileSystemProviderWrapper;
 import com.liferay.portal.kernel.nio.FileSystemWrapper;
 import com.liferay.portal.kernel.nio.PathWrapper;
-import com.liferay.portal.kernel.test.CaptureHandler;
-import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.SwappableSecurityManager;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -47,7 +48,6 @@ import java.nio.file.spi.FileSystemProvider;
 
 import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
@@ -656,9 +656,8 @@ public class FileHelperUtilTest {
 
 		String folderName = "TestFolder";
 
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					FileHelperUtil.class.getName(), Level.FINEST)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
+				FileHelperUtil.class.getName(), Level.FINEST)) {
 
 			Path folderPath = FileServerTestUtil.createFolderWithFiles(
 				Paths.get(folderName));
@@ -668,13 +667,13 @@ public class FileHelperUtilTest {
 					folderPath, FileHelperUtil.TEMP_DIR_PATH,
 					CompressionLevel.BEST_COMPRESSION));
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
-			LogRecord logRecord = logRecords.remove(0);
+			LogEntry logEntry = logEntries.remove(0);
 
-			String message = logRecord.getMessage();
+			String message = logEntry.getMessage();
 
 			Assert.assertTrue(message.startsWith("Zipped"));
 
@@ -691,11 +690,11 @@ public class FileHelperUtilTest {
 				FileHelperUtil.unzip(
 					zipFilePath, FileHelperUtil.TEMP_DIR_PATH));
 
-			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
-			logRecord = logRecords.remove(0);
+			logEntry = logEntries.remove(0);
 
-			message = logRecord.getMessage();
+			message = logEntry.getMessage();
 
 			Assert.assertTrue(message.startsWith("Unzipped"));
 
@@ -704,9 +703,8 @@ public class FileHelperUtilTest {
 
 		// Without log
 
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					FileHelperUtil.class.getName(), Level.OFF)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
+				FileHelperUtil.class.getName(), Level.OFF)) {
 
 			Path folderPath = FileServerTestUtil.createFolderWithFiles(
 				Paths.get(folderName));
@@ -716,9 +714,9 @@ public class FileHelperUtilTest {
 					folderPath, FileHelperUtil.TEMP_DIR_PATH,
 					CompressionLevel.BEST_COMPRESSION));
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
+			Assert.assertTrue(logEntries.toString(), logEntries.isEmpty());
 
 			try (FileSystem fileSystem = FileSystems.newFileSystem(
 					zipFilePath, null)) {
@@ -733,7 +731,7 @@ public class FileHelperUtilTest {
 				FileHelperUtil.unzip(
 					zipFilePath, FileHelperUtil.TEMP_DIR_PATH));
 
-			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
+			Assert.assertTrue(logEntries.toString(), logEntries.isEmpty());
 
 			FileServerTestUtil.assertFileEquals(folderPath, unzipFolderPath);
 		}

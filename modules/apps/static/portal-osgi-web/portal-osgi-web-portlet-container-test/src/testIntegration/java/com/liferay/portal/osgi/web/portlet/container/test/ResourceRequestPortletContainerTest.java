@@ -23,9 +23,9 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.osgi.web.portlet.container.test.util.PortletContainerTestUtil;
-import com.liferay.portal.test.log.CaptureAppender;
-import com.liferay.portal.test.log.Log4JLoggerTestUtil;
-import com.liferay.portal.test.log.LogEvent;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.SecurityPortletContainerWrapper;
 
@@ -76,32 +76,31 @@ public class ResourceRequestPortletContainerTest
 			URLCodec.encodeURL("'\"><script>alert(1)</script>"),
 			"&p_p_lifecycle=2&");
 
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					SecurityPortletContainerWrapper.class.getName(),
-					Log4JLoggerTestUtil.WARN)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				SecurityPortletContainerWrapper.class.getName(),
+				LoggerTestUtil.WARN)) {
 
 			PortletContainerTestUtil.Response response =
 				PortletContainerTestUtil.request(url);
 
-			List<LogEvent> logEvents = captureAppender.getLogEvents();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logEvents.toString(), 2, logEvents.size());
+			Assert.assertEquals(logEntries.toString(), 2, logEntries.size());
 
-			LogEvent logEvent = logEvents.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
 			Assert.assertEquals(
 				"Invalid portlet ID '\"><script>alert(1)</script>",
-				logEvent.getMessage());
+				logEntry.getMessage());
 
-			logEvent = logEvents.get(1);
+			logEntry = logEntries.get(1);
 
 			Assert.assertEquals(
 				StringBundler.concat(
 					"User 0 is not allowed to serve resource for ", layoutURL,
 					" on '\"><script>alert(1)</script>: Invalid portlet ID ",
 					"'\"><script>alert(1)</script>"),
-				logEvent.getMessage());
+				logEntry.getMessage());
 
 			Assert.assertEquals(403, response.getCode());
 		}

@@ -21,16 +21,16 @@ import com.liferay.portal.json.jabsorb.serializer.LiferayJSONDeserializationWhit
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.test.AssertUtils;
-import com.liferay.portal.kernel.test.CaptureHandler;
-import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -102,10 +102,9 @@ public class JSONFactoryTest {
 	public void testDeserializeNonwhitelistedClass() {
 		String json = JSONFactoryUtil.serialize(new JSONFactoryTest());
 
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					LiferayJSONDeserializationWhitelist.class.getName(),
-					Level.WARNING)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
+				LiferayJSONDeserializationWhitelist.class.getName(),
+				Level.WARNING)) {
 
 			Object object = JSONFactoryUtil.deserialize(json);
 
@@ -113,16 +112,16 @@ public class JSONFactoryTest {
 				object.getClass() + " is not an instance of Map",
 				object instanceof Map);
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
-			LogRecord logRecord = logRecords.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
 			Assert.assertTrue(
-				logRecord.getMessage(),
+				logEntry.getMessage(),
 				StringUtil.startsWith(
-					logRecord.getMessage(),
+					logEntry.getMessage(),
 					"Unable to deserialize " +
 						JSONFactoryTest.class.getName()));
 		}

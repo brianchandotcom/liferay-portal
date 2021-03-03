@@ -14,12 +14,12 @@
 
 package com.liferay.frontend.js.minifier.internal;
 
-import com.liferay.portal.kernel.test.CaptureHandler;
-import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 
 import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -36,31 +36,30 @@ public class GoogleJavascriptMinifierTest {
 
 		String code = "function(){ var invalidFunctionExpression; }";
 
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					GoogleJavaScriptMinifier.class.getName(), Level.SEVERE)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
+				GoogleJavaScriptMinifier.class.getName(), Level.SEVERE)) {
 
 			String minifiedJS = googleJavaScriptMinifier.compress("test", code);
 
 			Assert.assertEquals(44, minifiedJS.length());
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logRecords.toString(), 2, logRecords.size());
+			Assert.assertEquals(logEntries.toString(), 2, logEntries.size());
 
-			LogRecord logRecord = logRecords.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
 			Assert.assertEquals(
 				"(test:1): Parse error. 'identifier' expected " +
 					"[JSC_PARSE_ERROR]",
-				logRecord.getMessage());
+				logEntry.getMessage());
 
-			logRecord = logRecords.get(1);
+			logEntry = logEntries.get(1);
 
 			Assert.assertEquals(
-				"(test): 1 error(s), 0 warning(s)", logRecord.getMessage());
+				"(test): 1 error(s), 0 warning(s)", logEntry.getMessage());
 
-			captureHandler.resetLogLevel(Level.SEVERE);
+			logCapture.resetPriority(String.valueOf(Level.SEVERE));
 		}
 	}
 

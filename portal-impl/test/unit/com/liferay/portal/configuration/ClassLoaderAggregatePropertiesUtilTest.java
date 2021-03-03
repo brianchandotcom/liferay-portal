@@ -14,13 +14,13 @@
 
 package com.liferay.portal.configuration;
 
-import com.liferay.portal.kernel.test.CaptureHandler;
-import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 
 import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -56,39 +56,38 @@ public class ClassLoaderAggregatePropertiesUtilTest {
 
 		// Encoded with illegal content
 
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					ClassLoaderAggregatePropertiesUtil.class.getName(),
-					Level.WARNING)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
+				ClassLoaderAggregatePropertiesUtil.class.getName(),
+				Level.WARNING)) {
 
 			String s = "abc_xyz_D_-1__DEF__GH";
 
 			Assert.assertEquals(s, _decode(s));
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logRecords.toString(), 3, logRecords.size());
+			Assert.assertEquals(logEntries.toString(), 3, logEntries.size());
 
-			LogRecord logRecord = logRecords.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
 			Assert.assertEquals(
 				"Unable to decode part \"xyz\" from \"" + s +
 					"\", preserve it literally",
-				logRecord.getMessage());
+				logEntry.getMessage());
 
-			logRecord = logRecords.get(1);
+			logEntry = logEntries.get(1);
 
 			Assert.assertEquals(
 				"Unable to decode part \"-1\" from \"" + s +
 					"\", preserve it literally",
-				logRecord.getMessage());
+				logEntry.getMessage());
 
-			logRecord = logRecords.get(2);
+			logEntry = logEntries.get(2);
 
 			Assert.assertEquals(
 				"Unable to decode part \"DEF\" from \"" + s +
 					"\", preserve it literally",
-				logRecord.getMessage());
+				logEntry.getMessage());
 		}
 	}
 

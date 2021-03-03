@@ -29,8 +29,8 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.test.log.CaptureAppender;
-import com.liferay.portal.test.log.Log4JLoggerTestUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.view.count.model.ViewCountEntry;
@@ -98,10 +98,8 @@ public class ViewCountEntryLocalServiceTest {
 			_viewCountEntryFinder, "_sessionFactory",
 			_createSessionFactoryProxy(sessionFactory, cyclicBarrier));
 
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					JDBCExceptionReporter.class.getName(),
-					Log4JLoggerTestUtil.OFF)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				JDBCExceptionReporter.class.getName(), LoggerTestUtil.OFF)) {
 
 			FutureTask<Void> futureTask = new FutureTask<>(
 				() -> {

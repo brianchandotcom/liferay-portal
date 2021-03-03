@@ -99,11 +99,6 @@ public class SiteNavigationAdminManagementToolbarDisplayContext
 	}
 
 	@Override
-	public String getComponentId() {
-		return "siteNavigationMenuWebManagementToolbar";
-	}
-
-	@Override
 	public CreationMenu getCreationMenu() {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -130,11 +125,6 @@ public class SiteNavigationAdminManagementToolbarDisplayContext
 					LanguageUtil.get(httpServletRequest, "add"));
 			}
 		).build();
-	}
-
-	@Override
-	public String getDefaultEventHandler() {
-		return "siteNavigationAdminManagementToolbarDefaultEventHandler";
 	}
 
 	@Override

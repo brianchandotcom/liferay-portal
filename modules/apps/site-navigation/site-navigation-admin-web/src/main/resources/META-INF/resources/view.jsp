@@ -20,8 +20,9 @@
 SiteNavigationAdminManagementToolbarDisplayContext siteNavigationAdminManagementToolbarDisplayContext = new SiteNavigationAdminManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, siteNavigationAdminDisplayContext);
 %>
 
-<clay:management-toolbar-v2
-	displayContext="<%= siteNavigationAdminManagementToolbarDisplayContext %>"
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= siteNavigationAdminManagementToolbarDisplayContext %>"
+	propsTransformer="js/SiteNavigationManagementToolbarPropsTransformer"
 />
 
 <portlet:actionURL name="/site_navigation_admin/delete_site_navigation_menu" var="deleteSitaNavigationMenuURL">
@@ -184,8 +185,3 @@ SiteNavigationAdminManagementToolbarDisplayContext siteNavigationAdminManagement
 
 	Liferay.on('destroyPortlet', handleDestroyPortlet);
 </aui:script>
-
-<liferay-frontend:component
-	componentId="<%= siteNavigationAdminManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/ManagementToolbarDefaultEventHandler"
-/>

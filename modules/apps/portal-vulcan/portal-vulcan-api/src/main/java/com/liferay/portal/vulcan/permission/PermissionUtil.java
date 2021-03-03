@@ -99,19 +99,8 @@ public class PermissionUtil {
 	}
 
 	public static Permission toPermission(
-		Long companyId, Long id, List<ResourceAction> resourceActions,
-		String resourceName,
-		ResourcePermissionLocalService resourcePermissionLocalService,
-		Role role) {
-
-		ResourcePermission resourcePermission =
-			resourcePermissionLocalService.fetchResourcePermission(
-				companyId, resourceName, ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(id), role.getRoleId());
-
-		if (resourcePermission == null) {
-			return null;
-		}
+		List<ResourceAction> resourceActions,
+		ResourcePermission resourcePermission, Role role) {
 
 		Set<String> actionsIdsSet = new HashSet<>();
 
@@ -131,6 +120,24 @@ public class PermissionUtil {
 				roleName = role.getName();
 			}
 		};
+	}
+
+	public static Permission toPermission(
+		Long companyId, Long id, List<ResourceAction> resourceActions,
+		String resourceName,
+		ResourcePermissionLocalService resourcePermissionLocalService,
+		Role role) {
+
+		ResourcePermission resourcePermission =
+			resourcePermissionLocalService.fetchResourcePermission(
+				companyId, resourceName, ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(id), role.getRoleId());
+
+		if (resourcePermission == null) {
+			return null;
+		}
+
+		return toPermission(resourceActions, resourcePermission, role);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(PermissionUtil.class);

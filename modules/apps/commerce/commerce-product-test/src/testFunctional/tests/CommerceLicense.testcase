@@ -44,6 +44,14 @@ definition {
 		}
 	}
 
+	@priority = "4"
+	test CombinedXML {
+		property commerce.enabled = "true";
+		property custom.commerce.license = "commerce-dxp-license-developer-combined.xml";
+
+		CommerceLicense.viewCommerceAvailable();
+	}
+
 	@priority = "3"
 	test DeleteLiferayDXPLicense {
 		property commerce.enabled = "false";

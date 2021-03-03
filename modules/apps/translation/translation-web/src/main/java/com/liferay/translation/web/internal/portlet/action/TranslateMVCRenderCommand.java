@@ -234,7 +234,7 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 			_translationEntryLocalService.fetchTranslationEntry(
 				className, classPK, targetLanguageId);
 
-		if (translationEntry == null) {
+		if ((translationEntry == null) || translationEntry.isApproved()) {
 			return journalArticleInfoItemFieldValues;
 		}
 

@@ -35,6 +35,10 @@ public interface UniqueFileEntryTitleProvider {
 		throws PortalException;
 
 	public String provide(
+			long groupId, long folderId, String extension, Locale locale)
+		throws PortalException;
+
+	public String provide(
 			long groupId, long folderId, String extension, String title)
 		throws PortalException;
 

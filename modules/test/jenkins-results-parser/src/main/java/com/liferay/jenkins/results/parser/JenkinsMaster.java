@@ -39,6 +39,10 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 			String propertyValue = JenkinsResultsParserUtil.getBuildProperty(
 				"slave.ram.minimum.default");
 
+			if (propertyValue == null) {
+				return SLAVE_RAM_DEFAULT;
+			}
+
 			return Integer.valueOf(propertyValue);
 		}
 		catch (Exception exception) {
@@ -62,6 +66,10 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		try {
 			String propertyValue = JenkinsResultsParserUtil.getBuildProperty(
 				"slaves.per.host.default");
+
+			if (propertyValue == null) {
+				return SLAVES_PER_HOST_DEFAULT;
+			}
 
 			return Integer.valueOf(propertyValue);
 		}

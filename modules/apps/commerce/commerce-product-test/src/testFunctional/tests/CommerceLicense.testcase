@@ -104,6 +104,7 @@ definition {
 	@priority = "4"
 	test DeployModuleLicenseToLCSPortal {
 		property commerce.enabled = "true";
+		property custom.commerce.license = "commerce-license-production-basic.xml";
 		property deploy.lcs.token.file = "true";
 
 		Pause(locator1 = "60000");

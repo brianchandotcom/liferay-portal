@@ -186,6 +186,8 @@ public class ProductHelperImpl implements ProductHelper {
 					allowedOrderQuantitiesArray);
 			}
 
+			productSettingsModel.setBackOrders(
+				cpDefinitionInventory.isBackOrders());
 			productSettingsModel.setLowStockQuantity(
 				cpDefinitionInventory.getMinStockQuantity());
 			productSettingsModel.setShowAvailabilityDot(

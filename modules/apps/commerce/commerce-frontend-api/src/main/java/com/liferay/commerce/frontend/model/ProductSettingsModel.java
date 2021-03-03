@@ -39,12 +39,20 @@ public class ProductSettingsModel {
 		return _multipleQuantity;
 	}
 
+	public boolean isBackOrders() {
+		return _backOrders;
+	}
+
 	public boolean isShowAvailabilityDot() {
 		return _showAvailabilityDot;
 	}
 
 	public void setAllowedQuantities(int[] allowedQuantities) {
 		_allowedQuantities = allowedQuantities;
+	}
+
+	public void setBackOrders(boolean backOrders) {
+		_backOrders = backOrders;
 	}
 
 	public void setLowStockQuantity(int lowStockQuantity) {
@@ -68,6 +76,7 @@ public class ProductSettingsModel {
 	}
 
 	private int[] _allowedQuantities;
+	private boolean _backOrders;
 	private int _lowStockQuantity;
 	private int _maxQuantity;
 	private int _minQuantity;

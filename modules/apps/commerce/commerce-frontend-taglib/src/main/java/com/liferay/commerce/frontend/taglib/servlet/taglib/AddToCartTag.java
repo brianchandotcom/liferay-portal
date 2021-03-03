@@ -18,7 +18,9 @@ import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.frontend.model.ProductSettingsModel;
 import com.liferay.commerce.frontend.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.commerce.frontend.util.ProductHelper;
 import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
@@ -116,6 +118,16 @@ public class AddToCartTag extends IncludeTag {
 				_stockQuantity = _commerceInventoryEngine.getStockQuantity(
 					PortalUtil.getCompanyId(request),
 					commerceContext.getCommerceChannelGroupId(), sku);
+
+				if (!_disabled) {
+					ProductSettingsModel productSettingsModel =
+						_productHelper.getProductSettingsModel(
+							cpSku.getCPInstanceId());
+
+					_disabled =
+						!productSettingsModel.isBackOrders() &&
+						(_stockQuantity <= 0);
+				}
 			}
 		}
 		catch (Exception exception) {
@@ -209,6 +221,7 @@ public class AddToCartTag extends IncludeTag {
 		_commerceOrderItemLocalService =
 			ServletContextUtil.getCommerceOrderItemLocalService();
 		_cpContentHelper = ServletContextUtil.getCPContentHelper();
+		_productHelper = ServletContextUtil.getProductHelper();
 		servletContext = ServletContextUtil.getServletContext();
 	}
 
@@ -237,6 +250,7 @@ public class AddToCartTag extends IncludeTag {
 		_disabled = false;
 		_inCart = false;
 		_options = null;
+		_productHelper = null;
 		_spritemap = null;
 		_stockQuantity = 0;
 		_willUpdate = false;
@@ -267,6 +281,7 @@ public class AddToCartTag extends IncludeTag {
 	private boolean _disabled;
 	private boolean _inCart;
 	private String _options;
+	private ProductHelper _productHelper;
 	private String _spritemap;
 	private int _stockQuantity;
 	private boolean _willUpdate;

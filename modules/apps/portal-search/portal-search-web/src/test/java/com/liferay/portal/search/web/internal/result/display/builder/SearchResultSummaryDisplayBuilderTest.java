@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -79,6 +80,8 @@ public class SearchResultSummaryDisplayBuilderTest {
 		setUpHtmlUtil();
 		setUpLocaleThreadLocal();
 		setUpPropsUtil();
+		setUpUser();
+		setUpUserLocalService();
 
 		themeDisplay = createThemeDisplay();
 	}
@@ -463,6 +466,7 @@ public class SearchResultSummaryDisplayBuilderTest {
 		searchResultSummaryDisplayBuilder.setSummaryBuilderFactory(
 			new SummaryBuilderFactoryImpl());
 		searchResultSummaryDisplayBuilder.setThemeDisplay(themeDisplay);
+		searchResultSummaryDisplayBuilder.setUserLocalService(userLocalService);
 
 		return searchResultSummaryDisplayBuilder;
 	}
@@ -527,6 +531,32 @@ public class SearchResultSummaryDisplayBuilderTest {
 
 	protected void setUpPropsUtil() {
 		PropsTestUtil.setProps(Collections.emptyMap());
+	}
+
+	protected void setUpUser() throws PortalException {
+		Mockito.doReturn(
+			RandomTestUtil.randomString()
+		).when(
+			user
+		).getPortraitURL(
+			Mockito.any()
+		);
+
+		Mockito.doReturn(
+			RandomTestUtil.randomLong()
+		).when(
+			user
+		).getPortraitId();
+	}
+
+	protected void setUpUserLocalService() {
+		Mockito.doReturn(
+			user
+		).when(
+			userLocalService
+		).fetchUser(
+			Mockito.anyLong()
+		);
 	}
 
 	protected void whenAssetEntryLocalServiceFetchEntry(
@@ -647,6 +677,12 @@ public class SearchResultSummaryDisplayBuilderTest {
 	protected PortletURLFactory portletURLFactory;
 
 	protected ThemeDisplay themeDisplay;
+
+	@Mock
+	protected User user;
+
+	@Mock
+	protected UserLocalService userLocalService;
 
 	private static final String _SUMMARY_CONTENT =
 		RandomTestUtil.randomString();

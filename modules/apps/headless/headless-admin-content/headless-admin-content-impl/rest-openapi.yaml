@@ -298,6 +298,31 @@ paths:
                     description:
                         ""
             tags: ["PageDefinition"]
+    "/sites/{siteId}/site-pages/{friendlyUrlPath}":
+        delete:
+            # @review
+            description:
+                Deletes the specific public page of a given site
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: friendlyUrlPath
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["SitePage"]
     "/sites/{siteId}/structured-contents":
         get:
             # @review

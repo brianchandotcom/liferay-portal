@@ -32,11 +32,14 @@ import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.layout.dynamic.data.mapping.form.field.type.constants.LayoutDDMFormFieldTypeConstants;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -47,10 +50,12 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -676,7 +681,7 @@ public class DDMFormValuesExportImportContentProcessor
 					_portletDataContext, jsonObject);
 
 				if (importedLayout != null) {
-					value.addString(locale, toJSON(importedLayout));
+					value.addString(locale, toJSON(importedLayout, locale));
 
 					continue;
 				}
@@ -702,7 +707,7 @@ public class DDMFormValuesExportImportContentProcessor
 				}
 
 				if (importedLayout != null) {
-					value.addString(locale, toJSON(importedLayout));
+					value.addString(locale, toJSON(importedLayout, locale));
 				}
 			}
 		}
@@ -727,16 +732,56 @@ public class DDMFormValuesExportImportContentProcessor
 			return layout;
 		}
 
-		protected String toJSON(Layout layout) {
+		protected String toJSON(Layout layout, Locale locale)
+			throws PortalException {
+
 			JSONObject jsonObject = JSONUtil.put(
 				"groupId", layout.getGroupId()
 			).put(
+				"id", layout.getUuid()
+			).put(
 				"layoutId", layout.getLayoutId()
 			).put(
+				"name", _getLayoutBreadcrumb(layout, locale)
+			).put(
 				"privateLayout", layout.isPrivateLayout()
+			).put(
+				"value", layout.getFriendlyURL(locale)
 			);
 
 			return jsonObject.toString();
+		}
+
+		private String _getLayoutBreadcrumb(Layout layout, Locale locale)
+			throws PortalException {
+
+			List<Layout> ancestors = layout.getAncestors();
+
+			StringBundler sb = new StringBundler((4 * ancestors.size()) + 5);
+
+			if (layout.isPrivateLayout()) {
+				sb.append(LanguageUtil.get(locale, "private-pages"));
+			}
+			else {
+				sb.append(LanguageUtil.get(locale, "public-pages"));
+			}
+
+			sb.append(StringPool.SPACE);
+			sb.append(StringPool.GREATER_THAN);
+			sb.append(StringPool.SPACE);
+
+			Collections.reverse(ancestors);
+
+			for (Layout ancestor : ancestors) {
+				sb.append(HtmlUtil.escape(ancestor.getName(locale)));
+				sb.append(StringPool.SPACE);
+				sb.append(StringPool.GREATER_THAN);
+				sb.append(StringPool.SPACE);
+			}
+
+			sb.append(HtmlUtil.escape(layout.getName(locale)));
+
+			return sb.toString();
 		}
 
 		private final PortletDataContext _portletDataContext;

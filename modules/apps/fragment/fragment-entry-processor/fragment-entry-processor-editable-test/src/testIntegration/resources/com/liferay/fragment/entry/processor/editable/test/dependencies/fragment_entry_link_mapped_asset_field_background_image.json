@@ -1,0 +1,13 @@
+{
+	"com.liferay.fragment.entry.processor.background.image.BackgroundImageFragmentEntryProcessor": {
+		"background-image": {
+			"classNameId": "CLASS_NAME_ID",
+			"classPK": "CLASS_PK",
+			"fieldId": "FIELD_ID"
+		}
+	},
+	"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor": {
+	},
+	"com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor": {
+	}
+}

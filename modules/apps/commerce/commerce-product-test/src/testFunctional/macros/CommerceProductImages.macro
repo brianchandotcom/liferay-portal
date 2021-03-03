@@ -1,15 +1,17 @@
 definition {
 
 	macro addProductImages {
-		for (var optionValues : list "${optionValuesList}") {
-			echo("optionValues is equal to ${optionValues}");
+		for (var imageTitle : list "${imageTitles}") {
+			echo("imageTitle is equal to ${imageTitle}");
 
-			var image = StringUtil.extractFirst("${optionValues}", ":");
+			var image = StringUtil.extractFirst("${imageTitle}", ":");
 
-			var number = StringUtil.extractLast("${optionValues}", ":");
+			var number = StringUtil.extractLast("${imageTitle}", ":");
+
+			var count = "0";
 
 			if ("${image}" == "") {
-				image = "${optionValues}";
+				image = "${imageTitle}";
 			}
 
 			var uploadFileName = "Commerce_${image}.jpg";
@@ -24,23 +26,30 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-			CommerceEntry.selectAssociatedOptionsValue(optionValue = "${optionValues}");
 
+			if (isSet(optionValues)) {
+				var optionValue = StringUtil.extractFirst("${optionValues}", ",");
+
+				if("${optionValue}" == "") {
+					optionValue = "${optionValues}";
+				}
+
+				CommerceEntry.selectAssociatedOptionsValue(optionValue = "${optionValue}");
+				
+				var optionValues = StringUtil.replaceFirst("${optionValues}", "${optionValue},", "");
+			}
+				
 			CommerceEntry.publishProductImage();
 
 			Click(locator1 = "Icon#CLOSE");
 
 			Refresh();
 
-			if ("${number}" != "") {
-				AssertElementPresent(
-					key_entry = "Commerce_${image} (${number}).jpg",
-					locator1 = "CommerceNavigation#ANY_ENTRY_NAME_WITHOUT_CONTAINS");
-			}
-			else {
-				AssertElementPresent(
-					key_entry = "${uploadFileName}",
-					locator1 = "CommerceNavigation#ANY_ENTRY_NAME_WITHOUT_CONTAINS");
+			if (isSet(validationImage)) {
+				CommerceEntry.checkImageName(
+					number = "${number}",
+					image = "${image}",
+					uploadFileName = "${uploadFileName}");
 			}
 		}
 

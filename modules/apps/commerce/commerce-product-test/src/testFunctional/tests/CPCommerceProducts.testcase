@@ -135,7 +135,10 @@ definition {
 
 		CommerceEntry.gotoMenuTab(menuTab = "Media");
 
-		CommerceProductImages.addProductImages(optionValuesList = "Black,Black:1,Blue,Blue:1,White");
+		CommerceProductImages.addProductImages(
+			imageTitles = "Black,Black:1,Blue,Blue:1,White",
+			optionValues = "6,12,24,48,112",
+			validationImage = "true");
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

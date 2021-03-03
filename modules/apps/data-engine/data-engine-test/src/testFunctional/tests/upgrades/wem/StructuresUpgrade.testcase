@@ -11,14 +11,13 @@ definition {
 		SignIn.signIn();
 
 		Smoke.viewWelcomePage();
-		/*
+		
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Search");
 
 		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
-		*/
 	}
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."

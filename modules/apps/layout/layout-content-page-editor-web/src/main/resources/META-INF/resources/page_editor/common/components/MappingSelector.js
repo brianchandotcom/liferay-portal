@@ -26,6 +26,7 @@ import CollectionService from '../../app/services/CollectionService';
 import InfoItemService from '../../app/services/InfoItemService';
 import {useDispatch, useSelector} from '../../app/store/index';
 import isMapped from '../../app/utils/editable-value/isMapped';
+import isMappedToInfoItem from '../../app/utils/editable-value/isMappedToInfoItem';
 import isMappedToStructure from '../../app/utils/editable-value/isMappedToStructure';
 import {useId} from '../../app/utils/useId';
 import ItemSelector from './ItemSelector';
@@ -178,8 +179,9 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 	const [selectedItem, setSelectedItem] = useState(mappedItem);
 
 	const [selectedSourceTypeId, setSelectedSourceTypeId] = useState(
-		isMappedToStructure(mappedItem) ||
-			config.layoutType === LAYOUT_TYPES.display
+		!isMappedToInfoItem(mappedItem) &&
+			(isMappedToStructure(mappedItem) ||
+				config.layoutType === LAYOUT_TYPES.display)
 			? MAPPING_SOURCE_TYPE_IDS.structure
 			: MAPPING_SOURCE_TYPE_IDS.content
 	);

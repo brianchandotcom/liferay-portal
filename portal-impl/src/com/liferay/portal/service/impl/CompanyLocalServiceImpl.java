@@ -203,11 +203,14 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		updateVirtualHostname(company.getCompanyId(), virtualHostname);
 
+		boolean newDBPartitionAdded = DBPartitionUtil.addDBPartition(
+			company.getCompanyId());
+
 		try (SafeClosable safeClosable =
 				CompanyThreadLocal.setInitializingCompanyId(
 					company.getCompanyId())) {
 
-			if (DBPartitionUtil.addDBPartition(company.getCompanyId())) {
+			if (newDBPartitionAdded) {
 				dlFileEntryTypeLocalService.
 					createBasicDocumentDLFileEntryType();
 			}

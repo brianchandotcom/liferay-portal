@@ -33,8 +33,9 @@ if (group != null) {
 }
 %>
 
-<clay:management-toolbar-v2
-	displayContext="<%= siteAdminManagementToolbarDisplayContext %>"
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= siteAdminManagementToolbarDisplayContext %>"
+	propsTransformer="js/SiteManagementToolbarPropsTransformer"
 />
 
 <div class="closed sidenav-container sidenav-right" id="<%= liferayPortletResponse.getNamespace() + "infoPanelId" %>">
@@ -90,8 +91,3 @@ if (group != null) {
 		</clay:container-fluid>
 	</div>
 </div>
-
-<liferay-frontend:component
-	componentId="<%= siteAdminManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/ManagementToolbarDefaultEventHandler.es"
-/>

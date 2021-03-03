@@ -29,6 +29,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -225,6 +226,59 @@ public class JenkinsCohort {
 
 		sb.append(buildLoadDataTableJSONArray.toString());
 
+		sb.append(";\nvar pullRequestData = ");
+
+		JSONArray pullRequestDataTableJSONArray = new JSONArray();
+
+		pullRequestDataTableJSONArray.put(
+			Arrays.asList(
+				"Pull Request URL", "Sender Username", "Branch Name",
+				"Test Suite", "Status"));
+
+		for (JenkinsCohortJob jenkinsCohortJob :
+				_jenkinsCohortJobsMap.values()) {
+
+			String jobName = jenkinsCohortJob.getJobName();
+
+			if (jobName.contains("test-portal-acceptance-pullrequest")) {
+				for (String buildURL :
+						jenkinsCohortJob.getTopLevelBuildURLs()) {
+
+					JSONObject jsonObject = JenkinsAPIUtil.getBuildJSONObject(
+						buildURL);
+
+					pullRequestDataTableJSONArray.put(
+						_createpullRequestDataTableRow(
+							buildURL,
+							JenkinsAPIUtil.getBuildParameters(jsonObject)));
+				}
+
+				Map<String, JSONObject> queuedTopLevelBuildURLs =
+					jenkinsCohortJob.getQueuedTopLevelBuildURLs();
+
+				for (JSONObject jsonObject : queuedTopLevelBuildURLs.values()) {
+					try {
+						Map<String, String> buildParameters =
+							JenkinsAPIUtil.getBuildParameters(jsonObject);
+
+						JSONObject taskJSONObject = jsonObject.getJSONObject(
+							"task");
+
+						String jobURL = taskJSONObject.getString("url");
+
+						pullRequestDataTableJSONArray.put(
+							_createpullRequestDataTableRow(
+								jobURL, buildParameters));
+					}
+					catch (JSONException jsonException) {
+						System.out.println(jsonObject.toString());
+					}
+				}
+			}
+		}
+
+		sb.append(pullRequestDataTableJSONArray.toString());
+
 		sb.append(";");
 
 		JenkinsResultsParserUtil.write(filePath, sb.toString());
@@ -238,6 +292,51 @@ public class JenkinsCohort {
 		}
 
 		return jsonArray;
+	}
+
+	private List<Object> _createpullRequestDataTableRow(
+		String buildURL, Map<String, String> buildParameters) {
+
+		String githubReceiverUsername = buildParameters.get(
+			"GITHUB_RECEIVER_USERNAME");
+
+		String repositoryName = "liferay-portal";
+
+		String githubUpstreamBranchName = buildParameters.get(
+			"GITHUB_UPSTREAM_BRANCH_NAME");
+
+		if ((githubUpstreamBranchName != null) &&
+			!githubUpstreamBranchName.equals("master")) {
+
+			repositoryName = repositoryName + "-ee";
+		}
+
+		String githubPullRequestNumber = buildParameters.get(
+			"GITHUB_PULL_REQUEST_NUMBER");
+
+		String githubSenderUsername = buildParameters.get(
+			"GITHUB_SENDER_USERNAME");
+
+		String ciTestSuite = buildParameters.get("CI_TEST_SUITE");
+
+		Matcher matcher = _buildNumberPattern.matcher(buildURL);
+
+		String status = "Queued";
+
+		if (matcher.find()) {
+			status = "Running";
+		}
+
+		return Arrays.asList(
+			_createJSONArray(
+				JenkinsResultsParserUtil.combine(
+					repositoryName, "/", githubReceiverUsername, "#",
+					githubPullRequestNumber),
+				PullRequest.getURL(
+					githubReceiverUsername, repositoryName,
+					githubPullRequestNumber)),
+			githubSenderUsername, githubUpstreamBranchName, ciTestSuite,
+			_createJSONArray(status, buildURL));
 	}
 
 	private String _formatBuildCountText(
@@ -370,6 +469,10 @@ public class JenkinsCohort {
 			return CISystemStatusReportUtil.getPercentage(
 				getQueuedBuildCount(),
 				JenkinsCohort.this.getQueuedBuildCount());
+		}
+
+		public Map<String, JSONObject> getQueuedTopLevelBuildURLs() {
+			return _queuedTopLevelBuildURLs;
 		}
 
 		public int getRunningBuildCount() {

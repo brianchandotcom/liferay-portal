@@ -12,7 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.kernel.test.rule;
+package com.liferay.portal.test.rule;
+
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
 
 import java.util.ArrayList;
 import java.util.List;

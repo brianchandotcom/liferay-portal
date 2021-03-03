@@ -17,7 +17,6 @@ import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import ClaySticker from '@clayui/sticker';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import classnames from 'classnames';
 import React, {useMemo} from 'react';
 
@@ -85,15 +84,13 @@ const SidebarPanelInfoView = ({
 			<Sidebar.Body>
 				<div className="c-mb-4">
 					<div className="component-title text-truncate-inline">
-						<ClayTooltipProvider>
-							<span
-								className="text-truncate"
-								data-tooltip-align="top"
-								title={title}
-							>
-								{title}
-							</span>
-						</ClayTooltipProvider>
+						<span
+							className="text-truncate"
+							data-tooltip-align="top"
+							title={title}
+						>
+							{title}
+						</span>
 					</div>
 
 					<p className="component-subtitle font-weight-normal">
@@ -180,21 +177,17 @@ const SidebarPanelInfoView = ({
 
 								{language.viewURL && (
 									<ClayLayout.ContentCol>
-										<ClayTooltipProvider>
-											<ClayLink
-												borderless
-												data-tooltip-align="top"
-												displayType="secondary"
-												href={language.viewURL}
-												monospaced
-												outline
-												title={Liferay.Language.get(
-													'view'
-												)}
-											>
-												<ClayIcon symbol="view" />
-											</ClayLink>
-										</ClayTooltipProvider>
+										<ClayLink
+											borderless
+											data-tooltip-align="top"
+											displayType="secondary"
+											href={language.viewURL}
+											monospaced
+											outline
+											title={Liferay.Language.get('view')}
+										>
+											<ClayIcon symbol="view" />
+										</ClayLink>
 									</ClayLayout.ContentCol>
 								)}
 							</ClayLayout.ContentRow>

@@ -30,7 +30,6 @@ import ClayLabel from '@clayui/label';
 import ClayList from '@clayui/list';
 import ClayProgressBar from '@clayui/progress-bar';
 import ClayTable from '@clayui/table';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
@@ -306,47 +305,45 @@ export default ({displayStyle, entries, spritemap, userInfo}) => {
 		}
 
 		return (
-			<ClayTooltipProvider>
-				<ClayTable
-					className="publications-table"
-					headingNoWrap
-					hover={false}
-				>
-					<ClayTable.Head>
-						<ClayTable.Row>
-							<ClayTable.Cell
-								className="table-cell-expand"
-								headingCell
-							>
-								{Liferay.Language.get('publication')}
-							</ClayTable.Cell>
-							<ClayTable.Cell
-								className="table-cell-expand-smaller"
-								headingCell
-							>
-								{Liferay.Language.get('published-date')}
-							</ClayTable.Cell>
-							<ClayTable.Cell
-								className="table-cell-expand-smallest text-center"
-								headingCell
-							>
-								{Liferay.Language.get('published-by')}
-							</ClayTable.Cell>
-							<ClayTable.Cell
-								className="table-cell-expand-smaller"
-								headingCell
-							>
-								{Liferay.Language.get('status')}
-							</ClayTable.Cell>
-							<ClayTable.Cell
-								className="table-cell-expand-smallest"
-								headingCell
-							/>
-						</ClayTable.Row>
-					</ClayTable.Head>
-					<ClayTable.Body>{rows}</ClayTable.Body>
-				</ClayTable>
-			</ClayTooltipProvider>
+			<ClayTable
+				className="publications-table"
+				headingNoWrap
+				hover={false}
+			>
+				<ClayTable.Head>
+					<ClayTable.Row>
+						<ClayTable.Cell
+							className="table-cell-expand"
+							headingCell
+						>
+							{Liferay.Language.get('publication')}
+						</ClayTable.Cell>
+						<ClayTable.Cell
+							className="table-cell-expand-smaller"
+							headingCell
+						>
+							{Liferay.Language.get('published-date')}
+						</ClayTable.Cell>
+						<ClayTable.Cell
+							className="table-cell-expand-smallest text-center"
+							headingCell
+						>
+							{Liferay.Language.get('published-by')}
+						</ClayTable.Cell>
+						<ClayTable.Cell
+							className="table-cell-expand-smaller"
+							headingCell
+						>
+							{Liferay.Language.get('status')}
+						</ClayTable.Cell>
+						<ClayTable.Cell
+							className="table-cell-expand-smallest"
+							headingCell
+						/>
+					</ClayTable.Row>
+				</ClayTable.Head>
+				<ClayTable.Body>{rows}</ClayTable.Body>
+			</ClayTable>
 		);
 	}
 
@@ -362,9 +359,5 @@ export default ({displayStyle, entries, spritemap, userInfo}) => {
 		);
 	}
 
-	return (
-		<ClayTooltipProvider>
-			<ClayList className="publications-table">{items}</ClayList>
-		</ClayTooltipProvider>
-	);
+	return <ClayList className="publications-table">{items}</ClayList>;
 };

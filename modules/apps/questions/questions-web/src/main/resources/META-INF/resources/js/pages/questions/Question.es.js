@@ -17,7 +17,6 @@ import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayNavigationBar from '@clayui/navigation-bar';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
@@ -313,22 +312,21 @@ export default withRouter(
 																setShowDeleteModalPanel
 															}
 														/>
-														<ClayTooltipProvider>
-															<ClayButton
-																data-tooltip-align="top"
-																displayType="secondary"
-																onClick={() =>
-																	setShowDeleteModalPanel(
-																		true
-																	)
-																}
-																title={Liferay.Language.get(
-																	'delete'
-																)}
-															>
-																<ClayIcon symbol="trash" />
-															</ClayButton>
-														</ClayTooltipProvider>
+
+														<ClayButton
+															data-tooltip-align="top"
+															displayType="secondary"
+															onClick={() =>
+																setShowDeleteModalPanel(
+																	true
+																)
+															}
+															title={Liferay.Language.get(
+																'delete'
+															)}
+														>
+															<ClayIcon symbol="trash" />
+														</ClayButton>
 													</>
 												)}
 

@@ -14,7 +14,6 @@
 
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
 import Table from 'data-engine-js-components-web/js/components/table/Table.es';
 import {DragTypes} from 'data-engine-taglib';
@@ -116,18 +115,16 @@ const DropZone = ({fields, onAddFieldName, onRemoveFieldName}) => {
 									appliedFilters,
 									name
 								) && (
-									<ClayTooltipProvider>
-										<ClayLayout.ContentCol>
-											<ClayIcon
-												data-tooltip-align="top"
-												data-tooltip-delay="200"
-												symbol="filter"
-												title={Liferay.Language.get(
-													'this-column-has-applied-filters'
-												)}
-											/>
-										</ClayLayout.ContentCol>
-									</ClayTooltipProvider>
+									<ClayLayout.ContentCol>
+										<ClayIcon
+											data-tooltip-align="top"
+											data-tooltip-delay="200"
+											symbol="filter"
+											title={Liferay.Language.get(
+												'this-column-has-applied-filters'
+											)}
+										/>
+									</ClayLayout.ContentCol>
 								)}
 							</ClayLayout.ContentRow>
 						</ClayLayout.ContainerFluid>

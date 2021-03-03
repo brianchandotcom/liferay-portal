@@ -16,7 +16,6 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import {SheetSection} from '@clayui/layout';
 import ClayPanel from '@clayui/panel';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import {DataDefinitionUtils} from 'data-engine-taglib';
 import React, {useContext, useEffect, useState} from 'react';
 
@@ -124,31 +123,29 @@ const DocumentRenderer = ({displayType, value = {}}) => {
 			{displayType === 'list' ? (
 				<StringRenderer value={title} />
 			) : fileEntryId ? (
-				<ClayTooltipProvider>
-					<ClayButton.Group className="data-record-document-field mb-2">
-						<ClayButton
-							data-tooltip-align="bottom"
-							data-tooltip-delay="200"
-							displayType="secondary"
-							onClick={onClickPreview}
-							title={Liferay.Language.get('file-preview')}
-						>
-							<ClayIcon
-								className="mr-2"
-								symbol={getDocumentIcon(title)}
-							/>
-							{title}
-						</ClayButton>
-						<ClayButtonWithIcon
-							data-tooltip-align="bottom"
-							data-tooltip-delay="200"
-							displayType="secondary"
-							onClick={onClickDownload}
-							symbol="download"
-							title={Liferay.Language.get('download')}
+				<ClayButton.Group className="data-record-document-field mb-2">
+					<ClayButton
+						data-tooltip-align="bottom"
+						data-tooltip-delay="200"
+						displayType="secondary"
+						onClick={onClickPreview}
+						title={Liferay.Language.get('file-preview')}
+					>
+						<ClayIcon
+							className="mr-2"
+							symbol={getDocumentIcon(title)}
 						/>
-					</ClayButton.Group>
-				</ClayTooltipProvider>
+						{title}
+					</ClayButton>
+					<ClayButtonWithIcon
+						data-tooltip-align="bottom"
+						data-tooltip-delay="200"
+						displayType="secondary"
+						onClick={onClickDownload}
+						symbol="download"
+						title={Liferay.Language.get('download')}
+					/>
+				</ClayButton.Group>
 			) : (
 				<StringRenderer />
 			)}

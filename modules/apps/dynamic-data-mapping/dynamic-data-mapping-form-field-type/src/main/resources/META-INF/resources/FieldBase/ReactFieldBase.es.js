@@ -16,7 +16,6 @@ import './FieldBase.scss';
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
 import {
 	EVENT_TYPES,
@@ -167,145 +166,143 @@ function FieldBase({
 	}
 
 	return (
-		<ClayTooltipProvider>
-			<div
-				aria-labelledby={parentDivAriaLabelledby}
-				className={classNames('form-group', {
-					'has-error': hasError,
-					hide: !visible,
-				})}
-				data-field-name={name}
-				onClick={onClick}
-				style={style}
-				tabIndex={parentDivTabIndex}
-			>
-				{repeatable && (
-					<div className="lfr-ddm-form-field-repeatable-toolbar">
-						{repeatable && repeatedIndex > 0 && (
-							<ClayButton
-								className="ddm-form-field-repeatable-delete-button p-0"
-								disabled={readOnly}
-								onClick={() =>
-									dispatch({
-										payload: name,
-										type: EVENT_TYPES.FIELD_REMOVED,
-									})
-								}
-								small
-								title={Liferay.Language.get('remove')}
-								type="button"
-							>
-								<ClayIcon symbol="hr" />
-							</ClayButton>
-						)}
-
+		<div
+			aria-labelledby={parentDivAriaLabelledby}
+			className={classNames('form-group', {
+				'has-error': hasError,
+				hide: !visible,
+			})}
+			data-field-name={name}
+			onClick={onClick}
+			style={style}
+			tabIndex={parentDivTabIndex}
+		>
+			{repeatable && (
+				<div className="lfr-ddm-form-field-repeatable-toolbar">
+					{repeatable && repeatedIndex > 0 && (
 						<ClayButton
-							className={classNames(
-								'ddm-form-field-repeatable-add-button p-0',
-								{
-									hide: overMaximumRepetitionsLimit,
-								}
-							)}
+							className="ddm-form-field-repeatable-delete-button p-0"
 							disabled={readOnly}
 							onClick={() =>
 								dispatch({
 									payload: name,
-									type: EVENT_TYPES.FIELD_REPEATED,
+									type: EVENT_TYPES.FIELD_REMOVED,
 								})
 							}
 							small
-							title={Liferay.Language.get('duplicate')}
+							title={Liferay.Language.get('remove')}
 							type="button"
 						>
-							<ClayIcon symbol="plus" />
+							<ClayIcon symbol="hr" />
 						</ClayButton>
-					</div>
-				)}
+					)}
 
-				{renderLabel && (
-					<>
-						{showLegend ? (
-							<fieldset>
-								<legend
-									aria-labelledby={fieldDetailsId}
-									className="lfr-ddm-legend"
-									tabIndex="0"
-								>
-									{label && showLabel && label}
-
-									<FieldProperties
-										required={required}
-										tooltip={tooltip}
-									/>
-								</legend>
-								{children}
-							</fieldset>
-						) : (
-							<>
-								<label
-									aria-describedby={fieldDetailsId}
-									className={classNames({
-										'ddm-empty': !showLabel && !required,
-										'ddm-label': showLabel || required,
-									})}
-									tabIndex="0"
-								>
-									{label && showLabel && label}
-
-									<FieldProperties
-										required={required}
-										tooltip={tooltip}
-									/>
-								</label>
-								{children}
-							</>
-						)}
-					</>
-				)}
-
-				{!renderLabel && children}
-
-				{localizedValueArray.length > 0 &&
-					localizedValueArray.map((language) => (
-						<input
-							key={language.name}
-							name={language.name}
-							type="hidden"
-							value={
-								language.value
-									? convertInputValue(type, language.value)
-									: ''
+					<ClayButton
+						className={classNames(
+							'ddm-form-field-repeatable-add-button p-0',
+							{
+								hide: overMaximumRepetitionsLimit,
 							}
-						/>
-					))}
+						)}
+						disabled={readOnly}
+						onClick={() =>
+							dispatch({
+								payload: name,
+								type: EVENT_TYPES.FIELD_REPEATED,
+							})
+						}
+						small
+						title={Liferay.Language.get('duplicate')}
+						type="button"
+					>
+						<ClayIcon symbol="plus" />
+					</ClayButton>
+				</div>
+			)}
 
-				{typeof tip === 'string' && (
-					<span aria-hidden="true" className="form-text">
-						{tip}
-					</span>
-				)}
+			{renderLabel && (
+				<>
+					{showLegend ? (
+						<fieldset>
+							<legend
+								aria-labelledby={fieldDetailsId}
+								className="lfr-ddm-legend"
+								tabIndex="0"
+							>
+								{label && showLabel && label}
 
-				{hasError && (
-					<span className="form-feedback-group">
-						<div aria-hidden="true" className="form-feedback-item">
-							{errorMessage}
-						</div>
-					</span>
-				)}
+								<FieldProperties
+									required={required}
+									tooltip={tooltip}
+								/>
+							</legend>
+							{children}
+						</fieldset>
+					) : (
+						<>
+							<label
+								aria-describedby={fieldDetailsId}
+								className={classNames({
+									'ddm-empty': !showLabel && !required,
+									'ddm-label': showLabel || required,
+								})}
+								tabIndex="0"
+							>
+								{label && showLabel && label}
 
-				{fieldDetails && (
-					<span
-						className="sr-only"
-						dangerouslySetInnerHTML={{
-							__html: fieldDetails,
-						}}
-						id={fieldDetailsId}
+								<FieldProperties
+									required={required}
+									tooltip={tooltip}
+								/>
+							</label>
+							{children}
+						</>
+					)}
+				</>
+			)}
+
+			{!renderLabel && children}
+
+			{localizedValueArray.length > 0 &&
+				localizedValueArray.map((language) => (
+					<input
+						key={language.name}
+						name={language.name}
+						type="hidden"
+						value={
+							language.value
+								? convertInputValue(type, language.value)
+								: ''
+						}
 					/>
-				)}
+				))}
 
-				{nestedFields && <Layout rows={getDefaultRows(nestedFields)} />}
-			</div>
-		</ClayTooltipProvider>
+			{typeof tip === 'string' && (
+				<span aria-hidden="true" className="form-text">
+					{tip}
+				</span>
+			)}
+
+			{hasError && (
+				<span className="form-feedback-group">
+					<div aria-hidden="true" className="form-feedback-item">
+						{errorMessage}
+					</div>
+				</span>
+			)}
+
+			{fieldDetails && (
+				<span
+					className="sr-only"
+					dangerouslySetInnerHTML={{
+						__html: fieldDetails,
+					}}
+					id={fieldDetailsId}
+				/>
+			)}
+
+			{nestedFields && <Layout rows={getDefaultRows(nestedFields)} />}
+		</div>
 	);
 }
 

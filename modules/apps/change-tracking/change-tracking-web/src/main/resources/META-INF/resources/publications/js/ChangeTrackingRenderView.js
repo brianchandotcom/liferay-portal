@@ -18,7 +18,6 @@ import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import ClayNavigationBar from '@clayui/navigation-bar';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
@@ -363,24 +362,22 @@ export default ({dataURL, getCache, spritemap, updateCache}) => {
 			elements.push(
 				<div className="autofit-col">
 					<div className="dropdown">
-						<ClayTooltipProvider>
-							<ClayButton
-								borderless
-								className="disabled"
-								data-tooltip-align="top"
-								displayType="secondary"
-								title={getContentSelectTooltip()}
-							>
-								{getContentSelectTitle(state.contentSelect)}
+						<ClayButton
+							borderless
+							className="disabled"
+							data-tooltip-align="top"
+							displayType="secondary"
+							title={getContentSelectTooltip()}
+						>
+							{getContentSelectTitle(state.contentSelect)}
 
-								<span className="inline-item inline-item-after">
-									<ClayIcon
-										spritemap={spritemap}
-										symbol="caret-bottom"
-									/>
-								</span>
-							</ClayButton>
-						</ClayTooltipProvider>
+							<span className="inline-item inline-item-after">
+								<ClayIcon
+									spritemap={spritemap}
+									symbol="caret-bottom"
+								/>
+							</span>
+						</ClayButton>
 					</div>
 				</div>
 			);
@@ -598,101 +595,84 @@ export default ({dataURL, getCache, spritemap, updateCache}) => {
 				>
 					<div className="autofit-row">
 						<div className="autofit-col">
-							<ClayTooltipProvider>
-								<ClayNavigationBar
-									spritemap={spritemap}
-									triggerLabel={Liferay.Language.get(
-										'display'
-									)}
+							<ClayNavigationBar
+								spritemap={spritemap}
+								triggerLabel={Liferay.Language.get('display')}
+							>
+								<ClayNavigationBar.Item
+									active={
+										state.contentType ===
+										CONTENT_TYPE_DISPLAY
+									}
 								>
-									<ClayNavigationBar.Item
-										active={
-											state.contentType ===
-											CONTENT_TYPE_DISPLAY
+									<ClayLink
+										className={
+											!state.renderData.content
+												? 'nav-link btn-link disabled'
+												: 'nav-link'
+										}
+										displayType="unstyled"
+										onClick={() =>
+											setContentType(CONTENT_TYPE_DISPLAY)
+										}
+										title={
+											!state.renderData.content
+												? Liferay.Language.get(
+														'item-does-not-have-a-content-display'
+												  )
+												: ''
 										}
 									>
-										<ClayLink
-											className={
-												!state.renderData.content
-													? 'nav-link btn-link disabled'
-													: 'nav-link'
-											}
-											displayType="unstyled"
-											onClick={() =>
-												setContentType(
-													CONTENT_TYPE_DISPLAY
-												)
-											}
-											title={
-												!state.renderData.content
-													? Liferay.Language.get(
-															'item-does-not-have-a-content-display'
-													  )
-													: ''
-											}
-										>
-											{Liferay.Language.get('display')}
-										</ClayLink>
-									</ClayNavigationBar.Item>
-									<ClayNavigationBar.Item
-										active={
-											state.contentType ===
-											CONTENT_TYPE_DATA
+										{Liferay.Language.get('display')}
+									</ClayLink>
+								</ClayNavigationBar.Item>
+								<ClayNavigationBar.Item
+									active={
+										state.contentType === CONTENT_TYPE_DATA
+									}
+								>
+									<ClayLink
+										className="nav-link"
+										displayType="unstyled"
+										onClick={() =>
+											setContentType(CONTENT_TYPE_DATA)
 										}
 									>
-										<ClayLink
-											className="nav-link"
-											displayType="unstyled"
-											onClick={() =>
-												setContentType(
-													CONTENT_TYPE_DATA
-												)
-											}
-										>
-											{Liferay.Language.get('data')}
-										</ClayLink>
-									</ClayNavigationBar.Item>
-								</ClayNavigationBar>
-							</ClayTooltipProvider>
+										{Liferay.Language.get('data')}
+									</ClayLink>
+								</ClayNavigationBar.Item>
+							</ClayNavigationBar>
 						</div>
 						<div className="autofit-col row-divider">
 							<div />
 						</div>
 						<div className="autofit-col">
-							<ClayTooltipProvider>
-								<ClayButton.Group>
-									<ClayButtonWithIcon
-										borderless
-										className={
-											state.viewType === VIEW_TYPE_FULL
-												? 'active'
-												: ''
-										}
-										data-tooltip-align="top"
-										displayType="secondary"
-										onClick={() =>
-											setViewType(VIEW_TYPE_FULL)
-										}
-										spritemap={spritemap}
-										symbol="rectangle"
-										title={Liferay.Language.get(
-											'full-view'
-										)}
-									/>
-									<ClayButtonWithIcon
-										borderless
-										className={splitViewClassName}
-										data-tooltip-align="top"
-										displayType="secondary"
-										onClick={() =>
-											setViewType(VIEW_TYPE_SPLIT)
-										}
-										spritemap={spritemap}
-										symbol="rectangle-split"
-										title={getSplitViewTooltip()}
-									/>
-								</ClayButton.Group>
-							</ClayTooltipProvider>
+							<ClayButton.Group>
+								<ClayButtonWithIcon
+									borderless
+									className={
+										state.viewType === VIEW_TYPE_FULL
+											? 'active'
+											: ''
+									}
+									data-tooltip-align="top"
+									displayType="secondary"
+									onClick={() => setViewType(VIEW_TYPE_FULL)}
+									spritemap={spritemap}
+									symbol="rectangle"
+									title={Liferay.Language.get('full-view')}
+								/>
+								<ClayButtonWithIcon
+									borderless
+									className={splitViewClassName}
+									data-tooltip-align="top"
+									displayType="secondary"
+									onClick={() => setViewType(VIEW_TYPE_SPLIT)}
+									spritemap={spritemap}
+									symbol="rectangle-split"
+									title={getSplitViewTooltip()}
+								/>
+							</ClayButton.Group>
 						</div>
 
 						{renderContentSelect()}

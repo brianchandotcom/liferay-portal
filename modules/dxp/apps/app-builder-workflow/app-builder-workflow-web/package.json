@@ -8,7 +8,6 @@
 		"@clayui/link": "3.2.0",
 		"@clayui/modal": "3.8.5",
 		"@clayui/popover": "3.5.5",
-		"@clayui/tooltip": "3.4.5",
 		"@liferay/frontend-js-react-web": "*",
 		"classnames": "2.2.6",
 		"frontend-js-web": "*",

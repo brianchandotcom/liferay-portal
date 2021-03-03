@@ -13,7 +13,6 @@ import ClayAlert from '@clayui/alert';
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {ClayRadio, ClayRadioGroup} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import {AppContext} from 'app-builder-web/js/AppContext.es';
 import SelectObjects from 'app-builder-web/js/components/select-objects/SelectObjects.es';
 import EditAppContext, {
@@ -61,17 +60,15 @@ const NoObjectEmptyState = () => (
 );
 
 export const OpenButton = (props) => (
-	<ClayTooltipProvider>
-		<ClayButtonWithIcon
-			className="ml-2 px-2 tap-ahead-icon-wrapper"
-			data-tooltip-align="bottom-right"
-			data-tooltip-delay="0"
-			displayType="secondary"
-			symbol="tap-ahead"
-			title={Liferay.Language.get('open')}
-			{...props}
-		/>
-	</ClayTooltipProvider>
+	<ClayButtonWithIcon
+		className="ml-2 px-2 tap-ahead-icon-wrapper"
+		data-tooltip-align="bottom-right"
+		data-tooltip-delay="0"
+		displayType="secondary"
+		symbol="tap-ahead"
+		title={Liferay.Language.get('open')}
+		{...props}
+	/>
 );
 
 export default function DataAndViewsTab({
@@ -254,16 +251,14 @@ export default function DataAndViewsTab({
 	};
 
 	const AddButton = (props) => (
-		<ClayTooltipProvider>
-			<ClayButtonWithIcon
-				className="btn btn-monospaced btn-secondary mr-2 nav-btn nav-btn-monospaced"
-				data-tooltip-align="bottom-right"
-				data-tooltip-delay="0"
-				displayType="secondary"
-				symbol="plus"
-				{...props}
-			/>
-		</ClayTooltipProvider>
+		<ClayButtonWithIcon
+			className="btn btn-monospaced btn-secondary mr-2 nav-btn nav-btn-monospaced"
+			data-tooltip-align="bottom-right"
+			data-tooltip-delay="0"
+			displayType="secondary"
+			symbol="plus"
+			{...props}
+		/>
 	);
 
 	const addFormViewButton = (selectFormView) => (
@@ -315,20 +310,17 @@ export default function DataAndViewsTab({
 							])} `}
 
 							{duplicatedFields.length > 5 && (
-								<ClayTooltipProvider delay="0">
-									<a
-										className="text-primary"
-										data-tooltip-align="bottom"
-										title={fieldsLabels
-											.slice(5, fieldsLabels.length)
-											.join('\n')}
-									>
-										{'*'}
-										{Liferay.Language.get(
-											'see-other-fields'
-										)}
-									</a>
-								</ClayTooltipProvider>
+								<a
+									className="text-primary"
+									data-tooltip-align="bottom"
+									data-tooltip-delay={0}
+									title={fieldsLabels
+										.slice(5, fieldsLabels.length)
+										.join('\n')}
+								>
+									{'*'}
+									{Liferay.Language.get('see-other-fields')}
+								</a>
 							)}
 						</ClayAlert>
 					)}
@@ -403,22 +395,20 @@ export default function DataAndViewsTab({
 									</ClayRadioGroup>
 
 									{stepFormViews.length > 1 && (
-										<ClayTooltipProvider>
-											<ClayButtonWithIcon
-												borderless
-												data-tooltip-align="bottom"
-												data-tooltip-delay="0"
-												displayType="secondary"
-												onClick={() =>
-													removeStepFormView(index)
-												}
-												small
-												symbol="trash"
-												title={Liferay.Language.get(
-													'remove'
-												)}
-											/>
-										</ClayTooltipProvider>
+										<ClayButtonWithIcon
+											borderless
+											data-tooltip-align="bottom"
+											data-tooltip-delay="0"
+											displayType="secondary"
+											onClick={() =>
+												removeStepFormView(index)
+											}
+											small
+											symbol="trash"
+											title={Liferay.Language.get(
+												'remove'
+											)}
+										/>
 									)}
 								</div>
 							</div>
@@ -442,17 +432,15 @@ export default function DataAndViewsTab({
 							{Liferay.Language.get('main-data-object')}
 						</label>
 
-						<ClayTooltipProvider>
-							<ClayIcon
-								className="ml-2 text-muted tooltip-icon"
-								data-tooltip-align="top"
-								data-tooltip-delay="0"
-								symbol="question-circle-full"
-								title={Liferay.Language.get(
-									'a-data-object-stores-your-business-data-and-is-composed-by-data-fields'
-								)}
-							/>
-						</ClayTooltipProvider>
+						<ClayIcon
+							className="ml-2 text-muted tooltip-icon"
+							data-tooltip-align="top"
+							data-tooltip-delay="0"
+							symbol="question-circle-full"
+							title={Liferay.Language.get(
+								'a-data-object-stores-your-business-data-and-is-composed-by-data-fields'
+							)}
+						/>
 
 						<SelectObjects
 							label={Liferay.Language.get('select-object')}

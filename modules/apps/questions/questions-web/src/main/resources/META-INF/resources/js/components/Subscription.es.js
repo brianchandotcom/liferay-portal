@@ -15,7 +15,6 @@
 import {useMutation} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import React, {useEffect, useState} from 'react';
 
 import {
@@ -80,20 +79,18 @@ export default ({
 	};
 
 	return (
-		<ClayTooltipProvider>
-			<ClayButton
-				data-tooltip-align="top"
-				displayType={subscription ? 'primary' : 'secondary'}
-				monospaced
-				onClick={changeSubscription}
-				title={
-					subscription
-						? Liferay.Language.get('unsubscribe')
-						: Liferay.Language.get('subscribe')
-				}
-			>
-				<ClayIcon symbol="bell-on" />
-			</ClayButton>
-		</ClayTooltipProvider>
+		<ClayButton
+			data-tooltip-align="top"
+			displayType={subscription ? 'primary' : 'secondary'}
+			monospaced
+			onClick={changeSubscription}
+			title={
+				subscription
+					? Liferay.Language.get('unsubscribe')
+					: Liferay.Language.get('subscribe')
+			}
+		>
+			<ClayIcon symbol="bell-on" />
+		</ClayButton>
 	);
 };

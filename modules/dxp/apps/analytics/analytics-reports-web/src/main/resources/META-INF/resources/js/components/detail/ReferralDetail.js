@@ -11,7 +11,6 @@
 
 import ClayButton from '@clayui/button';
 import ClayList from '@clayui/list';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import {ALIGN_POSITIONS} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useMemo, useState} from 'react';
@@ -157,21 +156,19 @@ export default function ReferralDetail({
 							<ClayList.Item flex key={url}>
 								<ClayList.ItemField expand>
 									<ClayList.ItemText>
-										<ClayTooltipProvider>
-											<span
-												className="text-truncate-inline"
-												data-tooltip-align="top"
-												title={url}
+										<span
+											className="text-truncate-inline"
+											data-tooltip-align="top"
+											title={url}
+										>
+											<a
+												className="c-mr-2 text-primary text-truncate text-truncate-reverse"
+												href={url}
+												target="_blank"
 											>
-												<a
-													className="c-mr-2 text-primary text-truncate text-truncate-reverse"
-													href={url}
-													target="_blank"
-												>
-													{url}
-												</a>
-											</span>
-										</ClayTooltipProvider>
+												{url}
+											</a>
+										</span>
 									</ClayList.ItemText>
 								</ClayList.ItemField>
 								<ClayList.ItemField expand>
@@ -237,21 +234,19 @@ export default function ReferralDetail({
 							<ClayList.Item flex key={url}>
 								<ClayList.ItemField expand>
 									<ClayList.ItemText>
-										<ClayTooltipProvider>
-											<span
-												className="text-truncate-inline"
-												data-tooltip-align="top"
-												title={url}
+										<span
+											className="text-truncate-inline"
+											data-tooltip-align="top"
+											title={url}
+										>
+											<a
+												className="c-mr-2 text-primary text-truncate"
+												href={url}
+												target="_blank"
 											>
-												<a
-													className="c-mr-2 text-primary text-truncate"
-													href={url}
-													target="_blank"
-												>
-													{url}
-												</a>
-											</span>
-										</ClayTooltipProvider>
+												{url}
+											</a>
+										</span>
 									</ClayList.ItemText>
 								</ClayList.ItemField>
 								<ClayList.ItemField expand>

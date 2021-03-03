@@ -13,7 +13,6 @@
 		"@clayui/navigation-bar": "3.3.5",
 		"@clayui/popover": "3.5.5",
 		"@clayui/sticker": "3.3.0",
-		"@clayui/tooltip": "3.4.5",
 		"@liferay/frontend-js-react-web": "*",
 		"asset-taglib": "*",
 		"bbcode-to-react": "^0.2.9",

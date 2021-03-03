@@ -16,7 +16,6 @@
 		"@clayui/panel": "3.25.0",
 		"@clayui/progress-bar": "3.2.0",
 		"@clayui/table": "3.1.0",
-		"@clayui/tooltip": "3.4.5",
 		"frontend-js-web": "*",
 		"moment": "^2.22.2",
 		"react": "16.12.0"

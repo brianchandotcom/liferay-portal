@@ -17,7 +17,6 @@ import './MultiPanelSidebar.scss';
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import {useIsMounted, useStateSafe} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import React, {useRef, useState} from 'react';
@@ -159,151 +158,141 @@ export default function MultiPanelSidebar({
 	};
 
 	return (
-		<ClayTooltipProvider>
-			<div
+		<div
+			className={classNames(
+				'multi-panel-sidebar',
+				`multi-panel-sidebar-${variant}`,
+				{
+					'menu-indicator-enabled': document.querySelector(
+						CLASSNAME_INDICATORS.join(',')
+					),
+				}
+			)}
+		>
+			<nav
 				className={classNames(
-					'multi-panel-sidebar',
-					`multi-panel-sidebar-${variant}`,
-					{
-						'menu-indicator-enabled': document.querySelector(
-							CLASSNAME_INDICATORS.join(',')
-						),
-					}
+					'multi-panel-sidebar-buttons',
+					'tbar',
+					'tbar-stacked',
+					variant === 'dark'
+						? `tbar-${variant}-d1`
+						: `tbar-${variant}`
 				)}
 			>
-				<nav
-					className={classNames(
-						'multi-panel-sidebar-buttons',
-						'tbar',
-						'tbar-stacked',
-						variant === 'dark'
-							? `tbar-${variant}-d1`
-							: `tbar-${variant}`
-					)}
-				>
-					<ul className="tbar-nav">
-						{panels.reduce((elements, group, groupIndex) => {
-							const buttons = group.map((panelId) => {
-								const panel = sidebarPanels[panelId];
+				<ul className="tbar-nav">
+					{panels.reduce((elements, group, groupIndex) => {
+						const buttons = group.map((panelId) => {
+							const panel = sidebarPanels[panelId];
 
-								const active =
-									open && currentPanelId === panelId;
-								const {
-									icon,
-									isLink,
-									label,
-									pluginEntryPoint,
-									url,
-								} = panel;
+							const active = open && currentPanelId === panelId;
+							const {
+								icon,
+								isLink,
+								label,
+								pluginEntryPoint,
+								url,
+							} = panel;
 
-								const prefetch = () =>
-									load(
-										panel.sidebarPanelId,
-										pluginEntryPoint
-									).then(...swallow);
+							const prefetch = () =>
+								load(
+									panel.sidebarPanelId,
+									pluginEntryPoint
+								).then(...swallow);
 
-								const btnClasses = classNames(
-									'tbar-btn tbar-btn-monospaced',
-									{active}
-								);
+							const btnClasses = classNames(
+								'tbar-btn tbar-btn-monospaced',
+								{active}
+							);
 
-								return (
-									<li
-										className={classNames(
-											'tbar-item',
-											`tbar-item--${panel.sidebarPanelId}`
-										)}
-										key={panel.sidebarPanelId}
-									>
-										{isLink ? (
-											<a
-												className={btnClasses}
-												href={url}
-											>
-												<ClayIcon symbol={icon} />
-											</a>
-										) : (
-											<ClayButtonWithIcon
-												aria-pressed={active}
-												className={btnClasses}
-												data-tooltip-align="left"
-												displayType="unstyled"
-												id={panel.sidebarPanelId}
-												onClick={() =>
-													handleClick(panel)
-												}
-												onFocus={prefetch}
-												onMouseEnter={prefetch}
-												symbol={icon}
-												title={label}
-											/>
-										)}
-									</li>
-								);
-							});
-
-							if (groupIndex === panels.length - 1) {
-								return elements.concat(buttons);
-							}
-							else {
-								return elements.concat([
-									...buttons,
-									<hr key={`separator-${groupIndex}`} />,
-								]);
-							}
-						}, [])}
-					</ul>
-				</nav>
-				<div
-					className={classNames('multi-panel-sidebar-content', {
-						'multi-panel-sidebar-content-open': open,
-					})}
-				>
-					{hasError ? (
-						<div>
-							<ClayButton
-								block
-								displayType="secondary"
-								onClick={() => {
-									onChange({
-										sidebarOpen: false,
-										sidebarPanelId:
-											panels[0] && panels[0][0],
-									});
-									setHasError(false);
-								}}
-								small
-							>
-								{Liferay.Language.get('refresh')}
-							</ClayButton>
-						</div>
-					) : (
-						<ErrorBoundary
-							handleError={() => {
-								setHasError(true);
-							}}
-						>
-							{panelComponents.length === 0 && (
-								<ClayLoadingIndicator />
-							)}
-
-							{panelComponents.map((panel) => (
-								<div
-									className={classNames({
-										'd-none':
-											panel.sidebarPanelId !==
-											currentPanelId,
-									})}
+							return (
+								<li
+									className={classNames(
+										'tbar-item',
+										`tbar-item--${panel.sidebarPanelId}`
+									)}
 									key={panel.sidebarPanelId}
 								>
-									<panel.Component />
-								</div>
-							))}
-						</ErrorBoundary>
-					)}
-				</div>
+									{isLink ? (
+										<a className={btnClasses} href={url}>
+											<ClayIcon symbol={icon} />
+										</a>
+									) : (
+										<ClayButtonWithIcon
+											aria-pressed={active}
+											className={btnClasses}
+											data-tooltip-align="left"
+											displayType="unstyled"
+											id={panel.sidebarPanelId}
+											onClick={() => handleClick(panel)}
+											onFocus={prefetch}
+											onMouseEnter={prefetch}
+											symbol={icon}
+											title={label}
+										/>
+									)}
+								</li>
+							);
+						});
+
+						if (groupIndex === panels.length - 1) {
+							return elements.concat(buttons);
+						}
+						else {
+							return elements.concat([
+								...buttons,
+								<hr key={`separator-${groupIndex}`} />,
+							]);
+						}
+					}, [])}
+				</ul>
+			</nav>
+			<div
+				className={classNames('multi-panel-sidebar-content', {
+					'multi-panel-sidebar-content-open': open,
+				})}
+			>
+				{hasError ? (
+					<div>
+						<ClayButton
+							block
+							displayType="secondary"
+							onClick={() => {
+								onChange({
+									sidebarOpen: false,
+									sidebarPanelId: panels[0] && panels[0][0],
+								});
+								setHasError(false);
+							}}
+							small
+						>
+							{Liferay.Language.get('refresh')}
+						</ClayButton>
+					</div>
+				) : (
+					<ErrorBoundary
+						handleError={() => {
+							setHasError(true);
+						}}
+					>
+						{panelComponents.length === 0 && (
+							<ClayLoadingIndicator />
+						)}
+
+						{panelComponents.map((panel) => (
+							<div
+								className={classNames({
+									'd-none':
+										panel.sidebarPanelId !== currentPanelId,
+								})}
+								key={panel.sidebarPanelId}
+							>
+								<panel.Component />
+							</div>
+						))}
+					</ErrorBoundary>
+				)}
 			</div>
-		</ClayTooltipProvider>
+		</div>
 	);
 }
 

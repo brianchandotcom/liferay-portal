@@ -11,7 +11,6 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClaySelect} from '@clayui/form';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
@@ -49,28 +48,27 @@ export default function TimeSpanSelector({
 			</ClaySelect>
 
 			<div className="d-flex ml-2">
-				<ClayTooltipProvider>
-					<ClayButtonWithIcon
-						aria-label={Liferay.Language.get('previous-period')}
-						className="mr-1"
-						data-tooltip-align="top-right"
-						disabled={
-							!validAnalyticsConnection ||
-							disabledPreviousPeriodButton
-						}
-						displayType="secondary"
-						onClick={onPreviousTimeSpanClick}
-						small
-						symbol="angle-left"
-						title={
-							disabledPreviousPeriodButton
-								? Liferay.Language.get(
-										'you-cannot-choose-a-date-prior-to-the-publication-date'
-								  )
-								: undefined
-						}
-					/>
-				</ClayTooltipProvider>
+				<ClayButtonWithIcon
+					aria-label={Liferay.Language.get('previous-period')}
+					className="mr-1"
+					data-tooltip-align="top-right"
+					disabled={
+						!validAnalyticsConnection ||
+						disabledPreviousPeriodButton
+					}
+					displayType="secondary"
+					onClick={onPreviousTimeSpanClick}
+					small
+					symbol="angle-left"
+					title={
+						disabledPreviousPeriodButton
+							? Liferay.Language.get(
+									'you-cannot-choose-a-date-prior-to-the-publication-date'
+							  )
+							: undefined
+					}
+				/>
+
 				<ClayButtonWithIcon
 					aria-label={Liferay.Language.get('next-period')}
 					disabled={!validAnalyticsConnection || disabledNextTimeSpan}

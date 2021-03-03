@@ -14,7 +14,6 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayButtonGroup from '@clayui/button/lib/Group';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import {confirmDelete} from 'data-engine-js-components-web/js/utils/client.es';
 import {sub} from 'data-engine-js-components-web/js/utils/lang.es';
 import React, {useContext} from 'react';
@@ -100,63 +99,57 @@ function ViewEntryUpperToolbar({
 			<UpperToolbar.Item expand>{children}</UpperToolbar.Item>
 
 			<UpperToolbar.Group>
-				<ClayTooltipProvider>
-					<ClayButtonGroup>
-						<ClayButtonWithIcon
-							data-tooltip-align="bottom"
-							data-tooltip-delay="200"
-							disabled={page === 1}
-							displayType="secondary"
-							onClick={onPrev}
-							small
-							symbol="angle-left"
-							title={Liferay.Language.get('previous-entry')}
-						/>
+				<ClayButtonGroup>
+					<ClayButtonWithIcon
+						data-tooltip-align="bottom"
+						data-tooltip-delay="200"
+						disabled={page === 1}
+						displayType="secondary"
+						onClick={onPrev}
+						small
+						symbol="angle-left"
+						title={Liferay.Language.get('previous-entry')}
+					/>
 
-						<ClayButtonWithIcon
-							data-tooltip-align="bottom"
-							data-tooltip-delay="200"
-							disabled={page === totalCount}
-							displayType="secondary"
-							onClick={onNext}
-							small
-							symbol="angle-right"
-							title={Liferay.Language.get('next-entry')}
-						/>
-					</ClayButtonGroup>
-				</ClayTooltipProvider>
+					<ClayButtonWithIcon
+						data-tooltip-align="bottom"
+						data-tooltip-delay="200"
+						disabled={page === totalCount}
+						displayType="secondary"
+						onClick={onNext}
+						small
+						symbol="angle-right"
+						title={Liferay.Language.get('next-entry')}
+					/>
+				</ClayButtonGroup>
 			</UpperToolbar.Group>
 
 			{showFormView && (
 				<UpperToolbar.Group>
 					{permissions.delete && showDeleteButton && (
-						<ClayTooltipProvider>
-							<ClayButtonWithIcon
-								className="mr-2"
-								data-tooltip-align="bottom"
-								data-tooltip-delay="200"
-								displayType="secondary"
-								onClick={onDelete}
-								small
-								symbol="trash"
-								title={Liferay.Language.get('delete')}
-							/>
-						</ClayTooltipProvider>
+						<ClayButtonWithIcon
+							className="mr-2"
+							data-tooltip-align="bottom"
+							data-tooltip-delay="200"
+							displayType="secondary"
+							onClick={onDelete}
+							small
+							symbol="trash"
+							title={Liferay.Language.get('delete')}
+						/>
 					)}
 
 					{permissions.update && showUpdateButton && (
-						<ClayTooltipProvider>
-							<ClayButtonWithIcon
-								className="mr-2"
-								data-tooltip-align="bottom"
-								data-tooltip-delay="200"
-								displayType="secondary"
-								onClick={onEdit}
-								small
-								symbol="pencil"
-								title={Liferay.Language.get('edit')}
-							/>
-						</ClayTooltipProvider>
+						<ClayButtonWithIcon
+							className="mr-2"
+							data-tooltip-align="bottom"
+							data-tooltip-delay="200"
+							displayType="secondary"
+							onClick={onEdit}
+							small
+							symbol="pencil"
+							title={Liferay.Language.get('edit')}
+						/>
 					)}
 
 					{additionalButtons}

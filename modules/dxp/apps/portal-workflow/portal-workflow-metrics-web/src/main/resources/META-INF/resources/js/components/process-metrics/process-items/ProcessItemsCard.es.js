@@ -12,7 +12,6 @@
 
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import React, {useMemo} from 'react';
 
 import ContentView from '../../../shared/components/content-view/ContentView.es';
@@ -119,17 +118,15 @@ const Header = ({children, data, description, title}) => (
 			<ClayLayout.ContentCol className="flex-row" expand>
 				<span className="mr-2">{title}</span>
 
-				<ClayTooltipProvider>
-					<span>
-						<span
-							className="workflow-tooltip"
-							data-tooltip-align="right"
-							title={description}
-						>
-							<ClayIcon symbol="question-circle-full" />
-						</span>
+				<span>
+					<span
+						className="workflow-tooltip"
+						data-tooltip-align="right"
+						title={description}
+					>
+						<ClayIcon symbol="question-circle-full" />
 					</span>
-				</ClayTooltipProvider>
+				</span>
 			</ClayLayout.ContentCol>
 
 			{children && data && (

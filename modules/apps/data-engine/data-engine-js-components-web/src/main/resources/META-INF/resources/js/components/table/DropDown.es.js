@@ -14,7 +14,6 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import React, {cloneElement, useState} from 'react';
 
 import DropDownAction from './DropDownAction.es';
@@ -37,16 +36,12 @@ export default ({actions, item, noActionsMessage}) => {
 	);
 
 	if (actions.length === 0) {
-		return (
-			<ClayTooltipProvider>
-				{cloneElement(DropdownButton, {
-					'data-tooltip-align': 'bottom',
-					'data-tooltip-delay': '200',
-					disabled: true,
-					title: noActionsMessage,
-				})}
-			</ClayTooltipProvider>
-		);
+		return cloneElement(DropdownButton, {
+			'data-tooltip-align': 'bottom',
+			'data-tooltip-delay': '200',
+			disabled: true,
+			title: noActionsMessage,
+		});
 	}
 
 	return (

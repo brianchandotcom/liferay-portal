@@ -13,7 +13,6 @@
 		"@clayui/multi-select": "3.25.1",
 		"@clayui/pagination-bar": "3.25.1",
 		"@clayui/tabs": "3.3.5",
-		"@clayui/tooltip": "3.4.5",
 		"@liferay/frontend-js-react-web": "*",
 		"classnames": "2.2.6",
 		"lodash.isfunction": "3.0.9",

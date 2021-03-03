@@ -14,7 +14,6 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
@@ -56,20 +55,15 @@ function CreationMenu({primaryItems}) {
 							</ClayDropDown.ItemList>
 						</ClayDropDown>
 					) : (
-						<ClayTooltipProvider>
-							<ClayButtonWithIcon
-								className="nav-btn nav-btn-monospaced"
-								data-tooltip-align="top"
-								onClick={() =>
-									triggerAction(
-										primaryItems[0],
-										dataSetContext
-									)
-								}
-								symbol="plus"
-								title={primaryItems[0].label}
-							/>
-						</ClayTooltipProvider>
+						<ClayButtonWithIcon
+							className="nav-btn nav-btn-monospaced"
+							data-tooltip-align="top"
+							onClick={() =>
+								triggerAction(primaryItems[0], dataSetContext)
+							}
+							symbol="plus"
+							title={primaryItems[0].label}
+						/>
 					)}
 				</li>
 			</ul>

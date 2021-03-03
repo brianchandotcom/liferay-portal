@@ -12,7 +12,6 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import {useEventListener} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import {throttle} from 'frontend-js-web';
@@ -224,15 +223,14 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 				<ClayForm.Group>
 					<label htmlFor="clickableElement">
 						{Liferay.Language.get('element-id')}
-						<ClayTooltipProvider>
-							<ClayIcon
-								className="c-ml-1 text-secondary"
-								data-tooltip-align="top"
-								small="true"
-								symbol="question-circle"
-								title={Liferay.Language.get('element-id-help')}
-							/>
-						</ClayTooltipProvider>
+
+						<ClayIcon
+							className="c-ml-1 text-secondary"
+							data-tooltip-align="top"
+							small="true"
+							symbol="question-circle"
+							title={Liferay.Language.get('element-id-help')}
+						/>
 					</label>
 					<ClayInput.Group
 						className={classNames({
@@ -243,52 +241,45 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 							<ClayInput.GroupText>#</ClayInput.GroupText>
 						</ClayInput.GroupItem>
 						<ClayInput.GroupItem append>
-							<ClayTooltipProvider>
-								<ClayInput
-									className={classNames({
-										'input-group-inset input-group-inset-after':
-											allowEdit && selectedTarget,
-									})}
-									data-tooltip-align="top"
-									id="clickableElement"
-									onBlur={handleBlur}
-									onChange={handleInputChange}
-									onKeyDown={handleKeyDown}
-									readOnly={!allowEdit || selectedTarget}
-									title={selectorInputValue}
-									type="text"
-									value={selectorInputValue}
-								/>
-							</ClayTooltipProvider>
+							<ClayInput
+								className={classNames({
+									'input-group-inset input-group-inset-after':
+										allowEdit && selectedTarget,
+								})}
+								data-tooltip-align="top"
+								id="clickableElement"
+								onBlur={handleBlur}
+								onChange={handleInputChange}
+								onKeyDown={handleKeyDown}
+								readOnly={!allowEdit || selectedTarget}
+								title={selectorInputValue}
+								type="text"
+								value={selectorInputValue}
+							/>
+
 							{allowEdit && selectedTarget && (
 								<ClayInput.GroupInsetItem after>
-									<ClayTooltipProvider>
-										<ClayButtonWithIcon
-											data-tooltip-align="bottom-right"
-											disabled={!selectedTarget}
-											displayType="unstyled"
-											monospaced={false}
-											onClick={handleDelete}
-											symbol="times-circle"
-											title={Liferay.Language.get(
-												'clear'
-											)}
-										/>
-									</ClayTooltipProvider>
+									<ClayButtonWithIcon
+										data-tooltip-align="bottom-right"
+										disabled={!selectedTarget}
+										displayType="unstyled"
+										monospaced={false}
+										onClick={handleDelete}
+										symbol="times-circle"
+										title={Liferay.Language.get('clear')}
+									/>
 								</ClayInput.GroupInsetItem>
 							)}
 						</ClayInput.GroupItem>
 						<ClayInput.GroupItem shrink>
-							<ClayTooltipProvider>
-								<ClayButtonWithIcon
-									data-tooltip-align="bottom-right"
-									disabled={!selectedTarget}
-									displayType="secondary"
-									onClick={scrollIntoView}
-									symbol="view"
-									title={Liferay.Language.get('show-element')}
-								/>
-							</ClayTooltipProvider>
+							<ClayButtonWithIcon
+								data-tooltip-align="bottom-right"
+								disabled={!selectedTarget}
+								displayType="secondary"
+								onClick={scrollIntoView}
+								symbol="view"
+								title={Liferay.Language.get('show-element')}
+							/>
 						</ClayInput.GroupItem>
 						{!isValidTarget && (
 							<ClayForm.FeedbackGroup>
@@ -561,31 +552,30 @@ function Target({allowEdit, element, geometry, mode, selector}) {
 				top: spaceOnTop,
 			}}
 		>
-			<ClayTooltipProvider>
-				<div
-					className={classNames({
-						'lfr-segments-experiment-click-goal-target-overlay':
-							!selectedTarget ||
-							mode === 'editing' ||
-							mode === 'selected',
-						'lfr-segments-experiment-click-goal-target-overlay-editing':
-							mode === 'editing',
-						'lfr-segments-experiment-click-goal-target-overlay-selected':
-							mode === 'selected',
-					})}
-					data-target-selector={selector}
-					data-tooltip-align="bottom-left"
-					onClick={handleClick}
-					style={{height, width}}
-					title={
-						mode === 'inactive'
-							? Liferay.Language.get(
-									'click-element-to-set-as-click-target-for-your-goal'
-							  )
-							: ''
-					}
-				></div>
-			</ClayTooltipProvider>
+			<div
+				className={classNames({
+					'lfr-segments-experiment-click-goal-target-overlay':
+						!selectedTarget ||
+						mode === 'editing' ||
+						mode === 'selected',
+					'lfr-segments-experiment-click-goal-target-overlay-editing':
+						mode === 'editing',
+					'lfr-segments-experiment-click-goal-target-overlay-selected':
+						mode === 'selected',
+				})}
+				data-target-selector={selector}
+				data-tooltip-align="bottom-left"
+				onClick={handleClick}
+				style={{height, width}}
+				title={
+					mode === 'inactive'
+						? Liferay.Language.get(
+								'click-element-to-set-as-click-target-for-your-goal'
+						  )
+						: ''
+				}
+			></div>
+
 			{mode !== 'inactive' && (
 				<ClickGoalPicker.TargetTopper
 					allowEdit={allowEdit}

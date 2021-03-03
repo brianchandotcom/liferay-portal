@@ -10,7 +10,6 @@
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import {useTimeout} from '@liferay/frontend-js-react-web';
 import {AppContext} from 'app-builder-web/js/AppContext.es';
 import {ControlMenuBase} from 'app-builder-web/js/components/control-menu/ControlMenu.es';
@@ -379,20 +378,16 @@ export default function EditEntry({
 							/>
 
 							{workflowInfo?.canReassign && (
-								<ClayTooltipProvider>
-									<ClayButtonWithIcon
-										className="ml-2"
-										data-tooltip-align="bottom"
-										data-tooltip-delay="200"
-										displayType="secondary"
-										onClick={() => setModalVisible(true)}
-										small
-										symbol="change"
-										title={Liferay.Language.get(
-											'assign-to'
-										)}
-									/>
-								</ClayTooltipProvider>
+								<ClayButtonWithIcon
+									className="ml-2"
+									data-tooltip-align="bottom"
+									data-tooltip-delay="200"
+									displayType="secondary"
+									onClick={() => setModalVisible(true)}
+									small
+									symbol="change"
+									title={Liferay.Language.get('assign-to')}
+								/>
 							)}
 						</div>
 					</WorkflowInfoPortal>

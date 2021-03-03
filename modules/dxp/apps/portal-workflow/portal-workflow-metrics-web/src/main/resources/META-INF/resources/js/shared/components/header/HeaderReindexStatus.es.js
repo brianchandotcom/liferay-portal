@@ -9,7 +9,6 @@
  * distribution rights of the Software.
  */
 
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import React from 'react';
 
 import {useReindexActions} from '../../../components/settings/indexes-page/hooks/useReindexActions.es';
@@ -28,16 +27,14 @@ const HeaderReindexStatus = ({container}) => {
 					position="after"
 				>
 					<div className="control-menu-icon px-2">
-						<ClayTooltipProvider>
-							<span
-								aria-hidden="true"
-								className="loading-animation loading-animation-sm m-0"
-								data-tooltip-align="bottom"
-								title={Liferay.Language.get(
-									'the-workflow-metrics-data-is-currently-reindexing'
-								)}
-							></span>
-						</ClayTooltipProvider>
+						<span
+							aria-hidden="true"
+							className="loading-animation loading-animation-sm m-0"
+							data-tooltip-align="bottom"
+							title={Liferay.Language.get(
+								'the-workflow-metrics-data-is-currently-reindexing'
+							)}
+						></span>
 					</div>
 				</Portal>
 			)}

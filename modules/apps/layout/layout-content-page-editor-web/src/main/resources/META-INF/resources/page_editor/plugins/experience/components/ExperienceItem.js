@@ -18,7 +18,6 @@ import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import ClayList from '@clayui/list';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -117,15 +116,13 @@ const ExperienceItem = ({
 							>
 								<ClayLayout.ContentSection>
 									<span className="text-truncate-inline">
-										<ClayTooltipProvider>
-											<span
-												className="font-weight-semi-bold text-truncate"
-												data-tooltip-align="top"
-												title={experience.name}
-											>
-												{experience.name}
-											</span>
-										</ClayTooltipProvider>
+										<span
+											className="font-weight-semi-bold text-truncate"
+											data-tooltip-align="top"
+											title={experience.name}
+										>
+											{experience.name}
+										</span>
 
 										{experience.hasLockedSegmentsExperiment && (
 											<ExperienceLockIcon />

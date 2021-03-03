@@ -14,7 +14,6 @@
 
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -27,13 +26,11 @@ const DLVideoExternalShortcutPreview = ({labelTooltip, onChange, url = ''}) => {
 				{Liferay.Language.get('video-url')}
 
 				{labelTooltip && (
-					<ClayTooltipProvider>
-						<ClayIcon
-							className="ml-1 text-secondary"
-							symbol="question-circle-full"
-							title={labelTooltip}
-						/>
-					</ClayTooltipProvider>
+					<ClayIcon
+						className="ml-1 text-secondary"
+						symbol="question-circle-full"
+						title={labelTooltip}
+					/>
 				)}
 			</label>
 			<ClayInput

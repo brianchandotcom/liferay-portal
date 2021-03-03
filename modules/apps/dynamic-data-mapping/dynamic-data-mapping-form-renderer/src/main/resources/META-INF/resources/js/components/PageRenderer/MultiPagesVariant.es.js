@@ -15,7 +15,6 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayLayout from '@clayui/layout';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import React from 'react';
 
 import {EVENT_TYPES} from '../../actions/eventTypes.es';
@@ -78,109 +77,107 @@ export const Container = ({children, empty, page, pageIndex, pages}) => {
 		<React.Fragment>
 			{pageIndex === 0 && <div className="horizontal-line" />}
 
-			<ClayTooltipProvider>
-				<div className="page">
-					<ClayLayout.Sheet
-						className="fade show tab-pane"
-						role="tabpanel"
+			<div className="page">
+				<ClayLayout.Sheet
+					className="fade show tab-pane"
+					role="tabpanel"
+				>
+					<div className="form-builder-layout">
+						<h5 className="pagination">{page.pagination}</h5>
+
+						{children}
+					</div>
+				</ClayLayout.Sheet>
+
+				<div className="ddm-paginated-builder-reorder">
+					<ClayButtonWithIcon
+						className="reorder-page-button"
+						disabled={pageIndex === 0}
+						displayType="secondary"
+						onClick={() =>
+							dispatch({
+								payload: {
+									firstIndex: pageIndex,
+									secondIndex: pageIndex - 1,
+								},
+								type: EVENT_TYPES.PAGE_SWAPPED,
+							})
+						}
+						small
+						symbol="angle-up"
+						title={Liferay.Language.get('move-page-up')}
+					/>
+
+					<ClayButtonWithIcon
+						className="reorder-page-button"
+						disabled={
+							pageIndex ===
+							pages.length -
+								(successPageSettings?.enabled ? 2 : 1)
+						}
+						displayType="secondary"
+						onClick={() =>
+							dispatch({
+								payload: {
+									firstIndex: pageIndex,
+									secondIndex: pageIndex + 1,
+								},
+								type: EVENT_TYPES.PAGE_SWAPPED,
+							})
+						}
+						small
+						symbol="angle-down"
+						title={Liferay.Language.get('move-page-down')}
+					/>
+				</div>
+
+				<div className="ddm-paginated-builder-dropdown">
+					<ClayDropDownWithItems
+						className="dropdown-action"
+						items={pageSettingsItems}
+						trigger={
+							<ClayButtonWithIcon
+								displayType="unstyled"
+								symbol="ellipsis-v"
+								title={Liferay.Language.get('page-options')}
+							/>
+						}
+					/>
+				</div>
+
+				<div className="add-page-button-container">
+					<div className="horizontal-line" />
+					<ClayButton
+						className="add-page-button"
+						displayType="secondary"
+						onClick={() =>
+							dispatch({
+								payload: {pageIndex},
+								type: EVENT_TYPES.PAGE_ADDED,
+							})
+						}
+						small
 					>
-						<div className="form-builder-layout">
-							<h5 className="pagination">{page.pagination}</h5>
+						{Liferay.Language.get('new-page')}
+					</ClayButton>
+					<div className="horizontal-line" />
+				</div>
 
-							{children}
-						</div>
-					</ClayLayout.Sheet>
-
-					<div className="ddm-paginated-builder-reorder">
-						<ClayButtonWithIcon
-							className="reorder-page-button"
-							disabled={pageIndex === 0}
-							displayType="secondary"
-							onClick={() =>
-								dispatch({
-									payload: {
-										firstIndex: pageIndex,
-										secondIndex: pageIndex - 1,
-									},
-									type: EVENT_TYPES.PAGE_SWAPPED,
-								})
-							}
-							small
-							symbol="angle-up"
-							title={Liferay.Language.get('move-page-up')}
-						/>
-
-						<ClayButtonWithIcon
-							className="reorder-page-button"
-							disabled={
-								pageIndex ===
-								pages.length -
-									(successPageSettings?.enabled ? 2 : 1)
-							}
-							displayType="secondary"
-							onClick={() =>
-								dispatch({
-									payload: {
-										firstIndex: pageIndex,
-										secondIndex: pageIndex + 1,
-									},
-									type: EVENT_TYPES.PAGE_SWAPPED,
-								})
-							}
-							small
-							symbol="angle-down"
-							title={Liferay.Language.get('move-page-down')}
-						/>
-					</div>
-
-					<div className="ddm-paginated-builder-dropdown">
-						<ClayDropDownWithItems
-							className="dropdown-action"
-							items={pageSettingsItems}
-							trigger={
-								<ClayButtonWithIcon
-									displayType="unstyled"
-									symbol="ellipsis-v"
-									title={Liferay.Language.get('page-options')}
-								/>
-							}
-						/>
-					</div>
-
+				{pages.length - 1 === pageIndex && (
 					<div className="add-page-button-container">
 						<div className="horizontal-line" />
 						<ClayButton
 							className="add-page-button"
 							displayType="secondary"
-							onClick={() =>
-								dispatch({
-									payload: {pageIndex},
-									type: EVENT_TYPES.PAGE_ADDED,
-								})
-							}
+							onClick={onAddSuccessPage}
 							small
 						>
-							{Liferay.Language.get('new-page')}
+							{Liferay.Language.get('add-success-page')}
 						</ClayButton>
 						<div className="horizontal-line" />
 					</div>
-
-					{pages.length - 1 === pageIndex && (
-						<div className="add-page-button-container">
-							<div className="horizontal-line" />
-							<ClayButton
-								className="add-page-button"
-								displayType="secondary"
-								onClick={onAddSuccessPage}
-								small
-							>
-								{Liferay.Language.get('add-success-page')}
-							</ClayButton>
-							<div className="horizontal-line" />
-						</div>
-					)}
-				</div>
-			</ClayTooltipProvider>
+				)}
+			</div>
 		</React.Fragment>
 	);
 };

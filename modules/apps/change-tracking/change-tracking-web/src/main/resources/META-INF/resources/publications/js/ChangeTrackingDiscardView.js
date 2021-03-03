@@ -15,7 +15,6 @@
 import ClayModal, {useModal} from '@clayui/modal';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClayTable from '@clayui/table';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import React, {useState} from 'react';
 
 import ChangeTrackingRenderView from './ChangeTrackingRenderView';
@@ -193,22 +192,20 @@ export default ({ctEntriesJSONArray, spritemap, typeNames, userInfo}) => {
 		<>
 			{renderViewModal()}
 
-			<ClayTooltipProvider>
-				<ClayTable className="publications-table" hover>
-					<ClayTable.Head>
-						<ClayTable.Row>
-							<ClayTable.Cell headingCell style={{width: '5%'}}>
-								{Liferay.Language.get('user')}
-							</ClayTable.Cell>
+			<ClayTable className="publications-table" hover>
+				<ClayTable.Head>
+					<ClayTable.Row>
+						<ClayTable.Cell headingCell style={{width: '5%'}}>
+							{Liferay.Language.get('user')}
+						</ClayTable.Cell>
 
-							<ClayTable.Cell headingCell style={{width: '95%'}}>
-								{Liferay.Language.get('change')}
-							</ClayTable.Cell>
-						</ClayTable.Row>
-					</ClayTable.Head>
-					<ClayTable.Body>{getTableRows()}</ClayTable.Body>
-				</ClayTable>
-			</ClayTooltipProvider>
+						<ClayTable.Cell headingCell style={{width: '95%'}}>
+							{Liferay.Language.get('change')}
+						</ClayTable.Cell>
+					</ClayTable.Row>
+				</ClayTable.Head>
+				<ClayTable.Body>{getTableRows()}</ClayTable.Body>
+			</ClayTable>
 
 			{renderPagination()}
 		</>

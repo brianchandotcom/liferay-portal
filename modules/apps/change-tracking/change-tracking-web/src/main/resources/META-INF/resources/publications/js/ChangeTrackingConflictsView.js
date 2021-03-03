@@ -22,7 +22,6 @@ import ClayModal, {useModal} from '@clayui/modal';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClayPanel from '@clayui/panel';
 import ClayTimePicker from '@clayui/time-picker';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import React, {useState} from 'react';
 
 import ChangeTrackingBaseScheduleView from './ChangeTrackingBaseScheduleView';
@@ -512,9 +511,7 @@ const ConflictsTable = ({conflicts, spritemap}) => {
 		<>
 			{renderViewModal()}
 
-			<ClayTooltipProvider>
-				<ClayList showQuickActionsOnHover>{getListItems()}</ClayList>
-			</ClayTooltipProvider>
+			<ClayList showQuickActionsOnHover>{getListItems()}</ClayList>
 
 			{renderPagination()}
 		</>

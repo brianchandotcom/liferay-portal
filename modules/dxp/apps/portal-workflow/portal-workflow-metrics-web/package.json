@@ -16,7 +16,6 @@
 		"@clayui/progress-bar": "3.2.0",
 		"@clayui/table": "3.1.0",
 		"@clayui/tabs": "3.3.5",
-		"@clayui/tooltip": "3.4.5",
 		"@liferay/frontend-js-react-web": "*",
 		"axios": "0.21.1",
 		"classnames": "2.2.6",

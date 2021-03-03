@@ -11,7 +11,6 @@
 
 import ClayIcon from '@clayui/icon';
 import ClayTable from '@clayui/table';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import React, {useCallback, useMemo} from 'react';
 
 import {Autocomplete} from '../../../../../shared/components/autocomplete/Autocomplete.es';
@@ -130,16 +129,14 @@ const Table = ({items, setAssigneeId}) => {
 						}}
 					>
 						{`${Liferay.Language.get('new-assignee')}`}{' '}
-						<ClayTooltipProvider>
-							<ClayIcon
-								data-tooltip-align="top"
-								style={{color: '#6B6C7E'}}
-								symbol="question-circle-full"
-								title={Liferay.Language.get(
-									'possible-assignees-must-have-permissions-to-be-assigned-to-the-corresponding-step'
-								)}
-							/>
-						</ClayTooltipProvider>
+						<ClayIcon
+							data-tooltip-align="top"
+							style={{color: '#6B6C7E'}}
+							symbol="question-circle-full"
+							title={Liferay.Language.get(
+								'possible-assignees-must-have-permissions-to-be-assigned-to-the-corresponding-step'
+							)}
+						/>
 					</ClayTable.Cell>
 				</ClayTable.Row>
 			</ClayTable.Head>

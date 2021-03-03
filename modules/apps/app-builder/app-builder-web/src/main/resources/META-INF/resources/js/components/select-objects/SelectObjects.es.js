@@ -15,7 +15,6 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import {getItem} from 'data-engine-js-components-web/js/utils/client.es';
 import {getLocalizedValue} from 'data-engine-js-components-web/js/utils/lang.es';
 import React, {useEffect, useState} from 'react';
@@ -158,17 +157,15 @@ export default function SelectObjects({
 			<DropDownWithSearch
 				{...state}
 				addButton={
-					<ClayTooltipProvider>
-						<ClayButtonWithIcon
-							className="btn btn-monospaced btn-secondary mr-2 nav-btn nav-btn-monospaced"
-							data-tooltip-align="bottom-right"
-							data-tooltip-delay="0"
-							displayType="secondary"
-							onClick={() => setModalVisible(true)}
-							symbol="plus"
-							title={Liferay.Language.get('new-custom-object')}
-						/>
-					</ClayTooltipProvider>
+					<ClayButtonWithIcon
+						className="btn btn-monospaced btn-secondary mr-2 nav-btn nav-btn-monospaced"
+						data-tooltip-align="bottom-right"
+						data-tooltip-delay="0"
+						displayType="secondary"
+						onClick={() => setModalVisible(true)}
+						symbol="plus"
+						title={Liferay.Language.get('new-custom-object')}
+					/>
 				}
 				isEmpty={items.length === 0}
 				label={label}

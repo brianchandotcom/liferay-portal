@@ -12,7 +12,6 @@
 import ClayAutocomplete from '@clayui/autocomplete';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import isClickOutside from 'app-builder-web/js/utils/clickOutside.es';
 import React, {useEffect, useRef, useState} from 'react';
 
@@ -164,23 +163,21 @@ function AutocompleteMultiSelect({
 			</div>
 
 			{selectedItems.length > 0 && (
-				<ClayTooltipProvider>
-					<ClayButton
-						borderless
-						className="ml-2 pl-0 pr-1 py-0"
-						displayType="light"
-						onClick={() => onChange([])}
-						style={{position: 'absolute', right: '1rem'}}
-					>
-						<ClayIcon
-							className="text-secondary tooltip-icon"
-							data-tooltip-align="top"
-							data-tooltip-delay="0"
-							symbol="times-circle"
-							title={Liferay.Language.get('clear-all')}
-						/>
-					</ClayButton>
-				</ClayTooltipProvider>
+				<ClayButton
+					borderless
+					className="ml-2 pl-0 pr-1 py-0"
+					displayType="light"
+					onClick={() => onChange([])}
+					style={{position: 'absolute', right: '1rem'}}
+				>
+					<ClayIcon
+						className="text-secondary tooltip-icon"
+						data-tooltip-align="top"
+						data-tooltip-delay="0"
+						symbol="times-circle"
+						title={Liferay.Language.get('clear-all')}
+					/>
+				</ClayButton>
 			)}
 
 			<AutocompleteDropDown

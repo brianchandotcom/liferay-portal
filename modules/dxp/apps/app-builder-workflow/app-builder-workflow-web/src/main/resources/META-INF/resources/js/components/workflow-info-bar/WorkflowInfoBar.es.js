@@ -10,7 +10,6 @@
  */
 
 import ClayLabel from '@clayui/label';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
 import {concatValues} from 'data-engine-js-components-web/js/utils/utils.es';
 import React from 'react';
@@ -88,21 +87,19 @@ export default function WorkflowInfo({
 	];
 
 	return (
-		<ClayTooltipProvider>
-			<div className={classNames('workflow-info-bar', className)}>
-				{items.map(
-					({label, show, tooltip = {}, value}, index) =>
-						show && (
-							<div className="info-item" key={index} {...tooltip}>
-								<span className="font-weight-bold text-secondary">
-									{`${label}: `}
-								</span>
+		<div className={classNames('workflow-info-bar', className)}>
+			{items.map(
+				({label, show, tooltip = {}, value}, index) =>
+					show && (
+						<div className="info-item" key={index} {...tooltip}>
+							<span className="font-weight-bold text-secondary">
+								{`${label}: `}
+							</span>
 
-								{value}
-							</div>
-						)
-				)}
-			</div>
-		</ClayTooltipProvider>
+							{value}
+						</div>
+					)
+			)}
+		</div>
 	);
 }

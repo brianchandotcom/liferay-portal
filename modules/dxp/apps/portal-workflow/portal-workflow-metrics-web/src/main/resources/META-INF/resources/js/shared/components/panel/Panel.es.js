@@ -11,7 +11,6 @@
 
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import getCN from 'classnames';
 import React from 'react';
 
@@ -65,17 +64,15 @@ const HeaderWithOptions = ({
 				<ClayLayout.ContentRow className="flex-row" expand="true">
 					<span className="mr-2">{title}</span>
 
-					<ClayTooltipProvider>
-						<span>
-							<span
-								className="workflow-tooltip"
-								data-tooltip-align={tooltipPosition}
-								title={description}
-							>
-								<ClayIcon symbol="question-circle-full" />
-							</span>
+					<span>
+						<span
+							className="workflow-tooltip"
+							data-tooltip-align={tooltipPosition}
+							title={description}
+						>
+							<ClayIcon symbol="question-circle-full" />
 						</span>
-					</ClayTooltipProvider>
+					</span>
 				</ClayLayout.ContentRow>
 
 				{children}

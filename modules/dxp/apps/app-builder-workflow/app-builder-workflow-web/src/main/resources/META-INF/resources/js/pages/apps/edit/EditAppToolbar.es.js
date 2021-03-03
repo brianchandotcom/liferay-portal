@@ -11,7 +11,6 @@
 
 import ClayBadge from '@clayui/badge';
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import UpperToolbar from 'app-builder-web/js/components/upper-toolbar/UpperToolbar.es';
 import useDeployApp from 'app-builder-web/js/hooks/useDeployApp.es';
 import EditAppContext, {
@@ -195,17 +194,15 @@ export default function EditAppToolbar({isSaving, onCancel, onSave}) {
 					</ClayButton>
 
 					{app.active && (
-						<ClayTooltipProvider>
-							<ClayButtonWithIcon
-								data-tooltip-align="bottom"
-								data-tooltip-delay="0"
-								displayType="secondary"
-								onClick={() => setDeployModalVisible(true)}
-								small
-								symbol="cog"
-								title={Liferay.Language.get('deploy-settings')}
-							/>
-						</ClayTooltipProvider>
+						<ClayButtonWithIcon
+							data-tooltip-align="bottom"
+							data-tooltip-delay="0"
+							displayType="secondary"
+							onClick={() => setDeployModalVisible(true)}
+							small
+							symbol="cog"
+							title={Liferay.Language.get('deploy-settings')}
+						/>
 					)}
 				</ClayButton.Group>
 			</UpperToolbar.Group>

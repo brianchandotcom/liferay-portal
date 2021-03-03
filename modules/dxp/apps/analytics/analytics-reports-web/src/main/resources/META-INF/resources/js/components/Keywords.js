@@ -14,7 +14,6 @@ import ClayDropDown from '@clayui/drop-down';
 import {ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import PropTypes from 'prop-types';
 import React, {useContext, useMemo, useState} from 'react';
 
@@ -180,17 +179,15 @@ export default function Keywords({currentPage, languageTag}) {
 								<ClayList.Item flex key={keyword}>
 									<ClayList.ItemField expand>
 										<ClayList.ItemText>
-											<ClayTooltipProvider>
-												<span
-													className="text-truncate-inline"
-													data-tooltip-align="top"
-													title={keyword}
-												>
-													<span className="text-secondary text-truncate">
-														{keyword}
-													</span>
+											<span
+												className="text-truncate-inline"
+												data-tooltip-align="top"
+												title={keyword}
+											>
+												<span className="text-secondary text-truncate">
+													{keyword}
 												</span>
-											</ClayTooltipProvider>
+											</span>
 										</ClayList.ItemText>
 									</ClayList.ItemField>
 									<ClayList.ItemField expand>

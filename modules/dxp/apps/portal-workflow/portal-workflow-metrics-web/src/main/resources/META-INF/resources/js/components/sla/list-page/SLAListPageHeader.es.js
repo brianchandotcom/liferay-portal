@@ -11,7 +11,6 @@
 
 import ClayIcon from '@clayui/icon';
 import ClayManagementToolbar from '@clayui/management-toolbar';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import React from 'react';
 
 import ChildLink from '../../../shared/components/router/ChildLink.es';
@@ -21,22 +20,20 @@ const Header = ({processId}) => {
 		<ClayManagementToolbar>
 			<ClayManagementToolbar.ItemList expand>
 				<ClayManagementToolbar.Item className="autofit-col-expand autofit-float-end">
-					<ClayTooltipProvider>
-						<span>
-							<span
-								className="workflow-tooltip"
-								data-tooltip-align="bottom"
-								title={Liferay.Language.get('new-sla')}
+					<span>
+						<span
+							className="workflow-tooltip"
+							data-tooltip-align="bottom"
+							title={Liferay.Language.get('new-sla')}
+						>
+							<ChildLink
+								className="btn btn-primary nav-btn nav-btn-monospaced"
+								to={`/sla/${processId}/new`}
 							>
-								<ChildLink
-									className="btn btn-primary nav-btn nav-btn-monospaced"
-									to={`/sla/${processId}/new`}
-								>
-									<ClayIcon symbol="plus" />
-								</ChildLink>
-							</span>
+								<ClayIcon symbol="plus" />
+							</ChildLink>
 						</span>
-					</ClayTooltipProvider>
+					</span>
 				</ClayManagementToolbar.Item>
 			</ClayManagementToolbar.ItemList>
 		</ClayManagementToolbar>

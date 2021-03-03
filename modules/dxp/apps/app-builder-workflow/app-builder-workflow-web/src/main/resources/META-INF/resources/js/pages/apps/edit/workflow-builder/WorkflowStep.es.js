@@ -13,7 +13,6 @@ import ClayBadge from '@clayui/badge';
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import EditAppContext from 'app-builder-web/js/pages/apps/edit/EditAppContext.es';
 import classNames from 'classnames';
 import {sub} from 'data-engine-js-components-web/js/utils/lang.es';
@@ -31,17 +30,15 @@ const Arrow = ({addStep, selected}) => {
 			/>
 
 			{selected && (
-				<ClayTooltipProvider>
-					<div
-						className={classNames('arrow-plus-button')}
-						data-tooltip-align="left"
-						data-tooltip-delay="0"
-						onClick={addStep}
-						title={Liferay.Language.get('create-new-step')}
-					>
-						<ClayIcon className="icon" symbol="plus" />
-					</div>
-				</ClayTooltipProvider>
+				<div
+					className={classNames('arrow-plus-button')}
+					data-tooltip-align="left"
+					data-tooltip-delay="0"
+					onClick={addStep}
+					title={Liferay.Language.get('create-new-step')}
+				>
+					<ClayIcon className="icon" symbol="plus" />
+				</div>
 			)}
 
 			<div className="arrow-body">
@@ -97,20 +94,18 @@ const Card = ({
 			</div>
 
 			{duplicatedFields.length > 0 && (
-				<ClayTooltipProvider>
-					<ClayIcon
-						className="error tooltip-popover-icon"
-						data-tooltip-align="bottom"
-						data-tooltip-delay="0"
-						fontSize="26px"
-						symbol="exclamation-full"
-						title={`${Liferay.Language.get(
-							'error'
-						)}: ${Liferay.Language.get(
-							'there-are-form-views-with-duplicated-fields'
-						)}`}
-					/>
-				</ClayTooltipProvider>
+				<ClayIcon
+					className="error tooltip-popover-icon"
+					data-tooltip-align="bottom"
+					data-tooltip-delay="0"
+					fontSize="26px"
+					symbol="exclamation-full"
+					title={`${Liferay.Language.get(
+						'error'
+					)}: ${Liferay.Language.get(
+						'there-are-form-views-with-duplicated-fields'
+					)}`}
+				/>
 			)}
 
 			{!app.active && appId && initial && (customField || nativeField) && (
@@ -150,35 +145,33 @@ const Card = ({
 
 			<div className="d-flex">
 				{!isInitialOrFinalSteps && (
-					<ClayTooltipProvider>
-						<ClayDropDown
-							active={active}
-							data-tooltip-align="bottom"
-							data-tooltip-delay="0"
-							onActiveChange={setActive}
-							title={Liferay.Language.get('options')}
-							trigger={
-								<ClayButtonWithIcon
-									className="border-0"
-									displayType="secondary"
-									symbol="ellipsis-v"
-								/>
-							}
-						>
-							<ClayDropDown.ItemList>
-								{actions.map(({label, onClick}, index) => (
-									<ClayDropDown.Item
-										key={index}
-										onClick={(event) =>
-											handleOnClick(event, onClick)
-										}
-									>
-										{label}
-									</ClayDropDown.Item>
-								))}
-							</ClayDropDown.ItemList>
-						</ClayDropDown>
-					</ClayTooltipProvider>
+					<ClayDropDown
+						active={active}
+						data-tooltip-align="bottom"
+						data-tooltip-delay="0"
+						onActiveChange={setActive}
+						title={Liferay.Language.get('options')}
+						trigger={
+							<ClayButtonWithIcon
+								className="border-0"
+								displayType="secondary"
+								symbol="ellipsis-v"
+							/>
+						}
+					>
+						<ClayDropDown.ItemList>
+							{actions.map(({label, onClick}, index) => (
+								<ClayDropDown.Item
+									key={index}
+									onClick={(event) =>
+										handleOnClick(event, onClick)
+									}
+								>
+									{label}
+								</ClayDropDown.Item>
+							))}
+						</ClayDropDown.ItemList>
+					</ClayDropDown>
 				)}
 			</div>
 		</div>

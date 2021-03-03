@@ -12,7 +12,6 @@
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import EditAppContext from 'app-builder-web/js/pages/apps/edit/EditAppContext.es';
 import classNames from 'classnames';
 import {sub} from 'data-engine-js-components-web/js/utils/lang.es';
@@ -214,17 +213,15 @@ export default function EditAppSidebar() {
 										</span>
 									</label>
 
-									<ClayTooltipProvider>
-										<ClayIcon
-											className="ml-2 text-muted tooltip-icon"
-											data-tooltip-align="top"
-											data-tooltip-delay="0"
-											symbol="question-circle-full"
-											title={Liferay.Language.get(
-												'assignees-are-the-roles-responsible-to-transition-this-workflow-step'
-											)}
-										/>
-									</ClayTooltipProvider>
+									<ClayIcon
+										className="ml-2 text-muted tooltip-icon"
+										data-tooltip-align="top"
+										data-tooltip-delay="0"
+										symbol="question-circle-full"
+										title={Liferay.Language.get(
+											'assignees-are-the-roles-responsible-to-transition-this-workflow-step'
+										)}
+									/>
 
 									<AutocompleteMultiSelect
 										emptyMessage={Liferay.Language.get(
@@ -285,20 +282,18 @@ export default function EditAppSidebar() {
 
 										<div className="d-flex">
 											{error && (
-												<ClayTooltipProvider>
-													<ClayIcon
-														className="error mr-2 mt-1 tooltip-popover-icon"
-														data-tooltip-align="left"
-														data-tooltip-delay="0"
-														fontSize="26px"
-														symbol="exclamation-full"
-														title={`${Liferay.Language.get(
-															'error'
-														)}: ${Liferay.Language.get(
-															'there-are-form-views-with-duplicated-fields'
-														)}`}
-													/>
-												</ClayTooltipProvider>
+												<ClayIcon
+													className="error mr-2 mt-1 tooltip-popover-icon"
+													data-tooltip-align="left"
+													data-tooltip-delay="0"
+													fontSize="26px"
+													symbol="exclamation-full"
+													title={`${Liferay.Language.get(
+														'error'
+													)}: ${Liferay.Language.get(
+														'there-are-form-views-with-duplicated-fields'
+													)}`}
+												/>
 											)}
 
 											{showPopoverIcon && (

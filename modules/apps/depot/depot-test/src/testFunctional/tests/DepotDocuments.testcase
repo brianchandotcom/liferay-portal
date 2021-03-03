@@ -179,9 +179,27 @@ definition {
 
 		PortletEntry.publish();
 
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "liferay");
+
+		AssertTextEquals(
+			key_fieldLabel = "Title",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "liferay");
+
+		AssertTextEquals(
+			key_fieldLabel = "File Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "liferay.txt");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "liferay");
 
-		DMDocument.viewCP(dmDocumentTitle = "liferay");
+		DMDocument.viewCP(
+			dmDocumentFileName = "liferay.txt",
+			dmDocumentTitle = "liferay");
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 

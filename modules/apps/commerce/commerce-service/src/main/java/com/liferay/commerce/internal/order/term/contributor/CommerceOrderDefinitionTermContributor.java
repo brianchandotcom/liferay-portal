@@ -203,7 +203,7 @@ public class CommerceOrderDefinitionTermContributor
 			Country country = commerceAddress.getCountry();
 
 			if (country != null) {
-				addressSB.append(country.getName(locale));
+				addressSB.append(country.getTitle(locale));
 			}
 		}
 		catch (PortalException portalException) {

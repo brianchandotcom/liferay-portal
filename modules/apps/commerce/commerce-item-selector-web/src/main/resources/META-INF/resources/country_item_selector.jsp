@@ -65,7 +65,7 @@ PortletURL portletURL = commerceCountryItemSelectorViewDisplayContext.getPortlet
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand"
 				name="name"
-				value="<%= country.getName(locale) %>"
+				value="<%= country.getTitle(locale) %>"
 			/>
 
 			<liferay-ui:search-container-column-text

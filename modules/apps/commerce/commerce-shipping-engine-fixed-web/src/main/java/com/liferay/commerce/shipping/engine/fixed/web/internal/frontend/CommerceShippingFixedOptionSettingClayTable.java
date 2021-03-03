@@ -213,7 +213,7 @@ public class CommerceShippingFixedOptionSettingClayTable
 			return StringPool.STAR;
 		}
 
-		return country.getName(themeDisplay.getLocale());
+		return country.getTitle(themeDisplay.getLanguageId());
 	}
 
 	private String _getRegion(

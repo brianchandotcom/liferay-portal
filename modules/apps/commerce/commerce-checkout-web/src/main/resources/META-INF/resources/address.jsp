@@ -40,5 +40,5 @@ Country country = commerceAddress.getCountry();
 %>
 
 <c:if test="<%= country != null %>">
-	<p><%= HtmlUtil.escape(country.getName(locale)) %></p>
+	<p><%= HtmlUtil.escape(country.getTitle(locale)) %></p>
 </c:if>

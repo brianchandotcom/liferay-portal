@@ -118,7 +118,7 @@ public class CommerceShippingRestrictionsPageClayTable
 		for (Country country : baseModelSearchResult.getBaseModels()) {
 			shippingRestrictions.add(
 				new ShippingRestriction(
-					country.getName(themeDisplay.getLocale()),
+					country.getTitle(themeDisplay.getLocale()),
 					country.getCountryId(),
 					_getFields(
 						country.getCountryId(), commerceShippingMethods,

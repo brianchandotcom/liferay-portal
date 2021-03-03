@@ -409,7 +409,7 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 					%>
 
 					<c:if test="<%= country != null %>">
-						<%= HtmlUtil.escape(country.getName(locale)) %><br />
+						<%= HtmlUtil.escape(country.getTitle(locale)) %><br />
 					</c:if>
 				</address>
 			</c:if>

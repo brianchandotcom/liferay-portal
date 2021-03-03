@@ -223,7 +223,7 @@ public class CommerceInventoryWarehousesDisplayContext {
 
 			emptyResultsMessage = LanguageUtil.format(
 				_cpRequestHelper.getRequest(), emptyResultsMessage,
-				country.getName(_cpRequestHelper.getLocale()));
+				country.getTitle(_cpRequestHelper.getLocale()));
 		}
 
 		_searchContainer = new SearchContainer<>(

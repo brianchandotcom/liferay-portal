@@ -61,7 +61,7 @@ public class AddressDTOConverter
 		Address address = new Address() {
 			{
 				city = commerceAddress.getCity();
-				country = addressCountry.getName(locale);
+				country = addressCountry.getTitle(locale);
 				countryISOCode = addressCountry.getA2();
 				description = commerceAddress.getDescription();
 				id = commerceAddress.getCommerceAddressId();

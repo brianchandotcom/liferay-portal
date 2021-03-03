@@ -67,7 +67,7 @@ if (commerceTaxFixedRateAddressRel != null) {
 			for (Country country : countries) {
 			%>
 
-				<aui:option label="<%= country.getName(locale) %>" selected="<%= (commerceTaxFixedRateAddressRel != null) && (commerceTaxFixedRateAddressRel.getCountryId() == country.getCountryId()) %>" value="<%= country.getCountryId() %>" />
+				<aui:option label="<%= country.getTitle(languageId) %>" selected="<%= (commerceTaxFixedRateAddressRel != null) && (commerceTaxFixedRateAddressRel.getCountryId() == country.getCountryId()) %>" value="<%= country.getCountryId() %>" />
 
 			<%
 			}

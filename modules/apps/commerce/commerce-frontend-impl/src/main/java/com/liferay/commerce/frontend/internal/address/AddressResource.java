@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -130,7 +129,7 @@ public class AddressResource {
 
 		return _getCountries(
 			_countryService.getCompanyCountries(companyId, true),
-			themeDisplay.getLocale());
+			themeDisplay.getLanguageId());
 	}
 
 	@GET
@@ -140,7 +139,7 @@ public class AddressResource {
 		List<Country> countries = _countryService.getCompanyCountries(
 			themeDisplay.getCompanyId(), true);
 
-		return _getCountries(countries, themeDisplay.getLocale());
+		return _getCountries(countries, themeDisplay.getLanguageId());
 	}
 
 	@GET
@@ -154,16 +153,16 @@ public class AddressResource {
 			_commerceCountryManager.getShippingCountriesByChannelId(
 				channelId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		return _getCountries(countries, themeDisplay.getLocale());
+		return _getCountries(countries, themeDisplay.getLanguageId());
 	}
 
-	private Response _getCountries(List<Country> countries, Locale locale) {
+	private Response _getCountries(List<Country> countries, String languageId) {
 		List<CountryModel> countryModels = new ArrayList<>();
 
 		for (Country country : countries) {
 			countryModels.add(
 				new CountryModel(
-					country.getCountryId(), country.getName(locale),
+					country.getCountryId(), country.getTitle(languageId),
 					country.isBillingAllowed(), country.isShippingAllowed()));
 		}
 

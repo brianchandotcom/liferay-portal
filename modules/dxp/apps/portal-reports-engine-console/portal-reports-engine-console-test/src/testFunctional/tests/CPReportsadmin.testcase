@@ -593,7 +593,7 @@ definition {
 			templateFile = "reports_admin_template_source_sample_class_name.jrxml");
 
 		ReportsAdmin.addReportEntry(
-			emailNotificationsAddress = PropsUtil.get("email.address.5"),
+			emailNotificationsAddress = PropsUtil.get("email.address.4"),
 			emailRecipientAddress = "test@liferay.com",
 			reportFormat = "pdf",
 			reportName = "Custom Report Name",
@@ -602,8 +602,8 @@ definition {
 		Pause(locator1 = "30000");
 
 		Gmail.login(
-			userEmailAddress = PropsUtil.get("email.address.5"),
-			userPassword = PropsUtil.get("email.password.5"));
+			userEmailAddress = PropsUtil.get("email.address.4"),
+			userPassword = PropsUtil.get("email.password.4"));
 
 		Gmail.gotoHtmlMode();
 

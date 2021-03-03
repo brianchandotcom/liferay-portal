@@ -181,7 +181,7 @@ definition {
 		property portal.version = "7.0.10.14";
 
 		var allFields = "Text,Text Box,Select,Boolean,Radio,Date,Integer,Decimal,Number,Image,HTML,Documents and Media,Link to Page,Separator,Web Content,Geolocation";
-		
+
 		DataEngineUpgrade.validateFieldLabelsTranslatedInStructure(allFields = "${allFields}");
 	}
 

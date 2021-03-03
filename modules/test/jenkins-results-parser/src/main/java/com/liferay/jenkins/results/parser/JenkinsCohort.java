@@ -253,10 +253,12 @@ public class JenkinsCohort {
 							JenkinsAPIUtil.getBuildParameters(jsonObject)));
 				}
 
-				Map<String, JSONObject> queuedTopLevelBuildURLs =
-					jenkinsCohortJob.getQueuedTopLevelBuildURLs();
+				Map<String, JSONObject> queuedTopLevelBuildsJsonMap =
+					jenkinsCohortJob.getQueuedTopLevelBuildsJsonMap();
 
-				for (JSONObject jsonObject : queuedTopLevelBuildURLs.values()) {
+				for (JSONObject jsonObject :
+						queuedTopLevelBuildsJsonMap.values()) {
+
 					try {
 						Map<String, String> buildParameters =
 							JenkinsAPIUtil.getBuildParameters(jsonObject);
@@ -407,10 +409,12 @@ public class JenkinsCohort {
 					jobName);
 
 				if (batchJobName == null) {
-					jenkinsCohortJob.addQueuedTopLevelBuildURL(queuedBuildURL);
+					jenkinsCohortJob.addQueuedTopLevelBuildJsonMapEntry(
+						queuedBuildURL);
 				}
 				else {
-					jenkinsCohortJob.addQueuedOtherBuildURL(queuedBuildURL);
+					jenkinsCohortJob.addQueuedOtherBuildJsonMapEntry(
+						queuedBuildURL);
 				}
 			}
 		}
@@ -437,19 +441,20 @@ public class JenkinsCohort {
 			_otherBuildURLs.add(buildURL);
 		}
 
-		public void addQueuedOtherBuildURL(
-			Map.Entry<String, JSONObject> queuedBuildURL) {
+		public void addQueuedOtherBuildJsonMapEntry(
+			Map.Entry<String, JSONObject> queuedBuildsJsonMapEntry) {
 
-			_queuedOtherBuildURLs.put(
-				queuedBuildURL.getKey(), queuedBuildURL.getValue());
+			_queuedOtherBuildsJsonMap.put(
+				queuedBuildsJsonMapEntry.getKey(),
+				queuedBuildsJsonMapEntry.getValue());
 		}
 
-		public void addQueuedTopLevelBuildURL(
-			Map.Entry<String, JSONObject> queuedTopLevelBuildURL) {
+		public void addQueuedTopLevelBuildJsonMapEntry(
+			Map.Entry<String, JSONObject> queuedTopLevelBuildMapEntry) {
 
-			_queuedTopLevelBuildURLs.put(
-				queuedTopLevelBuildURL.getKey(),
-				queuedTopLevelBuildURL.getValue());
+			_queuedTopLevelBuildsJsonMap.put(
+				queuedTopLevelBuildMapEntry.getKey(),
+				queuedTopLevelBuildMapEntry.getValue());
 		}
 
 		public void addTopLevelBuildURL(String topLevelBuildURL) {
@@ -461,8 +466,8 @@ public class JenkinsCohort {
 		}
 
 		public int getQueuedBuildCount() {
-			return _queuedTopLevelBuildURLs.size() +
-				_queuedOtherBuildURLs.size();
+			return _queuedTopLevelBuildsJsonMap.size() +
+				_queuedOtherBuildsJsonMap.size();
 		}
 
 		public String getQueuedBuildPercentage() {
@@ -471,8 +476,8 @@ public class JenkinsCohort {
 				JenkinsCohort.this.getQueuedBuildCount());
 		}
 
-		public Map<String, JSONObject> getQueuedTopLevelBuildURLs() {
-			return _queuedTopLevelBuildURLs;
+		public Map<String, JSONObject> getQueuedTopLevelBuildsJsonMap() {
+			return _queuedTopLevelBuildsJsonMap;
 		}
 
 		public int getRunningBuildCount() {
@@ -486,7 +491,8 @@ public class JenkinsCohort {
 		}
 
 		public int getTopLevelBuildCount() {
-			return _topLevelBuildURLs.size() + _queuedTopLevelBuildURLs.size();
+			return _topLevelBuildURLs.size() +
+				_queuedTopLevelBuildsJsonMap.size();
 		}
 
 		public List<String> getTopLevelBuildURLs() {
@@ -506,8 +512,9 @@ public class JenkinsCohort {
 
 		private final String _jenkinsCohortJobName;
 		private List<String> _otherBuildURLs = new ArrayList<>();
-		private Map<String, JSONObject> _queuedOtherBuildURLs = new HashMap<>();
-		private Map<String, JSONObject> _queuedTopLevelBuildURLs =
+		private Map<String, JSONObject> _queuedOtherBuildsJsonMap =
+			new HashMap<>();
+		private Map<String, JSONObject> _queuedTopLevelBuildsJsonMap =
 			new HashMap<>();
 		private List<String> _topLevelBuildURLs = new ArrayList<>();
 

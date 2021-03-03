@@ -55,11 +55,11 @@ public class JenkinsAPIUtil {
 	}
 
 	public static Map<String, String> getBuildParameters(
-		JSONObject jsonObject) {
+		JSONObject buildJSONObject) {
 
 		Map<String, String> buildParameters = new HashMap<>();
 
-		JSONArray actionsJSONArray = jsonObject.getJSONArray("actions");
+		JSONArray actionsJSONArray = buildJSONObject.getJSONArray("actions");
 
 		for (int i = 0; i < actionsJSONArray.length(); i++) {
 			Object actions = actionsJSONArray.get(i);

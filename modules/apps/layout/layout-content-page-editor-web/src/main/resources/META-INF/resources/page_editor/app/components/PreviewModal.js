@@ -148,7 +148,6 @@ const PreviewModal = ({observer}) => {
 										segmentsExperienceId={
 											segmentsExperienceId
 										}
-										showNotTranslated={false}
 									/>
 								</li>
 							</ul>

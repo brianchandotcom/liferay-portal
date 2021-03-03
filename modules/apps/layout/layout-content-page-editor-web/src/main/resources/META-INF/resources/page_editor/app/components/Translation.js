@@ -130,7 +130,6 @@ export default function Translation({
 	fragmentEntryLinks,
 	languageId,
 	segmentsExperienceId,
-	showNotTranslated = true,
 }) {
 	const [active, setActive] = useState(false);
 	const editableValues = useMemo(
@@ -158,23 +157,13 @@ export default function Translation({
 		return Object.keys({
 			[defaultLanguageId]: defaultLanguage,
 			...availableLanguagesMut,
-		})
-			.filter(
-				(languageId) =>
-					showNotTranslated ||
-					editableValues.filter(
-						(editableValue) =>
-							isTranslated(editableValue, languageId) ||
-							languageId === defaultLanguageId
-					).length > 0
-			)
-			.map((languageId) => ({
-				languageId,
-				values: editableValues.filter((editableValue) =>
-					isTranslated(editableValue, languageId)
-				),
-			}));
-	}, [defaultLanguageId, editableValues, languages, showNotTranslated]);
+		}).map((languageId) => ({
+			languageId,
+			values: editableValues.filter((editableValue) =>
+				isTranslated(editableValue, languageId)
+			),
+		}));
+	}, [defaultLanguageId, editableValues, languages]);
 
 	const selectedExperienceLanguage = (
 		defaultLanguageId,
@@ -265,5 +254,4 @@ Translation.propTypes = {
 	fragmentEntryLinks: PropTypes.object.isRequired,
 	languageId: PropTypes.string.isRequired,
 	segmentsExperienceId: PropTypes.string,
-	showNotTranslated: PropTypes.bool,
 };

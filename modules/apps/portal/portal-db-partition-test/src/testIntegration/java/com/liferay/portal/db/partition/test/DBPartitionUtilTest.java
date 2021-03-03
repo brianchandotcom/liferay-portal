@@ -96,9 +96,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 	public void tearDown() throws Exception {
 		db.runSQL("drop schema if exists " + _getSchemaName(_COMPANY_ID));
 
-		try (Statement statement = _connection.createStatement()) {
-			statement.execute("use " + _defaultSchemaName);
-		}
+		_connection.setCatalog(_defaultSchemaName);
 	}
 
 	@Test
@@ -115,7 +113,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 			statement.execute("select 1 from TestTable");
 
-			statement.execute("use " + _defaultSchemaName);
+			connection.setCatalog(_defaultSchemaName);
 		}
 	}
 
@@ -132,7 +130,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 			statement.execute("select 1 from CompanyInfo");
 
-			statement.execute("use " + _defaultSchemaName);
+			connection.setCatalog(_defaultSchemaName);
 		}
 		finally {
 			CompanyThreadLocal.setCompanyId(currentCompanyId);

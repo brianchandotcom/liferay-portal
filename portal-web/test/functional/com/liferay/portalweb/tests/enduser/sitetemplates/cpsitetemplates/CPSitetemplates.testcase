@@ -653,4 +653,52 @@ definition {
 		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
 	}
 
+	@description = "This is a use case for LPS-124594."
+	@priority = "4"
+	test SwitchPropagationWithOneClickControl {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
+
+		Site.openSitesAdmin();
+
+		Site.addSiteTemplateCP(
+			siteName = "Site Name",
+			siteTemplateName = "Site Template Name");
+
+		SiteTemplatesNavigator.gotoSiteTemplatesPage(
+			pageName = "Home",
+			siteName = "${siteName}",
+			siteTemplateName = "Site Template Name");
+
+		SiteTemplates.disablePropagationPG();
+
+		ContentPages.clickPencil();
+
+		PageEditor.addWidget(portletName = "Asset Publisher");
+
+		PageEditor.clickPublish();
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		Refresh();
+
+		Portlet.viewNoPortletsPresentPG();
+
+		SiteTemplatesNavigator.gotoSiteTemplatesPage(
+			pageName = "Home",
+			siteName = "${siteName}",
+			siteTemplateName = "Site Template Name");
+
+		SiteTemplates.enablePropagationPG();
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		Refresh();
+
+		AssertElementPresent(
+			key_portletName = "AssetPublisher",
+			locator1 = "Portlet#SPECIFIC_FRAGMENTS_AND_WIDGETS");
+	}
+
 }

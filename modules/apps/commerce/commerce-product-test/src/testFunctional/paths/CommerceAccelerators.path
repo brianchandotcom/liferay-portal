@@ -80,7 +80,7 @@
 </tr>
 <tr>
 	<td>MINIUM_CARD_NAME</td>
-	<td>//a[@class='minium-card__name' and contains(.,'${key_productName}')]</td>
+	<td>//p[@class='card-title']//span[text() = '${key_productName}']</td>
 	<td></td>
 </tr>
 <tr>

@@ -158,6 +158,9 @@ public class LiferayOAuthDataProvider
 		ServerAuthorizationCodeGrant serverAuthorizationCodeGrant =
 			super.createCodeGrant(authorizationCodeRegistration);
 
+		serverAuthorizationCodeGrant.setExtraProperties(
+			authorizationCodeRegistration.getExtraProperties());
+
 		serverAuthorizationCodeGrant.setRequestedScopes(
 			authorizationCodeRegistration.getRequestedScope());
 
@@ -584,6 +587,13 @@ public class LiferayOAuthDataProvider
 		throw new UnsupportedOperationException();
 	}
 
+	public void setRememberDeviceContent(
+		String refreshTokenContent, String rememberDeviceContent) {
+
+		_oAuth2AuthorizationLocalService.setRememberDeviceContent(
+			refreshTokenContent, rememberDeviceContent);
+	}
+
 	@Activate
 	@SuppressWarnings("unchecked")
 	protected void activate(Map<String, Object> properties) {
@@ -615,6 +625,11 @@ public class LiferayOAuthDataProvider
 
 		bearerTokenProvider.onBeforeCreate(accessToken);
 
+		Map<String, String> accessTokenParameters = accessToken.getParameters();
+
+		accessTokenParameters.putAll(
+			accessTokenRegistration.getExtraProperties());
+
 		serverAccessToken.setAudiences(accessToken.getAudiences());
 		serverAccessToken.setClientCodeVerifier(
 			accessToken.getClientCodeVerifier());
@@ -625,7 +640,7 @@ public class LiferayOAuthDataProvider
 		serverAccessToken.setIssuedAt(accessToken.getIssuedAt());
 		serverAccessToken.setIssuer(accessToken.getIssuer());
 		serverAccessToken.setNonce(accessToken.getNonce());
-		serverAccessToken.setParameters(accessToken.getParameters());
+		serverAccessToken.setParameters(accessTokenParameters);
 		serverAccessToken.setRefreshToken(accessToken.getRefreshToken());
 		serverAccessToken.setResponseType(accessToken.getResponseType());
 		serverAccessToken.setScopes(

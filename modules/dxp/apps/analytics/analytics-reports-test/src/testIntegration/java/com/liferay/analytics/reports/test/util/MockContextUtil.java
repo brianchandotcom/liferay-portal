@@ -18,12 +18,8 @@ import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItem;
 import com.liferay.analytics.reports.info.item.provider.AnalyticsReportsInfoItemObjectProvider;
 import com.liferay.analytics.reports.test.MockObject;
 import com.liferay.analytics.reports.test.analytics.reports.info.item.MockAnalyticsReportsInfoItem;
-import com.liferay.analytics.reports.test.layout.display.page.MockLayoutDisplayPageProvider;
 import com.liferay.info.item.InfoItemReference;
-import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.petra.function.UnsafeRunnable;
-import com.liferay.portal.kernel.model.ClassName;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 
 import org.osgi.framework.Bundle;
@@ -40,12 +36,6 @@ public class MockContextUtil {
 			MockContext mockContext, UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
-		ClassNameLocalService classNameLocalService =
-			mockContext.getClassNameLocalService();
-
-		ClassName className = classNameLocalService.addClassName(
-			MockObject.class.getName());
-
 		Bundle bundle = FrameworkUtil.getBundle(MockContextUtil.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
@@ -54,8 +44,6 @@ public class MockContextUtil {
 			analyticsReportsInfoItemObjectProviderServiceRegistration = null;
 		ServiceRegistration<AnalyticsReportsInfoItem<MockObject>>
 			analyticsReportsInfoItemServiceRegistration = null;
-		ServiceRegistration<LayoutDisplayPageProvider<MockObject>>
-			layoutDisplayPageProviderServiceRegistration = null;
 
 		try {
 			analyticsReportsInfoItemObjectProviderServiceRegistration =
@@ -83,12 +71,6 @@ public class MockContextUtil {
 						(Class<?>)AnalyticsReportsInfoItem.class,
 					mockContext.getAnalyticsReportsInfoItem(),
 					new HashMapDictionary<>());
-			layoutDisplayPageProviderServiceRegistration =
-				bundleContext.registerService(
-					(Class<LayoutDisplayPageProvider<MockObject>>)
-						(Class<?>)LayoutDisplayPageProvider.class,
-					mockContext.getLayoutDisplayPageProvider(),
-					new HashMapDictionary<>());
 			unsafeRunnable.run();
 		}
 		finally {
@@ -102,21 +84,13 @@ public class MockContextUtil {
 			if (analyticsReportsInfoItemServiceRegistration != null) {
 				analyticsReportsInfoItemServiceRegistration.unregister();
 			}
-
-			if (layoutDisplayPageProviderServiceRegistration != null) {
-				layoutDisplayPageProviderServiceRegistration.unregister();
-			}
-
-			classNameLocalService.deleteClassName(className);
 		}
 	}
 
 	public static class MockContext {
 
-		public static Builder builder(
-			ClassNameLocalService classNameLocalService) {
-
-			return new Builder(classNameLocalService);
+		public static Builder builder() {
+			return new Builder();
 		}
 
 		public AnalyticsReportsInfoItem<MockObject>
@@ -125,20 +99,9 @@ public class MockContextUtil {
 			return _analyticsReportsInfoItem;
 		}
 
-		public ClassNameLocalService getClassNameLocalService() {
-			return _classNameLocalService;
-		}
-
-		public LayoutDisplayPageProvider<MockObject>
-			getLayoutDisplayPageProvider() {
-
-			return _layoutDisplayPageProvider;
-		}
-
 		public static class Builder {
 
-			public Builder(ClassNameLocalService classNameLocalService) {
-				_classNameLocalService = classNameLocalService;
+			public Builder() {
 			}
 
 			public Builder analyticsReportsInfoItem(
@@ -150,32 +113,16 @@ public class MockContextUtil {
 			}
 
 			public MockContext build() {
-				return new MockContext(
-					_analyticsReportsInfoItem, _classNameLocalService,
-					_layoutDisplayPageProvider);
-			}
-
-			public Builder layoutDisplayPageProvider(
-				LayoutDisplayPageProvider<MockObject>
-					layoutDisplayPageProvider) {
-
-				_layoutDisplayPageProvider = layoutDisplayPageProvider;
-
-				return this;
+				return new MockContext(_analyticsReportsInfoItem);
 			}
 
 			private AnalyticsReportsInfoItem<MockObject>
 				_analyticsReportsInfoItem;
-			private final ClassNameLocalService _classNameLocalService;
-			private LayoutDisplayPageProvider<MockObject>
-				_layoutDisplayPageProvider;
 
 		}
 
 		private MockContext(
-			AnalyticsReportsInfoItem<MockObject> analyticsReportsInfoItem,
-			ClassNameLocalService classNameLocalService,
-			LayoutDisplayPageProvider<MockObject> layoutDisplayPageProvider) {
+			AnalyticsReportsInfoItem<MockObject> analyticsReportsInfoItem) {
 
 			if (analyticsReportsInfoItem == null) {
 				_analyticsReportsInfoItem =
@@ -185,25 +132,10 @@ public class MockContextUtil {
 			else {
 				_analyticsReportsInfoItem = analyticsReportsInfoItem;
 			}
-
-			_classNameLocalService = classNameLocalService;
-
-			if (layoutDisplayPageProvider == null) {
-				_layoutDisplayPageProvider =
-					MockLayoutDisplayPageProvider.builder(
-						_classNameLocalService
-					).build();
-			}
-			else {
-				_layoutDisplayPageProvider = layoutDisplayPageProvider;
-			}
 		}
 
 		private final AnalyticsReportsInfoItem<MockObject>
 			_analyticsReportsInfoItem;
-		private final ClassNameLocalService _classNameLocalService;
-		private final LayoutDisplayPageProvider<MockObject>
-			_layoutDisplayPageProvider;
 
 	}
 

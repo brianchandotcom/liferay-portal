@@ -16,14 +16,9 @@ package com.liferay.analytics.reports.web.internal.portlet.action.test;
 
 import com.liferay.analytics.reports.test.MockObject;
 import com.liferay.analytics.reports.test.analytics.reports.info.item.MockAnalyticsReportsInfoItem;
-import com.liferay.analytics.reports.test.layout.display.page.MockLayoutDisplayPageProvider;
 import com.liferay.analytics.reports.test.util.MockContextUtil;
 import com.liferay.analytics.reports.web.internal.portlet.action.test.util.MockThemeDisplayUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.info.item.InfoItemReference;
-import com.liferay.layout.display.page.LayoutDisplayPageProvider;
-import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
-import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -33,7 +28,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -93,9 +87,7 @@ public class GetDataMVCResourceCommandTest {
 	@Test
 	public void testGetAuthorWithoutPortraitURL() throws Exception {
 		MockContextUtil.testWithMockContext(
-			new MockContextUtil.MockContext.Builder(
-				_classNameLocalService
-			).analyticsReportsInfoItem(
+			new MockContextUtil.MockContext.Builder().analyticsReportsInfoItem(
 				MockAnalyticsReportsInfoItem.builder(
 				).build()
 			).build(),
@@ -139,9 +131,7 @@ public class GetDataMVCResourceCommandTest {
 		String title = RandomTestUtil.randomString();
 
 		MockContextUtil.testWithMockContext(
-			new MockContextUtil.MockContext.Builder(
-				_classNameLocalService
-			).analyticsReportsInfoItem(
+			new MockContextUtil.MockContext.Builder().analyticsReportsInfoItem(
 				MockAnalyticsReportsInfoItem.builder(
 				).authorName(
 					authorName
@@ -151,10 +141,6 @@ public class GetDataMVCResourceCommandTest {
 					publishDate
 				).title(
 					title
-				).build()
-			).layoutDisplayPageProvider(
-				MockLayoutDisplayPageProvider.builder(
-					_classNameLocalService
 				).build()
 			).build(),
 			() -> {
@@ -232,7 +218,6 @@ public class GetDataMVCResourceCommandTest {
 	public void testGetViewURLs() throws Exception {
 		MockContextUtil.testWithMockContext(
 			MockContextUtil.MockContext.builder(
-				_classNameLocalService
 			).build(),
 			() -> {
 				MockLiferayResourceResponse mockLiferayResourceResponse =
@@ -279,7 +264,6 @@ public class GetDataMVCResourceCommandTest {
 	public void testGetViewURLsWithMultipleLocales() throws Exception {
 		MockContextUtil.testWithMockContext(
 			MockContextUtil.MockContext.builder(
-				_classNameLocalService
 			).analyticsReportsInfoItem(
 				MockAnalyticsReportsInfoItem.builder(
 				).locales(
@@ -347,16 +331,6 @@ public class GetDataMVCResourceCommandTest {
 			new MockLiferayResourceRequest();
 
 		try {
-			LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-				_layoutDisplayPageProviderTracker.
-					getLayoutDisplayPageProviderByClassName(
-						MockObject.class.getName());
-
-			mockLiferayResourceRequest.setAttribute(
-				LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
-				layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
-					new InfoItemReference(MockObject.class.getName(), 0)));
-
 			mockLiferayResourceRequest.setAttribute(
 				WebKeys.THEME_DISPLAY,
 				MockThemeDisplayUtil.getThemeDisplay(
@@ -376,9 +350,6 @@ public class GetDataMVCResourceCommandTest {
 	}
 
 	@Inject
-	private ClassNameLocalService _classNameLocalService;
-
-	@Inject
 	private CompanyLocalService _companyLocalService;
 
 	@DeleteAfterTestRun
@@ -391,9 +362,6 @@ public class GetDataMVCResourceCommandTest {
 	private Language _language;
 
 	private Layout _layout;
-
-	@Inject
-	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;
 
 	@Inject
 	private LayoutSetLocalService _layoutSetLocalService;

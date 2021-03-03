@@ -144,6 +144,7 @@ if (cpSku != null) {
 
 				<commerce-ui:add-to-wish-list
 					CPCatalogEntry="<%= cpCatalogEntry %>"
+					large="true"
 				/>
 			</div>
 

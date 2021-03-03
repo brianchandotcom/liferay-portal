@@ -10,7 +10,13 @@ definition {
 				key_menuItem = "Dynamic Collection",
 				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
 		}
+		else if (IsVisible(locator1 = "Message#EMPTY_INFO_TAGLIB")) {
+			Click.waitForMenuToggleJSClick(locator1 = "Dropdown#EMPTY_MESSAGE_DROPDOWN");
 
+			Click(
+				key_menuItem = "Dynamic Collection",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+		}
 		else {
 			LexiconEntry.gotoAddMenuItem(menuItem = "Dynamic Collection");
 		}
@@ -68,7 +74,13 @@ definition {
 				key_menuItem = "Manual Collection",
 				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
 		}
+		else if (IsVisible(locator1 = "Message#EMPTY_INFO_TAGLIB")) {
+			Click.waitForMenuToggleJSClick(locator1 = "Dropdown#EMPTY_MESSAGE_DROPDOWN");
 
+			Click(
+				key_menuItem = "Manual Collection",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+		}
 		else {
 			LexiconEntry.gotoAddMenuItem(menuItem = "Manual Collection");
 		}

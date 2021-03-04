@@ -21,6 +21,7 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
 import CurrentLanguageFlag from '../../../common/components/CurrentLanguageFlag';
+import ItemSelector from '../../../common/components/ItemSelector';
 import {LayoutSelector} from '../../../common/components/LayoutSelector';
 import MappingSelector from '../../../common/components/MappingSelector';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
@@ -32,13 +33,21 @@ import isMapped from '../../utils/editable-value/isMapped';
 import isMappedToLayout from '../../utils/editable-value/isMappedToLayout';
 import isMappedToStructure from '../../utils/editable-value/isMappedToStructure';
 import resolveEditableValue from '../../utils/editable-value/resolveEditableValue';
+import itemSelectorValueToInfoItem from '../../utils/item-selector-value/itemSelectorValueToInfoItem';
 import {useId} from '../../utils/useId';
 import {useGetFieldValue} from '../CollectionItemContext';
+
+const DISPLAY_PAGE_URL_FIELD_ID = 'displayPageURL';
 
 const SOURCE_OPTIONS = {
 	fromContentField: {
 		label: Liferay.Language.get('from-content-field'),
 		value: 'fromContentField',
+	},
+
+	fromItemDisplayPage: {
+		label: Liferay.Language.get('display-page'),
+		value: 'fromItemDisplayPage',
 	},
 
 	fromLayout: {
@@ -136,7 +145,9 @@ export default function LinkField({field, onValueSelect, value}) {
 						config.layoutMappingEnabled
 							? Object.values(SOURCE_OPTIONS)
 							: Object.values(SOURCE_OPTIONS).filter(
-									({value}) => value !== 'fromLayout'
+									({value}) =>
+										value !== 'fromItemDisplayPage' &&
+										value !== 'fromLayout'
 							  )
 					}
 					value={source}
@@ -197,6 +208,22 @@ export default function LinkField({field, onValueSelect, value}) {
 						</ClayForm.Group>
 					)}
 				</>
+			)}
+
+			{source === SOURCE_OPTIONS.fromItemDisplayPage.value && (
+				<ClayForm.Group small>
+					<ItemSelector
+						label={Liferay.Language.get('item')}
+						onItemSelect={(item) =>
+							handleChange({
+								...item,
+								fieldId: DISPLAY_PAGE_URL_FIELD_ID,
+							})
+						}
+						selectedItemTitle={nextValue?.title}
+						transformValueCallback={itemSelectorValueToInfoItem}
+					/>
+				</ClayForm.Group>
 			)}
 
 			<ClayCheckbox

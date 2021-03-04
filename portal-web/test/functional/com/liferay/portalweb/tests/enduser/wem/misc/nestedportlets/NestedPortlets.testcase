@@ -52,7 +52,7 @@ definition {
 			defaultColumnName = "2 Columns (50/50)",
 			portletName = "Nested Applications");
 
-		Click(locator1 = "Icon#CLOSE");
+		Click(locator1 = "Modal#CLOSE_BUTTON");
 
 		WaitForElementNotPresent(locator1 = "IFrame#MODAL_BODY");
 

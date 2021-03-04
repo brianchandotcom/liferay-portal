@@ -20,12 +20,11 @@ import {
 	render,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import {Modal} from 'dynamic-data-mapping-form-web/admin/js/components/share-form/openShareFormModal.es';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
 import '@testing-library/jest-dom/extend-expect';
-
-import {Modal} from '../../../../main/resources/META-INF/resources/admin/js/components/ShareFormModal/openShareFormModal.es';
 
 const props = {
 	autocompleteUserURL: 'https://liferay.com/admin/autocomplete_user',

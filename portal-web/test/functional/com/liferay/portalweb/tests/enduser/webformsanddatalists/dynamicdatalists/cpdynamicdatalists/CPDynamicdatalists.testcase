@@ -806,6 +806,8 @@ definition {
 
 	@priority = "4"
 	test AddListRecordWithDecimalField {
+		property portal.upstream = "quarantine";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

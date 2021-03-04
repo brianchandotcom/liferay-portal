@@ -16,6 +16,7 @@ package com.liferay.jenkins.results.parser.testray;
 
 import com.liferay.jenkins.results.parser.BatchDependentJob;
 import com.liferay.jenkins.results.parser.Build;
+import com.liferay.jenkins.results.parser.Dom4JUtil;
 import com.liferay.jenkins.results.parser.GitWorkingDirectoryFactory;
 import com.liferay.jenkins.results.parser.JenkinsMaster;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
@@ -42,6 +43,10 @@ import com.liferay.jenkins.results.parser.test.clazz.group.FunctionalAxisTestCla
 import com.liferay.jenkins.results.parser.test.clazz.group.JUnitAxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroup;
 
+import java.io.IOException;
+
+import java.net.URLEncoder;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -49,6 +54,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.dom4j.Document;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
 
 /**
  * @author Michael Hashimoto
@@ -724,9 +733,50 @@ public class TestrayImporter {
 				batchDependentJob.getDependentAxisTestClassGroups());
 		}
 
-		List<TestrayCaseResult> testrayCaseResults = new ArrayList<>();
+		TestrayBuild testrayBuild = getTestrayBuild();
+		TestrayRoutine testrayRoutine = getTestrayRoutine();
+		TestrayProductVersion testrayProductVersion =
+			getTestrayProductVersion();
+		TestrayProject testrayProject = getTestrayProject();
+		TestrayServer testrayServer = getTestrayServer();
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
 
 		for (AxisTestClassGroup axisTestClassGroup : axisTestClassGroups) {
+			TestrayRun testrayRun = new TestrayRun(
+				testrayBuild, axisTestClassGroup.getBatchName());
+
+			Document document = DocumentHelper.createDocument();
+
+			Element rootElement = document.addElement("testsuite");
+
+			Element environmentsElement = rootElement.addElement(
+				"environments");
+
+			for (TestrayRun.Factor factor : testrayRun.getFactors()) {
+				Element environmentElement = environmentsElement.addElement(
+					"environment");
+
+				environmentElement.addAttribute("type", factor.getName());
+				environmentElement.addAttribute("option", factor.getValue());
+			}
+
+			Map<String, String> propertiesMap = new HashMap<>();
+
+			propertiesMap.put("testray.build.name", testrayBuild.getName());
+			propertiesMap.put("testray.build.type", testrayRoutine.getName());
+			propertiesMap.put(
+				"testray.product.version", testrayProductVersion.getName());
+			propertiesMap.put("testray.project.name", testrayProject.getName());
+			propertiesMap.put("testray.run.id", testrayRun.getRunIDString());
+
+			_addPropertyElements(
+				rootElement.addElement("properties"), propertiesMap);
+
+			List<TestrayCaseResult> testrayCaseResults = new ArrayList<>();
+
+			int passedCount = 0;
+			int failedCount = 0;
+
 			if (axisTestClassGroup instanceof CucumberAxisTestClassGroup ||
 				axisTestClassGroup instanceof FunctionalAxisTestClassGroup ||
 				axisTestClassGroup instanceof JUnitAxisTestClassGroup) {
@@ -736,21 +786,116 @@ public class TestrayImporter {
 
 					testrayCaseResults.add(
 						TestrayCaseResultFactory.newTestrayCaseResult(
-							getTestrayBuild(), getTopLevelBuild(),
-							axisTestClassGroup, testClass));
+							testrayBuild, topLevelBuild, axisTestClassGroup,
+							testClass));
 				}
+			}
+			else {
+				testrayCaseResults.add(
+					TestrayCaseResultFactory.newTestrayCaseResult(
+						testrayBuild, topLevelBuild, axisTestClassGroup, null));
+			}
+
+			for (TestrayCaseResult testrayCaseResult : testrayCaseResults) {
+				Element testcaseElement = rootElement.addElement("testcase");
+
+				Map<String, String> testcasePropertiesMap = new HashMap<>();
+
+				testcasePropertiesMap.put(
+					"testray.case.type.name", testrayCaseResult.getType());
+				testcasePropertiesMap.put(
+					"testray.component.names",
+					testrayCaseResult.getSubcomponentNames());
+				testcasePropertiesMap.put(
+					"testray.main.component.name",
+					testrayCaseResult.getComponentName());
+				testcasePropertiesMap.put(
+					"testray.team.name", testrayCaseResult.getTeamName());
+				testcasePropertiesMap.put(
+					"testray.testcase.name", testrayCaseResult.getName());
+				testcasePropertiesMap.put(
+					"testray.testcase.priority",
+					String.valueOf(testrayCaseResult.getPriority()));
+
+				TestrayCaseResult.Status testrayCaseStatus =
+					testrayCaseResult.getStatus();
+
+				testcasePropertiesMap.put(
+					"testray.testcase.status", testrayCaseStatus.getName());
+
+				if (testrayCaseStatus == TestrayCaseResult.Status.PASSED) {
+					passedCount++;
+				}
+				else {
+					failedCount++;
+				}
+
+				_addPropertyElements(
+					testcaseElement.addElement("properties"),
+					testcasePropertiesMap);
+
+				Element attachmentsElement = testcaseElement.addElement(
+					"attachments");
+
+				for (TestrayCaseResult.Attachment attachment :
+						testrayCaseResult.getAttachments()) {
+
+					Element attachmentFileElement =
+						attachmentsElement.addElement("file");
+
+					attachmentFileElement.addAttribute(
+						"name", attachment.getName());
+					attachmentFileElement.addAttribute(
+						"url", String.valueOf(attachment.getURL()));
+					attachmentFileElement.addAttribute(
+						"value", attachment.getValue());
+				}
+			}
+
+			Map<String, String> summaryMap = new HashMap<>();
+
+			summaryMap.put("failed", String.valueOf(failedCount));
+			summaryMap.put("passed", String.valueOf(passedCount));
+
+			_addPropertyElements(rootElement.addElement("summary"), summaryMap);
+
+			try {
+				JenkinsResultsParserUtil.toString(
+					JenkinsResultsParserUtil.combine(
+						String.valueOf(testrayServer.getURL()),
+						"/web/guest/home/-/testray/case_results",
+						"/importResults.json"),
+					JenkinsResultsParserUtil.combine(
+						"results=",
+						URLEncoder.encode(
+							Dom4JUtil.format(rootElement), "UTF-8"),
+						"&type=poshi"));
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
+		}
+	}
+
+	private void _addPropertyElements(
+		Element propertiesElement, Map<String, String> propertiesMap) {
+
+		for (Map.Entry<String, String> propertyEntry :
+				propertiesMap.entrySet()) {
+
+			Element propertyElement = propertiesElement.addElement("property");
+
+			String propertyName = propertyEntry.getKey();
+			String propertyValue = propertyEntry.getValue();
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(propertyName) ||
+				JenkinsResultsParserUtil.isNullOrEmpty(propertyValue)) {
 
 				continue;
 			}
 
-			testrayCaseResults.add(
-				TestrayCaseResultFactory.newTestrayCaseResult(
-					getTestrayBuild(), getTopLevelBuild(), axisTestClassGroup,
-					null));
-		}
-
-		for (TestrayCaseResult testrayCaseResult : testrayCaseResults) {
-			System.out.println(testrayCaseResult);
+			propertyElement.addAttribute("name", propertyName);
+			propertyElement.addAttribute("value", propertyValue);
 		}
 	}
 

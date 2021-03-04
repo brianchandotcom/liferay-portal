@@ -221,17 +221,12 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@ignore = "true"
 	@priority = "4"
-	test SetRichTextAsRepeatable {
+	test SetRichTextSearchableAsDisabled {
 		property portal.acceptance = "false";
 
-		DataEngine.editFieldRepeatable(fieldFieldLabel = "Rich Text");
-
-		DDLDataDefinition.save();
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type");
-
-		AssertElementPresent(locator1 = "FormFields#FIELD_ADD_DUPLICATE");
+		// TODO LPS-98076 SetRichTextSearchableAsDisabled pending implementation
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"

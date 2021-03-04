@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -55,6 +56,12 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = AnalyticsReportsInfoItem.class)
 public class JournalArticleAnalyticsReportsInfoItem
 	implements AnalyticsReportsInfoItem<JournalArticle> {
+
+	public List<Action> getActions() {
+		return Arrays.asList(
+			Action.HISTORICAL_READS, Action.HISTORICAL_VIEWS,
+			Action.TOTAL_READS, Action.TOTAL_VIEWS, Action.TRAFFIC_CHANNELS);
+	}
 
 	@Override
 	public String getAuthorName(JournalArticle journalArticle) {

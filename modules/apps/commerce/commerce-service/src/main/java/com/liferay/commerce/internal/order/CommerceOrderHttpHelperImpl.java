@@ -469,7 +469,17 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 		CommerceOrder commerceOrder = _commerceOrderThreadLocal.get();
 
 		if (commerceOrder != null) {
-			return commerceOrder;
+			CommerceOrder persistenceCommerceOrder =
+				_commerceOrderLocalService.fetchCommerceOrder(
+					commerceOrder.getCommerceOrderId());
+
+			if (persistenceCommerceOrder == null) {
+				return commerceOrder;
+			}
+
+			_commerceOrderThreadLocal.set(persistenceCommerceOrder);
+
+			return persistenceCommerceOrder;
 		}
 
 		CommerceChannel commerceChannel =

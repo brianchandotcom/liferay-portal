@@ -737,10 +737,10 @@ public class TestrayImporter {
 		}
 
 		TestrayBuild testrayBuild = getTestrayBuild();
-		TestrayRoutine testrayRoutine = getTestrayRoutine();
 		TestrayProductVersion testrayProductVersion =
 			getTestrayProductVersion();
 		TestrayProject testrayProject = getTestrayProject();
+		TestrayRoutine testrayRoutine = getTestrayRoutine();
 		TestrayServer testrayServer = getTestrayServer();
 		TopLevelBuild topLevelBuild = getTopLevelBuild();
 

@@ -63,6 +63,10 @@ public class AMImageDLPluggableContentDataHandler
 			FileEntry fileEntry)
 		throws Exception {
 
+		if (!_isEnabled(portletDataContext)) {
+			return;
+		}
+
 		Collection<AMImageConfigurationEntry> amImageConfigurationEntries =
 			_amImageConfigurationHelper.getAMImageConfigurationEntries(
 				portletDataContext.getCompanyId());
@@ -79,6 +83,10 @@ public class AMImageDLPluggableContentDataHandler
 			PortletDataContext portletDataContext, Element fileEntryElement,
 			FileEntry fileEntry, FileEntry importedFileEntry)
 		throws Exception {
+
+		if (!_isEnabled(portletDataContext)) {
+			return;
+		}
 
 		Collection<AMImageConfigurationEntry> amImageConfigurationEntries =
 			_amImageConfigurationHelper.getAMImageConfigurationEntries(
@@ -300,6 +308,17 @@ public class AMImageDLPluggableContentDataHandler
 				contentLengthOptional.get());
 		}
 	}
+
+	private boolean _isEnabled(PortletDataContext portletDataContext) {
+		return portletDataContext.getBooleanParameter(
+			_DL_PORTLET_DATA_HANDLER_NAMESPACE, "previews-and-thumbnails");
+	}
+
+	/**
+	 * @see com.liferay.document.library.web.internal.lar.DLPortletDataHandler#NAMESPACE
+	 */
+	private static final String _DL_PORTLET_DATA_HANDLER_NAMESPACE =
+		"document_library";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AMImageDLPluggableContentDataHandler.class);

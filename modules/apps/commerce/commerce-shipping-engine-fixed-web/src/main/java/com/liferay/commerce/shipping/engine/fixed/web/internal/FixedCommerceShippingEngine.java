@@ -16,7 +16,7 @@ package com.liferay.commerce.shipping.engine.fixed.web.internal;
 
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
-import com.liferay.commerce.currency.service.CommerceCurrencyService;
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.exception.CommerceShippingEngineException;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
@@ -24,7 +24,7 @@ import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.model.CommerceShippingOption;
 import com.liferay.commerce.product.model.CommerceChannel;
-import com.liferay.commerce.product.service.CommerceChannelService;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceAddressRestrictionLocalService;
 import com.liferay.commerce.service.CommerceShippingMethodLocalService;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
@@ -160,7 +160,7 @@ public class FixedCommerceShippingEngine implements CommerceShippingEngine {
 			BigDecimal amount = commerceShippingFixedOption.getAmount();
 
 			CommerceChannel commerceChannel =
-				_commerceChannelService.getCommerceChannelByOrderGroupId(
+				_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
 					commerceOrder.getGroupId());
 
 			CommerceCurrency commerceCurrency =
@@ -172,7 +172,7 @@ public class FixedCommerceShippingEngine implements CommerceShippingEngine {
 					commerceChannel.getCommerceCurrencyCode())) {
 
 				CommerceCurrency commerceChannelCommerceCurrency =
-					_commerceCurrencyService.getCommerceCurrency(
+					_commerceCurrencyLocalService.getCommerceCurrency(
 						commerceOrder.getCompanyId(),
 						commerceChannel.getCommerceCurrencyCode());
 
@@ -204,10 +204,10 @@ public class FixedCommerceShippingEngine implements CommerceShippingEngine {
 		_commerceAddressRestrictionLocalService;
 
 	@Reference
-	private CommerceChannelService _commerceChannelService;
+	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
-	private CommerceCurrencyService _commerceCurrencyService;
+	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
 
 	@Reference
 	private CommerceShippingFixedOptionLocalService

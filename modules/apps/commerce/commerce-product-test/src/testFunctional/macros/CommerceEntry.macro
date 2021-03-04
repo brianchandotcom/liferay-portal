@@ -342,6 +342,8 @@ definition {
 	}
 
 	macro addProductsEntry {
+		WaitForElementPresent(locator1 = "IFrame#MODAL_BODY");
+
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 		Type(

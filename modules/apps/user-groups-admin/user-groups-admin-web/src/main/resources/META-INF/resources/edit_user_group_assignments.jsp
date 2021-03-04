@@ -68,6 +68,7 @@ PortletURL portletURL = editUserGroupAssignmentsManagementToolbarDisplayContext.
 <clay:management-toolbar
 	actionDropdownItems="<%= editUserGroupAssignmentsManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= editUserGroupAssignmentsManagementToolbarDisplayContext.getClearResultsURL() %>"
+	creationMenu="<%= editUserGroupAssignmentsManagementToolbarDisplayContext.getCreationMenu() %>"
 	filterDropdownItems="<%= editUserGroupAssignmentsManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	itemsTotal="<%= searchContainer.getTotal() %>"
 	propsTransformer="js/EditUserGroupAssignmentsManagementToolbarPropsTransformer"

@@ -14,6 +14,8 @@
 
 package com.liferay.user.groups.admin.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
@@ -88,6 +90,16 @@ public class EditUserGroupAssignmentsManagementToolbarDisplayContext {
 		clearResultsURL.setParameter("keywords", StringPool.BLANK);
 
 		return clearResultsURL.toString();
+	}
+
+	public CreationMenu getCreationMenu() {
+		return CreationMenuBuilder.addPrimaryDropdownItem(
+			dropdownItem -> {
+				dropdownItem.putData("action", "addUsers");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "add-users"));
+			}
+		).build();
 	}
 
 	public List<DropdownItem> getFilterDropdownItems() {

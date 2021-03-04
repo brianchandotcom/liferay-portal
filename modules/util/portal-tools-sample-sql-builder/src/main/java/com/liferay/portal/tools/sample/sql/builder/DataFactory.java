@@ -1222,6 +1222,23 @@ public class DataFactory {
 		return accountEntryModels;
 	}
 
+	public PortletPreferencesModel
+		newCommerceB2BSiteTypePortletPreferencesModel(long ownerId) {
+
+		return newPortletPreferencesModel(
+			ownerId, PortletKeys.PREFS_OWNER_TYPE_GROUP, 0,
+			CommerceAccountConstants.SERVICE_NAME);
+	}
+
+	public PortletPreferenceValueModel
+		newCommerceB2BSiteTypePortletPreferenceValueModel(
+			PortletPreferencesModel portletPreferencesModel) {
+
+		return newPortletPreferenceValueModel(
+			portletPreferencesModel, "commerceSiteType", 0,
+			String.valueOf(CommerceAccountConstants.SITE_TYPE_B2B));
+	}
+
 	public GroupModel newCommerceCatalogGroupModel(
 		CommerceCatalogModel commerceCatalogModel) {
 
@@ -1579,6 +1596,52 @@ public class DataFactory {
 		return layoutModels;
 	}
 
+	public List<PortletPreferenceValueModel>
+			newCommerceLayoutPortletPreferenceValueModels(
+				List<PortletPreferencesModel> portletPreferencesModels)
+		throws Exception {
+
+		List<PortletPreferenceValueModel> portletPreferenceValueModels =
+			new ArrayList<>();
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+			StringUtil.read(getResourceInputStream("commerce_layouts.json")));
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			portletPreferenceValueModels.addAll(
+				newCommercePortletPreferenceValueModels(
+					portletPreferencesModels,
+					jsonObject.getJSONArray("portlets")));
+
+			JSONArray sublayoutsJSONArray = jsonObject.getJSONArray(
+				"subLayouts");
+
+			if (sublayoutsJSONArray != null) {
+				for (int j = 0; j < sublayoutsJSONArray.length(); j++) {
+					JSONObject sublayoutJSONObject =
+						sublayoutsJSONArray.getJSONObject(j);
+
+					portletPreferenceValueModels.addAll(
+						newCommercePortletPreferenceValueModels(
+							portletPreferencesModels,
+							sublayoutJSONObject.getJSONArray("portlets")));
+				}
+			}
+		}
+
+		portletPreferenceValueModels.addAll(
+			newCommercePortletPreferenceValueModels(
+				portletPreferencesModels,
+				JSONFactoryUtil.createJSONArray(
+					StringUtil.read(
+						getResourceInputStream(
+							"commerce_portlet_settings.json")))));
+
+		return portletPreferenceValueModels;
+	}
+
 	public CommerceOrderItemModel newCommerceOrderItemModel(
 		CommerceOrderModel commerceOrderModel,
 		CommercePriceListModel commercePriceListModel, long cProductId,
@@ -1735,6 +1798,40 @@ public class DataFactory {
 		return commerceOrderModels;
 	}
 
+	public List<PortletPreferencesModel> newCommercePortletPreferencesModels(
+			LayoutModel layoutModel)
+		throws IOException {
+
+		List<PortletPreferencesModel> portletPreferencesModels =
+			new ArrayList<>();
+
+		UnicodeProperties typeSettingsUnicodeProperties = new UnicodeProperties(
+			true);
+
+		typeSettingsUnicodeProperties.load(
+			StringUtil.replace(
+				layoutModel.getTypeSettings(), "\\n", StringPool.NEW_LINE));
+
+		Set<String> typeSettingPropertiesKeys =
+			typeSettingsUnicodeProperties.keySet();
+
+		for (String typeSettingPropertiesKey : typeSettingPropertiesKeys) {
+			if (typeSettingPropertiesKey.startsWith("column-")) {
+				String[] portletIds = StringUtil.split(
+					typeSettingsUnicodeProperties.getProperty(
+						typeSettingPropertiesKey));
+
+				for (String portletId : portletIds) {
+					portletPreferencesModels.add(
+						newPortletPreferencesModel(
+							layoutModel.getPlid(), portletId));
+				}
+			}
+		}
+
+		return portletPreferencesModels;
+	}
+
 	public CommercePriceEntryModel newCommercePriceEntryModel(
 		long commercePriceListId, String cpInstanceUuid, long cProductId) {
 
@@ -1813,6 +1910,46 @@ public class DataFactory {
 		commercePriceListModel.setStatusDate(new Date());
 
 		return commercePriceListModel;
+	}
+
+	public List<PortletPreferencesModel>
+			newCommerceSiteNavigationPortletPreferencesModels(
+				GroupModel groupModel)
+		throws Exception {
+
+		List<PortletPreferencesModel> portletPreferencesModels =
+			new ArrayList<>();
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+			StringUtil.read(
+				getResourceInputStream(
+					"commerce_theme_portlet_settings.json")));
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			portletPreferencesModels.add(
+				newPortletPreferencesModel(
+					groupModel.getGroupId(),
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, 0,
+					jsonObject.getString("portletName") + "_INSTANCE_" +
+						jsonObject.getString("instanceId")));
+		}
+
+		return portletPreferencesModels;
+	}
+
+	public List<PortletPreferenceValueModel>
+			newCommerceSiteNavigationPortletPreferenceValueModels(
+				List<PortletPreferencesModel> portletPreferencesModels)
+		throws Exception {
+
+		return newCommercePortletPreferenceValueModels(
+			portletPreferencesModels,
+			JSONFactoryUtil.createJSONArray(
+				StringUtil.read(
+					getResourceInputStream(
+						"commerce_theme_portlet_settings.json"))));
 	}
 
 	public CompanyModel newCompanyModel() {
@@ -4315,6 +4452,30 @@ public class DataFactory {
 	}
 
 	public PortletPreferencesModel newPortletPreferencesModel(
+		long ownerId, int ownerType, long plid, String portletId) {
+
+		PortletPreferencesModel portletPreferencesModel =
+			new PortletPreferencesModelImpl();
+
+		// PK fields
+
+		portletPreferencesModel.setPortletPreferencesId(_counter.get());
+
+		// Audit fields
+
+		portletPreferencesModel.setCompanyId(_companyId);
+
+		// Other fields
+
+		portletPreferencesModel.setOwnerId(ownerId);
+		portletPreferencesModel.setOwnerType(ownerType);
+		portletPreferencesModel.setPlid(plid);
+		portletPreferencesModel.setPortletId(portletId);
+
+		return portletPreferencesModel;
+	}
+
+	public PortletPreferencesModel newPortletPreferencesModel(
 		long plid, long groupId, String portletId, int currentIndex) {
 
 		if (currentIndex == 1) {
@@ -4375,26 +4536,9 @@ public class DataFactory {
 	public PortletPreferencesModel newPortletPreferencesModel(
 		long plid, String portletId) {
 
-		PortletPreferencesModel portletPreferencesModel =
-			new PortletPreferencesModelImpl();
-
-		// PK fields
-
-		portletPreferencesModel.setPortletPreferencesId(_counter.get());
-
-		// Audit fields
-
-		portletPreferencesModel.setCompanyId(_companyId);
-
-		// Other fields
-
-		portletPreferencesModel.setOwnerId(PortletKeys.PREFS_OWNER_ID_DEFAULT);
-		portletPreferencesModel.setOwnerType(
-			PortletKeys.PREFS_OWNER_TYPE_LAYOUT);
-		portletPreferencesModel.setPlid(plid);
-		portletPreferencesModel.setPortletId(portletId);
-
-		return portletPreferencesModel;
+		return newPortletPreferencesModel(
+			PortletKeys.PREFS_OWNER_ID_DEFAULT,
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, portletId);
 	}
 
 	public PortletPreferenceValueModel newPortletPreferenceValueModel(
@@ -4662,14 +4806,12 @@ public class DataFactory {
 
 		String name = portletId;
 
-		int index = portletId.indexOf(StringPool.UNDERLINE);
-
-		if (index > 0) {
-			name = portletId.substring(0, index);
-		}
-
 		String primKey = PortletPermissionUtil.getPrimaryKey(
 			portletPreferencesModel.getPlid(), portletId);
+
+		if (portletPreferencesModel.getPlid() <= 0) {
+			primKey = String.valueOf(portletPreferencesModel.getOwnerId());
+		}
 
 		return newResourcePermissionModels(name, primKey, 0);
 	}
@@ -5194,6 +5336,28 @@ public class DataFactory {
 			"Unable to find class name for id " + classNameId);
 	}
 
+	protected String[] getPortletNames(JSONArray jsonArray) {
+		Map<String, String> portletNames = new LinkedHashMap<>();
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			String key = jsonObject.getString("layoutColumnId");
+
+			if (portletNames.containsKey(key)) {
+				portletNames.put(
+					key,
+					portletNames.get(key) + StringPool.COMMA +
+						jsonObject.getString("portletName"));
+			}
+			else {
+				portletNames.put(key, jsonObject.getString("portletName"));
+			}
+		}
+
+		return ArrayUtil.toStringArray(portletNames.values());
+	}
+
 	protected InputStream getResourceInputStream(String resourceName) {
 		Class<?> clazz = getClass();
 
@@ -5397,6 +5561,65 @@ public class DataFactory {
 		blogsEntryModel.setStatusDate(new Date());
 
 		return blogsEntryModel;
+	}
+
+	protected List<PortletPreferenceValueModel>
+			newCommercePortletPreferenceValueModels(
+				List<PortletPreferencesModel> portletPreferencesModels,
+				JSONArray jsonArray)
+		throws Exception {
+
+		List<PortletPreferenceValueModel> portletPreferenceValueModels =
+			new ArrayList<>();
+
+		for (PortletPreferencesModel portletPreferencesModel :
+				portletPreferencesModels) {
+
+			for (int i = 0; i < jsonArray.length(); i++) {
+				JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+				String portletId = jsonObject.getString("portletName");
+
+				if (jsonObject.getString("instanceId") != null) {
+					portletId =
+						portletId + "_INSTANCE_" +
+							jsonObject.getString("instanceId");
+				}
+
+				if (portletId.equals(portletPreferencesModel.getPortletId())) {
+					JSONObject portletPreferencesJSONObject =
+						jsonObject.getJSONObject("portletPreferences");
+
+					if (portletPreferencesJSONObject == null) {
+						continue;
+					}
+
+					for (String key : portletPreferencesJSONObject.keySet()) {
+						String value = portletPreferencesJSONObject.getString(
+							key);
+
+						if (key.equals("displayStyle")) {
+							JSONObject displayStyleJSONObject =
+								portletPreferencesJSONObject.getJSONObject(key);
+
+							String name = StringUtil.removeSubstring(
+								displayStyleJSONObject.getString("FileName"),
+								".ftl");
+
+							value = "ddmTemplate_" + name;
+						}
+
+						portletPreferenceValueModels.add(
+							newPortletPreferenceValueModel(
+								portletPreferencesModel, key, 0, value));
+					}
+
+					break;
+				}
+			}
+		}
+
+		return portletPreferenceValueModels;
 	}
 
 	protected DDMStorageLinkModel newDDMStorageLinkModel(

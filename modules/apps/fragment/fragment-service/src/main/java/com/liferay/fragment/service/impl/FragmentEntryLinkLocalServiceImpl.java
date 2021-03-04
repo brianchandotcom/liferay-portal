@@ -700,45 +700,33 @@ public class FragmentEntryLinkLocalServiceImpl
 	public void updateLatestChanges(long fragmentEntryLinkId)
 		throws PortalException {
 
-		FragmentEntryLink oldFragmentEntryLink =
+		FragmentEntryLink fragmentEntryLink =
 			fragmentEntryLinkPersistence.findByPrimaryKey(fragmentEntryLinkId);
 
 		FragmentEntry fragmentEntry = fragmentEntryPersistence.findByPrimaryKey(
-			oldFragmentEntryLink.getFragmentEntryId());
+			fragmentEntryLink.getFragmentEntryId());
 
-		List<FragmentEntryLink> fragmentEntryLinks =
-			fragmentEntryLinkPersistence.findByG_F_C_C(
-				oldFragmentEntryLink.getGroupId(),
-				oldFragmentEntryLink.getFragmentEntryId(),
-				_portal.getClassNameId(Layout.class),
-				oldFragmentEntryLink.getPlid());
-
-		oldFragmentEntryLink.setHtml(fragmentEntry.getHtml());
+		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
 
 		String processedHTML = _getProcessedHTML(
-			oldFragmentEntryLink,
-			ServiceContextThreadLocal.getServiceContext());
+			fragmentEntryLink, ServiceContextThreadLocal.getServiceContext());
 
 		String defaultEditableValues = String.valueOf(
 			_fragmentEntryProcessorRegistry.getDefaultEditableValuesJSONObject(
-				processedHTML, oldFragmentEntryLink.getConfiguration()));
+				processedHTML, fragmentEntryLink.getConfiguration()));
 
-		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			fragmentEntryLink.setCss(fragmentEntry.getCss());
-			fragmentEntryLink.setHtml(fragmentEntry.getHtml());
-			fragmentEntryLink.setJs(fragmentEntry.getJs());
-			fragmentEntryLink.setConfiguration(
-				fragmentEntry.getConfiguration());
+		fragmentEntryLink.setCss(fragmentEntry.getCss());
+		fragmentEntryLink.setJs(fragmentEntry.getJs());
+		fragmentEntryLink.setConfiguration(fragmentEntry.getConfiguration());
 
-			String newEditableValues = _mergeEditableValues(
-				defaultEditableValues, fragmentEntryLink.getEditableValues());
+		String newEditableValues = _mergeEditableValues(
+			defaultEditableValues, fragmentEntryLink.getEditableValues());
 
-			fragmentEntryLink.setEditableValues(newEditableValues);
+		fragmentEntryLink.setEditableValues(newEditableValues);
 
-			fragmentEntryLink.setLastPropagationDate(new Date());
+		fragmentEntryLink.setLastPropagationDate(new Date());
 
-			fragmentEntryLinkPersistence.update(fragmentEntryLink);
-		}
+		fragmentEntryLinkPersistence.update(fragmentEntryLink);
 	}
 
 	private String _getProcessedHTML(

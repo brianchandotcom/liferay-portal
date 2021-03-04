@@ -63,6 +63,11 @@ const Link = ({url}) => {
 				</ClayInput.GroupItem>
 				<ClayInput.GroupItem append>
 					<ClayButton
+						aria-label={
+							success
+								? Liferay.Language.get('copied')
+								: Liferay.Language.get('copy')
+						}
 						className="ddm-copy-clipboard"
 						data-clipboard-text={url}
 						displayType={success ? 'success' : 'secondary'}

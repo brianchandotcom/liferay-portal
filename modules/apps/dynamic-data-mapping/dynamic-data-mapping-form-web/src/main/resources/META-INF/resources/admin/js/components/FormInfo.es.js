@@ -78,6 +78,7 @@ export const FormInfo = () => {
 					<ClayForm.Group>
 						<textarea
 							className="ddm-form-name form-control"
+							id="nameEditor"
 							name={`${portletNamespace}nameEditor`}
 							onChange={(event) =>
 								dispatch({
@@ -100,6 +101,7 @@ export const FormInfo = () => {
 					<ClayForm.Group>
 						<textarea
 							className="ddm-form-description form-control"
+							id="descriptionEditor"
 							name={`${portletNamespace}descriptionEditor`}
 							onChange={(event) =>
 								dispatch({

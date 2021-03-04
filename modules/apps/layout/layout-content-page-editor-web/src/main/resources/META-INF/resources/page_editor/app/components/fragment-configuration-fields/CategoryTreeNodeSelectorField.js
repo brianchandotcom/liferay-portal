@@ -19,6 +19,7 @@ import React from 'react';
 import ItemSelector from '../../../common/components/ItemSelector';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {config} from '../../config/index';
+import itemSelectorValueToCategoryTreeNode from '../../utils/item-selector-value/itemSelectorValueToCategoryTreeNode';
 
 export const CategoryTreeNodeSelectorField = ({
 	field,
@@ -39,6 +40,7 @@ export const CategoryTreeNodeSelectorField = ({
 				}}
 				selectedItemTitle={value ? value.title : null}
 				showMappedItems={false}
+				transformValueCallback={itemSelectorValueToCategoryTreeNode}
 			/>
 		</ClayForm.Group>
 	);

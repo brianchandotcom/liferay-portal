@@ -17,6 +17,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import {config} from '../../app/config/index';
+import itemSelectorValueToLayout from '../../app/utils/item-selector-value/itemSelectorValueToLayout';
 import ItemSelector from './ItemSelector';
 
 export const LayoutSelector = ({mappedLayout, onLayoutSelect}) => {
@@ -28,6 +29,7 @@ export const LayoutSelector = ({mappedLayout, onLayoutSelect}) => {
 				onItemSelect={(layout) => onLayoutSelect(layout)}
 				selectedItemTitle={mappedLayout?.name || ''}
 				showMappedItems={false}
+				transformValueCallback={itemSelectorValueToLayout}
 			/>
 			<ClayButton
 				className="mt-2"

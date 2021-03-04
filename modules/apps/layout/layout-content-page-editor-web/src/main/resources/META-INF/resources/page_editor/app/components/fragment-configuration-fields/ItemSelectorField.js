@@ -21,6 +21,7 @@ import ItemSelector from '../../../common/components/ItemSelector';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import InfoItemService from '../../services/InfoItemService';
 import {useDispatch} from '../../store/index';
+import itemSelectorValueToInfoItem from '../../utils/item-selector-value/itemSelectorValueToInfoItem';
 import {useId} from '../../utils/useId';
 import {CollectionItemContext} from '../CollectionItemContext';
 
@@ -46,12 +47,7 @@ export const ItemSelectorField = ({field, onValueSelect, value}) => {
 					itemSelectorURL={typeOptions.infoItemSelectorURL}
 					label={field.label}
 					onItemSelect={(item) => {
-						onValueSelect(field.name, {
-							className: item.className,
-							classNameId: item.classNameId,
-							classPK: item.classPK,
-							title: item.title,
-						});
+						onValueSelect(field.name, item);
 					}}
 					selectedItemTitle={
 						isWithinCollection
@@ -60,6 +56,7 @@ export const ItemSelectorField = ({field, onValueSelect, value}) => {
 							: value.title
 					}
 					showAddButton={!isWithinCollection}
+					transformValueCallback={itemSelectorValueToInfoItem}
 				/>
 			</ClayForm.Group>
 

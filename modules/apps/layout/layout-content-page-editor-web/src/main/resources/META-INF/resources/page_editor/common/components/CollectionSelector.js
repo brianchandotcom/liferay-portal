@@ -16,6 +16,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import {config} from '../../app/config/index';
+import itemSelectorValueToCollection from '../../app/utils/item-selector-value/itemSelectorValueToCollection';
 import ItemSelector from './ItemSelector';
 
 export default function CollectionSelector({
@@ -35,6 +36,7 @@ export default function CollectionSelector({
 			quickMappedInfoItems={config.selectedMappingTypes?.linkedCollection}
 			selectedItemTitle={collectionTitle}
 			showMappedItems={!!config.selectedMappingTypes?.linkedCollection}
+			transformValueCallback={itemSelectorValueToCollection}
 		/>
 	);
 }

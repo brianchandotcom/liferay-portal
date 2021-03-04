@@ -19,6 +19,7 @@ import React from 'react';
 import ItemSelector from '../../../common/components/ItemSelector';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {config} from '../../config/index';
+import itemSelectorValueToSiteNavigationMenuItem from '../../utils/item-selector-value/itemSelectorValueToSiteNavigationMenuItem';
 
 export const NavigationMenuSelectorField = ({field, onValueSelect, value}) => {
 	const eventName = `${config.portletNamespace}selectSiteNavigationMenu`;
@@ -42,6 +43,9 @@ export const NavigationMenuSelectorField = ({field, onValueSelect, value}) => {
 				}}
 				selectedItemTitle={title}
 				showMappedItems={false}
+				transformValueCallback={
+					itemSelectorValueToSiteNavigationMenuItem
+				}
 			/>
 		</ClayForm.Group>
 	);

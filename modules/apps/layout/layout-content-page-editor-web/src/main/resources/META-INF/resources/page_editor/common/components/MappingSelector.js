@@ -28,6 +28,7 @@ import {useDispatch, useSelector} from '../../app/store/index';
 import isMapped from '../../app/utils/editable-value/isMapped';
 import isMappedToInfoItem from '../../app/utils/editable-value/isMappedToInfoItem';
 import isMappedToStructure from '../../app/utils/editable-value/isMappedToStructure';
+import itemSelectorValueToInfoItem from '../../app/utils/item-selector-value/itemSelectorValueToInfoItem';
 import {useId} from '../../app/utils/useId';
 import ItemSelector from './ItemSelector';
 
@@ -321,6 +322,7 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 						label={Liferay.Language.get('content')}
 						onItemSelect={onInfoItemSelect}
 						selectedItemTitle={selectedItem.title}
+						transformValueCallback={itemSelectorValueToInfoItem}
 					/>
 				</ClayForm.Group>
 			)}

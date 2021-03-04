@@ -17,6 +17,10 @@ definition {
 
 		PortletEntry.inputName(name = "${classificationName}");
 
+		if (isSet(classificationDescription)) {
+			PortletEntry.inputDescription(description = "${classificationDescription}");
+		}
+
 		Panel.expandPanel(panel = "Operating System and Type");
 
 		var key_ruleOSScope = "${ruleOSScope}";
@@ -40,6 +44,10 @@ definition {
 			value1 = "New Device Family");
 
 		PortletEntry.inputName(name = "${deviceFamilyName}");
+
+		if (isSet(deviceDescription)) {
+			PortletEntry.inputDescription(description = "${deviceDescription}");
+		}
 
 		Click(locator1 = "Button#SAVE");
 

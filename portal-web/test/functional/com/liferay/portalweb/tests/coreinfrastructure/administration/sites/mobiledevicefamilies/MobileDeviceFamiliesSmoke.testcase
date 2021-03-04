@@ -1,0 +1,48 @@
+@component-name = "portal-mobile-device-rules"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Mobile Device Rules";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = "5"
+	test Smoke {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			portlet = "Mobile Device Families");
+
+		MobileDevice.addDeviceFamilyCP(
+			deviceDescription = "This is Test Family",
+			deviceFamilyName = "Test Family Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			portlet = "Mobile Device Families");
+
+		MobileDevice.addClassificationRuleCP(
+			classificationDescription = "This is Test Classification",
+			classificationName = "Test Classification Name",
+			deviceType = "Other Devices",
+			mobileDeviceFamilyName = "Test Family Name",
+			ruleOSScope = "Any Operating System");
+
+		AssertElementPresent(
+			key_classificationName = "Test Classification Name",
+			locator1 = "MobileDevice#CLASSIFICATION_RULE_TABLE_NAME");
+	}
+
+}

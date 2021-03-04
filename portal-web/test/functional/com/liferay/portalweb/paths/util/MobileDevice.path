@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>CLASSIFICATION_RULE_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_classificationName}')]/td[contains(@class,'name')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DEVICE_FAMILY_TABLE_NAME_LINK</td>
 	<td>//tr[contains(.,'${key_deviceFamilyName}')]/td[contains(@class,'name')]/a</td>
 	<td></td>

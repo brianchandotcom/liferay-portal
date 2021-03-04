@@ -39,6 +39,10 @@ public class TestrayBuild {
 		_testrayServer = _testrayRoutine.getTestrayServer();
 	}
 
+	public String getDescription() {
+		return _jsonObject.getString("description");
+	}
+
 	public int getID() {
 		return _jsonObject.getInt("testrayBuildId");
 	}

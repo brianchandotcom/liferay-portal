@@ -136,6 +136,7 @@ export default function pageLanguageUpdate({
 
 				dispatch({
 					payload: {
+						defaultLanguageId,
 						editingLanguageId: nextEditingLanguageId,
 						pages: newPages,
 					},

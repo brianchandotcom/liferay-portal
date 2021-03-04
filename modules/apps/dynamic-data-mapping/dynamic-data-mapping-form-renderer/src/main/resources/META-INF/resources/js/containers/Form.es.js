@@ -158,13 +158,14 @@ const Form = React.forwardRef(
 				successPageSettings,
 			}),
 			updateEditingLanguageId: ({
+				defaultLanguageId: nextDefaultLanguageId = defaultLanguageId,
 				editingLanguageId: nextEditingLanguageId = '',
 				preserveValue,
 			}) =>
 				dispatch(
 					pageLanguageUpdate({
 						ddmStructureLayoutId,
-						defaultLanguageId,
+						defaultLanguageId: nextDefaultLanguageId,
 						nextEditingLanguageId,
 						pages,
 						portletNamespace,

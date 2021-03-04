@@ -56,7 +56,8 @@ create table OAuth2Authorization (
 	refreshTokenContent TEXT null,
 	refreshTokenContentHash LONG,
 	refreshTokenCreateDate DATE null,
-	refreshTokenExpirationDate DATE null
+	refreshTokenExpirationDate DATE null,
+	rememberDeviceContent VARCHAR(75) null
 );
 
 create table OAuth2ScopeGrant (

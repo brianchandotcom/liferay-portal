@@ -63,6 +63,7 @@ public class OAuth2AuthorizationWrapper
 		attributes.put("refreshTokenCreateDate", getRefreshTokenCreateDate());
 		attributes.put(
 			"refreshTokenExpirationDate", getRefreshTokenExpirationDate());
+		attributes.put("rememberDeviceContent", getRememberDeviceContent());
 
 		return attributes;
 	}
@@ -179,6 +180,13 @@ public class OAuth2AuthorizationWrapper
 
 		if (refreshTokenExpirationDate != null) {
 			setRefreshTokenExpirationDate(refreshTokenExpirationDate);
+		}
+
+		String rememberDeviceContent = (String)attributes.get(
+			"rememberDeviceContent");
+
+		if (rememberDeviceContent != null) {
+			setRememberDeviceContent(rememberDeviceContent);
 		}
 	}
 
@@ -320,6 +328,16 @@ public class OAuth2AuthorizationWrapper
 	@Override
 	public Date getRefreshTokenExpirationDate() {
 		return model.getRefreshTokenExpirationDate();
+	}
+
+	/**
+	 * Returns the remember device content of this o auth2 authorization.
+	 *
+	 * @return the remember device content of this o auth2 authorization
+	 */
+	@Override
+	public String getRememberDeviceContent() {
+		return model.getRememberDeviceContent();
 	}
 
 	/**
@@ -518,6 +536,16 @@ public class OAuth2AuthorizationWrapper
 	@Override
 	public void setRefreshTokenExpirationDate(Date refreshTokenExpirationDate) {
 		model.setRefreshTokenExpirationDate(refreshTokenExpirationDate);
+	}
+
+	/**
+	 * Sets the remember device content of this o auth2 authorization.
+	 *
+	 * @param rememberDeviceContent the remember device content of this o auth2 authorization
+	 */
+	@Override
+	public void setRememberDeviceContent(String rememberDeviceContent) {
+		model.setRememberDeviceContent(rememberDeviceContent);
 	}
 
 	/**

@@ -878,6 +878,225 @@ public class OAuth2AuthorizationUtil {
 	}
 
 	/**
+	 * Returns all the o auth2 authorizations where userId = &#63; and oAuth2ApplicationId = &#63; and rememberDeviceContent = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param oAuth2ApplicationId the o auth2 application ID
+	 * @param rememberDeviceContent the remember device content
+	 * @return the matching o auth2 authorizations
+	 */
+	public static List<OAuth2Authorization> findByU_O_R(
+		long userId, long oAuth2ApplicationId, String rememberDeviceContent) {
+
+		return getPersistence().findByU_O_R(
+			userId, oAuth2ApplicationId, rememberDeviceContent);
+	}
+
+	/**
+	 * Returns a range of all the o auth2 authorizations where userId = &#63; and oAuth2ApplicationId = &#63; and rememberDeviceContent = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OAuth2AuthorizationModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param oAuth2ApplicationId the o auth2 application ID
+	 * @param rememberDeviceContent the remember device content
+	 * @param start the lower bound of the range of o auth2 authorizations
+	 * @param end the upper bound of the range of o auth2 authorizations (not inclusive)
+	 * @return the range of matching o auth2 authorizations
+	 */
+	public static List<OAuth2Authorization> findByU_O_R(
+		long userId, long oAuth2ApplicationId, String rememberDeviceContent,
+		int start, int end) {
+
+		return getPersistence().findByU_O_R(
+			userId, oAuth2ApplicationId, rememberDeviceContent, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the o auth2 authorizations where userId = &#63; and oAuth2ApplicationId = &#63; and rememberDeviceContent = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OAuth2AuthorizationModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param oAuth2ApplicationId the o auth2 application ID
+	 * @param rememberDeviceContent the remember device content
+	 * @param start the lower bound of the range of o auth2 authorizations
+	 * @param end the upper bound of the range of o auth2 authorizations (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching o auth2 authorizations
+	 */
+	public static List<OAuth2Authorization> findByU_O_R(
+		long userId, long oAuth2ApplicationId, String rememberDeviceContent,
+		int start, int end,
+		OrderByComparator<OAuth2Authorization> orderByComparator) {
+
+		return getPersistence().findByU_O_R(
+			userId, oAuth2ApplicationId, rememberDeviceContent, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the o auth2 authorizations where userId = &#63; and oAuth2ApplicationId = &#63; and rememberDeviceContent = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OAuth2AuthorizationModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param oAuth2ApplicationId the o auth2 application ID
+	 * @param rememberDeviceContent the remember device content
+	 * @param start the lower bound of the range of o auth2 authorizations
+	 * @param end the upper bound of the range of o auth2 authorizations (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching o auth2 authorizations
+	 */
+	public static List<OAuth2Authorization> findByU_O_R(
+		long userId, long oAuth2ApplicationId, String rememberDeviceContent,
+		int start, int end,
+		OrderByComparator<OAuth2Authorization> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByU_O_R(
+			userId, oAuth2ApplicationId, rememberDeviceContent, start, end,
+			orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first o auth2 authorization in the ordered set where userId = &#63; and oAuth2ApplicationId = &#63; and rememberDeviceContent = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param oAuth2ApplicationId the o auth2 application ID
+	 * @param rememberDeviceContent the remember device content
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching o auth2 authorization
+	 * @throws NoSuchOAuth2AuthorizationException if a matching o auth2 authorization could not be found
+	 */
+	public static OAuth2Authorization findByU_O_R_First(
+			long userId, long oAuth2ApplicationId, String rememberDeviceContent,
+			OrderByComparator<OAuth2Authorization> orderByComparator)
+		throws com.liferay.oauth2.provider.exception.
+			NoSuchOAuth2AuthorizationException {
+
+		return getPersistence().findByU_O_R_First(
+			userId, oAuth2ApplicationId, rememberDeviceContent,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns the first o auth2 authorization in the ordered set where userId = &#63; and oAuth2ApplicationId = &#63; and rememberDeviceContent = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param oAuth2ApplicationId the o auth2 application ID
+	 * @param rememberDeviceContent the remember device content
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching o auth2 authorization, or <code>null</code> if a matching o auth2 authorization could not be found
+	 */
+	public static OAuth2Authorization fetchByU_O_R_First(
+		long userId, long oAuth2ApplicationId, String rememberDeviceContent,
+		OrderByComparator<OAuth2Authorization> orderByComparator) {
+
+		return getPersistence().fetchByU_O_R_First(
+			userId, oAuth2ApplicationId, rememberDeviceContent,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns the last o auth2 authorization in the ordered set where userId = &#63; and oAuth2ApplicationId = &#63; and rememberDeviceContent = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param oAuth2ApplicationId the o auth2 application ID
+	 * @param rememberDeviceContent the remember device content
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching o auth2 authorization
+	 * @throws NoSuchOAuth2AuthorizationException if a matching o auth2 authorization could not be found
+	 */
+	public static OAuth2Authorization findByU_O_R_Last(
+			long userId, long oAuth2ApplicationId, String rememberDeviceContent,
+			OrderByComparator<OAuth2Authorization> orderByComparator)
+		throws com.liferay.oauth2.provider.exception.
+			NoSuchOAuth2AuthorizationException {
+
+		return getPersistence().findByU_O_R_Last(
+			userId, oAuth2ApplicationId, rememberDeviceContent,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns the last o auth2 authorization in the ordered set where userId = &#63; and oAuth2ApplicationId = &#63; and rememberDeviceContent = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param oAuth2ApplicationId the o auth2 application ID
+	 * @param rememberDeviceContent the remember device content
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching o auth2 authorization, or <code>null</code> if a matching o auth2 authorization could not be found
+	 */
+	public static OAuth2Authorization fetchByU_O_R_Last(
+		long userId, long oAuth2ApplicationId, String rememberDeviceContent,
+		OrderByComparator<OAuth2Authorization> orderByComparator) {
+
+		return getPersistence().fetchByU_O_R_Last(
+			userId, oAuth2ApplicationId, rememberDeviceContent,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns the o auth2 authorizations before and after the current o auth2 authorization in the ordered set where userId = &#63; and oAuth2ApplicationId = &#63; and rememberDeviceContent = &#63;.
+	 *
+	 * @param oAuth2AuthorizationId the primary key of the current o auth2 authorization
+	 * @param userId the user ID
+	 * @param oAuth2ApplicationId the o auth2 application ID
+	 * @param rememberDeviceContent the remember device content
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next o auth2 authorization
+	 * @throws NoSuchOAuth2AuthorizationException if a o auth2 authorization with the primary key could not be found
+	 */
+	public static OAuth2Authorization[] findByU_O_R_PrevAndNext(
+			long oAuth2AuthorizationId, long userId, long oAuth2ApplicationId,
+			String rememberDeviceContent,
+			OrderByComparator<OAuth2Authorization> orderByComparator)
+		throws com.liferay.oauth2.provider.exception.
+			NoSuchOAuth2AuthorizationException {
+
+		return getPersistence().findByU_O_R_PrevAndNext(
+			oAuth2AuthorizationId, userId, oAuth2ApplicationId,
+			rememberDeviceContent, orderByComparator);
+	}
+
+	/**
+	 * Removes all the o auth2 authorizations where userId = &#63; and oAuth2ApplicationId = &#63; and rememberDeviceContent = &#63; from the database.
+	 *
+	 * @param userId the user ID
+	 * @param oAuth2ApplicationId the o auth2 application ID
+	 * @param rememberDeviceContent the remember device content
+	 */
+	public static void removeByU_O_R(
+		long userId, long oAuth2ApplicationId, String rememberDeviceContent) {
+
+		getPersistence().removeByU_O_R(
+			userId, oAuth2ApplicationId, rememberDeviceContent);
+	}
+
+	/**
+	 * Returns the number of o auth2 authorizations where userId = &#63; and oAuth2ApplicationId = &#63; and rememberDeviceContent = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param oAuth2ApplicationId the o auth2 application ID
+	 * @param rememberDeviceContent the remember device content
+	 * @return the number of matching o auth2 authorizations
+	 */
+	public static int countByU_O_R(
+		long userId, long oAuth2ApplicationId, String rememberDeviceContent) {
+
+		return getPersistence().countByU_O_R(
+			userId, oAuth2ApplicationId, rememberDeviceContent);
+	}
+
+	/**
 	 * Caches the o auth2 authorization in the entity cache if it is enabled.
 	 *
 	 * @param oAuth2Authorization the o auth2 authorization

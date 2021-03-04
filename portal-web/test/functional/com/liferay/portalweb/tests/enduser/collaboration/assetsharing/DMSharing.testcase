@@ -324,8 +324,8 @@ definition {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		Gmail.login(
-			userEmailAddress = PropsUtil.get("email.address.3"),
-			userPassword = PropsUtil.get("email.password.3"));
+			userEmailAddress = PropsUtil.get("email.address.4"),
+			userPassword = PropsUtil.get("email.password.4"));
 
 		Gmail.gotoHtmlMode();
 
@@ -360,7 +360,7 @@ definition {
 			portlet = "Users and Organizations");
 
 		JSONUser.addUser(
-			userEmailAddress = PropsUtil.get("email.address.3"),
+			userEmailAddress = PropsUtil.get("email.address.4"),
 			userFirstName = "userfn1",
 			userLastName = "userln1",
 			userScreenName = "usersn1");
@@ -371,7 +371,7 @@ definition {
 			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
-			userEmailAddress = PropsUtil.get("email.address.3"),
+			userEmailAddress = PropsUtil.get("email.address.4"),
 			userScreenName = "usersn1");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
@@ -386,14 +386,14 @@ definition {
 		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
 
 		DMDocument.sharePG(
-			userEmailAddress = PropsUtil.get("email.address.3"),
+			userEmailAddress = PropsUtil.get("email.address.4"),
 			userName = "userfn1 userln1");
 
 		User.logoutPG();
 
 		User.loginUserPG(
 			password = "test",
-			userEmailAddress = PropsUtil.get("email.address.3"));
+			userEmailAddress = PropsUtil.get("email.address.4"));
 
 		Pause(locator1 = "30000");
 

@@ -36,8 +36,7 @@ definition {
 			category = "Store Management",
 			portlet = "Channels");
 
-		AssertElementNotPresent(
-			locator1 = "ItemSelector#ADD_BUTTON");
+		AssertElementNotPresent(locator1 = "ItemSelector#ADD_BUTTON");
 	}
 
 	@summary = "Assert expiration date warning for Liferay Commerce Subscription"

@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>ACCOUNT_SELECTOR_DROPDOWN</td>
-	<td>//div[@class='dropdown account-selector-dropdown']</td>
+	<td>//div[contains(@class,'account-selector-dropdown')]/button</td>
 	<td></td>
 </tr>
 <tr>

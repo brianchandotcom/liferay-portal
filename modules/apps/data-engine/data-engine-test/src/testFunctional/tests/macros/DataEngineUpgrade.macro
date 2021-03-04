@@ -52,7 +52,7 @@ definition {
 				fieldFieldLabelEdit = "${structureFieldName} - ca_ES Edited");
 		}
 
-		WebContentStructures.saveCP(structureName = "My Structure with nested fields");
+		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "My Structure with nested fields");
 

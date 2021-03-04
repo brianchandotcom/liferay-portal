@@ -506,6 +506,12 @@ definition {
 			locator1 = "FormViewBuilder#RADIO_OPTION_LABEL");
 	}
 
+	macro selectRequiredRadioOption {
+		Click.clickNoMouseOverNoWaitForVisible(
+			key_optionLabel = "${optionLabel}",
+			locator1 = "FormViewBuilder#OPTIONS_PLACED_IN_FORM_BUILDER_REQUIRED");
+	}
+
 	macro selectSelectOption {
 		var key_fieldName = "${fieldName}";
 		var key_selectOption = "${selectOption}";

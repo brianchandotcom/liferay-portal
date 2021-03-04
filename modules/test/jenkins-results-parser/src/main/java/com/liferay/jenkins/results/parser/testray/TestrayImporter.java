@@ -59,6 +59,9 @@ import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
@@ -745,6 +748,8 @@ public class TestrayImporter {
 			TestrayRun testrayRun = new TestrayRun(
 				testrayBuild, axisTestClassGroup.getBatchName());
 
+			long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
+
 			Document document = DocumentHelper.createDocument();
 
 			Element rootElement = document.addElement("testsuite");
@@ -860,7 +865,7 @@ public class TestrayImporter {
 			_addPropertyElements(rootElement.addElement("summary"), summaryMap);
 
 			try {
-				JenkinsResultsParserUtil.toString(
+				JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
 					JenkinsResultsParserUtil.combine(
 						String.valueOf(testrayServer.getURL()),
 						"/web/guest/home/-/testray/case_results",
@@ -870,9 +875,40 @@ public class TestrayImporter {
 						URLEncoder.encode(
 							Dom4JUtil.format(rootElement), "UTF-8"),
 						"&type=poshi"));
+
+				if (jsonObject.has("data")) {
+					JSONArray dataJSONArray = jsonObject.getJSONArray("data");
+
+					for (int i = 0; i < dataJSONArray.length(); i++) {
+						JSONObject dataJSONObject = dataJSONArray.getJSONObject(
+							i);
+
+						if (dataJSONObject == JSONObject.NULL) {
+							continue;
+						}
+
+						TestrayCaseResult testrayCaseResult =
+							new TestrayCaseResult(testrayBuild, dataJSONObject);
+
+						System.out.println(
+							JenkinsResultsParserUtil.combine(
+								String.valueOf(testrayCaseResult.getStatus()),
+								" - ", testrayCaseResult.getName(), " - ",
+								String.valueOf(testrayCaseResult.getURL())));
+					}
+				}
 			}
 			catch (IOException ioException) {
 				throw new RuntimeException(ioException);
+			}
+			finally {
+				System.out.println(
+					JenkinsResultsParserUtil.combine(
+						"Recorded ", String.valueOf(testrayCaseResults.size()),
+						" case results in ",
+						JenkinsResultsParserUtil.toDurationString(
+							JenkinsResultsParserUtil.getCurrentTimeMillis() -
+								start)));
 			}
 		}
 	}

@@ -5566,37 +5566,17 @@ log.sanitizer.enabled=false</echo>
 						<gradle-execute dir="modules" forcedcacheenabled="false" task="@{modules.baseline.task.group}">
 							<arg value="--continue" />
 							<arg value="--parallel" />
+							<arg value="-Dbaseline.ignoreFailures=true" />
 						</gradle-execute>
 					</sequential>
 				</for>
 
 				<echo>Checking for baseline log files.</echo>
 
-				<var name="log.files" unset="true" />
-
-				<fileset
-					dir="${project.dir}"
-					id="log.files"
-				>
-					<include name="modules/**/baseline.log" />
-				</fileset>
-
-				<pathconvert pathsep="," property="log.files" refid="log.files" />
-
-				<for list="${log.files}" param="log.file">
-					<sequential>
-						<print-file file.name="@{log.file}" />
-					</sequential>
-				</for>
-
-				<if>
-					<not>
-						<equals arg1="${log.files}" arg2="" />
-					</not>
-					<then>
-						<fail message="Semantic versioning is incorrect." />
-					</then>
-				</if>
+				<gradle-execute dir="modules/test/semantic-versioning-test" task="test">
+					<arg value="-Dmodules.test.class.group=${modules.test.class.group}" />
+					<arg value="-Dproject.dir=${project.dir}" />
+				</gradle-execute>
 
 				<echo>Check for baseline log files completed.</echo>
 			</test-action>

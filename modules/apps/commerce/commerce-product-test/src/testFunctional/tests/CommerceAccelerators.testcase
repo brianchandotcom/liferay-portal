@@ -166,7 +166,7 @@ definition {
 
 		Click(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN");
 
-		AssertElementPresent(locator1 = "CommerceAccelerators#ACCOUNT_SWITCHER_EMPTY_TABLE");
+		AssertElementPresent(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_NO_ACCOUNTS_WERE_FOUND");
 
 		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
 

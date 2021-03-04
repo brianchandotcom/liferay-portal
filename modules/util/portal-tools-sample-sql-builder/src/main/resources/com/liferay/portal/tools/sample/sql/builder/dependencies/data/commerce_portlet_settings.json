@@ -1,0 +1,72 @@
+[
+	{
+		"instanceId": "minium",
+		"layoutFriendlyURL": "/catalog",
+		"portletName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSearchResultsPortlet",
+		"portletPreferences": {
+			"cpContentListRendererKey": "list-default",
+			"grouped--cpTypeListEntryRendererKey": "list-entry-default",
+			"simple--cpTypeListEntryRendererKey": "list-entry-default",
+			"virtual--cpTypeListEntryRendererKey": "list-entry-default"
+		}
+	},
+	{
+		"instanceId": "minium",
+		"layoutFriendlyURL": "/catalog",
+		"portletName": "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet",
+		"portletPreferences": {
+			"searchScope": "everything"
+		}
+	},
+	{
+		"instanceId": "minium",
+		"layoutFriendlyURL": "/catalog",
+		"portletName": "com_liferay_portal_search_web_search_options_portlet_SearchOptionsPortlet",
+		"portletPreferences": {
+			"allowEmptySearches": "true"
+		}
+	},
+	{
+		"instanceId": "catalog",
+		"layoutFriendlyURL": "/catalog",
+		"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPCompareContentMiniPortlet",
+		"portletPreferences": {
+		}
+	},
+	{
+		"instanceId": "minium",
+		"layoutFriendlyURL": "/compare",
+		"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPCompareContentPortlet",
+		"portletPreferences": {
+			"grouped--cpTypeListEntryRendererKey": "list-entry-default",
+			"simple--cpTypeListEntryRendererKey": "list-entry-default",
+			"virtual--cpTypeListEntryRendererKey": "list-entry-default"
+		}
+	},
+	{
+		"instanceId": "minium",
+		"layoutFriendlyURL": "/product-detail",
+		"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPContentPortlet",
+		"portletPreferences": {
+			"cpType": "simple",
+			"grouped--cpTypeRendererKey": "default",
+			"simple--cpTypeRendererKey": "default",
+			"virtual--cpTypeRendererKey": "default"
+		}
+	},
+	{
+		"instanceId": "product_detail",
+		"layoutFriendlyURL": "/product-detail",
+		"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPCompareContentMiniPortlet",
+		"portletPreferences": {
+		}
+	},
+	{
+		"instanceId": "minium",
+		"layoutFriendlyURL": "/search",
+		"portletName": "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet",
+		"portletPreferences": {
+			"searchScope": "everything"
+		}
+	}
+]

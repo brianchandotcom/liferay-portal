@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
@@ -26,6 +27,14 @@ import java.util.concurrent.TimeoutException;
  * @author Peter Yoo
  */
 public class RemoteExecutor {
+
+	public static long getTimeout() {
+		return _timeout;
+	}
+
+	public static void setTimeout(long timeout) {
+		_timeout = _timeout;
+	}
 
 	public int execute(
 		int threadCount, String[] targetSlaves, String[] commands) {
@@ -123,6 +132,8 @@ public class RemoteExecutor {
 		_busySlaves.add(remoteExecutorThread._targetSlave);
 	}
 
+	private static long _timeout = 1000 * 60 * 60;
+
 	private final List<String> _busySlaves = new ArrayList<>();
 	private String[] _commands;
 	private final List<String> _errorSlaves = new ArrayList<>();
@@ -192,7 +203,7 @@ public class RemoteExecutor {
 			sb.append("'");
 
 			Process process = JenkinsResultsParserUtil.executeBashCommands(
-				sb.toString());
+				true, new File("."), getTimeout(), sb.toString());
 
 			return process.exitValue();
 		}

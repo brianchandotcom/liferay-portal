@@ -15,6 +15,7 @@
 package com.liferay.journal.internal.util;
 
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -39,6 +40,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -142,7 +144,9 @@ public class JournalConverterImpl implements JournalConverter {
 
 		_initDynamicElements(dynamicElementElementsMap, rootElement);
 
-		for (DDMFormField ddmFormField : ddmStructure.getDDMFormFields(true)) {
+		DDMForm ddmForm = ddmStructure.getDDMForm();
+
+		for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
 			addDDMFields(
 				availableLanguageIds, defaultLanguageId, ddmFields,
 				ddmFormField, ddmStructure, dynamicElementElementsMap);
@@ -183,6 +187,18 @@ public class JournalConverterImpl implements JournalConverter {
 					String.valueOf(ddmStructure.getStructureId()));
 			}
 
+			List<DDMFormField> nestedDDMFormFields =
+				ddmFormField.getNestedDDMFormFields();
+
+			if (ListUtil.isNotEmpty(nestedDDMFormFields)) {
+				for (DDMFormField nestedDDMFormField : nestedDDMFormFields) {
+					addDDMFields(
+						availableLanguageIds, defaultLanguageId, ddmFields,
+						nestedDDMFormField, ddmStructure,
+						dynamicElementElementsMap);
+				}
+			}
+
 			return;
 		}
 
@@ -210,6 +226,24 @@ public class JournalConverterImpl implements JournalConverter {
 			updateFieldsDisplay(
 				ddmFields, ddmFormField.getName(),
 				dynamicElementElement.attributeValue("instance-id"));
+
+			List<DDMFormField> nestedDDMFormFields =
+				ddmFormField.getNestedDDMFormFields();
+
+			if (ListUtil.isNotEmpty(nestedDDMFormFields)) {
+				Map<String, List<Element>> nestedDynamicElementElementsMap =
+					new HashMap<>();
+
+				_initDynamicElements(
+					nestedDynamicElementElementsMap, dynamicElementElement);
+
+				for (DDMFormField nestedDDMFormField : nestedDDMFormFields) {
+					addDDMFields(
+						availableLanguageIds, defaultLanguageId, ddmFields,
+						nestedDDMFormField, ddmStructure,
+						nestedDynamicElementElementsMap);
+				}
+			}
 		}
 	}
 

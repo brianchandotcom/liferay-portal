@@ -157,7 +157,7 @@ definition {
 	macro selectAccountFromAccountSelector {
 		Click.clickNoMouseOver(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN");
 
-		Click(locator1 = "CommerceAccelerators#ACCOUNT_SWITCHER_BACK_BUTTON");
+		Click(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN_BACK_BUTTON");
 
 		Click(
 			key_accountName = "${accountName}",

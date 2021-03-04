@@ -267,8 +267,6 @@ const CustomObjectFieldsList = ({keywords}) => {
 		deleteLabel: Liferay.Language.get('delete-from-object'),
 		keywords,
 		onClick: handleOnClick,
-		onDelete: (fieldName) =>
-			onDeleteDefinitionField({activePage: 0, fieldName}),
 		onDoubleClick: handleOnDoubleClick,
 	};
 
@@ -284,6 +282,9 @@ const CustomObjectFieldsList = ({keywords}) => {
 				{...fieldTypeListProps}
 				dataDefinition={dataDefinition}
 				fieldTypes={customFieldTypes}
+				onDelete={(fieldName) =>
+					onDeleteDefinitionField({activePage: 0, fieldName})
+				}
 				showEmptyState={false}
 			/>
 

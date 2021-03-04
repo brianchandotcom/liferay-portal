@@ -420,6 +420,7 @@ definition {
 	@priority = "5"
 	test TranslateWebContentFromStructureWithFieldsetWithFieldGroup {
 		property portal.upstream = "quarantine";
+
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();

@@ -18,12 +18,17 @@ import {openItemSelector} from '../../../src/main/resources/META-INF/resources/p
 
 jest.mock('frontend-js-web');
 
-const openModal = ({callback = () => {}, destroyedCallback = null}) => {
+const openModal = ({
+	callback = () => {},
+	destroyedCallback = null,
+	transformValueCallback = (item) => item,
+}) => {
 	openItemSelector({
 		callback,
 		destroyedCallback,
 		eventName: '',
 		itemSelectorURL: '',
+		transformValueCallback,
 	});
 
 	const [firstCall = []] = openSelectionModal.mock.calls;
@@ -55,7 +60,6 @@ describe('openItemSelector', () => {
 
 		expect(callback).toHaveBeenCalledWith({
 			returnType: 'custom',
-			type: 'custom',
 		});
 	});
 
@@ -71,7 +75,6 @@ describe('openItemSelector', () => {
 		expect(callback).toHaveBeenCalledWith({
 			returnType: 'custom',
 			some: {object: 'yep'},
-			type: 'custom',
 		});
 	});
 
@@ -87,7 +90,6 @@ describe('openItemSelector', () => {
 		expect(callback).toHaveBeenCalledWith({
 			returnType: 'custom',
 			some: {object: 'yep'},
-			type: 'custom',
 		});
 	});
 
@@ -102,7 +104,6 @@ describe('openItemSelector', () => {
 
 		expect(callback).toHaveBeenCalledWith({
 			returnType: 'custom',
-			type: 'custom',
 			value: 'notAnObject',
 		});
 	});

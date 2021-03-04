@@ -361,7 +361,9 @@ definition {
 
 		ManagementBar.setFilterAndOrder(orderBy = "Shared Date");
 
-		ManagementBar.toggleViewOrder(order = "down");
+		Click.clickNoMouseOver(
+			key_order = "unstyled",
+			locator1 = "ManagementBar#ORDER_ICON_SPECIFIC");
 
 		AssertElementPresent(
 			key_contentTitle = "Blogs Entry Title",

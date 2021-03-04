@@ -130,6 +130,7 @@
 	<bean class="com.liferay.portal.security.auth.ScreenNameValidatorFactory" id="com.liferay.portal.security.auth.ScreenNameValidatorFactory" />
 	<bean class="com.liferay.portal.security.auth.SessionAuthToken" id="com.liferay.portal.security.auth.SessionAuthToken" />
 	<bean class="com.liferay.portal.security.auth.StrutsPortletAuthTokenWhitelist" id="com.liferay.portal.security.auth.StrutsPortletAuthTokenWhitelist" />
+	<bean class="com.liferay.portal.security.auth.registry.AuthVerifierRegistry" id="com.liferay.portal.security.auth.registry.AuthVerifierRegistry" />
 	<bean class="com.liferay.portal.security.auth.tunnel.TunnelAuthenticationManagerImpl" id="com.liferay.portal.security.auth.tunnel.TunnelAuthenticationManagerImpl" />
 	<bean class="com.liferay.portal.security.membershippolicy.DefaultSiteMembershipPolicy" id="com.liferay.portal.security.membershippolicy.DefaultSiteMembershipPolicy" />
 	<bean class="com.liferay.portal.security.pwd.PasswordPolicyToolkit" id="com.liferay.portal.security.pwd.PasswordPolicyToolkit" />

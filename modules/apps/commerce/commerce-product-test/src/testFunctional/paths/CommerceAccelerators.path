@@ -329,7 +329,7 @@
 </tr>
 <tr>
 	<td>ORDERS_ENTRY_VIEW_BUTTON</td>
-	<td>//td[contains(.,'${key_orderAuthor}')]/..//following-sibling::td[contains(.,'View')]/a</td>
+	<td>//div[contains(.,'${key_orderAuthor}')]/..//following-sibling::div/a[contains(.,'View')]</td>
 	<td></td>
 </tr>
 </tbody>

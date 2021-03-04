@@ -76,7 +76,7 @@ public interface CPDisplayLayoutService extends BaseService {
 		throws PortalException;
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x)
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
 	@Deprecated
 	public void deleteCPDisplayLayout(Class<?> clazz, long classPK)

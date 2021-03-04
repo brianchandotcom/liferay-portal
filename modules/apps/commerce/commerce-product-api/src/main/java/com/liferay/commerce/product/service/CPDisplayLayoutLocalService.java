@@ -226,7 +226,8 @@ public interface CPDisplayLayoutLocalService
 		DynamicQuery dynamicQuery, Projection projection);
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x)
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #fetchCPDisplayLayout(long, Class, long)}
 	 */
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

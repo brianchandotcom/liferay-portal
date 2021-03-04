@@ -316,6 +316,18 @@ public class OAuth2AuthorizationLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static OAuth2Authorization
+			fetchLatestOAuth2AuthorizationByRememberDeviceContent(
+				long userId, long oAuth2ApplicationId,
+				String rememberDeviceContent)
+		throws com.liferay.oauth2.provider.exception.
+			NoSuchOAuth2AuthorizationException {
+
+		return getService().
+			fetchLatestOAuth2AuthorizationByRememberDeviceContent(
+				userId, oAuth2ApplicationId, rememberDeviceContent);
+	}
+
 	public static OAuth2Authorization fetchOAuth2Authorization(
 		long oAuth2AuthorizationId) {
 
@@ -523,6 +535,13 @@ public class OAuth2AuthorizationLocalServiceUtil {
 
 		getService().setOAuth2ScopeGrantOAuth2Authorizations(
 			oAuth2ScopeGrantId, oAuth2AuthorizationIds);
+	}
+
+	public static OAuth2Authorization setRememberDeviceContent(
+		String refreshTokenContent, String rememberDeviceContent) {
+
+		return getService().setRememberDeviceContent(
+			refreshTokenContent, rememberDeviceContent);
 	}
 
 	/**

@@ -94,6 +94,73 @@ public class FragmentEntryProcessorHelperTest {
 		_group = GroupTestUtil.addGroup();
 	}
 
+	@Test
+	public void testGetFileEntryIdClassNameClassPKDLImage() throws Exception {
+		FileEntry fileEntry = _addImageFileEntry();
+
+		long fileEntryId = _fragmentEntryProcessorHelper.getFileEntryId(
+			FileEntry.class.getName(), fileEntry.getFileEntryId());
+
+		Assert.assertEquals(fileEntry.getFileEntryId(), fileEntryId);
+	}
+
+	@Test
+	public void testGetFileEntryIdClassNameClassPKJournalArticle()
+		throws Exception {
+
+		JournalArticle journalArticle = _addJournalArticle(
+			_addImageFileEntry(), "ImageFieldName");
+
+		long fileEntryId = _fragmentEntryProcessorHelper.getFileEntryId(
+			JournalArticle.class.getName(),
+			journalArticle.getResourcePrimKey());
+
+		Assert.assertEquals(0L, fileEntryId);
+	}
+
+	@Test
+	public void testGetFileEntryIdClassPKDLImage() throws Exception {
+		FileEntry fileEntry = _addImageFileEntry();
+
+		long fileEntryId = _fragmentEntryProcessorHelper.getFileEntryId(
+			_portal.getClassNameId(FileEntry.class.getName()),
+			fileEntry.getFileEntryId(), "fileURL", LocaleUtil.getSiteDefault());
+
+		Assert.assertEquals(fileEntry.getFileEntryId(), fileEntryId);
+	}
+
+	@Test
+	public void testGetFileEntryIdClassPKJournalArticle() throws Exception {
+		FileEntry fileEntry = _addImageFileEntry();
+
+		String fieldId = "ImageFieldName";
+
+		JournalArticle journalArticle = _addJournalArticle(fileEntry, fieldId);
+
+		long fileEntryId = _fragmentEntryProcessorHelper.getFileEntryId(
+			_portal.getClassNameId(JournalArticle.class.getName()),
+			journalArticle.getResourcePrimKey(), fieldId,
+			LocaleUtil.getSiteDefault());
+
+		Assert.assertEquals(fileEntry.getFileEntryId(), fileEntryId);
+	}
+
+	@Test
+	public void testGetFileEntryIdDisplayObjectJournalArticle()
+		throws Exception {
+
+		FileEntry fileEntry = _addImageFileEntry();
+
+		String fieldId = "ImageFieldName";
+
+		JournalArticle journalArticle = _addJournalArticle(fileEntry, fieldId);
+
+		long fileEntryId = _fragmentEntryProcessorHelper.getFileEntryId(
+			journalArticle, fieldId, LocaleUtil.getSiteDefault());
+
+		Assert.assertEquals(fileEntry.getFileEntryId(), fileEntryId);
+	}
+
 	private DDMStructure _addDDMStructure(Group group, String content)
 		throws Exception {
 

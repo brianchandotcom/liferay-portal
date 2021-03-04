@@ -360,6 +360,86 @@ definition {
 		AppBuilderWorkflow.validateActivity(description = "Test Comment");
 	}
 
+	@description = "Automate LPS-121226: As an App User, I want to see all the past activities of a Workflow App instance"
+	@priority = "5"
+	test CheckActivityWorkflowAppWithSteps {
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Text",
+			formViewName = "My Form View",
+			tableViewName = "My Table View");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Apps");
+
+		AppBuilderAppAdmin.goToWorkflowPoweredTab();
+
+		AppBuilderAppAdmin.clickOnCreateNewAppButton();
+
+		AppBuilderWorkflow.selectStartStepDataAndViews(
+			formViewName = "My Form View",
+			objectName = "my custom object",
+			tableViewName = "My Table View");
+
+		AppBuilderWorkflow.addNewStep();
+
+		AppBuilderWorkflow.selectStepAssignee(
+			assignee = "Administrator",
+			step = "1");
+
+		AppBuilderWorkflow.addNewStep();
+
+		AppBuilderWorkflow.selectStepAssignee(
+			assignee = "Administrator",
+			step = "2");
+
+		AppBuilderWorkflow.addWorkflowAppName(workflowAppName = "My Workflow App");
+		Button.click(button = "Deploy");
+		App.toggleDeploy(deployOption = "Product Menu");
+		Button.click(button = "Done");
+		AppBuilderWorkflow.waitForButtonNotPresent(buttonName = "Done");
+
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "My Workflow App");
+		AppBuilderAdmin.addEntry();
+		FormViewBuilder.editText(
+			fieldName = "Text",
+			fieldValue = "Content 1");
+
+		AppBuilderWorkflow.submit();
+
+		Refresh();
+
+		AppBuilderAdmin.openItem(itemName = "Content 1");
+
+		AppBuilderWorkflow.validateActivity(description = "Task initially assigned to the Administrator role.");
+
+		DetailsView.backToTableView();
+
+		Refresh();
+
+		AppBuilderWorkflow.assignEntryThroughTableView(
+			assignee = "Test Test",
+			itemName = "Content 1");
+
+		AppBuilderAdmin.openItem(itemName = "Content 1");
+
+		AppBuilderWorkflow.validateActivity(description = "Task initially assigned to the Administrator role.");
+
+		AppBuilderWorkflow.validateActivity(description = "Test Test assigned the task to himself");
+
+		DetailsView.editEntry();
+
+		AppBuilderWorkflow.submit();
+
+		AppBuilderWorkflow.validateActivity(description = "Test Test completed the task Step 1.");
+	}
+
 	@description = "Create a Basic Workflow App"
 	@priority = "5"
 	test CreateBasicWorkflowApp {

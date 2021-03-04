@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.comparator.LayoutRevisionCreateDateComparator;
 import com.liferay.portal.kernel.util.comparator.LayoutRevisionModifiedDateComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -46,6 +47,7 @@ import com.liferay.portal.util.LayoutTypeControllerTracker;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Raymond Augé
@@ -509,13 +511,14 @@ public class LayoutRevisionLocalServiceImpl
 					portletPreferencesLocalService.getPortletPreferencesByPlid(
 						layoutRevision.getLayoutRevisionId());
 
+				Set<String> removePortlets = SetUtil.fromArray(
+					(String[])serviceContext.getAttribute("removePortlets"));
+
 				for (PortletPreferences portletPreferences :
 						portletPreferencesList) {
 
-					String portletId = portletPreferences.getPortletId();
-
-					if (portletId.equals(
-							serviceContext.getAttribute("p_p_id"))) {
+					if (removePortlets.contains(
+							portletPreferences.getPortletId())) {
 
 						portletPreferencesLocalService.deletePortletPreferences(
 							portletPreferences.getPortletPreferencesId());

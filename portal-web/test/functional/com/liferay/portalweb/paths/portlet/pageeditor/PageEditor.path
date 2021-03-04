@@ -296,6 +296,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXPERIENCE_LANGUAGE_CHECKBOX</td>
+	<td>//input[contains(@aria-label,'${key_language}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPERIENCE_LANGUAGE_SELECTOR</td>
+	<td>//ul[contains(@class,'navbar-nav') and contains(@class,'start')]//button[contains(@class,'dropdown-toggle') and contains(@class,'btn-monospaced')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPERIENCE_LANGUAGE_SELECTOR_LOCALE</td>
+	<td>//*[contains(@class,'dropdown-item')]//span[contains(text(), '${key_language}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EXPERIENCE_SEGMENT_ANYONE</td>
 	<td>//select[@id='_com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageEditorPortlet_segmentsExperienceSegment']</td>
 	<td></td>

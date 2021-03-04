@@ -378,6 +378,50 @@ definition {
 			locator1 = "PageEditor#EXPERIENCE_SELECT_ITEM");
 	}
 
+	macro addExperienceWithLanguage {
+		var key_experienceName = "${experienceName}";
+		var key_segmentName = "${segmentName}";
+		var key_language = "${language}";
+
+		AssertTextEquals(
+			locator1 = "PageEditor#EXPERIENCE_LABEL",
+			value1 = "Experience");
+
+		Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
+
+		Click(
+			key_text = "New Experience",
+			locator1 = "Button#ANY");
+
+		Type(
+			locator1 = "PageEditor#EXPERIENCE_NAME",
+			value1 = "${experienceName}");
+
+		AssertElementPresent(
+			key_language = "${language}",
+			locator1 = "PageEditor#EXPERIENCE_LANGUAGE_CHECKBOX");
+
+		AssertClick(
+			value1 = "${language}",
+			locator1 = "PageEditor#EXPERIENCE_LANGUAGE_CHECKBOX");
+
+		Click(locator1 = "PageEditor#EXPERIENCE_SEGMENT_ANYONE");
+
+		AssertClick(
+			locator1 = "PageEditor#EXPERIENCE_SELECT_SEGMENT",
+			value1 = "${segmentName}");
+
+		Click(locator1 = "Button#SAVE");
+
+		AssertClick(
+			locator1 = "PageEditor#EXPERIENCE_BUTTON_NAME",
+			value1 = "${experienceName}");
+
+		AssertElementPresent(
+			key_experienceName = "${experienceName}",
+			locator1 = "PageEditor#EXPERIENCE_SELECT_ITEM");
+	}
+
 	macro addFragment {
 		Pause(locator1 = "10000");
 
@@ -636,6 +680,23 @@ definition {
 		PageEditor.clickManagementBar();
 
 		AssertElementPresent(locator1 = "PageEditor#EXPERIENCE_BUTTON_NAME");
+	}
+
+	macro changeExperienceLanguage {
+		var key_experienceName = "${newExperience}";
+		var key_language = "${language}";
+
+		Click(locator1 = "PageEditor#EXPERIENCE_LABEL");
+
+		Click(locator1 = "PageEditor#EXPERIENCE_SELECT_ITEM");
+
+		PageEditor.clickManagementBar();
+
+		AssertElementPresent(locator1 = "PageEditor#EXPERIENCE_BUTTON_NAME");
+
+		Click(locator1 = "PageEditor#EXPERIENCE_LANGUAGE_SELECTOR");
+
+		Click(locator1 = "PageEditor#EXPERIENCE_LANGUAGE_SELECTOR_LOCALE");
 	}
 
 	macro changeLocale {

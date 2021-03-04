@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.internal.exportimport.data.handler;
 
+import com.liferay.document.library.constants.DLPortletDataHandlerConstants;
 import com.liferay.document.library.exportimport.data.handler.DLPluggableContentDataHandler;
 import com.liferay.document.library.kernel.util.DLProcessorRegistry;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -60,14 +61,8 @@ public class DLProcessorPluggableContentDataHandler
 
 	private boolean _isEnabled(PortletDataContext portletDataContext) {
 		return portletDataContext.getBooleanParameter(
-			_DL_PORTLET_DATA_HANDLER_NAMESPACE, "previews-and-thumbnails");
+			DLPortletDataHandlerConstants.NAMESPACE, "previews-and-thumbnails");
 	}
-
-	/**
-	 * @see com.liferay.document.library.web.internal.lar.DLPortletDataHandler#NAMESPACE
-	 */
-	private static final String _DL_PORTLET_DATA_HANDLER_NAMESPACE =
-		"document_library";
 
 	@Reference
 	private DLProcessorRegistry _dlProcessorRegistry;

@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.web.internal.lar;
 
+import com.liferay.document.library.constants.DLPortletDataHandlerConstants;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
@@ -79,7 +80,8 @@ public class DLAdminPortletDataHandler extends BasePortletDataHandler {
 		RepositoryEntry.class.getName()
 	};
 
-	public static final String NAMESPACE = "document_library";
+	public static final String NAMESPACE =
+		DLPortletDataHandlerConstants.NAMESPACE;
 
 	public static final String SCHEMA_VERSION = "4.0.0";
 

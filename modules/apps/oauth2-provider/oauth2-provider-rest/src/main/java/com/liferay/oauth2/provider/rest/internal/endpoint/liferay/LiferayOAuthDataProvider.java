@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -329,6 +330,28 @@ public class LiferayOAuthDataProvider
 
 		return _serverAuthorizationCodeGrantProvider.
 			getServerAuthorizationCodeGrants(client, subject);
+	}
+
+	public OAuth2Authorization getOAuth2AuthorizationByRememberDeviceContent(
+		Client client, String rememberDeviceContent, long userId) {
+
+		long companyId = MapUtil.getLong(
+			client.getProperties(),
+			OAuth2ProviderRESTEndpointConstants.PROPERTY_KEY_COMPANY_ID);
+
+		try {
+			OAuth2Application oAuth2Application =
+				_oAuth2ApplicationLocalService.getOAuth2Application(
+					companyId, client.getClientId());
+
+			return _oAuth2AuthorizationLocalService.
+				fetchLatestOAuth2AuthorizationByRememberDeviceContent(
+					userId, oAuth2Application.getOAuth2ApplicationId(),
+					rememberDeviceContent);
+		}
+		catch (PortalException portalException) {
+			throw new OAuthServiceException(portalException);
+		}
 	}
 
 	@Override

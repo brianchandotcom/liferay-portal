@@ -219,7 +219,7 @@ definition {
 		Gmail.gotoHtmlMode();
 
 		Gmail.viewMail(
-			emailFromUserName = "Liferay QA",
+			emailFromUserName = "me",
 			gmailAssetType = "New Report From QA: reports_admin_template_source_sample_class_name.pdf",
 			gmailMessageAttachment = "reports_admin_template_source_sample_class_name.pdf",
 			gmailMessageBody = "Please review the attached report from your friends in QA!",

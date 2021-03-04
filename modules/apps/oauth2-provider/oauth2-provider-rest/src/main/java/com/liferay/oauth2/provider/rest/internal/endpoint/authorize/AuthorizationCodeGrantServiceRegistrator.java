@@ -49,7 +49,9 @@ import org.apache.cxf.rs.security.oauth2.common.OAuthError;
 import org.apache.cxf.rs.security.oauth2.common.OAuthPermission;
 import org.apache.cxf.rs.security.oauth2.common.OAuthRedirectionState;
 import org.apache.cxf.rs.security.oauth2.common.OOBAuthorizationResponse;
+import org.apache.cxf.rs.security.oauth2.common.ServerAccessToken;
 import org.apache.cxf.rs.security.oauth2.common.UserSubject;
+import org.apache.cxf.rs.security.oauth2.grants.code.ServerAuthorizationCodeGrant;
 import org.apache.cxf.rs.security.oauth2.provider.OAuthServiceException;
 import org.apache.cxf.rs.security.oauth2.provider.SubjectCreator;
 import org.apache.cxf.rs.security.oauth2.services.AuthorizationCodeGrantService;
@@ -66,6 +68,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Tomas Polesovsky
+ * @author Marta Medio
  */
 @Component(
 	configurationPid = "com.liferay.oauth2.provider.configuration.OAuth2ProviderConfiguration",
@@ -78,6 +81,50 @@ public class AuthorizationCodeGrantServiceRegistrator {
 
 		public LiferayOAuthDataProvider getDataProvider() {
 			return getDataProvider();
+		}
+
+		@Override
+		public ServerAuthorizationCodeGrant getGrantRepresentation(
+			OAuthRedirectionState state, Client client,
+			List<String> requestedScope, List<String> approvedScope,
+			UserSubject userSubject, ServerAccessToken preauthorizedToken) {
+
+			ServerAuthorizationCodeGrant serverAuthorizationCodeGrant =
+				super.getGrantRepresentation(
+					state, client, requestedScope, approvedScope, userSubject,
+					preauthorizedToken);
+
+			String rememberDeviceCookieContent =
+				_getRememberDeviceCookieContent();
+
+			if (rememberDeviceCookieContent != null) {
+				long userId = GetterUtil.getLong(userSubject.getId());
+
+				OAuth2Authorization oAuth2Authorization =
+					getDataProvider().
+						getOAuth2AuthorizationByRememberDeviceContent(
+							client, rememberDeviceCookieContent, userId);
+
+				if ((oAuth2Authorization != null) &&
+					rememberDeviceCookieContent.equals(
+						oAuth2Authorization.getRememberDeviceContent())) {
+
+					Cookie cookie = _setRememberDeviceCookie();
+
+					Map<String, String> extraProperties =
+						serverAuthorizationCodeGrant.getExtraProperties();
+
+					extraProperties.put(
+						OAuth2ProviderRESTEndpointConstants.
+							COOKIE_REMEMBER_DEVICE,
+						cookie.getValue());
+
+					serverAuthorizationCodeGrant.setExtraProperties(
+						extraProperties);
+				}
+			}
+
+			return serverAuthorizationCodeGrant;
 		}
 
 		@Override

@@ -3,24 +3,6 @@
 
 <resource-action-mapping>
 	<model-resource>
-		<model-name>com.liferay.commerce.address</model-name>
-		<portlet-ref>
-			<portlet-name>com_liferay_commerce_address_web_internal_portlet_CommerceCountryPortlet</portlet-name>
-		</portlet-ref>
-		<root>true</root>
-		<weight>1</weight>
-		<permissions>
-			<supports>
-				<action-key>MANAGE_COMMERCE_COUNTRIES</action-key>
-			</supports>
-			<site-member-defaults />
-			<guest-defaults />
-			<guest-unsupported>
-				<action-key>MANAGE_COMMERCE_COUNTRIES</action-key>
-			</guest-unsupported>
-		</permissions>
-	</model-resource>
-	<model-resource>
 		<model-name>com.liferay.commerce.availability</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_commerce_availability_estimate_web_internal_portlet_CommerceAvailabilityEstimatePortlet</portlet-name>

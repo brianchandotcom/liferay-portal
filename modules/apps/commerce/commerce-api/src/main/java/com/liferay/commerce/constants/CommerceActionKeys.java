@@ -22,6 +22,10 @@ public class CommerceActionKeys {
 	public static final String MANAGE_COMMERCE_AVAILABILITY_ESTIMATES =
 		"MANAGE_COMMERCE_AVAILABILITY_ESTIMATES";
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String MANAGE_COMMERCE_COUNTRIES =
 		"MANAGE_COMMERCE_COUNTRIES";
 

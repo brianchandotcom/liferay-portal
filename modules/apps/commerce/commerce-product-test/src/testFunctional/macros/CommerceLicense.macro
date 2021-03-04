@@ -30,6 +30,15 @@ definition {
 			locator1 = "ApplicationsMenu#PANEL");
 	}
 
+	@summary = "Assert Commerce UI is unusable from the platform when expired"
+	macro viewCommerceExpired {
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
+			portlet = "Channels");
+
+		AssertElementNotPresent(locator1 = "ItemSelector#ADD_BUTTON");
+	}
+
 	@summary = "Assert Commerce UI is missing from the platform when not activated"
 	macro viewCommerceMissing {
 		ApplicationsMenuHelper.openApplicationsMenu();

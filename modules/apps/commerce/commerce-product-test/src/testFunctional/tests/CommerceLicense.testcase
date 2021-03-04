@@ -162,7 +162,7 @@ definition {
 
 		Pause(locator1 = "300000");
 
-		CommerceLicense.viewCommerceMissing();
+		CommerceLicense.viewCommerceExpired();
 	}
 
 	@description = "This is a test for covering the following LPS-120477"

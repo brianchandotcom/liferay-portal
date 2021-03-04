@@ -1219,6 +1219,29 @@ definition {
 			entryTitle = '''Blogs Entry Title `~!@#$%^&*(){}[],.<>/?|''');
 	}
 
+	@description = "This test covers LPS-128451. It ensures that a blog entry can be published normally with xss code injected title."
+	@priority = "4"
+	test ViewBlogsEntryWithXSSCodeInjectedTitle {
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = '''"><img src=xss onerror=alert(1)>''',
+			entryTitle = '''"><img src=xss onerror=alert(1)>''',
+			injectCode = "true");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = '''"><img src=xss onerror=alert(1)>''');
+
+		BlogsEntry.viewEntryPG(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = '''"><img src=xss onerror=alert(1)>''',
+			entryTitle = '''"><img src=xss onerror=alert(1)>''');
+	}
+
 	@priority = "4"
 	test ViewNoBlogsDraftDisplaysInAP {
 		JSONLayout.addPublicLayout(

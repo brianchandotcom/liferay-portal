@@ -104,11 +104,17 @@ export default function EditableLinkPanel({item}) {
 			nextConfig = {
 				...imageConfig,
 				...(linkConfig || {}),
-				[languageId]: {
-					href: nextLinkConfig.href,
-					target: nextLinkConfig.target || '',
-				},
 			};
+
+			if (Object.keys(nextLinkConfig).length) {
+				nextConfig = {
+					...nextConfig,
+					[languageId]: {
+						href: nextLinkConfig.href,
+						target: nextLinkConfig.target || '',
+					},
+				};
+			}
 		}
 
 		if (item.type !== EDITABLE_TYPES.link) {

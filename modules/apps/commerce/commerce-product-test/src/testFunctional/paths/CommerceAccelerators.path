@@ -44,11 +44,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ACCOUNT_SWITCHER_EMPTY_TABLE</td>
-	<td>//div[@class='commerce-account-switcher__empty-table']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADD_TO_CART_BUTTON</td>
 	<td>//p[@title='${key_productName}']//../..//button[contains(@class,'add-to-cart')]</td>
 	<td></td>

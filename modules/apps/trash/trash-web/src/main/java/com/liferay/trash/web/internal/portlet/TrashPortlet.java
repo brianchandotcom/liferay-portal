@@ -187,18 +187,32 @@ public class TrashPortlet extends MVCPortlet {
 				actionRequest, "rowIds");
 
 			for (long restoreEntryId : restoreEntryIds) {
-				TrashEntry entry = _trashEntryService.restoreEntry(
-					restoreEntryId);
+				try {
+					TrashEntry entry = _trashEntryService.restoreEntry(
+						restoreEntryId);
 
-				entries.add(
-					new ObjectValuePair<>(
-						entry.getClassName(), entry.getClassPK()));
+					entries.add(
+						new ObjectValuePair<>(
+							entry.getClassName(), entry.getClassPK()));
+				}
+				catch (com.liferay.trash.exception.RestoreEntryException
+							restoreEntryException) {
+
+					if (restoreEntryException.getType() !=
+							com.liferay.trash.exception.RestoreEntryException.
+								NOT_RESTORABLE) {
+
+						throw restoreEntryException;
+					}
+				}
 			}
 		}
 
 		TrashUndoUtil.addRestoreData(actionRequest, entries);
 
-		hideDefaultSuccessMessage(actionRequest);
+		if (!entries.isEmpty()) {
+			hideDefaultSuccessMessage(actionRequest);
+		}
 
 		sendRedirect(actionRequest, actionResponse);
 	}

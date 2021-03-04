@@ -203,6 +203,9 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessor;
@@ -1523,6 +1526,57 @@ public class DataFactory {
 		}
 
 		return commerceInventoryWarehouseModels;
+	}
+
+	public List<LayoutModel> newCommerceLayoutModels(long groupId)
+		throws Exception {
+
+		List<LayoutModel> layoutModels = new ArrayList<>();
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+			StringUtil.read(getResourceInputStream("commerce_layouts.json")));
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			LayoutModel layoutModel = newLayoutModel(
+				groupId,
+				StringUtil.replace(
+					StringUtil.toLowerCase(jsonObject.getString("name")),
+					CharPool.SPACE, CharPool.DASH),
+				jsonObject.getBoolean("privateLayout"),
+				jsonObject.getString("layoutTemplateId"),
+				getPortletNames(jsonObject.getJSONArray("portlets")));
+
+			layoutModels.add(layoutModel);
+
+			JSONArray subLayoutsJSONArray = jsonObject.getJSONArray(
+				"subLayouts");
+
+			if ((subLayoutsJSONArray != null) &&
+				(subLayoutsJSONArray.length() > 0)) {
+
+				for (int k = 0; k < subLayoutsJSONArray.length(); k++) {
+					JSONObject sublayoutJSONObject =
+						subLayoutsJSONArray.getJSONObject(k);
+
+					layoutModels.add(
+						newLayoutModel(
+							groupId, layoutModel.getLayoutId(),
+							StringUtil.replace(
+								StringUtil.toLowerCase(
+									sublayoutJSONObject.getString("name")),
+								CharPool.SPACE, CharPool.DASH),
+							sublayoutJSONObject.getBoolean("privateLayout"),
+							sublayoutJSONObject.getBoolean("hidden"),
+							sublayoutJSONObject.getString("layoutTemplateId"),
+							getPortletNames(
+								sublayoutJSONObject.getJSONArray("portlets"))));
+				}
+			}
+		}
+
+		return layoutModels;
 	}
 
 	public CommerceOrderItemModel newCommerceOrderItemModel(
@@ -3977,10 +4031,16 @@ public class DataFactory {
 	}
 
 	public List<LayoutSetModel> newLayoutSetModels(long groupId) {
+		return newLayoutSetModels(groupId, "classic_WAR_classictheme");
+	}
+
+	public List<LayoutSetModel> newLayoutSetModels(
+		long groupId, String themeId) {
+
 		List<LayoutSetModel> layoutSetModels = new ArrayList<>(2);
 
-		layoutSetModels.add(newLayoutSetModel(groupId, true));
-		layoutSetModels.add(newLayoutSetModel(groupId, false));
+		layoutSetModels.add(newLayoutSetModel(groupId, true, themeId));
+		layoutSetModels.add(newLayoutSetModel(groupId, false, themeId));
 
 		return layoutSetModels;
 	}
@@ -5585,8 +5645,8 @@ public class DataFactory {
 	}
 
 	protected LayoutModel newLayoutModel(
-		long groupId, String name, boolean privateLayout,
-		String layoutTemplateId, String... columns) {
+		long groupId, long parentLayoutId, String name, boolean privateLayout,
+		boolean hidden, String layoutTemplateId, String... columns) {
 
 		SimpleCounter simpleCounter = _layoutCounters.get(groupId);
 
@@ -5621,9 +5681,11 @@ public class DataFactory {
 		// Other fields
 
 		layoutModel.setLayoutId(simpleCounter.get());
+		layoutModel.setParentLayoutId(parentLayoutId);
 		layoutModel.setName(
 			"<?xml version=\"1.0\"?><root><name>" + name + "</name></root>");
 		layoutModel.setType(LayoutConstants.TYPE_PORTLET);
+		layoutModel.setHidden(hidden);
 
 		UnicodeProperties typeSettingsUnicodeProperties = new UnicodeProperties(
 			true);
@@ -5654,8 +5716,23 @@ public class DataFactory {
 		return layoutModel;
 	}
 
+	protected LayoutModel newLayoutModel(
+		long groupId, String name, boolean privateLayout,
+		String layoutTemplateId, String... columns) {
+
+		return newLayoutModel(
+			groupId, 0, name, privateLayout, false, layoutTemplateId, columns);
+	}
+
 	protected LayoutSetModel newLayoutSetModel(
 		long groupId, boolean privateLayout) {
+
+		return newLayoutSetModel(
+			groupId, privateLayout, "classic_WAR_classictheme");
+	}
+
+	protected LayoutSetModel newLayoutSetModel(
+		long groupId, boolean privateLayout, String themeId) {
 
 		LayoutSetModel layoutSetModel = new LayoutSetModelImpl();
 
@@ -5676,7 +5753,7 @@ public class DataFactory {
 		// Other fields
 
 		layoutSetModel.setPrivateLayout(privateLayout);
-		layoutSetModel.setThemeId("classic_WAR_classictheme");
+		layoutSetModel.setThemeId(themeId);
 		layoutSetModel.setColorSchemeId("01");
 
 		return layoutSetModel;

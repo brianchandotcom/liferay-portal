@@ -20,6 +20,14 @@ definition {
 		}
 	}
 
+	@priority = "4"
+	test AggregatedKeys {
+		property commerce.enabled = "true";
+		property custom.commerce.license = "commerce-dxp-license-developer-combined.xml";
+
+		CommerceLicense.viewCommerceAvailable();
+	}
+
 	@description = "This is a test for covering the following LPS-121306 and LPS-128094."
 	@priority = "5"
 	test AssertLicensesAppliedOnRestarts {

@@ -248,6 +248,7 @@ import com.liferay.portal.kernel.security.auth.FullNameGenerator;
 import com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -299,6 +300,7 @@ import com.liferay.portlet.asset.model.impl.AssetCategoryModelImpl;
 import com.liferay.portlet.asset.model.impl.AssetEntryModelImpl;
 import com.liferay.portlet.asset.model.impl.AssetTagModelImpl;
 import com.liferay.portlet.asset.model.impl.AssetVocabularyModelImpl;
+import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataModelImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryModelImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeModelImpl;
@@ -351,6 +353,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
@@ -376,6 +379,8 @@ public class DataFactory {
 		List<String> models = ModelHintsUtil.getModels();
 
 		models.add(Layout.class.getName());
+		models.add(NavItem.class.getName());
+		models.add(PortletDisplayTemplate.class.getName());
 		models.add(UserPersonalSite.class.getName());
 
 		models.add(_getMBDiscussionCombinedClassName(BlogsEntry.class));
@@ -1910,6 +1915,43 @@ public class DataFactory {
 		commercePriceListModel.setStatusDate(new Date());
 
 		return commercePriceListModel;
+	}
+
+	public List<DDMTemplateModel>
+			newCommerceSiteNavigationPortletDDMTemplateModels(long groupId)
+		throws Exception {
+
+		List<DDMTemplateModel> ddmTemplateModels = new ArrayList<>();
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+			StringUtil.read(
+				getResourceInputStream(
+					"commerce_theme_portlet_settings.json")));
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			JSONObject portletPreferencesJSONObject = jsonObject.getJSONObject(
+				"portletPreferences");
+
+			JSONObject displayStyleJSONObject =
+				portletPreferencesJSONObject.getJSONObject("displayStyle");
+
+			String fileName = displayStyleJSONObject.getString("FileName");
+
+			ddmTemplateModels.add(
+				newDDMTemplateModel(
+					groupId, _sampleUserId,
+					DDMTemplateConstants.TEMPLATE_MODE_CREATE,
+					displayStyleJSONObject.getString("Name"),
+					StringUtil.read(getResourceInputStream(fileName)),
+					getClassNameId(NavItem.class), 0,
+					getClassNameId(PortletDisplayTemplate.class),
+					_counter.get(),
+					StringUtil.removeSubstring(fileName, ".ftl")));
+		}
+
+		return ddmTemplateModels;
 	}
 
 	public List<PortletPreferencesModel>
@@ -4734,9 +4776,16 @@ public class DataFactory {
 	public List<ResourcePermissionModel> newResourcePermissionModels(
 		DDMTemplateModel ddmTemplateModel) {
 
+		String className = getClassName(
+			ddmTemplateModel.getResourceClassNameId());
+
 		String name = _getResourcePermissionModelName(
-			DDMTemplate.class.getName(),
-			getClassName(ddmTemplateModel.getResourceClassNameId()));
+			DDMTemplate.class.getName(), className);
+
+		if (className.equals(PortletDisplayTemplate.class.getName())) {
+			name = DDMTemplate.class.getName();
+		}
+
 		String primKey = String.valueOf(ddmTemplateModel.getTemplateId());
 
 		return newResourcePermissionModels(name, primKey, _sampleUserId);
@@ -5771,6 +5820,18 @@ public class DataFactory {
 		long groupId, long userId, long structureId, long sourceClassNameId,
 		long templateId) {
 
+		return newDDMTemplateModel(
+			groupId, userId, DDMTemplateConstants.TEMPLATE_MODE_CREATE,
+			"Basic Web Content", "${content.getData()}",
+			getClassNameId(DDMStructure.class), structureId, sourceClassNameId,
+			templateId, _JOURNAL_STRUCTURE_KEY);
+	}
+
+	protected DDMTemplateModel newDDMTemplateModel(
+		long groupId, long userId, String mode, String name, String script,
+		long classNameId, long classPK, long resourceClassNameId,
+		long templateId, String templateKey) {
+
 		DDMTemplateModel ddmTemplateModel = new DDMTemplateModelImpl();
 
 		// UUID
@@ -5796,24 +5857,25 @@ public class DataFactory {
 
 		// Other fields
 
-		ddmTemplateModel.setClassNameId(getClassNameId(DDMStructure.class));
-		ddmTemplateModel.setClassPK(structureId);
-		ddmTemplateModel.setResourceClassNameId(sourceClassNameId);
-		ddmTemplateModel.setTemplateKey(_JOURNAL_STRUCTURE_KEY);
+		ddmTemplateModel.setClassNameId(classNameId);
+		ddmTemplateModel.setClassPK(classPK);
+		ddmTemplateModel.setResourceClassNameId(resourceClassNameId);
+		ddmTemplateModel.setTemplateKey(templateKey);
 		ddmTemplateModel.setVersion(DDMTemplateConstants.VERSION_DEFAULT);
 
-		StringBundler sb = new StringBundler(3);
+		StringBundler sb = new StringBundler(4);
 
 		sb.append("<?xml version=\"1.0\"?><root available-locales=\"en_US\" ");
 		sb.append("default-locale=\"en_US\"><name language-id=\"en_US\">");
-		sb.append("Basic Web Content</name></root>");
+		sb.append(name);
+		sb.append("</name></root>");
 
 		ddmTemplateModel.setName(sb.toString());
 
 		ddmTemplateModel.setType(DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY);
-		ddmTemplateModel.setMode(DDMTemplateConstants.TEMPLATE_MODE_CREATE);
+		ddmTemplateModel.setMode(mode);
 		ddmTemplateModel.setLanguage(TemplateConstants.LANG_TYPE_FTL);
-		ddmTemplateModel.setScript("${content.getData()}");
+		ddmTemplateModel.setScript(script);
 		ddmTemplateModel.setCacheable(true);
 		ddmTemplateModel.setSmallImage(false);
 		ddmTemplateModel.setLastPublishDate(nextFutureDate());

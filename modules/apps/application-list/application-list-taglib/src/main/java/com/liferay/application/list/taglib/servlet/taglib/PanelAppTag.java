@@ -178,12 +178,17 @@ public class PanelAppTag extends BasePanelTag {
 		}
 
 		if (Validator.isNull(_label) && (_panelApp != null)) {
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(
-				themeDisplay.getCompanyId(), _panelApp.getPortletId());
-
 			_label = HtmlUtil.escape(
-				PortalUtil.getPortletTitle(
-					portlet, servletContext, themeDisplay.getLocale()));
+				_panelApp.getLabel(themeDisplay.getLocale()));
+
+			if (Validator.isNull(_label)) {
+				Portlet portlet = PortletLocalServiceUtil.getPortletById(
+					themeDisplay.getCompanyId(), _panelApp.getPortletId());
+
+				_label = HtmlUtil.escape(
+					PortalUtil.getPortletTitle(
+						portlet, servletContext, themeDisplay.getLocale()));
+			}
 
 			if (!_data.containsKey("qa-id")) {
 				_data.put("qa-id", "app");

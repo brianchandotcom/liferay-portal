@@ -16,7 +16,6 @@ package com.liferay.portal.crypto.hash.internal;
 
 import com.liferay.portal.crypto.hash.CryptoHashVerificationContext;
 import com.liferay.portal.crypto.hash.CryptoHashVerifier;
-import com.liferay.portal.crypto.hash.exception.CryptoHashException;
 import com.liferay.portal.crypto.hash.spi.CryptoHashProvider;
 import com.liferay.portal.crypto.hash.spi.CryptoHashProviderResponse;
 
@@ -29,12 +28,33 @@ import java.util.Map;
  * @author Arthur Chan
  * @author Carlos Sierra Andrés
  */
-public class CryptoHashVerifierImpl implements CryptoHashVerifier {
+public class CryptoHashRegistryImpl {
 
 	public CryptoHashProvider getCryptoHashProvider(
 		String cryptoHashProviderName) {
 
 		return _cryptoHashProviders.get(cryptoHashProviderName);
+	}
+
+	public CryptoHashVerifier getCryptoHashVerifier() {
+		return (input, hash, cryptoHashVerificationContexts) -> {
+			for (CryptoHashVerificationContext cryptoHashVerificationContext :
+					cryptoHashVerificationContexts) {
+
+				CryptoHashProvider cryptoHashProvider =
+					_cryptoHashProviders.get(
+						cryptoHashVerificationContext.
+							getCryptoHashProviderName());
+
+				CryptoHashProviderResponse cryptoHashProviderResponse =
+					cryptoHashProvider.generate(
+						cryptoHashVerificationContext.getSalt(), input);
+
+				input = cryptoHashProviderResponse.getHash();
+			}
+
+			return MessageDigest.isEqual(input, hash);
+		};
 	}
 
 	public void register(CryptoHashProvider cryptoHashProvider) {
@@ -44,28 +64,6 @@ public class CryptoHashVerifierImpl implements CryptoHashVerifier {
 
 	public void unregister(String cryptoHashProviderName) {
 		_cryptoHashProviders.remove(cryptoHashProviderName);
-	}
-
-	@Override
-	public boolean verify(
-			byte[] input, byte[] hash,
-			CryptoHashVerificationContext... cryptoHashVerificationContexts)
-		throws CryptoHashException {
-
-		for (CryptoHashVerificationContext cryptoHashVerificationContext :
-				cryptoHashVerificationContexts) {
-
-			CryptoHashProvider cryptoHashProvider = _cryptoHashProviders.get(
-				cryptoHashVerificationContext.getCryptoHashProviderName());
-
-			CryptoHashProviderResponse cryptoHashProviderResponse =
-				cryptoHashProvider.generate(
-					cryptoHashVerificationContext.getSalt(), input);
-
-			input = cryptoHashProviderResponse.getHash();
-		}
-
-		return MessageDigest.isEqual(input, hash);
 	}
 
 	private final Map<String, CryptoHashProvider> _cryptoHashProviders =

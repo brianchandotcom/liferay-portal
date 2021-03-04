@@ -420,7 +420,6 @@ definition {
 	@priority = "5"
 	test TranslateWebContentFromStructureWithFieldsetWithFieldGroup {
 		property portal.upstream = "quarantine";
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
@@ -442,13 +441,11 @@ definition {
 
 		DataEngine.editFieldTip(
 			fieldFieldLabel = "Text",
-			fieldHelp = "Text Field Help Text",
-			fieldsetModal = "true");
-
+			fieldHelp = "Text Field Help Text");
+			
 		DataEngine.editFieldTip(
 			fieldFieldLabel = "Rich Text",
-			fieldHelp = "Rich Text Field Help Text",
-			fieldsetModal = "true");
+			fieldHelp = "Rich Text Field Help Text");
 
 		PortletEntry.changeLocale(
 			locale = "pt-BR",
@@ -475,13 +472,11 @@ definition {
 
 		DataEngine.editFieldTip(
 			fieldFieldLabel = "Texto",
-			fieldHelp = "Texto de ajuda do campo de texto",
-			fieldsetModal = "true");
+			fieldHelp = "Texto de ajuda do campo de texto");
 
 		DataEngine.editFieldTip(
 			fieldFieldLabel = "Rico Texto",
-			fieldHelp = "Texto de ajuda do campo Rico Texto",
-			fieldsetModal = "true");
+			fieldHelp = "Texto de ajuda do campo Rico Texto");
 
 		Click(locator1 = "Modal#SAVE_BUTTON");
 

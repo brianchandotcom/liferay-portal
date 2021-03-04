@@ -22,6 +22,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,12 +61,13 @@ public class TestrayRoutine {
 	public TestrayBuild createTestrayBuild(
 		TestrayProductVersion testrayProductVersion, String buildName) {
 
-		return createTestrayBuild(testrayProductVersion, buildName, null, null);
+		return createTestrayBuild(
+			testrayProductVersion, buildName, null, null, null);
 	}
 
 	public TestrayBuild createTestrayBuild(
 		TestrayProductVersion testrayProductVersion, String buildName,
-		String buildDescription, String buildSHA) {
+		Date buildDate, String buildDescription, String buildSHA) {
 
 		if (testrayProductVersion == null) {
 			throw new RuntimeException("Please set a Testray product version");
@@ -83,6 +85,18 @@ public class TestrayRoutine {
 		sb.append(testrayProductVersion.getID());
 		sb.append("&testrayRoutineId=");
 		sb.append(getID());
+
+		if (buildDate != null) {
+			String buildDateString = JenkinsResultsParserUtil.toDateString(
+				buildDate, "MM-dd'T'HH:mm:ss.SSS'Z'", "America/Los_Angeles");
+
+			sb.append("&createDate=");
+			sb.append(buildDateString);
+			sb.append("&dueDate=");
+			sb.append(buildDateString);
+			sb.append("&modifiedDate=");
+			sb.append(buildDateString);
+		}
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(buildDescription)) {
 			sb.append("&description=");

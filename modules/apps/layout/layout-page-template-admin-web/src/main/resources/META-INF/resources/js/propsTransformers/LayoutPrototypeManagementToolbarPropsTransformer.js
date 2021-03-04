@@ -12,18 +12,31 @@
  * details.
  */
 
-import {DefaultEventHandler} from 'frontend-js-web';
+export default function propsTransformer({portletNamespace, ...otherProps}) {
+	return {
+		...otherProps,
+		onActionButtonClick(event, {item}) {
+			const data = item.data;
 
-class LayoutPrototypeManagementToolbarDefaultEventHandler extends DefaultEventHandler {
-	deleteSelectedLayoutPrototypes() {
-		if (
-			confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
-			)
-		) {
-			submitForm(this.one('#fm'));
-		}
-	}
+			const action = data?.action;
+
+			if (action === 'deleteSelectedLayoutPrototypes') {
+				if (
+					confirm(
+						Liferay.Language.get(
+							'are-you-sure-you-want-to-delete-this'
+						)
+					)
+				) {
+					const form = document.getElementById(
+						`${portletNamespace}fm`
+					);
+
+					if (form) {
+						submitForm(form);
+					}
+				}
+			}
+		},
+	};
 }
-
-export default LayoutPrototypeManagementToolbarDefaultEventHandler;

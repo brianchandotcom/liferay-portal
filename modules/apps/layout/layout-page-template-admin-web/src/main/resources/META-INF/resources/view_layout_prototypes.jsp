@@ -29,8 +29,9 @@ LayoutPrototypeDisplayContext layoutPrototypeDisplayContext = new LayoutPrototyp
 LayoutPrototypeManagementToolbarDisplayContext layoutPrototypeManagementToolbarDisplayContext = new LayoutPrototypeManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, layoutPrototypeDisplayContext);
 %>
 
-<clay:management-toolbar-v2
-	displayContext="<%= layoutPrototypeManagementToolbarDisplayContext %>"
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= layoutPrototypeManagementToolbarDisplayContext %>"
+	propsTransformer="js/propsTransformers/LayoutPrototypeManagementToolbarPropsTransformer"
 />
 
 <portlet:actionURL name="/layout_page_template_admin/delete_layout_prototype" var="deleteLayoutPrototypesURL">
@@ -73,8 +74,3 @@ LayoutPrototypeManagementToolbarDisplayContext layoutPrototypeManagementToolbarD
 		/>
 	</liferay-ui:search-container>
 </aui:form>
-
-<liferay-frontend:component
-	componentId="<%= layoutPrototypeManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/LayoutPrototypeManagementToolbarDefaultEventHandler.es"
-/>

@@ -244,10 +244,14 @@ definition {
 	}
 
 	@priority = "5"
-	test ViewCommerceDisabled {
+	test EnableCommerceAfterPortalStarts {
 		property commerce.enabled = "false";
 
 		CommerceLicense.viewCommerceMissing();
+
+		CommerceLicense.deployCommerceLicense();
+
+		CommerceLicense.executeSmoke();
 	}
 
 	@priority = "5"

@@ -80,7 +80,7 @@ definition {
 		property database.types = "mysql";
 		property liferay.online.properties = "true";
 		property portal.acceptance = "true";
-		property portal.smoke = "true";
+		property portal.smoke = "false";
 
 		AssertConsoleTextPresent(value1 = "Stopping blacklisted bundle");
 

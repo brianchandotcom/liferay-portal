@@ -73,6 +73,7 @@ import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceCatalogModel;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelModel;
+import com.liferay.commerce.product.model.CommerceChannelRelModel;
 import com.liferay.commerce.product.model.impl.CPAttachmentFileEntryModelImpl;
 import com.liferay.commerce.product.model.impl.CPDefinitionLocalizationModelImpl;
 import com.liferay.commerce.product.model.impl.CPDefinitionModelImpl;
@@ -86,6 +87,7 @@ import com.liferay.commerce.product.model.impl.CPTaxCategoryModelImpl;
 import com.liferay.commerce.product.model.impl.CProductModelImpl;
 import com.liferay.commerce.product.model.impl.CommerceCatalogModelImpl;
 import com.liferay.commerce.product.model.impl.CommerceChannelModelImpl;
+import com.liferay.commerce.product.model.impl.CommerceChannelRelModelImpl;
 import com.liferay.counter.kernel.model.Counter;
 import com.liferay.counter.kernel.model.CounterModel;
 import com.liferay.counter.model.impl.CounterModelImpl;
@@ -1272,8 +1274,27 @@ public class DataFactory {
 			commerceChannelModel.getName(), false);
 	}
 
+	public List<GroupModel> newCommerceChannelGroupModels(
+		List<CommerceChannelModel> commerceChannelModels) {
+
+		List<GroupModel> groupModels = new ArrayList<>(
+			commerceChannelModels.size());
+
+		for (CommerceChannelModel commerceChannelModel :
+				commerceChannelModels) {
+
+			groupModels.add(
+				newGroupModel(
+					_counter.get(), getClassNameId(CommerceChannel.class),
+					commerceChannelModel.getCommerceChannelId(),
+					commerceChannelModel.getName(), false));
+		}
+
+		return groupModels;
+	}
+
 	public CommerceChannelModel newCommerceChannelModel(
-		CommerceCurrencyModel commerceCurrencyModel) {
+		long groupId, CommerceCurrencyModel commerceCurrencyModel, int count) {
 
 		CommerceChannelModel commerceChannelModel =
 			new CommerceChannelModelImpl();
@@ -1292,14 +1313,59 @@ public class DataFactory {
 
 		// Other fields
 
-		commerceChannelModel.setSiteGroupId(1);
-		commerceChannelModel.setName(_SAMPLE_USER_NAME + " Channel");
+		commerceChannelModel.setSiteGroupId(groupId);
+		commerceChannelModel.setName(_SAMPLE_USER_NAME + " Channel" + count);
 		commerceChannelModel.setType("site");
 		commerceChannelModel.setTypeSettings(String.valueOf(_guestGroupId));
 		commerceChannelModel.setCommerceCurrencyCode(
 			commerceCurrencyModel.getCode());
 
 		return commerceChannelModel;
+	}
+
+	public List<CommerceChannelModel> newCommerceChannelModels(
+		List<GroupModel> groupModels,
+		CommerceCurrencyModel commerceCurrencyModel) {
+
+		List<CommerceChannelModel> commerceChannelModels = new ArrayList<>(
+			groupModels.size());
+
+		for (int i = 1; i <= groupModels.size(); i++) {
+			GroupModel groupModel = groupModels.get(i - 1);
+
+			commerceChannelModels.add(
+				newCommerceChannelModel(
+					groupModel.getGroupId(), commerceCurrencyModel, i));
+		}
+
+		return commerceChannelModels;
+	}
+
+	public CommerceChannelRelModel newCommerceChannelRelModel(
+		long classNameId, long classPK, long commerceChannelId) {
+
+		CommerceChannelRelModel commerceChannelRelModel =
+			new CommerceChannelRelModelImpl();
+
+		// PK fields
+
+		commerceChannelRelModel.setCommerceChannelRelId(_counter.get());
+
+		// Audit fields
+
+		commerceChannelRelModel.setCompanyId(_companyId);
+		commerceChannelRelModel.setUserId(_sampleUserId);
+		commerceChannelRelModel.setUserName(_SAMPLE_USER_NAME);
+		commerceChannelRelModel.setCreateDate(new Date());
+		commerceChannelRelModel.setModifiedDate(new Date());
+
+		// Other fields
+
+		commerceChannelRelModel.setClassNameId(classNameId);
+		commerceChannelRelModel.setClassPK(classPK);
+		commerceChannelRelModel.setCommerceChannelId(commerceChannelId);
+
+		return commerceChannelRelModel;
 	}
 
 	public CommerceCurrencyModel newCommerceCurrencyModel() {
@@ -1349,6 +1415,24 @@ public class DataFactory {
 		commerceCurrencyModel.setLastPublishDate(new Date());
 
 		return commerceCurrencyModel;
+	}
+
+	public List<GroupModel> newCommerceGroupModels() {
+		List<GroupModel> groupModels = new ArrayList<>(
+			BenchmarksPropsValues.MAX_GROUP_COUNT);
+
+		for (int i = 1; i <= BenchmarksPropsValues.MAX_COMMERCE_GROUP_COUNT;
+			 i++) {
+
+			long id = _counter.get();
+
+			groupModels.add(
+				newGroupModel(
+					id, getClassNameId(Group.class), id, "Commerce Site " + i,
+					true));
+		}
+
+		return groupModels;
 	}
 
 	public CommerceInventoryWarehouseItemModel

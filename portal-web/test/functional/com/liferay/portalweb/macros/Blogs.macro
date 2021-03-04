@@ -49,6 +49,10 @@ definition {
 				value1 = "${readingTime}");
 		}
 
+		if (isSet(injectCode)) {
+			AssertAlertNotPresent();
+		}
+
 		PortletEntry.publish();
 	}
 

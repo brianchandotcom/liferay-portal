@@ -30,13 +30,19 @@ export default (callback) => {
 
 	return (event) => {
 		const {
-			customProperties: {ddmStructureId},
+			customProperties: {ddmStructureId, nativeField},
 			fieldType,
 			label,
 		} = DataDefinitionUtils.getDataDefinitionField(
 			dataDefinition,
 			event.fieldName
 		);
+
+		// A Native Field cannot be removed from Object.
+
+		if (nativeField) {
+			return;
+		}
 
 		let {label: fieldTypeLabel} = fieldTypes.find(({name}) => {
 			return name === fieldType;

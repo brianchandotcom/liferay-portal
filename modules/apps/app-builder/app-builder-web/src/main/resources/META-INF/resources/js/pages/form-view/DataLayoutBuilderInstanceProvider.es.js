@@ -31,6 +31,7 @@ export default ({children, dataLayoutBuilder}) => {
 			dataLayout,
 			editingLanguageId,
 			focusedCustomObjectField,
+			focusedField,
 			hoveredField,
 		},
 		dispatch,
@@ -87,6 +88,9 @@ export default ({children, dataLayoutBuilder}) => {
 
 		const deleteFromObjectAction = {
 			action: (event) => deleteDefinitionFieldModal(event),
+			disabled:
+				focusedField?.nativeField ||
+				hoveredField?.customProperties?.nativeField,
 			label: Liferay.Language.get('delete-from-object'),
 		};
 
@@ -136,6 +140,7 @@ export default ({children, dataLayoutBuilder}) => {
 		dataLayoutBuilder,
 		dispatch,
 		duplicateField,
+		focusedField,
 		hoveredField,
 		deleteDefinitionFieldModal,
 		saveAsFieldset,

@@ -22,7 +22,7 @@ import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import {AppContextProvider} from '../../../../src/main/resources/META-INF/resources/js/AppContext.es';
 import EditFormView from '../../../../src/main/resources/META-INF/resources/js/pages/form-view/EditFormView.es';
-import {ENTRY, FORM_VIEW} from '../../constants.es';
+import {ENTRY, FORM_VIEW, dataDefinitionNativeField} from '../../constants.es';
 
 const {
 	EDIT_FORM_VIEW_PROPS,
@@ -367,6 +367,58 @@ describe('EditFormView', () => {
 		modal = document.querySelector('.remove-object-field-panel');
 
 		expect(modal).toBeFalsy();
+	});
+
+	it('renders as new-form-view with native objects', async () => {
+		const context = {
+			...FORM_VIEW_CONTEXT,
+			dataDefinition: {
+				...FORM_VIEW_CONTEXT.dataDefinition,
+				dataDefinitionFields: [
+					...FORM_VIEW_CONTEXT.dataDefinition.dataDefinitionFields,
+				],
+			},
+		};
+
+		setDataLayoutBuilderProps({
+			...dataLayoutBuilderProps,
+			getState: () => context,
+		});
+
+		const {container, queryByText, rerender} = render(
+			<EditFormViewWrapper />
+		);
+
+		await act(async () => {
+			jest.runAllTimers();
+		});
+
+		expect(queryByText('native-fields')).toBeFalsy();
+		expect(container.querySelectorAll('.custom-object-field')).toHaveLength(
+			3
+		);
+		expect(
+			container.querySelectorAll('.field-type-remove-icon')
+		).toHaveLength(3);
+
+		context.dataDefinition.dataDefinitionFields.push(
+			dataDefinitionNativeField
+		);
+
+		setDataLayoutBuilderProps({
+			...dataLayoutBuilderProps,
+			getState: () => context,
+		});
+
+		rerender(<EditFormViewWrapper />);
+
+		expect(queryByText('native-fields')).toBeTruthy();
+		expect(container.querySelectorAll('.custom-object-field')).toHaveLength(
+			4
+		);
+		expect(
+			container.querySelectorAll('.field-type-remove-icon')
+		).toHaveLength(3);
 	});
 
 	it('delete field from Layout', async () => {

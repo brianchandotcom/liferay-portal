@@ -180,6 +180,34 @@ const dataDefinitionField = {
 	},
 };
 
+export const dataDefinitionNativeField = {
+	customProperties: {
+		nativeField: true,
+		placeholder: {
+			en_US: '',
+		},
+		tooltip: {
+			en_US: '',
+		},
+	},
+	defaultValue: {
+		en_US: '',
+	},
+	description: {
+		en_US: 'Account Email',
+	},
+	fieldType: 'text',
+	label: {
+		en_US: 'Account Email',
+	},
+	localizable: true,
+	name: 'AccountEmail',
+	nestedDataDefinitionFields: [],
+	repeatable: false,
+	required: true,
+	showLabel: true,
+};
+
 export const dataDefinitionWithAllTypes = {
 	availableLanguageIds: ['en_US'],
 	dataDefinitionFields: [

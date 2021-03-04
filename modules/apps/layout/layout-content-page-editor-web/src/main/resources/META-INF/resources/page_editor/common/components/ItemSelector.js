@@ -22,7 +22,7 @@ import React, {useState} from 'react';
 import {config} from '../../app/config/index';
 import {useSelector} from '../../app/store/index';
 import {useId} from '../../app/utils/useId';
-import {openInfoItemSelector} from '../../core/openInfoItemSelector';
+import {openItemSelector} from '../../core/openItemSelector';
 
 export default function ItemSelector({
 	eventName,
@@ -47,7 +47,7 @@ export default function ItemSelector({
 	const defaultEventName = `${config.portletNamespace}selectInfoItem`;
 
 	const openModal = () =>
-		openInfoItemSelector({
+		openItemSelector({
 			callback: onItemSelect,
 			eventName: eventName || defaultEventName,
 			itemSelectorURL: itemSelectorURL || config.infoItemSelectorURL,

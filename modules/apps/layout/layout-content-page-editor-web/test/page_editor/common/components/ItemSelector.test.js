@@ -18,7 +18,7 @@ import React from 'react';
 
 import {StoreAPIContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
 import ItemSelector from '../../../../src/main/resources/META-INF/resources/page_editor/common/components/ItemSelector';
-import {openInfoItemSelector} from '../../../../src/main/resources/META-INF/resources/page_editor/core/openInfoItemSelector';
+import {openItemSelector} from '../../../../src/main/resources/META-INF/resources/page_editor/core/openItemSelector';
 
 jest.mock(
 	'../../../../src/main/resources/META-INF/resources/page_editor/app/config',
@@ -31,9 +31,9 @@ jest.mock(
 );
 
 jest.mock(
-	'../../../../src/main/resources/META-INF/resources/page_editor/core/openInfoItemSelector',
+	'../../../../src/main/resources/META-INF/resources/page_editor/core/openItemSelector',
 	() => ({
-		openInfoItemSelector: jest.fn(() => {}),
+		openItemSelector: jest.fn(() => {}),
 	})
 );
 
@@ -57,7 +57,7 @@ describe('ItemSelector', () => {
 	afterEach(() => {
 		cleanup();
 
-		openInfoItemSelector.mockClear();
+		openItemSelector.mockClear();
 	});
 
 	it('renders correctly', () => {
@@ -84,15 +84,15 @@ describe('ItemSelector', () => {
 		expect(getByLabelText('itemSelectorLabel')).toBeEmpty();
 	});
 
-	it('calls openInfoItemSelector when there are not mapping items and plus button is clicked', () => {
+	it('calls openItemSelector when there are not mapping items and plus button is clicked', () => {
 		const {getByLabelText} = renderItemSelector({});
 
 		fireEvent.click(getByLabelText('select-content-button'));
 
-		expect(openInfoItemSelector).toBeCalled();
+		expect(openItemSelector).toBeCalled();
 	});
 
-	it('shows recent items dropdown instead of calling openInfoItemSelector when there are mapping items', () => {
+	it('shows recent items dropdown instead of calling openItemSelector when there are mapping items', () => {
 		const mappedInfoItems = [
 			{classNameId: '001', classPK: '002', title: 'Mapped Item Title'},
 		];
@@ -105,6 +105,6 @@ describe('ItemSelector', () => {
 
 		expect(getByText('Mapped Item Title')).toBeInTheDocument();
 
-		expect(openInfoItemSelector).not.toBeCalled();
+		expect(openItemSelector).not.toBeCalled();
 	});
 });

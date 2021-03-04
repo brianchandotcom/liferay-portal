@@ -14,7 +14,7 @@
 
 import {openSelectionModal} from 'frontend-js-web';
 
-export function openInfoItemSelector({
+export function openItemSelector({
 	callback,
 	eventName,
 	itemSelectorURL,
@@ -49,7 +49,7 @@ export function openInfoItemSelector({
 				infoItem = {...infoItem, ...value};
 			}
 
-			callback(infoItem);
+			infoItem = callback(infoItem);
 		},
 		selectEventName: eventName,
 		title: Liferay.Language.get('select'),

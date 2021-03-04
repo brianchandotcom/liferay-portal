@@ -14,12 +14,12 @@
 
 import {openSelectionModal} from 'frontend-js-web';
 
-import {openInfoItemSelector} from '../../../src/main/resources/META-INF/resources/page_editor/core/openInfoItemSelector';
+import {openItemSelector} from '../../../src/main/resources/META-INF/resources/page_editor/core/openItemSelector';
 
 jest.mock('frontend-js-web');
 
 const openModal = ({callback = () => {}, destroyedCallback = null}) => {
-	openInfoItemSelector({
+	openItemSelector({
 		callback,
 		destroyedCallback,
 		eventName: '',
@@ -32,7 +32,7 @@ const openModal = ({callback = () => {}, destroyedCallback = null}) => {
 	return firstArgument;
 };
 
-describe('openInfoItemSelector', () => {
+describe('openItemSelector', () => {
 	afterEach(() => {
 		openSelectionModal.mockReset();
 	});

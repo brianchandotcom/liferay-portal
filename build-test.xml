@@ -724,23 +724,24 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 									<arg value="ifconfig eth0 | grep -o -E '([[:xdigit:]]{1,2}:){5}[[:xdigit:]]{1,2}'" />
 								</exec>
 							</then>
+							<elseif>
+								<isset property="network.interface" />
+								<then>
+									<exec executable="/bin/bash" os="${os.unix}" outputproperty="mac.address">
+										<arg value="-c" />
+										<arg value="ifconfig ${network.interface} | grep -o -E '([[:xdigit:]]{1,2}:){5}[[:xdigit:]]{1,2}'" />
+									</exec>
+								</then>
+							</elseif>
 							<else>
-								<if>
-									<isset property="network.interface" />
-									<then>
-										<exec executable="/bin/bash" os="${os.unix}" outputproperty="mac.address">
-											<arg value="-c" />
-											<arg value="ifconfig ${network.interface} | grep -o -E '([[:xdigit:]]{1,2}:){5}[[:xdigit:]]{1,2}'" />
-										</exec>
-									</then>
-									<else>
-										<fail message="${network.interface} must be set if running get-mac-address locally" />
-									</else>
-								</if>
+								<fail message="${network.interface} must be set if running get-mac-address locally" />
 							</else>
 						</if>
 					</then>
 				</elseif>
+				<else>
+					<fail message="Support for running get-mac-address on Windows not yet added" />
+				</else>
 			</if>
 		</sequential>
 	</macrodef>

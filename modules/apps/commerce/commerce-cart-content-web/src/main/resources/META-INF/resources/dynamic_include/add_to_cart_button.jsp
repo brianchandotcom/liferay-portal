@@ -20,24 +20,10 @@
 CPContentHelper cpContentHelper = (CPContentHelper)request.getAttribute(CPContentWebKeys.CP_CONTENT_HELPER);
 
 CPCatalogEntry cpCatalogEntry = cpContentHelper.getCPCatalogEntry(request);
-CPInstance cpInstance = cpContentHelper.getDefaultCPInstance(request);
-
-long cpInstanceId = 0;
-
-if (cpInstance != null) {
-	cpInstanceId = cpInstance.getCPInstanceId();
-}
-
-String productContentId = liferayPortletResponse.getNamespace() + cpCatalogEntry.getCPDefinitionId() + "ProductContent";
-String quantityInputId = liferayPortletResponse.getNamespace() + cpCatalogEntry.getCPDefinitionId() + "Quantity";
 %>
 
-<liferay-commerce:quantity-input CPDefinitionId="<%= cpCatalogEntry.getCPDefinitionId() %>" useSelect="<%= true %>" />
-
-<liferay-commerce-cart:add-to-cart
-	CPDefinitionId="<%= cpCatalogEntry.getCPDefinitionId() %>"
-	CPInstanceId="<%= cpInstanceId %>"
-	elementClasses="btn-lg btn-secondary"
-	productContentId='<%= productContentId %>'
-	taglibQuantityInputId='<%= quantityInputId %>'
+<commerce-ui:add-to-cart
+	CPCatalogEntry="<%= cpCatalogEntry %>"
+	options='<%= "[]" %>'
+	willUpdate="<%= true %>"
 />

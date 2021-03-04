@@ -72,7 +72,7 @@ if ((layoutPageTemplateEntry == null) || !Objects.equals(layoutPageTemplateEntry
 			<b><liferay-ui:message key="master-name" />:</b> <span id="<portlet:namespace />masterLayoutName"><%= (masterLayoutPageTemplateEntry != null) ? masterLayoutPageTemplateEntry.getName() : LanguageUtil.get(request, "blank") %></span>
 		</p>
 
-		<div class="button-holder">
+		<clay:content-row>
 
 			<%
 			String editMasterLayoutURL = StringPool.BLANK;
@@ -86,38 +86,43 @@ if ((layoutPageTemplateEntry == null) || !Objects.equals(layoutPageTemplateEntry
 			}
 			%>
 
-			<clay:button
-				additionalProps='<%=
-					HashMapBuilder.<String, Object>put(
-						"editableMasterLayout", editableMasterLayout
-					).put(
-						"editMasterLayoutURL", editMasterLayoutURL
-					).build()
-				%>'
-				cssClass='<%= (masterLayoutPageTemplateEntry == null) ? "hide" : StringPool.BLANK %>'
-				id='<%= liferayPortletResponse.getNamespace() + "editMasterLayoutButton" %>'
-				label="edit-master"
-				propsTransformer="js/layout/EditMasterLayoutButtonPropsTransformer"
-				small="<%= true %>"
-			/>
+			<clay:content-col
+				cssClass="mr-4"
+			>
+				<clay:button
+					additionalProps='<%=
+						HashMapBuilder.<String, Object>put(
+							"editableMasterLayout", editableMasterLayout
+						).put(
+							"editMasterLayoutURL", editMasterLayoutURL
+						).build()
+					%>'
+					cssClass='<%= (masterLayoutPageTemplateEntry == null) ? "hide" : StringPool.BLANK %>'
+					id='<%= liferayPortletResponse.getNamespace() + "editMasterLayoutButton" %>'
+					label="edit-master"
+					propsTransformer="js/layout/EditMasterLayoutButtonPropsTransformer"
+					small="<%= true %>"
+				/>
+			</clay:content-col>
 
 			<portlet:renderURL var="changeMasterLayoutURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 				<portlet:param name="mvcPath" value="/select_master_layout.jsp" />
 			</portlet:renderURL>
 
-			<clay:button
-				additionalProps='<%=
-					HashMapBuilder.<String, Object>put(
-						"url", changeMasterLayoutURL.toString()
-					).build()
-				%>'
-				id='<%= liferayPortletResponse.getNamespace() + "changeMasterLayoutButton" %>'
-				label="change-master"
-				propsTransformer="js/layout/ChangeMasterLayoutButtonPropsTransformer"
-				small="<%= true %>"
-			/>
-		</div
-	>
+			<clay:content-col>
+				<clay:button
+					additionalProps='<%=
+						HashMapBuilder.<String, Object>put(
+							"url", changeMasterLayoutURL.toString()
+						).build()
+					%>'
+					id='<%= liferayPortletResponse.getNamespace() + "changeMasterLayoutButton" %>'
+					label="change-master"
+					propsTransformer="js/layout/ChangeMasterLayoutButtonPropsTransformer"
+					small="<%= true %>"
+				/>
+			</clay:content-col>
+		</clay:content-row>
 	</clay:sheet-section>
 </c:if>
 

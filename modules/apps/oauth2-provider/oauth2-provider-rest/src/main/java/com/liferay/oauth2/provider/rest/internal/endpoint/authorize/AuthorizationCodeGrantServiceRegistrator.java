@@ -15,6 +15,7 @@
 package com.liferay.oauth2.provider.rest.internal.endpoint.authorize;
 
 import com.liferay.oauth2.provider.configuration.OAuth2ProviderConfiguration;
+import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.oauth2.provider.rest.internal.endpoint.constants.OAuth2ProviderRESTEndpointConstants;
 import com.liferay.oauth2.provider.rest.internal.endpoint.liferay.LiferayOAuthDataProvider;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.util.CookieKeys;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.MapUtil;
 
@@ -30,9 +32,12 @@ import java.net.URI;
 import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
@@ -48,7 +53,9 @@ import org.apache.cxf.rs.security.oauth2.common.UserSubject;
 import org.apache.cxf.rs.security.oauth2.provider.OAuthServiceException;
 import org.apache.cxf.rs.security.oauth2.provider.SubjectCreator;
 import org.apache.cxf.rs.security.oauth2.services.AuthorizationCodeGrantService;
+import org.apache.cxf.rs.security.oauth2.tokens.refresh.RefreshToken;
 import org.apache.cxf.rs.security.oauth2.utils.OAuthConstants;
+import org.apache.cxf.rs.security.oauth2.utils.OAuthUtils;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -69,6 +76,10 @@ public class AuthorizationCodeGrantServiceRegistrator {
 	public static class LiferayAuthorizationCodeGrantService
 		extends AuthorizationCodeGrantService {
 
+		public LiferayOAuthDataProvider getDataProvider() {
+			return getDataProvider();
+		}
+
 		@Override
 		protected boolean canAuthorizationBeSkipped(
 			MultivaluedMap<String, String> params, Client client,
@@ -81,6 +92,44 @@ public class AuthorizationCodeGrantServiceRegistrator {
 						PROPERTY_KEY_CLIENT_TRUSTED_APPLICATION)) {
 
 				return true;
+			}
+
+			if (MapUtil.getBoolean(
+					client.getProperties(),
+					OAuth2ProviderRESTEndpointConstants.
+						PROPERTY_KEY_CLIENT_REMEMBER_DEVICE)) {
+
+				String rememberDeviceCookieContent =
+					_getRememberDeviceCookieContent();
+
+				if (rememberDeviceCookieContent != null) {
+					long userId = GetterUtil.getLong(userSubject.getId());
+
+					OAuth2Authorization oAuth2Authorization =
+						getDataProvider().
+							getOAuth2AuthorizationByRememberDeviceContent(
+								client, rememberDeviceCookieContent, userId);
+
+					if ((oAuth2Authorization != null) &&
+						rememberDeviceCookieContent.equals(
+							oAuth2Authorization.getRememberDeviceContent())) {
+
+						RefreshToken refreshToken =
+							getDataProvider().getRefreshToken(
+								oAuth2Authorization.getRefreshTokenContent());
+
+						if ((refreshToken != null) &&
+							!OAuthUtils.isExpired(
+								refreshToken.getIssuedAt(),
+								refreshToken.getExpiresIn())) {
+
+							getDataProvider().doRevokeRefreshToken(
+								refreshToken);
+
+							return true;
+						}
+					}
+				}
 			}
 
 			return super.canAuthorizationBeSkipped(
@@ -160,6 +209,24 @@ public class AuthorizationCodeGrantServiceRegistrator {
 			}
 
 			return oAuthRedirectionState;
+		}
+
+		private String _getRememberDeviceCookieContent() {
+			HttpServletRequest httpServletRequest =
+				getMessageContext().getHttpServletRequest();
+
+			return Stream.of(
+				httpServletRequest.getCookies()
+			).filter(
+				cookie -> Objects.equals(
+					cookie.getName(),
+					OAuth2ProviderRESTEndpointConstants.COOKIE_REMEMBER_DEVICE)
+			).map(
+				Cookie::getValue
+			).findFirst(
+			).orElse(
+				null
+			);
 		}
 
 		private Cookie _setRememberDeviceCookie() {

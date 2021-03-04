@@ -83,7 +83,8 @@ public class OAuth2AuthorizationModelImpl
 		{"refreshTokenContent", Types.CLOB},
 		{"refreshTokenContentHash", Types.BIGINT},
 		{"refreshTokenCreateDate", Types.TIMESTAMP},
-		{"refreshTokenExpirationDate", Types.TIMESTAMP}
+		{"refreshTokenExpirationDate", Types.TIMESTAMP},
+		{"rememberDeviceContent", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -107,10 +108,11 @@ public class OAuth2AuthorizationModelImpl
 		TABLE_COLUMNS_MAP.put("refreshTokenContentHash", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("refreshTokenCreateDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("refreshTokenExpirationDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("rememberDeviceContent", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table OAuth2Authorization (oAuth2AuthorizationId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,oAuth2ApplicationId LONG,oA2AScopeAliasesId LONG,accessTokenContent TEXT null,accessTokenContentHash LONG,accessTokenCreateDate DATE null,accessTokenExpirationDate DATE null,remoteHostInfo VARCHAR(255) null,remoteIPInfo VARCHAR(75) null,refreshTokenContent TEXT null,refreshTokenContentHash LONG,refreshTokenCreateDate DATE null,refreshTokenExpirationDate DATE null)";
+		"create table OAuth2Authorization (oAuth2AuthorizationId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,oAuth2ApplicationId LONG,oA2AScopeAliasesId LONG,accessTokenContent TEXT null,accessTokenContentHash LONG,accessTokenCreateDate DATE null,accessTokenExpirationDate DATE null,remoteHostInfo VARCHAR(255) null,remoteIPInfo VARCHAR(75) null,refreshTokenContent TEXT null,refreshTokenContentHash LONG,refreshTokenCreateDate DATE null,refreshTokenExpirationDate DATE null,rememberDeviceContent VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table OAuth2Authorization";
@@ -155,14 +157,20 @@ public class OAuth2AuthorizationModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long USERID_COLUMN_BITMASK = 16L;
+	public static final long REMEMBERDEVICECONTENT_COLUMN_BITMASK = 16L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
+	public static final long USERID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long OAUTH2AUTHORIZATIONID_COLUMN_BITMASK = 32L;
+	public static final long OAUTH2AUTHORIZATIONID_COLUMN_BITMASK = 64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -216,6 +224,7 @@ public class OAuth2AuthorizationModelImpl
 		model.setRefreshTokenCreateDate(soapModel.getRefreshTokenCreateDate());
 		model.setRefreshTokenExpirationDate(
 			soapModel.getRefreshTokenExpirationDate());
+		model.setRememberDeviceContent(soapModel.getRememberDeviceContent());
 
 		return model;
 	}
@@ -495,6 +504,13 @@ public class OAuth2AuthorizationModelImpl
 			"refreshTokenExpirationDate",
 			(BiConsumer<OAuth2Authorization, Date>)
 				OAuth2Authorization::setRefreshTokenExpirationDate);
+		attributeGetterFunctions.put(
+			"rememberDeviceContent",
+			OAuth2Authorization::getRememberDeviceContent);
+		attributeSetterBiConsumers.put(
+			"rememberDeviceContent",
+			(BiConsumer<OAuth2Authorization, String>)
+				OAuth2Authorization::setRememberDeviceContent);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -832,6 +848,34 @@ public class OAuth2AuthorizationModelImpl
 		_refreshTokenExpirationDate = refreshTokenExpirationDate;
 	}
 
+	@Override
+	public String getRememberDeviceContent() {
+		if (_rememberDeviceContent == null) {
+			return "";
+		}
+		else {
+			return _rememberDeviceContent;
+		}
+	}
+
+	@Override
+	public void setRememberDeviceContent(String rememberDeviceContent) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_rememberDeviceContent = rememberDeviceContent;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalRememberDeviceContent() {
+		return getColumnOriginalValue("rememberDeviceContent");
+	}
+
 	public long getColumnBitmask() {
 		if (_columnBitmask > 0) {
 			return _columnBitmask;
@@ -915,6 +959,8 @@ public class OAuth2AuthorizationModelImpl
 			getRefreshTokenCreateDate());
 		oAuth2AuthorizationImpl.setRefreshTokenExpirationDate(
 			getRefreshTokenExpirationDate());
+		oAuth2AuthorizationImpl.setRememberDeviceContent(
+			getRememberDeviceContent());
 
 		oAuth2AuthorizationImpl.resetOriginalValues();
 
@@ -1113,6 +1159,18 @@ public class OAuth2AuthorizationModelImpl
 				Long.MIN_VALUE;
 		}
 
+		oAuth2AuthorizationCacheModel.rememberDeviceContent =
+			getRememberDeviceContent();
+
+		String rememberDeviceContent =
+			oAuth2AuthorizationCacheModel.rememberDeviceContent;
+
+		if ((rememberDeviceContent != null) &&
+			(rememberDeviceContent.length() == 0)) {
+
+			oAuth2AuthorizationCacheModel.rememberDeviceContent = null;
+		}
+
 		return oAuth2AuthorizationCacheModel;
 	}
 
@@ -1203,6 +1261,7 @@ public class OAuth2AuthorizationModelImpl
 	private long _refreshTokenContentHash;
 	private Date _refreshTokenCreateDate;
 	private Date _refreshTokenExpirationDate;
+	private String _rememberDeviceContent;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -1258,6 +1317,8 @@ public class OAuth2AuthorizationModelImpl
 			"refreshTokenCreateDate", _refreshTokenCreateDate);
 		_columnOriginalValues.put(
 			"refreshTokenExpirationDate", _refreshTokenExpirationDate);
+		_columnOriginalValues.put(
+			"rememberDeviceContent", _rememberDeviceContent);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -1315,6 +1376,8 @@ public class OAuth2AuthorizationModelImpl
 		columnBitmasks.put("refreshTokenCreateDate", 32768L);
 
 		columnBitmasks.put("refreshTokenExpirationDate", 65536L);
+
+		columnBitmasks.put("rememberDeviceContent", 131072L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

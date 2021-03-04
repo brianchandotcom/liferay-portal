@@ -44,7 +44,7 @@ public class OAuth2ApplicationLocalServiceWrapper
 				java.util.List<String> featuresList, String homePageURL,
 				long iconFileEntryId, String name, String privacyPolicyURL,
 				java.util.List<String> redirectURIsList,
-				boolean trustedApplication,
+				boolean rememeberDevice, boolean trustedApplication,
 				java.util.function.Consumer
 					<com.liferay.oauth2.provider.util.builder.
 						OAuth2ScopeBuilder> builderConsumer,
@@ -55,15 +55,39 @@ public class OAuth2ApplicationLocalServiceWrapper
 			companyId, userId, userName, allowedGrantTypesList,
 			clientCredentialUserId, clientId, clientProfile, clientSecret,
 			description, featuresList, homePageURL, iconFileEntryId, name,
-			privacyPolicyURL, redirectURIsList, trustedApplication,
-			builderConsumer, serviceContext);
+			privacyPolicyURL, redirectURIsList, rememeberDevice,
+			trustedApplication, builderConsumer, serviceContext);
+	}
+
+	@Override
+	public com.liferay.oauth2.provider.model.OAuth2Application
+			addOAuth2Application(
+				long companyId, long userId, String userName,
+				java.util.List<com.liferay.oauth2.provider.constants.GrantType>
+					allowedGrantTypesList,
+				long clientCredentialUserId, String clientId, int clientProfile,
+				String clientSecret, String description,
+				java.util.List<String> featuresList, String homePageURL,
+				long iconFileEntryId, String name, String privacyPolicyURL,
+				java.util.List<String> redirectURIsList, boolean rememberDevice,
+				java.util.List<String> scopeAliasesList,
+				boolean trustedApplication,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _oAuth2ApplicationLocalService.addOAuth2Application(
+			companyId, userId, userName, allowedGrantTypesList,
+			clientCredentialUserId, clientId, clientProfile, clientSecret,
+			description, featuresList, homePageURL, iconFileEntryId, name,
+			privacyPolicyURL, redirectURIsList, rememberDevice,
+			scopeAliasesList, trustedApplication, serviceContext);
 	}
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 #addOAuth2Application(long, long, String, List, long, String,
 	 int, String, String, List, String, long, String, String,
-	 List, boolean, Consumer, ServiceContext)}
+	 List, boolean, boolean, Consumer, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -91,35 +115,12 @@ public class OAuth2ApplicationLocalServiceWrapper
 			serviceContext);
 	}
 
-	@Override
-	public com.liferay.oauth2.provider.model.OAuth2Application
-			addOAuth2Application(
-				long companyId, long userId, String userName,
-				java.util.List<com.liferay.oauth2.provider.constants.GrantType>
-					allowedGrantTypesList,
-				long clientCredentialUserId, String clientId, int clientProfile,
-				String clientSecret, String description,
-				java.util.List<String> featuresList, String homePageURL,
-				long iconFileEntryId, String name, String privacyPolicyURL,
-				java.util.List<String> redirectURIsList,
-				java.util.List<String> scopeAliasesList,
-				boolean trustedApplication,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _oAuth2ApplicationLocalService.addOAuth2Application(
-			companyId, userId, userName, allowedGrantTypesList,
-			clientCredentialUserId, clientId, clientProfile, clientSecret,
-			description, featuresList, homePageURL, iconFileEntryId, name,
-			privacyPolicyURL, redirectURIsList, scopeAliasesList,
-			trustedApplication, serviceContext);
-	}
-
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 #addOAuth2Application(long, long, String, List, long, String,
 	 int, String, String, List, String, long, String, String,
-	 List, List, boolean, ServiceContext)} (String, long)}
+	 List, boolean, List, boolean, ServiceContext)} (String,
+	 long)}
 	 */
 	@Deprecated
 	@Override
@@ -498,7 +499,7 @@ public class OAuth2ApplicationLocalServiceWrapper
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 #updateOAuth2Application(long, long, List, long, String, int,
 	 String, String, List, String, long, String, String, List,
-	 boolean)}
+	 boolean, boolean)}
 	 */
 	@Deprecated
 	@Override
@@ -559,7 +560,7 @@ public class OAuth2ApplicationLocalServiceWrapper
 				String clientSecret, String description,
 				java.util.List<String> featuresList, String homePageURL,
 				long iconFileEntryId, String name, String privacyPolicyURL,
-				java.util.List<String> redirectURIsList,
+				java.util.List<String> redirectURIsList, boolean rememberDevice,
 				boolean trustedApplication)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -568,7 +569,7 @@ public class OAuth2ApplicationLocalServiceWrapper
 			allowedGrantTypesList, clientCredentialUserId, clientId,
 			clientProfile, clientSecret, description, featuresList, homePageURL,
 			iconFileEntryId, name, privacyPolicyURL, redirectURIsList,
-			trustedApplication);
+			rememberDevice, trustedApplication);
 	}
 
 	/**

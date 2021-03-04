@@ -65,6 +65,7 @@ public class OAuth2ApplicationWrapper
 		attributes.put("name", getName());
 		attributes.put("privacyPolicyURL", getPrivacyPolicyURL());
 		attributes.put("redirectURIs", getRedirectURIs());
+		attributes.put("rememberDevice", isRememberDevice());
 		attributes.put("trustedApplication", isTrustedApplication());
 
 		return attributes;
@@ -193,6 +194,12 @@ public class OAuth2ApplicationWrapper
 
 		if (redirectURIs != null) {
 			setRedirectURIs(redirectURIs);
+		}
+
+		Boolean rememberDevice = (Boolean)attributes.get("rememberDevice");
+
+		if (rememberDevice != null) {
+			setRememberDevice(rememberDevice);
 		}
 
 		Boolean trustedApplication = (Boolean)attributes.get(
@@ -421,6 +428,16 @@ public class OAuth2ApplicationWrapper
 	}
 
 	/**
+	 * Returns the remember device of this o auth2 application.
+	 *
+	 * @return the remember device of this o auth2 application
+	 */
+	@Override
+	public boolean getRememberDevice() {
+		return model.getRememberDevice();
+	}
+
+	/**
 	 * Returns the trusted application of this o auth2 application.
 	 *
 	 * @return the trusted application of this o auth2 application
@@ -458,6 +475,16 @@ public class OAuth2ApplicationWrapper
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
+	}
+
+	/**
+	 * Returns <code>true</code> if this o auth2 application is remember device.
+	 *
+	 * @return <code>true</code> if this o auth2 application is remember device; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isRememberDevice() {
+		return model.isRememberDevice();
 	}
 
 	/**
@@ -694,6 +721,16 @@ public class OAuth2ApplicationWrapper
 	@Override
 	public void setRedirectURIsList(java.util.List<String> redirectURIsList) {
 		model.setRedirectURIsList(redirectURIsList);
+	}
+
+	/**
+	 * Sets whether this o auth2 application is remember device.
+	 *
+	 * @param rememberDevice the remember device of this o auth2 application
+	 */
+	@Override
+	public void setRememberDevice(boolean rememberDevice) {
+		model.setRememberDevice(rememberDevice);
 	}
 
 	/**

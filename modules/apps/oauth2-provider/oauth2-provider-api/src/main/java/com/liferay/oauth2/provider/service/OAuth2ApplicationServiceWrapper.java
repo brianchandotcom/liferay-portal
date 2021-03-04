@@ -42,7 +42,7 @@ public class OAuth2ApplicationServiceWrapper
 				String clientSecret, String description,
 				java.util.List<String> featuresList, String homePageURL,
 				long iconFileEntryId, String name, String privacyPolicyURL,
-				java.util.List<String> redirectURIsList,
+				java.util.List<String> redirectURIsList, boolean rememberDevice,
 				java.util.List<String> scopeAliasesList,
 				boolean trustedApplication,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -52,14 +52,15 @@ public class OAuth2ApplicationServiceWrapper
 			allowedGrantTypesList, clientCredentialUserId, clientId,
 			clientProfile, clientSecret, description, featuresList, homePageURL,
 			iconFileEntryId, name, privacyPolicyURL, redirectURIsList,
-			scopeAliasesList, trustedApplication, serviceContext);
+			rememberDevice, scopeAliasesList, trustedApplication,
+			serviceContext);
 	}
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 #addOAuth2Application(List, long, String, int, String,
-	 String, List, String, long, String, String, List, List,
-	 boolean, ServiceContext)}
+	 String, List, String, long, String, String, List, boolean,
+	 List, boolean, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -182,9 +183,9 @@ public class OAuth2ApplicationServiceWrapper
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #updateOAuth2Application(long, List, long, String, int,
+	 #updateOAuth2Application(long, long, List, long, String, int,
 	 String, String, List, String, long, String, String, List,
-	 long, ServiceContext)}
+	 boolean, boolean)}
 	 */
 	@Deprecated
 	@Override
@@ -245,7 +246,7 @@ public class OAuth2ApplicationServiceWrapper
 				String clientSecret, String description,
 				java.util.List<String> featuresList, String homePageURL,
 				long iconFileEntryId, String name, String privacyPolicyURL,
-				java.util.List<String> redirectURIsList,
+				java.util.List<String> redirectURIsList, boolean rememberDevice,
 				boolean trustedApplication)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -254,7 +255,7 @@ public class OAuth2ApplicationServiceWrapper
 			allowedGrantTypesList, clientCredentialUserId, clientId,
 			clientProfile, clientSecret, description, featuresList, homePageURL,
 			iconFileEntryId, name, privacyPolicyURL, redirectURIsList,
-			trustedApplication);
+			rememberDevice, trustedApplication);
 	}
 
 	@Override

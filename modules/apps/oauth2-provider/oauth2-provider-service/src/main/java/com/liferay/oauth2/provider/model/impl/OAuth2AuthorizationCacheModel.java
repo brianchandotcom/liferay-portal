@@ -64,7 +64,7 @@ public class OAuth2AuthorizationCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{oAuth2AuthorizationId=");
 		sb.append(oAuth2AuthorizationId);
@@ -100,6 +100,8 @@ public class OAuth2AuthorizationCacheModel
 		sb.append(refreshTokenCreateDate);
 		sb.append(", refreshTokenExpirationDate=");
 		sb.append(refreshTokenExpirationDate);
+		sb.append(", rememberDeviceContent=");
+		sb.append(rememberDeviceContent);
 		sb.append("}");
 
 		return sb.toString();
@@ -198,6 +200,14 @@ public class OAuth2AuthorizationCacheModel
 				new Date(refreshTokenExpirationDate));
 		}
 
+		if (rememberDeviceContent == null) {
+			oAuth2AuthorizationImpl.setRememberDeviceContent("");
+		}
+		else {
+			oAuth2AuthorizationImpl.setRememberDeviceContent(
+				rememberDeviceContent);
+		}
+
 		oAuth2AuthorizationImpl.resetOriginalValues();
 
 		return oAuth2AuthorizationImpl;
@@ -230,6 +240,7 @@ public class OAuth2AuthorizationCacheModel
 		refreshTokenContentHash = objectInput.readLong();
 		refreshTokenCreateDate = objectInput.readLong();
 		refreshTokenExpirationDate = objectInput.readLong();
+		rememberDeviceContent = objectInput.readUTF();
 	}
 
 	@Override
@@ -288,6 +299,13 @@ public class OAuth2AuthorizationCacheModel
 		objectOutput.writeLong(refreshTokenContentHash);
 		objectOutput.writeLong(refreshTokenCreateDate);
 		objectOutput.writeLong(refreshTokenExpirationDate);
+
+		if (rememberDeviceContent == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(rememberDeviceContent);
+		}
 	}
 
 	public long oAuth2AuthorizationId;
@@ -307,5 +325,6 @@ public class OAuth2AuthorizationCacheModel
 	public long refreshTokenContentHash;
 	public long refreshTokenCreateDate;
 	public long refreshTokenExpirationDate;
+	public String rememberDeviceContent;
 
 }

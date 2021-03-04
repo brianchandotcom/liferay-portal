@@ -150,7 +150,7 @@
 </tr>
 <tr>
 	<td>EDIT_TAGS_DISABLED</td>
-	<td>//button[*[name()='svg'][contains(@class,'icon-tag')] and contains(@disabled,'disabled')]</td>
+	<td>//button[*[name()='svg'][contains(@class,'icon-tag')] and @disabled]</td>
 	<td></td>
 </tr>
 <tr>

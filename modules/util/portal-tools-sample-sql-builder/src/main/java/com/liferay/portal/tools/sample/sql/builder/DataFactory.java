@@ -59,8 +59,11 @@ import com.liferay.commerce.product.model.CPDefinitionLocalizationModel;
 import com.liferay.commerce.product.model.CPDefinitionModel;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValueModel;
 import com.liferay.commerce.product.model.CPInstanceModel;
+import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.model.CPOptionCategoryModel;
+import com.liferay.commerce.product.model.CPOptionModel;
+import com.liferay.commerce.product.model.CPOptionValueModel;
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.model.CPSpecificationOptionModel;
 import com.liferay.commerce.product.model.CPTaxCategoryModel;
@@ -76,6 +79,8 @@ import com.liferay.commerce.product.model.impl.CPDefinitionModelImpl;
 import com.liferay.commerce.product.model.impl.CPDefinitionSpecificationOptionValueModelImpl;
 import com.liferay.commerce.product.model.impl.CPInstanceModelImpl;
 import com.liferay.commerce.product.model.impl.CPOptionCategoryModelImpl;
+import com.liferay.commerce.product.model.impl.CPOptionModelImpl;
+import com.liferay.commerce.product.model.impl.CPOptionValueModelImpl;
 import com.liferay.commerce.product.model.impl.CPSpecificationOptionModelImpl;
 import com.liferay.commerce.product.model.impl.CPTaxCategoryModelImpl;
 import com.liferay.commerce.product.model.impl.CProductModelImpl;
@@ -2151,6 +2156,78 @@ public class DataFactory {
 		}
 
 		return cpOptionCategoryModels;
+	}
+
+	public CPOptionModel newCPOptionModel(
+		String ddmFormFieldTypeName, int index) {
+
+		CPOptionModel cpOptionModel = new CPOptionModelImpl();
+
+		// UUID
+
+		cpOptionModel.setUuid(SequentialUUID.generate());
+
+		// PK fields
+
+		cpOptionModel.setCPOptionId(_counter.get());
+
+		// Audit fields
+
+		cpOptionModel.setCompanyId(_companyId);
+		cpOptionModel.setUserName(_SAMPLE_USER_NAME);
+		cpOptionModel.setCreateDate(new Date());
+		cpOptionModel.setModifiedDate(new Date());
+
+		// Other fields
+
+		cpOptionModel.setName(
+			StringBundler.concat(
+				"<?xml version=\"1.0\" encoding=\"UTF-8\"?><root",
+				"available-locales=\"en_US\" default-locale=\"en_US\">",
+				"<Title language-id=\"en_US\">Option Name ", index,
+				"</Title></root>"));
+		cpOptionModel.setDescription("Option Description");
+		cpOptionModel.setDDMFormFieldTypeName(ddmFormFieldTypeName);
+		cpOptionModel.setFacetable(true);
+		cpOptionModel.setRequired(true);
+		cpOptionModel.setSkuContributor(true);
+		cpOptionModel.setKey("key" + index);
+
+		return cpOptionModel;
+	}
+
+	public CPOptionValueModel newCPOptionValueModel(
+		long cpOptionId, int index) {
+
+		CPOptionValueModel cpOptionValueModel = new CPOptionValueModelImpl();
+
+		// UUID
+
+		cpOptionValueModel.setUuid(SequentialUUID.generate());
+
+		// PK fields
+
+		cpOptionValueModel.setCPOptionId(_counter.get());
+
+		// Audit fields
+
+		cpOptionValueModel.setCompanyId(_companyId);
+		cpOptionValueModel.setUserName(_SAMPLE_USER_NAME);
+		cpOptionValueModel.setCreateDate(new Date());
+		cpOptionValueModel.setModifiedDate(new Date());
+
+		// Other fields
+
+		cpOptionValueModel.setCPOptionId(cpOptionId);
+		cpOptionValueModel.setName(
+			StringBundler.concat(
+				"<?xml version=\"1.0\" encoding=\"UTF-8\"?><root available-",
+				"locales=\"en_US\" default-locale=\"en_US\"><Title language-id",
+				"=\"en_US\">Option Value Name ", index, "</Title></root>"));
+		cpOptionValueModel.setPriority(index - 1);
+		cpOptionValueModel.setKey("key" + index);
+
+		return cpOptionValueModel;
 	}
 
 	public CProductModel newCProductModel(
@@ -4327,6 +4404,14 @@ public class DataFactory {
 			CPOptionCategory.class.getName(),
 			String.valueOf(cpOptionCategoryModel.getCPOptionCategoryId()),
 			_sampleUserId);
+	}
+
+	public List<ResourcePermissionModel> newResourcePermissionModels(
+		CPOptionModel cpOptionModel) {
+
+		return newResourcePermissionModels(
+			CPOption.class.getName(),
+			String.valueOf(cpOptionModel.getCPOptionId()), _sampleUserId);
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(

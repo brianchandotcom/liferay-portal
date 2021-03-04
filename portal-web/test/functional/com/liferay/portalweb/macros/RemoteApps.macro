@@ -28,14 +28,14 @@ definition {
 	macro viewTableEntryName {
 		AssertTextEquals(
 			key_tableEntryName = "${entryName}",
-			locator1 = "RemoteApps#TABLE_ENTRY_NAME",
+			locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE",
 			value1 = "${entryName}");
 	}
 
 	macro viewTableEntryURL {
 		AssertTextEquals(
 			key_tableEntryURL = "${entryURL}",
-			locator1 = "RemoteApps#TABLE_ENTRY_URL",
+			locator1 = "RemoteApps#TABLE_ENTRY_URL_REMOTE_TABLE",
 			value1 = "${entryURL}");
 	}
 

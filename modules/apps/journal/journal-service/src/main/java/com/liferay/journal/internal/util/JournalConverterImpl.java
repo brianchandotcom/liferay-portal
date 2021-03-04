@@ -657,16 +657,14 @@ public class JournalConverterImpl implements JournalConverter {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 				dynamicContentElement.getText());
 
-			if (jsonObject.get("classNameId") == null) {
+			if (!jsonObject.has("classNameId")) {
 				ClassName className = _classNameLocalService.fetchClassName(
 					jsonObject.getString("className"));
 
 				jsonObject.put("classNameId", className.getClassNameId());
 			}
 
-			if ((jsonObject.get("title") == null) ||
-				(jsonObject.get("titleMap") == null)) {
-
+			if (!jsonObject.has("title") || !jsonObject.has("titleMap")) {
 				JournalArticle journalArticle =
 					_journalArticleLocalService.fetchLatestArticle(
 						jsonObject.getLong("classPK"));

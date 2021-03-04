@@ -98,6 +98,7 @@ if ((layoutPageTemplateEntry == null) || !Objects.equals(layoutPageTemplateEntry
 						).build()
 					%>'
 					cssClass='<%= (masterLayoutPageTemplateEntry == null) ? "hide" : StringPool.BLANK %>'
+					displayType="secondary"
 					id='<%= liferayPortletResponse.getNamespace() + "editMasterLayoutButton" %>'
 					label="edit-master"
 					propsTransformer="js/layout/EditMasterLayoutButtonPropsTransformer"
@@ -116,6 +117,7 @@ if ((layoutPageTemplateEntry == null) || !Objects.equals(layoutPageTemplateEntry
 							"url", changeMasterLayoutURL.toString()
 						).build()
 					%>'
+					displayType="secondary"
 					id='<%= liferayPortletResponse.getNamespace() + "changeMasterLayoutButton" %>'
 					label="change-master"
 					propsTransformer="js/layout/ChangeMasterLayoutButtonPropsTransformer"
@@ -160,6 +162,7 @@ if (hasStyleBooks && (selLayout.getStyleBookEntryId() > 0)) {
 					"url", changeStyleBookURL.toString()
 				).build()
 			%>'
+			displayType="secondary"
 			id='<%= liferayPortletResponse.getNamespace() + "changeStyleBookButton" %>'
 			label="change-style-book"
 			propsTransformer="js/layout/ChangeStyleBookButtonPropsTransformer"

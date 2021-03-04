@@ -32,7 +32,9 @@ import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.currency.model.CommerceCurrencyModel;
 import com.liferay.commerce.currency.model.impl.CommerceCurrencyModelImpl;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
+import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItemModel;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseModel;
+import com.liferay.commerce.inventory.model.impl.CommerceInventoryWarehouseItemModelImpl;
 import com.liferay.commerce.inventory.model.impl.CommerceInventoryWarehouseModelImpl;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItemModel;
@@ -1257,6 +1259,38 @@ public class DataFactory {
 		commerceCurrencyModel.setLastPublishDate(new Date());
 
 		return commerceCurrencyModel;
+	}
+
+	public CommerceInventoryWarehouseItemModel
+		newCommerceInventoryWarehouseItemModel(
+			CommerceInventoryWarehouseModel commerceInventoryWarehouseModel,
+			CPInstanceModel cpInstanceModel) {
+
+		CommerceInventoryWarehouseItemModel
+			commerceInventoryWarehouseItemModel =
+				new CommerceInventoryWarehouseItemModelImpl();
+
+		// PK fields
+
+		commerceInventoryWarehouseItemModel.setCommerceInventoryWarehouseItemId(
+			_counter.get());
+
+		// Audit fields
+
+		commerceInventoryWarehouseItemModel.setCompanyId(_companyId);
+		commerceInventoryWarehouseItemModel.setUserName(_SAMPLE_USER_NAME);
+		commerceInventoryWarehouseItemModel.setCreateDate(new Date());
+		commerceInventoryWarehouseItemModel.setModifiedDate(new Date());
+
+		// Other fields
+
+		commerceInventoryWarehouseItemModel.setCommerceInventoryWarehouseId(
+			commerceInventoryWarehouseModel.getCommerceInventoryWarehouseId());
+		commerceInventoryWarehouseItemModel.setSku(cpInstanceModel.getSku());
+		commerceInventoryWarehouseItemModel.setQuantity(1);
+		commerceInventoryWarehouseItemModel.setReservedQuantity(0);
+
+		return commerceInventoryWarehouseItemModel;
 	}
 
 	public CommerceInventoryWarehouseModel newCommerceInventoryWarehouseModel(

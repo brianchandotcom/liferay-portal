@@ -30,19 +30,23 @@ definition {
 
 		Navigator.openURL();
 
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "Experience Content Page");
+
 		// Connect and synchronyze with Analytics Cloud
 
 		AnalyticsCloud.syncAnalyticsCloud();
 
 		// Create content page
 
-		SitePages.openPagesAdmin(siteURLKey = "guest");
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		ContentPages.addPage(pageName = "Content Page");
 
-		PageEditor.clickPublish();
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/content-page");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 	}
 
 	tearDown {
@@ -52,7 +56,7 @@ definition {
 
 		AnalyticsCloud.teardownAnalyticsCloud();
 
-		SitePages.openPagesAdmin(siteURLKey = "guest");
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		SitePages.deletePage(pageName = "Content Page");
 
@@ -97,7 +101,7 @@ definition {
 		if (IsElementNotPresent(locator1 = "ABTest#TERMINATE_TEST_BUTTON")) {
 			User.firstLoginPG();
 
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/content-page");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 		}
 
 		ABTest.terminateTest();
@@ -116,7 +120,7 @@ definition {
 
 		Button.clickPublish();
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/content-page");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
 		ABTest.createABTest(
 			goal = "Click",
@@ -151,7 +155,7 @@ definition {
 		if (IsElementNotPresent(locator1 = "ABTest#TERMINATE_TEST_BUTTON")) {
 			User.firstLoginPG();
 
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/content-page");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 		}
 
 		ABTest.terminateTest();

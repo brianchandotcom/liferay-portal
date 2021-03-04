@@ -73,7 +73,7 @@ public class EditUserGroupAssignmentsManagementToolbarDisplayContext {
 		return DropdownItemListBuilder.add(
 			() -> _hasAddUserGroupPermission(),
 			dropdownItem -> {
-				dropdownItem.setHref("javascript:;");
+				dropdownItem.putData("action", "removeUsers");
 				dropdownItem.setIcon("minus-circle");
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "remove"));

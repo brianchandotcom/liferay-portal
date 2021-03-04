@@ -65,12 +65,12 @@ SearchContainer<User> searchContainer = editUserGroupAssignmentsManagementToolba
 PortletURL portletURL = editUserGroupAssignmentsManagementToolbarDisplayContext.getPortletURL();
 %>
 
-<clay:management-toolbar-v2
+<clay:management-toolbar
 	actionDropdownItems="<%= editUserGroupAssignmentsManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= editUserGroupAssignmentsManagementToolbarDisplayContext.getClearResultsURL() %>"
-	componentId="editUserGroupAssignmentsManagementToolbar"
 	filterDropdownItems="<%= editUserGroupAssignmentsManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	itemsTotal="<%= searchContainer.getTotal() %>"
+	propsTransformer="js/EditUserGroupAssignmentsManagementToolbarPropsTransformer"
 	searchActionURL="<%= editUserGroupAssignmentsManagementToolbarDisplayContext.getSearchActionURL() %>"
 	searchContainerId="users"
 	searchFormName="searchFm"
@@ -124,59 +124,3 @@ PortletURL portletURL = editUserGroupAssignmentsManagementToolbarDisplayContext.
 		/>
 	</liferay-ui:search-container>
 </aui:form>
-
-<aui:script sandbox="<%= true %>">
-	var form = document.<portlet:namespace />fm;
-
-	<portlet:renderURL var="selectUsersURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-		<portlet:param name="mvcPath" value="/select_user_group_users.jsp" />
-		<portlet:param name="userGroupId" value="<%= String.valueOf(userGroupId) %>" />
-	</portlet:renderURL>
-
-	function <portlet:namespace />addUsers(event) {
-		Liferay.Util.openSelectionModal({
-			onSelect: function (selectedItem) {
-				if (selectedItem) {
-					Liferay.Util.postForm(form, {
-						data: {
-							addUserIds: selectedItem,
-						},
-						url:
-							'<portlet:actionURL name="editUserGroupAssignments" />',
-					});
-				}
-			},
-			multiple: true,
-			selectEventName: '<portlet:namespace />selectUsers',
-			title:
-				'<liferay-ui:message arguments="<%= HtmlUtil.escape(userGroup.getName()) %>" key="add-users-to-x" />',
-			url: '<%= selectUsersURL %>',
-		});
-	}
-
-	function <portlet:namespace />removeUsers() {
-		Liferay.Util.postForm(form, {
-			data: {
-				redirect: '<%= portletURL.toString() %>',
-				removeUserIds: Liferay.Util.listCheckedExcept(
-					form,
-					'<portlet:namespace />allRowIds'
-				),
-			},
-			url: '<portlet:actionURL name="editUserGroupAssignments" />',
-		});
-	}
-
-	Liferay.componentReady('editUserGroupAssignmentsManagementToolbar').then(
-		(managementToolbar) => {
-			managementToolbar.on(
-				'actionItemClicked',
-				<portlet:namespace />removeUsers
-			);
-			managementToolbar.on(
-				'creationButtonClicked',
-				<portlet:namespace />addUsers
-			);
-		}
-	);
-</aui:script>

@@ -694,8 +694,6 @@ public class JournalConverterImpl implements JournalConverter {
 		Element rootElement) {
 
 		for (Element dynamicElement : rootElement.elements("dynamic-element")) {
-			_initDynamicElements(dynamicElementElementsMap, dynamicElement);
-
 			List<Element> dynamicElementElements =
 				dynamicElementElementsMap.computeIfAbsent(
 					dynamicElement.attributeValue("name"),

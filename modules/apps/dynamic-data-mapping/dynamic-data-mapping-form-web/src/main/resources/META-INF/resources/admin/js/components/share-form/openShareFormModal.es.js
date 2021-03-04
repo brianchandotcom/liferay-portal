@@ -22,7 +22,7 @@ import {unmountComponentAtNode} from 'react-dom';
 import {submitEmailContent} from '../../util/submitEmailContent.es';
 import {ShareFormModalBody} from './ShareFormModalBody.es';
 
-function Modal({
+export function Modal({
 	autocompleteUserURL,
 	localizedName,
 	onClose,

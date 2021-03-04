@@ -34,7 +34,7 @@ definition {
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		ContentPages.addPage(pageName = "Experience Content Page");
+		ContentPages.addPage(pageName = "Content Page");
 
 		// Connect and synchronyze with Analytics Cloud
 

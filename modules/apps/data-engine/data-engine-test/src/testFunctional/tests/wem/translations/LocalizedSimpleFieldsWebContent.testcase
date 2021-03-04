@@ -413,6 +413,8 @@ definition {
 	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
 	@priority = "5"
 	test TranslateWebContentWithAllFields {
+		property portal.upstream = "quarantine";
+
 		for (var n : list "1,2") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",

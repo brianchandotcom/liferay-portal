@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.exception.DuplicateGroupException;
 import com.liferay.portal.kernel.exception.GroupInheritContentException;
 import com.liferay.portal.kernel.exception.GroupKeyException;
 import com.liferay.portal.kernel.exception.GroupParentException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -47,11 +46,11 @@ public class GroupExceptionRequestHandler {
 
 	public void handlePortalException(
 			ActionRequest actionRequest, ActionResponse actionResponse,
-			PortalException portalException)
+			Exception exception)
 		throws Exception {
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(portalException, portalException);
+			_log.debug(exception, exception);
 		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -59,21 +58,19 @@ public class GroupExceptionRequestHandler {
 
 		String errorMessage = null;
 
-		if (portalException instanceof DuplicateGroupException) {
+		if (exception instanceof DuplicateGroupException) {
 			errorMessage = LanguageUtil.get(
 				themeDisplay.getRequest(), "please-enter-a-unique-name");
 		}
-		else if (portalException instanceof GroupInheritContentException) {
+		else if (exception instanceof GroupInheritContentException) {
 			errorMessage = LanguageUtil.get(
 				themeDisplay.getRequest(),
 				"this-site-cannot-inherit-content-from-its-parent-site");
 		}
-		else if (portalException instanceof GroupKeyException) {
+		else if (exception instanceof GroupKeyException) {
 			errorMessage = _handleGroupKeyException(actionRequest);
 		}
-		else if (portalException instanceof
-					GroupParentException.MustNotBeOwnParent) {
-
+		else if (exception instanceof GroupParentException.MustNotBeOwnParent) {
 			errorMessage = LanguageUtil.get(
 				themeDisplay.getRequest(),
 				"this-site-cannot-inherit-content-from-its-parent-site");
@@ -83,7 +80,7 @@ public class GroupExceptionRequestHandler {
 			errorMessage = LanguageUtil.get(
 				themeDisplay.getRequest(), "an-unexpected-error-occurred");
 
-			_log.error(portalException.getMessage());
+			_log.error(exception.getMessage());
 		}
 
 		JSONObject jsonObject = JSONUtil.put("error", errorMessage);

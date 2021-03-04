@@ -18,7 +18,6 @@ import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTTransactionException;
 import com.liferay.portal.kernel.exception.LocaleException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -140,11 +139,11 @@ public class AddGroupMVCActionCommand extends BaseMVCActionCommand {
 
 			throw ctTransactionException;
 		}
-		catch (PortalException portalException) {
+		catch (Exception exception) {
 			hideDefaultSuccessMessage(actionRequest);
 
 			_groupExceptionRequestHandler.handlePortalException(
-				actionRequest, actionResponse, portalException);
+				actionRequest, actionResponse, exception);
 		}
 		catch (Throwable throwable) {
 			throw new Exception(throwable);

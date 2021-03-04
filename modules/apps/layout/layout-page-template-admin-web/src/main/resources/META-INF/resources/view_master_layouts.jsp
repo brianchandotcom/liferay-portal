@@ -29,8 +29,9 @@ MasterLayoutDisplayContext masterLayoutDisplayContext = new MasterLayoutDisplayC
 MasterLayoutManagementToolbarDisplayContext masterLayoutManagementToolbarDisplayContext = new MasterLayoutManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, masterLayoutDisplayContext);
 %>
 
-<clay:management-toolbar-v2
-	displayContext="<%= masterLayoutManagementToolbarDisplayContext %>"
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= masterLayoutManagementToolbarDisplayContext %>"
+	propsTransformer="js/propsTransformers/MasterLayoutManagementToolbarPropsTransformer"
 />
 
 <liferay-ui:success key="masterPagePublished" message="the-master-page-was-published-succesfully" />
@@ -84,8 +85,3 @@ MasterLayoutManagementToolbarDisplayContext masterLayoutManagementToolbarDisplay
 	<aui:input name="layoutPageTemplateEntryId" type="hidden" />
 	<aui:input name="fileEntryId" type="hidden" />
 </aui:form>
-
-<liferay-frontend:component
-	componentId="<%= masterLayoutManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/MasterLayoutManagementToolbarDefaultEventHandler.es"
-/>

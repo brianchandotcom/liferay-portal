@@ -16,14 +16,12 @@ package com.liferay.portal.workflow.kaleo.runtime.internal.notification.recipien
 
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.workflow.kaleo.definition.NotificationReceptionType;
-import com.liferay.portal.workflow.kaleo.definition.RecipientType;
 import com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipient;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationRecipient;
 import com.liferay.portal.workflow.kaleo.runtime.notification.recipient.NotificationRecipientBuilder;
-import com.liferay.portal.workflow.kaleo.runtime.notification.recipient.NotificationRecipientBuilderRegistry;
 
 import java.util.List;
 import java.util.Set;
@@ -86,18 +84,16 @@ public class AssigneeNotificationRecipientBuilder
 		for (KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance :
 				kaleoTaskAssignmentInstances) {
 
-			RecipientType recipientType = RecipientType.ROLE;
+			NotificationRecipientBuilder notificationRecipientBuilder =
+				_roleNotificationRecipientBuilder;
 
 			String assigneeClassName =
 				kaleoTaskAssignmentInstance.getAssigneeClassName();
 
 			if (assigneeClassName.equals(User.class.getName())) {
-				recipientType = RecipientType.USER;
+				notificationRecipientBuilder =
+					_userNotificationRecipientBuilder;
 			}
-
-			NotificationRecipientBuilder notificationRecipientBuilder =
-				_notificationRecipientBuilderRegistry.
-					getNotificationRecipientBuilder(recipientType);
 
 			notificationRecipientBuilder.processKaleoTaskAssignmentInstance(
 				notificationRecipients, kaleoTaskAssignmentInstance,
@@ -105,8 +101,10 @@ public class AssigneeNotificationRecipientBuilder
 		}
 	}
 
-	@Reference
-	private NotificationRecipientBuilderRegistry
-		_notificationRecipientBuilderRegistry;
+	@Reference(target = "(recipient.type=ROLE)")
+	private NotificationRecipientBuilder _roleNotificationRecipientBuilder;
+
+	@Reference(target = "(recipient.type=USER)")
+	private NotificationRecipientBuilder _userNotificationRecipientBuilder;
 
 }

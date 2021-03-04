@@ -236,7 +236,7 @@ public class FileEntryInfoItemFormProvider
 				_getDisplayPageInfoFieldSet()
 			).infoFieldSetEntry(
 				_expandoInfoItemFieldSetProvider.getInfoFieldSet(
-					FileEntry.class.getName())
+					DLFileEntryConstants.getClassName())
 			).infoFieldSetEntry(
 				assetEntryInfoFieldSet
 			).infoFieldSetEntry(

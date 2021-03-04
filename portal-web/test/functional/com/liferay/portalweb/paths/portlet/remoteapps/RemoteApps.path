@@ -14,8 +14,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TABLE_ENTRY_NAME_REMOTE_TABLE</td>
+	<td>//div[contains(@class,'dnd-td')]//div[contains(@class,'table-list-title')]//*[contains(text(),'${key_tableEntryName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TABLE_ENTRY_URL</td>
 	<td>//table//tbody//td[contains(text(),'${key_tableEntryURL}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_ENTRY_URL_REMOTE_TABLE</td>
+	<td>//div[contains(@class,'dnd-td') and contains(text(),'${key_tableEntryURL}')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -43,12 +43,6 @@ public enum NotificationType {
 		if (Objects.equals(EMAIL.getValue(), value)) {
 			return EMAIL;
 		}
-		else if (Objects.equals(IM.getValue(), value)) {
-			return IM;
-		}
-		else if (Objects.equals(PRIVATE_MESSAGE.getValue(), value)) {
-			return PRIVATE_MESSAGE;
-		}
 		else if (Objects.equals(PUSH_NOTIFICATION.getValue(), value)) {
 			return PUSH_NOTIFICATION;
 		}

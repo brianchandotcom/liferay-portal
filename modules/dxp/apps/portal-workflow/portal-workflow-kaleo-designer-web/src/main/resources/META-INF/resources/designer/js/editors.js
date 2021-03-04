@@ -1453,14 +1453,6 @@ AUI.add(
 								value: 'email',
 							},
 							{
-								label: strings.im,
-								value: 'im',
-							},
-							{
-								label: strings.privateMessage,
-								value: 'private-message',
-							},
-							{
 								label: strings.userNotification,
 								value: 'user-notification',
 							},

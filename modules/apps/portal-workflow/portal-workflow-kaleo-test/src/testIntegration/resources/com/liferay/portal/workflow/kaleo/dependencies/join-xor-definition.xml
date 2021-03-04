@@ -46,8 +46,6 @@
 				<template>${userName} sent you a ${entryType} for review in the workflow.</template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
-				<notification-type>im</notification-type>
-				<notification-type>private-message</notification-type>
 				<notification-type>push-notification</notification-type>
 				<notification-type>user-notification</notification-type>
 				<recipients receptionType="to">
@@ -107,8 +105,6 @@
 				<template>${userName} sent you a ${entryType} for review in the workflow.</template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
-				<notification-type>im</notification-type>
-				<notification-type>private-message</notification-type>
 				<notification-type>push-notification</notification-type>
 				<notification-type>user-notification</notification-type>
 				<recipients receptionType="to">
@@ -168,8 +164,6 @@
 				<template>${userName} sent you a ${entryType} for review in the workflow.</template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
-				<notification-type>im</notification-type>
-				<notification-type>private-message</notification-type>
 				<notification-type>push-notification</notification-type>
 				<notification-type>user-notification</notification-type>
 				<recipients receptionType="to">
@@ -229,8 +223,6 @@
 				<template>${userName} sent you a ${entryType} for review in the workflow.</template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
-				<notification-type>im</notification-type>
-				<notification-type>private-message</notification-type>
 				<notification-type>push-notification</notification-type>
 				<notification-type>user-notification</notification-type>
 				<recipients receptionType="to">

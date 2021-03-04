@@ -183,7 +183,7 @@ public class TestrayCaseResult {
 
 	public static enum Status {
 
-		FAILED(3, "Failed"), PASSED(2, "Passed");
+		FAILED(3, "failed"), PASSED(2, "passed");
 
 		public static Status get(Integer id) {
 			return _statuses.get(id);

@@ -15,9 +15,7 @@
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
-import LinkField, {
-	TARGET_OPTIONS,
-} from '../../../../app/components/fragment-configuration-fields/LinkField';
+import LinkField from '../../../../app/components/fragment-configuration-fields/LinkField';
 import {config} from '../../../../app/config/index';
 import selectSegmentsExperienceId from '../../../../app/selectors/selectSegmentsExperienceId';
 import {useDispatch, useSelector} from '../../../../app/store/index';
@@ -75,17 +73,17 @@ ContainerLinkPanel.propTypes = {
 			link: PropTypes.oneOfType([
 				PropTypes.shape({
 					href: PropTypes.string,
-					target: PropTypes.oneOf(Object.values(TARGET_OPTIONS)),
+					target: PropTypes.string,
 				}),
 				PropTypes.shape({
 					classNameId: PropTypes.string,
 					classPK: PropTypes.string,
 					fieldId: PropTypes.string,
-					target: PropTypes.oneOf(Object.values(TARGET_OPTIONS)),
+					target: PropTypes.string,
 				}),
 				PropTypes.shape({
 					mappedField: PropTypes.string,
-					target: PropTypes.oneOf(Object.values(TARGET_OPTIONS)),
+					target: PropTypes.string,
 				}),
 			]),
 		}),

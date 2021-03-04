@@ -252,17 +252,17 @@ LinkField.propTypes = {
 			classNameId: PropTypes.string,
 			classPK: PropTypes.string,
 			fieldId: PropTypes.string,
-			target: PropTypes.oneOf(Object.values(TARGET_OPTIONS)),
+			target: PropTypes.string,
 		}),
 
 		PropTypes.shape({
 			href: PropTypes.string,
-			target: PropTypes.oneOf(Object.values(TARGET_OPTIONS)),
+			target: PropTypes.string,
 		}),
 
 		PropTypes.shape({
 			mappedField: PropTypes.string,
-			target: PropTypes.oneOf(Object.values(TARGET_OPTIONS)),
+			target: PropTypes.string,
 		}),
 	]),
 };

@@ -28,6 +28,7 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -39,9 +40,11 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -55,10 +58,12 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -211,6 +216,30 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 		return ParamUtil.getString(httpServletRequest, "classTypeName");
 	}
 
+	private JSONObject _getEndpointsJSONObject(
+		AnalyticsReportsInfoItem<Object> analyticsReportsInfoItem,
+		String canonicalURL, Locale locale, ResourceResponse resourceResponse) {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		Optional.ofNullable(
+			analyticsReportsInfoItem.getActions()
+		).orElseGet(
+			Collections::emptyList
+		).stream(
+		).map(
+			_endpoints::get
+		).forEach(
+			objectValuePair -> jsonObject.put(
+				objectValuePair.getKey(),
+				_getResourceURL(
+					canonicalURL, locale, resourceResponse,
+					objectValuePair.getValue()))
+		);
+
+		return jsonObject;
+	}
+
 	private InfoItemReference _getInfoItemReference(
 		HttpServletRequest httpServletRequest) {
 
@@ -250,37 +279,9 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 			"canonicalURL", canonicalURL
 		).put(
 			"endpoints",
-			JSONUtil.put(
-				"analyticsReportsHistoricalReadsURL",
-				String.valueOf(
-					_getResourceURL(
-						canonicalURL, urlLocale, resourceResponse,
-						"/analytics_reports/get_historical_reads"))
-			).put(
-				"analyticsReportsHistoricalViewsURL",
-				String.valueOf(
-					_getResourceURL(
-						canonicalURL, urlLocale, resourceResponse,
-						"/analytics_reports/get_historical_views"))
-			).put(
-				"analyticsReportsTotalReadsURL",
-				String.valueOf(
-					_getResourceURL(
-						canonicalURL, urlLocale, resourceResponse,
-						"/analytics_reports/get_total_reads"))
-			).put(
-				"analyticsReportsTotalViewsURL",
-				String.valueOf(
-					_getResourceURL(
-						canonicalURL, urlLocale, resourceResponse,
-						"/analytics_reports/get_total_views"))
-			).put(
-				"analyticsReportsTrafficSourcesURL",
-				String.valueOf(
-					_getResourceURL(
-						canonicalURL, urlLocale, resourceResponse,
-						"/analytics_reports/get_traffic_sources"))
-			)
+			_getEndpointsJSONObject(
+				analyticsReportsInfoItem, canonicalURL, urlLocale,
+				resourceResponse)
 		).put(
 			"languageTag", locale.toLanguageTag()
 		).put(
@@ -488,6 +489,38 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GetDataMVCResourceCommand.class);
+
+	private static final Map
+		<AnalyticsReportsInfoItem.Action, ObjectValuePair<String, String>>
+			_endpoints =
+				HashMapBuilder.
+					<AnalyticsReportsInfoItem.Action,
+					 ObjectValuePair<String, String>>put(
+						AnalyticsReportsInfoItem.Action.HISTORICAL_READS,
+						new ObjectValuePair<>(
+							"analyticsReportsHistoricalReadsURL",
+							"/analytics_reports/get_historical_reads")
+					).put(
+						AnalyticsReportsInfoItem.Action.HISTORICAL_VIEWS,
+						new ObjectValuePair<>(
+							"analyticsReportsHistoricalViewsURL",
+							"/analytics_reports/get_historical_views")
+					).put(
+						AnalyticsReportsInfoItem.Action.TOTAL_READS,
+						new ObjectValuePair<>(
+							"analyticsReportsTotalReadsURL",
+							"/analytics_reports/get_total_reads")
+					).put(
+						AnalyticsReportsInfoItem.Action.TOTAL_VIEWS,
+						new ObjectValuePair<>(
+							"analyticsReportsTotalViewsURL",
+							"/analytics_reports/get_total_views")
+					).put(
+						AnalyticsReportsInfoItem.Action.TRAFFIC_CHANNELS,
+						new ObjectValuePair<>(
+							"analyticsReportsTrafficSourcesURL",
+							"/analytics_reports/get_traffic_sources")
+					).build();
 
 	@Reference
 	private AnalyticsReportsInfoItemObjectProvider

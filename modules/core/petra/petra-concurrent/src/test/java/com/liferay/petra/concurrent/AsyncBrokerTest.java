@@ -38,7 +38,6 @@ public class AsyncBrokerTest {
 
 	@ClassRule
 	@Rule
-	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			CodeCoverageAssertor.INSTANCE, LiferayUnitTestRule.INSTANCE);

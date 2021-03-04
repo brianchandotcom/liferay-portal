@@ -16,12 +16,15 @@ package com.liferay.portal.fabric.netty.rpc;
 
 import com.liferay.petra.concurrent.NoticeableFuture;
 import com.liferay.petra.process.ProcessCallable;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.concurrent.ExecutionException;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
@@ -30,8 +33,10 @@ import org.junit.Test;
 public class SyncProcessRPCCallableTest {
 
 	@ClassRule
-	public static final CodeCoverageAssertor codeCoverageAssertor =
-		CodeCoverageAssertor.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			CodeCoverageAssertor.INSTANCE, LiferayUnitTestRule.INSTANCE);
 
 	@Test
 	public void testCallWithException() throws Throwable {

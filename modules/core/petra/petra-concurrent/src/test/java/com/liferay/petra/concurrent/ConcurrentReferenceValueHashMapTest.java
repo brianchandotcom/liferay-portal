@@ -38,7 +38,6 @@ public class ConcurrentReferenceValueHashMapTest
 
 	@ClassRule
 	@Rule
-	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			CodeCoverageAssertor.INSTANCE, LiferayUnitTestRule.INSTANCE);

@@ -293,6 +293,19 @@ $navbarHeight: 120px;
 	cursor: help;
 }
 
+.missing-required-fields-popover {
+	min-width: 276px;
+
+	.popover-body {
+		padding: 12px;
+	}
+
+	.popover-header {
+		margin: 0 12px;
+		padding: 12px 0;
+	}
+}
+
 .outline-text {
 	background-color: white;
 	font-size: 12px;

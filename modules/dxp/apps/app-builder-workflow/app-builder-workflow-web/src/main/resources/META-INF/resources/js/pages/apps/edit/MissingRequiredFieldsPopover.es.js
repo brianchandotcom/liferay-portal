@@ -69,6 +69,7 @@ export default function MissingRequiredFieldsPopover({
 	return (
 		<ClayPopover
 			alignPosition={alignPosition}
+			className="missing-required-fields-popover"
 			disableScroll
 			header={
 				<>
@@ -94,19 +95,16 @@ export default function MissingRequiredFieldsPopover({
 				</div>
 			}
 		>
-			<>
-				{props[propsType].message}
-
-				<ClayButton
-					className="mt-3"
-					displayType="secondary"
-					onClick={onClick}
-				>
-					<span className="text-secondary">
-						{Liferay.Language.get('edit-form-view')}
-					</span>
-				</ClayButton>
-			</>
+			<div>{props[propsType].message}</div>
+			<ClayButton
+				className="mt-3"
+				displayType="secondary"
+				onClick={onClick}
+			>
+				<span className="text-secondary">
+					{Liferay.Language.get('edit-form-view')}
+				</span>
+			</ClayButton>
 		</ClayPopover>
 	);
 }

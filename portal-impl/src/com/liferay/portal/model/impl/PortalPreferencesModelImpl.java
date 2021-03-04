@@ -64,8 +64,7 @@ public class PortalPreferencesModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"portalPreferencesId", Types.BIGINT},
-		{"ownerId", Types.BIGINT}, {"ownerType", Types.INTEGER},
-		{"preferences", Types.CLOB}
+		{"ownerId", Types.BIGINT}, {"ownerType", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -76,11 +75,10 @@ public class PortalPreferencesModelImpl
 		TABLE_COLUMNS_MAP.put("portalPreferencesId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ownerId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ownerType", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("preferences", Types.CLOB);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table PortalPreferences (mvccVersion LONG default 0 not null,portalPreferencesId LONG not null primary key,ownerId LONG,ownerType INTEGER,preferences TEXT null)";
+		"create table PortalPreferences (mvccVersion LONG default 0 not null,portalPreferencesId LONG not null primary key,ownerId LONG,ownerType INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table PortalPreferences";
 
@@ -286,12 +284,6 @@ public class PortalPreferencesModelImpl
 			"ownerType",
 			(BiConsumer<PortalPreferences, Integer>)
 				PortalPreferences::setOwnerType);
-		attributeGetterFunctions.put(
-			"preferences", PortalPreferences::getPreferences);
-		attributeSetterBiConsumers.put(
-			"preferences",
-			(BiConsumer<PortalPreferences, String>)
-				PortalPreferences::setPreferences);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -374,25 +366,6 @@ public class PortalPreferencesModelImpl
 			this.<Integer>getColumnOriginalValue("ownerType"));
 	}
 
-	@Override
-	public String getPreferences() {
-		if (_preferences == null) {
-			return "";
-		}
-		else {
-			return _preferences;
-		}
-	}
-
-	@Override
-	public void setPreferences(String preferences) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_preferences = preferences;
-	}
-
 	public long getColumnBitmask() {
 		if (_columnBitmask > 0) {
 			return _columnBitmask;
@@ -452,7 +425,6 @@ public class PortalPreferencesModelImpl
 		portalPreferencesImpl.setPortalPreferencesId(getPortalPreferencesId());
 		portalPreferencesImpl.setOwnerId(getOwnerId());
 		portalPreferencesImpl.setOwnerType(getOwnerType());
-		portalPreferencesImpl.setPreferences(getPreferences());
 
 		portalPreferencesImpl.resetOriginalValues();
 
@@ -540,14 +512,6 @@ public class PortalPreferencesModelImpl
 
 		portalPreferencesCacheModel.ownerType = getOwnerType();
 
-		portalPreferencesCacheModel.preferences = getPreferences();
-
-		String preferences = portalPreferencesCacheModel.preferences;
-
-		if ((preferences != null) && (preferences.length() == 0)) {
-			portalPreferencesCacheModel.preferences = null;
-		}
-
 		return portalPreferencesCacheModel;
 	}
 
@@ -625,7 +589,6 @@ public class PortalPreferencesModelImpl
 	private long _portalPreferencesId;
 	private long _ownerId;
 	private int _ownerType;
-	private String _preferences;
 
 	public <T> T getColumnValue(String columnName) {
 		Function<PortalPreferences, Object> function =
@@ -658,7 +621,6 @@ public class PortalPreferencesModelImpl
 		_columnOriginalValues.put("portalPreferencesId", _portalPreferencesId);
 		_columnOriginalValues.put("ownerId", _ownerId);
 		_columnOriginalValues.put("ownerType", _ownerType);
-		_columnOriginalValues.put("preferences", _preferences);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;
@@ -679,8 +641,6 @@ public class PortalPreferencesModelImpl
 		columnBitmasks.put("ownerId", 4L);
 
 		columnBitmasks.put("ownerType", 8L);
-
-		columnBitmasks.put("preferences", 16L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

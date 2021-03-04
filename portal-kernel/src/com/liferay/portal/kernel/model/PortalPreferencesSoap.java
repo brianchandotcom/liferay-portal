@@ -36,7 +36,6 @@ public class PortalPreferencesSoap implements Serializable {
 		soapModel.setPortalPreferencesId(model.getPortalPreferencesId());
 		soapModel.setOwnerId(model.getOwnerId());
 		soapModel.setOwnerType(model.getOwnerType());
-		soapModel.setPreferences(model.getPreferences());
 
 		return soapModel;
 	}
@@ -130,18 +129,9 @@ public class PortalPreferencesSoap implements Serializable {
 		_ownerType = ownerType;
 	}
 
-	public String getPreferences() {
-		return _preferences;
-	}
-
-	public void setPreferences(String preferences) {
-		_preferences = preferences;
-	}
-
 	private long _mvccVersion;
 	private long _portalPreferencesId;
 	private long _ownerId;
 	private int _ownerType;
-	private String _preferences;
 
 }

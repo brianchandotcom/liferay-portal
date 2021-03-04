@@ -1157,9 +1157,6 @@
 		<field name="portalPreferencesId" type="long" />
 		<field name="ownerId" type="long" />
 		<field name="ownerType" type="int" />
-		<field name="preferences" type="String">
-			<hint-collection name="CLOB" />
-		</field>
 	</model>
 	<model name="com.liferay.portal.kernel.model.PortalPreferenceValue">
 		<field name="mvccVersion" type="long" />

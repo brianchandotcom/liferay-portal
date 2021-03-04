@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.model;
 
-import com.liferay.portal.kernel.bean.AutoEscape;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -110,20 +108,5 @@ public interface PortalPreferencesModel
 	 * @param ownerType the owner type of this portal preferences
 	 */
 	public void setOwnerType(int ownerType);
-
-	/**
-	 * Returns the preferences of this portal preferences.
-	 *
-	 * @return the preferences of this portal preferences
-	 */
-	@AutoEscape
-	public String getPreferences();
-
-	/**
-	 * Sets the preferences of this portal preferences.
-	 *
-	 * @param preferences the preferences of this portal preferences
-	 */
-	public void setPreferences(String preferences);
 
 }

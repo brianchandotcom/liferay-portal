@@ -129,8 +129,6 @@ public class PortalPreferencesPersistenceTest {
 
 		newPortalPreferences.setOwnerType(RandomTestUtil.nextInt());
 
-		newPortalPreferences.setPreferences(RandomTestUtil.randomString());
-
 		_portalPreferenceses.add(_persistence.update(newPortalPreferences));
 
 		PortalPreferences existingPortalPreferences =
@@ -148,9 +146,6 @@ public class PortalPreferencesPersistenceTest {
 		Assert.assertEquals(
 			existingPortalPreferences.getOwnerType(),
 			newPortalPreferences.getOwnerType());
-		Assert.assertEquals(
-			existingPortalPreferences.getPreferences(),
-			newPortalPreferences.getPreferences());
 	}
 
 	@Test
@@ -485,8 +480,6 @@ public class PortalPreferencesPersistenceTest {
 		portalPreferences.setOwnerId(RandomTestUtil.nextLong());
 
 		portalPreferences.setOwnerType(RandomTestUtil.nextInt());
-
-		portalPreferences.setPreferences(RandomTestUtil.randomString());
 
 		_portalPreferenceses.add(_persistence.update(portalPreferences));
 

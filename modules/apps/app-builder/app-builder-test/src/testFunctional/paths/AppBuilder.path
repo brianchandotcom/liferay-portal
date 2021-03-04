@@ -207,6 +207,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WARNING_SIGN</td>
+	<td>//div[contains (@class,'dropdown-button-asset help-cursor')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WORKFLOW_COLUMN</td>
 	<td>//table//tr//th[text()='${key_workflowColumnName}']</td>
 	<td></td>

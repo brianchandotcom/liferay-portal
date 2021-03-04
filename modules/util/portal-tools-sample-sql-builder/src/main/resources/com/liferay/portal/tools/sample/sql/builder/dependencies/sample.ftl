@@ -6,8 +6,6 @@
 
 <#include "class_names.ftl">
 
-<#include "commerce_product.ftl">
-
 <#include "company.ftl">
 
 <#include "ddm.ftl">

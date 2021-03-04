@@ -80,6 +80,9 @@ public class BenchmarksPropsValues {
 			PropertiesHolder._get(
 				BenchmarksPropsKeys.MAX_COMMERCE_ACCOUNT_ENTRY_COUNT));
 
+	public static final int MAX_COMMERCE_CATALOG_COUNT = GetterUtil.getInteger(
+		PropertiesHolder._get(BenchmarksPropsKeys.MAX_COMMERCE_CATALOG_COUNT));
+
 	public static final int MAX_COMMERCE_GROUP_COUNT = GetterUtil.getInteger(
 		PropertiesHolder._get(BenchmarksPropsKeys.MAX_COMMERCE_GROUP_COUNT));
 

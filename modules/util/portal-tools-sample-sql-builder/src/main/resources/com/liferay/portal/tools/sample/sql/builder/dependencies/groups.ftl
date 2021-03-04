@@ -1,12 +1,17 @@
-<#assign guestGroupModel = dataFactory.newGuestGroupModel() />
+<#assign
+	globalGroupModel = dataFactory.newGlobalGroupModel()
+	guestGroupModel = dataFactory.newGuestGroupModel()
+/>
 
 <#include "default_user.ftl">
 
 <#include "segments.ftl">
 
+<#include "commerce_groups.ftl">
+
 <@insertLayout _layoutModel=dataFactory.newLayoutModel(guestGroupModel.groupId, "welcome", "com_liferay_login_web_portlet_LoginPortlet,", "com_liferay_hello_world_web_portlet_HelloWorldPortlet,") />
 
-<@insertGroup _groupModel=dataFactory.newGlobalGroupModel() />
+<@insertGroup _groupModel=globalGroupModel />
 
 <@insertGroup _groupModel=guestGroupModel />
 

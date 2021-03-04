@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.sample.sql.builder;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -136,8 +137,15 @@ public class SampleSQLBuilderTest {
 		properties.put(BenchmarksPropsKeys.MAX_BLOGS_ENTRY_COMMENT_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_BLOGS_ENTRY_COUNT, "1");
 		properties.put(
+			BenchmarksPropsKeys.MAX_COMMERCE_ACCOUNT_ENTRY_COUNT, "1");
+		properties.put(BenchmarksPropsKeys.MAX_COMMERCE_CATALOG_COUNT, "1");
+		properties.put(BenchmarksPropsKeys.MAX_COMMERCE_GROUP_COUNT, "1");
+		properties.put(
 			BenchmarksPropsKeys.MAX_COMMERCE_INVENTORY_WAREHOUSE_COUNT, "1");
-		properties.put(BenchmarksPropsKeys.MAX_COMMERCE_ORDER_COUNT, "1");
+		properties.put(
+			BenchmarksPropsKeys.MAX_COMMERCE_ORDER_STATUS_CANCELLED_COUNT, "1");
+		properties.put(
+			BenchmarksPropsKeys.MAX_COMMERCE_ORDER_STATUS_PENDING_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_COMMERCE_PRICE_LIST_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_COMMERCE_PRODUCT_COUNT, "1");
 		properties.put(
@@ -149,9 +157,17 @@ public class SampleSQLBuilderTest {
 			"1");
 		properties.put(BenchmarksPropsKeys.MAX_CONTENT_LAYOUT_COUNT, "1");
 		properties.put(
+			BenchmarksPropsKeys.MAX_CP_DEFINITION_ATTACHMENT_TYPE_IMAGE_COUNT,
+			"0");
+		properties.put(
+			BenchmarksPropsKeys.MAX_CP_DEFINITION_ATTACHMENT_TYPE_PDF_COUNT,
+			"0");
+		properties.put(
 			BenchmarksPropsKeys.
 				MAX_CP_DEFINITION_SPECIFICATION_OPTION_VALUE_COUNT,
 			"1");
+		properties.put(
+			BenchmarksPropsKeys.MAX_CP_SPECIFICATION_OPTION_COUNT, "1");
 		properties.put(
 			BenchmarksPropsKeys.MAX_CP_SPECIFICATION_OPTION_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_DDL_CUSTOM_FIELD_COUNT, "1");
@@ -179,9 +195,11 @@ public class SampleSQLBuilderTest {
 		properties.put(BenchmarksPropsKeys.OPTIMIZE_BUFFER_SIZE, "8192");
 		properties.put(
 			BenchmarksPropsKeys.OUTPUT_CSV_FILE_NAMES,
-			"assetPublisher,blog,company,cpFriendlyURLEntry,documentLibrary," +
-				"dynamicDataList,fragment,layout,mbCategory,mbThread," +
-					"repository,wiki");
+			StringBundler.concat(
+				"assetPublisher,blog,company,commerceGroup,commerceOrder,",
+				"cpDefinitionLocalization,cpFriendlyURLEntry,cpInstance,",
+				"documentLibrary,dynamicDataList,fragment,layout,",
+				"mbCategory,mbThread,repository,wiki"));
 		properties.put(BenchmarksPropsKeys.OUTPUT_DIR, outputDir);
 		properties.put(BenchmarksPropsKeys.OUTPUT_MERGE, "true");
 		properties.put(

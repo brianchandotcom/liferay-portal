@@ -48,6 +48,9 @@ public interface BenchmarksPropsKeys {
 	public static final String MAX_COMMERCE_INVENTORY_WAREHOUSE_COUNT =
 		"sample.sql.max.commerce.inventory.warehouse.count";
 
+	public static final String MAX_COMMERCE_PRICE_LIST_COUNT =
+		"sample.sql.max.commerce.price.list.count";
+
 	public static final String MAX_COMMERCE_PRODUCT_COUNT =
 		"sample.sql.max.commerce.product.count";
 

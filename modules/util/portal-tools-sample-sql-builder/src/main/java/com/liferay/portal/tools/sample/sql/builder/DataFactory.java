@@ -33,6 +33,11 @@ import com.liferay.commerce.currency.model.impl.CommerceCurrencyModelImpl;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseModel;
 import com.liferay.commerce.inventory.model.impl.CommerceInventoryWarehouseModelImpl;
+import com.liferay.commerce.price.list.model.CommercePriceEntryModel;
+import com.liferay.commerce.price.list.model.CommercePriceList;
+import com.liferay.commerce.price.list.model.CommercePriceListModel;
+import com.liferay.commerce.price.list.model.impl.CommercePriceEntryModelImpl;
+import com.liferay.commerce.price.list.model.impl.CommercePriceListModelImpl;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLocalizationModel;
@@ -1291,6 +1296,86 @@ public class DataFactory {
 		}
 
 		return commerceInventoryWarehouseModels;
+	}
+
+	public CommercePriceEntryModel newCommercePriceEntryModel(
+		long commercePriceListId, String cpInstanceUuid, long cProductId) {
+
+		CommercePriceEntryModel commercePriceEntryModel =
+			new CommercePriceEntryModelImpl();
+
+		// UUID
+
+		commercePriceEntryModel.setUuid(SequentialUUID.generate());
+
+		// PK fields
+
+		commercePriceEntryModel.setCommercePriceEntryId(_counter.get());
+
+		// Audit fields
+
+		commercePriceEntryModel.setCompanyId(_companyId);
+		commercePriceEntryModel.setUserName(_SAMPLE_USER_NAME);
+		commercePriceEntryModel.setCreateDate(new Date());
+		commercePriceEntryModel.setModifiedDate(new Date());
+
+		// Other fields
+
+		commercePriceEntryModel.setCommercePriceListId(commercePriceListId);
+		commercePriceEntryModel.setCPInstanceUuid(cpInstanceUuid);
+		commercePriceEntryModel.setCProductId(cProductId);
+		commercePriceEntryModel.setPrice(BigDecimal.valueOf(0));
+		commercePriceEntryModel.setPromoPrice(BigDecimal.valueOf(0));
+		commercePriceEntryModel.setDiscountDiscovery(true);
+		commercePriceEntryModel.setDisplayDate(new Date());
+		commercePriceEntryModel.setStatus(0);
+		commercePriceEntryModel.setStatusByUserId(_sampleUserId);
+		commercePriceEntryModel.setStatusByUserName(_SAMPLE_USER_NAME);
+		commercePriceEntryModel.setStatusDate(new Date());
+
+		return commercePriceEntryModel;
+	}
+
+	public CommercePriceListModel newCommercePriceListModel(
+		long groupId, long commerceCurrencyId, boolean catalogBasePriceList,
+		boolean netPrice, String type) {
+
+		CommercePriceListModel commercePriceListModel =
+			new CommercePriceListModelImpl();
+
+		// PK fields
+
+		commercePriceListModel.setCommercePriceListId(_counter.get());
+
+		// Group instance
+
+		commercePriceListModel.setGroupId(groupId);
+
+		// Audit fields
+
+		commercePriceListModel.setCompanyId(_companyId);
+		commercePriceListModel.setUserName(_SAMPLE_USER_NAME);
+		commercePriceListModel.setCreateDate(new Date());
+		commercePriceListModel.setModifiedDate(new Date());
+
+		// Other fields
+
+		commercePriceListModel.setCommerceCurrencyId(commerceCurrencyId);
+		commercePriceListModel.setParentCommercePriceListId(0);
+		commercePriceListModel.setCatalogBasePriceList(catalogBasePriceList);
+		commercePriceListModel.setNetPrice(netPrice);
+		commercePriceListModel.setType(type);
+		commercePriceListModel.setName("Price List");
+		commercePriceListModel.setPriority(0);
+		commercePriceListModel.setDisplayDate(new Date());
+		commercePriceListModel.setExpirationDate(new Date());
+		commercePriceListModel.setLastPublishDate(new Date());
+		commercePriceListModel.setStatus(0);
+		commercePriceListModel.setStatusByUserId(_sampleUserId);
+		commercePriceListModel.setStatusByUserName(_SAMPLE_USER_NAME);
+		commercePriceListModel.setStatusDate(new Date());
+
+		return commercePriceListModel;
 	}
 
 	public CompanyModel newCompanyModel() {
@@ -3767,6 +3852,15 @@ public class DataFactory {
 			String.valueOf(
 				commerceInventoryWarehouseModel.
 					getCommerceInventoryWarehouseId()),
+			_sampleUserId);
+	}
+
+	public List<ResourcePermissionModel> newResourcePermissionModels(
+		CommercePriceListModel commercePriceListModel) {
+
+		return newResourcePermissionModels(
+			CommercePriceList.class.getName(),
+			String.valueOf(commercePriceListModel.getCommercePriceListId()),
 			_sampleUserId);
 	}
 

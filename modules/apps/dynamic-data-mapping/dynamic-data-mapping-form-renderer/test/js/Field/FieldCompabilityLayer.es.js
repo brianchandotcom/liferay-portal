@@ -14,12 +14,12 @@
 
 import {waitForElement} from '@testing-library/dom';
 import {cleanup, fireEvent, render} from '@testing-library/react';
+import {EVENT_TYPES} from 'dynamic-data-mapping-form-renderer/js/core/actions/eventTypes.es';
+import {Field} from 'dynamic-data-mapping-form-renderer/js/core/components/Field/Field.es';
+import {FormNoopProvider} from 'dynamic-data-mapping-form-renderer/js/core/hooks/useForm.es';
+import {PageProvider} from 'dynamic-data-mapping-form-renderer/js/core/hooks/usePage.es';
 import React from 'react';
 
-import {EVENT_TYPES} from '../../../src/main/resources/META-INF/resources/js/actions/eventTypes.es';
-import {Field} from '../../../src/main/resources/META-INF/resources/js/components/Field/Field.es';
-import {FormNoopProvider} from '../../../src/main/resources/META-INF/resources/js/hooks/useForm.es';
-import {PageProvider} from '../../../src/main/resources/META-INF/resources/js/hooks/usePage.es';
 import MetalFieldMock from '../__mock__/MetalFieldMock.es';
 
 const fieldTypes = [
@@ -35,8 +35,8 @@ const fieldProps = {
 	value: 'Foo',
 };
 
-const FieldWithProvider = ({field, onBlur, onChange, onEvent, onFocus}) => (
-	<FormNoopProvider onEvent={onEvent}>
+const FieldWithProvider = ({field, onAction, onBlur, onChange, onFocus}) => (
+	<FormNoopProvider onAction={onAction}>
 		<PageProvider value={{fieldTypes}}>
 			<Field
 				field={field}
@@ -151,10 +151,10 @@ describe('FieldCompabilityLayer -> Metal+Soy', () => {
 	});
 
 	it('dispatch the EVENT_TYPES.FIELD_REMOVED event when removing the field repeated', async () => {
-		const onEvent = jest.fn();
+		const onAction = jest.fn();
 
 		const {container, getByText} = render(
-			<FieldWithProvider field={fieldProps} onEvent={onEvent} />
+			<FieldWithProvider field={fieldProps} onAction={onAction} />
 		);
 
 		await waitForElement(() => getByText('Remove'), {container});
@@ -163,17 +163,17 @@ describe('FieldCompabilityLayer -> Metal+Soy', () => {
 
 		fireEvent.click(button);
 
-		expect(onEvent).toHaveBeenCalledWith(
-			EVENT_TYPES.FIELD_REMOVED,
-			'metal_field_name'
-		);
+		expect(onAction).toHaveBeenCalledWith({
+			payload: 'metal_field_name',
+			type: EVENT_TYPES.FIELD.REMOVED,
+		});
 	});
 
 	it('dispatch the EVENT_TYPES.FIELD_REPEATED event when repeating the same field', async () => {
-		const onEvent = jest.fn();
+		const onAction = jest.fn();
 
 		const {container, getByText} = render(
-			<FieldWithProvider field={fieldProps} onEvent={onEvent} />
+			<FieldWithProvider field={fieldProps} onAction={onAction} />
 		);
 
 		await waitForElement(() => getByText('Duplicate'), {container});
@@ -182,9 +182,9 @@ describe('FieldCompabilityLayer -> Metal+Soy', () => {
 
 		fireEvent.click(button);
 
-		expect(onEvent).toHaveBeenCalledWith(
-			EVENT_TYPES.FIELD_REPEATED,
-			'metal_field_name'
-		);
+		expect(onAction).toHaveBeenCalledWith({
+			payload: 'metal_field_name',
+			type: EVENT_TYPES.FIELD.REPEATED,
+		});
 	});
 });

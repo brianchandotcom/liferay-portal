@@ -69,17 +69,6 @@ public class JournalArticleDDMFormFieldTemplateContextContributor
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
-		LocalizedValue localizedValue =
-			(LocalizedValue)ddmFormField.getProperty("predefinedValue");
-
-		String predefinedValue = StringPool.BLANK;
-
-		if (localizedValue != null) {
-			predefinedValue = GetterUtil.getString(
-				localizedValue.getString(
-					ddmFormFieldRenderingContext.getLocale()));
-		}
-
 		return HashMapBuilder.<String, Object>put(
 			"itemSelectorURL",
 			getItemSelectorURL(
@@ -94,11 +83,26 @@ public class JournalArticleDDMFormFieldTemplateContextContributor
 			"portletNamespace",
 			ddmFormFieldRenderingContext.getPortletNamespace()
 		).put(
-			"predefinedValue", predefinedValue
+			"predefinedValue",
+			() -> {
+				LocalizedValue localizedValue =
+					(LocalizedValue)ddmFormField.getProperty("predefinedValue");
+
+				if (localizedValue == null) {
+					return StringPool.BLANK;
+				}
+
+				String predefinedValue = GetterUtil.getString(
+					localizedValue.getString(
+						ddmFormFieldRenderingContext.getLocale()));
+
+				return _getValue(predefinedValue);
+			}
 		).put(
 			"value",
-			GetterUtil.getString(
-				ddmFormFieldRenderingContext.getProperty("value"))
+			_getValue(
+				GetterUtil.getString(
+					ddmFormFieldRenderingContext.getProperty("value")))
 		).build();
 	}
 
@@ -172,6 +176,48 @@ public class JournalArticleDDMFormFieldTemplateContextContributor
 
 		return new AggregateResourceBundle(
 			classResourceBundle, _portal.getResourceBundle(locale));
+	}
+
+	private String _getValue(String value) {
+		if (Validator.isNull(value)) {
+			return StringPool.BLANK;
+		}
+
+		try {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
+
+			long classPK = jsonObject.getLong("classPK");
+
+			if (classPK <= 0) {
+				return StringPool.BLANK;
+			}
+
+			if (!jsonObject.has("classNameId")) {
+				String className = jsonObject.getString("className");
+
+				jsonObject.put(
+					"classNameId", _portal.getClassNameId(className));
+			}
+
+			if (!jsonObject.has("title") || !jsonObject.has("titleMap")) {
+				JournalArticle journalArticle =
+					_journalArticleLocalService.fetchLatestArticle(
+						jsonObject.getLong("classPK"));
+
+				jsonObject.put(
+					"title", journalArticle.getTitle()
+				).put(
+					"titleMap",
+					JSONFactoryUtil.createJSONObject(
+						journalArticle.getTitleMap())
+				);
+			}
+
+			return jsonObject.toJSONString();
+		}
+		catch (JSONException jsonException) {
+			return StringPool.BLANK;
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

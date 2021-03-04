@@ -17,8 +17,13 @@ package com.liferay.translation.web.internal.application.list;
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.translation.web.internal.constants.TranslationPortletKeys;
+
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -37,6 +42,14 @@ import org.osgi.service.component.annotations.Reference;
 public class TranslationPanelApp extends BasePanelApp {
 
 	@Override
+	public String getLabel(Locale locale) {
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(locale);
+
+		return _language.get(resourceBundle, "translation-processes");
+	}
+
+	@Override
 	public String getPortletId() {
 		return TranslationPortletKeys.TRANSLATION;
 	}
@@ -49,5 +62,11 @@ public class TranslationPanelApp extends BasePanelApp {
 	public void setPortlet(Portlet portlet) {
 		super.setPortlet(portlet);
 	}
+
+	@Reference
+	private Language _language;
+
+	@Reference(target = "(bundle.symbolic.name=com.liferay.translation.web)")
+	private ResourceBundleLoader _resourceBundleLoader;
 
 }

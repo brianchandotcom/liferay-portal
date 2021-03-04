@@ -5550,9 +5550,6 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 							//License expiration leeway
 							ZonedDateTime expiration = now.plusDays(30);
 
-							//License expiration delay
-							expiration = expiration.plusMinutes(5);
-
 							System.out.println(dateTimeFormatter.format(expiration));
 							project.setProperty("expiration.date", dateTimeFormatter.format(expiration));
 						]]>

@@ -69,6 +69,8 @@ import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.servlet.ServletContextClassLoaderPool;
 import com.liferay.portal.kernel.servlet.ServletContextUtil;
@@ -262,9 +264,28 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 					portletPreferences.getPortletId(), plid);
 			}
 
-			if (!LayoutStagingUtil.isBranchingLayout(
+			if (LayoutStagingUtil.isBranchingLayout(
 					_layoutLocalService.getLayout(plid))) {
 
+				ServiceContext serviceContext =
+					ServiceContextThreadLocal.getServiceContext();
+
+				String[] removePortlets = (String[])serviceContext.getAttribute(
+					"removePortlets");
+
+				if (removePortlets == null) {
+					removePortlets = new String[0];
+				}
+
+				if (!ArrayUtil.contains(removePortlets, portletId)) {
+					removePortlets = ArrayUtil.append(
+						removePortlets, portletId);
+
+					serviceContext.setAttribute(
+						"removePortlets", removePortlets);
+				}
+			}
+			else {
 				portletPreferencesLocalService.deletePortletPreferences(
 					portletPreferences.getPortletPreferencesId());
 			}

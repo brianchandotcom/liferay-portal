@@ -503,6 +503,12 @@ definition {
 	macro validateActivityDate {
 		var key_currentDateDay = DateUtil.getFormattedDate("0", "dd");
 		var key_currentDateYear = DateUtil.getCurrentYear();
+
+		var isLessThan10 = MathUtil.isLessThan("${key_currentDateDay}", "10");
+		if ("${isLessThan10}" == "true") {
+			var key_currentDateDay = StringUtil.substring("${key_currentDateDay}", "1", "2");
+		}
+
 		var key_currentDate = "/${key_currentDateDay}/${key_currentDateYear}";
 
 		AssertTextEquals.assertPartialText(

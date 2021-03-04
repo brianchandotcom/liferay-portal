@@ -39,7 +39,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ACCOUNT_SWITCHER_BACK_BUTTON</td>
+	<td>ACCOUNT_SELECTOR_DROPDOWN_BACK_BUTTON</td>
 	<td>//div[contains(@class,'item-list-head')]/button</td>
 	<td></td>
 </tr>

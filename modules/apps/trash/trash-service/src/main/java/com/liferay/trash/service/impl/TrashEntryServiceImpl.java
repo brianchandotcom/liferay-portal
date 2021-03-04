@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.trash.constants.TrashActionKeys;
 import com.liferay.trash.constants.TrashEntryConstants;
+import com.liferay.trash.exception.RestoreEntryException;
 import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.model.TrashEntryList;
 import com.liferay.trash.model.TrashEntrySoap;
@@ -446,6 +447,11 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			entry.getClassName());
+
+		if (!trashHandler.isRestorable(entry.getClassPK())) {
+			throw new RestoreEntryException(
+				RestoreEntryException.NOT_RESTORABLE);
+		}
 
 		if (!trashHandler.hasTrashPermission(
 				permissionChecker, 0, entry.getClassPK(),

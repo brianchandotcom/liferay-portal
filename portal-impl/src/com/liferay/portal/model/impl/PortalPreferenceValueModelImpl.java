@@ -67,7 +67,7 @@ public class PortalPreferenceValueModelImpl
 		{"mvccVersion", Types.BIGINT},
 		{"portalPreferenceValueId", Types.BIGINT},
 		{"portalPreferencesId", Types.BIGINT}, {"index_", Types.INTEGER},
-		{"key_", Types.VARCHAR}, {"largeValue", Types.VARCHAR},
+		{"key_", Types.VARCHAR}, {"largeValue", Types.CLOB},
 		{"namespace", Types.VARCHAR}, {"smallValue", Types.VARCHAR}
 	};
 
@@ -80,13 +80,13 @@ public class PortalPreferenceValueModelImpl
 		TABLE_COLUMNS_MAP.put("portalPreferencesId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("index_", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("key_", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("largeValue", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("largeValue", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("namespace", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("smallValue", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table PortalPreferenceValue (mvccVersion LONG default 0 not null,portalPreferenceValueId LONG not null primary key,portalPreferencesId LONG,index_ INTEGER,key_ VARCHAR(75) null,largeValue VARCHAR(75) null,namespace VARCHAR(75) null,smallValue VARCHAR(75) null)";
+		"create table PortalPreferenceValue (mvccVersion LONG default 0 not null,portalPreferenceValueId LONG not null primary key,portalPreferencesId LONG,index_ INTEGER,key_ VARCHAR(255) null,largeValue TEXT null,namespace VARCHAR(255) null,smallValue VARCHAR(255) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table PortalPreferenceValue";

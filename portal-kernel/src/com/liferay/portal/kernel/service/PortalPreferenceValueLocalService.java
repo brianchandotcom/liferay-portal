@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.model.PortalPreferenceValue;
+import com.liferay.portal.kernel.model.PortalPreferences;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
@@ -220,6 +221,11 @@ public interface PortalPreferenceValueLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.portlet.PortalPreferences
+		getPortalPreferences(
+			PortalPreferences portalPreferences, boolean signedIn);
 
 	/**
 	 * Returns the portal preference value with the primary key.

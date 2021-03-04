@@ -341,9 +341,9 @@ create index IX_B271FA88 on Phone (uuid_[$COLUMN_LENGTH:75$], companyId);
 
 create unique index IX_7171B2E8 on PluginSetting (companyId, pluginId[$COLUMN_LENGTH:75$], pluginType[$COLUMN_LENGTH:75$]);
 
-create unique index IX_A6DD0ECF on PortalPreferenceValue (portalPreferencesId, index_, key_[$COLUMN_LENGTH:75$], namespace[$COLUMN_LENGTH:75$]);
-create index IX_9FF9CC4E on PortalPreferenceValue (portalPreferencesId, key_[$COLUMN_LENGTH:75$], namespace[$COLUMN_LENGTH:75$], smallValue[$COLUMN_LENGTH:75$]);
-create index IX_4C7A38C4 on PortalPreferenceValue (portalPreferencesId, namespace[$COLUMN_LENGTH:75$]);
+create unique index IX_A6DD0ECF on PortalPreferenceValue (portalPreferencesId, index_, key_[$COLUMN_LENGTH:255$], namespace[$COLUMN_LENGTH:255$]);
+create index IX_9FF9CC4E on PortalPreferenceValue (portalPreferencesId, key_[$COLUMN_LENGTH:255$], namespace[$COLUMN_LENGTH:255$], smallValue[$COLUMN_LENGTH:255$]);
+create index IX_4C7A38C4 on PortalPreferenceValue (portalPreferencesId, namespace[$COLUMN_LENGTH:255$]);
 
 create index IX_D1F795F1 on PortalPreferences (ownerId, ownerType);
 

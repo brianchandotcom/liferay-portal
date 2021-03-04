@@ -197,6 +197,11 @@ public class PortalPreferenceValueWrapper
 	}
 
 	@Override
+	public String getValue() {
+		return model.getValue();
+	}
+
+	@Override
 	public void persist() {
 		model.persist();
 	}
@@ -289,6 +294,11 @@ public class PortalPreferenceValueWrapper
 	@Override
 	public void setSmallValue(String smallValue) {
 		model.setSmallValue(smallValue);
+	}
+
+	@Override
+	public void setValue(String value) {
+		model.setValue(value);
 	}
 
 	@Override

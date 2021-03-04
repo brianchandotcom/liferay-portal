@@ -970,10 +970,10 @@ create table PortalPreferenceValue (
 	portalPreferenceValueId LONG not null primary key,
 	portalPreferencesId LONG,
 	index_ INTEGER,
-	key_ VARCHAR(75) null,
-	largeValue VARCHAR(75) null,
-	namespace VARCHAR(75) null,
-	smallValue VARCHAR(75) null
+	key_ VARCHAR(255) null,
+	largeValue TEXT null,
+	namespace VARCHAR(255) null,
+	smallValue VARCHAR(255) null
 );
 
 create table PortalPreferences (

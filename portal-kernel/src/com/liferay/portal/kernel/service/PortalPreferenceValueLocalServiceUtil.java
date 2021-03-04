@@ -247,6 +247,14 @@ public class PortalPreferenceValueLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static com.liferay.portal.kernel.portlet.PortalPreferences
+		getPortalPreferences(
+			com.liferay.portal.kernel.model.PortalPreferences portalPreferences,
+			boolean signedIn) {
+
+		return getService().getPortalPreferences(portalPreferences, signedIn);
+	}
+
 	/**
 	 * Returns the portal preference value with the primary key.
 	 *

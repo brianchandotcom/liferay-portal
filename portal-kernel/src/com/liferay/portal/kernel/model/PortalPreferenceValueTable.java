@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 
+import java.sql.Clob;
 import java.sql.Types;
 
 /**
@@ -48,9 +49,8 @@ public class PortalPreferenceValueTable
 			"index_", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 	public final Column<PortalPreferenceValueTable, String> key = createColumn(
 		"key_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<PortalPreferenceValueTable, String> largeValue =
-		createColumn(
-			"largeValue", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<PortalPreferenceValueTable, Clob> largeValue =
+		createColumn("largeValue", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<PortalPreferenceValueTable, String> namespace =
 		createColumn(
 			"namespace", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);

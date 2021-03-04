@@ -20,13 +20,13 @@ export function openItemSelector({
 	itemSelectorURL,
 	destroyedCallback = null,
 	modalProps = {},
+	transformValueCallback,
 }) {
 	openSelectionModal({
 		onClose: destroyedCallback,
 		onSelect: (selectedItem) => {
 			let infoItem = {
 				...selectedItem,
-				type: selectedItem.returnType || '',
 			};
 
 			let value;
@@ -48,6 +48,8 @@ export function openItemSelector({
 				delete infoItem.value;
 				infoItem = {...infoItem, ...value};
 			}
+
+			infoItem = transformValueCallback(infoItem);
 
 			infoItem = callback(infoItem);
 		},

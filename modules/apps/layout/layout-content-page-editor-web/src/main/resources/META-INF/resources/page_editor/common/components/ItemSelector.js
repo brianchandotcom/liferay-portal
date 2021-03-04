@@ -34,6 +34,7 @@ export default function ItemSelector({
 	selectedItemTitle,
 	showAddButton = true,
 	showMappedItems = true,
+	transformValueCallback,
 }) {
 	const [active, setActive] = useState(false);
 	const itemSelectorInputId = useId();
@@ -52,6 +53,7 @@ export default function ItemSelector({
 			eventName: eventName || defaultEventName,
 			itemSelectorURL: itemSelectorURL || config.infoItemSelectorURL,
 			modalProps,
+			transformValueCallback,
 		});
 
 	return (
@@ -144,4 +146,5 @@ ItemSelector.propTypes = {
 	label: PropTypes.string,
 	onItemSelect: PropTypes.func.isRequired,
 	selectedItemTitle: PropTypes.string,
+	transformValueCallback: PropTypes.func.isRequired,
 };

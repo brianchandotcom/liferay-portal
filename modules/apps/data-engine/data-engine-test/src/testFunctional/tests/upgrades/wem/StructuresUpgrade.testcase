@@ -11,7 +11,7 @@ definition {
 		SignIn.signIn();
 
 		Smoke.viewWelcomePage();
-		
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",

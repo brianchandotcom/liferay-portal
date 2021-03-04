@@ -102,6 +102,10 @@ public class TestrayCaseResult {
 		return Status.get(statusID);
 	}
 
+	public String getSubcomponentNames() {
+		return "";
+	}
+
 	public String getTeamName() {
 		return jsonObject.getString("testrayTeamName");
 	}

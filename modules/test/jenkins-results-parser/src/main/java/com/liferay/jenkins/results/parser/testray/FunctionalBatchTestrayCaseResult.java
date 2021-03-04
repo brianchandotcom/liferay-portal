@@ -108,6 +108,13 @@ public class FunctionalBatchTestrayCaseResult extends BatchTestrayCaseResult {
 	}
 
 	@Override
+	public String getSubcomponentNames() {
+		return JenkinsResultsParserUtil.getProperty(
+			_functionalTestClass.getPoshiProperties(),
+			"testray.component.names");
+	}
+
+	@Override
 	public String getTeamName() {
 		TopLevelBuild topLevelBuild = getTopLevelBuild();
 

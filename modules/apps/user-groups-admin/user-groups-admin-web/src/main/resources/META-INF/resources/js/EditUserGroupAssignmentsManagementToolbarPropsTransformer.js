@@ -27,7 +27,7 @@ export default function propsTransformer({
 	const addUsers = () => {
 		openSelectionModal({
 			multiple: true,
-			onSelect: function (selectedItem) {
+			onSelect(selectedItem) {
 				const form = document.getElementById(`${portletNamespace}fm`);
 
 				if (form && selectedItem) {
@@ -40,11 +40,10 @@ export default function propsTransformer({
 				}
 			},
 			selectEventName: `${portletNamespace}selectUsers`,
-			title:
-				Liferay.Util.sub(
-					Liferay.Language.get('add-users-to-x'),
-					userGroupName
-				)
+			title: Liferay.Util.sub(
+				Liferay.Language.get('add-users-to-x'),
+				userGroupName
+			),
 			url: selectUsersURL,
 		});
 	};
@@ -66,7 +65,7 @@ export default function propsTransformer({
 			},
 			url: editUserGroupAssignmentsURL,
 		});
-	}
+	};
 
 	return {
 		...otherProps,

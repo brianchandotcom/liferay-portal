@@ -26,11 +26,14 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.UserGroupServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -42,8 +45,10 @@ import com.liferay.portlet.usersadmin.search.UserSearchTerms;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -80,6 +85,48 @@ public class EditUserGroupAssignmentsManagementToolbarDisplayContext {
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "remove"));
 				dropdownItem.setQuickAction(true);
+			}
+		).build();
+	}
+
+	public Map<String, Object> getAdditionalProps() {
+		return HashMapBuilder.<String, Object>put(
+			"editUserGroupAssignmentsURL",
+			() -> {
+				PortletURL editUserGroupAssignmentsURL =
+					_renderResponse.createActionURL();
+
+				editUserGroupAssignmentsURL.setParameter(
+					ActionRequest.ACTION_NAME, "editUserGroupAssignments");
+
+				return editUserGroupAssignmentsURL.toString();
+			}
+		).put(
+			"portletURL",
+			() -> {
+				PortletURL portletURL = getPortletURL();
+
+				return portletURL.toString();
+			}
+		).put(
+			"selectUsersURL",
+			() -> {
+				PortletURL selectUsersURL = _renderResponse.createActionURL();
+
+				selectUsersURL.setParameter(
+					"mvcPath", "/select_user_group_users.jsp");
+				selectUsersURL.setParameter(
+					"userGroupId", String.valueOf(_userGroup.getUserGroupId()));
+				selectUsersURL.setWindowState(LiferayWindowState.POP_UP);
+
+				return selectUsersURL.toString();
+			}
+		).put(
+			"userGroupName",
+			() -> {
+				String userGroupName = _userGroup.getName();
+
+				return HtmlUtil.escape(userGroupName);
 			}
 		).build();
 	}

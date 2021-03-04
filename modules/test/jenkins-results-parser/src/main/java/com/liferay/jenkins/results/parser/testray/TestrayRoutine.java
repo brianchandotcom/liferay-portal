@@ -60,6 +60,13 @@ public class TestrayRoutine {
 	public TestrayBuild createTestrayBuild(
 		TestrayProductVersion testrayProductVersion, String buildName) {
 
+		return createTestrayBuild(testrayProductVersion, buildName, null, null);
+	}
+
+	public TestrayBuild createTestrayBuild(
+		TestrayProductVersion testrayProductVersion, String buildName,
+		String buildDescription, String buildSHA) {
+
 		if (testrayProductVersion == null) {
 			throw new RuntimeException("Please set a Testray product version");
 		}
@@ -76,6 +83,16 @@ public class TestrayRoutine {
 		sb.append(testrayProductVersion.getID());
 		sb.append("&testrayRoutineId=");
 		sb.append(getID());
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(buildDescription)) {
+			sb.append("&description=");
+			sb.append(buildDescription);
+		}
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(buildSHA)) {
+			sb.append("&gitHash=");
+			sb.append(buildSHA);
+		}
 
 		String buildAddURL = JenkinsResultsParserUtil.combine(
 			String.valueOf(_testrayServer.getURL()),

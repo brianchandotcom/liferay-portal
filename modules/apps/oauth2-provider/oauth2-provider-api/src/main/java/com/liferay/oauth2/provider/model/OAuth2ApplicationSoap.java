@@ -55,6 +55,7 @@ public class OAuth2ApplicationSoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setPrivacyPolicyURL(model.getPrivacyPolicyURL());
 		soapModel.setRedirectURIs(model.getRedirectURIs());
+		soapModel.setRememberDevice(model.isRememberDevice());
 		soapModel.setTrustedApplication(model.isTrustedApplication());
 
 		return soapModel;
@@ -279,6 +280,18 @@ public class OAuth2ApplicationSoap implements Serializable {
 		_redirectURIs = redirectURIs;
 	}
 
+	public boolean getRememberDevice() {
+		return _rememberDevice;
+	}
+
+	public boolean isRememberDevice() {
+		return _rememberDevice;
+	}
+
+	public void setRememberDevice(boolean rememberDevice) {
+		_rememberDevice = rememberDevice;
+	}
+
 	public boolean getTrustedApplication() {
 		return _trustedApplication;
 	}
@@ -311,6 +324,7 @@ public class OAuth2ApplicationSoap implements Serializable {
 	private String _name;
 	private String _privacyPolicyURL;
 	private String _redirectURIs;
+	private boolean _rememberDevice;
 	private boolean _trustedApplication;
 
 }

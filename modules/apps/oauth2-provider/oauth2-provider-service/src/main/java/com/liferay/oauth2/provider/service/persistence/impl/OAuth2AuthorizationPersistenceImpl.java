@@ -56,6 +56,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -2244,6 +2245,649 @@ public class OAuth2AuthorizationPersistenceImpl
 		_FINDER_COLUMN_REFRESHTOKENCONTENTHASH_REFRESHTOKENCONTENTHASH_2 =
 			"oAuth2Authorization.refreshTokenContentHash = ?";
 
+	private FinderPath _finderPathWithPaginationFindByU_O_R;
+	private FinderPath _finderPathWithoutPaginationFindByU_O_R;
+	private FinderPath _finderPathCountByU_O_R;
+
+	/**
+	 * Returns all the o auth2 authorizations where userId = &#63; and oAuth2ApplicationId = &#63; and rememberDeviceContent = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param oAuth2ApplicationId the o auth2 application ID
+	 * @param rememberDeviceContent the remember device content
+	 * @return the matching o auth2 authorizations
+	 */
+	@Override
+	public List<OAuth2Authorization> findByU_O_R(
+		long userId, long oAuth2ApplicationId, String rememberDeviceContent) {
+
+		return findByU_O_R(
+			userId, oAuth2ApplicationId, rememberDeviceContent,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the o auth2 authorizations where userId = &#63; and oAuth2ApplicationId = &#63; and rememberDeviceContent = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OAuth2AuthorizationModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param oAuth2ApplicationId the o auth2 application ID
+	 * @param rememberDeviceContent the remember device content
+	 * @param start the lower bound of the range of o auth2 authorizations
+	 * @param end the upper bound of the range of o auth2 authorizations (not inclusive)
+	 * @return the range of matching o auth2 authorizations
+	 */
+	@Override
+	public List<OAuth2Authorization> findByU_O_R(
+		long userId, long oAuth2ApplicationId, String rememberDeviceContent,
+		int start, int end) {
+
+		return findByU_O_R(
+			userId, oAuth2ApplicationId, rememberDeviceContent, start, end,
+			null);
+	}
+
+	/**
+	 * Returns an ordered range of all the o auth2 authorizations where userId = &#63; and oAuth2ApplicationId = &#63; and rememberDeviceContent = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OAuth2AuthorizationModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param oAuth2ApplicationId the o auth2 application ID
+	 * @param rememberDeviceContent the remember device content
+	 * @param start the lower bound of the range of o auth2 authorizations
+	 * @param end the upper bound of the range of o auth2 authorizations (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching o auth2 authorizations
+	 */
+	@Override
+	public List<OAuth2Authorization> findByU_O_R(
+		long userId, long oAuth2ApplicationId, String rememberDeviceContent,
+		int start, int end,
+		OrderByComparator<OAuth2Authorization> orderByComparator) {
+
+		return findByU_O_R(
+			userId, oAuth2ApplicationId, rememberDeviceContent, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the o auth2 authorizations where userId = &#63; and oAuth2ApplicationId = &#63; and rememberDeviceContent = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OAuth2AuthorizationModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param oAuth2ApplicationId the o auth2 application ID
+	 * @param rememberDeviceContent the remember device content
+	 * @param start the lower bound of the range of o auth2 authorizations
+	 * @param end the upper bound of the range of o auth2 authorizations (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching o auth2 authorizations
+	 */
+	@Override
+	public List<OAuth2Authorization> findByU_O_R(
+		long userId, long oAuth2ApplicationId, String rememberDeviceContent,
+		int start, int end,
+		OrderByComparator<OAuth2Authorization> orderByComparator,
+		boolean useFinderCache) {
+
+		rememberDeviceContent = Objects.toString(rememberDeviceContent, "");
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByU_O_R;
+				finderArgs = new Object[] {
+					userId, oAuth2ApplicationId, rememberDeviceContent
+				};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByU_O_R;
+			finderArgs = new Object[] {
+				userId, oAuth2ApplicationId, rememberDeviceContent, start, end,
+				orderByComparator
+			};
+		}
+
+		List<OAuth2Authorization> list = null;
+
+		if (useFinderCache) {
+			list = (List<OAuth2Authorization>)finderCache.getResult(
+				finderPath, finderArgs);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (OAuth2Authorization oAuth2Authorization : list) {
+					if ((userId != oAuth2Authorization.getUserId()) ||
+						(oAuth2ApplicationId !=
+							oAuth2Authorization.getOAuth2ApplicationId()) ||
+						!rememberDeviceContent.equals(
+							oAuth2Authorization.getRememberDeviceContent())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					5 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(5);
+			}
+
+			sb.append(_SQL_SELECT_OAUTH2AUTHORIZATION_WHERE);
+
+			sb.append(_FINDER_COLUMN_U_O_R_USERID_2);
+
+			sb.append(_FINDER_COLUMN_U_O_R_OAUTH2APPLICATIONID_2);
+
+			boolean bindRememberDeviceContent = false;
+
+			if (rememberDeviceContent.isEmpty()) {
+				sb.append(_FINDER_COLUMN_U_O_R_REMEMBERDEVICECONTENT_3);
+			}
+			else {
+				bindRememberDeviceContent = true;
+
+				sb.append(_FINDER_COLUMN_U_O_R_REMEMBERDEVICECONTENT_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(OAuth2AuthorizationModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(userId);
+
+				queryPos.add(oAuth2ApplicationId);
+
+				if (bindRememberDeviceContent) {
+					queryPos.add(rememberDeviceContent);
+				}
+
+				list = (List<OAuth2Authorization>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first o auth2 authorization in the ordered set where userId = &#63; and oAuth2ApplicationId = &#63; and rememberDeviceContent = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param oAuth2ApplicationId the o auth2 application ID
+	 * @param rememberDeviceContent the remember device content
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching o auth2 authorization
+	 * @throws NoSuchOAuth2AuthorizationException if a matching o auth2 authorization could not be found
+	 */
+	@Override
+	public OAuth2Authorization findByU_O_R_First(
+			long userId, long oAuth2ApplicationId, String rememberDeviceContent,
+			OrderByComparator<OAuth2Authorization> orderByComparator)
+		throws NoSuchOAuth2AuthorizationException {
+
+		OAuth2Authorization oAuth2Authorization = fetchByU_O_R_First(
+			userId, oAuth2ApplicationId, rememberDeviceContent,
+			orderByComparator);
+
+		if (oAuth2Authorization != null) {
+			return oAuth2Authorization;
+		}
+
+		StringBundler sb = new StringBundler(8);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("userId=");
+		sb.append(userId);
+
+		sb.append(", oAuth2ApplicationId=");
+		sb.append(oAuth2ApplicationId);
+
+		sb.append(", rememberDeviceContent=");
+		sb.append(rememberDeviceContent);
+
+		sb.append("}");
+
+		throw new NoSuchOAuth2AuthorizationException(sb.toString());
+	}
+
+	/**
+	 * Returns the first o auth2 authorization in the ordered set where userId = &#63; and oAuth2ApplicationId = &#63; and rememberDeviceContent = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param oAuth2ApplicationId the o auth2 application ID
+	 * @param rememberDeviceContent the remember device content
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching o auth2 authorization, or <code>null</code> if a matching o auth2 authorization could not be found
+	 */
+	@Override
+	public OAuth2Authorization fetchByU_O_R_First(
+		long userId, long oAuth2ApplicationId, String rememberDeviceContent,
+		OrderByComparator<OAuth2Authorization> orderByComparator) {
+
+		List<OAuth2Authorization> list = findByU_O_R(
+			userId, oAuth2ApplicationId, rememberDeviceContent, 0, 1,
+			orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last o auth2 authorization in the ordered set where userId = &#63; and oAuth2ApplicationId = &#63; and rememberDeviceContent = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param oAuth2ApplicationId the o auth2 application ID
+	 * @param rememberDeviceContent the remember device content
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching o auth2 authorization
+	 * @throws NoSuchOAuth2AuthorizationException if a matching o auth2 authorization could not be found
+	 */
+	@Override
+	public OAuth2Authorization findByU_O_R_Last(
+			long userId, long oAuth2ApplicationId, String rememberDeviceContent,
+			OrderByComparator<OAuth2Authorization> orderByComparator)
+		throws NoSuchOAuth2AuthorizationException {
+
+		OAuth2Authorization oAuth2Authorization = fetchByU_O_R_Last(
+			userId, oAuth2ApplicationId, rememberDeviceContent,
+			orderByComparator);
+
+		if (oAuth2Authorization != null) {
+			return oAuth2Authorization;
+		}
+
+		StringBundler sb = new StringBundler(8);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("userId=");
+		sb.append(userId);
+
+		sb.append(", oAuth2ApplicationId=");
+		sb.append(oAuth2ApplicationId);
+
+		sb.append(", rememberDeviceContent=");
+		sb.append(rememberDeviceContent);
+
+		sb.append("}");
+
+		throw new NoSuchOAuth2AuthorizationException(sb.toString());
+	}
+
+	/**
+	 * Returns the last o auth2 authorization in the ordered set where userId = &#63; and oAuth2ApplicationId = &#63; and rememberDeviceContent = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param oAuth2ApplicationId the o auth2 application ID
+	 * @param rememberDeviceContent the remember device content
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching o auth2 authorization, or <code>null</code> if a matching o auth2 authorization could not be found
+	 */
+	@Override
+	public OAuth2Authorization fetchByU_O_R_Last(
+		long userId, long oAuth2ApplicationId, String rememberDeviceContent,
+		OrderByComparator<OAuth2Authorization> orderByComparator) {
+
+		int count = countByU_O_R(
+			userId, oAuth2ApplicationId, rememberDeviceContent);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<OAuth2Authorization> list = findByU_O_R(
+			userId, oAuth2ApplicationId, rememberDeviceContent, count - 1,
+			count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the o auth2 authorizations before and after the current o auth2 authorization in the ordered set where userId = &#63; and oAuth2ApplicationId = &#63; and rememberDeviceContent = &#63;.
+	 *
+	 * @param oAuth2AuthorizationId the primary key of the current o auth2 authorization
+	 * @param userId the user ID
+	 * @param oAuth2ApplicationId the o auth2 application ID
+	 * @param rememberDeviceContent the remember device content
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next o auth2 authorization
+	 * @throws NoSuchOAuth2AuthorizationException if a o auth2 authorization with the primary key could not be found
+	 */
+	@Override
+	public OAuth2Authorization[] findByU_O_R_PrevAndNext(
+			long oAuth2AuthorizationId, long userId, long oAuth2ApplicationId,
+			String rememberDeviceContent,
+			OrderByComparator<OAuth2Authorization> orderByComparator)
+		throws NoSuchOAuth2AuthorizationException {
+
+		rememberDeviceContent = Objects.toString(rememberDeviceContent, "");
+
+		OAuth2Authorization oAuth2Authorization = findByPrimaryKey(
+			oAuth2AuthorizationId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			OAuth2Authorization[] array = new OAuth2AuthorizationImpl[3];
+
+			array[0] = getByU_O_R_PrevAndNext(
+				session, oAuth2Authorization, userId, oAuth2ApplicationId,
+				rememberDeviceContent, orderByComparator, true);
+
+			array[1] = oAuth2Authorization;
+
+			array[2] = getByU_O_R_PrevAndNext(
+				session, oAuth2Authorization, userId, oAuth2ApplicationId,
+				rememberDeviceContent, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected OAuth2Authorization getByU_O_R_PrevAndNext(
+		Session session, OAuth2Authorization oAuth2Authorization, long userId,
+		long oAuth2ApplicationId, String rememberDeviceContent,
+		OrderByComparator<OAuth2Authorization> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				6 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(5);
+		}
+
+		sb.append(_SQL_SELECT_OAUTH2AUTHORIZATION_WHERE);
+
+		sb.append(_FINDER_COLUMN_U_O_R_USERID_2);
+
+		sb.append(_FINDER_COLUMN_U_O_R_OAUTH2APPLICATIONID_2);
+
+		boolean bindRememberDeviceContent = false;
+
+		if (rememberDeviceContent.isEmpty()) {
+			sb.append(_FINDER_COLUMN_U_O_R_REMEMBERDEVICECONTENT_3);
+		}
+		else {
+			bindRememberDeviceContent = true;
+
+			sb.append(_FINDER_COLUMN_U_O_R_REMEMBERDEVICECONTENT_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(OAuth2AuthorizationModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(userId);
+
+		queryPos.add(oAuth2ApplicationId);
+
+		if (bindRememberDeviceContent) {
+			queryPos.add(rememberDeviceContent);
+		}
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						oAuth2Authorization)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<OAuth2Authorization> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the o auth2 authorizations where userId = &#63; and oAuth2ApplicationId = &#63; and rememberDeviceContent = &#63; from the database.
+	 *
+	 * @param userId the user ID
+	 * @param oAuth2ApplicationId the o auth2 application ID
+	 * @param rememberDeviceContent the remember device content
+	 */
+	@Override
+	public void removeByU_O_R(
+		long userId, long oAuth2ApplicationId, String rememberDeviceContent) {
+
+		for (OAuth2Authorization oAuth2Authorization :
+				findByU_O_R(
+					userId, oAuth2ApplicationId, rememberDeviceContent,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			remove(oAuth2Authorization);
+		}
+	}
+
+	/**
+	 * Returns the number of o auth2 authorizations where userId = &#63; and oAuth2ApplicationId = &#63; and rememberDeviceContent = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param oAuth2ApplicationId the o auth2 application ID
+	 * @param rememberDeviceContent the remember device content
+	 * @return the number of matching o auth2 authorizations
+	 */
+	@Override
+	public int countByU_O_R(
+		long userId, long oAuth2ApplicationId, String rememberDeviceContent) {
+
+		rememberDeviceContent = Objects.toString(rememberDeviceContent, "");
+
+		FinderPath finderPath = _finderPathCountByU_O_R;
+
+		Object[] finderArgs = new Object[] {
+			userId, oAuth2ApplicationId, rememberDeviceContent
+		};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_COUNT_OAUTH2AUTHORIZATION_WHERE);
+
+			sb.append(_FINDER_COLUMN_U_O_R_USERID_2);
+
+			sb.append(_FINDER_COLUMN_U_O_R_OAUTH2APPLICATIONID_2);
+
+			boolean bindRememberDeviceContent = false;
+
+			if (rememberDeviceContent.isEmpty()) {
+				sb.append(_FINDER_COLUMN_U_O_R_REMEMBERDEVICECONTENT_3);
+			}
+			else {
+				bindRememberDeviceContent = true;
+
+				sb.append(_FINDER_COLUMN_U_O_R_REMEMBERDEVICECONTENT_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(userId);
+
+				queryPos.add(oAuth2ApplicationId);
+
+				if (bindRememberDeviceContent) {
+					queryPos.add(rememberDeviceContent);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_U_O_R_USERID_2 =
+		"oAuth2Authorization.userId = ? AND ";
+
+	private static final String _FINDER_COLUMN_U_O_R_OAUTH2APPLICATIONID_2 =
+		"oAuth2Authorization.oAuth2ApplicationId = ? AND ";
+
+	private static final String _FINDER_COLUMN_U_O_R_REMEMBERDEVICECONTENT_2 =
+		"oAuth2Authorization.rememberDeviceContent = ?";
+
+	private static final String _FINDER_COLUMN_U_O_R_REMEMBERDEVICECONTENT_3 =
+		"(oAuth2Authorization.rememberDeviceContent IS NULL OR oAuth2Authorization.rememberDeviceContent = '')";
+
 	public OAuth2AuthorizationPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -3199,6 +3843,40 @@ public class OAuth2AuthorizationPersistenceImpl
 			"countByRefreshTokenContentHash",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"companyId", "refreshTokenContentHash"}, false);
+
+		_finderPathWithPaginationFindByU_O_R = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_O_R",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				String.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {
+				"userId", "oAuth2ApplicationId", "rememberDeviceContent"
+			},
+			true);
+
+		_finderPathWithoutPaginationFindByU_O_R = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_O_R",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				String.class.getName()
+			},
+			new String[] {
+				"userId", "oAuth2ApplicationId", "rememberDeviceContent"
+			},
+			true);
+
+		_finderPathCountByU_O_R = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_O_R",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				String.class.getName()
+			},
+			new String[] {
+				"userId", "oAuth2ApplicationId", "rememberDeviceContent"
+			},
+			false);
 	}
 
 	@Deactivate

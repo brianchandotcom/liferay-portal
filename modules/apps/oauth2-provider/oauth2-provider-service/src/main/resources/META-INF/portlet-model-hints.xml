@@ -34,6 +34,7 @@
 		<field name="redirectURIs" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
+		<field name="rememberDevice" type="boolean" />
 		<field name="trustedApplication" type="boolean" />
 	</model>
 	<model name="com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases">
@@ -68,6 +69,7 @@
 		<field name="refreshTokenContentHash" type="long" />
 		<field name="refreshTokenCreateDate" type="Date" />
 		<field name="refreshTokenExpirationDate" type="Date" />
+		<field name="rememberDeviceContent" type="String" />
 	</model>
 	<model name="com.liferay.oauth2.provider.model.OAuth2ScopeGrant">
 		<field name="oAuth2ScopeGrantId" type="long" />

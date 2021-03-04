@@ -254,6 +254,13 @@ public interface OAuth2AuthorizationLocalService
 		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OAuth2Authorization
+			fetchLatestOAuth2AuthorizationByRememberDeviceContent(
+				long userId, long oAuth2ApplicationId,
+				String rememberDeviceContent)
+		throws NoSuchOAuth2AuthorizationException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OAuth2Authorization fetchOAuth2Authorization(
 		long oAuth2AuthorizationId);
 
@@ -387,6 +394,9 @@ public interface OAuth2AuthorizationLocalService
 
 	public void setOAuth2ScopeGrantOAuth2Authorizations(
 		long oAuth2ScopeGrantId, long[] oAuth2AuthorizationIds);
+
+	public OAuth2Authorization setRememberDeviceContent(
+		String refreshTokenContent, String rememberDeviceContent);
 
 	/**
 	 * Updates the o auth2 authorization in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

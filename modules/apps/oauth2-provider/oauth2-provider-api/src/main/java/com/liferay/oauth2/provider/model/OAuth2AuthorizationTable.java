@@ -94,6 +94,10 @@ public class OAuth2AuthorizationTable
 		refreshTokenExpirationDate = createColumn(
 			"refreshTokenExpirationDate", Date.class, Types.TIMESTAMP,
 			Column.FLAG_DEFAULT);
+	public final Column<OAuth2AuthorizationTable, String>
+		rememberDeviceContent = createColumn(
+			"rememberDeviceContent", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 
 	private OAuth2AuthorizationTable() {
 		super("OAuth2Authorization", OAuth2AuthorizationTable::new);

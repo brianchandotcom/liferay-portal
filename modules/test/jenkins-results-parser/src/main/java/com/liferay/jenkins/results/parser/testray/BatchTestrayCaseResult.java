@@ -73,7 +73,7 @@ public class BatchTestrayCaseResult extends TestrayCaseResult {
 	}
 
 	@Override
-	public String getComponent() {
+	public String getComponentName() {
 		try {
 			return JenkinsResultsParserUtil.getProperty(
 				JenkinsResultsParserUtil.getBuildProperties(),

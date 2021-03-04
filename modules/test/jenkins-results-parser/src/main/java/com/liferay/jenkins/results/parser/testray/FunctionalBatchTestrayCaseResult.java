@@ -73,7 +73,7 @@ public class FunctionalBatchTestrayCaseResult extends BatchTestrayCaseResult {
 	}
 
 	@Override
-	public String getComponent() {
+	public String getComponentName() {
 		return JenkinsResultsParserUtil.getProperty(
 			_functionalTestClass.getPoshiProperties(),
 			"testray.main.component.name");
@@ -122,7 +122,7 @@ public class FunctionalBatchTestrayCaseResult extends BatchTestrayCaseResult {
 			return super.getTeamName();
 		}
 
-		String component = getComponent();
+		String component = getComponentName();
 
 		for (String testrayTeamName : testrayTeamNames.split(",")) {
 			String testrayTeamComponentNames =

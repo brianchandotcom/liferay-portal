@@ -11,45 +11,6 @@
 	<short-name>liferay-commerce-cart</short-name>
 	<uri>http://liferay.com/tld/commerce-cart</uri>
 	<tag>
-		<name>add-to-cart</name>
-		<tag-class>com.liferay.commerce.cart.taglib.servlet.taglib.AddToCartTag</tag-class>
-		<body-content>empty</body-content>
-		<attribute>
-			<name>CPDefinitionId</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>CPInstanceId</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>elementClasses</name>
-			<required>false</required>
-		</attribute>
-		<attribute>
-			<name>label</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>productContentId</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>quantity</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>taglibQuantityInputId</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	<tag>
 		<name>quantity-control</name>
 		<tag-class>com.liferay.commerce.cart.taglib.servlet.taglib.QuantityControlTag</tag-class>
 		<body-content>JSP</body-content>

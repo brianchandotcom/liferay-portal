@@ -16,6 +16,7 @@ package com.liferay.site.admin.web.internal.handler;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.DataLimitExceededException;
 import com.liferay.portal.kernel.exception.DuplicateGroupException;
 import com.liferay.portal.kernel.exception.GroupInheritContentException;
 import com.liferay.portal.kernel.exception.GroupKeyException;
@@ -58,7 +59,12 @@ public class GroupExceptionRequestHandler {
 
 		String errorMessage = null;
 
-		if (exception instanceof DuplicateGroupException) {
+		if (exception instanceof DataLimitExceededException) {
+			errorMessage = LanguageUtil.get(
+				themeDisplay.getRequest(),
+				"unable-to-exceed-maximum-number-of-allowed-sites");
+		}
+		else if (exception instanceof DuplicateGroupException) {
 			errorMessage = LanguageUtil.get(
 				themeDisplay.getRequest(), "please-enter-a-unique-name");
 		}

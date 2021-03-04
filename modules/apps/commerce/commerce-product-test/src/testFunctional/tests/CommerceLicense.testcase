@@ -20,6 +20,7 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test AggregatedKeys {
 		property commerce.enabled = "true";
@@ -52,6 +53,7 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test CombinedXML {
 		property commerce.enabled = "true";
@@ -100,6 +102,7 @@ definition {
 		CommerceLicense.viewCommerceMissing();
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test DeployModuleLicenseToLCSPortal {
 		property commerce.enabled = "true";

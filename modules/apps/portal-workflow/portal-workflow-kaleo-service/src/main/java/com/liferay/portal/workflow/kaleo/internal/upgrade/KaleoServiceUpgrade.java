@@ -48,6 +48,7 @@ import com.liferay.portal.workflow.kaleo.internal.upgrade.v2_0_0.util.KaleoTimer
 import com.liferay.portal.workflow.kaleo.internal.upgrade.v2_0_0.util.KaleoTimerTable;
 import com.liferay.portal.workflow.kaleo.internal.upgrade.v2_0_0.util.KaleoTransitionTable;
 import com.liferay.portal.workflow.kaleo.internal.upgrade.v2_0_1.UpgradeMessageBoardsClassName;
+import com.liferay.portal.workflow.kaleo.internal.upgrade.v3_1_1.UpgradeKaleoNotification;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -135,6 +136,8 @@ public class KaleoServiceUpgrade implements UpgradeStepRegistrator {
 			"3.0.0", "3.1.0",
 			new com.liferay.portal.workflow.kaleo.internal.upgrade.v3_1_0.
 				UpgradeKaleoDefinition());
+
+		registry.register("3.1.0", "3.1.1", new UpgradeKaleoNotification());
 	}
 
 }

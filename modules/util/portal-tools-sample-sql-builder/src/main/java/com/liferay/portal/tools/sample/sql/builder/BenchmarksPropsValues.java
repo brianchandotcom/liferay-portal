@@ -80,6 +80,16 @@ public class BenchmarksPropsValues {
 			PropertiesHolder._get(
 				BenchmarksPropsKeys.MAX_COMMERCE_INVENTORY_WAREHOUSE_COUNT));
 
+	public static final int MAX_COMMERCE_ORDER_STATUS_CANCELLED_COUNT =
+		GetterUtil.getInteger(
+			PropertiesHolder._get(
+				BenchmarksPropsKeys.MAX_COMMERCE_ORDER_STATUS_CANCELLED_COUNT));
+
+	public static final int MAX_COMMERCE_ORDER_STATUS_PENDING_COUNT =
+		GetterUtil.getInteger(
+			PropertiesHolder._get(
+				BenchmarksPropsKeys.MAX_COMMERCE_ORDER_STATUS_PENDING_COUNT));
+
 	public static final int MAX_COMMERCE_PRICE_LIST_COUNT =
 		GetterUtil.getInteger(
 			PropertiesHolder._get(

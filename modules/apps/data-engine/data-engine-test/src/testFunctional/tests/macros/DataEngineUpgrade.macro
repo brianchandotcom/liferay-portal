@@ -409,9 +409,42 @@ definition {
 
 	macro validateWebContentWithFieldsetLevel2AndTranslations {
 
-		// TODO LPS-126236 validateWebContentWithFieldsetLevel2AndTranslations pending implementation
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
-		echo("empty stub");
+		WebContent.viewWithStructureCP(
+			webContentDate = "02/22/2021",
+			webContentDateFieldLabel = "Date",
+			webContentNumeric = "1.1",
+			webContentNumericFieldLabel = "Number",
+			webContentText = "Text - en_US",
+			webContentTextFieldLabel = "Text",
+			webContentTitle = "My Web Content based on My Structure with Fieldsets level 2");
+		
+		PortletEntry.publish();
+		
+		WebContent.viewWithStructureCP(
+			webContentDate = "23/02/2021",
+			webContentDateFieldLabel = "Date - pt_BR",
+			webContentLocaleFieldLabel = "pt_BR",
+			webContentNumeric = "2,1",
+			webContentNumericFieldLabel = "Number - pt_BR",
+			webContentText = "Text - pt_BR",
+			webContentTextFieldLabel = "Text - pt_BR",
+			webContentTitle = "My Web Content based on My Structure with Fieldsets level 2",
+			webContentTitleTranslated = "My Web Content based on My Structure with Fieldsets level 2 - pt_BR");
+
+		PortletEntry.publish();
+
+		WebContent.viewWithStructureCP(
+			webContentDate = "23/02/2021",
+			webContentDateFieldLabel = "Date - ca_ES",
+			webContentLocaleFieldLabel = "ca_ES",
+			webContentNumeric = "3,1",
+			webContentNumericFieldLabel = "Number - ca_ES",
+			webContentText = "Text - ca_ES",
+			webContentTextFieldLabel = "Text - ca_ES",
+			webContentTitle = "My Web Content based on My Structure with Fieldsets level 2",
+			webContentTitleTranslated = "My Web Content based on My Structure with Fieldsets level 2 - ca_ES");
 	}
 
 	macro validateWebContentWithRepeatableFieldGroupAndTranslations {

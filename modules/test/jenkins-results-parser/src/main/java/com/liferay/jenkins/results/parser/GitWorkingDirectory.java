@@ -1756,18 +1756,7 @@ public class GitWorkingDirectory {
 	}
 
 	public boolean isOnlyPoshiFilesModified() {
-		for (File modifiedFile : getModifiedFilesList()) {
-			String modifiedFileName = modifiedFile.getName();
-
-			String fileExtension = modifiedFileName.replaceAll(
-				".*(\\..+)", "$1");
-
-			if (!_poshiFileExtensions.contains(fileExtension.toLowerCase())) {
-				return false;
-			}
-		}
-
-		return true;
+		return isOnlyMatchingFilesModified(_poshiFileNamesMultiPattern);
 	}
 
 	public boolean isRemoteGitRepositoryAlive(String remoteURL) {
@@ -2254,6 +2243,18 @@ public class GitWorkingDirectory {
 			subdirectories, files);
 	}
 
+	protected boolean isOnlyMatchingFilesModified(MultiPattern multiPattern) {
+		for (File modifiedFile : getModifiedFilesList()) {
+			if (_poshiFileNamesMultiPattern.matches(modifiedFile.getName()) ==
+					null) {
+
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	protected String loadGitRepositoryName() {
 		GitRemote upstreamGitRemote = getUpstreamGitRemote();
 
@@ -2650,8 +2651,10 @@ public class GitWorkingDirectory {
 			"(?<message>.*)");
 	private static final Map<String, List<File>> _modifiedFilesMap =
 		new HashMap<>();
-	private static final List<String> _poshiFileExtensions = Arrays.asList(
-		".function", ".macro", ".path", ".prose", ".testcase");
+	private static final MultiPattern _poshiFileNamesMultiPattern =
+		new MultiPattern(
+			".*\\.function", ".*\\.macro", ".*\\.path", ".*\\.prose",
+			".*\\.testcase");
 	private static final List<String> _privateOnlyGitRepositoryNames =
 		_getBuildPropertyAsList(
 			"git.working.directory.private.only.repository.names");

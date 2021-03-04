@@ -106,6 +106,7 @@
 		<column name="refreshTokenContentHash" type="long" />
 		<column name="refreshTokenCreateDate" type="Date" />
 		<column name="refreshTokenExpirationDate" type="Date" />
+		<column name="rememberDeviceContent" type="String" />
 
 		<!-- Relationships -->
 
@@ -126,6 +127,11 @@
 		<finder name="RefreshTokenContentHash" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="refreshTokenContentHash" />
+		</finder>
+		<finder name="U_O_R" return-type="Collection">
+			<finder-column name="userId"></finder-column>
+			<finder-column name="oAuth2ApplicationId"></finder-column>
+			<finder-column name="rememberDeviceContent"></finder-column>
 		</finder>
 
 		<!-- References -->

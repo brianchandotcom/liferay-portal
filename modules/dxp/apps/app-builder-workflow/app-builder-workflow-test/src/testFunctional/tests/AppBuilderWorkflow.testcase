@@ -363,6 +363,8 @@ definition {
 	@description = "Automate LPS-121226: As an App User, I want to see all the past activities of a Workflow App instance"
 	@priority = "5"
 	test CheckActivityWorkflowAppWithSteps {
+		property portal.acceptance = "true";
+
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",
 			isCreatingFormView = "true",

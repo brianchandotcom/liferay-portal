@@ -294,32 +294,32 @@
 <!--ORDERS-->
 <tr>
 	<td>ORDER_DETAILS_DISCOUNT</td>
-	<td>//tbody//td[6]</td>
+	<td>//div[contains(@class,'tbody')]/div/div[6]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORDER_DETAILS_NAME</td>
-	<td>//tbody//td[1]</td>
+	<td>//div[contains(@class,'tbody')]/div/div[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORDER_DETAILS_PRICE</td>
-	<td>//tbody//td[8]</td>
+	<td>//div[contains(@class,'tbody')]/div/div[8]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORDER_DETAILS_QUANTITY</td>
-	<td>//tbody//td[7]</td>
+	<td>//div[contains(@class,'tbody')]/div/div[7]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORDER_DETAILS_SKU</td>
-	<td>//tbody//td[3]</td>
+	<td>//div[contains(@class,'tbody')]/div/div[3]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORDER_DETAILS_UNIT_PRICE</td>
-	<td>//tbody//td[4]</td>
+	<td>//div[contains(@class,'tbody')]/div/div[4]</td>
 	<td></td>
 </tr>
 <tr>

@@ -408,7 +408,6 @@ definition {
 	}
 
 	macro validateWebContentWithFieldsetLevel2AndTranslations {
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		WebContent.viewWithStructureCP(
@@ -419,9 +418,9 @@ definition {
 			webContentText = "Text - en_US",
 			webContentTextFieldLabel = "Text",
 			webContentTitle = "My Web Content based on My Structure with Fieldsets level 2");
-		
+
 		PortletEntry.publish();
-		
+
 		WebContent.viewWithStructureCP(
 			webContentDate = "23/02/2021",
 			webContentDateFieldLabel = "Date - pt_BR",

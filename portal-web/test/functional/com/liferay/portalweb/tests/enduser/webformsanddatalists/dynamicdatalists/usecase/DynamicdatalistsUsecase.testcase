@@ -2073,6 +2073,7 @@ definition {
 
 	@priority = "4"
 	test FormTemplateUniqueField {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "DynamicdatalistsUsecase#FormTemplateUniqueField";
 
 		Navigator.openURL();
@@ -2370,6 +2371,8 @@ definition {
 	@description = "This is a use case for LPS-48743."
 	@priority = "3"
 	test TemplateAddDeletedField {
+		property portal.upstream = "quarantine";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -2569,6 +2572,8 @@ definition {
 	@description = "This is a use case for LPS-48591."
 	@priority = "3"
 	test ViewFormTemplateFieldsAfterBackNavigation {
+		property portal.upstream = "quarantine";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

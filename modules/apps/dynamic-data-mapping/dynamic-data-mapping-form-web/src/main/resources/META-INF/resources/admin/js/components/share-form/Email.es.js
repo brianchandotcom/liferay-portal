@@ -68,7 +68,7 @@ const Email = ({
 				<label>{Liferay.Language.get('to')}</label>
 				<ClayInput.Group small stacked>
 					<ClayInput.GroupItem>
-						{!error && resource && (
+						{!error && (
 							<>
 								<ClayMultiSelect
 									closeButtonAriaLabel={Liferay.Language.get(
@@ -83,23 +83,38 @@ const Email = ({
 										onMultiSelectItemsChanged([]);
 									}}
 									onItemsChange={(newItems) => {
+										if (!newItems.length) {
+											emailContent.current.addresses = newItems;
+
+											return onMultiSelectItemsChanged(
+												newItems
+											);
+										}
+
 										if (
+											newItems.length &&
 											isEmailAddressValid(
 												newItems[newItems.length - 1]
-													.label
+													?.label
 											)
 										) {
 											emailContent.current.addresses = newItems;
 
-											onMultiSelectItemsChanged(newItems);
+											return onMultiSelectItemsChanged(
+												newItems
+											);
 										}
 									}}
 									placeholder={Liferay.Language.get(
 										'enter-a-list-of-email-addresses'
 									)}
-									sourceItems={formatAutocompleteUsersFromRequest(
+									sourceItems={
 										resource
-									)}
+											? formatAutocompleteUsersFromRequest(
+													resource
+											  )
+											: []
+									}
 								/>
 								<ClayForm.FeedbackGroup>
 									<ClayForm.Text>

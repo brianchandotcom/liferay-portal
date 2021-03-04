@@ -20,6 +20,7 @@ import com.liferay.jenkins.results.parser.GitWorkingDirectoryFactory;
 import com.liferay.jenkins.results.parser.JenkinsMaster;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
+import com.liferay.jenkins.results.parser.PluginsBranchInformationBuild;
 import com.liferay.jenkins.results.parser.PluginsTopLevelBuild;
 import com.liferay.jenkins.results.parser.PortalAppReleaseTopLevelBuild;
 import com.liferay.jenkins.results.parser.PortalBranchInformationBuild;
@@ -32,6 +33,7 @@ import com.liferay.jenkins.results.parser.PortalRelease;
 import com.liferay.jenkins.results.parser.PortalReleaseBuild;
 import com.liferay.jenkins.results.parser.PullRequest;
 import com.liferay.jenkins.results.parser.PullRequestBuild;
+import com.liferay.jenkins.results.parser.QAWebsitesBranchInformationBuild;
 import com.liferay.jenkins.results.parser.QAWebsitesTopLevelBuild;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
@@ -135,6 +137,10 @@ public class TestrayImporter {
 		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 		TestrayBuild testrayBuild = null;
 
+		Date testrayBuildDate = getTestrayBuildDate();
+		String testrayBuildDescription = getTestrayBuildDescription();
+		String testrayBuildSHA = getTestrayBuildSHA();
+
 		try {
 			String testrayBuildID = System.getProperty("TESTRAY_BUILD_ID");
 
@@ -152,7 +158,8 @@ public class TestrayImporter {
 
 				testrayBuild = testrayRoutine.createTestrayBuild(
 					getTestrayProductVersion(),
-					_replaceEnvVars(testrayBuildName));
+					_replaceEnvVars(testrayBuildName), testrayBuildDate,
+					testrayBuildDescription, testrayBuildSHA);
 			}
 
 			testrayBuildID = _getBuildParameter("TESTRAY_BUILD_ID");
@@ -171,7 +178,8 @@ public class TestrayImporter {
 
 				testrayBuild = testrayRoutine.createTestrayBuild(
 					getTestrayProductVersion(),
-					_replaceEnvVars(testrayBuildName));
+					_replaceEnvVars(testrayBuildName), testrayBuildDate,
+					testrayBuildDescription, testrayBuildSHA);
 			}
 
 			Job job = getJob();
@@ -196,7 +204,8 @@ public class TestrayImporter {
 
 				testrayBuild = testrayRoutine.createTestrayBuild(
 					getTestrayProductVersion(),
-					_replaceEnvVars(testrayBuildName));
+					_replaceEnvVars(testrayBuildName), testrayBuildDate,
+					testrayBuildDescription, testrayBuildSHA);
 			}
 		}
 		finally {
@@ -213,6 +222,132 @@ public class TestrayImporter {
 
 				return _testrayBuild;
 			}
+		}
+
+		return null;
+	}
+
+	public Date getTestrayBuildDate() {
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		Build controllerBuild = topLevelBuild.getControllerBuild();
+
+		if (controllerBuild != null) {
+			return new Date(controllerBuild.getStartTime());
+		}
+
+		return new Date(topLevelBuild.getStartTime());
+	}
+
+	public String getTestrayBuildDescription() {
+		StringBuilder sb = new StringBuilder();
+
+		PortalRelease portalRelease = getPortalRelease();
+
+		if (portalRelease != null) {
+			sb.append("Portal Release: ");
+			sb.append(portalRelease.getPortalVersion());
+			sb.append(";\n");
+		}
+
+		PortalFixpackRelease portalFixpackRelease = getPortalFixpackRelease();
+
+		if (portalFixpackRelease != null) {
+			sb.append("Portal Fixpack: ");
+			sb.append(portalFixpackRelease.getPortalFixpackVersion());
+			sb.append(";\n");
+		}
+
+		PortalHotfixRelease portalHotfixRelease = getPortalHotfixRelease();
+
+		if (portalHotfixRelease != null) {
+			sb.append("Portal Hotfix: ");
+			sb.append(portalHotfixRelease.getPortalHotfixReleaseVersion());
+			sb.append(";\n");
+		}
+
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		if (topLevelBuild instanceof PortalBranchInformationBuild) {
+			PortalBranchInformationBuild portalBranchInformationBuild =
+				(PortalBranchInformationBuild)topLevelBuild;
+
+			Build.BranchInformation portalBranchInformation =
+				portalBranchInformationBuild.getPortalBranchInformation();
+
+			sb.append("Portal Branch: ");
+			sb.append(portalBranchInformation.getUpstreamBranchName());
+			sb.append(";\n");
+
+			sb.append("Portal SHA: ");
+			sb.append(portalBranchInformation.getSenderBranchSHA());
+			sb.append(";\n");
+		}
+
+		if (topLevelBuild instanceof PluginsBranchInformationBuild) {
+			PluginsBranchInformationBuild pluginsBranchInformationBuild =
+				(PluginsBranchInformationBuild)topLevelBuild;
+
+			Build.BranchInformation pluginsBranchInformation =
+				pluginsBranchInformationBuild.getPluginsBranchInformation();
+
+			sb.append("Plugins Branch: ");
+			sb.append(pluginsBranchInformation.getUpstreamBranchName());
+			sb.append(";\n");
+
+			sb.append("Plugins SHA: ");
+			sb.append(pluginsBranchInformation.getSenderBranchSHA());
+			sb.append(";\n");
+		}
+
+		if (topLevelBuild instanceof QAWebsitesBranchInformationBuild) {
+			QAWebsitesBranchInformationBuild qaWebsitesBranchInformationBuild =
+				(QAWebsitesBranchInformationBuild)topLevelBuild;
+
+			Build.BranchInformation qaWebsitesBranchInformation =
+				qaWebsitesBranchInformationBuild.
+					getQAWebsitesBranchInformation();
+
+			sb.append("QA Websites SHA: ");
+			sb.append(qaWebsitesBranchInformation.getSenderBranchSHA());
+			sb.append(";\n");
+		}
+
+		return sb.toString();
+	}
+
+	public String getTestrayBuildSHA() {
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		if (topLevelBuild instanceof PortalBranchInformationBuild) {
+			PortalBranchInformationBuild portalBranchInformationBuild =
+				(PortalBranchInformationBuild)topLevelBuild;
+
+			Build.BranchInformation portalBranchInformation =
+				portalBranchInformationBuild.getPortalBranchInformation();
+
+			return portalBranchInformation.getSenderBranchSHA();
+		}
+
+		if (topLevelBuild instanceof PluginsBranchInformationBuild) {
+			PluginsBranchInformationBuild pluginsBranchInformationBuild =
+				(PluginsBranchInformationBuild)topLevelBuild;
+
+			Build.BranchInformation pluginsBranchInformation =
+				pluginsBranchInformationBuild.getPluginsBranchInformation();
+
+			return pluginsBranchInformation.getSenderBranchSHA();
+		}
+
+		if (topLevelBuild instanceof QAWebsitesBranchInformationBuild) {
+			QAWebsitesBranchInformationBuild qaWebsitesBranchInformationBuild =
+				(QAWebsitesBranchInformationBuild)topLevelBuild;
+
+			Build.BranchInformation qaWebsitesBranchInformation =
+				qaWebsitesBranchInformationBuild.
+					getQAWebsitesBranchInformation();
+
+			return qaWebsitesBranchInformation.getSenderBranchSHA();
 		}
 
 		return null;

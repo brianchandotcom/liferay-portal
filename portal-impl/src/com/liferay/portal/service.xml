@@ -1771,7 +1771,6 @@
 
 		<column name="ownerId" type="long" />
 		<column name="ownerType" type="int" />
-		<column name="preferences" type="String" />
 
 		<!-- Finder methods -->
 

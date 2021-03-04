@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>ACCOUNT_SWITCHER_BACK_BUTTON</td>
-	<td>//button[@class='commerce-account-switcher__back']</td>
+	<td>//div[contains(@class,'item-list-head')]/button</td>
 	<td></td>
 </tr>
 <tr>

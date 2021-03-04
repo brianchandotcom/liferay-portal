@@ -41,11 +41,10 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.ClassName;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -658,10 +657,10 @@ public class JournalConverterImpl implements JournalConverter {
 				dynamicContentElement.getText());
 
 			if (!jsonObject.has("classNameId")) {
-				ClassName className = _classNameLocalService.fetchClassName(
-					jsonObject.getString("className"));
+				String className = jsonObject.getString("className");
 
-				jsonObject.put("classNameId", className.getClassNameId());
+				jsonObject.put(
+					"classNameId", _portal.getClassNameId(className));
 			}
 
 			if (!jsonObject.has("title") || !jsonObject.has("titleMap")) {
@@ -722,9 +721,9 @@ public class JournalConverterImpl implements JournalConverter {
 		JournalConverterImpl.class);
 
 	@Reference
-	private ClassNameLocalService _classNameLocalService;
+	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Reference
-	private JournalArticleLocalService _journalArticleLocalService;
+	private Portal _portal;
 
 }

@@ -119,8 +119,8 @@ AssetEntryUsagesDisplayContext assetEntryUsagesDisplayContext = new AssetEntryUs
 					</c:choose>
 				</h3>
 
-				<clay:management-toolbar-v2
-					displayContext="<%= new AssetEntryUsagesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, assetEntryUsagesDisplayContext.getSearchContainer()) %>"
+				<clay:management-toolbar
+					managementToolbarDisplayContext="<%= new AssetEntryUsagesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, assetEntryUsagesDisplayContext.getSearchContainer()) %>"
 				/>
 
 				<liferay-ui:search-container

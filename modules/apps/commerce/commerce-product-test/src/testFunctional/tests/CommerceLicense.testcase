@@ -124,6 +124,17 @@ definition {
 		CommerceLicense.executeSmoke();
 	}
 
+	@priority = "5"
+	test EnableCommerceAfterPortalStarts {
+		property commerce.enabled = "false";
+
+		CommerceLicense.viewCommerceMissing();
+
+		CommerceLicense.deployCommerceLicense();
+
+		CommerceLicense.executeSmoke();
+	}
+
 	@priority = "4"
 	test MatchHostName {
 		property commerce.enabled = "true";
@@ -241,17 +252,6 @@ definition {
 		CommerceLicense.viewCommerceAvailable();
 
 		CommerceLicense.viewWarningExpirationDate();
-	}
-
-	@priority = "5"
-	test EnableCommerceAfterPortalStarts {
-		property commerce.enabled = "false";
-
-		CommerceLicense.viewCommerceMissing();
-
-		CommerceLicense.deployCommerceLicense();
-
-		CommerceLicense.executeSmoke();
 	}
 
 	@priority = "5"

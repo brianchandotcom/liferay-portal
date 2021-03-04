@@ -29,8 +29,9 @@ LayoutPageTemplateEntry layoutPageTemplateEntry = LayoutPageTemplateEntryService
 renderResponse.setTitle(layoutPageTemplateEntry.getName());
 %>
 
-<clay:management-toolbar-v2
-	displayContext="<%= assetDisplayPageUsagesManagementToolbarDisplayContext %>"
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= assetDisplayPageUsagesManagementToolbarDisplayContext %>"
+	propsTransformer="js/propsTransformers/AssetDisplayPageUsagesManagementToolbarPropsTransformer"
 />
 
 <aui:form cssClass="container-fluid container-fluid-max-xl" name="fm">
@@ -83,8 +84,3 @@ renderResponse.setTitle(layoutPageTemplateEntry.getName());
 		/>
 	</liferay-ui:search-container>
 </aui:form>
-
-<liferay-frontend:component
-	componentId="<%= assetDisplayPageUsagesManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/AssetDisplayPageUsagesManagementToolbarDefaultEventHandler.es"
-/>

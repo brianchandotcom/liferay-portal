@@ -1618,8 +1618,8 @@ definition {
 
 	@priority = "4"
 	test ViewListRecordWithVelocityDisplayTemplate {
-		property portal.upstream = "quarantine";
 		property custom.properties = "freemarker.engine.restricted.variables=${line.separator}restricted.variables=";
+		property portal.upstream = "quarantine";
 
 		var ddlDisplayTemplateScript = '''
 				#set ($records = $ddlDisplayTemplateHelper.getRecords($reserved_record_set_id))${line.separator}${line.separator}

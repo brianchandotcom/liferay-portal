@@ -14,14 +14,10 @@
 
 package com.liferay.portal.kernel.upgrade;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.LoggingTimer;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 import java.util.Map;
 
@@ -35,93 +31,58 @@ public abstract class RenameUpgradePortalPreferences extends UpgradeProcess {
 		Map<String, String> preferenceNamesMap = getPreferenceNamesMap();
 
 		for (Map.Entry<String, String> entry : preferenceNamesMap.entrySet()) {
-			updatePreferences(
-				"PortalPreferences", "portalPreferencesId", entry.getKey(),
-				entry.getValue());
+			String oldName = entry.getKey();
+
+			String oldNamespace = null;
+			String oldKey = oldName;
+
+			int index = oldName.indexOf(CharPool.POUND);
+
+			if (index > 0) {
+				oldNamespace = oldName.substring(0, index);
+				oldKey = oldName.substring(index + 1);
+			}
+
+			String newName = entry.getValue();
+
+			String newNamespace = null;
+			String newKey = newName;
+
+			index = newName.indexOf(CharPool.POUND);
+
+			if (index > 0) {
+				newNamespace = newName.substring(0, index);
+				newKey = newName.substring(index + 1);
+			}
+
+			StringBundler sb = new StringBundler(3);
+
+			sb.append("update PortalPreferenceValue set namespace = ?, key_ ");
+			sb.append("= ? where key_ = ? and ");
+
+			if (oldNamespace == null) {
+				sb.append("(namespace = '' or namespace is null)");
+			}
+			else {
+				sb.append("namespace = ?");
+			}
+
+			try (PreparedStatement preparedStatement =
+					connection.prepareStatement(sb.toString())) {
+
+				preparedStatement.setString(1, newNamespace);
+				preparedStatement.setString(2, newKey);
+				preparedStatement.setString(3, oldKey);
+
+				if (oldNamespace != null) {
+					preparedStatement.setString(4, oldNamespace);
+				}
+
+				preparedStatement.executeUpdate();
+			}
 		}
 	}
 
 	protected abstract Map<String, String> getPreferenceNamesMap();
-
-	protected void updatePreferences(
-			String tableName, String primaryKeyColumnName, String oldValue,
-			String newValue)
-		throws Exception {
-
-		try (LoggingTimer loggingTimer = new LoggingTimer(tableName)) {
-			StringBundler sb = new StringBundler(9);
-
-			sb.append("update ");
-			sb.append(tableName);
-			sb.append(" set preferences = replace(preferences, '");
-			sb.append(oldValue);
-			sb.append("', '");
-			sb.append(newValue);
-			sb.append("') where preferences like '%");
-			sb.append(oldValue);
-			sb.append("%'");
-
-			try {
-				runSQL(sb.toString());
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception, exception);
-				}
-
-				sb = new StringBundler(7);
-
-				sb.append("select ");
-				sb.append(primaryKeyColumnName);
-				sb.append(", preferences from ");
-				sb.append(tableName);
-				sb.append(" where preferences like '%");
-				sb.append(oldValue);
-				sb.append("%'");
-
-				try (PreparedStatement ps = connection.prepareStatement(
-						sb.toString());
-					ResultSet rs = ps.executeQuery()) {
-
-					while (rs.next()) {
-						long primaryKey = rs.getLong(primaryKeyColumnName);
-						String preferences = rs.getString("preferences");
-
-						updatePreferences(
-							tableName, primaryKeyColumnName, oldValue, newValue,
-							primaryKey, preferences);
-					}
-				}
-			}
-		}
-	}
-
-	protected void updatePreferences(
-			String tableName, String primaryKeyColumnName, String oldValue,
-			String newValue, long primaryKey, String preferences)
-		throws Exception {
-
-		preferences = StringUtil.replace(preferences, oldValue, newValue);
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append("update ");
-		sb.append(tableName);
-		sb.append(" set preferences = ? where ");
-		sb.append(primaryKeyColumnName);
-		sb.append(" = ?");
-
-		try (PreparedStatement ps = connection.prepareStatement(
-				sb.toString())) {
-
-			ps.setString(1, preferences);
-			ps.setLong(2, primaryKey);
-
-			ps.executeUpdate();
-		}
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		RenameUpgradePortalPreferences.class);
 
 }

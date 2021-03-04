@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -130,8 +131,8 @@ public abstract class BaseCommerceCountriesDisplayContext<T> {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		return _portletResourcePermission.contains(
-			themeDisplay.getPermissionChecker(), null, actionId);
+		return PortalPermissionUtil.contains(
+			themeDisplay.getPermissionChecker(), actionId);
 	}
 
 	public void setDefaultOrderByCol(String defaultOrderByCol) {

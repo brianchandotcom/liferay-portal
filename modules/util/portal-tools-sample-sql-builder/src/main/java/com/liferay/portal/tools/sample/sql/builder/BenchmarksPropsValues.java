@@ -75,6 +75,11 @@ public class BenchmarksPropsValues {
 	public static final int MAX_BLOGS_ENTRY_COUNT = GetterUtil.getInteger(
 		PropertiesHolder._get(BenchmarksPropsKeys.MAX_BLOGS_ENTRY_COUNT));
 
+	public static final int MAX_COMMERCE_ACCOUNT_ENTRY_COUNT =
+		GetterUtil.getInteger(
+			PropertiesHolder._get(
+				BenchmarksPropsKeys.MAX_COMMERCE_ACCOUNT_ENTRY_COUNT));
+
 	public static final int MAX_COMMERCE_INVENTORY_WAREHOUSE_COUNT =
 		GetterUtil.getInteger(
 			PropertiesHolder._get(

@@ -14,6 +14,12 @@
 
 package com.liferay.portal.tools.sample.sql.builder;
 
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountEntryModel;
+import com.liferay.account.model.AccountEntryUserRel;
+import com.liferay.account.model.AccountEntryUserRelModel;
+import com.liferay.account.model.impl.AccountEntryModelImpl;
+import com.liferay.account.model.impl.AccountEntryUserRelModelImpl;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetCategoryModel;
@@ -749,6 +755,55 @@ public class DataFactory {
 		unsyncBufferedReader.close();
 	}
 
+	public AccountEntryModel newAccountEntryModel(String type, int index) {
+		AccountEntryModel accountEntryModel = new AccountEntryModelImpl();
+
+		// PK fields
+
+		accountEntryModel.setAccountEntryId(_counter.get());
+
+		// Audit fields
+
+		accountEntryModel.setCompanyId(_companyId);
+		accountEntryModel.setUserName(_SAMPLE_USER_NAME);
+		accountEntryModel.setCreateDate(new Date());
+		accountEntryModel.setModifiedDate(new Date());
+
+		// Other fields
+
+		accountEntryModel.setDefaultBillingAddressId(0);
+		accountEntryModel.setDefaultShippingAddressId(0);
+		accountEntryModel.setParentAccountEntryId(0);
+		accountEntryModel.setName("Account Entry" + index);
+		accountEntryModel.setLogoId(0);
+		accountEntryModel.setType("business");
+		accountEntryModel.setStatus(0);
+
+		return accountEntryModel;
+	}
+
+	public AccountEntryUserRelModel newAccountEntryUserRelModel(
+		UserModel user, long accountEntryId) {
+
+		AccountEntryUserRelModel accountEntryUserRelModel =
+			new AccountEntryUserRelModelImpl();
+
+		// PK fields
+
+		accountEntryUserRelModel.setAccountEntryUserRelId(_counter.get());
+
+		// Audit fields
+
+		accountEntryUserRelModel.setCompanyId(_companyId);
+
+		// Other fields
+
+		accountEntryUserRelModel.setAccountEntryId(accountEntryId);
+		accountEntryUserRelModel.setAccountUserId(user.getUserId());
+
+		return accountEntryUserRelModel;
+	}
+
 	public AccountModel newAccountModel() {
 		AccountModel accountModel = new AccountModelImpl();
 
@@ -1125,6 +1180,36 @@ public class DataFactory {
 		blogsStatsUserModel.setLastPostDate(new Date());
 
 		return blogsStatsUserModel;
+	}
+
+	public List<GroupModel> newCommerceAccountEntryGroupModels(
+		List<AccountEntryModel> accountEntryModels) {
+
+		List<GroupModel> groupModels = new ArrayList<>(
+			accountEntryModels.size());
+
+		for (AccountEntryModel accountEntryModel : accountEntryModels) {
+			groupModels.add(
+				newGroupModel(
+					_counter.get(), getClassNameId(AccountEntry.class),
+					accountEntryModel.getAccountEntryId(),
+					accountEntryModel.getName(), false));
+		}
+
+		return groupModels;
+	}
+
+	public List<AccountEntryModel> newCommerceAccountEntryModels() {
+		List<AccountEntryModel> accountEntryModels = new ArrayList<>(
+			BenchmarksPropsValues.MAX_COMMERCE_ACCOUNT_ENTRY_COUNT);
+
+		for (int i = 1;
+			 i <= BenchmarksPropsValues.MAX_COMMERCE_ACCOUNT_ENTRY_COUNT; i++) {
+
+			accountEntryModels.add(newAccountEntryModel("business", i));
+		}
+
+		return accountEntryModels;
 	}
 
 	public GroupModel newCommerceCatalogGroupModel(
@@ -4153,6 +4238,24 @@ public class DataFactory {
 		}
 
 		return releases;
+	}
+
+	public List<ResourcePermissionModel> newResourcePermissionModels(
+		AccountEntryModel accountEntryModel) {
+
+		return newResourcePermissionModels(
+			AccountEntry.class.getName(),
+			String.valueOf(accountEntryModel.getAccountEntryId()),
+			_sampleUserId);
+	}
+
+	public List<ResourcePermissionModel> newResourcePermissionModels(
+		AccountEntryUserRelModel accountEntryUserRelModel) {
+
+		return newResourcePermissionModels(
+			AccountEntryUserRel.class.getName(),
+			String.valueOf(accountEntryUserRelModel.getAccountEntryUserRelId()),
+			_sampleUserId);
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(

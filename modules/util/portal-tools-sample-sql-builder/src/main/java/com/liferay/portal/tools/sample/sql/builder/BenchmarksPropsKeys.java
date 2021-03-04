@@ -45,6 +45,9 @@ public interface BenchmarksPropsKeys {
 	public static final String MAX_BLOGS_ENTRY_COUNT =
 		"sample.sql.max.blogs.entry.count";
 
+	public static final String MAX_COMMERCE_ACCOUNT_ENTRY_COUNT =
+		"sample.sql.max.commerce.account.entry.count";
+
 	public static final String MAX_COMMERCE_INVENTORY_WAREHOUSE_COUNT =
 		"sample.sql.max.commerce.inventory.warehouse.count";
 

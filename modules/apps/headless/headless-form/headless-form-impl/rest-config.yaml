@@ -5,5 +5,3 @@ application:
     className: "HeadlessFormApplication"
     name: "Liferay.Headless.Form"
 author: "Javier Gamarra"
-clientDir: "../headless-form-client/src/main/java"
-testDir: "../headless-form-test/src/testIntegration/java"

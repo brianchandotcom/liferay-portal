@@ -23,7 +23,17 @@ import java.util.Objects;
  */
 public enum NotificationType {
 
-	EMAIL("email"), IM("im"), PRIVATE_MESSAGE("private-message"),
+	EMAIL("email"),
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
+	IM("im"),
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
+	PRIVATE_MESSAGE("private-message"),
 	PUSH_NOTIFICATION("push-notification"),
 	USER_NOTIFICATION("user-notification");
 

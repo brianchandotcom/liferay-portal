@@ -427,34 +427,42 @@ if (portletTitleBasedNavigation) {
 			</c:if>
 
 			<div class="sheet-footer">
+				<div class="btn-group">
 
-				<%
-				String saveButtonLabel = "save";
+					<%
+					String saveButtonLabel = "save";
 
-				if ((message == null) || message.isDraft() || message.isApproved()) {
-					saveButtonLabel = "save-as-draft";
-				}
+					if ((message == null) || message.isDraft() || message.isApproved()) {
+						saveButtonLabel = "save-as-draft";
+					}
 
-				String publishButtonLabel = "publish";
+					String publishButtonLabel = "publish";
 
-				if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, MBMessage.class.getName())) {
-					publishButtonLabel = "submit-for-publication";
-				}
-				%>
+					if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, MBMessage.class.getName())) {
+						publishButtonLabel = "submit-for-publication";
+					}
+					%>
 
-				<c:if test="<%= (message != null) && message.isApproved() && WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(message.getCompanyId(), message.getGroupId(), MBMessage.class.getName()) %>">
-					<div class="alert alert-info">
-						<liferay-ui:message arguments="<%= ResourceActionsUtil.getModelResource(locale, MBMessage.class.getName()) %>" key="this-x-is-approved.-publishing-these-changes-will-cause-it-to-be-unpublished-and-go-through-the-approval-process-again" translateArguments="<%= false %>" />
+					<c:if test="<%= (message != null) && message.isApproved() && WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(message.getCompanyId(), message.getGroupId(), MBMessage.class.getName()) %>">
+						<div class="alert alert-info">
+							<liferay-ui:message arguments="<%= ResourceActionsUtil.getModelResource(locale, MBMessage.class.getName()) %>" key="this-x-is-approved.-publishing-these-changes-will-cause-it-to-be-unpublished-and-go-through-the-approval-process-again" translateArguments="<%= false %>" />
+						</div>
+					</c:if>
+
+					<div class="btn-group-item">
+						<aui:button disabled="<%= pending %>" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
 					</div>
-				</c:if>
 
-				<aui:button disabled="<%= pending %>" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
+					<c:if test="<%= themeDisplay.isSignedIn() %>">
+						<div class="btn-group-item">
+							<aui:button name="saveButton" value="<%= saveButtonLabel %>" />
+						</div>
+					</c:if>
 
-				<c:if test="<%= themeDisplay.isSignedIn() %>">
-					<aui:button name="saveButton" value="<%= saveButtonLabel %>" />
-				</c:if>
-
-				<aui:button href="<%= redirect %>" type="cancel" />
+					<div class="btn-group-item">
+						<aui:button href="<%= redirect %>" type="cancel" />
+					</div>
+				</div>
 			</div>
 		</aui:fieldset-group>
 	</aui:form>

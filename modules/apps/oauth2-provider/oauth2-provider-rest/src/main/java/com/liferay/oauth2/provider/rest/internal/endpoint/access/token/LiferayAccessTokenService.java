@@ -55,7 +55,7 @@ public class LiferayAccessTokenService extends AccessTokenService {
 	public Response handleTokenRequest(MultivaluedMap<String, String> params) {
 		Response response = super.handleTokenRequest(params);
 
-		if (response.getStatus() == Response.Status.OK.getStatusCode()) {
+		if (Response.Status.OK.getStatusCode() == response.getStatus()) {
 			ClientAccessToken clientAccessToken = response.readEntity(
 				ClientAccessToken.class);
 

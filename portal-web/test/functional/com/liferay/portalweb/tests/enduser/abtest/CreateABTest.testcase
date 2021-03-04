@@ -201,7 +201,7 @@ definition {
 	@priority = "5"
 	test CreateABTestRunWithNoVariants {
 		property minimum.slave.ram = "32";
-		
+
 		ABTest.createABTest(
 			goal = "Bounce Rate",
 			testTitle = "AB test title");

@@ -1,0 +1,32 @@
+{
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"defaultLanguageId": "en_US",
+	"definitionSchemaVersion": "2.0",
+	"fields": [
+		{
+			"dataType": "image",
+			"fieldNamespace": "",
+			"fieldReference": "Image",
+			"indexType": "text",
+			"label": {
+				"en_US": "Image"
+			},
+			"localizable": true,
+			"name": "FIELD_NAME",
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "image",
+			"visibilityExpression": ""
+		}
+	]
+}

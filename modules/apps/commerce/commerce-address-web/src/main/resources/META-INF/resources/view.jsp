@@ -20,7 +20,7 @@
 CommerceCountriesDisplayContext commerceCountriesDisplayContext = (CommerceCountriesDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
-<c:if test="<%= commerceCountriesDisplayContext.hasPermission(CommerceActionKeys.MANAGE_COMMERCE_COUNTRIES) %>">
+<c:if test="<%= commerceCountriesDisplayContext.hasPermission(ActionKeys.MANAGE_COUNTRIES) %>">
 	<liferay-frontend:management-bar
 		includeCheckBox="<%= true %>"
 		searchContainerId="commerceCountries"

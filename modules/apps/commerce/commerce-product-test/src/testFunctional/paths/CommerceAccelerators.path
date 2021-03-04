@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>ACCOUNT_SELECTOR_DROPDOWN_MENU_SELECTED_ACCOUNT</td>
-	<td>//div[contains(@class,'account-selector-dropdown-menu')]//h4</td>
+	<td>//div[contains(@class,'item-list-head')]/span/span</td>
 	<td></td>
 </tr>
 <tr>

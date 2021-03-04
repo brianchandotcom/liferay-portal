@@ -42,7 +42,8 @@ definition {
 	}
 
 	test CreateNewCountry {
-		property portal.acceptance = "true";
+		property portal.upstream = "false";
+		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceSettings#CreateNewCountry";
 
 		CommerceNavigator.gotoPortlet(

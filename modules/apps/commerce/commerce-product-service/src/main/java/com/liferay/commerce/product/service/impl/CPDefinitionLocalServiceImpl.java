@@ -1153,7 +1153,8 @@ public class CPDefinitionLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x)
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 * #getLayoutUuid(long, long)}
 	 */
 	@Deprecated
 	@Override

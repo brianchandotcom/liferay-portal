@@ -29,8 +29,10 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -123,9 +125,22 @@ public class DiscardDraftLayoutMVCActionCommand
 			themeDisplay.getPermissionChecker(), layout.getPlid(),
 			ActionKeys.VIEW);
 
+		UnicodeProperties typeSettingsUnicodeProperties =
+			draftLayout.getTypeSettingsProperties();
+
+		boolean published = GetterUtil.getBoolean(
+			typeSettingsUnicodeProperties.getProperty("published"));
+
 		draftLayout = _layoutCopyHelper.copyLayout(layout, draftLayout);
 
 		draftLayout.setStatus(WorkflowConstants.STATUS_APPROVED);
+
+		typeSettingsUnicodeProperties = draftLayout.getTypeSettingsProperties();
+
+		typeSettingsUnicodeProperties.put(
+			"published", String.valueOf(published));
+
+		draftLayout.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 
 		_layoutLocalService.updateLayout(draftLayout);
 

@@ -30,13 +30,17 @@ definition {
 			locator1 = "ApplicationsMenu#PANEL");
 	}
 
-	@summary = "Assert Commerce UI is unusable from the platform when not activated"
+	@summary = "Assert Commerce UI is missing from the platform when not activated"
 	macro viewCommerceMissing {
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		ApplicationsMenuHelper.openApplicationsMenu();
 
-		AssertElementNotPresent(locator1 = "ItemSelector#ADD_BUTTON");
+		AssertElementPresent(
+			key_panel = "Applications",
+			locator1 = "ApplicationsMenu#PANEL");
+
+		AssertElementNotPresent(
+			key_panel = "Commerce",
+			locator1 = "ApplicationsMenu#PANEL");
 	}
 
 	@summary = "Assert expiration date warning for Liferay Commerce Subscription"

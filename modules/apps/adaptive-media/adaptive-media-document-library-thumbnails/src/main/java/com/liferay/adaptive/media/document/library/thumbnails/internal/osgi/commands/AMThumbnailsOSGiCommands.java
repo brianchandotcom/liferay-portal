@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.awt.image.RenderedImage;
 
@@ -173,9 +172,7 @@ public class AMThumbnailsOSGiCommands {
 
 		Stream<String> companyIdStream = Arrays.stream(companyIds);
 
-		return companyIdStream.filter(
-			Validator::isNumber
-		).mapToLong(
+		return companyIdStream.mapToLong(
 			Long::parseLong
 		).toArray();
 	}

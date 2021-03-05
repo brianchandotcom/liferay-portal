@@ -171,8 +171,7 @@ public class LoadBalancerUtilTest
 				new File(sampleDir, jenkinsMaster.getName()),
 				JenkinsResultsParserUtil.createURL(jenkinsMaster.getURL()),
 				JenkinsResultsParserUtil.combine(
-					"/queue/api/json?tree=items[actions[parameters",
-					"[name,value]],inQueueSince,task[name,url],url,why]"));
+					"/queue/api/json?tree=items[task[name,url],url,why]"));
 		}
 	}
 

@@ -203,11 +203,6 @@ public class LoggerTestUtil {
 		}
 
 		@Override
-		public Object getWrappedObject() {
-			return this;
-		}
-
-		@Override
 		public String toString() {
 			StringBundler sb = new StringBundler(5);
 
@@ -326,11 +321,6 @@ public class LoggerTestUtil {
 			}
 
 			return null;
-		}
-
-		@Override
-		public Object getWrappedObject() {
-			return _loggingEvent;
 		}
 
 		@Override

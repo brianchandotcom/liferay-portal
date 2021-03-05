@@ -25,6 +25,4 @@ public interface LogEntry {
 
 	public Throwable getThrowable();
 
-	public Object getWrappedObject();
-
 }

@@ -201,6 +201,10 @@ $product-menu-pages-administration-link-height: 72px;
 					visibility: hidden;
 				}
 
+				.page-icon {
+					display: block;
+				}
+
 				&:hover .dropdown {
 					visibility: visible;
 				}

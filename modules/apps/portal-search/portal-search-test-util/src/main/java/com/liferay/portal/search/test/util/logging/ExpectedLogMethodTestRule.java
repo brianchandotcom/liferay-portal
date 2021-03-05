@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.test.util.logging;
 
+import com.liferay.portal.kernel.test.rule.MethodTestRule;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -32,73 +33,15 @@ import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
 import org.junit.Assert;
-import org.junit.rules.TestRule;
 import org.junit.runner.Description;
-import org.junit.runners.model.Statement;
 
 /**
  * @author André de Oliveira
  */
-public class ExpectedLogTestRule implements TestRule {
+public class ExpectedLogMethodTestRule extends MethodTestRule<Void> {
 
-	public static ExpectedLogTestRule none() {
-		return new ExpectedLogTestRule(null, null);
-	}
-
-	public static ExpectedLogTestRule with(Class<?> clazz, Level level) {
-		return new ExpectedLogTestRule(clazz.getName(), level);
-	}
-
-	public static ExpectedLogTestRule with(String name, Level level) {
-		return new ExpectedLogTestRule(name, level);
-	}
-
-	@Override
-	public Statement apply(Statement base, Description description) {
-		return new Statement() {
-
-			@Override
-			public void evaluate() throws Throwable {
-				configure(_name, _level);
-
-				try {
-					base.evaluate();
-
-					verify();
-				}
-				finally {
-					closeCaptureHandler();
-				}
-			}
-
-		};
-	}
-
-	public void configure(Class<?> clazz, Level level) {
-		configure(clazz.getName(), level);
-	}
-
-	public void configure(String name, Level level) {
-		if ((name == null) || (level == null)) {
-			return;
-		}
-
-		closeCaptureHandler();
-
-		openCaptureHandler(name, level);
-	}
-
-	public void expect(Matcher<?> matcher) {
-		_matcherBuilder.add(matcher);
-	}
-
-	public void expectMessage(Matcher<String> matcher) {
-		expect(LogOutputMatcher.hasMessage(matcher));
-	}
-
-	public void expectMessage(String substring) {
-		expectMessage(CoreMatchers.containsString(substring));
-	}
+	public static final ExpectedLogMethodTestRule INSTANCE =
+		new ExpectedLogMethodTestRule();
 
 	public void verify() {
 		if (!_matcherBuilder.isAnythingExpected()) {
@@ -106,6 +49,47 @@ public class ExpectedLogTestRule implements TestRule {
 		}
 
 		Assert.assertThat(getlogEntries(), _matcherBuilder.build());
+	}
+
+	@Override
+	protected void afterMethod(
+		Description description, Void unused, Object target) {
+
+		ExpectedLog expectedLog = description.getAnnotation(ExpectedLog.class);
+
+		if (expectedLog == null) {
+			return;
+		}
+
+		try {
+			verify();
+		}
+		finally {
+			closeCaptureHandler();
+		}
+	}
+
+	@Override
+	protected Void beforeMethod(Description description, Object target) {
+		ExpectedLog expectedLog = description.getAnnotation(ExpectedLog.class);
+
+		if (expectedLog == null) {
+			return null;
+		}
+
+		_matcherBuilder.clear();
+
+		Class<?> clazz = expectedLog.expectedClass();
+
+		ExpectedLog.Level level = expectedLog.expectedLevel();
+
+		_configure(clazz.getName(), Level.parse(level.name()));
+
+		_matcherBuilder.add(
+			LogOutputMatcher.hasMessage(
+				CoreMatchers.containsString(expectedLog.expectedLog())));
+
+		return null;
 	}
 
 	protected void closeCaptureHandler() {
@@ -205,6 +189,10 @@ public class ExpectedLogTestRule implements TestRule {
 			return CoreMatchers.allOf(new ArrayList<>((List)matchers));
 		}
 
+		protected void clear() {
+			matchers.clear();
+		}
+
 		protected boolean isAnythingExpected() {
 			if (matchers.isEmpty()) {
 				return false;
@@ -217,14 +205,17 @@ public class ExpectedLogTestRule implements TestRule {
 
 	}
 
-	private ExpectedLogTestRule(String name, Level level) {
-		_name = name;
-		_level = level;
+	private void _configure(String name, Level level) {
+		if ((name == null) || (level == null)) {
+			return;
+		}
+
+		closeCaptureHandler();
+
+		openCaptureHandler(name, level);
 	}
 
-	private final Level _level;
 	private LogCapture _logCapture;
 	private final MatcherBuilder _matcherBuilder = new MatcherBuilder();
-	private final String _name;
 
 }

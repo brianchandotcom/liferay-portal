@@ -2432,9 +2432,6 @@ definition {
 	@description = "LRQA-64406 Automate LPS-116593: As an App Adm, I want to be warned when a Form View cannot be used to create new records for Custom Objects in the Start-Step of the Workflow"
 	@priority = "4"
 	test WarningDuringStartStep {
-		property environment.acceptance = "true";
-		property portal.acceptance = "true";
-
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",
 			isCreatingFormView = "true",
@@ -2467,6 +2464,10 @@ definition {
 		AppBuilderWorkflow.clickOnSelectFormView(positionNumber = "1");
 		AssertElementPresent(locator1 = "AppBuilder#WARNING_SIGN");
 		AppBuilderWorkflow.selectFormView(formViewName = "My Form View Without Required");
+
+		AppBuilderWorkflow.assertFormViewSelected(
+			formViewName = "My Form View Without Required",
+			positionNumber = "1");
 	}
 
 }

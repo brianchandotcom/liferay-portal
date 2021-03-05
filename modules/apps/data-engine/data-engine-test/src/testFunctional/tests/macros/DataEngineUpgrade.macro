@@ -1,8 +1,7 @@
 definition {
 
 	macro createNewStructureUsingAnUpgradedStructureAsFieldset {
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		NavItem.gotoStructures();
 

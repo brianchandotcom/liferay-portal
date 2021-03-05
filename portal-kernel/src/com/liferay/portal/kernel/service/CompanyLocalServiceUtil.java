@@ -337,21 +337,6 @@ public class CompanyLocalServiceUtil {
 	}
 
 	public static <E extends Exception> void forEach(
-		com.liferay.petra.function.UnsafeConsumer<Company, E> unsafeConsumer,
-		java.util.function.BiConsumer<Company, E> biConsumer) {
-
-		getService().forEach(unsafeConsumer, biConsumer);
-	}
-
-	public static <E extends Exception> void forEach(
-		com.liferay.petra.function.UnsafeConsumer<Company, E> unsafeConsumer,
-		java.util.function.BiConsumer<Company, E> biConsumer,
-		List<Company> companies) {
-
-		getService().forEach(unsafeConsumer, biConsumer, companies);
-	}
-
-	public static <E extends Exception> void forEach(
 			com.liferay.petra.function.UnsafeConsumer<Company, E>
 				unsafeConsumer,
 			List<Company> companies)
@@ -365,20 +350,6 @@ public class CompanyLocalServiceUtil {
 		throws E {
 
 		getService().forEachCompanyId(unsafeConsumer);
-	}
-
-	public static <E extends Exception> void forEachCompanyId(
-		com.liferay.petra.function.UnsafeConsumer<Long, E> unsafeConsumer,
-		java.util.function.BiConsumer<Long, E> biConsumer) {
-
-		getService().forEachCompanyId(unsafeConsumer, biConsumer);
-	}
-
-	public static <E extends Exception> void forEachCompanyId(
-		com.liferay.petra.function.UnsafeConsumer<Long, E> unsafeConsumer,
-		java.util.function.BiConsumer<Long, E> biConsumer, long[] companyIds) {
-
-		getService().forEachCompanyId(unsafeConsumer, biConsumer, companyIds);
 	}
 
 	public static <E extends Exception> void forEachCompanyId(

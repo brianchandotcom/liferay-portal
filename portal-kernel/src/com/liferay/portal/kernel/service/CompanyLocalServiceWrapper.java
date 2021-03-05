@@ -371,27 +371,6 @@ public class CompanyLocalServiceWrapper
 
 	@Override
 	public <E extends java.lang.Exception> void forEach(
-		com.liferay.petra.function.UnsafeConsumer
-			<com.liferay.portal.kernel.model.Company, E> unsafeConsumer,
-		java.util.function.BiConsumer
-			<com.liferay.portal.kernel.model.Company, E> biConsumer) {
-
-		_companyLocalService.forEach(unsafeConsumer, biConsumer);
-	}
-
-	@Override
-	public <E extends java.lang.Exception> void forEach(
-		com.liferay.petra.function.UnsafeConsumer
-			<com.liferay.portal.kernel.model.Company, E> unsafeConsumer,
-		java.util.function.BiConsumer
-			<com.liferay.portal.kernel.model.Company, E> biConsumer,
-		java.util.List<com.liferay.portal.kernel.model.Company> companies) {
-
-		_companyLocalService.forEach(unsafeConsumer, biConsumer, companies);
-	}
-
-	@Override
-	public <E extends java.lang.Exception> void forEach(
 			com.liferay.petra.function.UnsafeConsumer
 				<com.liferay.portal.kernel.model.Company, E> unsafeConsumer,
 			java.util.List<com.liferay.portal.kernel.model.Company> companies)
@@ -407,26 +386,6 @@ public class CompanyLocalServiceWrapper
 		throws E {
 
 		_companyLocalService.forEachCompanyId(unsafeConsumer);
-	}
-
-	@Override
-	public <E extends java.lang.Exception> void forEachCompanyId(
-		com.liferay.petra.function.UnsafeConsumer<java.lang.Long, E>
-			unsafeConsumer,
-		java.util.function.BiConsumer<java.lang.Long, E> biConsumer) {
-
-		_companyLocalService.forEachCompanyId(unsafeConsumer, biConsumer);
-	}
-
-	@Override
-	public <E extends java.lang.Exception> void forEachCompanyId(
-		com.liferay.petra.function.UnsafeConsumer<java.lang.Long, E>
-			unsafeConsumer,
-		java.util.function.BiConsumer<java.lang.Long, E> biConsumer,
-		long[] companyIds) {
-
-		_companyLocalService.forEachCompanyId(
-			unsafeConsumer, biConsumer, companyIds);
 	}
 
 	@Override

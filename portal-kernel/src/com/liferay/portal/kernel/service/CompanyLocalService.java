@@ -39,7 +39,6 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.List;
-import java.util.function.BiConsumer;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -314,16 +313,6 @@ public interface CompanyLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public <E extends Exception> void forEach(
-		UnsafeConsumer<Company, E> unsafeConsumer,
-		BiConsumer<Company, E> biConsumer);
-
-	@Transactional(propagation = Propagation.SUPPORTS)
-	public <E extends Exception> void forEach(
-		UnsafeConsumer<Company, E> unsafeConsumer,
-		BiConsumer<Company, E> biConsumer, List<Company> companies);
-
-	@Transactional(propagation = Propagation.SUPPORTS)
-	public <E extends Exception> void forEach(
 			UnsafeConsumer<Company, E> unsafeConsumer, List<Company> companies)
 		throws E;
 
@@ -331,15 +320,6 @@ public interface CompanyLocalService
 	public <E extends Exception> void forEachCompanyId(
 			UnsafeConsumer<Long, E> unsafeConsumer)
 		throws E;
-
-	@Transactional(propagation = Propagation.SUPPORTS)
-	public <E extends Exception> void forEachCompanyId(
-		UnsafeConsumer<Long, E> unsafeConsumer, BiConsumer<Long, E> biConsumer);
-
-	@Transactional(propagation = Propagation.SUPPORTS)
-	public <E extends Exception> void forEachCompanyId(
-		UnsafeConsumer<Long, E> unsafeConsumer, BiConsumer<Long, E> biConsumer,
-		long[] companyIds);
 
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public <E extends Exception> void forEachCompanyId(

@@ -3,13 +3,20 @@
 <project basedir="." name="portal-test-elasticsearch" xmlns:antelope="antlib:ise.antelope.tasks" xmlns:if="ant:if" xmlns:unless="ant:unless">
 	<import file="build-test.xml" />
 
+	<get-testcase-property if:set="env.JENKINS_HOME" property.name="elastic.override.version" />
 	<propertycopy from="suite.elastic.version[${env.CI_TEST_SUITE}]" name="suite.elastic.version" silent="true" />
 
 	<if>
-		<isset property="suite.elastic.version" />
+		<isset property="elastic.override.version" />
 		<then>
-			<property name="elasticsearch.version" value="${suite.elastic.version}" />
+			<property name="elasticsearch.version" value="${elastic.override.version}" />
 		</then>
+		<elseif>
+			<isset property="suite.elastic.version" />
+			<then>
+				<property name="elasticsearch.version" value="${suite.elastic.version}" />
+			</then>
+		</elseif>
 		<else>
 			<property name="elasticsearch.version" value="7.11.0" />
 		</else>
@@ -165,49 +172,6 @@ xpack.security.transport.ssl.certificate_authorities: [ "certs/ca.crt" ]
 xpack.security.transport.ssl.enabled: true
 xpack.security.transport.ssl.key: certs/elastic-certificates.key
 xpack.security.transport.ssl.verification_mode: certificate</echo>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="configure-elasticsearch79-ltr-test-properties">
-		<sequential>
-			<var name="elasticsearch.version" unset="true" />
-			<var name="elasticsearch.dir" unset="true" />
-			<var name="elasticsearch.analysis-icu.zip.name" unset="true" />
-			<var name="elasticsearch.analysis-icu.zip.url" unset="true" />
-			<var name="elasticsearch.analysis-kuromoji.zip.name" unset="true" />
-			<var name="elasticsearch.analysis-kuromoji.zip.url" unset="true" />
-			<var name="elasticsearch.analysis-smartcn.zip.name" unset="true" />
-			<var name="elasticsearch.analysis-smartcn.zip.url" unset="true" />
-			<var name="elasticsearch.analysis-stempel.zip.name" unset="true" />
-			<var name="elasticsearch.analysis-stempel.zip.url" unset="true" />
-			<var name="elasticsearch.tar.name.linux" unset="true" />
-			<var name="elasticsearch.tar.name.mac" unset="true" />
-			<var name="elasticsearch.zip.name.windows" unset="true" />
-			<var name="elasticsearch.tar.url.linux" unset="true" />
-			<var name="elasticsearch.tar.url.mac" unset="true" />
-			<var name="elasticsearch.zip.url.windows" unset="true" />
-
-			<property name="elasticsearch.version" value="7.9.0" />
-			<property name="elasticsearch.dir" value="${app.server.parent.dir}/elasticsearch-${elasticsearch.version}" />
-			<property name="elasticsearch.analysis-icu.zip.name" value="analysis-icu-${elasticsearch.version}.zip" />
-			<property name="elasticsearch.analysis-icu.zip.url" value="https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-icu/${elasticsearch.analysis-icu.zip.name}" />
-			<property name="elasticsearch.analysis-kuromoji.zip.name" value="analysis-kuromoji-${elasticsearch.version}.zip" />
-			<property name="elasticsearch.analysis-kuromoji.zip.url" value="https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-kuromoji/${elasticsearch.analysis-kuromoji.zip.name}" />
-			<property name="elasticsearch.analysis-smartcn.zip.name" value="analysis-smartcn-${elasticsearch.version}.zip" />
-			<property name="elasticsearch.analysis-smartcn.zip.url" value="https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-smartcn/${elasticsearch.analysis-smartcn.zip.name}" />
-			<property name="elasticsearch.analysis-stempel.zip.name" value="analysis-stempel-${elasticsearch.version}.zip" />
-			<property name="elasticsearch.analysis-stempel.zip.url" value="https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-stempel/${elasticsearch.analysis-stempel.zip.name}" />
-			<property name="elasticsearch.tar.name.linux" value="elasticsearch-${elasticsearch.version}-linux-x86_64.tar.gz" />
-			<property name="elasticsearch.tar.name.mac" value="elasticsearch-${elasticsearch.version}-darwin-x86_64.tar.gz" />
-			<property name="elasticsearch.zip.name.windows" value="elasticsearch-${elasticsearch.version}-windows-x86_64.zip" />
-			<property name="elasticsearch.tar.url.linux" value="https://artifacts.elastic.co/downloads/elasticsearch/${elasticsearch.tar.name.linux}" />
-			<property name="elasticsearch.tar.url.mac" value="https://artifacts.elastic.co/downloads/elasticsearch/${elasticsearch.tar.name.mac}" />
-			<property name="elasticsearch.zip.url.windows" value="https://artifacts.elastic.co/downloads/elasticsearch/${elasticsearch.zip.name.windows}" />
-			<property name="elasticsearch.ltr.version" value="1.5.0" />
-			<property name="elasticsearch.ltr-linear-regression-model.zip.name" value="ltr-linear-regression-model.zip" />
-			<property name="elasticsearch.ltr-linear-regression-model.zip.url" value="http://files.liferay.com/private/apps/elastic/elasticsearch/${elasticsearch.ltr-linear-regression-model.zip.name}" />
-			<property name="elasticsearch.ltr.zip.name" value="ltr-plugin-v${elasticsearch.ltr.version}-es${elasticsearch.version}.zip" />
-			<property name="elasticsearch.ltr.url" value="http://es-learn-to-rank.labs.o19s.com/${elasticsearch.ltr.zip.name}" />
 		</sequential>
 	</macrodef>
 
@@ -623,6 +587,8 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 		<sequential>
 			<lstopwatch action="start" name="prepare.elasticsearch.ltr" />
 
+			<property name="elasticsearch.ltr.zip.name" value="ltr-plugin-v1.5.0-es${elasticsearch.version}.zip" />
+
 			<if>
 				<not>
 					<available file="${elasticsearch.dir}/${elasticsearch.ltr.zip.name}" />
@@ -631,7 +597,7 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 					<mirrors-get
 						dest="${elasticsearch.dir}/${elasticsearch.ltr.zip.name}"
 						skipChecksum="true"
-						src="${elasticsearch.ltr.url}"
+						src="http://es-learn-to-rank.labs.o19s.com/${elasticsearch.ltr.zip.name}"
 					/>
 				</then>
 			</if>
@@ -772,8 +738,6 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 
 	<macrodef name="start-elasticsearch-with-ltr">
 		<sequential>
-			<configure-elasticsearch79-ltr-test-properties />
-
 			<set-up-standard-elasticsearch />
 
 			<configure-elasticsearch-ltr-properties />
@@ -1102,22 +1066,24 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 
 	<macrodef name="unzip-ltr-linear-regression-model">
 		<sequential>
+			<property name="ltr-linear-regression-model.zip.name" value="ltr-linear-regression-model.zip" />
+
 			<if>
 				<not>
-					<available file="${liferay.home}/${elasticsearch.ltr-linear-regression-model.zip.name}" />
+					<available file="${liferay.home}/${ltr-linear-regression-model.zip.name}" />
 				</not>
 				<then>
 					<mirrors-get
-						dest="${liferay.home}/${elasticsearch.ltr-linear-regression-model.zip.name}"
+						dest="${liferay.home}/${ltr-linear-regression-model.zip.name}"
 						skipChecksum="true"
-						src="${elasticsearch.ltr-linear-regression-model.zip.url}"
+						src="http://files.liferay.com/private/apps/elastic/elasticsearch/${ltr-linear-regression-model.zip.name}"
 					/>
 				</then>
 			</if>
 
 			<unzip
 				dest="${liferay.home}/data/elasticsearch7/repo"
-				src="${liferay.home}/${elasticsearch.ltr-linear-regression-model.zip.name}"
+				src="${liferay.home}/${ltr-linear-regression-model.zip.name}"
 			/>
 		</sequential>
 	</macrodef>
@@ -1134,8 +1100,6 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 	</target>
 
 	<target name="add-ltr-linear-regression-model">
-		<configure-elasticsearch79-ltr-test-properties />
-
 		<unzip-ltr-linear-regression-model />
 
 		<antcall target="restore-backup">

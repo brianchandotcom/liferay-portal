@@ -159,7 +159,7 @@ $product-menu-pages-administration-link-height: 72px;
 					background: transparent;
 					border: none;
 
-					.autofit-row {
+					> .autofit-row {
 						border-radius: 4px;
 						box-shadow: 0 0 0 2px $primary-l1;
 					}
@@ -184,8 +184,17 @@ $product-menu-pages-administration-link-height: 72px;
 				}
 			}
 
-			.tree-label a.layout-tree {
+			.tree-label > span a.layout-tree {
 				color: $gray-500;
+				padding: 3px 0 3px 6px;
+				width: 100%;
+
+				&:before {
+					bottom: 4px;
+					left: 4px;
+					right: 8px;
+					top: 4px;
+				}
 
 				&:hover {
 					color: $white;
@@ -193,16 +202,13 @@ $product-menu-pages-administration-link-height: 72px;
 			}
 
 			font-size: 14px;
-			margin-bottom: 4px;
-			margin-top: 4px;
+			margin-bottom: 2px;
+			margin-top: 2px;
 
 			.tree-label {
 				.dropdown {
+					margin-top: 4px;
 					visibility: hidden;
-				}
-
-				.page-icon {
-					display: block;
 				}
 
 				&:hover .dropdown {
@@ -212,7 +218,7 @@ $product-menu-pages-administration-link-height: 72px;
 				color: $gray-500 !important;
 				display: flex;
 				flex-grow: 1;
-				margin-left: 8px;
+				margin-left: 2px;
 				padding-right: 17px;
 				vertical-align: middle;
 				width: calc(100% - 20px);

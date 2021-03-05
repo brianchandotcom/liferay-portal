@@ -43,127 +43,107 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 		<clay:content-row
 			containerElement="span"
 		>
-			<clay:content-col
-				containerElement="span"
-				cssClass="mr-2 list-icon {type}-layout"
-			>
-				<aui:icon image="list" markupView="lexicon" />
-			</clay:content-col>
-
-			<clay:content-col
-				containerElement="span"
-				cssClass="mr-2 page-icon {type}-layout"
-			>
-				<aui:icon image="page" markupView="lexicon" />
-			</clay:content-col>
-
-			<clay:content-col
-				containerElement="span"
-				cssClass="table-cell-content"
-				expand="<%= true %>"
-			>
-				<a class="{cssClass}" data-regular-url="{regularURL}" data-url="{url}" data-uuid="{uuid}" href="{url}" id="{id}" title="{title}">
-					{label}
-				</a>
-			</clay:content-col>
-
-			<clay:content-col
-				containerElement="span"
-				cssClass="pages-tree-dropdown"
-				expand="<%= true %>"
-			>
-				<span class="d-sm-block dropdown text-right">
-					<button class="btn btn-unstyled dropdown-toggle ml-1 taglib-icon" data-toggle="liferay-dropdown">
-						<aui:icon image="ellipsis-v" markupView="lexicon" />
-
-						<span class="sr-only">
-							<liferay-ui:message key="options" />
-						</span>
-					</button>
-
-					<ul class="dropdown-menu dropdown-menu-left" role="menu">
-						<c:if test="<%= (stagingGroup == null) || Objects.equals(scopeGroupId, stagingGroupId) %>">
-							<li class="child-page-action-option type-{parentable}">
-								<clay:content-row
-									containerElement="a"
-									cssClass="dropdown-item layout-action"
-									href="<%= layoutsTreeDisplayContext.getAddChildURLTemplate() %>"
-								>
-									<clay:content-col
-										containerElement="span"
-										expand="<%= true %>"
-									>
-										<clay:content-section
-											containerElement="span"
-											cssClass="text-left"
-										>
-											<liferay-ui:message key="add-child-page" />
-										</clay:content-section>
-									</clay:content-col>
-								</clay:content-row>
-							</li>
-							<li class="child-page-action-option type-{parentable}">
-								<clay:content-row
-									containerElement="a"
-									cssClass="dropdown-item layout-action"
-									href="<%= layoutsTreeDisplayContext.getAddChildCollectionURLTemplate() %>"
-								>
-									<clay:content-col
-										containerElement="span"
-										expand="<%= true %>"
-									>
-										<clay:content-section
-											containerElement="span"
-											cssClass="text-left"
-										>
-											<liferay-ui:message key="add-child-collection-page" />
-										</clay:content-section>
-									</clay:content-col>
-								</clay:content-row>
-							</li>
-						</c:if>
-
-						<li>
-							<clay:content-row
-								containerElement="a"
-								cssClass="dropdown-item layout-action"
-								href="<%= layoutsTreeDisplayContext.getConfigureLayoutURLTemplate() %>"
-							>
-								<clay:content-col
-									containerElement="span"
-									expand="<%= true %>"
-								>
-									<clay:content-section
-										containerElement="span"
-										cssClass="text-left"
-									>
-										<liferay-ui:message key="configure" />
-									</clay:content-section>
-								</clay:content-col>
-							</clay:content-row>
-						</li>
-						<li class="view-collection-items-action-option {type}" data-view-collection-items-url="<%= layoutsTreeDisplayContext.getViewCollectionItemsURL() %>">
-							<clay:content-row
-								containerElement="a"
-								cssClass="dropdown-item layout-action"
-								href="javascript:;"
-							>
-								<clay:content-col
-									containerElement="span"
-									expand="<%= true %>"
-								>
-									<clay:content-section
-										containerElement="span"
-										cssClass="text-left"
-									>
-										<liferay-ui:message key="view-collection-items" />
-									</clay:content-section>
-								</clay:content-col>
-							</clay:content-row>
-						</li>
-					</ul>
+			<a class="{cssClass}" data-regular-url="{regularURL}" data-url="{url}" data-uuid="{uuid}" href="{url}" id="{id}" title="{title}">
+				<span class="mr-1 list-icon {type}-layout">
+					<aui:icon image="list" markupView="lexicon" />
 				</span>
-			</clay:content-col>
+				<span class="mr-1 page-icon {type}-layout">
+					<aui:icon image="page" markupView="lexicon" />
+				</span>
+				{label}
+			</a>
+
+			<span class="d-sm-block dropdown pages-tree-dropdown text-right">
+				<button class="btn btn-unstyled dropdown-toggle ml-1 taglib-icon" data-toggle="liferay-dropdown">
+					<aui:icon image="ellipsis-v" markupView="lexicon" />
+
+					<span class="sr-only">
+						<liferay-ui:message key="options" />
+					</span>
+				</button>
+
+				<ul class="dropdown-menu dropdown-menu-left" role="menu">
+					<c:if test="<%= (stagingGroup == null) || Objects.equals(scopeGroupId, stagingGroupId) %>">
+						<li class="child-page-action-option type-{parentable}">
+							<clay:content-row
+								containerElement="a"
+								cssClass="dropdown-item layout-action"
+								href="<%= layoutsTreeDisplayContext.getAddChildURLTemplate() %>"
+							>
+								<clay:content-col
+									containerElement="span"
+									expand="<%= true %>"
+								>
+									<clay:content-section
+										containerElement="span"
+										cssClass="text-left"
+									>
+										<liferay-ui:message key="add-child-page" />
+									</clay:content-section>
+								</clay:content-col>
+							</clay:content-row>
+						</li>
+						<li class="child-page-action-option type-{parentable}">
+							<clay:content-row
+								containerElement="a"
+								cssClass="dropdown-item layout-action"
+								href="<%= layoutsTreeDisplayContext.getAddChildCollectionURLTemplate() %>"
+							>
+								<clay:content-col
+									containerElement="span"
+									expand="<%= true %>"
+								>
+									<clay:content-section
+										containerElement="span"
+										cssClass="text-left"
+									>
+										<liferay-ui:message key="add-child-collection-page" />
+									</clay:content-section>
+								</clay:content-col>
+							</clay:content-row>
+						</li>
+					</c:if>
+
+					<li>
+						<clay:content-row
+							containerElement="a"
+							cssClass="dropdown-item layout-action"
+							href="<%= layoutsTreeDisplayContext.getConfigureLayoutURLTemplate() %>"
+						>
+							<clay:content-col
+								containerElement="span"
+								expand="<%= true %>"
+							>
+								<clay:content-section
+									containerElement="span"
+									cssClass="text-left"
+								>
+									<liferay-ui:message key="configure" />
+								</clay:content-section>
+							</clay:content-col>
+						</clay:content-row>
+					</li>
+					<li class="view-collection-items-action-option {type}" data-view-collection-items-url="<%= layoutsTreeDisplayContext.getViewCollectionItemsURL() %>">
+						<clay:content-row
+							containerElement="a"
+							cssClass="dropdown-item layout-action"
+							href="javascript:;"
+						>
+							<clay:content-col
+								containerElement="span"
+								expand="<%= true %>"
+							>
+								<clay:content-section
+									containerElement="span"
+									cssClass="text-left"
+								>
+									<liferay-ui:message key="view-collection-items" />
+								</clay:content-section>
+							</clay:content-col>
+						</clay:content-row>
+					</li>
+				</ul>
+			</span>
 		</clay:content-row>
 	</liferay-util:buffer>
 
@@ -175,7 +155,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 		groupId="<%= layoutsTreeDisplayContext.getGroupId() %>"
 		linkTemplate="<%= linkTemplate %>"
 		privateLayout="<%= layoutsTreeDisplayContext.isPrivateLayout() %>"
-		rootLinkTemplate='<a class="{cssClass}" href="javascript:void(0);" id="{id}" title="{title}">{label}</a>'
+		rootLinkTemplate='<a tabindex="-1" class="{cssClass}mb-1 ml-1" href="javascript:void(0);" id="{id}" title="{title}">{label}</a>'
 		rootNodeName="<%= siteGroup.getLayoutRootNodeName(layoutsTreeDisplayContext.isPrivateLayout(), locale) %>"
 		selPlid="<%= plid %>"
 		treeId="pagesTree"

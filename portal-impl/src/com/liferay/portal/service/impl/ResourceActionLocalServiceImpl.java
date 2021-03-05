@@ -284,10 +284,12 @@ public class ResourceActionLocalServiceImpl
 						}
 					});
 
-				actionableDynamicQuery.performActions();
-			},
-			(companyId, exception) -> {
-				throw new SystemException(exception);
+				try {
+					actionableDynamicQuery.performActions();
+				}
+				catch (PortalException portalException) {
+					throw new SystemException(portalException);
+				}
 			});
 
 		_resourceActions.remove(

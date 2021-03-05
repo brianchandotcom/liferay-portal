@@ -65,27 +65,27 @@ public class MFASystemConfigurationModelListener
 
 		_companyLocalService.forEachCompanyId(
 			companyId -> {
-				MFAEmailOTPConfiguration mfaEmailOTPConfiguration =
-					_configurationProvider.getCompanyConfiguration(
-						MFAEmailOTPConfiguration.class, companyId);
+				try {
+					MFAEmailOTPConfiguration mfaEmailOTPConfiguration =
+						_configurationProvider.getCompanyConfiguration(
+							MFAEmailOTPConfiguration.class, companyId);
 
-				if (mfaEmailOTPConfiguration.enabled()) {
-					_sendNotificationToInstanceAdministrators(
-						companyId, mfaDisableGlobally);
+					if (mfaEmailOTPConfiguration.enabled()) {
+						_sendNotificationToInstanceAdministrators(
+							companyId, mfaDisableGlobally);
+					}
 				}
-			},
-			(companyId, exception) -> {
-				if (exception instanceof ConfigurationException) {
+				catch (ConfigurationException configurationException) {
 					_log.error(
 						"Unable to get multi-factor authentication " +
 							"configuration for company " + companyId,
-						exception);
+						configurationException);
 				}
-				else if (exception instanceof PortalException) {
+				catch (PortalException portalException) {
 					_log.error(
 						"Failed to send notifications to administrators of " +
 							"company " + companyId,
-						exception);
+						portalException);
 				}
 			});
 

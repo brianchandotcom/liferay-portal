@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.service.access.policy.internal.verify;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -58,11 +59,17 @@ public class SAPServiceVerifyProcess extends VerifyProcess {
 	protected void verifyDefaultSAPEntry() {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			_companyLocalService.forEachCompanyId(
-				_sapEntryLocalService::checkSystemSAPEntries,
-				(companyId, portalException) -> _log.error(
-					"Unable to add default service access policy for company " +
-						companyId,
-					portalException));
+				companyId -> {
+					try {
+						_sapEntryLocalService.checkSystemSAPEntries(companyId);
+					}
+					catch (PortalException portalException) {
+						_log.error(
+							"Unable to add default service access policy for " +
+								"company " + companyId,
+							portalException);
+					}
+				});
 		}
 	}
 

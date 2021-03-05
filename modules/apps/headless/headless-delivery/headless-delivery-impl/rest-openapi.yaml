@@ -7311,6 +7311,7 @@ paths:
             # @review
             description:
                 Delete the message board thread's message board message by external reference code.
+            operationId: deleteMessageBoardThreadMessageBoardMessage
             parameters:
                 - in: path
                   name: messageBoardThreadId
@@ -7335,6 +7336,7 @@ paths:
             # @review
             description:
                 Retrieves the message board thread's message board message by external reference code.
+            operationId: getMessageBoardThreadMessageBoardMessage
             parameters:
                 - in: path
                   name: messageBoardThreadId
@@ -7364,6 +7366,7 @@ paths:
             description:
                 Update the message board thread's message board message by external reference code, or creates it if it
                 not exists.
+            operationId: putMessageBoardThreadMessageBoardMessage
             parameters:
                 - in: path
                   name: messageBoardThreadId
@@ -8595,6 +8598,7 @@ paths:
             # @review
             description:
                 Delete the site's message board message by external reference code.
+            operationId: deleteSiteMessageBoardMessage
             parameters:
                 - in: path
                   name: siteId
@@ -8619,6 +8623,7 @@ paths:
             # @review
             description:
                 Retrieves the site's message board message by external reference code.
+            operationId: getSiteMessageBoardMessage
             parameters:
                 - in: path
                   name: siteId
@@ -8647,6 +8652,7 @@ paths:
             # @review
             description:
                 Update the site's message board message by external reference code, or creates it if it not exists.
+            operationId: putSiteMessageBoardMessage
             parameters:
                 - in: path
                   name: siteId

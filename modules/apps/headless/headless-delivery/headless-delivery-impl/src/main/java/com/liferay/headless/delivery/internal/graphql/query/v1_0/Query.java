@@ -1531,7 +1531,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {messageBoardMessage(messageBoardMessageId: ___){actions, aggregateRating, anonymous, articleBody, creator, creatorStatistics, customFields, dateCreated, dateModified, encodingFormat, friendlyUrlPath, headline, id, keywords, messageBoardSectionId, messageBoardThreadId, numberOfMessageBoardAttachments, numberOfMessageBoardMessages, parentMessageBoardMessageId, relatedContents, showAsAnswer, siteId, subscribed, viewableBy}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {messageBoardMessage(messageBoardMessageId: ___){actions, aggregateRating, anonymous, articleBody, creator, creatorStatistics, customFields, dateCreated, dateModified, encodingFormat, externalReferenceCode, friendlyUrlPath, headline, id, keywords, messageBoardSectionId, messageBoardThreadId, numberOfMessageBoardAttachments, numberOfMessageBoardMessages, parentMessageBoardMessageId, relatedContents, showAsAnswer, siteId, subscribed, viewableBy}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieves the message board message.")
 	public MessageBoardMessage messageBoardMessage(
@@ -1637,6 +1637,28 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {messageBoardThreadMessageBoardMessage(externalReferenceCode: ___, messageBoardThreadId: ___){actions, aggregateRating, anonymous, articleBody, creator, creatorStatistics, customFields, dateCreated, dateModified, encodingFormat, externalReferenceCode, friendlyUrlPath, headline, id, keywords, messageBoardSectionId, messageBoardThreadId, numberOfMessageBoardAttachments, numberOfMessageBoardMessages, parentMessageBoardMessageId, relatedContents, showAsAnswer, siteId, subscribed, viewableBy}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieves the message board thread's message board message by external reference code."
+	)
+	public MessageBoardMessage messageBoardThreadMessageBoardMessage(
+			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardMessageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardMessageResource ->
+				messageBoardMessageResource.
+					getMessageBoardThreadMessageBoardMessage(
+						messageBoardThreadId, externalReferenceCode));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {messageBoardMessages(aggregation: ___, filter: ___, flatten: ___, page: ___, pageSize: ___, search: ___, siteKey: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieves the site's message board messages.")
@@ -1669,7 +1691,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {messageBoardMessageByFriendlyUrlPath(friendlyUrlPath: ___, siteKey: ___){actions, aggregateRating, anonymous, articleBody, creator, creatorStatistics, customFields, dateCreated, dateModified, encodingFormat, friendlyUrlPath, headline, id, keywords, messageBoardSectionId, messageBoardThreadId, numberOfMessageBoardAttachments, numberOfMessageBoardMessages, parentMessageBoardMessageId, relatedContents, showAsAnswer, siteId, subscribed, viewableBy}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {messageBoardMessageByFriendlyUrlPath(friendlyUrlPath: ___, siteKey: ___){actions, aggregateRating, anonymous, articleBody, creator, creatorStatistics, customFields, dateCreated, dateModified, encodingFormat, externalReferenceCode, friendlyUrlPath, headline, id, keywords, messageBoardSectionId, messageBoardThreadId, numberOfMessageBoardAttachments, numberOfMessageBoardMessages, parentMessageBoardMessageId, relatedContents, showAsAnswer, siteId, subscribed, viewableBy}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public MessageBoardMessage messageBoardMessageByFriendlyUrlPath(
@@ -1684,6 +1706,27 @@ public class Query {
 				messageBoardMessageResource.
 					getSiteMessageBoardMessageByFriendlyUrlPath(
 						Long.valueOf(siteKey), friendlyUrlPath));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {siteMessageBoardMessage(externalReferenceCode: ___, siteKey: ___){actions, aggregateRating, anonymous, articleBody, creator, creatorStatistics, customFields, dateCreated, dateModified, encodingFormat, externalReferenceCode, friendlyUrlPath, headline, id, keywords, messageBoardSectionId, messageBoardThreadId, numberOfMessageBoardAttachments, numberOfMessageBoardMessages, parentMessageBoardMessageId, relatedContents, showAsAnswer, siteId, subscribed, viewableBy}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieves the site's message board message by external reference code."
+	)
+	public MessageBoardMessage siteMessageBoardMessage(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardMessageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardMessageResource ->
+				messageBoardMessageResource.getSiteMessageBoardMessage(
+					Long.valueOf(siteKey), externalReferenceCode));
 	}
 
 	/**
@@ -3799,6 +3842,37 @@ public class Query {
 				messageBoardThreadResource ->
 					messageBoardThreadResource.getMessageBoardThreadMyRating(
 						_messageBoardThread.getId()));
+		}
+
+		private MessageBoardThread _messageBoardThread;
+
+	}
+
+	@GraphQLTypeExtension(MessageBoardThread.class)
+	public class GetMessageBoardThreadMessageBoardMessageTypeExtension {
+
+		public GetMessageBoardThreadMessageBoardMessageTypeExtension(
+			MessageBoardThread messageBoardThread) {
+
+			_messageBoardThread = messageBoardThread;
+		}
+
+		@GraphQLField(
+			description = "Retrieves the message board thread's message board message by external reference code."
+		)
+		public MessageBoardMessage messageBoardMessage(
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_messageBoardMessageResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				messageBoardMessageResource ->
+					messageBoardMessageResource.
+						getMessageBoardThreadMessageBoardMessage(
+							_messageBoardThread.getId(),
+							externalReferenceCode));
 		}
 
 		private MessageBoardThread _messageBoardThread;

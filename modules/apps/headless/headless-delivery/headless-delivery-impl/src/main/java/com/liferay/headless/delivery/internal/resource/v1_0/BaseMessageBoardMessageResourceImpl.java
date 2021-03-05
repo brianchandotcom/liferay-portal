@@ -171,7 +171,7 @@ public abstract class BaseMessageBoardMessageResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-messages/{messageBoardMessageId}' -d $'{"anonymous": ___, "articleBody": ___, "creatorStatistics": ___, "customFields": ___, "encodingFormat": ___, "friendlyUrlPath": ___, "headline": ___, "keywords": ___, "messageBoardSectionId": ___, "parentMessageBoardMessageId": ___, "showAsAnswer": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-messages/{messageBoardMessageId}' -d $'{"anonymous": ___, "articleBody": ___, "creatorStatistics": ___, "customFields": ___, "encodingFormat": ___, "externalReferenceCode": ___, "friendlyUrlPath": ___, "headline": ___, "keywords": ___, "messageBoardSectionId": ___, "parentMessageBoardMessageId": ___, "showAsAnswer": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
@@ -224,6 +224,11 @@ public abstract class BaseMessageBoardMessageResourceImpl
 		if (messageBoardMessage.getEncodingFormat() != null) {
 			existingMessageBoardMessage.setEncodingFormat(
 				messageBoardMessage.getEncodingFormat());
+		}
+
+		if (messageBoardMessage.getExternalReferenceCode() != null) {
+			existingMessageBoardMessage.setExternalReferenceCode(
+				messageBoardMessage.getExternalReferenceCode());
 		}
 
 		if (messageBoardMessage.getFriendlyUrlPath() != null) {
@@ -295,7 +300,7 @@ public abstract class BaseMessageBoardMessageResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-messages/{messageBoardMessageId}' -d $'{"anonymous": ___, "articleBody": ___, "creatorStatistics": ___, "customFields": ___, "encodingFormat": ___, "friendlyUrlPath": ___, "headline": ___, "keywords": ___, "messageBoardSectionId": ___, "parentMessageBoardMessageId": ___, "showAsAnswer": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-messages/{messageBoardMessageId}' -d $'{"anonymous": ___, "articleBody": ___, "creatorStatistics": ___, "customFields": ___, "encodingFormat": ___, "externalReferenceCode": ___, "friendlyUrlPath": ___, "headline": ___, "keywords": ___, "messageBoardSectionId": ___, "parentMessageBoardMessageId": ___, "showAsAnswer": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
@@ -548,7 +553,7 @@ public abstract class BaseMessageBoardMessageResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-messages/{parentMessageBoardMessageId}/message-board-messages' -d $'{"anonymous": ___, "articleBody": ___, "creatorStatistics": ___, "customFields": ___, "encodingFormat": ___, "friendlyUrlPath": ___, "headline": ___, "keywords": ___, "messageBoardSectionId": ___, "parentMessageBoardMessageId": ___, "showAsAnswer": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-messages/{parentMessageBoardMessageId}/message-board-messages' -d $'{"anonymous": ___, "articleBody": ___, "creatorStatistics": ___, "customFields": ___, "encodingFormat": ___, "externalReferenceCode": ___, "friendlyUrlPath": ___, "headline": ___, "keywords": ___, "messageBoardSectionId": ___, "parentMessageBoardMessageId": ___, "showAsAnswer": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
@@ -620,7 +625,7 @@ public abstract class BaseMessageBoardMessageResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}/message-board-messages' -d $'{"anonymous": ___, "articleBody": ___, "creatorStatistics": ___, "customFields": ___, "encodingFormat": ___, "friendlyUrlPath": ___, "headline": ___, "keywords": ___, "messageBoardSectionId": ___, "parentMessageBoardMessageId": ___, "showAsAnswer": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}/message-board-messages' -d $'{"anonymous": ___, "articleBody": ___, "creatorStatistics": ___, "customFields": ___, "encodingFormat": ___, "externalReferenceCode": ___, "friendlyUrlPath": ___, "headline": ___, "keywords": ___, "messageBoardSectionId": ___, "parentMessageBoardMessageId": ___, "showAsAnswer": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
@@ -693,6 +698,99 @@ public abstract class BaseMessageBoardMessageResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}/message-board-messages/{externalReferenceCode}'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@DELETE
+	@Operation(
+		description = "Delete the message board thread's message board message by external reference code."
+	)
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "messageBoardThreadId"),
+			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
+		}
+	)
+	@Path(
+		"/message-board-threads/{messageBoardThreadId}/message-board-messages/{externalReferenceCode}"
+	)
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "MessageBoardMessage")})
+	public void deleteMessageBoardThreadMessageBoardMessage(
+			@NotNull @Parameter(hidden = true)
+			@PathParam("messageBoardThreadId") Long messageBoardThreadId,
+			@NotNull @Parameter(hidden = true)
+			@PathParam("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}/message-board-messages/{externalReferenceCode}'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@GET
+	@Operation(
+		description = "Retrieves the message board thread's message board message by external reference code."
+	)
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "messageBoardThreadId"),
+			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
+		}
+	)
+	@Path(
+		"/message-board-threads/{messageBoardThreadId}/message-board-messages/{externalReferenceCode}"
+	)
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "MessageBoardMessage")})
+	public MessageBoardMessage getMessageBoardThreadMessageBoardMessage(
+			@NotNull @Parameter(hidden = true)
+			@PathParam("messageBoardThreadId") Long messageBoardThreadId,
+			@NotNull @Parameter(hidden = true)
+			@PathParam("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		return new MessageBoardMessage();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}/message-board-messages/{externalReferenceCode}' -d $'{"anonymous": ___, "articleBody": ___, "creatorStatistics": ___, "customFields": ___, "encodingFormat": ___, "externalReferenceCode": ___, "friendlyUrlPath": ___, "headline": ___, "keywords": ___, "messageBoardSectionId": ___, "parentMessageBoardMessageId": ___, "showAsAnswer": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Consumes({"application/json", "application/xml"})
+	@Operation(
+		description = "Update the message board thread's message board message by external reference code, or creates it if it not exists."
+	)
+	@PUT
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "messageBoardThreadId"),
+			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
+		}
+	)
+	@Path(
+		"/message-board-threads/{messageBoardThreadId}/message-board-messages/{externalReferenceCode}"
+	)
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "MessageBoardMessage")})
+	public MessageBoardMessage putMessageBoardThreadMessageBoardMessage(
+			@NotNull @Parameter(hidden = true)
+			@PathParam("messageBoardThreadId") Long messageBoardThreadId,
+			@NotNull @Parameter(hidden = true)
+			@PathParam("externalReferenceCode") String externalReferenceCode,
+			MessageBoardMessage messageBoardMessage)
+		throws Exception {
+
+		return new MessageBoardMessage();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/message-board-messages'  -u 'test@liferay.com:test'
 	 */
 	@Override
@@ -747,6 +845,90 @@ public abstract class BaseMessageBoardMessageResourceImpl
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			@NotNull @Parameter(hidden = true) @PathParam("friendlyUrlPath")
 				String friendlyUrlPath)
+		throws Exception {
+
+		return new MessageBoardMessage();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/message-board-messages/{externalReferenceCode}'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@DELETE
+	@Operation(
+		description = "Delete the site's message board message by external reference code."
+	)
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "siteId"),
+			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
+		}
+	)
+	@Path("/sites/{siteId}/message-board-messages/{externalReferenceCode}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "MessageBoardMessage")})
+	public void deleteSiteMessageBoardMessage(
+			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
+			@NotNull @Parameter(hidden = true)
+			@PathParam("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/message-board-messages/{externalReferenceCode}'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@GET
+	@Operation(
+		description = "Retrieves the site's message board message by external reference code."
+	)
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "siteId"),
+			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
+		}
+	)
+	@Path("/sites/{siteId}/message-board-messages/{externalReferenceCode}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "MessageBoardMessage")})
+	public MessageBoardMessage getSiteMessageBoardMessage(
+			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
+			@NotNull @Parameter(hidden = true)
+			@PathParam("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		return new MessageBoardMessage();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/message-board-messages/{externalReferenceCode}' -d $'{"anonymous": ___, "articleBody": ___, "creatorStatistics": ___, "customFields": ___, "encodingFormat": ___, "externalReferenceCode": ___, "friendlyUrlPath": ___, "headline": ___, "keywords": ___, "messageBoardSectionId": ___, "parentMessageBoardMessageId": ___, "showAsAnswer": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Consumes({"application/json", "application/xml"})
+	@Operation(
+		description = "Update the site's message board message by external reference code, or creates it if it not exists."
+	)
+	@PUT
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "siteId"),
+			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
+		}
+	)
+	@Path("/sites/{siteId}/message-board-messages/{externalReferenceCode}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "MessageBoardMessage")})
+	public MessageBoardMessage putSiteMessageBoardMessage(
+			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
+			@NotNull @Parameter(hidden = true)
+			@PathParam("externalReferenceCode") String externalReferenceCode,
+			MessageBoardMessage messageBoardMessage)
 		throws Exception {
 
 		return new MessageBoardMessage();

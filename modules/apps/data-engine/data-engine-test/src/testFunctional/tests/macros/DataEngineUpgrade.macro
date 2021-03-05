@@ -172,9 +172,7 @@ definition {
 	}
 
 	macro editAnUpgradedWebContentWithTranslations {
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "My Web Content based on My Structure with repeated fields");
 

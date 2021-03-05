@@ -51,7 +51,7 @@ export const useDrop = ({
 			canDrop: monitor.canDrop(),
 			overTarget: monitor.isOver({shallow: true}),
 		}),
-		drop: ({data, type}, monitor) => {
+		drop: ({data, pageIndex: sourceFieldPage, type}, monitor) => {
 			if (monitor.didDrop()) {
 				return;
 			}
@@ -99,7 +99,7 @@ export const useDrop = ({
 					dispatch({
 						payload: {
 							sourceFieldName: data.fieldName,
-							sourceFieldPage: pageIndex,
+							sourceFieldPage,
 							targetFieldName: fieldName,
 							targetIndexes: {
 								columnIndex,

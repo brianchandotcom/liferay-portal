@@ -24,7 +24,7 @@ import {useDispatch, useSelector} from '../../../../app/store/index';
 import updateItemConfig from '../../../../app/thunks/updateItemConfig';
 import {getLayoutDataItemPropTypes} from '../../../../prop-types/index';
 
-export default function ContainerLinkPanel({item}) {
+export default function ContainerGeneralPanel({item}) {
 	const dispatch = useDispatch();
 	const languageId = useSelector((state) => state.languageId);
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
@@ -69,7 +69,7 @@ export default function ContainerLinkPanel({item}) {
 	);
 }
 
-ContainerLinkPanel.propTypes = {
+ContainerGeneralPanel.propTypes = {
 	item: getLayoutDataItemPropTypes({
 		config: PropTypes.shape({
 			link: PropTypes.oneOfType([

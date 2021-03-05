@@ -20,7 +20,7 @@ import {VIEWPORT_SIZES} from '../../../app/config/constants/viewportSizes';
 import selectCanUpdateEditables from '../../../app/selectors/selectCanUpdateEditables';
 import selectCanUpdateItemConfiguration from '../../../app/selectors/selectCanUpdateItemConfiguration';
 import {CollectionGeneralPanel} from '../components/item-configuration-panels/CollectionGeneralPanel';
-import ContainerLinkPanel from '../components/item-configuration-panels/ContainerLinkPanel';
+import ContainerGeneralPanel from '../components/item-configuration-panels/ContainerGeneralPanel';
 import {ContainerStylesPanel} from '../components/item-configuration-panels/ContainerStylesPanel';
 import EditableLinkPanel from '../components/item-configuration-panels/EditableLinkPanel';
 import {FragmentGeneralPanel} from '../components/item-configuration-panels/FragmentGeneralPanel';
@@ -32,7 +32,7 @@ import {RowStylesPanel} from '../components/item-configuration-panels/RowStylesP
 
 export const PANEL_IDS = {
 	collectionGeneral: 'collectionGeneral',
-	containerLink: 'containerLink',
+	containerGeneral: 'containerGeneral',
 	containerStyles: 'containerStyles',
 	editableLink: 'editableLink',
 	editableMapping: 'editableMapping',
@@ -49,9 +49,9 @@ export const PANELS = {
 		label: Liferay.Language.get('general'),
 		priority: 0,
 	},
-	[PANEL_IDS.containerLink]: {
-		component: ContainerLinkPanel,
-		label: Liferay.Language.get('link'),
+	[PANEL_IDS.containerGeneral]: {
+		component: ContainerGeneralPanel,
+		label: Liferay.Language.get('general'),
 		priority: 0,
 	},
 	[PANEL_IDS.containerStyles]: {
@@ -149,10 +149,10 @@ export const selectPanels = (activeItemId, activeItemType, state) => {
 	}
 	else if (activeItem.type === LAYOUT_DATA_ITEM_TYPES.container) {
 		panelsIds = {
-			[PANEL_IDS.containerStyles]: canUpdateItemConfiguration,
-			[PANEL_IDS.containerLink]:
+			[PANEL_IDS.containerGeneral]:
 				state.selectedViewportSize === VIEWPORT_SIZES.desktop &&
 				canUpdateItemConfiguration,
+			[PANEL_IDS.containerStyles]: canUpdateItemConfiguration,
 		};
 	}
 	else if (activeItem.type === LAYOUT_DATA_ITEM_TYPES.fragment) {

@@ -301,12 +301,18 @@ public class SchemaBuilder {
 			schemaField = new Schema.Field(
 				fieldName, AvroUtils.wrapAsNullable(AvroUtils._date()), null,
 				(Object)null);
+
+			schemaField.addProp(
+				SchemaConstants.TALEND_COLUMN_PATTERN, _ISO_8601_PATTERN);
 		}
 		else if (oasFormat == OASFormat.DATE_TIME) {
 			schemaField = new Schema.Field(
 				fieldName,
 				AvroUtils.wrapAsNullable(AvroUtils._logicalTimestamp()), null,
 				(Object)null);
+
+			schemaField.addProp(
+				SchemaConstants.TALEND_COLUMN_PATTERN, _ISO_8601_PATTERN);
 		}
 		else if (oasFormat == OASFormat.DICTIONARY) {
 			schemaField = new Schema.Field(
@@ -446,6 +452,8 @@ public class SchemaBuilder {
 		"complex: Dictionary";
 
 	private static final String _COMPLEX_TYPE_OBJECT = "complex: Object";
+
+	private static final String _ISO_8601_PATTERN = "yyyy-MM-dd'T'hh:mm:ss'Z'";
 
 	private static final String _PROPERTY_KEY_TABLE_COMMENT =
 		"di.table.comment";

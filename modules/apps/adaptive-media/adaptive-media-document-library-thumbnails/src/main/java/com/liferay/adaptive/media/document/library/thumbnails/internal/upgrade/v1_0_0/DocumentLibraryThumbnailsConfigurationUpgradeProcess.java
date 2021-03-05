@@ -40,9 +40,16 @@ public class DocumentLibraryThumbnailsConfigurationUpgradeProcess
 	@Override
 	protected void doUpgrade() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			_companyLocalService.forEach(
-				_amCompanyThumbnailConfigurationInitializer::initializeCompany,
-				(company, exception) -> _log.error(exception, exception));
+			_companyLocalService.forEachCompany(
+				company -> {
+					try {
+						_amCompanyThumbnailConfigurationInitializer.
+							initializeCompany(company);
+					}
+					catch (Exception exception) {
+						_log.error(exception, exception);
+					}
+				});
 		}
 	}
 

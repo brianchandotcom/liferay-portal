@@ -96,6 +96,16 @@ definition {
 			value1 = "Versions");
 	}
 
+	macro gotoEditDocumentPG {
+		var key_dmDocumentTitle = "${dmDocumentTitle}";
+
+		AssertClick(
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
+			value1 = "${dmDocumentTitle}");
+
+		Click(locator1 = "Button#EDIT");
+	}
+
 	macro gotoEditDocumentType {
 		DMDocumentType.selectDocumentTypeFrame();
 

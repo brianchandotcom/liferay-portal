@@ -64,7 +64,7 @@ function MiniCart({
 
 	const [isOpen, setIsOpen] = useState(!toggleable);
 	const [isUpdating, setIsUpdating] = useState(false);
-	const [cartState, updateCartState] = useState({itemsQuantity, orderId});
+	const [cartState, updateCartState] = useState({id: orderId, itemsQuantity});
 	const [actionURLs, setActionURLs] = useState(cartActionURLs);
 	const [CartViews, setCartViews] = useState({});
 
@@ -75,7 +75,7 @@ function MiniCart({
 	]);
 
 	const updateCartModel = useCallback(
-		({orderId: cartId}) => {
+		({id: cartId}) => {
 			CartResource.getCartByIdWithItems(cartId)
 				.then((model) => {
 					let latestActionURLs, latestCartState;
@@ -85,7 +85,7 @@ function MiniCart({
 						const {orderUUID} = model;
 
 						latestActionURLs =
-							orderId !== cartId
+							cartState.id !== cartId
 								? {
 										checkoutURL,
 										orderDetailURL: regenerateOrderDetailURL(
@@ -114,7 +114,7 @@ function MiniCart({
 				})
 				.catch(showErrorNotification);
 		},
-		[CartResource, onAddToCart, orderId]
+		[CartResource, cartState.id, onAddToCart]
 	);
 
 	useEffect(() => {
@@ -133,8 +133,8 @@ function MiniCart({
 	}, [updateCartModel]);
 
 	useEffect(() => {
-		if (orderId && orderId !== 0) {
-			updateCartModel({orderId});
+		if (orderId) {
+			updateCartModel({id: orderId});
 		}
 	}, [orderId, updateCartModel]);
 

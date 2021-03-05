@@ -17,7 +17,6 @@ import {ClayIconSpriteContext} from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 
-import ServiceProvider from '../../ServiceProvider/index';
 import {
 	CURRENT_ACCOUNT_UPDATED,
 	CURRENT_ORDER_UPDATED,
@@ -28,8 +27,6 @@ import {VIEWS} from './util/constants';
 import {selectAccount} from './util/index';
 import AccountsListView from './views/AccountsListView';
 import OrdersListView from './views/OrdersListView';
-
-const CartResource = ServiceProvider.DeliveryCartAPI('v1');
 
 function AccountSelector({
 	alignmentPosition,
@@ -43,7 +40,10 @@ function AccountSelector({
 }) {
 	const [active, setActive] = useState(false);
 	const [currentAccount, setCurrentAccount] = useState(account);
-	const [currentOrder, setCurrentOrder] = useState(order);
+	const [currentOrder, setCurrentOrder] = useState({
+		...order,
+		id: order?.orderId || 0,
+	});
 	const [currentView, setCurrentView] = useState(
 		account ? VIEWS.ORDERS_LIST : VIEWS.ACCOUNTS_LIST
 	);
@@ -66,11 +66,9 @@ function AccountSelector({
 	};
 
 	const updateOrderModel = useCallback(
-		({orderId}) => {
-			if (!currentOrder || currentOrder.orderId !== orderId) {
-				CartResource.getCartById(orderId).then((order) => {
-					setCurrentOrder((current) => ({...current, ...order}));
-				});
+		(order) => {
+			if (!currentOrder || currentOrder.id !== order.id) {
+				setCurrentOrder((current) => ({...current, ...order}));
 			}
 		},
 		[currentOrder, setCurrentOrder]

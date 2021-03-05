@@ -1,13 +1,15 @@
 .account-selector {
 	.btn-account-selector {
 		font-size: 0.75rem;
+		margin: 0 0.75rem;
 		max-width: 16rem;
 
 		&:focus {
 			box-shadow: none !important;
 		}
 
-		.account-name {
+		.account-name,
+		.no-account-selected-placeholder {
 			font-size: 0.875rem;
 			font-weight: 500;
 			text-transform: capitalize;

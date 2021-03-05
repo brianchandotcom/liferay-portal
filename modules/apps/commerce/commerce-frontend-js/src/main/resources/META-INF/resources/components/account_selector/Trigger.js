@@ -44,10 +44,10 @@ const Trigger = React.forwardRef(
 							</span>
 						</div>
 						<div className="d-flex">
-							{currentOrder ? (
+							{currentOrder.id ? (
 								<>
 									<span className="order-id">
-										{currentOrder?.orderId}
+										{currentOrder.id}
 									</span>
 									<span className="col order-label">
 										<StatusRenderer
@@ -59,7 +59,7 @@ const Trigger = React.forwardRef(
 								</>
 							) : (
 								<Row>
-									<Col className="no-account-selected-placeholder">
+									<Col>
 										{Liferay.Language.get(
 											'there-is-no-order-selected'
 										)}

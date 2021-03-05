@@ -110,7 +110,7 @@ function CartItem({item: cartItem}) {
 					isRemoved: true,
 					removalTimeoutRef: setTimeout(() => {
 						CartResource.deleteItemById(cartItemId)
-							.then(() => updateCartModel({orderId}))
+							.then(() => updateCartModel({id: orderId}))
 							.then(() => {
 								setIsUpdating(false);
 								Liferay.fire(PRODUCT_REMOVED_FROM_CART, {
@@ -158,7 +158,7 @@ function CartItem({item: cartItem}) {
 
 						return Promise.resolve();
 					})
-					.then(() => updateCartModel({orderId}))
+					.then(() => updateCartModel({id: orderId}))
 					.then(() => setIsUpdating(false))
 					.catch(showErrors);
 			}

@@ -58,7 +58,7 @@ else {
 		settings: {
 			block: <%= block %>,
 			disabled: <%= disabled %>,
-			willUpdate: <%= willUpdate %>,
+			namespace: '<%= namespace %>',
 			withQuantity: {
 				forceDropdown: true,
 			},

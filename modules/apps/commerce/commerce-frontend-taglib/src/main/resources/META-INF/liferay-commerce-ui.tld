@@ -65,12 +65,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>options</name>
+			<name>namespace</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>willUpdate</name>
+			<name>options</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

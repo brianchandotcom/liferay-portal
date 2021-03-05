@@ -28,6 +28,7 @@ import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPSku;
 import com.liferay.commerce.product.content.util.CPContentHelper;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -151,16 +152,16 @@ public class AddToCartTag extends IncludeTag {
 		return _cpInstanceId;
 	}
 
+	public String getNamespace() {
+		return _namespace;
+	}
+
 	public String getOptions() {
 		return _options;
 	}
 
 	public String getSpritemap() {
 		return _spritemap;
-	}
-
-	public boolean isWillUpdate() {
-		return _willUpdate;
 	}
 
 	@Override
@@ -180,6 +181,7 @@ public class AddToCartTag extends IncludeTag {
 			httpServletRequest, "cpInstanceId", _cpInstanceId);
 		setNamespacedAttribute(httpServletRequest, "disabled", _disabled);
 		setNamespacedAttribute(httpServletRequest, "inCart", _inCart);
+		setNamespacedAttribute(httpServletRequest, "namespace", _namespace);
 		setNamespacedAttribute(httpServletRequest, "options", _options);
 
 		if (Validator.isNull(_spritemap)) {
@@ -193,7 +195,6 @@ public class AddToCartTag extends IncludeTag {
 		setNamespacedAttribute(httpServletRequest, "spritemap", _spritemap);
 		setNamespacedAttribute(
 			httpServletRequest, "stockQuantity", _stockQuantity);
-		setNamespacedAttribute(httpServletRequest, "willUpdate", _willUpdate);
 	}
 
 	public void setBlock(boolean block) {
@@ -206,6 +207,10 @@ public class AddToCartTag extends IncludeTag {
 
 	public void setCPInstanceId(long cpInstanceId) {
 		_cpInstanceId = cpInstanceId;
+	}
+
+	public void setNamespace(String namespace) {
+		_namespace = namespace;
 	}
 
 	public void setOptions(String options) {
@@ -229,10 +234,6 @@ public class AddToCartTag extends IncludeTag {
 		_spritemap = spritemap;
 	}
 
-	public void setWillUpdate(boolean willUpdate) {
-		_willUpdate = willUpdate;
-	}
-
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
@@ -249,11 +250,11 @@ public class AddToCartTag extends IncludeTag {
 		_cpInstanceId = 0;
 		_disabled = false;
 		_inCart = false;
+		_namespace = StringPool.BLANK;
 		_options = null;
 		_productHelper = null;
 		_spritemap = null;
 		_stockQuantity = 0;
-		_willUpdate = false;
 	}
 
 	@Override
@@ -280,10 +281,10 @@ public class AddToCartTag extends IncludeTag {
 	private long _cpInstanceId;
 	private boolean _disabled;
 	private boolean _inCart;
+	private String _namespace = StringPool.BLANK;
 	private String _options;
 	private ProductHelper _productHelper;
 	private String _spritemap;
 	private int _stockQuantity;
-	private boolean _willUpdate;
 
 }

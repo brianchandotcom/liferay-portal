@@ -31,16 +31,22 @@ function WrapperWithQuantity({AddToCartButton, ...props}) {
 		setDisabled(!cpInstance.stockQuantity > 0);
 
 	useEffect(() => {
-		if (settings.willUpdate) {
-			Liferay.on(CP_INSTANCE_CHANGED, onCPInstanceChange);
+		if (settings.namespace) {
+			Liferay.on(
+				`${settings.namespace}${CP_INSTANCE_CHANGED}`,
+				onCPInstanceChange
+			);
 		}
 
 		return () => {
-			if (settings.willUpdate) {
-				Liferay.detach(CP_INSTANCE_CHANGED, onCPInstanceChange);
+			if (settings.namespace) {
+				Liferay.detach(
+					`${settings.namespace}${CP_INSTANCE_CHANGED}`,
+					onCPInstanceChange
+				);
 			}
 		};
-	}, [settings.willUpdate]);
+	}, [settings.namespace]);
 
 	return (
 		<div
@@ -72,7 +78,7 @@ WrapperWithQuantity.propTypes = {
 	settings: PropTypes.shape({
 		block: PropTypes.bool,
 		disabled: PropTypes.bool,
-		willUpdate: PropTypes.bool,
+		namespace: PropTypes.bool,
 		withQuantity: PropTypes.shape({
 			allowedQuantities: PropTypes.arrayOf(PropTypes.number),
 			disabled: PropTypes.bool,

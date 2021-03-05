@@ -33,10 +33,10 @@ String commerceCurrencyCode = (String)request.getAttribute("liferay-commerce:add
 String commerceOrderId = (String)request.getAttribute("liferay-commerce:add-to-cart:commerceOrderId");
 String cpInstanceId = (String)request.getAttribute("liferay-commerce:add-to-cart:cpInstanceId");
 String inCart = (String)request.getAttribute("liferay-commerce:add-to-cart:inCart");
+String namespace = (String)request.getAttribute("liferay-commerce:add-to-cart:namespace");
 String options = (String)request.getAttribute("liferay-commerce:add-to-cart:options");
 String spritemap = (String)request.getAttribute("liferay-commerce:add-to-cart:spritemap");
 String stockQuantity = (String)request.getAttribute("liferay-commerce:add-to-cart:stockQuantity");
-String willUpdate = (String)request.getAttribute("liferay-commerce:add-to-cart:willUpdate");
 
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib") + StringPool.UNDERLINE;
 

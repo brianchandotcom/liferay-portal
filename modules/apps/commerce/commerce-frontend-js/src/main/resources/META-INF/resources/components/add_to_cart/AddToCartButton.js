@@ -118,19 +118,22 @@ function AddToCartButton({
 		Liferay.on(CURRENT_ORDER_UPDATED, changeOrder);
 		Liferay.on(PRODUCT_REMOVED_FROM_CART, remove);
 
-		if (settings.willUpdate) {
-			Liferay.on(CP_INSTANCE_CHANGED, reset);
+		if (settings.namespace) {
+			Liferay.on(`${settings.namespace}${CP_INSTANCE_CHANGED}`, reset);
 		}
 
 		return () => {
 			Liferay.detach(CURRENT_ORDER_UPDATED, changeOrder);
 			Liferay.detach(PRODUCT_REMOVED_FROM_CART, remove);
 
-			if (settings.willUpdate) {
-				Liferay.detach(CP_INSTANCE_CHANGED, reset);
+			if (settings.namespace) {
+				Liferay.detach(
+					`${settings.namespace}${CP_INSTANCE_CHANGED}`,
+					reset
+				);
 			}
 		};
-	}, [remove, reset, settings.willUpdate, changeOrder]);
+	}, [changeOrder, remove, reset, settings.namespace]);
 
 	return (
 		<>
@@ -227,7 +230,7 @@ AddToCartButton.propTypes = {
 		block: PropTypes.bool,
 		disabled: PropTypes.bool,
 		iconOnly: PropTypes.bool,
-		willUpdate: PropTypes.bool,
+		namespace: PropTypes.string,
 	}),
 	spritemap: PropTypes.string,
 };

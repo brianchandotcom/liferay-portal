@@ -65,7 +65,7 @@
 </tr>
 <tr>
 	<td>FACEBOOK</td>
-	<td>//a/span[contains(@class,'taglib-text') and contains(.,'Facebook')]</td>
+	<td>//a//span[contains(@class,'taglib-text') and contains(.,'Facebook')]</td>
 	<td></td>
 </tr>
 <tr>

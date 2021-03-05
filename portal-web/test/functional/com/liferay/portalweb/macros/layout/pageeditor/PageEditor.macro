@@ -397,8 +397,8 @@ definition {
 			locator1 = "PageEditor#EXPERIENCE_NAME",
 			value1 = "${experienceName}");
 
-		Check.checkNotVisible( 
-			checkboxName = "${language}", 
+		Check.checkNotVisible(
+			checkboxName = "${language}",
 			locator1 = "Checkbox#ANY_CHECKBOX");
 
 		Click(locator1 = "PageEditor#EXPERIENCE_SEGMENT_ANYONE");

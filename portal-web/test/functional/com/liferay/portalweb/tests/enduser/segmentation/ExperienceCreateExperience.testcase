@@ -188,14 +188,14 @@ definition {
 
 		PageEditor.addExperienceWithLanguage(
 			experienceName = "NewAnyoneExperience",
-			segmentName = "Anyone",
-			language = "Spanish");
+			language = "Spanish",
+			segmentName = "Anyone");
 
 		Refresh();
 
 		PageEditor.changeExperienceLanguage(
-			newExperience = "NewAnyoneExperience",
-			language = "es-ES");
+			language = "es-ES",
+			newExperience = "NewAnyoneExperience");
 
 		PageEditor.editFragmentText(
 			fragmentName = "Heading",
@@ -263,7 +263,7 @@ definition {
 
 		User.firstLoginPG();
 	}
-	
+
 	@description = "When the user clicks on the Duplicate option of an experience, a new experience with [the same name] + Copy and the same audience (Segment) appears in the last position of the list, always below the default experience"
 	@priority = "5"
 	test DuplicateExperience {
@@ -312,14 +312,14 @@ definition {
 
 		PageEditor.addExperienceWithLanguage(
 			experienceName = "NewAnyoneExperience",
-			segmentName = "Anyone",
-			language = "Spanish");
+			language = "Spanish",
+			segmentName = "Anyone");
 
 		Refresh();
 
 		PageEditor.changeExperienceLanguage(
-			newExperience = "NewAnyoneExperience",
-			language = "es-ES");
+			language = "es-ES",
+			newExperience = "NewAnyoneExperience");
 
 		PageEditor.editFragmentText(
 			fragmentName = "Heading",
@@ -343,8 +343,8 @@ definition {
 		ContentPages.clickPencil();
 
 		PageEditor.changeExperienceLanguage(
-			newExperience = "NewAnyoneExperience (Copy)",
-			language = "es-ES");
+			language = "es-ES",
+			newExperience = "NewAnyoneExperience (Copy)");
 
 		AssertTextEquals(
 			locator1 = "Experience#FRAGMENT_HEADING",

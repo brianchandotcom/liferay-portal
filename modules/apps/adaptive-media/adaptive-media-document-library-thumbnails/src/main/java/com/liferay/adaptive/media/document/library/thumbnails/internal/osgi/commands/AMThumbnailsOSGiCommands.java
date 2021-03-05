@@ -75,16 +75,14 @@ public class AMThumbnailsOSGiCommands {
 		AtomicInteger count = new AtomicInteger();
 
 		_companyLocalService.forEachCompanyId(
-			companyId -> count.addAndGet(_countPendingThumbnails(companyId)),
-			AMThumbnailsOSGiCommands::_processException);
+			companyId -> _countPendingThumbnails(companyId, count));
 
 		System.out.printf("%nTOTAL: %d%n", count.get());
 	}
 
 	public void cleanUp(String... companyIds) {
 		_companyLocalService.forEachCompanyId(
-			this::_cleanUp, AMThumbnailsOSGiCommands::_processException,
-			_getCompanyIds(companyIds));
+			this::_cleanUp, _getCompanyIds(companyIds));
 	}
 
 	public void migrate(String... companyIds) throws PortalException {
@@ -92,73 +90,74 @@ public class AMThumbnailsOSGiCommands {
 			this::_migrate, _getCompanyIds(companyIds));
 	}
 
-	private static void _processException(
-		Long companyId, PortalException portalException) {
+	private void _cleanUp(long companyId) {
+		try {
+			String[] fileNames = DLStoreUtil.getFileNames(
+				companyId, DLPreviewableProcessor.REPOSITORY_ID,
+				DLPreviewableProcessor.THUMBNAIL_PATH);
 
-		_log.error(
-			StringBundler.concat(
-				"CompanyId ", companyId, " failed: ", portalException),
-			portalException);
-	}
+			for (String fileName : fileNames) {
 
-	private void _cleanUp(long companyId) throws PortalException {
-		String[] fileNames = DLStoreUtil.getFileNames(
-			companyId, DLPreviewableProcessor.REPOSITORY_ID,
-			DLPreviewableProcessor.THUMBNAIL_PATH);
+				// See LPS-70788
 
-		for (String fileName : fileNames) {
+				String actualFileName = StringUtil.replace(
+					fileName, "//", StringPool.SLASH);
 
-			// See LPS-70788
+				for (ThumbnailConfiguration thumbnailConfiguration :
+						_getThumbnailConfigurations()) {
 
-			String actualFileName = StringUtil.replace(
-				fileName, "//", StringPool.SLASH);
+					FileVersion fileVersion = _getFileVersion(
+						thumbnailConfiguration.getFileVersionId(
+							actualFileName));
 
-			for (ThumbnailConfiguration thumbnailConfiguration :
-					_getThumbnailConfigurations()) {
-
-				FileVersion fileVersion = _getFileVersion(
-					thumbnailConfiguration.getFileVersionId(actualFileName));
-
-				if (fileVersion != null) {
-					DLStoreUtil.deleteFile(
-						companyId, DLPreviewableProcessor.REPOSITORY_ID,
-						actualFileName);
+					if (fileVersion != null) {
+						DLStoreUtil.deleteFile(
+							companyId, DLPreviewableProcessor.REPOSITORY_ID,
+							actualFileName);
+					}
 				}
 			}
 		}
+		catch (PortalException portalException) {
+			_processException(companyId, portalException);
+		}
 	}
 
-	private Integer _countPendingThumbnails(Long companyId)
-		throws PortalException {
+	private void _countPendingThumbnails(Long companyId, AtomicInteger count) {
+		try {
+			String[] fileNames = DLStoreUtil.getFileNames(
+				companyId, DLPreviewableProcessor.REPOSITORY_ID,
+				DLPreviewableProcessor.THUMBNAIL_PATH);
 
-		String[] fileNames = DLStoreUtil.getFileNames(
-			companyId, DLPreviewableProcessor.REPOSITORY_ID,
-			DLPreviewableProcessor.THUMBNAIL_PATH);
+			int companyTotal = 0;
 
-		int companyTotal = 0;
+			for (String fileName : fileNames) {
 
-		for (String fileName : fileNames) {
+				// See LPS-70788
 
-			// See LPS-70788
+				String actualFileName = StringUtil.replace(
+					fileName, StringPool.DOUBLE_SLASH, StringPool.SLASH);
 
-			String actualFileName = StringUtil.replace(
-				fileName, StringPool.DOUBLE_SLASH, StringPool.SLASH);
+				for (ThumbnailConfiguration thumbnailConfiguration :
+						_getThumbnailConfigurations()) {
 
-			for (ThumbnailConfiguration thumbnailConfiguration :
-					_getThumbnailConfigurations()) {
+					FileVersion fileVersion = _getFileVersion(
+						thumbnailConfiguration.getFileVersionId(
+							actualFileName));
 
-				FileVersion fileVersion = _getFileVersion(
-					thumbnailConfiguration.getFileVersionId(actualFileName));
-
-				if (fileVersion != null) {
-					companyTotal = +1;
+					if (fileVersion != null) {
+						companyTotal = +1;
+					}
 				}
 			}
+
+			System.out.printf("%d\t\t%d%n", companyId, companyTotal);
+
+			count.addAndGet(companyTotal);
 		}
-
-		System.out.printf("%d\t\t%d%n", companyId, companyTotal);
-
-		return companyTotal;
+		catch (PortalException portalException) {
+			_processException(companyId, portalException);
+		}
 	}
 
 	private long[] _getCompanyIds(String... companyIds) {
@@ -336,6 +335,15 @@ public class AMThumbnailsOSGiCommands {
 		catch (IOException | PortalException exception) {
 			_log.error(exception, exception);
 		}
+	}
+
+	private void _processException(
+		Long companyId, PortalException portalException) {
+
+		_log.error(
+			StringBundler.concat(
+				"CompanyId ", companyId, " failed: ", portalException),
+			portalException);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

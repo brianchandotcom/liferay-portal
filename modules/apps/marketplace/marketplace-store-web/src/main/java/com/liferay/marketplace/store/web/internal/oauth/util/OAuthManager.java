@@ -135,13 +135,17 @@ public class OAuthManager {
 	@Activate
 	protected void activate() {
 		_companyLocalService.forEachCompanyId(
-			this::setupExpando,
-			(companyId, exception) -> {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						StringBundler.concat(
-							"Unable to setup Marketplace for company ",
-							companyId, ": ", exception.getMessage()));
+			companyId -> {
+				try {
+					setupExpando(companyId);
+				}
+				catch (Exception exception) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringBundler.concat(
+								"Unable to setup Marketplace for company ",
+								companyId, ": ", exception.getMessage()));
+					}
 				}
 			});
 	}

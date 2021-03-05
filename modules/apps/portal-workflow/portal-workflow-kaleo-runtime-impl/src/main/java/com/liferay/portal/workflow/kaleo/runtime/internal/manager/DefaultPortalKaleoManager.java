@@ -75,36 +75,43 @@ public class DefaultPortalKaleoManager
 
 		companyLocalService.forEachCompanyId(
 			companyId -> {
-				User defaultUser = userLocalService.getDefaultUser(companyId);
+				try {
+					User defaultUser = userLocalService.getDefaultUser(
+						companyId);
 
-				Group companyGroup = groupLocalService.getCompanyGroup(
-					companyId);
+					Group companyGroup = groupLocalService.getCompanyGroup(
+						companyId);
 
-				String definitionName = _DEFINITION_NAME;
+					String definitionName = _DEFINITION_NAME;
 
-				if (_definitionAssets.containsKey(assetClassName)) {
-					definitionName = _definitionAssets.get(assetClassName);
+					if (_definitionAssets.containsKey(assetClassName)) {
+						definitionName = _definitionAssets.get(assetClassName);
+					}
+
+					ServiceContext serviceContext = new ServiceContext();
+
+					serviceContext.setCompanyId(companyId);
+
+					deployDefaultDefinitionLink(
+						defaultUser, companyId, companyGroup, assetClassName,
+						definitionName);
 				}
-
-				ServiceContext serviceContext = new ServiceContext();
-
-				serviceContext.setCompanyId(companyId);
-
-				deployDefaultDefinitionLink(
-					defaultUser, companyId, companyGroup, assetClassName,
-					definitionName);
-			},
-			(companyId, exception) -> {
-				throw new SystemException(exception);
+				catch (PortalException portalException) {
+					throw new SystemException(portalException);
+				}
 			});
 	}
 
 	@Override
 	public void deployDefaultDefinitionLinks() throws Exception {
 		companyLocalService.forEachCompanyId(
-			this::deployDefaultDefinitionLinks,
-			(companyId, exception) -> {
-				throw new SystemException(exception);
+			companyId -> {
+				try {
+					deployDefaultDefinitionLinks(companyId);
+				}
+				catch (Exception exception) {
+					throw new SystemException(exception);
+				}
 			});
 	}
 
@@ -131,9 +138,13 @@ public class DefaultPortalKaleoManager
 	@Override
 	public void deployDefaultDefinitions() throws Exception {
 		companyLocalService.forEachCompanyId(
-			this::deployDefaultDefinitions,
-			(companyId, exception) -> {
-				throw new SystemException(exception);
+			companyId -> {
+				try {
+					deployDefaultDefinitions(companyId);
+				}
+				catch (Exception exception) {
+					throw new SystemException(exception);
+				}
 			});
 	}
 
@@ -185,9 +196,13 @@ public class DefaultPortalKaleoManager
 	@Override
 	public void deployDefaultRoles() throws Exception {
 		companyLocalService.forEachCompanyId(
-			this::deployDefaultRoles,
-			(companyId, exception) -> {
-				throw new SystemException(exception);
+			companyId -> {
+				try {
+					deployDefaultRoles(companyId);
+				}
+				catch (Exception exception) {
+					throw new SystemException(exception);
+				}
 			});
 	}
 

@@ -76,6 +76,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -485,7 +486,9 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			UnsafeConsumer<Long, E> unsafeConsumer)
 		throws E {
 
-		forEachCompanyId(unsafeConsumer, _getCompanyIds());
+		forEachCompanyId(
+			unsafeConsumer,
+			ListUtil.toLongArray(getCompanies(false), Company::getCompanyId));
 	}
 
 	@Override
@@ -494,7 +497,9 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		UnsafeConsumer<Long, E> unsafeConsumer,
 		BiConsumer<Long, E> biConsumer) {
 
-		forEachCompanyId(unsafeConsumer, biConsumer, _getCompanyIds());
+		forEachCompanyId(
+			unsafeConsumer, biConsumer,
+			ListUtil.toLongArray(getCompanies(false), Company::getCompanyId));
 	}
 
 	@Override
@@ -2098,20 +2103,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		};
 
 		TransactionCommitCallbackUtil.registerCallback(callable);
-	}
-
-	private long[] _getCompanyIds() {
-		List<Company> companies = getCompanies(false);
-
-		long[] companyIds = new long[companies.size()];
-
-		for (int i = 0; i < companies.size(); i++) {
-			Company company = companies.get(i);
-
-			companyIds[i] = company.getCompanyId();
-		}
-
-		return companyIds;
 	}
 
 	private static final String _DEFAULT_VIRTUAL_HOST = "localhost";

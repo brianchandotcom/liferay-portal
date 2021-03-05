@@ -1272,6 +1272,7 @@ definition {
 		DMDocument.editCmd(
 			dmDocumentDescriptionEdit = "${dmDocumentDescriptionEdit}",
 			dmDocumentFileEdit = "${dmDocumentFileEdit}",
+			dmDocumentFileNameEdit = "${dmDocumentFileNameEdit}",
 			dmDocumentTitleEdit = "${dmDocumentTitleEdit}");
 
 		PortletEntry.publish();

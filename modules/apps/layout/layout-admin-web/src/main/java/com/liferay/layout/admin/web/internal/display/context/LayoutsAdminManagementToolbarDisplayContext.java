@@ -177,11 +177,12 @@ public class LayoutsAdminManagementToolbarDisplayContext
 			}
 		).addPrimaryDropdownItem(
 			() ->
-				(_layoutsAdminDisplayContext.isShowAddChildPageAction(
+				_layoutsAdminDisplayContext.isShowPrivatePages() &&
+				((_layoutsAdminDisplayContext.isShowAddChildPageAction(
 					selLayout) &&
-				 _layoutsAdminDisplayContext.isPrivateLayout()) ||
-				_layoutsAdminDisplayContext.isFirstColumn() ||
-				!_layoutsAdminDisplayContext.hasLayouts(),
+				  _layoutsAdminDisplayContext.isPrivateLayout()) ||
+				 _layoutsAdminDisplayContext.isFirstColumn() ||
+				 !_layoutsAdminDisplayContext.hasLayouts()),
 			dropdownItem -> {
 				dropdownItem.setHref(
 					_layoutsAdminDisplayContext.
@@ -192,9 +193,10 @@ public class LayoutsAdminManagementToolbarDisplayContext
 			}
 		).addPrimaryDropdownItem(
 			() ->
-				_layoutsAdminDisplayContext.isPrivateLayout() ||
-				_layoutsAdminDisplayContext.isFirstColumn() ||
-				!_layoutsAdminDisplayContext.hasLayouts(),
+				_layoutsAdminDisplayContext.isShowPrivatePages() &&
+				(_layoutsAdminDisplayContext.isPrivateLayout() ||
+				 _layoutsAdminDisplayContext.isFirstColumn() ||
+				 !_layoutsAdminDisplayContext.hasLayouts()),
 			dropdownItem -> {
 				dropdownItem.setHref(
 					_layoutsAdminDisplayContext.getSelectLayoutCollectionURL(

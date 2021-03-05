@@ -16,6 +16,7 @@ package com.liferay.portal.crypto.hash.internal;
 
 import com.liferay.portal.crypto.hash.CryptoHashVerificationContext;
 import com.liferay.portal.crypto.hash.CryptoHashVerifier;
+import com.liferay.portal.crypto.hash.exception.CryptoHashException;
 import com.liferay.portal.crypto.hash.spi.CryptoHashProvider;
 import com.liferay.portal.crypto.hash.spi.CryptoHashProviderResponse;
 
@@ -37,7 +38,29 @@ public class CryptoVerifierRegistry {
 	}
 
 	public CryptoHashVerifier getCryptoHashVerifier() {
-		return (input, hash, cryptoHashVerificationContexts) -> {
+		return new CryptoHashVerifierImpl();
+	}
+
+	public void register(CryptoHashProvider cryptoHashProvider) {
+		_cryptoHashProviders.put(
+			cryptoHashProvider.getCryptoHashProviderName(), cryptoHashProvider);
+	}
+
+	public void unregister(String cryptoHashProviderName) {
+		_cryptoHashProviders.remove(cryptoHashProviderName);
+	}
+
+	private final Map<String, CryptoHashProvider> _cryptoHashProviders =
+		new HashMap<>();
+
+	private class CryptoHashVerifierImpl implements CryptoHashVerifier {
+
+		@Override
+		public boolean verify(
+				byte[] input, byte[] hash,
+				CryptoHashVerificationContext... cryptoHashVerificationContexts)
+			throws CryptoHashException {
+
 			for (CryptoHashVerificationContext cryptoHashVerificationContext :
 					cryptoHashVerificationContexts) {
 
@@ -54,19 +77,8 @@ public class CryptoVerifierRegistry {
 			}
 
 			return MessageDigest.isEqual(input, hash);
-		};
-	}
+		}
 
-	public void register(CryptoHashProvider cryptoHashProvider) {
-		_cryptoHashProviders.put(
-			cryptoHashProvider.getCryptoHashProviderName(), cryptoHashProvider);
 	}
-
-	public void unregister(String cryptoHashProviderName) {
-		_cryptoHashProviders.remove(cryptoHashProviderName);
-	}
-
-	private final Map<String, CryptoHashProvider> _cryptoHashProviders =
-		new HashMap<>();
 
 }

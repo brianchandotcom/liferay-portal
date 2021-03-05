@@ -172,9 +172,39 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 />
 
 <aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule">
+	const KEY_ENTER = 13;
+
 	var layoutsTree = document.getElementById('<portlet:namespace />layoutsTree');
 
 	var delegate = delegateModule.default;
+
+	const dropdownActionKeyupHandler = delegate(
+		layoutsTree,
+		'keyup',
+		'.pages-tree-dropdown button.dropdown-toggle',
+		(event) => {
+			if (event.keyCode === KEY_ENTER) {
+				event.stopImmediatePropagation();
+				const trigger = event.delegateTarget;
+				const menu = trigger.parentNode.querySelector(
+					'.pages-tree-dropdown .dropdown-menu'
+				);
+				Liferay.DropdownProvider.show({menu, trigger});
+			}
+		}
+	);
+
+	const linkActionKeyupHandler = delegate(
+		layoutsTree,
+		'keyup',
+		'a.layout-tree[data-url], .pages-tree-dropdown a.dropdown-item',
+		(event) => {
+			if (event.keyCode === KEY_ENTER) {
+				event.stopImmediatePropagation();
+				window.location.href = event.delegateTarget.href;
+			}
+		}
+	);
 
 	var viewCollectionItemsActionOptionQueryClickHandler = delegate(
 		layoutsTree,
@@ -197,6 +227,8 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 			'<%= ProductNavigationProductMenuWebKeys.PAGES_TREE_EVENT_HANDLER %>'
 		);
 
+		dropdownActionKeyupHandler.dispose();
+		linkActionKeyupHandler.dispose();
 		viewCollectionItemsActionOptionQueryClickHandler.dispose();
 
 		Liferay.detach('destroyPortlet', handleDestroyPortlet);

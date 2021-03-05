@@ -941,6 +941,21 @@ mariadb.executable=${mariadb.executable}]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-suite-search-engine">
+		<sequential>
+			<propertycopy from="suite.elastic.version[${env.CI_TEST_SUITE}]" name="suite.elastic.version" silent="true" />
+
+			<if>
+				<isset property="suite.elastic.version" />
+				<then>
+					<ant antfile="build-test-elasticsearch7.xml" target="redeploy-sidecar">
+						<property name="sidecar.redeploy.version" value="${suite.elastic.version}" />
+					</ant>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-test-build">
 		<sequential>
 			<trycatch property="exception.message">
@@ -2937,6 +2952,8 @@ log.sanitizer.enabled=false</echo>
 							<prepare-test-build />
 						</else>
 					</if>
+
+					<prepare-suite-search-engine />
 
 					<antcall inheritAll="false" target="record-test-class-file-names">
 						<param name="test.class.groups.size" value="${test.batch.size}" />
@@ -5680,6 +5697,8 @@ log.sanitizer.enabled=false</echo>
 
 			<test-set-up>
 				<setup-test-environment />
+
+				<prepare-suite-search-engine />
 
 				<antcall inheritAll="false" target="record-test-class-file-names">
 					<param name="test.class.groups.size" value="${test.batch.size}" />

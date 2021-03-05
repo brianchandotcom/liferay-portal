@@ -4193,12 +4193,21 @@ go</echo>
 	<macrodef name="set-up-search-engine">
 		<sequential>
 			<get-testcase-property property.name="remote.elasticsearch.enabled" />
+			<propertycopy from="suite.elastic.version[${env.CI_TEST_SUITE}]" name="suite.elastic.version" silent="true" />
 
 			<if>
 				<equals arg1="${remote.elasticsearch.enabled}" arg2="true" />
 				<then>
 					<ant antfile="build-test-elasticsearch7.xml" target="start-elasticsearch" />
 				</then>
+				<elseif>
+					<isset property="suite.elastic.version" />
+					<then>
+						<ant antfile="build-test-elasticsearch7.xml" target="redeploy-sidecar">
+							<property name="sidecar.redeploy.version" value="${suite.elastic.version}" />
+						</ant>
+					</then>
+				</elseif>
 			</if>
 
 			<get-testcase-property property.name="delete.sidecar.bundle" />

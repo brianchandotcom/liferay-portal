@@ -185,27 +185,18 @@ definition {
 			webContentTextFieldLabel = "Text",
 			webContentTitle = "My Web Content based on My Structure with repeated fields");
 
-		PortletEntry.changeLocale(locale = "pt-BR");
+		for (var locale : list "pt_BR,ca_ES") {
+			PortletEntry.changeLocale(locale = "${locale}");
 
-		WebContent.addWithStructureCP(
-			webContentDate = "23/02/2021",
-			webContentDateFieldLabel = "Date - pt_BR",
-			webContentNumeric = "1,2",
-			webContentNumericFieldLabel = "Number - pt_BR",
-			webContentText = "Text - pt_BR",
-			webContentTextFieldLabel = "Text - pt_BR",
-			webContentTitle = "My Web Content based on My Structure with repeated fields - pt_BR");
-
-		PortletEntry.changeLocale(locale = "ca-ES");
-
-		WebContent.addWithStructureCP(
-			webContentDate = "23/02/2021",
-			webContentDateFieldLabel = "Date - ca_ES",
-			webContentNumeric = "1,2",
-			webContentNumericFieldLabel = "Number - ca_ES",
-			webContentText = "Text - ca_ES",
-			webContentTextFieldLabel = "Text - ca_ES",
-			webContentTitle = "My Web Content based on My Structure with repeated fields - ca_ES");
+			WebContent.addWithStructureCP(
+				webContentDate = "23/02/2021",
+				webContentDateFieldLabel = "Date - ${locale}",
+				webContentNumeric = "1,2",
+				webContentNumericFieldLabel = "Number - ${locale}",
+				webContentText = "Text - ${locale}",
+				webContentTextFieldLabel = "Text - ${locale}",
+				webContentTitle = "My Web Content based on My Structure with repeated fields - ${locale}");
+		}
 
 		PortletEntry.publish();
 
@@ -218,31 +209,20 @@ definition {
 			webContentTextFieldLabel = "Text",
 			webContentTitle = "My Web Content based on My Structure with repeated fields");
 
-		PortletEntry.publish();
+		for (var locale : list "pt_BR,ca_ES") {
+			PortletEntry.publish();
 
-		WebContent.viewWithStructureCP(
-			webContentDate = "03/02/2021",
-			webContentDateFieldLabel = "Date - pt_BR",
-			webContentLocaleFieldLabel = "pt_BR",
-			webContentNumeric = "1,2",
-			webContentNumericFieldLabel = "Number - pt_BR",
-			webContentText = "Text - pt_BR",
-			webContentTextFieldLabel = "Text - pt_BR",
-			webContentTitle = "My Web Content based on My Structure with repeated fields",
-			webContentTitleTranslated = "My Web Content based on My Structure with repeated fields - pt_BR");
-
-		PortletEntry.publish();
-
-		WebContent.viewWithStructureCP(
-			webContentDate = "03/02/2021",
-			webContentDateFieldLabel = "Date - ca_ES",
-			webContentLocaleFieldLabel = "ca_ES",
-			webContentNumeric = "1,2",
-			webContentNumericFieldLabel = "Number - ca_ES",
-			webContentText = "Text - ca_ES",
-			webContentTextFieldLabel = "Text - ca_ES",
-			webContentTitle = "My Web Content based on My Structure with repeated fields",
-			webContentTitleTranslated = "My Web Content based on My Structure with repeated fields - ca_ES");
+			WebContent.viewWithStructureCP(
+				webContentDate = "03/02/2021",
+				webContentDateFieldLabel = "Date - ${locale}",
+				webContentLocaleFieldLabel = "${locale}",
+				webContentNumeric = "1,2",
+				webContentNumericFieldLabel = "Number - ${locale}",
+				webContentText = "Text - ${locale}",
+				webContentTextFieldLabel = "Text - ${locale}",
+				webContentTitle = "My Web Content based on My Structure with repeated fields",
+				webContentTitleTranslated = "My Web Content based on My Structure with repeated fields - ${locale}");
+		}
 	}
 
 	macro validateFieldLabelsTranslatedInStructure {

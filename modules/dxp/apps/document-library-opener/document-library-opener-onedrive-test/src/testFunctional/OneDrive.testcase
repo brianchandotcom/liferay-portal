@@ -136,6 +136,152 @@ definition {
 			value1 = "Add Excel Sheet Title.xlsx");
 	}
 
+	@description = "This test ensures that the title and the file name will be renamed when the created One Drive doc title duplicates the existing document File Name."
+	@priority = "4"
+	test AddOneDriveEntryWithDuplicateFileName {
+		property test.name.skip.portal.instance = "OneDrive#AddOneDriveEntryWithDuplicateFileName";
+
+		for (var documentTitle : list "OneDrive Entry Title,OneDrive Entry Title Edit,OneDrive Entry Title (1)") {
+			OneDrive.deleteDocument(dmDocumentTitle = "${documentTitle}");
+		}
+
+		Navigator.openURL();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Excel");
+
+		OneDrive.AddDocument(
+			dmDocumentTitle = "OneDrive Entry Title",
+			dmDocumentTypeName = "Excel");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.checkinPG(dmDocumentTitle = "OneDrive Entry Title");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.editPG(
+			dmDocumentTitle = "OneDrive Entry Title",
+			dmDocumentTitleEdit = "OneDrive Entry Title Edit");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		AssertTextEquals.assertPartialText(
+			key_dmDocumentTitle = "OneDrive Entry Title Edit",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
+			value1 = "OneDrive Entry Title Edit");
+
+		DMNavigator.gotoEditDocumentPG(dmDocumentTitle = "OneDrive Entry Title Edit");
+
+		AssertTextEquals(
+			key_fieldLabel = "Title",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "OneDrive Entry Title Edit");
+
+		AssertTextEquals(
+			key_fieldLabel = "File Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "OneDrive Entry Title.xlsx");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Excel");
+
+		OneDrive.AddDocument(
+			dmDocumentTitle = "OneDrive Entry Title",
+			dmDocumentTypeName = "Excel");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.checkinPG(dmDocumentTitle = "OneDrive Entry Title (1)");
+
+		DMNavigator.gotoEditDocumentPG(dmDocumentTitle = "OneDrive Entry Title (1)");
+
+		AssertTextEquals(
+			key_fieldLabel = "Title",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "OneDrive Entry Title (1)");
+
+		AssertTextEquals(
+			key_fieldLabel = "File Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "OneDrive Entry Title (1).xlsx");
+	}
+
+	@description = "This test ensures that the title and the file name will be renamed when the created One Drive doc title duplicates the existing document title."
+	@priority = "4"
+	test AddOneDriveEntryWithDuplicateTitle {
+		property test.name.skip.portal.instance = "OneDrive#AddOneDriveEntryWithDuplicateTitle";
+
+		for (var documentTitle : list "OneDrive Entry Title,OneDrive Entry Title Edit,OneDrive Entry Title Edit (1)") {
+			OneDrive.deleteDocument(dmDocumentTitle = "${documentTitle}");
+		}
+
+		Navigator.openURL();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Word");
+
+		OneDrive.AddDocument(
+			dmDocumentTitle = "OneDrive Entry Title",
+			dmDocumentTypeName = "Word");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.checkinPG(dmDocumentTitle = "OneDrive Entry Title");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.editPG(
+			dmDocumentTitle = "OneDrive Entry Title",
+			dmDocumentTitleEdit = "OneDrive Entry Title Edit");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		AssertTextEquals.assertPartialText(
+			key_dmDocumentTitle = "OneDrive Entry Title Edit",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
+			value1 = "OneDrive Entry Title Edit");
+
+		DMNavigator.gotoEditDocumentPG(dmDocumentTitle = "OneDrive Entry Title Edit");
+
+		AssertTextEquals(
+			key_fieldLabel = "Title",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "OneDrive Entry Title Edit");
+
+		AssertTextEquals(
+			key_fieldLabel = "File Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "OneDrive Entry Title.docx");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Word");
+
+		OneDrive.AddDocument(
+			dmDocumentTitle = "OneDrive Entry Title Edit",
+			dmDocumentTypeName = "Word");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.checkinPG(dmDocumentTitle = "OneDrive Entry Title Edit (1)");
+
+		DMNavigator.gotoEditDocumentPG(dmDocumentTitle = "OneDrive Entry Title Edit (1)");
+
+		AssertTextEquals(
+			key_fieldLabel = "Title",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "OneDrive Entry Title Edit (1)");
+
+		AssertTextEquals(
+			key_fieldLabel = "File Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "OneDrive Entry Title Edit (1).docx");
+	}
+
 	@description = "This test ensures that a Powerpoint presentation can be added via the OneDrive editor."
 	@priority = "5"
 	test AddPowerPointPresentation {

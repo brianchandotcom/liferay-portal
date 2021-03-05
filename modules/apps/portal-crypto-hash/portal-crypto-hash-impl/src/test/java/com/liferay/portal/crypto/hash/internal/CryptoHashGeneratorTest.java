@@ -38,24 +38,24 @@ public class CryptoHashGeneratorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		final CryptoHashRegistryImpl cryptoHashRegistryImpl =
-			new CryptoHashRegistryImpl();
+		final CryptoVerifierRegistry cryptoVerifierRegistry =
+			new CryptoVerifierRegistry();
 
 		BCryptCryptoHashProvider bCryptCryptoHashProvider =
 			new BCryptCryptoHashProvider();
 
-		cryptoHashRegistryImpl.register(bCryptCryptoHashProvider);
+		cryptoVerifierRegistry.register(bCryptCryptoHashProvider);
 
 		MessageDigestCryptoHashProvider messageDigestCryptoHashProvider =
 			new MessageDigestCryptoHashProvider();
 
-		cryptoHashRegistryImpl.register(messageDigestCryptoHashProvider);
+		cryptoVerifierRegistry.register(messageDigestCryptoHashProvider);
 
 		_cryptoHashGenerators = Arrays.asList(
 			new CryptoHashGeneratorImpl(bCryptCryptoHashProvider),
 			new CryptoHashGeneratorImpl(messageDigestCryptoHashProvider));
 
-		_cryptoHashVerifier = cryptoHashRegistryImpl.getCryptoHashVerifier();
+		_cryptoHashVerifier = cryptoVerifierRegistry.getCryptoHashVerifier();
 	}
 
 	@Test

@@ -99,6 +99,14 @@ public class DataCleanupTest {
 	}
 
 	@Test
+	public void testDeprecatedModulesUpgradeImageEditor() throws Exception {
+		_testDeprecatedModulesUpgrade(
+			"cleanUpImageEditorModuleData",
+			"com.liferay.frontend.image.editor.web", null,
+			"com_liferay_image_editor_web_portlet_ImageEditorPortlet");
+	}
+
+	@Test
 	public void testDeprecatedModulesUpgradeInvitation() throws Exception {
 		_testDeprecatedModulesUpgrade(
 			"cleanUpInvitationModuleData", "com.liferay.invitation.web", null,
@@ -228,8 +236,9 @@ public class DataCleanupTest {
 
 	private static final String[] _SERVLET_CONTEXT_NAMES = {
 		"com.liferay.chat.service", "com.liferay.dictionary.web",
-		"com.liferay.directory.web", "com.liferay.invitation.web",
-		"com.liferay.mail.reader.service", "com.liferay.shopping.service",
+		"com.liferay.directory.web", "com.liferay.frontend.image.editor.web",
+		"com.liferay.invitation.web", "com.liferay.mail.reader.service",
+		"com.liferay.shopping.service",
 		"com.liferay.social.privatemessaging.service",
 		"com.liferay.twitter.service"
 	};

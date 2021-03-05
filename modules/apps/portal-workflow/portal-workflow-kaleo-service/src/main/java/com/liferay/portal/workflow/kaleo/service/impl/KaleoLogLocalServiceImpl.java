@@ -52,7 +52,6 @@ import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoLog;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance;
-import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstanceModel;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 import com.liferay.portal.workflow.kaleo.service.base.KaleoLogLocalServiceBaseImpl;
@@ -61,13 +60,10 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
-import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -274,20 +270,8 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 			kaleoTaskInstanceToken.getKaleoTaskAssignmentInstances();
 
 		if (ListUtil.isNotEmpty(kaleoTaskAssignmentInstances)) {
-			Stream<KaleoTaskAssignmentInstance>
-				kaleoTaskAssignmentInstancesStream =
-					kaleoTaskAssignmentInstances.stream();
-
-			Set<KaleoTaskAssignmentInstance> kaleoTaskAssignmentInstancesSet =
-				kaleoTaskAssignmentInstancesStream.collect(
-					Collectors.toCollection(
-						() -> new TreeSet<>(
-							Comparator.comparingLong(
-								KaleoTaskAssignmentInstanceModel::
-									getAssigneeClassPK))));
-
 			for (KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance :
-					kaleoTaskAssignmentInstancesSet) {
+					kaleoTaskAssignmentInstances) {
 
 				kaleoLogs.add(
 					kaleoLogLocalService.addTaskAssignmentKaleoLog(

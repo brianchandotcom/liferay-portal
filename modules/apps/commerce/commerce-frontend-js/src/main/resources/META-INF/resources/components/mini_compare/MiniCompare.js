@@ -19,7 +19,7 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
-import CookieUtils from '../../utilities/cookies';
+import CommerceCookie from '../../utilities/cookies';
 import {
 	ADD_ITEM_TO_COMPARE,
 	COMPARE_IS_AVAILABLE,
@@ -28,10 +28,10 @@ import {
 	REMOVE_ITEM_FROM_COMPARE,
 } from '../../utilities/eventsDefinitions';
 
-const cookieUtils = new CookieUtils('COMMERCE_COMPARE_cpDefinitionIds_');
+const compareCookie = new CommerceCookie('COMMERCE_COMPARE_cpDefinitionIds_');
 
 function toggleStatus(commerceChannelGroupId, id, toggle) {
-	const value = cookieUtils.getValue(commerceChannelGroupId);
+	const value = compareCookie.getValue(commerceChannelGroupId);
 
 	const cpDefinitionIds = value ? value.split(':') : [];
 
@@ -48,7 +48,7 @@ function toggleStatus(commerceChannelGroupId, id, toggle) {
 		}
 	}
 
-	cookieUtils.setValue(commerceChannelGroupId, cpDefinitionIds.join(':'));
+	compareCookie.setValue(commerceChannelGroupId, cpDefinitionIds.join(':'));
 }
 
 function Item(props) {
@@ -78,7 +78,7 @@ function Item(props) {
 function MiniCompare(props) {
 	const [items, updateItems] = useState(props.items);
 
-	cookieUtils.setValue(
+	compareCookie.setValue(
 		props.commerceChannelGroupId,
 		items.map((item) => item.id).join(':')
 	);

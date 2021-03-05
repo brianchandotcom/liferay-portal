@@ -19,18 +19,16 @@ import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
 import ServiceProvider from '../../ServiceProvider/index';
-import CookieUtils from '../../utilities/cookies';
+import CommerceCookie from '../../utilities/cookies';
 import {
 	CP_INSTANCE_CHANGED,
 	CURRENT_ORDER_UPDATED,
 	PRODUCT_REMOVED_FROM_CART,
 } from '../../utilities/eventsDefinitions';
 import {showErrorNotification} from '../../utilities/notifications';
-import {ALL} from './constants';
+import {ALL, GUEST_COMMERCE_ORDER_COOKIE_IDENTIFIER} from './constants';
 
-const cookieUtils = new CookieUtils(
-	'com.liferay.commerce.model.CommerceOrder#'
-);
+const orderCookie = new CommerceCookie(GUEST_COMMERCE_ORDER_COOKIE_IDENTIFIER);
 
 function AddToCartButton({
 	channel,
@@ -46,7 +44,7 @@ function AddToCartButton({
 	);
 
 	const [catalogItem, updateCatalogItem] = useState(cpInstance);
-	const [currentCartId, setCurrentCartId] = useState(orderId);
+	const [activeOrder, setActiveOrder] = useState({id: orderId});
 	const [disabled, setDisabled] = useState(
 		settings.disabled || !catalogItem.accountId
 	);
@@ -58,20 +56,16 @@ function AddToCartButton({
 			skuId: catalogItem.skuId,
 		};
 
-		return currentCartId
+		return activeOrder.id
 			? CartResource.createItemByCartId(
-					currentCartId,
+					activeOrder.id,
 					toCartItem
-			  ).then((item) =>
-					Promise.resolve({...item, orderId: currentCartId})
-			  )
+			  ).then(() => Promise.resolve(activeOrder))
 			: CartResource.createCartByChannelId(channel.id, {
 					accountId: catalogItem.accountId,
 					cartItems: [toCartItem],
 					currencyCode: channel.currencyCode,
-			  }).then(({id, orderUUID}) =>
-					Promise.resolve({orderId: id, orderUUID})
-			  );
+			  });
 	};
 
 	const remove = useCallback(
@@ -85,7 +79,7 @@ function AddToCartButton({
 
 	const reset = useCallback(
 		({cpInstance}) =>
-			CartResource.getItemsByCartId(currentCartId)
+			CartResource.getItemsByCartId(activeOrder.id)
 				.then(({items}) =>
 					Promise.resolve(
 						Boolean(
@@ -105,10 +99,23 @@ function AddToCartButton({
 						setDisabled(false);
 					}
 				}),
-		[CartResource, catalogItem, currentCartId]
+		[activeOrder, CartResource, catalogItem]
+	);
+
+	const changeOrder = useCallback(
+		(order) => {
+			if (order.id !== activeOrder.id) {
+				setActiveOrder((current) => ({
+					...current,
+					...order,
+				}));
+			}
+		},
+		[activeOrder.id]
 	);
 
 	useEffect(() => {
+		Liferay.on(CURRENT_ORDER_UPDATED, changeOrder);
 		Liferay.on(PRODUCT_REMOVED_FROM_CART, remove);
 
 		if (settings.willUpdate) {
@@ -116,13 +123,14 @@ function AddToCartButton({
 		}
 
 		return () => {
+			Liferay.detach(CURRENT_ORDER_UPDATED, changeOrder);
 			Liferay.detach(PRODUCT_REMOVED_FROM_CART, remove);
 
 			if (settings.willUpdate) {
 				Liferay.detach(CP_INSTANCE_CHANGED, reset);
 			}
 		};
-	}, [remove, reset, settings.willUpdate]);
+	}, [remove, reset, settings.willUpdate, changeOrder]);
 
 	return (
 		<>
@@ -138,21 +146,23 @@ function AddToCartButton({
 				displayType={'primary'}
 				onClick={() =>
 					add()
-						.then(({orderId, orderUUID}) => {
-							const orderDidChange = orderId !== currentCartId;
+						.then((order) => {
+							const orderDidChange = order.id !== activeOrder.id;
 
-							Liferay.fire(CURRENT_ORDER_UPDATED, {
-								orderId: orderDidChange
-									? orderId
-									: currentCartId,
-							});
+							Liferay.fire(
+								CURRENT_ORDER_UPDATED,
+								orderDidChange ? {...order} : {...activeOrder}
+							);
 
 							updateCatalogItem({...catalogItem, inCart: true});
 
 							if (orderDidChange) {
-								setCurrentCartId(orderId);
+								orderCookie.setValue(
+									channel.id,
+									order.orderUUID
+								);
 
-								cookieUtils.setValue(channel.id, orderUUID);
+								setActiveOrder(order);
 							}
 						})
 						.catch(showErrorNotification)

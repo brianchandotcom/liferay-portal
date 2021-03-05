@@ -308,7 +308,7 @@ describe('AddToCartButton', () => {
 
 				expect(
 					window.Liferay.fire
-				).toHaveBeenCalledWith(CURRENT_ORDER_UPDATED, {orderId});
+				).toHaveBeenCalledWith(CURRENT_ORDER_UPDATED, {id: orderId});
 			});
 		});
 
@@ -332,7 +332,7 @@ describe('AddToCartButton', () => {
 
 				expect(
 					window.Liferay.fire
-				).toHaveBeenCalledWith(CURRENT_ORDER_UPDATED, {orderId: 9999});
+				).toHaveBeenCalledWith(CURRENT_ORDER_UPDATED, {id: 9999});
 			});
 		});
 

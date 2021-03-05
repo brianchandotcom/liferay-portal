@@ -13,3 +13,6 @@
  */
 
 export const ALL = 'all';
+
+export const GUEST_COMMERCE_ORDER_COOKIE_IDENTIFIER =
+	'com.liferay.commerce.model.CommerceOrder#';

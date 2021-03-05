@@ -409,10 +409,10 @@ const ordersDataSetDisplayProps = {
 			items: [
 				{
 					label: 'Completed',
-					value: 1,
+					value: 0,
 				},
 				{
-					label: 'Not-completed',
+					label: 'Not completed',
 					value: 999,
 				},
 			],

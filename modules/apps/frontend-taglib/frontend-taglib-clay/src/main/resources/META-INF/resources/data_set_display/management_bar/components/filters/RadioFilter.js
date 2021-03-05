@@ -41,9 +41,9 @@ function RadioFilter({id, items, updateFilterState, value: valueProp}) {
 	let submitDisabled = true;
 
 	if (
-		(!valueProp && itemValue) ||
+		(!valueProp && itemValue !== undefined) ||
 		(valueProp && valueProp.itemValue !== itemValue) ||
-		(valueProp && itemValue && valueProp.exclude !== exclude)
+		(valueProp && itemValue !== undefined && valueProp.exclude !== exclude)
 	) {
 		submitDisabled = false;
 	}

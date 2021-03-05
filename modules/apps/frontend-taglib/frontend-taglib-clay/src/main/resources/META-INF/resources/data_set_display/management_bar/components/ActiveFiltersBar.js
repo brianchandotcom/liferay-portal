@@ -24,7 +24,9 @@ function ActiveFiltersBar({disabled}) {
 
 	const activeFilters = filtersState.filters.reduce(
 		(acc, filter) =>
-			filter.value && !filter.invisible ? acc.concat(filter.id) : acc,
+			filter.value !== undefined && !filter.invisible
+				? acc.concat(filter.id)
+				: acc,
 		[]
 	);
 

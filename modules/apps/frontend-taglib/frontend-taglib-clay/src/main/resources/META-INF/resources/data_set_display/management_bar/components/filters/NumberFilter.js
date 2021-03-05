@@ -48,7 +48,7 @@ function NumberFilter({
 								min={min}
 								onChange={(e) => setValue(e.target.value)}
 								type="number"
-								value={value || ''}
+								value={value !== undefined ? value : ''}
 							/>
 						</div>
 						{inputText && (
@@ -64,7 +64,9 @@ function NumberFilter({
 			<ClayDropDown.Divider />
 			<ClayDropDown.Caption>
 				<ClayButton
-					disabled={Number(value) === valueProp}
+					disabled={
+						value === undefined || Number(value) === valueProp
+					}
 					onClick={() =>
 						updateFilterState(
 							id,

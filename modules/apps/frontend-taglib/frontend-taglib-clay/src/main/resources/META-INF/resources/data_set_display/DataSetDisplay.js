@@ -352,7 +352,7 @@ function DataSetDisplay({
 					readOnly
 					value={selectedItemsValue.join(',')}
 				/>
-				{items.length ||
+				{items?.length ||
 				overrideEmptyResultView ||
 				inlineAddingSettings ? (
 					<CurrentViewComponent

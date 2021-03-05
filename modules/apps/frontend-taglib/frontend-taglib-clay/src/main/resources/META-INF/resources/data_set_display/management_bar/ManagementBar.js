@@ -45,19 +45,14 @@ function ManagementBar({
 			updateFilters((filters) => {
 				return filters.map((element) => ({
 					...element,
-					additionalData: null,
-					odataFilterString: null,
-					resumeCustomLabel: null,
-					value: null,
+					additionalData: undefined,
+					odataFilterString: undefined,
+					resumeCustomLabel: undefined,
+					value: undefined,
 				}));
 			});
 		},
-		updateFilterState: (
-			id,
-			value = null,
-			formattedValue = null,
-			odataFilterString = null
-		) => {
+		updateFilterState: (id, value, formattedValue, odataFilterString) => {
 			updateFilters((filters) => {
 				return filters.map((filter) => ({
 					...filter,

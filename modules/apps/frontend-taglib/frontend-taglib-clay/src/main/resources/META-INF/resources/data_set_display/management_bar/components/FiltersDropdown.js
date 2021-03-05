@@ -89,10 +89,7 @@ function FiltersDropdown() {
 						<ClayDropDown.ItemList>
 							{visibleFilters.map((item) => (
 								<ClayDropDown.Item
-									active={
-										item.value !== undefined &&
-										item.value !== null
-									}
+									active={item.value !== undefined}
 									key={item.id}
 									onClick={() => {
 										setActiveFilterId(item.id);

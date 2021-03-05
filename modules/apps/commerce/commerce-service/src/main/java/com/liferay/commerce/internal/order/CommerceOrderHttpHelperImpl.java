@@ -17,6 +17,7 @@ package com.liferay.commerce.internal.order;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.configuration.CommerceOrderCheckoutConfiguration;
+import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
@@ -357,6 +358,9 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 			PermissionThreadLocal.getPermissionChecker();
 
 		if (permissionChecker.isSignedIn()) {
+			httpServletRequest.setAttribute(
+				CommerceCheckoutWebKeys.COMMERCE_ORDER, commerceOrder);
+
 			return;
 		}
 

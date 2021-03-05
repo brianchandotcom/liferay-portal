@@ -31,7 +31,9 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.io.File;
 import java.io.Serializable;
 
 import java.lang.annotation.Annotation;
@@ -41,7 +43,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.net.URLClassLoader;
+
+import java.security.CodeSource;
+import java.security.ProtectionDomain;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -324,8 +331,27 @@ public class NewEnvTestRule implements TestRule {
 		builder.setEnvironment(environmentMap);
 	}
 
-	protected static final String CLASS_PATH = ClassPathUtil.getJVMClassPath(
-		true);
+	protected static final String CLASS_PATH;
+
+	static {
+		try {
+			ProtectionDomain protectionDomain =
+				LiferayUnitTestRule.class.getProtectionDomain();
+
+			CodeSource codeSource = protectionDomain.getCodeSource();
+
+			URL url = codeSource.getLocation();
+
+			File file = new File(url.toURI());
+
+			CLASS_PATH = StringBundler.concat(
+				file.getPath(), File.pathSeparator,
+				ClassPathUtil.getJVMClassPath(true));
+		}
+		catch (URISyntaxException uriSyntaxException) {
+			throw new ExceptionInInitializerError(uriSyntaxException);
+		}
+	}
 
 	private boolean _isJPDAEnabled() {
 		if (Boolean.getBoolean("jvm.debug")) {

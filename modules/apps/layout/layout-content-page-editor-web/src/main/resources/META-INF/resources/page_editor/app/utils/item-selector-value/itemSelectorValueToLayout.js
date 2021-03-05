@@ -12,6 +12,16 @@
  * details.
  */
 
-export default function itemSelectorValueToLayout(layout) {
-	return layout;
+export default function itemSelectorValueToLayout({
+	groupId,
+	layoutId,
+	name,
+	privateLayout,
+}) {
+	return {
+		groupId,
+		layoutId,
+		name,
+		privateLayout,
+	};
 }

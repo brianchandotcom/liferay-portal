@@ -14,15 +14,46 @@
 
 package com.liferay.portal.test.log;
 
+import com.liferay.petra.string.StringBundler;
+
 /**
  * @author Dante Wang
  */
-public interface LogEntry {
+public class LogEntry {
 
-	public String getMessage();
+	public LogEntry(String message, String priority, Throwable throwable) {
+		_message = message;
+		_priority = priority;
+		_throwable = throwable;
+	}
 
-	public String getPriority();
+	public String getMessage() {
+		return _message;
+	}
 
-	public Throwable getThrowable();
+	public String getPriority() {
+		return _priority;
+	}
+
+	public Throwable getThrowable() {
+		return _throwable;
+	}
+
+	@Override
+	public String toString() {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("{level=");
+		sb.append(getPriority());
+		sb.append(", message=");
+		sb.append(getMessage());
+		sb.append("}");
+
+		return sb.toString();
+	}
+
+	private final String _message;
+	private final String _priority;
+	private final Throwable _throwable;
 
 }

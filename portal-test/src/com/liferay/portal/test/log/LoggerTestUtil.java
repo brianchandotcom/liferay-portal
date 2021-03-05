@@ -15,7 +15,6 @@
 package com.liferay.portal.test.log;
 
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Jdk14LogImpl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -150,7 +149,11 @@ public class LoggerTestUtil {
 
 		@Override
 		public void publish(LogRecord logRecord) {
-			_logEntries.add(new JDKLogEntry(logRecord));
+			_logEntries.add(
+				new LogEntry(
+					logRecord.getMessage(),
+					String.valueOf(logRecord.getLevel()),
+					logRecord.getThrown()));
 		}
 
 		@Override
@@ -182,44 +185,6 @@ public class LoggerTestUtil {
 		private final List<LogEntry> _logEntries = new CopyOnWriteArrayList<>();
 		private final Logger _logger;
 		private final boolean _useParentHandlers;
-
-	}
-
-	private static class JDKLogEntry implements LogEntry {
-
-		@Override
-		public String getMessage() {
-			return _logRecord.getMessage();
-		}
-
-		@Override
-		public String getPriority() {
-			return String.valueOf(_logRecord.getLevel());
-		}
-
-		@Override
-		public Throwable getThrowable() {
-			return _logRecord.getThrown();
-		}
-
-		@Override
-		public String toString() {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("{level=");
-			sb.append(_logRecord.getLevel());
-			sb.append(", message=");
-			sb.append(getMessage());
-			sb.append("}");
-
-			return sb.toString();
-		}
-
-		private JDKLogEntry(LogRecord logRecord) {
-			_logRecord = logRecord;
-		}
-
-		private final LogRecord _logRecord;
 
 	}
 
@@ -262,7 +227,19 @@ public class LoggerTestUtil {
 
 		@Override
 		protected void append(LoggingEvent loggingEvent) {
-			_logEntries.add(new Log4JLogEntry(loggingEvent));
+			ThrowableInformation throwableInformation =
+				loggingEvent.getThrowableInformation();
+
+			Throwable throwable = null;
+
+			if (throwableInformation != null) {
+				throwable = throwableInformation.getThrowable();
+			}
+
+			_logEntries.add(
+				new LogEntry(
+					loggingEvent.getRenderedMessage(),
+					String.valueOf(loggingEvent.getLevel()), throwable));
 		}
 
 		private Log4JLogCapture(org.apache.log4j.Logger logger) {
@@ -296,51 +273,6 @@ public class LoggerTestUtil {
 		private final List<LogEntry> _logEntries = new CopyOnWriteArrayList<>();
 		private final org.apache.log4j.Logger _logger;
 		private final Category _parentCategory;
-
-	}
-
-	private static class Log4JLogEntry implements LogEntry {
-
-		@Override
-		public String getMessage() {
-			return _loggingEvent.getRenderedMessage();
-		}
-
-		@Override
-		public String getPriority() {
-			return String.valueOf(_loggingEvent.getLevel());
-		}
-
-		@Override
-		public Throwable getThrowable() {
-			ThrowableInformation throwableInformation =
-				_loggingEvent.getThrowableInformation();
-
-			if (throwableInformation != null) {
-				return throwableInformation.getThrowable();
-			}
-
-			return null;
-		}
-
-		@Override
-		public String toString() {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("{level=");
-			sb.append(getPriority());
-			sb.append(", message=");
-			sb.append(getMessage());
-			sb.append("}");
-
-			return sb.toString();
-		}
-
-		private Log4JLogEntry(LoggingEvent loggingEvent) {
-			_loggingEvent = loggingEvent;
-		}
-
-		private final LoggingEvent _loggingEvent;
 
 	}
 

@@ -15,6 +15,8 @@ import ClayPopover from '@clayui/popover';
 import {sub} from 'app-builder-web/js/utils/lang.es';
 import React from 'react';
 
+import useDebounceCallback from '../../../hooks/useDebounceCallback.es';
+
 export default function MissingRequiredFieldsPopover({
 	alignPosition = 'left',
 	dataObjectName,
@@ -25,6 +27,11 @@ export default function MissingRequiredFieldsPopover({
 	showPopover,
 	triggerClassName,
 }) {
+	const [dismissPopover, cancelDismissPopover] = useDebounceCallback(
+		() => setShowPopover(false),
+		1000
+	);
+
 	const props = {
 		custom: {
 			headerIcon: {
@@ -79,15 +86,22 @@ export default function MissingRequiredFieldsPopover({
 					</span>
 				</>
 			}
-			onMouseEnter={() => setShowPopover(true)}
+			onMouseEnter={() => {
+				cancelDismissPopover();
+
+				setShowPopover(true);
+			}}
 			onMouseLeave={() => setShowPopover(false)}
+			onMouseOver={() => setShowPopover(true)}
 			show={showPopover}
 			trigger={
 				<div className={triggerClassName ?? ''}>
 					<ClayIcon
 						fontSize="26px"
 						onMouseEnter={() => setShowPopover(true)}
-						onMouseLeave={() => setShowPopover(false)}
+						onMouseLeave={() => {
+							dismissPopover();
+						}}
 						onMouseOver={() => setShowPopover(true)}
 						{...props[propsType].icon}
 					/>

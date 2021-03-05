@@ -21,7 +21,10 @@ import org.apache.log4j.spi.ThrowableInformation;
 
 /**
  * @author Tina Tian
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+ *              LoggerTestUtil.Log4JLogEntry}
  */
+@Deprecated
 public class LogEvent {
 
 	public LogEvent(LoggingEvent loggingEvent) {

@@ -14,24 +14,9 @@
 
 import {
 	DEFAULT_ORDER_DETAILS_PORTLET_ID,
-	DISCOUNT_LEVEL_PREFIX,
 	ORDER_DETAILS_ENDPOINT,
 	ORDER_UUID_PARAMETER,
 } from './constants';
-
-export function isNonnull(...values) {
-	return !!values.find((value) => parseFloat(value) > 0);
-}
-
-export function collectDiscountLevels(price) {
-	return Object.keys(price).reduce((levels, key) => {
-		if (key.startsWith(DISCOUNT_LEVEL_PREFIX)) {
-			levels.push(price[key].toFixed(2));
-		}
-
-		return levels;
-	}, []);
-}
 
 export function parseOptions(jsonString) {
 	let options;

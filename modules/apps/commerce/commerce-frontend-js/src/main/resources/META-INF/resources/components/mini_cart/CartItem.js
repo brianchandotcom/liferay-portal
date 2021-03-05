@@ -19,9 +19,9 @@ import PropTypes from 'prop-types';
 import React, {useCallback, useContext, useState} from 'react';
 
 import {PRODUCT_REMOVED_FROM_CART} from '../../utilities/eventsDefinitions';
+import Price from '../price/Price';
 import QuantitySelector from '../quantity_selector/QuantitySelector';
 import ItemInfoView from './CartItemViews/ItemInfoView';
-import ItemPriceView from './CartItemViews/ItemPriceView';
 import MiniCartContext from './MiniCartContext';
 import {parseOptions} from './util/index';
 
@@ -210,7 +210,8 @@ function CartItem({item: cartItem}) {
 			</div>
 
 			<div className={'mini-cart-item-price'}>
-				<ItemPriceView
+				<Price
+					compact={true}
 					displayDiscountLevels={displayDiscountLevels}
 					price={itemPrice}
 				/>

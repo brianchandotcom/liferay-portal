@@ -2346,6 +2346,15 @@ definition {
 		}
 	}
 
+	macro viewFieldLabels {
+		for (var fieldFieldLabels : list "${labels}") {
+			AssertTextEquals.assertPartialText(
+				key_fieldFieldLabel = "${fieldFieldLabels}",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
+				value1 = "${fieldFieldLabels}");
+		}
+	}
+
 	macro viewIconLockedCP {
 		var key_dmDocumentTitle = "${dmDocumentTitle}";
 

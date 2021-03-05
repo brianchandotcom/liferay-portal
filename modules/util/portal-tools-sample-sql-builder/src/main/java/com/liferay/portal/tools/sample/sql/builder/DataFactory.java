@@ -797,22 +797,19 @@ public class DataFactory {
 		return accountModel;
 	}
 
-	public List<AssetCategoryModel> newAssetCategoryModels(long groupId) {
+	public List<AssetCategoryModel> newAssetCategoryModels(
+		long groupId, List<AssetVocabularyModel> assetVocabularyModels) {
+
 		List<AssetCategoryModel> allAssetCategoryModels = new ArrayList<>();
 
 		StringBundler sb = new StringBundler(4);
 
-		List<AssetVocabularyModel> assetVocabularyModels =
-			_assetVocabularyModelsArray[(int)groupId - 1];
 		List<AssetCategoryModel> groupAssetCategoryModels = new ArrayList<>(
 			BenchmarksPropsValues.MAX_ASSET_VUCABULARY_COUNT *
 				BenchmarksPropsValues.MAX_ASSET_CATEGORY_COUNT);
 
-		for (int j = 0; j < BenchmarksPropsValues.MAX_ASSET_VUCABULARY_COUNT;
-			 j++) {
-
-			AssetVocabularyModel assetVocabularyModel =
-				assetVocabularyModels.get(j);
+		for (AssetVocabularyModel assetVocabularyModel :
+				assetVocabularyModels) {
 
 			for (int k = 0; k < BenchmarksPropsValues.MAX_ASSET_CATEGORY_COUNT;
 				 k++) {
@@ -1115,9 +1112,6 @@ public class DataFactory {
 
 		StringBundler sb = new StringBundler(4);
 
-		List<AssetVocabularyModel> groupAssetVocabularyModels = new ArrayList<>(
-			BenchmarksPropsValues.MAX_ASSET_VUCABULARY_COUNT);
-
 		for (int j = 0; j < BenchmarksPropsValues.MAX_ASSET_VUCABULARY_COUNT;
 			 j++) {
 
@@ -1131,13 +1125,8 @@ public class DataFactory {
 			AssetVocabularyModel assetVocabularyModel = newAssetVocabularyModel(
 				groupId, _sampleUserId, _SAMPLE_USER_NAME, sb.toString());
 
-			groupAssetVocabularyModels.add(assetVocabularyModel);
-
 			allAssetVocabularyModels.add(assetVocabularyModel);
 		}
-
-		_assetVocabularyModelsArray[(int)groupId - 1] =
-			groupAssetVocabularyModels;
 
 		return allAssetVocabularyModels;
 	}
@@ -5304,9 +5293,6 @@ public class DataFactory {
 	private Map<Long, List<AssetTagModel>>[] _assetTagModelsMaps =
 		(Map<Long, List<AssetTagModel>>[])
 			new HashMap<?, ?>[BenchmarksPropsValues.MAX_GROUP_COUNT];
-	private List<AssetVocabularyModel>[] _assetVocabularyModelsArray =
-		(List<AssetVocabularyModel>[])
-			new List<?>[BenchmarksPropsValues.MAX_GROUP_COUNT];
 	private final Map<String, ClassNameModel> _classNameModels =
 		new HashMap<>();
 	private final long _companyId;

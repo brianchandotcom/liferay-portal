@@ -20,7 +20,6 @@ import com.liferay.petra.encryptor.Encryptor;
 import com.liferay.petra.encryptor.EncryptorException;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.lang.SafeClosable;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.db.partition.DBPartitionUtil;
@@ -475,9 +474,14 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			UnsafeConsumer<Company, E> unsafeConsumer, List<Company> companies)
 		throws E {
 
-		forEach(
-			unsafeConsumer, (__, e) -> ReflectionUtil.throwException(e),
-			companies);
+		for (Company company : companies) {
+			try (SafeClosable safeClosable =
+					CompanyThreadLocal.setWithSafeClosable(
+						company.getCompanyId())) {
+
+				unsafeConsumer.accept(company);
+			}
+		}
 	}
 
 	@Override
@@ -526,9 +530,13 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			UnsafeConsumer<Long, E> unsafeConsumer, long[] companyIds)
 		throws E {
 
-		forEachCompanyId(
-			unsafeConsumer, (__, e) -> ReflectionUtil.throwException(e),
-			companyIds);
+		for (long companyId : companyIds) {
+			try (SafeClosable safeClosable =
+					CompanyThreadLocal.setWithSafeClosable(companyId)) {
+
+				unsafeConsumer.accept(companyId);
+			}
+		}
 	}
 
 	/**

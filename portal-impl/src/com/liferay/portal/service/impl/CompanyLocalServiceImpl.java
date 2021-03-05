@@ -19,7 +19,6 @@ import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.petra.encryptor.Encryptor;
 import com.liferay.petra.encryptor.EncryptorException;
 import com.liferay.petra.function.UnsafeConsumer;
-import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.lang.SafeClosable;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -124,8 +123,6 @@ import java.util.Set;
 import java.util.TimeZone;
 import java.util.concurrent.Callable;
 import java.util.function.BiConsumer;
-import java.util.stream.LongStream;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
@@ -283,33 +280,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		return addCompany(
 			null, webId, virtualHostname, mx, system, maxUsers, active);
-	}
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS)
-	public <T, E extends Exception> Stream applyForEachCompanyId(
-		UnsafeFunction<Long, T, E> unsafeFunction,
-		BiConsumer<Long, E> biConsumer) {
-
-		LongStream longStream = Arrays.stream(_getCompanyIds());
-
-		Stream<Long> companyIdsStream = longStream.boxed();
-
-		return companyIdsStream.flatMap(
-			companyId -> {
-				try (SafeClosable safeClosable =
-						CompanyThreadLocal.setWithSafeClosable(companyId)) {
-
-					CompanyThreadLocal.setCompanyId(companyId);
-
-					return Stream.of(unsafeFunction.apply(companyId));
-				}
-				catch (Exception exception) {
-					biConsumer.accept(companyId, (E)exception);
-
-					return Stream.empty();
-				}
-			});
 	}
 
 	/**

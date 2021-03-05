@@ -5,7 +5,7 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "Commerce";
 
-    setUp {
+	setUp {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
@@ -36,7 +36,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5911 AssertComparisonItemsAreVisibleOnMiniCompare pending implementation
-
 	}
 
 	@description = "COMMERCE-5915. As a buyer, I want to see max number of compare items allowed in Compare page"
@@ -46,7 +45,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5915 EditMaxNumberOfComparisonItemsInComparePage pending implementation
-
 	}
 
 	@description = "COMMERCE-5916. As a buyer, I want to see max number of compare items allowed in MiniCompare widget"
@@ -56,7 +54,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5916 EditMaxNumberOfComparisonItemsInMiniCompare pending implementation
-
 	}
 
 	@description = "COMMERCE-5918. As a buyer, I want to deselect a item in Product Compare page"
@@ -66,7 +63,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5918 RemoveComparisonItemFromComparePage pending implementation
-
 	}
 
 	@description = "COMMERCE-5913. As a buyer, I want to deselect items in Catalog for compare in MiniCompare widget"
@@ -76,7 +72,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5913 RemoveComparisonItemFromMiniCompare pending implementation
-
 	}
 
 	@description = "COMMERCE-5914. As a buyer, I want to deselect a item in Product Details for compare in Product Widget"
@@ -86,7 +81,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5914 RemoveComparisonItemFromProductDetailsPage pending implementation
-
 	}
 
 	@description = "COMMERCE-5919. As a buyer, when comparing items in Compare page, I want to view product options and specifications, if set"
@@ -96,7 +90,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5919 ViewProductOptionsAndSpecificationsWhenComparingItemsInComparePage pending implementation
-
 	}
 
 }

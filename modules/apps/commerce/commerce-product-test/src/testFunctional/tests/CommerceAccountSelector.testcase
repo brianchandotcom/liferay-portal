@@ -5,7 +5,7 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "Commerce";
 
-    setUp {
+	setUp {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
@@ -36,7 +36,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5938 AssertAccountSelectorIsClosedAfterMiniCartIsOpened pending implementation
-
 	}
 
 	@description = "COMMERCE-5925. As a buyer, I want the account I have currently selected to be highlighted in the account selector bar"
@@ -46,7 +45,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5925 AssertActiveAccountIsVisibleOnAccountSelectorBar pending implementation
-
 	}
 
 	@description = "COMMERCE-5924. As a buyer, I want the account I have currently selected to be highlighted in the account selector dropdown"
@@ -56,7 +54,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5924 AssertActiveAccountIsVisibleOnAccountSelectorDropdown pending implementation
-
 	}
 
 	@description = "COMMERCE-5927. As a buyer, I want to be able to select an account from the list (which is not the selected one), and have the selected account change to the newly selected account"
@@ -66,7 +63,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5927 ChangeActiveAccountFromAccountsList pending implementation
-
 	}
 
 	@description = "COMMERCE-5929. As a buyer, I want to be able to select an order from the list (which is not the selected one), and have the selected order change to the newly selected order"
@@ -76,7 +72,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5929 ChangeActiveOrderFromOrdersList pending implementation
-
 	}
 
 	@description = "COMMERCE-5936. As a buyer, I want to be able to create a new order from the account selector dropdown's order list view, The created order should then be the selected order"
@@ -86,7 +81,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5936 CreateNewOrderFromAccountSelectorDropdown pending implementation
-
 	}
 
 	@description = "COMMERCE-5956. As a buyer, I want to search for an account in the accounts list, and select it as active account"
@@ -96,7 +90,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5956 SearchForAnAccountAndSelectItAsActive pending implementation
-
 	}
 
 	@description = "COMMERCE-5957. As a buyer, I want to search for an order in the orders list, and select it as active order"
@@ -106,8 +99,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5957 SearchForAnOrderAndSelectItAsActive pending implementation
-
-	}	
+	}
 
 	@description = "COMMERCE-5926. As a buyer, I want to be able to see all of the accounts I am a member of in the account selector dropdown"
 	@ignore = "true"
@@ -116,7 +108,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5926 ViewAccountSelectorDropdownAccountsList pending implementation
-
 	}
 
 	@description = "COMMERCE-5928. As a buyer, I want to be able to switch the account selector dropdown's view from the account list to the order list and I want to be able to see all the orders for the account I have selected"
@@ -126,7 +117,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5928 ViewAccountSelectorDropdownOrdersList pending implementation
-
 	}
 
 }

@@ -5,7 +5,7 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "Commerce";
 
-    setUp {
+	setUp {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
@@ -19,7 +19,7 @@ definition {
 		}
 	}
 
-    @description = "COMMERCE-5866. As a buyer, I want to be able to add a product to my wish list, by clicking on an Add To Wish List button"
+	@description = "COMMERCE-5866. As a buyer, I want to be able to add a product to my wish list, by clicking on an Add To Wish List button"
 	@ignore = "true"
 	@priority = "3"
 	test AddProductToWishListFromProductCard {
@@ -36,17 +36,15 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5859 AssertDefaultChannelCurrencyIsAppliedToProductCard pending implementation
-
 	}
 
-    @description = "COMMERCE-5907. As a buyer, I want to be unable to add multiple SKU product to the cart directly, I want to be unable to select the quantity of the product directly and I want to be unable to check the availability of the product directly"
+	@description = "COMMERCE-5907. As a buyer, I want to be unable to add multiple SKU product to the cart directly, I want to be unable to select the quantity of the product directly and I want to be unable to check the availability of the product directly"
 	@ignore = "true"
 	@priority = "3"
 	test AssertMultipleSKUProductCannotBeDirectlyAddedToCart {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5907 AssertMultipleSKUProductCannotBeDirectlyAddedToCart pending implementation
-
 	}
 
 	@description = "COMMERCE-5860. As a buyer, I want to change the channel currency and view the product price with the changed currency"
@@ -56,7 +54,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5860 AssertProductCardCurrencyAfterChannelCurrencyChanged pending implementation
-
 	}
 
 	@description = "COMMERCE-5856. As a buyer, I want to view the product image container in the top area and I want to be able to click on the product image to navigate to the product detail page"
@@ -66,7 +63,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5856 AssertProductCardImageRedirectsToProductDetailsPage pending implementation
-
 	}
 
 	@description = "COMMERCE-5858. As a buyer, I want to view the catalog default product image if set"
@@ -76,7 +72,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5858 AssertProductCardShowsCatalogDefaultImage pending implementation
-
 	}
 
 	@description = "COMMERCE-5857. As a buyer, I want to view the product's own image if set"
@@ -86,27 +81,24 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5857 AssertProductCardShowsCustomImageIfSet pending implementation
-
 	}
 
-    @description = "COMMERCE-5872. As a buyer, I want to view the availability of the product, if set and configured admin-side(product available)"
+	@description = "COMMERCE-5872. As a buyer, I want to view the availability of the product, if set and configured admin-side(product available)"
 	@ignore = "true"
 	@priority = "3"
 	test AssertProductIsAvailable {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5872 AssertProductIsAvailable pending implementation
-
 	}
 
-    @description = "COMMERCE-5871. As a buyer, I want to view the availability of the product, if set and configured admin-side(product unavailable)"
+	@description = "COMMERCE-5871. As a buyer, I want to view the availability of the product, if set and configured admin-side(product unavailable)"
 	@ignore = "true"
 	@priority = "3"
 	test AssertProductIsUnavailable {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5871 AssertProductIsUnavailable pending implementation
-
 	}
 
 	@description = "COMMERCE-5861. As a buyer, I want to view the product name with the correct localization"
@@ -116,7 +108,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5861 AssertProductNameIsTranslated pending implementation
-
 	}
 
 	@description = "COMMERCE-5873. As a buyer, I want to be able to navigate to the product detail page via primary CTA, to check its variants"
@@ -126,38 +117,34 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5873 AssertViewAllVariantsButtonRedirectsToProductDetailsPage pending implementation
-
 	}
 
-    @description = "COMMERCE-5868. As a buyer, I want to be able to compare a product with other ones in a product comparison items list, by checking the product via checkbox"
+	@description = "COMMERCE-5868. As a buyer, I want to be able to compare a product with other ones in a product comparison items list, by checking the product via checkbox"
 	@ignore = "true"
 	@priority = "3"
 	test CompareProductFromProductCard {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5868 CompareProductFromProductCard pending implementation
-
 	}
 
-    @description = "COMMERCE-5869. As a buyer, I want to be able to remove a product from a product comparison items list, by unchecking the product via checkbox"
+	@description = "COMMERCE-5869. As a buyer, I want to be able to remove a product from a product comparison items list, by unchecking the product via checkbox"
 	@ignore = "true"
 	@priority = "3"
 	test RemoveProductFromComparisonItems {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5869 RemoveProductFromComparisonItems pending implementation
+	}
 
-	} 
-
-    @description = "COMMERCE-5867. As a buyer, I want to be able to remove a product from my wish list, by clicking on an Add To Wish List button, if already active"
+	@description = "COMMERCE-5867. As a buyer, I want to be able to remove a product from my wish list, by clicking on an Add To Wish List button, if already active"
 	@ignore = "true"
 	@priority = "3"
 	test RemoveProductFromWishList {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5867 RemoveProductFromWishList pending implementation
-
-	}   
+	}
 
 	@description = "COMMERCE-5864. As a buyer, I want to view the product price"
 	@ignore = "true"
@@ -166,7 +153,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5864 ViewProductCardPrice pending implementation
-
 	}
 
 	@description = "COMMERCE-5865. As a buyer, I want to view the product price range"
@@ -176,7 +162,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5865 ViewProductCardPriceRange pending implementation
-
 	}
 
 	@description = "COMMERCE-5862. As a buyer, I want to view the product SKU, if set(single SKU)"
@@ -186,7 +171,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5862 ViewProductCardSKU pending implementation
-
 	}
 
 }

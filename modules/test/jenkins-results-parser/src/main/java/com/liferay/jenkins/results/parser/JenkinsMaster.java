@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +34,14 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	public static final Integer SLAVE_RAM_DEFAULT = 16;
 
 	public static final Integer SLAVES_PER_HOST_DEFAULT = 2;
+
+	public static synchronized JenkinsMaster getInstance(String masterName) {
+		if (!_jenkinsMasters.containsKey(masterName)) {
+			_jenkinsMasters.put(masterName, new JenkinsMaster(masterName));
+		}
+
+		return _jenkinsMasters.get(masterName);
+	}
 
 	public static Integer getSlaveRAMMinimumDefault() {
 		try {
@@ -87,56 +96,6 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 			exception.printStackTrace();
 
 			return SLAVES_PER_HOST_DEFAULT;
-		}
-	}
-
-	public JenkinsMaster(String masterName) {
-		if (masterName.contains(".")) {
-			_masterName = masterName.substring(0, masterName.indexOf("."));
-		}
-		else {
-			_masterName = masterName;
-		}
-
-		try {
-			Properties properties =
-				JenkinsResultsParserUtil.getBuildProperties();
-
-			_masterURL = properties.getProperty(
-				JenkinsResultsParserUtil.combine(
-					"jenkins.local.url[", _masterName, "]"));
-
-			Integer slaveRAM = getSlaveRAMMinimumDefault();
-
-			String slaveRAMString = JenkinsResultsParserUtil.getProperty(
-				properties,
-				JenkinsResultsParserUtil.combine(
-					"master.property(", _masterName, "/slave.ram)"));
-
-			if ((slaveRAMString != null) && slaveRAMString.matches("\\d+")) {
-				slaveRAM = Integer.valueOf(slaveRAMString);
-			}
-
-			_slaveRAM = slaveRAM;
-
-			Integer slavesPerHost = getSlavesPerHostDefault();
-
-			String slavesPerHostString = JenkinsResultsParserUtil.getProperty(
-				properties,
-				JenkinsResultsParserUtil.combine(
-					"master.property(", _masterName, "/slaves.per.host)"));
-
-			if ((slavesPerHostString != null) &&
-				slavesPerHostString.matches("\\d+")) {
-
-				slavesPerHost = Integer.valueOf(slavesPerHostString);
-			}
-
-			_slavesPerHost = slavesPerHost;
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(
-				"Unable to determine URL for master " + _masterName, exception);
 		}
 	}
 
@@ -446,6 +405,56 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 
 	protected static long maxRecentBatchAge = 120 * 1000;
 
+	private JenkinsMaster(String masterName) {
+		if (masterName.contains(".")) {
+			_masterName = masterName.substring(0, masterName.indexOf("."));
+		}
+		else {
+			_masterName = masterName;
+		}
+
+		try {
+			Properties properties =
+				JenkinsResultsParserUtil.getBuildProperties();
+
+			_masterURL = properties.getProperty(
+				JenkinsResultsParserUtil.combine(
+					"jenkins.local.url[", _masterName, "]"));
+
+			Integer slaveRAM = getSlaveRAMMinimumDefault();
+
+			String slaveRAMString = JenkinsResultsParserUtil.getProperty(
+				properties,
+				JenkinsResultsParserUtil.combine(
+					"master.property(", _masterName, "/slave.ram)"));
+
+			if ((slaveRAMString != null) && slaveRAMString.matches("\\d+")) {
+				slaveRAM = Integer.valueOf(slaveRAMString);
+			}
+
+			_slaveRAM = slaveRAM;
+
+			Integer slavesPerHost = getSlavesPerHostDefault();
+
+			String slavesPerHostString = JenkinsResultsParserUtil.getProperty(
+				properties,
+				JenkinsResultsParserUtil.combine(
+					"master.property(", _masterName, "/slaves.per.host)"));
+
+			if ((slavesPerHostString != null) &&
+				slavesPerHostString.matches("\\d+")) {
+
+				slavesPerHost = Integer.valueOf(slavesPerHostString);
+			}
+
+			_slavesPerHost = slavesPerHost;
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(
+				"Unable to determine URL for master " + _masterName, exception);
+		}
+	}
+
 	private synchronized int _getRecentBatchSizesTotal() {
 		long currentTimestamp = JenkinsResultsParserUtil.getCurrentTimeMillis();
 		int recentBatchSizesTotal = 0;
@@ -470,6 +479,9 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 
 		return recentBatchSizesTotal;
 	}
+
+	private static final Map<String, JenkinsMaster> _jenkinsMasters =
+		Collections.synchronizedMap(new HashMap<String, JenkinsMaster>());
 
 	private boolean _available;
 	private final Map<Long, Integer> _batchSizes = new TreeMap<>();

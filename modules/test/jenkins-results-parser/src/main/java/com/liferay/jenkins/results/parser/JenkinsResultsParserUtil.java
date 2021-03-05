@@ -1531,7 +1531,8 @@ public class JenkinsResultsParserUtil {
 				 "master.slaves(" + prefix + "-" + i + ")");
 			 i++) {
 
-			JenkinsMaster jenkinsMaster = new JenkinsMaster(prefix + "-" + i);
+			JenkinsMaster jenkinsMaster = JenkinsMaster.getInstance(
+				prefix + "-" + i);
 
 			if ((jenkinsMaster.getSlaveRAM() >= minimumRAM) &&
 				(jenkinsMaster.getSlavesPerHost() <= maximumSlavesPerHost)) {

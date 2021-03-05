@@ -2569,7 +2569,7 @@ public abstract class BaseBuild implements Build {
 
 	protected void extractBuildURLComponents(Matcher matcher) {
 		_buildNumber = Integer.parseInt(matcher.group("buildNumber"));
-		setJenkinsMaster(new JenkinsMaster(matcher.group("master")));
+		setJenkinsMaster(JenkinsMaster.getInstance(matcher.group("master")));
 		setJobName(matcher.group("jobName"));
 	}
 
@@ -3564,7 +3564,7 @@ public abstract class BaseBuild implements Build {
 
 		setJobName(invocationURLMatcher.group("jobName"));
 		setJenkinsMaster(
-			new JenkinsMaster(invocationURLMatcher.group("master")));
+			JenkinsMaster.getInstance(invocationURLMatcher.group("master")));
 
 		loadParametersFromQueryString(invocationURL);
 

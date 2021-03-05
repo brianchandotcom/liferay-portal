@@ -43,7 +43,7 @@ public class JenkinsSlave implements JenkinsNode<JenkinsSlave> {
 					"hostname ", hostname));
 		}
 
-		_jenkinsMaster = new JenkinsMaster(jenkinsMasterName);
+		_jenkinsMaster = JenkinsMaster.getInstance(jenkinsMasterName);
 
 		String jenkinsSlaveJSONObjectURL = JenkinsResultsParserUtil.getLocalURL(
 			JenkinsResultsParserUtil.combine(

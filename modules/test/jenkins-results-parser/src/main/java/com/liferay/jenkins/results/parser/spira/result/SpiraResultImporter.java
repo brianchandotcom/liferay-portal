@@ -413,7 +413,8 @@ public class SpiraResultImporter {
 
 			if (!spiraAutomationHostMap.containsKey(masterHostname)) {
 				SpiraAutomationHost spiraAutomationHost =
-					_getSpiraAutomationHost(new JenkinsMaster(masterHostname));
+					_getSpiraAutomationHost(
+						JenkinsMaster.getInstance(masterHostname));
 
 				spiraAutomationHostMap.put(
 					spiraAutomationHost.getName(), spiraAutomationHost);

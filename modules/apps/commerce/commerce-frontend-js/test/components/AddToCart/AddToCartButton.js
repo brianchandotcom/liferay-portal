@@ -418,7 +418,7 @@ describe('AddToCartButton', () => {
 				let resetCBTrigger;
 
 				window.Liferay.on = jest.fn((eventName, callback) => {
-					if (eventName === CP_INSTANCE_CHANGED) {
+					if (eventName.includes(CP_INSTANCE_CHANGED)) {
 						resetCBTrigger = callback;
 					}
 				});
@@ -427,11 +427,11 @@ describe('AddToCartButton', () => {
 					...INTERACTION_PROPS,
 					orderId: 123,
 					settings: {
-						willUpdate: true,
+						namespace: 'someNamespace',
 					},
 				};
 
-				const outerCPInstance = {
+				const incomingCPInstance = {
 					cpInstance: {
 						skuId: INTERACTION_PROPS.cpInstance.skuId,
 						stockQuantity: 10,
@@ -441,7 +441,7 @@ describe('AddToCartButton', () => {
 				const {getByRole} = render(<AddToCartButton {...props} />);
 
 				await act(async () => {
-					resetCBTrigger(outerCPInstance);
+					resetCBTrigger(incomingCPInstance);
 				});
 
 				await wait(() => {
@@ -477,7 +477,7 @@ describe('AddToCartButton', () => {
 				let resetCBTrigger;
 
 				window.Liferay.on = jest.fn((eventName, callback) => {
-					if (eventName === CP_INSTANCE_CHANGED) {
+					if (eventName.includes(CP_INSTANCE_CHANGED)) {
 						resetCBTrigger = callback;
 					}
 				});
@@ -486,11 +486,11 @@ describe('AddToCartButton', () => {
 					...INTERACTION_PROPS,
 					orderId: 123,
 					settings: {
-						willUpdate: true,
+						namespace: 'someNamespace',
 					},
 				};
 
-				const outerCPInstance = {
+				const incomingCPInstance = {
 					cpInstance: {
 						skuId: INTERACTION_PROPS.cpInstance.skuId,
 						stockQuantity: 10,
@@ -500,7 +500,7 @@ describe('AddToCartButton', () => {
 				const {getByRole} = render(<AddToCartButton {...props} />);
 
 				await act(async () => {
-					resetCBTrigger(outerCPInstance);
+					resetCBTrigger(incomingCPInstance);
 				});
 
 				await wait(() => {

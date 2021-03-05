@@ -278,6 +278,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TEXT_FIELD_DESCRIPTION</td>
+	<td>//input[@type='text' and contains(@name,'${key_fieldName}') and contains(@name,'description')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TEXT_FIELD_2</td>
 	<td>//div[contains(@class,'lfr-ddm-form-container')]//div[contains(@data-field-name,'${key_fieldName}')][2]//input[@type='text' and contains(@name,'${key_fieldName}')]</td>
 	<td></td>

@@ -1,8 +1,40 @@
 <?xml version="1.0"?>
 
 <root available-locales="en_US,pt_BR" default-locale="en_US">
-	<dynamic-element index-type="text" instance-id="RF3do1m5" name="contact" type="text">
-		<dynamic-element index-type="text" instance-id="QK6B0wK9" name="phone" type="text">
+	<dynamic-element index-type="text" instance-id="YELSrniM" name="boolean" type="checkbox_multiple">
+		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
+		<dynamic-content language-id="pt_BR"><![CDATA[]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="HzKJrSts" name="document_library" type="document_library">
+		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
+		<dynamic-content language-id="pt_BR"><![CDATA[]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="eHQALxHa" name="link_to_layout" type="link_to_layout">
+		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
+		<dynamic-content language-id="pt_BR"><![CDATA[]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="ucizquBv" name="text_area" type="rich_text">
+		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
+		<dynamic-content language-id="pt_BR"><![CDATA[]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="oOUZHUcy" name="multi_list" type="select">
+		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
+		<dynamic-content language-id="pt_BR"><![CDATA[]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="RMYIbORN" name="list" type="select">
+		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
+		<dynamic-content language-id="pt_BR"><![CDATA[]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element instance-id="RJSkjdfi" name="contactFieldSet">
+		<dynamic-element index-type="text" instance-id="RF3do1m5" name="contact" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[joe]]></dynamic-content>
+			<dynamic-content language-id="pt_BR"><![CDATA[joao]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element instance-id="zhglwgmk" name="phoneFieldSet">
+			<dynamic-element index-type="text" instance-id="QK6B0wK9" name="phone" type="text">
+				<dynamic-content language-id="en_US"><![CDATA[123]]></dynamic-content>
+				<dynamic-content language-id="pt_BR"><![CDATA[123]]></dynamic-content>
+			</dynamic-element>
 			<dynamic-element index-type="text" instance-id="L67MPqQf" name="ext" type="text">
 				<dynamic-content language-id="en_US"><![CDATA[1]]></dynamic-content>
 				<dynamic-content language-id="pt_BR"><![CDATA[1]]></dynamic-content>
@@ -15,14 +47,18 @@
 				<dynamic-content language-id="en_US"><![CDATA[3]]></dynamic-content>
 				<dynamic-content language-id="pt_BR"><![CDATA[3]]></dynamic-content>
 			</dynamic-element>
-			<dynamic-content language-id="en_US"><![CDATA[123]]></dynamic-content>
-			<dynamic-content language-id="pt_BR"><![CDATA[123]]></dynamic-content>
 		</dynamic-element>
-		<dynamic-content language-id="en_US"><![CDATA[joe]]></dynamic-content>
-		<dynamic-content language-id="pt_BR"><![CDATA[joao]]></dynamic-content>
 	</dynamic-element>
-	<dynamic-element index-type="text" instance-id="CUeFxcrA" name="contact" type="text">
-		<dynamic-element index-type="text" instance-id="lVTcTviF" name="phone" type="text">
+	<dynamic-element instance-id="3hACzXcE" name="contactFieldSet">
+		<dynamic-element index-type="text" instance-id="CUeFxcrA" name="contact" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[richard]]></dynamic-content>
+			<dynamic-content language-id="pt_BR"><![CDATA[ricardo]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element instance-id="UgCyiQd3" name="phoneFieldSet">
+			<dynamic-element index-type="text" instance-id="lVTcTviF" name="phone" type="text">
+				<dynamic-content language-id="en_US"><![CDATA[456]]></dynamic-content>
+				<dynamic-content language-id="pt_BR"><![CDATA[456]]></dynamic-content>
+			</dynamic-element>
 			<dynamic-element index-type="text" instance-id="cZalDSll" name="ext" type="text">
 				<dynamic-content language-id="en_US"><![CDATA[4]]></dynamic-content>
 				<dynamic-content language-id="pt_BR"><![CDATA[4]]></dynamic-content>
@@ -31,10 +67,26 @@
 				<dynamic-content language-id="en_US"><![CDATA[5]]></dynamic-content>
 				<dynamic-content language-id="pt_BR"><![CDATA[5]]></dynamic-content>
 			</dynamic-element>
-			<dynamic-content language-id="en_US"><![CDATA[456]]></dynamic-content>
-			<dynamic-content language-id="pt_BR"><![CDATA[456]]></dynamic-content>
 		</dynamic-element>
-		<dynamic-content language-id="en_US"><![CDATA[richard]]></dynamic-content>
-		<dynamic-content language-id="pt_BR"><![CDATA[ricardo]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="zWlZDoLc" name="text" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
+		<dynamic-content language-id="pt_BR"><![CDATA[]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="fmyemVKH" name="text_box" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
+		<dynamic-content language-id="pt_BR"><![CDATA[]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="xhdykzYh" name="image_1" type="image">
+		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
+		<dynamic-content language-id="pt_BR"><![CDATA[]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="FViKyTea" name="image_2" type="image">
+		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
+		<dynamic-content language-id="pt_BR"><![CDATA[]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="JVBHdcGZ" name="image_3" type="image">
+		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
+		<dynamic-content language-id="pt_BR"><![CDATA[]]></dynamic-content>
 	</dynamic-element>
 </root>

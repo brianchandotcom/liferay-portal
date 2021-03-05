@@ -71,7 +71,7 @@ public class OAuth2ServiceUpgrade implements UpgradeStepRegistrator {
 					"userId, clientCredentialUserName = userName"));
 
 		registry.register(
-			"3.0.0", "4.0.0",
+			"3.0.0", "3.1.0",
 			UpgradeStepFactory.addColumns(
 				OAuth2ApplicationTable.class, "trustedApplication BOOLEAN"));
 	}

@@ -1110,6 +1110,38 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 		<echo>Finished adding LTR linear regression model.</echo>
 	</target>
 
+	<target name="get-sidecar-binaries">
+		<mirrors-get
+			dest="${liferay.home}"
+			skipChecksum="true"
+			src="${elasticsearch.sidecar.analysis-icu.zip.url}"
+		/>
+
+		<mirrors-get
+			dest="${liferay.home}"
+			skipChecksum="true"
+			src="${elasticsearch.sidecar.analysis-kuromoji.zip.url}"
+		/>
+
+		<mirrors-get
+			dest="${liferay.home}"
+			skipChecksum="true"
+			src="${elasticsearch.sidecar.analysis-smartcn.zip.url}"
+		/>
+
+		<mirrors-get
+			dest="${liferay.home}"
+			skipChecksum="true"
+			src="${elasticsearch.sidecar.analysis-stempel.zip.url}"
+		/>
+
+		<mirrors-get
+			dest="${liferay.home}"
+			skipChecksum="true"
+			src="${elasticsearch.sidecar.no.jdk.tar.url}"
+		/>
+	</target>
+
 	<target name="print-elasticsearch-indices">
 		<if>
 			<http url="http://localhost:${elasticsearch.port}" />

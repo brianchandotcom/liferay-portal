@@ -924,6 +924,13 @@ definition {
 			value1 = "${fieldValue}");
 	}
 
+	macro viewTextValueDescription {
+		AssertTextEquals(
+			key_fieldName = "${fieldName}",
+			locator1 = "FormFields#TEXT_FIELD_DESCRIPTION",
+			value1 = "${fieldValue}");
+	}
+
 	macro viewUploadField {
 		FormFields.viewUploadLabel(
 			fieldLabel = "${fieldLabel}",

@@ -30,13 +30,11 @@ import com.liferay.portal.workflow.kaleo.definition.ExecutionType;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
-import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.action.KaleoActionExecutor;
-import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelector;
-import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelectorRegistry;
+import com.liferay.portal.workflow.kaleo.runtime.assignment.AggregateTaskAssignmentSelector;
 import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationHelper;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 import com.liferay.portal.workflow.kaleo.service.KaleoInstanceTokenLocalService;
@@ -45,7 +43,6 @@ import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentInstanceLoca
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskLocalService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -104,22 +101,8 @@ public class UserModelListener extends BaseModelListener<User> {
 				}
 			});
 
-		List<KaleoTaskAssignment> kaleoTaskAssignments = new ArrayList<>();
-
 		KaleoTask kaleoTask = _kaleoTaskLocalService.getKaleoTask(
 			kaleoTaskAssignmentInstance.getKaleoTaskId());
-
-		for (KaleoTaskAssignment kaleoTaskAssignment :
-				kaleoTask.getKaleoTaskAssignments()) {
-
-			TaskAssignmentSelector taskAssignmentSelector =
-				_taskAssignmentSelectorRegistry.getTaskAssignmentSelector(
-					kaleoTaskAssignment.getAssigneeClassName());
-
-			kaleoTaskAssignments.addAll(
-				taskAssignmentSelector.calculateTaskAssignments(
-					kaleoTaskAssignment, executionContext));
-		}
 
 		List<KaleoTaskAssignmentInstance> previousTaskAssignmentInstances =
 			kaleoTaskInstanceToken.getKaleoTaskAssignmentInstances();
@@ -132,7 +115,9 @@ public class UserModelListener extends BaseModelListener<User> {
 			_kaleoTaskInstanceTokenLocalService.addKaleoTaskInstanceToken(
 				kaleoInstanceToken.getKaleoInstanceTokenId(),
 				kaleoTask.getKaleoTaskId(), kaleoTask.getName(),
-				kaleoTaskAssignments, kaleoTaskInstanceToken.getDueDate(),
+				_aggregateTaskAssignmentSelector.calculateTaskAssignments(
+					kaleoTask.getKaleoTaskAssignments(), executionContext),
+				kaleoTaskInstanceToken.getDueDate(),
 				executionContext.getWorkflowContext(),
 				executionContext.getServiceContext());
 
@@ -185,6 +170,9 @@ public class UserModelListener extends BaseModelListener<User> {
 	}
 
 	@Reference
+	private AggregateTaskAssignmentSelector _aggregateTaskAssignmentSelector;
+
+	@Reference
 	private KaleoActionExecutor _kaleoActionExecutor;
 
 	@Reference
@@ -206,8 +194,5 @@ public class UserModelListener extends BaseModelListener<User> {
 
 	@Reference
 	private NotificationHelper _notificationHelper;
-
-	@Reference
-	private TaskAssignmentSelectorRegistry _taskAssignmentSelectorRegistry;
 
 }

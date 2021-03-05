@@ -490,15 +490,6 @@ public class FragmentDropZoneMVCActionCommandTest {
 			StringPool.BLANK, serviceContext);
 	}
 
-	private String _readFileToString(String fileName) throws Exception {
-		Class<?> clazz = getClass();
-
-		return StringUtil.read(
-			clazz.getClassLoader(),
-			"com/liferay/layout/content/page/editor/web/internal/portlet" +
-				"/action/test/dependencies/" + fileName);
-	}
-
 	private MockHttpServletRequest _getMockHttpServletRequest()
 		throws Exception {
 
@@ -554,6 +545,15 @@ public class FragmentDropZoneMVCActionCommandTest {
 		themeDisplay.setUser(TestPropsValues.getUser());
 
 		return themeDisplay;
+	}
+
+	private String _readFileToString(String fileName) throws Exception {
+		Class<?> clazz = getClass();
+
+		return StringUtil.read(
+			clazz.getClassLoader(),
+			"com/liferay/layout/content/page/editor/web/internal/portlet" +
+				"/action/test/dependencies/" + fileName);
 	}
 
 	@Inject(

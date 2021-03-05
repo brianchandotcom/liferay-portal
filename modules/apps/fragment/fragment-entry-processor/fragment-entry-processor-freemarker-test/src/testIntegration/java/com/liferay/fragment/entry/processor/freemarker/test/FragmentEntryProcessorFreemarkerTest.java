@@ -525,37 +525,6 @@ public class FragmentEntryProcessorFreemarkerTest {
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
-	private String _readFileToString(String fileName) throws Exception {
-		return _readFileToString(fileName, null);
-	}
-
-	private String _readFileToString(String fileName, Map<String, String> values)
-		throws Exception {
-
-		Class<?> clazz = getClass();
-
-		String template = StringUtil.read(
-			clazz.getClassLoader(),
-			"com/liferay/fragment/entry/processor/freemarker/test" +
-				"/dependencies/" + fileName);
-
-		return StringUtil.replace(template, "${", "}", values);
-	}
-
-	private String _readJSONFileToString(String jsonFileName) throws Exception {
-		return _readJSONFileToString(jsonFileName, null);
-	}
-
-	private String _readJSONFileToString(
-			String jsonFileName, Map<String, String> values)
-		throws Exception {
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			_readFileToString(jsonFileName, values));
-
-		return jsonObject.toString();
-	}
-
 	private MockHttpServletRequest _getMockHttpServletRequest()
 		throws Exception {
 
@@ -631,6 +600,38 @@ public class FragmentEntryProcessorFreemarkerTest {
 			"false");
 
 		return unicodeProperties.toString();
+	}
+
+	private String _readFileToString(String fileName) throws Exception {
+		return _readFileToString(fileName, null);
+	}
+
+	private String _readFileToString(
+			String fileName, Map<String, String> values)
+		throws Exception {
+
+		Class<?> clazz = getClass();
+
+		String template = StringUtil.read(
+			clazz.getClassLoader(),
+			"com/liferay/fragment/entry/processor/freemarker/test" +
+				"/dependencies/" + fileName);
+
+		return StringUtil.replace(template, "${", "}", values);
+	}
+
+	private String _readJSONFileToString(String jsonFileName) throws Exception {
+		return _readJSONFileToString(jsonFileName, null);
+	}
+
+	private String _readJSONFileToString(
+			String jsonFileName, Map<String, String> values)
+		throws Exception {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			_readFileToString(jsonFileName, values));
+
+		return jsonObject.toString();
 	}
 
 	@Inject

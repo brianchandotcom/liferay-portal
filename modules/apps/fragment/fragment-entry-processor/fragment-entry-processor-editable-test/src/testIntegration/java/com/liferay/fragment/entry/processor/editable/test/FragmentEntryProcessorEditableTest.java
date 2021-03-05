@@ -761,15 +761,6 @@ public class FragmentEntryProcessorEditableTest {
 		return elements.get(0);
 	}
 
-	private String _readFileToString(String fileName) throws Exception {
-		Class<?> clazz = getClass();
-
-		return StringUtil.read(
-			clazz.getClassLoader(),
-			"com/liferay/fragment/entry/processor/editable/test/dependencies/" +
-				fileName);
-	}
-
 	private FragmentEntryProcessorContext _getFragmentEntryProcessorContext()
 		throws Exception {
 
@@ -819,7 +810,8 @@ public class FragmentEntryProcessorEditableTest {
 			String editableValuesFileName, String fieldId, FileEntry fileEntry)
 		throws Exception {
 
-		String ddmStructureContent = _readJSONFileToString("ddm_structure.json");
+		String ddmStructureContent = _readJSONFileToString(
+			"ddm_structure.json");
 
 		ddmStructureContent = StringUtil.replace(
 			ddmStructureContent, "FIELD_NAME", fieldId);
@@ -836,15 +828,9 @@ public class FragmentEntryProcessorEditableTest {
 			editableValuesFileName);
 	}
 
-	private String _readJSONFileToString(String jsonFileName) throws Exception {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			_readFileToString(jsonFileName));
-
-		return jsonObject.toString();
-	}
-
 	private String _getProcessedHTML(String fileName) throws Exception {
-		Document document = Jsoup.parseBodyFragment(_readFileToString(fileName));
+		Document document = Jsoup.parseBodyFragment(
+			_readFileToString(fileName));
 
 		document.outputSettings(
 			new Document.OutputSettings() {
@@ -924,6 +910,22 @@ public class FragmentEntryProcessorEditableTest {
 		themeDisplay.setUser(TestPropsValues.getUser());
 
 		return themeDisplay;
+	}
+
+	private String _readFileToString(String fileName) throws Exception {
+		Class<?> clazz = getClass();
+
+		return StringUtil.read(
+			clazz.getClassLoader(),
+			"com/liferay/fragment/entry/processor/editable/test/dependencies/" +
+				fileName);
+	}
+
+	private String _readJSONFileToString(String jsonFileName) throws Exception {
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			_readFileToString(jsonFileName));
+
+		return jsonObject.toString();
 	}
 
 	@Inject

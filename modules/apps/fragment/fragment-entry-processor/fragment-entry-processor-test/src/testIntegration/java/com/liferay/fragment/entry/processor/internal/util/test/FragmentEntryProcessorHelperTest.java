@@ -257,7 +257,8 @@ public class FragmentEntryProcessorHelperTest {
 			FileEntry fileEntry, String fieldId)
 		throws Exception {
 
-		String ddmStructureContent = _readJSONFileToString("ddm_structure.json");
+		String ddmStructureContent = _readJSONFileToString(
+			"ddm_structure.json");
 
 		ddmStructureContent = StringUtil.replace(
 			ddmStructureContent, "FIELD_NAME", fieldId);
@@ -291,15 +292,6 @@ public class FragmentEntryProcessorHelperTest {
 				_jsonDDMFormDeserializer.deserialize(builder.build());
 
 		return ddmFormDeserializerDeserializeResponse.getDDMForm();
-	}
-
-	private String _readFileToString(String fileName) throws Exception {
-		Class<?> clazz = getClass();
-
-		return StringUtil.read(
-			clazz.getClassLoader(),
-			"com/liferay/fragment/entry/processor/internal/util/test" +
-				"/dependencies/" + fileName);
 	}
 
 	private String _getJournalArticleStructuredContent(
@@ -339,6 +331,15 @@ public class FragmentEntryProcessorHelperTest {
 		}
 
 		return document.asXML();
+	}
+
+	private String _readFileToString(String fileName) throws Exception {
+		Class<?> clazz = getClass();
+
+		return StringUtil.read(
+			clazz.getClassLoader(),
+			"com/liferay/fragment/entry/processor/internal/util/test" +
+				"/dependencies/" + fileName);
 	}
 
 	private String _readJSONFileToString(String jsonFileName) throws Exception {

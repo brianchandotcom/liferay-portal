@@ -153,17 +153,9 @@ public class FragmentEntryProcessorDropZoneTest {
 			StringPool.BLANK, StringPool.BLANK, 0, null, _serviceContext);
 	}
 
-	private String _readFileToString(String fileName) throws Exception {
-		Class<?> clazz = getClass();
-
-		return StringUtil.read(
-			clazz.getClassLoader(),
-			"com/liferay/fragment/entry/processor/drop/zone/test/dependencies" +
-				"/" + fileName);
-	}
-
 	private String _getProcessedHTML(String fileName) throws Exception {
-		Document document = Jsoup.parseBodyFragment(_readFileToString(fileName));
+		Document document = Jsoup.parseBodyFragment(
+			_readFileToString(fileName));
 
 		document.outputSettings(
 			new Document.OutputSettings() {
@@ -175,6 +167,15 @@ public class FragmentEntryProcessorDropZoneTest {
 		Element bodyElement = document.body();
 
 		return bodyElement.html();
+	}
+
+	private String _readFileToString(String fileName) throws Exception {
+		Class<?> clazz = getClass();
+
+		return StringUtil.read(
+			clazz.getClassLoader(),
+			"com/liferay/fragment/entry/processor/drop/zone/test/dependencies" +
+				"/" + fileName);
 	}
 
 	@Inject

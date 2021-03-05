@@ -1106,7 +1106,6 @@ definition {
 
 	@priority = "4"
 	test AddListRecordWithIntegerField {
-		property portal.upstream = "quarantine";
 
 		Navigator.openURL();
 
@@ -1120,6 +1119,12 @@ definition {
 			field = "Integer",
 			fieldFieldLabel = "Integer",
 			fieldName = "Integer");
+
+		DynamicDataMapping.editFieldPredefinedValue(
+			field = "Integer",
+			fieldFieldLabel = "Integer",
+			fieldName = "Integer",
+			fieldPredefinedValue = "7");
 
 		DDLDataDefinition.save();
 
@@ -1156,14 +1161,9 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Dynamic Data Lists");
 
-		DDLRecord.addCP(
-			ddlDataDefinitionName = "Data Definition",
-			ddlListName = "List Name");
+		DDLNavigator.gotoListRecords(ddlListName = "List Name");
 
-		DDLRecord.populateFieldInteger(
-			ddlRecordFieldData = "7",
-			fieldFieldLabel = "Integer",
-			fieldName = "Integer");
+		Click(locator1 = "Button#PLUS");
 
 		PortletEntry.publish();
 
@@ -1175,9 +1175,14 @@ definition {
 
 		DDLNavigator.gotoListRecords(ddlListName = "List Name");
 
-		DDLRecord.viewFirstFieldCP(
-			ddlRecordFieldData = "7",
+		Click(locator1 = "DDL#RECORD_TABLE_ELLIPSIS_1");
+
+		MenuItem.click(menuItem = "View");
+		
+		DDLRecord.viewFieldPredefinedValue(
+			fieldPredefinedValue = "7",
 			field = "Integer",
+			fieldName = "Integer",
 			fieldFieldLabel = "Integer");
 	}
 

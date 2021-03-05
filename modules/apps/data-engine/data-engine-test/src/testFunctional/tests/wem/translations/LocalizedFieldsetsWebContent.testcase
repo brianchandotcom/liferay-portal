@@ -419,7 +419,6 @@ definition {
 	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"
 	@priority = "5"
 	test TranslateWebContentFromStructureWithFieldsetWithFieldGroup {
-		property portal.upstream = "quarantine";
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
@@ -442,7 +441,7 @@ definition {
 		DataEngine.editFieldTip(
 			fieldFieldLabel = "Text",
 			fieldHelp = "Text Field Help Text");
-			
+
 		DataEngine.editFieldTip(
 			fieldFieldLabel = "Rich Text",
 			fieldHelp = "Rich Text Field Help Text");

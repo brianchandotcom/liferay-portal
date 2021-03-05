@@ -32,47 +32,23 @@ definition {
 
 	@priority = "3"
 	test ExportUserGroupMembers {
-		JSONUser.addUser(
-			userEmailAddress = "userea1@liferay.com",
-			userFirstName = "userfn1",
-			userLastName = "userln1",
-			userScreenName = "usersn1");
+		JSONUserGroup.addUserGroup(
+			userGroupDescription = "UG UserGroup Name Description",
+			userGroupName = "UG UserGroup Name");
 
-		JSONUser.addUser(
-			userEmailAddress = "userea2@liferay.com",
-			userFirstName = "userfn2",
-			userLastName = "userln2",
-			userScreenName = "usersn2");
+		for (var userNumber : list "1,2") {
+			JSONUser.addUser(
+				userEmailAddress = "userea${userNumber}@liferay.com",
+				userFirstName = "userfn${userNumber}",
+				userLastName = "userln${userNumber}",
+				userScreenName = "usersn${userNumber}");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
+			JSONUser.addUserToUserGroup(
+				userGroupName = "UG UserGroup Name",
+				userEmailAddress = "userea${userNumber}@liferay.com");
+		}
 
-		UserGroup.addCP(userGroupName = "UG UserGroup Name");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
-
-		UserGroup.assignMemberCP(
-			userGroupName = "UG UserGroup Name",
-			userScreenName = "usersn1");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
-
-		UserGroup.assignMemberCP(
-			userGroupName = "UG UserGroup Name",
-			userScreenName = "usersn2");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
+		UserGroup.openUserGroupsAdmin();
 
 		LAR.exportUserGroups(larFileName = "User_Group_Members.lar");
 	}

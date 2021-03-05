@@ -138,7 +138,7 @@ public class JenkinsCohort {
 
 				@Override
 				public Void call() {
-					jenkinsMaster.update();
+					jenkinsMaster.update(false);
 
 					buildURLs.addAll(jenkinsMaster.getBuildURLs());
 					queuedBuildURLs.putAll(jenkinsMaster.getQueuedBuildURLs());
@@ -312,6 +312,8 @@ public class JenkinsCohort {
 					}
 					catch (JSONException jsonException) {
 						System.out.println(jsonObject.toString());
+
+						throw new RuntimeException(jsonException);
 					}
 				}
 			}

@@ -277,6 +277,10 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	}
 
 	public synchronized void update() {
+		update(true);
+	}
+
+	public synchronized void update(boolean minimal) {
 		JSONObject computerAPIJSONObject = null;
 		JSONObject queueAPIJSONObject = null;
 
@@ -288,12 +292,19 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 						"/computer/api/json?tree=computer[displayName,",
 						"executors[currentExecutable[url]],idle,offline]")),
 				false, 5000);
+
+			String queueAPIQuery = "tree=items[task[name,url],url,why]";
+
+			if (!minimal) {
+				queueAPIQuery =
+					"tree=items[actions[parameters[name,value]]," +
+						"inQueueSince,task[name,url],url,why]";
+			}
+
 			queueAPIJSONObject = JenkinsResultsParserUtil.toJSONObject(
 				JenkinsResultsParserUtil.getLocalURL(
 					JenkinsResultsParserUtil.combine(
-						_masterURL,
-						"/queue/api/json?tree=items[actions[parameters",
-						"[name,value]],inQueueSince,task[name,url],url,why]")),
+						_masterURL, "/queue/api/json?" + queueAPIQuery)),
 				false, 5000);
 		}
 		catch (Exception exception) {

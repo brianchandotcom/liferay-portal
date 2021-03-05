@@ -536,6 +536,51 @@ definition {
 		}
 	}
 
+	macro uploadFileWithSelectFrameNoLoading {
+		var key_navTab = "${navTab}";
+		var key_uploadFileName = "${uploadFileName}";
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
+
+		if (IsElementPresent(locator1 = "ItemSelector#NAVIGATION_SPECIFIC_TAB")) {
+			AssertClick(
+				locator1 = "ItemSelector#NAVIGATION_SPECIFIC_TAB",
+				value1 = "${navTab}");
+		}
+
+		AssertElementPresent(locator1 = "ItemSelector#SELECT_FILE_UPLOAD_IMAGE");
+
+		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+			locator1 = "TextInput#FILE",
+			value1 = "${uploadFileName}");
+
+		if (isSet(invalidFileValidation)) {
+			AssertTextEquals(
+				key_alertMessage = "${invalidFileValidation}",
+				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE",
+				value1 = "${invalidFileValidation}");
+
+			AssertElementNotPresent(
+				locator1 = "ItemSelector#ADD_BUTTON",
+				value1 = "Add");
+
+			SelectFrame(value1 = "relative=top");
+
+			Click.clickNoMouseOver(locator1 = "Modal#CLOSE_BUTTON");
+		}
+		else {
+			Pause(locator1 = "5000");
+
+			AssertElementPresent.pauseAssertVisible(
+				locator1 = "ItemSelector#ADD_BUTTON",
+				value1 = "Add");
+
+			AssertClick(
+				locator1 = "ItemSelector#ADD_BUTTON",
+				value1 = "Add");
+		}
+	}
+
 	macro viewBlogImageDetails {
 		var key_imageFileName = "${imageFileName}";
 		var key_uploadFileName = "${uploadFileName}";

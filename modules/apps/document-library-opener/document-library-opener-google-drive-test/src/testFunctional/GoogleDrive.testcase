@@ -424,6 +424,20 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
+		DMNavigator.gotoEditDocumentPG(dmDocumentTitle = "Untitled");
+
+		AssertTextEquals(
+			key_fieldLabel = "Title",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Untitled");
+
+		AssertTextEquals(
+			key_fieldLabel = "File Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Untitled.docx");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
 		GoogleDoc.gotoEdit(
 			dmDocumentTitle = "Untitled",
 			dmDocumentTypeName = "Google Docs");
@@ -438,6 +452,18 @@ definition {
 			key_dmDocumentTitle = "Edited Google Document",
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
 			value1 = "Edited Google Document");
+
+		DMNavigator.gotoEditDocumentPG(dmDocumentTitle = "Edited Google Document");
+
+		AssertTextEquals(
+			key_fieldLabel = "Title",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Edited Google Document");
+
+		AssertTextEquals(
+			key_fieldLabel = "File Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Edited Google Document.docx");
 	}
 
 	@description = "This test ensures that special characters  can be saved through the Google Doc editor"
@@ -586,6 +612,20 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
+		DMNavigator.gotoEditDocumentPG(dmDocumentTitle = "Untitled");
+
+		AssertTextEquals(
+			key_fieldLabel = "Title",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Untitled");
+
+		AssertTextEquals(
+			key_fieldLabel = "File Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Untitled.xlsx");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
 		GoogleDoc.gotoEdit(
 			dmDocumentTitle = "Untitled",
 			dmDocumentTypeName = "Google Sheets");
@@ -600,6 +640,18 @@ definition {
 			key_dmDocumentTitle = "Edited Google Sheet",
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
 			value1 = "Edited Google Sheet");
+
+		DMNavigator.gotoEditDocumentPG(dmDocumentTitle = "Edited Google Sheet");
+
+		AssertTextEquals(
+			key_fieldLabel = "Title",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Edited Google Sheet");
+
+		AssertTextEquals(
+			key_fieldLabel = "File Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Edited Google Sheet.xlsx");
 	}
 
 	@description = "This test ensures a Google Slide title can be changed through the editor"
@@ -620,6 +672,20 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
+		DMNavigator.gotoEditDocumentPG(dmDocumentTitle = "Untitled");
+
+		AssertTextEquals(
+			key_fieldLabel = "Title",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Untitled");
+
+		AssertTextEquals(
+			key_fieldLabel = "File Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Untitled.pptx");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
 		GoogleDoc.gotoEdit(
 			dmDocumentTitle = "Untitled",
 			dmDocumentTypeName = "Google Slides");
@@ -634,6 +700,18 @@ definition {
 			key_dmDocumentTitle = "Edited Google Slide",
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
 			value1 = "Edited Google Slide");
+
+		DMNavigator.gotoEditDocumentPG(dmDocumentTitle = "Edited Google Slide");
+
+		AssertTextEquals(
+			key_fieldLabel = "Title",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Edited Google Slide");
+
+		AssertTextEquals(
+			key_fieldLabel = "File Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Edited Google Slide.pptx");
 	}
 
 	@description = "This test ensures that a document is checked out when the Google Doc editor is being used"

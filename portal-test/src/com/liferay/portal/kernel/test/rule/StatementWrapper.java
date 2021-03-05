@@ -16,6 +16,8 @@ package com.liferay.portal.kernel.test.rule;
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 
+import java.util.Objects;
+
 import org.junit.internal.runners.statements.ExpectException;
 import org.junit.internal.runners.statements.FailOnTimeout;
 import org.junit.internal.runners.statements.InvokeMethod;
@@ -48,7 +50,15 @@ public abstract class StatementWrapper extends Statement {
 
 			return ReflectionTestUtil.getFieldValue(statement, "target");
 		}
-		else if (statement instanceof ExpectException) {
+
+		Class<?> clazz = statement.getClass();
+
+		if ((statement instanceof ExpectException) ||
+			Objects.equals(
+				clazz.getName(),
+				"org.junit.rules." +
+					"ExpectedException$ExpectedExceptionStatement")) {
+
 			return inspectTarget(
 				ReflectionTestUtil.<Statement>getFieldValue(statement, "next"));
 		}

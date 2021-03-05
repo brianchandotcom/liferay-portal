@@ -199,7 +199,7 @@ public abstract class BaseKaleoLocalServiceTestCase {
 		throws PortalException {
 
 		return kaleoLogLocalService.addTaskAssignmentKaleoLog(
-			Collections.emptyList(), kaleoTaskInstanceToken, null,
+			Collections.emptyList(), null, kaleoTaskInstanceToken,
 			StringPool.BLANK,
 			WorkflowContextUtil.convert(kaleoInstance.getWorkflowContext()),
 			serviceContext);

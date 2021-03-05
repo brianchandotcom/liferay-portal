@@ -49,8 +49,6 @@ definition {
 		while (!((IsElementPresent(locator1 = "Home#PORTLET")) || ("${i}" == "3"))) {
 			var i = ${i} + 1;
 
-			Pause(locator1 = "30000");
-
 			echo("The PORTLET could not be found. Refreshing the page. Attempt number ${i}...");
 
 			Refresh();
@@ -83,7 +81,7 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Widgets");
 
-		Pause(locator1 = "5000");
+		Pause(locator1 = "3000");
 
 		Type(
 			locator1 = "NavBar#APPLICATION_SEARCH_FIELD",
@@ -92,6 +90,8 @@ definition {
 		Portlet._clickAddPortlet(portletName = "${portletName}");
 
 		var key_portletName = "${portletName}";
+
+		LiferayEvent.waitForPortletReady();
 
 		AssertElementPresent(locator1 = "Portlet#LOADED");
 	}

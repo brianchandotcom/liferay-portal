@@ -601,31 +601,17 @@ public class DDMFormAdminDisplayContext {
 		DDMFormBuilderContextResponse ddmFormBuilderContextResponse =
 			_ddmFormBuilderContextFactory.create(ddmFormBuilderContextRequest);
 
-		Map<String, Object> context =
-			ddmFormBuilderContextResponse.getContext();
-
-		context.put(
-			"activeNavItem",
-			ParamUtil.getInteger(
-				renderRequest, "activeNavItem", _NAV_ITEM_FORM));
-
-		return jsonFactory.createJSONObject(context);
+		return jsonFactory.createJSONObject(
+			ddmFormBuilderContextResponse.getContext());
 	}
 
 	public List<NavigationItem> getFormBuilderNavigationItems() {
 		HttpServletRequest httpServletRequest =
 			formAdminRequestHelper.getRequest();
 
-		int activeNavItem = ParamUtil.getInteger(
-			httpServletRequest, "activeNavItem");
-
 		return NavigationItemListBuilder.add(
 			navigationItem -> {
 				navigationItem.putData("action", "showForm");
-
-				if (activeNavItem == _NAV_ITEM_FORM) {
-					navigationItem.setActive(true);
-				}
 
 				navigationItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "form"));
@@ -634,20 +620,12 @@ public class DDMFormAdminDisplayContext {
 			navigationItem -> {
 				navigationItem.putData("action", "showRules");
 
-				if (activeNavItem == _NAV_ITEM_RULES) {
-					navigationItem.setActive(true);
-				}
-
 				navigationItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "rules"));
 			}
 		).add(
 			navigationItem -> {
 				navigationItem.putData("action", "showReport");
-
-				if (activeNavItem == _NAV_ITEM_REPORT) {
-					navigationItem.setActive(true);
-				}
 
 				navigationItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "entries"));
@@ -1640,12 +1618,6 @@ public class DDMFormAdminDisplayContext {
 	}
 
 	private static final String[] _DISPLAY_VIEWS = {"descriptive", "list"};
-
-	private static final int _NAV_ITEM_FORM = 0;
-
-	private static final int _NAV_ITEM_REPORT = 2;
-
-	private static final int _NAV_ITEM_RULES = 1;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormAdminDisplayContext.class);

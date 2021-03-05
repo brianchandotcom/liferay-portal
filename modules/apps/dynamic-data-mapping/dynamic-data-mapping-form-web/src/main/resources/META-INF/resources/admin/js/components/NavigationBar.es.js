@@ -13,8 +13,7 @@
  */
 
 import {useEventListener} from '@liferay/frontend-js-react-web';
-import {useConfig} from 'dynamic-data-mapping-form-renderer';
-import {useCallback} from 'react';
+import {useCallback, useLayoutEffect} from 'react';
 
 import {useBack} from '../hooks/useBack.es';
 
@@ -24,17 +23,10 @@ const NAV_ITEMS = {
 	2: '/report',
 };
 
-/**
- * Updates the search param so that the navigation bar rendered
- * on the backend via JSP can come with the active element when
- * the page is updated.
- */
-const setSearchParam = (name, value) => {
-	const url = new URL(window.location.toString());
-
-	url.searchParams.set(name, value);
-
-	window.history.replaceState({path: url.toString()}, '', url.toString());
+const NAV_ITEMS_REVERSE = {
+	'/': 0,
+	'/report': 2,
+	'/rules': 1,
 };
 
 /**
@@ -43,8 +35,6 @@ const setSearchParam = (name, value) => {
  * and it is necessary to control the interaction via JavaScript.
  */
 export const NavigationBar = ({history, location}) => {
-	const {portletNamespace} = useConfig();
-
 	useBack();
 
 	const onClick = useCallback(
@@ -67,15 +57,13 @@ export const NavigationBar = ({history, location}) => {
 
 				event.target.classList.add('active');
 
-				setSearchParam(`${portletNamespace}activeNavItem`, index);
-
 				const method =
 					path === location.pathname ? history.replace : history.push;
 
 				method(path);
 			}
 		},
-		[portletNamespace, history, location.pathname]
+		[history, location.pathname]
 	);
 
 	useEventListener(
@@ -84,6 +72,21 @@ export const NavigationBar = ({history, location}) => {
 		true,
 		document.body.querySelector('.forms-navigation-bar')
 	);
+
+	useLayoutEffect(() => {
+		const index = NAV_ITEMS_REVERSE[location.pathname];
+
+		// This will mark the active element of the NavigationBar for the first
+		// time according to the pathname when the application is started.
+
+		document
+			.querySelector(
+				`.forms-navigation-bar li[data-nav-item-index='${index}'] > button`
+			)
+			.classList.add('active');
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return null;
 };

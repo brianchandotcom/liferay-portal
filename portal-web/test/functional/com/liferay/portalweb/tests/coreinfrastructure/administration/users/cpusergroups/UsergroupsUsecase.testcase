@@ -57,11 +57,6 @@ definition {
 	test UserGroupRegularRolePermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",
 			resourceName = "90",

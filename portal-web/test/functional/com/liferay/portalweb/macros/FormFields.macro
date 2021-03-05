@@ -210,6 +210,15 @@ definition {
 			value1 = "${fieldValue}");
 	}
 
+	macro editTextDescription {
+		Pause(locator1 = "1000");
+
+		Type(
+			key_fieldName = "${fieldName}",
+			locator1 = "FormFields#TEXT_FIELD_DESCRIPTION",
+			value1 = "${fieldValue}");
+	}
+
 	macro editTextFieldWithEnterKey {
 		Pause(locator1 = "1000");
 

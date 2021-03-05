@@ -278,6 +278,11 @@ public class FragmentEntryLinkExportImportContentProcessor
 					configurationValueJSONObject, exportReferencedContent,
 					portletDataContext, stagedModel);
 			}
+			else {
+				_replaceMappedFieldExportContentReferences(
+					portletDataContext, stagedModel,
+					configurationValueJSONObject, exportReferencedContent);
+			}
 		}
 	}
 
@@ -307,6 +312,10 @@ public class FragmentEntryLinkExportImportContentProcessor
 
 				_replaceSiteNavigationMenuIds(
 					configurationValueJSONObject, portletDataContext);
+			}
+			else {
+				_replaceMappedFieldImportContentReferences(
+					portletDataContext, configurationValueJSONObject);
 			}
 		}
 	}

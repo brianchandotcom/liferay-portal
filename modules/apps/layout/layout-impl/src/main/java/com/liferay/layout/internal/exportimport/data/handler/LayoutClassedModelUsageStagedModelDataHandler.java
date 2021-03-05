@@ -24,6 +24,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
+import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -198,6 +199,22 @@ public class LayoutClassedModelUsageStagedModelDataHandler
 			layoutClassedModelUsage.getClassPK());
 
 		importedLayoutClassedModelUsage.setClassPK(classPK);
+
+		Map<Long, Long> fragmentLinkEntryIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				FragmentEntryLink.class.getName());
+
+		Long containerKey = Long.valueOf(
+			layoutClassedModelUsage.getContainerKey());
+
+		containerKey = MapUtil.getLong(
+			fragmentLinkEntryIds, containerKey, containerKey);
+
+		importedLayoutClassedModelUsage.setContainerKey(
+			containerKey.toString());
+
+		importedLayoutClassedModelUsage.setContainerType(
+			_portal.getClassNameId(FragmentEntryLink.class));
 
 		Element element = portletDataContext.getImportDataStagedModelElement(
 			layoutClassedModelUsage);

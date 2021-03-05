@@ -31,8 +31,6 @@
 	<property name="elasticsearch.analysis-smartcn.zip.url" value="https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-smartcn/${elasticsearch.analysis-smartcn.zip.name}" />
 	<property name="elasticsearch.analysis-stempel.zip.name" value="analysis-stempel-${elasticsearch.version}.zip" />
 	<property name="elasticsearch.analysis-stempel.zip.url" value="https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-stempel/${elasticsearch.analysis-stempel.zip.name}" />
-	<property name="elasticsearch.boston-dataset-index.zip.name" value="boston-dataset-index.zip" />
-	<property name="elasticsearch.boston-dataset-index.zip.url" value="http://files.liferay.com/private/apps/elastic/elasticsearch/${elasticsearch.boston-dataset-index.zip.name}" />
 	<property name="elasticsearch.tar.name.linux" value="elasticsearch-${elasticsearch.version}-linux-x86_64.tar.gz" />
 	<property name="elasticsearch.tar.name.mac" value="elasticsearch-${elasticsearch.version}-darwin-x86_64.tar.gz" />
 	<property name="elasticsearch.zip.name.windows" value="elasticsearch-${elasticsearch.version}-windows-x86_64.zip" />
@@ -892,22 +890,24 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 
 	<macrodef name="unzip-boston-dataset-index">
 		<sequential>
+			<property name="boston-dataset-index.zip.name" value="boston-dataset-index.zip" />
+
 			<if>
 				<not>
-					<available file="${liferay.home}/${elasticsearch.boston-dataset-index.zip.name}" />
+					<available file="${liferay.home}/${boston-dataset-index.zip.name}" />
 				</not>
 				<then>
 					<mirrors-get
-						dest="${liferay.home}/${elasticsearch.boston-dataset-index.zip.name}"
+						dest="${liferay.home}/${boston-dataset-index.zip.name}"
 						skipChecksum="true"
-						src="${elasticsearch.boston-dataset-index.zip.url}"
+						src="http://files.liferay.com/private/apps/elastic/elasticsearch/${boston-dataset-index.zip.name}"
 					/>
 				</then>
 			</if>
 
 			<unzip
 				dest="${liferay.home}/data/elasticsearch7/repo"
-				src="${liferay.home}/${elasticsearch.boston-dataset-index.zip.name}"
+				src="${liferay.home}/${boston-dataset-index.zip.name}"
 			/>
 		</sequential>
 	</macrodef>

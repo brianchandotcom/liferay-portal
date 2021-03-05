@@ -2249,9 +2249,7 @@ public class GitWorkingDirectory {
 
 	protected boolean isOnlyMatchingFilesModified(MultiPattern multiPattern) {
 		for (File modifiedFile : getModifiedFilesList()) {
-			if (_poshiFileNamesMultiPattern.matches(modifiedFile.getName()) ==
-					null) {
-
+			if (multiPattern.matches(modifiedFile.getName()) == null) {
 				return false;
 			}
 		}

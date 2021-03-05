@@ -41,12 +41,13 @@ SearchContainer<UserGroup> searchContainer = viewUserGroupsManagementToolbarDisp
 PortletURL portletURL = viewUserGroupsManagementToolbarDisplayContext.getPortletURL();
 %>
 
-<clay:management-toolbar-v2
+<clay:management-toolbar
 	actionDropdownItems="<%= viewUserGroupsManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= viewUserGroupsManagementToolbarDisplayContext.getClearResultsURL() %>"
 	creationMenu="<%= viewUserGroupsManagementToolbarDisplayContext.getCreationMenu() %>"
 	filterDropdownItems="<%= viewUserGroupsManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	itemsTotal="<%= searchContainer.getTotal() %>"
+	propsTransformer="js/ViewUserGroupsManagementToolbarPropsTransformer"
 	searchActionURL="<%= viewUserGroupsManagementToolbarDisplayContext.getSearchActionURL() %>"
 	searchContainerId="userGroups"
 	searchFormName="searchFm"

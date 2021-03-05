@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.test.log.CaptureAppender;
+import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -69,10 +71,19 @@ public class CheckAssetEntryMessageListenerTest {
 		String cronExpression = "a a a";
 		int repeatInterval = 3;
 
-		Trigger trigger = ReflectionTestUtil.invoke(
-			_messageListener, "_getTrigger",
-			new Class<?>[] {String.class, int.class}, cronExpression,
-			repeatInterval);
+		Trigger trigger = null;
+
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					"com.liferay.asset.publisher.web.internal.messaging." +
+						"CheckAssetEntryMessageListener",
+					Log4JLoggerTestUtil.ERROR)) {
+
+			trigger = ReflectionTestUtil.invoke(
+				_messageListener, "_getTrigger",
+				new Class<?>[] {String.class, int.class}, cronExpression,
+				repeatInterval);
+		}
 
 		Serializable wrappedTrigger = trigger.getWrappedTrigger();
 

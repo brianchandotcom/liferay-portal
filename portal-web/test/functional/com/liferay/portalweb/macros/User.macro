@@ -2257,16 +2257,11 @@ definition {
 
 	@description = "Log out of Liferay Portal."
 	macro logoutPG {
-		if (isSet(nodePort)) {
-			Navigator.openSpecificURL(url = "http://localhost:${nodePort}");
+		if (isSet(specificURL)) {
+			Navigator.openSpecificURL(url = "${specificURL}");
 		}
 		else {
-			if (isSet(specificURL)) {
-				Navigator.openSpecificURL(url = "${specificURL}");
-			}
-			else {
-				Navigator.openURL();
-			}
+			Navigator.openURL();
 		}
 
 		UserBar.signOut();

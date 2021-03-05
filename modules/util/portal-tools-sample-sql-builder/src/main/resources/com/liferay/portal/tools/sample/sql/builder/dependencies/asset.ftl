@@ -1,4 +1,4 @@
-<#list dataFactory.assetVocabularyModels as assetVocabularyModel>
+<#list dataFactory.newAssetVocabularyModels(dataFactory.newDefaultAssetVocabularyModel()) as assetVocabularyModel>
 	${dataFactory.toInsertSQL(assetVocabularyModel)}
 </#list>
 

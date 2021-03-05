@@ -509,20 +509,6 @@ public class DataFactory {
 		return allAssetTagModels;
 	}
 
-	public List<AssetVocabularyModel> getAssetVocabularyModels() {
-		List<AssetVocabularyModel> allAssetVocabularyModels = new ArrayList<>();
-
-		allAssetVocabularyModels.add(_defaultAssetVocabularyModel);
-
-		for (List<AssetVocabularyModel> assetVocabularyModels :
-				_assetVocabularyModelsArray) {
-
-			allAssetVocabularyModels.addAll(assetVocabularyModels);
-		}
-
-		return allAssetVocabularyModels;
-	}
-
 	public long getBlogsEntryClassNameId() {
 		return getClassNameId(BlogsEntry.class);
 	}
@@ -700,9 +686,6 @@ public class DataFactory {
 		_assetVocabularyModelsArray =
 			(List<AssetVocabularyModel>[])
 				new List<?>[BenchmarksPropsValues.MAX_GROUP_COUNT];
-		_defaultAssetVocabularyModel = newAssetVocabularyModel(
-			_globalGroupId, _defaultUserId, null,
-			PropsValues.ASSET_VOCABULARY_DEFAULT);
 
 		StringBundler sb = new StringBundler(4);
 
@@ -1181,6 +1164,22 @@ public class DataFactory {
 		}
 
 		return portletPreferenceValueModels;
+	}
+
+	public List<AssetVocabularyModel> newAssetVocabularyModels(
+		AssetVocabularyModel defaultAssetVocabularyModel) {
+
+		List<AssetVocabularyModel> allAssetVocabularyModels = new ArrayList<>();
+
+		allAssetVocabularyModels.add(defaultAssetVocabularyModel);
+
+		for (List<AssetVocabularyModel> assetVocabularyModels :
+				_assetVocabularyModelsArray) {
+
+			allAssetVocabularyModels.addAll(assetVocabularyModels);
+		}
+
+		return allAssetVocabularyModels;
 	}
 
 	public List<BlogsEntryModel> newBlogsEntryModels(long groupId) {
@@ -2276,6 +2275,12 @@ public class DataFactory {
 		ddmTemplateLinkModel.setTemplateId(templateId);
 
 		return ddmTemplateLinkModel;
+	}
+
+	public AssetVocabularyModel newDefaultAssetVocabularyModel() {
+		return newAssetVocabularyModel(
+			_globalGroupId, _defaultUserId, null,
+			PropsValues.ASSET_VOCABULARY_DEFAULT);
 	}
 
 	public DDMStructureLayoutModel newDefaultDLDDMStructureLayoutModel() {
@@ -5343,7 +5348,6 @@ public class DataFactory {
 	private final SimpleCounter _counter;
 	private final PortletPreferencesImpl
 		_defaultAssetPublisherPortletPreferencesImpl;
-	private AssetVocabularyModel _defaultAssetVocabularyModel;
 	private final long _defaultDLDDMStructureId;
 	private final long _defaultDLDDMStructureVersionId;
 	private String _defaultJournalArticleId;

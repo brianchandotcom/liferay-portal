@@ -276,7 +276,7 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 			String.valueOf(_reportedAvailableSlavesCount), "}");
 	}
 
-	public void update() {
+	public synchronized void update() {
 		JSONObject computerAPIJSONObject = null;
 		JSONObject queueAPIJSONObject = null;
 
@@ -486,7 +486,8 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	private boolean _available;
 	private final Map<Long, Integer> _batchSizes = new TreeMap<>();
 	private final List<String> _buildURLs = new ArrayList<>();
-	private final Map<String, JenkinsSlave> _jenkinsSlavesMap = new HashMap<>();
+	private final Map<String, JenkinsSlave> _jenkinsSlavesMap =
+		Collections.synchronizedMap(new HashMap<String, JenkinsSlave>());
 	private final String _masterName;
 	private final String _masterURL;
 	private int _queueCount;

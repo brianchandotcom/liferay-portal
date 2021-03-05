@@ -15,6 +15,7 @@
 package com.liferay.portal.security.audit.storage.service.impl;
 
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -38,6 +39,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = AopService.class
 )
+@CTAware
 public class AuditEventServiceImpl extends AuditEventServiceBaseImpl {
 
 	@Override

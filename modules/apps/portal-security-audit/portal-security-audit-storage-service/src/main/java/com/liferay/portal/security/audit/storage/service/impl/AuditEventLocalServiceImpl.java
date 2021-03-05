@@ -17,6 +17,7 @@ package com.liferay.portal.security.audit.storage.service.impl;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.audit.AuditMessage;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Junction;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -41,6 +42,7 @@ import org.osgi.service.component.annotations.Component;
 	property = "model.class.name=com.liferay.portal.security.audit.storage.model.AuditEvent",
 	service = AopService.class
 )
+@CTAware
 public class AuditEventLocalServiceImpl extends AuditEventLocalServiceBaseImpl {
 
 	@Override

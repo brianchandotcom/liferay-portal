@@ -58,21 +58,21 @@ public class SourceChecksUtil {
 	public static List<SourceCheck> getSourceChecks(
 			SourceFormatterConfiguration sourceFormatterConfiguration,
 			String sourceProcessorName, Map<String, Properties> propertiesMap,
-			List<String> skipCheckNames, boolean portalSource,
-			boolean subrepository, boolean includeModuleChecks,
-			List<String> checkNames)
+			List<String> filterCheckNames, List<String> skipCheckNames,
+			boolean portalSource, boolean subrepository,
+			boolean includeModuleChecks)
 		throws Exception {
 
 		List<SourceCheck> sourceChecks = _getSourceChecks(
 			sourceFormatterConfiguration, sourceProcessorName, propertiesMap,
-			skipCheckNames, portalSource, subrepository, includeModuleChecks,
-			checkNames);
+			filterCheckNames, skipCheckNames, portalSource, subrepository,
+			includeModuleChecks);
 
 		sourceChecks.addAll(
 			_getSourceChecks(
 				sourceFormatterConfiguration, "all", propertiesMap,
-				skipCheckNames, includeModuleChecks, subrepository,
-				includeModuleChecks, checkNames));
+				filterCheckNames, skipCheckNames, includeModuleChecks,
+				subrepository, includeModuleChecks));
 
 		return sourceChecks;
 	}
@@ -221,9 +221,9 @@ public class SourceChecksUtil {
 	private static List<SourceCheck> _getSourceChecks(
 			SourceFormatterConfiguration sourceFormatterConfiguration,
 			String sourceProcessorName, Map<String, Properties> propertiesMap,
-			List<String> skipCheckNames, boolean portalSource,
-			boolean subrepository, boolean includeModuleChecks,
-			List<String> checkNames)
+			List<String> filterCheckNames, List<String> skipCheckNames,
+			boolean portalSource, boolean subrepository,
+			boolean includeModuleChecks)
 		throws Exception {
 
 		List<SourceCheck> sourceChecks = new ArrayList<>();
@@ -245,8 +245,8 @@ public class SourceChecksUtil {
 			String sourceCheckName = SourceFormatterUtil.getSimpleName(
 				sourceCheckConfiguration.getName());
 
-			if (!checkNames.isEmpty() &&
-				!checkNames.contains(sourceCheckName)) {
+			if (!filterCheckNames.isEmpty() &&
+				!filterCheckNames.contains(sourceCheckName)) {
 
 				continue;
 			}

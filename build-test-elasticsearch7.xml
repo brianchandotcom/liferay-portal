@@ -3,6 +3,49 @@
 <project basedir="." name="portal-test-elasticsearch" xmlns:antelope="antlib:ise.antelope.tasks" xmlns:if="ant:if" xmlns:unless="ant:unless">
 	<import file="build-test.xml" />
 
+	<propertycopy from="suite.elastic.version[${env.CI_TEST_SUITE}]" name="suite.elastic.version" silent="true" />
+
+	<if>
+		<isset property="suite.elastic.version" />
+		<then>
+			<property name="elasticsearch.version" value="${suite.elastic.version}" />
+		</then>
+		<else>
+			<property name="elasticsearch.version" value="7.11.0" />
+		</else>
+	</if>
+
+	<property name="elastic.kibana.dir" value="${app.server.parent.dir}/kibana-${elasticsearch.version}" />
+	<property name="elastic.kibana.tar.name.linux" value="kibana-${elasticsearch.version}-linux-x86_64.tar.gz" />
+	<property name="elastic.kibana.tar.name.mac" value="kibana-${elasticsearch.version}-darwin-x86_64.tar.gz" />
+	<property name="elastic.kibana.tar.url.linux" value="https://artifacts.elastic.co/downloads/kibana/${elastic.kibana.tar.name.linux}" />
+	<property name="elastic.kibana.tar.url.mac" value="https://artifacts.elastic.co/downloads/kibana/${elastic.kibana.tar.name.mac}" />
+	<property name="elastic.kibana.zip.name.windows" value="kibana-${elasticsearch.version}-windows-x86_64.zip" />
+	<property name="elastic.kibana.zip.url.windows" value="https://artifacts.elastic.co/downloads/kibana/${elastic.kibana.zip.name.windows}" />
+	<property name="elasticsearch.dir" value="${app.server.parent.dir}/elasticsearch-${elasticsearch.version}" />
+	<property name="elasticsearch.analysis-icu.zip.name" value="analysis-icu-${elasticsearch.version}.zip" />
+	<property name="elasticsearch.analysis-icu.zip.url" value="https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-icu/${elasticsearch.analysis-icu.zip.name}" />
+	<property name="elasticsearch.analysis-kuromoji.zip.name" value="analysis-kuromoji-${elasticsearch.version}.zip" />
+	<property name="elasticsearch.analysis-kuromoji.zip.url" value="https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-kuromoji/${elasticsearch.analysis-kuromoji.zip.name}" />
+	<property name="elasticsearch.analysis-smartcn.zip.name" value="analysis-smartcn-${elasticsearch.version}.zip" />
+	<property name="elasticsearch.analysis-smartcn.zip.url" value="https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-smartcn/${elasticsearch.analysis-smartcn.zip.name}" />
+	<property name="elasticsearch.analysis-stempel.zip.name" value="analysis-stempel-${elasticsearch.version}.zip" />
+	<property name="elasticsearch.analysis-stempel.zip.url" value="https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-stempel/${elasticsearch.analysis-stempel.zip.name}" />
+	<property name="elasticsearch.boston-dataset-index.zip.name" value="boston-dataset-index.zip" />
+	<property name="elasticsearch.boston-dataset-index.zip.url" value="http://files.liferay.com/private/apps/elastic/elasticsearch/${elasticsearch.boston-dataset-index.zip.name}" />
+	<property name="elasticsearch.tar.name.linux" value="elasticsearch-${elasticsearch.version}-linux-x86_64.tar.gz" />
+	<property name="elasticsearch.tar.name.mac" value="elasticsearch-${elasticsearch.version}-darwin-x86_64.tar.gz" />
+	<property name="elasticsearch.zip.name.windows" value="elasticsearch-${elasticsearch.version}-windows-x86_64.zip" />
+	<property name="elasticsearch.tar.url.linux" value="https://artifacts.elastic.co/downloads/elasticsearch/${elasticsearch.tar.name.linux}" />
+	<property name="elasticsearch.tar.url.mac" value="https://artifacts.elastic.co/downloads/elasticsearch/${elasticsearch.tar.name.mac}" />
+	<property name="elasticsearch.zip.url.windows" value="https://artifacts.elastic.co/downloads/elasticsearch/${elasticsearch.zip.name.windows}" />
+	<property name="elasticsearch.sidecar.version" value="7.9.0" />
+	<property name="elasticsearch.sidecar.analysis-icu.zip.url" value="https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-icu/analysis-icu-${elasticsearch.sidecar.version}.zip" />
+	<property name="elasticsearch.sidecar.analysis-kuromoji.zip.url" value="https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-kuromoji/analysis-kuromoji-${elasticsearch.sidecar.version}.zip" />
+	<property name="elasticsearch.sidecar.analysis-smartcn.zip.url" value="https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-smartcn/analysis-smartcn-${elasticsearch.sidecar.version}.zip" />
+	<property name="elasticsearch.sidecar.analysis-stempel.zip.url" value="https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-stempel/analysis-stempel-${elasticsearch.sidecar.version}.zip" />
+	<property name="elasticsearch.sidecar.no.jdk.tar.url" value="https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-oss-${elasticsearch.sidecar.version}-no-jdk-linux-x86_64.tar.gz" />
+
 	<macrodef name="check-elasticsearch-security">
 		<attribute name="authentication.type" />
 

@@ -15,16 +15,16 @@
 package com.liferay.portal.search.elasticsearch7.internal.logging;
 
 import com.liferay.portal.kernel.search.generic.MatchAllQuery;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.search.elasticsearch7.internal.ElasticsearchIndexSearcher;
 import com.liferay.portal.search.elasticsearch7.internal.LiferayElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.search.CountSearchRequestExecutorImpl;
 import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.search.SearchSearchRequestExecutorImpl;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
-import com.liferay.portal.search.test.util.logging.ExpectedLogTestRule;
+import com.liferay.portal.search.test.util.logging.ExpectedLog;
+import com.liferay.portal.search.test.util.logging.ExpectedLogMethodTestRule;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-
-import java.util.logging.Level;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -39,61 +39,58 @@ public class ElasticsearchIndexSearcherLoggingTest
 
 	@ClassRule
 	@Rule
-	public static final LiferayUnitTestRule liferayUnitTestRule =
-		LiferayUnitTestRule.INSTANCE;
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			ExpectedLogMethodTestRule.INSTANCE, LiferayUnitTestRule.INSTANCE);
 
+	@ExpectedLog(
+		expectedClass = CountSearchRequestExecutorImpl.class,
+		expectedLevel = ExpectedLog.Level.FINE,
+		expectedLog = "The search engine processed"
+	)
 	@Test
 	public void testCountSearchRequestExecutorLogsViaIndexer() {
-		expectedLogTestRule.configure(
-			CountSearchRequestExecutorImpl.class, Level.FINE);
-
-		expectedLogTestRule.expectMessage("The search engine processed");
-
 		searchCount(createSearchContext(), new MatchAllQuery());
 	}
 
+	@ExpectedLog(
+		expectedClass = ElasticsearchIndexSearcher.class,
+		expectedLevel = ExpectedLog.Level.INFO,
+		expectedLog = "The search engine processed"
+	)
 	@Test
 	public void testIndexerSearchCountLogs() {
-		expectedLogTestRule.configure(
-			ElasticsearchIndexSearcher.class, Level.INFO);
-
-		expectedLogTestRule.expectMessage("The search engine processed");
-
 		searchCount(createSearchContext(), new MatchAllQuery());
 	}
 
+	@ExpectedLog(
+		expectedClass = ElasticsearchIndexSearcher.class,
+		expectedLevel = ExpectedLog.Level.INFO,
+		expectedLog = "The search engine processed"
+	)
 	@Test
 	public void testIndexerSearchLogs() {
-		expectedLogTestRule.configure(
-			ElasticsearchIndexSearcher.class, Level.INFO);
-
-		expectedLogTestRule.expectMessage("The search engine processed");
-
 		search(createSearchContext());
 	}
 
+	@ExpectedLog(
+		expectedClass = SearchSearchRequestExecutorImpl.class,
+		expectedLevel = ExpectedLog.Level.FINEST, expectedLog = "Search query:"
+	)
 	@Test
 	public void testSearchSearchRequestExecutorLogsPrettyPrintedString() {
-		expectedLogTestRule.configure(
-			SearchSearchRequestExecutorImpl.class, Level.FINEST);
-
-		expectedLogTestRule.expectMessage("Search query:");
-
 		search(createSearchContext());
 	}
 
+	@ExpectedLog(
+		expectedClass = SearchSearchRequestExecutorImpl.class,
+		expectedLevel = ExpectedLog.Level.FINE,
+		expectedLog = "The search engine processed"
+	)
 	@Test
 	public void testSearchSearchRequestExecutorLogsViaIndexer() {
-		expectedLogTestRule.configure(
-			SearchSearchRequestExecutorImpl.class, Level.FINE);
-
-		expectedLogTestRule.expectMessage("The search engine processed");
-
 		search(createSearchContext());
 	}
-
-	@Rule
-	public ExpectedLogTestRule expectedLogTestRule = ExpectedLogTestRule.none();
 
 	@Override
 	protected IndexingFixture createIndexingFixture() {

@@ -27,10 +27,8 @@ import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.search.CountSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.MultisearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
-import com.liferay.portal.search.test.util.logging.ExpectedLogTestRule;
+import com.liferay.portal.search.test.util.logging.ExpectedLog;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-
-import java.util.logging.Level;
 
 import org.elasticsearch.cluster.health.ClusterHealthStatus;
 
@@ -89,13 +87,13 @@ public class ElasticsearchSearchEngineAdapterLoggingTest {
 			elasticsearchEngineAdapterFixture.getSearchEngineAdapter();
 	}
 
+	@ExpectedLog(
+		expectedClass = CountSearchRequestExecutorImpl.class,
+		expectedLevel = ExpectedLog.Level.FINE,
+		expectedLog = "The search engine processed"
+	)
 	@Test
 	public void testCountSearchRequestExecutorLogs() {
-		expectedLogTestRule.configure(
-			CountSearchRequestExecutorImpl.class, Level.FINE);
-
-		expectedLogTestRule.expectMessage("The search engine processed");
-
 		_searchEngineAdapter.execute(
 			new CountSearchRequest() {
 				{
@@ -105,13 +103,13 @@ public class ElasticsearchSearchEngineAdapterLoggingTest {
 			});
 	}
 
+	@ExpectedLog(
+		expectedClass = MultisearchSearchRequestExecutorImpl.class,
+		expectedLevel = ExpectedLog.Level.FINE,
+		expectedLog = "The search engine processed"
+	)
 	@Test
 	public void testMultisearchSearchRequestExecutorLogs() {
-		expectedLogTestRule.configure(
-			MultisearchSearchRequestExecutorImpl.class, Level.FINE);
-
-		expectedLogTestRule.expectMessage("The search engine processed");
-
 		_searchEngineAdapter.execute(
 			new MultisearchSearchRequest() {
 				{
@@ -126,13 +124,13 @@ public class ElasticsearchSearchEngineAdapterLoggingTest {
 			});
 	}
 
+	@ExpectedLog(
+		expectedClass = SearchSearchRequestExecutorImpl.class,
+		expectedLevel = ExpectedLog.Level.FINE,
+		expectedLog = "The search engine processed"
+	)
 	@Test
 	public void testSearchSearchRequestExecutorLogs() {
-		expectedLogTestRule.configure(
-			SearchSearchRequestExecutorImpl.class, Level.FINE);
-
-		expectedLogTestRule.expectMessage("The search engine processed");
-
 		_searchEngineAdapter.execute(
 			new SearchSearchRequest() {
 				{
@@ -141,9 +139,6 @@ public class ElasticsearchSearchEngineAdapterLoggingTest {
 				}
 			});
 	}
-
-	@Rule
-	public ExpectedLogTestRule expectedLogTestRule = ExpectedLogTestRule.none();
 
 	protected void waitForElasticsearchToStart(
 		ElasticsearchClientResolver elasticsearchClientResolver) {

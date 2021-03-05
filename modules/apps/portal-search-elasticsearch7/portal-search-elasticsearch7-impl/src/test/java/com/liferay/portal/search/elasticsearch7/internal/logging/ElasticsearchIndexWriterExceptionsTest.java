@@ -22,21 +22,20 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriter;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.search.elasticsearch7.internal.ElasticsearchIndexWriter;
 import com.liferay.portal.search.elasticsearch7.internal.LiferayElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
-import com.liferay.portal.search.test.util.logging.ExpectedLogTestRule;
+import com.liferay.portal.search.test.util.logging.ExpectedLog;
+import com.liferay.portal.search.test.util.logging.ExpectedLogMethodTestRule;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 
 import org.elasticsearch.ElasticsearchStatusException;
-
-import org.hamcrest.CoreMatchers;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -51,8 +50,9 @@ public class ElasticsearchIndexWriterExceptionsTest
 
 	@ClassRule
 	@Rule
-	public static final LiferayUnitTestRule liferayUnitTestRule =
-		LiferayUnitTestRule.INSTANCE;
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			ExpectedLogMethodTestRule.INSTANCE, LiferayUnitTestRule.INSTANCE);
 
 	@Test
 	public void testAddDocument() {
@@ -113,14 +113,12 @@ public class ElasticsearchIndexWriterExceptionsTest
 		}
 	}
 
+	@ExpectedLog(
+		expectedClass = ElasticsearchIndexWriter.class,
+		expectedLevel = ExpectedLog.Level.INFO, expectedLog = "no such index"
+	)
 	@Test
 	public void testDeleteDocument() {
-		expectedLogTestRule.configure(
-			ElasticsearchIndexWriter.class, Level.INFO);
-
-		expectedLogTestRule.expectMessage(
-			CoreMatchers.containsString("no such index"));
-
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setCompanyId(1);
@@ -283,9 +281,6 @@ public class ElasticsearchIndexWriterExceptionsTest
 
 	@Rule
 	public ExpectedException expectedException = ExpectedException.none();
-
-	@Rule
-	public ExpectedLogTestRule expectedLogTestRule = ExpectedLogTestRule.none();
 
 	@Override
 	protected IndexingFixture createIndexingFixture() {

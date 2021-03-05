@@ -110,15 +110,6 @@ public class CompanyLocalServiceUtil {
 			webId, virtualHostname, mx, system, maxUsers, active);
 	}
 
-	public static <T, E extends Exception> java.util.stream.Stream
-		applyForEachCompanyId(
-			com.liferay.petra.function.UnsafeFunction<Long, T, E>
-				unsafeFunction,
-			java.util.function.BiConsumer<Long, E> biConsumer) {
-
-		return getService().applyForEachCompanyId(unsafeFunction, biConsumer);
-	}
-
 	/**
 	 * Returns the company with the web domain.
 	 *
@@ -338,36 +329,32 @@ public class CompanyLocalServiceUtil {
 	}
 
 	public static <E extends Exception> void forEach(
-			com.liferay.petra.function.UnsafeConsumer
-				<com.liferay.portal.kernel.model.Company, E> unsafeConsumer)
+			com.liferay.petra.function.UnsafeConsumer<Company, E>
+				unsafeConsumer)
 		throws E {
 
 		getService().forEach(unsafeConsumer);
 	}
 
 	public static <E extends Exception> void forEach(
-		com.liferay.petra.function.UnsafeConsumer
-			<com.liferay.portal.kernel.model.Company, E> unsafeConsumer,
-		java.util.function.BiConsumer
-			<com.liferay.portal.kernel.model.Company, E> biConsumer) {
+		com.liferay.petra.function.UnsafeConsumer<Company, E> unsafeConsumer,
+		java.util.function.BiConsumer<Company, E> biConsumer) {
 
 		getService().forEach(unsafeConsumer, biConsumer);
 	}
 
 	public static <E extends Exception> void forEach(
-		com.liferay.petra.function.UnsafeConsumer
-			<com.liferay.portal.kernel.model.Company, E> unsafeConsumer,
-		java.util.function.BiConsumer
-			<com.liferay.portal.kernel.model.Company, E> biConsumer,
-		java.util.List<com.liferay.portal.kernel.model.Company> companies) {
+		com.liferay.petra.function.UnsafeConsumer<Company, E> unsafeConsumer,
+		java.util.function.BiConsumer<Company, E> biConsumer,
+		List<Company> companies) {
 
 		getService().forEach(unsafeConsumer, biConsumer, companies);
 	}
 
 	public static <E extends Exception> void forEach(
-			com.liferay.petra.function.UnsafeConsumer
-				<com.liferay.portal.kernel.model.Company, E> unsafeConsumer,
-			java.util.List<com.liferay.portal.kernel.model.Company> companies)
+			com.liferay.petra.function.UnsafeConsumer<Company, E>
+				unsafeConsumer,
+			List<Company> companies)
 		throws E {
 
 		getService().forEach(unsafeConsumer, companies);

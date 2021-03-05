@@ -98,17 +98,6 @@ public class CompanyLocalServiceWrapper
 			webId, virtualHostname, mx, system, maxUsers, active);
 	}
 
-	@Override
-	public <T, E extends java.lang.Exception> java.util.stream.Stream
-		applyForEachCompanyId(
-			com.liferay.petra.function.UnsafeFunction<java.lang.Long, T, E>
-				unsafeFunction,
-			java.util.function.BiConsumer<java.lang.Long, E> biConsumer) {
-
-		return _companyLocalService.applyForEachCompanyId(
-			unsafeFunction, biConsumer);
-	}
-
 	/**
 	 * Returns the company with the web domain.
 	 *

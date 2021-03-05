@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.service;
 
 import com.liferay.petra.function.UnsafeConsumer;
-import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -41,7 +40,6 @@ import java.io.Serializable;
 
 import java.util.List;
 import java.util.function.BiConsumer;
-import java.util.stream.Stream;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -123,11 +121,6 @@ public interface CompanyLocalService
 			String webId, String virtualHostname, String mx, boolean system,
 			int maxUsers, boolean active)
 		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS)
-	public <T, E extends Exception> Stream applyForEachCompanyId(
-		UnsafeFunction<Long, T, E> unsafeFunction,
-		BiConsumer<Long, E> biConsumer);
 
 	/**
 	 * Returns the company with the web domain.

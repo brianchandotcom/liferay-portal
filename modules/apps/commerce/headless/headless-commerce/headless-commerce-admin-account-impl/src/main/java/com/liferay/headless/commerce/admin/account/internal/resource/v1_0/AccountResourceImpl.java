@@ -274,13 +274,13 @@ public class AccountResourceImpl
 				true, account.getExternalReferenceCode(),
 				_serviceContextHelper.getServiceContext());
 
-		if (account.getDefaultBillingAccountAddressId() > 0) {
+		if (_isValidId(account.getDefaultBillingAccountAddressId())) {
 			_commerceAccountService.updateDefaultBillingAddress(
 				commerceAccount.getCommerceAccountId(),
 				account.getDefaultBillingAccountAddressId());
 		}
 
-		if (account.getDefaultShippingAccountAddressId() > 0) {
+		if (_isValidId(account.getDefaultShippingAccountAddressId())) {
 			_commerceAccountService.updateDefaultShippingAddress(
 				commerceAccount.getCommerceAccountId(),
 				account.getDefaultShippingAccountAddressId());
@@ -445,6 +445,14 @@ public class AccountResourceImpl
 		}
 
 		return region.getRegionId();
+	}
+
+	private boolean _isValidId(Long value) {
+		if ((value == null) || (value <= 0)) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private Account _toAccount(CommerceAccount commerceAccount)

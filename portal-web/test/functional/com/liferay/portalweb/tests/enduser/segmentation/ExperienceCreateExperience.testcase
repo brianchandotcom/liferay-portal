@@ -286,6 +286,73 @@ definition {
 		PageEditor.clickPublish();
 	}
 
+	@description = "When the user duplicates an experience, the new experience has the same locales selected than the duplicated one"
+	@priority = "5"
+	test DuplicateExperienceWithLanguage {
+		property portal.acceptance = "true";
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+		ContentPages.clickPencil();
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditor.editFragmentText(
+			fragmentName = "Heading",
+			id = "element-text",
+			text = "Text in english");
+
+		Button.clickPublish();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+		ContentPages.clickPencil();
+
+		PageEditor.addExperienceWithLanguage(
+			experienceName = "NewAnyoneExperience",
+			segmentName = "Anyone",
+			language = "Spanish");
+
+		Refresh();
+
+		PageEditor.changeExperienceLanguage(
+			newExperience = "NewAnyoneExperience",
+			language = "es-ES");
+
+		PageEditor.editFragmentText(
+			fragmentName = "Heading",
+			id = "element-text",
+			text = "Texto en español");
+
+		Button.clickPublish();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+		ContentPages.clickPencil();
+
+		PageEditor.changeExperience(newExperience = "NewAnyoneExperience");
+
+		PageEditor.duplicateExperience(experienceName = "NewAnyoneExperience");
+
+		PageEditor.clickPublish();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+		ContentPages.clickPencil();
+
+		PageEditor.changeExperienceLanguage(
+			newExperience = "NewAnyoneExperience (Copy)",
+			language = "es-ES");
+
+		AssertTextEquals(
+			locator1 = "Experience#FRAGMENT_HEADING",
+			value1 = "Texto en español");
+
+		PageEditor.clickPublish();
+	}
+
 	@description = "Validate experience edition and deletion"
 	@priority = "5"
 	test EditAndDeleteExperience {

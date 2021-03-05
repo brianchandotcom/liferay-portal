@@ -265,21 +265,17 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 
 		List<KaleoLog> kaleoLogs = new ArrayList<>();
 
-		List<KaleoTaskAssignmentInstance> kaleoTaskAssignmentInstances =
-			kaleoTaskInstanceToken.getKaleoTaskAssignmentInstances();
+		for (KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance :
+				kaleoTaskInstanceToken.getKaleoTaskAssignmentInstances()) {
 
-		if (ListUtil.isNotEmpty(kaleoTaskAssignmentInstances)) {
-			for (KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance :
-					kaleoTaskAssignmentInstances) {
-
-				kaleoLogs.add(
-					kaleoLogLocalService.addTaskAssignmentKaleoLog(
-						previousTaskAssignmentInstances,
-						kaleoTaskAssignmentInstance, kaleoTaskInstanceToken,
-						comment, workflowContext, serviceContext));
-			}
+			kaleoLogs.add(
+				kaleoLogLocalService.addTaskAssignmentKaleoLog(
+					previousTaskAssignmentInstances,
+					kaleoTaskAssignmentInstance, kaleoTaskInstanceToken,
+					comment, workflowContext, serviceContext));
 		}
-		else {
+
+		if (ListUtil.isEmpty(kaleoLogs)) {
 			kaleoLogs.add(
 				kaleoLogLocalService.addTaskAssignmentKaleoLog(
 					previousTaskAssignmentInstances, null,

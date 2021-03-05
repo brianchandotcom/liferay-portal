@@ -58,6 +58,11 @@ public class DataCleanup implements UpgradeStepRegistrator {
 				"com.liferay.directory.web", UpgradeDirectory::new);
 
 			_cleanUpModuleData(
+				_dataCleanupConfiguration::cleanUpImageEditorModuleData,
+				"com.liferay.frontend.image.editor.web",
+				UpgradeImageEditor::new);
+
+			_cleanUpModuleData(
 				_dataCleanupConfiguration::cleanUpInvitationModuleData,
 				"com.liferay.invitation.web", UpgradeInvitation::new);
 

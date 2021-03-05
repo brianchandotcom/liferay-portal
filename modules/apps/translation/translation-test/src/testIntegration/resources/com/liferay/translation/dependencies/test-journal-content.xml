@@ -24,4 +24,7 @@
 	<dynamic-element index-type="keyword" instance-id="bajz" name="Integer2cc6" type="numeric">
 		<dynamic-content language-id="en_US"><![CDATA[1]]></dynamic-content>
 	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="bajz" name="Numeric89452576" type="numeric">
+		<dynamic-content language-id="en_US"><![CDATA[1]]></dynamic-content>
+	</dynamic-element>
 </root>

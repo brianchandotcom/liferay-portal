@@ -147,6 +147,27 @@
 				"en_US": ""
 			},
 			"type": "numeric"
+		},
+		{
+			"dataType": "double",
+			"fieldNamespace": "ddm",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Decimal"
+			},
+			"localizable": true,
+			"name": "Numeric89452576",
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "numeric"
 		}
 	],
 	"successPage": {

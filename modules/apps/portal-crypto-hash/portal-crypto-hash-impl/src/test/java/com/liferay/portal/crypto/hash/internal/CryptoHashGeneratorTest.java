@@ -38,7 +38,7 @@ public class CryptoHashGeneratorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		final CryptoVerifierRegistry cryptoVerifierRegistry =
+		CryptoVerifierRegistry cryptoVerifierRegistry =
 			new CryptoVerifierRegistry();
 
 		BCryptCryptoHashProvider bCryptCryptoHashProvider =

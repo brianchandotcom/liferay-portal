@@ -122,7 +122,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.TimeZone;
 import java.util.concurrent.Callable;
-import java.util.function.BiConsumer;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
@@ -443,34 +442,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public <E extends Exception> void forEach(
-		UnsafeConsumer<Company, E> unsafeConsumer,
-		BiConsumer<Company, E> biConsumer) {
-
-		forEach(unsafeConsumer, biConsumer, getCompanies(false));
-	}
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS)
-	public <E extends Exception> void forEach(
-		UnsafeConsumer<Company, E> unsafeConsumer,
-		BiConsumer<Company, E> biConsumer, List<Company> companies) {
-
-		for (Company company : companies) {
-			try (SafeClosable safeClosable =
-					CompanyThreadLocal.setWithSafeClosable(
-						company.getCompanyId())) {
-
-				unsafeConsumer.accept(company);
-			}
-			catch (Exception exception) {
-				biConsumer.accept(company, (E)exception);
-			}
-		}
-	}
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS)
-	public <E extends Exception> void forEach(
 			UnsafeConsumer<Company, E> unsafeConsumer, List<Company> companies)
 		throws E {
 
@@ -493,35 +464,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		forEachCompanyId(
 			unsafeConsumer,
 			ListUtil.toLongArray(getCompanies(false), Company::getCompanyId));
-	}
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS)
-	public <E extends Exception> void forEachCompanyId(
-		UnsafeConsumer<Long, E> unsafeConsumer,
-		BiConsumer<Long, E> biConsumer) {
-
-		forEachCompanyId(
-			unsafeConsumer, biConsumer,
-			ListUtil.toLongArray(getCompanies(false), Company::getCompanyId));
-	}
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS)
-	public <E extends Exception> void forEachCompanyId(
-		UnsafeConsumer<Long, E> unsafeConsumer, BiConsumer<Long, E> biConsumer,
-		long[] companyIds) {
-
-		for (long companyId : companyIds) {
-			try (SafeClosable safeClosable =
-					CompanyThreadLocal.setWithSafeClosable(companyId)) {
-
-				unsafeConsumer.accept(companyId);
-			}
-			catch (Exception exception) {
-				biConsumer.accept(companyId, (E)exception);
-			}
-		}
 	}
 
 	@Override

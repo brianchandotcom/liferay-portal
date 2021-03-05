@@ -185,16 +185,21 @@ public class LoggerTestUtil {
 
 	}
 
-	private static class JDKLogEntry extends LogRecord implements LogEntry {
+	private static class JDKLogEntry implements LogEntry {
+
+		@Override
+		public String getMessage() {
+			return _logRecord.getMessage();
+		}
 
 		@Override
 		public String getPriority() {
-			return String.valueOf(getLevel());
+			return String.valueOf(_logRecord.getLevel());
 		}
 
 		@Override
 		public Throwable getThrowable() {
-			return getThrown();
+			return _logRecord.getThrown();
 		}
 
 		@Override
@@ -207,7 +212,7 @@ public class LoggerTestUtil {
 			StringBundler sb = new StringBundler(5);
 
 			sb.append("{level=");
-			sb.append(getLevel());
+			sb.append(_logRecord.getLevel());
 			sb.append(", message=");
 			sb.append(getMessage());
 			sb.append("}");
@@ -216,19 +221,10 @@ public class LoggerTestUtil {
 		}
 
 		private JDKLogEntry(LogRecord logRecord) {
-			super(logRecord.getLevel(), logRecord.getMessage());
-
-			setLoggerName(logRecord.getLoggerName());
-			setMillis(logRecord.getMillis());
-			setParameters(logRecord.getParameters());
-			setResourceBundle(logRecord.getResourceBundle());
-			setResourceBundleName(logRecord.getResourceBundleName());
-			setSequenceNumber(logRecord.getSequenceNumber());
-			setSourceClassName(logRecord.getSourceClassName());
-			setSourceMethodName(logRecord.getSourceMethodName());
-			setThreadID(logRecord.getThreadID());
-			setThrown(logRecord.getThrown());
+			_logRecord = logRecord;
 		}
+
+		private final LogRecord _logRecord;
 
 	}
 

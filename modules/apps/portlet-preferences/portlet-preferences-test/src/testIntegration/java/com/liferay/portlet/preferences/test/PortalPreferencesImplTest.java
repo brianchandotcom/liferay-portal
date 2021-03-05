@@ -39,7 +39,6 @@ import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portlet.PortalPreferencesWrapperCacheUtil;
 
 import java.lang.reflect.Method;
 
@@ -49,6 +48,7 @@ import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.FutureTask;
 
 import org.hibernate.util.JDBCExceptionReporter;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -128,9 +128,6 @@ public class PortalPreferencesImplTest {
 
 				return null;
 			});
-
-		PortalPreferencesWrapperCacheUtil.remove(
-			_testOwnerId, PortletKeys.PREFS_OWNER_TYPE_USER);
 	}
 
 	@Test
@@ -417,10 +414,6 @@ public class PortalPreferencesImplTest {
 			}
 			catch (Throwable throwable) {
 				ReflectionUtil.throwException(throwable);
-			}
-			finally {
-				PortalPreferencesWrapperCacheUtil.remove(
-					_testOwnerId, PortletKeys.PREFS_OWNER_TYPE_USER);
 			}
 		}
 

@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.PortalPreferencesWrapper;
-import com.liferay.portlet.PortalPreferencesWrapperCacheUtil;
 
 import java.util.Enumeration;
 import java.util.Properties;
@@ -177,19 +175,6 @@ public class PrefsPropsUtil {
 	}
 
 	public static PortletPreferences getPreferences(boolean readOnly) {
-		PortalPreferencesWrapper portalPreferencesWrapper =
-			PortalPreferencesWrapperCacheUtil.get(
-				PortletKeys.PREFS_OWNER_ID_DEFAULT,
-				PortletKeys.PREFS_OWNER_TYPE_COMPANY);
-
-		if (portalPreferencesWrapper != null) {
-			if (!readOnly) {
-				portalPreferencesWrapper = portalPreferencesWrapper.clone();
-			}
-
-			return portalPreferencesWrapper;
-		}
-
 		return _portalPreferencesLocalService.getPreferences(
 			PortletKeys.PREFS_OWNER_ID_DEFAULT,
 			PortletKeys.PREFS_OWNER_TYPE_COMPANY);
@@ -202,22 +187,8 @@ public class PrefsPropsUtil {
 	public static PortletPreferences getPreferences(
 		long companyId, boolean readOnly) {
 
-		long ownerId = companyId;
-		int ownerType = PortletKeys.PREFS_OWNER_TYPE_COMPANY;
-
-		PortalPreferencesWrapper portalPreferencesWrapper =
-			PortalPreferencesWrapperCacheUtil.get(ownerId, ownerType);
-
-		if (portalPreferencesWrapper != null) {
-			if (!readOnly) {
-				portalPreferencesWrapper = portalPreferencesWrapper.clone();
-			}
-
-			return portalPreferencesWrapper;
-		}
-
 		return _portalPreferencesLocalService.getPreferences(
-			ownerId, ownerType);
+			companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY);
 	}
 
 	public static Properties getProperties(

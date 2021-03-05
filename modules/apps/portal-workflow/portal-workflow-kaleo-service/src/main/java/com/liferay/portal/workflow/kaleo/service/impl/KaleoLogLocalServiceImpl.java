@@ -175,9 +175,9 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 	public KaleoLog addTaskAssignmentKaleoLog(
 			List<KaleoTaskAssignmentInstance>
 				previousKaleoTaskAssignmentInstances,
-			KaleoTaskInstanceToken kaleoTaskInstanceToken,
 			KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance,
-			String comment, Map<String, Serializable> workflowContext,
+			KaleoTaskInstanceToken kaleoTaskInstanceToken, String comment,
+			Map<String, Serializable> workflowContext,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -227,8 +227,8 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *              #addTaskAssignmentKaleoLog(List, KaleoTaskInstanceToken,
-	 * 	             KaleoTaskAssignmentInstance, String, Map, ServiceContext)}}
+	 *             #addTaskAssignmentKaleoLog(List, KaleoTaskAssignmentInstance,
+	 *             KaleoTaskInstanceToken, String, Map, ServiceContext)}}
 	 */
 	@Deprecated
 	@Indexable(type = IndexableType.REINDEX)
@@ -251,9 +251,8 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 		}
 
 		return addTaskAssignmentKaleoLog(
-			previousKaleoTaskAssignmentInstances, kaleoTaskInstanceToken,
-			kaleoTaskAssignmentInstance, comment, workflowContext,
-			serviceContext);
+			previousKaleoTaskAssignmentInstances, kaleoTaskAssignmentInstance,
+			kaleoTaskInstanceToken, comment, workflowContext, serviceContext);
 	}
 
 	@Override
@@ -275,16 +274,17 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 
 				kaleoLogs.add(
 					kaleoLogLocalService.addTaskAssignmentKaleoLog(
-						previousTaskAssignmentInstances, kaleoTaskInstanceToken,
-						kaleoTaskAssignmentInstance, comment, workflowContext,
-						serviceContext));
+						previousTaskAssignmentInstances,
+						kaleoTaskAssignmentInstance, kaleoTaskInstanceToken,
+						comment, workflowContext, serviceContext));
 			}
 		}
 		else {
 			kaleoLogs.add(
 				kaleoLogLocalService.addTaskAssignmentKaleoLog(
-					previousTaskAssignmentInstances, kaleoTaskInstanceToken,
-					null, comment, workflowContext, serviceContext));
+					previousTaskAssignmentInstances, null,
+					kaleoTaskInstanceToken, comment, workflowContext,
+					serviceContext));
 		}
 
 		return kaleoLogs;

@@ -274,12 +274,11 @@ public class FragmentEntryProcessorEditableTest {
 			"fragment_entry_link_mapped_asset_field.json");
 
 		editableValues = StringUtil.replace(
-			editableValues, "CLASS_NAME_ID",
-			String.valueOf(_portal.getClassNameId(JournalArticle.class)));
-
-		editableValues = StringUtil.replace(
-			editableValues, "CLASS_PK",
-			String.valueOf(journalArticle.getResourcePrimKey()));
+			editableValues, new String[] {"CLASS_NAME_ID", "CLASS_PK"},
+			new String[] {
+				String.valueOf(_portal.getClassNameId(JournalArticle.class)),
+				String.valueOf(journalArticle.getResourcePrimKey())
+			});
 
 		_fragmentEntryLinkLocalService.updateFragmentEntryLink(
 			fragmentEntryLink.getFragmentEntryLinkId(), editableValues);
@@ -613,18 +612,16 @@ public class FragmentEntryProcessorEditableTest {
 		String dynamicContent = _readJSONFileToString("dynamic_content.json");
 
 		dynamicContent = StringUtil.replace(
-			dynamicContent, "FILE_ENTRY_ID",
-			String.valueOf(fileEntry.getFileEntryId()));
-
-		dynamicContent = StringUtil.replace(
-			dynamicContent, "GROUP_ID", String.valueOf(fileEntry.getGroupId()));
-
-		dynamicContent = StringUtil.replace(
-			dynamicContent, "RESOURCE_PRIM_KEY",
-			String.valueOf(fileEntry.getPrimaryKey()));
-
-		dynamicContent = StringUtil.replace(
-			dynamicContent, "UUID", String.valueOf(fileEntry.getUuid()));
+			dynamicContent,
+			new String[] {
+				"FILE_ENTRY_ID", "GROUP_ID", "RESOURCE_PRIM_KEY", "UUID"
+			},
+			new String[] {
+				String.valueOf(fileEntry.getFileEntryId()),
+				String.valueOf(fileEntry.getGroupId()),
+				String.valueOf(fileEntry.getPrimaryKey()),
+				String.valueOf(fileEntry.getUuid())
+			});
 
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
 			_group.getGroupId(), ddmStructure.getStructureId(),
@@ -718,16 +715,12 @@ public class FragmentEntryProcessorEditableTest {
 
 		String editableValues = _readJSONFileToString(fileName);
 
-		editableValues = StringUtil.replace(
-			editableValues, "CLASS_NAME_ID", String.valueOf(classNameId));
-
-		editableValues = StringUtil.replace(
-			editableValues, "CLASS_PK", String.valueOf(classPK));
-
-		editableValues = StringUtil.replace(
-			editableValues, "FIELD_ID", fieldId);
-
-		return editableValues;
+		return StringUtil.replace(
+			editableValues,
+			new String[] {"CLASS_NAME_ID", "CLASS_PK", "FIELD_ID"},
+			new String[] {
+				String.valueOf(classNameId), String.valueOf(classPK), fieldId
+			});
 	}
 
 	private Element _getElement(

@@ -48,6 +48,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
@@ -71,13 +72,13 @@ public class AMThumbnailsOSGiCommands {
 		System.out.println("Company ID\t# of thumbnails pending migration");
 		System.out.println("-------------------------------------------------");
 
-		Stream<Integer> countsStream =
-			_companyLocalService.applyForEachCompanyId(
-				this::_countPendingThumbnails,
-				AMThumbnailsOSGiCommands::_processException);
+		AtomicInteger count = new AtomicInteger();
 
-		System.out.printf(
-			"%nTOTAL: %d%n", countsStream.reduce(0, Integer::sum));
+		_companyLocalService.forEachCompanyId(
+			companyId -> count.addAndGet(_countPendingThumbnails(companyId)),
+			AMThumbnailsOSGiCommands::_processException);
+
+		System.out.printf("%nTOTAL: %d%n", count.get());
 	}
 
 	public void cleanUp(String... companyIds) {

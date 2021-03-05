@@ -297,7 +297,7 @@
 </tr>
 <tr>
 	<td>EXPERIENCE_LANGUAGE_CHECKBOX</td>
-	<td>//input[contains(@aria-label,'${key_language}')]</td>
+	<td>//*[contains(@aria-label,'${key_language}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -308,6 +308,11 @@
 <tr>
 	<td>EXPERIENCE_LANGUAGE_SELECTOR_LOCALE</td>
 	<td>//*[contains(@class,'dropdown-item')]//span[contains(text(), '${key_language}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPERIENCE_PRIORITIZE_BUTTON</td>
+	<td>//div[contains(@class,'toolbar-experience')]//button[contains(@title,'Prioritize Experience')]</td>
 	<td></td>
 </tr>
 <tr>

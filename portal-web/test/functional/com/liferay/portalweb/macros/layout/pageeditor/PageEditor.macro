@@ -397,13 +397,9 @@ definition {
 			locator1 = "PageEditor#EXPERIENCE_NAME",
 			value1 = "${experienceName}");
 
-		AssertElementPresent(
-			key_language = "${language}",
-			locator1 = "PageEditor#EXPERIENCE_LANGUAGE_CHECKBOX");
-
-		AssertClick(
-			value1 = "${language}",
-			locator1 = "PageEditor#EXPERIENCE_LANGUAGE_CHECKBOX");
+		Check.checkNotVisible( 
+			checkboxName = "${language}", 
+			locator1 = "Checkbox#ANY_CHECKBOX");
 
 		Click(locator1 = "PageEditor#EXPERIENCE_SEGMENT_ANYONE");
 
@@ -2355,6 +2351,20 @@ definition {
 
 	macro openExperienceMenu {
 		Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
+	}
+
+	macro prioritizeExperience {
+		var key_experienceName = "${experienceName}";
+
+		AssertTextEquals(
+			locator1 = "PageEditor#EXPERIENCE_LABEL",
+			value1 = "Experience");
+
+		AssertClick(
+			locator1 = "PageEditor#EXPERIENCE_BUTTON_NAME",
+			value1 = "${experienceName}");
+
+		Click(locator1 = "PageEditor#EXPERIENCE_PRIORITIZE_BUTTON");
 	}
 
 	macro removeFragment {

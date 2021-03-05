@@ -12,6 +12,18 @@ definition {
 
 		Navigator.openURL();
 
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "User Authentication",
+			configurationName = "General",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+
 		// Create site and content page
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
@@ -183,7 +195,7 @@ definition {
 
 		PageEditor.changeExperienceLanguage(
 			newExperience = "NewAnyoneExperience",
-			language = "Spanish");
+			language = "es-ES");
 
 		PageEditor.editFragmentText(
 			fragmentName = "Heading",
@@ -196,24 +208,36 @@ definition {
 
 		ContentPages.clickPencil();
 
-		PageEditor.changeExperienceLanguage(language = "es");
+		PageEditor.changeExperience(newExperience = "NewAnyoneExperience");
 
-		AssertTextEquals(
-			locator1 = "Experience#FRAGMENT_HEADING",
-			value1 = "Texto en español");
+		PageEditor.prioritizeExperience(experienceName = "NewAnyoneExperience");
 
-		PageEditor.changeExperienceLanguage(language = "en");
-
-		AssertTextEquals(
-			locator1 = "Experience#FRAGMENT_HEADING",
-			value1 = "Text in english");
+		Button.clickPublish();
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn",
-			locale = "es-ES");
+			userScreenName = "usersn");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.editPasswordCP(
+			requirePasswordReset = "true",
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.editDisplaySettingsCP(
+			languageName = "español (España)",
+			userScreenName = "usersn");
 
 		User.logoutPG();
 

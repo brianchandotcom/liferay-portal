@@ -29,8 +29,7 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoTimer;
 import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
-import com.liferay.portal.workflow.kaleo.runtime.assignment.KaleoTaskAssignmentSelector;
-import com.liferay.portal.workflow.kaleo.runtime.assignment.KaleoTaskAssignmentSelectorRegistry;
+import com.liferay.portal.workflow.kaleo.runtime.assignment.AggregateKaleoTaskAssignmentSelector;
 import com.liferay.portal.workflow.kaleo.runtime.calendar.DueDateCalculator;
 import com.liferay.portal.workflow.kaleo.runtime.graph.PathElement;
 import com.liferay.portal.workflow.kaleo.runtime.internal.assignment.TaskAssignerHelper;
@@ -42,8 +41,6 @@ import com.liferay.portal.workflow.kaleo.service.KaleoTaskLocalService;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -94,29 +91,12 @@ public class TaskNodeExecutor extends BaseNodeExecutor {
 			Date dueDate)
 		throws PortalException {
 
-		Collection<KaleoTaskAssignment> configuredKaleoTaskAssignments =
-			kaleoTask.getKaleoTaskAssignments();
-
-		Collection<KaleoTaskAssignment> kaleoTaskAssignments =
-			new ArrayList<>();
-
-		for (KaleoTaskAssignment configuredKaleoTaskAssignment :
-				configuredKaleoTaskAssignments) {
-
-			KaleoTaskAssignmentSelector kaleoTaskAssignmentSelector =
-				_kaleoTaskAssignmentSelectorRegistry.
-					getKaleoTaskAssignmentSelector(
-						configuredKaleoTaskAssignment.getAssigneeClassName());
-
-			kaleoTaskAssignments.addAll(
-				kaleoTaskAssignmentSelector.getKaleoTaskAssignments(
-					configuredKaleoTaskAssignment, executionContext));
-		}
-
 		return _kaleoTaskInstanceTokenLocalService.addKaleoTaskInstanceToken(
 			kaleoInstanceToken.getKaleoInstanceTokenId(),
 			kaleoTask.getKaleoTaskId(), kaleoTask.getName(),
-			kaleoTaskAssignments, dueDate, workflowContext, serviceContext);
+			_aggregateKaleoTaskAssignmentSelector.getKaleoTaskAssignments(
+				kaleoTask.getKaleoTaskAssignments(), executionContext),
+			dueDate, workflowContext, serviceContext);
 	}
 
 	@Override
@@ -211,14 +191,14 @@ public class TaskNodeExecutor extends BaseNodeExecutor {
 	}
 
 	@Reference
+	private AggregateKaleoTaskAssignmentSelector
+		_aggregateKaleoTaskAssignmentSelector;
+
+	@Reference
 	private DueDateCalculator _dueDateCalculator;
 
 	@Reference
 	private KaleoLogLocalService _kaleoLogLocalService;
-
-	@Reference
-	private KaleoTaskAssignmentSelectorRegistry
-		_kaleoTaskAssignmentSelectorRegistry;
 
 	@Reference
 	private KaleoTaskInstanceTokenLocalService

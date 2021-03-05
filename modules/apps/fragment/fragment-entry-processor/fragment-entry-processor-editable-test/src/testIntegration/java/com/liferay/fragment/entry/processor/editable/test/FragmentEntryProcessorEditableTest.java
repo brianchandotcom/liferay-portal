@@ -575,7 +575,7 @@ public class FragmentEntryProcessorEditableTest {
 		return _fragmentEntryService.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
 			"fragment-entry", "Fragment Entry", null,
-			_getFileAsString(htmlFile), null, null, 0,
+			_readFileToString(htmlFile), null, null, 0,
 			FragmentConstants.TYPE_SECTION, WorkflowConstants.STATUS_APPROVED,
 			serviceContext);
 	}
@@ -761,7 +761,7 @@ public class FragmentEntryProcessorEditableTest {
 		return elements.get(0);
 	}
 
-	private String _getFileAsString(String fileName) throws Exception {
+	private String _readFileToString(String fileName) throws Exception {
 		Class<?> clazz = getClass();
 
 		return StringUtil.read(
@@ -838,13 +838,13 @@ public class FragmentEntryProcessorEditableTest {
 
 	private String _readJSONFileToString(String jsonFileName) throws Exception {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			_getFileAsString(jsonFileName));
+			_readFileToString(jsonFileName));
 
 		return jsonObject.toString();
 	}
 
 	private String _getProcessedHTML(String fileName) throws Exception {
-		Document document = Jsoup.parseBodyFragment(_getFileAsString(fileName));
+		Document document = Jsoup.parseBodyFragment(_readFileToString(fileName));
 
 		document.outputSettings(
 			new Document.OutputSettings() {

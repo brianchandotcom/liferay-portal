@@ -132,7 +132,7 @@ public class JournalFragmentEntryProcessorEditableTest {
 		return PortalUtil.getClassNameId(compositeClassName);
 	}
 
-	private String _getFileAsString(String fileName) throws Exception {
+	private String _readFileToString(String fileName) throws Exception {
 		Class<?> clazz = getClass();
 
 		return StringUtil.read(
@@ -142,7 +142,7 @@ public class JournalFragmentEntryProcessorEditableTest {
 
 	private String _readJSONFileToString(String jsonFileName) throws Exception {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			_getFileAsString(jsonFileName));
+			_readFileToString(jsonFileName));
 
 		return jsonObject.toString();
 	}

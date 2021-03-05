@@ -141,7 +141,7 @@ public class FragmentEntryProcessorDropZoneTest {
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				fragmentCollection.getFragmentCollectionId(), "fragment-entry",
 				"Fragment Entry", null,
-				_getFileAsString("drop_zone_fragment_entry.html"), null, null,
+				_readFileToString("drop_zone_fragment_entry.html"), null, null,
 				0, FragmentConstants.TYPE_SECTION,
 				WorkflowConstants.STATUS_APPROVED, _serviceContext);
 
@@ -153,7 +153,7 @@ public class FragmentEntryProcessorDropZoneTest {
 			StringPool.BLANK, StringPool.BLANK, 0, null, _serviceContext);
 	}
 
-	private String _getFileAsString(String fileName) throws Exception {
+	private String _readFileToString(String fileName) throws Exception {
 		Class<?> clazz = getClass();
 
 		return StringUtil.read(
@@ -163,7 +163,7 @@ public class FragmentEntryProcessorDropZoneTest {
 	}
 
 	private String _getProcessedHTML(String fileName) throws Exception {
-		Document document = Jsoup.parseBodyFragment(_getFileAsString(fileName));
+		Document document = Jsoup.parseBodyFragment(_readFileToString(fileName));
 
 		document.outputSettings(
 			new Document.OutputSettings() {

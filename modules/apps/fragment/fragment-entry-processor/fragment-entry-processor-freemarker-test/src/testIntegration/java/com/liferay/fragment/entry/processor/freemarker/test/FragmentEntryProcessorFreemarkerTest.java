@@ -132,7 +132,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 				fragmentEntryLink, defaultFragmentEntryProcessorContext));
 
 		String expectedProcessedHTML = _getProcessedHTML(
-			_getFileAsString("expected_processed_fragment_entry.html"));
+			_readFileToString("expected_processed_fragment_entry.html"));
 
 		Assert.assertEquals(expectedProcessedHTML, actualProcessedHTML);
 	}
@@ -164,7 +164,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 				fragmentEntryLink, defaultFragmentEntryProcessorContext));
 
 		String expectedProcessedHTML = _getProcessedHTML(
-			_getFileAsString(
+			_readFileToString(
 				"expected_processed_fragment_entry_with_configuration.html"));
 
 		Assert.assertEquals(expectedProcessedHTML, actualProcessedHTML);
@@ -241,7 +241,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 				fragmentEntryLink, defaultFragmentEntryProcessorContext));
 
 		String expectedProcessedHTML = _getProcessedHTML(
-			_getFileAsString(
+			_readFileToString(
 				"expected_processed_fragment_entry_with_configuration_" +
 					"collectionselector_dynamic_collection.html",
 				HashMapBuilder.put(
@@ -301,7 +301,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 				fragmentEntryLink, defaultFragmentEntryProcessorContext));
 
 		String expectedProcessedHTML = _getProcessedHTML(
-			_getFileAsString(
+			_readFileToString(
 				"expected_processed_fragment_entry_with_configuration_" +
 					"itemselector_file_entry.html",
 				HashMapBuilder.put(
@@ -379,7 +379,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 				fragmentEntryLink, defaultFragmentEntryProcessorContext));
 
 		String expectedProcessedHTML = _getProcessedHTML(
-			_getFileAsString(
+			_readFileToString(
 				"expected_processed_fragment_entry_with_configuration_" +
 					"itemselector_journal_article.html",
 				HashMapBuilder.put(
@@ -512,7 +512,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 		String configuration = null;
 
 		if (configurationFile != null) {
-			configuration = _getFileAsString(configurationFile);
+			configuration = _readFileToString(configurationFile);
 
 			configuration = StringUtil.replace(
 				configuration, "${", "}", values);
@@ -521,15 +521,15 @@ public class FragmentEntryProcessorFreemarkerTest {
 		return _fragmentEntryService.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
 			"fragment-entry", "Fragment Entry", null,
-			_getFileAsString(htmlFile), null, configuration, 0, 0,
+			_readFileToString(htmlFile), null, configuration, 0, 0,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
-	private String _getFileAsString(String fileName) throws Exception {
-		return _getFileAsString(fileName, null);
+	private String _readFileToString(String fileName) throws Exception {
+		return _readFileToString(fileName, null);
 	}
 
-	private String _getFileAsString(String fileName, Map<String, String> values)
+	private String _readFileToString(String fileName, Map<String, String> values)
 		throws Exception {
 
 		Class<?> clazz = getClass();
@@ -551,7 +551,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 		throws Exception {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			_getFileAsString(jsonFileName, values));
+			_readFileToString(jsonFileName, values));
 
 		return jsonObject.toString();
 	}

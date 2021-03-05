@@ -377,8 +377,6 @@ public class DataFactory {
 			(PortletPreferencesImpl)_portletPreferencesFactory.fromDefaultXML(
 				_readFile("default_asset_publisher_preference.xml"));
 
-		initAssetTagModels();
-
 		initJournalArticleContent();
 
 		initRoleModels();
@@ -474,22 +472,6 @@ public class DataFactory {
 		}
 
 		return assetTagIds;
-	}
-
-	public List<AssetTagModel> getAssetTagModels() {
-		List<AssetTagModel> allAssetTagModels = new ArrayList<>();
-
-		for (Map<Long, List<AssetTagModel>> assetTagModelsMap :
-				_assetTagModelsMaps) {
-
-			for (List<AssetTagModel> assetTagModels :
-					assetTagModelsMap.values()) {
-
-				allAssetTagModels.addAll(assetTagModels);
-			}
-		}
-
-		return allAssetTagModels;
 	}
 
 	public long getBlogsEntryClassNameId() {
@@ -660,62 +642,6 @@ public class DataFactory {
 
 	public long getWikiPageClassNameId() {
 		return getClassNameId(WikiPage.class);
-	}
-
-	public void initAssetTagModels() {
-		_assetTagModelsArray =
-			(List<AssetTagModel>[])
-				new List<?>[BenchmarksPropsValues.MAX_GROUP_COUNT];
-		_assetTagModelsMaps =
-			(Map<Long, List<AssetTagModel>>[])
-				new HashMap<?, ?>[BenchmarksPropsValues.MAX_GROUP_COUNT];
-
-		for (int i = 1; i <= BenchmarksPropsValues.MAX_GROUP_COUNT; i++) {
-			List<AssetTagModel> assetTagModels = new ArrayList<>(
-				BenchmarksPropsValues.MAX_ASSET_TAG_COUNT);
-
-			for (int j = 0; j < BenchmarksPropsValues.MAX_ASSET_TAG_COUNT;
-				 j++) {
-
-				AssetTagModel assetTagModel = new AssetTagModelImpl();
-
-				assetTagModel.setUuid(SequentialUUID.generate());
-				assetTagModel.setTagId(_counter.get());
-				assetTagModel.setGroupId(i);
-				assetTagModel.setCompanyId(_companyId);
-				assetTagModel.setUserId(_sampleUserId);
-				assetTagModel.setUserName(_SAMPLE_USER_NAME);
-				assetTagModel.setCreateDate(new Date());
-				assetTagModel.setModifiedDate(new Date());
-				assetTagModel.setName(
-					StringBundler.concat("TestTag_", i, "_", j));
-				assetTagModel.setLastPublishDate(new Date());
-
-				assetTagModels.add(assetTagModel);
-			}
-
-			_assetTagModelsArray[i - 1] = assetTagModels;
-
-			Map<Long, List<AssetTagModel>> assetTagModelsMap = new HashMap<>();
-
-			int pageSize = assetTagModels.size() / _assetClassNameIds.length;
-
-			for (int j = 0; j < _assetClassNameIds.length; j++) {
-				int fromIndex = j * pageSize;
-
-				int toIndex = (j + 1) * pageSize;
-
-				if (j == (_assetClassNameIds.length - 1)) {
-					toIndex = assetTagModels.size();
-				}
-
-				assetTagModelsMap.put(
-					_assetClassNameIds[j],
-					assetTagModels.subList(fromIndex, toIndex));
-			}
-
-			_assetTagModelsMaps[i - 1] = assetTagModelsMap;
-		}
 	}
 
 	public void initJournalArticleContent() {
@@ -1140,6 +1066,64 @@ public class DataFactory {
 		}
 
 		return portletPreferenceValueModels;
+	}
+
+	public List<AssetTagModel> newAssetTagModels() {
+		List<AssetTagModel> allAssetTagModels = new ArrayList<>();
+
+		_assetTagModelsMaps =
+			(Map<Long, List<AssetTagModel>>[])
+				new HashMap<?, ?>[BenchmarksPropsValues.MAX_GROUP_COUNT];
+
+		for (int i = 1; i <= BenchmarksPropsValues.MAX_GROUP_COUNT; i++) {
+			List<AssetTagModel> groupAssetTagModels = new ArrayList<>(
+				BenchmarksPropsValues.MAX_ASSET_TAG_COUNT);
+
+			for (int j = 0; j < BenchmarksPropsValues.MAX_ASSET_TAG_COUNT;
+				 j++) {
+
+				AssetTagModel assetTagModel = new AssetTagModelImpl();
+
+				assetTagModel.setUuid(SequentialUUID.generate());
+				assetTagModel.setTagId(_counter.get());
+				assetTagModel.setGroupId(i);
+				assetTagModel.setCompanyId(_companyId);
+				assetTagModel.setUserId(_sampleUserId);
+				assetTagModel.setUserName(_SAMPLE_USER_NAME);
+				assetTagModel.setCreateDate(new Date());
+				assetTagModel.setModifiedDate(new Date());
+				assetTagModel.setName(
+					StringBundler.concat("TestTag_", i, "_", j));
+				assetTagModel.setLastPublishDate(new Date());
+
+				groupAssetTagModels.add(assetTagModel);
+
+				allAssetTagModels.add(assetTagModel);
+			}
+
+			Map<Long, List<AssetTagModel>> assetTagModelsMap = new HashMap<>();
+
+			int pageSize =
+				groupAssetTagModels.size() / _assetClassNameIds.length;
+
+			for (int j = 0; j < _assetClassNameIds.length; j++) {
+				int fromIndex = j * pageSize;
+
+				int toIndex = (j + 1) * pageSize;
+
+				if (j == (_assetClassNameIds.length - 1)) {
+					toIndex = groupAssetTagModels.size();
+				}
+
+				assetTagModelsMap.put(
+					_assetClassNameIds[j],
+					groupAssetTagModels.subList(fromIndex, toIndex));
+			}
+
+			_assetTagModelsMaps[i - 1] = assetTagModelsMap;
+		}
+
+		return allAssetTagModels;
 	}
 
 	public List<AssetVocabularyModel> newAssetVocabularyModels(
@@ -5342,7 +5326,6 @@ public class DataFactory {
 	private final Map<Long, Integer> _assetPublisherQueryStartIndexes =
 		new HashMap<>();
 	private Map<Long, SimpleCounter>[] _assetTagCounters;
-	private List<AssetTagModel>[] _assetTagModelsArray;
 	private Map<Long, List<AssetTagModel>>[] _assetTagModelsMaps;
 	private List<AssetVocabularyModel>[] _assetVocabularyModelsArray;
 	private final Map<String, ClassNameModel> _classNameModels =

@@ -6,6 +6,6 @@
 	${dataFactory.toInsertSQL(assetCategoryModel)}
 </#list>
 
-<#list dataFactory.assetTagModels as assetTagModel>
+<#list dataFactory.newAssetTagModels() as assetTagModel>
 	${dataFactory.toInsertSQL(assetTagModel)}
 </#list>

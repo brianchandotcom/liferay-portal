@@ -1,4 +1,19 @@
-<#assign pageCounts = dataFactory.getSequence(dataFactory.maxAssetPublisherPageCount) />
+<#assign
+	assetVocabularyModels = dataFactory.newAssetVocabularyModels(groupId)
+	pageCounts = dataFactory.getSequence(dataFactory.maxAssetPublisherPageCount)
+/>
+
+<#list assetVocabularyModels as assetVocabularyModel>
+	${dataFactory.toInsertSQL(assetVocabularyModel)}
+</#list>
+
+<#list dataFactory.newAssetCategoryModels(groupId) as assetCategoryModel>
+	${dataFactory.toInsertSQL(assetCategoryModel)}
+</#list>
+
+<#list dataFactory.newAssetTagModels(groupId) as assetTagModel>
+	${dataFactory.toInsertSQL(assetTagModel)}
+</#list>
 
 <#list pageCounts as pageCount>
 	<#assign

@@ -60,6 +60,134 @@ definition {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 	}
 
+	@description = "This test ensures that the title and the file name will be renamed when the created Google doc title duplicates the existing document file name."
+	@priority = "4"
+	test AddGoogleEntryWithDuplicateFileName {
+		property test.name.skip.portal.instance = "GoogleDrive#AddGoogleEntryWithDuplicateFileName";
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Sheet");
+
+		Google.signIn(
+			userEmailAddress = PropsUtil.get("email.address.3"),
+			userPassword = PropsUtil.get("email.password.3"),
+			windowTitle = "Documents and Media Page - Liferay");
+
+		GoogleDoc.saveAndExit();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.editPG(
+			dmDocumentFileNameEdit = "Untitled Edit.xlsx",
+			dmDocumentTitle = "Untitled");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoEditDocumentPG(dmDocumentTitle = "Untitled");
+
+		AssertTextEquals(
+			key_fieldLabel = "Title",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Untitled");
+
+		AssertTextEquals(
+			key_fieldLabel = "File Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Untitled Edit.xlsx");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Sheet");
+
+		GoogleDoc.editTitleInGoogleDoc(dmDocumentTitle = "Untitled Edit");
+
+		GoogleDoc.saveAndExit();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		AssertTextEquals(
+			key_dmDocumentTitle = "Untitled Edit (1)",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
+			value1 = "Untitled Edit (1)");
+
+		DMNavigator.gotoEditDocumentPG(dmDocumentTitle = "Untitled Edit (1)");
+
+		AssertTextEquals(
+			key_fieldLabel = "Title",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Untitled Edit (1)");
+
+		AssertTextEquals(
+			key_fieldLabel = "File Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Untitled Edit (1).xlsx");
+	}
+
+	@description = "This test ensures that the title and the file name will be renamed when the created Google doc title duplicates the existing document title."
+	@priority = "4"
+	test AddGoogleEntryWithDuplicateTitle {
+		property test.name.skip.portal.instance = "GoogleDrive#AddGoogleEntryWithDuplicateTitle";
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Doc");
+
+		Google.signIn(
+			userEmailAddress = PropsUtil.get("email.address.3"),
+			userPassword = PropsUtil.get("email.password.3"),
+			windowTitle = "Documents and Media Page - Liferay");
+
+		GoogleDoc.saveAndExit();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.editPG(
+			dmDocumentTitle = "Untitled",
+			dmDocumentTitleEdit = "Untitled Edit");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoEditDocumentPG(dmDocumentTitle = "Untitled Edit");
+
+		AssertTextEquals(
+			key_fieldLabel = "Title",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Untitled Edit");
+
+		AssertTextEquals(
+			key_fieldLabel = "File Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Untitled.docx");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Doc");
+
+		GoogleDoc.editTitleInGoogleDoc(dmDocumentTitle = "Untitled Edit");
+
+		GoogleDoc.saveAndExit();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		AssertTextEquals(
+			key_dmDocumentTitle = "Untitled Edit (1)",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
+			value1 = "Untitled Edit (1)");
+
+		DMNavigator.gotoEditDocumentPG(dmDocumentTitle = "Untitled Edit (1)");
+
+		AssertTextEquals(
+			key_fieldLabel = "Title",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Untitled Edit (1)");
+
+		AssertTextEquals(
+			key_fieldLabel = "File Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Untitled Edit (1).docx");
+	}
+
 	@description = "This test ensures that a Google Doc is autotagged once checked in."
 	@priority = "4"
 	test AutoTagGoogleDoc {

@@ -18,12 +18,10 @@
 
 <%
 CPContentHelper cpContentHelper = (CPContentHelper)request.getAttribute(CPContentWebKeys.CP_CONTENT_HELPER);
-
-CPCatalogEntry cpCatalogEntry = cpContentHelper.getCPCatalogEntry(request);
 %>
 
 <commerce-ui:add-to-cart
-	CPCatalogEntry="<%= cpCatalogEntry %>"
+	CPCatalogEntry="<%= cpContentHelper.getCPCatalogEntry(request) %>"
 	options='<%= "[]" %>'
 	willUpdate="<%= true %>"
 />

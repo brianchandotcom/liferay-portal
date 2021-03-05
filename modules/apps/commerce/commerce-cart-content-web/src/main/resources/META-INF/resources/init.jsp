@@ -41,7 +41,6 @@ page import="com.liferay.commerce.model.CommerceOrderItem" %><%@
 page import="com.liferay.commerce.order.CommerceOrderValidatorResult" %><%@
 page import="com.liferay.commerce.price.CommerceOrderPrice" %><%@
 page import="com.liferay.commerce.pricing.constants.CommercePricingConstants" %><%@
-page import="com.liferay.commerce.product.catalog.CPCatalogEntry" %><%@
 page import="com.liferay.commerce.product.content.constants.CPContentWebKeys" %><%@
 page import="com.liferay.commerce.product.content.util.CPContentHelper" %><%@
 page import="com.liferay.commerce.product.model.CPDefinition" %><%@
@@ -68,8 +67,6 @@ page import="java.util.StringJoiner" %>
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />
-
-<portlet:defineObjects />
 
 <%
 String languageId = LanguageUtil.getLanguageId(locale);

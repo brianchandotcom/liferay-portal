@@ -15,8 +15,8 @@
 package com.liferay.portal.search.elasticsearch7.internal.index;
 
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.search.elasticsearch7.internal.connection.IndexName;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Collections;
 import java.util.Date;

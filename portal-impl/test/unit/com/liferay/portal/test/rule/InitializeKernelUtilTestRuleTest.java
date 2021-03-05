@@ -14,9 +14,7 @@
 
 package com.liferay.portal.test.rule;
 
-import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.test.rule.InitializeKernelUtil;
 
 import org.junit.Assert;
 import org.junit.ClassRule;

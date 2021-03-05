@@ -15,8 +15,8 @@
 package com.liferay.portal.kernel.spring.osgi;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.Serializable;
 

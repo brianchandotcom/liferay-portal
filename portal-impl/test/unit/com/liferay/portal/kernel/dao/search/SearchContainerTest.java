@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.dao.search;
 
-import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.kernel.util.ProxyFactory;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;

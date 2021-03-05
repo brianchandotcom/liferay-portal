@@ -17,7 +17,7 @@ package com.liferay.document.library.internal.util;
 import com.liferay.document.library.configuration.DLConfiguration;
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.util.DLValidator;
-import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Before;
 import org.junit.ClassRule;

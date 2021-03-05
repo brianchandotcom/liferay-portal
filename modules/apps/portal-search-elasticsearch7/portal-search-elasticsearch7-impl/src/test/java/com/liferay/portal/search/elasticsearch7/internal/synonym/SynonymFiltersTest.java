@@ -14,7 +14,6 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.synonym;
 
-import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch7.internal.connection.IndexName;
@@ -32,6 +31,7 @@ import com.liferay.portal.search.engine.adapter.index.CreateIndexResponse;
 import com.liferay.portal.search.engine.adapter.index.DeleteIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.DeleteIndexResponse;
 import com.liferay.portal.search.engine.adapter.index.IndexRequestExecutor;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.elasticsearch.index.query.MatchPhraseQueryBuilder;
 

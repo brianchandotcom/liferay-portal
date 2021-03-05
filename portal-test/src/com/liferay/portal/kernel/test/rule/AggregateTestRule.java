@@ -14,6 +14,9 @@
 
 package com.liferay.portal.kernel.test.rule;
 
+import com.liferay.portal.test.rule.InitializeKernelUtilTestRule;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashSet;

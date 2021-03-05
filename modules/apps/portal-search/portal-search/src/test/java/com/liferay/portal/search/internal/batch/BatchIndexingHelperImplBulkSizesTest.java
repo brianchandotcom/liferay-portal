@@ -15,8 +15,8 @@
 package com.liferay.portal.search.internal.batch;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Arrays;
 import java.util.Collections;

@@ -15,12 +15,12 @@
 package com.liferay.portal.deploy.hot;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.kernel.url.URLContainer;
 import com.liferay.portal.kernel.util.CustomJspRegistryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.CustomJspRegistryImpl;
 import com.liferay.portal.util.PortalImpl;
 import com.liferay.registry.BasicRegistryImpl;

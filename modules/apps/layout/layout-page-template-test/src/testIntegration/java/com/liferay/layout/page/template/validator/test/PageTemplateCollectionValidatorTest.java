@@ -16,8 +16,8 @@ package com.liferay.layout.page.template.validator.test;
 
 import com.liferay.layout.page.template.exception.PageTemplateCollectionValidatorException;
 import com.liferay.layout.page.template.validator.PageTemplateCollectionValidator;
-import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.hamcrest.core.StringStartsWith;
 

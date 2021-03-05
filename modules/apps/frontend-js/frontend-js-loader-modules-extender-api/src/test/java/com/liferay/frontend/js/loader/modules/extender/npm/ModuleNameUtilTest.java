@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.js.loader.modules.extender.npm;
 
-import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
 import org.junit.ClassRule;

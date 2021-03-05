@@ -16,7 +16,7 @@ package com.liferay.portal.template;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.net.URL;
 

@@ -15,7 +15,6 @@
 package com.liferay.portal.search.tuning.synonyms.web.internal.display.context;
 
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -26,6 +25,7 @@ import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexNameBuilder;
 import com.liferay.portal.search.tuning.synonyms.web.internal.filter.SynonymSetFilterReader;
 import com.liferay.portal.search.tuning.synonyms.web.internal.index.DocumentToSynonymSetTranslator;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import javax.portlet.ActionURL;
 import javax.portlet.RenderRequest;

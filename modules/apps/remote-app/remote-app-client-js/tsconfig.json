@@ -1,6 +1,7 @@
 {
 	"compilerOptions": {
 		"module": "es6",
+		"moduleResolution": "node",
 		"outDir": "./build/node/packageRunBuild/dist/",
 		"sourceMap": true,
 		"strict": true,
@@ -10,5 +11,9 @@
 			"./node_modules/@types",
 			"./src/main/resources/META-INF/resources/js/types"
 		]
-	}
+	},
+	"include": [
+		"src/**/*",
+		"tests/**/*"
+	]
 }

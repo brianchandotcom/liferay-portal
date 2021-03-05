@@ -17,6 +17,8 @@ package com.liferay.frontend.taglib.clay.servlet.taglib.display.context;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -68,7 +70,10 @@ public class SearchContainerManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isDisabled() {
-		if (getItemsTotal() == 0) {
+		if ((getItemsTotal() == 0) &&
+			Validator.isNull(
+				ParamUtil.getString(httpServletRequest, "keywords"))) {
+
 			return true;
 		}
 

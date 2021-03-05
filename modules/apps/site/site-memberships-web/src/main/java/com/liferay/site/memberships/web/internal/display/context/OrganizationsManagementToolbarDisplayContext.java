@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.memberships.web.internal.util.GroupUtil;
 
@@ -163,17 +161,6 @@ public class OrganizationsManagementToolbarDisplayContext
 	@Override
 	public String getSearchContainerId() {
 		return "organizations";
-	}
-
-	@Override
-	public Boolean isDisabled() {
-		if (Validator.isNotNull(
-				ParamUtil.getString(httpServletRequest, "keywords"))) {
-
-			return false;
-		}
-
-		return super.isDisabled();
 	}
 
 	@Override

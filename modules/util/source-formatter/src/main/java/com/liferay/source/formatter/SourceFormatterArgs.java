@@ -81,6 +81,10 @@ public class SourceFormatterArgs {
 		return _baseDirName;
 	}
 
+	public List<String> getCheckCategoryNames() {
+		return _checkCategoryNames;
+	}
+
 	public List<String> getCheckNames() {
 		return _checkNames;
 	}
@@ -185,6 +189,10 @@ public class SourceFormatterArgs {
 		_baseDirName = baseDirName;
 	}
 
+	public void setCheckCategoryNames(List<String> checkCategoryNames) {
+		_checkCategoryNames = checkCategoryNames;
+	}
+
 	public void setCheckNames(List<String> checkNames) {
 		_checkNames = checkNames;
 	}
@@ -276,6 +284,7 @@ public class SourceFormatterArgs {
 
 	private boolean _autoFix = AUTO_FIX;
 	private String _baseDirName = BASE_DIR_NAME;
+	private List<String> _checkCategoryNames = new ArrayList<>();
 	private List<String> _checkNames = new ArrayList<>();
 	private boolean _failOnAutoFix = FAIL_ON_AUTO_FIX;
 	private boolean _failOnHasWarning = FAIL_ON_HAS_WARNING;

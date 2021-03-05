@@ -55,8 +55,11 @@ public class ConfigurationLoader {
 			for (Element checkElement :
 					(List<Element>)sourceProcessorElement.elements("check")) {
 
+				Element categoryElement = checkElement.element("category");
+
 				SourceCheckConfiguration sourceCheckConfiguration =
 					new SourceCheckConfiguration(
+						categoryElement.attributeValue("name"),
 						checkElement.attributeValue("name"));
 
 				for (Element propertyElement :

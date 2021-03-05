@@ -85,6 +85,8 @@ public class CheckstyleUtil {
 
 		List<String> checkNames = new ArrayList<>();
 
+		List<String> filterCheckCategoryNames =
+			sourceFormatterArgs.getCheckCategoryNames();
 		List<String> filterCheckNames = sourceFormatterArgs.getCheckNames();
 
 		for (Configuration checkConfiguration : checkConfigurations) {
@@ -97,7 +99,10 @@ public class CheckstyleUtil {
 			String checkSimpleName = SourceFormatterUtil.getSimpleName(
 				checkName);
 
-			if (!filterCheckNames.isEmpty() &&
+			if ((!filterCheckCategoryNames.isEmpty() ||
+				 !filterCheckNames.isEmpty()) &&
+				!filterCheckCategoryNames.contains(
+					checkConfiguration.getAttribute("category")) &&
 				!filterCheckNames.contains(checkSimpleName)) {
 
 				treeWalkerConfiguration.removeChild(checkConfiguration);

@@ -26,7 +26,8 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public class SourceCheckConfiguration {
 
-	public SourceCheckConfiguration(String name) {
+	public SourceCheckConfiguration(String category, String name) {
+		_category = category;
 		_name = name;
 	}
 
@@ -48,11 +49,16 @@ public class SourceCheckConfiguration {
 		return _attributesJSONObject;
 	}
 
+	public String getCategory() {
+		return _category;
+	}
+
 	public String getName() {
 		return _name;
 	}
 
 	private final JSONObject _attributesJSONObject = new JSONObjectImpl();
+	private final String _category;
 	private final String _name;
 
 }

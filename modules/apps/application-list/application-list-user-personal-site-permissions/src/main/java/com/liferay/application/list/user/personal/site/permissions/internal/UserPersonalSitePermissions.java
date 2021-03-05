@@ -51,11 +51,6 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 @Component(immediate = true, service = UserPersonalSitePermissions.class)
 public class UserPersonalSitePermissions {
 
-	public void gitk(List<Company> companies, Portlet portlet) {
-		_companyLocalService.forEachCompany(
-			company -> _initPermissions(company, portlet), companies);
-	}
-
 	public void initPermissions(long companyId, List<Portlet> portlets) {
 		Role powerUserRole = getPowerUserRole(companyId);
 
@@ -86,7 +81,12 @@ public class UserPersonalSitePermissions {
 			}
 		}
 	}
-	
+
+	public void initPermissions(Portlet portlet) {
+		_companyLocalService.forEachCompany(
+			company -> _initPermissions(company, portlet));
+	}
+
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
@@ -252,7 +252,7 @@ public class UserPersonalSitePermissions {
 					return panelApp;
 				}
 
-				initPermissions(_companyLocalService.getCompanies(), portlet);
+				initPermissions(portlet);
 
 				return panelApp;
 			}

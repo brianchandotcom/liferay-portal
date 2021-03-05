@@ -22,7 +22,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletConstants;
@@ -59,13 +58,6 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 @Component(immediate = true, service = PanelAppMyAccountPermissions.class)
 public class PanelAppMyAccountPermissions {
 
-	public void initPermissions(List<Company> companies, Portlet portlet) {
-		_companyLocalService.forEach(
-			company -> initPermissions(
-				company.getCompanyId(), Arrays.asList(portlet)),
-			companies);
-	}
-
 	public void initPermissions(long companyId, List<Portlet> portlets) {
 		Role userRole = _getUserRole(companyId);
 
@@ -92,6 +84,12 @@ public class PanelAppMyAccountPermissions {
 					exception);
 			}
 		}
+	}
+
+	public void initPermissions(Portlet portlet) {
+		_companyLocalService.forEachCompany(
+			company -> initPermissions(
+				company.getCompanyId(), Arrays.asList(portlet)));
 	}
 
 	@Activate
@@ -208,7 +206,7 @@ public class PanelAppMyAccountPermissions {
 					return panelApp;
 				}
 
-				initPermissions(_companyLocalService.getCompanies(), portlet);
+				initPermissions(portlet);
 
 				return panelApp;
 			}

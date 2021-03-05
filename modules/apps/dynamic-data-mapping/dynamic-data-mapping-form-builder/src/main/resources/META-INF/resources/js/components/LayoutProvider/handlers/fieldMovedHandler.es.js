@@ -35,6 +35,29 @@ export default (props, state, event) => {
 		sourceFieldName
 	);
 
+	if (sourceField.type === 'fieldset') {
+		const targetParentField = FormSupport.findFieldByFieldName(
+			[
+				{
+					rows: [
+						{
+							columns: [
+								{
+									fields: [sourceField],
+								},
+							],
+						},
+					],
+				},
+			],
+			targetParentFieldName
+		);
+
+		if (targetParentField) {
+			return;
+		}
+	}
+
 	let mergedState = {
 		...handleFieldDeleted(props, state, {
 			activePage: sourceFieldPage,

@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -45,11 +46,9 @@ import java.io.IOException;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -161,20 +160,11 @@ public class AMThumbnailsOSGiCommands {
 
 	private long[] _getCompanyIds(String... companyIds) {
 		if (companyIds.length == 0) {
-			List<Company> companies = _companyLocalService.getCompanies();
-
-			Stream<Company> companyStream = companies.stream();
-
-			return companyStream.mapToLong(
-				Company::getCompanyId
-			).toArray();
+			return ListUtil.toLongArray(
+				_companyLocalService.getCompanies(), Company::getCompanyId);
 		}
 
-		Stream<String> companyIdStream = Arrays.stream(companyIds);
-
-		return companyIdStream.mapToLong(
-			Long::parseLong
-		).toArray();
+		return ListUtil.toLongArray(Arrays.asList(companyIds), Long::parseLong);
 	}
 
 	private FileVersion _getFileVersion(long fileVersionId) {
@@ -237,18 +227,19 @@ public class AMThumbnailsOSGiCommands {
 	private boolean _isValidConfigurationEntries(
 		Collection<AMImageConfigurationEntry> amImageConfigurationEntries) {
 
-		Stream<ThumbnailConfiguration> thumbnailConfigurationStream =
-			Arrays.stream(_getThumbnailConfigurations());
+		for (ThumbnailConfiguration thumbnailConfiguration :
+				_getThumbnailConfigurations()) {
 
-		return thumbnailConfigurationStream.anyMatch(
-			thumbnailConfiguration -> {
-				Stream<AMImageConfigurationEntry>
-					amImageConfigurationEntryStream =
-						amImageConfigurationEntries.stream();
+			for (AMImageConfigurationEntry amImageConfigurationEntry :
+					amImageConfigurationEntries) {
 
-				return amImageConfigurationEntryStream.anyMatch(
-					thumbnailConfiguration::matches);
-			});
+				if (thumbnailConfiguration.matches(amImageConfigurationEntry)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 	private void _migrate(Long companyId) throws PortalException {

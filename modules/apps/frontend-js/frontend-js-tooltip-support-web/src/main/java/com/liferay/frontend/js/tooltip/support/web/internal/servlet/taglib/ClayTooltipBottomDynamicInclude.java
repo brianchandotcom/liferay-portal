@@ -14,9 +14,8 @@
 
 package com.liferay.frontend.js.tooltip.support.web.internal.servlet.taglib;
 
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
+import com.liferay.frontend.js.module.launcher.JSModuleLauncher;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
-import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 
 import java.io.IOException;
 
@@ -38,16 +37,8 @@ public class ClayTooltipBottomDynamicInclude implements DynamicInclude {
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
-		ScriptData scriptData = new ScriptData();
-
-		String initModuleName = _npmResolver.resolveModuleName(
-			"frontend-js-tooltip-support-web/index");
-
-		scriptData.append(
-			null, "TooltipSupport.default()",
-			initModuleName + " as TooltipSupport", ScriptData.ModulesType.ES6);
-
-		scriptData.writeTo(httpServletResponse.getWriter());
+		_jsModuleLauncher.writeModuleInvocation(
+			httpServletResponse.getWriter(), "frontend-js-tooltip-support-web");
 	}
 
 	@Override
@@ -58,6 +49,6 @@ public class ClayTooltipBottomDynamicInclude implements DynamicInclude {
 	}
 
 	@Reference
-	private NPMResolver _npmResolver;
+	private JSModuleLauncher _jsModuleLauncher;
 
 }

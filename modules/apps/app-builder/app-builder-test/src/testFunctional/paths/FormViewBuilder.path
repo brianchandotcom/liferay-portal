@@ -621,6 +621,12 @@
 </tr>
 
 <tr>
+	<td>FORM_FIELD_REQUIRED_ELLIPSES</td>
+	<td>//div[contains(@class, 'ddm-field')]//div[contains(@class, 'd-flex form-renderer-required-field justify-content-between')]//button[contains(@class, 'btn btn-monospaced btn-outline-borderless btn-sm btn-outline-secondary')]</td>
+	<td></td>
+</tr>
+
+<tr>
 	<td>FIELD_IN_FORM_BUILDER</td>
 	<td>//legend[text()='${fieldLabel}']</td>
 	<td></td>
@@ -629,6 +635,12 @@
 <tr>
 	<td>OPTIONS_PLACED_IN_FORM_BUILDER</td>
 	<td>//div[@class='ddm-radio']//span[text()='${optionLabel}']</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>OPTIONS_PLACED_IN_FORM_BUILDER_REQUIRED</td>
+	<td>//div[@class='popover-body']//span[text()='${optionLabel}']</td>
 	<td></td>
 </tr>
 

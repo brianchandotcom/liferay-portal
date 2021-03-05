@@ -187,6 +187,10 @@ definition {
 			value1 = "${key_fieldLabel}");
 	}
 
+	macro clickRequiredEllipses {
+		Click(locator1 = "FormViewBuilder#FORM_FIELD_REQUIRED_ELLIPSES");
+	}
+
 	macro closeSidebar() {
 		Click(locator1 = "FormViewBuilder#CLOSE_SIDEBAR");
 	}

@@ -243,7 +243,7 @@ public class FragmentEntryProcessorEditableTest {
 		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
 
 		fragmentEntryLink.setEditableValues(
-			_getJsonFileAsString("fragment_entry_link_editable_values.json"));
+			_readJSONFileToString("fragment_entry_link_editable_values.json"));
 
 		Assert.assertEquals(
 			_processedHTML,
@@ -270,7 +270,7 @@ public class FragmentEntryProcessorEditableTest {
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		String editableValues = _getJsonFileAsString(
+		String editableValues = _readJSONFileToString(
 			"fragment_entry_link_mapped_asset_field.json");
 
 		editableValues = StringUtil.replace(
@@ -406,7 +406,7 @@ public class FragmentEntryProcessorEditableTest {
 		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
 
 		fragmentEntryLink.setEditableValues(
-			_getJsonFileAsString(
+			_readJSONFileToString(
 				"fragment_entry_link_editable_values_empty_string.json"));
 
 		Assert.assertEquals(
@@ -463,7 +463,7 @@ public class FragmentEntryProcessorEditableTest {
 		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
 
 		fragmentEntryLink.setEditableValues(
-			_getJsonFileAsString(
+			_readJSONFileToString(
 				"fragment_entry_link_editable_values_localizable_image_alt." +
 					"json"));
 
@@ -500,7 +500,7 @@ public class FragmentEntryProcessorEditableTest {
 		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
 
 		fragmentEntryLink.setEditableValues(
-			_getJsonFileAsString(
+			_readJSONFileToString(
 				"fragment_entry_link_editable_values_matching_language.json"));
 
 		Assert.assertEquals(
@@ -537,7 +537,7 @@ public class FragmentEntryProcessorEditableTest {
 		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
 
 		fragmentEntryLink.setEditableValues(
-			_getJsonFileAsString(
+			_readJSONFileToString(
 				"fragment_entry_link_editable_values_unmatching_language." +
 					"json"));
 
@@ -610,7 +610,7 @@ public class FragmentEntryProcessorEditableTest {
 
 		Locale defaultLocale = LocaleUtil.getSiteDefault();
 
-		String dynamicContent = _getJsonFileAsString("dynamic_content.json");
+		String dynamicContent = _readJSONFileToString("dynamic_content.json");
 
 		dynamicContent = StringUtil.replace(
 			dynamicContent, "FILE_ENTRY_ID",
@@ -716,7 +716,7 @@ public class FragmentEntryProcessorEditableTest {
 			long classNameId, long classPK, String fieldId, String fileName)
 		throws Exception {
 
-		String editableValues = _getJsonFileAsString(fileName);
+		String editableValues = _readJSONFileToString(fileName);
 
 		editableValues = StringUtil.replace(
 			editableValues, "CLASS_NAME_ID", String.valueOf(classNameId));
@@ -819,7 +819,7 @@ public class FragmentEntryProcessorEditableTest {
 			String editableValuesFileName, String fieldId, FileEntry fileEntry)
 		throws Exception {
 
-		String ddmStructureContent = _getJsonFileAsString("ddm_structure.json");
+		String ddmStructureContent = _readJSONFileToString("ddm_structure.json");
 
 		ddmStructureContent = StringUtil.replace(
 			ddmStructureContent, "FIELD_NAME", fieldId);
@@ -836,7 +836,7 @@ public class FragmentEntryProcessorEditableTest {
 			editableValuesFileName);
 	}
 
-	private String _getJsonFileAsString(String jsonFileName) throws Exception {
+	private String _readJSONFileToString(String jsonFileName) throws Exception {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			_getFileAsString(jsonFileName));
 

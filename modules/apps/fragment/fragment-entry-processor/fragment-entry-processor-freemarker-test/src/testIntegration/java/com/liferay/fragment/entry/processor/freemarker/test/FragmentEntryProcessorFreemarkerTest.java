@@ -150,7 +150,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
 		fragmentEntryLink.setConfiguration(fragmentEntry.getConfiguration());
 		fragmentEntryLink.setEditableValues(
-			_getJsonFileAsString(
+			_readJSONFileToString(
 				"fragment_entry_link_editable_values_with_configuration.json"));
 
 		DefaultFragmentEntryProcessorContext
@@ -225,7 +225,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
 		fragmentEntryLink.setConfiguration(fragmentEntry.getConfiguration());
 		fragmentEntryLink.setEditableValues(
-			_getJsonFileAsString(
+			_readJSONFileToString(
 				"fragment_entry_link_editable_values_with_configuration_" +
 					"collectionselector_dynamic_collection.json",
 				editableValuesValues));
@@ -286,7 +286,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
 		fragmentEntryLink.setConfiguration(fragmentEntry.getConfiguration());
 		fragmentEntryLink.setEditableValues(
-			_getJsonFileAsString(
+			_readJSONFileToString(
 				"fragment_entry_link_editable_values_with_configuration_" +
 					"itemselector.json"));
 
@@ -364,7 +364,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
 		fragmentEntryLink.setConfiguration(fragmentEntry.getConfiguration());
 		fragmentEntryLink.setEditableValues(
-			_getJsonFileAsString(
+			_readJSONFileToString(
 				"fragment_entry_link_editable_values_with_configuration_" +
 					"itemselector.json"));
 
@@ -415,7 +415,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
 		fragmentEntryLink.setConfiguration(fragmentEntry.getConfiguration());
 		fragmentEntryLink.setEditableValues(
-			_getJsonFileAsString(
+			_readJSONFileToString(
 				"fragment_entry_link_editable_values_with_configuration_" +
 					"localizable.json"));
 
@@ -542,11 +542,11 @@ public class FragmentEntryProcessorFreemarkerTest {
 		return StringUtil.replace(template, "${", "}", values);
 	}
 
-	private String _getJsonFileAsString(String jsonFileName) throws Exception {
-		return _getJsonFileAsString(jsonFileName, null);
+	private String _readJSONFileToString(String jsonFileName) throws Exception {
+		return _readJSONFileToString(jsonFileName, null);
 	}
 
-	private String _getJsonFileAsString(
+	private String _readJSONFileToString(
 			String jsonFileName, Map<String, String> values)
 		throws Exception {
 

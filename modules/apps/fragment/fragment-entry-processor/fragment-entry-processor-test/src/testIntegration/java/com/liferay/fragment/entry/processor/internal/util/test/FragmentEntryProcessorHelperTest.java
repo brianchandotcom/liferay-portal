@@ -205,7 +205,7 @@ public class FragmentEntryProcessorHelperTest {
 
 		Locale defaultLocale = LocaleUtil.getSiteDefault();
 
-		String dynamicContent = _getJsonFileAsString("dynamic_content.json");
+		String dynamicContent = _readJSONFileToString("dynamic_content.json");
 
 		dynamicContent = StringUtil.replace(
 			dynamicContent,
@@ -257,7 +257,7 @@ public class FragmentEntryProcessorHelperTest {
 			FileEntry fileEntry, String fieldId)
 		throws Exception {
 
-		String ddmStructureContent = _getJsonFileAsString("ddm_structure.json");
+		String ddmStructureContent = _readJSONFileToString("ddm_structure.json");
 
 		ddmStructureContent = StringUtil.replace(
 			ddmStructureContent, "FIELD_NAME", fieldId);
@@ -341,7 +341,7 @@ public class FragmentEntryProcessorHelperTest {
 		return document.asXML();
 	}
 
-	private String _getJsonFileAsString(String jsonFileName) throws Exception {
+	private String _readJSONFileToString(String jsonFileName) throws Exception {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			_getFileAsString(jsonFileName));
 

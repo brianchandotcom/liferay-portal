@@ -47,6 +47,16 @@ public class FileEntryInfoItemFields {
 			InfoLocalizedValue.localize(
 				"com.liferay.journal.lang", "author-profile-image")
 		).build();
+	public static final InfoField<TextInfoFieldType> createDateInfoField =
+		InfoField.builder(
+		).infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"createDate"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				FileEntryInfoItemFields.class, "create-date")
+		).build();
 	public static final InfoField<TextInfoFieldType> descriptionInfoField =
 		InfoField.builder(
 		).infoFieldType(
@@ -106,6 +116,16 @@ public class FileEntryInfoItemFields {
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(
 				FileEntryInfoItemFields.class, "mime-type")
+		).build();
+	public static final InfoField<TextInfoFieldType> modifiedDateInfoField =
+		InfoField.builder(
+		).infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"modifiedDate"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				FileEntryInfoItemFields.class, "modified-date")
 		).build();
 	public static final InfoField<ImageInfoFieldType> previewImage =
 		InfoField.builder(

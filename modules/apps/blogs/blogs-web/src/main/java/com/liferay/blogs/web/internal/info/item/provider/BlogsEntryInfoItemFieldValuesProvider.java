@@ -102,6 +102,15 @@ public class BlogsEntryInfoItemFieldValuesProvider
 					BlogsEntryInfoItemFields.descriptionInfoField,
 					blogsEntry.getDescription()));
 
+			blogsEntryFieldValues.add(
+				new InfoFieldValue<>(
+					BlogsEntryInfoItemFields.createDateInfoField,
+					blogsEntry.getCreateDate()));
+			blogsEntryFieldValues.add(
+				new InfoFieldValue<>(
+					BlogsEntryInfoItemFields.modifiedDateInfoField,
+					blogsEntry.getModifiedDate()));
+
 			if (themeDisplay != null) {
 				WebImage smallWebImage = new WebImage(
 					blogsEntry.getSmallImageURL(themeDisplay),

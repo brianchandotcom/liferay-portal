@@ -280,6 +280,15 @@ public class JournalArticleInfoItemFieldValuesProvider
 						journalArticle.getDescriptionMap()
 					).build()));
 
+			journalArticleFieldValues.add(
+				new InfoFieldValue<>(
+					JournalArticleInfoItemFields.createDateInfoField,
+					journalArticle.getCreateDate()));
+			journalArticleFieldValues.add(
+				new InfoFieldValue<>(
+					JournalArticleInfoItemFields.modifiedDateInfoField,
+					journalArticle.getModifiedDate()));
+
 			if (themeDisplay != null) {
 				String articleImageURL = journalArticle.getArticleImageURL(
 					themeDisplay);

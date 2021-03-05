@@ -200,6 +200,15 @@ public class FileEntryInfoItemFieldValuesProvider
 				new InfoFieldValue<>(
 					FileEntryInfoItemFields.size, fileEntry.getSize()));
 
+			fileEntryFieldValues.add(
+				new InfoFieldValue<>(
+					FileEntryInfoItemFields.createDateInfoField,
+					fileEntry.getCreateDate()));
+			fileEntryFieldValues.add(
+				new InfoFieldValue<>(
+					FileEntryInfoItemFields.modifiedDateInfoField,
+					fileEntry.getModifiedDate()));
+
 			User user = _userLocalService.fetchUser(fileEntry.getUserId());
 
 			if (user != null) {

@@ -69,11 +69,11 @@ definition {
 
 		Click(locator1 = "WCEditWebContent#IMAGE_FIELD_SELECT");
 
-		ItemSelector.uploadFile(
+		ItemSelector.uploadFileWithSelectFrameNoLoading(
 			navTab = "Web Content Images",
 			uploadFileName = "Document_3.png");
 
-		FormFields.editTextAlt(
+		FormFields.editTextDescription(
 			fieldName = "Image",
 			fieldValue = "English (United States) Image Description");
 
@@ -83,7 +83,7 @@ definition {
 			fieldName = "title",
 			fieldValue = "Spanish (Spain) Title");
 
-		FormFields.editTextAlt(
+		FormFields.editTextDescription(
 			fieldName = "Image",
 			fieldValue = "Spanish (Spain) Image Description");
 
@@ -93,7 +93,7 @@ definition {
 			fieldName = "title",
 			fieldValue = "Portuguese (Brazil) Title");
 
-		FormFields.editTextAlt(
+		FormFields.editTextDescription(
 			fieldName = "Image",
 			fieldValue = "Portuguese (Brazil) Image Description");
 
@@ -111,7 +111,7 @@ definition {
 			locator1 = "TextInput#SELECTOR_INPUT",
 			value1 = "Document_3.png");
 
-		FormFields.viewTextValueAlt(
+		FormFields.viewTextValueDescription(
 			fieldName = "Image",
 			fieldValue = "English (United States) Image Description");
 
@@ -127,7 +127,7 @@ definition {
 			locator1 = "TextInput#SELECTOR_INPUT",
 			value1 = "Document_3.png");
 
-		FormFields.viewTextValueAlt(
+		FormFields.viewTextValueDescription(
 			fieldName = "Image",
 			fieldValue = "Spanish (Spain) Image Description");
 
@@ -143,7 +143,7 @@ definition {
 			locator1 = "TextInput#SELECTOR_INPUT",
 			value1 = "Document_3.png");
 
-		FormFields.viewTextValueAlt(
+		FormFields.viewTextValueDescription(
 			fieldName = "Image",
 			fieldValue = "Portuguese (Brazil) Image Description");
 	}

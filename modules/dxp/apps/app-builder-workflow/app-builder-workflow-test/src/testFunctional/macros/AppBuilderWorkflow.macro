@@ -502,6 +502,7 @@ definition {
 
 	macro validateActivityDate {
 		var key_currentDateDay = DateUtil.getFormattedDate("0", "dd");
+		var key_currentDateMonth = DateUtil.getCurrentMonth();
 		var key_currentDateYear = DateUtil.getCurrentYear();
 
 		var isLessThan10 = MathUtil.isLessThan("${key_currentDateDay}", "10");
@@ -509,7 +510,7 @@ definition {
 			var key_currentDateDay = StringUtil.substring("${key_currentDateDay}", "1", "2");
 		}
 
-		var key_currentDate = "/${key_currentDateDay}/${key_currentDateYear}";
+		var key_currentDate = "${key_currentDateMonth}/${key_currentDateDay}/${key_currentDateYear}";
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "AppBuilderWorkflow#ACTIVITY_DATE",

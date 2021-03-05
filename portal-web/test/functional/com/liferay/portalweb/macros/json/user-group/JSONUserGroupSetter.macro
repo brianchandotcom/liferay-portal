@@ -1,0 +1,11 @@
+definition {
+
+	macro setUserGroupId {
+		Variables.assertDefined(parameterList = "${userGroupName}");
+
+		var userGroupId = JSONUserGroupAPI._getUserGroupIdByName(userGroupName = "${userGroupName}");
+
+		return "${userGroupId}";
+	}
+
+}

@@ -81,7 +81,7 @@ public class EditUserGroupAssignmentsManagementToolbarDisplayContext {
 			() -> _hasAddUserGroupPermission(),
 			dropdownItem -> {
 				dropdownItem.putData("action", "removeUsers");
-				dropdownItem.setIcon("minus-circle");
+				dropdownItem.setIcon("times-circle");
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "remove"));
 				dropdownItem.setQuickAction(true);

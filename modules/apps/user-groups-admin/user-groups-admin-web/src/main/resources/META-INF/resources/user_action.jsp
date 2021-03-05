@@ -31,7 +31,7 @@ User user2 = (User)row.getObject();
 </portlet:actionURL>
 
 <liferay-ui:icon
-	icon="minus-circle"
+	icon="times-circle"
 	linkCssClass="table-action-link"
 	markupView="lexicon"
 	message="remove"

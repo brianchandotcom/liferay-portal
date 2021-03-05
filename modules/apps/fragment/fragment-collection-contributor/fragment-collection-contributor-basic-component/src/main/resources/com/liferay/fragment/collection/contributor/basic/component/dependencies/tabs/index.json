@@ -1,7 +1,6 @@
 {
 	"fieldSets": [
 		{
-			"configurationRole": "style",
 			"fields": [
 				{
 					"dataType": "int",

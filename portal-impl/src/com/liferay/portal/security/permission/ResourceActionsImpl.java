@@ -201,7 +201,13 @@ public class ResourceActionsImpl implements ResourceActions {
 
 	@Override
 	public List<String> getModelPortletResources(String name) {
-		return new ArrayList<>(_resourceReferences.get(name));
+		Set<String> resources = _resourceReferences.get(name);
+
+		if (resources == null) {
+			return new ArrayList<>();
+		}
+
+		return new ArrayList<>(resources);
 	}
 
 	@Override

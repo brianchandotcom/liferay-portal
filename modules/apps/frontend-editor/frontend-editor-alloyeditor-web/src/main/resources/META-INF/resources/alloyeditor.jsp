@@ -66,6 +66,10 @@ if (editorOptions != null) {
 </c:if>
 
 <script data-senna-track="temporary" type="text/javascript">
+	CKEDITOR.ADDITIONAL_RESOURCE_PARAMS = {
+		languageId: themeDisplay.getLanguageId(),
+	};
+
 	CKEDITOR.disableAutoInline = true;
 
 	CKEDITOR.dtd.$removeEmpty.i = 0;

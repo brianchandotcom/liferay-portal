@@ -21,6 +21,7 @@ import com.liferay.data.engine.rest.dto.v2_0.DataDefinitionField;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.data.engine.rest.resource.v2_0.DataLayoutResource;
+import com.liferay.data.engine.rest.resource.v2_0.DataListViewResource;
 import com.liferay.data.engine.rest.resource.v2_0.DataRecordCollectionResource;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService;
@@ -135,6 +136,11 @@ public class DataEngineNativeObjectPortalExecutor {
 	@Reference(unbind = "-")
 	protected void setDataLayoutResourceFactory(
 		DataLayoutResource.Factory dataLayoutResourceFactory) {
+	}
+
+	@Reference(unbind = "-")
+	protected void setDataListViewResourceFactory(
+		DataListViewResource.Factory dataListViewResourceFactory) {
 	}
 
 	@Reference(unbind = "-")

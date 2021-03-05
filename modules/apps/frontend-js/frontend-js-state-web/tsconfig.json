@@ -1,0 +1,20 @@
+{
+	"compilerOptions": {
+		"allowSyntheticDefaultImports": true,
+		"module": "es6",
+		"moduleResolution": "node",
+		"outDir": "./build/node/packageRunBuild/dist/",
+		"sourceMap": true,
+		"strict": true,
+		"target": "es6",
+		"typeRoots": [
+			"../../../node_modules/@types",
+			"./node_modules/@types",
+			"./src/main/resources/META-INF/resources/js/types"
+		]
+	},
+	"include": [
+		"src/**/*",
+		"test/**/*"
+	]
+}

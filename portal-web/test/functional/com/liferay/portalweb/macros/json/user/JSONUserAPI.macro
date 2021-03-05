@@ -53,6 +53,19 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
+	macro _addUserToUserGroup {
+		Variables.assertDefined(parameterList = "${userGroupId},${userId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/user/add-user-group-users/user-group-id/${userGroupId}/user-ids/${userId} \
+				-u test@liferay.com:test
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
 	macro _agreeToTermsAndAnswerReminderQuery {
 		Variables.assertDefined(parameterList = "${userId}");
 
@@ -178,6 +191,19 @@ definition {
 		var userIds = StringUtil.replace("${userIds}", "&quot;", "");
 
 		return "${userIds}";
+	}
+
+	macro _removeUserFromUserGroup {
+		Variables.assertDefined(parameterList = "${userGroupId},${userId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/user/unset-user-group-users/user-group-id/${userGroupId}/user-ids/${userId} \
+				-u test@liferay.com:test
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
 	macro _updatePassword {

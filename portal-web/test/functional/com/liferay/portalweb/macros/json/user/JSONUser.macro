@@ -147,6 +147,18 @@ definition {
 			userId = "${userId}");
 	}
 
+	macro addUserToUserGroup {
+		Variables.assertDefined(parameterList = "${userGroupName},${userEmailAddress}");
+
+		var userGroupId = JSONUserGroupSetter.setUserGroupId(userGroupName = "${userGroupName}");
+
+		var userId = JSONUserSetter.setUserId(userEmailAddress = "${userEmailAddress}");
+
+		JSONUserAPI._addUserToUserGroup(
+			userGroupId = "${userGroupId}",
+			userId = "${userId}");
+	}
+
 	macro deleteUserByEmailAddress {
 		Variables.assertDefined(parameterList = "${userEmailAddress}");
 
@@ -159,6 +171,18 @@ definition {
 		Variables.assertDefined(parameterList = "${userId}");
 
 		JSONUserAPI._deleteUser(userId = "${userId}");
+	}
+
+	macro removeUserFromUserGroup {
+		Variables.assertDefined(parameterList = "${userGroupName},${userEmailAddress}");
+
+		var userGroupId = JSONUserGroupSetter.setUserGroupId(userGroupName = "${userGroupName}");
+
+		var userId = JSONUserSetter.setUserId(userEmailAddress = "${userEmailAddress}");
+
+		JSONUserAPI._removeUserFromUserGroup(
+			userGroupId = "${userGroupId}",
+			userId = "${userId}");
 	}
 
 	macro setFirstPassword {

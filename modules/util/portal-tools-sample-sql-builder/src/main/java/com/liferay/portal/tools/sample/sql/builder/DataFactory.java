@@ -800,7 +800,7 @@ public class DataFactory {
 	public List<AssetCategoryModel> newAssetCategoryModels(
 		long groupId, List<AssetVocabularyModel> assetVocabularyModels) {
 
-		List<AssetCategoryModel> allAssetCategoryModels = new ArrayList<>();
+		List<AssetCategoryModel> assetCategoryModels = new ArrayList<>();
 
 		StringBundler sb = new StringBundler(4);
 
@@ -827,7 +827,7 @@ public class DataFactory {
 
 				groupAssetCategoryModels.add(assetCategoryModel);
 
-				allAssetCategoryModels.add(assetCategoryModel);
+				assetCategoryModels.add(assetCategoryModel);
 			}
 		}
 
@@ -853,7 +853,7 @@ public class DataFactory {
 
 		_assetCategoryModelsMaps[(int)groupId - 1] = assetCategoryModelsMap;
 
-		return allAssetCategoryModels;
+		return assetCategoryModels;
 	}
 
 	public AssetEntryModel newAssetEntryModel(BlogsEntryModel blogsEntryModel) {
@@ -1059,7 +1059,7 @@ public class DataFactory {
 	}
 
 	public List<AssetTagModel> newAssetTagModels(long groupId) {
-		List<AssetTagModel> allAssetTagModels = new ArrayList<>();
+		List<AssetTagModel> assetTagModels = new ArrayList<>();
 
 		List<AssetTagModel> groupAssetTagModels = new ArrayList<>(
 			BenchmarksPropsValues.MAX_ASSET_TAG_COUNT);
@@ -1081,7 +1081,7 @@ public class DataFactory {
 
 			groupAssetTagModels.add(assetTagModel);
 
-			allAssetTagModels.add(assetTagModel);
+			assetTagModels.add(assetTagModel);
 		}
 
 		Map<Long, List<AssetTagModel>> assetTagModelsMap = new HashMap<>();
@@ -1104,11 +1104,11 @@ public class DataFactory {
 
 		_assetTagModelsMaps[(int)groupId - 1] = assetTagModelsMap;
 
-		return allAssetTagModels;
+		return assetTagModels;
 	}
 
 	public List<AssetVocabularyModel> newAssetVocabularyModels(long groupId) {
-		List<AssetVocabularyModel> allAssetVocabularyModels = new ArrayList<>();
+		List<AssetVocabularyModel> assetVocabularyModels = new ArrayList<>();
 
 		StringBundler sb = new StringBundler(4);
 
@@ -1125,10 +1125,10 @@ public class DataFactory {
 			AssetVocabularyModel assetVocabularyModel = newAssetVocabularyModel(
 				groupId, _sampleUserId, _SAMPLE_USER_NAME, sb.toString());
 
-			allAssetVocabularyModels.add(assetVocabularyModel);
+			assetVocabularyModels.add(assetVocabularyModel);
 		}
 
-		return allAssetVocabularyModels;
+		return assetVocabularyModels;
 	}
 
 	public List<BlogsEntryModel> newBlogsEntryModels(long groupId) {
@@ -5281,16 +5281,17 @@ public class DataFactory {
 	private final long _accountId;
 	private RoleModel _administratorRoleModel;
 	private Map<Long, SimpleCounter>[] _assetCategoryCounters;
-	private Map<Long, List<AssetCategoryModel>>[] _assetCategoryModelsMaps =
-		(Map<Long, List<AssetCategoryModel>>[])
-			new HashMap<?, ?>[BenchmarksPropsValues.MAX_GROUP_COUNT];
+	private final Map<Long, List<AssetCategoryModel>>[]
+		_assetCategoryModelsMaps =
+			(Map<Long, List<AssetCategoryModel>>[])
+				new HashMap<?, ?>[BenchmarksPropsValues.MAX_GROUP_COUNT];
 	private final long[] _assetClassNameIds;
 	private final Map<Long, Integer> _assetClassNameIdsIndexes =
 		new HashMap<>();
 	private final Map<Long, Integer> _assetPublisherQueryStartIndexes =
 		new HashMap<>();
 	private Map<Long, SimpleCounter>[] _assetTagCounters;
-	private Map<Long, List<AssetTagModel>>[] _assetTagModelsMaps =
+	private final Map<Long, List<AssetTagModel>>[] _assetTagModelsMaps =
 		(Map<Long, List<AssetTagModel>>[])
 			new HashMap<?, ?>[BenchmarksPropsValues.MAX_GROUP_COUNT];
 	private final Map<String, ClassNameModel> _classNameModels =

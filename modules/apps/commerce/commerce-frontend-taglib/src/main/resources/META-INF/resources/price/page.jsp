@@ -16,7 +16,7 @@
 
 <%@ include file="/price/init.jsp" %>
 
-<span class="<%= Validator.isNotNull(namespace) ? namespace + "price price" : "price" %><%= compact ? " compact" : StringPool.BLANK %>">
+<span class="<%= Validator.isNotNull(namespace) ? namespace + "price price" : "price" %><%= compact ? " compact" : StringPool.BLANK %>" id="<%= Validator.isNotNull(namespace) ? namespace + "price" : "" %>">
 	<liferay-util:include page="/price/default.jsp" servletContext="<%= application %>" />
 
 	<c:choose>
@@ -47,14 +47,17 @@
 </span>
 
 <c:if test="<%= Validator.isNotNull(namespace) %>">
-	<liferay-frontend:component
-		context='<%=
-			HashMapBuilder.<String, Object>put(
-				"displayDiscountLevels", displayDiscountLevels
-			).put(
-				"namespace", namespace
-			).build()
-		%>'
-		module="price/js/PriceCPInstanceChangeHandler"
-	/>
+	<aui:script require="commerce-frontend-js/components/price/entry as Price">
+		const componentId = '<%= namespace + "price" %>';
+
+		const initialProps = {
+			displayDiscountLevels: <%= displayDiscountLevels %>,
+			namespace: '<%= namespace %>',
+			netPrice: <%= netPrice %>,
+			price: <%= jsonSerializer.serializeDeep(priceModel) %>,
+			standalone: true,
+		};
+
+		Price.default(componentId, componentId, initialProps);
+	</aui:script>
 </c:if>

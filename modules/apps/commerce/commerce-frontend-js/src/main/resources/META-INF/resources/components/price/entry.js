@@ -12,21 +12,7 @@
  * details.
  */
 
-import * as Events from 'commerce-frontend-js/utilities/eventsDefinitions';
+import launcher from '../../utilities/launcher';
+import Price from './Price';
 
-function updatePrice(_params) {
-
-	/**
-	 * Due to PTR-2238 this function
-	 * is temporarily not implementable.
-	 */
-}
-
-export default function (context) {
-	Liferay.on(
-		`${context.namespace}${Events.CP_INSTANCE_CHANGED}`,
-		({cpInstance}) => {
-			updatePrice({cpInstance, ...context});
-		}
-	);
-}
+export default (...data) => launcher(Price, ...data);

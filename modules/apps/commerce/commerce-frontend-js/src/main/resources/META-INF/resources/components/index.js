@@ -23,6 +23,7 @@ export {default as DropdownMenu} from './dropdown/entry';
 export {default as Gallery} from './gallery/entry';
 export {default as ItemFinder} from './item_finder/entry';
 export {default as MiniCart} from './mini_cart/entry';
+export {default as Price} from './price/entry';
 export {default as QuantitySelector} from './quantity_selector/entry';
 export {default as SidePanel} from './side_panel/entry';
 export {default as StepTracker} from './step_tracker/entry';

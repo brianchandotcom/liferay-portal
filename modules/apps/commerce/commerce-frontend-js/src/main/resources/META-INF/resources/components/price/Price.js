@@ -14,35 +14,74 @@
 
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
-import {collectDiscountLevels, isNonnull} from '../util/index';
+import {CP_INSTANCE_CHANGED} from '../../utilities/eventsDefinitions';
+import {
+	adaptLegacyPriceModel,
+	collectDiscountLevels,
+	isNonnull,
+} from './util/index';
 
-function ItemPriceView({displayDiscountLevels, price}) {
+function Price({
+	compact,
+	displayDiscountLevels,
+	namespace,
+	netPrice,
+	price,
+	standalone,
+}) {
+	const [activePrice, setActivePrice] = useState(
+		adaptLegacyPriceModel(price)
+	);
+
 	const {
 		discountPercentage,
 		finalPriceFormatted,
 		priceFormatted,
 		promoPrice,
 		promoPriceFormatted,
-	} = price;
+	} = activePrice;
 
 	const discountLevels = displayDiscountLevels
-			? collectDiscountLevels(price)
-			: [],
-		hasPromo = isNonnull(promoPrice),
-		hasDiscount = isNonnull(discountPercentage, ...discountLevels);
+		? collectDiscountLevels(activePrice)
+		: [];
 
-	return (
-		<div className={'compact price'}>
+	const hasDiscount = isNonnull(discountPercentage, ...discountLevels);
+	const hasPromo = isNonnull(promoPrice);
+
+	const updatePrice = ({cpInstance}) =>
+		setActivePrice((currentPrice) => ({
+			...currentPrice,
+			...adaptLegacyPriceModel(cpInstance.prices),
+		}));
+
+	useEffect(() => {
+		if (namespace) {
+			Liferay.on(`${namespace}${CP_INSTANCE_CHANGED}`, updatePrice);
+		}
+
+		return () => {
+			if (namespace) {
+				Liferay.detach(
+					`${namespace}${CP_INSTANCE_CHANGED}`,
+					updatePrice
+				);
+			}
+		};
+	}, [namespace]);
+
+	const Component = (
+		<>
 			<span className="price-label">
-				{Liferay.Language.get('catalog-price')}
+				{Liferay.Language.get('list-price')}
 			</span>
 			<span
-				className={classnames(
-					'price-value',
-					(hasPromo || hasDiscount) && 'price-value-inactive'
-				)}
+				className={classnames({
+					'price-standalone': standalone,
+					'price-value': true,
+					'price-value-inactive': hasPromo || hasDiscount,
+				})}
 			>
 				{priceFormatted}
 			</span>
@@ -50,7 +89,7 @@ function ItemPriceView({displayDiscountLevels, price}) {
 			{hasPromo && (
 				<>
 					<span className={'price-label'}>
-						{Liferay.Language.get('promo-price')}
+						{Liferay.Language.get('sale-price')}
 					</span>
 					<span
 						className={classnames(
@@ -85,23 +124,38 @@ function ItemPriceView({displayDiscountLevels, price}) {
 						)}
 					</span>
 					<span className={'price-label'}>
-						{Liferay.Language.get('final-price')}
+						{Liferay.Language.get(
+							netPrice ? 'net-price' : 'gross-price'
+						)}
 					</span>
 					<span className={'price-value price-value-final'}>
 						{finalPriceFormatted}
 					</span>
 				</>
 			)}
-		</div>
+		</>
+	);
+
+	return standalone ? (
+		Component
+	) : (
+		<div className={classnames({compact, price: true})}>{Component}</div>
 	);
 }
 
-ItemPriceView.defaultProps = {
+Price.defaultProps = {
+	compact: false,
 	displayDiscountLevels: false,
+	namespace: '',
+	netPrice: true,
+	standalone: false,
 };
 
-ItemPriceView.propTypes = {
-	displayDiscountLevels: PropTypes.bool,
+Price.propTypes = {
+	compact: PropTypes.bool,
+	displayDiscountLevels: PropTypes.bool.isRequired,
+	namespace: PropTypes.bool,
+	netPrice: PropTypes.bool,
 	price: PropTypes.shape({
 		currency: PropTypes.string.isRequired,
 		discount: PropTypes.number,
@@ -117,6 +171,7 @@ ItemPriceView.propTypes = {
 		promoPrice: PropTypes.number,
 		promoPriceFormatted: PropTypes.string,
 	}).isRequired,
+	standalone: PropTypes.bool,
 };
 
-export default ItemPriceView;
+export default Price;

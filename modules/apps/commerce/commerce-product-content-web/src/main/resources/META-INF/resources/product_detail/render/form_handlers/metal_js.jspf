@@ -26,10 +26,12 @@
 
 	function updateGallery(formFields) {
 		var formData = new FormData();
+
 		formData.append(
 			'<portlet:namespace />ddmFormValues',
 			JSON.stringify(formFields)
 		);
+
 		formData.append('groupId', themeDisplay.getScopeGroupId());
 
 		fetch(
@@ -124,6 +126,7 @@
 					actionURL: '<%= checkCPInstanceURL %>',
 					cpDefinitionId: '<%= cpDefinitionId %>',
 					DDMFormInstance: DDMFormInstance,
+					namespace: '<%= liferayPortletResponse.getNamespace() %>',
 					portletId: CP_CONTENT_WEB_PORTLET_KEY,
 				};
 

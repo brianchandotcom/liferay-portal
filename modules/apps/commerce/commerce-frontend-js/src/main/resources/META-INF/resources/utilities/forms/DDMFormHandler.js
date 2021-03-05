@@ -17,9 +17,10 @@ import {CP_INSTANCE_CHANGED} from '../eventsDefinitions';
 import {getDefaultFieldsShape, updateFields} from './formsHelper';
 
 class DDMFormHandler {
-	constructor({DDMFormInstance, actionURL, portletId}) {
+	constructor({DDMFormInstance, actionURL, namespace, portletId}) {
 		this.actionURL = actionURL;
 		this.DDMFormInstance = DDMFormInstance;
+		this.namespace = namespace;
 		this.portletId = portletId;
 		this.fields = getDefaultFieldsShape(
 			DDMFormInstance.reactComponentRef.current.toJSON()
@@ -59,7 +60,10 @@ class DDMFormHandler {
 					formFields: this.fields,
 				};
 
-				Liferay.fire(CP_INSTANCE_CHANGED, dispatchedPayload);
+				Liferay.fire(
+					`${this.namespace}${CP_INSTANCE_CHANGED}`,
+					dispatchedPayload
+				);
 			}
 		});
 	}

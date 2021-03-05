@@ -123,6 +123,7 @@ export default function LabelField({
 	const [value, setValue] = useState(getInitialValue(selectedValue, state));
 
 	const {
+		availableLanguageIds,
 		dataDefinitionField,
 		dataLayoutField,
 		defaultLanguageId,
@@ -205,12 +206,20 @@ export default function LabelField({
 				autoFocus
 				className="ddm-field-text"
 				name={field.name}
-				onChange={({target: {value: currentValue}}) =>
+				onChange={({target: {value: currentValue}}) => {
 					setValue({
 						...value,
 						[editingLanguageId]: currentValue,
-					})
-				}
+					});
+
+					if (!availableLanguageIds.includes(editingLanguageId)) {
+						dispatch({
+							payload: editingLanguageId,
+							type:
+								DataLayoutBuilderActions.UPDATE_DATA_DEFINITION_AVAILABLE_LANGUAGE,
+						});
+					}
+				}}
 				placeholder={field.placeholder}
 				type="text"
 				value={value[editingLanguageId] || value[defaultLanguageId]}

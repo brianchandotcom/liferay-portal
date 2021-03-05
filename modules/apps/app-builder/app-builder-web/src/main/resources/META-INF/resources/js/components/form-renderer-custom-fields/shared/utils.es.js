@@ -53,7 +53,11 @@ export function getDataDefinitionField({
  */
 export function getFormattedState(state) {
 	const {
-		dataDefinition: {dataDefinitionFields, defaultLanguageId},
+		dataDefinition: {
+			availableLanguageIds,
+			dataDefinitionFields,
+			defaultLanguageId,
+		},
 		dataLayout: {dataLayoutFields},
 		editingLanguageId,
 	} = state;
@@ -70,6 +74,7 @@ export function getFormattedState(state) {
 	};
 
 	return {
+		availableLanguageIds,
 		dataDefinitionField,
 		dataDefinitionFields,
 		dataLayoutField: {

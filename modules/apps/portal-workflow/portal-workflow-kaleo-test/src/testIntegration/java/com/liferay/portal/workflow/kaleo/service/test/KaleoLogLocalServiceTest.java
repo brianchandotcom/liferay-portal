@@ -33,7 +33,6 @@ import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoLog;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
-import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.runtime.util.comparator.KaleoLogOrderByComparator;
 
@@ -41,7 +40,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Rule;
@@ -67,43 +65,39 @@ public class KaleoLogLocalServiceTest extends BaseKaleoLocalServiceTestCase {
 
 		Task task = new Task(RandomTestUtil.randomString(), StringPool.BLANK);
 
-		Set<Assignment> assignments = new HashSet<>();
-
-		assignments.add(
-			new RoleAssignment(
-				RoleConstants.ADMINISTRATOR, RoleConstants.TYPE_REGULAR_LABEL));
-		assignments.add(
-			new RoleAssignment(
-				RoleConstants.GUEST, RoleConstants.TYPE_REGULAR_LABEL));
-		assignments.add(
-			new RoleAssignment(
-				RoleConstants.OWNER, RoleConstants.TYPE_REGULAR_LABEL));
-
-		task.setAssignments(assignments);
+		task.setAssignments(
+			new HashSet<Assignment>() {
+				{
+					add(
+						new RoleAssignment(
+							RoleConstants.ADMINISTRATOR,
+							RoleConstants.TYPE_REGULAR_LABEL));
+					add(
+						new RoleAssignment(
+							RoleConstants.GUEST,
+							RoleConstants.TYPE_REGULAR_LABEL));
+					add(
+						new RoleAssignment(
+							RoleConstants.OWNER,
+							RoleConstants.TYPE_REGULAR_LABEL));
+				}
+			});
 
 		KaleoNode kaleoNode = addKaleoNode(kaleoInstance, task);
 
 		long kaleoClassPK = RandomTestUtil.nextLong();
 
-		for (Assignment assignment : assignments) {
+		for (Assignment assignment : task.getAssignments()) {
 			addKaleoTaskAssignmentInstance(
 				kaleoTaskInstanceToken,
 				addKaleoTaskAssignment(kaleoNode, assignment, kaleoClassPK));
 		}
 
-		List<KaleoTaskAssignmentInstance> kaleoTaskAssignmentInstances =
-			kaleoTaskInstanceToken.getKaleoTaskAssignmentInstances();
-
 		List<KaleoLog> kaleoLogs = addTaskAssignmentKaleoLogs(
 			kaleoInstance, kaleoTaskInstanceToken);
 
-		Assert.assertTrue(ListUtil.isNotEmpty(kaleoTaskAssignmentInstances));
 		Assert.assertTrue(ListUtil.isNotEmpty(kaleoLogs));
-
-		int expectedSize = kaleoTaskAssignmentInstances.size();
-
-		Assert.assertEquals(
-			kaleoLogs.toString(), expectedSize, kaleoLogs.size());
+		Assert.assertEquals(kaleoLogs.toString(), 3, kaleoLogs.size());
 	}
 
 	@Test

@@ -181,7 +181,7 @@ definition {
 			webContentDateFieldLabel = "Date",
 			webContentNumeric = "1.1",
 			webContentNumericFieldLabel = "Number",
-			webContentText = "Text - en_US",
+			webContentText = "Text",
 			webContentTextFieldLabel = "Text",
 			webContentTitle = "My Web Content based on My Structure with repeated fields");
 
@@ -214,7 +214,7 @@ definition {
 			webContentDateFieldLabel = "Date",
 			webContentNumeric = "1.1",
 			webContentNumericFieldLabel = "Number",
-			webContentText = "Text - en_US",
+			webContentText = "Text",
 			webContentTextFieldLabel = "Text",
 			webContentTitle = "My Web Content based on My Structure with repeated fields");
 

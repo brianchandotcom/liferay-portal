@@ -146,7 +146,7 @@
 			"tip": {
 				"en_US": ""
 			},
-			"type": "ddm-number"
+			"type": "numeric"
 		}
 	],
 	"successPage": {

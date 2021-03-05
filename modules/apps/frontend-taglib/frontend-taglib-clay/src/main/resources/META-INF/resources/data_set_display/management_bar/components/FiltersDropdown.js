@@ -25,17 +25,20 @@ function FiltersDropdown() {
 	const [active, setActive] = useState(false);
 	const [query, setQuery] = useState('');
 
-	const [visibleFilters] = useState(
-		filtersState.filters.filter((filter) => !filter.invisible)
+	const visibleFilters = useMemo(
+		() => filtersState.filters.filter((filter) => !filter.invisible),
+		[filtersState]
 	);
 
 	const [activeFilterId, setActiveFilterId] = useState(null);
 
 	const activeFilter = useMemo(() => {
-		return (
-			activeFilterId &&
-			visibleFilters.find((filter) => filter.id === activeFilterId)
-		);
+		return visibleFilters.length && activeFilterId
+			? activeFilterId &&
+					visibleFilters.find(
+						(filter) => filter.id === activeFilterId
+					)
+			: null;
 	}, [visibleFilters, activeFilterId]);
 
 	return filtersState.filters.length ? (
@@ -91,7 +94,9 @@ function FiltersDropdown() {
 										item.value !== null
 									}
 									key={item.id}
-									onClick={() => setActiveFilterId(item.id)}
+									onClick={() => {
+										setActiveFilterId(item.id);
+									}}
 								>
 									{item.label}
 								</ClayDropDown.Item>

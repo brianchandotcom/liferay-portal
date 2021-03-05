@@ -122,6 +122,18 @@ definition {
 			key_dmDocumentTitle = "Add Excel Sheet Title",
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
 			value1 = "Add Excel Sheet Title");
+
+		DMNavigator.gotoEditDocumentPG(dmDocumentTitle = "Add Excel Sheet Title");
+
+		AssertTextEquals(
+			key_fieldLabel = "Title",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Add Excel Sheet Title");
+
+		AssertTextEquals(
+			key_fieldLabel = "File Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Add Excel Sheet Title.xlsx");
 	}
 
 	@description = "This test ensures that a Powerpoint presentation can be added via the OneDrive editor."
@@ -157,6 +169,18 @@ definition {
 			key_dmDocumentTitle = "Add PowerPoint Presentation Title",
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
 			value1 = "Add PowerPoint Presentation Title");
+
+		DMNavigator.gotoEditDocumentPG(dmDocumentTitle = "Add PowerPoint Presentation Title");
+
+		AssertTextEquals(
+			key_fieldLabel = "Title",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Add PowerPoint Presentation Title");
+
+		AssertTextEquals(
+			key_fieldLabel = "File Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Add PowerPoint Presentation Title.pptx");
 	}
 
 	@description = "This test ensures that a Word document can be added via the OneDrive editor. "
@@ -192,6 +216,18 @@ definition {
 			key_dmDocumentTitle = "Add Word Doc Title",
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
 			value1 = "Add Word Doc Title");
+
+		DMNavigator.gotoEditDocumentPG(dmDocumentTitle = "Add Word Doc Title");
+
+		AssertTextEquals(
+			key_fieldLabel = "Title",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Add Word Doc Title");
+
+		AssertTextEquals(
+			key_fieldLabel = "File Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Add Word Doc Title.docx");
 	}
 
 	@description = "This test covers LPS-102478. It ensures that an Office 365 document automatically checks in after the lock is expired."

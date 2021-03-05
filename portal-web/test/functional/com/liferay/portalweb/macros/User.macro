@@ -2267,13 +2267,6 @@ definition {
 		UserBar.signOut();
 	}
 
-	@description = "Log out of Liferay Portal."
-	macro logoutUserPG {
-		Navigator.openURL();
-
-		UserBar.signOut();
-	}
-
 	macro makePrimary {
 		Click.waitForMenuToggleJSClick(
 			key_rowEntry = "${rowEntry}",

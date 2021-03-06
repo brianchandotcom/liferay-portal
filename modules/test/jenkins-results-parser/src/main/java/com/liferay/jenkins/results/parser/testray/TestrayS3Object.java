@@ -65,9 +65,18 @@ public class TestrayS3Object {
 		return _url;
 	}
 
+	public String getURLString() {
+		String urlString = String.valueOf(_url);
+
+		urlString = urlString.replace("(", "%28");
+		urlString = urlString.replace(")", "%29");
+
+		return urlString;
+	}
+
 	@Override
 	public String toString() {
-		return String.valueOf(getURL());
+		return getURLString();
 	}
 
 	protected TestrayS3Object(TestrayS3Bucket testrayS3Bucket, String key) {

@@ -92,8 +92,8 @@ public class TestrayS3Bucket {
 
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
-					"Created S3 Object ",
-					String.valueOf(testrayS3Object.getURL()), " in ",
+					"Created S3 Object ", testrayS3Object.getURLString(),
+					" in ",
 					JenkinsResultsParserUtil.toDurationString(
 						JenkinsResultsParserUtil.getCurrentTimeMillis() -
 							start)));
@@ -133,8 +133,8 @@ public class TestrayS3Bucket {
 
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
-					"Created S3 Object ",
-					String.valueOf(testrayS3Object.getURL()), " in ",
+					"Created S3 Object ", testrayS3Object.getURLString(),
+					" in ",
 					JenkinsResultsParserUtil.toDurationString(
 						JenkinsResultsParserUtil.getCurrentTimeMillis() -
 							start)));
@@ -183,8 +183,7 @@ public class TestrayS3Bucket {
 
 		System.out.println(
 			JenkinsResultsParserUtil.combine(
-				"Deleted S3 Object ", String.valueOf(testrayS3Object.getURL()),
-				" in ",
+				"Deleted S3 Object ", testrayS3Object.getURLString(), " in ",
 				JenkinsResultsParserUtil.toDurationString(
 					JenkinsResultsParserUtil.getCurrentTimeMillis() - start)));
 	}

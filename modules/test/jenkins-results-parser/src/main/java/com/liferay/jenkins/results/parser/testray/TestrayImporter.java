@@ -14,13 +14,17 @@
 
 package com.liferay.jenkins.results.parser.testray;
 
+import com.liferay.jenkins.results.parser.AntException;
+import com.liferay.jenkins.results.parser.AntUtil;
 import com.liferay.jenkins.results.parser.BatchDependentJob;
 import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.Dom4JUtil;
+import com.liferay.jenkins.results.parser.GitWorkingDirectory;
 import com.liferay.jenkins.results.parser.GitWorkingDirectoryFactory;
 import com.liferay.jenkins.results.parser.JenkinsMaster;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
+import com.liferay.jenkins.results.parser.LocalGitBranch;
 import com.liferay.jenkins.results.parser.PluginsBranchInformationBuild;
 import com.liferay.jenkins.results.parser.PluginsTopLevelBuild;
 import com.liferay.jenkins.results.parser.PortalAppReleaseTopLevelBuild;
@@ -43,6 +47,7 @@ import com.liferay.jenkins.results.parser.test.clazz.group.FunctionalAxisTestCla
 import com.liferay.jenkins.results.parser.test.clazz.group.JUnitAxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroup;
 
+import java.io.File;
 import java.io.IOException;
 
 import java.net.URLEncoder;
@@ -52,6 +57,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -913,6 +919,18 @@ public class TestrayImporter {
 		}
 	}
 
+	public void setup() {
+		_checkoutPortalBranch();
+
+		_checkoutPortalBaseBranch();
+
+		_setupProfileDXP();
+
+		_callPrepareTCK();
+
+		_checkoutPluginsBranch();
+	}
+
 	private void _addPropertyElements(
 		Element propertiesElement, Map<String, String> propertiesMap) {
 
@@ -935,6 +953,169 @@ public class TestrayImporter {
 		}
 	}
 
+	private void _callPrepareTCK() {
+		PortalGitWorkingDirectory portalGitWorkingDirectory =
+			_getPortalGitWorkingDirectory();
+
+		Map<String, String> parameters = new HashMap<>();
+
+		String portalUpstreamBranchName =
+			portalGitWorkingDirectory.getUpstreamBranchName();
+
+		if (!portalUpstreamBranchName.contains("ee-")) {
+			GitWorkingDirectory jenkinsGitWorkingDirectory =
+				_getJenkinsGitWorkingDirectory();
+
+			Properties testProperties = JenkinsResultsParserUtil.getProperties(
+				new File(
+					jenkinsGitWorkingDirectory.getWorkingDirectory(),
+					"commands/dependencies/test.properties"));
+
+			parameters.put(
+				"tck.home",
+				JenkinsResultsParserUtil.getProperty(
+					testProperties, "tck.home"));
+		}
+
+		try {
+			AntUtil.callTarget(
+				portalGitWorkingDirectory.getWorkingDirectory(),
+				"build-test-tck.xml", "prepare-tck", parameters);
+		}
+		catch (AntException antException) {
+			throw new RuntimeException(antException);
+		}
+	}
+
+	private void _checkoutPluginsBranch() {
+		if (!(_topLevelBuild instanceof PluginsBranchInformationBuild)) {
+			return;
+		}
+
+		PluginsBranchInformationBuild pluginsBranchInformationBuild =
+			(PluginsBranchInformationBuild)_topLevelBuild;
+
+		Build.BranchInformation branchInformation =
+			pluginsBranchInformationBuild.getPluginsBranchInformation();
+
+		if (branchInformation == null) {
+			return;
+		}
+
+		Properties buildProperties;
+
+		try {
+			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		String upstreamBranchName = branchInformation.getUpstreamBranchName();
+
+		String upstreamDirPath = JenkinsResultsParserUtil.getProperty(
+			buildProperties, "plugins.dir", upstreamBranchName);
+		String upstreamRepository = JenkinsResultsParserUtil.getProperty(
+			buildProperties, "plugins.repository", upstreamBranchName);
+
+		GitWorkingDirectory pluginsGitWorkingDirectory =
+			GitWorkingDirectoryFactory.newGitWorkingDirectory(
+				upstreamBranchName, upstreamDirPath, upstreamRepository);
+
+		pluginsGitWorkingDirectory.checkoutLocalGitBranch(branchInformation);
+
+		pluginsGitWorkingDirectory.displayLog();
+
+		PortalGitWorkingDirectory portalGitWorkingDirectory =
+			_getPortalGitWorkingDirectory();
+
+		File releasePropertiesFile = new File(
+			portalGitWorkingDirectory.getWorkingDirectory(),
+			JenkinsResultsParserUtil.combine(
+				"release.", System.getenv("HOSTNAME"), ".properties"));
+
+		try {
+			JenkinsResultsParserUtil.write(
+				releasePropertiesFile,
+				JenkinsResultsParserUtil.combine(
+					"lp.plugins.dir=",
+					JenkinsResultsParserUtil.getCanonicalPath(
+						pluginsGitWorkingDirectory.getWorkingDirectory())));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
+	private void _checkoutPortalBaseBranch() {
+		if (!(_topLevelBuild instanceof PortalBranchInformationBuild)) {
+			return;
+		}
+
+		PortalBranchInformationBuild portalBranchInformationBuild =
+			(PortalBranchInformationBuild)_topLevelBuild;
+
+		Build.BranchInformation branchInformation =
+			portalBranchInformationBuild.getPortalBaseBranchInformation();
+
+		if (branchInformation == null) {
+			return;
+		}
+
+		PortalGitWorkingDirectory portalBaseGitWorkingDirectory =
+			GitWorkingDirectoryFactory.newPortalGitWorkingDirectory(
+				branchInformation.getUpstreamBranchName());
+
+		LocalGitBranch portalBaseLocalGitBranch =
+			portalBaseGitWorkingDirectory.checkoutLocalGitBranch(
+				branchInformation);
+
+		portalBaseGitWorkingDirectory.displayLog();
+
+		PortalGitWorkingDirectory portalGitWorkingDirectory =
+			_getPortalGitWorkingDirectory();
+
+		portalGitWorkingDirectory.fetch(
+			portalBaseLocalGitBranch.getName(), portalBaseLocalGitBranch);
+
+		try {
+			JenkinsResultsParserUtil.write(
+				new File(
+					portalGitWorkingDirectory.getWorkingDirectory(),
+					"git-commit-portal"),
+				portalBaseLocalGitBranch.getSHA());
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		try {
+			AntUtil.callTarget(
+				portalGitWorkingDirectory.getWorkingDirectory(),
+				"build-working-dir.xml", "prepare-working-dir");
+		}
+		catch (AntException antException) {
+			throw new RuntimeException(antException);
+		}
+	}
+
+	private void _checkoutPortalBranch() {
+		if (!(_topLevelBuild instanceof PortalBranchInformationBuild)) {
+			return;
+		}
+
+		PortalBranchInformationBuild portalBranchInformationBuild =
+			(PortalBranchInformationBuild)_topLevelBuild;
+
+		PortalGitWorkingDirectory portalGitWorkingDirectory =
+			_getPortalGitWorkingDirectory();
+
+		portalGitWorkingDirectory.checkoutLocalGitBranch(
+			portalBranchInformationBuild.getPortalBranchInformation());
+
+		portalGitWorkingDirectory.displayLog();
+	}
+
 	private String _getBuildParameter(String buildParameterName) {
 		Map<String, String> buildParameters = new HashMap<>();
 
@@ -947,6 +1128,28 @@ public class TestrayImporter {
 		buildParameters.putAll(_topLevelBuild.getParameters());
 
 		return buildParameters.get(buildParameterName);
+	}
+
+	private GitWorkingDirectory _getJenkinsGitWorkingDirectory() {
+		Properties buildProperties;
+
+		try {
+			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		String upstreamBranchName = "master";
+
+		String upstreamDirPath = JenkinsResultsParserUtil.getProperty(
+			buildProperties, "jenkins.dir", upstreamBranchName);
+
+		String upstreamRepository = JenkinsResultsParserUtil.getProperty(
+			buildProperties, "jenkins.repository", upstreamBranchName);
+
+		return GitWorkingDirectoryFactory.newGitWorkingDirectory(
+			upstreamBranchName, upstreamDirPath, upstreamRepository);
 	}
 
 	private PortalGitWorkingDirectory _getPortalGitWorkingDirectory() {
@@ -1203,6 +1406,44 @@ public class TestrayImporter {
 
 		return string.replace(
 			"$(jenkins.report.url)", _topLevelBuild.getJenkinsReportURL());
+	}
+
+	private void _setupProfileDXP() {
+		boolean setupProfileDXP = false;
+
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		String branchName = topLevelBuild.getBranchName();
+		String jobName = topLevelBuild.getJobName();
+
+		if (!branchName.startsWith("ee-") && !branchName.endsWith("-private") &&
+			jobName.contains("environment")) {
+
+			setupProfileDXP = true;
+		}
+
+		String portalBuildProfile = topLevelBuild.getParameterValue(
+			"TEST_PORTAL_BUILD_PROFILE");
+
+		if ((portalBuildProfile != null) && portalBuildProfile.equals("dxp")) {
+			setupProfileDXP = true;
+		}
+
+		if (!setupProfileDXP) {
+			return;
+		}
+
+		PortalGitWorkingDirectory portalGitWorkingDirectory =
+			_getPortalGitWorkingDirectory();
+
+		try {
+			AntUtil.callTarget(
+				portalGitWorkingDirectory.getWorkingDirectory(), "build.xml",
+				"setup-profile-dxp");
+		}
+		catch (AntException antException) {
+			throw new RuntimeException(antException);
+		}
 	}
 
 	private static final Pattern _releaseArtifactURLPattern = Pattern.compile(

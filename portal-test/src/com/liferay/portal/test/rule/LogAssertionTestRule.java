@@ -30,6 +30,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 import org.apache.log4j.AppenderSkeleton;
@@ -222,9 +224,9 @@ public class LogAssertionTestRule
 	protected static void installJdk14Handler() {
 		Logger logger = Logger.getLogger(StringPool.BLANK);
 
-		logger.removeHandler(LogAssertionHandler.INSTANCE);
+		logger.removeHandler(_logHandler);
 
-		logger.addHandler(LogAssertionHandler.INSTANCE);
+		logger.addHandler(_logHandler);
 	}
 
 	protected static void installLog4jAppender() {
@@ -282,7 +284,7 @@ public class LogAssertionTestRule
 	protected static void uninstallJdk14Handler() {
 		Logger logger = Logger.getLogger(StringPool.BLANK);
 
-		logger.removeHandler(LogAssertionHandler.INSTANCE);
+		logger.removeHandler(_logHandler);
 	}
 
 	protected static void uninstallLog4jAppender() {
@@ -298,6 +300,7 @@ public class LogAssertionTestRule
 	private static final Map<Thread, Error> _concurrentFailures =
 		new ConcurrentHashMap<>();
 	private static final LogAppender _logAppender = new LogAppender();
+	private static final LogHandler _logHandler = new LogHandler();
 	private static volatile Thread _thread;
 	private static volatile Thread.UncaughtExceptionHandler
 		_uncaughtExceptionHandler;
@@ -333,6 +336,37 @@ public class LogAssertionTestRule
 				LogAssertionTestRule.caughtFailure(
 					new AssertionError(
 						sb.toString(), throwableInformation.getThrowable()));
+			}
+		}
+
+	}
+
+	private static class LogHandler extends Handler {
+
+		@Override
+		public void close() throws SecurityException {
+		}
+
+		@Override
+		public void flush() {
+		}
+
+		@Override
+		public void publish(LogRecord logRecord) {
+			java.util.logging.Level level = logRecord.getLevel();
+
+			if (level.equals(java.util.logging.Level.SEVERE)) {
+				StringBundler sb = new StringBundler(6);
+
+				sb.append("{level=");
+				sb.append(logRecord.getLevel());
+				sb.append(", loggerName=");
+				sb.append(logRecord.getLoggerName());
+				sb.append(", message=");
+				sb.append(logRecord.getMessage());
+
+				LogAssertionTestRule.caughtFailure(
+					new AssertionError(sb.toString(), logRecord.getThrown()));
 			}
 		}
 

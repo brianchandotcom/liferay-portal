@@ -22,7 +22,9 @@ import java.util.logging.LogRecord;
 
 /**
  * @author William Newbury
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
+@Deprecated
 public class LogAssertionHandler extends Handler {
 
 	public static final LogAssertionHandler INSTANCE =

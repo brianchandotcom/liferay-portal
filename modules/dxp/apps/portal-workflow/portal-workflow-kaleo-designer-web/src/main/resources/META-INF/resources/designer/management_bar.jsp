@@ -16,12 +16,11 @@
 
 <%@ include file="/designer/init.jsp" %>
 
-<clay:management-toolbar-v2
+<clay:management-toolbar
 	clearResultsURL="<%= kaleoDesignerDisplayContext.getClearResultsURL() %>"
 	creationMenu="<%= kaleoDesignerDisplayContext.getCreationMenu(pageContext) %>"
 	filterDropdownItems="<%= kaleoDesignerDisplayContext.getFilterItemsDropdownItems() %>"
 	itemsTotal="<%= kaleoDesignerDisplayContext.getTotalItems(displayedStatus) %>"
-	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	searchActionURL="<%= kaleoDesignerDisplayContext.getSearchActionURL() %>"
 	searchContainerId="<%= kaleoDesignerDisplayContext.getSearchContainerId() %>"
 	searchFormName="fm1"

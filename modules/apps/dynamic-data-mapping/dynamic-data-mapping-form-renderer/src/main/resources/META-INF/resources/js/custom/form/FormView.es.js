@@ -27,17 +27,20 @@ import {INITIAL_CONFIG_STATE} from '../../core/config/initialConfigState.es';
 import {INITIAL_STATE} from '../../core/config/initialState.es';
 import {ConfigProvider, useConfig} from '../../core/hooks/useConfig.es';
 import {FormProvider, useForm, useFormState} from '../../core/hooks/useForm.es';
-import activePageReducer from '../../core/reducers/activePageReducer.es';
-import fieldReducer from '../../core/reducers/fieldReducer.es';
-import languageReducer from '../../core/reducers/languageReducer.es';
-import pagesStructureReducer from '../../core/reducers/pagesStructureReducer.es';
+import {
+	activePageReducer,
+	fieldReducer,
+	languageReducer,
+	pageValidationReducer,
+	pagesStructureReducer,
+} from '../../core/reducers/index.es';
 import formValidate from '../../core/thunks/formValidate.es';
 import pageLanguageUpdate from '../../core/thunks/pageLanguageUpdate.es';
 import {evaluate} from '../../util/evaluation.es';
 import * as Fields from '../../util/fields.es';
 import {getFormId, getFormNode} from '../../util/formId.es';
 import {parseProps} from '../../util/parseProps.es';
-import {pageValidationReducer, paginationReducer} from './reducers/index.es';
+import {paginationReducer} from './reducers/index.es';
 
 /**
  * This is a copy of the old implementation made in Metal.js, deals with

@@ -18,3 +18,4 @@ export {default as fieldEditableReducer} from './fieldEditableReducer.es';
 export {default as fieldReducer} from './fieldReducer.es';
 export {default as languageReducer} from './languageReducer.es';
 export {default as pagesStructureReducer} from './pagesStructureReducer.es';
+export {default as pageValidationReducer} from './pageValidationReducer.es';

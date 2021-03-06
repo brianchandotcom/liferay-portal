@@ -20,14 +20,17 @@ import {INITIAL_CONFIG_STATE} from '../../core/config/initialConfigState.es';
 import {INITIAL_STATE} from '../../core/config/initialState.es';
 import {ConfigProvider} from '../../core/hooks/useConfig.es';
 import {FormProvider, useForm} from '../../core/hooks/useForm.es';
-import activePageReducer from '../../core/reducers/activePageReducer.es';
-import fieldReducer from '../../core/reducers/fieldReducer.es';
-import languageReducer from '../../core/reducers/languageReducer.es';
-import pagesStructureReducer from '../../core/reducers/pagesStructureReducer.es';
+import {
+	activePageReducer,
+	fieldReducer,
+	languageReducer,
+	pageValidationReducer,
+	pagesStructureReducer,
+} from '../../core/reducers/index.es';
 import {getConnectedReactComponentAdapter} from '../../util/ReactComponentAdapter.es';
 import {parseProps} from '../../util/parseProps.es';
 import {Form} from './FormView.es';
-import {pageValidationReducer, paginationReducer} from './reducers/index.es';
+import {paginationReducer} from './reducers/index.es';
 
 /**
  * Updates the state of the FieldSettings when any value coming

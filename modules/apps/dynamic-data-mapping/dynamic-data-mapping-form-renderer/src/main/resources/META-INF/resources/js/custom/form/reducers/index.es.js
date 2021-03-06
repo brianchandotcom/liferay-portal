@@ -13,5 +13,4 @@
  */
 
 export {default as pageReducer} from './pageReducer.es';
-export {default as pageValidationReducer} from './pageValidationReducer.es';
 export {default as paginationReducer} from './paginationReducer.es';

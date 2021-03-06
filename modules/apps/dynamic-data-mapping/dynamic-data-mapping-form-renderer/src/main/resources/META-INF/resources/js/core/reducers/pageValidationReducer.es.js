@@ -14,8 +14,8 @@
 
 import {sub} from 'dynamic-data-mapping-form-field-type/util/strings.es';
 
-import {PagesVisitor} from '../../../util/visitors.es';
-import {EVENT_TYPES} from '../eventTypes.es';
+import {PagesVisitor} from '../../util/visitors.es';
+import {EVENT_TYPES} from '../actions/eventTypes.es';
 
 /**
  * NOTE: This is a literal copy of the old LayoutProvider logic. Small changes

@@ -55,7 +55,7 @@ export default function formValidate({
 						newPages: evaluatedPages,
 						pageIndex: activePage,
 					},
-					type: EVENT_TYPES.PAGE_VALIDATION_FAILED,
+					type: EVENT_TYPES.PAGE.VALIDATION_FAILED,
 				});
 			}
 

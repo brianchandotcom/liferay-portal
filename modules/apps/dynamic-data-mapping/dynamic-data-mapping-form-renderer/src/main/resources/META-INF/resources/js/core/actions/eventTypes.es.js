@@ -14,12 +14,12 @@
 
 const LEGACY_EVENTS = {
 	FIELD_EVALUATION_ERROR: 'evaluationError',
-	PAGE_VALIDATION_FAILED: 'pageValidationFailed',
 };
 
 const PAGE = {
 	CHANGE: 'page_change',
 	UPDATE: 'pages_update',
+	VALIDATION_FAILED: 'page_validation_failed',
 };
 
 const FIELD = {
@@ -62,6 +62,7 @@ const LANGUAGE = {
 export const MAPPED_EVENT_TYPES = {
 	[DND.MOVE]: 'fieldMoved',
 	[DND.RESIZE]: 'columnResized',
+	[FIELD_SET.ADD]: 'fieldSetAdded',
 	[FIELD.ADD]: 'fieldAdded',
 	[FIELD.BLUR]: 'fieldBlurred',
 	[FIELD.CHANGE]: 'fieldEdited',
@@ -69,7 +70,7 @@ export const MAPPED_EVENT_TYPES = {
 	[FIELD.DELETE]: 'fieldDeleted',
 	[FIELD.DUPLICATE]: 'fieldDuplicated',
 	[FIELD.HOVER]: 'fieldHovered',
-	[FIELD_SET.ADD]: 'fieldSetAdded',
+	[PAGE.VALIDATION_FAILED]: 'pageValidationFailed',
 	[SECTION.ADD]: 'sectionAdded',
 };
 

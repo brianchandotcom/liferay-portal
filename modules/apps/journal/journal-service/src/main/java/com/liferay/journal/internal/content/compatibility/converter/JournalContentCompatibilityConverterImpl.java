@@ -21,6 +21,7 @@ import com.liferay.layout.dynamic.data.mapping.form.field.type.constants.LayoutD
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.xml.XMLUtil;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -219,40 +220,38 @@ public class JournalContentCompatibilityConverterImpl
 
 		String[] values = StringUtil.split(value, CharPool.AT);
 
-		if (ArrayUtil.isEmpty(values) ||
-			((values.length <= 2) && (_groupId == 0))) {
-
+		if (ArrayUtil.isEmpty(values)) {
 			return StringPool.BLANK;
 		}
 
-		long groupId = _groupId;
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		long layoutId = GetterUtil.getLong(values[0]);
+		boolean privateLayout = !Objects.equals(values[1], "public");
 
 		if (values.length > 2) {
-			groupId = GetterUtil.getLong(values[2]);
+			long groupId = GetterUtil.getLong(values[2]);
+
+			jsonObject.put("groupId", groupId);
+
+			Layout layout = _layoutLocalService.fetchLayout(
+				groupId, privateLayout, layoutId);
+
+			if (layout != null) {
+				jsonObject.put(
+					"id", layout.getUuid()
+				).put(
+					"name", layout.getName(defaultLocale)
+				).put(
+					"value", layout.getFriendlyURL(defaultLocale)
+				);
+			}
 		}
 
-		boolean privateLayout = !Objects.equals(values[1], "public");
-		long layoutId = GetterUtil.getLong(values[0]);
-
-		Layout layout = _layoutLocalService.fetchLayout(
-			groupId, privateLayout, layoutId);
-
-		if (layout == null) {
-			return StringPool.BLANK;
-		}
-
-		JSONObject jsonObject = JSONUtil.put(
-			"groupId", groupId
-		).put(
-			"id", layout.getUuid()
-		).put(
+		jsonObject.put(
 			"layoutId", layoutId
 		).put(
-			"name", layout.getName(defaultLocale)
-		).put(
 			"privateLayout", privateLayout
-		).put(
-			"value", layout.getFriendlyURL(defaultLocale)
 		);
 
 		return jsonObject.toJSONString();

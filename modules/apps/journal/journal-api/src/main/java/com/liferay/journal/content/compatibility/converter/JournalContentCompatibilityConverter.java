@@ -28,6 +28,4 @@ public interface JournalContentCompatibilityConverter {
 
 	public String convert(String content);
 
-	public void setGroupId(long groupId);
-
 }

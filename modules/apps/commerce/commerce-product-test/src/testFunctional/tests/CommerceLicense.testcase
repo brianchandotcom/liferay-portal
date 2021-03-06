@@ -24,7 +24,7 @@ definition {
 	@priority = "4"
 	test AggregatedKeys {
 		property commerce.enabled = "true";
-		property custom.commerce.license = "commerce-dxp-license-developer-combined.xml";
+		property commerce.license.file = "commerce-dxp-license-developer-combined.xml";
 
 		CommerceLicense.viewCommerceAvailable();
 	}
@@ -57,7 +57,7 @@ definition {
 	@priority = "4"
 	test CombinedXML {
 		property commerce.enabled = "true";
-		property custom.commerce.license = "commerce-dxp-license-developer-combined.xml";
+		property commerce.license.file = "commerce-dxp-license-developer-combined.xml";
 
 		CommerceLicense.viewCommerceAvailable();
 	}
@@ -106,7 +106,7 @@ definition {
 	@priority = "4"
 	test DeployModuleLicenseToLCSPortal {
 		property commerce.enabled = "true";
-		property custom.commerce.license = "commerce-license-production-basic.xml";
+		property commerce.license.file = "commerce-license-production-basic.xml";
 		property deploy.lcs.token.file = "true";
 
 		Pause(locator1 = "60000");
@@ -138,7 +138,7 @@ definition {
 	@priority = "4"
 	test MatchHostName {
 		property commerce.enabled = "true";
-		property custom.commerce.license = "commerce-license-developer-hostname.xml";
+		property commerce.license.file = "commerce-license-developer-hostname.xml";
 
 		CommerceLicense.viewCommerceAvailable();
 	}
@@ -146,7 +146,7 @@ definition {
 	@priority = "4"
 	test MatchHostNameOnly {
 		property commerce.enabled = "true";
-		property custom.commerce.license = "commerce-license-developer-hostname-only.xml";
+		property commerce.license.file = "commerce-license-developer-hostname-only.xml";
 
 		CommerceLicense.viewCommerceAvailable();
 	}
@@ -154,7 +154,7 @@ definition {
 	@priority = "4"
 	test MatchIPAddress {
 		property commerce.enabled = "true";
-		property custom.commerce.license = "commerce-license-developer-ipaddress.xml";
+		property commerce.license.file = "commerce-license-developer-ipaddress.xml";
 
 		CommerceLicense.viewCommerceAvailable();
 	}
@@ -162,7 +162,7 @@ definition {
 	@priority = "4"
 	test MatchMacAddress {
 		property commerce.enabled = "true";
-		property custom.commerce.license = "commerce-license-developer-macaddress.xml";
+		property commerce.license.file = "commerce-license-developer-macaddress.xml";
 
 		CommerceLicense.viewCommerceAvailable();
 	}
@@ -170,7 +170,7 @@ definition {
 	@priority = "4"
 	test ModuleLicenseExpiration {
 		property commerce.enabled = "true";
-		property custom.commerce.license = "commerce-license-developer-custom-expiration-2-day-expired.xml";
+		property commerce.license.file = "commerce-license-developer-custom-expiration-2-day-expired.xml";
 
 		CommerceLicense.viewCommerceAvailable();
 
@@ -183,7 +183,7 @@ definition {
 	@priority = "4"
 	test ModuleLicenseExpirationNotShownToNonAdmin {
 		property commerce.enabled = "true";
-		property custom.commerce.license = "commerce-license-developer-custom-expiration-30-day.xml";
+		property commerce.license.file = "commerce-license-developer-custom-expiration-30-day.xml";
 		property custom.properties = "company.security.strangers.verify=false${line.separator}login.secure.forgot.password=false";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -247,7 +247,7 @@ definition {
 	@priority = "4"
 	test ModuleLicenseExpirationWarning {
 		property commerce.enabled = "true";
-		property custom.commerce.license = "commerce-license-developer-custom-expiration-30-day.xml";
+		property commerce.license.file = "commerce-license-developer-custom-expiration-30-day.xml";
 
 		CommerceLicense.viewCommerceAvailable();
 

@@ -4469,7 +4469,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					</if>
 
 					<get-testcase-property property.name="commerce.enabled" />
-					<get-testcase-property property.name="custom.commerce.license" />
+					<get-testcase-property property.name="commerce.license.file" />
 
 					<if>
 						<equals arg1="${commerce.enabled}" arg2="false" />
@@ -4478,9 +4478,9 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 						</then>
 						<else>
 							<if>
-								<isset property="custom.commerce.license" />
+								<isset property="commerce.license.file" />
 								<then>
-									<swap-commerce-license custom.commerce.license="${custom.commerce.license}" />
+									<swap-commerce-license commerce.license.file="${commerce.license.file}" />
 								</then>
 							</if>
 						</else>
@@ -5500,32 +5500,32 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 	</macrodef>
 
 	<macrodef name="swap-commerce-license">
-		<attribute name="custom.commerce.license" />
+		<attribute name="commerce.license.file" />
 
 		<sequential>
 			<delete failonerror="false" file="${liferay.home}/deploy/portal-commerce-license.xml" verbose="true" />
 
 			<copy
-				file="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/license/@{custom.commerce.license}"
+				file="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/license/@{commerce.license.file}"
 				todir="${liferay.home}/deploy"
 			/>
 
 			<if>
-				<equals arg1="@{custom.commerce.license}" arg2="commerce-dxp-license-developer-combined.xml" />
+				<equals arg1="@{commerce.license.file}" arg2="commerce-dxp-license-developer-combined.xml" />
 				<then>
 					<delete failonerror="false" file="${liferay.home}/deploy/license.xml" verbose="true" />
 				</then>
 			</if>
 
 			<if>
-				<equals arg1="@{custom.commerce.license}" arg2="commerce-license-developer-ipaddress.xml" />
+				<equals arg1="@{commerce.license.file}" arg2="commerce-license-developer-ipaddress.xml" />
 				<then>
 					<get-ip-address />
 				</then>
 			</if>
 
 			<if>
-				<equals arg1="@{custom.commerce.license}" arg2="commerce-license-developer-macaddress.xml" />
+				<equals arg1="@{commerce.license.file}" arg2="commerce-license-developer-macaddress.xml" />
 				<then>
 					<get-mac-address />
 				</then>
@@ -5534,7 +5534,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 			<var name="expiration.leeway" value="2" />
 
 			<if>
-				<equals arg1="@{custom.commerce.license}" arg2="commerce-license-developer-custom-expiration-30-day.xml" />
+				<equals arg1="@{commerce.license.file}" arg2="commerce-license-developer-custom-expiration-30-day.xml" />
 				<then>
 					<beanshell>
 						<![CDATA[
@@ -5583,25 +5583,25 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 			</if>
 
 			<replace
-				file="${liferay.home}/deploy/@{custom.commerce.license}"
+				file="${liferay.home}/deploy/@{commerce.license.file}"
 				token="${host.name}"
 				value="${env.HOSTNAME}"
 			/>
 
 			<replace
-				file="${liferay.home}/deploy/@{custom.commerce.license}"
+				file="${liferay.home}/deploy/@{commerce.license.file}"
 				token="${expirationdate}"
 				value="${expiration.date}"
 			/>
 
 			<replace
-				file="${liferay.home}/deploy/@{custom.commerce.license}"
+				file="${liferay.home}/deploy/@{commerce.license.file}"
 				token="${ipaddress}"
 				value="${ip.address}"
 			/>
 
 			<replace
-				file="${liferay.home}/deploy/@{custom.commerce.license}"
+				file="${liferay.home}/deploy/@{commerce.license.file}"
 				token="${macaddress}"
 				value="${mac.address}"
 			/>

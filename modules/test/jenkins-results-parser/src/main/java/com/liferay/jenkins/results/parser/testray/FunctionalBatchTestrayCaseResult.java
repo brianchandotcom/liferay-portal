@@ -223,7 +223,7 @@ public class FunctionalBatchTestrayCaseResult extends BatchTestrayCaseResult {
 				TestrayS3Bucket.getInstance(),
 				JenkinsResultsParserUtil.combine(
 					getAxisBuildURLPath(), "/", name.replace("#", "_"),
-					"/report.html.gz"));
+					"/index.html.gz"));
 
 		return new Attachment(this, testrayS3Object, "Poshi Report");
 	}

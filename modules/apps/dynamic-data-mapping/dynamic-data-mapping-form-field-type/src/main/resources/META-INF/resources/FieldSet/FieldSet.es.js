@@ -70,7 +70,7 @@ const FieldSet = ({
 	let fieldInsidePage = null;
 
 	const isFieldsGroup = type === 'fieldset' && !ddmStructureId;
-	const {page} = usePage();
+	const {editable, page} = usePage();
 	const repeatedIndex = useMemo(() => getRepeatedIndex(name), [name]);
 
 	const findFieldInsidePage = (fields) =>
@@ -128,13 +128,21 @@ const FieldSet = ({
 						title={label}
 					>
 						<Layout
-							editable={isFieldsGroup && !belongsToFieldSet}
+							editable={
+								editable
+									? isFieldsGroup && !belongsToFieldSet
+									: editable
+							}
 							rows={getRows(rows, nestedFields)}
 						/>
 					</Panel>
 				) : (
 					<Layout
-						editable={isFieldsGroup && !belongsToFieldSet}
+						editable={
+							editable
+								? isFieldsGroup && !belongsToFieldSet
+								: editable
+						}
 						rows={getRows(rows, nestedFields)}
 					/>
 				)}

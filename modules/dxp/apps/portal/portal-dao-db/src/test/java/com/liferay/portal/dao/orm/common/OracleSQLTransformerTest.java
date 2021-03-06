@@ -15,8 +15,11 @@
 package com.liferay.portal.dao.orm.common;
 
 import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
@@ -24,6 +27,11 @@ import org.junit.Test;
  * @author Miguel Pastor
  */
 public class OracleSQLTransformerTest extends BaseSQLTransformerTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testReplaceNotEqualsBlankStringComparison() {

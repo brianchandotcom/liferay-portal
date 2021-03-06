@@ -14,6 +14,8 @@
 
 package com.liferay.registry;
 
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
 import java.util.Collections;
 import java.util.EventListener;
 import java.util.HashMap;
@@ -22,12 +24,19 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Raymond Augé
  */
 public class BasicRegistryImplTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {

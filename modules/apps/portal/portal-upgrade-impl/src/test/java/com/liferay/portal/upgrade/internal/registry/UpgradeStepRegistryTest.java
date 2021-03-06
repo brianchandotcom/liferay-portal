@@ -16,11 +16,14 @@ package com.liferay.portal.upgrade.internal.registry;
 
 import com.liferay.portal.kernel.dao.db.DBProcessContext;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 import org.osgi.framework.Version;
@@ -29,6 +32,11 @@ import org.osgi.framework.Version;
  * @author Carlos Sierra Andrés
  */
 public class UpgradeStepRegistryTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testCreateUpgradeInfos() {

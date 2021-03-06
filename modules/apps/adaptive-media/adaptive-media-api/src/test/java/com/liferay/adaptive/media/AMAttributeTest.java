@@ -17,18 +17,26 @@ package com.liferay.adaptive.media;
 import com.liferay.adaptive.media.exception.AMRuntimeException;
 import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Adolfo Pérez
  */
 public class AMAttributeTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testConfigurationUuidRecognizesAnyString() {

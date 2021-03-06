@@ -16,6 +16,7 @@ package com.liferay.adaptive.media.image.internal.processor;
 
 import com.liferay.adaptive.media.image.internal.configuration.AMImageAttributeMapping;
 import com.liferay.adaptive.media.image.processor.AMImageAttribute;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.InputStream;
 
@@ -25,6 +26,8 @@ import java.util.Collections;
 import java.util.function.Supplier;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.Mockito;
@@ -33,6 +36,11 @@ import org.mockito.Mockito;
  * @author Adolfo Pérez
  */
 public class AMImageTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testGetAttributeDelegatesOnMapping() {

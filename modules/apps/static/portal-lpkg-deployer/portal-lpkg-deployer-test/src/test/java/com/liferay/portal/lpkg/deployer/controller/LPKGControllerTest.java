@@ -15,18 +15,26 @@
 package com.liferay.portal.lpkg.deployer.controller;
 
 import com.liferay.portal.lpkg.deployer.test.util.LPKGTestUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Matthew Tambara
  */
 public class LPKGControllerTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testLPKGControllerDeploy() throws Exception {

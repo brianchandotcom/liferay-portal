@@ -17,6 +17,7 @@ package com.liferay.configuration.admin.web.internal.util;
 import com.liferay.configuration.admin.web.internal.exporter.ConfigurationExporter;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
@@ -25,12 +26,19 @@ import org.apache.felix.cm.file.ConfigurationHandler;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Pei-Jung Lan
  */
 public class ConfigurationExportImportTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() {

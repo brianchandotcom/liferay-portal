@@ -16,6 +16,7 @@ package com.liferay.batch.engine.internal.reader;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -24,6 +25,8 @@ import java.util.Collections;
 import java.util.HashMap;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
@@ -31,6 +34,11 @@ import org.junit.Test;
  */
 public class JSONBatchEngineImportTaskItemReaderTest
 	extends BaseBatchEngineImportTaskItemReaderTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testColumnMapping() throws Exception {

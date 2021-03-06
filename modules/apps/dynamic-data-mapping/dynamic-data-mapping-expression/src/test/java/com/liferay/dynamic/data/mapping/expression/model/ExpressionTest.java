@@ -14,15 +14,24 @@
 
 package com.liferay.dynamic.data.mapping.expression.model;
 
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
 import java.util.Arrays;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Marcellus Tavares
  */
 public class ExpressionTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testAndExpresion() {

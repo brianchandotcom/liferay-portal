@@ -14,6 +14,7 @@
 
 package com.liferay.portal.vulcan.internal.jaxrs.container.request.filter;
 
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.vulcan.fields.NestedFieldsContext;
 import com.liferay.portal.vulcan.fields.NestedFieldsContextThreadLocal;
 
@@ -31,6 +32,8 @@ import javax.ws.rs.core.UriInfo;
 import org.apache.cxf.jaxrs.impl.PathSegmentImpl;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.Mockito;
@@ -39,6 +42,11 @@ import org.mockito.Mockito;
  * @author Ivica Cardic
  */
 public class NestedFieldsContainerRequestFilterTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testFilter() throws IOException {

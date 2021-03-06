@@ -16,11 +16,14 @@ package com.liferay.portal.search.web.internal.search.results.portlet;
 
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.search.web.internal.result.display.context.SearchResultSummaryDisplayContext;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.Mockito;
@@ -29,6 +32,11 @@ import org.mockito.Mockito;
  * @author André de Oliveira
  */
 public class SearchResultsSummariesHolderTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testOrder() {

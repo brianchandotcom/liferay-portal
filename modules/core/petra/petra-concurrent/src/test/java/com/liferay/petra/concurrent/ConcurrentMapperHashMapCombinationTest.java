@@ -17,18 +17,26 @@ package com.liferay.petra.concurrent;
 import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.portal.kernel.test.FinalizeManagerUtil;
 import com.liferay.portal.kernel.test.GCUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.lang.ref.Reference;
 
 import java.util.concurrent.ConcurrentMap;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Shuyang Zhou
  */
 public class ConcurrentMapperHashMapCombinationTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testIdentityKeyWeakValue() throws InterruptedException {

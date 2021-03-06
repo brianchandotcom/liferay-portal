@@ -14,17 +14,26 @@
 
 package com.liferay.vldap.server.internal.directory;
 
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Minhchau Dang
  */
 public class FilterConstraintTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testAddAttribute() {

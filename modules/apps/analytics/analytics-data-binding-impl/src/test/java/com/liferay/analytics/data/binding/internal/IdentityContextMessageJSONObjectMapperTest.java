@@ -16,6 +16,7 @@ package com.liferay.analytics.data.binding.internal;
 
 import com.liferay.analytics.data.binding.JSONObjectMapper;
 import com.liferay.analytics.model.IdentityContextMessage;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.net.URL;
 
@@ -25,6 +26,8 @@ import java.nio.file.Paths;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -33,6 +36,11 @@ import org.skyscreamer.jsonassert.JSONAssert;
  * @author Eduardo García
  */
 public class IdentityContextMessageJSONObjectMapperTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testJSONDeserialization() throws Exception {

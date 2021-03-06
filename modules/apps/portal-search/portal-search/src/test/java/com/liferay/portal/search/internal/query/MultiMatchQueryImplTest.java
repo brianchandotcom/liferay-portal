@@ -14,18 +14,27 @@
 
 package com.liferay.portal.search.internal.query;
 
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Bryan Engler
  */
 public class MultiMatchQueryImplTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testMultiMatchQueryConstructor1() {

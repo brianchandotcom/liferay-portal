@@ -15,12 +15,15 @@
 package com.liferay.portal.lpkg.deployer.persistence;
 
 import com.liferay.portal.lpkg.deployer.test.util.LPKGTestUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 import org.osgi.framework.Version;
@@ -29,6 +32,11 @@ import org.osgi.framework.Version;
  * @author Matthew Tambara
  */
 public class LPKGPersistenceUpgradeTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testLPKGPersistenceUpgrade() throws Exception {

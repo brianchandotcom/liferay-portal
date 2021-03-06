@@ -16,10 +16,13 @@ package com.liferay.adaptive.media.upload.internal.web.attachment;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.upload.AttachmentElementReplacer;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.Mockito;
@@ -30,6 +33,11 @@ import org.powermock.api.mockito.PowerMockito;
  * @author Alejandro Tardín
  */
 public class AMHTMLImageAttachmentElementHandlerTest extends PowerMockito {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() {

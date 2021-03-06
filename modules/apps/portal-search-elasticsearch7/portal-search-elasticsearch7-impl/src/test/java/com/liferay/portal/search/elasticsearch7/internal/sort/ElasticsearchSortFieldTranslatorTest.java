@@ -38,6 +38,7 @@ import com.liferay.portal.search.test.util.indexing.DocumentCreationHelper;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import com.liferay.portal.search.test.util.sort.BaseNestedFieldsSortTestCase;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Date;
 import java.util.function.Function;
@@ -45,6 +46,8 @@ import java.util.stream.Stream;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
@@ -52,6 +55,11 @@ import org.junit.Test;
  */
 public class ElasticsearchSortFieldTranslatorTest
 	extends BaseNestedFieldsSortTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() throws Exception {

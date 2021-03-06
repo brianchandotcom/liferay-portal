@@ -15,14 +15,22 @@
 package com.liferay.document.library.opener.onedrive.web.internal.constants;
 
 import com.liferay.document.library.opener.constants.DLOpenerMimeTypes;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Cristina González
  */
 public class DLOpenerOneDriveMimeTypesTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testGetMimeTypeExtension() {

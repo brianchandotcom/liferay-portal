@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.result.display.context.SearchResultContentDisplayContext;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portlet.internal.MutableRenderParametersImpl;
 
 import java.util.HashMap;
@@ -39,6 +40,8 @@ import javax.portlet.RenderResponse;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.Mock;
@@ -50,6 +53,11 @@ import org.mockito.MockitoAnnotations;
  * @author André de Oliveira
  */
 public class SearchResultContentDisplayBuilderTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() throws Exception {

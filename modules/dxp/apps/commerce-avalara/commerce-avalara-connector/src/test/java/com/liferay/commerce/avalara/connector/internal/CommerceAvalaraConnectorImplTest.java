@@ -18,6 +18,7 @@ import com.liferay.commerce.avalara.connector.constants.CommerceAvalaraConstants
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.text.SimpleDateFormat;
 
@@ -28,12 +29,19 @@ import net.avalara.avatax.rest.client.models.PingResultModel;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Riccardo Alberti
  */
 public class CommerceAvalaraConnectorImplTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() {

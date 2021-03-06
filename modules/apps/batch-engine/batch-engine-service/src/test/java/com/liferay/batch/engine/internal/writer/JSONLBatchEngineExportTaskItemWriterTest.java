@@ -17,11 +17,14 @@ package com.liferay.batch.engine.internal.writer;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -31,6 +34,11 @@ import org.skyscreamer.jsonassert.JSONAssert;
  */
 public class JSONLBatchEngineExportTaskItemWriterTest
 	extends BaseBatchEngineExportTaskItemWriterTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testWriteRowsWithDefinedFieldNames1() throws Exception {

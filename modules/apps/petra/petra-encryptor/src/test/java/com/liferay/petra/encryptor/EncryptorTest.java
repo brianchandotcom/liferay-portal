@@ -16,6 +16,7 @@ package com.liferay.petra.encryptor;
 
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.security.Key;
 
@@ -23,6 +24,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
@@ -30,6 +33,11 @@ import org.junit.Test;
  * @see    com.liferay.util.EncryptorTest
  */
 public class EncryptorTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testKeySerialization() throws Exception {

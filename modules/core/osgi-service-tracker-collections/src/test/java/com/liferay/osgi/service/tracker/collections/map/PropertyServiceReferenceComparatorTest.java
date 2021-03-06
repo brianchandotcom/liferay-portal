@@ -14,11 +14,15 @@
 
 package com.liferay.osgi.service.tracker.collections.map;
 
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 import org.osgi.framework.Bundle;
@@ -28,6 +32,11 @@ import org.osgi.framework.ServiceReference;
  * @author Carlos Sierra Andrés
  */
 public class PropertyServiceReferenceComparatorTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testCompare() {

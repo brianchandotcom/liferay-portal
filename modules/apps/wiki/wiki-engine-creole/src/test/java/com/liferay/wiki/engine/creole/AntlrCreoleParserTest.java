@@ -16,6 +16,7 @@ package com.liferay.wiki.engine.creole;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.wiki.engine.creole.internal.parser.ast.ASTNode;
 import com.liferay.wiki.engine.creole.internal.parser.ast.BaseListNode;
 import com.liferay.wiki.engine.creole.internal.parser.ast.BoldTextNode;
@@ -55,6 +56,8 @@ import org.antlr.runtime.CommonTokenStream;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
@@ -62,6 +65,11 @@ import org.junit.Test;
  * @author Manuel de la Peña
  */
 public class AntlrCreoleParserTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() {

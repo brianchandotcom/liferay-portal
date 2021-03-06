@@ -16,12 +16,15 @@ package com.liferay.portal.upgrade.internal.graph;
 
 import com.liferay.portal.kernel.dao.db.DBProcessContext;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.upgrade.internal.registry.UpgradeInfo;
 
 import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
@@ -29,6 +32,11 @@ import org.junit.Test;
  * @author Miguel Pastor
  */
 public class ReleaseGraphManagerTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testGetAutoUpgradePath() {

@@ -15,9 +15,12 @@
 package com.liferay.portal.vulcan.util;
 
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import junit.framework.Assert;
 
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
@@ -25,6 +28,11 @@ import org.junit.Test;
  * @author Javier de Arcos
  */
 public class EntityExtensionUtilTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testExtend() throws Exception {

@@ -17,11 +17,20 @@ package com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket;
 import com.liferay.portal.search.elasticsearch7.internal.LiferayElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.test.util.aggregation.bucket.BaseMissingAggregationTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
+import org.junit.ClassRule;
+import org.junit.Rule;
 
 /**
  * @author Inácio Nery
  */
 public class MissingAggregationTest extends BaseMissingAggregationTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Override
 	protected IndexingFixture createIndexingFixture() throws Exception {

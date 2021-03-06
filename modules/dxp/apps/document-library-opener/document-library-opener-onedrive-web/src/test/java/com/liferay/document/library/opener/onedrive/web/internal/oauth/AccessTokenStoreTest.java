@@ -17,16 +17,24 @@ package com.liferay.document.library.opener.onedrive.web.internal.oauth;
 import com.github.scribejava.core.model.OAuth2AccessToken;
 
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Optional;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Cristina González
  */
 public class AccessTokenStoreTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testAdd() {

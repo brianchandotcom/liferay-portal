@@ -14,16 +14,25 @@
 
 package com.liferay.portal.vulcan.internal.param.converter;
 
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
 import java.util.Calendar;
 import java.util.Date;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Ivica Cardic
  */
 public class DateParamConverterTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testFromString() {

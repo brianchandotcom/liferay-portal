@@ -14,6 +14,7 @@
 
 package com.liferay.portal.vulcan.internal.jaxrs.context.provider;
 
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.vulcan.fields.FieldsQueryParam;
 
 import java.util.Set;
@@ -26,6 +27,8 @@ import org.apache.cxf.message.Message;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.Mockito;
@@ -34,6 +37,11 @@ import org.mockito.Mockito;
  * @author Alejandro Hernández
  */
 public class FieldsQueryParamContextProviderTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void test() {

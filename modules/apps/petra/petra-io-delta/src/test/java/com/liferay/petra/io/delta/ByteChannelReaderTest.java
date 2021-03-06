@@ -14,11 +14,15 @@
 
 package com.liferay.petra.io.delta;
 
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
 import java.io.IOException;
 
 import java.nio.ByteBuffer;
 import java.nio.channels.ReadableByteChannel;
 
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.Mockito;
@@ -29,6 +33,11 @@ import org.mockito.stubbing.Answer;
  * @author Dennis Ju
  */
 public class ByteChannelReaderTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testRead() throws IOException {

@@ -27,6 +27,7 @@ import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpExchange;
@@ -48,6 +49,8 @@ import java.util.Map;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.Mockito;
@@ -56,6 +59,11 @@ import org.mockito.Mockito;
  * @author Ivica Cardic
  */
 public class RemoteCommerceTaxEngineTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() throws Exception {

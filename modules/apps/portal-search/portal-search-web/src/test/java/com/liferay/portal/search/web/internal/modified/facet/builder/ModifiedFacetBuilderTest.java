@@ -30,6 +30,7 @@ import com.liferay.portal.search.facet.modified.ModifiedFacetFactory;
 import com.liferay.portal.search.filter.FilterBuilders;
 import com.liferay.portal.search.internal.facet.modified.ModifiedFacetFactoryImpl;
 import com.liferay.portal.search.internal.filter.FilterBuildersImpl;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.DateFormatFactoryImpl;
 
 import java.util.Arrays;
@@ -39,6 +40,8 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.Mockito;
@@ -47,6 +50,11 @@ import org.mockito.Mockito;
  * @author Adam Brandizzi
  */
 public class ModifiedFacetBuilderTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() {

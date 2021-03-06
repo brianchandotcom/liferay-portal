@@ -15,17 +15,25 @@
 package com.liferay.portal.workflow.web.internal.util.filter;
 
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.workflow.web.internal.util.comparator.WorkflowDefinitionModifiedDateComparator;
 
 import java.util.Calendar;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Adam Brandizzi
  */
 public class WorkflowDefinitionModifiedDateComparatorTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testCompareEqualsAscending() {

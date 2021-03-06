@@ -14,7 +14,10 @@
 
 package com.liferay.portal.search.internal.index;
 
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
 import org.junit.Assert;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -23,6 +26,11 @@ import org.junit.rules.ExpectedException;
  * @author André de Oliveira
  */
 public class IndexStatusManagerImplRequireIndexReadWriteTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testBookendsLikeSetupAndTeardown() {

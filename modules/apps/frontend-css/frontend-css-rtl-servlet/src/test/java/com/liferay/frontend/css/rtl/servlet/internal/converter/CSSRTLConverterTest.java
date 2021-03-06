@@ -22,6 +22,8 @@ import com.helger.css.reader.errorhandler.DoNothingCSSParseErrorHandler;
 import com.helger.css.writer.CSSWriter;
 import com.helger.css.writer.CSSWriterSettings;
 
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
 import java.io.File;
 
 import java.net.URL;
@@ -32,12 +34,19 @@ import java.nio.file.Paths;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author David Truong
  */
 public class CSSRTLConverterTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() throws Exception {

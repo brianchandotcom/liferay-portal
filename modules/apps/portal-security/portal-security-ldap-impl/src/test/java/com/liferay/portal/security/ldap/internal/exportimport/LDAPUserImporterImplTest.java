@@ -14,15 +14,24 @@
 
 package com.liferay.portal.security.ldap.internal.exportimport;
 
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
 import javax.naming.InvalidNameException;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Jorge Díaz
  */
 public class LDAPUserImporterImplTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testBindingInNamespaceEscape() throws InvalidNameException {

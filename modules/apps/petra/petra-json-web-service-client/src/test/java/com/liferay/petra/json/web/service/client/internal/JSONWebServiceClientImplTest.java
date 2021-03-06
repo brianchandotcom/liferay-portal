@@ -14,9 +14,13 @@
 
 package com.liferay.petra.json.web.service.client.internal;
 
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
@@ -24,6 +28,11 @@ import org.junit.Test;
  */
 public class JSONWebServiceClientImplTest
 	extends BaseJSONWebServiceClientTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testActivateForBasicProxy() throws Exception {

@@ -16,6 +16,7 @@ package com.liferay.saml.opensaml.integration.internal.util;
 
 import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.saml.opensaml.integration.internal.bootstrap.OpenSamlBootstrap;
 
 import java.io.InputStream;
@@ -25,12 +26,19 @@ import net.shibboleth.utilities.java.support.xml.BasicParserPool;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Mika Koivisto
  */
 public class MetadataUtilTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {

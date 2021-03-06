@@ -15,6 +15,7 @@
 package com.liferay.portal.vulcan.internal.jaxrs.writer.interceptor;
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.vulcan.internal.jaxrs.extension.ExtendedEntity;
 import com.liferay.portal.vulcan.internal.jaxrs.util.JAXRSExtensionContextUtil;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -29,6 +30,8 @@ import javax.ws.rs.ext.WriterInterceptorContext;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.ArgumentCaptor;
@@ -39,6 +42,11 @@ import org.mockito.Mockito;
  * @author Javier de Arcos
  */
 public class PageEntityExtensionWriterInterceptorTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() {

@@ -20,8 +20,11 @@ import com.liferay.portal.search.elasticsearch7.internal.configuration.Operation
 import com.liferay.portal.search.elasticsearch7.internal.util.SearchLogHelper;
 import com.liferay.portal.search.elasticsearch7.internal.util.SearchLogHelperImpl;
 import com.liferay.portal.search.elasticsearch7.internal.util.SearchLogHelperUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.Mockito;
@@ -30,6 +33,11 @@ import org.mockito.Mockito;
  * @author Adam Brandizzi
  */
 public class ElasticsearchConnectionLogTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() {

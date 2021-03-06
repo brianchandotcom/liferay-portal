@@ -17,6 +17,7 @@ package com.liferay.configuration.admin.web;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -27,12 +28,19 @@ import java.util.Collections;
 import org.apache.felix.cm.file.ConfigurationHandler;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Matthew Tambara
  */
 public class ConfigurationHandlerTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testWriteArray() throws IOException {

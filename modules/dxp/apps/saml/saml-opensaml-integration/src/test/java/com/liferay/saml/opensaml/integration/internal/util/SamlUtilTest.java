@@ -16,6 +16,7 @@ package com.liferay.saml.opensaml.integration.internal.util;
 
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.saml.opensaml.integration.internal.BaseSamlTestCase;
 
 import java.io.Serializable;
@@ -30,6 +31,8 @@ import org.joda.time.DateTimeZone;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 import org.opensaml.saml.saml2.core.Attribute;
@@ -38,6 +41,11 @@ import org.opensaml.saml.saml2.core.Attribute;
  * @author Mika Koivisto
  */
 public class SamlUtilTest extends BaseSamlTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	@Override

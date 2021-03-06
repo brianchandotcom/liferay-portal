@@ -14,15 +14,24 @@
 
 package com.liferay.portal.vulcan.pagination;
 
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.Is;
 
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Alejandro Hernández
  */
 public class PaginationTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testOf() {

@@ -14,6 +14,7 @@
 
 package com.liferay.segments.asah.connector.internal.client.data.binding;
 
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.segments.asah.connector.internal.client.model.Individual;
 import com.liferay.segments.asah.connector.internal.client.model.Results;
 
@@ -28,12 +29,19 @@ import java.nio.file.Paths;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author David Arques
  */
 public class IndividualJSONObjectMapperTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testMap() throws Exception {

@@ -21,9 +21,12 @@ import com.liferay.portal.search.elasticsearch7.internal.ElasticsearchIndexingFi
 import com.liferay.portal.search.test.util.highlight.BaseHighlightTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Arrays;
 
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
@@ -31,6 +34,11 @@ import org.junit.Test;
  * @author André de Oliveira
  */
 public class ElasticsearchHighlightTest extends BaseHighlightTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testEllipsisElasticsearch() throws Exception {

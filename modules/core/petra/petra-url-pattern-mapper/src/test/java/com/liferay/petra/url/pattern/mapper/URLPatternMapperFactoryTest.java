@@ -16,17 +16,25 @@ package com.liferay.petra.url.pattern.mapper;
 
 import com.liferay.petra.url.pattern.mapper.internal.DynamicSizeTrieURLPatternMapper;
 import com.liferay.petra.url.pattern.mapper.internal.StaticSizeTrieURLPatternMapper;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Arthur Chan
  */
 public class URLPatternMapperFactoryTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testCreate() {

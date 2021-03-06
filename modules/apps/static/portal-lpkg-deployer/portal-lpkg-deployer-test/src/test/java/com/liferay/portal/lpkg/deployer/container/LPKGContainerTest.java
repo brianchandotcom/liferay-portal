@@ -15,6 +15,7 @@
 package com.liferay.portal.lpkg.deployer.container;
 
 import com.liferay.portal.lpkg.deployer.test.util.LPKGTestUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.OutputStream;
 
@@ -26,12 +27,19 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Matthew Tambara
  */
 public class LPKGContainerTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testLPKGContainerDeploy() throws Exception {

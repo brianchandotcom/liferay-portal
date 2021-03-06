@@ -17,12 +17,21 @@ package com.liferay.portal.search.elasticsearch7.internal.aggregation.pipeline;
 import com.liferay.portal.search.elasticsearch7.internal.LiferayElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.test.util.aggregation.pipeline.BaseMovingFunctionPipelineAggregationTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
+import org.junit.ClassRule;
+import org.junit.Rule;
 
 /**
  * @author Michael C. Han
  */
 public class MovingFunctionPipelineAggregationTest
 	extends BaseMovingFunctionPipelineAggregationTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Override
 	protected IndexingFixture createIndexingFixture() throws Exception {

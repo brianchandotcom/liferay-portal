@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.messaging.internal.DefaultMessageBus;
 import com.liferay.portal.messaging.internal.SerialDestination;
 import com.liferay.portal.messaging.internal.SynchronousDestination;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Collections;
 import java.util.Iterator;
@@ -36,6 +37,8 @@ import java.util.Map;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.Mockito;
@@ -44,6 +47,11 @@ import org.mockito.Mockito;
  * @author Shuyang Zhou
  */
 public class DefaultSynchronousMessageSenderTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() {

@@ -17,12 +17,21 @@ package com.liferay.portal.search.elasticsearch7.internal.aggregation.pipeline;
 import com.liferay.portal.search.elasticsearch7.internal.LiferayElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.test.util.aggregation.pipeline.BaseCumulativeSumPipelineAggregationTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
+import org.junit.ClassRule;
+import org.junit.Rule;
 
 /**
  * @author Michael C. Han
  */
 public class CumulativeSumPipelineAggregationTest
 	extends BaseCumulativeSumPipelineAggregationTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Override
 	protected IndexingFixture createIndexingFixture() throws Exception {

@@ -14,11 +14,14 @@
 
 package com.liferay.portal.workflow.kaleo.definition;
 
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
 
 import java.util.Arrays;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
@@ -30,6 +33,11 @@ public class DurationScaleTest {
 		"second", "millisecond", "minute", "hour", "day", "week", "month",
 		"year"
 	};
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test(
 		expected = KaleoDefinitionValidationException.InvalidDurationScale.class

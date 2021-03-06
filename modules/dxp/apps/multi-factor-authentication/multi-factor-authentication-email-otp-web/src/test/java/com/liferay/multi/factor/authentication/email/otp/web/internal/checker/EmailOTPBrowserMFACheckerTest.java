@@ -14,13 +14,22 @@
 
 package com.liferay.multi.factor.authentication.email.otp.web.internal.checker;
 
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Stian Sigvartsen
  */
 public class EmailOTPBrowserMFACheckerTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testObfuscateEmailAddress() throws Exception {

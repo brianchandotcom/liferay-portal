@@ -18,10 +18,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.search.test.util.logging.ExpectedLogTestRule;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.logging.Level;
 
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -30,6 +32,11 @@ import org.junit.rules.ExpectedException;
  * @author Adam Brandizzi
  */
 public class ElasticsearchExceptionHandlerTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() {

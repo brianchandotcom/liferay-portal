@@ -15,9 +15,12 @@
 package com.liferay.analytics.client.internal;
 
 import com.liferay.analytics.model.AnalyticsEventsMessage;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
@@ -25,6 +28,11 @@ import org.junit.Test;
  */
 @Ignore
 public class AnalyticsClientImplTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testSendAnalytics() throws Exception {

@@ -14,6 +14,8 @@
 
 package com.liferay.petra.mail;
 
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
 import java.util.Arrays;
 
 import javax.mail.internet.AddressException;
@@ -21,6 +23,8 @@ import javax.mail.internet.InternetAddress;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
@@ -28,6 +32,11 @@ import org.junit.Test;
  * @see    com.liferay.util.mail.InternetAddressUtilTest
  */
 public class InternetAddressUtilTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() throws AddressException {

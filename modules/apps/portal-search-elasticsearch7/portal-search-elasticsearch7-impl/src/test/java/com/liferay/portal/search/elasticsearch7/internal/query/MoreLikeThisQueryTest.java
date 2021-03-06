@@ -20,6 +20,7 @@ import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import com.liferay.portal.search.test.util.query.BaseMoreLikeThisQueryTestCase;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Collections;
 
@@ -28,6 +29,7 @@ import org.elasticsearch.client.ResponseException;
 
 import org.hamcrest.CoreMatchers;
 
+import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
@@ -38,8 +40,13 @@ import org.junit.rules.ExpectedException;
  */
 public class MoreLikeThisQueryTest extends BaseMoreLikeThisQueryTestCase {
 
+	@ClassRule
 	@Ignore
 	@Override
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
+
 	@Test
 	public void testMoreLikeThisWithoutFields() throws Exception {
 	}

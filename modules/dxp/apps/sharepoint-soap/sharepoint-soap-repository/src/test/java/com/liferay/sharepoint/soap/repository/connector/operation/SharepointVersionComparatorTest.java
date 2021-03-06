@@ -14,15 +14,23 @@
 
 package com.liferay.sharepoint.soap.repository.connector.operation;
 
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.sharepoint.soap.repository.connector.SharepointVersion;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Iván Zaera
  */
 public class SharepointVersionComparatorTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testCompareGreaterThanMajor() {

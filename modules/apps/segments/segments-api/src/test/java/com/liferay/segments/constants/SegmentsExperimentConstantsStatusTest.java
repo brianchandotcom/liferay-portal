@@ -14,14 +14,22 @@
 
 package com.liferay.segments.constants;
 
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.segments.exception.SegmentsExperimentStatusException;
 
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author David Arques
  */
 public class SegmentsExperimentConstantsStatusTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testValidateTransitionFromCompletedToCompleted()

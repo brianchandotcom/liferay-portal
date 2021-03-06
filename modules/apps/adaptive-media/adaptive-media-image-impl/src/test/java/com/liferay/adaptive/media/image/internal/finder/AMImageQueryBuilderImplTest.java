@@ -23,6 +23,7 @@ import com.liferay.adaptive.media.image.processor.AMImageProcessor;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Collections;
 import java.util.Map;
@@ -30,6 +31,8 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.Mockito;
@@ -38,6 +41,11 @@ import org.mockito.Mockito;
  * @author Adolfo Pérez
  */
 public class AMImageQueryBuilderImplTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testFileEntryQueryReturnsLatestFileVersion() throws Exception {

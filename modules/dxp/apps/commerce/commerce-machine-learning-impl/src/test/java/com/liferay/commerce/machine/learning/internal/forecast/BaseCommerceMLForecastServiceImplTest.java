@@ -15,6 +15,7 @@
 package com.liferay.commerce.machine.learning.internal.forecast;
 
 import com.liferay.commerce.machine.learning.internal.forecast.constants.CommerceMLForecastPeriod;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
@@ -25,6 +26,8 @@ import java.util.Date;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.Mockito;
@@ -33,6 +36,11 @@ import org.mockito.Mockito;
  * @author Riccardo Ferrari
  */
 public class BaseCommerceMLForecastServiceImplTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() {

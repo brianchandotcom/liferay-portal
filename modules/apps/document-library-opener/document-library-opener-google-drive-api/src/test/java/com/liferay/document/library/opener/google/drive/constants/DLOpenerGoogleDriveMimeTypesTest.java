@@ -14,13 +14,22 @@
 
 package com.liferay.document.library.opener.google.drive.constants;
 
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Alejandro Tardín
  */
 public class DLOpenerGoogleDriveMimeTypesTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testSupportsDocumentMimeTypes() {

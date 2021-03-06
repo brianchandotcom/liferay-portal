@@ -14,6 +14,8 @@
 
 package com.liferay.portal.lpkg.deployer;
 
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -27,12 +29,19 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Matthew Tambara
  */
 public class LPKGVersionChangeLogAssertorTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testUpgradeLog() throws IOException {

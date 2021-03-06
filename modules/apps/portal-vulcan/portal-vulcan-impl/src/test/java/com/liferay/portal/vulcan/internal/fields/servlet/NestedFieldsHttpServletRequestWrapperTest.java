@@ -14,16 +14,25 @@
 
 package com.liferay.portal.vulcan.internal.fields.servlet;
 
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Ivica Cardic
  */
 public class NestedFieldsHttpServletRequestWrapperTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testGetParameter() {

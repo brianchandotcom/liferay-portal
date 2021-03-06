@@ -15,16 +15,24 @@
 package com.liferay.info.field.type;
 
 import com.liferay.info.field.InfoField;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Optional;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Alejandro Tardín
  */
 public class TextInfoFieldTypeTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testMultilineAttributeCanBeSetToFalse() {

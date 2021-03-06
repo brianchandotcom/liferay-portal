@@ -15,10 +15,13 @@
 package com.liferay.vldap.server.internal.util;
 
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.apache.directory.api.ldap.model.name.Dn;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 import org.powermock.api.mockito.PowerMockito;
@@ -27,6 +30,11 @@ import org.powermock.api.mockito.PowerMockito;
  * @author Jonathan McCann
  */
 public class LdapUtilTest extends PowerMockito {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testBuildName() {

@@ -43,6 +43,7 @@ import com.liferay.portal.odata.internal.filter.expression.LambdaVariableExpress
 import com.liferay.portal.odata.internal.filter.expression.LiteralExpressionImpl;
 import com.liferay.portal.odata.internal.filter.expression.MemberExpressionImpl;
 import com.liferay.portal.odata.internal.filter.expression.PrimitivePropertyExpressionImpl;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.text.SimpleDateFormat;
 
@@ -58,12 +59,19 @@ import org.assertj.core.api.Assertions;
 import org.assertj.core.util.Arrays;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Rubén Pulido
  */
 public class ExpressionVisitorImplTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testVisitBinaryExpressionOperationWithAndOperation() {

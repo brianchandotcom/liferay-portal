@@ -23,12 +23,15 @@ import com.liferay.dynamic.data.mapping.data.provider.internal.rest.DDMRESTDataP
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceService;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import com.netflix.hystrix.exception.HystrixRuntimeException;
 
 import java.util.Optional;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.Matchers;
@@ -40,6 +43,11 @@ import org.powermock.api.mockito.PowerMockito;
  * @author Leonardo Barros
  */
 public class DDMDataProviderInvokerImplTest extends PowerMockito {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testDDMDataProviderInvokeCommand() throws Exception {

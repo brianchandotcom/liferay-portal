@@ -20,8 +20,11 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.indexer.IndexerDocumentBuilder;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.Matchers;
@@ -33,6 +36,11 @@ import org.mockito.MockitoAnnotations;
  * @author Adam Brandizzi
  */
 public class ModelIndexerWriterDocumentHelperTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() throws Exception {

@@ -18,12 +18,15 @@ import com.liferay.petra.json.web.service.client.JSONWebServiceException;
 import com.liferay.petra.json.web.service.client.keystore.KeyStoreLoader;
 import com.liferay.petra.json.web.service.client.server.simulator.HTTPSServerSimulator;
 import com.liferay.petra.json.web.service.client.server.simulator.constants.SimulatorConstants;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.security.KeyStore;
 
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
@@ -31,6 +34,11 @@ import org.junit.Test;
  */
 public class JSONWebServiceClientImplSSLGetTest
 	extends BaseJSONWebServiceClientTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void test200OKOnGetIfTLS11() throws Exception {

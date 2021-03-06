@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.connection;
 
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -25,6 +27,8 @@ import org.elasticsearch.client.RestHighLevelClient;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.Mockito;
@@ -33,6 +37,11 @@ import org.mockito.Mockito;
  * @author André de Oliveira
  */
 public class ElasticsearchConnectionTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() {

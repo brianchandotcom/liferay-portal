@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.Serializable;
 
@@ -25,6 +26,8 @@ import java.util.Collections;
 import java.util.HashMap;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.Mockito;
@@ -34,6 +37,11 @@ import org.mockito.Mockito;
  */
 public class ThreadLocalAwareBackgroundTaskExecutorTest
 	extends BaseBackgroundTaskTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testStaleBackgroundTaskIsSkipped() throws Exception {

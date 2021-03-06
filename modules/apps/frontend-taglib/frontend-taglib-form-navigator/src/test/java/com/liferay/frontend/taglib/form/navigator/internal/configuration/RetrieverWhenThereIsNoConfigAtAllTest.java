@@ -14,10 +14,14 @@
 
 package com.liferay.frontend.taglib.form.navigator.internal.configuration;
 
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
 import java.util.List;
 import java.util.Optional;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
@@ -25,6 +29,11 @@ import org.junit.Test;
  */
 public class RetrieverWhenThereIsNoConfigAtAllTest
 	extends BaseFormNavigatorEntryConfigurationRetrieverTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testReturnsEmptyOptional() {

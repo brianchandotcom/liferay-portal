@@ -14,9 +14,13 @@
 
 package com.liferay.document.library.repository.cmis.internal;
 
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
 import org.apache.chemistry.opencmis.commons.data.RepositoryInfo;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 import org.powermock.api.mockito.PowerMockito;
@@ -25,6 +29,11 @@ import org.powermock.api.mockito.PowerMockito;
  * @author Iván Zaera
  */
 public class CMISRepositoryDetectorTest extends PowerMockito {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testCMISDetectorWhenNuxeo5_4() {

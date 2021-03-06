@@ -14,15 +14,23 @@
 
 package com.liferay.vldap.server.internal.directory;
 
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.vldap.server.internal.directory.builder.AttributeValidator;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Jonathan McCann
  */
 public class AttributeValidatorTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testIsAlwaysValidAttribute() {

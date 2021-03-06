@@ -18,11 +18,14 @@ import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.portal.json.JSONArrayImpl;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -37,6 +40,11 @@ import org.mockito.runners.MockitoJUnitRunner;
  */
 @RunWith(MockitoJUnitRunner.class)
 public class DynamicDataMappingUpgradeProcessTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testTransformRadioDDMFormFieldValues() throws Exception {

@@ -14,18 +14,27 @@
 
 package com.liferay.portal.osgi.web.servlet.context.helper.definition;
 
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
 import java.util.EventListener;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Miguel Pastor
  */
 public class WebXMLDefinitionTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() {

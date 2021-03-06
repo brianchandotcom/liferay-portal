@@ -62,17 +62,6 @@ public class LayoutDDMFormFieldTemplateContextContributor
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
-		LocalizedValue localizedValue =
-			(LocalizedValue)ddmFormField.getProperty("predefinedValue");
-
-		String predefinedValue = StringPool.BLANK;
-
-		if (localizedValue != null) {
-			predefinedValue = GetterUtil.getString(
-				localizedValue.getString(
-					ddmFormFieldRenderingContext.getLocale()));
-		}
-
 		return HashMapBuilder.<String, Object>put(
 			"itemSelectorURL",
 			getItemSelectorURL(
@@ -82,7 +71,24 @@ public class LayoutDDMFormFieldTemplateContextContributor
 			"portletNamespace",
 			ddmFormFieldRenderingContext.getPortletNamespace()
 		).put(
-			"predefinedValue", predefinedValue
+			"predefinedValue",
+			() -> {
+				LocalizedValue localizedValue =
+					(LocalizedValue)ddmFormField.getProperty("predefinedValue");
+
+				String predefinedValue = StringPool.BLANK;
+
+				if (localizedValue != null) {
+					predefinedValue = GetterUtil.getString(
+						localizedValue.getString(
+							ddmFormFieldRenderingContext.getLocale()));
+				}
+
+				return _getValue(
+					GetterUtil.getLong(
+						ddmFormFieldRenderingContext.getProperty("groupId")),
+					ddmFormFieldRenderingContext.getLocale(), predefinedValue);
+			}
 		).put(
 			"value",
 			_getValue(

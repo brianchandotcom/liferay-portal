@@ -135,6 +135,30 @@ public class JournalContentCompatibilityConverterTest {
 	}
 
 	@Test
+	public void testGetLinkToLayoutValueWithoutGroupId() throws Exception {
+		Layout layout = LayoutTestUtil.addLayout(_group);
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(layout.getLayoutId());
+		sb.append(StringPool.AT);
+		sb.append(layout.isPublicLayout() ? "public" : "private");
+
+		String value = ReflectionTestUtil.invoke(
+			_journalContentCompatibilityConverter, "_convertLinkToLayoutValue",
+			new Class<?>[] {Locale.class, String.class}, LocaleUtil.US,
+			sb.toString());
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
+
+		Assert.assertFalse(jsonObject.has("groupId"));
+		Assert.assertEquals(
+			layout.getLayoutId(), jsonObject.getLong("layoutId"));
+		Assert.assertFalse(jsonObject.has("name"));
+		Assert.assertFalse(jsonObject.getBoolean("privateLayout"));
+	}
+
+	@Test
 	public void testLinkToPageFieldCompatibilityLayer() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(

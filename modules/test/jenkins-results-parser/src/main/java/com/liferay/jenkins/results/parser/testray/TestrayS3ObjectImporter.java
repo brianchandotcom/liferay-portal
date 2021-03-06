@@ -17,14 +17,20 @@ package com.liferay.jenkins.results.parser.testray;
 import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.BuildDatabase;
 import com.liferay.jenkins.results.parser.BuildDatabaseUtil;
+import com.liferay.jenkins.results.parser.GitWorkingDirectoryFactory;
 import com.liferay.jenkins.results.parser.JenkinsConsoleTextLoader;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 
 import java.io.File;
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Michael Hashimoto
@@ -49,6 +55,8 @@ public class TestrayS3ObjectImporter {
 		JenkinsResultsParserUtil.delete(_getTestrayLogsDir());
 
 		_recordJenkinsConsole();
+		_recordLiferayLogs();
+		_recordLiferayOSGiLogs();
 	}
 
 	public void upload() {
@@ -65,6 +73,73 @@ public class TestrayS3ObjectImporter {
 		JenkinsResultsParserUtil.delete(file);
 
 		return gzipFile;
+	}
+
+	private List<File> _getLiferayBundlesDirs() {
+		List<File> liferayBundlesDirs = new ArrayList<>();
+
+		PortalGitWorkingDirectory portalGitWorkingDirectory =
+			_getPortalGitWorkingDirectory();
+
+		if (portalGitWorkingDirectory == null) {
+			return liferayBundlesDirs;
+		}
+
+		Properties appServerProperties =
+			portalGitWorkingDirectory.getAppServerProperties();
+
+		File appServerParentDir = new File(
+			JenkinsResultsParserUtil.getProperty(
+				appServerProperties, "app.server.parent.dir"));
+
+		for (File siblingFile :
+				JenkinsResultsParserUtil.findSiblingFiles(appServerParentDir)) {
+
+			if (!siblingFile.isDirectory()) {
+				continue;
+			}
+
+			String siblingFileName = siblingFile.getName();
+
+			Matcher matcher = _bundlesDirNamePattern.matcher(siblingFileName);
+
+			if (!matcher.find()) {
+				continue;
+			}
+
+			liferayBundlesDirs.add(siblingFile);
+		}
+
+		return liferayBundlesDirs;
+	}
+
+	private int _getLiferayLogMaxSize() {
+		int liferayLogMaxSizeInMB = 10;
+
+		try {
+			liferayLogMaxSizeInMB = Integer.parseInt(
+				JenkinsResultsParserUtil.getBuildProperty(
+					"testray.liferay.log.max.size.in.mb"));
+		}
+		catch (IOException ioException) {
+		}
+
+		return liferayLogMaxSizeInMB * 1024 * 1024;
+	}
+
+	private PortalGitWorkingDirectory _getPortalGitWorkingDirectory() {
+		if (_portalGitWorkingDirectory != null) {
+			return _portalGitWorkingDirectory;
+		}
+
+		String portalUpstreamBranchName = _startProperties.getProperty(
+			"PORTAL_UPSTREAM_BRANCH_NAME");
+
+		_portalGitWorkingDirectory =
+			GitWorkingDirectoryFactory.newPortalGitWorkingDirectory(
+				portalUpstreamBranchName);
+
+		return _portalGitWorkingDirectory;
 	}
 
 	private File _getTestrayLogsBuildDir() {
@@ -122,7 +197,121 @@ public class TestrayS3ObjectImporter {
 		}
 	}
 
+	private void _recordLiferayLogs() {
+		for (File liferayBundlesDir : _getLiferayBundlesDirs()) {
+			File liferayLogsDir = new File(liferayBundlesDir, "logs");
+
+			if (!liferayLogsDir.exists()) {
+				continue;
+			}
+
+			StringBuilder sb = new StringBuilder();
+
+			for (File liferayLogFile :
+					JenkinsResultsParserUtil.findFiles(
+						liferayLogsDir, "liferay\\..*\\.log")) {
+
+				try {
+					sb.append(JenkinsResultsParserUtil.read(liferayLogFile));
+
+					sb.append("\n");
+				}
+				catch (IOException ioException) {
+					throw new RuntimeException(ioException);
+				}
+			}
+
+			int liferayLogMaxSizeInMB = _getLiferayLogMaxSize();
+
+			if (sb.length() > liferayLogMaxSizeInMB) {
+				sb.setLength(liferayLogMaxSizeInMB);
+			}
+
+			Matcher matcher = _bundlesDirNamePattern.matcher(
+				liferayBundlesDir.getName());
+
+			if (!matcher.find()) {
+				continue;
+			}
+
+			File liferayLogFile = new File(
+				_getTestrayLogsBuildDir(),
+				JenkinsResultsParserUtil.combine(
+					"liferay-log", matcher.group("bundlesSuffix"), ".txt"));
+
+			try {
+				JenkinsResultsParserUtil.write(liferayLogFile, sb.toString());
+			}
+			catch (IOException ioException) {
+				continue;
+			}
+
+			_convertToGzipFile(liferayLogFile);
+		}
+	}
+
+	private void _recordLiferayOSGiLogs() {
+		for (File liferayBundlesDir : _getLiferayBundlesDirs()) {
+			File liferayOSGiStateDir = new File(
+				liferayBundlesDir, "osgi/state");
+
+			if (!liferayOSGiStateDir.exists()) {
+				continue;
+			}
+
+			StringBuilder sb = new StringBuilder();
+
+			for (File liferayOSGiLogFile :
+					JenkinsResultsParserUtil.findFiles(
+						liferayOSGiStateDir.getParentFile(), ".*\\.log")) {
+
+				try {
+					sb.append(
+						JenkinsResultsParserUtil.read(liferayOSGiLogFile));
+
+					sb.append("\n");
+				}
+				catch (IOException ioException) {
+					throw new RuntimeException(ioException);
+				}
+			}
+
+			int liferayLogMaxSize = _getLiferayLogMaxSize();
+
+			if (sb.length() > liferayLogMaxSize) {
+				sb.setLength(liferayLogMaxSize);
+			}
+
+			Matcher matcher = _bundlesDirNamePattern.matcher(
+				liferayBundlesDir.getName());
+
+			if (!matcher.find()) {
+				continue;
+			}
+
+			File liferayOSGiLogFile = new File(
+				_getTestrayLogsBuildDir(),
+				JenkinsResultsParserUtil.combine(
+					"liferay-osgi-log", matcher.group("bundlesSuffix"),
+					".txt"));
+
+			try {
+				JenkinsResultsParserUtil.write(
+					liferayOSGiLogFile, sb.toString());
+			}
+			catch (IOException ioException) {
+				continue;
+			}
+
+			_convertToGzipFile(liferayOSGiLogFile);
+		}
+	}
+
+	private static final Pattern _bundlesDirNamePattern = Pattern.compile(
+		"bundles(?<bundlesSuffix>.*)");
+
 	private final Build _build;
+	private PortalGitWorkingDirectory _portalGitWorkingDirectory;
 	private final Properties _startProperties;
 
 }

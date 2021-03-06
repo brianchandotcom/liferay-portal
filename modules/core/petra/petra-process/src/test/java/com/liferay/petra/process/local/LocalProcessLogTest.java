@@ -17,7 +17,9 @@ package com.liferay.petra.process.local;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.process.ProcessLog;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.lang.reflect.Constructor;
 
@@ -25,6 +27,7 @@ import java.util.Arrays;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
@@ -33,8 +36,10 @@ import org.junit.Test;
 public class LocalProcessLogTest {
 
 	@ClassRule
-	public static final CodeCoverageAssertor codeCoverageAssertor =
-		CodeCoverageAssertor.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			CodeCoverageAssertor.INSTANCE, LiferayUnitTestRule.INSTANCE);
 
 	@Test
 	public void testEquals() {

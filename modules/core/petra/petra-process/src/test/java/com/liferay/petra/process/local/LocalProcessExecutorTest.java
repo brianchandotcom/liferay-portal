@@ -29,7 +29,9 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.test.util.ThreadTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.EOFException;
 import java.io.File;
@@ -75,6 +77,7 @@ import java.util.function.Supplier;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
@@ -83,24 +86,28 @@ import org.junit.Test;
 public class LocalProcessExecutorTest {
 
 	@ClassRule
-	public static final CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor() {
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new CodeCoverageAssertor() {
 
-			@Override
-			public void appendAssertClasses(List<Class<?>> assertClasses) {
-				assertClasses.add(ProcessConfig.class);
+				@Override
+				public void appendAssertClasses(List<Class<?>> assertClasses) {
+					assertClasses.add(ProcessConfig.class);
 
-				Collections.addAll(
-					assertClasses, ProcessConfig.class.getDeclaredClasses());
+					Collections.addAll(
+						assertClasses,
+						ProcessConfig.class.getDeclaredClasses());
 
-				assertClasses.add(LocalProcessLauncher.class);
+					assertClasses.add(LocalProcessLauncher.class);
 
-				Collections.addAll(
-					assertClasses,
-					LocalProcessLauncher.class.getDeclaredClasses());
-			}
+					Collections.addAll(
+						assertClasses,
+						LocalProcessLauncher.class.getDeclaredClasses());
+				}
 
-		};
+			},
+			LiferayUnitTestRule.INSTANCE);
 
 	@Test
 	public void testHeartBeatThreadDetachOnBrokenPipe() throws Exception {

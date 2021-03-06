@@ -65,7 +65,9 @@ import com.liferay.petra.sql.dsl.spi.query.SetOperationType;
 import com.liferay.petra.sql.dsl.spi.query.Where;
 import com.liferay.petra.sql.dsl.spi.query.sort.DefaultOrderByExpression;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.sql.Clob;
 import java.sql.Types;
@@ -77,6 +79,7 @@ import java.util.function.Consumer;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
@@ -85,50 +88,53 @@ import org.junit.Test;
 public class SQLDSLTest {
 
 	@ClassRule
-	public static final CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor() {
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new CodeCoverageAssertor() {
 
-			@Override
-			public void appendAssertClasses(List<Class<?>> assertClasses) {
-				assertClasses.clear();
+				@Override
+				public void appendAssertClasses(List<Class<?>> assertClasses) {
+					assertClasses.clear();
 
-				assertClasses.add(AggregateExpression.class);
-				assertClasses.add(BaseASTNode.class);
-				assertClasses.add(BaseTable.class);
-				assertClasses.add(CaseWhenThen.class);
-				assertClasses.add(DefaultAlias.class);
-				assertClasses.add(DefaultASTNodeListener.class);
-				assertClasses.add(DefaultColumn.class);
-				assertClasses.add(DefaultColumnAlias.class);
-				assertClasses.add(DefaultOrderByExpression.class);
-				assertClasses.add(DefaultPredicate.class);
-				assertClasses.add(DSLFunction.class);
-				assertClasses.add(DSLFunctionType.class);
-				assertClasses.add(DSLFunctionFactoryUtil.class);
-				assertClasses.add(DSLQueryFactoryUtil.class);
-				assertClasses.add(ElseEnd.class);
-				assertClasses.add(From.class);
-				assertClasses.add(GroupBy.class);
-				assertClasses.add(Having.class);
-				assertClasses.add(Join.class);
-				assertClasses.add(JoinType.class);
-				assertClasses.add(Limit.class);
-				assertClasses.add(NullExpression.class);
-				assertClasses.add(Operand.class);
-				assertClasses.add(OrderBy.class);
-				assertClasses.add(QueryExpression.class);
-				assertClasses.add(QueryTable.class);
-				assertClasses.add(Scalar.class);
-				assertClasses.add(ScalarList.class);
-				assertClasses.add(Select.class);
-				assertClasses.add(SetOperation.class);
-				assertClasses.add(SetOperationType.class);
-				assertClasses.add(TableStar.class);
-				assertClasses.add(WhenThen.class);
-				assertClasses.add(Where.class);
-			}
+					assertClasses.add(AggregateExpression.class);
+					assertClasses.add(BaseASTNode.class);
+					assertClasses.add(BaseTable.class);
+					assertClasses.add(CaseWhenThen.class);
+					assertClasses.add(DefaultAlias.class);
+					assertClasses.add(DefaultASTNodeListener.class);
+					assertClasses.add(DefaultColumn.class);
+					assertClasses.add(DefaultColumnAlias.class);
+					assertClasses.add(DefaultOrderByExpression.class);
+					assertClasses.add(DefaultPredicate.class);
+					assertClasses.add(DSLFunction.class);
+					assertClasses.add(DSLFunctionType.class);
+					assertClasses.add(DSLFunctionFactoryUtil.class);
+					assertClasses.add(DSLQueryFactoryUtil.class);
+					assertClasses.add(ElseEnd.class);
+					assertClasses.add(From.class);
+					assertClasses.add(GroupBy.class);
+					assertClasses.add(Having.class);
+					assertClasses.add(Join.class);
+					assertClasses.add(JoinType.class);
+					assertClasses.add(Limit.class);
+					assertClasses.add(NullExpression.class);
+					assertClasses.add(Operand.class);
+					assertClasses.add(OrderBy.class);
+					assertClasses.add(QueryExpression.class);
+					assertClasses.add(QueryTable.class);
+					assertClasses.add(Scalar.class);
+					assertClasses.add(ScalarList.class);
+					assertClasses.add(Select.class);
+					assertClasses.add(SetOperation.class);
+					assertClasses.add(SetOperationType.class);
+					assertClasses.add(TableStar.class);
+					assertClasses.add(WhenThen.class);
+					assertClasses.add(Where.class);
+				}
 
-		};
+			},
+			LiferayUnitTestRule.INSTANCE);
 
 	@Test
 	public void testAggregateExpression() {

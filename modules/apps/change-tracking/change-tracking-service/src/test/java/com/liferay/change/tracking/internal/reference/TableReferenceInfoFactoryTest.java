@@ -36,7 +36,9 @@ import com.liferay.portal.kernel.model.ClassNameTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.sql.Clob;
 import java.sql.Types;
@@ -50,6 +52,7 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
@@ -58,24 +61,28 @@ import org.junit.Test;
 public class TableReferenceInfoFactoryTest {
 
 	@ClassRule
-	public static final CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor() {
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new CodeCoverageAssertor() {
 
-			@Override
-			public void appendAssertClasses(List<Class<?>> assertClasses) {
-				assertClasses.add(BaseTableReferenceInfoBuilder.class);
-				assertClasses.add(ChildTableReferenceInfoBuilderImpl.class);
-				assertClasses.add(ParentTableReferenceInfoBuilderImpl.class);
-				assertClasses.add(TableJoinHolderFactory.class);
+				@Override
+				public void appendAssertClasses(List<Class<?>> assertClasses) {
+					assertClasses.add(BaseTableReferenceInfoBuilder.class);
+					assertClasses.add(ChildTableReferenceInfoBuilderImpl.class);
+					assertClasses.add(
+						ParentTableReferenceInfoBuilderImpl.class);
+					assertClasses.add(TableJoinHolderFactory.class);
 
-				Collections.addAll(
-					assertClasses,
-					TableJoinHolderFactory.class.getDeclaredClasses());
+					Collections.addAll(
+						assertClasses,
+						TableJoinHolderFactory.class.getDeclaredClasses());
 
-				assertClasses.add(TableReferenceInfo.class);
-			}
+					assertClasses.add(TableReferenceInfo.class);
+				}
 
-		};
+			},
+			LiferayUnitTestRule.INSTANCE);
 
 	@BeforeClass
 	public static void setUpClass() {

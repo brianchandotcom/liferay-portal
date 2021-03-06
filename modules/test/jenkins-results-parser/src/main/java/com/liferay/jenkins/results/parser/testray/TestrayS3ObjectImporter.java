@@ -58,6 +58,7 @@ public class TestrayS3ObjectImporter {
 		_recordLiferayLogs();
 		_recordLiferayOSGiLogs();
 		_recordPoshiReportFiles();
+		_recordPoshiWarnings();
 	}
 
 	public void upload() {
@@ -359,6 +360,46 @@ public class TestrayS3ObjectImporter {
 				_convertToGzipFile(poshiReportFile);
 			}
 		}
+	}
+
+	private void _recordPoshiWarnings() {
+		PortalGitWorkingDirectory portalGitWorkingDirectory =
+			_getPortalGitWorkingDirectory();
+
+		File sourcePoshiWarningsFile = new File(
+			portalGitWorkingDirectory.getWorkingDirectory(),
+			"poshi-warnings.xml");
+
+		if (!sourcePoshiWarningsFile.exists()) {
+			return;
+		}
+
+		File poshiWarningsFile = new File(
+			_getTestrayLogsBuildDir(), "poshi-warnings.xml");
+
+		try {
+			JenkinsResultsParserUtil.copy(
+				sourcePoshiWarningsFile, poshiWarningsFile);
+
+			String content = JenkinsResultsParserUtil.read(poshiWarningsFile);
+
+			content = content.trim();
+
+			if (content.isEmpty()) {
+				return;
+			}
+
+			JenkinsResultsParserUtil.write(
+				poshiWarningsFile,
+				JenkinsResultsParserUtil.combine(
+					"<?xml version=\"1.0\"?>\n<values>\n", content,
+					"\n</values>"));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		_convertToGzipFile(poshiWarningsFile);
 	}
 
 	private static final Pattern _bundlesDirNamePattern = Pattern.compile(

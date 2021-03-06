@@ -40,6 +40,17 @@ import org.json.JSONObject;
  */
 public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 
+	public Properties getAppServerProperties() {
+		if (_appServerProperties != null) {
+			return _appServerProperties;
+		}
+
+		_appServerProperties = JenkinsResultsParserUtil.getProperties(
+			new File(getWorkingDirectory(), "app.server.properties"));
+
+		return _appServerProperties;
+	}
+
 	public String getMajorPortalVersion() {
 		return JenkinsResultsParserUtil.getProperty(
 			getReleaseProperties(), "lp.version.major");
@@ -234,23 +245,7 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 		}
 
 		_releaseProperties = JenkinsResultsParserUtil.getProperties(
-			new File(getWorkingDirectory(), "release.properties"),
-			new File(
-				getWorkingDirectory(),
-				JenkinsResultsParserUtil.combine(
-					"release.", System.getenv("HOSTNAME"), ".properties")),
-			new File(
-				getWorkingDirectory(),
-				JenkinsResultsParserUtil.combine(
-					"release.", System.getenv("HOST"), ".properties")),
-			new File(
-				getWorkingDirectory(),
-				JenkinsResultsParserUtil.combine(
-					"release.", System.getenv("COMPUTERNAME"), ".properties")),
-			new File(
-				getWorkingDirectory(),
-				JenkinsResultsParserUtil.combine(
-					"release.", System.getenv("user.name"), ".properties")));
+			new File(getWorkingDirectory(), "release.properties"));
 
 		return _releaseProperties;
 	}
@@ -261,23 +256,7 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 		}
 
 		_testProperties = JenkinsResultsParserUtil.getProperties(
-			new File(getWorkingDirectory(), "test.properties"),
-			new File(
-				getWorkingDirectory(),
-				JenkinsResultsParserUtil.combine(
-					"test.", System.getenv("HOSTNAME"), ".properties")),
-			new File(
-				getWorkingDirectory(),
-				JenkinsResultsParserUtil.combine(
-					"test.", System.getenv("HOST"), ".properties")),
-			new File(
-				getWorkingDirectory(),
-				JenkinsResultsParserUtil.combine(
-					"test.", System.getenv("COMPUTERNAME"), ".properties")),
-			new File(
-				getWorkingDirectory(),
-				JenkinsResultsParserUtil.combine(
-					"test.", System.getenv("user.name"), ".properties")));
+			new File(getWorkingDirectory(), "test.properties"));
 
 		return _testProperties;
 	}
@@ -337,6 +316,7 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 		return false;
 	}
 
+	private Properties _appServerProperties;
 	private Properties _releaseProperties;
 	private Properties _testProperties;
 

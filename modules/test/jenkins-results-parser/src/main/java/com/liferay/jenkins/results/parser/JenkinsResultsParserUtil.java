@@ -633,6 +633,26 @@ public class JenkinsResultsParserUtil {
 		return files;
 	}
 
+	public static List<File> findSiblingFiles(File file) {
+		if ((file == null) || !file.exists()) {
+			return new ArrayList<>();
+		}
+
+		File parentFile = file.getParentFile();
+
+		if ((parentFile == null) || !parentFile.exists()) {
+			return new ArrayList<>();
+		}
+
+		File[] siblingFiles = parentFile.listFiles();
+
+		if (siblingFiles == null) {
+			return new ArrayList<>();
+		}
+
+		return Arrays.asList(siblingFiles);
+	}
+
 	public static String fixFileName(String fileName) {
 		String prefix = "";
 

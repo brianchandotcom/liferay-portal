@@ -75,7 +75,9 @@ public class TestrayS3Bucket {
 			else if (fileName.endsWith("jpg") || fileName.endsWith("jpg.gz")) {
 				objectMetadata.setContentType("image/jpeg");
 			}
-			else if (fileName.endsWith("txt") || fileName.endsWith("txt.gz")) {
+			else if (fileName.endsWith("txt") || fileName.endsWith("txt.gz") ||
+					 fileName.endsWith("xml") || fileName.endsWith("xml.gz")) {
+
 				objectMetadata.setContentType("text/plain");
 			}
 

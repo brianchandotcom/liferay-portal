@@ -23,10 +23,17 @@ import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.layout.dynamic.data.mapping.form.field.type.constants.LayoutDDMFormFieldTypeConstants;
 import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletURL;
@@ -78,8 +85,12 @@ public class LayoutDDMFormFieldTemplateContextContributor
 			"predefinedValue", predefinedValue
 		).put(
 			"value",
-			GetterUtil.getString(
-				ddmFormFieldRenderingContext.getProperty("value"))
+			_getValue(
+				GetterUtil.getLong(
+					ddmFormFieldRenderingContext.getProperty("groupId")),
+				ddmFormFieldRenderingContext.getLocale(),
+				GetterUtil.getString(
+					ddmFormFieldRenderingContext.getProperty("value")))
 		).build();
 	}
 
@@ -108,7 +119,49 @@ public class LayoutDDMFormFieldTemplateContextContributor
 		return itemSelectorURL.toString();
 	}
 
+	private String _getValue(
+		long defaultGroupId, Locale defaultLocale, String value) {
+
+		if (Validator.isNull(value)) {
+			return StringPool.BLANK;
+		}
+
+		try {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
+
+			if (jsonObject.has("groupId")) {
+				return value;
+			}
+
+			boolean privateLayout = jsonObject.getBoolean("privateLayout");
+			long layoutId = jsonObject.getLong("layoutId");
+
+			Layout layout = _layoutLocalService.fetchLayout(
+				defaultGroupId, privateLayout, layoutId);
+
+			if (layout == null) {
+				return StringPool.BLANK;
+			}
+
+			jsonObject.put(
+				"id", layout.getUuid()
+			).put(
+				"name", layout.getName(defaultLocale)
+			).put(
+				"value", layout.getFriendlyURL(defaultLocale)
+			);
+
+			return jsonObject.toJSONString();
+		}
+		catch (JSONException jsonException) {
+			return StringPool.BLANK;
+		}
+	}
+
 	@Reference
 	private ItemSelector _itemSelector;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 }

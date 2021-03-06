@@ -2,11 +2,11 @@
 
 <root available-locales="es_ES,en_US" default-locale="en_US" version="1.0">
 	<dynamic-element index-type="keyword" instance-id="loye" name="LinkToPage8186" type="link_to_layout">
-		<dynamic-content language-id="es_ES"><![CDATA[{"groupId":$GROUP_ID,"name":"layout1","id":"$UUID_1","privateLayout":false,"layoutId":"$LAYOUT_ID_1","value":"/layout1"}]]></dynamic-content>
-		<dynamic-content language-id="en_US"><![CDATA[{"groupId":$GROUP_ID,"name":"layout2","id":"$UUID_2","privateLayout":false,"layoutId":"$LAYOUT_ID_2","value":"/layout2"}]]></dynamic-content>
+		<dynamic-content language-id="es_ES"><![CDATA[{"groupId":"$GROUP_ID","name":"layout1","id":"$UUID_1","privateLayout":false,"value":"/layout1","layoutId":"$LAYOUT_ID_1"}]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[{"groupId":"$GROUP_ID","name":"layout2","id":"$UUID_2","privateLayout":false,"value":"/layout2","layoutId":"$LAYOUT_ID_2"}]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="keyword" instance-id="bvee" name="LinkToPage8186" type="link_to_layout">
-		<dynamic-content language-id="es_ES"><![CDATA[{"groupId":$GROUP_ID,"name":"layout3","id":"$UUID_3","privateLayout":false,"layoutId":"$LAYOUT_ID_3","value":"/layout3"}]]></dynamic-content>
-		<dynamic-content language-id="en_US"><![CDATA[{"groupId":$GROUP_ID,"name":"layout4","id":"$UUID_4","privateLayout":false,"layoutId":"$LAYOUT_ID_4","value":"/layout4"}]]></dynamic-content>
+		<dynamic-content language-id="es_ES"><![CDATA[{"groupId":"$GROUP_ID","name":"layout3","id":"$UUID_3","privateLayout":false,"value":"/layout3","layoutId":"$LAYOUT_ID_3"}]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[{"groupId":"$GROUP_ID","name":"layout4","id":"$UUID_4","privateLayout":false,"value":"/layout4","layoutId":"$LAYOUT_ID_4"}]]></dynamic-content>
 	</dynamic-element>
 </root>

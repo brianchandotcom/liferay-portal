@@ -146,18 +146,34 @@ public class TestrayS3Bucket {
 		}
 	}
 
+	public List<TestrayS3Object> createTestrayS3Objects(File dir) {
+		return createTestrayS3Objects(null, dir);
+	}
+
 	public List<TestrayS3Object> createTestrayS3Objects(
 		String baseKey, File dir) {
 
 		List<TestrayS3Object> testrayS3Objects = new ArrayList<>();
 
+		if ((dir == null) || !dir.isDirectory()) {
+			return testrayS3Objects;
+		}
+
 		for (File file : JenkinsResultsParserUtil.findFiles(dir, ".*")) {
 			StringBuilder sb = new StringBuilder();
 
-			sb.append(baseKey);
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(baseKey) &&
+				!baseKey.equals("/")) {
 
-			if (!baseKey.endsWith("/")) {
-				sb.append("/");
+				if (baseKey.startsWith("/")) {
+					baseKey = baseKey.substring(1);
+				}
+
+				sb.append(baseKey);
+
+				if (!baseKey.endsWith("/")) {
+					sb.append("/");
+				}
 			}
 
 			sb.append(JenkinsResultsParserUtil.getPathRelativeTo(file, dir));

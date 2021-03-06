@@ -85,6 +85,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.zip.GZIPOutputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
@@ -2308,6 +2309,26 @@ public class JenkinsResultsParserUtil {
 
 	public static File getUserHomeDir() {
 		return _userHomeDir;
+	}
+
+	public static void gzip(File sourceFile, File targetFile) {
+		try (FileOutputStream fileOutputStream = new FileOutputStream(
+				targetFile);
+			GZIPOutputStream gzipOutputStream = new GZIPOutputStream(
+				fileOutputStream);
+			FileInputStream fileInputStream = new FileInputStream(sourceFile)) {
+
+			byte[] bytes = new byte[1024];
+
+			int len;
+
+			while ((len = fileInputStream.read(bytes)) > 0) {
+				gzipOutputStream.write(bytes, 0, len);
+			}
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	public static boolean isCINode() {

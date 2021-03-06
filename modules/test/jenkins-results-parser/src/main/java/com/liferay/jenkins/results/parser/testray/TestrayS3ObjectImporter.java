@@ -57,6 +57,7 @@ public class TestrayS3ObjectImporter {
 		_recordJenkinsConsole();
 		_recordLiferayLogs();
 		_recordLiferayOSGiLogs();
+		_recordPoshiReportFiles();
 	}
 
 	public void upload() {
@@ -304,6 +305,59 @@ public class TestrayS3ObjectImporter {
 			}
 
 			_convertToGzipFile(liferayOSGiLogFile);
+		}
+	}
+
+	private void _recordPoshiReportFiles() {
+		PortalGitWorkingDirectory portalGitWorkingDirectory =
+			_getPortalGitWorkingDirectory();
+
+		File testResultsDir = new File(
+			portalGitWorkingDirectory.getWorkingDirectory(),
+			"portal-web/test-results");
+
+		if (!testResultsDir.exists()) {
+			return;
+		}
+
+		List<File> poshiReportIndexFiles = JenkinsResultsParserUtil.findFiles(
+			testResultsDir, "index.html");
+
+		for (File poshiReportIndexFile : poshiReportIndexFiles) {
+			File sourcePoshiReportDir = poshiReportIndexFile.getParentFile();
+
+			File poshiReportDir = new File(
+				_getTestrayLogsBuildDir(), sourcePoshiReportDir.getName());
+
+			try {
+				JenkinsResultsParserUtil.copy(
+					sourcePoshiReportDir, poshiReportDir);
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
+
+			for (File poshiReportFile :
+					JenkinsResultsParserUtil.findFiles(poshiReportDir, ".*")) {
+
+				String poshiReportFileName = poshiReportFile.getName();
+
+				if (poshiReportFileName.endsWith(".html")) {
+					try {
+						String content = JenkinsResultsParserUtil.read(
+							poshiReportFile);
+
+						JenkinsResultsParserUtil.write(
+							poshiReportFile,
+							content.replaceAll("\\.jpg", "\\.jpg\\.gz"));
+					}
+					catch (IOException ioException) {
+						throw new RuntimeException(ioException);
+					}
+				}
+
+				_convertToGzipFile(poshiReportFile);
+			}
 		}
 	}
 

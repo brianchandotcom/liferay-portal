@@ -634,6 +634,10 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static List<File> findSiblingFiles(File file) {
+		return findSiblingFiles(file, false);
+	}
+
+	public static List<File> findSiblingFiles(File file, boolean includeFile) {
 		if ((file == null) || !file.exists()) {
 			return Collections.emptyList();
 		}
@@ -641,13 +645,19 @@ public class JenkinsResultsParserUtil {
 		File parentFile = file.getParentFile();
 
 		if ((parentFile == null) || !parentFile.exists()) {
+			if (includeFile) {
+				return Arrays.asList(file);
+			}
+
 			return Collections.emptyList();
 		}
 
 		List<File> siblingFilesList = new ArrayList<>(
 			Arrays.asList(parentFile.listFiles()));
 
-		siblingFilesList.remove(file);
+		if (!includeFile) {
+			siblingFilesList.remove(file);
+		}
 
 		return siblingFilesList;
 	}

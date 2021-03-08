@@ -20,7 +20,6 @@ import com.liferay.app.builder.model.AppBuilderAppDataRecordLink;
 import com.liferay.app.builder.portlet.tab.AppBuilderAppPortletTab;
 import com.liferay.app.builder.service.AppBuilderAppDataRecordLinkLocalService;
 import com.liferay.app.builder.service.AppBuilderAppLocalService;
-import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
@@ -69,11 +68,6 @@ public class AppBuilderAppAssetRendererFactory
 		setPortletId(AppBuilderPortletKeys.APPS);
 		setSearchable(false);
 		setSelectable(false);
-	}
-
-	@Override
-	public AssetEntry getAssetEntry(long assetEntryId) throws PortalException {
-		return getAssetEntry(getClassName(), assetEntryId);
 	}
 
 	@Override

@@ -180,9 +180,11 @@ public class DataDefinitionResourceImpl
 
 		dataLayoutResource.deleteDataLayoutsDataDefinition(dataDefinitionId);
 
+		DataListViewResource.Builder dataListViewResourceBuilder =
+			_dataListViewResourceFactory.create();
+
 		DataListViewResource dataListViewResource =
-			DataListViewResource.builder(
-			).checkPermissions(
+			dataListViewResourceBuilder.checkPermissions(
 				false
 			).user(
 				contextUser
@@ -1204,9 +1206,11 @@ public class DataDefinitionResourceImpl
 			Set<Long> deDataListViewIds, String[] removedFieldNames)
 		throws Exception {
 
+		DataListViewResource.Builder dataListViewResourceBuilder =
+			_dataListViewResourceFactory.create();
+
 		DataListViewResource dataListViewResource =
-			DataListViewResource.builder(
-			).checkPermissions(
+			dataListViewResourceBuilder.checkPermissions(
 				false
 			).user(
 				contextUser
@@ -1239,6 +1243,13 @@ public class DataDefinitionResourceImpl
 		}
 
 		return _npmResolver.resolveModuleName(ddmFormFieldType.getModuleName());
+	}
+
+	@Reference(unbind = "-")
+	private void _setDataListViewResourceFactory(
+		DataListViewResource.Factory dataListViewResourceFactory) {
+
+		_dataListViewResourceFactory = dataListViewResourceFactory;
 	}
 
 	private void _setTypeDDMFormFieldValue(
@@ -1586,6 +1597,8 @@ public class DataDefinitionResourceImpl
 
 	@Reference
 	private DataEngineNativeObjectTracker _dataEngineNativeObjectTracker;
+
+	private DataListViewResource.Factory _dataListViewResourceFactory;
 
 	@Reference
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;

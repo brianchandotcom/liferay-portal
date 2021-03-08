@@ -82,9 +82,9 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 					</c:choose>
 				</p>
 
-				<span class="d-inline-flex">
+				<div class="d-inline-flex">
 					<liferay-util:include page="/asset_actions.jsp" servletContext="<%= application %>" />
-				</span>
+				</div>
 			</div>
 
 			<span class="asset-anchor lfr-asset-anchor" id="<%= assetEntry.getEntryId() %>"></span>

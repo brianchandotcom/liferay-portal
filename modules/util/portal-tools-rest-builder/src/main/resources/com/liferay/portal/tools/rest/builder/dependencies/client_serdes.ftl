@@ -276,10 +276,6 @@ public class ${schemaName}SerDes {
 					}
 				}
 			</#list>
-
-			else if (jsonParserFieldName.equals("status")) {
-				throw new IllegalArgumentException();
-			}
 		}
 	}
 

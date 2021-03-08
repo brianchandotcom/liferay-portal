@@ -153,6 +153,12 @@ public interface ${schemaName}Resource {
 				_logger.fine("HTTP response message: " + httpResponse.getMessage());
 				_logger.fine("HTTP response status code: " + httpResponse.getStatusCode());
 
+				if (httpResponse.getStatusCode() / 100 != 2) {
+					_logger.log(Level.WARNING, "Unable to process HTTP response: " + content);
+
+					throw new Problem.ProblemException(Problem.toDTO(content));
+				}
+
 				<#if !javaMethodSignature.returnType?contains("javax.ws.rs.core.Response")>
 					try {
 						<#if javaMethodSignature.returnType?contains("Page<com.liferay.portal.vulcan.permission.Permission>")>

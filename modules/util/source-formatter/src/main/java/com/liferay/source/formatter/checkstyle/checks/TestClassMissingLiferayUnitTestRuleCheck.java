@@ -62,7 +62,7 @@ public class TestClassMissingLiferayUnitTestRuleCheck extends BaseCheck {
 
 		if ((annotationDetailAST == null) &&
 			!importNames.contains(
-				"com.liferay.portal.kernel.test.rule.LiferayUnitTestRule")) {
+				"com.liferay.portal.test.rule.LiferayUnitTestRule")) {
 
 			log(detailAST, _MSG_REQUIRE_TEST_RULE);
 
@@ -86,7 +86,7 @@ public class TestClassMissingLiferayUnitTestRuleCheck extends BaseCheck {
 		}
 
 		if (!importNames.contains(
-				"com.liferay.portal.kernel.test.rule.LiferayUnitTestRule")) {
+				"com.liferay.portal.test.rule.LiferayUnitTestRule")) {
 
 			log(detailAST, _MSG_REQUIRE_TEST_RULE);
 		}

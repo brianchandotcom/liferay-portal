@@ -306,22 +306,22 @@ public interface CompanyLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Company fetchCompanyByVirtualHost(String virtualHostname);
 
-	@Transactional(propagation = Propagation.SUPPORTS)
+	@Transactional(enabled = false)
 	public <E extends Exception> void forEach(
 			UnsafeConsumer<Company, E> unsafeConsumer)
 		throws E;
 
-	@Transactional(propagation = Propagation.SUPPORTS)
+	@Transactional(enabled = false)
 	public <E extends Exception> void forEach(
 			UnsafeConsumer<Company, E> unsafeConsumer, List<Company> companies)
 		throws E;
 
-	@Transactional(propagation = Propagation.SUPPORTS)
+	@Transactional(enabled = false)
 	public <E extends Exception> void forEachCompanyId(
 			UnsafeConsumer<Long, E> unsafeConsumer)
 		throws E;
 
-	@Transactional(propagation = Propagation.SUPPORTS)
+	@Transactional(enabled = false)
 	public <E extends Exception> void forEachCompanyId(
 			UnsafeConsumer<Long, E> unsafeConsumer, long[] companyIds)
 		throws E;

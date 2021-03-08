@@ -26,16 +26,16 @@
 				<target><![CDATA[Un poco de texto]]></target>
 			</segment>
 		</unit>
-		<unit id="Integer2cc6">
-			<segment>
-				<source><![CDATA[1]]></source>
-				<target><![CDATA[1]]></target>
-			</segment>
-		</unit>
 		<unit id="Double89452576">
 			<segment>
 				<source><![CDATA[1.0]]></source>
 				<target><![CDATA[1,0]]></target>
+			</segment>
+		</unit>
+		<unit id="Integer2cc6">
+			<segment>
+				<source><![CDATA[1]]></source>
+				<target><![CDATA[1]]></target>
 			</segment>
 		</unit>
 	</file>

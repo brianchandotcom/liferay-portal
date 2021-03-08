@@ -128,14 +128,14 @@
 			"type": "image"
 		},
 		{
-			"dataType": "integer",
+			"dataType": "double",
 			"fieldNamespace": "ddm",
 			"indexType": "keyword",
 			"label": {
-				"en_US": "Integer"
+				"en_US": "Decimal"
 			},
 			"localizable": true,
-			"name": "Integer2cc6",
+			"name": "Double89452576",
 			"predefinedValue": {
 				"en_US": ""
 			},
@@ -149,14 +149,14 @@
 			"type": "numeric"
 		},
 		{
-			"dataType": "double",
+			"dataType": "integer",
 			"fieldNamespace": "ddm",
 			"indexType": "keyword",
 			"label": {
-				"en_US": "Decimal"
+				"en_US": "Integer"
 			},
 			"localizable": true,
-			"name": "Double89452576",
+			"name": "Integer2cc6",
 			"predefinedValue": {
 				"en_US": ""
 			},

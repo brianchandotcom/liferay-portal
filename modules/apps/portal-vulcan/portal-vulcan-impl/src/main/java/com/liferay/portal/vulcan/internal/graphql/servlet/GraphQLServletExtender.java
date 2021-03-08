@@ -1311,10 +1311,15 @@ public class GraphQLServletExtender {
 			Object resource, Map<String, String[]> parameterMap)
 		throws Exception {
 
-		EntityModelResource entityModelResource = (EntityModelResource)resource;
+		if (resource instanceof EntityModelResource) {
+			EntityModelResource entityModelResource =
+				(EntityModelResource)resource;
 
-		return entityModelResource.getEntityModel(
-			ContextProviderUtil.getMultivaluedHashMap(parameterMap));
+			return entityModelResource.getEntityModel(
+				ContextProviderUtil.getMultivaluedHashMap(parameterMap));
+		}
+
+		return null;
 	}
 
 	private Field _getFieldDefinitionsByNameField(

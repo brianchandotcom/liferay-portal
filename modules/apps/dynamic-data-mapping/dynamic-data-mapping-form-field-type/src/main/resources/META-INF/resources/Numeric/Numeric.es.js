@@ -20,6 +20,8 @@ import vanillaTextMask from 'vanilla-text-mask';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 
+const ONE_DIGIT_NEGATIVE_NUMBER_LENGTH = 2;
+
 const getGenericValue = (symbols, value = '') => {
 	if (typeof value === 'number' || !symbols) {
 		return value;
@@ -164,6 +166,22 @@ const Numeric = ({
 
 				setCurrentValue(newValue);
 				onChange(event);
+			}}
+			onKeyUp={(event) => {
+				const {value: newValue} = event.target;
+
+				if (newValue === '-_') {
+					return;
+				}
+
+				if (
+					!newValue ||
+					(newValue.startsWith('-') &&
+						newValue.length <= ONE_DIGIT_NEGATIVE_NUMBER_LENGTH)
+				) {
+					setCurrentValue(newValue);
+					onChange(event);
+				}
 			}}
 			ref={inputRef}
 			type="text"

@@ -1,0 +1,51 @@
+@component-name = "portal-clustering"
+definition {
+
+	property app.server.bundles.size = "2";
+	property cluster.enabled = "true";
+	property portal.release = "true";
+	property portal.upstream = "false";
+	property remote.elasticsearch.enabled = "true";
+	property test.run.environment = "EE";
+	property testray.main.component.name = "Clustering";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = "5"
+	test ViewNodeLimit {
+		property dxp.license.file = "dxp-license-virtual-cluster.xml";
+		property license.required = "true";
+
+		Clustering.viewClusterStatusInConsole();
+
+		Page.assertNodePortPG(nodePort = "8080");
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		Page.assertNodePortPG(nodePort = "9080");
+
+		Clustering.viewTextPresentOnSpecificNode(
+			expectedText = "You have exceeded the maximum number of cluster nodes in cluster",
+			nodePort = "10080");
+
+		Navigator.openSpecificURL(url = "http://localhost:10080");
+
+		Alert.viewErrorMessage(errorMessage = "This instance is not registered.");
+	}
+
+}

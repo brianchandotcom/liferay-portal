@@ -207,6 +207,7 @@ public class LoggerTestUtil {
 			}
 		}
 
+		@Override
 		public List<LogEntry> getLogEntries() {
 			return _logEntries;
 		}

@@ -44,9 +44,9 @@ public class LogEntry {
 		StringBundler sb = new StringBundler(5);
 
 		sb.append("{level=");
-		sb.append(getPriority());
+		sb.append(_priority);
 		sb.append(", message=");
-		sb.append(getMessage());
+		sb.append(_message);
 		sb.append("}");
 
 		return sb.toString();

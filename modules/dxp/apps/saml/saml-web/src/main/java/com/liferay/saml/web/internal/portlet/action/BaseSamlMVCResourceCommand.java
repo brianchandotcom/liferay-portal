@@ -12,17 +12,24 @@
  *
  */
 
-package com.liferay.saml.web.internal.struts;
+package com.liferay.saml.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.struts.StrutsAction;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import com.liferay.saml.runtime.exception.StatusException;
 import com.liferay.saml.util.JspUtil;
+
+import java.io.IOException;
+
+import javax.portlet.PortletException;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,33 +37,52 @@ import javax.servlet.http.HttpServletResponse;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Mika Koivisto
+ * @author Arthur Chan
  */
-public abstract class BaseSamlStrutsAction implements StrutsAction {
+public abstract class BaseSamlMVCResourceCommand
+	extends BaseMVCResourceCommand {
+
+	public boolean isEnabled() {
+		return samlProviderConfigurationHelper.isEnabled();
+	}
 
 	@Override
-	public String execute(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws Exception {
+	public boolean serveResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws PortletException {
+
+		//PortletRequestDispatcher portletRequestDispatcher =
+		//	getPortletRequestDispatcher(
+		//		resourceRequest, JspUtil.PATH_PORTAL_SAML_ERROR);
 
 		if (!isEnabled()) {
-			return "/common/referer_js.jsp";
-		}
+			try {
+				//portletRequestDispatcher.forward(
+				//	resourceRequest, resourceResponse);
 
-		httpServletRequest.setAttribute(
-			WebKeys.RESOURCE_BUNDLE_LOADER, resourceBundleLoader);
+				include(
+					resourceRequest, resourceResponse,
+					JspUtil.PATH_PORTAL_SAML_ERROR);
+
+				return false;
+			}
+			catch (IOException ioException) {
+				throw new PortletException(ioException);
+			}
+		}
 
 		Thread currentThread = Thread.currentThread();
 
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
 		try {
-			Class<? extends BaseSamlStrutsAction> clazz = getClass();
+			Class<? extends BaseSamlMVCResourceCommand> clazz = getClass();
 
 			currentThread.setContextClassLoader(clazz.getClassLoader());
 
-			return doExecute(httpServletRequest, httpServletResponse);
+			doServeResource(resourceRequest, resourceResponse);
+
+			return true;
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -68,29 +94,36 @@ public abstract class BaseSamlStrutsAction implements StrutsAction {
 
 			Class<?> clazz = exception.getClass();
 
-			SessionErrors.add(httpServletRequest, clazz.getName());
+			SessionErrors.add(resourceRequest, clazz.getName());
 
 			if (exception instanceof StatusException) {
 				StatusException statusException = (StatusException)exception;
 
 				SessionErrors.add(
-					httpServletRequest, "statusCodeURI",
+					resourceRequest, "statusCodeURI",
 					statusException.getMessage());
 			}
 
-			JspUtil.dispatch(
-				httpServletRequest, httpServletResponse,
-				JspUtil.PATH_PORTAL_SAML_ERROR, "status");
+			try {
+				include(
+					resourceRequest, resourceResponse,
+					JspUtil.PATH_PORTAL_SAML_ERROR);
+				//portletRequestDispatcher.forward(
+				//	resourceRequest, resourceResponse);
+
+				return false;
+			}
+			catch (IOException ioException) {
+				throw new PortletException(ioException);
+			}
 		}
 		finally {
 			currentThread.setContextClassLoader(contextClassLoader);
 		}
-
-		return null;
 	}
 
-	public boolean isEnabled() {
-		return samlProviderConfigurationHelper.isEnabled();
+	public void setPortal(Portal portal) {
+		this.portal = portal;
 	}
 
 	public void setSamlProviderConfigurationHelper(
@@ -99,10 +132,29 @@ public abstract class BaseSamlStrutsAction implements StrutsAction {
 		this.samlProviderConfigurationHelper = samlProviderConfigurationHelper;
 	}
 
-	protected abstract String doExecute(
+	protected abstract void doServeResource(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws Exception;
+
+	protected void doServeResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws Exception {
+
+		HttpServletRequest httpServletRequest =
+			portal.getOriginalServletRequest(
+				portal.getHttpServletRequest(resourceRequest));
+
+		HttpServletResponse httpServletResponse = portal.getHttpServletResponse(
+			resourceResponse);
+
+		httpServletRequest.setAttribute(
+			WebKeys.RESOURCE_BUNDLE_LOADER, resourceBundleLoader);
+
+		doServeResource(httpServletRequest, httpServletResponse);
+	}
+
+	protected Portal portal;
 
 	@Reference(target = "(bundle.symbolic.name=com.liferay.saml.web)")
 	protected ResourceBundleLoader resourceBundleLoader;
@@ -110,6 +162,6 @@ public abstract class BaseSamlStrutsAction implements StrutsAction {
 	protected SamlProviderConfigurationHelper samlProviderConfigurationHelper;
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseSamlStrutsAction.class);
+		BaseSamlMVCResourceCommand.class);
 
 }

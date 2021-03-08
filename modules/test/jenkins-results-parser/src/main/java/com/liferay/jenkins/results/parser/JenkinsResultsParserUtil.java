@@ -646,10 +646,6 @@ public class JenkinsResultsParserUtil {
 
 		File[] siblingFiles = parentFile.listFiles();
 
-		if (siblingFiles == null) {
-			return Collections.emptyList();
-		}
-
 		return Arrays.asList(siblingFiles);
 	}
 

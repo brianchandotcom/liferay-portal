@@ -18,12 +18,12 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {
-	EVENT_TYPES,
 	Layout,
 	getRepeatedIndex,
 	useForm,
 	useFormState,
 } from 'dynamic-data-mapping-form-renderer';
+import {EVENT_TYPES as CORE_EVENT_TYPES} from 'dynamic-data-mapping-form-renderer/js/core/actions/eventTypes.es';
 import moment from 'moment';
 import React, {useMemo} from 'react';
 
@@ -183,7 +183,7 @@ function FieldBase({
 							onClick={() =>
 								dispatch({
 									payload: name,
-									type: EVENT_TYPES.FIELD_REMOVED,
+									type: CORE_EVENT_TYPES.FIELD.REMOVED,
 								})
 							}
 							small
@@ -205,7 +205,7 @@ function FieldBase({
 						onClick={() =>
 							dispatch({
 								payload: name,
-								type: EVENT_TYPES.FIELD_REPEATED,
+								type: CORE_EVENT_TYPES.FIELD.REPEATED,
 							})
 						}
 						small

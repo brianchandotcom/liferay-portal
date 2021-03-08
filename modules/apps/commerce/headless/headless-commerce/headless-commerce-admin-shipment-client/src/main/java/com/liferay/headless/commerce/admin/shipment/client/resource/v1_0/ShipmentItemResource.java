@@ -122,6 +122,22 @@ public interface ShipmentItemResource {
 			return this;
 		}
 
+		public Builder parameters(String... parameters) {
+			if ((parameters.length % 2) != 0) {
+				throw new IllegalArgumentException(
+					"Parameters length is not an even number");
+			}
+
+			for (int i = 0; i < parameters.length; i += 2) {
+				String parameterName = String.valueOf(parameters[i]);
+				String parameterValue = String.valueOf(parameters[i + 1]);
+
+				_parameters.put(parameterName, parameterValue);
+			}
+
+			return this;
+		}
+
 		private Builder() {
 		}
 

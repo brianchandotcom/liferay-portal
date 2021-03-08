@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
 import com.liferay.portal.kernel.test.rule.AbstractTestRule;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -34,10 +35,11 @@ import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
-import org.apache.log4j.AppenderSkeleton;
-import org.apache.log4j.Level;
-import org.apache.log4j.spi.LoggingEvent;
-import org.apache.log4j.spi.ThrowableInformation;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.LogEvent;
+import org.apache.logging.log4j.core.appender.AbstractAppender;
+import org.apache.logging.log4j.message.Message;
 
 import org.junit.Assert;
 import org.junit.runner.Description;
@@ -230,8 +232,8 @@ public class LogAssertionTestRule
 	}
 
 	protected static void installLog4jAppender() {
-		org.apache.log4j.Logger logger =
-			org.apache.log4j.Logger.getRootLogger();
+		org.apache.logging.log4j.core.Logger logger =
+			(org.apache.logging.log4j.core.Logger)LogManager.getRootLogger();
 
 		logger.removeAppender(_logAppender);
 
@@ -288,8 +290,8 @@ public class LogAssertionTestRule
 	}
 
 	protected static void uninstallLog4jAppender() {
-		org.apache.log4j.Logger logger =
-			org.apache.log4j.Logger.getRootLogger();
+		org.apache.logging.log4j.core.Logger logger =
+			(org.apache.logging.log4j.core.Logger)LogManager.getRootLogger();
 
 		logger.removeAppender(_logAppender);
 	}
@@ -305,43 +307,32 @@ public class LogAssertionTestRule
 	private static volatile Thread.UncaughtExceptionHandler
 		_uncaughtExceptionHandler;
 
-	private static class LogAppender extends AppenderSkeleton {
+	private static class LogAppender extends AbstractAppender {
 
 		@Override
-		public void close() {
-		}
-
-		@Override
-		public boolean requiresLayout() {
-			return false;
-		}
-
-		@Override
-		protected void append(LoggingEvent loggingEvent) {
-			Level level = loggingEvent.getLevel();
+		public void append(LogEvent logEvent) {
+			Level level = logEvent.getLevel();
 
 			if (level.equals(Level.ERROR) || level.equals(Level.FATAL)) {
 				StringBundler sb = new StringBundler(6);
 
 				sb.append("{level=");
-				sb.append(loggingEvent.getLevel());
+				sb.append(logEvent.getLevel());
 				sb.append(", loggerName=");
-				sb.append(loggingEvent.getLoggerName());
+				sb.append(logEvent.getLoggerName());
 				sb.append(", message=");
-				sb.append(loggingEvent.getMessage());
 
-				Throwable throwable = null;
+				Message message = logEvent.getMessage();
 
-				ThrowableInformation throwableInformation =
-					loggingEvent.getThrowableInformation();
-
-				if (throwableInformation != null) {
-					throwable = throwableInformation.getThrowable();
-				}
+				sb.append(message.getFormattedMessage());
 
 				LogAssertionTestRule.caughtFailure(
-					new AssertionError(sb.toString(), throwable));
+					new AssertionError(sb.toString(), logEvent.getThrown()));
 			}
+		}
+
+		private LogAppender() {
+			super(StringUtil.randomString(), null, null, true, null);
 		}
 
 	}

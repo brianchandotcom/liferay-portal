@@ -14,14 +14,13 @@
 
 package com.liferay.portal.test.log;
 
-import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.log4j.Log4JUtil;
 import com.liferay.portal.kernel.log.Jdk14LogImpl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.log.LogWrapper;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-
-import java.lang.reflect.Field;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -30,37 +29,39 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
-import org.apache.log4j.AppenderSkeleton;
-import org.apache.log4j.Category;
-import org.apache.log4j.spi.LoggingEvent;
-import org.apache.log4j.spi.ThrowableInformation;
+import org.apache.logging.log4j.core.LogEvent;
+import org.apache.logging.log4j.core.appender.AbstractAppender;
+import org.apache.logging.log4j.core.config.LoggerConfig;
+import org.apache.logging.log4j.message.Message;
 
 /**
  * @author Shuyang Zhou
  */
 public class LoggerTestUtil {
 
-	public static final String ALL = String.valueOf(org.apache.log4j.Level.ALL);
+	public static final String ALL = String.valueOf(
+		org.apache.logging.log4j.Level.ALL);
 
 	public static final String DEBUG = String.valueOf(
 		org.apache.log4j.Level.DEBUG);
 
 	public static final String ERROR = String.valueOf(
-		org.apache.log4j.Level.ERROR);
+		org.apache.logging.log4j.Level.ERROR);
 
 	public static final String FATAL = String.valueOf(
-		org.apache.log4j.Level.FATAL);
+		org.apache.logging.log4j.Level.FATAL);
 
 	public static final String INFO = String.valueOf(
-		org.apache.log4j.Level.INFO);
+		org.apache.logging.log4j.Level.INFO);
 
-	public static final String OFF = String.valueOf(org.apache.log4j.Level.OFF);
+	public static final String OFF = String.valueOf(
+		org.apache.logging.log4j.Level.OFF);
 
 	public static final String TRACE = String.valueOf(
-		org.apache.log4j.Level.TRACE);
+		org.apache.logging.log4j.Level.TRACE);
 
 	public static final String WARN = String.valueOf(
-		org.apache.log4j.Level.WARN);
+		org.apache.logging.log4j.Level.WARN);
 
 	public static LogCapture configureJDKLogger(String name, Level level) {
 		LogWrapper logWrapper = (LogWrapper)LogFactoryUtil.getLog(name);
@@ -90,7 +91,7 @@ public class LoggerTestUtil {
 
 		Log log = logWrapper.getWrappedLog();
 
-		org.apache.log4j.Logger logger = null;
+		org.apache.logging.log4j.core.Logger logger = null;
 
 		try {
 			logger = ReflectionTestUtil.getFieldValue(log, "_logger");
@@ -100,11 +101,13 @@ public class LoggerTestUtil {
 				"Log " + name + " is not a Log4j logger");
 		}
 
+		Log4JUtil.setLevel(logger.getName(), priority, false);
+
 		Log4JLogCapture log4JLogCapture = new Log4JLogCapture(logger);
 
-		logger.addAppender(log4JLogCapture);
+		log4JLogCapture.start();
 
-		logger.setLevel(org.apache.log4j.Level.toLevel(priority));
+		logger.addAppender(log4JLogCapture);
 
 		return log4JLogCapture;
 	}
@@ -189,22 +192,27 @@ public class LoggerTestUtil {
 	}
 
 	private static class Log4JLogCapture
-		extends AppenderSkeleton implements LogCapture {
+		extends AbstractAppender implements LogCapture {
+
+		@Override
+		public void append(LogEvent logEvent) {
+			Message message = logEvent.getMessage();
+
+			_logEntries.add(
+				new LogEntry(
+					message.getFormattedMessage(),
+					String.valueOf(logEvent.getLevel()), logEvent.getThrown()));
+		}
 
 		@Override
 		public void close() {
-			closed = true;
-
 			_logger.removeAppender(this);
 
-			_logger.setLevel(_level);
+			stop();
 
-			try {
-				_parentField.set(_logger, _parentCategory);
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
+			_loggerConfig.setAdditive(_additive);
+
+			Log4JUtil.setLevel(_logger.getName(), _level.toString(), false);
 		}
 
 		@Override
@@ -213,67 +221,33 @@ public class LoggerTestUtil {
 		}
 
 		@Override
-		public boolean requiresLayout() {
-			return false;
-		}
-
-		@Override
 		public List<LogEntry> resetPriority(String priority) {
 			_logEntries.clear();
 
-			_logger.setLevel(org.apache.log4j.Level.toLevel(priority));
+			_logger.setLevel(org.apache.logging.log4j.Level.toLevel(priority));
 
 			return _logEntries;
 		}
 
-		@Override
-		protected void append(LoggingEvent loggingEvent) {
-			ThrowableInformation throwableInformation =
-				loggingEvent.getThrowableInformation();
+		private Log4JLogCapture(org.apache.logging.log4j.core.Logger logger) {
+			super(StringUtil.randomString(), null, null, true, null);
 
-			Throwable throwable = null;
-
-			if (throwableInformation != null) {
-				throwable = throwableInformation.getThrowable();
-			}
-
-			_logEntries.add(
-				new LogEntry(
-					loggingEvent.getRenderedMessage(),
-					String.valueOf(loggingEvent.getLevel()), throwable));
-		}
-
-		private Log4JLogCapture(org.apache.log4j.Logger logger) {
 			_logger = logger;
 
 			_level = _logger.getLevel();
 
-			_parentCategory = logger.getParent();
+			_loggerConfig = _logger.get();
 
-			try {
-				_parentField.set(_logger, null);
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
+			_additive = _loggerConfig.isAdditive();
+
+			_loggerConfig.setAdditive(false);
 		}
 
-		private static final Field _parentField;
-
-		static {
-			try {
-				_parentField = ReflectionUtil.getDeclaredField(
-					Category.class, "parent");
-			}
-			catch (Exception exception) {
-				throw new ExceptionInInitializerError(exception);
-			}
-		}
-
-		private final org.apache.log4j.Level _level;
+		private final boolean _additive;
+		private final org.apache.logging.log4j.Level _level;
 		private final List<LogEntry> _logEntries = new CopyOnWriteArrayList<>();
-		private final org.apache.log4j.Logger _logger;
-		private final Category _parentCategory;
+		private final org.apache.logging.log4j.core.Logger _logger;
+		private final LoggerConfig _loggerConfig;
 
 	}
 

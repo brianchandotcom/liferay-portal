@@ -96,9 +96,17 @@ Map<String, Object> fragmentsEditorData = HashMapBuilder.<String, Object>put(
 			request.setAttribute("view.jsp-fullContentRedirect", fullContentRedirect);
 			%>
 
-			<div class="d-inline-flex">
+			<liferay-util:buffer
+				var="assetActions"
+			>
 				<liferay-util:include page="/asset_actions.jsp" servletContext="<%= application %>" />
-			</div>
+			</liferay-util:buffer>
+
+			<c:if test="<%= Validator.isNotNull(assetActions) %>">
+				<div class="d-inline-flex">
+					<%= assetActions %>
+				</div>
+			</c:if>
 		</c:if>
 	</div>
 

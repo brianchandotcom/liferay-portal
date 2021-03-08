@@ -151,6 +151,14 @@ public interface SubscriptionResource {
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
 
+			if (httpResponse.getStatusCode() / 100 != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+
 			try {
 				return Page.of(content, SubscriptionSerDes::toDTO);
 			}
@@ -226,6 +234,14 @@ public interface SubscriptionResource {
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
 
+			if (httpResponse.getStatusCode() / 100 != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+
 			try {
 				return;
 			}
@@ -289,6 +305,14 @@ public interface SubscriptionResource {
 			_logger.fine("HTTP response message: " + httpResponse.getMessage());
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			if (httpResponse.getStatusCode() / 100 != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
 
 			try {
 				return SubscriptionSerDes.toDTO(content);

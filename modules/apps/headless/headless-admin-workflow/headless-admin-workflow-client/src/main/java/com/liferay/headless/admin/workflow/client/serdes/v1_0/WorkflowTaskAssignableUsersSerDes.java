@@ -163,9 +163,6 @@ public class WorkflowTaskAssignableUsersSerDes {
 						));
 				}
 			}
-			else if (jsonParserFieldName.equals("status")) {
-				throw new IllegalArgumentException();
-			}
 		}
 
 	}

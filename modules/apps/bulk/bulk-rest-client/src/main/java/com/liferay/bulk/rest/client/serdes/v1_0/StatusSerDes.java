@@ -115,9 +115,6 @@ public class StatusSerDes {
 					status.setActionInProgress((Boolean)jsonParserFieldValue);
 				}
 			}
-			else if (jsonParserFieldName.equals("status")) {
-				throw new IllegalArgumentException();
-			}
 		}
 
 	}

@@ -205,6 +205,14 @@ public interface ProductGroupResource {
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
 
+			if (httpResponse.getStatusCode() / 100 != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+
 			try {
 				return Page.of(content, ProductGroupSerDes::toDTO);
 			}
@@ -287,6 +295,14 @@ public interface ProductGroupResource {
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
 
+			if (httpResponse.getStatusCode() / 100 != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+
 			try {
 				return ProductGroupSerDes.toDTO(content);
 			}
@@ -350,6 +366,14 @@ public interface ProductGroupResource {
 			_logger.fine("HTTP response message: " + httpResponse.getMessage());
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			if (httpResponse.getStatusCode() / 100 != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
 		}
 
 		public HttpInvoker.HttpResponse postProductGroupBatchHttpResponse(
@@ -410,6 +434,14 @@ public interface ProductGroupResource {
 			_logger.fine("HTTP response message: " + httpResponse.getMessage());
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			if (httpResponse.getStatusCode() / 100 != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
 
 			try {
 				return;
@@ -478,6 +510,14 @@ public interface ProductGroupResource {
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
 
+			if (httpResponse.getStatusCode() / 100 != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+
 			try {
 				return ProductGroupSerDes.toDTO(content);
 			}
@@ -544,6 +584,14 @@ public interface ProductGroupResource {
 			_logger.fine("HTTP response message: " + httpResponse.getMessage());
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			if (httpResponse.getStatusCode() / 100 != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
 		}
 
 		public HttpInvoker.HttpResponse
@@ -598,6 +646,14 @@ public interface ProductGroupResource {
 			_logger.fine("HTTP response message: " + httpResponse.getMessage());
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			if (httpResponse.getStatusCode() / 100 != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
 
 			try {
 				return;
@@ -662,6 +718,14 @@ public interface ProductGroupResource {
 			_logger.fine("HTTP response message: " + httpResponse.getMessage());
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			if (httpResponse.getStatusCode() / 100 != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
 		}
 
 		public HttpInvoker.HttpResponse deleteProductGroupBatchHttpResponse(
@@ -718,6 +782,14 @@ public interface ProductGroupResource {
 			_logger.fine("HTTP response message: " + httpResponse.getMessage());
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			if (httpResponse.getStatusCode() / 100 != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
 
 			try {
 				return ProductGroupSerDes.toDTO(content);
@@ -781,6 +853,14 @@ public interface ProductGroupResource {
 			_logger.fine("HTTP response message: " + httpResponse.getMessage());
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			if (httpResponse.getStatusCode() / 100 != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
 		}
 
 		public HttpInvoker.HttpResponse patchProductGroupHttpResponse(

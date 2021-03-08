@@ -195,6 +195,14 @@ public interface PriceModifierCategoryResource {
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
 
+			if (httpResponse.getStatusCode() / 100 != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+
 			try {
 				return;
 			}
@@ -261,6 +269,14 @@ public interface PriceModifierCategoryResource {
 			_logger.fine("HTTP response message: " + httpResponse.getMessage());
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			if (httpResponse.getStatusCode() / 100 != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
 		}
 
 		public HttpInvoker.HttpResponse
@@ -321,6 +337,14 @@ public interface PriceModifierCategoryResource {
 			_logger.fine("HTTP response message: " + httpResponse.getMessage());
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			if (httpResponse.getStatusCode() / 100 != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
 
 			try {
 				return Page.of(content, PriceModifierCategorySerDes::toDTO);
@@ -398,6 +422,14 @@ public interface PriceModifierCategoryResource {
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
 
+			if (httpResponse.getStatusCode() / 100 != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+
 			try {
 				return PriceModifierCategorySerDes.toDTO(content);
 			}
@@ -470,6 +502,14 @@ public interface PriceModifierCategoryResource {
 			_logger.fine("HTTP response message: " + httpResponse.getMessage());
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			if (httpResponse.getStatusCode() / 100 != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
 
 			try {
 				return Page.of(content, PriceModifierCategorySerDes::toDTO);
@@ -558,6 +598,14 @@ public interface PriceModifierCategoryResource {
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
 
+			if (httpResponse.getStatusCode() / 100 != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+
 			try {
 				return PriceModifierCategorySerDes.toDTO(content);
 			}
@@ -627,6 +675,14 @@ public interface PriceModifierCategoryResource {
 			_logger.fine("HTTP response message: " + httpResponse.getMessage());
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			if (httpResponse.getStatusCode() / 100 != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
 		}
 
 		public HttpInvoker.HttpResponse

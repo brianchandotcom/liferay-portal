@@ -274,9 +274,6 @@ public class TaskBulkSelectionSerDes {
 						toStrings((Object[])jsonParserFieldValue));
 				}
 			}
-			else if (jsonParserFieldName.equals("status")) {
-				throw new IllegalArgumentException();
-			}
 		}
 
 	}

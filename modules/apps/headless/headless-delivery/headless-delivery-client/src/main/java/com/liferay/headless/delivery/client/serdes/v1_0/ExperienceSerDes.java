@@ -201,9 +201,6 @@ public class ExperienceSerDes {
 					experience.setSegments((Segment[])jsonParserFieldValue);
 				}
 			}
-			else if (jsonParserFieldName.equals("status")) {
-				throw new IllegalArgumentException();
-			}
 		}
 
 	}

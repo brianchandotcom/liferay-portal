@@ -157,9 +157,6 @@ public class DataLayoutColumnSerDes {
 						toStrings((Object[])jsonParserFieldValue));
 				}
 			}
-			else if (jsonParserFieldName.equals("status")) {
-				throw new IllegalArgumentException();
-			}
 		}
 
 	}

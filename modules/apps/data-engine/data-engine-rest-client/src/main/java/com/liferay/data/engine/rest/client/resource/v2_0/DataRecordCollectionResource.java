@@ -246,6 +246,14 @@ public interface DataRecordCollectionResource {
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
 
+			if (httpResponse.getStatusCode() / 100 != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+
 			try {
 				return DataRecordCollectionSerDes.toDTO(content);
 			}
@@ -314,6 +322,14 @@ public interface DataRecordCollectionResource {
 			_logger.fine("HTTP response message: " + httpResponse.getMessage());
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			if (httpResponse.getStatusCode() / 100 != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
 
 			try {
 				return Page.of(content, DataRecordCollectionSerDes::toDTO);
@@ -395,6 +411,14 @@ public interface DataRecordCollectionResource {
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
 
+			if (httpResponse.getStatusCode() / 100 != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+
 			try {
 				return DataRecordCollectionSerDes.toDTO(content);
 			}
@@ -465,6 +489,14 @@ public interface DataRecordCollectionResource {
 			_logger.fine("HTTP response message: " + httpResponse.getMessage());
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			if (httpResponse.getStatusCode() / 100 != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
 		}
 
 		public HttpInvoker.HttpResponse
@@ -526,6 +558,14 @@ public interface DataRecordCollectionResource {
 			_logger.fine("HTTP response message: " + httpResponse.getMessage());
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			if (httpResponse.getStatusCode() / 100 != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
 
 			try {
 				return;
@@ -592,6 +632,14 @@ public interface DataRecordCollectionResource {
 			_logger.fine("HTTP response message: " + httpResponse.getMessage());
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			if (httpResponse.getStatusCode() / 100 != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
 		}
 
 		public HttpInvoker.HttpResponse
@@ -650,6 +698,14 @@ public interface DataRecordCollectionResource {
 			_logger.fine("HTTP response message: " + httpResponse.getMessage());
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			if (httpResponse.getStatusCode() / 100 != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
 
 			try {
 				return DataRecordCollectionSerDes.toDTO(content);
@@ -717,6 +773,14 @@ public interface DataRecordCollectionResource {
 			_logger.fine("HTTP response message: " + httpResponse.getMessage());
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			if (httpResponse.getStatusCode() / 100 != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
 
 			try {
 				return DataRecordCollectionSerDes.toDTO(content);
@@ -786,6 +850,14 @@ public interface DataRecordCollectionResource {
 			_logger.fine("HTTP response message: " + httpResponse.getMessage());
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			if (httpResponse.getStatusCode() / 100 != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
 		}
 
 		public HttpInvoker.HttpResponse
@@ -847,6 +919,14 @@ public interface DataRecordCollectionResource {
 			_logger.fine("HTTP response message: " + httpResponse.getMessage());
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			if (httpResponse.getStatusCode() / 100 != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
 
 			try {
 				return Page.of(content, Permission::toDTO);
@@ -918,6 +998,14 @@ public interface DataRecordCollectionResource {
 			_logger.fine("HTTP response message: " + httpResponse.getMessage());
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			if (httpResponse.getStatusCode() / 100 != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
 
 			try {
 				return;
@@ -996,6 +1084,14 @@ public interface DataRecordCollectionResource {
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
 
+			if (httpResponse.getStatusCode() / 100 != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+
 			try {
 				return content;
 			}
@@ -1063,6 +1159,14 @@ public interface DataRecordCollectionResource {
 			_logger.fine("HTTP response message: " + httpResponse.getMessage());
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			if (httpResponse.getStatusCode() / 100 != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
 
 			try {
 				return DataRecordCollectionSerDes.toDTO(content);

@@ -166,6 +166,14 @@ public interface AccountUserResource {
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
 
+			if (httpResponse.getStatusCode() / 100 != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+
 			try {
 				return Page.of(content, AccountUserSerDes::toDTO);
 			}
@@ -254,6 +262,14 @@ public interface AccountUserResource {
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
 
+			if (httpResponse.getStatusCode() / 100 != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+
 			try {
 				return AccountUserSerDes.toDTO(content);
 			}
@@ -323,6 +339,14 @@ public interface AccountUserResource {
 			_logger.fine("HTTP response message: " + httpResponse.getMessage());
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			if (httpResponse.getStatusCode() / 100 != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
 
 			try {
 				return Page.of(content, AccountUserSerDes::toDTO);
@@ -408,6 +432,14 @@ public interface AccountUserResource {
 			_logger.fine("HTTP response message: " + httpResponse.getMessage());
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			if (httpResponse.getStatusCode() / 100 != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
 
 			try {
 				return AccountUserSerDes.toDTO(content);

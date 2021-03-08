@@ -520,9 +520,6 @@ public class OrganizationSerDes {
 						));
 				}
 			}
-			else if (jsonParserFieldName.equals("status")) {
-				throw new IllegalArgumentException();
-			}
 		}
 
 	}

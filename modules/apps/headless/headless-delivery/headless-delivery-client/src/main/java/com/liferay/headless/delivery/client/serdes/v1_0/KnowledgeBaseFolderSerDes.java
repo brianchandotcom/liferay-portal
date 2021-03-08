@@ -511,9 +511,6 @@ public class KnowledgeBaseFolderSerDes {
 							(String)jsonParserFieldValue));
 				}
 			}
-			else if (jsonParserFieldName.equals("status")) {
-				throw new IllegalArgumentException();
-			}
 		}
 
 	}

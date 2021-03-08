@@ -269,9 +269,6 @@ public class CatalogSerDes {
 					catalog.setSystem((Boolean)jsonParserFieldValue);
 				}
 			}
-			else if (jsonParserFieldName.equals("status")) {
-				throw new IllegalArgumentException();
-			}
 		}
 
 	}

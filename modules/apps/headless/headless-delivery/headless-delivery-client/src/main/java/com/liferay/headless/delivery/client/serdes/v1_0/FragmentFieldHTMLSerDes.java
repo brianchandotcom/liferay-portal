@@ -123,9 +123,6 @@ public class FragmentFieldHTMLSerDes {
 					fragmentFieldHTML.setHtml((Object)jsonParserFieldValue);
 				}
 			}
-			else if (jsonParserFieldName.equals("status")) {
-				throw new IllegalArgumentException();
-			}
 		}
 
 	}

@@ -261,9 +261,6 @@ public class AppWorkflowSerDes {
 						));
 				}
 			}
-			else if (jsonParserFieldName.equals("status")) {
-				throw new IllegalArgumentException();
-			}
 		}
 
 	}

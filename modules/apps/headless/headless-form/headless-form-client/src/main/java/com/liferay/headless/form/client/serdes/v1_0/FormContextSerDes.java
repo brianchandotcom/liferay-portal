@@ -255,9 +255,6 @@ public class FormContextSerDes {
 						(Boolean)jsonParserFieldValue);
 				}
 			}
-			else if (jsonParserFieldName.equals("status")) {
-				throw new IllegalArgumentException();
-			}
 		}
 
 	}

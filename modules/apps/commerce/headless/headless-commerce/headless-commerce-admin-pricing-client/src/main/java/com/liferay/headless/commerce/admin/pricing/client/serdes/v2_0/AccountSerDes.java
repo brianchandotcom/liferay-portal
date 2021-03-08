@@ -162,9 +162,6 @@ public class AccountSerDes {
 					account.setName((String)jsonParserFieldValue);
 				}
 			}
-			else if (jsonParserFieldName.equals("status")) {
-				throw new IllegalArgumentException();
-			}
 		}
 
 	}

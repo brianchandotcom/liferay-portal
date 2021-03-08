@@ -331,9 +331,6 @@ public class FormFieldContextSerDes {
 					formFieldContext.setVisible((Boolean)jsonParserFieldValue);
 				}
 			}
-			else if (jsonParserFieldName.equals("status")) {
-				throw new IllegalArgumentException();
-			}
 		}
 
 	}

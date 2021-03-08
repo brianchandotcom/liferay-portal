@@ -251,9 +251,6 @@ public class SLAResultSerDes {
 						SLAResult.Status.create((String)jsonParserFieldValue));
 				}
 			}
-			else if (jsonParserFieldName.equals("status")) {
-				throw new IllegalArgumentException();
-			}
 		}
 
 	}

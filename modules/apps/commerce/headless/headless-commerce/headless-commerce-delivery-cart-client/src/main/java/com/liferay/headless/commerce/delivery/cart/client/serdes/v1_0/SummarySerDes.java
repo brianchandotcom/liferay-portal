@@ -714,9 +714,6 @@ public class SummarySerDes {
 					summary.setTotalFormatted((String)jsonParserFieldValue);
 				}
 			}
-			else if (jsonParserFieldName.equals("status")) {
-				throw new IllegalArgumentException();
-			}
 		}
 
 	}

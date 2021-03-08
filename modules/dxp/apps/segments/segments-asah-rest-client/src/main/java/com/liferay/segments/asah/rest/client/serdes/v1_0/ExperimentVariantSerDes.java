@@ -148,9 +148,6 @@ public class ExperimentVariantSerDes {
 						Double.valueOf((String)jsonParserFieldValue));
 				}
 			}
-			else if (jsonParserFieldName.equals("status")) {
-				throw new IllegalArgumentException();
-			}
 		}
 
 	}

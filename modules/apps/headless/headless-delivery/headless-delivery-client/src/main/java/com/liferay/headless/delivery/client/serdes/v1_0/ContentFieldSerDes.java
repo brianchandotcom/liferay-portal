@@ -347,9 +347,6 @@ public class ContentFieldSerDes {
 					contentField.setRepeatable((Boolean)jsonParserFieldValue);
 				}
 			}
-			else if (jsonParserFieldName.equals("status")) {
-				throw new IllegalArgumentException();
-			}
 		}
 
 	}

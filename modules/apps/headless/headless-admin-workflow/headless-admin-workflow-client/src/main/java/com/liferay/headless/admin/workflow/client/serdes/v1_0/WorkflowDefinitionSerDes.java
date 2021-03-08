@@ -351,9 +351,6 @@ public class WorkflowDefinitionSerDes {
 					workflowDefinition.setVersion((String)jsonParserFieldValue);
 				}
 			}
-			else if (jsonParserFieldName.equals("status")) {
-				throw new IllegalArgumentException();
-			}
 		}
 
 	}

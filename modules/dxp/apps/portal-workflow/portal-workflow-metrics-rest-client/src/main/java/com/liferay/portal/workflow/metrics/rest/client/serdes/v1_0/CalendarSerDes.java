@@ -167,9 +167,6 @@ public class CalendarSerDes {
 					calendar.setTitle((String)jsonParserFieldValue);
 				}
 			}
-			else if (jsonParserFieldName.equals("status")) {
-				throw new IllegalArgumentException();
-			}
 		}
 
 	}

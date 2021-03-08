@@ -396,9 +396,6 @@ public class PriceSerDes {
 					price.setTierPriceFormatted((String)jsonParserFieldValue);
 				}
 			}
-			else if (jsonParserFieldName.equals("status")) {
-				throw new IllegalArgumentException();
-			}
 		}
 
 	}

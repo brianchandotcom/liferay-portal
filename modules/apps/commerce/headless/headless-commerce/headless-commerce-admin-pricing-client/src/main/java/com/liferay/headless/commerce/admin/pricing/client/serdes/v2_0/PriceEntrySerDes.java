@@ -759,9 +759,6 @@ public class PriceEntrySerDes {
 						));
 				}
 			}
-			else if (jsonParserFieldName.equals("status")) {
-				throw new IllegalArgumentException();
-			}
 		}
 
 	}

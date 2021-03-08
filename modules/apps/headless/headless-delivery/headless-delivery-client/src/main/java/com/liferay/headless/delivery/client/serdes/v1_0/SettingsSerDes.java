@@ -270,9 +270,6 @@ public class SettingsSerDes {
 					settings.setThemeSettings((Object)jsonParserFieldValue);
 				}
 			}
-			else if (jsonParserFieldName.equals("status")) {
-				throw new IllegalArgumentException();
-			}
 		}
 
 	}

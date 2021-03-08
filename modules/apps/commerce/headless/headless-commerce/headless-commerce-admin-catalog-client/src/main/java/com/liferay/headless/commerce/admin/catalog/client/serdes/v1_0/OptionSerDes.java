@@ -420,9 +420,6 @@ public class OptionSerDes {
 					option.setSkuContributor((Boolean)jsonParserFieldValue);
 				}
 			}
-			else if (jsonParserFieldName.equals("status")) {
-				throw new IllegalArgumentException();
-			}
 		}
 
 	}

@@ -234,9 +234,6 @@ public class TaxonomyCategoryBulkSelectionSerDes {
 							toLongs((Object[])jsonParserFieldValue));
 				}
 			}
-			else if (jsonParserFieldName.equals("status")) {
-				throw new IllegalArgumentException();
-			}
 		}
 
 	}

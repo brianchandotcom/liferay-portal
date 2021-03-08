@@ -152,9 +152,6 @@ public class AppWorkflowDataLayoutLinkSerDes {
 						(Boolean)jsonParserFieldValue);
 				}
 			}
-			else if (jsonParserFieldName.equals("status")) {
-				throw new IllegalArgumentException();
-			}
 		}
 
 	}

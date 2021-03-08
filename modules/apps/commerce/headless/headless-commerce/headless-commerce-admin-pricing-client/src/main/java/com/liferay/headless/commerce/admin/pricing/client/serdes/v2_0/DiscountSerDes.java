@@ -1050,9 +1050,6 @@ public class DiscountSerDes {
 					discount.setUsePercentage((Boolean)jsonParserFieldValue);
 				}
 			}
-			else if (jsonParserFieldName.equals("status")) {
-				throw new IllegalArgumentException();
-			}
 		}
 
 	}

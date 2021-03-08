@@ -142,9 +142,6 @@ public class PageDefinitionSerDes {
 						SettingsSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
-			else if (jsonParserFieldName.equals("status")) {
-				throw new IllegalArgumentException();
-			}
 		}
 
 	}

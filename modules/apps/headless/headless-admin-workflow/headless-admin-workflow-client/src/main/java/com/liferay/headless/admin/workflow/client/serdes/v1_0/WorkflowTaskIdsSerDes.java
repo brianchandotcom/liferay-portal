@@ -132,9 +132,6 @@ public class WorkflowTaskIdsSerDes {
 						toLongs((Object[])jsonParserFieldValue));
 				}
 			}
-			else if (jsonParserFieldName.equals("status")) {
-				throw new IllegalArgumentException();
-			}
 		}
 
 	}

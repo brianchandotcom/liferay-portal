@@ -176,9 +176,6 @@ public class BackgroundImageSerDes {
 					backgroundImage.setUrl((Object)jsonParserFieldValue);
 				}
 			}
-			else if (jsonParserFieldName.equals("status")) {
-				throw new IllegalArgumentException();
-			}
 		}
 
 	}

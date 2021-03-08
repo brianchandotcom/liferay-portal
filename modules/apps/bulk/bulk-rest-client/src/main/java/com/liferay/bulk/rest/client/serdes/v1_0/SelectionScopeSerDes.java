@@ -165,9 +165,6 @@ public class SelectionScopeSerDes {
 					selectionScope.setSelectAll((Boolean)jsonParserFieldValue);
 				}
 			}
-			else if (jsonParserFieldName.equals("status")) {
-				throw new IllegalArgumentException();
-			}
 		}
 
 	}

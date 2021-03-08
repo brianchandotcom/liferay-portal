@@ -818,9 +818,6 @@ public class ProductSerDes {
 					product.setUrlImage((String)jsonParserFieldValue);
 				}
 			}
-			else if (jsonParserFieldName.equals("status")) {
-				throw new IllegalArgumentException();
-			}
 		}
 
 	}

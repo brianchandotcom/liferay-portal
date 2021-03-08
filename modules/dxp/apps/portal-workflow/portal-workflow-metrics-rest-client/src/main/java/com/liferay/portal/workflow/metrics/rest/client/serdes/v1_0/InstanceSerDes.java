@@ -668,9 +668,6 @@ public class InstanceSerDes {
 						));
 				}
 			}
-			else if (jsonParserFieldName.equals("status")) {
-				throw new IllegalArgumentException();
-			}
 		}
 
 	}

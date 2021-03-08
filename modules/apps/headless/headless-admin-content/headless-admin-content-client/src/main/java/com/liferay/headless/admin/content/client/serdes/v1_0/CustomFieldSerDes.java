@@ -172,9 +172,6 @@ public class CustomFieldSerDes {
 					customField.setName((String)jsonParserFieldValue);
 				}
 			}
-			else if (jsonParserFieldName.equals("status")) {
-				throw new IllegalArgumentException();
-			}
 		}
 
 	}

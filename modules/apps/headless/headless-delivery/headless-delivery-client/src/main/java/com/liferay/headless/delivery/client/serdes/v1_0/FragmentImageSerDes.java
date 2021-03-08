@@ -205,9 +205,6 @@ public class FragmentImageSerDes {
 					fragmentImage.setUrl((Object)jsonParserFieldValue);
 				}
 			}
-			else if (jsonParserFieldName.equals("status")) {
-				throw new IllegalArgumentException();
-			}
 		}
 
 	}

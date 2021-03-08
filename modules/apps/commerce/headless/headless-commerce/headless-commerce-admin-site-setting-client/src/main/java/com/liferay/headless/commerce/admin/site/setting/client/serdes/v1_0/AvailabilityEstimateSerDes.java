@@ -192,9 +192,6 @@ public class AvailabilityEstimateSerDes {
 							(String)jsonParserFieldValue));
 				}
 			}
-			else if (jsonParserFieldName.equals("status")) {
-				throw new IllegalArgumentException();
-			}
 		}
 
 	}

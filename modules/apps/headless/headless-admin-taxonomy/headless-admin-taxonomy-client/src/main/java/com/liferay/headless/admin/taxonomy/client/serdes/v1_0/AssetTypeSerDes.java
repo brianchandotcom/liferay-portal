@@ -165,9 +165,6 @@ public class AssetTypeSerDes {
 					assetType.setType((String)jsonParserFieldValue);
 				}
 			}
-			else if (jsonParserFieldName.equals("status")) {
-				throw new IllegalArgumentException();
-			}
 		}
 
 	}

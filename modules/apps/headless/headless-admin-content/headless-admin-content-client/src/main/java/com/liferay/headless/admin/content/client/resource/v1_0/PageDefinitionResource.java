@@ -16,10 +16,12 @@ package com.liferay.headless.admin.content.client.resource.v1_0;
 
 import com.liferay.headless.admin.content.client.dto.v1_0.PageDefinition;
 import com.liferay.headless.admin.content.client.http.HttpInvoker;
+import com.liferay.headless.admin.content.client.problem.Problem;
 
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.Generated;
@@ -130,6 +132,14 @@ public interface PageDefinitionResource {
 			_logger.fine("HTTP response message: " + httpResponse.getMessage());
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			if (httpResponse.getStatusCode() / 100 != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
 		}
 
 		public HttpInvoker.HttpResponse

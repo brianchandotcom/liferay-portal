@@ -331,9 +331,6 @@ public class UserSerDes {
 					user.setRoles(toStrings((Object[])jsonParserFieldValue));
 				}
 			}
-			else if (jsonParserFieldName.equals("status")) {
-				throw new IllegalArgumentException();
-			}
 		}
 
 	}

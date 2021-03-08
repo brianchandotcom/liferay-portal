@@ -117,9 +117,6 @@ public class Body_1SerDes {
 					body_1.setLogo((String)jsonParserFieldValue);
 				}
 			}
-			else if (jsonParserFieldName.equals("status")) {
-				throw new IllegalArgumentException();
-			}
 		}
 
 	}

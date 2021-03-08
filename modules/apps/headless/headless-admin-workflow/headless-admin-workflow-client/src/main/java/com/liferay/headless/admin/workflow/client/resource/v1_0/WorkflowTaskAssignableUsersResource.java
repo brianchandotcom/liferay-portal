@@ -133,6 +133,14 @@ public interface WorkflowTaskAssignableUsersResource {
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
 
+			if (httpResponse.getStatusCode() / 100 != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+
 			try {
 				return com.liferay.headless.admin.workflow.client.serdes.v1_0.
 					WorkflowTaskAssignableUsersSerDes.toDTO(content);

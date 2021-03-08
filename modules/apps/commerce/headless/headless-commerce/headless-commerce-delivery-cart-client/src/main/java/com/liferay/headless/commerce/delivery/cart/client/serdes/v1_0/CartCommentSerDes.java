@@ -215,9 +215,6 @@ public class CartCommentSerDes {
 					cartComment.setRestricted((Boolean)jsonParserFieldValue);
 				}
 			}
-			else if (jsonParserFieldName.equals("status")) {
-				throw new IllegalArgumentException();
-			}
 		}
 
 	}

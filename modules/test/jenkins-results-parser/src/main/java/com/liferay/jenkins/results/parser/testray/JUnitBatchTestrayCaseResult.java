@@ -61,6 +61,12 @@ public class JUnitBatchTestrayCaseResult extends BatchTestrayCaseResult {
 	public TestClassResult getTestClassResult() {
 		Build build = getBuild();
 
+		String result = build.getResult();
+
+		if (!result.equals("SUCCESS") && !result.equals("UNSTABLE")) {
+			return null;
+		}
+
 		return build.getTestClassResult(getName());
 	}
 

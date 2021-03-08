@@ -164,6 +164,12 @@ public class FunctionalBatchTestrayCaseResult extends BatchTestrayCaseResult {
 			return null;
 		}
 
+		String result = build.getResult();
+
+		if (!result.equals("SUCCESS") && !result.equals("UNSTABLE")) {
+			return null;
+		}
+
 		TestClassResult testClassResult = build.getTestClassResult(
 			"com.liferay.poshi.runner.PoshiRunner");
 

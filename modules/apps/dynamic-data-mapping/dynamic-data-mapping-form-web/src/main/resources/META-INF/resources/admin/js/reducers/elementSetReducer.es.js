@@ -66,18 +66,18 @@ export default (state, action) => {
 				};
 			});
 
-			const rows = newFieldsetPages[0].rows;
-
-			for (let i = rows.length - 1; i >= 0; i--) {
-				pages[pageIndex].rows.splice(rowIndex, 0, rows[i]);
-			}
-
 			return {
 				pages: pages.map((page, index) => {
 					if (index === pageIndex) {
+						const rows = FormSupport.removeEmptyRows(pages, index);
+
 						return {
 							...page,
-							rows: FormSupport.removeEmptyRows(pages, index),
+							rows: [
+								...rows.slice(0, rowIndex + 1),
+								...newFieldsetPages[0].rows,
+								...rows.slice(rowIndex + 1),
+							],
 						};
 					}
 

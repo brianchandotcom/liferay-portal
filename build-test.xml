@@ -4468,6 +4468,20 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 						</then>
 					</if>
 
+					<get-testcase-property property.name="dxp.license.file" />
+
+					<if>
+						<isset property="dxp.license.file" />
+						<then>
+							<delete failonerror="false" file="${liferay.home}/deploy/license.xml" verbose="true" />
+
+							<copy
+								file="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/license/${dxp.license.file}"
+								todir="${liferay.home}/deploy"
+							/>
+						</then>
+					</if>
+
 					<get-testcase-property property.name="commerce.enabled" />
 					<get-testcase-property property.name="commerce.license.file" />
 

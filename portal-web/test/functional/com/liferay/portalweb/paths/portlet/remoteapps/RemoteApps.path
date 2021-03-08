@@ -9,6 +9,21 @@
 </thead>
 <tbody>
 <tr>
+	<td>EMPTY_REMOTE_TABLE_MESSAGE</td>
+	<td>//div[contains(@class,'sheet-text') and contains(.,'No items were found.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMOTE_TABLE_DELETE</td>
+	<td>//a[contains(@class,'dropdown-item') and contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMOTE_TABLE_ELLIPSI</td>
+	<td>//button[contains(@class,'component-action')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TABLE_ENTRY_NAME</td>
 	<td>//table//tbody//td//*[contains(@class,'table-list-title')]//*[contains(text(),'${key_tableEntryName}')]</td>
 	<td></td>

@@ -224,7 +224,7 @@ public class FileEntryInfoItemFieldValuesProvider
 			fileEntryFieldValues.add(
 				new InfoFieldValue<>(
 					FileEntryInfoItemFields.publishDateInfoField,
-					fileEntry.getLastPublishDate()));
+					fileEntry.getModifiedDate()));
 
 			String downloadURL = _dlURLHelper.getDownloadURL(
 				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK);

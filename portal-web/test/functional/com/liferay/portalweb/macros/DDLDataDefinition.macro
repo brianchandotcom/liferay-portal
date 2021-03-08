@@ -317,12 +317,10 @@ definition {
 			locator1 = "Button#SELECT",
 			value1 = "Select");
 
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		var key_assetTitle = "${assetTitle}";
+		var key_iframeTitle = "${assetTitle}";
 
 		AssertTextEquals(
-			locator1 = "NavBar#ASSET_TITLE",
+			locator1 = "IFrame#IFRAME_TITLE",
 			value1 = "${assetTitle}");
 	}
 

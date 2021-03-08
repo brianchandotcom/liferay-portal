@@ -2554,7 +2554,6 @@ definition {
 		KaleoFormsAdmin.saveFieldSet();
 	}
 
-	@ignore = "true"
 	@priority = "3"
 	test ViewFieldSetParentDefinitionIframeTitle {
 		Navigator.openURL();

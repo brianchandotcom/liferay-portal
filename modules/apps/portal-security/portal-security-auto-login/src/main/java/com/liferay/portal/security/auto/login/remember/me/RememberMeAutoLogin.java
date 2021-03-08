@@ -48,8 +48,8 @@ public class RememberMeAutoLogin extends BaseAutoLogin {
 			HttpServletResponse httpServletResponse, Exception exception)
 		throws AutoLoginException {
 
-		if (_log.isWarnEnabled()) {
-			_log.warn(exception, exception);
+		if (_log.isDebugEnabled()) {
+			_log.debug(exception, exception);
 		}
 
 		removeCookies(httpServletRequest, httpServletResponse);

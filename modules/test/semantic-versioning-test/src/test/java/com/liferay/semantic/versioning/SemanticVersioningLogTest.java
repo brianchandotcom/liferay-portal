@@ -15,24 +15,18 @@
 package com.liferay.semantic.versioning;
 
 import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.io.File;
 import java.io.IOException;
 
-import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
 
+import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
-import java.util.concurrent.atomic.AtomicReference;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -58,13 +52,14 @@ public class SemanticVersioningLogTest {
 			"Missing system property \"project.dir\"",
 			Validator.isNull(System.getProperty("project.dir")));
 
-		modulesTestClassGroup = modulesTestClassGroup.replaceAll(
-			StringPool.COLON, StringPool.SLASH);
+		modulesTestClassGroup = StringUtil.replace(
+			modulesTestClassGroup, CharPool.COLON, CharPool.SLASH);
 
-		modulesTestClassGroup = modulesTestClassGroup.replaceAll(
-			"/baseline", StringPool.BLANK);
+		modulesTestClassGroup = StringUtil.replace(
+			modulesTestClassGroup, "/baseline", StringPool.BLANK);
 
-		return StringUtil.split(modulesTestClassGroup, CharPool.SPACE);
+		return Arrays.asList(
+			StringUtil.split(modulesTestClassGroup, CharPool.SPACE));
 	}
 
 	public SemanticVersioningLogTest(String module) {
@@ -73,48 +68,19 @@ public class SemanticVersioningLogTest {
 
 	@Test
 	public void testSemanticVersioning() throws IOException {
-		AtomicReference<Path> logPath = new AtomicReference<>();
+		Path baselineLogPath = Paths.get(
+			System.getProperty("project.dir"), "modules", _module, "build",
+			"reports", "baseline", "baseline.log");
 
-		Files.walkFileTree(
-			Paths.get(System.getProperty("project.dir"), "modules", _module),
-			new SimpleFileVisitor<Path>() {
+		boolean exist = Files.exists(baselineLogPath);
 
-				@Override
-				public FileVisitResult visitFile(
-						Path path, BasicFileAttributes basicFileAttributes)
-					throws IOException {
+		String message = "";
 
-					File file = path.toFile();
-
-					if (Objects.equals(file.getName(), "baseline.log")) {
-						logPath.set(path);
-
-						return FileVisitResult.TERMINATE;
-					}
-
-					return FileVisitResult.CONTINUE;
-				}
-
-			});
-
-		String message = null;
-
-		Path path = logPath.get();
-
-		if (path != null) {
-			List<String> lines = Files.readAllLines(path);
-
-			StringBundler sb = new StringBundler(lines.size() * 2);
-
-			for (String line : lines) {
-				sb.append(line);
-				sb.append(StringPool.NEW_LINE);
-			}
-
-			message = sb.toString();
+		if (exist) {
+			message = new String(Files.readAllBytes(baselineLogPath));
 		}
 
-		Assert.assertNull(message, path);
+		Assert.assertFalse(message, exist);
 	}
 
 	private final String _module;

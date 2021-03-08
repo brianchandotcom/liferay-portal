@@ -506,30 +506,30 @@ public class AssetListAssetEntryProviderImpl
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				className);
 
-		if (assetRendererFactory != null) {
-			ClassTypeReader classTypeReader =
-				assetRendererFactory.getClassTypeReader();
+		if (assetRendererFactory == null) {
+			return availableClassTypeIds;
+		}
 
-			try {
-				List<ClassType> classTypes =
-					classTypeReader.getAvailableClassTypes(
-						_portal.getSharedContentSiteGroupIds(
-							assetListEntry.getCompanyId(),
-							assetListEntry.getGroupId(),
-							assetListEntry.getUserId()),
-						LocaleUtil.getDefault());
+		ClassTypeReader classTypeReader =
+			assetRendererFactory.getClassTypeReader();
 
-				Stream<ClassType> stream = classTypes.stream();
+		try {
+			List<ClassType> classTypes = classTypeReader.getAvailableClassTypes(
+				_portal.getSharedContentSiteGroupIds(
+					assetListEntry.getCompanyId(), assetListEntry.getGroupId(),
+					assetListEntry.getUserId()),
+				LocaleUtil.getDefault());
 
-				availableClassTypeIds = stream.mapToLong(
-					ClassType::getClassTypeId
-				).toArray();
-			}
-			catch (PortalException portalException) {
-				_log.error(
-					"Unable to get class types for class name " + className,
-					portalException);
-			}
+			Stream<ClassType> stream = classTypes.stream();
+
+			availableClassTypeIds = stream.mapToLong(
+				ClassType::getClassTypeId
+			).toArray();
+		}
+		catch (PortalException portalException) {
+			_log.error(
+				"Unable to get class types for class name " + className,
+				portalException);
 		}
 
 		Class<? extends AssetRendererFactory> clazz =

@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
@@ -223,8 +222,6 @@ public class SiteBrowserDisplayContext {
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				groupSearch.getOrderByComparator());
 
-			groups = _filterGroups(groups, themeDisplay.getPermissionChecker());
-
 			total = groups.size();
 
 			total += additionalSites;
@@ -395,29 +392,6 @@ public class SiteBrowserDisplayContext {
 		}
 
 		return false;
-	}
-
-	private List<Group> _filterGroups(
-			List<Group> groups, PermissionChecker permissionChecker)
-		throws Exception {
-
-		boolean filterManageableGroups = ParamUtil.getBoolean(
-			_httpServletRequest, "filterManageableGroups", true);
-
-		List<Group> filteredGroups = new ArrayList<>();
-
-		for (Group group : groups) {
-			if (permissionChecker.isGroupAdmin(group.getGroupId()) ||
-				(!filterManageableGroups &&
-				 GroupPermissionUtil.contains(
-					 permissionChecker, group.getGroupId(),
-					 ActionKeys.ASSIGN_MEMBERS))) {
-
-				filteredGroups.add(group);
-			}
-		}
-
-		return filteredGroups;
 	}
 
 	private List<Group> _filterGroups(List<Group> groups, String filter) {

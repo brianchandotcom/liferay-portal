@@ -669,7 +669,7 @@ public class JournalTransformer {
 		}
 
 		String type = dynamicElementElement.attributeValue(
-			"type", StringPool.BLANK);
+			"type", ddmFormField.getType());
 
 		Map<String, String> attributes = new HashMap<>();
 

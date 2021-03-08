@@ -849,7 +849,16 @@ export const getSectionBySectionTitle = (siteKey, sectionTitle) =>
 				siteKey,
 			},
 		})
-		.then(({data}) => data.messageBoardSections.items[0]);
+		.then(({data}) => {
+			if (
+				data.messageBoardSections &&
+				data.messageBoardSections.items.length
+			) {
+				return data.messageBoardSections.items[0];
+			}
+
+			return Promise.reject(new Error('Section not found'));
+		});
 
 export const getSectionsByRootSection = (siteKey, sectionTitle) => {
 	if (!sectionTitle || sectionTitle === '0') {

@@ -17,7 +17,7 @@ import ClayEmptyState from '@clayui/empty-state';
 import {ClayInput, ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
@@ -29,12 +29,14 @@ import ResultsMessage from '../../components/ResultsMessage.es';
 import SectionSubscription from '../../components/SectionSubscription.es';
 import useQueryParams from '../../hooks/useQueryParams.es';
 import {
+	client,
 	getQuestionThreads,
 	getSectionByRootSection,
 	getSectionBySectionTitle,
 	getSectionsByRootSection,
 } from '../../utils/client.es';
 import {
+	deleteCacheVariables,
 	getBasePath,
 	historyPushWithSlug,
 	isWebCrawler,
@@ -112,7 +114,10 @@ export default withRouter(
 
 		const siteKey = context.siteKey;
 
-		const historyPushParser = historyPushWithSlug(history.push);
+		const historyPushParser = useCallback(
+			(url) => historyPushWithSlug(history.push)(url),
+			[history.push]
+		);
 
 		useEffect(() => {
 			setCurrentTag(tag ? slugToText(tag) : '');
@@ -247,12 +252,20 @@ export default withRouter(
 				getSectionBySectionTitle(
 					context.siteKey,
 					slugToText(sectionTitle)
-				).then(setSection);
+				)
+					.then(setSection)
+					.catch((_) => {
+						deleteCacheVariables(
+							client.cache,
+							'MessageBoardSection'
+						);
+						historyPushParser('/questions/');
+					});
 			}
 			else if (sectionTitle === '0') {
 				getSectionByRootSection(context.siteKey).then(setSection);
 			}
-		}, [sectionTitle, context.siteKey]);
+		}, [historyPushParser, sectionTitle, context.siteKey]);
 
 		const filterOptions = getFilterOptions();
 

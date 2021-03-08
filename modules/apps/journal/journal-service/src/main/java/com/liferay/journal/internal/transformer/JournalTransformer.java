@@ -465,21 +465,27 @@ public class JournalTransformer {
 			"dynamic-element");
 
 		for (Element dynamicElementElement : dynamicElementElements) {
-			Element dynamicContentElement = dynamicElementElement.element(
-				"dynamic-content");
-
-			String data = StringPool.BLANK;
-
-			if (dynamicContentElement != null) {
-				data = dynamicContentElement.getText();
-			}
-
 			String name = dynamicElementElement.attributeValue(
 				"name", StringPool.BLANK);
 
 			if (name.length() == 0) {
 				throw new TransformException(
 					"Element missing \"name\" attribute");
+			}
+
+			DDMFormField ddmFormField = ddmFormFieldsMap.get(name);
+
+			if (ddmFormField == null) {
+				continue;
+			}
+
+			String data = StringPool.BLANK;
+
+			Element dynamicContentElement = dynamicElementElement.element(
+				"dynamic-content");
+
+			if (dynamicContentElement != null) {
+				data = dynamicContentElement.getText();
 			}
 
 			String type = dynamicElementElement.attributeValue(
@@ -506,12 +512,6 @@ public class JournalTransformer {
 				for (Attribute attribute : dynamicContentElement.attributes()) {
 					attributes.put(attribute.getName(), attribute.getValue());
 				}
-			}
-
-			DDMFormField ddmFormField = ddmFormFieldsMap.get(name);
-
-			if (ddmFormField == null) {
-				continue;
 			}
 
 			TemplateNode templateNode = new TemplateNode(

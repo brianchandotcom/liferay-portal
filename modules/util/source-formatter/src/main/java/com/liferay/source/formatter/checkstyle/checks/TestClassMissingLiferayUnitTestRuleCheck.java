@@ -42,6 +42,7 @@ public class TestClassMissingLiferayUnitTestRuleCheck extends BaseCheck {
 
 		if (!absolutePath.contains("/test/") ||
 			!absolutePath.endsWith("Test.java") ||
+			absolutePath.contains("/portal-kernel/") ||
 			absolutePath.contains("/testIntegration/")) {
 
 			return;

@@ -1,2 +1,55 @@
 .lfr-layout-reports-panel {
+	&.open-admin-panel.sidenav-menu-slider {
+		visibility: visible;
+		width: 330px;
+	}
+
+	.sidebar-header,
+	.sidebar-header .sidenav-close {
+		color: #d5d6e1;
+	}
+
+	.sidebar-header {
+		background-color: #272833;
+		line-height: 32px;
+		padding-bottom: 8px;
+		padding-right: 9px;
+		padding-top: 8px;
+	}
+
+	@media only screen and (min-width: 576px) {
+		.sidebar-header {
+			padding-bottom: 12px;
+			padding-top: 12px;
+		}
+	}
+
+	.sidebar-body {
+		bottom: 0;
+		left: 0;
+		position: absolute;
+		right: 0;
+		top: 56px;
+
+		.chart-loading-indicator {
+			position: absolute;
+			transform: translate(80%, 100%);
+			z-index: 1;
+		}
+
+		.loading-animation {
+			left: 0;
+			position: absolute;
+			right: 0;
+			top: 40%;
+		}
+	}
+
+	.text-truncate-reverse {
+		direction: rtl;
+	}
+
+	.list-group {
+		margin-bottom: 0.5rem;
+	}
 }

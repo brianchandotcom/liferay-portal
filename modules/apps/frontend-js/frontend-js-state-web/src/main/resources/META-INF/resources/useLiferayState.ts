@@ -31,7 +31,7 @@ import type {Atom, Selector} from './State';
  */
 export default function useLiferayState<T>(
 	atomOrSelector: Atom<T> | Selector<T>
-): [value: T, setValue: (newValue: T) => void] {
+): [value: Immutable<T>, setValue: (newValue: T) => void] {
 	const [currentValue, setValue] = useState(() => {
 		return State.read(atomOrSelector);
 	});

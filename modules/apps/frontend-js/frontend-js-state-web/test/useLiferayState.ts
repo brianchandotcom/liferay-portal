@@ -90,6 +90,7 @@ describe('State', () => {
 				string,
 				(newValue: string) => void
 			] = useLiferayState(atom);
+
 			const [_c, _d]: [
 				number,
 				(newValue: number) => void
@@ -122,6 +123,26 @@ describe('State', () => {
 				number,
 				(newValue: string) => void
 			] = useLiferayState(selector);
+
+			const complexAtom = State.atom('nested', [
+				{age: 10, name: 'bruce'},
+			]);
+
+			const [_m, _n]: [
+				Readonly<Array<Readonly<{age: number; name: string}>>>,
+				(
+					newValue: Readonly<
+						Array<Readonly<{age: number; name: string}>>
+					>
+				) => void
+			] = useLiferayState(complexAtom);
+
+			// @ts-expect-error: Wrong type for value and setter.
+
+			const [_o, _p]: [
+				Readonly<Array<Readonly<{name: null}>>>,
+				(newValue: Readonly<Array<Readonly<{name: null}>>>) => void
+			] = useLiferayState(complexAtom);
 		});
 	});
 });

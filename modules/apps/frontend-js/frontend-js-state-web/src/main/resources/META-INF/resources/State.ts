@@ -18,17 +18,17 @@ import deepFreeze from './deepFreeze';
 const ATOM = Symbol('Liferay.State.ATOM');
 const SELECTOR = Symbol('Liferay.State.SELECTOR');
 
-export type Atom<T> = Readonly<{
+export type Atom<T> = Immutable<{
 	[ATOM]: true;
 	default: T;
 	key: string;
 }>;
 
 interface Getter {
-	<T>(atomOrSelector: Atom<T> | Selector<T>): T;
+	<T>(atomOrSelector: Atom<T> | Selector<T>): Immutable<T>;
 }
 
-export type Selector<T> = Readonly<{
+export type Selector<T> = Immutable<{
 	[SELECTOR]: true;
 	deriveValue: (get: Getter) => T;
 	key: string;
@@ -109,7 +109,7 @@ const State = {
 	 *
 	 * This is a convenience wrapper around `readAtom()` and `readSelector()`.
 	 */
-	read<T>(atomOrSelector: Atom<T> | Selector<T>): T {
+	read<T>(atomOrSelector: Atom<T> | Selector<T>): Immutable<T> {
 		if (isAtom(atomOrSelector)) {
 			return State.readAtom(atomOrSelector);
 		}
@@ -121,7 +121,7 @@ const State = {
 	/**
 	 * Read the current value associated with the provided atom.
 	 */
-	readAtom<T>(atom: Atom<T>): T {
+	readAtom<T>(atom: Atom<T>): Immutable<T> {
 		if (values.has(atom)) {
 			return values.get(atom) as any;
 		}
@@ -133,7 +133,7 @@ const State = {
 	/**
 	 * Read the current value associated with the provided selector.
 	 */
-	readSelector<T>(selector: Selector<T>): T {
+	readSelector<T>(selector: Selector<T>): Immutable<T> {
 		const seen = new Set<Selector<unknown>>();
 
 		return State._readSelector(selector, seen);
@@ -206,7 +206,7 @@ const State = {
 	 */
 	subscribe<T extends any>(
 		atomOrSelector: Atom<T> | Selector<T>,
-		callback: (value: T) => void
+		callback: (value: Immutable<T>) => void
 	): {dispose: () => void} {
 		const dispose = subscribers.addCallback(atomOrSelector, callback);
 
@@ -448,7 +448,10 @@ const State = {
 		}
 	},
 
-	_readSelector<T>(selector: Selector<T>, seen: Set<Selector<unknown>>): T {
+	_readSelector<T>(
+		selector: Selector<T>,
+		seen: Set<Selector<unknown>>
+	): Immutable<T> {
 		if (seen.has(selector)) {
 			const path = Array.from(seen.values());
 
@@ -468,7 +471,7 @@ const State = {
 		if (!values.has(selector)) {
 			const getter: Getter = <V>(
 				atomOrSelector: Atom<V> | Selector<V>
-			): V => {
+			): Immutable<V> => {
 				if (!dependencies.has(atomOrSelector)) {
 					dependencies.set(atomOrSelector, new Set());
 				}

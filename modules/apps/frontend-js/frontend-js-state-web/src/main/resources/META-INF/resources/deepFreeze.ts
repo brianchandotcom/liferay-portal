@@ -12,7 +12,7 @@
  * details.
  */
 
-export default function deepFreeze<T>(value: T): Readonly<T> {
+export default function deepFreeze<T>(value: T): Immutable<T> {
 	if (process.env.NODE_ENV === 'development') {
 		if (Array.isArray(value)) {
 			value.forEach(deepFreeze);
@@ -24,5 +24,5 @@ export default function deepFreeze<T>(value: T): Readonly<T> {
 		Object.freeze(value);
 	}
 
-	return value;
+	return value as Immutable<T>;
 }

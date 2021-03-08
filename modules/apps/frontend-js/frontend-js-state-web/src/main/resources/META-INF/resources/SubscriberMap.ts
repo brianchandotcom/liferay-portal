@@ -45,7 +45,7 @@ export default class SubscriberMap {
 
 	getCallbacks<T>(
 		atomOrSelector: Atom<T> | Selector<T>
-	): Map<number, (value: T) => void> {
+	): Map<number, (value: Immutable<T>) => void> {
 		if (!this._subscribers.has(atomOrSelector)) {
 			this._subscribers.set(
 				atomOrSelector,
@@ -58,7 +58,7 @@ export default class SubscriberMap {
 
 	addCallback<T extends unknown>(
 		atomOrSelector: Atom<T> | Selector<T>,
-		callback: (value: T) => void
+		callback: (value: Immutable<T>) => void
 	): () => void {
 		const subscriberId = this._id++;
 

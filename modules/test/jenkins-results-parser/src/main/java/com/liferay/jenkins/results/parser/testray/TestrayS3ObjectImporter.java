@@ -339,26 +339,55 @@ public class TestrayS3ObjectImporter {
 				throw new RuntimeException(ioException);
 			}
 
-			for (File poshiReportFile :
-					JenkinsResultsParserUtil.findFiles(poshiReportDir, ".*")) {
+			File poshiIndexFile = new File(poshiReportDir, "index.html");
 
-				String poshiReportFileName = poshiReportFile.getName();
+			if (poshiIndexFile.exists()) {
+				try {
+					String content = JenkinsResultsParserUtil.read(
+						poshiIndexFile);
 
-				if (poshiReportFileName.endsWith(".html")) {
-					try {
-						String content = JenkinsResultsParserUtil.read(
-							poshiReportFile);
+					for (File poshiReportJPGFile :
+							JenkinsResultsParserUtil.findFiles(
+								poshiReportDir, ".*\\.jpg")) {
 
-						JenkinsResultsParserUtil.write(
-							poshiReportFile,
-							content.replaceAll("\\.jpg", "\\.jpg\\.gz"));
-					}
-					catch (IOException ioException) {
-						throw new RuntimeException(ioException);
+						String poshiReportJPGFileName =
+							poshiReportJPGFile.getName();
+
+						if (!content.contains("/" + poshiReportJPGFileName)) {
+							System.out.println(
+								"Removing unreferenced file " +
+									poshiReportJPGFile);
+
+							JenkinsResultsParserUtil.delete(poshiReportJPGFile);
+
+							continue;
+						}
+
+						_convertToGzipFile(poshiReportJPGFile);
 					}
 				}
+				catch (IOException ioException) {
+					throw new RuntimeException(ioException);
+				}
+			}
 
-				_convertToGzipFile(poshiReportFile);
+			for (File poshiReportHTMLFile :
+					JenkinsResultsParserUtil.findFiles(
+						poshiReportDir, ".*\\.html")) {
+
+				try {
+					String content = JenkinsResultsParserUtil.read(
+						poshiReportHTMLFile);
+
+					JenkinsResultsParserUtil.write(
+						poshiReportHTMLFile,
+						content.replaceAll("\\.jpg", "\\.jpg\\.gz"));
+				}
+				catch (IOException ioException) {
+					throw new RuntimeException(ioException);
+				}
+
+				_convertToGzipFile(poshiReportHTMLFile);
 			}
 		}
 	}

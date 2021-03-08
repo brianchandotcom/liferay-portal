@@ -12,6 +12,24 @@
  * details.
  */
 
+/**
+ * The validator only removes properties with the value undefined to allow
+ * the initialProps to be added.
+ */
+const validator = (props) => {
+	const newProps = {};
+
+	for (const key in props) {
+		const value = props[key];
+
+		if (value !== undefined) {
+			newProps[key] = value;
+		}
+	}
+
+	return newProps;
+};
+
 export const parseProps = ({
 	allowInvalidAvailableLocalesForProperty,
 	autocompleteUserURL,
@@ -45,7 +63,7 @@ export const parseProps = ({
 	view,
 	...otherProps
 }) => ({
-	config: {
+	config: validator({
 		allowInvalidAvailableLocalesForProperty,
 		autocompleteUserURL,
 		cancelLabel,
@@ -76,10 +94,10 @@ export const parseProps = ({
 		spritemap,
 		submitLabel,
 		view,
-	},
-	state: {
+	}),
+	state: validator({
 		...otherProps,
 		...otherContext,
 		rules,
-	},
+	}),
 });

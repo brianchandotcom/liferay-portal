@@ -33,7 +33,6 @@ const getFieldNameGenerator = (pages, generateFieldNameUsingFieldLabel) => (
 
 export const INITIAL_CONFIG_STATE = {
 	cache: {},
-	defaultLanguageId: themeDisplay.getLanguageId(),
 	generateFieldNameUsingFieldLabel: false,
 	getFieldNameGenerator,
 };

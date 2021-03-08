@@ -16,7 +16,7 @@ import React, {useContext} from 'react';
 
 import {getFormId, getFormNode} from '../../../util/formId.es';
 import {useEvaluate} from '../../hooks/useEvaluate.es';
-import {useForm} from '../../hooks/useForm.es';
+import {useForm, useFormState} from '../../hooks/useForm.es';
 import {usePage} from '../../hooks/usePage.es';
 import fieldBlur from '../../thunks/fieldBlur.es';
 import fieldChange from '../../thunks/fieldChange.es';
@@ -25,14 +25,9 @@ import {Field} from '../Field/Field.es';
 import {VariantsContext} from './VariantsContext.es';
 
 export const Layout = ({components, editable, rows}) => {
-	const {
-		activePage,
-		allowNestedFields,
-		containerElement,
-		defaultLanguageId,
-		pageIndex,
-		spritemap,
-	} = usePage();
+	const {containerElement, pageIndex} = usePage();
+	const {activePage, allowNestedFields, defaultLanguageId} = useFormState();
+
 	const createFieldChange = useEvaluate(fieldChange);
 	const dispatch = useForm();
 
@@ -107,7 +102,6 @@ export const Layout = ({components, editable, rows}) => {
 										)
 									}
 									pageIndex={pageIndex}
-									spritemap={spritemap}
 								/>
 							)}
 						</Components.Column>

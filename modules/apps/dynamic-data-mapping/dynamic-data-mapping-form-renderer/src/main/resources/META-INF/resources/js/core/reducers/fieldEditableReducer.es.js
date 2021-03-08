@@ -147,9 +147,13 @@ export default (state, action, config) => {
 				indexes,
 			} = action.payload;
 
-			const {availableLanguageIds, editingLanguageId, pages} = state;
 			const {
+				availableLanguageIds,
 				defaultLanguageId,
+				editingLanguageId,
+				pages,
+			} = state;
+			const {
 				generateFieldNameUsingFieldLabel,
 				getFieldNameGenerator,
 			} = config;
@@ -234,8 +238,7 @@ export default (state, action, config) => {
 		}
 		case EVENT_TYPES.FIELD.CLICK: {
 			const {activePage, field} = action.payload;
-			const {editingLanguageId} = state;
-			const {defaultLanguageId} = config;
+			const {defaultLanguageId, editingLanguageId} = state;
 
 			const visitor = new PagesVisitor(field.settingsContext.pages);
 
@@ -274,9 +277,14 @@ export default (state, action, config) => {
 		}
 		case EVENT_TYPES.FIELD.CHANGE: {
 			const {fieldName, propertyName, propertyValue} = action.payload;
-			const {editingLanguageId, focusedField, pages, rules} = state;
 			const {
 				defaultLanguageId,
+				editingLanguageId,
+				focusedField,
+				pages,
+				rules,
+			} = state;
+			const {
 				generateFieldNameUsingFieldLabel,
 				getFieldNameGenerator,
 			} = config;
@@ -351,9 +359,8 @@ export default (state, action, config) => {
 				fieldName,
 				removeEmptyRows = true,
 			} = action.payload;
-			const {editingLanguageId, pages, rules} = state;
+			const {defaultLanguageId, editingLanguageId, pages, rules} = state;
 			const {
-				defaultLanguageId,
 				generateFieldNameUsingFieldLabel,
 				getFieldNameGenerator,
 			} = config;
@@ -384,9 +391,8 @@ export default (state, action, config) => {
 		}
 		case EVENT_TYPES.FIELD.DUPLICATE: {
 			const {fieldName, parentFieldName} = action.payload;
-			const {availableLanguageIds, pages} = state;
+			const {availableLanguageIds, defaultLanguageId, pages} = state;
 			const {
-				defaultLanguageId,
 				generateFieldNameUsingFieldLabel,
 				getFieldNameGenerator,
 			} = config;
@@ -505,9 +511,13 @@ export default (state, action, config) => {
 				rows,
 				useFieldName,
 			} = action.payload;
-			const {availableLanguageIds, editingLanguageId, pages} = state;
 			const {
+				availableLanguageIds,
 				defaultLanguageId,
+				editingLanguageId,
+				pages,
+			} = state;
+			const {
 				generateFieldNameUsingFieldLabel,
 				getFieldNameGenerator,
 			} = config;
@@ -630,13 +640,13 @@ export default (state, action, config) => {
 			const {
 				activePage,
 				availableLanguageIds,
+				defaultLanguageId,
 				editingLanguageId,
 				fieldTypes,
 				pages,
 				rules,
 			} = state;
 			const {
-				defaultLanguageId,
 				generateFieldNameUsingFieldLabel,
 				getFieldNameGenerator,
 			} = config;

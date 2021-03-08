@@ -46,13 +46,13 @@ export default (state, action, config) => {
 			const {
 				activePage,
 				availableLanguageIds,
+				defaultLanguageId,
 				editingLanguageId,
 				fieldTypes,
 				pages,
 				rules,
 			} = state;
 			const {
-				defaultLanguageId,
 				generateFieldNameUsingFieldLabel,
 				getFieldNameGenerator,
 			} = config;
@@ -214,9 +214,8 @@ export default (state, action, config) => {
 		}
 		case EVENT_TYPES.DND.RESIZE: {
 			const {column, direction, loc} = action.payload;
-			const {editingLanguageId, pages} = state;
+			const {defaultLanguageId, editingLanguageId, pages} = state;
 			const {
-				defaultLanguageId,
 				generateFieldNameUsingFieldLabel,
 				getFieldNameGenerator,
 			} = config;

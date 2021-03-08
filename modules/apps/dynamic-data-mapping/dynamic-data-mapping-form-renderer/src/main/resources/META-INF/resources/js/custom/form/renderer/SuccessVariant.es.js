@@ -19,7 +19,6 @@ import {usePrevious} from '@liferay/frontend-js-react-web';
 import React, {useEffect, useState} from 'react';
 
 import {EVENT_TYPES as CORE_EVENT_TYPES} from '../../../core/actions/eventTypes.es';
-import {useConfig} from '../../../core/hooks/useConfig.es';
 import {useForm, useFormState} from '../../../core/hooks/useForm.es';
 import {setValue} from '../../../util/i18n.es';
 import {EVENT_TYPES} from '../eventTypes.es';
@@ -79,8 +78,7 @@ export const Container = ({children, pages, strings = {}}) => {
 Container.displayName = 'SuccessVariant.Container';
 
 export const Page = ({page: {successPageSettings}}) => {
-	const {defaultLanguageId} = useConfig();
-	const {editingLanguageId} = useFormState();
+	const {defaultLanguageId, editingLanguageId} = useFormState();
 
 	const dispatch = useForm();
 

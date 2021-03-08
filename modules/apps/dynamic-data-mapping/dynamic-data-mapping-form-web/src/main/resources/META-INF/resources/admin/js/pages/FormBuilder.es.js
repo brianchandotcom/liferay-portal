@@ -62,6 +62,7 @@ export const FormBuilder = () => {
 
 	const {
 		activePage,
+		defaultLanguageId,
 		editingLanguageId,
 		fieldSets,
 		focusedField,
@@ -365,6 +366,7 @@ export const FormBuilder = () => {
 					/>
 				) : (
 					<MetalSidebarAdapter
+						defaultLanguageId={defaultLanguageId}
 						editingLanguageId={editingLanguageId}
 						fieldSets={fieldSets}
 						focusedField={focusedField}

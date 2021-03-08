@@ -82,9 +82,10 @@ const getSerializedFormBuilderContext = (state, defaultLanguageId) => {
  * to make the submit, this is the same implementation of StateSyncronizer.
  */
 export const useStateSync = () => {
-	const {defaultLanguageId, portletNamespace} = useConfig();
+	const {portletNamespace} = useConfig();
 	const {
 		availableLanguageIds,
+		defaultLanguageId,
 		localizedDescription,
 		localizedName,
 		pages,

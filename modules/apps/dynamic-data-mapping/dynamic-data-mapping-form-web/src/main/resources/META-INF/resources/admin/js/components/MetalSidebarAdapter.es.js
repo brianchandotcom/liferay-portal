@@ -63,7 +63,6 @@ const createRevertFieldChanges = (onClose) => ({onClick, type}) => ({
 export const MetalSidebarAdapter = React.forwardRef(
 	({rules, ...otherProps}, ref) => {
 		const {
-			defaultLanguageId,
 			fieldSetDefinitionURL,
 			fieldTypes,
 			portletNamespace,
@@ -90,7 +89,6 @@ export const MetalSidebarAdapter = React.forwardRef(
 				component.current = new Sidebar(
 					{
 						...otherProps,
-						defaultLanguageId,
 						dispatch: (type, event) =>
 							dispatch({payload: event, type}),
 						fieldSetDefinitionURL,

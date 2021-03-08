@@ -14,5 +14,6 @@
 
 export const INITIAL_STATE = {
 	activePage: 0,
+	defaultLanguageId: themeDisplay.getLanguageId(),
 	pages: [],
 };

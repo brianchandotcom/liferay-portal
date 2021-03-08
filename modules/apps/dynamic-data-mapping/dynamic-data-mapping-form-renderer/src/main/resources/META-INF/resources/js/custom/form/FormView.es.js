@@ -126,16 +126,11 @@ const useFormSubmit = ({apiRef, containerRef}) => {
  * Liferay.Component register.
  */
 const usePublicAPI = ({apiRef, containerRef, unstable_onEventRef}) => {
-	const {
-		containerId,
-		defaultLanguageId,
-		groupId,
-		portletNamespace,
-		viewMode,
-	} = useConfig();
+	const {containerId, groupId, portletNamespace, viewMode} = useConfig();
 	const {
 		activePage,
 		ddmStructureLayoutId,
+		defaultLanguageId,
 		description,
 		editingLanguageId,
 		name,

@@ -19,7 +19,6 @@ import {sub} from 'dynamic-data-mapping-form-field-type/util/strings.es';
 import React from 'react';
 
 import {EVENT_TYPES as CORE_EVENT_TYPES} from '../../../core/actions/eventTypes.es';
-import {useConfig} from '../../../core/hooks/useConfig.es';
 import {useForm, useFormState} from '../../../core/hooks/useForm.es';
 import {usePage} from '../../../core/hooks/usePage.es';
 import {EVENT_TYPES} from '../eventTypes.es';
@@ -198,9 +197,8 @@ export const Container = ({children, empty, pageIndex, pages}) => {
 Container.displayName = 'MultiPagesVariant.Container';
 
 export const PageHeader = ({localizedDescription, localizedTitle}) => {
-	const {editingLanguageId} = useFormState();
+	const {defaultLanguageId, editingLanguageId} = useFormState();
 	const {pageIndex} = usePage();
-	const {defaultLanguageId} = useConfig();
 
 	const dispatch = useForm();
 

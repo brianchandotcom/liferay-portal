@@ -27,6 +27,7 @@ import React, {
 	useState,
 } from 'react';
 
+import {useFormState} from '../../hooks/useForm.es';
 import {usePage} from '../../hooks/usePage.es';
 import {useStorage} from '../../hooks/useStorage.es';
 import {AutoFocus} from '../AutoFocus.es';
@@ -185,7 +186,8 @@ const getRootParentField = (field, currentLoc, {loc, root}) => {
 
 export const Field = ({field, loc, ...otherProps}) => {
 	const parentField = useContext(ParentFieldContext);
-	const {defaultLanguageId, editingLanguageId, fieldTypes} = usePage();
+	const {defaultLanguageId, editingLanguageId} = useFormState();
+	const {fieldTypes} = usePage();
 	const [hasError, setHasError] = useState();
 
 	const getReadOnly = ({

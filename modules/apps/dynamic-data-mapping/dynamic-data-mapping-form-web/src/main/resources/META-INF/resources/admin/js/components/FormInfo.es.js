@@ -44,9 +44,10 @@ const isForbiddenKey = (event, limit) => {
 };
 
 export const FormInfo = () => {
-	const {defaultLanguageId, portletNamespace} = useConfig();
+	const {portletNamespace} = useConfig();
 
 	const {
+		defaultLanguageId,
 		editingLanguageId,
 		localizedDescription,
 		localizedName,

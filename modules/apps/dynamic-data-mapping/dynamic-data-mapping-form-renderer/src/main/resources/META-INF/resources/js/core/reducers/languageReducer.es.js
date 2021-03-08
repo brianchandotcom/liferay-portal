@@ -141,12 +141,15 @@ const updateFieldLanguage = ({
  * NOTE: This is a literal copy of the old LayoutProvider logic. Small changes
  * were made only to adapt to the reducer.
  */
-export default (state, action, config) => {
+export default (state, action) => {
 	switch (action.type) {
 		case EVENT_TYPES.LANGUAGE.CHANGE: {
-			const {defaultLanguageId} = config;
 			const {availableLanguageIds, focusedField} = state;
-			const {editingLanguageId, pages} = action.payload;
+			const {
+				defaultLanguageId,
+				editingLanguageId,
+				pages,
+			} = action.payload;
 
 			const visitor = new PagesVisitor(pages ?? state.pages);
 
@@ -202,6 +205,7 @@ export default (state, action, config) => {
 			);
 
 			return {
+				defaultLanguageId,
 				editingLanguageId,
 				focusedField: newFocusedField,
 				pages: newPages,

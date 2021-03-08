@@ -90,9 +90,10 @@ const updateAutoSaveMessage = ({
  * Each time the rules are changed, the form is saved.
  */
 export const AutoSaveProvider = ({children, interval, url}) => {
-	const {defaultLanguageId, portletNamespace} = useConfig();
+	const {portletNamespace} = useConfig();
 	const {
 		availableLanguageIds,
+		defaultLanguageId,
 		localizedDescription,
 		localizedName,
 		pages,

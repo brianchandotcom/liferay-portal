@@ -31,13 +31,13 @@ export const FormsFieldSidebar = ({title}) => {
 	const {
 		dataProviderInstanceParameterSettingsURL,
 		dataProviderInstancesURL,
-		defaultLanguageId,
 		fieldTypes,
 		functionsMetadata,
 		functionsURL,
 	} = useConfig();
 	const {
 		activePage,
+		defaultLanguageId,
 		editingLanguageId,
 		focusedField,
 		pages,

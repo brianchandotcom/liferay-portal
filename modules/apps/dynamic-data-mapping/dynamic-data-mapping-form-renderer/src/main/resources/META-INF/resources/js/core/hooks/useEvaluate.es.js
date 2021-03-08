@@ -23,13 +23,8 @@ import {useFormState} from './useForm.es';
  * the `evaluate` function.
  */
 export const useEvaluate = (thunk) => {
-	const {
-		defaultLanguageId,
-		groupId,
-		portletNamespace,
-		viewMode,
-	} = useConfig();
-	const {editingLanguageId, pages, rules} = useFormState();
+	const {groupId, portletNamespace, viewMode} = useConfig();
+	const {defaultLanguageId, editingLanguageId, pages, rules} = useFormState();
 
 	return useCallback(
 		(args) =>

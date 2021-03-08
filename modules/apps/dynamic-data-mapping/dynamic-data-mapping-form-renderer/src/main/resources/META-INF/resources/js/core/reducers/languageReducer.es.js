@@ -160,14 +160,6 @@ export default (state, action, config) => {
 					value: previousValue,
 					...field
 				}) => {
-					const value = getLocalizedValue({
-						defaultLanguageId,
-						editingLanguageId,
-						localizable,
-						localizedValue,
-						localizedValueEdited,
-						value: previousValue,
-					});
 
 					// When languageReducer is used in the context of the
 					// Form Builder, the fields contain settingsContext
@@ -194,7 +186,14 @@ export default (state, action, config) => {
 					}
 
 					return {
-						value,
+						value: getLocalizedValue({
+							defaultLanguageId,
+							editingLanguageId,
+							localizable,
+							localizedValue,
+							localizedValueEdited,
+							value: previousValue,
+						}),
 					};
 				},
 				true,

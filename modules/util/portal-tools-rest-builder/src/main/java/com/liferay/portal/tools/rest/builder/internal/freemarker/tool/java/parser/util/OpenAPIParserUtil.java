@@ -196,17 +196,30 @@ public class OpenAPIParserUtil {
 
 		Map<String, Schema> externalReferencesMap = new HashMap<>();
 
-		List<String> externalReferences = getExternalReferences(openAPIYAML);
+		Queue<String> queue = new LinkedList<>(
+			getExternalReferences(openAPIYAML));
 
-		for (String externalReference : externalReferences) {
+		String externalReference = null;
+
+		Set<String> visitedPaths = new HashSet<>();
+
+		while ((externalReference = queue.poll()) != null) {
 			String path = externalReference.substring(
 				0, externalReference.indexOf("#"));
 
-			File openAPIFile = new File(path);
+			if (visitedPaths.contains(path)) {
+				continue;
+			}
+
+			visitedPaths.add(path);
+
+			openAPIYAML = YAMLUtil.loadOpenAPIYAML(
+				FileUtil.read(new File(path)));
 
 			externalReferencesMap.putAll(
-				OpenAPIUtil.getAllSchemas(
-					YAMLUtil.loadOpenAPIYAML(FileUtil.read(openAPIFile))));
+				OpenAPIUtil.getAllSchemas(openAPIYAML));
+
+			queue.addAll(getExternalReferences(openAPIYAML));
 		}
 
 		return externalReferencesMap;
@@ -277,19 +290,27 @@ public class OpenAPIParserUtil {
 
 		List<String> externalReferences = getExternalReferences(openAPIYAML);
 
+		Set<String> visitedPaths = new HashSet<>();
+
 		try {
 			for (String externalReference : externalReferences) {
-				String openAPIPath = externalReference.substring(
+				String path = externalReference.substring(
 					0, externalReference.indexOf("#"));
 
+				if (visitedPaths.contains(path)) {
+					continue;
+				}
+
+				visitedPaths.add(path);
+
 				String configPath = StringUtil.replace(
-					openAPIPath, "rest-openapi.yaml", "rest-config.yaml");
+					path, "rest-openapi.yaml", "rest-config.yaml");
 
 				ConfigYAML externalConfigYAML = YAMLUtil.loadConfigYAML(
 					FileUtil.read(new File(configPath)));
 
 				OpenAPIYAML externalOpenAPIYAML = YAMLUtil.loadOpenAPIYAML(
-					FileUtil.read(new File(openAPIPath)));
+					FileUtil.read(new File(path)));
 
 				Map<String, String> externalJavaDataTypeMap =
 					getJavaDataTypeMap(externalConfigYAML, externalOpenAPIYAML);

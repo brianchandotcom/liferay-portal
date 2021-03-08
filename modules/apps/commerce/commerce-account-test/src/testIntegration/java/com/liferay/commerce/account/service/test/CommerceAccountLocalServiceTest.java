@@ -101,8 +101,16 @@ public class CommerceAccountLocalServiceTest {
 				CommerceAccountConstants.SITE_TYPE_B2B, StringPool.BLANK, null,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
+		int commerceAccountsCount =
+			_commerceAccountLocalService.getUserCommerceAccountsCount(
+				_user.getUserId(),
+				CommerceAccountConstants.DEFAULT_PARENT_ACCOUNT_ID,
+				CommerceAccountConstants.SITE_TYPE_B2B, StringPool.BLANK, null);
+
 		Assert.assertEquals(
-			commerceAccounts.toString(), 1, commerceAccounts.size());
+			_user.toString(), commerceAccounts.size(), commerceAccountsCount);
+
+		Assert.assertEquals(_user.toString(), 1, commerceAccountsCount);
 
 		CommerceAccount commerceAccount = commerceAccounts.get(0);
 
@@ -142,6 +150,17 @@ public class CommerceAccountLocalServiceTest {
 				CommerceAccountConstants.DEFAULT_PARENT_ACCOUNT_ID,
 				CommerceAccountConstants.SITE_TYPE_B2C, StringPool.BLANK, null,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		int commerceAccountsCount =
+			_commerceAccountLocalService.getUserCommerceAccountsCount(
+				_user.getUserId(),
+				CommerceAccountConstants.DEFAULT_PARENT_ACCOUNT_ID,
+				CommerceAccountConstants.SITE_TYPE_B2C, StringPool.BLANK, null);
+
+		Assert.assertEquals(
+			_user.toString(), commerceAccounts.size(), commerceAccountsCount);
+
+		Assert.assertEquals(_user.toString(), 1, commerceAccountsCount);
 
 		Assert.assertEquals(
 			commerceAccounts.toString(), 1, commerceAccounts.size());
@@ -213,9 +232,20 @@ public class CommerceAccountLocalServiceTest {
 				CommerceAccountConstants.SITE_TYPE_B2B, StringPool.BLANK, null,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
+		int organizationUser1CommerceAccountsCount =
+			_commerceAccountLocalService.getUserCommerceAccountsCount(
+				organizationUser1.getUserId(),
+				CommerceAccountConstants.DEFAULT_PARENT_ACCOUNT_ID,
+				CommerceAccountConstants.SITE_TYPE_B2B, StringPool.BLANK, null);
+
 		Assert.assertEquals(
-			organizationUser1CommerceAccounts.toString(), 1,
-			organizationUser1CommerceAccounts.size());
+			organizationUser1.toString(),
+			organizationUser1CommerceAccounts.size(),
+			organizationUser1CommerceAccountsCount);
+
+		Assert.assertEquals(
+			organizationUser2.toString(), 1,
+			organizationUser1CommerceAccountsCount);
 
 		CommerceAccount organizationUser1CommerceAccount =
 			organizationUser1CommerceAccounts.get(0);
@@ -230,6 +260,21 @@ public class CommerceAccountLocalServiceTest {
 				CommerceAccountConstants.DEFAULT_PARENT_ACCOUNT_ID,
 				CommerceAccountConstants.SITE_TYPE_B2B, StringPool.BLANK, null,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		int organizationUser2CommerceAccountsCount =
+			_commerceAccountLocalService.getUserCommerceAccountsCount(
+				organizationUser2.getUserId(),
+				CommerceAccountConstants.DEFAULT_PARENT_ACCOUNT_ID,
+				CommerceAccountConstants.SITE_TYPE_B2B, StringPool.BLANK, null);
+
+		Assert.assertEquals(
+			organizationUser2.toString(),
+			organizationUser2CommerceAccounts.size(),
+			organizationUser2CommerceAccountsCount);
+
+		Assert.assertEquals(
+			organizationUser2.toString(), 1,
+			organizationUser2CommerceAccountsCount);
 
 		Assert.assertEquals(
 			organizationUser2CommerceAccounts.toString(), 1,
@@ -284,9 +329,18 @@ public class CommerceAccountLocalServiceTest {
 				CommerceAccountConstants.SITE_TYPE_B2B, StringPool.BLANK, null,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
+		int businessUser1CommerceAccountsCount =
+			_commerceAccountLocalService.getUserCommerceAccountsCount(
+				businessUser1.getUserId(),
+				CommerceAccountConstants.DEFAULT_PARENT_ACCOUNT_ID,
+				CommerceAccountConstants.SITE_TYPE_B2B, StringPool.BLANK, null);
+
 		Assert.assertEquals(
-			businessUser1CommerceAccounts.toString(), 1,
-			businessUser1CommerceAccounts.size());
+			businessUser1.toString(), businessUser1CommerceAccounts.size(),
+			businessUser1CommerceAccountsCount);
+
+		Assert.assertEquals(
+			businessUser1.toString(), 1, businessUser1CommerceAccountsCount);
 
 		CommerceAccount businessUser1CommerceAccount =
 			businessUser1CommerceAccounts.get(0);
@@ -301,9 +355,18 @@ public class CommerceAccountLocalServiceTest {
 				CommerceAccountConstants.SITE_TYPE_B2B, StringPool.BLANK, null,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
+		int businessUser2CommerceAccountsCount =
+			_commerceAccountLocalService.getUserCommerceAccountsCount(
+				businessUser2.getUserId(),
+				CommerceAccountConstants.DEFAULT_PARENT_ACCOUNT_ID,
+				CommerceAccountConstants.SITE_TYPE_B2B, StringPool.BLANK, null);
+
 		Assert.assertEquals(
-			businessUser2CommerceAccounts.toString(), 1,
-			businessUser2CommerceAccounts.size());
+			businessUser2.toString(), businessUser2CommerceAccounts.size(),
+			businessUser2CommerceAccountsCount);
+
+		Assert.assertEquals(
+			businessUser2.toString(), 1, businessUser2CommerceAccountsCount);
 
 		CommerceAccount businessUser2CommerceAccount =
 			businessUser2CommerceAccounts.get(0);
@@ -453,8 +516,18 @@ public class CommerceAccountLocalServiceTest {
 				CommerceAccountConstants.SITE_TYPE_B2B, StringPool.BLANK, null,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
+		int userCommerceAccountsCount1 =
+			_commerceAccountLocalService.getUserCommerceAccountsCount(
+				user1.getUserId(),
+				CommerceAccountConstants.DEFAULT_PARENT_ACCOUNT_ID,
+				CommerceAccountConstants.SITE_TYPE_B2B, StringPool.BLANK, null);
+
 		Assert.assertEquals(
-			userCommerceAccounts1.toString(), 1, userCommerceAccounts1.size());
+			userCommerceAccounts1.toString(), userCommerceAccounts1.size(),
+			userCommerceAccountsCount1);
+
+		Assert.assertEquals(
+			userCommerceAccounts1.toString(), 1, userCommerceAccountsCount1);
 
 		CommerceAccount userCommerceAccount1 = userCommerceAccounts1.get(0);
 
@@ -469,8 +542,18 @@ public class CommerceAccountLocalServiceTest {
 				CommerceAccountConstants.SITE_TYPE_B2B, StringPool.BLANK, null,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
+		int userCommerceAccountsCount2 =
+			_commerceAccountLocalService.getUserCommerceAccountsCount(
+				user2.getUserId(),
+				CommerceAccountConstants.DEFAULT_PARENT_ACCOUNT_ID,
+				CommerceAccountConstants.SITE_TYPE_B2B, StringPool.BLANK, null);
+
 		Assert.assertEquals(
-			userCommerceAccounts2.toString(), 2, userCommerceAccounts2.size());
+			userCommerceAccounts2.toString(), userCommerceAccounts2.size(),
+			userCommerceAccountsCount2);
+
+		Assert.assertEquals(
+			userCommerceAccounts2.toString(), 2, userCommerceAccountsCount2);
 
 		userCommerceAccounts2 = ListUtil.sort(userCommerceAccounts2);
 
@@ -491,8 +574,18 @@ public class CommerceAccountLocalServiceTest {
 				CommerceAccountConstants.SITE_TYPE_B2B, StringPool.BLANK, null,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
+		int userCommerceAccountsCount3 =
+			_commerceAccountLocalService.getUserCommerceAccountsCount(
+				user3.getUserId(),
+				CommerceAccountConstants.DEFAULT_PARENT_ACCOUNT_ID,
+				CommerceAccountConstants.SITE_TYPE_B2B, StringPool.BLANK, null);
+
 		Assert.assertEquals(
-			userCommerceAccounts3.toString(), 3, userCommerceAccounts3.size());
+			userCommerceAccounts3.toString(), userCommerceAccounts3.size(),
+			userCommerceAccountsCount3);
+
+		Assert.assertEquals(
+			userCommerceAccounts3.toString(), 3, userCommerceAccountsCount3);
 
 		userCommerceAccounts3 = ListUtil.sort(userCommerceAccounts3);
 
@@ -517,8 +610,18 @@ public class CommerceAccountLocalServiceTest {
 				CommerceAccountConstants.SITE_TYPE_B2B, StringPool.BLANK, null,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
+		int userCommerceAccountsCount4 =
+			_commerceAccountLocalService.getUserCommerceAccountsCount(
+				user4.getUserId(),
+				CommerceAccountConstants.DEFAULT_PARENT_ACCOUNT_ID,
+				CommerceAccountConstants.SITE_TYPE_B2B, StringPool.BLANK, null);
+
 		Assert.assertEquals(
-			userCommerceAccounts4.toString(), 1, userCommerceAccounts4.size());
+			userCommerceAccounts4.toString(), userCommerceAccounts4.size(),
+			userCommerceAccountsCount4);
+
+		Assert.assertEquals(
+			userCommerceAccounts4.toString(), 1, userCommerceAccountsCount4);
 
 		CommerceAccount userCommerceAccount4 = userCommerceAccounts4.get(0);
 
@@ -533,8 +636,18 @@ public class CommerceAccountLocalServiceTest {
 				CommerceAccountConstants.SITE_TYPE_B2B, StringPool.BLANK, null,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
+		int userCommerceAccountsCount5 =
+			_commerceAccountLocalService.getUserCommerceAccountsCount(
+				user5.getUserId(),
+				CommerceAccountConstants.DEFAULT_PARENT_ACCOUNT_ID,
+				CommerceAccountConstants.SITE_TYPE_B2B, StringPool.BLANK, null);
+
 		Assert.assertEquals(
-			userCommerceAccounts5.toString(), 4, userCommerceAccounts5.size());
+			userCommerceAccounts5.toString(), userCommerceAccounts5.size(),
+			userCommerceAccountsCount5);
+
+		Assert.assertEquals(
+			userCommerceAccounts5.toString(), 4, userCommerceAccountsCount5);
 
 		userCommerceAccounts5 = ListUtil.sort(userCommerceAccounts5);
 

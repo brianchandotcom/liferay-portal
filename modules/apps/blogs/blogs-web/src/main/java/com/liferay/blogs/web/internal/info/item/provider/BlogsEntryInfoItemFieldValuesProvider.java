@@ -163,6 +163,10 @@ public class BlogsEntryInfoItemFieldValuesProvider
 				new InfoFieldValue<>(
 					BlogsEntryInfoItemFields.displayDateInfoField,
 					blogsEntry.getDisplayDate()));
+			blogsEntryFieldValues.add(
+				new InfoFieldValue<>(
+					BlogsEntryInfoItemFields.publishDateInfoField,
+					blogsEntry.getDisplayDate()));
 
 			if (themeDisplay != null) {
 				blogsEntryFieldValues.add(

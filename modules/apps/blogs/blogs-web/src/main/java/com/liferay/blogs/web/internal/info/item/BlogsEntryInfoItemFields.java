@@ -106,6 +106,16 @@ public interface BlogsEntryInfoItemFields {
 			InfoLocalizedValue.localize(
 				"com.liferay.asset.info.display.impl", "display-page-url")
 		).build();
+	public static final InfoField<DateInfoFieldType> publishDateInfoField =
+		InfoField.builder(
+		).infoFieldType(
+			DateInfoFieldType.INSTANCE
+		).name(
+			"publishDate"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				BlogsEntryInfoItemFields.class, "publish-date")
+		).build();
 	public static final InfoField<ImageInfoFieldType> smallImageInfoField =
 		InfoField.builder(
 		).infoFieldType(

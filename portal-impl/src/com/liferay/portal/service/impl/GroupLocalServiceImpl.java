@@ -4342,12 +4342,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			_log.debug("Unprocessed parameters " + MapUtil.toString(params));
 		}
 
-		if (joinedGroups.size() > groups.size()) {
-			groups.retainAll(joinedGroups);
-
-			return groups;
-		}
-
 		joinedGroups.retainAll(groups);
 
 		return joinedGroups;

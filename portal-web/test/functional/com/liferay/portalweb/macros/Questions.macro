@@ -428,6 +428,26 @@ definition {
 		}
 	}
 
+	macro editRootTopic {
+		var key_categoryName = "${categoryName}";
+
+		LexiconEntry.openEntryMenu(rowEntry = "${categoryName}");
+
+		MenuItem.click(menuItem = "Edit");
+
+		PortletEntry.inputName(name = "${categoryNameEdit}");
+
+		Click(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
+
+		Alert.viewSuccessMessage();
+
+		AssertTextEquals(
+			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
+			value1 = "${categoryNameEdit}");
+	}
+
 	macro fillName {
 		Click(locator1 = "Questions#CREATE_QUESTIONS_NAME_FIELD");
 

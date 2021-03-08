@@ -188,6 +188,8 @@ definition {
 	@description = "This is a test for LPS-123101. The image resolution is applied to direct background image of elements."
 	@priority = "5"
 	test ViewAutoImageResolutionForBackgroundImageDirectlySelected {
+		property portal.acceptance = "true";
+
 		task ("Add a Container element to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
@@ -317,6 +319,8 @@ definition {
 	@description = "This is a test for LPS-122822. View auto image resolution for image mapped to web content."
 	@priority = "5"
 	test ViewAutoImageResolutionForImageMappedToWebContent {
+		property portal.acceptance = "true";
+
 		task ("Add an Image Resolution with 2000px Max Width") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
@@ -413,6 +417,8 @@ definition {
 	@description = "This is a test for LPS-125189. The image resolution is applied to mapping background image of a fragment with editable field."
 	@priority = "5"
 	test ViewAutoImageResolutionForMappingBackgroundImageInBannerCenter {
+		property portal.acceptance = "true";
+
 		task ("Add a Banner Center fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
@@ -605,6 +611,8 @@ definition {
 	@description = "This is a test for LPS-125189. The image resolution is applied to mapping background image of the Container with padding settings."
 	@priority = "5"
 	test ViewAutoImageResolutionForMappingBackgroundImageInContainer {
+		property portal.acceptance = "true";
+
 		task ("Add a Container fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",

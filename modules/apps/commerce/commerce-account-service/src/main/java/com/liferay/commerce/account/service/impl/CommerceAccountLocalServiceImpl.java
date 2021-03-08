@@ -472,14 +472,15 @@ public class CommerceAccountLocalServiceImpl
 			String keywords, Boolean active)
 		throws PortalException {
 
-		return accountEntryLocalService.dslQuery(
+		Long value = accountEntryLocalService.dslQuery(
 			_getGroupByStep(
 				DSLQueryFactoryUtil.countDistinct(
-					AccountEntryTable.INSTANCE.accountEntryId.as(
-						"COUNT_VALUE")),
+					AccountEntryTable.INSTANCE.accountEntryId),
 				userId, parentCommerceAccountId, keywords,
 				CommerceAccountImpl.toAccountEntryTypes(commerceSiteType),
 				CommerceAccountImpl.toAccountEntryStatus(active)));
+
+		return value.intValue();
 	}
 
 	@Override

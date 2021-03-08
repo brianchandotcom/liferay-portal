@@ -17,6 +17,7 @@ package com.liferay.translation.internal.security.permission;
 import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.translation.constants.TranslationConstants;
+import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.security.permission.TranslationPermission;
 
 import org.osgi.service.component.annotations.Component;
@@ -38,8 +39,7 @@ public class TranslationPermissionImpl implements TranslationPermission {
 
 		Boolean hasPermission = _stagingPermission.hasPermission(
 			permissionChecker, groupId, resourceName, 0,
-			"com_liferay_translation_web_internal_portlet_TranslationPortlet",
-			actionId);
+			TranslationPortletKeys.TRANSLATION, actionId);
 
 		if (hasPermission != null) {
 			return hasPermission.booleanValue();

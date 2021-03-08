@@ -15,7 +15,7 @@
 package com.liferay.translation.web.internal.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.translation.web.internal.constants.TranslationPortletKeys;
+import com.liferay.translation.constants.TranslationPortletKeys;
 
 import javax.portlet.Portlet;
 

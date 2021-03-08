@@ -15,7 +15,7 @@
 package com.liferay.translation.web.internal.depot.application;
 
 import com.liferay.depot.application.DepotApplication;
-import com.liferay.translation.web.internal.constants.TranslationPortletKeys;
+import com.liferay.translation.constants.TranslationPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 

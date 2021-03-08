@@ -20,11 +20,11 @@ import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
+import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.info.field.TranslationInfoFieldChecker;
 import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.service.TranslationEntryLocalService;
 import com.liferay.translation.snapshot.TranslationSnapshotProvider;
-import com.liferay.translation.web.internal.constants.TranslationPortletKeys;
 
 import javax.servlet.ServletContext;
 

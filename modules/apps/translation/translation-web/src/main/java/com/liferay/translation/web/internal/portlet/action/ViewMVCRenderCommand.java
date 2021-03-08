@@ -17,9 +17,9 @@ package com.liferay.translation.web.internal.portlet.action;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.service.TranslationEntryLocalService;
-import com.liferay.translation.web.internal.constants.TranslationPortletKeys;
 import com.liferay.translation.web.internal.display.context.ViewDisplayContext;
 
 import javax.portlet.RenderRequest;

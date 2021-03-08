@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.translation.web.internal.constants.TranslationPortletKeys;
+import com.liferay.translation.constants.TranslationPortletKeys;
 
 import java.util.Map;
 

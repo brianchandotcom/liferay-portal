@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.translation.web.internal.constants;
+package com.liferay.translation.constants;
 
 /**
  * @author Alicia Garcia

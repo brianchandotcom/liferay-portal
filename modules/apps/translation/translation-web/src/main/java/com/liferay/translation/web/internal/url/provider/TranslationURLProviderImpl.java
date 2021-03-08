@@ -15,8 +15,8 @@
 package com.liferay.translation.web.internal.url.provider;
 
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
+import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.url.provider.TranslationURLProvider;
-import com.liferay.translation.web.internal.constants.TranslationPortletKeys;
 
 import javax.portlet.PortletURL;
 

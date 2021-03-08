@@ -17,8 +17,8 @@ package com.liferay.translation.web.internal.portlet.action;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.service.TranslationEntryService;
-import com.liferay.translation.web.internal.constants.TranslationPortletKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;

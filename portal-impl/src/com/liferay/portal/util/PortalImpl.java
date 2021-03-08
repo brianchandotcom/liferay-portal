@@ -177,6 +177,7 @@ import com.liferay.portal.kernel.util.ListMergeable;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -2754,7 +2755,7 @@ public class PortalImpl implements Portal {
 		if (Validator.isNotNull(queryString)) {
 			layoutActualURL = layoutActualURL.concat(queryString);
 		}
-		else if (params.isEmpty()) {
+		else if (MapUtil.isEmpty(params)) {
 			UnicodeProperties typeSettingsUnicodeProperties =
 				layout.getTypeSettingsProperties();
 

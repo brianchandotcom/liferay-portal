@@ -10,6 +10,12 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro deleteRemoteApp {
+		Click(locator1 = "RemoteApps#REMOTE_TABLE_ELLIPSI");
+
+		Click(locator1 = "RemoteApps#REMOTE_TABLE_DELETE");
+	}
+
 	macro tearDown {
 		ApplicationsMenu.gotoPortlet(
 			category = "Custom Apps",
@@ -23,6 +29,10 @@ definition {
 
 			MenuItem.clickNoError(menuItem = "Delete");
 		}
+	}
+
+	macro viewEmptyRemoteTable {
+		AssertElementPresent(locator1 = "RemoteApps#EMPTY_REMOTE_TABLE_MESSAGE");
 	}
 
 	macro viewTableEntryName {

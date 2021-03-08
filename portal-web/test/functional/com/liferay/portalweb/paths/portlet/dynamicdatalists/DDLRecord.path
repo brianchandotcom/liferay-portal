@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELD_1_VALUE</td>
+	<td>//div[@class='lfr-ddm-container']/div[not(contains(@class,'hide'))][1]//input[@value='${key_value}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

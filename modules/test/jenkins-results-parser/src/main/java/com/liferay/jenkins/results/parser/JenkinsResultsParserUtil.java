@@ -635,19 +635,19 @@ public class JenkinsResultsParserUtil {
 
 	public static List<File> findSiblingFiles(File file) {
 		if ((file == null) || !file.exists()) {
-			return new ArrayList<>();
+			return Collections.emptyList();
 		}
 
 		File parentFile = file.getParentFile();
 
 		if ((parentFile == null) || !parentFile.exists()) {
-			return new ArrayList<>();
+			return Collections.emptyList();
 		}
 
 		File[] siblingFiles = parentFile.listFiles();
 
 		if (siblingFiles == null) {
-			return new ArrayList<>();
+			return Collections.emptyList();
 		}
 
 		return Arrays.asList(siblingFiles);

@@ -14,10 +14,8 @@
  */
 --%>
 
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+<%@ include file="/init.jsp" %>
 
-<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
+<div class="c-p-3" id="<portlet:namespace />-layout-reports-root" %>
 
-<liferay-theme:defineObjects />
-
-<%@ include file="/init-ext.jsp" %>
+</div>

@@ -296,8 +296,8 @@ public class MetadataManagerImpl
 
 		String contextPath = httpServletRequest.getContextPath();
 
-		if (Validator.isNotNull(contextPath) &&
-			!contextPath.equals(StringPool.SLASH)) {
+		if ((contextPath != null) && !contextPath.equals(StringPool.SLASH) &&
+			requestURI.startsWith(contextPath)) {
 
 			requestURI = requestURI.substring(contextPath.length());
 		}

@@ -639,6 +639,10 @@ public class JenkinsResultsParserUtil {
 
 	public static List<File> findSiblingFiles(File file, boolean includeFile) {
 		if ((file == null) || !file.exists()) {
+			if (includeFile) {
+				return Arrays.asList(file);
+			}
+
 			return Collections.emptyList();
 		}
 
@@ -659,7 +663,7 @@ public class JenkinsResultsParserUtil {
 			siblingFilesList.remove(file);
 		}
 
-		return siblingFilesList;
+		return Collections.unmodifiableList(siblingFilesList);
 	}
 
 	public static String fixFileName(String fileName) {

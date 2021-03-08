@@ -76,35 +76,20 @@ public class PortalPreferencesImpl
 
 	public PortalPreferencesImpl(
 		long ownerId, int ownerType,
-		com.liferay.portal.kernel.model.PortalPreferences portalPreferences,
 		Map<PortalPreferenceKey, String[]> preferences, boolean signedIn) {
 
 		_ownerId = ownerId;
 		_ownerType = ownerType;
-		_portalPreferences = portalPreferences;
 		_signedIn = signedIn;
 
 		_originalPreferences = preferences;
 	}
 
-	public PortalPreferencesImpl(
-		long ownerId, int ownerType,
-		Map<PortalPreferenceKey, String[]> preferences, boolean signedIn) {
-
-		this(ownerId, ownerType, null, preferences, signedIn);
-	}
-
 	@Override
 	public PortalPreferencesImpl clone() {
-		if (_portalPreferences == null) {
-			return new PortalPreferencesImpl(
-				getOwnerId(), getOwnerType(),
-				new HashMap<>(_getOriginalPreferences()), isSignedIn());
-		}
-
 		return new PortalPreferencesImpl(
-			getOwnerId(), getOwnerType(), _portalPreferences,
-			new HashMap<>(getPreferences()), isSignedIn());
+			getOwnerId(), getOwnerType(), new HashMap<>(getPreferences()),
+			isSignedIn());
 	}
 
 	@Override
@@ -155,14 +140,6 @@ public class PortalPreferencesImpl
 		}
 
 		return preferenceMap;
-	}
-
-	public long getMvccVersion() {
-		if (_portalPreferences == null) {
-			return -1;
-		}
-
-		return _portalPreferences.getMvccVersion();
 	}
 
 	public Enumeration<String> getNames(String namespace) {
@@ -424,9 +401,8 @@ public class PortalPreferencesImpl
 
 	public void store() throws IOException {
 		try {
-			_portalPreferences =
-				PortalPreferencesLocalServiceUtil.updatePreferences(
-					getOwnerId(), getOwnerType(), this);
+			PortalPreferencesLocalServiceUtil.updatePreferences(
+				getOwnerId(), getOwnerType(), this);
 		}
 		catch (Throwable throwable) {
 			throw new IOException(throwable);
@@ -505,10 +481,6 @@ public class PortalPreferencesImpl
 		}
 
 		return _modifiedPreferences;
-	}
-
-	private Map<PortalPreferenceKey, String[]> _getOriginalPreferences() {
-		return _originalPreferences;
 	}
 
 	private String[] _getValues(
@@ -659,8 +631,6 @@ public class PortalPreferencesImpl
 	private Map<PortalPreferenceKey, String[]> _originalPreferences;
 	private final long _ownerId;
 	private final int _ownerType;
-	private com.liferay.portal.kernel.model.PortalPreferences
-		_portalPreferences;
 	private boolean _signedIn;
 	private long _userId;
 

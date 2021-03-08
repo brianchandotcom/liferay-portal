@@ -32,7 +32,7 @@
 				<target><![CDATA[1]]></target>
 			</segment>
 		</unit>
-		<unit id="Numeric89452576">
+		<unit id="Double89452576">
 			<segment>
 				<source><![CDATA[1.0]]></source>
 				<target><![CDATA[1,0]]></target>

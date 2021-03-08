@@ -92,6 +92,7 @@ import com.liferay.portal.kernel.security.permission.UserBag;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.http.TunnelUtil;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -4335,6 +4336,32 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			for (long userGroupId : userGroupIds) {
 				joinedGroups.addAll(
 					userGroupPersistence.getGroups(userGroupId));
+			}
+		}
+
+		String actionId = (String)params.remove("actionId");
+
+		if (actionId != null) {
+			PermissionChecker permissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
+
+			for (Group group : groups) {
+				try {
+					if (permissionChecker.isGroupAdmin(group.getGroupId()) ||
+						GroupPermissionUtil.contains(
+							permissionChecker, group.getGroupId(), actionId)) {
+
+						joinedGroups.add(group);
+					}
+				}
+				catch (PortalException portalException) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to check permission for group: " +
+								group.getGroupId(),
+							portalException);
+					}
+				}
 			}
 		}
 

@@ -166,6 +166,15 @@ public class SiteBrowserDisplayContext {
 				_getGroupId());
 		}
 		else if (!type.equals("parent-sites")) {
+			_getGroupParams();
+
+			if (type.equals("sites-that-i-administer")) {
+				_groupParams.put("actionId", ActionKeys.UPDATE);
+			}
+			else {
+				_groupParams.put("actionId", ActionKeys.ASSIGN_MEMBERS);
+			}
+
 			total = GroupLocalServiceUtil.searchCount(
 				themeDisplay.getCompanyId(), classNameIds,
 				groupSearchTerms.getKeywords(), _getGroupParams());

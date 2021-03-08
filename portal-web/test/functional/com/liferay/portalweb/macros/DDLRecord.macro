@@ -770,12 +770,12 @@ definition {
 			else {
 				AssertTextEquals(
 					locator1 = "DDLRecord#FIELD_1",
-					value1 = "${fieldFieldLabel}");	
+					value1 = "${fieldFieldLabel}");
 
 				AssertTextEquals(
-					locator1 = "DDLRecord#FIELD_1_VALUE",
 					key_value = "${ddlRecordFieldData}",
-					value1 = "${ddlRecordFieldData}");	
+					locator1 = "DDLRecord#FIELD_1_VALUE",
+					value1 = "${ddlRecordFieldData}");
 			}
 		}
 	}

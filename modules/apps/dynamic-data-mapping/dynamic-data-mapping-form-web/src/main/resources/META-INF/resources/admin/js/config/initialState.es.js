@@ -18,7 +18,7 @@ import {INITIAL_STATE} from 'dynamic-data-mapping-form-renderer/js/core/config/i
 
 export const BUILDER_INITIAL_STATE = {
 	...INITIAL_STATE,
-	availableLanguageIds: [themeDisplay.getLanguageId()],
+	availableLanguageIds: [themeDisplay.getDefaultLanguageId()],
 
 	// Flag that indicates the index of the rule being edited.
 

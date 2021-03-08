@@ -71,6 +71,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
+import com.liferay.translation.security.permission.TranslationPermission;
 import com.liferay.translation.url.provider.TranslationURLProvider;
 import com.liferay.trash.TrashHelper;
 import com.liferay.trash.util.TrashWebKeys;
@@ -177,6 +178,8 @@ public class JournalPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			JournalWebKeys.JOURNAL_CONVERTER, _journalConverter);
 		renderRequest.setAttribute(
+			TranslationPermission.class.getName(), _translationPermission);
+		renderRequest.setAttribute(
 			TranslationURLProvider.class.getName(), _translationURLProvider);
 
 		super.render(renderRequest, renderResponse);
@@ -194,6 +197,8 @@ public class JournalPortlet extends MVCPortlet {
 			DDMTemplateHelper.class.getName(), _ddmTemplateHelper);
 		resourceRequest.setAttribute(
 			JournalWebConfiguration.class.getName(), _journalWebConfiguration);
+		resourceRequest.setAttribute(
+			TranslationPermission.class.getName(), _translationPermission);
 		resourceRequest.setAttribute(
 			TranslationURLProvider.class.getName(), _translationURLProvider);
 		resourceRequest.setAttribute(TrashWebKeys.TRASH_HELPER, _trashHelper);
@@ -347,6 +352,9 @@ public class JournalPortlet extends MVCPortlet {
 	private volatile JournalFileUploadsConfiguration
 		_journalFileUploadsConfiguration;
 	private volatile JournalWebConfiguration _journalWebConfiguration;
+
+	@Reference
+	private TranslationPermission _translationPermission;
 
 	@Reference
 	private TranslationURLProvider _translationURLProvider;

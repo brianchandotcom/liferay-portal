@@ -65,6 +65,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
+import com.liferay.translation.constants.TranslationActionKeys;
+import com.liferay.translation.security.permission.TranslationPermission;
 import com.liferay.translation.url.provider.TranslationURLProvider;
 import com.liferay.trash.TrashHelper;
 
@@ -101,6 +103,9 @@ public class JournalArticleActionDropdownItemsProvider {
 			liferayPortletRequest);
 		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+		_translationPermission =
+			(TranslationPermission)liferayPortletRequest.getAttribute(
+				TranslationPermission.class.getName());
 		_translationURLProvider =
 			(TranslationURLProvider)liferayPortletRequest.getAttribute(
 				TranslationURLProvider.class.getName());
@@ -110,6 +115,7 @@ public class JournalArticleActionDropdownItemsProvider {
 		String[] availableLanguageIds = _article.getAvailableLanguageIds();
 		boolean hasDeletePermission = JournalArticlePermission.contains(
 			_themeDisplay.getPermissionChecker(), _article, ActionKeys.DELETE);
+		boolean hasTranslatePermission = _hasTranslatePermission();
 		boolean hasUpdatePermission = JournalArticlePermission.contains(
 			_themeDisplay.getPermissionChecker(), _article, ActionKeys.UPDATE);
 		boolean hasViewPermission = JournalArticlePermission.contains(
@@ -146,10 +152,14 @@ public class JournalArticleActionDropdownItemsProvider {
 			() -> hasViewPermission && (previewContentArticleAction != null),
 			previewContentArticleAction
 		).add(
-			() -> hasViewPermission && !singleLanguageSite,
+			() ->
+				hasTranslatePermission && hasViewPermission &&
+				!singleLanguageSite,
 			_getTranslateActionUnsafeConsumer()
 		).add(
-			() -> hasViewPermission && !singleLanguageSite,
+			() ->
+				hasTranslatePermission && hasViewPermission &&
+				!singleLanguageSite,
 			_getExportForTranslationActionUnsafeConsumer()
 		).add(
 			() -> hasUpdatePermission && !singleLanguageSite,
@@ -789,6 +799,23 @@ public class JournalArticleActionDropdownItemsProvider {
 		};
 	}
 
+	private boolean _hasTranslatePermission() {
+		PermissionChecker permissionChecker =
+			_themeDisplay.getPermissionChecker();
+		long scopeGroupId = _themeDisplay.getScopeGroupId();
+
+		for (String languageId : _article.getAvailableLanguageIds()) {
+			if (_translationPermission.contains(
+					permissionChecker, scopeGroupId, languageId,
+					TranslationActionKeys.TRANSLATE)) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private boolean _isShowPublishAction() {
 		PermissionChecker permissionChecker =
 			_themeDisplay.getPermissionChecker();
@@ -902,6 +929,7 @@ public class JournalArticleActionDropdownItemsProvider {
 	private String _redirect;
 	private String _referringPortletResource;
 	private final ThemeDisplay _themeDisplay;
+	private final TranslationPermission _translationPermission;
 	private final TranslationURLProvider _translationURLProvider;
 	private final TrashHelper _trashHelper;
 

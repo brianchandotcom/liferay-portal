@@ -644,9 +644,12 @@ public class JenkinsResultsParserUtil {
 			return Collections.emptyList();
 		}
 
-		File[] siblingFiles = parentFile.listFiles();
+		List<File> siblingFilesList = new ArrayList<>(
+			Arrays.asList(parentFile.listFiles()));
 
-		return Arrays.asList(siblingFiles);
+		siblingFilesList.remove(file);
+
+		return siblingFilesList;
 	}
 
 	public static String fixFileName(String fileName) {

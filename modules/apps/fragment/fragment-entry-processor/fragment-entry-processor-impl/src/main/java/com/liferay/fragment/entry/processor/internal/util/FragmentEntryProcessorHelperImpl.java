@@ -42,13 +42,18 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassedModel;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -321,10 +326,25 @@ public class FragmentEntryProcessorHelperImpl
 		boolean privateLayout = layoutJSONObject.getBoolean("privateLayout");
 		long layoutId = layoutJSONObject.getLong("layoutId");
 
-		Layout layout = _layoutLocalService.getLayout(
+		Layout layout = _layoutLocalService.fetchLayout(
 			groupId, privateLayout, layoutId);
 
-		return layout.getFriendlyURL(fragmentEntryProcessorContext.getLocale());
+		Group group = _groupLocalService.fetchGroup(groupId);
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		if ((group == null) || (layout == null) || (themeDisplay == null)) {
+			return StringPool.BLANK;
+		}
+
+		String layoutFriendlyURL = layout.getFriendlyURL(
+			fragmentEntryProcessorContext.getLocale());
+
+		return group.getPathFriendlyURL(privateLayout, themeDisplay) +
+			group.getFriendlyURL() + layoutFriendlyURL;
 	}
 
 	@Override
@@ -618,6 +638,9 @@ public class FragmentEntryProcessorHelperImpl
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;

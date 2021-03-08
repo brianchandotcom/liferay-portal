@@ -84,24 +84,10 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 		<aui:input name="structureKey" type="hidden" value="<%= structureKey %>" />
 		<aui:input name="serializedFormBuilderContext" type="hidden" value="<%= formBuilderContextJSONObject %>" />
 		<aui:input name="serializedSettingsContext" type="hidden" value="" />
+		<aui:input name="name" type="hidden" />
+		<aui:input name="description" type="hidden" />
 
 		<%@ include file="/admin/exceptions.jspf" %>
-
-		<div class="ddm-form-basic-info">
-			<clay:container-fluid>
-				<h1>
-					<aui:input autoSize="<%= true %>" cssClass="ddm-form-name ddm-placeholder hidden" label="" name="nameEditor" placeholder='<%= LanguageUtil.get(request, "untitled-element-set") %>' type="textarea" value="<%= HtmlUtil.escape(ddmFormAdminDisplayContext.getFormName()) %>" />
-				</h1>
-
-				<aui:input name="name" type="hidden" />
-
-				<h5>
-					<aui:input autoSize="<%= true %>" cssClass="ddm-form-description ddm-placeholder hidden" label="" name="descriptionEditor" placeholder='<%= LanguageUtil.get(request, "add-a-short-description-for-this-element-set") %>' type="textarea" value="<%= HtmlUtil.escape(ddmFormAdminDisplayContext.getFormDescription()) %>" />
-				</h5>
-
-				<aui:input name="description" type="hidden" />
-			</clay:container-fluid>
-		</div>
 
 		<div id="<portlet:namespace />-container">
 			<react:component

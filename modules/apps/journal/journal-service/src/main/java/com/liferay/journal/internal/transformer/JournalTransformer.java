@@ -465,10 +465,9 @@ public class JournalTransformer {
 			"dynamic-element");
 
 		for (Element dynamicElementElement : dynamicElementElements) {
-			String name = dynamicElementElement.attributeValue(
-				"name", StringPool.BLANK);
+			String name = dynamicElementElement.attributeValue("name");
 
-			if (name.length() == 0) {
+			if (Validator.isNull(name)) {
 				throw new TransformException(
 					"Element missing \"name\" attribute");
 			}

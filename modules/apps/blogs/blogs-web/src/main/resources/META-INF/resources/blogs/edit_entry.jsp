@@ -444,15 +444,15 @@ if (entry != null) {
 		).put(
 			"customDescription", customAbstract
 		).put(
-			"description", UnicodeFormatter.toString(description)
+			"description", description
 		).put(
 			"pending", entry.isPending()
 		).put(
 			"status", entry.getStatus()
 		).put(
-			"subtitle", UnicodeFormatter.toString(subtitle)
+			"subtitle", subtitle
 		).put(
-			"title", UnicodeFormatter.toString(title)
+			"title", title
 		).put(
 			"userId", entry.getUserId()
 		).build());

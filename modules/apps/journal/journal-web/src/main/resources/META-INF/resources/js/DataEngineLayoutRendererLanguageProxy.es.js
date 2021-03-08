@@ -14,6 +14,7 @@
 
 export default function ({currentLanguageId, namespace}) {
 	let localeChangedHandler = null;
+	let defaultLocaleChangedHandler = null;
 
 	Liferay.componentReady(`${namespace}dataEngineLayoutRenderer`).then(
 		(dataEngineLayoutRenderer) => {
@@ -27,14 +28,33 @@ export default function ({currentLanguageId, namespace}) {
 						'data-value'
 					);
 
-					switchLanguage(
+					switchLanguage({
 						dataEngineReactComponentRef,
-						selectedLanguageId
-					);
+						languageId: selectedLanguageId,
+						namespace,
+					});
 				}
 			);
 
-			switchLanguage(dataEngineReactComponentRef, currentLanguageId, {
+			defaultLocaleChangedHandler = Liferay.after(
+				'inputLocalized:defaultLocaleChanged',
+				(event) => {
+					const selectedLanguageId = event.item.getAttribute(
+						'data-value'
+					);
+
+					const defaultLanguageIdInput = document.getElementById(
+						`${namespace}defaultLanguageId`
+					);
+
+					defaultLanguageIdInput.value = selectedLanguageId;
+				}
+			);
+
+			switchLanguage({
+				dataEngineReactComponentRef,
+				languageId: currentLanguageId,
+				namespace,
 				preserveValue: true,
 			});
 		}
@@ -45,17 +65,27 @@ export default function ({currentLanguageId, namespace}) {
 			if (localeChangedHandler) {
 				localeChangedHandler.detach();
 			}
+
+			if (defaultLocaleChangedHandler) {
+				defaultLocaleChangedHandler.detach();
+			}
 		},
 	};
 }
 
-function switchLanguage(
+function switchLanguage({
 	dataEngineReactComponentRef,
 	languageId,
-	{preserveValue = false} = {}
-) {
+	namespace,
+	preserveValue = false,
+}) {
 	if (dataEngineReactComponentRef?.current) {
+		const defaultLanguageIdInput = document.getElementById(
+			`${namespace}defaultLanguageId`
+		);
+
 		dataEngineReactComponentRef.current.updateEditingLanguageId({
+			defaultLanguageId: defaultLanguageIdInput.value,
 			editingLanguageId: languageId,
 			preserveValue,
 		});

@@ -95,7 +95,8 @@ public class TestrayS3ObjectImporter {
 				appServerProperties, "app.server.parent.dir"));
 
 		for (File siblingFile :
-				JenkinsResultsParserUtil.findSiblingFiles(appServerParentDir)) {
+				JenkinsResultsParserUtil.findSiblingFiles(
+					appServerParentDir, true)) {
 
 			if (!siblingFile.isDirectory()) {
 				continue;

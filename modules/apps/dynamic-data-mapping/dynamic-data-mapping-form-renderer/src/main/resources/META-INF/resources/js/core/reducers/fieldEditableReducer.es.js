@@ -383,7 +383,7 @@ export default (state, action, config) => {
 			};
 		}
 		case EVENT_TYPES.FIELD.DUPLICATE: {
-			const {activePage, fieldName, parentFieldName} = action.payload;
+			const {fieldName, parentFieldName} = action.payload;
 			const {availableLanguageIds, pages} = state;
 			const {
 				defaultLanguageId,
@@ -435,7 +435,10 @@ export default (state, action, config) => {
 
 							let pages = [{rows: field.rows}];
 
-							const {rowIndex} = FormSupport.getFieldIndexes(
+							const {
+								pageIndex,
+								rowIndex,
+							} = FormSupport.getFieldIndexes(
 								pages,
 								originalField.fieldName
 							);
@@ -447,7 +450,7 @@ export default (state, action, config) => {
 							pages = FormSupport.addRow(
 								pages,
 								rowIndex + 1,
-								activePage,
+								pageIndex,
 								newRow
 							);
 
@@ -471,7 +474,7 @@ export default (state, action, config) => {
 				);
 			}
 			else {
-				const {rowIndex} = FormSupport.getFieldIndexes(
+				const {pageIndex, rowIndex} = FormSupport.getFieldIndexes(
 					pages,
 					originalField.fieldName
 				);
@@ -481,7 +484,7 @@ export default (state, action, config) => {
 				newPages = FormSupport.addRow(
 					pages,
 					rowIndex + 1,
-					activePage,
+					pageIndex,
 					newRow
 				);
 			}

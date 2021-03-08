@@ -218,7 +218,7 @@ public class AccountResourceImpl
 
 			},
 			document -> _toAccount(
-				_commerceAccountService.getCommerceAccount(
+				_commerceAccountService.fetchCommerceAccount(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
 			sorts);
 	}

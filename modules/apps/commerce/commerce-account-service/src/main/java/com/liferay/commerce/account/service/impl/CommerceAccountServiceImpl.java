@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.NoSuchAccountException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -124,17 +123,8 @@ public class CommerceAccountServiceImpl extends CommerceAccountServiceBaseImpl {
 				commerceAccountId);
 		}
 
-		CommerceAccount commerceAccount =
-			commerceAccountLocalService.getCommerceAccount(
-				getUserId(), commerceAccountId);
-
-		if (commerceAccount == null) {
-			throw new PrincipalException.MustHavePermission(
-				getPermissionChecker(), CommerceAccount.class.getName(),
-				commerceAccountId, ActionKeys.VIEW);
-		}
-
-		return commerceAccount;
+		return commerceAccountLocalService.getCommerceAccount(
+			getUserId(), commerceAccountId);
 	}
 
 	@Override

@@ -109,6 +109,10 @@ public class BlogsPortletDisplayTemplateHandler
 		TemplateVariableGroup blogsUtilTemplateVariableGroup =
 			new TemplateVariableGroup("blogs-util", restrictedVariables);
 
+		blogsUtilTemplateVariableGroup.addVariable(
+			"blogs-entry-asset-entry-util", BlogsEntryAssetEntryUtil.class,
+			"blogsEntryAssetEntryUtil");
+
 		templateVariableGroups.put(
 			"blogs-util", blogsUtilTemplateVariableGroup);
 

@@ -25,6 +25,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -1056,7 +1057,8 @@ public class ManagementToolbarTag extends BaseContainerTag {
 					resourceBundle, "x-results-for-x",
 					new Object[] {
 						getItemsTotal(),
-						(searchValue == null) ? StringPool.BLANK : searchValue
+						(searchValue == null) ? StringPool.BLANK :
+							HtmlUtil.escape(searchValue)
 					}));
 
 			jspWriter.write("</span></span></div></li>");

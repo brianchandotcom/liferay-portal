@@ -519,7 +519,7 @@ definition {
 	@description = "This ensures that users can not upload a file that exceed the storage quota through the single upload."
 	@priority = "5"
 	test ExceedStorageQuotaSingleUpload {
-		property data.limit.dl.storage.max.size = "1048576";
+		property custom.properties = "property data.limit.dl.storage.max.size=1048576";
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 

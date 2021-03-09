@@ -30,6 +30,7 @@ import com.google.cloud.storage.StorageOptions;
 
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.kernel.util.comparator.VersionNumberComparator;
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -44,7 +45,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 
 import java.util.Arrays;
@@ -91,7 +91,7 @@ public class GCSStore implements Store {
 		).build();
 
 		try (WriteChannel writer = _getWriter(blobInfo)) {
-			_writeInputStream(inputStream, writer);
+			StreamUtil.transfer(inputStream, Channels.newOutputStream(writer));
 		}
 		catch (IOException ioException) {
 			throw new PortalException(
@@ -374,26 +374,8 @@ public class GCSStore implements Store {
 		}
 	}
 
-	private void _writeInputStream(InputStream inputStream, WriteChannel writer)
-		throws IOException, PortalException {
-
-		byte[] buffer = new byte[_WRITE_BUFFER_SIZE];
-		int limit = -1;
-
-		while ((limit = inputStream.read(buffer)) >= 0) {
-			try {
-				writer.write(ByteBuffer.wrap(buffer, 0, limit));
-			}
-			catch (IOException ioException) {
-				throw new PortalException(ioException);
-			}
-		}
-	}
-
 	private static final String _DL_STORE_GCS_AES_256_KEY =
 		"dl.store.gcs.aes256.key";
-
-	private static final int _WRITE_BUFFER_SIZE = 1024;
 
 	private static final Log _log = LogFactoryUtil.getLog(GCSStore.class);
 

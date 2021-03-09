@@ -242,7 +242,7 @@ public class TestrayImporter {
 			}
 		}
 
-		return null;
+		throw new RuntimeException("Please set TESTRAY_BUILD_NAME");
 	}
 
 	public Date getTestrayBuildDate() {
@@ -565,7 +565,7 @@ public class TestrayImporter {
 			}
 		}
 
-		return null;
+		throw new RuntimeException("Please set TESTRAY_PROJECT_NAME");
 	}
 
 	public TestrayRoutine getTestrayRoutine() {
@@ -666,7 +666,7 @@ public class TestrayImporter {
 			}
 		}
 
-		return null;
+		throw new RuntimeException("Please set TESTRAY_ROUTINE_NAME");
 	}
 
 	public TestrayServer getTestrayServer() {
@@ -722,7 +722,7 @@ public class TestrayImporter {
 			}
 		}
 
-		return null;
+		throw new RuntimeException("Please set TESTRAY_SERVER_URL");
 	}
 
 	public TopLevelBuild getTopLevelBuild() {

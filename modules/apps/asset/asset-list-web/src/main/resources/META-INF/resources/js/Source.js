@@ -384,13 +384,13 @@ export default function ({classTypes, namespace}) {
 			customSelectEvent: true,
 			id: `${namespace}selectDDMStructure${delegateTarget.id}`,
 			onSelect: (selectedItem) => {
-				setDDMFields(
-					selectedItem.className,
-					selectedItem.name,
-					selectedItem.value,
-					selectedItem.displayValue,
-					`${selectedItem.label}: ${selectedItem.displayValue}`
-				);
+				setDDMFields({
+					className: selectedItem.className,
+					displayValue: selectedItem.displayValue,
+					message: `${selectedItem.label}: ${selectedItem.displayValue}`,
+					name: selectedItem.name,
+					value: selectedItem.value,
+				});
 			},
 			selectEventName: `${namespace}selectDDMStructureField`,
 			title: Liferay.Util.sub(

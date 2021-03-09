@@ -46,6 +46,11 @@ public abstract class BasePortalReleaseJob
 		_jenkinsGitWorkingDirectory =
 			GitWorkingDirectoryFactory.newJenkinsGitWorkingDirectory();
 
+		jobPropertiesFiles.add(
+			new File(
+				_jenkinsGitWorkingDirectory.getWorkingDirectory(),
+				"commands/build.properties"));
+
 		_portalGitWorkingDirectory =
 			GitWorkingDirectoryFactory.newPortalGitWorkingDirectory(
 				portalBranchName);

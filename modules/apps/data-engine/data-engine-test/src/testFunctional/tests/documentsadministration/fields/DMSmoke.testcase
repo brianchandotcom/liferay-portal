@@ -29,7 +29,7 @@ definition {
 	@description = "This test deletes a document using a custom document type with all fields and a related metadataset with all fields."
 	@priority = "5"
 	test DeleteDocumentWithFieldsFromCustomDocTypeAndMetadataSet {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 

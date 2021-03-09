@@ -107,16 +107,10 @@
 										- <@liferay_reading_time["reading-time"] displayStyle="simple" model=curBlogEntry />
 									</#if>
 
-									<#if serviceLocator??>
-										<#assign
-											assetEntryLocalService = serviceLocator.findService("com.liferay.asset.kernel.service.AssetEntryLocalService")
+									<#assign assetEntry = blogsEntryAssetEntryUtil.getAssetEntry(request, curBlogEntry) />
 
-											assetEntry = assetEntryLocalService.getEntry("com.liferay.blogs.model.BlogsEntry", curBlogEntry.getEntryId())
-										/>
-
-										<#if blogsPortletInstanceConfiguration.enableViewCount()>
-											- <@liferay_ui["message"] arguments=assetEntry.getViewCount() key=(assetEntry.getViewCount()==0)?then("x-view", "x-views") />
-										</#if>
+									<#if blogsPortletInstanceConfiguration.enableViewCount()>
+										- <@liferay_ui["message"] arguments=assetEntry.getViewCount() key=(assetEntry.getViewCount()==0)?then("x-view", "x-views") />
 									</#if>
 								</div>
 							</div>

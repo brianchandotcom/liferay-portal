@@ -126,7 +126,8 @@ public class AccountGroupResourceImpl
 
 		return SearchUtil.search(
 			booleanQuery -> booleanQuery.getPreBooleanFilter(), filter,
-			CommerceAccountGroup.class, StringPool.BLANK, pagination,
+			com.liferay.account.model.AccountGroup.class, StringPool.BLANK,
+			pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
 			new UnsafeConsumer() {

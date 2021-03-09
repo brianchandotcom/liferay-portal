@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.kaleo.internal.upgrade.registry;
 
 import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.workflow.kaleo.internal.upgrade.v1_0_0.KaleoTaskInstanceTokenUpgradeProcess;
@@ -155,6 +156,18 @@ public class KaleoServiceUpgradeStepRegistrator
 
 		registry.register(
 			"3.3.0", "3.4.0", new KaleoTransitionUpgradeProcess());
+
+		registry.register(
+			"3.4.0", "3.5.0",
+			new CTModelUpgradeProcess(
+				"KaleoAction", "KaleoCondition", "KaleoDefinition",
+				"KaleoDefinitionVersion", "KaleoInstance", "KaleoInstanceToken",
+				"KaleoLog", "KaleoNode", "KaleoNotification",
+				"KaleoNotificationRecipient", "KaleoTask",
+				"KaleoTaskAssignment", "KaleoTaskAssignmentInstance",
+				"KaleoTaskForm", "KaleoTaskFormInstance",
+				"KaleoTaskInstanceToken", "KaleoTimer",
+				"KaleoTimerInstanceToken", "KaleoTransition"));
 	}
 
 }

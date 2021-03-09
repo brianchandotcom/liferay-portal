@@ -41,50 +41,58 @@ public class TestClassMissingLiferayUnitTestRuleCheck extends BaseCheck {
 		String absolutePath = getAbsolutePath();
 
 		if (!absolutePath.contains("/test/") ||
-			!absolutePath.endsWith("Test.java") ||
-			absolutePath.contains("/portal-kernel/") ||
-			absolutePath.contains("/testIntegration/")) {
+			!absolutePath.endsWith("Test.java")) {
 
 			return;
 		}
 
-		List<String> importNames = getImportNames(detailAST);
+		List<String> pathNames = getAttributeValues(_PAHT_NAMES_WHITELIST);
 
-		DetailAST annotationDetailAST = AnnotationUtil.getAnnotation(
-			detailAST, "RunWith");
+		for (String pathName : pathNames) {
+			if (!absolutePath.contains(pathName)) {
+				continue;
+			}
 
-		if ((annotationDetailAST == null) &&
-			!importNames.contains(
-				"com.liferay.portal.test.rule.LiferayUnitTestRule")) {
+			List<String> importNames = getImportNames(detailAST);
 
-			log(detailAST, _MSG_REQUIRE_TEST_RULE);
+			DetailAST annotationDetailAST = AnnotationUtil.getAnnotation(
+				detailAST, "RunWith");
 
-			return;
-		}
+			if ((annotationDetailAST == null) &&
+				!importNames.contains(
+					"com.liferay.portal.test.rule.LiferayUnitTestRule")) {
 
-		List<DetailAST> literalClassDetailASTList = getAllChildTokens(
-			annotationDetailAST, true, TokenTypes.LITERAL_CLASS);
-
-		for (DetailAST literalClassDetailAST : literalClassDetailASTList) {
-			DetailAST identDetailAST =
-				literalClassDetailAST.getPreviousSibling();
-
-			String className = identDetailAST.getText();
-
-			if (className.equals("MockitoJUnitRunner") ||
-				className.equals("PowerMockRunner")) {
+				log(detailAST, _MSG_REQUIRE_TEST_RULE);
 
 				return;
 			}
-		}
 
-		if (!importNames.contains(
-				"com.liferay.portal.test.rule.LiferayUnitTestRule")) {
+			List<DetailAST> literalClassDetailASTList = getAllChildTokens(
+				annotationDetailAST, true, TokenTypes.LITERAL_CLASS);
 
-			log(detailAST, _MSG_REQUIRE_TEST_RULE);
+			for (DetailAST literalClassDetailAST : literalClassDetailASTList) {
+				DetailAST identDetailAST =
+					literalClassDetailAST.getPreviousSibling();
+
+				String className = identDetailAST.getText();
+
+				if (className.equals("MockitoJUnitRunner") ||
+					className.equals("PowerMockRunner")) {
+
+					return;
+				}
+			}
+
+			if (!importNames.contains(
+					"com.liferay.portal.test.rule.LiferayUnitTestRule")) {
+
+				log(detailAST, _MSG_REQUIRE_TEST_RULE);
+			}
 		}
 	}
 
 	private static final String _MSG_REQUIRE_TEST_RULE = "test.rule.missing";
+
+	private static final String _PAHT_NAMES_WHITELIST = "pathNamesWhiltelist";
 
 }

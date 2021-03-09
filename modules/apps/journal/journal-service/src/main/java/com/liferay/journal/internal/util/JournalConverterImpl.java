@@ -117,21 +117,20 @@ public class JournalConverterImpl implements JournalConverter {
 	public Fields getDDMFields(DDMStructure ddmStructure, Document document)
 		throws PortalException {
 
-		Field fieldsDisplayField = new Field(
-			ddmStructure.getStructureId(), DDM.FIELDS_DISPLAY_NAME,
-			StringPool.BLANK);
-
 		Fields ddmFields = new Fields();
 
-		ddmFields.put(fieldsDisplayField);
+		ddmFields.put(
+			new Field(
+				ddmStructure.getStructureId(), DDM.FIELDS_DISPLAY_NAME,
+				StringPool.BLANK));
+
+		DDMForm ddmForm = ddmStructure.getDDMForm();
 
 		Element rootElement = document.getRootElement();
 
 		String[] availableLanguageIds = StringUtil.split(
 			rootElement.attributeValue("available-locales"));
 		String defaultLanguageId = rootElement.attributeValue("default-locale");
-
-		DDMForm ddmForm = ddmStructure.getDDMForm();
 
 		Map<String, List<Element>> dynamicElementElementsMap =
 			_getDynamicElements(rootElement);

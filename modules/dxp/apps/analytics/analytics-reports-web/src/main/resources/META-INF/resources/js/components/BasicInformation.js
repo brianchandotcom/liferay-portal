@@ -19,7 +19,7 @@ import React from 'react';
 
 function Author({author: {authorId, name, url}}) {
 	return (
-		<div className="text-secondary">
+		<div className="c-mt-3 text-secondary">
 			<ClaySticker
 				className={classnames('c-mr-2 sticker-user-icon', {
 					[`user-icon-color-${parseInt(authorId, 10) % 10}`]: !url,
@@ -85,12 +85,12 @@ function BasicInformation({
 
 			<ClayLayout.ContentRow>
 				<ClayLayout.ContentCol expand>
-					<p className="text-secondary">
+					<span className="text-secondary">
 						{Liferay.Util.sub(
 							Liferay.Language.get('published-on-x'),
 							formattedPublishDate
 						)}
-					</p>
+					</span>
 				</ClayLayout.ContentCol>
 			</ClayLayout.ContentRow>
 

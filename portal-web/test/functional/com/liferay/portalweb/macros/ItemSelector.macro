@@ -524,7 +524,7 @@ definition {
 			Click.clickNoMouseOver(locator1 = "Modal#CLOSE_BUTTON");
 		}
 		else {
-			Pause(locator1 = "5000");
+			Pause(locator1 = "3000");
 
 			AssertElementPresent.pauseAssertVisible(
 				locator1 = "ItemSelector#ADD_BUTTON",

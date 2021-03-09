@@ -166,7 +166,9 @@ definition {
 	}
 
 	macro gotoSelectFile {
-		Pause(locator1 = "5000");
+		WaitForElementPresent(
+			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_SELECT_FILE",
+			value1 = "Select File");
 
 		AssertClick(
 			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_SELECT_FILE",

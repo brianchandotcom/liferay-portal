@@ -4312,11 +4312,17 @@ definition {
 		}
 
 		task ("View the web content is shown in Content Display") {
-			for (var content : list "This is a Text field,Option 2,Option 3,Yes,10 Oct 2020,9,#FF0D0D") {
+			for (var content : list "This is a Text field,Value2,Value3,10 Oct 2020,9,FF0D0D") {
 				AssertTextEquals.assertPartialText(
 					locator1 = "WCD#WEB_CONTENT_CONTENT",
 					value1 = "${content}");
 			}
+
+			var multipleSelectionFieldValue = '''["First"]''';
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "WCD#WEB_CONTENT_CONTENT",
+				value1 = "${multipleSelectionFieldValue}");
 
 			var gridFieldValue = '''{"R1":"C1"}''';
 

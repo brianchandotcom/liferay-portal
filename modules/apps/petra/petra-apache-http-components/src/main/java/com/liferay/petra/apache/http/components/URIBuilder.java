@@ -17,6 +17,8 @@ package com.liferay.petra.apache.http.components;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.util.Map;
+
 /**
  * @author Hugo Huijser
  */
@@ -107,6 +109,16 @@ public class URIBuilder {
 			catch (Exception exception) {
 				throw new RuntimeException(exception);
 			}
+		}
+
+		public URIBuilderWrapper addParameters(
+			Map<String, String> parameterMap) {
+
+			for (Map.Entry<String, String> entry : parameterMap.entrySet()) {
+				_uriBuilder.addParameter(entry.getKey(), entry.getValue());
+			}
+
+			return this;
 		}
 
 		public URI build() throws URISyntaxException {

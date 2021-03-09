@@ -43,4 +43,24 @@ definition {
 		RemoteApps.viewTableEntryURL(entryURL = "http://www.liferay.com");
 	}
 
+	@priority = "5"
+	test DeleteRemoteApp {
+		property portal.acceptance = "true";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Custom Apps",
+			panel = "Applications",
+			portlet = "Remote Apps");
+
+		RemoteApps.addApp(
+			entryName = "Test Remote App",
+			entryURL = "http://www.liferay.com");
+
+		RemoteApps.deleteRemoteApp(tableEntry = "Test Remote App");
+
+		RemoteApps.viewTableEntryNameNotPresent(entryName = "Test Remote App");
+
+		RemoteApps.viewEmptyRemoteTable();
+	}
+
 }

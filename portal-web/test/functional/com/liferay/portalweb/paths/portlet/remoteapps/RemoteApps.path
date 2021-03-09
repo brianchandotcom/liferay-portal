@@ -19,7 +19,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>REMOTE_TABLE_ELLIPSI</td>
+	<td>REMOTE_TABLE_ELLIPSIS</td>
 	<td>//button[contains(@class,'component-action')]</td>
 	<td></td>
 </tr>

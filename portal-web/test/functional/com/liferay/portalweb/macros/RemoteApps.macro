@@ -11,7 +11,7 @@ definition {
 	}
 
 	macro deleteRemoteApp {
-		Click(locator1 = "RemoteApps#REMOTE_TABLE_ELLIPSI");
+		Click(locator1 = "RemoteApps#REMOTE_TABLE_ELLIPSIS");
 
 		Click(locator1 = "RemoteApps#REMOTE_TABLE_DELETE");
 	}
@@ -37,6 +37,13 @@ definition {
 
 	macro viewTableEntryName {
 		AssertTextEquals(
+			key_tableEntryName = "${entryName}",
+			locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE",
+			value1 = "${entryName}");
+	}
+
+	macro viewTableEntryNameNotPresent {
+		AssertElementNotPresent(
 			key_tableEntryName = "${entryName}",
 			locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE",
 			value1 = "${entryName}");

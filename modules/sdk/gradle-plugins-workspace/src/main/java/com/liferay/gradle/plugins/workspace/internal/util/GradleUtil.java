@@ -53,6 +53,18 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 				}
 
 			});
+
+		repositoryHandler.maven(
+			new Action<MavenArtifactRepository>() {
+
+				@Override
+				public void execute(
+					MavenArtifactRepository mavenArtifactRepository) {
+
+					mavenArtifactRepository.setUrl(_REPOSITORY_URL);
+				}
+
+			});
 	}
 
 	public static String getArchivesBaseName(Project project) {
@@ -189,5 +201,8 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 
 	private static final String _DEFAULT_REPOSITORY_URL =
 		"https://repository-cdn.liferay.com/nexus/content/groups/public";
+
+	private static final String _REPOSITORY_URL =
+		"https://repository.liferay.com/nexus/content/groups/public";
 
 }

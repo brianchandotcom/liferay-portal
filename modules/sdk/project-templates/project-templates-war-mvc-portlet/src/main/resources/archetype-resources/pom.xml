@@ -57,8 +57,12 @@
 			</dependencyManagement>
 			<repositories>
 				<repository>
-					<id>liferay-public</id>
+					<id>liferay-public-cdn</id>
 					<url>https://repository-cdn.liferay.com/nexus/content/groups/public/</url>
+				</repository>
+				<repository>
+					<id>liferay-public</id>
+					<url>https://repository.liferay.com/nexus/content/groups/public/</url>
 				</repository>
 			</repositories>
 		</profile>

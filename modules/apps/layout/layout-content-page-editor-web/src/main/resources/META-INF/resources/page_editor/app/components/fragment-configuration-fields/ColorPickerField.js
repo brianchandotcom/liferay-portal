@@ -12,7 +12,7 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
+import {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
@@ -74,20 +74,20 @@ export const ColorPickerField = ({field, onValueSelect, value}) => {
 						}
 					/>
 				</ClayInput.GroupItem>
+				{color && (
+					<ClayButtonWithIcon
+						className="ml-2"
+						displayType="secondary"
+						onClick={() => {
+							setColor('');
+
+							onValueSelect(field.name, '');
+						}}
+						small
+						symbol="times-circle"
+					/>
+				)}
 			</ClayInput.Group>
-
-			<ClayButton
-				className="mt-2"
-				disabled={!color}
-				displayType="secondary"
-				onClick={() => {
-					setColor('');
-
-					onValueSelect(field.name, '');
-				}}
-			>
-				{Liferay.Language.get('clear')}
-			</ClayButton>
 		</ClayForm.Group>
 	);
 };

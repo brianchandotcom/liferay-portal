@@ -326,14 +326,22 @@ export default withRouter(
 											'this-topic-is-empty'
 										)}
 									>
-										<ClayButton
-											displayType="primary"
-											onClick={navigateToNewQuestion}
-										>
-											{Liferay.Language.get(
-												'ask-question'
-											)}
-										</ClayButton>
+										{(context.redirectToLogin &&
+											section &&
+											section.actions &&
+											section.actions['add-thread']) ||
+											(context.canCreateThread && (
+												<ClayButton
+													displayType="primary"
+													onClick={
+														navigateToNewQuestion
+													}
+												>
+													{Liferay.Language.get(
+														'ask-question'
+													)}
+												</ClayButton>
+											))}
 									</ClayEmptyState>
 								) : (
 									<ClayEmptyState

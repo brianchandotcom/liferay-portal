@@ -76,4 +76,97 @@ definition {
 		Questions.gotoDetails(questionTitle = "あなたの好きな日本料理は何ですか");
 	}
 
+	@description = "Validate if the user can redirect to the question after clicking a tag that contains non-Latin characters."
+	@priority = "5"
+	test ViewQuestionViaTags {
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoTab(questionTabField = "Questions");
+
+		Questions.addRootTopic(
+			rootTopicDescription = "トピック記述",
+			rootTopicName = "質問トピック");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "質問トピック");
+
+		Questions.askQuestionFillingTheMandatoryFields(
+			contentField = "私の好きな日本料理は寿司とすき焼きです",
+			tagLocatorList = "おおさか,とうきょう",
+			titleField = "あなたの好きな日本料理は何ですか");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoTab(questionTabField = "Tags");
+
+		for (var tagName : list "おおさか,とうきょう") {
+			AssertElementPresent(
+				key_tagName = "${tagName}",
+				locator1 = "Questions#TAGS_LIST_TAB_NAMES");
+		}
+
+		Questions.search(
+			searchKey = "おおさか",
+			searchTag = "true");
+
+		Questions.viewTags(tagName = "おおさか");
+
+		Questions.viewNoTags(tagsList = "とうきょう");
+
+		Click(
+			key_tagName = "おおさか",
+			locator1 = "Questions#TAGS_LIST_TAB_NAMES");
+
+		Questions.gotoDetails(questionTitle = "あなたの好きな日本料理は何ですか");
+	}
+
+	@description = "Validate if the user can view the sorted tags that contain non-Latin characters."
+	@priority = "4"
+	test ViewSortedTags {
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoTab(questionTabField = "Questions");
+
+		Questions.addRootTopic(
+			rootTopicDescription = "トピック記述",
+			rootTopicName = "質問トピック");
+
+		for (var num : list "1,2") {
+			Navigator.gotoPage(pageName = "Questions Page");
+
+			Questions.gotoCategory(categoryName = "質問トピック");
+
+			Questions.askQuestionFillingTheMandatoryFields(
+				contentField = "Question Body ${num}",
+				tagLocatorList = "おおさか",
+				titleField = "Question ${num}");
+		}
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "質問トピック");
+
+		Questions.askQuestionFillingTheMandatoryFields(
+			contentField = "Question Body 3",
+			tagLocatorList = "とうきょう",
+			titleField = "Question 3");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "質問トピック");
+
+		Questions.gotoTab(questionTabField = "Tags");
+
+		Questions.viewTagsFilterResults(
+			position = "1",
+			tagName = "おおさか",
+			usedTimes = "Used 2 Times");
+
+		Questions.viewTagsFilterResults(
+			position = "2",
+			tagName = "とうきょう",
+			usedTimes = "Used 1 Times");
+	}
+
 }

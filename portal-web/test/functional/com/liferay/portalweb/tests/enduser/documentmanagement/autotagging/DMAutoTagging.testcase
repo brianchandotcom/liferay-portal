@@ -162,7 +162,7 @@ definition {
 	test AutoTagImagesOnSeparateNodes {
 		property app.server.bundles.size = "1";
 		property cluster.enabled = "true";
-		property test.name.skip.portal.instance = "DMAutoTagging#AutoTaggingImagesOnSeparateNodes";
+		property test.name.skip.portal.instance = "DMAutoTagging#AutoTagImagesOnSeparateNodes";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -239,6 +239,10 @@ definition {
 			dmDocumentDescription = "Document Description",
 			dmDocumentFile = "Commerce_Black.jpg",
 			dmDocumentTitle = "DM Document JPG Node1");
+
+		Pause(locator = "3000");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document JPG Node1");
 

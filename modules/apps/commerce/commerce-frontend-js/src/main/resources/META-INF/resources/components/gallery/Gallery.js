@@ -15,18 +15,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {PRODUCT_OPTIONS_CHANGED} from '../../utilities/eventsDefinitions';
+import {CP_INSTANCE_CHANGED} from '../../utilities/eventsDefinitions';
 import MainImage from './MainImage';
 import Overlay from './Overlay';
 import Thumbnails from './Thumbnails';
-
-function fetchImage(url) {
-	return new Promise((resolve) => {
-		const img = new Image();
-		img.src = url;
-		img.onload = () => resolve(url);
-	});
-}
+import {fetchImage, updateGallery} from './util/index';
 
 export default class Gallery extends React.Component {
 	constructor(props) {
@@ -51,20 +44,33 @@ export default class Gallery extends React.Component {
 	}
 
 	componentDidMount() {
-		Liferay.on(PRODUCT_OPTIONS_CHANGED, this._handleImagesUpdate, this);
+		Liferay.on(
+			`${this.props.namespace}${CP_INSTANCE_CHANGED}`,
+			this._handleImagesUpdate,
+			this
+		);
 	}
 
 	componentWillUnmount() {
-		Liferay.detach(PRODUCT_OPTIONS_CHANGED, this._handleImagesUpdate, this);
+		Liferay.detach(
+			`${this.props.namespace}${CP_INSTANCE_CHANGED}`,
+			this._handleImagesUpdate,
+			this
+		);
 	}
 
-	_handleImagesUpdate(e) {
-		if (e.images) {
-			this.setState({
-				images: e.images,
-				selected: 0,
-			});
-		}
+	_handleImagesUpdate({formFields}) {
+		const {namespace, viewCPAttachmentURL} = this.props;
+
+		updateGallery(formFields, namespace, viewCPAttachmentURL).then(
+			(selectedImage) => {
+				this.setState({
+					selected: this.state.images.findIndex(
+						({downloadUrl}) => downloadUrl === selectedImage[0].url
+					),
+				});
+			}
+		);
 	}
 
 	fullscreenOpen() {
@@ -178,4 +184,6 @@ Gallery.propTypes = {
 			url: PropTypes.string.isRequired,
 		})
 	),
+	namespace: PropTypes.string,
+	viewCPAttachmentURL: PropTypes.string.isRequired,
 };

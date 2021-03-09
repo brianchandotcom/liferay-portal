@@ -17,14 +17,21 @@ package com.liferay.commerce.frontend.taglib.servlet.taglib;
 import com.liferay.commerce.frontend.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.commerce.product.catalog.CPMedia;
 import com.liferay.commerce.product.content.util.CPContentHelper;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
+
+import javax.portlet.PortletResponse;
+import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -42,6 +49,7 @@ public class GalleryTag extends IncludeTag {
 
 		try {
 			_images = _cpContentHelper.getImages(_cpDefinitionId, themeDisplay);
+			_viewCPAttachmentURL = _getViewCPAttachmentURL();
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException, portalException);
@@ -54,8 +62,16 @@ public class GalleryTag extends IncludeTag {
 		return _cpDefinitionId;
 	}
 
+	public String getNamespace() {
+		return _namespace;
+	}
+
 	public void setCPDefinitionId(long cpDefinitionId) {
 		_cpDefinitionId = cpDefinitionId;
+	}
+
+	public void setNamespace(String namespace) {
+		_namespace = namespace;
 	}
 
 	@Override
@@ -73,6 +89,8 @@ public class GalleryTag extends IncludeTag {
 		_cpContentHelper = null;
 		_cpDefinitionId = 0;
 		_images = null;
+		_namespace = StringPool.BLANK;
+		_viewCPAttachmentURL = StringPool.BLANK;
 	}
 
 	@Override
@@ -82,7 +100,30 @@ public class GalleryTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
-		request.setAttribute("liferay-commerce:gallery:images", _images);
+		httpServletRequest.setAttribute(
+			"liferay-commerce:gallery:images", _images);
+		httpServletRequest.setAttribute(
+			"liferay-commerce:gallery:namespace", _namespace);
+		httpServletRequest.setAttribute(
+			"liferay-commerce:gallery:viewCPAttachmentURL",
+			_viewCPAttachmentURL);
+	}
+
+	private String _getViewCPAttachmentURL() {
+		PortletResponse portletResponse =
+			(PortletResponse)getRequest().getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		LiferayPortletResponse liferayPortletResponse =
+			PortalUtil.getLiferayPortletResponse(portletResponse);
+
+		ResourceURL resourceURL = liferayPortletResponse.createResourceURL();
+
+		resourceURL.setParameter(
+			"cpDefinitionId", String.valueOf(_cpDefinitionId));
+		resourceURL.setResourceID("/cp_content_web/view_cp_attachments");
+
+		return resourceURL.toString();
 	}
 
 	private static final String _PAGE = "/gallery/page.jsp";
@@ -92,5 +133,7 @@ public class GalleryTag extends IncludeTag {
 	private CPContentHelper _cpContentHelper;
 	private long _cpDefinitionId;
 	private List<CPMedia> _images;
+	private String _namespace = StringPool.BLANK;
+	private String _viewCPAttachmentURL = StringPool.BLANK;
 
 }

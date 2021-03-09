@@ -39,6 +39,7 @@ if (cpSku != null) {
 		<div class="col-12 col-md-6">
 			<commerce-ui:gallery
 				CPDefinitionId="<%= cpDefinitionId %>"
+				namespace="<%= liferayPortletResponse.getNamespace() %>"
 			/>
 		</div>
 

@@ -58,6 +58,7 @@ class DDMFormHandler {
 				const dispatchedPayload = {
 					cpInstance,
 					formFields: this.fields,
+					namespace: this.namespace,
 				};
 
 				Liferay.fire(

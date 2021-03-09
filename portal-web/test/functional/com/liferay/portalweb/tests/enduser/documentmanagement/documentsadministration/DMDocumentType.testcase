@@ -895,11 +895,11 @@ definition {
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
 			value1 = "Texto de prueba");
 
-		Button.clickPublish();
+		PortletEntry.publish();
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		Navigator.ensureLocaleURL(locale = "es-ES");
+		Navigator.ensureLocaleURL(locale = "es");
 
 		AssertClick(
 			key_dmDocumentTitle = "DM Document Title",

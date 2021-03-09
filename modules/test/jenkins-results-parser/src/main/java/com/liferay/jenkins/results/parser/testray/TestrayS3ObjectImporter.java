@@ -285,6 +285,14 @@ public class TestrayS3ObjectImporter {
 				sb.setLength(liferayLogMaxSize);
 			}
 
+			String liferayOSGiLogFileContent = sb.toString();
+
+			liferayOSGiLogFileContent = liferayOSGiLogFileContent.trim();
+
+			if (liferayOSGiLogFileContent.length() == 0) {
+				continue;
+			}
+
 			Matcher matcher = _bundlesDirNamePattern.matcher(
 				liferayBundlesDir.getName());
 
@@ -300,7 +308,7 @@ public class TestrayS3ObjectImporter {
 
 			try {
 				JenkinsResultsParserUtil.write(
-					liferayOSGiLogFile, sb.toString());
+					liferayOSGiLogFile, liferayOSGiLogFileContent);
 			}
 			catch (IOException ioException) {
 				continue;

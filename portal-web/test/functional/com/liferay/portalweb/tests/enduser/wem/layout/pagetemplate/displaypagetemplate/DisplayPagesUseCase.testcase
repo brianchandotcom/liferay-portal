@@ -85,7 +85,7 @@ definition {
 			key_tableEntry = "Blogs Entry Title",
 			locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
 
-		Click(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
+		Click(locator1 = "ManagementBar#ELLIPSIS_ICON");
 
 		MenuItem.clickNoError(menuItem = "Assign to Default");
 
@@ -150,7 +150,7 @@ definition {
 
 		Click(locator1 = "Checkbox#LEXICON_SELECT_ALL_CONTAINER");
 
-		Click(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
+		Click(locator1 = "ManagementBar#ELLIPSIS_ICON");
 
 		MenuItem.clickNoError(menuItem = "Assign to Default");
 
@@ -221,7 +221,7 @@ definition {
 
 		Click(locator1 = "Checkbox#LEXICON_SELECT_ALL_CONTAINER");
 
-		Click(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
+		Click(locator1 = "ManagementBar#ELLIPSIS_ICON");
 
 		MenuItem.clickNoError(menuItem = "Assign to Default (Display Page Name 1)");
 
@@ -560,7 +560,7 @@ definition {
 
 		Click(locator1 = "Checkbox#LEXICON_SELECT_ALL_CONTAINER");
 
-		Click(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
+		Click(locator1 = "ManagementBar#ELLIPSIS_ICON");
 
 		MenuItem.clickNoError(menuItem = "Unassign");
 
@@ -622,7 +622,7 @@ definition {
 			key_tableEntry = "Document_3.txt",
 			locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
 
-		Click(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
+		Click(locator1 = "ManagementBar#ELLIPSIS_ICON");
 
 		MenuItem.clickNoError(menuItem = "Assign to Default");
 
@@ -898,7 +898,7 @@ definition {
 
 		Click(locator1 = "Checkbox#LEXICON_SELECT_ALL_CONTAINER");
 
-		Click(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
+		Click(locator1 = "ManagementBar#ELLIPSIS_ICON");
 
 		MenuItem.clickNoError(menuItem = "Unassign");
 
@@ -969,7 +969,7 @@ definition {
 
 		Click(locator1 = "Checkbox#LEXICON_SELECT_ALL_CONTAINER");
 
-		Click(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
+		Click(locator1 = "ManagementBar#ELLIPSIS_ICON");
 
 		MenuItem.clickNoError(menuItem = "Unassign");
 

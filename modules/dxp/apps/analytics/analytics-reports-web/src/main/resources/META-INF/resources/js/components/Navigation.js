@@ -139,17 +139,21 @@ export default function Navigation({
 					<Main
 						author={author}
 						canonicalURL={canonicalURL}
-						chartDataProviders={[
-							getHistoricalViews,
-							getHistoricalReads,
-						]}
+						chartDataProviders={
+							endpoints.analyticsReportsHistoricalReadsURL
+								? [getHistoricalViews, getHistoricalReads]
+								: [getHistoricalViews]
+						}
 						languageTag={languageTag}
 						onSelectedLanguageClick={onSelectedLanguageClick}
 						onTrafficSourceClick={handleTrafficSourceClick}
 						pagePublishDate={pagePublishDate}
 						pageTitle={pageTitle}
 						timeSpanOptions={timeSpanOptions}
-						totalReadsDataProvider={handleTotalReads}
+						totalReadsDataProvider={
+							endpoints.analyticsReportsTotalReadsURL &&
+							handleTotalReads
+						}
 						totalViewsDataProvider={handleTotalViews}
 						trafficSourcesDataProvider={getTrafficSources}
 						viewURLs={viewURLs}

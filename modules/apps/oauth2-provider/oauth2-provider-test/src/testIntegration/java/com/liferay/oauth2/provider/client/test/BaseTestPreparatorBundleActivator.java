@@ -244,8 +244,9 @@ public abstract class BaseTestPreparatorBundleActivator
 
 		return createOAuth2Application(
 			companyId, user, clientId, "oauthTestApplicationSecret",
-			allowedGrantTypesList, scopeAliasesList,
-			Collections.singletonList("http://redirecturi:8080"));
+			allowedGrantTypesList,
+			Collections.singletonList("http://redirecturi:8080"),
+			scopeAliasesList);
 	}
 
 	protected OAuth2Application createOAuth2Application(
@@ -256,9 +257,9 @@ public abstract class BaseTestPreparatorBundleActivator
 
 		return createOAuth2Application(
 			companyId, user, clientId, "oauthTestApplicationSecret",
-			allowedGrantTypesList, scopeAliasesList,
+			allowedGrantTypesList,
 			Collections.singletonList("http://redirecturi:8080"),
-			trustedApplication);
+			scopeAliasesList, trustedApplication);
 	}
 
 	protected OAuth2Application createOAuth2Application(
@@ -277,18 +278,18 @@ public abstract class BaseTestPreparatorBundleActivator
 	protected OAuth2Application createOAuth2Application(
 			long companyId, User user, String clientId, String clientSecret,
 			List<GrantType> allowedGrantTypesList,
-			List<String> scopeAliasesList, List<String> redirectURIsList)
+			List<String> redirectURIsList, List<String> scopeAliasesList)
 		throws PortalException {
 
 		return createOAuth2Application(
 			companyId, user, clientId, clientSecret, allowedGrantTypesList,
-			scopeAliasesList, redirectURIsList, false);
+			redirectURIsList, scopeAliasesList, false);
 	}
 
 	protected OAuth2Application createOAuth2Application(
 			long companyId, User user, String clientId, String clientSecret,
 			List<GrantType> allowedGrantTypesList,
-			List<String> scopeAliasesList, List<String> redirectURIsList,
+			List<String> redirectURIsList, List<String> scopeAliasesList,
 			boolean trustedApplication)
 		throws PortalException {
 

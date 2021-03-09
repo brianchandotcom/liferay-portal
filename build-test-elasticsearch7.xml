@@ -161,54 +161,47 @@ xpack.security.transport.ssl.verification_mode: certificate</echo>
 
 	<macrodef name="configure-kibana-properties">
 		<sequential>
-			<echo append="true" file="${elastic.kibana.dir}/config/kibana.yml">${line.separator}elasticsearch.hosts: "http://localhost:9200"
+			<echo append="true" file="${elastic.kibana.dir}/config/kibana.yml">
+elasticsearch.hosts: "http://localhost:9200"
 pid.file: ${elastic.kibana.dir}/bin/pid-kibana
 server.basePath: "/o/portal-search-elasticsearch-monitoring/monitoring-proxy"
 server.rewriteBasePath: false</echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="configure-kibana-x-pack-pki-security-properties">
+	<macrodef name="configure-kibana-x-pack-security-properties">
 		<sequential>
-			<echo append="true" file="${elastic.kibana.dir}/config/kibana.yml">${line.separator}
-elasticsearch.ssl.certificateAuthorities: [ "${elasticsearch.dir}/config/certs/ca.crt" ]
-elasticsearch.ssl.certificate: ${elasticsearch.dir}/config/certs/elastic-certificates.crt
-elasticsearch.ssl.key: ${elasticsearch.dir}/config/certs/elastic-certificates.key
-elasticsearch.ssl.verificationMode: certificate
-server.ssl.certificateAuthorities: [ "${elasticsearch.dir}/config/certs/ca.crt" ]
-server.ssl.certificate: ${elasticsearch.dir}/config/certs/elastic-certificates.crt
-server.ssl.enabled: true
-server.ssl.key: ${elasticsearch.dir}/config/certs/elastic-certificates.key
-xpack.security.encryptionKey: "xsomethingxatxleastx32xcharactersx"
-xpack.security.sessionTimeout: 600000
-elasticsearch.ssl.alwaysPresentCertificate: true</echo>
-
 			<replace
 				file="${elastic.kibana.dir}/config/kibana.yml"
 			>
 				<replacetoken><![CDATA[elasticsearch.hosts: "http://localhost:9200"]]></replacetoken>
 				<replacevalue><![CDATA[elasticsearch.hosts: "https://localhost:9200"]]></replacevalue>
 			</replace>
-		</sequential>
-	</macrodef>
 
-	<macrodef name="configure-kibana-x-pack-security-properties">
-		<sequential>
-			<echo append="true" file="${elastic.kibana.dir}/config/kibana.yml">${line.separator}elasticsearch.password: "${elastic.xpack.elastic.user.password}"
+			<echo append="true" file="${elastic.kibana.dir}/config/kibana.yml">
 elasticsearch.ssl.certificateAuthorities: [ "${elasticsearch.dir}/config/certs/ca.crt" ]
-elasticsearch.username: "elastic"
 server.ssl.certificate: ${elasticsearch.dir}/config/certs/elastic-certificates.crt
 server.ssl.enabled: true
 server.ssl.key: ${elasticsearch.dir}/config/certs/elastic-certificates.key
 xpack.security.encryptionKey: "xsomethingxatxleastx32xcharactersx"
 xpack.security.sessionTimeout: 600000</echo>
 
-			<replace
-				file="${elastic.kibana.dir}/config/kibana.yml"
-			>
-				<replacetoken><![CDATA[elasticsearch.hosts: "http://localhost:9200"]]></replacetoken>
-				<replacevalue><![CDATA[elasticsearch.hosts: "https://localhost:9200"]]></replacevalue>
-			</replace>
+			<if>
+				<equals arg1="${elastic.pki.authentication.enabled}" arg2="true" />
+				<then>
+					<echo append="true" file="${elastic.kibana.dir}/config/kibana.yml">
+elasticsearch.ssl.alwaysPresentCertificate: true
+elasticsearch.ssl.certificate: ${elasticsearch.dir}/config/certs/elastic-certificates.crt
+elasticsearch.ssl.key: ${elasticsearch.dir}/config/certs/elastic-certificates.key
+elasticsearch.ssl.verificationMode: certificate
+server.ssl.certificateAuthorities: [ "${elasticsearch.dir}/config/certs/ca.crt" ]</echo>
+				</then>
+				<else>
+					<echo append="true" file="${elastic.kibana.dir}/config/kibana.yml">
+elasticsearch.password: "${elastic.xpack.elastic.user.password}"
+elasticsearch.username: "elastic"</echo>
+				</else>
+			</if>
 		</sequential>
 	</macrodef>
 
@@ -1319,18 +1312,7 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 
 		<configure-kibana-properties />
 
-		<if>
-			<equals arg1="${elastic.pki.authentication.enabled}" arg2="true" />
-			<then>
-				<configure-kibana-x-pack-pki-security-properties />
-			</then>
-			<elseif>
-				<equals arg1="${elastic.xpack.enabled}" arg2="true" />
-				<then>
-					<configure-kibana-x-pack-security-properties />
-				</then>
-			</elseif>
-		</if>
+		<configure-kibana-x-pack-security-properties if:true="${elastic.xpack.enabled}" />
 
 		<exec dir="${elastic.kibana.dir}/bin" executable="/bin/bash" osfamily="unix">
 			<arg value="-c" />

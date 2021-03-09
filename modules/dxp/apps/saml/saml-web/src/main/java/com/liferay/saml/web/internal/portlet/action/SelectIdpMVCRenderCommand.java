@@ -19,11 +19,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.constants.SamlPortletKeys;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.persistence.model.SamlSpIdpConnection;
@@ -87,35 +83,9 @@ public class SelectIdpMVCRenderCommand extends BaseSamlMVCRenderCommand {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		String entityId = ParamUtil.getString(
-			httpServletRequest, "idpEntityId");
-
-		long companyId = portal.getCompanyId(httpServletRequest);
-
-		if (Validator.isNotNull(entityId)) {
-			SamlSpIdpConnection samlSpIdpConnection =
-				_samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
-					companyId, entityId);
-
-			httpServletRequest.setAttribute(
-				SamlWebKeys.SAML_SP_IDP_CONNECTION, samlSpIdpConnection);
-
-			if (GetterUtil.getBoolean(
-					ParamUtil.getBoolean(httpServletRequest, "forceAuthn"))) {
-
-				AuthTokenUtil.checkCSRFToken(
-					httpServletRequest,
-					SelectIdpMVCRenderCommand.class.getName());
-
-				httpServletRequest.setAttribute(
-					SamlWebKeys.FORCE_REAUTHENTICATION, Boolean.TRUE);
-			}
-
-			return null;
-		}
-
 		List<SamlSpIdpConnection> samlSpIdpConnections =
-			_samlSpIdpConnectionLocalService.getSamlSpIdpConnections(companyId);
+			_samlSpIdpConnectionLocalService.getSamlSpIdpConnections(
+				portal.getCompanyId(httpServletRequest));
 
 		Stream<SamlSpIdpConnection> stream = samlSpIdpConnections.stream();
 

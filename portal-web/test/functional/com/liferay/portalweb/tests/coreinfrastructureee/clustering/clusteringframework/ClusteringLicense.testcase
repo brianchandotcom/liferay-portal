@@ -3,6 +3,7 @@ definition {
 
 	property app.server.bundles.size = "2";
 	property cluster.enabled = "true";
+	property license.required = "true";
 	property portal.release = "true";
 	property portal.upstream = "false";
 	property remote.elasticsearch.enabled = "true";
@@ -25,8 +26,8 @@ definition {
 
 	@priority = "5"
 	test ViewNodeLimit {
+		property commerce.enabled = "false";
 		property dxp.license.file = "dxp-license-virtual-cluster.xml";
-		property license.required = "true";
 
 		Clustering.viewClusterStatusInConsole();
 

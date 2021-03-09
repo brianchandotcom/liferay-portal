@@ -642,11 +642,11 @@ export default (state, action, config) => {
 				availableLanguageIds,
 				defaultLanguageId,
 				editingLanguageId,
-				fieldTypes,
 				pages,
 				rules,
 			} = state;
 			const {
+				fieldTypes,
 				generateFieldNameUsingFieldLabel,
 				getFieldNameGenerator,
 			} = config;

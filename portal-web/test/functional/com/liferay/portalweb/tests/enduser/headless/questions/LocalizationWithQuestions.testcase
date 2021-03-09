@@ -50,6 +50,48 @@ definition {
 		}
 	}
 
+	@description = "Validate if the user can post a question with non-Latin characters via subtopic."
+	@priority = "4"
+	test AddQuestionViaSubTopic {
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoTab(questionTabField = "Questions");
+
+		Questions.addRootTopic(
+			rootTopicDescription = "トピック記述",
+			rootTopicName = "質問トピック");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "質問トピック");
+
+		Questions.addSubTopic(
+			subTopicDescription = "トピック記述",
+			subTopicName = "サブテーマ");
+
+		Questions.changeTopic(gotoParentTopic = "質問トピック");
+
+		Questions.changeTopic(
+			parentTopicName = "質問トピック",
+			subTopicName = "サブテーマ");
+
+		Questions.askQuestionFillingTheMandatoryFields(
+			contentField = "私の好きな日本料理は寿司とすき焼きです",
+			titleField = "あなたの好きな日本料理は何ですか");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "質問トピック");
+
+		Questions.changeTopic(gotoParentTopic = "質問トピック");
+
+		Questions.changeTopic(
+			parentTopicName = "質問トピック",
+			subTopicName = "サブテーマ");
+
+		Questions.gotoDetails(questionTitle = "あなたの好きな日本料理は何ですか");
+	}
+
 	@description = "Validate if the user can post a question with non-Latin characters， it also covers LPS-128639."
 	@priority = "5"
 	test AddQuestionWithNonLatinCharacters {

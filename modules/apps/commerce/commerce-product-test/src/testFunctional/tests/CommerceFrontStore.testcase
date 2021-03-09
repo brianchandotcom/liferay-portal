@@ -48,9 +48,11 @@ definition {
 		CPCommerceCatalog.newOptionsEntry(
 			optionDescription = "Option Description",
 			optionFieldType = "Select from List",
-			optionName = "Color",
-			optionValuesList = "Black,Blue,White",
-			valuePriority = "1");
+			optionName = "Color");
+
+		Button.clickSave();
+
+		CPCommerceCatalog.addOptionValues(optionValuesList = "Black:1,Blue:2,White:3");
 
 		echo("Creating new Product...");
 

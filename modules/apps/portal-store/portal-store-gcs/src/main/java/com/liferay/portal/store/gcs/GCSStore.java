@@ -230,44 +230,14 @@ public class GCSStore implements Store {
 
 			_gcsStore = null;
 
-			_setupEncryptedCommunication();
+			_initCryptOptions();
 
-			_setGcsStore();
+			_initGCSStore();
 		}
 		catch (PortalException portalException) {
 			throw new IllegalStateException(
 				"Unable to initialize GCS store", portalException);
 		}
-	}
-
-	private RetrySettings _buildRetrySettings(
-		int maxAttempts, int initialRetryDelay, int maxRetryDelay,
-		double retryDelayMultiplier, int maxRpcTimeout, int initRpcTimout,
-		double rpcTimeoutMultiplier, boolean jittered) {
-
-		RetrySettings.Builder builder = RetrySettings.newBuilder();
-
-		builder.setInitialRetryDelay(Duration.ofMillis(initialRetryDelay));
-		builder.setInitialRpcTimeout(Duration.ofMillis(initRpcTimout));
-		builder.setJittered(jittered);
-		builder.setMaxAttempts(maxAttempts);
-		builder.setMaxRetryDelay(Duration.ofMillis(maxRetryDelay));
-		builder.setMaxRpcTimeout(Duration.ofMillis(maxRpcTimeout));
-		builder.setRetryDelayMultiplier(retryDelayMultiplier);
-		builder.setRpcTimeoutMultiplier(rpcTimeoutMultiplier);
-
-		return builder.build();
-	}
-
-	private StorageOptions _buildStorage(
-		RetrySettings retrySettings, GoogleCredentials googleCredentials) {
-
-		StorageOptions.Builder builder = StorageOptions.newBuilder();
-
-		builder.setCredentials(googleCredentials);
-		builder.setRetrySettings(retrySettings);
-
-		return builder.build();
 	}
 
 	private void _deleteBlob(Blob blob) {
@@ -337,44 +307,54 @@ public class GCSStore implements Store {
 		return _gcsStore.writer(blobInfo, _blobEncryptWriteOption);
 	}
 
-	private void _setCredentials() throws PortalException {
-		try (InputStream inputStream = new FileInputStream(
-				_gcsStoreConfiguration.authFileLocation())) {
-
-			_googleCredentials = ServiceAccountCredentials.fromStream(
-				inputStream);
-		}
-		catch (IOException ioException) {
-			throw new PortalException(
-				"Unable to authenticate with authentication file", ioException);
-		}
-	}
-
-	private void _setGcsStore() throws PortalException {
+	private void _initGCSStore() throws PortalException {
 		if (_gcsStore == null) {
-			_setCredentials();
+			try (InputStream inputStream = new FileInputStream(
+					_gcsStoreConfiguration.authFileLocation())) {
 
-			RetrySettings retrySettings = _buildRetrySettings(
-				_gcsStoreConfiguration.maxRetryAttempts(),
-				_gcsStoreConfiguration.initialRetryDelay(),
-				_gcsStoreConfiguration.maxRetryDelay(),
-				_gcsStoreConfiguration.retryDelayMultiplier(),
-				_gcsStoreConfiguration.maxRpcTimeout(),
-				_gcsStoreConfiguration.initialRpcTimeout(),
-				_gcsStoreConfiguration.rpcTimeoutMultiplier(),
-				_gcsStoreConfiguration.retryJitter());
+				_googleCredentials = ServiceAccountCredentials.fromStream(
+					inputStream);
+			}
+			catch (IOException ioException) {
+				throw new PortalException(
+					"Unable to authenticate with authentication file",
+					ioException);
+			}
 
-			StorageOptions storageOptions = _buildStorage(
-				retrySettings, _googleCredentials);
+			RetrySettings retrySettings = RetrySettings.newBuilder(
+			).setInitialRetryDelay(
+				Duration.ofMillis(_gcsStoreConfiguration.initialRetryDelay())
+			).setInitialRpcTimeout(
+				Duration.ofMillis(_gcsStoreConfiguration.initialRpcTimeout())
+			).setJittered(
+				_gcsStoreConfiguration.retryJitter()
+			).setMaxAttempts(
+				_gcsStoreConfiguration.maxRetryAttempts()
+			).setMaxRetryDelay(
+				Duration.ofMillis(_gcsStoreConfiguration.maxRetryDelay())
+			).setMaxRpcTimeout(
+				Duration.ofMillis(_gcsStoreConfiguration.maxRpcTimeout())
+			).setRetryDelayMultiplier(
+				_gcsStoreConfiguration.retryDelayMultiplier()
+			).setRpcTimeoutMultiplier(
+				_gcsStoreConfiguration.rpcTimeoutMultiplier()
+			).build();
+
+			StorageOptions storageOptions = StorageOptions.newBuilder(
+			).setCredentials(
+				_googleCredentials
+			).setRetrySettings(
+				retrySettings
+			).build();
 
 			_gcsStore = storageOptions.getService();
 		}
 	}
 
-	private void _setupEncryptedCommunication() {
-		String keyValue = PropsUtil.get(_DL_STORE_GCS_AES_256_KEY);
+	private void _initCryptOptions() {
+		String key = PropsUtil.get(_DL_STORE_GCS_AES_256_KEY);
 
-		if ((keyValue == null) || keyValue.equals(StringPool.BLANK)) {
+		if (Validator.isNull(key)) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Property \"dl.store.gcs.aes256.key\" should be set to " +
@@ -387,11 +367,10 @@ public class GCSStore implements Store {
 			_blobEncryptWriteOption = null;
 		}
 		else {
-			_blobDecryptSourceOption = Blob.BlobSourceOption.decryptionKey(
-				keyValue);
+			_blobDecryptSourceOption = Blob.BlobSourceOption.decryptionKey(key);
 
 			_blobEncryptWriteOption = Storage.BlobWriteOption.encryptionKey(
-				keyValue);
+				key);
 		}
 	}
 

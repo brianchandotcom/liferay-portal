@@ -106,7 +106,7 @@ public class PortletLayoutTypeController extends BaseLayoutTypeControllerImpl {
 				originalHttpServletRequest =
 					DynamicServletRequestUtil.createDynamicServletRequest(
 						originalHttpServletRequest, portlet,
-						httpServletRequest.getParameterMap(), true);
+						httpServletRequest.getParameterMap(), false);
 			}
 		}
 

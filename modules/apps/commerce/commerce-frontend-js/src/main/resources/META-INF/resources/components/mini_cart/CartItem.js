@@ -16,7 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useCallback, useContext, useState} from 'react';
+import React, {useContext, useState} from 'react';
 
 import {PRODUCT_REMOVED_FROM_CART} from '../../utilities/eventsDefinitions';
 import Price from '../price/Price';
@@ -63,8 +63,6 @@ function CartItem({item: cartItem}) {
 
 	const {id: orderId} = cartState;
 	const [itemState, setItemState] = useState(INITIAL_ITEM_STATE);
-	const [itemQuantity, setItemQuantity] = useState(quantity);
-	const [itemPrice, updateItemPrice] = useState(price);
 
 	const options = parseOptions(rawOptions);
 
@@ -113,6 +111,7 @@ function CartItem({item: cartItem}) {
 							.then(() => updateCartModel({id: orderId}))
 							.then(() => {
 								setIsUpdating(false);
+
 								Liferay.fire(PRODUCT_REMOVED_FROM_CART, {
 									skuId,
 								});
@@ -123,50 +122,6 @@ function CartItem({item: cartItem}) {
 			}, REMOVAL_TIMEOUT),
 		});
 	};
-
-	const updateItemQuantity = useCallback(
-		(quantity) => {
-			if (quantity !== itemQuantity) {
-				setIsUpdating(true);
-
-				CartResource.updateItemById(cartItemId, {
-					...cartItem,
-					quantity,
-				})
-					.then(({quantity: updatedQuantity, ...updatedItem}) => {
-						setItemQuantity(updatedQuantity);
-
-						return Promise.resolve(updatedItem);
-					})
-					.then(({price: updatedPrice}) => {
-						const {price: currentPriceValue} = itemPrice;
-						const {price: updatedPriceValue} = updatedPrice;
-
-						/**
-						 * The unit price of an item may change based
-						 * on the change of its quantity
-						 * @type {boolean}
-						 */
-
-						const priceValueChanged =
-							!currentPriceValue ||
-							currentPriceValue !== updatedPriceValue;
-
-						if (priceValueChanged) {
-							return updateItemPrice(updatedPrice);
-						}
-
-						return Promise.resolve();
-					})
-					.then(() => updateCartModel({id: orderId}))
-					.then(() => setIsUpdating(false))
-					.catch(showErrors);
-			}
-
-			return Promise.resolve();
-		}, // eslint-disable-next-line react-hooks/exhaustive-deps
-		[CartResource, cartItem, cartItemId, orderId]
-	);
 
 	const {
 		isGettingRemoved,
@@ -202,7 +157,19 @@ function CartItem({item: cartItem}) {
 
 			<div className={'mini-cart-item-quantity'}>
 				<QuantitySelector
-					onUpdate={updateItemQuantity}
+					onUpdate={(freshQuantity) => {
+						if (freshQuantity && freshQuantity !== quantity) {
+							setIsUpdating(true);
+
+							CartResource.updateItemById(cartItemId, {
+								...cartItem,
+								quantity: freshQuantity,
+							})
+								.then(() => updateCartModel({id: orderId}))
+								.then(() => setIsUpdating(false))
+								.catch(showErrors);
+						}
+					}}
 					quantity={quantity}
 					spritemap={spritemap}
 					{...settings}
@@ -213,7 +180,7 @@ function CartItem({item: cartItem}) {
 				<Price
 					compact={true}
 					displayDiscountLevels={displayDiscountLevels}
-					price={itemPrice}
+					price={price}
 				/>
 			</div>
 

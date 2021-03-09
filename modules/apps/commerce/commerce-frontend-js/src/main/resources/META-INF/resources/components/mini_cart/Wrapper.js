@@ -19,11 +19,7 @@ import MiniCartContext from './MiniCartContext';
 import {ITEMS_LIST} from './util/constants';
 
 function Wrapper() {
-	const {CartViews, cartState, isOpen, spritemap} = useContext(
-		MiniCartContext
-	);
-
-	const {cartItems = []} = cartState;
+	const {CartViews, isOpen, spritemap} = useContext(MiniCartContext);
 
 	return (
 		<div className={'mini-cart-wrapper'}>
@@ -33,7 +29,7 @@ function Wrapper() {
 				{isOpen && (
 					<DatasetDisplay
 						id={'cart-items-list-dataset-display'}
-						items={cartItems}
+						items={[]}
 						overrideEmptyResultView={true}
 						showManagementBar={false}
 						showPagination={false}

@@ -60,6 +60,9 @@ public class GetLayoutFriendlyURLMVCResourceCommand
 			resourceRequest, "privateLayout");
 		long layoutId = ParamUtil.getLong(resourceRequest, "layoutId");
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		try {
 			Layout layout = _layoutLocalService.getLayout(
 				groupId, privateLayout, layoutId);
@@ -68,14 +71,10 @@ public class GetLayoutFriendlyURLMVCResourceCommand
 				resourceRequest, resourceResponse,
 				JSONUtil.put(
 					"friendlyURL",
-					layout.getFriendlyURL(resourceRequest.getLocale())));
+					_portal.getLayoutFullURL(layout, themeDisplay)));
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException, portalException);
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)resourceRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
 
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,

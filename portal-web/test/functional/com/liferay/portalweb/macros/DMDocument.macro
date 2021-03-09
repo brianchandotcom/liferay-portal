@@ -843,8 +843,7 @@ definition {
 				locator1 = "Message#CHECKOUT_SUCCESS",
 				value1 = "You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire.");
 		}
-
-		if (isSet(editStatus)) {
+		else if (isSet(editStatus)) {
 			AssertClick(
 				locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
 				value1 = "${dmDocumentTitle}");

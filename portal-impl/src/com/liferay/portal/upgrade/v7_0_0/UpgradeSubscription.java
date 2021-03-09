@@ -113,16 +113,34 @@ public class UpgradeSubscription extends UpgradeProcess {
 			return 0;
 		}
 
+		String tableName = groupIdSQLParts[0];
+
 		String sql = StringBundler.concat(
-			"select ", groupIdSQLParts[1], " from ", groupIdSQLParts[0],
-			" where ", groupIdSQLParts[2], " = ?");
+			"select ", groupIdSQLParts[1], " from ", tableName, " where ",
+			groupIdSQLParts[2], " = ?");
 
-		try (PreparedStatement ps = connection.prepareStatement(sql)) {
-			ps.setLong(1, classPK);
+		try (PreparedStatement ps1 = connection.prepareStatement(sql)) {
+			ps1.setLong(1, classPK);
 
-			try (ResultSet rs = ps.executeQuery()) {
-				if (rs.next()) {
-					return rs.getLong("groupId");
+			try (ResultSet rs1 = ps1.executeQuery()) {
+				if (rs1.next()) {
+					if (tableName.equals("PortletPreferences")) {
+						long plid = rs1.getLong("plid");
+
+						PreparedStatement ps2 = connection.prepareStatement(
+							"select groupId from Layout where plid = ?");
+
+						ps2.setLong(1, plid);
+
+						try (ResultSet rs2 = ps2.executeQuery()) {
+							if (rs2.next()) {
+								return rs2.getLong("groupId");
+							}
+						}
+					}
+					else {
+						return rs1.getLong("groupId");
+					}
 				}
 			}
 		}
@@ -237,6 +255,9 @@ public class UpgradeSubscription extends UpgradeProcess {
 		).put(
 			"com.liferay.journal.model.JournalFolder",
 			"JournalFolder,groupId,folderId"
+		).put(
+			"com.liferay.portal.kernel.model.PortletPreferences",
+			"PortletPreferences,plid,portletPreferencesId"
 		).put(
 			"com.liferay.portlet.bookmarks.model.BookmarksEntry",
 			"BookmarksEntry,groupId,entryId"

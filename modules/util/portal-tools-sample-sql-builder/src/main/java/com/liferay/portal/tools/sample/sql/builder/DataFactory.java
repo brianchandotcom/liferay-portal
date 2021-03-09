@@ -379,7 +379,6 @@ public class DataFactory {
 
 		initJournalArticleContent();
 
-		initRoleModels();
 		initUserNames();
 	}
 
@@ -622,10 +621,6 @@ public class DataFactory {
 		return _powerUserRoleModel;
 	}
 
-	public List<RoleModel> getRoleModels() {
-		return _roleModels;
-	}
-
 	public List<Integer> getSequence(int size) {
 		List<Integer> sequence = new ArrayList<>(size);
 
@@ -670,84 +665,6 @@ public class DataFactory {
 		sb.append("]]></dynamic-content></dynamic-element></root>");
 
 		_journalArticleContent = sb.toString();
-	}
-
-	public void initRoleModels() {
-		_roleModels = new ArrayList<>();
-
-		// Administrator
-
-		_administratorRoleModel = newRoleModel(
-			RoleConstants.ADMINISTRATOR, RoleConstants.TYPE_REGULAR);
-
-		_roleModels.add(_administratorRoleModel);
-
-		// Guest
-
-		_guestRoleModel = newRoleModel(
-			RoleConstants.GUEST, RoleConstants.TYPE_REGULAR);
-
-		_roleModels.add(_guestRoleModel);
-
-		// Organization Administrator
-
-		_roleModels.add(
-			newRoleModel(
-				RoleConstants.ORGANIZATION_ADMINISTRATOR,
-				RoleConstants.TYPE_ORGANIZATION));
-
-		// Organization Owner
-
-		_roleModels.add(
-			newRoleModel(
-				RoleConstants.ORGANIZATION_OWNER,
-				RoleConstants.TYPE_ORGANIZATION));
-
-		// Organization User
-
-		_roleModels.add(
-			newRoleModel(
-				RoleConstants.ORGANIZATION_USER,
-				RoleConstants.TYPE_ORGANIZATION));
-
-		// Owner
-
-		_ownerRoleModel = newRoleModel(
-			RoleConstants.OWNER, RoleConstants.TYPE_REGULAR);
-
-		_roleModels.add(_ownerRoleModel);
-
-		// Power User
-
-		_powerUserRoleModel = newRoleModel(
-			RoleConstants.POWER_USER, RoleConstants.TYPE_REGULAR);
-
-		_roleModels.add(_powerUserRoleModel);
-
-		// Site Administrator
-
-		_roleModels.add(
-			newRoleModel(
-				RoleConstants.SITE_ADMINISTRATOR, RoleConstants.TYPE_SITE));
-
-		// Site Member
-
-		_siteMemberRoleModel = newRoleModel(
-			RoleConstants.SITE_MEMBER, RoleConstants.TYPE_SITE);
-
-		_roleModels.add(_siteMemberRoleModel);
-
-		// Site Owner
-
-		_roleModels.add(
-			newRoleModel(RoleConstants.SITE_OWNER, RoleConstants.TYPE_SITE));
-
-		// User
-
-		_userRoleModel = newRoleModel(
-			RoleConstants.USER, RoleConstants.TYPE_REGULAR);
-
-		_roleModels.add(_userRoleModel);
 	}
 
 	public void initUserNames() throws IOException {
@@ -3735,6 +3652,86 @@ public class DataFactory {
 			String.valueOf(wikiPageModel.getResourcePrimKey()), _sampleUserId);
 	}
 
+	public List<RoleModel> newRoleModels() {
+		List<RoleModel> roleModels = new ArrayList<>();
+
+		// Administrator
+
+		_administratorRoleModel = newRoleModel(
+			RoleConstants.ADMINISTRATOR, RoleConstants.TYPE_REGULAR);
+
+		roleModels.add(_administratorRoleModel);
+
+		// Guest
+
+		_guestRoleModel = newRoleModel(
+			RoleConstants.GUEST, RoleConstants.TYPE_REGULAR);
+
+		roleModels.add(_guestRoleModel);
+
+		// Organization Administrator
+
+		roleModels.add(
+			newRoleModel(
+				RoleConstants.ORGANIZATION_ADMINISTRATOR,
+				RoleConstants.TYPE_ORGANIZATION));
+
+		// Organization Owner
+
+		roleModels.add(
+			newRoleModel(
+				RoleConstants.ORGANIZATION_OWNER,
+				RoleConstants.TYPE_ORGANIZATION));
+
+		// Organization User
+
+		roleModels.add(
+			newRoleModel(
+				RoleConstants.ORGANIZATION_USER,
+				RoleConstants.TYPE_ORGANIZATION));
+
+		// Owner
+
+		_ownerRoleModel = newRoleModel(
+			RoleConstants.OWNER, RoleConstants.TYPE_REGULAR);
+
+		roleModels.add(_ownerRoleModel);
+
+		// Power User
+
+		_powerUserRoleModel = newRoleModel(
+			RoleConstants.POWER_USER, RoleConstants.TYPE_REGULAR);
+
+		roleModels.add(_powerUserRoleModel);
+
+		// Site Administrator
+
+		roleModels.add(
+			newRoleModel(
+				RoleConstants.SITE_ADMINISTRATOR, RoleConstants.TYPE_SITE));
+
+		// Site Member
+
+		_siteMemberRoleModel = newRoleModel(
+			RoleConstants.SITE_MEMBER, RoleConstants.TYPE_SITE);
+
+		roleModels.add(_siteMemberRoleModel);
+
+		// Site Owner
+
+		roleModels.add(
+			newRoleModel(RoleConstants.SITE_OWNER, RoleConstants.TYPE_SITE));
+
+		// User
+
+		_userRoleModel = newRoleModel(
+			RoleConstants.USER, RoleConstants.TYPE_REGULAR);
+
+		roleModels.add(_userRoleModel);
+
+		return roleModels;
+	}
+
 	public UserModel newSampleUserModel() {
 		return newUserModel(
 			_sampleUserId, _SAMPLE_USER_NAME, _SAMPLE_USER_NAME,
@@ -5325,7 +5322,6 @@ public class DataFactory {
 	private RoleModel _ownerRoleModel;
 	private RoleModel _powerUserRoleModel;
 	private final SimpleCounter _resourcePermissionCounter;
-	private List<RoleModel> _roleModels;
 	private final long _sampleUserId;
 	private final Format _simpleDateFormat;
 	private RoleModel _siteMemberRoleModel;

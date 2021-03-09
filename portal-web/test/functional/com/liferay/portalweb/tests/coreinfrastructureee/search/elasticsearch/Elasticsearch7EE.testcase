@@ -1003,12 +1003,87 @@ definition {
 	}
 
 	@priority = "5"
+	test XPackPkiAuthenticationWithJDK11 {
+		property elastic.pki.authentication.enabled = "true";
+		property elastic.xpack.enabled = "true";
+		property elasticsearch.jdk11.enabled = "true";
+		property osgi.app.includes = "portal-search-elasticsearch-monitoring";
+		property portal.suite.search.engine = "";
+		property portal.upstream = "quarantine";
+		property remote.elasticsearch.enabled = "true";
+		property test.name.skip.portal.instance = "Elasticsearch7EE#XPackPkiAuthenticationWithJDK11";
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Elasticsearch Monitoring Page");
+
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "Guest",
+			layoutName = "Elasticsearch Monitoring Page",
+			layoutTemplate = "1 Column");
+
+		Navigator.gotoPage(pageName = "Elasticsearch Monitoring Page");
+
+		Portlet.addPG(portletName = "Elasticsearch Monitoring");
+
+		ElasticsearchMonitoring.viewPG();
+	}
+
+	@priority = "5"
 	test XPackSmokeTest {
 		property elastic.xpack.enabled = "true";
 		property osgi.app.includes = "portal-search-elasticsearch-monitoring";
 		property portal.upstream = "quarantine";
 		property remote.elasticsearch.enabled = "true";
 		property test.name.skip.portal.instance = "Elasticsearch7EE#XPackSmokeTest";
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "WC Title");
+
+		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "WC Title",
+			searchAssetType = "Web Content Article");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(
+			pageName = "Elasticsearch Monitoring Page",
+			sitePageType = "Widget Page");
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Elasticsearch Monitoring Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page");
+
+		Navigator.gotoPage(pageName = "Elasticsearch Monitoring Page");
+
+		Portlet.addPG(portletName = "Elasticsearch Monitoring");
+
+		ElasticsearchMonitoring.viewPG();
+
+		User.logoutPG();
+
+		Navigator.gotoPage(pageName = "Elasticsearch Monitoring Page");
+
+		ElasticsearchMonitoring.viewAsGuestPG();
+	}
+
+	@priority = "5"
+	test XPackWithJDK11 {
+		property elastic.xpack.enabled = "true";
+		property elasticsearch.jdk11.enabled = "true";
+		property osgi.app.includes = "portal-search-elasticsearch-monitoring";
+		property portal.suite.search.engine = "";
+		property portal.upstream = "quarantine";
+		property remote.elasticsearch.enabled = "true";
+		property test.name.skip.portal.instance = "Elasticsearch7EE#XPackWithJDK11";
 
 		JSONWebcontent.addWebContent(
 			content = "WC Content",

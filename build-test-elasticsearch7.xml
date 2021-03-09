@@ -43,6 +43,17 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="configure-elasticsearch-jdk11">
+		<sequential>
+			<replace
+				file="${elasticsearch.dir}/bin/elasticsearch-env"
+			>
+				<replacetoken><![CDATA[JAVA="$JAVA_HOME/bin/java"]]></replacetoken>
+				<replacevalue><![CDATA[JAVA="/opt/java/jdk11/bin/java"]]></replacevalue>
+			</replace>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="configure-elasticsearch-ltr-properties">
 		<sequential>
 			<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}xpack.ml.enabled: false
@@ -202,6 +213,10 @@ elasticsearch.password: "${elastic.xpack.elastic.user.password}"
 elasticsearch.username: "elastic"</echo>
 				</else>
 			</if>
+
+			<get-testcase-property if:set="env.JENKINS_HOME" property.name="elasticsearch.jdk11.enabled" />
+
+			<echo append="true" file="${elastic.kibana.dir}/config/node.options" if:true="${elasticsearch.jdk11.enabled}">${line.separator}--tls-max-v1.2</echo>
 		</sequential>
 	</macrodef>
 
@@ -801,6 +816,10 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 					<configure-elasticsearch-x-pack-security-properties />
 				</else>
 			</if>
+
+			<get-testcase-property if:set="env.JENKINS_HOME" property.name="elasticsearch.jdk11.enabled" />
+
+			<configure-elasticsearch-jdk11 if:true="${elasticsearch.jdk11.enabled}" />
 
 			<antcall target="start-elasticsearch-node" />
 

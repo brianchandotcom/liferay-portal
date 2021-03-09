@@ -54,30 +54,15 @@ public class JournalContentCompatibilityConverterImpl
 
 	@Override
 	public void convert(Document document) {
-		Element rootElement = document.getRootElement();
-
-		String version = rootElement.attributeValue("version");
-
-		if (Validator.isNotNull(version) &&
-			Objects.equals(version, _LATEST_CONTENT_VERSION)) {
-
+		if (_isLatestVersion(document)) {
 			return;
 		}
 
+		Element rootElement = document.getRootElement();
+
 		rootElement.addAttribute("version", _LATEST_CONTENT_VERSION);
 
-		Locale defaultLocale = null;
-
-		String defaultLanguageId = rootElement.attributeValue("default-locale");
-
-		if (defaultLanguageId == null) {
-			defaultLocale = LocaleUtil.getSiteDefault();
-		}
-		else {
-			defaultLocale = LocaleUtil.fromLanguageId(defaultLanguageId);
-		}
-
-		_convertDDMFields(defaultLocale, rootElement);
+		_convertDDMFields(_getDefaultLocale(document), rootElement);
 
 		if (_hasNestedFields(rootElement)) {
 			_convertNestedFields(rootElement);
@@ -294,6 +279,18 @@ public class JournalContentCompatibilityConverterImpl
 		}
 	}
 
+	private Locale _getDefaultLocale(Document document) {
+		Element rootElement = document.getRootElement();
+
+		String defaultLanguageId = rootElement.attributeValue("default-locale");
+
+		if (defaultLanguageId == null) {
+			return LocaleUtil.getSiteDefault();
+		}
+
+		return LocaleUtil.fromLanguageId(defaultLanguageId);
+	}
+
 	private boolean _hasNestedFields(Element element) {
 		for (Element dynamicElement : element.elements("dynamic-element")) {
 			List<Element> nestedFieldsElements = dynamicElement.elements(
@@ -302,6 +299,20 @@ public class JournalContentCompatibilityConverterImpl
 			if (!nestedFieldsElements.isEmpty()) {
 				return true;
 			}
+		}
+
+		return false;
+	}
+
+	private boolean _isLatestVersion(Document document) {
+		Element rootElement = document.getRootElement();
+
+		String version = rootElement.attributeValue("version");
+
+		if (Validator.isNotNull(version) &&
+			Objects.equals(version, _LATEST_CONTENT_VERSION)) {
+
+			return true;
 		}
 
 		return false;

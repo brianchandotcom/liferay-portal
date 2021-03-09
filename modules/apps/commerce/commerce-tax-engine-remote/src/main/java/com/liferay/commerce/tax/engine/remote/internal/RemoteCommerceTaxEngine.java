@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -48,6 +49,7 @@ import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.apache.http.StatusLine;
@@ -179,53 +181,52 @@ public class RemoteCommerceTaxEngine implements CommerceTaxEngine {
 		}
 	}
 
-	private void _addCommerceAddressParameters(
-			long commerceAddressId, String prefix,
-			URIBuilder.URIBuilderWrapper uriBuilderWrapper)
+	private Map<String, String> _getCommerceAddressParameters(
+			long commerceAddressId, String prefix)
 		throws PortalException {
 
 		CommerceAddress commerceAddress = getCommerceAddress(commerceAddressId);
 
-		uriBuilderWrapper.addParameter(
+		return HashMapBuilder.put(
 			prefix + "AddressCity", commerceAddress.getCity()
-		).addParameter(
+		).put(
 			prefix + "AddressCountryISOCode",
 			() -> {
 				Country country = commerceAddress.getCountry();
 
 				return country.getA3();
 			}
-		).addParameter(
+		).put(
 			prefix + "AddressExternalReferenceCode",
 			commerceAddress.getExternalReferenceCode()
-		).addParameter(
+		).put(
 			prefix + "AddressId", String.valueOf(commerceAddressId)
-		).addParameter(
+		).put(
 			prefix + "AddressLatitude",
 			String.valueOf(commerceAddress.getLatitude())
-		).addParameter(
+		).put(
 			prefix + "AddressLongitude",
 			String.valueOf(commerceAddress.getLongitude())
-		).addParameter(
+		).put(
 			prefix + "AddressPhoneNumber", commerceAddress.getPhoneNumber()
-		).addParameter(
+		).put(
 			prefix + "AddressRegionISOCode",
 			() -> {
 				Region region = commerceAddress.getRegion();
 
 				return region.getRegionCode();
 			}
-		).addParameter(
+		).put(
 			prefix + "AddressStreet1", commerceAddress.getStreet1()
-		).addParameter(
+		).put(
 			prefix + "AddressStreet2", commerceAddress.getStreet2()
-		).addParameter(
+		).put(
 			prefix + "AddressStreet3", commerceAddress.getStreet3()
-		).addParameter(
+		).put(
 			prefix + "AddressType", String.valueOf(commerceAddress.getType())
-		).addParameter(
+		).put(
 			prefix + "AddressZip", commerceAddress.getZip()
-		);
+		).build();
 	}
 
 	private CommerceTaxValue _getCommerceTaxValue(String result)
@@ -250,46 +251,42 @@ public class RemoteCommerceTaxEngine implements CommerceTaxEngine {
 			getRemoteCommerceTaxConfiguration(
 				commerceTaxCalculateRequest.getChannelGroupId());
 
-		URIBuilder.URIBuilderWrapper uriBuilderWrapper = URIBuilder.create(
-			remoteCommerceTaxConfiguration.taxValueEndpointURL());
+		HttpGet httpGet = new HttpGet(
+			URIBuilder.create(
+				remoteCommerceTaxConfiguration.taxValueEndpointURL()
+			).addParameters(
+				_getCommerceAddressParameters(
+					commerceTaxCalculateRequest.getCommerceBillingAddressId(),
+					"billing")
+			).addParameter(
+				"percentage",
+				String.valueOf(commerceTaxCalculateRequest.isPercentage())
+			).addParameter(
+				"price", String.valueOf(commerceTaxCalculateRequest.getPrice())
+			).addParameters(
+				_getCommerceAddressParameters(
+					commerceTaxCalculateRequest.getCommerceShippingAddressId(),
+					"shipping")
+			).addParameter(
+				"taxCategoryId",
+				String.valueOf(commerceTaxCalculateRequest.getTaxCategoryId())
+			).addParameter(
+				"taxMethod",
+				() -> {
+					CommerceTaxMethod commerceTaxMethod = getCommerceTaxMethod(
+						commerceTaxCalculateRequest.getCommerceTaxMethodId());
 
-		_addCommerceAddressParameters(
-			commerceTaxCalculateRequest.getCommerceBillingAddressId(),
-			"billing", uriBuilderWrapper);
+					return commerceTaxMethod.getEngineKey();
+				}
+			).addParameter(
+				"taxMethodPercentage",
+				() -> {
+					CommerceTaxMethod commerceTaxMethod = getCommerceTaxMethod(
+						commerceTaxCalculateRequest.getCommerceTaxMethodId());
 
-		uriBuilderWrapper.addParameter(
-			"percentage",
-			String.valueOf(commerceTaxCalculateRequest.isPercentage())
-		).addParameter(
-			"price", String.valueOf(commerceTaxCalculateRequest.getPrice())
-		);
-
-		_addCommerceAddressParameters(
-			commerceTaxCalculateRequest.getCommerceShippingAddressId(),
-			"shipping", uriBuilderWrapper);
-
-		uriBuilderWrapper.addParameter(
-			"taxCategoryId",
-			String.valueOf(commerceTaxCalculateRequest.getTaxCategoryId())
-		).addParameter(
-			"taxMethod",
-			() -> {
-				CommerceTaxMethod commerceTaxMethod = getCommerceTaxMethod(
-					commerceTaxCalculateRequest.getCommerceTaxMethodId());
-
-				return commerceTaxMethod.getEngineKey();
-			}
-		).addParameter(
-			"taxMethodPercentage",
-			() -> {
-				CommerceTaxMethod commerceTaxMethod = getCommerceTaxMethod(
-					commerceTaxCalculateRequest.getCommerceTaxMethodId());
-
-				return String.valueOf(commerceTaxMethod.isPercentage());
-			}
-		);
-
-		HttpGet httpGet = new HttpGet(uriBuilderWrapper.build());
+					return String.valueOf(commerceTaxMethod.isPercentage());
+				}
+			).build());
 
 		if (Validator.isNotNull(
 				remoteCommerceTaxConfiguration.

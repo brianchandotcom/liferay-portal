@@ -12,7 +12,7 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
+import {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -36,27 +36,23 @@ export function ImageSelector({
 		(state) => state.selectedViewportSize
 	);
 
+	const hasImageTitle = imageTitle && imageTitle !== DEFAULT_IMAGE_TITLE;
+
 	return selectedViewportSize === VIEWPORT_SIZES.desktop ? (
 		<>
 			<ClayForm.Group>
 				<label htmlFor={imageTitleId}>{label}</label>
-				<ClayInput
-					className="page-editor__item-selector__content-input"
-					id={imageTitleId}
-					onClick={() =>
-						openImageSelector((image) => {
-							onImageSelected(image);
-						})
-					}
-					placeholder={Liferay.Language.get('none')}
-					readOnly
-					sizing="sm"
-					value={imageTitle}
-				/>
-			</ClayForm.Group>
-			<ClayButton.Group>
-				<div className="btn-group-item">
-					<ClayButton
+				<ClayInput.Group>
+					<ClayInput
+						className="page-editor__item-selector__content-input"
+						id={imageTitleId}
+						placeholder={Liferay.Language.get('none')}
+						readOnly
+						sizing="sm"
+						value={imageTitle}
+					/>
+					<ClayButtonWithIcon
+						className="ml-2"
 						displayType="secondary"
 						onClick={() =>
 							openImageSelector((image) => {
@@ -64,24 +60,21 @@ export function ImageSelector({
 							})
 						}
 						small
-					>
-						{Liferay.Language.get('select')}
-					</ClayButton>
-				</div>
-				<div className="btn-group-item">
-					<ClayButton
-						borderless
-						disabled={
-							!imageTitle || imageTitle === DEFAULT_IMAGE_TITLE
-						}
-						displayType="secondary"
-						onClick={onClearButtonPressed}
-						small
-					>
-						{Liferay.Language.get('clear')}
-					</ClayButton>
-				</div>
-			</ClayButton.Group>
+						symbol={hasImageTitle ? 'change' : 'plus'}
+					/>
+					{hasImageTitle && (
+						<>
+							<ClayButtonWithIcon
+								className="ml-2"
+								displayType="secondary"
+								onClick={onClearButtonPressed}
+								small
+								symbol="times-circle"
+							/>
+						</>
+					)}
+				</ClayInput.Group>
+			</ClayForm.Group>
 		</>
 	) : (
 		<ReadOnlyImageInput imageTitle={imageTitle} label={label} />

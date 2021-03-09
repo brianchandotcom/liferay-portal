@@ -24,9 +24,11 @@ JSONObject samlSsoLoginContext = (JSONObject)request.getAttribute("SAML_SSO_LOGI
 JSONArray relevantIdpConnectionsJSONArray = samlSsoLoginContext.getJSONArray("relevantIdpConnections");
 %>
 
-<aui:form action='<%= PortalUtil.getPortalURL(request) + "/c/portal/login" %>' method="get" name="fm" style="padding: 1rem;">
-	<aui:input name="saveLastPath" type="hidden" value="<%= false %>" />
+<liferay-portlet:resourceURL id="/saml/send_authn_request" var="sendAuthnRequestURL" />
+
+<aui:form action="<%= sendAuthnRequestURL %>" id="fm" name="fm" style="padding: 1rem;">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="saveLastPath" type="hidden" value="<%= false %>" />
 
 	<c:choose>
 		<c:when test="<%= relevantIdpConnectionsJSONArray.length() > 0 %>">

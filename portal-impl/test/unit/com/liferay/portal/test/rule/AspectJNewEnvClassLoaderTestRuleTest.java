@@ -20,6 +20,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -28,6 +29,11 @@ import org.junit.Test;
  */
 @NewEnv(type = NewEnv.Type.CLASSLOADER)
 public class AspectJNewEnvClassLoaderTestRuleTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@NewEnv(type = NewEnv.Type.NONE)
 	@Test
@@ -70,10 +76,6 @@ public class AspectJNewEnvClassLoaderTestRuleTest {
 		catch (IllegalStateException illegalStateException) {
 		}
 	}
-
-	@Rule
-	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		AspectJNewEnvTestRule.INSTANCE;
 
 	@Aspect
 	private static class AdviceClass1 {

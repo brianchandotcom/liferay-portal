@@ -188,7 +188,8 @@ public class FrameworkRestartTest {
 		ClassLoader classLoader = new URLClassLoader(
 			_getURLS(
 				Assert.class, FrameworkFactory.class,
-				FrameworkRestartTest.class, UnsyncByteArrayOutputStream.class),
+				FrameworkRestartTest.class, LiferayUnitTestRule.class,
+				UnsyncByteArrayOutputStream.class),
 			null);
 
 		Class<?> clazz = classLoader.loadClass(

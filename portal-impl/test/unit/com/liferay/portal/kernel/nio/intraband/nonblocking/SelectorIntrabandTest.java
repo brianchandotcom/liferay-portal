@@ -33,7 +33,7 @@ import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.AdviseWith;
-import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.IOException;
 
@@ -77,7 +77,6 @@ public class SelectorIntrabandTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			AspectJNewEnvTestRule.INSTANCE,
 			new CodeCoverageAssertor() {
 
 				@Override
@@ -85,7 +84,8 @@ public class SelectorIntrabandTest {
 					assertClasses.add(SelectionKeyRegistrationReference.class);
 				}
 
-			});
+			},
+			LiferayUnitTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {

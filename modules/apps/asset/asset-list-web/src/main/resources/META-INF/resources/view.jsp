@@ -25,8 +25,9 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 	navigationItems='<%= assetListDisplayContext.getNavigationItems("collections") %>'
 />
 
-<clay:management-toolbar-v2
-	displayContext="<%= assetListManagementToolbarDisplayContext %>"
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= assetListManagementToolbarDisplayContext %>"
+	propsTransformer="js/ManagementToolbarPropsTransformer"
 />
 
 <portlet:actionURL name="/asset_list/delete_asset_list_entries" var="deleteAssetListEntryURL">

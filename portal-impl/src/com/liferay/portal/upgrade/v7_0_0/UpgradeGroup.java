@@ -17,9 +17,11 @@ package com.liferay.portal.upgrade.v7_0_0;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.upgrade.v7_0_0.util.GroupTable;
+import com.liferay.portal.util.PropsValues;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -60,8 +62,8 @@ public class UpgradeGroup extends UpgradeProcess {
 		for (Long companyId : companyIds) {
 			LocalizedValuesMap localizedValuesMap = new LocalizedValuesMap();
 
-			for (Locale locale :
-					LanguageUtil.getCompanyAvailableLocales(companyId)) {
+			for (String languageId : PropsValues.LOCALES_ENABLED) {
+				Locale locale = LocaleUtil.fromLanguageId(languageId);
 
 				localizedValuesMap.put(
 					locale,

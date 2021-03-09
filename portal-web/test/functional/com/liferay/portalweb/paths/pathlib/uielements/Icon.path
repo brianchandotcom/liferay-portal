@@ -165,7 +165,7 @@
 </tr>
 <tr>
 	<td>EXPORT_DISABLED</td>
-	<td>//button[*[name()='svg'][contains(@class,'icon-download')] and contains(@disabled,'disabled')]</td>
+	<td>//button[*[name()='svg'][contains(@class,'icon-download')] and @disabled]</td>
 	<td></td>
 </tr>
 <tr>

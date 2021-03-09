@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>ELLIPSIS_ICON</td>
+	<td>//nav[contains(@class,'management-bar')]//button[*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FILTER_AND_ORDER</td>
 	<td>//nav[contains(@class,'management-bar')]//*[*[normalize-space(text())='Filter and Order']]</td>
 	<td></td>
@@ -35,7 +40,7 @@
 </tr>
 <tr>
 	<td>ORDER_ICON_GENERIC</td>
-	<td>//nav[contains(@class,'management-bar')]//a[contains(@class,'order') and contains(@class,'active')]</td>
+	<td>//nav[contains(@class,'management-bar')]//a[*[name()='svg'][contains(@class,'icon-order-arrow')]]</td>
 	<td></td>
 </tr>
 <tr>

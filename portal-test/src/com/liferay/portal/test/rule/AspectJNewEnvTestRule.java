@@ -40,6 +40,7 @@ import java.util.List;
 import org.aspectj.lang.annotation.Aspect;
 
 import org.junit.runner.Description;
+import org.junit.runners.model.Statement;
 
 /**
  * @author Shuyang Zhou
@@ -48,6 +49,17 @@ public class AspectJNewEnvTestRule extends NewEnvTestRule {
 
 	public static final AspectJNewEnvTestRule INSTANCE =
 		new AspectJNewEnvTestRule();
+
+	@Override
+	public Statement apply(Statement statement, Description description) {
+		AdviseWith adviseWith = description.getAnnotation(AdviseWith.class);
+
+		if (adviseWith == null) {
+			return statement;
+		}
+
+		return super.apply(statement, description);
+	}
 
 	@Override
 	protected List<String> createArguments(Description description) {

@@ -335,18 +335,27 @@ public class NewEnvTestRule implements TestRule {
 
 	static {
 		try {
-			ProtectionDomain protectionDomain =
-				LiferayUnitTestRule.class.getProtectionDomain();
+			String jvmClassPath = ClassPathUtil.getJVMClassPath(true);
 
-			CodeSource codeSource = protectionDomain.getCodeSource();
+			String classPath = jvmClassPath;
 
-			URL url = codeSource.getLocation();
+			if (!(classPath.contains("com.liferay.portal.test") ||
+				  classPath.contains("portal-test"))) {
 
-			File file = new File(url.toURI());
+				ProtectionDomain protectionDomain =
+					LiferayUnitTestRule.class.getProtectionDomain();
 
-			CLASS_PATH = StringBundler.concat(
-				file.getPath(), File.pathSeparator,
-				ClassPathUtil.getJVMClassPath(true));
+				CodeSource codeSource = protectionDomain.getCodeSource();
+
+				URL url = codeSource.getLocation();
+
+				File file = new File(url.toURI());
+
+				classPath = StringBundler.concat(
+					file.getPath(), File.pathSeparator, classPath);
+			}
+
+			CLASS_PATH = classPath;
 		}
 		catch (URISyntaxException uriSyntaxException) {
 			throw new ExceptionInInitializerError(uriSyntaxException);

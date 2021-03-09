@@ -45,6 +45,9 @@ public class LiferayUnitTestRule extends AggregateTestRule {
 				"com.liferay.portal.test.rule.InitializeKernelUtilTestRule"));
 		testRules.add(
 			new LazyInstanceTestRule(
+				"com.liferay.portal.test.rule.AspectJNewEnvTestRule"));
+		testRules.add(
+			new LazyInstanceTestRule(
 				"com.liferay.portal.kernel.test.rule.NewEnvTestRule"));
 
 		return testRules.toArray(new TestRule[0]);

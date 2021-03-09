@@ -51,7 +51,7 @@ definition {
 				DataEngine.editFieldReferenceOfFieldOption(
 					fieldFieldLabel = "Select from List",
 					fieldReferenceOfFieldOption = "Value${index}",
-					index = "1");
+					index = "${index}");
 
 				var index = ${index} + 1;
 			}

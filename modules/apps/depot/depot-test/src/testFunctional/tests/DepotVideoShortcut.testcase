@@ -67,7 +67,8 @@ definition {
 			entryContent = "video",
 			entryTitle = "Blogs Entry Title",
 			navTab = "Documents and Media",
-			videoShortcutTitle = "Test YouTube Video");
+			videoShortcutTitle = "Test YouTube Video",
+			viewVideoHelpMessage = "true");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 

@@ -23,23 +23,18 @@ import com.liferay.portal.kernel.util.StringBundler;
 
 import java.nio.charset.StandardCharsets;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Edward C. Han
  * @author Shanon Mathai
  */
-@Component(immediate = true, service = GCSKeyTransformer.class)
-public class GCSKeyTransformerImpl implements GCSKeyTransformer {
+public class GCSKeyTransformerImpl {
 
-	@Override
 	public String getDirectoryKey(
 		long companyId, long repositoryId, String folderName) {
 
 		return getFileKey(companyId, repositoryId, folderName);
 	}
 
-	@Override
 	public String getFileKey(
 		long companyId, long repositoryId, String fileName) {
 
@@ -53,7 +48,6 @@ public class GCSKeyTransformerImpl implements GCSKeyTransformer {
 		return sb.toString();
 	}
 
-	@Override
 	public String getFileVersionKey(
 		long companyId, long repositoryId, String fileName,
 		String versionLabel) {
@@ -70,7 +64,6 @@ public class GCSKeyTransformerImpl implements GCSKeyTransformer {
 		return sb.toString();
 	}
 
-	@Override
 	public String getRepositoryKey(long companyId, long repositoryId) {
 		return companyId + StringPool.SLASH + repositoryId;
 	}

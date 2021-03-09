@@ -922,27 +922,27 @@ definition {
 
 		var portalURL = PropsUtil.get("portal.url");
 
-		Navigator.openSpecificURL(url = "${portalURL}/es/group/guest/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		Click.waitForMenuToggleJSClick(
-			key_webContentTitle = "WC WebContent Título",
-			locator1 = "WC#ENTRY_LIST_MENULIST_ICON");
-
-		MenuItem.click(menuItem = "Editar");
-
-		PortletEntry.changeLocale(locale = "es-ES");
-
-		WebContent.viewCP(
-			otherLocaleSummary = "Resumen",
-			webContentDecimal = "22,0",
-			webContentDescription = "WC WebContent Descripción",
-			webContentHTML = "${webContentHTML}",
-			webContentNumber = "200",
+		WebContent.viewWithStructureCP(
+			description = "WC WebContent Descripción",
+			webContentLocaleFieldLabel = "es-ES",
+			webContentNumeric = "200",
+			webContentRichText = "Este es un título HTML",
 			webContentText = "Mensaje de texto",
-			webContentTextBox = "Este es un cuadro de texto.",
-			webContentTitle = "WC WebContent Título");
+			webContentTitle = "WC WebContent Title",
+			webContentTitleTranslated = "WC WebContent Título");
+
+		WebContent.viewWithStructureCP(
+			predefinedValue = "true",
+			webContentNumeric = "22,0",
+			webContentNumericFieldLabel = "Decimal");
+
+		WebContent.viewWithStructureCP(
+			fieldType = "Multiple Lines",
+			predefinedValue = "true",
+			webContentText = "Este es un cuadro de texto.",
+			webContentTextFieldLabel = "Text Box");
 	}
 
 	@description = "This ensures that the user can not translate a web content without any languages permissions."

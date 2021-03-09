@@ -190,7 +190,7 @@ definition {
 
 		ReportsAdmin.addReportEntry(
 			emailNotificationsAddress = PropsUtil.get("email.address.4"),
-			emailRecipientAddress = PropsUtil.get("email.address.2"),
+			emailRecipientAddress = PropsUtil.get("email.address.3"),
 			reportFormat = "pdf",
 			reportsDefinitionName = "Reports Definition Name");
 
@@ -213,13 +213,13 @@ definition {
 		Gmail.deleteSpecificMail(gmailMessageTitleList = "New Report From QA: reports_admin_template_source_sample_class_name.pdf");
 
 		Gmail.logoutAndLogin(
-			userEmailAddress = PropsUtil.get("email.address.2"),
-			userPassword = PropsUtil.get("email.password.2"));
+			userEmailAddress = PropsUtil.get("email.address.3"),
+			userPassword = PropsUtil.get("email.password.3"));
 
 		Gmail.gotoHtmlMode();
 
 		Gmail.viewMail(
-			emailFromUserName = "me",
+			emailFromUserName = "Liferay QA",
 			gmailAssetType = "New Report From QA: reports_admin_template_source_sample_class_name.pdf",
 			gmailMessageAttachment = "reports_admin_template_source_sample_class_name.pdf",
 			gmailMessageBody = "Please review the attached report from your friends in QA!",

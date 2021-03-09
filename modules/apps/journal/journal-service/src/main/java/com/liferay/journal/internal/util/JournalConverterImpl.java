@@ -134,7 +134,7 @@ public class JournalConverterImpl implements JournalConverter {
 		DDMForm ddmForm = ddmStructure.getDDMForm();
 
 		Map<String, List<Element>> dynamicElementElementsMap =
-			_mapDynamicElements(rootElement);
+			_getDynamicElements(rootElement);
 
 		for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
 			addDDMFields(
@@ -198,7 +198,7 @@ public class JournalConverterImpl implements JournalConverter {
 				_addNestedDDMFields(
 					availableLanguageIds, defaultLanguageId, ddmFields,
 					ddmFormField, ddmStructure,
-					_mapDynamicElements(dynamicElementElement),
+					_getDynamicElements(dynamicElementElement),
 					dynamicElementElement.attributeValue("instance-id"));
 			}
 		}
@@ -656,7 +656,7 @@ public class JournalConverterImpl implements JournalConverter {
 		return jsonArray.toString();
 	}
 
-	private Map<String, List<Element>> _mapDynamicElements(
+	private Map<String, List<Element>> _getDynamicElements(
 		Element rootElement) {
 
 		Map<String, List<Element>> dynamicElementElementsMap = new HashMap<>();

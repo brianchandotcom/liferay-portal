@@ -31,5 +31,11 @@
 				margin: 0;
 			}
 		}
+
+		.btn {
+			&:nth-last-child(2) {
+				margin: 0;
+			}
+		}
 	}
 }

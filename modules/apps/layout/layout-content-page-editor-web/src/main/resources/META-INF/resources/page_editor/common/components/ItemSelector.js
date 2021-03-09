@@ -56,6 +56,8 @@ export default function ItemSelector({
 			transformValueCallback,
 		});
 
+	const selectContentIcon = selectedItemTitle ? 'change' : 'plus';
+
 	return (
 		<>
 			{label && <label htmlFor={itemSelectorInputId}>{label}</label>}
@@ -91,7 +93,7 @@ export default function ItemSelector({
 									displayType="secondary"
 									onClick={() => setActive(true)}
 									small
-									symbol="plus"
+									symbol={selectContentIcon}
 								/>
 							}
 						>
@@ -128,9 +130,24 @@ export default function ItemSelector({
 							displayType="secondary"
 							onClick={openModal}
 							small
-							symbol="plus"
+							symbol={selectContentIcon}
 						/>
 					))}
+
+				{selectedItemTitle && (
+					<ClayButtonWithIcon
+						aria-label={Liferay.Language.get(
+							'clear-content-button'
+						)}
+						className={
+							'ml-2 page-editor__item-selector__content-button'
+						}
+						displayType="secondary"
+						onClick={() => onItemSelect({})}
+						small
+						symbol="times-circle"
+					/>
+				)}
 			</div>
 		</>
 	);

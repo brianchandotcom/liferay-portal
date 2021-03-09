@@ -620,9 +620,9 @@ definition {
 
 		Click(locator1 = "Form#UNPUBLISH_FORM_BUTTON");
 
-		var key_uniqueSuccess = "The form was unpublished successfully.";
+		var key_successMessage = "Your request completed successfully.";
 
-		AssertElementPresent(locator1 = "Message#UNIQUE_SUCCESS");
+		AssertElementPresent(locator1 = "Form#UNPUBLISH_FORM_MESSAGE_SUCCESS");
 	}
 
 	macro validateNoFieldLabel {

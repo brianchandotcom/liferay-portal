@@ -69,6 +69,11 @@
     <td></td>
 </tr>
 <tr>
+    <td>UNPUBLISH_FORM_MESSAGE_SUCCESS</td>
+    <td>//div[contains(@class,'alert-notifications')]//div[contains(@class,'alert') and contains(@class,'alert-success')]//div[contains(@class,'autofit-section')]//div[contains(.,'${key_successMessage}')]</td>
+    <td></td>
+</tr>
+<tr>
     <td>FORM_PAGE</td>
     <td>//ol[contains(@class,'multi-step-nav')]//li/div[contains(.,'${key_formPageName}')]</td>
     <td></td>

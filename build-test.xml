@@ -7253,6 +7253,15 @@ virtualHostname="localhost"
 				</not>
 			</and>
 			<then>
+				<local name="fixpack.version" />
+
+				<if>
+					<matches pattern="https?://" string="${test.build.fix.pack.zip.url}" />
+					<then>
+						<get-fixpack-version patch.file.zip.url="${test.build.fix.pack.zip.url}" />
+					</then>
+				</if>
+
 				<for param="app.file.path">
 					<path>
 						<fileset
@@ -7275,10 +7284,8 @@ virtualHostname="localhost"
 						<local name="sync.connector.override" />
 
 						<if>
-							<matches pattern="https?://" string="${test.build.fix.pack.zip.url}" />
+							<isset property="fixpack.version" />
 							<then>
-								<get-fixpack-version patch.file.zip.url="${test.build.fix.pack.zip.url}" />
-
 								<beanshell>
 									<![CDATA[
 										String appFileName = project.getProperty("app.file.name");

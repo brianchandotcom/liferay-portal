@@ -613,6 +613,7 @@ definition {
 		property liferay.dependency.jars = "com.liferay.oauth2.provider.scope.sample.qa.jar";
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.scope.internal.configuration.ConfigurableScopeMapperConfiguration-default.config";
 		property osgi.module.configurations = "mapping=[&quot;example-scope-1,example-scope-2\=everything&quot;]${line.separator}osgi.jaxrs.name=&quot;liferay-oauth2-scope-sample-qa-app&quot;${line.separator}passthrough=&quot;true&quot;";
+		property test.name.skip.portal.instance = "OAuth2#EditApplicationScopesAndViewLanguageKeys";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -1085,6 +1086,7 @@ definition {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.scope.internal.configuration.BundlePrefixHandlerFactoryConfiguration-default.config";
 		property osgi.module.configurations = "include.bundle.symbolic.name=&quot;false&quot;${line.separator}osgi.jaxrs.name=&quot;Default&quot;${line.separator}separator=&quot;&quot;${line.separator}service.properties=&quot;&quot;";
+		property test.name.skip.portal.instance = "OAuth2#ViewAuthPromptRequestedScopes";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Security",

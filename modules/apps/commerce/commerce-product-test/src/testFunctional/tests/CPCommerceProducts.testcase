@@ -107,8 +107,9 @@ definition {
 	}
 
 	test ProductPublishing {
-		property environment.acceptance = "true";
-		property portal.acceptance = "true";
+		property environment.acceptance = "quarantine";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "CPCommerceProducts#ProductPublishing";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");

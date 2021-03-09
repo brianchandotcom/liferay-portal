@@ -40,6 +40,11 @@ public class LayoutClassedModelUsagesManagementToolbarDisplayContext
 	}
 
 	@Override
+	public Boolean isSelectable() {
+		return false;
+	}
+
+	@Override
 	protected String[] getOrderByKeys() {
 		return new String[] {"modified-date"};
 	}

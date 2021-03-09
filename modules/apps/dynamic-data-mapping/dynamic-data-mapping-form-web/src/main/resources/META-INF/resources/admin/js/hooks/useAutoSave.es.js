@@ -69,19 +69,21 @@ const defineIds = (portletNamespace, response) => {
 const updateAutoSaveMessage = ({
 	modifiedDate,
 	portletNamespace,
-	savedAsDraft,
+	saveAsDraft,
 }) => {
 	const autoSaveMessageNode = document.querySelector(
 		`#${portletNamespace}autosaveMessage`
 	);
 
 	autoSaveMessageNode.innerHTML = sub(
-		savedAsDraft
+		saveAsDraft
 			? Liferay.Language.get('draft-x')
 			: Liferay.Language.get('saved-x'),
 		[modifiedDate]
 	);
 };
+
+const MILLISECONDS_TO_MINUTE = 60000;
 
 /**
  * AutoSave performs a periodic routine in minutes to save the current form. Save will
@@ -89,7 +91,7 @@ const updateAutoSaveMessage = ({
  *
  * Each time the rules are changed, the form is saved.
  */
-export const AutoSaveProvider = ({children, interval, url}) => {
+export const AutoSaveProvider = ({children, interval, published, url}) => {
 	const {portletNamespace} = useConfig();
 	const {
 		availableLanguageIds,
@@ -148,6 +150,7 @@ export const AutoSaveProvider = ({children, interval, url}) => {
 				body: getFormData({
 					name: localizedName,
 					portletNamespace,
+					published,
 					saveAsDraft,
 				}),
 				url,
@@ -176,12 +179,13 @@ export const AutoSaveProvider = ({children, interval, url}) => {
 			return pendingRequestRef.current;
 		},
 		[
-			pendingRequestRef,
-			lastKnownHashRef,
-			getCurrentStateHash,
 			doSyncInput,
+			getCurrentStateHash,
+			lastKnownHashRef,
 			localizedName,
+			pendingRequestRef,
 			portletNamespace,
+			published,
 			url,
 		]
 	);
@@ -198,16 +202,16 @@ export const AutoSaveProvider = ({children, interval, url}) => {
 					.catch((error) => console.error(error));
 			}
 			else if (!isSaved() && !FormSupport.isEmpty(pages)) {
-				doSave();
+				doSave(!published);
 			}
 		}
-	}, [pendingRequestRef, isMounted, pages, doSave, isSaved]);
+	}, [doSave, isMounted, isSaved, pages, pendingRequestRef, published]);
 
 	useEffect(() => {
 		if (interval > 0) {
 			intervalIdRef.current = setInterval(
 				() => performSave(),
-				interval * 60000
+				interval * MILLISECONDS_TO_MINUTE
 			);
 		}
 

@@ -334,6 +334,22 @@ definition {
 		Button.clickSave();
 
 		AssertElementPresent(locator1 = "Message#SUCCESS");
+
+		Click(
+			key_menuTab = "General",
+			locator1 = "CommerceEntry#MENU_TAB");
+
+		for (var fixIssueButtonName : list "Product Detail,Product Compare,Commerce Cart,Checkout") {
+			WaitForElementPresent(
+				key_fixIssueButtonName = "${fixIssueButtonName}",
+				locator1 = "CommerceEntry#FIX_ISSUE_BUTTON");
+
+			Click(
+				key_fixIssueButtonName = "${fixIssueButtonName}",
+				locator1 = "CommerceEntry#FIX_ISSUE_BUTTON");
+
+			Alert.viewSuccessMessage();
+		}
 	}
 
 	macro commerceStoreFrontTearDown {

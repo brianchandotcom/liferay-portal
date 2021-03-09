@@ -261,10 +261,8 @@ public class JournalTransformer {
 						themeDisplay, rootElement,
 						ddmForm.getDDMFormFieldsMap(true), locale);
 
-					if (templateNodes != null) {
-						for (TemplateNode templateNode : templateNodes) {
-							template.put(templateNode.getName(), templateNode);
-						}
+					for (TemplateNode templateNode : templateNodes) {
+						template.put(templateNode.getName(), templateNode);
 					}
 
 					if (portletRequestModel != null) {

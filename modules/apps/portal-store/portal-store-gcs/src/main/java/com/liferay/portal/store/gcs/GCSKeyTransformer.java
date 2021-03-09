@@ -27,7 +27,7 @@ import java.nio.charset.StandardCharsets;
  * @author Edward C. Han
  * @author Shanon Mathai
  */
-public class GCSKeyTransformerImpl {
+public class GCSKeyTransformer {
 
 	public String getDirectoryKey(
 		long companyId, long repositoryId, String folderName) {

@@ -719,7 +719,6 @@ public class GCSStore implements Store {
 	private BucketInfo _bucketInfo;
 	private Storage _gcsStore;
 	private GCSStoreConfiguration _gcsStoreConfiguration;
-	private final GCSKeyTransformerImpl _keyTransformer =
-		new GCSKeyTransformerImpl();
+	private final GCSKeyTransformer _keyTransformer = new GCSKeyTransformer();
 
 }

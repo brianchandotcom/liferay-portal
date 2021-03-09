@@ -87,6 +87,12 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_segments_web_internal_portlet_SegmentsPortlet");
 	}
 
+	macro openSegmentOptions {
+		if (IsElementPresent(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS")) {
+			Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+		}
+	}
+
 	macro selectOrganization {
 		Click(locator1 = "Segmentation#ORGANIZATION_MENU");
 	}

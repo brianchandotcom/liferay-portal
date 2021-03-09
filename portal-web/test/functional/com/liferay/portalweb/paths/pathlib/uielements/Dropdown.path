@@ -9,6 +9,16 @@
 </thead>
 <tbody>
 <tr>
+	<td>ANY_DISABLED</td>
+	<td>//*[contains(@class, 'dropdown')]//*[contains(@class, 'disabled') and contains(text(), '${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANY_ENABLED</td>
+	<td>//*[contains(@class, 'dropdown')]//*[not(contains(@class, 'disabled') and contains(text(),'${key_text}'))]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CAPTION</td>
 	<td>//div[contains(@class,'caption') and normalize-space()='${key_caption}']</td>
 	<td></td>

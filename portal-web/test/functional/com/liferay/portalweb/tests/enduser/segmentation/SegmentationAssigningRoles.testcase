@@ -120,6 +120,67 @@ definition {
 		}
 	}
 
+	@description = "Validate if, with the option Enable Assign roles by segments disabled, the option Assign Site Roles is disabled"
+	@priority = "5"
+	test AssignSiteRolesOptionDisabled {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "SegmentationAssigningRoles#AssignSiteRolesOptionDisabled";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "People",
+			portlet = "Segments");
+
+		if (IsElementPresent(locator1 = "Segmentation#SEGMENT_LIST")) {
+			Segmentation.tearDown();
+		}
+
+		LexiconEntry.gotoAdd();
+
+		Segmentation.addProperties(propertyOption = "Email Address");
+
+		Segmentation.fillTitle(titleField = "Segment Email Liferay");
+
+		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Contains");
+
+		Segmentation.fillProperty(PropertyField = "liferay");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+		
+		Segmentation.openSegmentOptions();
+
+		AssertElementPresent(
+			key_text = "",
+			locator1 = "Dropdown#ANY_DISABLED");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Segments",
+			configurationName = "Segments Service",
+			configurationScope = "System Scope");
+
+		Segmentation.enableAssingRolesBySegmentsCheckbox();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "People",
+			portlet = "Segments");
+		
+		Segmentation.openSegmentOptions();
+
+		AssertElementPresent(
+			key_text = "Assign Site Roles",
+			locator1 = "Dropdown#ANY_ENABLED");
+	}
+
 	@description = "Validate if, with the option Enable Assign roles by segments disabled, the role is not working for the user"
 	@priority = "5"
 	test DisableAssignRolesBySegment {

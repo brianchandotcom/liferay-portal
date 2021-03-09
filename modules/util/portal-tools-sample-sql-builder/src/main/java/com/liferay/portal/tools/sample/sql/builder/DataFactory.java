@@ -719,8 +719,6 @@ public class DataFactory {
 
 		List<AssetCategoryModel> assetCategoryModels = new ArrayList<>();
 
-		StringBundler sb = new StringBundler(4);
-
 		List<AssetCategoryModel> groupAssetCategoryModels = new ArrayList<>(
 			BenchmarksPropsValues.MAX_ASSET_VUCABULARY_COUNT *
 				BenchmarksPropsValues.MAX_ASSET_CATEGORY_COUNT);
@@ -731,15 +729,11 @@ public class DataFactory {
 			for (int k = 0; k < BenchmarksPropsValues.MAX_ASSET_CATEGORY_COUNT;
 				 k++) {
 
-				sb.setIndex(0);
-
-				sb.append("TestCategory_");
-				sb.append(assetVocabularyModel.getVocabularyId());
-				sb.append(StringPool.UNDERLINE);
-				sb.append(k);
-
 				AssetCategoryModel assetCategoryModel = newAssetCategoryModel(
-					groupId, sb.toString(),
+					groupId,
+					StringBundler.concat(
+						"TestCategory_", assetVocabularyModel.getVocabularyId(),
+						StringPool.UNDERLINE, k),
 					assetVocabularyModel.getVocabularyId());
 
 				groupAssetCategoryModels.add(assetCategoryModel);
@@ -1027,20 +1021,13 @@ public class DataFactory {
 	public List<AssetVocabularyModel> newAssetVocabularyModels(long groupId) {
 		List<AssetVocabularyModel> assetVocabularyModels = new ArrayList<>();
 
-		StringBundler sb = new StringBundler(4);
-
 		for (int j = 0; j < BenchmarksPropsValues.MAX_ASSET_VUCABULARY_COUNT;
 			 j++) {
 
-			sb.setIndex(0);
-
-			sb.append("TestVocabulary_");
-			sb.append(groupId);
-			sb.append(StringPool.UNDERLINE);
-			sb.append(j);
-
 			AssetVocabularyModel assetVocabularyModel = newAssetVocabularyModel(
-				groupId, _sampleUserId, _SAMPLE_USER_NAME, sb.toString());
+				groupId, _sampleUserId, _SAMPLE_USER_NAME,
+				StringBundler.concat(
+					"TestVocabulary_", groupId, StringPool.UNDERLINE, j));
 
 			assetVocabularyModels.add(assetVocabularyModel);
 		}

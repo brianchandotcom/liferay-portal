@@ -36,8 +36,8 @@ if (parentContainerId > 0) {
 long[] groupIds = viewUADEntitiesDisplay.getGroupIds();
 %>
 
-<clay:management-toolbar-v2
-	displayContext="<%= new ViewUADEntitiesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, viewUADEntitiesDisplay) %>"
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= new ViewUADEntitiesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, viewUADEntitiesDisplay) %>"
 />
 
 <aui:form method="post" name="viewUADEntitiesFm">

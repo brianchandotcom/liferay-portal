@@ -45,8 +45,8 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 	%>'
 />
 
-<clay:management-toolbar-v2
-	displayContext="<%= uadExportProcessManagementToolbarDisplayContext %>"
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= uadExportProcessManagementToolbarDisplayContext %>"
 />
 
 <aui:form cssClass="container-fluid container-fluid-max-xl">

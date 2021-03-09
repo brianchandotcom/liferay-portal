@@ -60,10 +60,9 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 				}
 				%>
 
-				<clay:management-toolbar-v2
+				<clay:management-toolbar
 					disabled="<%= disableManagementBar %>"
 					itemsTotal="<%= uadApplicationExportDisplayList.size() %>"
-					namespace="<%= liferayPortletResponse.getNamespace() %>"
 					searchContainerId="uadApplicationExportDisplay"
 					selectable="<%= true %>"
 					showSearch="<%= false %>"

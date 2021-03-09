@@ -86,6 +86,10 @@ public class GCSStore implements Store {
 			String versionLabel, InputStream inputStream)
 		throws PortalException {
 
+		if (hasFile(companyId, repositoryId, fileName, versionLabel)) {
+			deleteFile(companyId, repositoryId, fileName, versionLabel);
+		}
+
 		String fileVersionKey = _keyTransformer.getFileVersionKey(
 			companyId, repositoryId, fileName, versionLabel);
 

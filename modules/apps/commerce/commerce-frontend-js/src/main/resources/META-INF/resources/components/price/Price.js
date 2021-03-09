@@ -71,6 +71,10 @@ function Price({
 		};
 	}, [namespace]);
 
+	useEffect(() => {
+		setActivePrice(adaptLegacyPriceModel(price));
+	}, [price]);
+
 	const Component = (
 		<>
 			<span className="price-label">
@@ -139,7 +143,14 @@ function Price({
 	return standalone ? (
 		Component
 	) : (
-		<div className={classnames({compact, price: true})}>{Component}</div>
+		<div
+			className={classnames({
+				compact,
+				price: true,
+			})}
+		>
+			{Component}
+		</div>
 	);
 }
 

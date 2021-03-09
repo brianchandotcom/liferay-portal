@@ -333,6 +333,52 @@ public class GetDataMVCResourceCommandTest {
 	}
 
 	@Test
+	public void testGetEndpoints() throws Exception {
+		MockContextUtil.testWithMockContext(
+			MockContextUtil.MockContext.builder(
+			).mockObjectAnalyticsReportsInfoItem(
+				MockObjectAnalyticsReportsInfoItem.builder(
+				).build()
+			).build(),
+			() -> {
+				MockLiferayResourceResponse mockLiferayResourceResponse =
+					new MockLiferayResourceResponse();
+
+				_mvcResourceCommand.serveResource(
+					_getMockLiferayResourceRequest(
+						new InfoItemReference(MockObject.class.getName(), 0L)),
+					mockLiferayResourceResponse);
+
+				ByteArrayOutputStream byteArrayOutputStream =
+					(ByteArrayOutputStream)
+						mockLiferayResourceResponse.getPortletOutputStream();
+
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+					new String(byteArrayOutputStream.toByteArray()));
+
+				JSONObject contextJSONObject = jsonObject.getJSONObject(
+					"context");
+
+				JSONObject endpointsJSONObject =
+					contextJSONObject.getJSONObject("endpoints");
+
+				Assert.assertNull(
+					endpointsJSONObject.get(
+						"analyticsReportsHistoricalReadsURL"));
+				Assert.assertNotNull(
+					endpointsJSONObject.get(
+						"analyticsReportsHistoricalViewsURL"));
+				Assert.assertNull(
+					endpointsJSONObject.get("analyticsReportsTotalReadsURL"));
+				Assert.assertNotNull(
+					endpointsJSONObject.get("analyticsReportsTotalViewsURL"));
+				Assert.assertNotNull(
+					endpointsJSONObject.get(
+						"analyticsReportsTrafficSourcesURL"));
+			});
+	}
+
+	@Test
 	public void testGetViewURLs() throws Exception {
 		MockContextUtil.testWithMockContext(
 			MockContextUtil.MockContext.builder(

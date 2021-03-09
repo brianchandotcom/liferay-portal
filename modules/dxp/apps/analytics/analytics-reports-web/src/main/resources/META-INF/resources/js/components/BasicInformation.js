@@ -110,7 +110,7 @@ Author.propTypes = {
 };
 
 BasicInformation.propTypes = {
-	author: PropTypes.object.isRequired,
+	author: PropTypes.object,
 	canonicalURL: PropTypes.string.isRequired,
 	languageTag: PropTypes.string.isRequired,
 	publishDate: PropTypes.string.isRequired,

@@ -53,6 +53,16 @@ definition {
 			AssertAlertNotPresent();
 		}
 
+		if (isSet(viewVideoHelpMessage)) {
+			Pause(locator1 = "3000");
+
+			Click.clickNoMouseOverNoWaitForVisible(locator1 = "BlogsEntry#VIDEO_EMBED_HELP_MESSAGE");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "BlogsEntry#VIDEO_EMBED_HELP_MESSAGE",
+				value1 = "Video playback is disabled during edit mode");
+		}
+
 		PortletEntry.publish();
 	}
 

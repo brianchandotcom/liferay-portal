@@ -86,10 +86,9 @@ public class GCSStore implements Store {
 		String fileVersionKey = _keyTransformer.getFileVersionKey(
 			companyId, repositoryId, fileName, versionLabel);
 
-		BlobInfo.Builder builder = BlobInfo.newBuilder(
-			_getBucketInfo(), fileVersionKey);
-
-		BlobInfo blobInfo = builder.build();
+		BlobInfo blobInfo = BlobInfo.newBuilder(
+			_getBucketInfo(), fileVersionKey
+		).build();
 
 		try (WriteChannel writer = _getWriter(blobInfo)) {
 			_writeInputStream(inputStream, writer);
@@ -131,14 +130,13 @@ public class GCSStore implements Store {
 		long companyId, long repositoryId, String fileName,
 		String versionLabel) {
 
-		return Channels.newInputStream(
-			_getReader(
-				_gcsStore.get(
-					BlobId.of(
-						_gcsStoreConfiguration.bucketName(),
-						_getHeadVersionLabel(
-							companyId, repositoryId, fileName,
-							versionLabel)))));
+		String pathName = _getHeadVersionLabel(
+			companyId, repositoryId, fileName, versionLabel);
+
+		Blob blob = _gcsStore.get(
+			BlobId.of(_gcsStoreConfiguration.bucketName(), pathName));
+
+		return Channels.newInputStream(_getReader(blob));
 	}
 
 	@Override
@@ -206,12 +204,13 @@ public class GCSStore implements Store {
 		long companyId, long repositoryId, String fileName,
 		String versionLabel) {
 
+		String path = _keyTransformer.getFileVersionKey(
+			companyId, repositoryId, fileName, versionLabel);
+
 		Page<Blob> blobPage = _gcsStore.list(
 			_gcsStoreConfiguration.bucketName(),
 			Storage.BlobListOption.pageSize(1),
-			Storage.BlobListOption.prefix(
-				_keyTransformer.getFileVersionKey(
-					companyId, repositoryId, fileName, versionLabel)));
+			Storage.BlobListOption.prefix(path));
 
 		Iterable<Blob> filesFoundIterable = blobPage.getValues();
 

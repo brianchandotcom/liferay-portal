@@ -30,6 +30,77 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-128645. Map custom field to text fragment."
+	@priority = "4"
+	test MapCustomFieldToTextFragment {
+		task ("Add a custom field for Document") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Custom Fields");
+
+			CustomFields.addCP(
+				customFieldName = "Short Description",
+				customFieldType = "Input Field",
+				customInputDataType = "Text",
+				resourceName = "Document");
+		}
+
+		task ("Add a document based on Basic Document") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+			DMDocument.addCP(
+				customFieldText = "This is a short description",
+				dmDocumentFile = "Document_1.jpg",
+				dmDocumentTitle = "DM Title");
+		}
+
+		task ("Add a display page template with Document and Basic Document") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.addDisplayPage(
+				contentType = "Document",
+				displayPageName = "DPT Name",
+				subType = "Basic Document");
+		}
+
+		task ("Add a Heading fragment to display page template") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Map custom field to editable field of Heading") {
+			PageEditorMapping.mapEditableTextToField(
+				field = "short description",
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Mark the display page template as default") {
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "DPT Name");
+		}
+
+		task ("Assert the mapped custom field is shown in display page template") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+			var fileEntryID = DMDocument.getFileEntryID(dmDocumentTitle = "DM Title");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/d/${fileEntryID}");
+
+			AssertTextEquals(
+				locator1 = "ControlMenu#HEADING",
+				value1 = "DPT Name");
+
+			AssertTextEquals(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "This is a short description");
+		}
+	}
+
 	@description = "This is a test for LPS-98031. Map manual URL to image fragment."
 	@priority = "4"
 	test MapManualURLToImageFragment {

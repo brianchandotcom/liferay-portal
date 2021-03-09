@@ -19,6 +19,7 @@
 	const CONTAINERS_SYMBOL = Symbol.for('__LIFERAY_WEBPACK_CONTAINERS__');
 	const GET_MODULE_SYMBOL = Symbol.for('__LIFERAY_WEBPACK_GET_MODULE__');
 	const SHARED_SCOPE_SYMBOL = Symbol.for('__LIFERAY_WEBPACK_SHARED_SCOPE__');
+	const WEBPACK_HELPERS_SYMBOL = Symbol.for('__LIFERAY_WEBPACK_HELPERS__');
 
 	window[CONTAINER_REQUESTS_SYMBOL] = window[CONTAINER_REQUESTS_SYMBOL] || {};
 	window[CONTAINERS_SYMBOL] = window[CONTAINERS_SYMBOL] || {};
@@ -84,6 +85,20 @@
 	}
 
 	/**
+	 * Transform a webpack chunk script file name.
+	 *
+	 * The webpack federation runtimes for projects built with npm-scripts
+	 * delegate to this method the logic to compose the URL to retrieve the
+	 * chunk files from server.
+	 */
+	function transformChunkScriptFilename(chunkScriptFileName) {
+		return (
+			chunkScriptFileName + '?languageId=' +
+				Liferay.ThemeDisplay.getLanguageId()
+		);
+	}
+
+	/**
 	 * Compute container URL for a given containerId
 	 */
 	function getContainerURL(containerId) {
@@ -98,7 +113,10 @@
 			containerId = containerId.substr(i + 1);
 		}
 
-		return '/o/' + containerId + '/__generated__/container.js';
+		return (
+			'/o/' + containerId + '/__generated__/container.js?languageId=' +
+				Liferay.ThemeDisplay.getLanguageId()
+		);
 	}
 
 	/**
@@ -387,4 +405,7 @@
 	}
 
 	window[GET_MODULE_SYMBOL] = getModule;
+	window[WEBPACK_HELPERS_SYMBOL] = {
+		transformChunkScriptFilename
+	};
 })();

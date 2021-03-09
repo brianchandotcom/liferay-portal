@@ -61,7 +61,7 @@ const Link = ({url}) => {
 						</ClayForm.FeedbackGroup>
 					)}
 				</ClayInput.GroupItem>
-				<ClayInput.GroupItem append>
+				<ClayInput.GroupItem append shrink>
 					<ClayButton
 						aria-label={
 							success

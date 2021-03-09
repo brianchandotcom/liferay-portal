@@ -12,44 +12,54 @@
  * details.
  */
 
-import {
-	DefaultEventHandler,
-	addParams,
-	openSelectionModal,
-} from 'frontend-js-web';
+import {addParams, openSelectionModal} from 'frontend-js-web';
 
-class AssetCategoriesManagementToolbarDefaultEventHandler extends DefaultEventHandler {
-	deleteSelectedCategories() {
+export default function propsTransformer({portletNamespace, ...otherProps}) {
+	const deleteSelectedCategories = () => {
 		if (
 			confirm(
 				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
 			)
 		) {
-			submitForm(this.one('#fm'));
+			const form = document.getElementById(`${portletNamespace}fm`);
+
+			if (form) {
+				submitForm(form);
+			}
 		}
-	}
+	};
 
-	selectCategory(itemData) {
-		const namespace = this.namespace;
-
+	const selectCategory = (itemData) => {
 		openSelectionModal({
-			onSelect: (selectedItem) => {
+			onSelect(selectedItem) {
 				const category = selectedItem
 					? selectedItem[Object.keys(selectedItem)[0]]
 					: null;
 
 				if (category) {
 					location.href = addParams(
-						namespace + 'categoryId=' + category.categoryId,
+						`${portletNamespace}categoryId=${category.categoryId}`,
 						itemData.viewCategoriesURL
 					);
 				}
 			},
-			selectEventName: this.ns('selectCategory'),
+			selectEventName: `${portletNamespace}selectCategory`,
 			title: Liferay.Language.get('select-category'),
 			url: itemData.categoriesSelectorURL,
 		});
-	}
-}
+	};
 
-export default AssetCategoriesManagementToolbarDefaultEventHandler;
+	return {
+		...otherProps,
+		onActionButtonClick(event, {item}) {
+			const action = item.data?.action;
+
+			if (action === 'deleteSelectedCategories') {
+				deleteSelectedCategories();
+			}
+			else if (action === 'selectCategory') {
+				selectCategory();
+			}
+		},
+	};
+}

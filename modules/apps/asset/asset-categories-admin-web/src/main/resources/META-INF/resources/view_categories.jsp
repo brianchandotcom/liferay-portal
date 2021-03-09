@@ -20,8 +20,9 @@
 AssetCategoriesManagementToolbarDisplayContext assetCategoriesManagementToolbarDisplayContext = new AssetCategoriesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, assetCategoriesDisplayContext);
 %>
 
-<clay:management-toolbar-v2
-	displayContext="<%= assetCategoriesManagementToolbarDisplayContext %>"
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= assetCategoriesManagementToolbarDisplayContext %>"
+	propsTransformer="js/AssetCategoriesManagementToolbarPropsTransformer"
 />
 
 <portlet:actionURL name="deleteCategory" var="deleteCategoryURL">
@@ -162,8 +163,3 @@ AssetCategoriesManagementToolbarDisplayContext assetCategoriesManagementToolbarD
 	<aui:input name="parentCategoryId" type="hidden" />
 	<aui:input name="vocabularyId" type="hidden" />
 </aui:form>
-
-<liferay-frontend:component
-	componentId="<%= assetCategoriesManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/AssetCategoriesManagementToolbarDefaultEventHandler.es"
-/>

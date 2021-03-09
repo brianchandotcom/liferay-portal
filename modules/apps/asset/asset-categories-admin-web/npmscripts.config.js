@@ -16,7 +16,7 @@ module.exports = {
 	federation: {
 		exposes: [
 			'<inputDir>/js/ActionsComponentPropsTransformer.js',
-			'<inputDir>/js/AssetCategoriesManagementToolbarDefaultEventHandler.es.js',
+			'<inputDir>/js/AssetCategoriesManagementToolbarPropsTransformer.js',
 			'<inputDir>/js/AssetCategoriesSelectorTag.es.js',
 		],
 		mode: 'default',

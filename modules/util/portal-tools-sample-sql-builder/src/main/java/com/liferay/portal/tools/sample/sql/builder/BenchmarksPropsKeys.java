@@ -155,6 +155,12 @@ public interface BenchmarksPropsKeys {
 	public static final String MAX_USER_TO_GROUP_COUNT =
 		"sample.sql.max.user.to.group.count";
 
+	public static final String MAX_VIRTUAL_INSTANCE_COUNT =
+		"sample.sql.max.virtual.instance.count";
+
+	public static final String MAX_VIRTUAL_INSTANCE_USER_COUNT =
+		"sample.sql.max.virtual.instance.user.count";
+
 	public static final String MAX_WIKI_NODE_COUNT =
 		"sample.sql.max.wiki.node.count";
 

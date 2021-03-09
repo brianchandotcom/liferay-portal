@@ -23,7 +23,10 @@ public class UpgradeRatingsMVCCVersion extends UpgradeMVCCVersion {
 
 	@Override
 	protected String[] getExcludedTableNames() {
-		return new String[] {"PortalPreferenceValue", "PortletPreferenceValue"};
+		return new String[] {
+			"CountryLocalization", "PortalPreferenceValue",
+			"PortletPreferenceValue", "RegionLocalization"
+		};
 	}
 
 	@Override

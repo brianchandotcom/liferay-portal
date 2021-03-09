@@ -53,7 +53,20 @@ public class JournalContentCompatibilityConverterImpl
 	implements JournalContentCompatibilityConverter {
 
 	@Override
-	public void convert(Document document) {
+	public String convert(String content) {
+		try {
+			Document document = SAXReaderUtil.read(content);
+
+			_convert(document);
+
+			return XMLUtil.formatXML(document);
+		}
+		catch (Exception exception) {
+			return content;
+		}
+	}
+
+	private void _convert(Document document) {
 		if (_isLatestVersion(document)) {
 			return;
 		}
@@ -66,20 +79,6 @@ public class JournalContentCompatibilityConverterImpl
 
 		if (_hasNestedFields(rootElement)) {
 			_convertNestedFields(rootElement);
-		}
-	}
-
-	@Override
-	public String convert(String content) {
-		try {
-			Document document = SAXReaderUtil.read(content);
-
-			convert(document);
-
-			return XMLUtil.formatXML(document);
-		}
-		catch (Exception exception) {
-			return content;
 		}
 	}
 

@@ -14,8 +14,6 @@
 
 package com.liferay.journal.content.compatibility.converter;
 
-import com.liferay.portal.kernel.xml.Document;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -23,8 +21,6 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface JournalContentCompatibilityConverter {
-
-	public void convert(Document document);
 
 	public String convert(String content);
 

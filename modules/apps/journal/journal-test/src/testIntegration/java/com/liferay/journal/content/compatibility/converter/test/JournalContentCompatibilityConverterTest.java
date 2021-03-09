@@ -72,9 +72,9 @@ public class JournalContentCompatibilityConverterTest {
 		String content = read(
 			"test-journal-content-all-fields-compatibility.xml");
 
-		Document document = SAXReaderUtil.read(content);
+		content = _journalContentCompatibilityConverter.convert(content);
 
-		_journalContentCompatibilityConverter.convert(document);
+		Document document = SAXReaderUtil.read(content);
 
 		String expectedContent = read(
 			"test-journal-content-all-fields-compatibility-expected-" +
@@ -92,9 +92,9 @@ public class JournalContentCompatibilityConverterTest {
 		String content = read(
 			"test-journal-content-complex-nested-fields-compatibility.xml");
 
-		Document document = SAXReaderUtil.read(content);
+		content = _journalContentCompatibilityConverter.convert(content);
 
-		_journalContentCompatibilityConverter.convert(document);
+		Document document = SAXReaderUtil.read(content);
 
 		String expectedContent = read(
 			"test-journal-content-complex-nested-fields-compatibility-" +
@@ -199,9 +199,9 @@ public class JournalContentCompatibilityConverterTest {
 				String.valueOf(layout4.getLayoutId())
 			});
 
-		Document document = SAXReaderUtil.read(content);
+		content = _journalContentCompatibilityConverter.convert(content);
 
-		_journalContentCompatibilityConverter.convert(document);
+		Document document = SAXReaderUtil.read(content);
 
 		String expectedContent = StringUtil.replace(
 			read(
@@ -234,9 +234,9 @@ public class JournalContentCompatibilityConverterTest {
 		String content = read(
 			"test-journal-content-nested-fields-compatibility.xml");
 
-		Document document = SAXReaderUtil.read(content);
+		content = _journalContentCompatibilityConverter.convert(content);
 
-		_journalContentCompatibilityConverter.convert(document);
+		Document document = SAXReaderUtil.read(content);
 
 		String expectedContent = read(
 			"test-journal-content-nested-fields-compatibility-expected-" +
@@ -256,9 +256,9 @@ public class JournalContentCompatibilityConverterTest {
 		String content = read(
 			"test-journal-content-repeatable-nested-fields-compatibility.xml");
 
-		Document document = SAXReaderUtil.read(content);
+		content = _journalContentCompatibilityConverter.convert(content);
 
-		_journalContentCompatibilityConverter.convert(document);
+		Document document = SAXReaderUtil.read(content);
 
 		String expectedContent = read(
 			"test-journal-content-repeatable-nested-fields-compatibility-" +
@@ -275,9 +275,9 @@ public class JournalContentCompatibilityConverterTest {
 	public void testVersionCompatibilityLayer() throws Exception {
 		String content = read("test-journal-content-version-compatibility.xml");
 
-		Document document = SAXReaderUtil.read(content);
+		content = _journalContentCompatibilityConverter.convert(content);
 
-		_journalContentCompatibilityConverter.convert(document);
+		Document document = SAXReaderUtil.read(content);
 
 		String expectedContent = read(
 			"test-journal-content-version-compatibility-expected-results.xml");

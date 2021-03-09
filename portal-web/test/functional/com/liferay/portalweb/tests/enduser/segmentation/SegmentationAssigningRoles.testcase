@@ -149,7 +149,7 @@ definition {
 		Button.clickSave();
 
 		Alert.viewSuccessMessage();
-		
+
 		Segmentation.openSegmentOptions();
 
 		AssertElementPresent(
@@ -173,7 +173,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "People",
 			portlet = "Segments");
-		
+
 		Segmentation.openSegmentOptions();
 
 		AssertElementPresent(

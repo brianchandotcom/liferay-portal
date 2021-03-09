@@ -57,18 +57,16 @@ public class JournalContentCompatibilityConverterImpl
 		try {
 			Document document = SAXReaderUtil.read(content);
 
-			_convert(document);
-
-			return XMLUtil.formatXML(document);
+			return XMLUtil.formatXML(_convert(document));
 		}
 		catch (Exception exception) {
 			return content;
 		}
 	}
 
-	private void _convert(Document document) {
+	private Document _convert(Document document) {
 		if (_isLatestVersion(document)) {
-			return;
+			return document;
 		}
 
 		Element rootElement = document.getRootElement();
@@ -77,9 +75,29 @@ public class JournalContentCompatibilityConverterImpl
 
 		_convertDDMFields(_getDefaultLocale(document), rootElement);
 
-		if (_hasNestedFields(rootElement)) {
-			_convertNestedFields(rootElement);
+		if (!_hasNestedFields(rootElement)) {
+			return document;
 		}
+
+		Document oldDocument = document.clone();
+
+		document = SAXReaderUtil.createDocument();
+
+		Element newRootElement = document.addElement("root");
+
+		Element oldRootElement = oldDocument.getRootElement();
+
+		newRootElement.addAttribute(
+			"available-locales",
+			oldRootElement.attributeValue("available-locales"));
+		newRootElement.addAttribute(
+			"default-locale", oldRootElement.attributeValue("default-locale"));
+
+		newRootElement.addAttribute("version", _LATEST_CONTENT_VERSION);
+
+		_convertNestedFields(newRootElement, oldDocument.getRootElement());
+
+		return document;
 	}
 
 	private void _convertDDMFields(Locale defaultLocale, Element element) {
@@ -241,40 +259,41 @@ public class JournalContentCompatibilityConverterImpl
 		return jsonObject.toJSONString();
 	}
 
-	private void _convertNestedFields(Element element) {
-		for (Element dynamicElement : element.elements("dynamic-element")) {
+	private void _convertNestedFields(Element newElement, Element oldElement) {
+		for (Element dynamicElement : oldElement.elements("dynamic-element")) {
 			List<Element> nestedFieldsElements = dynamicElement.elements(
 				"dynamic-element");
 
 			if (nestedFieldsElements.isEmpty()) {
+				newElement.add(dynamicElement.createCopy());
+
 				continue;
 			}
 
-			_convertNestedFields(dynamicElement);
+			Element fieldSetDynamicElement = newElement.addElement(
+				"dynamic-element");
 
-			Element newDynamicElement = dynamicElement.addElement(
+			fieldSetDynamicElement.addAttribute("index-type", StringPool.BLANK);
+			fieldSetDynamicElement.addAttribute(
+				"instance-id", StringUtil.randomString());
+			fieldSetDynamicElement.addAttribute(
+				"name", dynamicElement.attributeValue("name") + "FieldSet");
+
+			Element newDynamicElement = fieldSetDynamicElement.addElement(
 				"dynamic-element");
 
 			for (Attribute attribute : dynamicElement.attributes()) {
 				newDynamicElement.addAttribute(
 					attribute.getName(), attribute.getValue());
-
-				dynamicElement.remove(attribute);
 			}
 
 			for (Element dynamicContent :
 					dynamicElement.elements("dynamic-content")) {
 
 				newDynamicElement.add(dynamicContent.createCopy());
-
-				dynamicElement.remove(dynamicContent);
 			}
 
-			dynamicElement.addAttribute("index-type", StringPool.BLANK);
-			dynamicElement.addAttribute(
-				"instance-id", StringUtil.randomString());
-			dynamicElement.addAttribute(
-				"name", newDynamicElement.attributeValue("name") + "FieldSet");
+			_convertNestedFields(fieldSetDynamicElement, dynamicElement);
 		}
 	}
 

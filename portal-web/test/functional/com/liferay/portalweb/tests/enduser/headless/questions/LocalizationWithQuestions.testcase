@@ -108,6 +108,38 @@ definition {
 		Questions.replyToComment(commentReply = "私の好きな日本料理は焼肉と鮭の刺身です");
 	}
 
+	@description = "Validate if the user can view a question via an edited topic that contains non-Latin characters."
+	@priority = "4"
+	test ViewQuestionViaEditedTopic {
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoTab(questionTabField = "Questions");
+
+		Questions.addRootTopic(
+			rootTopicDescription = "トピック記述",
+			rootTopicName = "質問トピック");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "質問トピック");
+
+		Questions.askQuestionFillingTheMandatoryFields(
+			contentField = "あなたの好きな日本料理は寿司とすき焼きですか",
+			titleField = "あなたの好きな日本料理は何ですか");
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		Questions.editRootTopic(
+			categoryName = "質問トピック",
+			categoryNameEdit = "質問トピックを編集する");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "質問トピックを編集する");
+
+		Questions.gotoDetails(questionTitle = "あなたの好きな日本料理は何ですか");
+	}
+
 	@description = "Validate if the user can redirect to the question after clicking a tag that contains non-Latin characters."
 	@priority = "5"
 	test ViewQuestionViaTags {

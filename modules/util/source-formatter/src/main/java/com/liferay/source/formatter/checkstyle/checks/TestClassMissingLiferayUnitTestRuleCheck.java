@@ -50,14 +50,6 @@ public class TestClassMissingLiferayUnitTestRuleCheck extends BaseCheck {
 
 		List<String> importNames = getImportNames(detailAST);
 
-		if (importNames.contains(
-				"com.liferay.portal.kernel.test.rule.NewEnvTestRule") ||
-			importNames.contains(
-				"com.liferay.portal.test.rule.AspectJNewEnvTestRule")) {
-
-			return;
-		}
-
 		DetailAST annotationDetailAST = AnnotationUtil.getAnnotation(
 			detailAST, "RunWith");
 

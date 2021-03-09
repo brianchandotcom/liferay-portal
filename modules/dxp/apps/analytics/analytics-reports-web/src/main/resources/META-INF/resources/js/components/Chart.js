@@ -181,10 +181,11 @@ export default function Chart({
 				? HOUR_IN_MILLISECONDS
 				: DAY_IN_MILLISECONDS;
 
-		const keys = [
-			'analyticsReportsHistoricalViews',
-			'analyticsReportsHistoricalReads',
-		];
+		const keys = new Set(['analyticsReportsHistoricalViews']);
+
+		if (dataProviders.length === 2) {
+			keys.add('analyticsReportsHistoricalReads');
+		}
 
 		if (validAnalyticsConnection) {
 			const promises = dataProviders.map((getter) => {

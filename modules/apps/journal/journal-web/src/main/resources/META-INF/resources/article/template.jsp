@@ -42,6 +42,7 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 						displayType="secondary"
 						icon="view"
 						id='<%= liferayPortletResponse.getNamespace() + "previewWithTemplate" %>'
+						type="button"
 					/>
 				</div>
 			</c:if>

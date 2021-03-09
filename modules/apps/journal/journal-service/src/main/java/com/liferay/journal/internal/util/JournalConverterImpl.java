@@ -599,16 +599,13 @@ public class JournalConverterImpl implements JournalConverter {
 
 		updateFieldsDisplay(ddmFields, ddmFormField.getName(), instanceId);
 
-		List<DDMFormField> nestedDDMFormFields =
-			ddmFormField.getNestedDDMFormFields();
+		for (DDMFormField nestedDDMFormField :
+				ddmFormField.getNestedDDMFormFields()) {
 
-		if (ListUtil.isNotEmpty(nestedDDMFormFields)) {
-			for (DDMFormField nestedDDMFormField : nestedDDMFormFields) {
-				addDDMFields(
-					availableLanguageIds, defaultLanguageId, ddmFields,
-					nestedDDMFormField, ddmStructure,
-					dynamicElementElementsMap);
-			}
+			addDDMFields(
+				availableLanguageIds, defaultLanguageId, ddmFields,
+				nestedDDMFormField, ddmStructure,
+				dynamicElementElementsMap);
 		}
 	}
 

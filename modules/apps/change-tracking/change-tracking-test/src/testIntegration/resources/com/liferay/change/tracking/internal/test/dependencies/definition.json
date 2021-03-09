@@ -1,0 +1,84 @@
+{
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"dataDefinitionFields": [
+		{
+			"customProperties": {
+				"allowGuestUsers": false,
+				"dataType": "document-library",
+				"fieldNamespace": "",
+				"fieldReference": "Upload",
+				"validation": {
+					"errorMessage": {
+					},
+					"expression": {
+					},
+					"parameter": {
+					}
+				},
+				"visibilityExpression": ""
+			},
+			"defaultValue": {
+				"en_US": ""
+			},
+			"fieldType": "document_library",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Upload"
+			},
+			"localizable": true,
+			"name": "Upload",
+			"nestedDataDefinitionFields": [
+			],
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			}
+		}
+	],
+	"dataDefinitionKey": "",
+	"defaultDataLayout": {
+		"dataLayoutPages": [
+			{
+				"dataLayoutRows": [
+					{
+						"dataLayoutColumns": [
+							{
+								"columnSize": 12,
+								"fieldNames": [
+									"Upload"
+								]
+							}
+						]
+					}
+				],
+				"description": {
+					"en_US": ""
+				},
+				"title": {
+					"en_US": ""
+				}
+			}
+		],
+		"dataRules": [
+		],
+		"description": {
+			"en_US": ""
+		},
+		"name": {
+			"en_US": "Upload"
+		},
+		"paginationMode": "single-page"
+	},
+	"defaultLanguageId": "en_US",
+	"description": {
+		"en_US": ""
+	},
+	"name": {
+		"en_US": "upload"
+	}
+}

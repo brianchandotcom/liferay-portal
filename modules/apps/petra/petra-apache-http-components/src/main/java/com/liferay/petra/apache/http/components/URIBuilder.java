@@ -130,7 +130,7 @@ public class URIBuilder {
 	}
 
 	@FunctionalInterface
-	private interface UnsafeSupplier<String, E extends Throwable> {
+	public interface UnsafeSupplier<String, E extends Throwable> {
 
 		public String get() throws E;
 

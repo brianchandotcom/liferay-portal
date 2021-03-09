@@ -36,7 +36,13 @@ import {paginationReducer} from './reducers/index.es';
  * Updates the state of the FieldSettings when any value coming
  * from layers above changes.
  */
-const StateSync = ({activePage, editingLanguageId, focusedField, pages}) => {
+const StateSync = ({
+	activePage,
+	defaultLanguageId,
+	editingLanguageId,
+	focusedField,
+	pages,
+}) => {
 	const dispatch = useForm();
 
 	useEffect(() => {
@@ -62,10 +68,10 @@ const StateSync = ({activePage, editingLanguageId, focusedField, pages}) => {
 
 	useEffect(() => {
 		dispatch({
-			payload: {editingLanguageId},
+			payload: {defaultLanguageId, editingLanguageId},
 			type: CORE_EVENT_TYPES.LANGUAGE.CHANGE,
 		});
-	}, [dispatch, editingLanguageId]);
+	}, [dispatch, defaultLanguageId, editingLanguageId]);
 
 	return null;
 };

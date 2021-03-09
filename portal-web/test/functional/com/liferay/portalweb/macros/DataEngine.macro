@@ -313,10 +313,20 @@ definition {
 					optionFieldLabel = "Options",
 					optionValue = "Option 1");
 
+				DataEngine.editFieldReferenceOfFieldOption(
+					fieldReferenceOfFieldOption = "First",
+					index = "1",
+					optionFieldLabel = "Options");
+
 				DataEngine.addFieldOption(
 					index = "2",
 					optionFieldLabel = "Options",
 					optionValue = "Option 2");
+
+				DataEngine.editFieldReferenceOfFieldOption(
+					fieldReferenceOfFieldOption = "Second",
+					index = "2",
+					optionFieldLabel = "Options");
 			}
 			else if ("${fieldName}" == "Select from List") {
 				DataEngine.addFieldOption(

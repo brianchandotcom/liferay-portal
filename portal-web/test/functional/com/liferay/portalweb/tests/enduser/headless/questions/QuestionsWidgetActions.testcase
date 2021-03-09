@@ -1084,6 +1084,35 @@ definition {
 			locator1 = "Questions#QUESTIONS_LIST_TAB_FIELD");
 	}
 
+	@description = "Validate if the user can view a question via an edited topic."
+	@priority = "5"
+	test ViewQuestionAfterEditingTopic {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		Questions.askQuestionFillingTheMandatoryFields(
+			contentField = "Body AddQuestionWithTheTestBody",
+			titleField = "Title AddQuestionWithTheTestTitle");
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		Questions.editRootTopic(
+			categoryName = "Questions Test Category",
+			categoryNameEdit = "Edit Questions Test Category");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Edit Questions Test Category");
+
+		Questions.gotoDetails(questionTitle = "Title AddQuestionWithTheTestTitle");
+	}
+
 	@description = "Validate if the user can filter by votes."
 	@priority = "4"
 	test ViewQuestionsFilteredByVotes {
@@ -1366,35 +1395,6 @@ definition {
 		Questions.viewFilterResults(
 			lastQuestionTitle = "Question 1 Edit",
 			questionTitle = "Question 2");
-	}
-
-	@description = "Validate if the user can view a question via an edited topic."
-	@priority = "5"
-	test ViewQuestionViaEditedTopic {
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category",
-			userEmailAddress = "test@liferay.com");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "Questions Test Category");
-
-		Questions.askQuestionFillingTheMandatoryFields(
-			contentField = "Body AddQuestionWithTheTestBody",
-			titleField = "Title AddQuestionWithTheTestTitle");
-
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		Questions.editRootTopic(
-			categoryName = "Questions Test Category",
-			categoryNameEdit = "Edit Questions Test Category");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "Edit Questions Test Category");
-
-		Questions.gotoDetails(questionTitle = "Title AddQuestionWithTheTestTitle");
 	}
 
 	@description = "Validate if the user can view the related question."

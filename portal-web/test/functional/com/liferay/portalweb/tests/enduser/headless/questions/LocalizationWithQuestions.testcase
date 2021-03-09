@@ -152,7 +152,7 @@ definition {
 
 	@description = "Validate if the user can view a question via an edited topic that contains non-Latin characters."
 	@priority = "4"
-	test ViewQuestionViaEditedTopic {
+	test ViewQuestionAfterEditingTopic {
 		Navigator.gotoPage(pageName = "Questions Page");
 
 		Questions.gotoTab(questionTabField = "Questions");

@@ -1,0 +1,49 @@
+@component-name = "portal-commerce"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Commerce";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.openURL();
+
+			CommerceConfiguration.commerceAdminTearDown();
+
+			CommerceConfiguration.commerceInitializersTearDown();
+		}
+	}
+
+	@description = "COMMERCE-5841. As a system admin I want to be able to add/suspend/reactivate/cancel a delivery subscription"
+	@ignore = "true"
+	@priority = "3"
+	test CreateAndUpdateDeliverySubscription {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-5841 CreateAndUpdateDeliverySubscription Pending Implementation
+		// NOTE: 1. Delete action is already handled by commerceAdminTearDown
+
+	}
+
+	@description = "COMMERCE-5844. As a system admin I want to check subscription notifications are properly created"
+	@ignore = "true"
+	@priority = "3"
+	test SubscriptionNotifications {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-5841 SubscriptionNotifications Pending Implementation
+	}
+
+}

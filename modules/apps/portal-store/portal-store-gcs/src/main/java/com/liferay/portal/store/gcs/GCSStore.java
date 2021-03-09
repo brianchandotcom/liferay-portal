@@ -120,9 +120,11 @@ public class GCSStore implements Store {
 		long companyId, long repositoryId, String fileName,
 		String versionLabel) {
 
-		_deleteFile(
-			_getHeadVersionLabel(
-				companyId, repositoryId, fileName, versionLabel));
+		String pathName = _getHeadVersionLabel(
+			companyId, repositoryId, fileName, versionLabel);
+
+		_gcsStore.delete(
+			BlobId.of(_gcsStoreConfiguration.bucketName(), pathName));
 	}
 
 	@Override
@@ -274,17 +276,6 @@ public class GCSStore implements Store {
 		}
 
 		blob.delete(_blobDecryptSourceOption);
-	}
-
-	private void _deleteFile(String filePath) {
-		boolean deleted = _gcsStore.delete(
-			BlobId.of(_gcsStoreConfiguration.bucketName(), filePath));
-
-		if (!deleted && _log.isWarnEnabled()) {
-			_log.warn(
-				StringBundler.concat(
-					"Unable to delete \"", filePath, "\" from file store"));
-		}
 	}
 
 	private BucketInfo _getBucketInfo() {

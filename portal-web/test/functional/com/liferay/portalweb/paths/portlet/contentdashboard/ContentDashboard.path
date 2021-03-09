@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>AUTHOR_SELECT_DISPLAY_MODE_BUTTON</td>
-	<td>//button[contains(@class, 'dropdown-toggle') and contains(@class, 'btn-unstyled') and contains(@class, 'nav-link-monospaced') and contains(@class, 'btn nav-link')]</td>
+	<td>//button[contains(@class, 'dropdown-toggle') and contains(@class, 'btn-unstyled') and contains(@class, 'nav-link-monospaced') and contains(@class, 'nav-link')]</td>
 	<td></td>
 </tr>
 <tr>

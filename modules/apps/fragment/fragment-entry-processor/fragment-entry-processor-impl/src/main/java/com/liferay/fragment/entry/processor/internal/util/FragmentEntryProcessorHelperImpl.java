@@ -238,9 +238,8 @@ public class FragmentEntryProcessorHelperImpl
 
 	@Override
 	public Object getMappedCollectionValue(
-			JSONObject jsonObject,
-			FragmentEntryProcessorContext fragmentEntryProcessorContext)
-		throws PortalException {
+		JSONObject jsonObject,
+		FragmentEntryProcessorContext fragmentEntryProcessorContext) {
 
 		if (!isMappedCollection(jsonObject)) {
 			return JSONFactoryUtil.createJSONObject();

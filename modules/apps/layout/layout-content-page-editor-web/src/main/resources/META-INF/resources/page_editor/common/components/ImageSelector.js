@@ -64,6 +64,12 @@ export function ImageSelector({
 						}
 						small
 						symbol={hasImageTitle ? 'change' : 'plus'}
+						title={Liferay.Util.sub(
+							hasImageTitle
+								? Liferay.Language.get('change-x')
+								: Liferay.Language.get('select-x'),
+							Liferay.Language.get('image')
+						)}
 					/>
 					{hasImageTitle && (
 						<>
@@ -73,6 +79,7 @@ export function ImageSelector({
 								onClick={onClearButtonPressed}
 								small
 								symbol="times-circle"
+								title={Liferay.Language.get('clear-selection')}
 							/>
 						</>
 					)}

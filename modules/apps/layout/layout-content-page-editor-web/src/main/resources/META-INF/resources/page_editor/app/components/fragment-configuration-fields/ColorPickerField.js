@@ -85,6 +85,7 @@ export const ColorPickerField = ({field, onValueSelect, value}) => {
 						}}
 						small
 						symbol="times-circle"
+						title={Liferay.Language.get('clear-selection')}
 					/>
 				)}
 			</ClayInput.Group>

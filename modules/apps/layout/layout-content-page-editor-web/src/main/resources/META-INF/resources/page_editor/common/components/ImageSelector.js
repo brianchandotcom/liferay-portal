@@ -22,7 +22,7 @@ import {useSelector} from '../../app/store/index';
 import {useId} from '../../app/utils/useId';
 import {openImageSelector} from '../../core/openImageSelector';
 
-const DEFAULT_IMAGE_TITLE = Liferay.Language.get('none');
+const DEFAULT_IMAGE_TITLE = '';
 
 export function ImageSelector({
 	imageTitle = DEFAULT_IMAGE_TITLE,
@@ -46,7 +46,10 @@ export function ImageSelector({
 					<ClayInput
 						className="page-editor__item-selector__content-input"
 						id={imageTitleId}
-						placeholder={Liferay.Language.get('none')}
+						placeholder={Liferay.Util.sub(
+							Liferay.Language.get('select-x'),
+							Liferay.Language.get('image')
+						)}
 						readOnly
 						sizing="sm"
 						value={imageTitle}
@@ -83,7 +86,7 @@ export function ImageSelector({
 
 ImageSelector.propTypes = {
 	imageTitle: PropTypes.string,
-	label: PropTypes.string,
+	label: PropTypes.string.isRequired,
 	onClearButtonPressed: PropTypes.func.isRequired,
 	onImageSelected: PropTypes.func.isRequired,
 };

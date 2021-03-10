@@ -34,6 +34,7 @@ export default function ItemSelector({
 	selectedItemTitle,
 	showAddButton = true,
 	showMappedItems = true,
+	showLabel = true,
 	transformValueCallback,
 }) {
 	const [active, setActive] = useState(false);
@@ -60,7 +61,7 @@ export default function ItemSelector({
 
 	return (
 		<>
-			{label && <label htmlFor={itemSelectorInputId}>{label}</label>}
+			{showLabel && <label htmlFor={itemSelectorInputId}>{label}</label>}
 
 			<div className="d-flex">
 				<ClayInput
@@ -73,6 +74,10 @@ export default function ItemSelector({
 							openModal();
 						}
 					}}
+					placeholder={Liferay.Util.sub(
+						Liferay.Language.get('select-x'),
+						label
+					)}
 					readOnly
 					sizing="sm"
 					type="text"
@@ -156,7 +161,7 @@ export default function ItemSelector({
 ItemSelector.propTypes = {
 	eventName: PropTypes.string,
 	itemSelectorURL: PropTypes.string,
-	label: PropTypes.string,
+	label: PropTypes.string.isRequired,
 	onItemSelect: PropTypes.func.isRequired,
 	selectedItemTitle: PropTypes.string,
 	transformValueCallback: PropTypes.func.isRequired,

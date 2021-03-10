@@ -21,11 +21,17 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface DLVideoExternalShortcut {
 
-	public String getDescription();
+	public default String getDescription() {
+		return null;
+	}
 
-	public String getThumbnailURL();
+	public default String getThumbnailURL() {
+		return null;
+	}
 
-	public String getTitle();
+	public default String getTitle() {
+		return null;
+	}
 
 	public String getURL();
 

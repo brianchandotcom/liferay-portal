@@ -220,7 +220,7 @@ public class DataDefinitionDDMFormUtil {
 		ddmFormField.setRequired(
 			GetterUtil.getBoolean(dataDefinitionField.getRequired()));
 		ddmFormField.setShowLabel(
-			GetterUtil.getBoolean(dataDefinitionField.getShowLabel()));
+			GetterUtil.getBoolean(dataDefinitionField.getShowLabel(), true));
 		ddmFormField.setTip(
 			LocalizedValueUtil.toLocalizedValue(
 				dataDefinitionField.getTip(),

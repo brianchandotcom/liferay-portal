@@ -43,6 +43,11 @@
 	<td>//div[@class='product-detail-header']//..//div[contains (@class,'full-image')]/img[contains (@src,'${key_FSProductImage}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>FS_PRODUCT_IMAGE</td>
+	<td>//div[@class='product-gallery']//img[contains(@src, '${key_FSProductImage}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

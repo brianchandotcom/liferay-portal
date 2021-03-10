@@ -27,6 +27,7 @@ import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.headless.delivery.dto.v1_0.PageTemplate;
 import com.liferay.headless.delivery.dto.v1_0.PageTemplateCollection;
 import com.liferay.headless.delivery.dto.v1_0.Settings;
+import com.liferay.headless.delivery.dto.v1_0.StyleBook;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.page.template.admin.web.internal.exception.DropzoneLayoutStructureItemException;
 import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer.LayoutStructureItemImporter;
@@ -85,6 +86,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.style.book.model.StyleBookEntry;
+import com.liferay.style.book.service.StyleBookEntryLocalService;
 
 import java.io.File;
 import java.io.IOException;
@@ -1296,6 +1299,19 @@ public class LayoutPageTemplatesImporterImpl
 			}
 		}
 
+		StyleBook styleBook = settings.getStyleBook();
+
+		if (styleBook != null) {
+			StyleBookEntry styleBookEntry =
+				_styleBookEntryLocalService.fetchStyleBookEntry(
+					layout.getGroupId(), styleBook.getKey());
+
+			if (styleBookEntry != null) {
+				layout.setStyleBookEntryId(
+					styleBookEntry.getStyleBookEntryId());
+			}
+		}
+
 		_layoutLocalService.updateLayout(layout);
 	}
 
@@ -1376,6 +1392,9 @@ public class LayoutPageTemplatesImporterImpl
 
 	@Reference
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
+	@Reference
+	private StyleBookEntryLocalService _styleBookEntryLocalService;
 
 	@Reference
 	private ThemeLocalService _themeLocalService;

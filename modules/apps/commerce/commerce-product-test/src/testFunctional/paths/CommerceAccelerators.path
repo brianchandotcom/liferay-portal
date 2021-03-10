@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>ACCOUNT_SELECTOR_ACCOUNT_LIST_ITEM</td>
-	<td>//ul[contains(@class,'accounts-list')]//button[@class='dropdown-item']/span[contains(.,'key_accountName')]</td>
+	<td>//ul[contains(@class,'accounts-list')]//button[@class='dropdown-item']/span[contains(.,'${key_accountName}')]</td>
 	<td></td>
 </tr>
 <tr>

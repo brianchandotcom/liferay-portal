@@ -2124,9 +2124,12 @@ definition {
 		}
 
 		task ("Assert styles of Separator in view mode") {
-			PageEditor.viewFragmentStyle(
-				bottomSpacing = "1",
-				separatorColor = "dark");
+			PageEditor.viewFragmentStyle(separatorColor = "dark");
+
+			AssertElementPresent(
+				key_fragmentName = "separator",
+				key_paddingBottom = "1",
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_PADDING_BOTTOM_IN_VIEW_MODE");
 		}
 
 		task ("Assert styles of Spacer in view mode") {
@@ -2236,7 +2239,7 @@ definition {
 
 		task ("Assert styles of Separator in edit mode") {
 			PageEditor.viewFragmentStyle(
-				bottomSpacing = "1",
+				paddingBottom = "1",
 				separatorColor = "dark");
 		}
 

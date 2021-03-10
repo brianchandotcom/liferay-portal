@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>FS_PRODUCT_OPTION</td>
-	<td>//div[@class='drop-chosen']/div/ul//li/a[contains (@title,'${key_optionValue}') and contains (.,'${key_optionValue}')]</td>
+	<td>//div[contains(@class,'dropdown-menu')]/ul//li/button[contains(.,'${key_optionValue}')]</td>
 	<td></td>
 </tr>
 <tr>

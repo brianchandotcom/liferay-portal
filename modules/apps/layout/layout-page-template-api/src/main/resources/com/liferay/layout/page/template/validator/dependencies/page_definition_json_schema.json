@@ -1610,6 +1610,24 @@
 					"title": "The masterPage Schema",
 					"type": "object"
 				},
+				"styleBook": {
+					"additionalProperties": false,
+					"properties": {
+						"key": {
+							"title": "The key Schema",
+							"type": "string"
+						},
+						"name": {
+							"title": "The name Schema",
+							"type": "string"
+						}
+					},
+					"required": [
+						"key"
+					],
+					"title": "The styleBook Schema",
+					"type": "object"
+				},
 				"themeName": {
 					"title": "The themeName Schema",
 					"type": "string"

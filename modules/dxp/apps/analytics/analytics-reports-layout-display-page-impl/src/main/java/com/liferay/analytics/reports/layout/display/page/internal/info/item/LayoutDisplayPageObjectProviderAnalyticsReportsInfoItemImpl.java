@@ -214,15 +214,14 @@ public class LayoutDisplayPageObjectProviderAnalyticsReportsInfoItemImpl
 			ClassName className = _classNameLocalService.getClassName(
 				layoutDisplayPageObjectProvider.getClassNameId());
 
-			InfoItemFieldValuesProvider infoItemFieldValuesProvider =
-				_infoItemServiceTracker.getFirstInfoItemService(
-					InfoItemFieldValuesProvider.class,
-					className.getClassName());
-
 			Date date = (Date)Optional.ofNullable(
-				infoItemFieldValuesProvider.getInfoItemFieldValue(
-					layoutDisplayPageObjectProvider.getDisplayObject(),
-					"publishDate")
+				_infoItemServiceTracker.getFirstInfoItemService(
+					InfoItemFieldValuesProvider.class, className.getClassName())
+			).map(
+				infoItemFieldValuesProvider ->
+					infoItemFieldValuesProvider.getInfoItemFieldValue(
+						layoutDisplayPageObjectProvider.getDisplayObject(),
+						"createDate")
 			).filter(
 				infoFieldValue -> {
 					InfoField infoField = infoFieldValue.getInfoField();
@@ -243,8 +242,8 @@ public class LayoutDisplayPageObjectProviderAnalyticsReportsInfoItemImpl
 					layoutDisplayPageObjectProvider.getClassNameId(),
 					layoutDisplayPageObjectProvider.getClassPK())
 			).filter(
-				assetDisplayPageEntry -> date.after(
-					assetDisplayPageEntry.getModifiedDate())
+				assetDisplayPageEntry -> date.before(
+					assetDisplayPageEntry.getCreateDate())
 			).map(
 				AssetDisplayPageEntry::getCreateDate
 			).orElse(

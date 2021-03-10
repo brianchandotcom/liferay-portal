@@ -16,8 +16,6 @@ package com.liferay.analytics.reports.journal.internal.info.item;
 
 import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItem;
 import com.liferay.analytics.reports.layout.display.page.info.item.LayoutDisplayPageObjectProviderAnalyticsReportsInfoItem;
-import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
-import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
@@ -30,9 +28,6 @@ import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -123,21 +118,8 @@ public class JournalArticleAnalyticsReportsInfoItem
 
 	@Override
 	public Date getPublishDate(JournalArticle journalArticle) {
-		AssetDisplayPageEntry assetDisplayPageEntry =
-			_assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
-				journalArticle.getGroupId(),
-				_portal.getClassNameId(JournalArticle.class),
-				journalArticle.getResourcePrimKey());
-
-		Date date = _getJournalArticleFirstPublishLocalDate(journalArticle);
-
-		if ((assetDisplayPageEntry == null) ||
-			date.after(assetDisplayPageEntry.getModifiedDate())) {
-
-			return date;
-		}
-
-		return assetDisplayPageEntry.getCreateDate();
+		return _layoutDisplayPageObjectProviderAnalyticsReportsInfoItem.
+			getPublishDate(_getLayoutDisplayPageObjectProvider(journalArticle));
 	}
 
 	@Override
@@ -149,23 +131,6 @@ public class JournalArticleAnalyticsReportsInfoItem
 	public boolean isShow(JournalArticle journalArticle) {
 		return _layoutDisplayPageObjectProviderAnalyticsReportsInfoItem.isShow(
 			_getLayoutDisplayPageObjectProvider(journalArticle));
-	}
-
-	private Date _getJournalArticleFirstPublishLocalDate(
-		JournalArticle journalArticle) {
-
-		try {
-			JournalArticle oldestJournalArticle =
-				_journalArticleLocalService.getOldestArticle(
-					journalArticle.getGroupId(), journalArticle.getArticleId());
-
-			return oldestJournalArticle.getDisplayDate();
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
-
-			return journalArticle.getDisplayDate();
-		}
 	}
 
 	private LayoutDisplayPageObjectProvider<JournalArticle>
@@ -196,13 +161,6 @@ public class JournalArticleAnalyticsReportsInfoItem
 				latestArticle.getUserId())
 		);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		JournalArticleAnalyticsReportsInfoItem.class);
-
-	@Reference
-	private AssetDisplayPageEntryLocalService
-		_assetDisplayPageEntryLocalService;
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;

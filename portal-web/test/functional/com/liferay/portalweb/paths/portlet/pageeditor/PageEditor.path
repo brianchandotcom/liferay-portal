@@ -711,12 +711,6 @@
 	<td>xpath=(//div[contains(@class,'page-editor__topper__bar') and contains(.,'Grid')]//following-sibling::div[contains(@class,'page-editor__topper__content')])[${key_position}]//div[contains(@class,'page-editor__row') and contains(@class,'${key_verticalAlignment}')]</td>
 	<td></td>
 </tr>
-<!--LANGUAGE_MENU-->
-<tr>
-	<td>DROPDOWN</td>
-	<td>//div[contains(@class,'management-bar')]//button[contains(@class,'dropdown-toggle')]</td>
-	<td></td>
-</tr>
 <!--MANAGEMENT_BAR-->
 <tr>
 	<td>AUTOSAVE_MESSAGE</td>

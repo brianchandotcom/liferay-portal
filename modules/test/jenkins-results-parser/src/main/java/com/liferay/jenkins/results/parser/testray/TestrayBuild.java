@@ -37,6 +37,9 @@ public class TestrayBuild {
 
 		_testrayProject = _testrayRoutine.getTestrayProject();
 		_testrayServer = _testrayRoutine.getTestrayServer();
+
+		_testrayProductVersion = _testrayProject.getTestrayProductVersionByID(
+			_jsonObject.getInt("testrayProductVersionId"));
 	}
 
 	public String getDescription() {
@@ -57,6 +60,10 @@ public class TestrayBuild {
 		}
 
 		return _testrayCaseResults;
+	}
+
+	public TestrayProductVersion getTestrayProductVersion() {
+		return _testrayProductVersion;
 	}
 
 	public TestrayProject getTestrayProject() {
@@ -108,6 +115,7 @@ public class TestrayBuild {
 
 	private final JSONObject _jsonObject;
 	private List<TestrayCaseResult> _testrayCaseResults;
+	private final TestrayProductVersion _testrayProductVersion;
 	private final TestrayProject _testrayProject;
 	private final TestrayRoutine _testrayRoutine;
 	private final TestrayServer _testrayServer;

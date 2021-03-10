@@ -15,7 +15,10 @@
 package com.liferay.headless.admin.user.internal.dto.v1_0.converter;
 
 import com.liferay.headless.admin.user.dto.v1_0.Segment;
+import com.liferay.headless.admin.user.internal.constants.SegmentsSourceConstants;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.model.SegmentsEntry;
 
 import org.osgi.service.component.annotations.Component;
@@ -47,7 +50,26 @@ public class SegmentDTOConverter
 				name = segmentsEntry.getName(
 					segmentsEntry.getDefaultLanguageId());
 				siteId = segmentsEntry.getGroupId();
-				source = segmentsEntry.getSource();
+
+				setSource(
+					() -> {
+						if (StringUtil.equals(
+								segmentsEntry.getSource(),
+								SegmentsEntryConstants.
+									SOURCE_ASAH_FARO_BACKEND)) {
+
+							return SegmentsSourceConstants.
+								SOURCE_ASAH_FARO_BACKEND;
+						}
+						else if (StringUtil.equals(
+									segmentsEntry.getSource(),
+									SegmentsEntryConstants.SOURCE_REFERRED)) {
+
+							return SegmentsSourceConstants.SOURCE_REFERRED;
+						}
+
+						return SegmentsSourceConstants.SOURCE_DEFAULT;
+					});
 			}
 		};
 	}

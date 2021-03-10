@@ -5,7 +5,8 @@
 		"frontend-js-web": "*",
 		"incremental-dom-string": "0.0.2",
 		"metal-component": "2.16.8",
-		"metal-soy": "2.16.9"
+		"metal-soy": "2.16.9",
+		"moment": "^2.22.2"
 	},
 	"jest": {
 		"modulePathIgnorePatterns": [

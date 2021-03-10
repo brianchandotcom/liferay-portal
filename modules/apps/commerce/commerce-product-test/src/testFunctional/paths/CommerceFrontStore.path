@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>FS_PRODUCT_SKU</td>
-	<td>//div[@class='product-detail-header']//..//div/h4[contains (.,'${key_FSProductSKU}')]</td>
+	<td>//p/span[(normalize-space(text())='SKU')]/following::span</td>
 	<td></td>
 </tr>
 <tr>

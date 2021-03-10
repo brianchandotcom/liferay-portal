@@ -8,19 +8,7 @@
 	commerceChannelGroupModels = dataFactory.newCommerceChannelGroupModels(commerceChannelModels)
 
 	commerceInventoryWarehouseModels = dataFactory.newCommerceInventoryWarehouseModels()
-/>
 
-<#include "commerce_accounts.ftl">
-
-<#list commerceInventoryWarehouseModels as commerceInventoryWarehouseModel>
-	${dataFactory.toInsertSQL(commerceInventoryWarehouseModel)}
-
-	<#list commerceChannelModels as commerceChannelModel>
-		${dataFactory.toInsertSQL(dataFactory.newCommerceChannelRelModel(dataFactory.commerceInventoryWarehouseClassNameId, commerceInventoryWarehouseModel.commerceInventoryWarehouseId, commerceChannelModel.commerceChannelId))}
-	</#list>
-</#list>
-
-<#assign
 	cpOptionModel = dataFactory.newCPOptionModel("select", 1)
 
 	cpOptionCategoryModels = dataFactory.newCPOptionCategoryModels()
@@ -33,6 +21,16 @@
 
 	defaultCommercePriceEntryModel = dataFactory.newCommercePriceEntryModel(0, "", 0)
 />
+
+<#include "commerce_accounts.ftl">
+
+<#list commerceInventoryWarehouseModels as commerceInventoryWarehouseModel>
+	${dataFactory.toInsertSQL(commerceInventoryWarehouseModel)}
+
+	<#list commerceChannelModels as commerceChannelModel>
+		${dataFactory.toInsertSQL(dataFactory.newCommerceChannelRelModel(dataFactory.commerceInventoryWarehouseClassNameId, commerceInventoryWarehouseModel.commerceInventoryWarehouseId, commerceChannelModel.commerceChannelId))}
+	</#list>
+</#list>
 
 ${dataFactory.toInsertSQL(cpOptionModel)}
 

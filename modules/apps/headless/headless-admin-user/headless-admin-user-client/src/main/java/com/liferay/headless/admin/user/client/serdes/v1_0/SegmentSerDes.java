@@ -83,6 +83,16 @@ public class SegmentSerDes {
 			sb.append("\"");
 		}
 
+		if (segment.getCriteriaValue() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"criteriaValue\": ");
+
+			sb.append(_toJSON(segment.getCriteriaValue()));
+		}
+
 		if (segment.getDateCreated() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -195,6 +205,14 @@ public class SegmentSerDes {
 			map.put("criteria", String.valueOf(segment.getCriteria()));
 		}
 
+		if (segment.getCriteriaValue() == null) {
+			map.put("criteriaValue", null);
+		}
+		else {
+			map.put(
+				"criteriaValue", String.valueOf(segment.getCriteriaValue()));
+		}
+
 		if (segment.getDateCreated() == null) {
 			map.put("dateCreated", null);
 		}
@@ -269,6 +287,12 @@ public class SegmentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "criteria")) {
 				if (jsonParserFieldValue != null) {
 					segment.setCriteria((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "criteriaValue")) {
+				if (jsonParserFieldValue != null) {
+					segment.setCriteriaValue(
+						(Map)SegmentSerDes.toMap((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {

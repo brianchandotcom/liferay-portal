@@ -39,6 +39,7 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -121,6 +122,36 @@ public class Segment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	@NotEmpty
 	protected String criteria;
+
+	@Schema(description = "The segment's criteria in a JSONObject.")
+	@Valid
+	public Map<String, Object> getCriteriaValue() {
+		return criteriaValue;
+	}
+
+	public void setCriteriaValue(Map<String, Object> criteriaValue) {
+		this.criteriaValue = criteriaValue;
+	}
+
+	@JsonIgnore
+	public void setCriteriaValue(
+		UnsafeSupplier<Map<String, Object>, Exception>
+			criteriaValueUnsafeSupplier) {
+
+		try {
+			criteriaValue = criteriaValueUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The segment's criteria in a JSONObject.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Map<String, Object> criteriaValue;
 
 	@Schema(description = "The segment's creation date.")
 	public Date getDateCreated() {
@@ -339,6 +370,16 @@ public class Segment implements Serializable {
 			sb.append(_escape(criteria));
 
 			sb.append("\"");
+		}
+
+		if (criteriaValue != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"criteriaValue\": ");
+
+			sb.append(_toJSON(criteriaValue));
 		}
 
 		if (dateCreated != null) {

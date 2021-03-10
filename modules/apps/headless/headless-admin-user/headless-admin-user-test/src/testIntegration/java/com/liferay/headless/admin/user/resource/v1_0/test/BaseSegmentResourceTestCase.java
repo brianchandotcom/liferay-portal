@@ -503,6 +503,14 @@ public abstract class BaseSegmentResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("criteriaValue", additionalAssertFieldName)) {
+				if (segment.getCriteriaValue() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (segment.getName() == null) {
 					valid = false;
@@ -627,6 +635,17 @@ public abstract class BaseSegmentResourceTestCase {
 			if (Objects.equals("criteria", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						segment1.getCriteria(), segment2.getCriteria())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("criteriaValue", additionalAssertFieldName)) {
+				if (!equals(
+						(Map)segment1.getCriteriaValue(),
+						(Map)segment2.getCriteriaValue())) {
 
 					return false;
 				}
@@ -778,6 +797,11 @@ public abstract class BaseSegmentResourceTestCase {
 			sb.append("'");
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("criteriaValue")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("dateCreated")) {

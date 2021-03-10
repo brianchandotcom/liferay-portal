@@ -20,6 +20,7 @@ import com.liferay.headless.delivery.client.serdes.v1_0.SegmentSerDes;
 import java.io.Serializable;
 
 import java.util.Date;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -76,6 +77,28 @@ public class Segment implements Cloneable, Serializable {
 	}
 
 	protected String criteria;
+
+	public Map<String, Object> getCriteriaValue() {
+		return criteriaValue;
+	}
+
+	public void setCriteriaValue(Map<String, Object> criteriaValue) {
+		this.criteriaValue = criteriaValue;
+	}
+
+	public void setCriteriaValue(
+		UnsafeSupplier<Map<String, Object>, Exception>
+			criteriaValueUnsafeSupplier) {
+
+		try {
+			criteriaValue = criteriaValueUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, Object> criteriaValue;
 
 	public Date getDateCreated() {
 		return dateCreated;

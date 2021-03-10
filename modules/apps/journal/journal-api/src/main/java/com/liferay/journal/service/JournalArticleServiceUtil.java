@@ -1710,7 +1710,9 @@ public class JournalArticleServiceUtil {
 	 articles
 	 * @return the range of matching web content articles ordered by the
 	 comparator
+	 * @deprecated As of Cavanaugh (7.4.x), replace by {@link #search(long, long, List, long, String, Double, String, String, Date, Date, Locale, int, Date, int, int, OrderByComparator)}
 	 */
+	@Deprecated
 	public static List<JournalArticle> search(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
 		String keywords, Double version, String ddmStructureKey,
@@ -1723,6 +1725,20 @@ public class JournalArticleServiceUtil {
 			companyId, groupId, folderIds, classNameId, keywords, version,
 			ddmStructureKey, ddmTemplateKey, displayDateGT, displayDateLT,
 			status, reviewDate, start, end, orderByComparator);
+	}
+
+	public static List<JournalArticle> search(
+		long companyId, long groupId, List<Long> folderIds, long classNameId,
+		String keywords, Double version, String ddmStructureKey,
+		String ddmTemplateKey, java.util.Date displayDateGT,
+		java.util.Date displayDateLT, java.util.Locale locale, int status,
+		java.util.Date reviewDate, int start, int end,
+		OrderByComparator<JournalArticle> orderByComparator) {
+
+		return getService().search(
+			companyId, groupId, folderIds, classNameId, keywords, version,
+			ddmStructureKey, ddmTemplateKey, displayDateGT, displayDateLT,
+			locale, status, reviewDate, start, end, orderByComparator);
 	}
 
 	/**
@@ -1787,7 +1803,9 @@ public class JournalArticleServiceUtil {
 	 articles
 	 * @return the range of matching web content articles ordered by the
 	 comparator
+	 * @deprecated As of Cavanaugh (7.4.x), replace by {@link #search(long, long, List, long, String, Double, String, String, String, String, String, Date, Date, Locale, int, Date, boolean, int, int, OrderByComparator)}
 	 */
+	@Deprecated
 	public static List<JournalArticle> search(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
 		String articleId, Double version, String title, String description,
@@ -1801,6 +1819,22 @@ public class JournalArticleServiceUtil {
 			title, description, content, ddmStructureKey, ddmTemplateKey,
 			displayDateGT, displayDateLT, status, reviewDate, andOperator,
 			start, end, orderByComparator);
+	}
+
+	public static List<JournalArticle> search(
+		long companyId, long groupId, List<Long> folderIds, long classNameId,
+		String articleId, Double version, String title, String description,
+		String content, String ddmStructureKey, String ddmTemplateKey,
+		java.util.Date displayDateGT, java.util.Date displayDateLT,
+		java.util.Locale locale, int status, java.util.Date reviewDate,
+		boolean andOperator, int start, int end,
+		OrderByComparator<JournalArticle> orderByComparator) {
+
+		return getService().search(
+			companyId, groupId, folderIds, classNameId, articleId, version,
+			title, description, content, ddmStructureKey, ddmTemplateKey,
+			displayDateGT, displayDateLT, locale, status, reviewDate,
+			andOperator, start, end, orderByComparator);
 	}
 
 	/**
@@ -1867,7 +1901,9 @@ public class JournalArticleServiceUtil {
 	 articles
 	 * @return the range of matching web content articles ordered by the
 	 comparator
+	 * @deprecated As of Cavanaugh (7.4.x), replace by {@link #search(long, long, List, long, String, Double, String, String, String, String[], String[], Date, Date, Locale, int, Date, boolean, int, int, OrderByComparator)}
 	 */
+	@Deprecated
 	public static List<JournalArticle> search(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
 		String articleId, Double version, String title, String description,
@@ -1881,6 +1917,22 @@ public class JournalArticleServiceUtil {
 			title, description, content, ddmStructureKeys, ddmTemplateKeys,
 			displayDateGT, displayDateLT, status, reviewDate, andOperator,
 			start, end, orderByComparator);
+	}
+
+	public static List<JournalArticle> search(
+		long companyId, long groupId, List<Long> folderIds, long classNameId,
+		String articleId, Double version, String title, String description,
+		String content, String[] ddmStructureKeys, String[] ddmTemplateKeys,
+		java.util.Date displayDateGT, java.util.Date displayDateLT,
+		java.util.Locale locale, int status, java.util.Date reviewDate,
+		boolean andOperator, int start, int end,
+		OrderByComparator<JournalArticle> orderByComparator) {
+
+		return getService().search(
+			companyId, groupId, folderIds, classNameId, articleId, version,
+			title, description, content, ddmStructureKeys, ddmTemplateKeys,
+			displayDateGT, displayDateLT, locale, status, reviewDate,
+			andOperator, start, end, orderByComparator);
 	}
 
 	/**
@@ -1922,7 +1974,9 @@ public class JournalArticleServiceUtil {
 	 * @param reviewDate the web content article's scheduled review date
 	 (optionally <code>null</code>)
 	 * @return the number of matching web content articles
+	 * @deprecated As of Cavanaugh (7.4.x), replace by {@link #searchCount(long, long, List, long, String, Double, String, String, Date, Date, Locale, int, Date)}
 	 */
+	@Deprecated
 	public static int searchCount(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
 		String keywords, Double version, String ddmStructureKey,
@@ -1933,6 +1987,19 @@ public class JournalArticleServiceUtil {
 			companyId, groupId, folderIds, classNameId, keywords, version,
 			ddmStructureKey, ddmTemplateKey, displayDateGT, displayDateLT,
 			status, reviewDate);
+	}
+
+	public static int searchCount(
+		long companyId, long groupId, List<Long> folderIds, long classNameId,
+		String keywords, Double version, String ddmStructureKey,
+		String ddmTemplateKey, java.util.Date displayDateGT,
+		java.util.Date displayDateLT, java.util.Locale locale, int status,
+		java.util.Date reviewDate) {
+
+		return getService().searchCount(
+			companyId, groupId, folderIds, classNameId, keywords, version,
+			ddmStructureKey, ddmTemplateKey, displayDateGT, displayDateLT,
+			locale, status, reviewDate);
 	}
 
 	/**
@@ -1980,7 +2047,9 @@ public class JournalArticleServiceUtil {
 	 or just one field must match. Group, folder IDs, class name ID,
 	 and status must all match their values.
 	 * @return the number of matching web content articles
+	 * @deprecated As of Cavanaugh (7.4.x), replace by {@link #searchCount(long, long, List, long, String, Double, String, String, String, String, String, Date, Date, Locale, int, Date, boolean)}
 	 */
+	@Deprecated
 	public static int searchCount(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
 		String articleId, Double version, String title, String description,
@@ -1992,6 +2061,21 @@ public class JournalArticleServiceUtil {
 			companyId, groupId, folderIds, classNameId, articleId, version,
 			title, description, content, ddmStructureKey, ddmTemplateKey,
 			displayDateGT, displayDateLT, status, reviewDate, andOperator);
+	}
+
+	public static int searchCount(
+		long companyId, long groupId, List<Long> folderIds, long classNameId,
+		String articleId, Double version, String title, String description,
+		String content, String ddmStructureKey, String ddmTemplateKey,
+		java.util.Date displayDateGT, java.util.Date displayDateLT,
+		java.util.Locale locale, int status, java.util.Date reviewDate,
+		boolean andOperator) {
+
+		return getService().searchCount(
+			companyId, groupId, folderIds, classNameId, articleId, version,
+			title, description, content, ddmStructureKey, ddmTemplateKey,
+			displayDateGT, displayDateLT, locale, status, reviewDate,
+			andOperator);
 	}
 
 	/**
@@ -2041,7 +2125,9 @@ public class JournalArticleServiceUtil {
 	 or just one field must match.  Group, folder IDs, class name ID,
 	 and status must all match their values.
 	 * @return the number of matching web content articles
+	 * @deprecated As of Cavanaugh (7.4.x), replace by {@link #searchCount(long, long, List, long, String, Double, String, String, String, String[], String[], Date, Date, Locale, int, Date, boolean)}
 	 */
+	@Deprecated
 	public static int searchCount(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
 		String articleId, Double version, String title, String description,
@@ -2053,6 +2139,21 @@ public class JournalArticleServiceUtil {
 			companyId, groupId, folderIds, classNameId, articleId, version,
 			title, description, content, ddmStructureKeys, ddmTemplateKeys,
 			displayDateGT, displayDateLT, status, reviewDate, andOperator);
+	}
+
+	public static int searchCount(
+		long companyId, long groupId, List<Long> folderIds, long classNameId,
+		String articleId, Double version, String title, String description,
+		String content, String[] ddmStructureKeys, String[] ddmTemplateKeys,
+		java.util.Date displayDateGT, java.util.Date displayDateLT,
+		java.util.Locale locale, int status, java.util.Date reviewDate,
+		boolean andOperator) {
+
+		return getService().searchCount(
+			companyId, groupId, folderIds, classNameId, articleId, version,
+			title, description, content, ddmStructureKeys, ddmTemplateKeys,
+			displayDateGT, displayDateLT, locale, status, reviewDate,
+			andOperator);
 	}
 
 	public static void subscribe(long groupId, long articleId)

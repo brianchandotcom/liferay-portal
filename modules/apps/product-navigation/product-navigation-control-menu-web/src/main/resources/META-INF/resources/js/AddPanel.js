@@ -153,7 +153,10 @@ const AddPanel = ({
 
 	useEffect(() => {
 		const removePortlet = (item) => {
-			const portlet = {...item, itemId: item.portletId};
+			const portlet = {
+				...item,
+				itemId: item.portletId.replace(/_USER_(.*)/, ''),
+			};
 			const updatedWidgets = updateUsedWidget({
 				item: portlet,
 				used: false,

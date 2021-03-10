@@ -93,8 +93,9 @@
 	 */
 	function transformChunkScriptFilename(chunkScriptFileName) {
 		return (
-			chunkScriptFileName + '?languageId=' +
-				Liferay.ThemeDisplay.getLanguageId()
+			chunkScriptFileName +
+			'?languageId=' +
+			Liferay.ThemeDisplay.getLanguageId()
 		);
 	}
 
@@ -114,8 +115,10 @@
 		}
 
 		return (
-			'/o/' + containerId + '/__generated__/container.js?languageId=' +
-				Liferay.ThemeDisplay.getLanguageId()
+			'/o/' +
+			containerId +
+			'/__generated__/container.js?languageId=' +
+			Liferay.ThemeDisplay.getLanguageId()
 		);
 	}
 
@@ -406,6 +409,6 @@
 
 	window[GET_MODULE_SYMBOL] = getModule;
 	window[WEBPACK_HELPERS_SYMBOL] = {
-		transformChunkScriptFilename
+		transformChunkScriptFilename,
 	};
 })();

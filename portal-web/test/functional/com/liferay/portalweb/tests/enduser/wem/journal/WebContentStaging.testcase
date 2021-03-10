@@ -15,15 +15,6 @@ definition {
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Staging Test Page");
-
-		JSONWebcontent.addWebContent(
-			content = "WC Content",
-			groupName = "Site Name",
-			title = "WC 1");
-
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(siteName = "Site Name");
 	}
 
 	tearDown {
@@ -40,7 +31,18 @@ definition {
 	@description = "Assert Web Content created From Structure is published Via SAP"
 	@priority = "4"
 	test AssertWebContentFromStructureNotBeDeletedOnLiveViaSAP {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+		task ("Create a web content") {
+			JSONWebcontent.addWebContent(
+					content = "WC Content",
+					groupName = "Site Name",
+					title = "WC 1");
+		}
+
+		task ("Activate Staging") {
+			Staging.openStagingAdmin(siteURLKey = "site-name");
+
+			Staging.activateStagingCP(siteName = "Site Name");
+		}
 
 		task ("Add a web content structure with all fields") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
@@ -173,6 +175,19 @@ definition {
 	@priority = "5"
 	test PublishInStagingWebContentFromStructure {
 		property portal.acceptance = "true";
+
+		task ("Create a web content") {
+			JSONWebcontent.addWebContent(
+					content = "WC Content",
+					groupName = "Site Name",
+					title = "WC 1");
+		}
+
+		task ("Activate Staging") {
+			Staging.openStagingAdmin(siteURLKey = "site-name");
+
+			Staging.activateStagingCP(siteName = "Site Name");
+		}
 
 		task ("Add a web content structure with all fields") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");

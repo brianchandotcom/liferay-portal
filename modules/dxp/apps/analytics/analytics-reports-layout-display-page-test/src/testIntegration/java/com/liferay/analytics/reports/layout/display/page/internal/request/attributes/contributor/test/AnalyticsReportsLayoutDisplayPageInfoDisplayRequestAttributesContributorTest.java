@@ -16,6 +16,8 @@ package com.liferay.analytics.reports.layout.display.page.internal.request.attri
 
 import com.liferay.analytics.reports.constants.AnalyticsReportsWebKeys;
 import com.liferay.analytics.reports.info.item.ClassNameClassPKInfoItemIdentifier;
+import com.liferay.analytics.reports.layout.display.page.internal.test.MockObject;
+import com.liferay.analytics.reports.layout.display.page.internal.test.layout.display.page.MockObjectLayoutDisplayPageObjectProvider;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.info.display.request.attributes.contributor.InfoDisplayRequestAttributesContributor;
 import com.liferay.info.item.InfoItemReference;
@@ -26,8 +28,6 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
-import java.util.Locale;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -73,54 +73,8 @@ public class
 
 			mockHttpServletRequest.setAttribute(
 				LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
-				new LayoutDisplayPageObjectProvider<MockObject>() {
-
-					@Override
-					public long getClassNameId() {
-						return className.getClassNameId();
-					}
-
-					@Override
-					public long getClassPK() {
-						return 0;
-					}
-
-					@Override
-					public long getClassTypeId() {
-						return 0;
-					}
-
-					@Override
-					public String getDescription(Locale locale) {
-						return null;
-					}
-
-					@Override
-					public MockObject getDisplayObject() {
-						return new MockObject();
-					}
-
-					@Override
-					public long getGroupId() {
-						return 0;
-					}
-
-					@Override
-					public String getKeywords(Locale locale) {
-						return null;
-					}
-
-					@Override
-					public String getTitle(Locale locale) {
-						return null;
-					}
-
-					@Override
-					public String getURLTitle(Locale locale) {
-						return null;
-					}
-
-				});
+				new MockObjectLayoutDisplayPageObjectProvider(
+					className.getClassNameId()));
 
 			_infoDisplayRequestAttributesContributor.addAttributes(
 				mockHttpServletRequest);
@@ -147,9 +101,6 @@ public class
 		finally {
 			_classNameLocalService.deleteClassName(className);
 		}
-	}
-
-	public static class MockObject {
 	}
 
 	@Inject

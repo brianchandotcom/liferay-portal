@@ -1,4 +1,6 @@
 <#assign
+	commerceAccountEntryModels = dataFactory.newCommerceAccountEntryModels()
+
 	commerceCurrencyModel = dataFactory.newCommerceCurrencyModel()
 
 	commerceGroupModels = dataFactory.newCommerceGroupModels()
@@ -22,7 +24,13 @@
 	defaultCommercePriceEntryModel = dataFactory.newCommercePriceEntryModel(0, "", 0)
 />
 
-<#include "commerce_accounts.ftl">
+<#list commerceAccountEntryModels as commerceAccountEntryModel>
+	${dataFactory.toInsertSQL(commerceAccountEntryModel)}
+
+	${dataFactory.toInsertSQL(dataFactory.newAccountEntryUserRelModel(sampleUserModel, commerceAccountEntryModel.accountEntryId))}
+
+	<@insertGroup _groupModel=dataFactory.newCommerceAccountEntryGroupModel(commerceAccountEntryModel) />
+</#list>
 
 <#list commerceInventoryWarehouseModels as commerceInventoryWarehouseModel>
 	${dataFactory.toInsertSQL(commerceInventoryWarehouseModel)}

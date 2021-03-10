@@ -16,7 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayLink from '@clayui/link';
 import {Context as ModalContext} from '@clayui/modal';
 import classNames from 'classnames';
-import {MultiPanelSidebar} from 'data-engine-taglib';
+import {DragLayer, MultiPanelSidebar} from 'data-engine-taglib';
 import {
 	Pages,
 	useConfig,
@@ -303,6 +303,7 @@ export const FormBuilder = () => {
 								}
 							)}
 						>
+							<DragLayer />
 							<Pages
 								editable={true}
 								fieldActions={[

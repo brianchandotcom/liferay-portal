@@ -14,15 +14,20 @@
 
 package com.liferay.portal.crypto.hash;
 
+import java.util.Map;
+
 /**
  * @author Carlos Sierra Andrés
+ * @author Arthur Chan
  */
 public class CryptoHashVerificationContext {
 
 	public CryptoHashVerificationContext(
-		String cryptoHashProviderName, byte[] salt) {
+		String cryptoHashProviderName,
+		Map<String, ?> cryptoHashProviderProperties, byte[] salt) {
 
 		_cryptoHashProviderName = cryptoHashProviderName;
+		_cryptoHashProviderProperties = cryptoHashProviderProperties;
 		_salt = salt;
 	}
 
@@ -30,11 +35,16 @@ public class CryptoHashVerificationContext {
 		return _cryptoHashProviderName;
 	}
 
+	public Map<String, ?> getCryptoHashProviderProperties() {
+		return _cryptoHashProviderProperties;
+	}
+
 	public byte[] getSalt() {
 		return _salt;
 	}
 
 	private final String _cryptoHashProviderName;
+	private final Map<String, ?> _cryptoHashProviderProperties;
 	private final byte[] _salt;
 
 }

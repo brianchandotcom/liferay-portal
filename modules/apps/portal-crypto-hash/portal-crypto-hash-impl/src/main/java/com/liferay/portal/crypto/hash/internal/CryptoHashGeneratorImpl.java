@@ -46,7 +46,9 @@ public class CryptoHashGeneratorImpl implements CryptoHashGenerator {
 
 		return new CryptoHashResponse(
 			new CryptoHashVerificationContext(
-				cryptoHashProviderResponse.getCryptoHashProviderName(), salt),
+				cryptoHashProviderResponse.getCryptoHashProviderName(),
+				cryptoHashProviderResponse.getCryptoHashProviderProperties(),
+				salt),
 			cryptoHashProviderResponse.getHash());
 	}
 

@@ -1197,7 +1197,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			portlet = "Translation");
+			portlet = "Translation Processes");
 
 		Translations.viewTranslationEntry(
 			language = "es-ES",

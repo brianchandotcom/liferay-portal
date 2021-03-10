@@ -17,37 +17,52 @@ package com.liferay.portal.crypto.hash.provider.message.digest.internal;
 import com.liferay.portal.crypto.hash.spi.CryptoHashProvider;
 import com.liferay.portal.crypto.hash.spi.CryptoHashProviderResponse;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import java.util.Collections;
+import java.util.Map;
 
 /**
  * @author Arthur Chan
  */
 public class MessageDigestCryptoHashProvider implements CryptoHashProvider {
 
-	public MessageDigestCryptoHashProvider() throws NoSuchAlgorithmException {
-		_messageDigest = MessageDigest.getInstance("SHA-256");
+	public static final String ALGORITHM = "algorithm";
+
+	public MessageDigestCryptoHashProvider(String cryptoHashProviderFactoryName)
+		throws NoSuchAlgorithmException {
+
+		_cryptoHashProviderFactoryName = cryptoHashProviderFactoryName;
+
+		_messageDigest = MessageDigest.getInstance(_DEFAULT_ALGORITHM);
+	}
+
+	public MessageDigestCryptoHashProvider(
+			String cryptoHashProviderFactoryName,
+			Map<String, ?> cryptoHashProviderProperties)
+		throws NoSuchAlgorithmException {
+
+		_cryptoHashProviderFactoryName = cryptoHashProviderFactoryName;
+
+		_messageDigest = MessageDigest.getInstance(
+			MapUtil.getString(cryptoHashProviderProperties, ALGORITHM));
 	}
 
 	@Override
 	public CryptoHashProviderResponse generate(byte[] salt, byte[] input) {
 		return new CryptoHashProviderResponse(
-			_CRYPTO_HASH_PROVIDER_NAME,
+			_cryptoHashProviderFactoryName,
 			Collections.singletonMap(
 				"algorithm", _messageDigest.getAlgorithm()),
 			_messageDigest.digest(ArrayUtil.append(salt, input)));
 	}
 
-	@Override
-	public String getCryptoHashProviderName() {
-		return _CRYPTO_HASH_PROVIDER_NAME;
-	}
+	private static final String _DEFAULT_ALGORITHM = "SHA-256";
 
-	private static final String _CRYPTO_HASH_PROVIDER_NAME = "MessageDigest";
-
+	private final String _cryptoHashProviderFactoryName;
 	private final MessageDigest _messageDigest;
 
 }

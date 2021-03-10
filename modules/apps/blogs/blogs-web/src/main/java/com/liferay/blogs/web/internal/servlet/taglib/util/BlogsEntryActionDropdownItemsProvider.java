@@ -50,6 +50,7 @@ import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionURL;
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -207,12 +208,18 @@ public class BlogsEntryActionDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getEditEntryActionUnsafeConsumer() {
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		return dropdownItem -> {
 			dropdownItem.setHref(
-				_renderResponse.createRenderURL(), "mvcRenderCommandName",
-				"/blogs/edit_entry", Constants.CMD, Constants.UPDATE,
-				"redirect", _getRedirectURL(), "entryId",
-				_blogsEntry.getEntryId());
+				PortalUtil.getControlPanelPortletURL(
+					_httpServletRequest, themeDisplay.getScopeGroup(),
+					BlogsPortletKeys.BLOGS_ADMIN, 0, themeDisplay.getPlid(),
+					PortletRequest.RENDER_PHASE),
+				"mvcRenderCommandName", "/blogs/edit_entry", "redirect",
+				_getRedirectURL(), "entryId", _blogsEntry.getEntryId());
 
 			dropdownItem.setIcon("edit");
 			dropdownItem.setLabel(LanguageUtil.get(_resourceBundle, "edit"));

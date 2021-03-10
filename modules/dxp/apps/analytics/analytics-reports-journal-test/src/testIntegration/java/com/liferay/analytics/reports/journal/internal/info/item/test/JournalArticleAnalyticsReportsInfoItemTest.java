@@ -244,7 +244,7 @@ public class JournalArticleAnalyticsReportsInfoItemTest {
 			RandomTestUtil.randomString());
 
 		Assert.assertEquals(
-			journalArticle.getDisplayDate(),
+			journalArticle.getCreateDate(),
 			_analyticsReportsInfoItem.getPublishDate(journalArticle));
 	}
 
@@ -277,7 +277,7 @@ public class JournalArticleAnalyticsReportsInfoItemTest {
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		Assert.assertEquals(
-			assetDisplayPageEntry.getModifiedDate(),
+			assetDisplayPageEntry.getCreateDate(),
 			_analyticsReportsInfoItem.getPublishDate(journalArticle));
 	}
 

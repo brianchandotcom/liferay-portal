@@ -542,7 +542,7 @@ definition {
 				field = "Display Page URL",
 				link = "From Content Field",
 				navItem = "Web Content",
-				panel = "Link");
+				panel = "General");
 
 			var baseURL = PropsUtil.get("portal.url");
 
@@ -660,7 +660,7 @@ definition {
 
 		task ("Map Manual URL to Container") {
 			PageEditor.editLayoutContainer(
-				panel = "Link",
+				panel = "General",
 				url = "https://liferay.com");
 
 			AssertVisible(

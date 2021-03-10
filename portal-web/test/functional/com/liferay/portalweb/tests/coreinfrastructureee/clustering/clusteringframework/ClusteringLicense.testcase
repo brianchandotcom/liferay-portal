@@ -41,12 +41,23 @@ definition {
 		Page.assertNodePortPG(nodePort = "9080");
 
 		Clustering.viewTextPresentOnSpecificNode(
-			expectedText = "You have exceeded the maximum number of cluster nodes in cluster",
+			expectedText = "You have exceeded the maximum number of cluster nodes in cluster, overloaded nodes will be deactivated in 2 hours",
 			nodePort = "10080");
+
+		User.loginPG(
+			nodePort = "10080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		Page.assertNodePortPG(nodePort = "10080");
+
+		// TODO Assert message to Admin in the UI when node is scheduled to deactivate
+
+		Pause(locator1 = "300000");
 
 		Navigator.openSpecificURL(url = "http://localhost:10080");
 
-		Alert.viewErrorMessage(errorMessage = "This instance is not registered.");
+		Alert.viewErrorMessage(errorMessage = "You have exceeded the maximum number of cluster nodes in cluster, please shutdown nodes to recover or register a new license.");
 	}
 
 }

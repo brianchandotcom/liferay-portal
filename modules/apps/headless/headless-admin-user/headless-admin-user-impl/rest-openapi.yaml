@@ -460,6 +460,13 @@ components:
                         The segment's criteria.
                     readOnly: true
                     type: string
+                criteriaValue:
+                    additionalProperties:
+                        type: object
+                    description:
+                        The segment's criteria in a JSONObject.
+                    readOnly: true
+                    type: object
                 dateCreated:
                     description:
                         The segment's creation date.

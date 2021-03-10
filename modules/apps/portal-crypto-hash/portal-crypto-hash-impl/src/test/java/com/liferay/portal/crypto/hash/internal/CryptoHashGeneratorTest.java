@@ -18,12 +18,13 @@ import com.liferay.portal.crypto.hash.CryptoHashGenerator;
 import com.liferay.portal.crypto.hash.CryptoHashResponse;
 import com.liferay.portal.crypto.hash.CryptoHashVerificationContext;
 import com.liferay.portal.crypto.hash.CryptoHashVerifier;
-import com.liferay.portal.crypto.hash.provider.bcrypt.internal.BCryptCryptoHashProvider;
-import com.liferay.portal.crypto.hash.provider.message.digest.internal.MessageDigestCryptoHashProvider;
+import com.liferay.portal.crypto.hash.provider.bcrypt.internal.BCryptCryptoHashProviderFactory;
+import com.liferay.portal.crypto.hash.provider.message.digest.internal.MessageDigestCryptoHashProviderFactory;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
@@ -38,25 +39,32 @@ public class CryptoHashGeneratorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		CryptoHashProviderRegistry cryptoHashProviderRegistry =
-			new CryptoHashProviderRegistry();
+		CryptoHashProviderFactoryRegistry cryptoHashProviderFactoryRegistry =
+			new CryptoHashProviderFactoryRegistry();
 
-		BCryptCryptoHashProvider bCryptCryptoHashProvider =
-			new BCryptCryptoHashProvider();
+		BCryptCryptoHashProviderFactory bCryptCryptoHashProviderFactory =
+			new BCryptCryptoHashProviderFactory();
 
-		cryptoHashProviderRegistry.register(bCryptCryptoHashProvider);
+		cryptoHashProviderFactoryRegistry.register(
+			bCryptCryptoHashProviderFactory);
 
-		MessageDigestCryptoHashProvider messageDigestCryptoHashProvider =
-			new MessageDigestCryptoHashProvider();
+		MessageDigestCryptoHashProviderFactory
+			messageDigestCryptoHashProviderFactory =
+				new MessageDigestCryptoHashProviderFactory();
 
-		cryptoHashProviderRegistry.register(messageDigestCryptoHashProvider);
+		cryptoHashProviderFactoryRegistry.register(
+			messageDigestCryptoHashProviderFactory);
 
 		_cryptoHashGenerators = Arrays.asList(
-			new CryptoHashGeneratorImpl(bCryptCryptoHashProvider),
-			new CryptoHashGeneratorImpl(messageDigestCryptoHashProvider));
+			new CryptoHashGeneratorImpl(
+				bCryptCryptoHashProviderFactory.create(
+					Collections.singletonMap("rounds", "10"))),
+			new CryptoHashGeneratorImpl(
+				messageDigestCryptoHashProviderFactory.create(
+					Collections.singletonMap("algorithm", "SHA-256"))));
 
 		_cryptoHashVerifier = new CryptoHashVerifierImpl(
-			cryptoHashProviderRegistry);
+			cryptoHashProviderFactoryRegistry);
 	}
 
 	@Test

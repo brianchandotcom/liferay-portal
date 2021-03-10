@@ -13,8 +13,9 @@
  */
 
 import ClayDatePicker from '@clayui/date-picker';
+import {usePrevious} from '@liferay/frontend-js-react-web';
 import moment from 'moment/min/moment-with-locales';
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {createAutoCorrectedDatePipe} from 'text-mask-addons';
 import {createTextMaskInputElement} from 'text-mask-core';
 
@@ -93,7 +94,9 @@ const getDateFormat = (locale) => {
 
 const transformToDate = (date, locale) => {
 	if (typeof date === 'string' && date.indexOf('_') === -1 && date !== '') {
-		return moment(date).locale(locale).toDate();
+		const dateFormat = getLocaleDateFormat(locale);
+
+		return moment(date, [dateFormat, 'YYYY-MM-DD']).toDate();
 	}
 
 	return date;
@@ -128,14 +131,29 @@ const DatePicker = ({
 
 	const [expanded, setExpand] = useState(false);
 
-	const initialValueMemoized = useMemo(
-		() => transformToDate(initialValue, locale),
-		[initialValue, locale]
+	const previousLocale = usePrevious(locale);
+	const previousInitialValue = usePrevious(initialValue);
+
+	const [initialValueDate, setInitialValueDate] = useState(
+		transformToDate(initialValue, locale)
 	);
+
+	useEffect(() => {
+		if (
+			previousLocale &&
+			previousLocale != locale &&
+			initialValue === previousInitialValue
+		) {
+			setInitialValueDate(transformToDate(initialValue, previousLocale));
+		}
+		else if (initialValue !== previousInitialValue) {
+			setInitialValueDate(transformToDate(initialValue, locale));
+		}
+	}, [initialValue, locale, previousInitialValue, previousLocale]);
 
 	const [localizedValue, setLocalizedValue] = useState({});
 
-	const [value, setValue] = useSyncValue(initialValueMemoized);
+	const [value, setValue] = useSyncValue(initialValueDate);
 	const [years, setYears] = useState(() => {
 		const currentYear = new Date().getFullYear();
 
@@ -168,8 +186,8 @@ const DatePicker = ({
 					).format(dateMask.toUpperCase());
 				}
 			}
-			else if (initialValueMemoized) {
-				inputRef.current.value = moment(initialValueMemoized).format(
+			else if (initialValueDate) {
+				inputRef.current.value = moment(initialValueDate).format(
 					dateMask.toUpperCase()
 				);
 			}
@@ -183,7 +201,7 @@ const DatePicker = ({
 		dateMask,
 		inputMask,
 		inputRef,
-		initialValueMemoized,
+		initialValueDate,
 		localizedValue,
 		locale,
 	]);

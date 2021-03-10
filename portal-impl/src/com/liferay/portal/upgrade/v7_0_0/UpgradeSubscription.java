@@ -127,14 +127,17 @@ public class UpgradeSubscription extends UpgradeProcess {
 					if (tableName.equals("PortletPreferences")) {
 						long plid = rs1.getLong("plid");
 
-						PreparedStatement ps2 = connection.prepareStatement(
-							"select groupId from Layout where plid = ?");
+						try (PreparedStatement ps2 =
+								connection.prepareStatement(
+									"select groupId from Layout where plid = " +
+										"?")) {
 
-						ps2.setLong(1, plid);
+							ps2.setLong(1, plid);
 
-						try (ResultSet rs2 = ps2.executeQuery()) {
-							if (rs2.next()) {
-								return rs2.getLong("groupId");
+							try (ResultSet rs2 = ps2.executeQuery()) {
+								if (rs2.next()) {
+									return rs2.getLong("groupId");
+								}
 							}
 						}
 					}

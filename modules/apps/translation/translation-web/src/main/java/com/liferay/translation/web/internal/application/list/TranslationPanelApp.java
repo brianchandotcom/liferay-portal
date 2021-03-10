@@ -22,9 +22,6 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.translation.constants.TranslationPortletKeys;
 
-import java.util.Locale;
-import java.util.ResourceBundle;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -40,14 +37,6 @@ import org.osgi.service.component.annotations.Reference;
 	service = PanelApp.class
 )
 public class TranslationPanelApp extends BasePanelApp {
-
-	@Override
-	public String getLabel(Locale locale) {
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(locale);
-
-		return _language.get(resourceBundle, "translation-processes");
-	}
 
 	@Override
 	public String getPortletId() {

@@ -18,9 +18,12 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Alejandro Tardín
  */
+@ProviderType
 public interface DLVideoRenderer {
 
 	public String renderHTML(

@@ -17,9 +17,12 @@ package com.liferay.document.library.video.external.shortcut.resolver;
 import com.liferay.document.library.video.external.shortcut.DLVideoExternalShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Alejandro Tardín
  */
+@ProviderType
 public interface DLVideoExternalShortcutResolver {
 
 	public DLVideoExternalShortcut resolve(FileVersion fileVersion);

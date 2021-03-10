@@ -42,10 +42,10 @@ export function adaptLegacyPriceModel(priceModel = {}) {
 		 */
 		promoPrice: promoPrice ? promoPrice.match(/\d/gi)[0] : '0',
 		promoPriceFormatted: promoPrice,
-		...(discountPercentages || [0, 0, 0, 0]).reduce(
-			(discountLevels, percentage, index) => ({
+		...(discountPercentages || ['0', '0', '0', '0']).reduce(
+			(discountLevels, percentage, i) => ({
 				...discountLevels,
-				[`${DISCOUNT_LEVEL_PREFIX}${index + 1}`]: percentage,
+				[`${DISCOUNT_LEVEL_PREFIX}${i + 1}`]: parseFloat(percentage),
 			}),
 			{}
 		),

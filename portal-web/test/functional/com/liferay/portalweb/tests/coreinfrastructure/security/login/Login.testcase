@@ -13,6 +13,7 @@ definition {
 	test CASSSOSmoke {
 		property cas.enabled = "true";
 		property dummy.socket.proxy.disabled = "true";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Login#CASSSOSmoke";
 
 		User.firstLoginPG();

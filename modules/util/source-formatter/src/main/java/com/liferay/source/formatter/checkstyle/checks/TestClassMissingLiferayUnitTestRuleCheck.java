@@ -58,28 +58,23 @@ public class TestClassMissingLiferayUnitTestRuleCheck extends BaseCheck {
 			DetailAST annotationDetailAST = AnnotationUtil.getAnnotation(
 				detailAST, "RunWith");
 
-			if ((annotationDetailAST == null) &&
-				!importNames.contains(
-					"com.liferay.portal.test.rule.LiferayUnitTestRule")) {
+			if (annotationDetailAST != null) {
+				List<DetailAST> literalClassDetailASTList = getAllChildTokens(
+					annotationDetailAST, true, TokenTypes.LITERAL_CLASS);
 
-				log(detailAST, _MSG_REQUIRE_TEST_RULE);
+				for (DetailAST literalClassDetailAST :
+						literalClassDetailASTList) {
 
-				return;
-			}
+					DetailAST identDetailAST =
+						literalClassDetailAST.getPreviousSibling();
 
-			List<DetailAST> literalClassDetailASTList = getAllChildTokens(
-				annotationDetailAST, true, TokenTypes.LITERAL_CLASS);
+					String className = identDetailAST.getText();
 
-			for (DetailAST literalClassDetailAST : literalClassDetailASTList) {
-				DetailAST identDetailAST =
-					literalClassDetailAST.getPreviousSibling();
+					if (className.equals("MockitoJUnitRunner") ||
+						className.equals("PowerMockRunner")) {
 
-				String className = identDetailAST.getText();
-
-				if (className.equals("MockitoJUnitRunner") ||
-					className.equals("PowerMockRunner")) {
-
-					return;
+						return;
+					}
 				}
 			}
 

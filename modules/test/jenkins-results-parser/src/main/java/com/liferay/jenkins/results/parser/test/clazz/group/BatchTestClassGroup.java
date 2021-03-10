@@ -490,43 +490,24 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			return;
 		}
 
-		Map<Integer, List<AxisTestClassGroup>> axisTestClassGroupsMap =
-			new HashMap<>();
+		List<List<AxisTestClassGroup>> partition = new ArrayList<>();
 
-		for (AxisTestClassGroup axisTestClassGroup : axisTestClassGroups) {
-			Integer minimumSlaveRAM = axisTestClassGroup.getMinimumSlaveRAM();
+		partition.add(axisTestClassGroups);
 
-			List<AxisTestClassGroup> axisTestClassGroups =
-				axisTestClassGroupsMap.get(minimumSlaveRAM);
+		partition = _partitionByMinimumSlaveRAM(partition);
+		partition = _partitionByTestBaseDir(partition);
 
-			if (axisTestClassGroups == null) {
-				axisTestClassGroups = new ArrayList<>();
+		partition = _partitionByMaxChildren(partition);
+
+		for (List<AxisTestClassGroup> axisTestClassGroups : partition) {
+			SegmentTestClassGroup segmentTestClassGroup =
+				TestClassGroupFactory.newSegmentTestClassGroup(this);
+
+			for (AxisTestClassGroup axisTestClassGroup : axisTestClassGroups) {
+				segmentTestClassGroup.addAxisTestClassGroup(axisTestClassGroup);
 			}
 
-			axisTestClassGroups.add(axisTestClassGroup);
-
-			axisTestClassGroupsMap.put(minimumSlaveRAM, axisTestClassGroups);
-		}
-
-		for (List<AxisTestClassGroup> axisTestClassGroupsMapValue :
-				axisTestClassGroupsMap.values()) {
-
-			for (List<AxisTestClassGroup> axisTestClassGroups :
-					Lists.partition(
-						axisTestClassGroupsMapValue, getSegmentMaxChildren())) {
-
-				SegmentTestClassGroup segmentTestClassGroup =
-					TestClassGroupFactory.newSegmentTestClassGroup(this);
-
-				for (AxisTestClassGroup axisTestClassGroup :
-						axisTestClassGroups) {
-
-					segmentTestClassGroup.addAxisTestClassGroup(
-						axisTestClassGroup);
-				}
-
-				_segmentTestClassGroups.add(segmentTestClassGroup);
-			}
+			_segmentTestClassGroups.add(segmentTestClassGroup);
 		}
 	}
 
@@ -646,6 +627,85 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		}
 
 		return Lists.newArrayList(requiredModuleDirs);
+	}
+
+	private List<List<AxisTestClassGroup>> _partitionByMaxChildren(
+		List<List<AxisTestClassGroup>> partition) {
+
+		List<List<AxisTestClassGroup>> axisTestClassGroupPartition =
+			new ArrayList<>();
+
+		for (List<AxisTestClassGroup> axisTestClassGroups : partition) {
+			axisTestClassGroupPartition.addAll(
+				Lists.partition(axisTestClassGroups, getSegmentMaxChildren()));
+		}
+
+		return axisTestClassGroupPartition;
+	}
+
+	private List<List<AxisTestClassGroup>> _partitionByMinimumSlaveRAM(
+		List<List<AxisTestClassGroup>> partition) {
+
+		List<List<AxisTestClassGroup>> axisTestClassGroupPartition =
+			new ArrayList<>();
+
+		for (List<AxisTestClassGroup> axisTestClassGroups : partition) {
+			Map<Integer, List<AxisTestClassGroup>> axisTestClassGroupsMap =
+				new HashMap<>();
+
+			for (AxisTestClassGroup axisTestClassGroup : axisTestClassGroups) {
+				Integer minimumSlaveRAM =
+					axisTestClassGroup.getMinimumSlaveRAM();
+
+				List<AxisTestClassGroup> minimumSlaveRAMAxisTestClassGroups =
+					axisTestClassGroupsMap.get(minimumSlaveRAM);
+
+				if (minimumSlaveRAMAxisTestClassGroups == null) {
+					minimumSlaveRAMAxisTestClassGroups = new ArrayList<>();
+				}
+
+				minimumSlaveRAMAxisTestClassGroups.add(axisTestClassGroup);
+
+				axisTestClassGroupsMap.put(
+					minimumSlaveRAM, minimumSlaveRAMAxisTestClassGroups);
+			}
+
+			axisTestClassGroupPartition.addAll(axisTestClassGroupsMap.values());
+		}
+
+		return axisTestClassGroupPartition;
+	}
+
+	private List<List<AxisTestClassGroup>> _partitionByTestBaseDir(
+		List<List<AxisTestClassGroup>> partition) {
+
+		List<List<AxisTestClassGroup>> axisTestClassGroupPartition =
+			new ArrayList<>();
+
+		for (List<AxisTestClassGroup> axisTestClassGroups : partition) {
+			Map<File, List<AxisTestClassGroup>> axisTestClassGroupsMap =
+				new HashMap<>();
+
+			for (AxisTestClassGroup axisTestClassGroup : axisTestClassGroups) {
+				File testBaseDir = axisTestClassGroup.getTestBaseDir();
+
+				List<AxisTestClassGroup> testBaseDirAxisTestClassGroups =
+					axisTestClassGroupsMap.get(testBaseDir);
+
+				if (testBaseDirAxisTestClassGroups == null) {
+					testBaseDirAxisTestClassGroups = new ArrayList<>();
+				}
+
+				testBaseDirAxisTestClassGroups.add(axisTestClassGroup);
+
+				axisTestClassGroupsMap.put(
+					testBaseDir, testBaseDirAxisTestClassGroups);
+			}
+
+			axisTestClassGroupPartition.addAll(axisTestClassGroupsMap.values());
+		}
+
+		return axisTestClassGroupPartition;
 	}
 
 	private void _setIncludeStableTestSuite() {

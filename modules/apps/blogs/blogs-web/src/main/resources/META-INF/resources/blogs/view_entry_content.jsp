@@ -63,9 +63,20 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 				<clay:content-col
 					cssClass="visible-interaction"
 				>
-					<div class="dropdown dropdown-action">
-						<liferay-util:include page="/blogs/entry_action.jsp" servletContext="<%= application %>" />
-					</div>
+
+					<%
+					BlogsEntryActionDropdownItemsProvider blogsEntryActionDropdownItemsProvider = new BlogsEntryActionDropdownItemsProvider(entry, renderRequest, renderResponse, permissionChecker, resourceBundle, trashHelper);
+					%>
+
+					<clay:dropdown-actions
+						additionalProps='<%=
+							HashMapBuilder.<String, Object>put(
+								"trashEnabled", trashHelper.isTrashEnabled(themeDisplay.getScopeGroupId())
+							).build()
+						%>'
+						dropdownItems="<%= blogsEntryActionDropdownItemsProvider.getActionDropdownItems() %>"
+						propsTransformer="blogs_admin/js/ElementsPropsTransformer"
+					/>
 				</clay:content-col>
 			</clay:content-row>
 

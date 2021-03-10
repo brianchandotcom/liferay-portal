@@ -14,6 +14,7 @@
 
 package com.liferay.portal.test.rule;
 
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.BaseTransactionalTestRuleTest;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvoker;
@@ -32,8 +33,9 @@ public class TransactionalTestRuleTest extends BaseTransactionalTestRuleTest {
 
 	@ClassRule
 	@Rule
-	public static final TransactionalTestRule transactionalTestRule =
-		TransactionalTestRule.INSTANCE;
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			LiferayUnitTestRule.INSTANCE, TransactionalTestRule.INSTANCE);
 
 	static {
 		TransactionInvokerUtil transactionInvokerUtil =

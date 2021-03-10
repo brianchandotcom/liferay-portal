@@ -834,7 +834,9 @@ definition {
 
 		PortletEntry.selectAll();
 
-		AssertElementPresent(locator1 = "xpath=(//button[(@title = 'Delete') and (@disabled = 'disabled')])");
+		AssertElementPresent(
+			key_text = "times-circle",
+			locator1 = "Icon#ANY_DISABLED");
 	}
 
 	macro viewNoOldFriendlyURL {

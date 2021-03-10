@@ -830,9 +830,9 @@ definition {
 				key_fragmentClass = "rich-text",
 				locator1 = "Fragment#FRAGMENT");
 
-			Click(locator1 = "PageEditor#DROPDOWN");
-
-			MenuItem.click(menuItem = "zh-CN");
+			PageEditor.changeLocale(
+				currentLocale = "en-US",
+				locale = "zh-CN");
 
 			AssertVisible(
 				key_content = "New editable fragment zh-CN text",

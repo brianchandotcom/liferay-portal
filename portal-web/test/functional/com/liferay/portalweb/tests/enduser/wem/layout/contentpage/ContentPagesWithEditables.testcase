@@ -172,9 +172,9 @@ definition {
 				id = "rich-text",
 				text = "New editable fragment en-US text");
 
-			Click(locator1 = "PageEditor#DROPDOWN");
-
-			MenuItem.click(menuItem = "ca-ES");
+			PageEditor.changeLocale(
+				currentLocale = "en-US",
+				locale = "ca-ES");
 
 			PageEditor.editFragmentText(
 				contributed = "false",
@@ -197,9 +197,9 @@ definition {
 				key_fragmentClass = "rich-text",
 				locator1 = "Fragment#FRAGMENT");
 
-			Click(locator1 = "PageEditor#DROPDOWN");
-
-			MenuItem.click(menuItem = "ca-ES");
+			PageEditor.changeLocale(
+				currentLocale = "en-US",
+				locale = "ca-ES");
 
 			AssertVisible(
 				key_content = "New editable fragment ca-ES text",

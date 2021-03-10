@@ -2938,6 +2938,15 @@ components:
                     type: string
                 masterPage:
                     $ref: "#/components/schemas/MasterPage"
+                styleBook:
+                    description:
+                        "Defines the StyleBook that is applied to the Page"
+                    properties:
+                        key:
+                            type: string
+                        name:
+                            type: string
+                    type: object
                 themeName:
                     type: string
                 themeSettings:

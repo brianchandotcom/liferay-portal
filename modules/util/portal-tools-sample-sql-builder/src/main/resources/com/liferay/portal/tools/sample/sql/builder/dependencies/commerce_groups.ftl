@@ -19,10 +19,6 @@
 		cpSpecificationOptionModels = dataFactory.newCPSpecificationOptionModels(cpOptionCategoryModels)
 
 		cpTaxCategoryModel = dataFactory.newCPTaxCategoryModel()
-
-		defaultCPInstanceModel = dataFactory.newCPInstanceModel(dataFactory.newCPDefinitionModel(cpTaxCategoryModel, dataFactory.newCProductModel(0), 1), 1)
-
-		defaultCommercePriceEntryModel = dataFactory.newCommercePriceEntryModel(0, "", 0)
 	/>
 
 	<#list commerceAccountEntryModels as commerceAccountEntryModel>

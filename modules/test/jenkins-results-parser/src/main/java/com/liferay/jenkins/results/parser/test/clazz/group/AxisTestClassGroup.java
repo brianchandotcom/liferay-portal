@@ -17,6 +17,8 @@ package com.liferay.jenkins.results.parser.test.clazz.group;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
 
+import java.io.File;
+
 import java.util.List;
 
 /**
@@ -77,6 +79,10 @@ public class AxisTestClassGroup extends BaseTestClassGroup {
 
 	public SegmentTestClassGroup getSegmentTestClassGroup() {
 		return _segmentTestClassGroup;
+	}
+
+	public File getTestBaseDir() {
+		return null;
 	}
 
 	protected AxisTestClassGroup(BatchTestClassGroup batchTestClassGroup) {

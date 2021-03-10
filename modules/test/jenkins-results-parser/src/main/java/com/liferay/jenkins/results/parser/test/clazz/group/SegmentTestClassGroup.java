@@ -17,6 +17,8 @@ package com.liferay.jenkins.results.parser.test.clazz.group;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
 
+import java.io.File;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,8 +82,30 @@ public class SegmentTestClassGroup extends BaseTestClassGroup {
 			getBatchName(), "/", String.valueOf(getBatchIndex()));
 	}
 
+	public File getTestBaseDir() {
+		List<AxisTestClassGroup> axisTestClassGroups = getAxisTestClassGroups();
+
+		if ((axisTestClassGroups == null) || axisTestClassGroups.isEmpty()) {
+			return null;
+		}
+
+		AxisTestClassGroup axisTestClassGroup = axisTestClassGroups.get(0);
+
+		return axisTestClassGroup.getTestBaseDir();
+	}
+
 	public String getTestCasePropertiesContent() {
-		return "";
+		StringBuilder sb = new StringBuilder();
+
+		File testBaseDir = getTestBaseDir();
+
+		if ((testBaseDir != null) && testBaseDir.exists()) {
+			sb.append("TEST_BASE_DIR_NAME=");
+			sb.append(JenkinsResultsParserUtil.getCanonicalPath(testBaseDir));
+			sb.append("\n");
+		}
+
+		return sb.toString();
 	}
 
 	@Override

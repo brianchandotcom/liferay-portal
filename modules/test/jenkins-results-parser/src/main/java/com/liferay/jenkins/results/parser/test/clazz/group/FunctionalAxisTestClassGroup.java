@@ -64,6 +64,7 @@ public class FunctionalAxisTestClassGroup extends AxisTestClassGroup {
 		return functionalTestClass.getPoshiProperties();
 	}
 
+	@Override
 	public File getTestBaseDir() {
 		return _testBaseDir;
 	}

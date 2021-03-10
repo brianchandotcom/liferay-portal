@@ -16,8 +16,6 @@ package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
-import java.io.File;
-
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
@@ -82,25 +80,11 @@ public class FunctionalSegmentTestClassGroup extends SegmentTestClassGroup {
 		return functionalAxisTestClassGroup.getPoshiProperties();
 	}
 
-	public File getTestBaseDir() {
-		List<FunctionalAxisTestClassGroup> functionalAxisTestClassGroups =
-			getFunctionalAxisTestClassGroups();
-
-		if ((functionalAxisTestClassGroups == null) ||
-			functionalAxisTestClassGroups.isEmpty()) {
-
-			return null;
-		}
-
-		FunctionalAxisTestClassGroup functionalAxisTestClassGroup =
-			functionalAxisTestClassGroups.get(0);
-
-		return functionalAxisTestClassGroup.getTestBaseDir();
-	}
-
 	@Override
 	public String getTestCasePropertiesContent() {
 		StringBuilder sb = new StringBuilder();
+
+		sb.append(super.getTestCasePropertiesContent());
 
 		List<String> axisGroupNames = new ArrayList<>();
 
@@ -131,14 +115,6 @@ public class FunctionalSegmentTestClassGroup extends SegmentTestClassGroup {
 		sb.append("=");
 		sb.append(JenkinsResultsParserUtil.join(" ", axisGroupNames));
 		sb.append("\n");
-
-		File testBaseDir = getTestBaseDir();
-
-		if ((testBaseDir != null) && testBaseDir.exists()) {
-			sb.append("TEST_BASE_DIR_NAME=");
-			sb.append(JenkinsResultsParserUtil.getCanonicalPath(testBaseDir));
-			sb.append("/\n");
-		}
 
 		return sb.toString();
 	}

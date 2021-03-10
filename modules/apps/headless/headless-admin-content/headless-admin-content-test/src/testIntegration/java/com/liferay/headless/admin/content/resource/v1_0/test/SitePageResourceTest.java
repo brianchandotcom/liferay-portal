@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.Inject;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -77,6 +78,11 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			JSONUtil.getValueAsBoolean(
 				dataJSONObject, "JSONObject/admin",
 				"Object/deleteSiteSitePage"));
+	}
+
+	@Ignore
+	@Test
+	public void testPutSiteSitePage() {
 	}
 
 	private Layout _addLayout(long groupId) throws Exception {

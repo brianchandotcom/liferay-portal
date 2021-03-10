@@ -1950,38 +1950,6 @@ definition {
 			entryTitle = "Tavaszi felhők");
 	}
 
-	@description = "This is a use case for LPS-77728."
-	@priority = "5"
-	test StagingDraftWebContent {
-		property portal.acceptance = "true";
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addDraft(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
-
-		VerifyElementPresent(locator1 = "Message#SUCCESS");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
-
-		WebContentNavigator.gotoViewStatus(
-			webContentStatus = "DRAFT",
-			webContentTitle = "WC WebContent Title");
-
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(
-			pageVersioningEnabled = "true",
-			siteName = "Site Name");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
-
-		AssertTextNotPresent(value1 = "WC WebContent Title");
-	}
-
 	@description = "This is a use case for LPS-82431."
 	@priority = "5"
 	test StagingEditWebContents {

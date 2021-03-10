@@ -365,6 +365,50 @@ definition {
 
 			AssertConsoleTextNotPresent(value1 = "SystemException");
 		}
+
+		task ("Delete created site") {
+			JSONGroup.deleteGroupByName(groupName = "Site Name B");
+		}
 	}
 
+	@description = "This is a use case for LPS-77728."
+	@priority = "5"
+	test StagingDraftWebContent {
+		property portal.acceptance = "true";
+
+		task ("Create a web content as draft") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addDraft(
+					webContentContent = "WC WebContent Content",
+					webContentTitle = "WC WebContent Title");
+
+			VerifyElementPresent(locator1 = "Message#SUCCESS");
+		}
+
+		task ("Assert web content draft exists") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			WebContentNavigator.gotoViewStatus(
+					webContentStatus = "DRAFT",
+					webContentTitle = "WC WebContent Title");
+
+		}
+
+		task ("Activate Staging with page versioning") {
+			Staging.openStagingAdmin(siteURLKey = "site-name");
+
+			Staging.activateStagingCP(
+					pageVersioningEnabled = "true",
+					siteName = "Site Name");
+		}
+
+		task ("Check web content draft is not present in life") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			AssertTextNotPresent(value1 = "WC WebContent Title");
+		}
+	}
 }

@@ -2160,7 +2160,7 @@ public class DataFactory {
 		cpAttachmentFileEntryModel.setClassNameId(
 			getClassNameId(CPDefinition.class));
 		cpAttachmentFileEntryModel.setClassPK(cpDefinitionId);
-		cpAttachmentFileEntryModel.setFileEntryId(0);
+		cpAttachmentFileEntryModel.setFileEntryId(_counter.get());
 		cpAttachmentFileEntryModel.setDisplayDate(null);
 		cpAttachmentFileEntryModel.setExpirationDate(null);
 
@@ -3392,6 +3392,14 @@ public class DataFactory {
 		DLFolderModel dlFolderModel, String name, String extension,
 		String mimeType) {
 
+		return newDlFileEntryModel(
+			dlFolderModel, name, extension, mimeType, _counter.get());
+	}
+
+	public DLFileEntryModel newDlFileEntryModel(
+		DLFolderModel dlFolderModel, String name, String extension,
+		String mimeType, long fileEntryId) {
+
 		DLFileEntryModel dlFileEntryModel = new DLFileEntryModelImpl();
 
 		// UUID
@@ -3400,7 +3408,7 @@ public class DataFactory {
 
 		// PK fields
 
-		dlFileEntryModel.setFileEntryId(_counter.get());
+		dlFileEntryModel.setFileEntryId(fileEntryId);
 
 		// Group instance
 
@@ -5292,15 +5300,6 @@ public class DataFactory {
 		userName[1] = _lastNames.get((int)(index % _lastNames.size()));
 
 		return userName;
-	}
-
-	public CPAttachmentFileEntryModel setCPAttachmentFileEntryFileEntryId(
-		CPAttachmentFileEntryModel cpAttachmentFileEntryModel,
-		long fileEntryId) {
-
-		cpAttachmentFileEntryModel.setFileEntryId(fileEntryId);
-
-		return cpAttachmentFileEntryModel;
 	}
 
 	public CProductModel setCProductModelPublishedCPDefinitionId(

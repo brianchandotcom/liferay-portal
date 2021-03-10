@@ -4,9 +4,7 @@
 
 		dlFolderModel = dataFactory.newDLFolderModel(commerceCatalogGroupModel.groupId, cpDefinitionDLFolderModel.folderId, "Commerce Product Definition Attachment Folder " + cpAttachmentFileEntryModel.CPAttachmentFileEntryId)
 
-		dlFileEntryModel = dataFactory.newDlFileEntryModel(dlFolderModel, "TestFile" + cpAttachmentFileEntryModel.CPAttachmentFileEntryId, "jpeg", "image/jpeg")
-
-		cpAttachmentFileEntryModel = dataFactory.setCPAttachmentFileEntryFileEntryId(cpAttachmentFileEntryModel, dlFileEntryModel.fileEntryId)
+		dlFileEntryModel = dataFactory.newDlFileEntryModel(dlFolderModel, "TestFile" + cpAttachmentFileEntryModel.CPAttachmentFileEntryId, "jpeg", "image/jpeg", cpAttachmentFileEntryModel.fileEntryId)
 
 		dlFileVersionModel = dataFactory.newDLFileVersionModel(dlFileEntryModel)
 	/>
@@ -28,9 +26,7 @@
 
 		dlFolderModel = dataFactory.newDLFolderModel(commerceCatalogGroupModel.groupId, cpDefinitionDLFolderModel.folderId, "Commerce PDF Folder" + cpAttachmentFileEntryModel.CPAttachmentFileEntryId)
 
-		dlFileEntryModel = dataFactory.newDlFileEntryModel(dlFolderModel, "TestFile" + cpAttachmentFileEntryModel.CPAttachmentFileEntryId, "pdf", "application/pdf")
-
-		cpAttachmentFileEntryModel = dataFactory.setCPAttachmentFileEntryFileEntryId(cpAttachmentFileEntryModel, dlFileEntryModel.fileEntryId)
+		dlFileEntryModel = dataFactory.newDlFileEntryModel(dlFolderModel, "TestFile" + cpAttachmentFileEntryModel.CPAttachmentFileEntryId, "pdf", "application/pdf", cpAttachmentFileEntryModel.fileEntryId)
 
 		dlFileVersionModel = dataFactory.newDLFileVersionModel(dlFileEntryModel)
 	/>

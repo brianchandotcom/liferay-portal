@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>FS_PRODUCT_NAME</td>
-	<td>//div[@class='product-detail-header']//..//div/h1[contains (.,'${key_FSProductName}')]</td>
+	<td>//h2[@class='product-header-title']</td>
 	<td></td>
 </tr>
 <tr>

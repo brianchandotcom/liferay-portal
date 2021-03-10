@@ -1464,6 +1464,18 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
+	macro viewDetailsViaMailLink {
+		AssertTextEquals(
+			locator1 = "Portlet#H3_HEADER",
+			value1 = "${eventTitle}");
+
+		AssertElementPresent(locator1 = "CalendarViewEventDetails#START_DATE_FIELD");
+
+		AssertElementPresent(locator1 = "CalendarViewEventDetails#END_DATE_FIELD");
+
+		CalendarEvent.viewApprovedEventRSVPButtons();
+	}
+
 	macro viewEventNotToday {
 		for (var viewType : list "Day,Week,Month") {
 			CalendarNavigator.gotoView(viewType = "${viewType}");

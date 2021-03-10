@@ -1600,10 +1600,10 @@
     source-map "^0.7.3"
     webpack "^5.4.0"
 
-"@liferay/npm-scripts@38.1.0":
-  version "38.1.0"
-  resolved "https://registry.yarnpkg.com/@liferay/npm-scripts/-/npm-scripts-38.1.0.tgz#3ba247116aa44f7be609879c11e49188785e5a1d"
-  integrity sha512-hZrfkfEE5kMlrFlkhacFprhDCpg7atM9S+eb2wXyz+B2rzdV3vq/9v5ohT+NEo5A4b/Txl5Ap5/qORiSrtD8YQ==
+"@liferay/npm-scripts@38.2.0":
+  version "38.2.0"
+  resolved "https://registry.yarnpkg.com/@liferay/npm-scripts/-/npm-scripts-38.2.0.tgz#3f1dec0d3565a08d5267be20e78edb23107a00b0"
+  integrity sha512-Ns15MBmG52XWUfdkCUM3PrfNrZ0IXvT1d7xhljA6nDEQr0JoHRHit0nLpSkbCoXc8MPqJhcfuVwsfnrWcO7pRA==
   dependencies:
     "@babel/cli" "^7.2.3"
     "@babel/core" "^7.8.3"
@@ -1624,6 +1624,7 @@
     "@testing-library/react-hooks" "^3.4.2"
     "@testing-library/user-event" "^4.2.4"
     "@types/jest" "^26.0.14"
+    "@types/vfile-message" "2.0.0"
     babel-eslint "^10.0.3"
     babel-jest "^25.1.0"
     babel-loader "^8.1.0"
@@ -2004,7 +2005,7 @@
   resolved "https://registry.yarnpkg.com/@types/unist/-/unist-2.0.3.tgz#9c088679876f374eb5983f150d4787aa6fb32d7e"
   integrity sha512-FvUupuM3rlRsRtCN+fDudtmytGO6iHJuuRKS1Ss0pG5z8oX0diNEw94UEL7hgDbpN94rgaK5R7sWm6RrSkZuAQ==
 
-"@types/vfile-message@*":
+"@types/vfile-message@*", "@types/vfile-message@2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@types/vfile-message/-/vfile-message-2.0.0.tgz#690e46af0fdfc1f9faae00cd049cc888957927d5"
   integrity sha512-GpTIuDpb9u4zIO165fUy9+fXcULdD8HFRNli04GehoMVbeNq7D6OBnqSmg3lxZnC+UvgUhEWKxdKiwYUkGltIw==

@@ -310,7 +310,11 @@ export const FieldValuePreview = ({
 		.filter((key) => key.includes(fieldName))
 		.map((key) => {
 			if (typeof dataRecordValues[key] == 'object') {
-				return dataRecordValues[key][defaultLanguageId];
+				return getLocalizedUserPreferenceValue(
+					dataRecordValues[key],
+					userLanguageId,
+					defaultLanguageId
+				);
 			}
 
 			return dataRecordValues[key];

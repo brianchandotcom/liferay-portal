@@ -1109,7 +1109,7 @@ definition {
 	@description = "This ensures that the translator can select which base language she wants to translate."
 	@priority = "5"
 	test TranslateWebContent {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",

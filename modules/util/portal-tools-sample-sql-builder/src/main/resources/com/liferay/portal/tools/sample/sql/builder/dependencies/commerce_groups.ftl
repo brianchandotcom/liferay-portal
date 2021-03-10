@@ -6,11 +6,19 @@
 	commerceChannelModels = dataFactory.newCommerceChannelModels(commerceGroupModels, commerceCurrencyModel)
 
 	commerceChannelGroupModels = dataFactory.newCommerceChannelGroupModels(commerceChannelModels)
+
+	commerceInventoryWarehouseModels = dataFactory.newCommerceInventoryWarehouseModels()
 />
 
 <#include "commerce_accounts.ftl">
 
-<#include "commerce_inventory_warehouses.ftl">
+<#list commerceInventoryWarehouseModels as commerceInventoryWarehouseModel>
+	${dataFactory.toInsertSQL(commerceInventoryWarehouseModel)}
+
+	<#list commerceChannelModels as commerceChannelModel>
+		${dataFactory.toInsertSQL(dataFactory.newCommerceChannelRelModel(dataFactory.commerceInventoryWarehouseClassNameId, commerceInventoryWarehouseModel.commerceInventoryWarehouseId, commerceChannelModel.commerceChannelId))}
+	</#list>
+</#list>
 
 <#assign
 	cpOptionModel = dataFactory.newCPOptionModel("select", 1)

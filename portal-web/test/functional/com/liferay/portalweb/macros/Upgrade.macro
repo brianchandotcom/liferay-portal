@@ -783,8 +783,6 @@ definition {
 			PageEditor.changeExperience(newExperience = "New Experience Name");
 
 			PageEditor.addComment(
-				content = "Lorem ipsum dolor sit amet",
-				fragmentClass = "header",
 				fragmentComment = "This is a fragment comment.",
 				fragmentName = "Title");
 
@@ -1355,8 +1353,6 @@ definition {
 		ContentPages.clickPencil();
 
 		PageEditor.addComment(
-			content = "This is static text.",
-			fragmentClass = "static-text",
 			fragmentComment = "This is a new fragment comment",
 			fragmentName = "Static Text");
 

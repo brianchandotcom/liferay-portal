@@ -97,8 +97,6 @@ definition {
 
 		task ("Add a comment for Heading") {
 			PageEditor.addComment(
-				content = "New editable fragment text",
-				fragmentClass = "content",
 				fragmentComment = "This is a fragment comment.",
 				fragmentName = "Heading",
 				position = "1");

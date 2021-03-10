@@ -89,8 +89,6 @@ definition {
 		ContentPages.clickPencil();
 
 		PageEditor.addComment(
-			content = "Lorem ipsum dolor sit amet",
-			fragmentClass = "header",
 			fragmentComment = "Comment by User 2",
 			fragmentName = "Title");
 
@@ -130,8 +128,6 @@ definition {
 			fragmentName = "Title");
 
 		PageEditor.addComment(
-			content = "Lorem ipsum dolor sit amet",
-			fragmentClass = "header",
 			fragmentComment = "Comment By User 1",
 			fragmentName = "Title");
 
@@ -211,8 +207,6 @@ definition {
 			fragmentName = "Title");
 
 		PageEditor.addComment(
-			content = "Lorem ipsum dolor sit amet",
-			fragmentClass = "header",
 			fragmentComment = "Comment By User 1",
 			fragmentName = "Title");
 
@@ -275,8 +269,6 @@ definition {
 		ContentPages.clickPencil();
 
 		PageEditor.addComment(
-			content = "Lorem ipsum dolor sit amet",
-			fragmentClass = "header",
 			fragmentComment = "Comment by Test",
 			fragmentName = "Title",
 			mentionsUserFullName = "userfn userln",

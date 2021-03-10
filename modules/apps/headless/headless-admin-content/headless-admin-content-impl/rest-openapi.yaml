@@ -323,6 +323,39 @@ paths:
                     description:
                         ""
             tags: ["SitePage"]
+        # @review
+        put:
+            description:
+                Modifies a public page in a specific site
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: friendlyUrlPath
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#SitePage"
+                    application/xml:
+                        schema:
+                            $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#SitePage"
+            responses:
+                200:
+                    content:
+                        text/html:
+                            schema:
+                                type: string
+                    description:
+                        ""
+            tags: ["SitePage"]
     "/sites/{siteId}/structured-contents":
         get:
             # @review

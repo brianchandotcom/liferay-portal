@@ -19,7 +19,12 @@ import {EVENT_TYPES} from '../actions/eventTypes.es';
 import formatFieldValue from '../util/formatFieldValue.es';
 import setDataRecord from '../util/setDataRecord.es';
 
-const formatDataRecord = (languageId, pages, preserveValue) => {
+const getDataRecordValues = ({
+	nextEditingLanguageId,
+	pages,
+	preserveValue,
+	prevEditingLanguageId,
+}) => {
 	const visitor = new PagesVisitor(pages);
 
 	const dataRecordValues = {};
@@ -37,7 +42,7 @@ const formatDataRecord = (languageId, pages, preserveValue) => {
 					),
 				},
 				dataRecordValues,
-				languageId,
+				preserveValue ? nextEditingLanguageId : prevEditingLanguageId,
 				preserveValue
 			);
 		},
@@ -46,19 +51,6 @@ const formatDataRecord = (languageId, pages, preserveValue) => {
 	);
 
 	return dataRecordValues;
-};
-
-const getDataRecordValues = ({
-	nextEditingLanguageId,
-	pages,
-	preserveValue,
-	prevEditingLanguageId,
-}) => {
-	if (preserveValue) {
-		return formatDataRecord(nextEditingLanguageId, pages, true);
-	}
-
-	return formatDataRecord(prevEditingLanguageId, pages);
 };
 
 const getFieldProperties = (fieldName, pages) => {

@@ -116,6 +116,152 @@ definition {
 		Questions.gotoDetails(questionTitle = "あなたの好きな日本料理は何ですか");
 	}
 
+	@description = "Validate if the user can cancel the deletions that contain non-Latin characters."
+	@priority = "4"
+	test CancelDeletions {
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoTab(questionTabField = "Questions");
+
+		Questions.addRootTopic(
+			rootTopicDescription = "トピック記述",
+			rootTopicName = "質問トピック");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "質問トピック");
+
+		Questions.askQuestionFillingTheMandatoryFields(
+			contentField = "あなたの好きな日本料理は寿司とすき焼きですか",
+			titleField = "あなたの好きな日本料理は何ですか");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "質問トピック");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "あなたの好きな日本料理は何ですか");
+
+		Questions.answerQuestion(contentField = "私の好きな日本料理はフグ刺しと天ぷらです");
+
+		Questions.replyToComment(commentReply = "私の好きな日本料理は焼肉と鮭の刺身です");
+
+		Questions.deleteComment(
+			cancel = "true",
+			commentReply = "私の好きな日本料理は焼肉と鮭の刺身です");
+
+		Questions.deleteAnswer(
+			cancel = "true",
+			contentField = "私の好きな日本料理はフグ刺しと天ぷらです");
+
+		Questions.deleteQuestion(
+			cancel = "true",
+			questionTitle = "あなたの好きな日本料理は何ですか");
+	}
+
+	@description = "Validate if the user can delete a comment that contains non-Latin characters to an answer."
+	@priority = "4"
+	test DeleteCommentWithNonLatinCharacters {
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoTab(questionTabField = "Questions");
+
+		Questions.addRootTopic(
+			rootTopicDescription = "トピック記述",
+			rootTopicName = "質問トピック");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "質問トピック");
+
+		Questions.askQuestionFillingTheMandatoryFields(
+			contentField = "あなたの好きな日本料理は寿司とすき焼きですか",
+			titleField = "あなたの好きな日本料理は何ですか");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "質問トピック");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "あなたの好きな日本料理は何ですか");
+
+		Questions.answerQuestion(contentField = "私の好きな日本料理はフグ刺しと天ぷらです");
+
+		Questions.replyToComment(commentReply = "私の好きな日本料理は焼肉と鮭の刺身です");
+
+		Questions.deleteComment(commentReply = "私の好きな日本料理は焼肉と鮭の刺身です");
+	}
+
+	@description = "Validate if the user can delete an edited answer that contains non-Latin characters."
+	@priority = "4"
+	test DeleteEditedAnswer {
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoTab(questionTabField = "Questions");
+
+		Questions.addRootTopic(
+			rootTopicDescription = "トピック記述",
+			rootTopicName = "質問トピック");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "質問トピック");
+
+		Questions.askQuestionFillingTheMandatoryFields(
+			contentField = "あなたの好きな日本料理は寿司とすき焼きですか",
+			titleField = "あなたの好きな日本料理は何ですか");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "質問トピック");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "あなたの好きな日本料理は何ですか");
+
+		Questions.answerQuestion(contentField = "私の好きな日本料理はフグ刺しと天ぷらです");
+
+		Questions.editAnswer(contentField = "私の好きな日本料理は焼肉と鮭の刺身です");
+
+		Questions.deleteAnswer(contentField = "私の好きな日本料理は焼肉と鮭の刺身です");
+	}
+
+	@description = "Validate if the user can delete a question that contains non-Latin characters."
+	@priority = "4"
+	test DeleteQuestionWithComment {
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoTab(questionTabField = "Questions");
+
+		Questions.addRootTopic(
+			rootTopicDescription = "トピック記述",
+			rootTopicName = "質問トピック");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "質問トピック");
+
+		Questions.askQuestionFillingTheMandatoryFields(
+			contentField = "あなたの好きな日本料理は寿司とすき焼きですか",
+			titleField = "あなたの好きな日本料理は何ですか");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "質問トピック");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "あなたの好きな日本料理は何ですか");
+
+		Questions.answerQuestion(contentField = "私の好きな日本料理はフグ刺しと天ぷらです");
+
+		Questions.replyToComment(commentReply = "私の好きな日本料理は焼肉と鮭の刺身です");
+
+		Questions.deleteQuestion();
+	}
+
 	@description = "Validate if the user can add a comment to an answer with non-Latin characters."
 	@priority = "4"
 	test ReplyToAnAnswerWithNonLatinCharacters {

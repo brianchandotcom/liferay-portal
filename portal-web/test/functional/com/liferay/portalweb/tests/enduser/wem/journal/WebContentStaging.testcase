@@ -259,4 +259,112 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-75802."
+	@priority = "5"
+	test PublishWebContentWithImportedStructureDefaultValues {
+		property test.name.skip.portal.instance = "Staging#PublishWebContentWithImportedStructureDefaultValues";
+
+		task ("Create structure") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(
+					structureDescription = "WC Structure Description",
+					structureName = "WC Structure Name");
+
+			DataEngine.addField(
+					fieldFieldLabel = "Text",
+					fieldName = "Text");
+
+			WebContentStructures.saveCP(structureName = "WC Structure Name");
+		}
+
+		task ("Set default values for the structure") {
+			WebContentStructures.editStructureDefaultValuesCP(
+					structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(webContentText = "(Enter Text Here)");
+
+			PortletEntry.save();
+		}
+
+		task ("Create a template") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			NavItem.gotoTemplates();
+
+			WebContentTemplates.addCP(
+					structureName = "WC Structure Name",
+					templateDescription = "WC Template Description",
+					templateFieldNames = "Text",
+					templateName = "WC Template Name");
+
+		}
+
+		task ("Create and Publish Web Content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			WebContentNavigator.gotoAddWithStructureCP(
+					structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
+					structureName = "WC Structure Name",
+					webContentText = "Web Content Text",
+					webContentTitle = "Web Content Title");
+
+			PortletEntry.publish();
+
+			WebContent.viewTitle(webContentTitle = "Web Content Title");
+
+		}
+
+		task ("Export web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			LAR.exportPortlet(larFileName = "WebContent_portlet.lar");
+		}
+
+		task ("Create another site") {
+			JSONGroup.addGroup(groupName = "Site Name B");
+		}
+
+		task ("Enable Staging in created site") {
+			Staging.openStagingAdmin(siteURLKey = "site-name-b");
+
+			Staging.activateStagingCP(siteName = "Site Name B");
+		}
+
+		task ("Import web content") {
+			WebContentNavigator.openWebContentAdmin(
+					siteURLKey = "site-name-b-staging");
+
+			LAR.importPortlet(larFileName = "WebContent_portlet.lar");
+		}
+
+		task ("Import web content") {
+			WebContentNavigator.openWebContentAdmin(
+					siteURLKey = "site-name-b-staging");
+		}
+
+		task ("Assert web content has been imported") {
+			WebContent.viewWithStructureCP(
+					webContentText = "Web Content Text",
+					webContentTitle = "Web Content Title");
+		}
+
+		task ("Publish the site to live") {
+			Staging.openStagingAdmin(siteURLKey = "site-name-b-staging");
+
+			Staging.publishCustomPublication();
+		}
+
+		task ("Assert no error") {
+			AssertConsoleTextNotPresent(
+					value1 = "ConstraintViolationException");
+
+			AssertConsoleTextNotPresent(value1 = "SystemException");
+		}
+	}
+
 }

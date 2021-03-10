@@ -9,9 +9,8 @@ definition {
 
 		if (IsElementNotPresent(key_fragmentName = "${fragmentName}", locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_SECTION_NAME")) {
 			Click(
-				key_content = "${content}",
-				key_fragmentClass = "${fragmentClass}",
-				locator1 = "Fragment#FRAGMENT");
+				key_fragmentName = "${fragmentName}",
+				locator1 = "Fragment#FRAGMENT_BODY");
 		}
 
 		AssertElementPresent(

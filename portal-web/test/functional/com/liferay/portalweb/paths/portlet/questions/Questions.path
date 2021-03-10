@@ -54,6 +54,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EDIT_ANSWER</td>
+	<td>//button[contains(@class,'text-reset')]//a[contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EMPTY_STATE_MESSAGE</td>
 	<td>//div[contains(@class,'questions-container')]//div[contains(@class,'empty')]//span[contains(text(),'${key_emptyInfo}')]</td>
 	<td></td>

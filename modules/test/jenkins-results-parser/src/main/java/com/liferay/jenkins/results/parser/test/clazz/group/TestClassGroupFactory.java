@@ -57,6 +57,11 @@ public class TestClassGroupFactory {
 				(JUnitBatchTestClassGroup)batchTestClassGroup);
 		}
 
+		if (batchTestClassGroup instanceof PluginsGulpBatchTestClassGroup) {
+			return new PluginsGulpAxisTestClassGroup(
+				(PluginsGulpBatchTestClassGroup)batchTestClassGroup);
+		}
+
 		return new AxisTestClassGroup(batchTestClassGroup);
 	}
 

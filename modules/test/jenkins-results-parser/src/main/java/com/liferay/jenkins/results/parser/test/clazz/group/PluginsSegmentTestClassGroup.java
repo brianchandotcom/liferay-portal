@@ -30,6 +30,8 @@ public class PluginsSegmentTestClassGroup extends SegmentTestClassGroup {
 	public String getTestCasePropertiesContent() {
 		StringBuilder sb = new StringBuilder();
 
+		sb.append(super.getTestCasePropertiesContent());
+
 		List<String> axisIndexes = new ArrayList<>();
 
 		for (int axisIndex = 0; axisIndex < getAxisCount(); axisIndex++) {

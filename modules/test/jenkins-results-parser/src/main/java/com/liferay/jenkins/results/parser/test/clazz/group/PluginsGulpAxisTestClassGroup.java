@@ -14,15 +14,38 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
+import java.io.File;
+
+import java.util.List;
+
 /**
  * @author Michael Hashimoto
  */
-public class PluginsGulpSegmentTestClassGroup extends SegmentTestClassGroup {
+public class PluginsGulpAxisTestClassGroup extends AxisTestClassGroup {
 
-	protected PluginsGulpSegmentTestClassGroup(
-		PluginsGulpBatchTestClassGroup parentPluginsGulpBatchTestClassGroup) {
+	@Override
+	public File getTestBaseDir() {
+		List<TestClass> testClasses = getTestClasses();
 
-		super(parentPluginsGulpBatchTestClassGroup);
+		if (testClasses.isEmpty()) {
+			return null;
+		}
+
+		TestClass testClass = testClasses.get(0);
+
+		File testBaseDir = testClass.getTestClassFile();
+
+		if ((testBaseDir == null) || !testBaseDir.exists()) {
+			return null;
+		}
+
+		return testBaseDir;
+	}
+
+	protected PluginsGulpAxisTestClassGroup(
+		PluginsGulpBatchTestClassGroup pluginsGulpBatchTestClassGroup) {
+
+		super(pluginsGulpBatchTestClassGroup);
 	}
 
 }

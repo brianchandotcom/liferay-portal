@@ -21,7 +21,6 @@ import com.liferay.data.engine.rest.dto.v2_0.DataDefinitionField;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.data.engine.rest.resource.v2_0.DataLayoutResource;
-import com.liferay.data.engine.rest.resource.v2_0.DataRecordCollectionResource;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
@@ -127,22 +126,6 @@ public class DataEngineNativeObjectPortalExecutor {
 		_serviceTrackerMap.close();
 	}
 
-	@Reference(unbind = "-")
-	protected void setDataDefinitionResourceFactory(
-		DataDefinitionResource.Factory dataDefinitionResourceFactory) {
-	}
-
-	@Reference(unbind = "-")
-	protected void setDataLayoutResourceFactory(
-		DataLayoutResource.Factory dataLayoutResourceFactory) {
-	}
-
-	@Reference(unbind = "-")
-	protected void setDataRecordCollectionResourceFactory(
-		DataRecordCollectionResource.Factory
-			dataRecordCollectionResourceFactory) {
-	}
-
 	@Reference(
 		target = ModuleServiceLifecycle.PORTLETS_INITIALIZED, unbind = "-"
 	)
@@ -207,8 +190,14 @@ public class DataEngineNativeObjectPortalExecutor {
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
+	@Reference
+	private DataDefinitionResource.Factory _dataDefinitionResourceFactory;
+
 	private final DataEngineNativeObjectObserver
 		_dataEngineNativeObjectObserver = new DataEngineNativeObjectObserver();
+
+	@Reference
+	private DataLayoutResource.Factory _dataLayoutResourceFactory;
 
 	@Reference
 	private DDMStructureLayoutLocalService _ddmStructureLayoutLocalService;
@@ -234,9 +223,11 @@ public class DataEngineNativeObjectPortalExecutor {
 				Long companyId, DataEngineNativeObject dataEngineNativeObject)
 			throws Exception {
 
+			DataDefinitionResource.Builder dataDefinitionResourceBuilder =
+				_dataDefinitionResourceFactory.create();
+
 			DataDefinitionResource dataDefinitionResource =
-				DataDefinitionResource.builder(
-				).checkPermissions(
+				dataDefinitionResourceBuilder.checkPermissions(
 					false
 				).user(
 					GuestOrUserUtil.getGuestOrUser(companyId)
@@ -305,9 +296,11 @@ public class DataEngineNativeObjectPortalExecutor {
 
 				dataLayout.setName(dataDefinition.getName());
 
+				DataLayoutResource.Builder dataLayoutResourceBuilder =
+					_dataLayoutResourceFactory.create();
+
 				DataLayoutResource dataLayoutResource =
-					DataLayoutResource.builder(
-					).checkPermissions(
+					dataLayoutResourceBuilder.checkPermissions(
 						false
 					).user(
 						GuestOrUserUtil.getGuestOrUser(companyId)

@@ -1468,7 +1468,7 @@ public class DataFactory {
 
 	public List<GroupModel> newCommerceGroupModels() {
 		List<GroupModel> groupModels = new ArrayList<>(
-			BenchmarksPropsValues.MAX_GROUP_COUNT);
+			BenchmarksPropsValues.MAX_COMMERCE_GROUP_COUNT);
 
 		for (int i = 1; i <= BenchmarksPropsValues.MAX_COMMERCE_GROUP_COUNT;
 			 i++) {

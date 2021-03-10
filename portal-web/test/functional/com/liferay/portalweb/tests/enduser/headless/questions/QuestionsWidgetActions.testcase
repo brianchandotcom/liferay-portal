@@ -730,6 +730,33 @@ definition {
 		Questions.deleteQuestion();
 	}
 
+	@description = "Validate if the user can edit an answer to a question."
+	@priority = "5"
+	test EditAnswer {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		Questions.addQuestionByAPI(
+			bodyField = "Question Body Text",
+			categoryName = "Questions Test Category",
+			tagField = "test tag",
+			titleField = "What is your Chinese name?");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "What is your Chinese name?");
+
+		Questions.answerQuestion(contentField = "This is my answer");
+
+		Questions.editAnswer(contentField = "This is my edited answer");
+	}
+
 	@description = "Validate if the user can lock and unlock a question through the MB."
 	@priority = "4"
 	test LockAndUnlockThroughMB {

@@ -180,6 +180,47 @@ definition {
 		CommerceLicense.viewCommerceExpired();
 	}
 
+	@priority = "4"
+	test ModuleLicenseExpirationNonAdmin {
+		property commerce.enabled = "true";
+		property commerce.license.file = "commerce-license-developer-custom-expiration-2-day-expired.xml";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}login.secure.forgot.password=false";
+
+		CommerceLicense.viewCommerceAvailable();
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Category Manager",
+			userEmailAddress = "userea@liferay.com");
+
+		Pause(locator1 = "300000");
+
+		CommerceLogin.miniumLogin(
+			password = "test",
+			urlAppend = "web/minium",
+			userEmailAddress = "userea@liferay.com");
+
+		AssertElementNotPresent(
+			locator1 = "Message#ERROR",
+			value1 = "The activation key for Liferay Commerce Subscription Production has expired. Please contact your administrator.");
+
+		CommerceLicense.viewCommerceExpired();
+	}
+
 	@description = "This is a test for covering the following LPS-120477"
 	@priority = "4"
 	test ModuleLicenseExpirationNotShownToNonAdmin {

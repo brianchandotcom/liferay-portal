@@ -19,6 +19,8 @@ import com.liferay.portal.crypto.hash.spi.CryptoHashProviderResponse;
 
 import java.nio.charset.StandardCharsets;
 
+import java.util.HashMap;
+
 import jodd.crypt.BCrypt;
 
 /**
@@ -33,7 +35,7 @@ public class BCryptCryptoHashProvider implements CryptoHashProvider {
 			new String(salt, StandardCharsets.US_ASCII));
 
 		return new CryptoHashProviderResponse(
-			_CRYPTO_HASH_PROVIDER_NAME,
+			_CRYPTO_HASH_PROVIDER_NAME, new HashMap<>(),
 			hashedPassword.getBytes(StandardCharsets.US_ASCII));
 	}
 

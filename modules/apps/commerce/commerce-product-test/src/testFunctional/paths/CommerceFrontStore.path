@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>FS_PRODUCT_PRICE</td>
-	<td>//div[@class='product-detail-header']//div/div/div[contains(.,'${key_FSProductPrice}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FS_PRODUCT_SKU</td>
 	<td>//p/span[(normalize-space(text())='SKU')]/following::span</td>
 	<td></td>
@@ -31,16 +26,6 @@
 <tr>
 	<td>FS_PRODUCT_OPTION</td>
 	<td>//div[contains(@class,'dropdown-menu')]/ul//li/button[contains(.,'${key_optionValue}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FS_PRODUCT_IMAGE_THUMBNAIL</td>
-	<td>//div[@class='product-detail-header']//..//div[contains (@class,'thumb')]/img[contains (@src,'${key_FSProductImageThumb}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FS_PRODUCT_FULL_IMAGE</td>
-	<td>//div[@class='product-detail-header']//..//div[contains (@class,'full-image')]/img[contains (@src,'${key_FSProductImage}')]</td>
 	<td></td>
 </tr>
 <tr>

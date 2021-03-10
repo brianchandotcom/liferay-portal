@@ -23,16 +23,16 @@ import java.util.Map;
 public class CryptoHashVerificationContext {
 
 	public CryptoHashVerificationContext(
-		String cryptoHashProviderName,
+		String cryptoHashProviderFactoryName,
 		Map<String, ?> cryptoHashProviderProperties, byte[] salt) {
 
-		_cryptoHashProviderName = cryptoHashProviderName;
+		_cryptoHashProviderFactoryName = cryptoHashProviderFactoryName;
 		_cryptoHashProviderProperties = cryptoHashProviderProperties;
 		_salt = salt;
 	}
 
-	public String getCryptoHashProviderName() {
-		return _cryptoHashProviderName;
+	public String getCryptoHashProviderFactoryName() {
+		return _cryptoHashProviderFactoryName;
 	}
 
 	public Map<String, ?> getCryptoHashProviderProperties() {
@@ -43,7 +43,7 @@ public class CryptoHashVerificationContext {
 		return _salt;
 	}
 
-	private final String _cryptoHashProviderName;
+	private final String _cryptoHashProviderFactoryName;
 	private final Map<String, ?> _cryptoHashProviderProperties;
 	private final byte[] _salt;
 

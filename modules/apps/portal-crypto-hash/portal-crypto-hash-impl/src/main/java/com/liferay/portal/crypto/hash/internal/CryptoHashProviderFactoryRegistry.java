@@ -15,6 +15,7 @@
 package com.liferay.portal.crypto.hash.internal;
 
 import com.liferay.portal.crypto.hash.spi.CryptoHashProvider;
+import com.liferay.portal.crypto.hash.spi.CryptoHashProviderFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,24 +24,30 @@ import java.util.Map;
  * @author Arthur Chan
  * @author Carlos Sierra Andrés
  */
-public class CryptoHashProviderRegistry {
+public class CryptoHashProviderFactoryRegistry {
 
 	public CryptoHashProvider getCryptoHashProvider(
-		String cryptoHashProviderName) {
+			String cryptoHashProviderFactoryName,
+			Map<String, ?> cryptoHashProviderProperties)
+		throws Exception {
 
-		return _cryptoHashProviders.get(cryptoHashProviderName);
+		CryptoHashProviderFactory cryptoHashProviderFactory =
+			_cryptoHashProviderFactories.get(cryptoHashProviderFactoryName);
+
+		return cryptoHashProviderFactory.create(cryptoHashProviderProperties);
 	}
 
-	public void register(CryptoHashProvider cryptoHashProvider) {
-		_cryptoHashProviders.put(
-			cryptoHashProvider.getCryptoHashProviderName(), cryptoHashProvider);
+	public void register(CryptoHashProviderFactory cryptoHashProviderFactory) {
+		_cryptoHashProviderFactories.put(
+			cryptoHashProviderFactory.getCryptoHashProviderFactoryName(),
+			cryptoHashProviderFactory);
 	}
 
 	public void unregister(String cryptoHashProviderName) {
-		_cryptoHashProviders.remove(cryptoHashProviderName);
+		_cryptoHashProviderFactories.remove(cryptoHashProviderName);
 	}
 
-	private final Map<String, CryptoHashProvider> _cryptoHashProviders =
-		new HashMap<>();
+	private final Map<String, CryptoHashProviderFactory>
+		_cryptoHashProviderFactories = new HashMap<>();
 
 }

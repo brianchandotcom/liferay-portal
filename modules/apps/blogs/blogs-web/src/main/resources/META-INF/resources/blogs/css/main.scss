@@ -3,29 +3,6 @@
 @import 'common_main';
 
 .portlet-blogs {
-	.entry-options {
-		margin-bottom: 10px;
-		min-height: 30px;
-		position: relative;
-
-		&.inline {
-			position: absolute;
-			right: 0;
-			top: 0;
-		}
-
-		& > div {
-			padding: 5px;
-			text-align: center;
-		}
-
-		& > .btn {
-			position: absolute;
-			right: 0;
-			top: 0;
-		}
-	}
-
 	.taglib-custom-attributes-list {
 		margin-bottom: 1em;
 	}

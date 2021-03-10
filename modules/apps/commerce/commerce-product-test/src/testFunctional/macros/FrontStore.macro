@@ -121,9 +121,9 @@ definition {
 
 				echo("Checking ${FSOptionValue} ${FSProductName} price is correct...");
 
-				AssertElementPresent(
-					key_FSProductPrice = "${FSPrice}",
-					locator1 = "CommerceFrontStore#FS_PRODUCT_PRICE");
+				AssertTextEquals.assertPartialText(
+					locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
+					value1 = "${FSPrice}");
 
 				echo("Checking ${FSOptionValue} ${FSProductName} image is correct...");
 

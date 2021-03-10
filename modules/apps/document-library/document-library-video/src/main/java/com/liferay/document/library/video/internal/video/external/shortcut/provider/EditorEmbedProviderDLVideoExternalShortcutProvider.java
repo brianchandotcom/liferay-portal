@@ -55,21 +55,6 @@ public class EditorEmbedProviderDLVideoExternalShortcutProvider
 					return new DLVideoExternalShortcut() {
 
 						@Override
-						public String getDescription() {
-							return null;
-						}
-
-						@Override
-						public String getThumbnailURL() {
-							return null;
-						}
-
-						@Override
-						public String getTitle() {
-							return null;
-						}
-
-						@Override
 						public String getURL() {
 							return url;
 						}

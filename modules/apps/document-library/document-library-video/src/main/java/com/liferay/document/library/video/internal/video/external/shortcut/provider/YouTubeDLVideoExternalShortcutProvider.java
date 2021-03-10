@@ -57,11 +57,6 @@ public class YouTubeDLVideoExternalShortcutProvider
 		return new DLVideoExternalShortcut() {
 
 			@Override
-			public String getDescription() {
-				return null;
-			}
-
-			@Override
 			public String getThumbnailURL() {
 				return jsonObject.getString("thumbnail_url");
 			}

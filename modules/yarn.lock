@@ -966,10 +966,10 @@
     classnames "^2.2.6"
     tinycolor2 "^1.4.1"
 
-"@clayui/css@3.25.1":
-  version "3.25.1"
-  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.25.1.tgz#6c66e2a3043e36079f7035a4750c25dbbe328c96"
-  integrity sha512-SAXzqQpKzzTv4jYloaHvel43AFxp2XWhzB2NS6D14+4pJZ0/m4sDikXUYsEixQZKE90chw9qgiBv7vHQZlFRmA==
+"@clayui/css@3.25.2":
+  version "3.25.2"
+  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.25.2.tgz#2a27a218b2f888d07cbfbafb7a77cb17170c994a"
+  integrity sha512-ZGQUDM1FrqDs6ityBXcqKIdSSh9dtKZ02trxOnTHLkKSQOKXgD9Ru6nNeqDIoK9Hw17ZDY9zrWOrgdEd5IQUrw==
 
 "@clayui/data-provider@3.3.10":
   version "3.3.10"

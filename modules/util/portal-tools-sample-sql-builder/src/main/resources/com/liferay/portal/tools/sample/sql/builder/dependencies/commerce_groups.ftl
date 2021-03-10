@@ -1,221 +1,221 @@
-<#assign
-	commerceAccountEntryModels = dataFactory.newCommerceAccountEntryModels()
-
-	commerceCurrencyModel = dataFactory.newCommerceCurrencyModel()
-
-	commerceGroupModels = dataFactory.newCommerceGroupModels()
-
-	commerceChannelModels = dataFactory.newCommerceChannelModels(commerceGroupModels, commerceCurrencyModel)
-
-	commerceChannelGroupModels = dataFactory.newCommerceChannelGroupModels(commerceChannelModels)
-
-	commerceInventoryWarehouseModels = dataFactory.newCommerceInventoryWarehouseModels()
-
-	cpOptionModel = dataFactory.newCPOptionModel("select", 1)
-
-	cpOptionCategoryModels = dataFactory.newCPOptionCategoryModels()
-
-	cpSpecificationOptionModels = dataFactory.newCPSpecificationOptionModels(cpOptionCategoryModels)
-
-	cpTaxCategoryModel = dataFactory.newCPTaxCategoryModel()
-
-	defaultCPInstanceModel = dataFactory.newCPInstanceModel(dataFactory.newCPDefinitionModel(cpTaxCategoryModel, dataFactory.newCProductModel(0), 1), 1)
-
-	defaultCommercePriceEntryModel = dataFactory.newCommercePriceEntryModel(0, "", 0)
-/>
-
-<#list commerceAccountEntryModels as commerceAccountEntryModel>
-	${dataFactory.toInsertSQL(commerceAccountEntryModel)}
-
-	${dataFactory.toInsertSQL(dataFactory.newAccountEntryUserRelModel(sampleUserModel, commerceAccountEntryModel.accountEntryId))}
-
-	<@insertGroup _groupModel=dataFactory.newCommerceAccountEntryGroupModel(commerceAccountEntryModel) />
-</#list>
-
-<#list commerceInventoryWarehouseModels as commerceInventoryWarehouseModel>
-	${dataFactory.toInsertSQL(commerceInventoryWarehouseModel)}
-
-	<#list commerceChannelModels as commerceChannelModel>
-		${dataFactory.toInsertSQL(dataFactory.newCommerceChannelRelModel(dataFactory.commerceInventoryWarehouseClassNameId, commerceInventoryWarehouseModel.commerceInventoryWarehouseId, commerceChannelModel.commerceChannelId))}
-	</#list>
-</#list>
-
-${dataFactory.toInsertSQL(cpOptionModel)}
-
-${dataFactory.toInsertSQL(dataFactory.newCPOptionValueModel(cpOptionModel.CPOptionId, 1))}
-
-<#list cpOptionCategoryModels as cpOptionCategoryModel>
-	${dataFactory.toInsertSQL(cpOptionCategoryModel)}
-</#list>
-
-<#list cpSpecificationOptionModels as cpSpecificationOptionModel>
-	${dataFactory.toInsertSQL(cpSpecificationOptionModel)}
-</#list>
-
-${dataFactory.toInsertSQL(cpTaxCategoryModel)}
-
-<#list dataFactory.newCommerceCatalogModels(commerceCurrencyModel) as commerceCatalogModel>
-	${dataFactory.toInsertSQL(commerceCatalogModel)}
-
-	${dataFactory.toInsertSQL(dataFactory.newCommerceCatalogResourcePermissionModel(commerceCatalogModel))}
-
+<#if dataFactory.maxCPDefinitionAttachmentTypePDFCount != 0>
 	<#assign
-		commerceCatalogGroupModel = dataFactory.newCommerceCatalogGroupModel(commerceCatalogModel)
+		commerceAccountEntryModels = dataFactory.newCommerceAccountEntryModels()
 
-		commercePriceListModel = dataFactory.newCommercePriceListModel(commerceCatalogGroupModel.groupId, commerceCurrencyModel.commerceCurrencyId, true, true, "price-list")
+		commerceCurrencyModel = dataFactory.newCommerceCurrencyModel()
 
-		commerceProductDLFolderModel = dataFactory.newDLFolderModel(commerceCatalogGroupModel.groupId, 0, "Commerce Product")
+		commerceGroupModels = dataFactory.newCommerceGroupModels()
 
-		cpDefinitionDLFolderModel = dataFactory.newDLFolderModel(commerceCatalogGroupModel.groupId, commerceProductDLFolderModel.folderId, "Commerce Product Definition")
+		commerceChannelModels = dataFactory.newCommerceChannelModels(commerceGroupModels, commerceCurrencyModel)
+
+		commerceChannelGroupModels = dataFactory.newCommerceChannelGroupModels(commerceChannelModels)
+
+		commerceInventoryWarehouseModels = dataFactory.newCommerceInventoryWarehouseModels()
+
+		cpOptionModel = dataFactory.newCPOptionModel("select", 1)
+
+		cpOptionCategoryModels = dataFactory.newCPOptionCategoryModels()
+
+		cpSpecificationOptionModels = dataFactory.newCPSpecificationOptionModels(cpOptionCategoryModels)
+
+		cpTaxCategoryModel = dataFactory.newCPTaxCategoryModel()
+
+		defaultCPInstanceModel = dataFactory.newCPInstanceModel(dataFactory.newCPDefinitionModel(cpTaxCategoryModel, dataFactory.newCProductModel(0), 1), 1)
+
+		defaultCommercePriceEntryModel = dataFactory.newCommercePriceEntryModel(0, "", 0)
 	/>
 
-	<@insertGroup _groupModel=commerceCatalogGroupModel />
+	<#list commerceAccountEntryModels as commerceAccountEntryModel>
+		${dataFactory.toInsertSQL(commerceAccountEntryModel)}
 
-	${dataFactory.toInsertSQL(commercePriceListModel)}
+		${dataFactory.toInsertSQL(dataFactory.newAccountEntryUserRelModel(sampleUserModel, commerceAccountEntryModel.accountEntryId))}
 
-	${dataFactory.toInsertSQL(commerceProductDLFolderModel)}
+		<@insertGroup _groupModel=dataFactory.newCommerceAccountEntryGroupModel(commerceAccountEntryModel) />
+	</#list>
 
-	${dataFactory.toInsertSQL(cpDefinitionDLFolderModel)}
+	<#list commerceInventoryWarehouseModels as commerceInventoryWarehouseModel>
+		${dataFactory.toInsertSQL(commerceInventoryWarehouseModel)}
 
-	<#list dataFactory.newCProductModels(commerceCatalogGroupModel.groupId) as cProductModel>
+		<#list commerceChannelModels as commerceChannelModel>
+			${dataFactory.toInsertSQL(dataFactory.newCommerceChannelRelModel(dataFactory.commerceInventoryWarehouseClassNameId, commerceInventoryWarehouseModel.commerceInventoryWarehouseId, commerceChannelModel.commerceChannelId))}
+		</#list>
+	</#list>
+
+	${dataFactory.toInsertSQL(cpOptionModel)}
+
+	${dataFactory.toInsertSQL(dataFactory.newCPOptionValueModel(cpOptionModel.CPOptionId, 1))}
+
+	<#list cpOptionCategoryModels as cpOptionCategoryModel>
+		${dataFactory.toInsertSQL(cpOptionCategoryModel)}
+	</#list>
+
+	<#list cpSpecificationOptionModels as cpSpecificationOptionModel>
+		${dataFactory.toInsertSQL(cpSpecificationOptionModel)}
+	</#list>
+
+	${dataFactory.toInsertSQL(cpTaxCategoryModel)}
+
+	<#list dataFactory.newCommerceCatalogModels(commerceCurrencyModel) as commerceCatalogModel>
+		${dataFactory.toInsertSQL(commerceCatalogModel)}
+
+		${dataFactory.toInsertSQL(dataFactory.newCommerceCatalogResourcePermissionModel(commerceCatalogModel))}
+
 		<#assign
-			cpDefinitionModels = dataFactory.newCPDefinitionModels(cpTaxCategoryModel, cProductModel)
+			commerceCatalogGroupModel = dataFactory.newCommerceCatalogGroupModel(commerceCatalogModel)
 
-			cProductModel = dataFactory.setCProductModelPublishedCPDefinitionId(cProductModel, cpDefinitionModels)
+			commercePriceListModel = dataFactory.newCommercePriceListModel(commerceCatalogGroupModel.groupId, commerceCurrencyModel.commerceCurrencyId, true, true, "price-list")
 
-			friendlyURLEntryModel = dataFactory.newFriendlyURLEntryModel(globalGroupModel.groupId, dataFactory.CProductClassNameId, cProductModel.CProductId)
+			commerceProductDLFolderModel = dataFactory.newDLFolderModel(commerceCatalogGroupModel.groupId, 0, "Commerce Product")
 
-			friendlyURLEntryLocalizationModel = dataFactory.newFriendlyURLEntryLocalizationModel(friendlyURLEntryModel, "definition-" + cProductModel.publishedCPDefinitionId)
+			cpDefinitionDLFolderModel = dataFactory.newDLFolderModel(commerceCatalogGroupModel.groupId, commerceProductDLFolderModel.folderId, "Commerce Product Definition")
 		/>
 
-		${dataFactory.toInsertSQL(cProductModel)}
+		<@insertGroup _groupModel=commerceCatalogGroupModel />
 
-		<#list cpDefinitionModels as cpDefinitionModel>
-			${dataFactory.toInsertSQL(cpDefinitionModel)}
+		${dataFactory.toInsertSQL(commercePriceListModel)}
 
-			<#list commerceChannelModels as commerceChannelModel>
-				${dataFactory.toInsertSQL(dataFactory.newCommerceChannelRelModel(dataFactory.CPDefinitionClassNameId, cpDefinitionModel.CPDefinitionId, commerceChannelModel.commerceChannelId))}
-			</#list>
+		${dataFactory.toInsertSQL(commerceProductDLFolderModel)}
 
-			${dataFactory.toInsertSQL(dataFactory.newCPDefinitionModelAssetEntryModel(cpDefinitionModel, cpDefinitionModel.groupId))}
+		${dataFactory.toInsertSQL(cpDefinitionDLFolderModel)}
 
-			<#assign cpDefinitionLocalizationModel = dataFactory.newCPDefinitionLocalizationModel(cpDefinitionModel) />
+		<#list dataFactory.newCProductModels(commerceCatalogGroupModel.groupId) as cProductModel>
+			<#assign
+				cpDefinitionModels = dataFactory.newCPDefinitionModels(cpTaxCategoryModel, cProductModel)
 
-			${dataFactory.toInsertSQL(cpDefinitionLocalizationModel)}
+				cProductModel = dataFactory.setCProductModelPublishedCPDefinitionId(cProductModel, cpDefinitionModels)
 
-			${csvFileWriter.write("cpDefinitionLocalization", cpDefinitionLocalizationModel.name + ", " + cpDefinitionLocalizationModel.description + "\n")}
+				friendlyURLEntryModel = dataFactory.newFriendlyURLEntryModel(globalGroupModel.groupId, dataFactory.CProductClassNameId, cProductModel.CProductId)
 
-			<#list dataFactory.getSequence(dataFactory.maxCPDefinitionSpecificationOptionValueCount) as cpDefinitionSpecificationOptionValueCount>
-				<#assign
-					cpSpecificationOptionModel = cpSpecificationOptionModels[cpDefinitionSpecificationOptionValueCount - 1]
+				friendlyURLEntryLocalizationModel = dataFactory.newFriendlyURLEntryLocalizationModel(friendlyURLEntryModel, "definition-" + cProductModel.publishedCPDefinitionId)
+			/>
 
-					cpDefinitionSpecificationOptionValueModel = dataFactory.newCPDefinitionSpecificationOptionValueModel(cpDefinitionModel.CPDefinitionId, cpSpecificationOptionModel.CPSpecificationOptionId, cpSpecificationOptionModel.CPOptionCategoryId, cpDefinitionSpecificationOptionValueCount)
-				/>
+			${dataFactory.toInsertSQL(cProductModel)}
 
-				${dataFactory.toInsertSQL(cpDefinitionSpecificationOptionValueModel)}
-			</#list>
+			<#list cpDefinitionModels as cpDefinitionModel>
+				${dataFactory.toInsertSQL(cpDefinitionModel)}
 
-			<#list dataFactory.newCPInstanceModels(cpDefinitionModel) as cpInstanceModel>
-				${dataFactory.toInsertSQL(cpInstanceModel)}
-
-				<#list commerceInventoryWarehouseModels as commerceInventoryWarehouseModel>
-					${dataFactory.toInsertSQL(dataFactory.newCommerceInventoryWarehouseItemModel(commerceInventoryWarehouseModel, cpInstanceModel))}
+				<#list commerceChannelModels as commerceChannelModel>
+					${dataFactory.toInsertSQL(dataFactory.newCommerceChannelRelModel(dataFactory.CPDefinitionClassNameId, cpDefinitionModel.CPDefinitionId, commerceChannelModel.commerceChannelId))}
 				</#list>
 
-				<#assign
-					defaultCPInstanceModel = cpInstanceModel
+				${dataFactory.toInsertSQL(dataFactory.newCPDefinitionModelAssetEntryModel(cpDefinitionModel, cpDefinitionModel.groupId))}
 
-					commercePriceEntryModel = dataFactory.newCommercePriceEntryModel(commercePriceListModel.commercePriceListId, cpInstanceModel.CPInstanceUuid, cpDefinitionModel.CProductId)
+				<#assign cpDefinitionLocalizationModel = dataFactory.newCPDefinitionLocalizationModel(cpDefinitionModel) />
 
-					defaultCommercePriceEntryModel = commercePriceEntryModel
-				/>
+				${dataFactory.toInsertSQL(cpDefinitionLocalizationModel)}
 
-				${dataFactory.toInsertSQL(commercePriceEntryModel)}
+				${csvFileWriter.write("cpDefinitionLocalization", cpDefinitionLocalizationModel.name + ", " + cpDefinitionLocalizationModel.description + "\n")}
 
-				${csvFileWriter.write("cpInstance", cpInstanceModel.sku + "\n")}
+				<#list dataFactory.getSequence(dataFactory.maxCPDefinitionSpecificationOptionValueCount) as cpDefinitionSpecificationOptionValueCount>
+					<#assign
+						cpSpecificationOptionModel = cpSpecificationOptionModels[cpDefinitionSpecificationOptionValueCount - 1]
+
+						cpDefinitionSpecificationOptionValueModel = dataFactory.newCPDefinitionSpecificationOptionValueModel(cpDefinitionModel.CPDefinitionId, cpSpecificationOptionModel.CPSpecificationOptionId, cpSpecificationOptionModel.CPOptionCategoryId, cpDefinitionSpecificationOptionValueCount)
+					/>
+
+					${dataFactory.toInsertSQL(cpDefinitionSpecificationOptionValueModel)}
+				</#list>
+
+				<#list dataFactory.newCPInstanceModels(cpDefinitionModel) as cpInstanceModel>
+					${dataFactory.toInsertSQL(cpInstanceModel)}
+
+					<#list commerceInventoryWarehouseModels as commerceInventoryWarehouseModel>
+						${dataFactory.toInsertSQL(dataFactory.newCommerceInventoryWarehouseItemModel(commerceInventoryWarehouseModel, cpInstanceModel))}
+					</#list>
+
+					<#assign
+						defaultCPInstanceModel = cpInstanceModel
+
+						commercePriceEntryModel = dataFactory.newCommercePriceEntryModel(commercePriceListModel.commercePriceListId, cpInstanceModel.CPInstanceUuid, cpDefinitionModel.CProductId)
+
+						defaultCommercePriceEntryModel = commercePriceEntryModel
+					/>
+
+					${dataFactory.toInsertSQL(commercePriceEntryModel)}
+
+					${csvFileWriter.write("cpInstance", cpInstanceModel.sku + "\n")}
+				</#list>
+
+				<#include "commerce_product_attachment_file_entries.ftl">
 			</#list>
 
-			<#include "commerce_product_attachment_file_entries.ftl">
+			${dataFactory.toInsertSQL(friendlyURLEntryModel)}
+
+			${dataFactory.toInsertSQL(friendlyURLEntryLocalizationModel)}
+
+			${dataFactory.toInsertSQL(dataFactory.newFriendlyURLEntryMapping(friendlyURLEntryModel))}
+
+			${csvFileWriter.write("cpFriendlyURLEntry", friendlyURLEntryLocalizationModel.urlTitle + "\n")}
+		</#list>
+	</#list>
+
+	<#list dataFactory.newCommerceOrderModels(commerceChannelGroupModels, commerceAccountEntryModels[0].accountEntryId, commerceCurrencyModel.commerceCurrencyId, 0, 0, 8) as cancelledCommerceOrderModel>
+		${dataFactory.toInsertSQL(cancelledCommerceOrderModel)}
+
+		${dataFactory.toInsertSQL(dataFactory.newCommerceOrderItemModel(cancelledCommerceOrderModel, defaultCommercePriceEntryModel.commercePriceListId, defaultCommercePriceEntryModel.CProductId, defaultCPInstanceModel))}
+
+		${csvFileWriter.write("commerceOrder", cancelledCommerceOrderModel.commerceOrderId + ", " + cancelledCommerceOrderModel.orderStatus + "\n")}
+	</#list>
+
+	<#list dataFactory.newCommerceOrderModels(commerceChannelGroupModels, commerceAccountEntryModels[0].accountEntryId, commerceCurrencyModel.commerceCurrencyId, 0, 0, 1) as pendingCommerceOrderModel>
+		${dataFactory.toInsertSQL(pendingCommerceOrderModel)}
+
+		${dataFactory.toInsertSQL(dataFactory.newCommerceOrderItemModel(pendingCommerceOrderModel, defaultCommercePriceEntryModel.commercePriceListId, defaultCommercePriceEntryModel.CProductId, defaultCPInstanceModel))}
+
+		${csvFileWriter.write("commerceOrder", pendingCommerceOrderModel.commerceOrderId + ", " + pendingCommerceOrderModel.orderStatus + "\n")}
+	</#list>
+
+	${dataFactory.toInsertSQL(commerceCurrencyModel)}
+
+	<#list commerceGroupModels as commerceGroupModel>
+		${dataFactory.toInsertSQL(commerceGroupModel)}
+
+		<#assign commerceSiteNavigationPortletPreferencesModels = dataFactory.newCommerceSiteNavigationPortletPreferencesModels(commerceGroupModel) />
+
+		<#list commerceSiteNavigationPortletPreferencesModels as commerceSiteNavigationPortletPreferencesModel>
+			${dataFactory.toInsertSQL(commerceSiteNavigationPortletPreferencesModel)}
 		</#list>
 
-		${dataFactory.toInsertSQL(friendlyURLEntryModel)}
-
-		${dataFactory.toInsertSQL(friendlyURLEntryLocalizationModel)}
-
-		${dataFactory.toInsertSQL(dataFactory.newFriendlyURLEntryMapping(friendlyURLEntryModel))}
-
-		${csvFileWriter.write("cpFriendlyURLEntry", friendlyURLEntryLocalizationModel.urlTitle + "\n")}
-	</#list>
-</#list>
-
-<#list dataFactory.newCommerceOrderModels(commerceChannelGroupModels, commerceAccountEntryModels[0].accountEntryId, commerceCurrencyModel.commerceCurrencyId, 0, 0, 8) as cancelledCommerceOrderModel>
-	${dataFactory.toInsertSQL(cancelledCommerceOrderModel)}
-
-	${dataFactory.toInsertSQL(dataFactory.newCommerceOrderItemModel(cancelledCommerceOrderModel, defaultCommercePriceEntryModel.commercePriceListId, defaultCommercePriceEntryModel.CProductId, defaultCPInstanceModel))}
-
-	${csvFileWriter.write("commerceOrder", cancelledCommerceOrderModel.commerceOrderId + ", " + cancelledCommerceOrderModel.orderStatus + "\n")}
-</#list>
-
-<#list dataFactory.newCommerceOrderModels(commerceChannelGroupModels, commerceAccountEntryModels[0].accountEntryId, commerceCurrencyModel.commerceCurrencyId, 0, 0, 1) as pendingCommerceOrderModel>
-	${dataFactory.toInsertSQL(pendingCommerceOrderModel)}
-
-	${dataFactory.toInsertSQL(dataFactory.newCommerceOrderItemModel(pendingCommerceOrderModel, defaultCommercePriceEntryModel.commercePriceListId, defaultCommercePriceEntryModel.CProductId, defaultCPInstanceModel))}
-
-	${csvFileWriter.write("commerceOrder", pendingCommerceOrderModel.commerceOrderId + ", " + pendingCommerceOrderModel.orderStatus + "\n")}
-</#list>
-
-${dataFactory.toInsertSQL(commerceCurrencyModel)}
-
-<#list commerceGroupModels as commerceGroupModel>
-	${dataFactory.toInsertSQL(commerceGroupModel)}
-
-	<#assign commerceSiteNavigationPortletPreferencesModels = dataFactory.newCommerceSiteNavigationPortletPreferencesModels(commerceGroupModel) />
-
-	<#list commerceSiteNavigationPortletPreferencesModels as commerceSiteNavigationPortletPreferencesModel>
-		${dataFactory.toInsertSQL(commerceSiteNavigationPortletPreferencesModel)}
-	</#list>
-
-	<#list dataFactory.newCommerceSiteNavigationPortletDDMTemplateModels(commerceGroupModel.groupId) as commerceSiteNavigationPortletDDMTemplateModel>
-		${dataFactory.toInsertSQL(commerceSiteNavigationPortletDDMTemplateModel)}
-	</#list>
-
-	<#list dataFactory.newCommerceSiteNavigationPortletPreferenceValueModels(commerceSiteNavigationPortletPreferencesModels) as commerceSiteNavigationPortletPreferenceValueModel>
-		${dataFactory.toInsertSQL(commerceSiteNavigationPortletPreferenceValueModel)}
-	</#list>
-
-	<#list dataFactory.newLayoutSetModels(commerceGroupModel.groupId, "minium_WAR_miniumtheme") as commerceLayoutSetModel>
-		${dataFactory.toInsertSQL(commerceLayoutSetModel)}
-	</#list>
-
-	<#list dataFactory.newCommerceLayoutModels(commerceGroupModel.groupId) as commerceLayoutModel>
-		<#assign portletPreferencesModels = dataFactory.newCommercePortletPreferencesModels(commerceLayoutModel) />
-
-		<#list portletPreferencesModels as portletPreferencesModel>
-			${dataFactory.toInsertSQL(portletPreferencesModel)}
+		<#list dataFactory.newCommerceSiteNavigationPortletDDMTemplateModels(commerceGroupModel.groupId) as commerceSiteNavigationPortletDDMTemplateModel>
+			${dataFactory.toInsertSQL(commerceSiteNavigationPortletDDMTemplateModel)}
 		</#list>
 
-		<#list dataFactory.newCommerceLayoutPortletPreferenceValueModels(portletPreferencesModels) as portletPreferenceValueModel>
-			${dataFactory.toInsertSQL(portletPreferenceValueModel)}
+		<#list dataFactory.newCommerceSiteNavigationPortletPreferenceValueModels(commerceSiteNavigationPortletPreferencesModels) as commerceSiteNavigationPortletPreferenceValueModel>
+			${dataFactory.toInsertSQL(commerceSiteNavigationPortletPreferenceValueModel)}
 		</#list>
 
-		<@insertLayout _layoutModel=commerceLayoutModel />
+		<#list dataFactory.newLayoutSetModels(commerceGroupModel.groupId, "minium_WAR_miniumtheme") as commerceLayoutSetModel>
+			${dataFactory.toInsertSQL(commerceLayoutSetModel)}
+		</#list>
+
+		<#list dataFactory.newCommerceLayoutModels(commerceGroupModel.groupId) as commerceLayoutModel>
+			<#assign portletPreferencesModels = dataFactory.newCommercePortletPreferencesModels(commerceLayoutModel) />
+
+			<#list portletPreferencesModels as portletPreferencesModel>
+				${dataFactory.toInsertSQL(portletPreferencesModel)}
+			</#list>
+
+			<#list dataFactory.newCommerceLayoutPortletPreferenceValueModels(portletPreferencesModels) as portletPreferenceValueModel>
+				${dataFactory.toInsertSQL(portletPreferenceValueModel)}
+			</#list>
+
+			<@insertLayout _layoutModel=commerceLayoutModel />
+		</#list>
+
+		${csvFileWriter.write("commerceGroup", commerceGroupModel.groupId + ", " + commerceGroupModel.name + "\n")}
 	</#list>
 
-	${csvFileWriter.write("commerceGroup", commerceGroupModel.groupId + ", " + commerceGroupModel.name + "\n")}
-</#list>
+	<#list commerceChannelModels as commerceChannelModel>
+		${dataFactory.toInsertSQL(commerceChannelModel)}
+	</#list>
 
-<#list commerceChannelModels as commerceChannelModel>
-	${dataFactory.toInsertSQL(commerceChannelModel)}
-</#list>
+	<#list commerceChannelGroupModels as commerceChannelGroupModel>
+		<#assign commerceB2BSiteTypePortletPreferencesModel = dataFactory.newCommerceB2BSiteTypePortletPreferencesModel(commerceChannelGroupModel.groupId) />
 
-<#list commerceChannelGroupModels as commerceChannelGroupModel>
-	<#assign
-		commerceB2BSiteTypePortletPreferencesModel = dataFactory.newCommerceB2BSiteTypePortletPreferencesModel(commerceChannelGroupModel.groupId)
-	/>
+		${dataFactory.toInsertSQL(commerceB2BSiteTypePortletPreferencesModel)}
 
-	${dataFactory.toInsertSQL(commerceB2BSiteTypePortletPreferencesModel)}
+		${dataFactory.toInsertSQL(dataFactory.newCommerceB2BSiteTypePortletPreferenceValueModel(commerceB2BSiteTypePortletPreferencesModel))}
 
-	${dataFactory.toInsertSQL(dataFactory.newCommerceB2BSiteTypePortletPreferenceValueModel(commerceB2BSiteTypePortletPreferencesModel))}
-
-	<@insertGroup _groupModel=commerceChannelGroupModel />
-</#list>
+		<@insertGroup _groupModel=commerceChannelGroupModel />
+	</#list>
+</#if>

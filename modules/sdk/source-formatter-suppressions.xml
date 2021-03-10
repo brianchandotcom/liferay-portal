@@ -52,6 +52,7 @@
 		<suppress checks="JSONValidationCheck" files="project-templates/.*" />
 		<suppress checks="StringMethodsCheck" files="gradle-plugins-baseline/src/main/java/com/liferay/gradle/plugins/baseline/Baseline\.java" />
 		<suppress checks="StringMethodsCheck" files="gradle-plugins-defaults/src/main/java/com/liferay/gradle/plugins/defaults/LiferayOSGiDefaultsPlugin\.java" />
+		<suppress checks="XMLDTDVersionCheck" files=".*/gradleTest/.*" />
 		<suppress checks="XMLServiceFileCheck" files="gradle-plugins-db-support/src/gradleTest/cleanServiceBuilder/service\.xml" />
 	</source-check>
 </suppressions>

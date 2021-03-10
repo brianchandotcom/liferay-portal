@@ -14,15 +14,20 @@
 
 package com.liferay.portal.crypto.hash.spi;
 
+import java.util.Map;
+
 /**
  * @author Carlos Sierra Andrés
+ * @author Arthur Chan
  */
 public class CryptoHashProviderResponse {
 
 	public CryptoHashProviderResponse(
-		String cryptoHashProviderName, byte[] hash) {
+		String cryptoHashProviderName,
+		Map<String, ?> cryptoHashProviderProperties, byte[] hash) {
 
 		_cryptoHashProviderName = cryptoHashProviderName;
+		_cryptoHashProviderProperties = cryptoHashProviderProperties;
 		_hash = hash;
 	}
 
@@ -30,11 +35,16 @@ public class CryptoHashProviderResponse {
 		return _cryptoHashProviderName;
 	}
 
+	public Map<String, ?> getCryptoHashProviderProperties() {
+		return _cryptoHashProviderProperties;
+	}
+
 	public byte[] getHash() {
 		return _hash;
 	}
 
 	private final String _cryptoHashProviderName;
+	private final Map<String, ?> _cryptoHashProviderProperties;
 	private final byte[] _hash;
 
 }

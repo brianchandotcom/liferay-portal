@@ -274,6 +274,7 @@ paths:
         post:
             description:
                 Renders and retrieves HTML for the page definition using the theme of specified site.
+            operationId: postSitePageDefinitionPreview
             parameters:
                 - in: path
                   name: siteId
@@ -304,6 +305,7 @@ paths:
             description:
                 Retrieves the site's structured contents latest version. Results can be paginated, filtered, searched,
                 flattened, and sorted.
+            operationId: getSiteStructuredContentsPage
             parameters:
                 - in: path
                   name: siteId
@@ -366,6 +368,7 @@ paths:
             # @review
             description:
                 Retrieves all versions of a structured content via its ID.
+            operationId: getStructuredContentsVersionsPage
             parameters:
                 - in: path
                   name: structuredContentId

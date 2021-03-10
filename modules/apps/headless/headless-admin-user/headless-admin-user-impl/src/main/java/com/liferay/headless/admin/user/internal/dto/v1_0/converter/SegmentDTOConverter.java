@@ -16,10 +16,18 @@ package com.liferay.headless.admin.user.internal.dto.v1_0.converter;
 
 import com.liferay.headless.admin.user.dto.v1_0.Segment;
 import com.liferay.headless.admin.user.internal.constants.SegmentsSourceConstants;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.model.SegmentsEntry;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -43,13 +51,43 @@ public class SegmentDTOConverter
 		return new Segment() {
 			{
 				active = segmentsEntry.isActive();
-				criteria = segmentsEntry.getCriteria();
 				dateCreated = segmentsEntry.getCreateDate();
 				dateModified = segmentsEntry.getModifiedDate();
 				id = segmentsEntry.getSegmentsEntryId();
 				name = segmentsEntry.getName(
 					segmentsEntry.getDefaultLanguageId());
 				siteId = segmentsEntry.getGroupId();
+
+				setCriteria(
+					() -> {
+						String criteria = segmentsEntry.getCriteria();
+
+						if (!criteria.isEmpty()) {
+							return segmentsEntry.getCriteria();
+						}
+
+						return null;
+					});
+
+				setCriteriaValue(
+					() -> {
+						String criteria = segmentsEntry.getCriteria();
+
+						if (!criteria.isEmpty()) {
+							try {
+								return _toMap(
+									JSONFactoryUtil.createJSONObject(
+										segmentsEntry.getCriteria()));
+							}
+							catch (JSONException jsonException) {
+								if (_log.isWarnEnabled()) {
+									_log.warn(jsonException, jsonException);
+								}
+							}
+						}
+
+						return null;
+					});
 
 				setSource(
 					() -> {
@@ -73,5 +111,23 @@ public class SegmentDTOConverter
 			}
 		};
 	}
+
+	private Map<String, Object> _toMap(JSONObject jsonObject) {
+		Map<String, Object> map = new HashMap<>();
+
+		for (String key : jsonObject.keySet()) {
+			if (jsonObject.getJSONObject(key) != null) {
+				map.put(key, _toMap(jsonObject.getJSONObject(key)));
+			}
+			else {
+				map.put(key, jsonObject.get(key));
+			}
+		}
+
+		return map;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SegmentDTOConverter.class);
 
 }

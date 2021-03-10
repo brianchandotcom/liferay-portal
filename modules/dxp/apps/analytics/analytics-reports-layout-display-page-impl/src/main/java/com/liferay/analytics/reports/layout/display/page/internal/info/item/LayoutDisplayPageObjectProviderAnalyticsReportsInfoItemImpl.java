@@ -36,6 +36,7 @@ import com.liferay.layout.seo.kernel.LayoutSEOLink;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassName;
@@ -113,11 +114,11 @@ public class LayoutDisplayPageObjectProviderAnalyticsReportsInfoItemImpl
 			_groupLocalService.fetchGroup(
 				layoutDisplayPageObjectProvider.getGroupId())
 		).map(
-			Group::getAvailableLanguageIds
+			Group::getGroupId
 		).map(
-			LocaleUtil::fromLanguageIds
+			_language::getAvailableLocales
 		).map(
-			ListUtil::fromArray
+			ListUtil::fromCollection
 		).orElseGet(
 			() -> Collections.singletonList(LocaleUtil.getDefault())
 		);
@@ -426,6 +427,9 @@ public class LayoutDisplayPageObjectProviderAnalyticsReportsInfoItemImpl
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

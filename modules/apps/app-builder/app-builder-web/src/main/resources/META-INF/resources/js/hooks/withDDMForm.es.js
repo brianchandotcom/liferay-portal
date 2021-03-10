@@ -12,7 +12,11 @@
  * details.
  */
 
-import {PagesVisitor, setDataRecord} from 'dynamic-data-mapping-form-renderer';
+import {
+	PagesVisitor,
+	formatFieldValue,
+	setDataRecord,
+} from 'dynamic-data-mapping-form-renderer';
 import React, {useCallback, useEffect, useState} from 'react';
 
 export function useDDMFormSubmit(ddmForm, onSubmit) {
@@ -49,12 +53,33 @@ export function useDDMFormValidation(ddmForm, languageId) {
 						const dataRecordValues = {};
 
 						visitor.mapFields(
-							(field) =>
+							(field) => {
+								const {
+									editingLanguageId,
+									localizedValue,
+								} = field;
+
+								if (editingLanguageId != languageId) {
+									const newValue = formatFieldValue(
+										field,
+										true,
+										editingLanguageId,
+										languageId
+									);
+
+									if (!localizedValue[languageId]) {
+										localizedValue[languageId] = newValue;
+									}
+
+									field.value = newValue;
+								}
+
 								setDataRecord(
 									field,
 									dataRecordValues,
 									languageId
-								),
+								);
+							},
 							true,
 							true
 						);

@@ -81,7 +81,7 @@ class Sidebar extends Component {
 			);
 		}
 
-		dispatch('sidebar_evaluate', {
+		dispatch('sidebar_change_field_type', {
 			...focusedField,
 			...newFieldType,
 			...getFieldProperties(
@@ -89,7 +89,6 @@ class Sidebar extends Component {
 				defaultLanguageId,
 				editingLanguageId
 			),
-			changedFieldType: true,
 			instanceId: generateInstanceId(8),
 			settingsContext,
 			type: newFieldType.name,
@@ -663,15 +662,9 @@ class Sidebar extends Component {
 	}
 
 	_handleEvaluatorChanged(pages) {
-		const {dispatch, focusedField} = this.props;
+		const {dispatch} = this.props;
 
-		dispatch('sidebar_evaluate', {
-			...focusedField,
-			settingsContext: {
-				...focusedField.settingsContext,
-				pages,
-			},
-		});
+		dispatch('field_evaluate', {settingsContextPages: pages});
 	}
 
 	_handleElementSettingsClicked({data: {item}}) {

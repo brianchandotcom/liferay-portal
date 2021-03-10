@@ -69,6 +69,7 @@ export const MAPPED_EVENT_TYPES = {
 	[FIELD.CLICK]: 'fieldClicked',
 	[FIELD.DELETE]: 'fieldDeleted',
 	[FIELD.DUPLICATE]: 'fieldDuplicated',
+	[FIELD.EVALUATE]: 'focusedFieldEvaluationEnded',
 	[FIELD.HOVER]: 'fieldHovered',
 	[PAGE.VALIDATION_FAILED]: 'pageValidationFailed',
 	[SECTION.ADD]: 'sectionAdded',

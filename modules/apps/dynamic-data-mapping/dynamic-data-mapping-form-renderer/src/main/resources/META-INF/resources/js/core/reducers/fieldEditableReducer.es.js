@@ -135,6 +135,45 @@ export const deleteField = ({
 		return page;
 	});
 
+const updateFieldProperty = ({
+	defaultLanguageId,
+	editingLanguageId,
+	fieldNameGenerator,
+	focusedField,
+	generateFieldNameUsingFieldLabel,
+	pages,
+	propertyName,
+	propertyValue,
+}) => {
+	if (
+		propertyName === 'fieldReference' &&
+		propertyValue !== '' &&
+		propertyValue !== focusedField.fieldName
+	) {
+		focusedField = SettingsContext.updateFieldReference(
+			focusedField,
+			FieldUtil.findInvalidFieldReference(
+				focusedField,
+				pages,
+				propertyValue
+			),
+			false
+		);
+	}
+
+	return SettingsContext.updateField(
+		{
+			defaultLanguageId,
+			editingLanguageId,
+			fieldNameGenerator,
+			generateFieldNameUsingFieldLabel,
+		},
+		focusedField,
+		propertyName,
+		propertyValue
+	);
+};
+
 /**
  * NOTE: This is a literal copy of the old LayoutProvider logic. Small changes
  * were made only to adapt to the reducer.
@@ -298,37 +337,18 @@ export default (state, action, config) => {
 				return state;
 			}
 
-			let newFocusedField = fieldName
-				? FieldSupport.getField(pages, fieldName)
-				: focusedField;
-
-			if (
-				propertyName === 'fieldReference' &&
-				propertyValue !== '' &&
-				propertyValue !== newFocusedField.fieldName
-			) {
-				newFocusedField = SettingsContext.updateFieldReference(
-					newFocusedField,
-					FieldUtil.findInvalidFieldReference(
-						newFocusedField,
-						pages,
-						propertyValue
-					),
-					false
-				);
-			}
-
-			newFocusedField = SettingsContext.updateField(
-				{
-					defaultLanguageId,
-					editingLanguageId,
-					fieldNameGenerator,
-					generateFieldNameUsingFieldLabel,
-				},
-				newFocusedField,
+			const newFocusedField = updateFieldProperty({
+				defaultLanguageId,
+				editingLanguageId,
+				fieldNameGenerator,
+				focusedField: fieldName
+					? FieldSupport.getField(pages, fieldName)
+					: focusedField,
+				generateFieldNameUsingFieldLabel,
+				pages,
 				propertyName,
-				propertyValue
-			);
+				propertyValue,
+			});
 
 			const visitor = new PagesVisitor(pages);
 
@@ -630,6 +650,87 @@ export default (state, action, config) => {
 					parentFieldName,
 				}),
 				previousFocusedField: newField,
+			};
+		}
+		case EVENT_TYPES.FIELD.EVALUATE: {
+			const {settingsContextPages} = action.payload;
+			const {
+				defaultLanguageId,
+				editingLanguageId,
+				focusedField,
+				pages,
+				rules,
+			} = state;
+			const {
+				generateFieldNameUsingFieldLabel,
+				getFieldNameGenerator,
+			} = config;
+
+			const fieldName = FieldSupport.getField(
+				settingsContextPages,
+				'name'
+			);
+			const focusedFieldName = FieldSupport.getField(
+				focusedField.settingsContext.pages,
+				'name'
+			);
+
+			if (fieldName.instanceId !== focusedFieldName.instanceId) {
+				return state;
+			}
+
+			const fieldNameGenerator = getFieldNameGenerator(
+				pages,
+				generateFieldNameUsingFieldLabel
+			);
+
+			let newFocusedField = {
+				...focusedField,
+				settingsContext: {
+					...focusedField.settingsContext,
+					pages: settingsContextPages,
+				},
+			};
+
+			const settingsContextVisitor = new PagesVisitor(
+				settingsContextPages
+			);
+
+			settingsContextVisitor.mapFields(({fieldName, value}) => {
+				newFocusedField = updateFieldProperty({
+					defaultLanguageId,
+					editingLanguageId,
+					fieldNameGenerator,
+					focusedField: newFocusedField,
+					generateFieldNameUsingFieldLabel,
+					pages,
+					propertyName: fieldName,
+					propertyValue: value,
+				});
+			});
+
+			const visitor = new PagesVisitor(pages);
+
+			const newPages = visitor.mapFields(
+				(field) => {
+					if (field.fieldName !== fieldName.value) {
+						return field;
+					}
+
+					return newFocusedField;
+				},
+				true,
+				true
+			);
+
+			return {
+				focusedField: newFocusedField,
+				pages: newPages,
+				rules: RulesUtil.updateRulesReferences(
+					rules || [],
+					focusedField,
+					newFocusedField
+				),
 			};
 		}
 		case EVENT_TYPES.FIELD.HOVER:

@@ -12,7 +12,7 @@
  * details.
  */
 
-import {FieldSupport, RulesSupport} from 'dynamic-data-mapping-form-builder';
+import {RulesSupport} from 'dynamic-data-mapping-form-builder';
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 
 import {EVENT_TYPES} from '../eventTypes.es';
@@ -48,53 +48,27 @@ export default (state, action) => {
 				}),
 			};
 		}
-		case EVENT_TYPES.SIDEBAR.EVALUATE: {
-			const {
-				changedFieldType,
-				instanceId,
-				settingsContext,
-			} = action.payload;
-			const {focusedField, pages, rules} = state;
-
-			const fieldName = FieldSupport.getField(
-				settingsContext.pages,
-				'name'
-			);
-			const focusedFieldName = FieldSupport.getField(
-				focusedField.settingsContext.pages,
-				'name'
-			);
-
-			if (
-				fieldName.instanceId !== focusedFieldName.instanceId &&
-				!changedFieldType
-			) {
-				return state;
-			}
+		case EVENT_TYPES.SIDEBAR.CHANGE_FIELD_TYPE: {
+			const {pages, rules} = state;
 
 			const visitor = new PagesVisitor(pages);
 
-			const newPages = visitor.mapFields((field) => {
-				if (field.fieldName !== fieldName.value) {
-					return field;
-				}
+			const newPages = visitor.mapFields(
+				(field) => {
+					if (field.fieldName !== action.payload.fieldName) {
+						return field;
+					}
 
-				return {
-					...field,
-					settingsContext,
-				};
-			});
+					return action.payload;
+				},
+				true,
+				true
+			);
 
 			return {
-				focusedField: {
-					...focusedField,
-					instanceId: instanceId || focusedField.instanceId,
-					settingsContext,
-				},
+				focusedField: action.payload,
 				pages: newPages,
-				rules: changedFieldType
-					? RulesSupport.formatRules(newPages, rules)
-					: rules,
+				rules: RulesSupport.formatRules(newPages, rules),
 			};
 		}
 		default:

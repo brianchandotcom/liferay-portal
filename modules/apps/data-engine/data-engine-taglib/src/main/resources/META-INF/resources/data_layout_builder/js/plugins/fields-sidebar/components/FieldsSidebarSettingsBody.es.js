@@ -14,11 +14,8 @@
 
 import {ClayIconSpriteContext} from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
-import {
-	EVENT_TYPES,
-	FormFieldSettings,
-	Pages,
-} from 'dynamic-data-mapping-form-renderer';
+import {FormFieldSettings, Pages} from 'dynamic-data-mapping-form-renderer';
+import {EVENT_TYPES as CORE_EVENT_TYPES} from 'dynamic-data-mapping-form-renderer/js/core/actions/eventTypes.es';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 
 import AppContext from '../../../AppContext.es';
@@ -142,11 +139,11 @@ export default function ({
 				editingLanguageId={editingLanguageId}
 				onAction={({payload, type}) => {
 					switch (type) {
-						case EVENT_TYPES.PAGE.CHANGE:
+						case CORE_EVENT_TYPES.PAGE.CHANGE:
 							setActivePage(payload.activePage);
 							break;
-						case EVENT_TYPES.FIELD.BLUR:
-						case EVENT_TYPES.FIELD.CHANGE:
+						case CORE_EVENT_TYPES.FIELD.BLUR:
+						case CORE_EVENT_TYPES.FIELD.CHANGE:
 							dispatchEvent(type, {
 								editingLanguageId:
 									settingsContext.editingLanguageId,
@@ -154,8 +151,8 @@ export default function ({
 								propertyValue: payload.value,
 							});
 							break;
-						case EVENT_TYPES.FIELD_EVALUATED:
-							dispatchEvent('focusedFieldEvaluationEnded', {
+						case CORE_EVENT_TYPES.FIELD.EVALUATE:
+							dispatchEvent(type, {
 								settingsContext: {
 									...settingsContext,
 									pages: payload,

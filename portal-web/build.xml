@@ -108,6 +108,7 @@
 			outputproperty="jspc.output"
 		>
 			<jvmarg if:true="${jvm.debug}" line="${jpda.settings}" />
+			<sysproperty key="log4j2.disable.jmx" value="true" />
 			<arg line="${arg.line}" />
 		</java>
 

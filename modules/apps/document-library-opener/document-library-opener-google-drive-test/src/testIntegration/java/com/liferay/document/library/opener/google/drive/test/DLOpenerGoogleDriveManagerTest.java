@@ -32,9 +32,9 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
@@ -54,8 +54,11 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.Dictionary;
 
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -76,10 +79,18 @@ public class DLOpenerGoogleDriveManagerTest {
 			PermissionCheckerMethodTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE);
 
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_company = CompanyTestUtil.addCompany();
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		CompanyLocalServiceUtil.deleteCompany(_company);
+	}
+
 	@Before
 	public void setUp() throws Exception {
-		_company = CompanyTestUtil.addCompany();
-
 		_user = UserTestUtil.addGroupAdminUser(_company.getGroup());
 
 		_originalName = PrincipalThreadLocal.getName();
@@ -238,9 +249,10 @@ public class DLOpenerGoogleDriveManagerTest {
 
 		return _dlAppLocalService.addFileEntry(
 			serviceContext.getUserId(), folder.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "liferay.txt",
-			ContentTypes.TEXT_PLAIN, "liferay", StringPool.BLANK,
-			StringPool.BLANK, "liferay".getBytes(), serviceContext);
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
+			"liferay".getBytes(), serviceContext);
 	}
 
 	private String _getAuthorizationToken() throws Exception {
@@ -310,8 +322,7 @@ public class DLOpenerGoogleDriveManagerTest {
 		}
 	}
 
-	@DeleteAfterTestRun
-	private Company _company;
+	private static Company _company;
 
 	@Inject
 	private DLAppLocalService _dlAppLocalService;

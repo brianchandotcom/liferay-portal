@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
@@ -260,6 +261,10 @@ public class JournalTransformer {
 					List<TemplateNode> templateNodes = getTemplateNodes(
 						themeDisplay, rootElement,
 						ddmForm.getDDMFormFieldsMap(true), locale);
+
+					templateNodes.addAll(
+						includeBackwardsCompatibilityTemplateNodes(
+							templateNodes, -1));
 
 					for (TemplateNode templateNode : templateNodes) {
 						template.put(templateNode.getName(), templateNode);
@@ -517,6 +522,74 @@ public class JournalTransformer {
 		sb.append(classNameId);
 
 		return sb.toString();
+	}
+
+	protected List<TemplateNode> includeBackwardsCompatibilityTemplateNodes(
+		List<TemplateNode> templateNodes, int parentOffset) {
+
+		List<TemplateNode> backwardsCompatibilityTemplateNodes =
+			new ArrayList<>();
+
+		parentOffset++;
+
+		for (TemplateNode templateNode : templateNodes) {
+			if (!Objects.equals(
+					templateNode.getType(),
+					DDMFormFieldTypeConstants.FIELDSET)) {
+
+				if (parentOffset > 0) {
+					backwardsCompatibilityTemplateNodes.add(
+						(TemplateNode)templateNode.clone());
+				}
+
+				continue;
+			}
+
+			List<TemplateNode> childTemplateNodes = templateNode.getChildren();
+
+			if (ListUtil.isEmpty(childTemplateNodes)) {
+				continue;
+			}
+
+			TemplateNode firstChildTemplateNode = childTemplateNodes.get(0);
+
+			firstChildTemplateNode =
+				(TemplateNode)firstChildTemplateNode.clone();
+
+			List<TemplateNode> newChildTemplateNodes = new ArrayList<>(
+				childTemplateNodes);
+
+			newChildTemplateNodes.remove(0);
+
+			firstChildTemplateNode.appendChildren(
+				includeBackwardsCompatibilityTemplateNodes(
+					newChildTemplateNodes, parentOffset));
+
+			List<TemplateNode> siblingsTemplateNodes =
+				templateNode.getSiblings();
+
+			if (siblingsTemplateNodes.size() > 1) {
+				List<TemplateNode> firstChildSiblingsTemplateNodes =
+					firstChildTemplateNode.getSiblings();
+
+				firstChildSiblingsTemplateNodes.clear();
+
+				firstChildSiblingsTemplateNodes.add(firstChildTemplateNode);
+
+				List<TemplateNode> newSiblingsTemplateNodes = new ArrayList<>(
+					siblingsTemplateNodes);
+
+				newSiblingsTemplateNodes.remove(0);
+
+				firstChildSiblingsTemplateNodes.addAll(
+					includeBackwardsCompatibilityTemplateNodes(
+						newSiblingsTemplateNodes, parentOffset));
+			}
+
+			backwardsCompatibilityTemplateNodes.add(firstChildTemplateNode);
+		}
+
+		return backwardsCompatibilityTemplateNodes;
 	}
 
 	protected Map<String, Object> insertRequestVariables(Element element) {

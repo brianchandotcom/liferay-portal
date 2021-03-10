@@ -158,10 +158,10 @@ public class SampleSQLBuilderTest {
 		properties.put(BenchmarksPropsKeys.MAX_CONTENT_LAYOUT_COUNT, "1");
 		properties.put(
 			BenchmarksPropsKeys.MAX_CP_DEFINITION_ATTACHMENT_TYPE_IMAGE_COUNT,
-			"0");
+			"1");
 		properties.put(
 			BenchmarksPropsKeys.MAX_CP_DEFINITION_ATTACHMENT_TYPE_PDF_COUNT,
-			"0");
+			"1");
 		properties.put(
 			BenchmarksPropsKeys.
 				MAX_CP_DEFINITION_SPECIFICATION_OPTION_VALUE_COUNT,

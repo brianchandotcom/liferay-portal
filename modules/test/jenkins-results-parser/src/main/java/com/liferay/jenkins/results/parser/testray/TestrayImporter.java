@@ -147,13 +147,14 @@ public class TestrayImporter {
 		return pullRequestBuild.getPullRequest();
 	}
 
-	public TestrayBuild getTestrayBuild() {
-		if (_testrayBuild != null) {
-			return _testrayBuild;
+	public TestrayBuild getTestrayBuild(File testBaseDir) {
+		TestrayBuild testrayBuild = _testrayBuilds.get(testBaseDir);
+
+		if (testrayBuild != null) {
+			return testrayBuild;
 		}
 
 		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
-		TestrayBuild testrayBuild = null;
 
 		Date testrayBuildDate = getTestrayBuildDate();
 		String testrayBuildDescription = getTestrayBuildDescription();
@@ -162,7 +163,9 @@ public class TestrayImporter {
 		try {
 			String testrayBuildID = System.getProperty("TESTRAY_BUILD_ID");
 
-			TestrayRoutine testrayRoutine = getTestrayRoutine();
+			TestrayRoutine testrayRoutine = getTestrayRoutine(testBaseDir);
+			TestrayProductVersion testrayProductVersion =
+				getTestrayProductVersion(testBaseDir);
 
 			if ((testrayBuildID != null) && testrayBuildID.matches("\\d+")) {
 				testrayBuild = testrayRoutine.getTestrayBuildByID(
@@ -175,9 +178,8 @@ public class TestrayImporter {
 				!JenkinsResultsParserUtil.isNullOrEmpty(testrayBuildName)) {
 
 				testrayBuild = testrayRoutine.createTestrayBuild(
-					getTestrayProductVersion(),
-					_replaceEnvVars(testrayBuildName), testrayBuildDate,
-					testrayBuildDescription, testrayBuildSHA);
+					testrayProductVersion, _replaceEnvVars(testrayBuildName),
+					testrayBuildDate, testrayBuildDescription, testrayBuildSHA);
 			}
 
 			testrayBuildID = _getBuildParameter("TESTRAY_BUILD_ID");
@@ -195,9 +197,8 @@ public class TestrayImporter {
 				!JenkinsResultsParserUtil.isNullOrEmpty(testrayBuildName)) {
 
 				testrayBuild = testrayRoutine.createTestrayBuild(
-					getTestrayProductVersion(),
-					_replaceEnvVars(testrayBuildName), testrayBuildDate,
-					testrayBuildDescription, testrayBuildSHA);
+					testrayProductVersion, _replaceEnvVars(testrayBuildName),
+					testrayBuildDate, testrayBuildDescription, testrayBuildSHA);
 			}
 
 			Job job = getJob();
@@ -221,24 +222,23 @@ public class TestrayImporter {
 				!JenkinsResultsParserUtil.isNullOrEmpty(testrayBuildName)) {
 
 				testrayBuild = testrayRoutine.createTestrayBuild(
-					getTestrayProductVersion(),
-					_replaceEnvVars(testrayBuildName), testrayBuildDate,
-					testrayBuildDescription, testrayBuildSHA);
+					testrayProductVersion, _replaceEnvVars(testrayBuildName),
+					testrayBuildDate, testrayBuildDescription, testrayBuildSHA);
 			}
 		}
 		finally {
 			if (testrayBuild != null) {
-				_testrayBuild = testrayBuild;
+				_testrayBuilds.put(testBaseDir, testrayBuild);
 
 				System.out.println(
 					JenkinsResultsParserUtil.combine(
-						"Testray Build ",
-						String.valueOf(_testrayBuild.getURL()), " created in ",
+						"Testray Build ", String.valueOf(testrayBuild.getURL()),
+						" created in ",
 						JenkinsResultsParserUtil.toDurationString(
 							JenkinsResultsParserUtil.getCurrentTimeMillis() -
 								start)));
 
-				return _testrayBuild;
+				return testrayBuild;
 			}
 		}
 
@@ -371,16 +371,18 @@ public class TestrayImporter {
 		return null;
 	}
 
-	public TestrayProductVersion getTestrayProductVersion() {
-		if (_testrayProductVersion != null) {
-			return _testrayProductVersion;
+	public TestrayProductVersion getTestrayProductVersion(File testBaseDir) {
+		TestrayProductVersion testrayProductVersion =
+			_testrayProductVersions.get(testBaseDir);
+
+		if (testrayProductVersion != null) {
+			return testrayProductVersion;
 		}
 
 		long start = System.currentTimeMillis();
-		TestrayProductVersion testrayProductVersion = null;
 
 		try {
-			TestrayProject testrayProject = getTestrayProject();
+			TestrayProject testrayProject = getTestrayProject(testBaseDir);
 
 			String testrayProductVersionID = System.getProperty(
 				"TESTRAY_PRODUCT_VERSION_ID");
@@ -459,35 +461,36 @@ public class TestrayImporter {
 		}
 		finally {
 			if (testrayProductVersion != null) {
-				_testrayProductVersion = testrayProductVersion;
+				_testrayProductVersions.put(testBaseDir, testrayProductVersion);
 
 				System.out.println(
 					JenkinsResultsParserUtil.combine(
 						"Testray Product Version ",
-						String.valueOf(_testrayProductVersion.getURL()),
+						String.valueOf(testrayProductVersion.getURL()),
 						" created in ",
 						JenkinsResultsParserUtil.toDurationString(
 							System.currentTimeMillis() - start)));
 
-				return _testrayProductVersion;
+				return testrayProductVersion;
 			}
 		}
 
 		return null;
 	}
 
-	public TestrayProject getTestrayProject() {
-		if (_testrayProject != null) {
-			return _testrayProject;
+	public TestrayProject getTestrayProject(File testBaseDir) {
+		TestrayProject testrayProject = _testrayProjects.get(testBaseDir);
+
+		if (testrayProject != null) {
+			return testrayProject;
 		}
 
 		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
-		TestrayProject testrayProject = null;
 
 		try {
 			String testrayProjectID = System.getProperty("TESTRAY_PROJECT_ID");
 
-			TestrayServer testrayServer = getTestrayServer();
+			TestrayServer testrayServer = getTestrayServer(testBaseDir);
 
 			if ((testrayProjectID != null) &&
 				testrayProjectID.matches("\\d+")) {
@@ -550,36 +553,36 @@ public class TestrayImporter {
 		}
 		finally {
 			if (testrayProject != null) {
-				_testrayProject = testrayProject;
+				_testrayProjects.put(testBaseDir, testrayProject);
 
 				System.out.println(
 					JenkinsResultsParserUtil.combine(
 						"Testray Project ",
-						String.valueOf(_testrayProject.getURL()),
-						" created in ",
+						String.valueOf(testrayProject.getURL()), " created in ",
 						JenkinsResultsParserUtil.toDurationString(
 							JenkinsResultsParserUtil.getCurrentTimeMillis() -
 								start)));
 
-				return _testrayProject;
+				return testrayProject;
 			}
 		}
 
 		throw new RuntimeException("Please set TESTRAY_PROJECT_NAME");
 	}
 
-	public TestrayRoutine getTestrayRoutine() {
-		if (_testrayRoutine != null) {
-			return _testrayRoutine;
+	public TestrayRoutine getTestrayRoutine(File testBaseDir) {
+		TestrayRoutine testrayRoutine = _testrayRoutines.get(testBaseDir);
+
+		if (testrayRoutine != null) {
+			return testrayRoutine;
 		}
 
 		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
-		TestrayRoutine testrayRoutine = null;
 
 		try {
 			String testrayRoutineID = System.getProperty("TESTRAY_ROUTINE_ID");
 
-			TestrayProject testrayProject = getTestrayProject();
+			TestrayProject testrayProject = getTestrayProject(testBaseDir);
 
 			if ((testrayRoutineID != null) &&
 				testrayRoutineID.matches("\\d+")) {
@@ -651,31 +654,31 @@ public class TestrayImporter {
 		}
 		finally {
 			if (testrayRoutine != null) {
-				_testrayRoutine = testrayRoutine;
+				_testrayRoutines.put(testBaseDir, testrayRoutine);
 
 				System.out.println(
 					JenkinsResultsParserUtil.combine(
 						"Testray Routine ",
-						String.valueOf(_testrayRoutine.getURL()),
-						" created in ",
+						String.valueOf(testrayRoutine.getURL()), " created in ",
 						JenkinsResultsParserUtil.toDurationString(
 							JenkinsResultsParserUtil.getCurrentTimeMillis() -
 								start)));
 
-				return _testrayRoutine;
+				return testrayRoutine;
 			}
 		}
 
 		throw new RuntimeException("Please set TESTRAY_ROUTINE_NAME");
 	}
 
-	public TestrayServer getTestrayServer() {
-		if (_testrayServer != null) {
-			return _testrayServer;
+	public TestrayServer getTestrayServer(File testBaseDir) {
+		TestrayServer testrayServer = _testrayServers.get(testBaseDir);
+
+		if (testrayServer != null) {
+			return testrayServer;
 		}
 
 		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
-		TestrayServer testrayServer = null;
 
 		try {
 			String testrayServerURL = System.getProperty("TESTRAY_SERVER_URL");
@@ -708,17 +711,17 @@ public class TestrayImporter {
 		}
 		finally {
 			if (testrayServer != null) {
-				_testrayServer = testrayServer;
+				_testrayServers.put(testBaseDir, testrayServer);
 
 				System.out.println(
 					JenkinsResultsParserUtil.combine(
 						"Testray Server ",
-						String.valueOf(_testrayServer.getURL()), " created in ",
+						String.valueOf(testrayServer.getURL()), " created in ",
 						JenkinsResultsParserUtil.toDurationString(
 							JenkinsResultsParserUtil.getCurrentTimeMillis() -
 								start)));
 
-				return _testrayServer;
+				return testrayServer;
 			}
 		}
 
@@ -742,15 +745,10 @@ public class TestrayImporter {
 				batchDependentJob.getDependentAxisTestClassGroups());
 		}
 
-		TestrayBuild testrayBuild = getTestrayBuild();
-		TestrayProductVersion testrayProductVersion =
-			getTestrayProductVersion();
-		TestrayProject testrayProject = getTestrayProject();
-		TestrayRoutine testrayRoutine = getTestrayRoutine();
-		TestrayServer testrayServer = getTestrayServer();
-		TopLevelBuild topLevelBuild = getTopLevelBuild();
-
 		for (AxisTestClassGroup axisTestClassGroup : axisTestClassGroups) {
+			TestrayBuild testrayBuild = getTestrayBuild(
+				axisTestClassGroup.getTestBaseDir());
+
 			TestrayRun testrayRun = new TestrayRun(
 				testrayBuild, axisTestClassGroup.getBatchName());
 
@@ -774,10 +772,21 @@ public class TestrayImporter {
 			Map<String, String> propertiesMap = new HashMap<>();
 
 			propertiesMap.put("testray.build.name", testrayBuild.getName());
+
+			TestrayRoutine testrayRoutine = testrayBuild.getTestrayRoutine();
+
 			propertiesMap.put("testray.build.type", testrayRoutine.getName());
+
+			TestrayProductVersion testrayProductVersion =
+				testrayBuild.getTestrayProductVersion();
+
 			propertiesMap.put(
 				"testray.product.version", testrayProductVersion.getName());
+
+			TestrayProject testrayProject = testrayBuild.getTestrayProject();
+
 			propertiesMap.put("testray.project.name", testrayProject.getName());
+
 			propertiesMap.put("testray.run.id", testrayRun.getRunIDString());
 
 			_addPropertyElements(
@@ -797,14 +806,15 @@ public class TestrayImporter {
 
 					testrayCaseResults.add(
 						TestrayCaseResultFactory.newTestrayCaseResult(
-							testrayBuild, topLevelBuild, axisTestClassGroup,
-							testClass));
+							testrayBuild, getTopLevelBuild(),
+							axisTestClassGroup, testClass));
 				}
 			}
 			else {
 				testrayCaseResults.add(
 					TestrayCaseResultFactory.newTestrayCaseResult(
-						testrayBuild, topLevelBuild, axisTestClassGroup, null));
+						testrayBuild, getTopLevelBuild(), axisTestClassGroup,
+						null));
 			}
 
 			for (TestrayCaseResult testrayCaseResult : testrayCaseResults) {
@@ -869,6 +879,8 @@ public class TestrayImporter {
 			summaryMap.put("passed", String.valueOf(passedCount));
 
 			_addPropertyElements(rootElement.addElement("summary"), summaryMap);
+
+			TestrayServer testrayServer = testrayBuild.getTestrayServer();
 
 			try {
 				JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
@@ -1450,11 +1462,12 @@ public class TestrayImporter {
 		"https?://.+/(?<releaseFileName>[^/]+)");
 
 	private Job _job;
-	private TestrayBuild _testrayBuild;
-	private TestrayProductVersion _testrayProductVersion;
-	private TestrayProject _testrayProject;
-	private TestrayRoutine _testrayRoutine;
-	private TestrayServer _testrayServer;
+	private final Map<File, TestrayBuild> _testrayBuilds = new HashMap<>();
+	private final Map<File, TestrayProductVersion> _testrayProductVersions =
+		new HashMap<>();
+	private final Map<File, TestrayProject> _testrayProjects = new HashMap<>();
+	private final Map<File, TestrayRoutine> _testrayRoutines = new HashMap<>();
+	private final Map<File, TestrayServer> _testrayServers = new HashMap<>();
 	private final TopLevelBuild _topLevelBuild;
 
 }

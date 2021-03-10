@@ -3701,7 +3701,7 @@ definition {
 		}
 
 		task ("Increase number of tabs") {
-			PageEditor.gotoStyle(fragmentName = "Tabs");
+			PageEditor.gotoConfiguration(fragmentName = "Tabs");
 
 			PageEditor.configureFragment(numberOfTabs = "6");
 		}

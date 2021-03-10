@@ -517,7 +517,7 @@ definition {
 		}
 
 		task ("Change the Number of Tabs to 5") {
-			PageEditor.gotoStyle(fragmentName = "Tabs");
+			PageEditor.gotoConfiguration(fragmentName = "Tabs");
 
 			PageEditor.configureFragment(numberOfTabs = "5");
 		}
@@ -540,7 +540,7 @@ definition {
 		}
 
 		task ("Change the Number of Tabs to 3") {
-			PageEditor.gotoStyle(fragmentName = "Tabs");
+			PageEditor.gotoConfiguration(fragmentName = "Tabs");
 
 			PageEditor.configureFragment(numberOfTabs = "3");
 		}

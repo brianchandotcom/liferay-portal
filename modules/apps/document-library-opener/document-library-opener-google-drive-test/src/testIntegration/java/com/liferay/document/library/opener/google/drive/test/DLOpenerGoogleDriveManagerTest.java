@@ -82,7 +82,14 @@ public class DLOpenerGoogleDriveManagerTest {
 
 		_user = UserTestUtil.addGroupAdminUser(_company.getGroup());
 
+		_originalName = PrincipalThreadLocal.getName();
+
 		PrincipalThreadLocal.setName(_user.getUserId());
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		PrincipalThreadLocal.setName(_originalName);
 	}
 
 	@Test
@@ -318,6 +325,7 @@ public class DLOpenerGoogleDriveManagerTest {
 	@Inject
 	private Http _http;
 
+	private String _originalName;
 	private User _user;
 
 }

@@ -76,10 +76,10 @@ public interface BlogsEntryInfoItemFields {
 			InfoLocalizedValue.localize(
 				BlogsEntryInfoItemFields.class, "cover-image")
 		).build();
-	public static final InfoField<TextInfoFieldType> createDateInfoField =
+	public static final InfoField<DateInfoFieldType> createDateInfoField =
 		InfoField.builder(
 		).infoFieldType(
-			TextInfoFieldType.INSTANCE
+			DateInfoFieldType.INSTANCE
 		).name(
 			"createDate"
 		).labelInfoLocalizedValue(
@@ -116,10 +116,10 @@ public interface BlogsEntryInfoItemFields {
 			InfoLocalizedValue.localize(
 				"com.liferay.asset.info.display.impl", "display-page-url")
 		).build();
-	public static final InfoField<TextInfoFieldType> modifiedDateInfoField =
+	public static final InfoField<DateInfoFieldType> modifiedDateInfoField =
 		InfoField.builder(
 		).infoFieldType(
-			TextInfoFieldType.INSTANCE
+			DateInfoFieldType.INSTANCE
 		).name(
 			"modifiedDate"
 		).labelInfoLocalizedValue(

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.StringUtil_IW;
 import com.liferay.portal.kernel.util.TextFormatter;
@@ -1344,13 +1345,19 @@ public class RESTBuilder {
 	}
 
 	private String _fixOpenAPIOperationIds(
-		FreeMarkerTool freeMarkerTool, String yamlString) {
+			FreeMarkerTool freeMarkerTool, String yamlString)
+		throws Exception {
 
 		OpenAPIYAML openAPIYAML = _loadOpenAPIYAML(yamlString);
 
 		yamlString = yamlString.replaceAll("\n\\s+operationId:.+", "");
 
+		Map<String, Schema> allExternalSchemas =
+			OpenAPIUtil.getAllExternalSchemas(openAPIYAML);
+
 		Map<String, Schema> schemas = freeMarkerTool.getSchemas(openAPIYAML);
+
+		MapUtil.merge(allExternalSchemas, schemas);
 
 		for (String schemaName : schemas.keySet()) {
 			Set<String> methodNames = new HashSet<>();

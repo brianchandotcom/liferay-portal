@@ -21,8 +21,11 @@ import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.updater.InfoItemFieldValuesUpdater;
 import com.liferay.petra.io.StreamUtil;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
@@ -149,7 +152,27 @@ public class TranslationEntryLocalServiceImpl
 
 	@Override
 	public void deleteTranslationEntries(long classNameId, long classPK) {
-		translationEntryPersistence.removeByC_C(classNameId, classPK);
+		try {
+			ActionableDynamicQuery actionableDynamicQuery =
+				translationEntryLocalService.getActionableDynamicQuery();
+
+			actionableDynamicQuery.setAddCriteriaMethod(
+				dynamicQuery -> {
+					dynamicQuery.add(
+						RestrictionsFactoryUtil.eq("classNameId", classNameId));
+					dynamicQuery.add(
+						RestrictionsFactoryUtil.eq("classPK", classPK));
+				});
+			actionableDynamicQuery.setPerformActionMethod(
+				(TranslationEntry translationEntry) ->
+					translationEntryLocalService.deleteTranslationEntry(
+						translationEntry));
+
+			actionableDynamicQuery.performActions();
+		}
+		catch (PortalException portalException) {
+			ReflectionUtil.throwException(portalException);
+		}
 	}
 
 	@Override

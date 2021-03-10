@@ -1,6 +1,4 @@
-<#assign
-	commerceInventoryWarehouseModels = dataFactory.newCommerceInventoryWarehouseModels()
-/>
+<#assign commerceInventoryWarehouseModels = dataFactory.newCommerceInventoryWarehouseModels() />
 
 <#list commerceInventoryWarehouseModels as commerceInventoryWarehouseModel>
 	${dataFactory.toInsertSQL(commerceInventoryWarehouseModel)}

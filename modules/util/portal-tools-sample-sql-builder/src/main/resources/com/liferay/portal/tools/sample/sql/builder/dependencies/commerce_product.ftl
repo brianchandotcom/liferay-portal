@@ -63,9 +63,7 @@ ${dataFactory.toInsertSQL(cpTaxCategoryModel)}
 
 			${dataFactory.toInsertSQL(dataFactory.newCPDefinitionModelAssetEntryModel(cpDefinitionModel, cpDefinitionModel.groupId))}
 
-			<#assign
-				cpDefinitionLocalizationModel = dataFactory.newCPDefinitionLocalizationModel(cpDefinitionModel)
-			/>
+			<#assign cpDefinitionLocalizationModel = dataFactory.newCPDefinitionLocalizationModel(cpDefinitionModel) />
 
 			${dataFactory.toInsertSQL(cpDefinitionLocalizationModel)}
 
@@ -81,11 +79,7 @@ ${dataFactory.toInsertSQL(cpTaxCategoryModel)}
 				${dataFactory.toInsertSQL(cpDefinitionSpecificationOptionValueModel)}
 			</#list>
 
-			<#assign
-				cpInstanceModels = dataFactory.newCPInstanceModels(cpDefinitionModel)
-			/>
-
-			<#list cpInstanceModels as cpInstanceModel>
+			<#list dataFactory.newCPInstanceModels(cpDefinitionModel) as cpInstanceModel>
 				${dataFactory.toInsertSQL(cpInstanceModel)}
 
 				<#list commerceInventoryWarehouseModels as commerceInventoryWarehouseModel>

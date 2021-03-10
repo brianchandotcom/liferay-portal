@@ -33,9 +33,7 @@ ${dataFactory.toInsertSQL(commerceCurrencyModel)}
 <#list commerceGroupModels as commerceGroupModel>
 	${dataFactory.toInsertSQL(commerceGroupModel)}
 
-	<#assign
-		commerceSiteNavigationPortletPreferencesModels = dataFactory.newCommerceSiteNavigationPortletPreferencesModels(commerceGroupModel)
-	/>
+	<#assign commerceSiteNavigationPortletPreferencesModels = dataFactory.newCommerceSiteNavigationPortletPreferencesModels(commerceGroupModel) />
 
 	<#list commerceSiteNavigationPortletPreferencesModels as commerceSiteNavigationPortletPreferencesModel>
 		${dataFactory.toInsertSQL(commerceSiteNavigationPortletPreferencesModel)}
@@ -49,26 +47,18 @@ ${dataFactory.toInsertSQL(commerceCurrencyModel)}
 		${dataFactory.toInsertSQL(commerceSiteNavigationPortletPreferenceValueModel)}
 	</#list>
 
-	<#assign
-		commerceLayoutSetModels = dataFactory.newLayoutSetModels(commerceGroupModel.groupId, "minium_WAR_miniumtheme")
-	/>
-
-	<#list commerceLayoutSetModels as commerceLayoutSetModel>
+	<#list dataFactory.newLayoutSetModels(commerceGroupModel.groupId, "minium_WAR_miniumtheme") as commerceLayoutSetModel>
 		${dataFactory.toInsertSQL(commerceLayoutSetModel)}
 	</#list>
 
 	<#list dataFactory.newCommerceLayoutModels(commerceGroupModel.groupId) as commerceLayoutModel>
-		<#assign
-			portletPreferencesModels = dataFactory.newCommercePortletPreferencesModels(commerceLayoutModel)
-
-			portletPreferenceValueModels = dataFactory.newCommerceLayoutPortletPreferenceValueModels(portletPreferencesModels)
-		/>
+		<#assign portletPreferencesModels = dataFactory.newCommercePortletPreferencesModels(commerceLayoutModel) />
 
 		<#list portletPreferencesModels as portletPreferencesModel>
 			${dataFactory.toInsertSQL(portletPreferencesModel)}
 		</#list>
 
-		<#list portletPreferenceValueModels as portletPreferenceValueModel>
+		<#list dataFactory.newCommerceLayoutPortletPreferenceValueModels(portletPreferencesModels) as portletPreferenceValueModel>
 			${dataFactory.toInsertSQL(portletPreferenceValueModel)}
 		</#list>
 

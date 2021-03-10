@@ -1,8 +1,6 @@
 <#assign
 	commerceAccountEntryModels = dataFactory.newCommerceAccountEntryModels()
 
-	defaultCommerceAccountEntryModel = commerceAccountEntryModels[0]
-
 	commerceAccountEntryGroupModels = dataFactory.newCommerceAccountEntryGroupModels(commerceAccountEntryModels)
 />
 

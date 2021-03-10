@@ -1,5 +1,6 @@
 dependencies {
 	compileInclude group: "org.jodd", name: "jodd-core", version: "5.0.13"
 
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly project(":apps:portal-crypto-hash:portal-crypto-hash-spi")
 }

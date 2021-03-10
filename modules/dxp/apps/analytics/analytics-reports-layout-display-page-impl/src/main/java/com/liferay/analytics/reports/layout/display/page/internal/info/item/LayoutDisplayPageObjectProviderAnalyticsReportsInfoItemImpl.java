@@ -195,16 +195,15 @@ public class LayoutDisplayPageObjectProviderAnalyticsReportsInfoItemImpl
 	public Locale getDefaultLocale(
 		LayoutDisplayPageObjectProvider layoutDisplayPageObjectProvider) {
 
-		return Optional.ofNullable(
-			_groupLocalService.fetchGroup(
-				layoutDisplayPageObjectProvider.getGroupId())
-		).map(
-			Group::getDefaultLanguageId
-		).map(
-			LocaleUtil::fromLanguageId
-		).orElseGet(
-			LocaleUtil::getDefault
-		);
+		try {
+			return _portal.getSiteDefaultLocale(
+				layoutDisplayPageObjectProvider.getGroupId());
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
+		}
+
+		return LocaleUtil.getDefault();
 	}
 
 	@Override

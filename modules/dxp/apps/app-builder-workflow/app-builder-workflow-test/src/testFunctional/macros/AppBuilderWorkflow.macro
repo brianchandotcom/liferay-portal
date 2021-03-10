@@ -28,6 +28,12 @@ definition {
 			value1 = "${workflowAppName}");
 	}
 
+	macro assert1SharedFieldErrorMessage {
+		AssertElementPresent(
+			key_fieldLabel = "${fieldLabel}",
+			locator1 = "AppBuilderWorkflow#ONE_SHARED_FIELD_ERROR_MESSAGE");
+	}
+
 	macro assertAppUpdateAlertModal {
 		AssertElementPresent(locator1 = "AppBuilderWorkflow#APP_ALERT_MODAL_TITLE");
 		AssertElementPresent(locator1 = "AppBuilderWorkflow#APP_ALERT_MODAL_TEXT");
@@ -55,6 +61,12 @@ definition {
 		AssertVisible(
 			key_text = "${buttonName}",
 			locator1 = "Button#ANY_DISABLED");
+	}
+
+	macro assertButtonEnabled {
+		AssertVisible(
+			key_text = "${buttonName}",
+			locator1 = "Button#ANY_ENABLED");
 	}
 
 	macro assertButtonNotPresent {

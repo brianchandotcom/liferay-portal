@@ -94,6 +94,19 @@ definition {
 		AppBuilderAdmin.gotoBack();
 	}
 
+	macro addFormViewSameFields {
+		if (IsElementPresent(locator1 = "AppBuilder#NAVBAR")) {
+			FormViewBuilder.switchToFormViewTab();
+			AppBuilderAdmin.add();
+		}
+
+		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(fieldLabel = "${fieldLabel}");
+
+		FormViewBuilder.setName(formViewName = "${formViewName}");
+
+		FormViewBuilder.save();
+	}
+
 	macro addObjectByDragAndDrop {
 		Pause(locator1 = "10000");
 

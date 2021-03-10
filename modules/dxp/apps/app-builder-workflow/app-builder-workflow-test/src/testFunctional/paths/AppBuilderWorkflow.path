@@ -105,6 +105,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ONE_SHARED_FIELD_ERROR_MESSAGE</td>
+	<td>//div[contains(@class,'alert-danger')]//div[contains(@class,'autofit-section') and contains(text(),'The field "${key_fieldLabel}" is present in multiple form views. The app cannot be deployed until duplicate form fields are removed.')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>STEP_CARD</td>
 	<td>//span[contains(text(),'${key_step}')]/parent::span/following-sibling::div</td>
 	<td></td>

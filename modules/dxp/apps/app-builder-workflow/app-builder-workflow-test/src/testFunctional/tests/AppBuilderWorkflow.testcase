@@ -2470,4 +2470,59 @@ definition {
 			positionNumber = "1");
 	}
 
+	@description = "LRQA-60455 - Automate LPS-112666: As an App Admin, I want to be alerted when one same Object field is present in more than one Form for the same step"
+	@priority = "5"
+	test WorkflowAppStepsSharingSameObjectsField {
+		property portal.acceptance = "true";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Text",
+			formViewName = "My Form View 1",
+			tableViewName = "My Table View");
+
+		FormViewBuilder.addFormViewSameFields(
+			fieldLabel = "Text",
+			formViewName = "My Form View 2");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Apps");
+
+		AppBuilderAppAdmin.goToWorkflowPoweredTab();
+
+		AppBuilderAppAdmin.clickOnPlusButton();
+
+		AppBuilderWorkflow.addWorkflowAppName(workflowAppName = "My Workflow App");
+
+		AppBuilderWorkflow.selectStartStepDataAndViews(
+			formViewName = "My Form View 1",
+			objectName = "my custom object",
+			tableViewName = "My Table View");
+
+		AppBuilderWorkflow.addNewStep();
+
+		AppBuilderWorkflow.selectStepAssignee(
+			assignee = "Administrator",
+			step = "1");
+
+		AppBuilderWorkflow.selectDataAndViewsCard();
+
+		AppBuilderWorkflow.assertButtonEnabled(buttonName = "Deploy");
+		AppBuilderWorkflow.assertButtonEnabled(buttonName = "Save");
+
+		AppBuilderWorkflow.addNewFormView();
+		AppBuilderWorkflow.clickOnSelectFormView(positionNumber = "2");
+		AppBuilderWorkflow.selectFormView(formViewName = "My Form View 2");
+
+		AppBuilderWorkflow.assertButtonDisabled(buttonName = "Deploy");
+		AppBuilderWorkflow.assertButtonDisabled(buttonName = "Save");
+		AppBuilderWorkflow.assert1SharedFieldErrorMessage(fieldLabel = "Text");
+	}
+
 }

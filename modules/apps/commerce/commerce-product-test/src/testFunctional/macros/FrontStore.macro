@@ -101,9 +101,9 @@ definition {
 	}
 
 	macro viewProductDetail {
-		AssertElementPresent(
-			key_FSProductName = "${FSProductName}",
-			locator1 = "CommerceFrontStore#FS_PRODUCT_NAME");
+		AssertTextEquals(
+			locator1 = "CommerceFrontStore#FS_PRODUCT_NAME",
+			value1 = "${FSProductName}");
 
 		if (IsElementPresent(locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT")) {
 			for (var FSOptionValues : list "${FSOptionValuesList}") {
@@ -115,9 +115,9 @@ definition {
 
 				echo("Checking ${FSOptionValue} ${FSProductName} SKU is correct...");
 
-				AssertElementPresent(
-					key_FSProductSKU = "${FSOptionValueUppercase}SKU",
-					locator1 = "CommerceFrontStore#FS_PRODUCT_SKU");
+				AssertTextEquals(
+					locator1 = "CommerceFrontStore#FS_PRODUCT_SKU",
+					value1 = "${FSOptionValueUppercase}SKU");
 
 				echo("Checking ${FSOptionValue} ${FSProductName} price is correct...");
 
@@ -129,14 +129,7 @@ definition {
 
 				AssertElementPresent(
 					key_FSProductImage = "${FSOptionValue}",
-					locator1 = "CommerceFrontStore#FS_PRODUCT_FULL_IMAGE",
-					value1 = "${FSOptionValue}");
-
-				echo("Checking ${FSOptionValue} ${FSProductName} thumbnail is correct...");
-
-				AssertElementPresent(
-					key_FSProductImageThumb = "${FSOptionValue}",
-					locator1 = "CommerceFrontStore#FS_PRODUCT_IMAGE_THUMBNAIL",
+					locator1 = "CommerceFrontStore#FS_PRODUCT_IMAGE",
 					value1 = "${FSOptionValue}");
 			}
 		}

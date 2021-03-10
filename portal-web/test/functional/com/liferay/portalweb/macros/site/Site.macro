@@ -1021,6 +1021,8 @@ definition {
 			AssertElementPresent(locator1 = "Message#EMPTY_INFO");
 		}
 		else {
+			LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
 			LexiconTable.viewTableEntryTitle(tableEntry = StringUtil.unquote("${searchValue}"));
 		}
 	}

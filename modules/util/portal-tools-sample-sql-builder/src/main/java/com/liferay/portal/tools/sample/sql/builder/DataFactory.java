@@ -1190,21 +1190,13 @@ public class DataFactory {
 		return blogsStatsUserModel;
 	}
 
-	public List<GroupModel> newCommerceAccountEntryGroupModels(
-		List<AccountEntryModel> accountEntryModels) {
+	public GroupModel newCommerceAccountEntryGroupModel(
+		AccountEntryModel accountEntryModel) {
 
-		List<GroupModel> groupModels = new ArrayList<>(
-			accountEntryModels.size());
-
-		for (AccountEntryModel accountEntryModel : accountEntryModels) {
-			groupModels.add(
-				newGroupModel(
-					_counter.get(), getClassNameId(AccountEntry.class),
-					accountEntryModel.getAccountEntryId(),
-					accountEntryModel.getName(), false));
-		}
-
-		return groupModels;
+		return newGroupModel(
+			_counter.get(), getClassNameId(AccountEntry.class),
+			accountEntryModel.getAccountEntryId(), accountEntryModel.getName(),
+			false);
 	}
 
 	public List<AccountEntryModel> newCommerceAccountEntryModels() {

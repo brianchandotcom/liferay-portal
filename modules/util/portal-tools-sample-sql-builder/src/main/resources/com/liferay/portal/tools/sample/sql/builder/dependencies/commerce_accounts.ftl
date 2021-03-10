@@ -1,15 +1,9 @@
-<#assign
-	commerceAccountEntryModels = dataFactory.newCommerceAccountEntryModels()
-
-	commerceAccountEntryGroupModels = dataFactory.newCommerceAccountEntryGroupModels(commerceAccountEntryModels)
-/>
+<#assign commerceAccountEntryModels = dataFactory.newCommerceAccountEntryModels() />
 
 <#list commerceAccountEntryModels as commerceAccountEntryModel>
 	${dataFactory.toInsertSQL(commerceAccountEntryModel)}
 
 	${dataFactory.toInsertSQL(dataFactory.newAccountEntryUserRelModel(sampleUserModel, commerceAccountEntryModel.accountEntryId))}
-</#list>
 
-<#list commerceAccountEntryGroupModels as commerceAccountEntryGroupModel>
-	<@insertGroup _groupModel=commerceAccountEntryGroupModel />
+	<@insertGroup _groupModel=dataFactory.newCommerceAccountEntryGroupModel(commerceAccountEntryModel) />
 </#list>

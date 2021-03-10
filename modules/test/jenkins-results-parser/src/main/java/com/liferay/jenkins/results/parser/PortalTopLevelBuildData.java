@@ -76,8 +76,8 @@ public class PortalTopLevelBuildData
 
 		super(runID, jobName, buildURL);
 
-		setPortalGitHubURL(URL_PORTAL_GITHUB_BRANCH_DEFAULT);
-		setPortalUpstreamBranchName(NAME_PORTAL_UPSTREAM_BRANCH_DEFAULT);
+		setPortalGitHubURL(_getPortalGitHubURL());
+		setPortalUpstreamBranchName(_getPortalUpstreamBranchName());
 
 		validateKeys(_REQUIRED_KEYS);
 	}
@@ -85,6 +85,27 @@ public class PortalTopLevelBuildData
 	@Override
 	protected String getType() {
 		return _TYPE;
+	}
+
+	private String _getPortalGitHubURL() {
+		String portalGitHubURL = optString("portal_github_url");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(portalGitHubURL)) {
+			return portalGitHubURL;
+		}
+
+		return URL_PORTAL_GITHUB_BRANCH_DEFAULT;
+	}
+
+	private String _getPortalUpstreamBranchName() {
+		String portalUpstreamBranchName = optString(
+			"portal_upstream_branch_name");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(portalUpstreamBranchName)) {
+			return portalUpstreamBranchName;
+		}
+
+		return NAME_PORTAL_UPSTREAM_BRANCH_DEFAULT;
 	}
 
 	private static final String[] _REQUIRED_KEYS = {

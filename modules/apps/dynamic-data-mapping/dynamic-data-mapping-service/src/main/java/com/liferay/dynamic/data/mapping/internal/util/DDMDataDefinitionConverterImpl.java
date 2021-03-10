@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -270,6 +271,21 @@ public class DDMDataDefinitionConverterImpl
 		return false;
 	}
 
+	private void _updateDDMFormFieldOptionsReferences(
+		DDMFormFieldOptions ddmFormFieldOptions) {
+
+		if (ddmFormFieldOptions == null) {
+			return;
+		}
+
+		Set<String> ddmFormFieldOptionsValues =
+			ddmFormFieldOptions.getOptionsValues();
+
+		ddmFormFieldOptionsValues.forEach(
+			ddmFormFieldOptionsValue -> ddmFormFieldOptions.addOptionReference(
+				ddmFormFieldOptionsValue, ddmFormFieldOptionsValue));
+	}
+
 	private LocalizedValue _updateLocalizedValue(
 		Set<Locale> availableLocales, Locale defaultLocale, String key,
 		LocalizedValue localizedValue) {
@@ -341,6 +357,15 @@ public class DDMDataDefinitionConverterImpl
 			if (Validator.isNull(object)) {
 				ddmFormField.removeProperty("validation");
 			}
+		}
+
+		if (!StringUtil.equals(ddmFormField.getType(), "fieldset")) {
+			_updateDDMFormFieldOptionsReferences(
+				ddmFormField.getDDMFormFieldOptions());
+			_updateDDMFormFieldOptionsReferences(
+				(DDMFormFieldOptions)ddmFormField.getProperty("columns"));
+			_updateDDMFormFieldOptionsReferences(
+				(DDMFormFieldOptions)ddmFormField.getProperty("rows"));
 		}
 
 		if (Objects.equals(ddmFormField.getType(), "checkbox")) {

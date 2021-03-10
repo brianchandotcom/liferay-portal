@@ -374,27 +374,32 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 	</macrodef>
 
 	<macrodef name="get-commerce-license-product-name">
+		<attribute default="ci-portal-commerce-license.xml" name="commerce.license.file" />
+
 		<sequential>
+			<if>
+				<not>
+					<isset property="commerce.license.file" />
+				</not>
+				<then>
+					<var name="commerce.license.file" value="ci-portal-commerce-license.xml" />
+				</then>
+			</if>
+
 			<var name="commerce.license.product.name" unset="true" />
 
-			<if>
-				<isset property="test.commerce.license.url" />
-				<then>
-					<mirrors-get
-						dest="portal-commerce-license.xml"
-						src="${test.commerce.license.url}"
-					/>
+			<loadfile
+				property="commerce.license.content"
+				srcfile="${liferay.home}/osgi/modules/@{commerce.license.file}"
+			/>
 
-					<xmlproperty file="portal-commerce-license.xml" prefix="commerce" />
-
-					<property name="commerce.license.product.name" value="${commerce.license.product-name}" />
-
-					<delete file="portal-commerce-license.xml" />
-				</then>
-				<else>
-					<fail message="Unable to get commerce license product name because property 'test.commerce.license.url' is not set." />
-				</else>
-			</if>
+			<propertyregex
+				casesensitive="false"
+				input="${commerce.license.content}"
+				property="commerce.license.product.name"
+				regexp="&lt;product-name&gt;(.*?)&lt;/product-name&gt;"
+				select="\1"
+			/>
 		</sequential>
 	</macrodef>
 
@@ -912,27 +917,32 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 	</macrodef>
 
 	<macrodef name="get-portal-license-product-name">
+		<attribute default="ci-license.xml" name="portal.license.file" />
+
 		<sequential>
+			<if>
+				<not>
+					<isset property="portal.license.file" />
+				</not>
+				<then>
+					<var name="portal.license.file" value="ci-license.xml" />
+				</then>
+			</if>
+
 			<var name="portal.license.product.name" unset="true" />
 
-			<if>
-				<isset property="test.license.xml.url" />
-				<then>
-					<mirrors-get
-						dest="portal-license.xml"
-						src="${test.license.xml.url}"
-					/>
+			<loadfile
+				property="dxp.license.content"
+				srcfile="${liferay.home}/osgi/modules/@{portal.license.file}"
+			/>
 
-					<xmlproperty file="portal-license.xml" prefix="portal" />
-
-					<property name="portal.license.product.name" value="${portal.license.product-name}" />
-
-					<delete file="portal-license.xml" />
-				</then>
-				<else>
-					<fail message="Unable to get portal license product name because property 'test.license.xml.url' is not set." />
-				</else>
-			</if>
+			<propertyregex
+				casesensitive="false"
+				input="${dxp.license.content}"
+				property="portal.license.product.name"
+				regexp="&lt;product-name&gt;(.*?)&lt;/product-name&gt;"
+				select="\1"
+			/>
 		</sequential>
 	</macrodef>
 
@@ -6032,13 +6042,16 @@ war.path=${app.server.portal.dir}/</echo>
 
 	<macrodef name="wait-for-license-activation">
 		<sequential>
-			<get-commerce-license-product-name />
+			<get-testcase-property property.name="commerce.license.file" />
+			<get-testcase-property property.name="portal.license.file" />
+
+			<get-commerce-license-product-name commerce.license.file="${commerce.license.file}" />
 
 			<wait-for-app-server-log-message log.message="${commerce.license.product.name} license validation passed" />
 
 			<wait-for-app-server-log-message log.message="License registered for ${commerce.license.product.name}" />
 
-			<get-portal-license-product-name />
+			<get-portal-license-product-name portal.license.file="${portal.license.file}" />
 
 			<wait-for-app-server-log-message log.message="${portal.license.product.name} license validation passed" />
 

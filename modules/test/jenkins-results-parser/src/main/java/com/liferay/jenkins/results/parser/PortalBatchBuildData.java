@@ -14,9 +14,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.json.JSONObject;
 
 /**
@@ -79,10 +76,6 @@ public class PortalBatchBuildData
 
 	@Override
 	public void put(String key, Object value) {
-		if (_forbiddenKeys.contains(key)) {
-			throw new IllegalArgumentException(key + " may not be set");
-		}
-
 		super.put(key, value);
 	}
 
@@ -113,8 +106,5 @@ public class PortalBatchBuildData
 	}
 
 	private static final String _TYPE = "portal_batch";
-
-	private static final List<String> _forbiddenKeys = Arrays.asList(
-		"portal_github_url", "portal_upstream_branch_name");
 
 }

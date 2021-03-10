@@ -255,6 +255,15 @@ definition {
 		CommerceLicense.viewWarningExpirationDate();
 	}
 
+	@priority = "4"
+	test ProductionLicense {
+		property commerce.enabled = "true";
+		property commerce.license.file = "commerce-license-production-basic.xml";
+		property portal.license.file = "portal-license-production-basic.xml";
+
+		CommerceLicense.executeSmoke();
+	}
+
 	@priority = "5"
 	test ViewCommerceEnabled {
 		property commerce.enabled = "true";

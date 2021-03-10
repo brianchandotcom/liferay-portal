@@ -428,6 +428,26 @@ definition {
 		}
 	}
 
+	macro editAnswer {
+		Click(locator1 = "Questions#EDIT_ANSWER");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+		Type(
+			locator1 = "CKEditor#BODY",
+			value1 = "${contentField}");
+
+		SelectFrame(value1 = "relative=top");
+
+		Click(
+			key_text = "Update Your Answer",
+			locator1 = "Button#ANY");
+
+		AssertVisible(
+			key_answerBodyContent = "${contentField}",
+			locator1 = "Questions#ANSWER_BODY");
+	}
+
 	macro editRootTopic {
 		var key_categoryName = "${categoryName}";
 

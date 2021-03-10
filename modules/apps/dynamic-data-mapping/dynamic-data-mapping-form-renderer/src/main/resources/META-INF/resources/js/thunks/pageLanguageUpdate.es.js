@@ -16,15 +16,8 @@ import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 import {fetch} from 'frontend-js-web';
 
 import {EVENT_TYPES} from '../actions/eventTypes.es';
+import formatFieldValue from '../util/formatFieldValue.es';
 import setDataRecord from '../util/setDataRecord.es';
-
-const formatFieldValue = ({dataType, symbols, value}) => {
-	if (dataType === 'double') {
-		return String(value).replace(symbols.decimalSymbol, '.');
-	}
-
-	return value;
-};
 
 const formatDataRecord = (languageId, pages, preserveValue) => {
 	const visitor = new PagesVisitor(pages);
@@ -36,7 +29,12 @@ const formatDataRecord = (languageId, pages, preserveValue) => {
 			setDataRecord(
 				{
 					...field,
-					value: formatFieldValue(field),
+					value: formatFieldValue(
+						field,
+						preserveValue,
+						nextEditingLanguageId,
+						prevEditingLanguageId
+					),
 				},
 				dataRecordValues,
 				languageId,

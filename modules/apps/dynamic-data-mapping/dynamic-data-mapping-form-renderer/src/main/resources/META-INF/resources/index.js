@@ -24,6 +24,7 @@ export {
 export {PagesVisitor, RulesVisitor} from './js/util/visitors.es';
 export * as FormSupport from './js/util/FormSupport.es';
 export {getConnectedReactComponentAdapter} from './js/util/ReactComponentAdapter.es';
+export {default as formatFieldValue} from './js/util/formatFieldValue.es';
 export {default as setDataRecord} from './js/util/setDataRecord.es';
 
 // Composing Form

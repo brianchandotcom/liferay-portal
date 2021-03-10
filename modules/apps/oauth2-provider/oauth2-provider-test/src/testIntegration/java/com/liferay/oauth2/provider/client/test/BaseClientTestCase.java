@@ -147,12 +147,22 @@ public abstract class BaseClientTestCase {
 		getAuthenticatedInvocationBuilderFunction(
 			String login, String password, String hostname) {
 
+		return getAuthenticatedInvocationBuilderFunction(
+			login, password, hostname, Function.identity());
+	}
+
+	protected Function<WebTarget, Invocation.Builder>
+		getAuthenticatedInvocationBuilderFunction(
+			String login, String password, String hostname,
+			Function<Invocation.Builder, Invocation.Builder>
+				invocationBuilderFunction) {
+
 		Cookie authenticatedCookie = getAuthenticatedCookie(
 			login, password, hostname);
 
 		return webtarget -> {
 			Invocation.Builder invocationBuilder = getInvocationBuilder(
-				hostname, webtarget);
+				hostname, webtarget, invocationBuilderFunction);
 
 			return invocationBuilder.accept(
 				"text/html"
@@ -344,9 +354,21 @@ public abstract class BaseClientTestCase {
 		Function<Function<WebTarget, Invocation.Builder>, Response>
 			authorizationResponseFunction) {
 
+		return getCodeResponse(
+			login, password, hostname, authorizationResponseFunction,
+			Function.identity());
+	}
+
+	protected Response getCodeResponse(
+		String login, String password, String hostname,
+		Function<Function<WebTarget, Invocation.Builder>, Response>
+			authorizationResponseFunction,
+		Function<Invocation.Builder, Invocation.Builder>
+			invocationBuilderFunction) {
+
 		return authorizationResponseFunction.apply(
 			getAuthenticatedInvocationBuilderFunction(
-				login, password, hostname));
+				login, password, hostname, invocationBuilderFunction));
 	}
 
 	protected BiFunction<String, Invocation.Builder, Response>
@@ -394,13 +416,21 @@ public abstract class BaseClientTestCase {
 	protected Invocation.Builder getInvocationBuilder(
 		String hostname, WebTarget webTarget) {
 
+		return getInvocationBuilder(hostname, webTarget, Function.identity());
+	}
+
+	protected Invocation.Builder getInvocationBuilder(
+		String hostname, WebTarget webTarget,
+		Function<Invocation.Builder, Invocation.Builder>
+			invocationBuilderFunction) {
+
 		Invocation.Builder invocationBuilder = webTarget.request();
 
 		if (hostname != null) {
 			invocationBuilder = invocationBuilder.header("Host", hostname);
 		}
 
-		return invocationBuilder;
+		return invocationBuilderFunction.apply(invocationBuilder);
 	}
 
 	protected WebTarget getJsonWebTarget(String... paths) {

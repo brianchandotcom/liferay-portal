@@ -1,8 +1,6 @@
 <#assign
 	commerceCurrencyModel = dataFactory.newCommerceCurrencyModel()
 
-	commerceCatalogModels = dataFactory.newCommerceCatalogModels(commerceCurrencyModel)
-
 	commerceGroupModels = dataFactory.newCommerceGroupModels()
 
 	commerceChannelModels = dataFactory.newCommerceChannelModels(commerceGroupModels, commerceCurrencyModel)
@@ -42,8 +40,14 @@ ${dataFactory.toInsertSQL(dataFactory.newCPOptionValueModel(cpOptionModel.CPOpti
 
 ${dataFactory.toInsertSQL(cpTaxCategoryModel)}
 
-<#list dataFactory.newCommerceCatalogGroupModels(commerceCatalogModels) as commerceCatalogGroupModel>
+<#list dataFactory.newCommerceCatalogModels(commerceCurrencyModel) as commerceCatalogModel>
+	${dataFactory.toInsertSQL(commerceCatalogModel)}
+
+	${dataFactory.toInsertSQL(dataFactory.newCommerceCatalogResourcePermissionModel(commerceCatalogModel))}
+
 	<#assign
+		commerceCatalogGroupModel = dataFactory.newCommerceCatalogGroupModel(commerceCatalogModel)
+
 		commercePriceListModel = dataFactory.newCommercePriceListModel(commerceCatalogGroupModel.groupId, commerceCurrencyModel.commerceCurrencyId, true, true, "price-list")
 
 		commerceProductDLFolderModel = dataFactory.newDLFolderModel(commerceCatalogGroupModel.groupId, 0, "Commerce Product")
@@ -133,12 +137,6 @@ ${dataFactory.toInsertSQL(cpTaxCategoryModel)}
 <#include "commerce_orders.ftl">
 
 ${dataFactory.toInsertSQL(commerceCurrencyModel)}
-
-<#list commerceCatalogModels as commerceCatalogModel>
-	${dataFactory.toInsertSQL(commerceCatalogModel)}
-
-	${dataFactory.toInsertSQL(dataFactory.newCommerceCatalogResourcePermissionModel(commerceCatalogModel))}
-</#list>
 
 <#list commerceGroupModels as commerceGroupModel>
 	${dataFactory.toInsertSQL(commerceGroupModel)}

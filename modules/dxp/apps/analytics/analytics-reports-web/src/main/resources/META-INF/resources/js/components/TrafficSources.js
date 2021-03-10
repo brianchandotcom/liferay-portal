@@ -72,8 +72,11 @@ export default function TrafficSources({
 	}, [addWarning, dataProvider, setTrafficSources, validAnalyticsConnection]);
 
 	const fullPieChart = useMemo(
-		() => trafficSources.some(({value}) => value),
-		[trafficSources]
+		() =>
+			validAnalyticsConnection &&
+			!publishedToday &&
+			trafficSources.some(({value}) => value),
+		[publishedToday, trafficSources, validAnalyticsConnection]
 	);
 
 	const missingTrafficSourceValue = useMemo(
@@ -153,7 +156,10 @@ export default function TrafficSources({
 												)
 											}
 										>
-											{entry.value > 0 && hasDetails ? (
+											{validAnalyticsConnection &&
+											!publishedToday &&
+											entry.value > 0 &&
+											hasDetails ? (
 												<ClayButton
 													className="px-0 py-1 text-primary"
 													displayType="link"

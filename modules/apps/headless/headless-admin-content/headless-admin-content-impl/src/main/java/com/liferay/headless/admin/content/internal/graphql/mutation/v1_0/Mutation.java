@@ -15,6 +15,7 @@
 package com.liferay.headless.admin.content.internal.graphql.mutation.v1_0;
 
 import com.liferay.headless.admin.content.resource.v1_0.PageDefinitionResource;
+import com.liferay.headless.admin.content.resource.v1_0.SitePageResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;
@@ -53,6 +54,14 @@ public class Mutation {
 			pageDefinitionResourceComponentServiceObjects;
 	}
 
+	public static void setSitePageResourceComponentServiceObjects(
+		ComponentServiceObjects<SitePageResource>
+			sitePageResourceComponentServiceObjects) {
+
+		_sitePageResourceComponentServiceObjects =
+			sitePageResourceComponentServiceObjects;
+	}
+
 	@GraphQLField(
 		description = "Renders and retrieves HTML for the page definition using the theme of specified site."
 	)
@@ -69,6 +78,38 @@ public class Mutation {
 			pageDefinitionResource ->
 				pageDefinitionResource.postSitePageDefinitionPreview(
 					Long.valueOf(siteKey), pageDefinition));
+	}
+
+	@GraphQLField(
+		description = "Deletes the specific public page of a given site"
+	)
+	public boolean deleteSiteSitePage(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("friendlyUrlPath") String friendlyUrlPath)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_sitePageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			sitePageResource -> sitePageResource.deleteSiteSitePage(
+				Long.valueOf(siteKey), friendlyUrlPath));
+
+		return true;
+	}
+
+	@GraphQLField(description = "Modifies a public page in a specific site")
+	public Response updateSiteSitePage(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("friendlyUrlPath") String friendlyUrlPath,
+			@GraphQLName("sitePage")
+				com.liferay.headless.delivery.dto.v1_0.SitePage sitePage)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_sitePageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			sitePageResource -> sitePageResource.putSiteSitePage(
+				Long.valueOf(siteKey), friendlyUrlPath, sitePage));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
@@ -125,8 +166,23 @@ public class Mutation {
 		pageDefinitionResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(SitePageResource sitePageResource)
+		throws Exception {
+
+		sitePageResource.setContextAcceptLanguage(_acceptLanguage);
+		sitePageResource.setContextCompany(_company);
+		sitePageResource.setContextHttpServletRequest(_httpServletRequest);
+		sitePageResource.setContextHttpServletResponse(_httpServletResponse);
+		sitePageResource.setContextUriInfo(_uriInfo);
+		sitePageResource.setContextUser(_user);
+		sitePageResource.setGroupLocalService(_groupLocalService);
+		sitePageResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private static ComponentServiceObjects<PageDefinitionResource>
 		_pageDefinitionResourceComponentServiceObjects;
+	private static ComponentServiceObjects<SitePageResource>
+		_sitePageResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;

@@ -6,6 +6,7 @@ definition {
 		OAuth2.inputApplicationValues(
 			applicationName = "${applicationName}",
 			callbackURI = "${callbackURI}",
+			checkboxCheckList = "${checkboxCheckList}",
 			checkboxUncheckList = "${checkboxUncheckList}",
 			clientProfile = "${clientProfile}",
 			description = "${description}",

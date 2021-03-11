@@ -171,11 +171,6 @@ describe('Chart', () => {
 			expect(mockViewsDataProvider).toHaveBeenCalledTimes(1)
 		);
 
-		expect(mockViewsDataProvider).toHaveBeenCalledWith({
-			timeSpanKey: 'last-7-days',
-			timeSpanOffset: 0,
-		});
-
 		expect(getByText('225')).toBeInTheDocument();
 
 		expect(getByText('Jan 27 - Feb 2, 2020')).toBeInTheDocument();
@@ -206,21 +201,9 @@ describe('Chart', () => {
 			</ChartStateContextProvider>
 		);
 
-		await wait(() =>
-			expect(mockViewsDataProvider).toHaveBeenCalledTimes(1)
-		);
-		await wait(() =>
-			expect(mockReadsDataProvider).toHaveBeenCalledTimes(1)
-		);
-
-		expect(mockViewsDataProvider).toHaveBeenCalledWith({
-			timeSpanKey: 'last-7-days',
-			timeSpanOffset: 0,
-		});
-
-		expect(mockReadsDataProvider).toHaveBeenCalledWith({
-			timeSpanKey: 'last-7-days',
-			timeSpanOffset: 0,
+		await wait(() => {
+			expect(mockViewsDataProvider).toHaveBeenCalledTimes(1);
+			expect(mockReadsDataProvider).toHaveBeenCalledTimes(1);
 		});
 
 		expect(getByText('225')).toBeInTheDocument();

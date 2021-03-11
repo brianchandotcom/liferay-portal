@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import java.nio.charset.StandardCharsets;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 import jodd.crypt.BCrypt;
@@ -62,6 +63,8 @@ public class BCryptCryptoHashProviderFactory
 		public BCryptCryptoHashProvider(
 			Map<String, ?> cryptoHashProviderProperties) {
 
+			_cryptoHashProviderProperties = cryptoHashProviderProperties;
+
 			_rounds = MapUtil.getInteger(
 				cryptoHashProviderProperties, ROUNDS, _DEFAULT_ROUNDS);
 		}
@@ -73,7 +76,8 @@ public class BCryptCryptoHashProviderFactory
 				new String(salt, StandardCharsets.US_ASCII));
 
 			return new CryptoHashProviderResponse(
-				_CRYPTO_HASH_PROVIDER_FACTORY_NAME, null,
+				_CRYPTO_HASH_PROVIDER_FACTORY_NAME,
+				Collections.unmodifiableMap(_cryptoHashProviderProperties),
 				hashedPassword.getBytes(StandardCharsets.US_ASCII));
 		}
 
@@ -86,6 +90,7 @@ public class BCryptCryptoHashProviderFactory
 
 		private static final int _DEFAULT_ROUNDS = 10;
 
+		private final Map<String, ?> _cryptoHashProviderProperties;
 		private final int _rounds;
 
 	}

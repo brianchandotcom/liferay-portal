@@ -25,6 +25,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -69,6 +70,8 @@ public class MessageDigestCryptoHashProviderFactory
 				Map<String, ?> cryptoHashProviderProperties)
 			throws NoSuchAlgorithmException {
 
+			_cryptoHashProviderProperties = cryptoHashProviderProperties;
+
 			_messageDigest = MessageDigest.getInstance(
 				MapUtil.getString(
 					cryptoHashProviderProperties, ALGORITHM,
@@ -79,13 +82,13 @@ public class MessageDigestCryptoHashProviderFactory
 		public CryptoHashProviderResponse generate(byte[] salt, byte[] input) {
 			return new CryptoHashProviderResponse(
 				_CRYPTO_HASH_PROVIDER_FACTORY_NAME,
-				Collections.singletonMap(
-					"algorithm", _messageDigest.getAlgorithm()),
+				Collections.unmodifiableMap(_cryptoHashProviderProperties),
 				_messageDigest.digest(ArrayUtil.append(salt, input)));
 		}
 
 		private static final String _DEFAULT_ALGORITHM = "SHA-256";
 
+		private final Map<String, ?> _cryptoHashProviderProperties;
 		private final MessageDigest _messageDigest;
 
 	}

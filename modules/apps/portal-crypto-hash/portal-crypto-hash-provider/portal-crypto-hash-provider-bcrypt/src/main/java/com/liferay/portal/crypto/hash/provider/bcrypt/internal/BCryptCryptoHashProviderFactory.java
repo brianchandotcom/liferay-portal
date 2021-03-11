@@ -40,12 +40,10 @@ public class BCryptCryptoHashProviderFactory
 		if ((cryptoHashProviderProperties == null) ||
 			cryptoHashProviderProperties.isEmpty()) {
 
-			return new BCryptCryptoHashProvider(
-				getCryptoHashProviderFactoryName());
+			return new BCryptCryptoHashProvider();
 		}
 
-		return new BCryptCryptoHashProvider(
-			getCryptoHashProviderFactoryName(), cryptoHashProviderProperties);
+		return new BCryptCryptoHashProvider(cryptoHashProviderProperties);
 	}
 
 	@Override
@@ -60,17 +58,12 @@ public class BCryptCryptoHashProviderFactory
 
 		public static final String ROUNDS = "rounds";
 
-		public BCryptCryptoHashProvider(String cryptoHashProviderFactoryName) {
-			_cryptoHashProviderFactoryName = cryptoHashProviderFactoryName;
-
+		public BCryptCryptoHashProvider() {
 			_rounds = _DEFAULT_ROUNDS;
 		}
 
 		public BCryptCryptoHashProvider(
-			String cryptoHashProviderFactoryName,
 			Map<String, ?> cryptoHashProviderProperties) {
-
-			_cryptoHashProviderFactoryName = cryptoHashProviderFactoryName;
 
 			_rounds = MapUtil.getInteger(cryptoHashProviderProperties, ROUNDS);
 		}
@@ -82,7 +75,7 @@ public class BCryptCryptoHashProviderFactory
 				new String(salt, StandardCharsets.US_ASCII));
 
 			return new CryptoHashProviderResponse(
-				_cryptoHashProviderFactoryName, null,
+				_CRYPTO_HASH_PROVIDER_FACTORY_NAME, null,
 				hashedPassword.getBytes(StandardCharsets.US_ASCII));
 		}
 
@@ -95,7 +88,6 @@ public class BCryptCryptoHashProviderFactory
 
 		private static final int _DEFAULT_ROUNDS = 10;
 
-		private final String _cryptoHashProviderFactoryName;
 		private final int _rounds;
 
 	}

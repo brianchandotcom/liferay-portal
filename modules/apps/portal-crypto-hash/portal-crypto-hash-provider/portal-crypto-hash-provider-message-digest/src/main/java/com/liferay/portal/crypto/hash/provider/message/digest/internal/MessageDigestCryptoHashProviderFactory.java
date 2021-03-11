@@ -42,12 +42,10 @@ public class MessageDigestCryptoHashProviderFactory
 			if ((cryptoHashProviderProperties == null) ||
 				cryptoHashProviderProperties.isEmpty()) {
 
-				return new MessageDigestCryptoHashProvider(
-					getCryptoHashProviderFactoryName());
+				return new MessageDigestCryptoHashProvider();
 			}
 
 			return new MessageDigestCryptoHashProvider(
-				getCryptoHashProviderFactoryName(),
 				cryptoHashProviderProperties);
 		}
 		catch (NoSuchAlgorithmException noSuchAlgorithmException) {
@@ -68,21 +66,15 @@ public class MessageDigestCryptoHashProviderFactory
 
 		public static final String ALGORITHM = "algorithm";
 
-		public MessageDigestCryptoHashProvider(
-				String cryptoHashProviderFactoryName)
+		public MessageDigestCryptoHashProvider()
 			throws NoSuchAlgorithmException {
-
-			_cryptoHashProviderFactoryName = cryptoHashProviderFactoryName;
 
 			_messageDigest = MessageDigest.getInstance(_DEFAULT_ALGORITHM);
 		}
 
 		public MessageDigestCryptoHashProvider(
-				String cryptoHashProviderFactoryName,
 				Map<String, ?> cryptoHashProviderProperties)
 			throws NoSuchAlgorithmException {
-
-			_cryptoHashProviderFactoryName = cryptoHashProviderFactoryName;
 
 			_messageDigest = MessageDigest.getInstance(
 				MapUtil.getString(cryptoHashProviderProperties, ALGORITHM));
@@ -91,7 +83,7 @@ public class MessageDigestCryptoHashProviderFactory
 		@Override
 		public CryptoHashProviderResponse generate(byte[] salt, byte[] input) {
 			return new CryptoHashProviderResponse(
-				_cryptoHashProviderFactoryName,
+				_CRYPTO_HASH_PROVIDER_FACTORY_NAME,
 				Collections.singletonMap(
 					"algorithm", _messageDigest.getAlgorithm()),
 				_messageDigest.digest(ArrayUtil.append(salt, input)));
@@ -99,7 +91,6 @@ public class MessageDigestCryptoHashProviderFactory
 
 		private static final String _DEFAULT_ALGORITHM = "SHA-256";
 
-		private final String _cryptoHashProviderFactoryName;
 		private final MessageDigest _messageDigest;
 
 	}

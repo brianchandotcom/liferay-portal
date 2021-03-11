@@ -59,9 +59,6 @@ import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.xsl.XSLTemplateResource;
-import com.liferay.portal.xsl.XSLURIResolver;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.io.IOException;
@@ -193,8 +190,7 @@ public class JournalTransformer {
 			templateId = getTemplateId(
 				templateId, companyId, companyGroupId, articleGroupId);
 
-			Template template = getTemplate(
-				templateId, tokens, languageId, document, script, langType);
+			Template template = getTemplate(templateId, script, langType);
 
 			if ((themeDisplay != null) && (themeDisplay.getRequest() != null)) {
 				PortletRequest originalPortletRequest = null;
@@ -273,16 +269,6 @@ public class JournalTransformer {
 
 					if (portletRequestModel != null) {
 						template.put("requestMap", portletRequestModel.toMap());
-
-						if (langType.equals(TemplateConstants.LANG_TYPE_XSL)) {
-							Document requestDocument = SAXReaderUtil.read(
-								portletRequestModel.toXML());
-
-							Element requestElement =
-								requestDocument.getRootElement();
-
-							template.put("xmlRequest", requestElement.asXML());
-						}
 					}
 					else {
 						Element requestElement = rootElement.element("request");
@@ -290,10 +276,6 @@ public class JournalTransformer {
 						template.put(
 							"requestMap",
 							insertRequestVariables(requestElement));
-
-						if (langType.equals(TemplateConstants.LANG_TYPE_XSL)) {
-							template.put("xmlRequest", requestElement.asXML());
-						}
 					}
 				}
 
@@ -423,9 +405,6 @@ public class JournalTransformer {
 			else if (langType.equals(TemplateConstants.LANG_TYPE_VM)) {
 				template = journalServiceConfiguration.errorTemplateVM();
 			}
-			else if (langType.equals(TemplateConstants.LANG_TYPE_XSL)) {
-				template = journalServiceConfiguration.errorTemplateXSL();
-			}
 			else {
 				return null;
 			}
@@ -442,22 +421,11 @@ public class JournalTransformer {
 	}
 
 	protected Template getTemplate(
-			String templateId, Map<String, String> tokens, String languageId,
-			Document document, String script, String langType)
+			String templateId, String script, String langType)
 		throws Exception {
 
-		TemplateResource templateResource = null;
-
-		if (langType.equals(TemplateConstants.LANG_TYPE_XSL)) {
-			XSLURIResolver xslURIResolver = new JournalXSLURIResolver(
-				tokens, languageId);
-
-			templateResource = new XSLTemplateResource(
-				templateId, script, xslURIResolver, document.asXML());
-		}
-		else {
-			templateResource = new StringTemplateResource(templateId, script);
-		}
+		TemplateResource templateResource = new StringTemplateResource(
+			templateId, script);
 
 		return TemplateManagerUtil.getTemplate(
 			langType, templateResource, true);

@@ -42,7 +42,6 @@ export default function App({
 				{
 					ftl: 'ftl',
 					vm: 'velocity',
-					xsl: 'xml',
 				}[event.target.value]
 			);
 		};

@@ -170,10 +170,6 @@ public class JournalEditDDMTemplateDisplayContext {
 			return "ftl";
 		}
 
-		if (Objects.equals(getLanguage(), "xsl")) {
-			return "xml";
-		}
-
 		return "velocity";
 	}
 

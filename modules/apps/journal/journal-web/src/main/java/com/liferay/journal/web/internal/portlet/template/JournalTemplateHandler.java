@@ -243,9 +243,6 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 		).put(
 			"vm",
 			"com/liferay/journal/web/portlet/template/dependencies/template.vm"
-		).put(
-			"xsl",
-			"com/liferay/journal/web/portlet/template/dependencies/template.xsl"
 		).build();
 
 	@Reference

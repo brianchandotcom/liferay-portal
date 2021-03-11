@@ -23,8 +23,7 @@ package com.liferay.journal.util;
 public interface JournalDefaultTemplateProvider {
 
 	/**
-	 * Default template language type. <code>ftl</code>, <code>vm</code> or
-	 * <code>xsl</code>.
+	 * Default template language type. <code>ftl</code> or <code>vm</code>.
 	 *
 	 * @return Default template language type.
 	 */

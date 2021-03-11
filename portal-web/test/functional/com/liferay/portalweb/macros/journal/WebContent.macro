@@ -1312,6 +1312,10 @@ definition {
 	macro editWithStructureCP {
 		WebContentNavigator.gotoEditCP(webContentTitle = "${webContentTitle}");
 
+		if (isSet(locale)) {
+			PortletEntry.changeLocale(locale = "${locale}");
+		}
+
 		WebContent.addWithStructureCP(
 			column = "${column}",
 			dmNavTab = "${dmNavTab}",

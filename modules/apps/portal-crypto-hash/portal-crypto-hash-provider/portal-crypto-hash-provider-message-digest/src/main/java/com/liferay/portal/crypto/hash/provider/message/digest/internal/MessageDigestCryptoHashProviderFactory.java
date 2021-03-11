@@ -16,7 +16,14 @@ package com.liferay.portal.crypto.hash.provider.message.digest.internal;
 
 import com.liferay.portal.crypto.hash.spi.CryptoHashProvider;
 import com.liferay.portal.crypto.hash.spi.CryptoHashProviderFactory;
+import com.liferay.portal.crypto.hash.spi.CryptoHashProviderResponse;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+import java.util.Collections;
 import java.util.Map;
 
 /**
@@ -48,5 +55,46 @@ public class MessageDigestCryptoHashProviderFactory
 
 	private static final String _CRYPTO_HASH_PROVIDER_FACTORY_NAME =
 		"MessageDigest";
+
+	private static class MessageDigestCryptoHashProvider
+		implements CryptoHashProvider {
+
+		public static final String ALGORITHM = "algorithm";
+
+		public MessageDigestCryptoHashProvider(
+				String cryptoHashProviderFactoryName)
+			throws NoSuchAlgorithmException {
+
+			_cryptoHashProviderFactoryName = cryptoHashProviderFactoryName;
+
+			_messageDigest = MessageDigest.getInstance(_DEFAULT_ALGORITHM);
+		}
+
+		public MessageDigestCryptoHashProvider(
+				String cryptoHashProviderFactoryName,
+				Map<String, ?> cryptoHashProviderProperties)
+			throws NoSuchAlgorithmException {
+
+			_cryptoHashProviderFactoryName = cryptoHashProviderFactoryName;
+
+			_messageDigest = MessageDigest.getInstance(
+				MapUtil.getString(cryptoHashProviderProperties, ALGORITHM));
+		}
+
+		@Override
+		public CryptoHashProviderResponse generate(byte[] salt, byte[] input) {
+			return new CryptoHashProviderResponse(
+				_cryptoHashProviderFactoryName,
+				Collections.singletonMap(
+					"algorithm", _messageDigest.getAlgorithm()),
+				_messageDigest.digest(ArrayUtil.append(salt, input)));
+		}
+
+		private static final String _DEFAULT_ALGORITHM = "SHA-256";
+
+		private final String _cryptoHashProviderFactoryName;
+		private final MessageDigest _messageDigest;
+
+	}
 
 }

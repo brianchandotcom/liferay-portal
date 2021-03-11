@@ -40,6 +40,7 @@ function Dropdown(props) {
 		}
 
 		if (onClick) {
+			/* eslint-disable-next-line no-eval */
 			eval(onClick);
 		}
 	}

@@ -55,6 +55,7 @@
 		object.rv = {};
 
 		object.before = function (method, f) {
+			/* eslint-disable-next-line no-eval */
 			var original = eval('this.' + method);
 
 			this[method] = function () {
@@ -65,6 +66,7 @@
 		};
 
 		object.after = function (method, f) {
+			/* eslint-disable-next-line no-eval */
 			var original = eval('this.' + method);
 
 			this[method] = function () {
@@ -75,6 +77,7 @@
 		};
 
 		object.around = function (method, f) {
+			/* eslint-disable-next-line no-eval */
 			var original = eval('this.' + method);
 
 			this[method] = function () {

@@ -93,6 +93,7 @@ function ActionLinkRenderer(props) {
 		}
 
 		if (currentAction.onClick) {
+			/* eslint-disable-next-line no-eval */
 			eval(currentAction.onClick);
 		}
 	}

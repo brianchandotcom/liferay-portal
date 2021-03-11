@@ -5443,50 +5443,36 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					<get-testcase-property property.name="elasticsearch.cluster.size" />
 					<get-testcase-property property.name="elasticsearch.multiple.connections" />
 
-					<local name="stop.type" />
+					<if>
+						<or>
+							<isset property="elasticsearch.cluster.size" />
+							<isset property="elasticsearch.multiple.connections" />
+						</or>
+						<then>
+							<condition else="2" property="elasticsearch.total.bundles" value="${elasticsearch.cluster.size}">
+								<isset property="elasticsearch.cluster.size" />
+							</condition>
 
-					<property if:set="elasticsearch.cluster.size" name="stop.type" value="elasticsearch.cluster.size" />
-					<property if:true="${elasticsearch.multiple.connections}" name="stop.type" value="elasticsearch.multiple.connections" />
+							<var name="elasticsearch.bundle.count" value="${elasticsearch.total.bundles}" />
 
-					<switch value="${stop.type}">
-						<case value="elasticsearch.cluster.size">
-							<var name="elasticsearch.node.number" value="2" />
-
-							<antelope:repeat count="${elasticsearch.cluster.size}">
+							<antelope:repeat count="${elasticsearch.total.bundles}">
 								<ant antfile="build-test-elasticsearch7.xml" target="stop-elasticsearch">
-									<property name="elasticsearch.bundle.number" value="${elasticsearch.node.number}" />
+									<property name="elasticsearch.bundle.number" value="${elasticsearch.bundle.count}" />
 								</ant>
 
 								<math
 									datatype="int"
-									operand1="${elasticsearch.node.number}"
+									operand1="${elasticsearch.bundle.count}"
 									operand2="1"
 									operation="-"
-									result="elasticsearch.node.number"
+									result="elasticsearch.bundle.count"
 								/>
 							</antelope:repeat>
-						</case>
-						<case value="elasticsearch.multiple.connections">
-							<var name="elasticsearch.cluster.number" value="2" />
-
-							<antelope:repeat count="2">
-								<ant antfile="build-test-elasticsearch7.xml" target="stop-elasticsearch">
-									<property name="elasticsearch.bundle.number" value="${elasticsearch.cluster.number}" />
-								</ant>
-
-								<math
-									datatype="int"
-									operand1="${elasticsearch.cluster.number}"
-									operand2="1"
-									operation="-"
-									result="elasticsearch.cluster.number"
-								/>
-							</antelope:repeat>
-						</case>
-						<default>
+						</then>
+						<else>
 							<ant antfile="build-test-elasticsearch7.xml" target="stop-elasticsearch" />
-						</default>
-					</switch>
+						</else>
+					</if>
 
 					<if>
 						<socket port="5601" server="localhost" />

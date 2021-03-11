@@ -38,7 +38,7 @@ export function ImageSelector({
 
 	return selectedViewportSize === VIEWPORT_SIZES.desktop ? (
 		<>
-			<ClayForm.Group>
+			<ClayForm.Group small>
 				<label htmlFor={imageTitleId}>{label}</label>
 				<ClayInput.Group>
 					<ClayInput
@@ -50,7 +50,7 @@ export function ImageSelector({
 						value={imageTitle}
 					/>
 					<ClayButtonWithIcon
-						className="ml-2"
+						className="ml-2 page-editor__item-selector__content-button"
 						displayType="secondary"
 						onClick={() =>
 							openImageSelector((image) => {
@@ -69,7 +69,7 @@ export function ImageSelector({
 					{hasImageTitle && (
 						<>
 							<ClayButtonWithIcon
-								className="ml-2"
+								className="ml-2 page-editor__item-selector__content-button"
 								displayType="secondary"
 								onClick={onClearButtonPressed}
 								small

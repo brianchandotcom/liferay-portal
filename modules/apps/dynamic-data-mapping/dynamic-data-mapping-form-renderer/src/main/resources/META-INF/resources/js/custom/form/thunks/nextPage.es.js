@@ -15,7 +15,6 @@
 import {EVENT_TYPES as CORE_EVENT_TYPES} from '../../../core/actions/eventTypes.es';
 import {evaluate} from '../../../util/evaluation.es';
 import {PagesVisitor} from '../../../util/visitors.es';
-import {EVENT_TYPES} from '../eventTypes.es';
 
 export default function nextPage({
 	activePage,
@@ -75,7 +74,7 @@ export default function nextPage({
 			else {
 				dispatch({
 					payload: {newPages: evaluatedPages, pageIndex: activePage},
-					type: EVENT_TYPES.PAGE.VALIDATION_FAILED,
+					type: CORE_EVENT_TYPES.PAGE.VALIDATION_FAILED,
 				});
 			}
 		});

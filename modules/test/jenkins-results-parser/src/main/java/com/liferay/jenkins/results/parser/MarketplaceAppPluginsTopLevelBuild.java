@@ -14,13 +14,17 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.IOException;
+
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * @author Michael Hashimoto
  */
-public class MarketplaceAppPluginsTopLevelBuild extends PluginsTopLevelBuild {
+public class MarketplaceAppPluginsTopLevelBuild
+	extends PluginsTopLevelBuild implements PortalReleaseBuild {
 
 	public MarketplaceAppPluginsTopLevelBuild(
 		String url, TopLevelBuild topLevelBuild) {
@@ -75,7 +79,51 @@ public class MarketplaceAppPluginsTopLevelBuild extends PluginsTopLevelBuild {
 		return getParameterValue("TEST_PACKAGE_FILE_NAME");
 	}
 
+	public PortalRelease getPortalRelease() {
+		if (_portalRelease != null) {
+			return _portalRelease;
+		}
+
+		String portalBuildNumber = getParameterValue(
+			"TEST_PORTAL_BUILD_NUMBER");
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(portalBuildNumber)) {
+			return null;
+		}
+
+		Properties buildProperties;
+
+		try {
+			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		String portalVersion = JenkinsResultsParserUtil.getProperty(
+			buildProperties, "portal.version", portalBuildNumber);
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(portalVersion)) {
+			return null;
+		}
+
+		String portalVersionLatest = JenkinsResultsParserUtil.getProperty(
+			buildProperties, "portal.version.latest", portalVersion);
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(portalVersionLatest)) {
+			_portalRelease = new PortalRelease(portalVersionLatest);
+
+			return _portalRelease;
+		}
+
+		_portalRelease = new PortalRelease(portalVersion);
+
+		return _portalRelease;
+	}
+
 	private static final Pattern _pattern = Pattern.compile(
 		"(?<major>\\d)(?<minor>\\d)(?<fix>\\d+)");
+
+	private PortalRelease _portalRelease;
 
 }

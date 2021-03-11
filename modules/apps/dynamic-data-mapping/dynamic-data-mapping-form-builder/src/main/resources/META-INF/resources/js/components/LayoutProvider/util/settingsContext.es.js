@@ -275,6 +275,22 @@ export const updateFieldLabel = (
 	};
 };
 
+const getValueLocalized = (
+	localizable,
+	value,
+	defaultLanguageId,
+	editingLanguageId
+) => {
+	if (localizable && value[editingLanguageId] !== undefined) {
+		return value[editingLanguageId];
+	}
+	else if (localizable && value[defaultLanguageId]) {
+		return value[defaultLanguageId];
+	}
+
+	return value;
+};
+
 export const updateFieldProperty = (
 	defaultLanguageId,
 	editingLanguageId,
@@ -284,7 +300,12 @@ export const updateFieldProperty = (
 ) => {
 	return {
 		...focusedField,
-		[propertyName]: propertyValue,
+		[propertyName]: getValueLocalized(
+			focusedField.localizable,
+			propertyValue,
+			defaultLanguageId,
+			editingLanguageId
+		),
 		settingsContext: updateSettingsContextProperty(
 			defaultLanguageId,
 			editingLanguageId,

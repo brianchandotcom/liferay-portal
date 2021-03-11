@@ -144,9 +144,13 @@ const updateFieldLanguage = ({
 export default (state, action) => {
 	switch (action.type) {
 		case EVENT_TYPES.LANGUAGE.CHANGE: {
-			const {availableLanguageIds, focusedField} = state;
 			const {
-				defaultLanguageId,
+				availableLanguageIds,
+				defaultLanguageId: prevDefaultLanguageId,
+				focusedField,
+			} = state;
+			const {
+				defaultLanguageId = prevDefaultLanguageId,
 				editingLanguageId,
 				pages,
 			} = action.payload;

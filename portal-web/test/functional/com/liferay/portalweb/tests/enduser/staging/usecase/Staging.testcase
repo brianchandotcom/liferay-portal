@@ -1950,43 +1950,6 @@ definition {
 			entryTitle = "Tavaszi felhők");
 	}
 
-	@description = "This is a use case for LPS-82431."
-	@priority = "5"
-	test StagingEditWebContents {
-		property portal.acceptance = "true";
-
-		for (var webContentTitle : list "WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
-
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addCP(
-				webContentContent = "WC WebContent Content",
-				webContentTitle = "${webContentTitle}");
-
-			PortletEntry.publish();
-
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
-
-			WebContent.viewTitle(webContentTitle = "${webContentTitle}");
-		}
-
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(siteName = "Site Name");
-
-		for (var webContentTitle : list "WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
-
-			WebContentNavigator.gotoEditCP(webContentTitle = "${webContentTitle}");
-
-			WebContent.editCP(
-				webContentContentEdit = "WC WebContent Content Edit",
-				webContentTitle = "${webContentTitle}",
-				webContentTitleEdit = "${webContentTitle} Edit");
-		}
-	}
-
 	@priority = "3"
 	test StagingKaleoWebContentLinkingUnapprovedContent {
 		Navigator.openSiteURL(siteName = "Site Name");

@@ -12,7 +12,6 @@
  * details.
  */
 
-import ClayForm from '@clayui/form';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -32,22 +31,18 @@ export const NavigationMenuSelectorField = ({field, onValueSelect, value}) => {
 		: Liferay.Language.get('public-pages-hierarchy');
 
 	return (
-		<ClayForm.Group small>
-			<ItemSelector
-				eventName={eventName}
-				itemSelectorURL={config.siteNavigationMenuItemSelectorURL}
-				label={field.label}
-				modalProps={{height: '60vh', size: 'lg'}}
-				onItemSelect={(navigationMenu) => {
-					onValueSelect(field.name, navigationMenu);
-				}}
-				selectedItemTitle={title}
-				showMappedItems={false}
-				transformValueCallback={
-					itemSelectorValueToSiteNavigationMenuItem
-				}
-			/>
-		</ClayForm.Group>
+		<ItemSelector
+			eventName={eventName}
+			itemSelectorURL={config.siteNavigationMenuItemSelectorURL}
+			label={field.label}
+			modalProps={{height: '60vh', size: 'lg'}}
+			onItemSelect={(navigationMenu) => {
+				onValueSelect(field.name, navigationMenu);
+			}}
+			selectedItemTitle={title}
+			showMappedItems={false}
+			transformValueCallback={itemSelectorValueToSiteNavigationMenuItem}
+		/>
 	);
 };
 

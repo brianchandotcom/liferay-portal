@@ -211,19 +211,17 @@ export default function LinkField({field, onValueSelect, value}) {
 			)}
 
 			{source === SOURCE_OPTIONS.fromItemDisplayPage.value && (
-				<ClayForm.Group small>
-					<ItemSelector
-						label={Liferay.Language.get('item')}
-						onItemSelect={(item) =>
-							handleChange({
-								...item,
-								fieldId: DISPLAY_PAGE_URL_FIELD_ID,
-							})
-						}
-						selectedItemTitle={nextValue?.title}
-						transformValueCallback={itemSelectorValueToInfoItem}
-					/>
-				</ClayForm.Group>
+				<ItemSelector
+					label={Liferay.Language.get('item')}
+					onItemSelect={(item) =>
+						handleChange({
+							...item,
+							fieldId: DISPLAY_PAGE_URL_FIELD_ID,
+						})
+					}
+					selectedItemTitle={nextValue?.title}
+					transformValueCallback={itemSelectorValueToInfoItem}
+				/>
 			)}
 
 			<ClayCheckbox

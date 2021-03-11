@@ -14,7 +14,7 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
-import {ClayInput} from '@clayui/form';
+import ClayForm, {ClayInput} from '@clayui/form';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
@@ -67,7 +67,7 @@ export default function ItemSelector({
 	);
 
 	return (
-		<>
+		<ClayForm.Group small>
 			{showLabel && <label htmlFor={itemSelectorInputId}>{label}</label>}
 
 			<div className="d-flex">
@@ -153,9 +153,7 @@ export default function ItemSelector({
 						aria-label={Liferay.Language.get(
 							'clear-content-button'
 						)}
-						className={
-							'ml-2 page-editor__item-selector__content-button'
-						}
+						className="ml-2 page-editor__item-selector__content-button"
 						displayType="secondary"
 						onClick={() => onItemSelect({})}
 						small
@@ -164,7 +162,7 @@ export default function ItemSelector({
 					/>
 				)}
 			</div>
-		</>
+		</ClayForm.Group>
 	);
 }
 

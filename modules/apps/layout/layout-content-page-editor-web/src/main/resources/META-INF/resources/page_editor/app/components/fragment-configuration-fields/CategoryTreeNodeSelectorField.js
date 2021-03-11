@@ -12,7 +12,6 @@
  * details.
  */
 
-import ClayForm from '@clayui/form';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -29,20 +28,18 @@ export const CategoryTreeNodeSelectorField = ({
 	const eventName = `${config.portletNamespace}selectAssetCategoryTreeNode`;
 
 	return (
-		<ClayForm.Group small>
-			<ItemSelector
-				eventName={eventName}
-				itemSelectorURL={config.assetCategoryTreeNodeItemSelectorURL}
-				label={field.label}
-				modalProps={{height: '60vh', size: 'lg'}}
-				onItemSelect={(categoryTreeNode) => {
-					onValueSelect(field.name, categoryTreeNode);
-				}}
-				selectedItemTitle={value ? value.title : null}
-				showMappedItems={false}
-				transformValueCallback={itemSelectorValueToCategoryTreeNode}
-			/>
-		</ClayForm.Group>
+		<ItemSelector
+			eventName={eventName}
+			itemSelectorURL={config.assetCategoryTreeNodeItemSelectorURL}
+			label={field.label}
+			modalProps={{height: '60vh', size: 'lg'}}
+			onItemSelect={(categoryTreeNode) => {
+				onValueSelect(field.name, categoryTreeNode);
+			}}
+			selectedItemTitle={value ? value.title : null}
+			showMappedItems={false}
+			transformValueCallback={itemSelectorValueToCategoryTreeNode}
+		/>
 	);
 };
 

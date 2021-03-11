@@ -317,14 +317,12 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 			)}
 
 			{selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.content && (
-				<ClayForm.Group small>
-					<ItemSelector
-						label={Liferay.Language.get('content')}
-						onItemSelect={onInfoItemSelect}
-						selectedItemTitle={selectedItem.title}
-						transformValueCallback={itemSelectorValueToInfoItem}
-					/>
-				</ClayForm.Group>
+				<ItemSelector
+					label={Liferay.Language.get('content')}
+					onItemSelect={onInfoItemSelect}
+					selectedItemTitle={selectedItem.title}
+					transformValueCallback={itemSelectorValueToInfoItem}
+				/>
 			)}
 
 			<ClayForm.Group small>

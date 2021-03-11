@@ -42,23 +42,21 @@ export const ItemSelectorField = ({field, onValueSelect, value}) => {
 
 	return (
 		<>
-			<ClayForm.Group small>
-				<ItemSelector
-					itemSelectorURL={typeOptions.infoItemSelectorURL}
-					label={field.label}
-					onItemSelect={(item) => {
-						onValueSelect(field.name, item);
-					}}
-					selectedItemTitle={
-						isWithinCollection
-							? collectionItem.title ||
-							  Liferay.Language.get('collection-item')
-							: value.title
-					}
-					showAddButton={!isWithinCollection}
-					transformValueCallback={itemSelectorValueToInfoItem}
-				/>
-			</ClayForm.Group>
+			<ItemSelector
+				itemSelectorURL={typeOptions.infoItemSelectorURL}
+				label={field.label}
+				onItemSelect={(item) => {
+					onValueSelect(field.name, item);
+				}}
+				selectedItemTitle={
+					isWithinCollection
+						? collectionItem.title ||
+						  Liferay.Language.get('collection-item')
+						: value.title
+				}
+				showAddButton={!isWithinCollection}
+				transformValueCallback={itemSelectorValueToInfoItem}
+			/>
 
 			{typeOptions.enableSelectTemplate && className && (
 				<ClayForm.Group small>

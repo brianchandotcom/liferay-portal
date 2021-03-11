@@ -113,21 +113,19 @@ export const CollectionGeneralPanel = ({item}) => {
 
 	return (
 		<>
-			<ClayForm.Group small>
-				<CollectionSelector
-					collectionTitle={(item.config.collection || {}).title || ''}
-					itemSelectorURL={config.collectionSelectorURL}
-					label={Liferay.Language.get('collection')}
-					onCollectionSelect={(collection) =>
-						handleConfigurationChanged({
-							collection,
-							listItemStyle: null,
-							listStyle: LIST_STYLE_GRID,
-							templateKey: null,
-						})
-					}
-				/>
-			</ClayForm.Group>
+			<CollectionSelector
+				collectionTitle={(item.config.collection || {}).title || ''}
+				itemSelectorURL={config.collectionSelectorURL}
+				label={Liferay.Language.get('collection')}
+				onCollectionSelect={(collection) =>
+					handleConfigurationChanged({
+						collection,
+						listItemStyle: null,
+						listStyle: LIST_STYLE_GRID,
+						templateKey: null,
+					})
+				}
+			/>
 			{item.config.collection && (
 				<>
 					<ClayForm.Group small>

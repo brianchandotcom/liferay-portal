@@ -12,7 +12,6 @@
  * details.
  */
 
-import ClayForm from '@clayui/form';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -23,16 +22,14 @@ export const CollectionSelectorField = ({field, onValueSelect, value}) => {
 	const {typeOptions = {}} = field;
 
 	return (
-		<ClayForm.Group small>
-			<CollectionSelector
-				collectionTitle={value.title}
-				itemSelectorURL={typeOptions.infoListSelectorURL}
-				label={field.label}
-				onCollectionSelect={(collection) => {
-					onValueSelect(field.name, collection);
-				}}
-			></CollectionSelector>
-		</ClayForm.Group>
+		<CollectionSelector
+			collectionTitle={value.title}
+			itemSelectorURL={typeOptions.infoListSelectorURL}
+			label={field.label}
+			onCollectionSelect={(collection) => {
+				onValueSelect(field.name, collection);
+			}}
+		></CollectionSelector>
 	);
 };
 

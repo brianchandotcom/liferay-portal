@@ -13590,7 +13590,7 @@ public class DLFolderPersistenceImpl
 		ctStrictColumnNames.add("treePath");
 		ctStrictColumnNames.add("name");
 		ctStrictColumnNames.add("description");
-		ctStrictColumnNames.add("lastPostDate");
+		ctMergeColumnNames.add("lastPostDate");
 		ctStrictColumnNames.add("defaultFileEntryTypeId");
 		ctStrictColumnNames.add("hidden_");
 		ctStrictColumnNames.add("restrictionType");

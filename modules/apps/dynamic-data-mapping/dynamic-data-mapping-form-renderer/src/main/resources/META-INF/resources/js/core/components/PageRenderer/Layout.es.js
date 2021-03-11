@@ -15,6 +15,7 @@
 import React, {useContext} from 'react';
 
 import {getFormId, getFormNode} from '../../../util/formId.es';
+import {useConfig} from '../../hooks/useConfig.es';
 import {useEvaluate} from '../../hooks/useEvaluate.es';
 import {useForm, useFormState} from '../../hooks/useForm.es';
 import {usePage} from '../../hooks/usePage.es';
@@ -26,7 +27,8 @@ import {VariantsContext} from './VariantsContext.es';
 
 export const Layout = ({components, editable, rows}) => {
 	const {containerElement, pageIndex} = usePage();
-	const {activePage, allowNestedFields, defaultLanguageId} = useFormState();
+	const {activePage, defaultLanguageId} = useFormState();
+	const {allowNestedFields} = useConfig();
 
 	const createFieldChange = useEvaluate(fieldChange);
 	const dispatch = useForm();

@@ -32,6 +32,7 @@ const validator = (props) => {
 
 export const parseProps = ({
 	allowInvalidAvailableLocalesForProperty,
+	allowNestedFields,
 	autocompleteUserURL,
 	cancelLabel,
 	containerId,
@@ -64,6 +65,7 @@ export const parseProps = ({
 }) => ({
 	config: validator({
 		allowInvalidAvailableLocalesForProperty,
+		allowNestedFields,
 		autocompleteUserURL,
 		cancelLabel,
 		containerId,

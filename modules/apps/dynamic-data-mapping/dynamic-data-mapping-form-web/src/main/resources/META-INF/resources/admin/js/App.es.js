@@ -18,7 +18,6 @@ import {
 	FormProvider,
 	parseProps,
 } from 'dynamic-data-mapping-form-renderer';
-import {INITIAL_CONFIG_STATE} from 'dynamic-data-mapping-form-renderer/js/core/config/index.es';
 import {
 	dragAndDropReducer,
 	fieldEditableReducer,
@@ -32,6 +31,7 @@ import {HTML5Backend} from 'react-dnd-html5-backend';
 import {HashRouter as Router, Route, Switch} from 'react-router-dom';
 
 import {NavigationBar} from './components/NavigationBar.es';
+import {INITIAL_CONFIG_STATE} from './config/initialConfigState.es';
 import {BUILDER_INITIAL_STATE, initState} from './config/initialState.es';
 import {AutoSaveProvider} from './hooks/useAutoSave.es';
 import {ToastProvider} from './hooks/useToast.es';

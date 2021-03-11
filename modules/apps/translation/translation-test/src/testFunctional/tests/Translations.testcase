@@ -1302,4 +1302,93 @@ definition {
 		Translations.viewTranslationOptions(webContentTitle = "Web Content Title");
 	}
 
+	@description = "This test covers LPS-128546. It ensures that the translated field content can be displayed correctly after editing by different translation ways."
+	@priority = "4"
+	test ViewTranslatedFieldContentAfterEditing {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DataEngine.addFields(fieldNameList = "Rich Text,Text");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			description = "WC WebContent Description EN",
+			structureName = "WC Structure Name",
+			webContentRichText = "Rich Text EN",
+			webContentText = "Text EN",
+			webContentTitle = "WC WebContent Title EN");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContent.editWithStructureCP(
+			locale = "pt-BR",
+			webContentRichText = "Rich Text PT",
+			webContentText = "Text PT",
+			webContentTitle = "WC WebContent Title EN",
+			webContentTitleEdit = "WC WebContent Title PT");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		Translations.gotoTranslate(webContentTitle = "WC WebContent Title EN");
+
+		Translations.changeTargetLocale(
+			currentTargetLocale = "ar-SA",
+			newTargetLocale = "pt-BR");
+
+		Translations.viewTargetFields(
+			webContentHTML = "Rich Text PT",
+			webContentText = "Text PT",
+			webContentTitle = "WC WebContent Title PT");
+
+		Translations.translateFields(
+			webContentSourceHTML = "Rich Text PT Edit",
+			webContentText = "Text PT Edit",
+			webContentTitle = "WC WebContent Title PT Edit");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContent.viewWithStructureCP(
+			webContentLocaleFieldLabel = "pt-BR",
+			webContentRichText = "Rich Text PT Edit",
+			webContentText = "Text PT Edit",
+			webContentTitle = "WC WebContent Title EN",
+			webContentTitleTranslated = "WC WebContent Title PT Edit");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContent.editWithStructureCP(
+			locale = "pt-BR",
+			webContentRichText = "Rich Text PT Edit Again",
+			webContentText = "Text PT Again",
+			webContentTitle = "WC WebContent Title EN",
+			webContentTitleEdit = "WC WebContent Title PT Again");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		Translations.gotoTranslate(webContentTitle = "WC WebContent Title EN");
+
+		Translations.changeTargetLocale(
+			currentTargetLocale = "ar-SA",
+			newTargetLocale = "pt-BR");
+
+		Translations.viewTargetFields(
+			webContentHTML = "Rich Text PT Edit Again",
+			webContentText = "Text PT Again",
+			webContentTitle = "WC WebContent Title PT Again");
+	}
+
 }

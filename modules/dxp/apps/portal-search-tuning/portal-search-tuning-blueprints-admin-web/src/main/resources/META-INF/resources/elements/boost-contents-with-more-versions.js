@@ -19,12 +19,12 @@ export default {
 				query: {
 					query: {
 						function_score: {
-							boost: '${config.boost}',
+							boost: '${configuration.boost}',
 							field_value_factor: {
-								factor: '${config.factor}',
+								factor: '${configuration.factor}',
 								field: 'versionCount_sortable',
 								missing: 1,
-								modifier: '${config.modifier}',
+								modifier: '${configuration.modifier}',
 							},
 						},
 					},
@@ -42,67 +42,77 @@ export default {
 			en_US: 'Boost Contents With More Versions',
 		},
 	},
-	uiConfigurationJSON: [
-		{
-			defaultValue: 10,
-			key: 'boost',
-			label: 'Boost',
-			type: 'slider',
-		},
-		{
-			defaultValue: 1.2,
-			key: 'factor',
-			label: 'Factor',
-			min: 0,
-			type: 'number',
-		},
-		{
-			defaultValue: 'sqrt',
-			key: 'modifier',
-			label: 'Modifier',
-			type: 'select',
-			typeOptions: [
-				{
-					label: 'None',
-					value: 'none',
-				},
-				{
-					label: 'log',
-					value: 'log',
-				},
-				{
-					label: 'log1p',
-					value: 'log1p',
-				},
-				{
-					label: 'log2p',
-					value: 'log2p',
-				},
-				{
-					label: 'ln',
-					value: 'ln',
-				},
-				{
-					label: 'ln1p',
-					value: 'ln1p',
-				},
-				{
-					label: 'ln2p',
-					value: 'ln2p',
-				},
-				{
-					label: 'Square',
-					value: 'square',
-				},
-				{
-					label: 'Square Root',
-					value: 'sqrt',
-				},
-				{
-					label: 'Reciprocal',
-					value: 'reciprocal',
-				},
-			],
-		},
-	],
+	uiConfigurationJSON: {
+		fieldSets: [
+			{
+				fields: [
+					{
+						defaultValue: 10,
+						label: 'Boost',
+						name: 'boost',
+						type: 'slider',
+					},
+					{
+						defaultValue: 1.2,
+						label: 'Factor',
+						name: 'factor',
+						type: 'number',
+						typeOptions: {
+							min: 0,
+						},
+					},
+					{
+						defaultValue: 'sqrt',
+						label: 'Modifier',
+						name: 'modifier',
+						type: 'select',
+						typeOptions: {
+							options: [
+								{
+									label: 'None',
+									value: 'none',
+								},
+								{
+									label: 'log',
+									value: 'log',
+								},
+								{
+									label: 'log1p',
+									value: 'log1p',
+								},
+								{
+									label: 'log2p',
+									value: 'log2p',
+								},
+								{
+									label: 'ln',
+									value: 'ln',
+								},
+								{
+									label: 'ln1p',
+									value: 'ln1p',
+								},
+								{
+									label: 'ln2p',
+									value: 'ln2p',
+								},
+								{
+									label: 'Square',
+									value: 'square',
+								},
+								{
+									label: 'Square Root',
+									value: 'sqrt',
+								},
+								{
+									label: 'Reciprocal',
+									value: 'reciprocal',
+								},
+							],
+						},
+					},
+				],
+			},
+		],
+	},
 };

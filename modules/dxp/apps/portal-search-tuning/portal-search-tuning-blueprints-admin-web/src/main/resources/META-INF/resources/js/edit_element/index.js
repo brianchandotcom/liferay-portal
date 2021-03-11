@@ -34,9 +34,9 @@ import PreviewModal from '../shared/PreviewModal';
 import SearchInput from '../shared/SearchInput';
 import ThemeContext from '../shared/ThemeContext';
 import Element from '../shared/element/index';
+import {CONFIG_PREFIX} from '../utils/constants';
 import {
 	getUIConfigurationValues,
-	isNotEmpty,
 	openErrorToast,
 	renameKeys,
 	sub,
@@ -175,11 +175,24 @@ function EditElementForm({
 		elementTemplateJSON,
 		parseUIConfigurationJSON
 	) => {
-		const elementKeys = [
-			...elementTemplateJSON.matchAll(/\$\{config.\w+\}/g),
-		].map((item) => item[0].replace('${config.', '').replace('}', ''));
+		const regex = new RegExp(`\\$\\{${CONFIG_PREFIX}.([\\w\\d_]+)\\}`, 'g');
 
-		const uiConfigKeys = parseUIConfigurationJSON.map((item) => item.key);
+		const elementKeys = [...elementTemplateJSON.matchAll(regex)].map(
+			(item) => item[1]
+		);
+
+		const uiConfigKeys = parseUIConfigurationJSON.fieldSets
+			? parseUIConfigurationJSON.fieldSets.reduce((acc, curr) => {
+
+					// Find names within each fields array
+
+					const configKeys = curr.fields
+						? curr.fields.map((item) => item.name)
+						: [];
+
+					return [...acc, ...configKeys];
+			  }, [])
+			: [];
 
 		const missingKeys = elementKeys.filter(
 			(item) => !uiConfigKeys.includes(item)
@@ -223,13 +236,13 @@ function EditElementForm({
 
 			_validateConfigKeys(elementTemplateJSON, parseUIConfigurationJSON);
 
-			if (!isNotEmpty(parseElementTemplateJSON.title)) {
+			if (!parseElementTemplateJSON.title) {
 				throw Liferay.Language.get('error.title-empty');
 			}
 
 			if (
 				typeof parseElementTemplateJSON.title === 'object' &&
-				!isNotEmpty(parseElementTemplateJSON.title[defaultLocale])
+				!parseElementTemplateJSON.title[defaultLocale]
 			) {
 				throw Liferay.Language.get('error.default-locale-title-empty');
 			}

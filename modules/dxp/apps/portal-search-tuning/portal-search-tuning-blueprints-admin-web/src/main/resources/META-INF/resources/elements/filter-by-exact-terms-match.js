@@ -19,7 +19,7 @@ export default {
 				query: {
 					query: {
 						terms: {
-							'${config.field}': '${config.values}',
+							'${configuration.field}': '${configuration.values}',
 						},
 					},
 				},
@@ -37,21 +37,22 @@ export default {
 			en_US: 'Filter by Exact Terms Match',
 		},
 	},
-	uiConfigurationJSON: [
-		{
-			defaultValue: {
-				field: '',
-				locale: '',
+	uiConfigurationJSON: {
+		fieldSets: [
+			{
+				fields: [
+					{
+						label: 'Field',
+						name: 'field',
+						type: 'fieldMapping',
+					},
+					{
+						label: 'Values',
+						name: 'values',
+						type: 'multiselect',
+					},
+				],
 			},
-			key: 'field',
-			label: 'Field',
-			type: 'field',
-		},
-		{
-			defaultValue: [],
-			key: 'values',
-			label: 'Values',
-			type: 'multiselect',
-		},
-	],
+		],
+	},
 };

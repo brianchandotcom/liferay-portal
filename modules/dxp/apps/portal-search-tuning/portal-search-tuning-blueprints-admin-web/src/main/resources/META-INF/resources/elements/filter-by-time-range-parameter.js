@@ -50,4 +50,5 @@ export default {
 			en_US: 'Filter by Time Range',
 		},
 	},
+	uiConfigurationJSON: {},
 };

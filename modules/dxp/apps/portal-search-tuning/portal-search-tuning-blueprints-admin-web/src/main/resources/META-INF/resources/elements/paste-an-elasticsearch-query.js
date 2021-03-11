@@ -15,9 +15,9 @@ export default {
 		clauses: [
 			{
 				context: 'query',
-				occur: '${config.occur}',
+				occur: '${configuration.occur}',
 				query: {
-					query: '${config.query}',
+					query: '${configuration.query}',
 				},
 				type: 'wrapper',
 			},
@@ -32,35 +32,43 @@ export default {
 			en_US: 'Paste any Elasticsearch query',
 		},
 	},
-	uiConfigurationJSON: [
-		{
-			defaultValue: 'must',
-			key: 'occur',
-			label: 'Occur',
-			type: 'select',
-			typeOptions: [
-				{
-					label: 'MUST',
-					value: 'must',
-				},
-				{
-					label: 'SHOULD',
-					value: 'should',
-				},
-				{
-					label: 'MUST NOT',
-					value: 'must_not',
-				},
-				{
-					label: 'FILTER',
-					value: 'filter',
-				},
-			],
-		},
-		{
-			defaultValue: {},
-			key: 'query',
-			type: 'json',
-		},
-	],
+	uiConfigurationJSON: {
+		fieldSets: [
+			{
+				fields: [
+					{
+						defaultValue: 'must',
+						label: 'Occur',
+						name: 'occur',
+						type: 'select',
+						typeOptions: {
+							options: [
+								{
+									label: 'MUST',
+									value: 'must',
+								},
+								{
+									label: 'SHOULD',
+									value: 'should',
+								},
+								{
+									label: 'MUST NOT',
+									value: 'must_not',
+								},
+								{
+									label: 'FILTER',
+									value: 'filter',
+								},
+							],
+						},
+					},
+					{
+						defaultValue: {},
+						name: 'query',
+						type: 'json',
+					},
+				],
+			},
+		],
+	},
 };

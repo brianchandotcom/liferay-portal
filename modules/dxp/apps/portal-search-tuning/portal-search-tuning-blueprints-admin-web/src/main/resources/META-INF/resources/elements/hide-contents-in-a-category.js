@@ -24,7 +24,7 @@ export default {
 									term: {
 										assetCategoryIds: {
 											value:
-												'${config.asset_category_id}',
+												'${configuration.asset_category_id}',
 										},
 									},
 								},
@@ -45,12 +45,18 @@ export default {
 			en_US: 'Hide Contents in a Category',
 		},
 	},
-	uiConfigurationJSON: [
-		{
-			helpText: 'Add asset category ID',
-			key: 'asset_category_id',
-			label: 'Asset Category',
-			type: 'number',
-		},
-	],
+	uiConfigurationJSON: {
+		fieldSets: [
+			{
+				fields: [
+					{
+						helpText: 'Add asset category ID',
+						label: 'Asset Category',
+						name: 'asset_category_id',
+						type: 'number',
+					},
+				],
+			},
+		],
+	},
 };

@@ -20,10 +20,10 @@ export default {
 					query: {
 						range: {
 							createDate: {
-								from: '${config.start_date}',
+								from: '${configuration.start_date}',
 								include_lower: true,
 								include_upper: true,
-								to: '${config.end_date}',
+								to: '${configuration.end_date}',
 							},
 						},
 					},
@@ -41,16 +41,22 @@ export default {
 			en_US: 'Limit Search to Contents Created Within a Period of Time',
 		},
 	},
-	uiConfigurationJSON: [
-		{
-			key: 'start_date',
-			label: 'Create Date: From',
-			type: 'date',
-		},
-		{
-			key: 'end_date',
-			label: 'Create Date: To',
-			type: 'date',
-		},
-	],
+	uiConfigurationJSON: {
+		fieldSets: [
+			{
+				fields: [
+					{
+						label: 'Create Date: From',
+						name: 'start_date',
+						type: 'date',
+					},
+					{
+						label: 'Create Date: To',
+						name: 'end_date',
+						type: 'date',
+					},
+				],
+			},
+		],
+	},
 };

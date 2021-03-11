@@ -20,7 +20,7 @@ export default {
 					query: {
 						term: {
 							'assetTagNames.raw': {
-								boost: '${config.boost}',
+								boost: '${configuration.boost}',
 								value: '${keywords}',
 							},
 						},
@@ -39,12 +39,18 @@ export default {
 			en_US: 'Boost Tags Match',
 		},
 	},
-	uiConfigurationJSON: [
-		{
-			defaultValue: 40,
-			key: 'boost',
-			label: 'Boost',
-			type: 'slider',
-		},
-	],
+	uiConfigurationJSON: {
+		fieldSets: [
+			{
+				fields: [
+					{
+						defaultValue: 40,
+						label: 'Boost',
+						name: 'boost',
+						type: 'slider',
+					},
+				],
+			},
+		],
+	},
 };

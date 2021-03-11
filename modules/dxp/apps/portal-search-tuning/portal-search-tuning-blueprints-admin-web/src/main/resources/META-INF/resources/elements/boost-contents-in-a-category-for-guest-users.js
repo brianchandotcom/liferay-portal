@@ -20,8 +20,8 @@ export default {
 					query: {
 						term: {
 							assetCategoryIds: {
-								boost: '${config.boost}',
-								value: '${config.asset_category_id}',
+								boost: '${configuration.boost}',
+								value: '${configuration.asset_category_id}',
 							},
 						},
 					},
@@ -47,18 +47,24 @@ export default {
 			en_US: 'Boost Contents in a Category for Guest Users',
 		},
 	},
-	uiConfigurationJSON: [
-		{
-			helpText: 'Add asset category ID',
-			key: 'asset_category_id',
-			label: 'Asset Category',
-			type: 'number',
-		},
-		{
-			defaultValue: 20,
-			key: 'boost',
-			label: 'Boost',
-			type: 'slider',
-		},
-	],
+	uiConfigurationJSON: {
+		fieldSets: [
+			{
+				fields: [
+					{
+						helpText: 'Add asset category ID',
+						label: 'Asset Category',
+						name: 'asset_category_id',
+						type: 'number',
+					},
+					{
+						defaultValue: 20,
+						label: 'Boost',
+						name: 'boost',
+						type: 'slider',
+					},
+				],
+			},
+		],
+	},
 };

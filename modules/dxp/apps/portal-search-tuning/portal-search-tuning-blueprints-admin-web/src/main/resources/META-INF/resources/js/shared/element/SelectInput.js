@@ -18,7 +18,7 @@ function SelectInput({
 	id,
 	label,
 	onChange,
-	typeOptions,
+	options,
 	value,
 }) {
 	return (
@@ -29,8 +29,8 @@ function SelectInput({
 			id={id}
 			onChange={(event) => {
 				const value =
-					typeof typeOptions[0].value == 'boolean' ||
-					typeof typeOptions[0].value == 'number'
+					typeof options[0].value == 'boolean' ||
+					typeof options[0].value == 'number'
 						? JSON.parse(event.target.value)
 						: event.target.value;
 
@@ -38,8 +38,8 @@ function SelectInput({
 			}}
 			value={value}
 		>
-			{typeOptions &&
-				typeOptions.map((item) => (
+			{options &&
+				options.map((item) => (
 					<ClaySelect.Option
 						key={item.value}
 						label={item.label}

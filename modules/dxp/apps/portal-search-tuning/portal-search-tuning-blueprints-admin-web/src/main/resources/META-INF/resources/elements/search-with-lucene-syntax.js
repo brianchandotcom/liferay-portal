@@ -19,9 +19,9 @@ export default {
 				query: {
 					query: {
 						simple_query_string: {
-							boost: '${config.boost}',
-							default_operator: '${config.operator}',
-							fields: '${config.fields}',
+							boost: '${configuration.boost}',
+							default_operator: '${configuration.operator}',
+							fields: '${configuration.fields}',
 							query: '${keywords}',
 						},
 					},
@@ -39,63 +39,55 @@ export default {
 			en_US: 'Search with the Lucene Syntax',
 		},
 	},
-	uiConfigurationJSON: [
-		{
-			boost: true,
-			defaultValue: [
-				{
-					boost: '2',
-					field: 'localized_title',
-					locale: '${context.language_id}',
-				},
-				{
-					boost: '2',
-					field: 'content',
-					locale: '${context.language_id}',
-				},
-			],
-			key: 'fields',
-			label: 'Fields',
-			type: 'field-list',
-			typeOptions: [
-				{
-					label: 'Title',
-					value: 'localized_title',
-				},
-				{
-					label: 'Description',
-					value: 'description',
-				},
-				{
-					label: 'Content',
-					value: 'content',
-				},
-				{
-					label: 'Name',
-					value: 'name',
-				},
-			],
-		},
-		{
-			key: 'operator',
-			label: 'Operator',
-			type: 'select',
-			typeOptions: [
-				{
-					label: 'OR',
-					value: 'or',
-				},
-				{
-					label: 'AND',
-					value: 'and',
-				},
-			],
-		},
-		{
-			defaultValue: 1,
-			key: 'boost',
-			label: 'Boost',
-			type: 'slider',
-		},
-	],
+	uiConfigurationJSON: {
+		fieldSets: [
+			{
+				fields: [
+					{
+						defaultValue: [
+							{
+								boost: '2',
+								field: 'localized_title',
+								locale: '${context.language_id}',
+							},
+							{
+								boost: '2',
+								field: 'content',
+								locale: '${context.language_id}',
+							},
+						],
+						label: 'Fields',
+						name: 'fields',
+						type: 'fieldMappingList',
+						typeOptions: {
+							boost: true,
+						},
+					},
+					{
+						label: 'Operator',
+						name: 'operator',
+						type: 'select',
+						typeOptions: {
+							options: [
+								{
+									label: 'OR',
+									value: 'or',
+								},
+								{
+									label: 'AND',
+									value: 'and',
+								},
+							],
+						},
+					},
+					{
+						defaultValue: 1,
+						label: 'Boost',
+						name: 'boost',
+						type: 'slider',
+					},
+				],
+			},
+		],
+	},
 };

@@ -68,5 +68,5 @@ export default {
 			en_US: 'Staging Aware',
 		},
 	},
-	uiConfigurationJSON: [],
+	uiConfigurationJSON: {},
 };

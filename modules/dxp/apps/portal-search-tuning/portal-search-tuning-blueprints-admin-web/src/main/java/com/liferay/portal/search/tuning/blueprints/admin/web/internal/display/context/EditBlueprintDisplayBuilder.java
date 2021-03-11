@@ -223,6 +223,10 @@ public class EditBlueprintDisplayBuilder extends EditEntryDisplayBuilder {
 
 				multiple = true;
 			}
+
+			/*
+			LPS-129056 - Address selector functionality
+
 			else if (className.equals(Organization.class.getName())) {
 				_prepareSelectEntityURL(
 					portletURL,
@@ -230,6 +234,7 @@ public class EditBlueprintDisplayBuilder extends EditEntryDisplayBuilder {
 
 				multiple = true;
 			}
+			*/
 
 			return JSONUtil.put(
 				"multiple", multiple

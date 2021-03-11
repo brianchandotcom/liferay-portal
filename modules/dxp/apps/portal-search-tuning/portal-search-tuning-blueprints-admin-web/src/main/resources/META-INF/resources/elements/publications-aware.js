@@ -56,5 +56,5 @@ export default {
 			en_US: 'Publications Aware',
 		},
 	},
-	uiConfigurationJSON: [],
+	uiConfigurationJSON: {},
 };

@@ -60,5 +60,5 @@ export default {
 			en_US: 'Hide Default User',
 		},
 	},
-	uiConfigurationJSON: [],
+	uiConfigurationJSON: {},
 };

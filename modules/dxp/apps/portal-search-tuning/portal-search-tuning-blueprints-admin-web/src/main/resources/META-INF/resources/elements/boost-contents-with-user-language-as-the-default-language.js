@@ -31,7 +31,7 @@ export default {
 								{
 									term: {
 										defaultLanguageId: {
-											boost: '${config.boost}',
+											boost: '${configuration.boost}',
 											value: '${context.language_id}',
 										},
 									},
@@ -54,12 +54,18 @@ export default {
 			en_US: 'Boost Contents for the Current Language',
 		},
 	},
-	uiConfigurationJSON: [
-		{
-			defaultValue: 20,
-			key: 'boost',
-			label: 'Boost',
-			type: 'slider',
-		},
-	],
+	uiConfigurationJSON: {
+		fieldSets: [
+			{
+				fields: [
+					{
+						defaultValue: 20,
+						label: 'Boost',
+						name: 'boost',
+						type: 'slider',
+					},
+				],
+			},
+		],
+	},
 };

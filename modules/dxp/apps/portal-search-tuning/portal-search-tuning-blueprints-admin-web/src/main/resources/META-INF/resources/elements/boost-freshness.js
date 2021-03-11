@@ -19,14 +19,14 @@ export default {
 				query: {
 					query: {
 						function_score: {
-							boost: '${config.boost}',
+							boost: '${configuration.boost}',
 							gauss: {
 								modified: {
-									decay: '${config.decay}',
-									offset: '${config.offset}',
+									decay: '${configuration.decay}',
+									offset: '${configuration.offset}',
 									origin:
 										'${time.current_date|dateFormat=yyyyMMddHHmmss}',
-									scale: '${config.scale}',
+									scale: '${configuration.scale}',
 								},
 							},
 						},
@@ -45,39 +45,51 @@ export default {
 			en_US: 'Boost Freshness',
 		},
 	},
-	uiConfigurationJSON: [
-		{
-			defaultValue: 0.5,
-			key: 'decay',
-			label: 'Decay',
-			max: 0.99,
-			min: 0.01,
-			step: 0.1,
-			type: 'number',
-		},
-		{
-			defaultValue: 0,
-			key: 'offset',
-			label: 'Offset',
-			min: 0,
-			type: 'number',
-			unit: 'days',
-			unitSuffix: 'd',
-		},
-		{
-			defaultValue: 10,
-			key: 'scale',
-			label: 'Scale',
-			min: 0,
-			type: 'number',
-			unit: 'days',
-			unitSuffix: 'd',
-		},
-		{
-			defaultValue: 2,
-			key: 'boost',
-			label: 'Boost',
-			type: 'slider',
-		},
-	],
+	uiConfigurationJSON: {
+		fieldSets: [
+			{
+				fields: [
+					{
+						defaultValue: 0.5,
+						label: 'Decay',
+						name: 'decay',
+						type: 'number',
+						typeOptions: {
+							max: 0.99,
+							min: 0.01,
+							step: 0.1,
+						},
+					},
+					{
+						defaultValue: 0,
+						label: 'Offset',
+						name: 'offset',
+						type: 'number',
+						typeOptions: {
+							min: 0,
+							unit: 'days',
+							unitSuffix: 'd',
+						},
+					},
+					{
+						defaultValue: 10,
+						label: 'Scale',
+						name: 'scale',
+						type: 'number',
+						typeOptions: {
+							min: 0,
+							unit: 'days',
+							unitSuffix: 'd',
+						},
+					},
+					{
+						defaultValue: 2,
+						label: 'Boost',
+						name: 'boost',
+						type: 'slider',
+					},
+				],
+			},
+		],
+	},
 };

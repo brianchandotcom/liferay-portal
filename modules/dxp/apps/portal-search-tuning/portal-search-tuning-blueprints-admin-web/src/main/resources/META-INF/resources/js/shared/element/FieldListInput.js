@@ -25,7 +25,6 @@ function FieldListInput({
 	indexFields,
 	initialValue,
 	onChange,
-	typeOptions,
 }) {
 	const idCounter = useRef(0);
 
@@ -83,7 +82,6 @@ function FieldListInput({
 					onChange={_handleChange(index)}
 					onDelete={_handleFieldRowDelete(index)}
 					showBoost={showBoost}
-					typeOptions={typeOptions}
 				/>
 			))}
 

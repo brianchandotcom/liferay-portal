@@ -20,8 +20,8 @@ export default {
 					query: {
 						term: {
 							entryClassName: {
-								boost: '${config.boost}',
-								value: '${config.entry_class_name}',
+								boost: '${configuration.boost}',
+								value: '${configuration.entry_class_name}',
 							},
 						},
 					},
@@ -39,85 +39,105 @@ export default {
 			en_US: 'Boost Asset Type',
 		},
 	},
-	uiConfigurationJSON: [
-		{
-			key: 'entry_class_name',
-			label: 'Asset Type',
-			type: 'select',
-			typeOptions: [
-				{
-					label: 'Blogs Entry',
-					value: 'com.liferay.blogs.model.BlogsEntry',
-				},
-				{
-					label: 'Bookmark Entry',
-					value: 'com.liferay.bookmarks.model.BookmarksEntry',
-				},
-				{
-					label: 'Bookmarks Folder',
-					value: 'com.liferay.bookmarks.model.BookmarksFolder',
-				},
-				{
-					label: 'Calendar Event',
-					value: 'com.liferay.calendar.model.CalendarBooking',
-				},
-				{
-					label: 'Commerce Product',
-					value: 'com.liferay.commerce.product.model.CPDefinition',
-				},
-				{
-					label: 'Document',
-					value:
-						'com.liferay.document.library.kernel.model.DLFileEntry',
-				},
-				{
-					label: 'Documents Folder',
-					value: 'com.liferay.document.library.kernel.model.DLFolder',
-				},
-				{
-					label: 'Dynamic Data List Record',
-					value: 'com.liferay.dynamic.data.lists.model.DDLRecord',
-				},
-				{
-					label: 'Form',
-					value:
-						'com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord',
-				},
-				{
-					label: 'Knowledge Base Article',
-					value: 'com.liferay.knowledge.base.model.KBArticle',
-				},
-				{
-					label: 'Message Boards Message',
-					value: 'com.liferay.message.boards.model.MBMessage',
-				},
-				{
-					label: 'Page',
-					value: 'com.liferay.portal.kernel.model.Layout',
-				},
-				{
-					label: 'User',
-					value: 'com.liferay.portal.kernel.model.User',
-				},
-				{
-					label: 'Web Content Article',
-					value: 'com.liferay.journal.model.JournalArticle',
-				},
-				{
-					label: 'Web Content Folder',
-					value: 'com.liferay.journal.model.JournalFolder',
-				},
-				{
-					label: 'Wiki Page',
-					value: 'com.liferay.wiki.model.WikiPage',
-				},
-			],
-		},
-		{
-			defaultValue: 10,
-			key: 'boost',
-			label: 'Boost',
-			type: 'slider',
-		},
-	],
+	uiConfigurationJSON: {
+		fieldSets: [
+			{
+				fields: [
+					{
+						label: 'Asset Type',
+						name: 'entry_class_name',
+						type: 'select',
+						typeOptions: {
+							options: [
+								{
+									label: 'Blogs Entry',
+									value: 'com.liferay.blogs.model.BlogsEntry',
+								},
+								{
+									label: 'Bookmark Entry',
+									value:
+										'com.liferay.bookmarks.model.BookmarksEntry',
+								},
+								{
+									label: 'Bookmarks Folder',
+									value:
+										'com.liferay.bookmarks.model.BookmarksFolder',
+								},
+								{
+									label: 'Calendar Event',
+									value:
+										'com.liferay.calendar.model.CalendarBooking',
+								},
+								{
+									label: 'Commerce Product',
+									value:
+										'com.liferay.commerce.product.model.CPDefinition',
+								},
+								{
+									label: 'Document',
+									value:
+										'com.liferay.document.library.kernel.model.DLFileEntry',
+								},
+								{
+									label: 'Documents Folder',
+									value:
+										'com.liferay.document.library.kernel.model.DLFolder',
+								},
+								{
+									label: 'Dynamic Data List Record',
+									value:
+										'com.liferay.dynamic.data.lists.model.DDLRecord',
+								},
+								{
+									label: 'Form',
+									value:
+										'com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord',
+								},
+								{
+									label: 'Knowledge Base Article',
+									value:
+										'com.liferay.knowledge.base.model.KBArticle',
+								},
+								{
+									label: 'Message Boards Message',
+									value:
+										'com.liferay.message.boards.model.MBMessage',
+								},
+								{
+									label: 'Page',
+									value:
+										'com.liferay.portal.kernel.model.Layout',
+								},
+								{
+									label: 'User',
+									value:
+										'com.liferay.portal.kernel.model.User',
+								},
+								{
+									label: 'Web Content Article',
+									value:
+										'com.liferay.journal.model.JournalArticle',
+								},
+								{
+									label: 'Web Content Folder',
+									value:
+										'com.liferay.journal.model.JournalFolder',
+								},
+								{
+									label: 'Wiki Page',
+									value: 'com.liferay.wiki.model.WikiPage',
+								},
+							],
+						},
+					},
+					{
+						defaultValue: 10,
+						label: 'Boost',
+						name: 'boost',
+						type: 'slider',
+					},
+				],
+			},
+		],
+	},
 };

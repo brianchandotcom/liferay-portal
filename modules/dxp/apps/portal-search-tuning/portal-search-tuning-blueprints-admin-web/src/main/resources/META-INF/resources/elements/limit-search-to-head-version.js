@@ -72,5 +72,5 @@ export default {
 			en_US: 'Limit Search to HEAD Version',
 		},
 	},
-	uiConfigurationJSON: [],
+	uiConfigurationJSON: {},
 };

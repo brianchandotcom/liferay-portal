@@ -36,5 +36,5 @@ export default {
 			en_US: 'Limit Search to My Sites',
 		},
 	},
-	uiConfigurationJSON: [],
+	uiConfigurationJSON: {},
 };

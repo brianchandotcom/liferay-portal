@@ -19,7 +19,7 @@ export default {
 				query: {
 					query: {
 						terms: {
-							scopeGroupId: '${config.scope_group_ids}',
+							scopeGroupId: '${configuration.scope_group_ids}',
 						},
 					},
 				},
@@ -36,12 +36,18 @@ export default {
 			en_US: 'Limit Search to These Sites',
 		},
 	},
-	uiConfigurationJSON: [
-		{
-			helpText: 'Add group IDs',
-			key: 'scope_group_ids',
-			label: 'Group IDs',
-			type: 'multiselect',
-		},
-	],
+	uiConfigurationJSON: {
+		fieldSets: [
+			{
+				fields: [
+					{
+						helpText: 'Add group IDs',
+						label: 'Group IDs',
+						name: 'scope_group_ids',
+						type: 'multiselect',
+					},
+				],
+			},
+		],
+	},
 };

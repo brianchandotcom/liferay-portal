@@ -9,4 +9,4 @@
  * distribution rights of the Software.
  */
 
-export const CONFIG_PREFIX = 'config';
+export const CONFIG_PREFIX = 'configuration';

@@ -20,8 +20,8 @@ export default {
 					query: {
 						term: {
 							assetCategoryIds: {
-								boost: '${config.boost}',
-								value: '${config.asset_category_id}',
+								boost: '${configuration.boost}',
+								value: '${configuration.asset_category_id}',
 							},
 						},
 					},
@@ -34,7 +34,7 @@ export default {
 				configuration: {
 					evaluation_type: 'eq',
 					parameter_name: '${time.time_of_day}',
-					value: '${config.time_of_day}',
+					value: '${configuration.time_of_day}',
 				},
 			},
 		],
@@ -47,41 +47,49 @@ export default {
 			en_US: 'Boost Contents in a Category for the Time of Day',
 		},
 	},
-	uiConfigurationJSON: [
-		{
-			helpText: 'Add asset category ID',
-			key: 'asset_category_id',
-			label: 'Asset Category',
-			type: 'number',
-		},
-		{
-			key: 'time_of_day',
-			label: 'Time of Day',
-			type: 'select',
-			typeOptions: [
-				{
-					label: 'Morning (4am - 12am)',
-					value: 'morning',
-				},
-				{
-					label: 'Afternoon (12pm - 5pm)',
-					value: 'afternoon',
-				},
-				{
-					label: 'Evening (5pm - 8pm)',
-					value: 'evening',
-				},
-				{
-					label: 'Night (8pm - 4am)',
-					value: 'night',
-				},
-			],
-		},
-		{
-			defaultValue: 20,
-			key: 'boost',
-			label: 'Boost',
-			type: 'slider',
-		},
-	],
+	uiConfigurationJSON: {
+		fieldSets: [
+			{
+				fields: [
+					{
+						helpText: 'Add asset category ID',
+						label: 'Asset Category',
+						name: 'asset_category_id',
+						type: 'number',
+					},
+					{
+						label: 'Time of Day',
+						name: 'time_of_day',
+						type: 'select',
+						typeOptions: {
+							options: [
+								{
+									label: 'Morning (4am - 12am)',
+									value: 'morning',
+								},
+								{
+									label: 'Afternoon (12pm - 5pm)',
+									value: 'afternoon',
+								},
+								{
+									label: 'Evening (5pm - 8pm)',
+									value: 'evening',
+								},
+								{
+									label: 'Night (8pm - 4am)',
+									value: 'night',
+								},
+							],
+						},
+					},
+					{
+						defaultValue: 20,
+						label: 'Boost',
+						name: 'boost',
+						type: 'slider',
+					},
+				],
+			},
+		],
+	},
 };

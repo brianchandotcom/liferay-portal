@@ -20,8 +20,8 @@ export default {
 					query: {
 						term: {
 							assetCategoryIds: {
-								boost: '${config.boost}',
-								value: '${config.asset_category_id}',
+								boost: '${configuration.boost}',
+								value: '${configuration.asset_category_id}',
 							},
 						},
 					},
@@ -35,7 +35,10 @@ export default {
 					date_format: 'yyyyMMdd',
 					evaluation_type: 'in_range',
 					parameter_name: '${time.current_date}',
-					value: ['${config.start_date}', '${config.end_date}'],
+					value: [
+						'${configuration.start_date}',
+						'${configuration.end_date}',
+					],
 				},
 			},
 		],
@@ -48,30 +51,36 @@ export default {
 			en_US: 'Boost Contents in a Category for a Period of Time',
 		},
 	},
-	uiConfigurationJSON: [
-		{
-			helpText: 'Add asset category ID',
-			key: 'asset_category_id',
-			label: 'Asset Category',
-			type: 'number',
-		},
-		{
-			format: 'YYYYMMDD',
-			key: 'start_date',
-			label: 'Create Date: From',
-			type: 'date',
-		},
-		{
-			format: 'YYYYMMDD',
-			key: 'end_date',
-			label: 'Create Date: To',
-			type: 'date',
-		},
-		{
-			defaultValue: 10,
-			key: 'boost',
-			label: 'Boost',
-			type: 'slider',
-		},
-	],
+	uiConfigurationJSON: {
+		fieldSets: [
+			{
+				fields: [
+					{
+						helpText: 'Add asset category ID',
+						label: 'Asset Category',
+						name: 'asset_category_id',
+						type: 'number',
+					},
+					{
+						format: 'YYYYMMDD',
+						label: 'Create Date: From',
+						name: 'start_date',
+						type: 'date',
+					},
+					{
+						format: 'YYYYMMDD',
+						label: 'Create Date: To',
+						name: 'end_date',
+						type: 'date',
+					},
+					{
+						defaultValue: 10,
+						label: 'Boost',
+						name: 'boost',
+						type: 'slider',
+					},
+				],
+			},
+		],
+	},
 };

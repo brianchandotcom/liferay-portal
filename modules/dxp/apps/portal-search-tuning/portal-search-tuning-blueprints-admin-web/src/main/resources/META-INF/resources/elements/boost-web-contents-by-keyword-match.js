@@ -19,8 +19,9 @@ export default {
 				query: {
 					query: {
 						terms: {
-							articleId_String_sortable: '${config.article_ids}',
-							boost: '${config.boost}',
+							articleId_String_sortable:
+								'${configuration.article_ids}',
+							boost: '${configuration.boost}',
 						},
 					},
 				},
@@ -32,7 +33,7 @@ export default {
 				configuration: {
 					evaluation_type: 'any_word_in',
 					parameter_name: '${keywords}',
-					value: '${config.values}',
+					value: '${configuration.values}',
 				},
 			},
 		],
@@ -46,24 +47,29 @@ export default {
 			en_US: 'Boost Web Contents by Keyword Match',
 		},
 	},
-	uiConfigurationJSON: [
-		{
-			helpText: 'Add article IDs',
-			key: 'article_ids',
-			label: 'Article IDs',
-			type: 'multiselect',
-		},
-		{
-			defaultValue: [],
-			key: 'values',
-			label: 'Keywords',
-			type: 'multiselect',
-		},
-		{
-			defaultValue: 20,
-			key: 'boost',
-			label: 'Boost',
-			type: 'slider',
-		},
-	],
+	uiConfigurationJSON: {
+		fieldSets: [
+			{
+				fields: [
+					{
+						helpText: 'Add article IDs',
+						label: 'Article IDs',
+						name: 'article_ids',
+						type: 'multiselect',
+					},
+					{
+						label: 'Keywords',
+						name: 'values',
+						type: 'multiselect',
+					},
+					{
+						defaultValue: 20,
+						label: 'Boost',
+						name: 'boost',
+						type: 'slider',
+					},
+				],
+			},
+		],
+	},
 };

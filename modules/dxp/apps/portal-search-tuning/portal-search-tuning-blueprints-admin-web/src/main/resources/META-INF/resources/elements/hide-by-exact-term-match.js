@@ -22,8 +22,8 @@ export default {
 							must_not: [
 								{
 									term: {
-										'${config.field}': {
-											value: '${config.value}',
+										'${configuration.field}': {
+											value: '${configuration.value}',
 										},
 									},
 								},
@@ -44,42 +44,22 @@ export default {
 			en_US: 'Hide by an Exact Term Match',
 		},
 	},
-	uiConfigurationJSON: [
-		{
-			defaultValue: {
-				field: '',
-				locale: '',
+	uiConfigurationJSON: {
+		fieldSets: [
+			{
+				fields: [
+					{
+						label: 'Field',
+						name: 'field',
+						type: 'fieldMapping',
+					},
+					{
+						label: 'Value',
+						name: 'value',
+						type: 'text',
+					},
+				],
 			},
-			key: 'field',
-			label: 'Field',
-			type: 'field',
-			typeOptions: [
-				{
-					label: 'Entry Class PK',
-					value: 'entryClassPK',
-				},
-				{
-					label: 'Folder ID',
-					value: 'folderId',
-				},
-				{
-					label: 'Group ID',
-					value: 'groupId',
-				},
-				{
-					label: 'User ID',
-					value: 'userId',
-				},
-				{
-					label: 'Web Content Article ID',
-					value: 'articleId_String_sortable',
-				},
-			],
-		},
-		{
-			key: 'value',
-			label: 'Value',
-			type: 'text',
-		},
-	],
+		],
+	},
 };

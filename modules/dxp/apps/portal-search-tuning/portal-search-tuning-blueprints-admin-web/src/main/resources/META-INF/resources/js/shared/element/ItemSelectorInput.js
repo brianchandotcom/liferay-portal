@@ -15,17 +15,17 @@ import ClayIcon from '@clayui/icon';
 import {openSelectionModal} from 'frontend-js-web';
 import React from 'react';
 
-function EntityInput({
-	className,
+function ItemSelectorInput({
 	configKey,
 	disabled,
 	entityJSON,
+	itemType,
 	label,
 	onChange,
 	value,
 }) {
-	const _handleMultipleEntitySelect = (key, className) => {
-		if (entityJSON[className].multiple) {
+	const _handleMultipleEntitySelect = (key, itemType) => {
+		if (entityJSON[itemType].multiple) {
 			openSelectionModal({
 				buttonAddLabel: Liferay.Language.get('select'),
 				multiple: true,
@@ -35,8 +35,8 @@ function EntityInput({
 					}
 				},
 				selectEventName: 'selectEntity',
-				title: entityJSON[className].title,
-				url: entityJSON[className].url,
+				title: entityJSON[itemType].title,
+				url: entityJSON[itemType].url,
 			});
 		}
 		else {
@@ -51,8 +51,8 @@ function EntityInput({
 					]);
 				},
 				selectEventName: 'selectEntity',
-				title: entityJSON[className].title,
-				url: entityJSON[className].url,
+				title: entityJSON[itemType].title,
+				url: entityJSON[itemType].url,
 			});
 		}
 	};
@@ -95,7 +95,7 @@ function EntityInput({
 					displayType="secondary"
 					onClick={() => {
 						if (entityJSON) {
-							_handleMultipleEntitySelect(configKey, className);
+							_handleMultipleEntitySelect(configKey, itemType);
 						}
 					}}
 					small
@@ -107,4 +107,4 @@ function EntityInput({
 	);
 }
 
-export default EntityInput;
+export default ItemSelectorInput;

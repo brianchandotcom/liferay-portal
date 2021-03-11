@@ -20,8 +20,8 @@ export default {
 					query: {
 						term: {
 							assetCategoryIds: {
-								boost: '${config.boost}',
-								value: '${config.asset_category_id}',
+								boost: '${configuration.boost}',
+								value: '${configuration.asset_category_id}',
 							},
 						},
 					},
@@ -34,7 +34,7 @@ export default {
 				configuration: {
 					evaluation_type: 'contains',
 					parameter_name: '${user.user_segment_entry_ids}',
-					value: ['${config.user_segment_id}'],
+					value: ['${configuration.user_segment_id}'],
 				},
 			},
 		],
@@ -48,24 +48,30 @@ export default {
 			en_US: 'Boost Contents in a Category for a User Segment',
 		},
 	},
-	uiConfigurationJSON: [
-		{
-			helpText: 'Add asset category ID',
-			key: 'asset_category_id',
-			label: 'Asset Category',
-			type: 'number',
-		},
-		{
-			helpText: 'Add user segment ID',
-			key: 'user_segment_id',
-			label: 'User Segment',
-			type: 'number',
-		},
-		{
-			defaultValue: 20,
-			key: 'boost',
-			label: 'Boost',
-			type: 'slider',
-		},
-	],
+	uiConfigurationJSON: {
+		fieldSets: [
+			{
+				fields: [
+					{
+						helpText: 'Add asset category ID',
+						label: 'Asset Category',
+						name: 'asset_category_id',
+						type: 'number',
+					},
+					{
+						helpText: 'Add user segment ID',
+						label: 'User Segment',
+						name: 'user_segment_id',
+						type: 'number',
+					},
+					{
+						defaultValue: 20,
+						label: 'Boost',
+						name: 'boost',
+						type: 'slider',
+					},
+				],
+			},
+		],
+	},
 };

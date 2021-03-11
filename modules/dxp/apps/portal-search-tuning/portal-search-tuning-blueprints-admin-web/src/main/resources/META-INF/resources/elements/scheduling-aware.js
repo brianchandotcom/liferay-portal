@@ -103,5 +103,5 @@ export default {
 			en_US: 'Scheduling Aware',
 		},
 	},
-	uiConfigurationJSON: [],
+	uiConfigurationJSON: {},
 };

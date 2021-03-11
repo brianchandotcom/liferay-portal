@@ -19,8 +19,8 @@ export default {
 				query: {
 					query: {
 						terms: {
-							'assetTagNames.raw': '${config.asset_tags}',
-							boost: '${config.boost}',
+							'assetTagNames.raw': '${configuration.asset_tags}',
+							boost: '${configuration.boost}',
 						},
 					},
 				},
@@ -37,18 +37,23 @@ export default {
 			en_US: 'Boost Tagged Contents',
 		},
 	},
-	uiConfigurationJSON: [
-		{
-			defaultValue: [],
-			key: 'asset_tags',
-			label: 'Asset Tags',
-			type: 'multiselect',
-		},
-		{
-			defaultValue: 5,
-			key: 'boost',
-			label: 'Boost',
-			type: 'slider',
-		},
-	],
+	uiConfigurationJSON: {
+		fieldSets: [
+			{
+				fields: [
+					{
+						label: 'Asset Tags',
+						name: 'asset_tags',
+						type: 'multiselect',
+					},
+					{
+						defaultValue: 5,
+						label: 'Boost',
+						name: 'boost',
+						type: 'slider',
+					},
+				],
+			},
+		],
+	},
 };

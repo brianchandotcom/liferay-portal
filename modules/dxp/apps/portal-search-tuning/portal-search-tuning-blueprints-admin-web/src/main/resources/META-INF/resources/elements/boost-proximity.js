@@ -19,16 +19,16 @@ export default {
 				query: {
 					query: {
 						function_score: {
-							boost: '${config.boost}',
+							boost: '${configuration.boost}',
 							gauss: {
-								'${config.field}': {
-									decay: '${config.decay}',
+								'${configuration.field}': {
+									decay: '${configuration.decay}',
 									offset: 0,
 									origin: {
 										lat: '${ipstack.latitude}',
 										lon: '${ipstack.longitude}',
 									},
-									scale: '${config.scale}',
+									scale: '${configuration.scale}',
 								},
 							},
 						},
@@ -48,38 +48,48 @@ export default {
 			en_US: 'Boost Proximity',
 		},
 	},
-	uiConfigurationJSON: [
-		{
-			defaultValue:
-				'expando__keyword__custom_fields__location_geolocation',
-			helpText: 'A geopoint field',
-			key: 'field',
-			label: 'Field',
-			type: 'text',
-		},
-		{
-			defaultValue: 0.3,
-			key: 'decay',
-			label: 'Decay',
-			max: 0.99,
-			min: 0.01,
-			step: 0.1,
-			type: 'number',
-		},
-		{
-			defaultValue: 100,
-			key: 'scale',
-			label: 'Scale',
-			min: 0,
-			type: 'number',
-			unit: 'km',
-			unitSuffix: 'km',
-		},
-		{
-			defaultValue: 2,
-			key: 'boost',
-			label: 'Boost',
-			type: 'slider',
-		},
-	],
+	uiConfigurationJSON: {
+		fieldSets: [
+			{
+				fields: [
+					{
+						defaultValue:
+							'expando__keyword__custom_fields__location_geolocation',
+						helpText: 'A geopoint field',
+						label: 'Field',
+						name: 'field',
+						type: 'text',
+					},
+					{
+						defaultValue: 0.3,
+						label: 'Decay',
+						name: 'decay',
+						type: 'number',
+						typeOptions: {
+							max: 0.99,
+							min: 0.01,
+							step: 0.1,
+						},
+					},
+					{
+						defaultValue: 100,
+						label: 'Scale',
+						name: 'scale',
+						type: 'number',
+						typeOptions: {
+							min: 0,
+							unit: 'km',
+							unitSuffix: 'km',
+						},
+					},
+					{
+						defaultValue: 2,
+						label: 'Boost',
+						name: 'boost',
+						type: 'slider',
+					},
+				],
+			},
+		],
+	},
 };

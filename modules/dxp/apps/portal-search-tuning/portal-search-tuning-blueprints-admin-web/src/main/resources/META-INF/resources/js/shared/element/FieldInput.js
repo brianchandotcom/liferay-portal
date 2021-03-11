@@ -22,7 +22,6 @@ function FieldInput({
 	initialValue,
 	onChange,
 	showBoost,
-	typeOptions,
 }) {
 	const [value, setValue] = useState(initialValue || defaultValue);
 
@@ -49,7 +48,6 @@ function FieldInput({
 				onBlur={_handleBlur}
 				onChange={_handleChange}
 				showBoost={showBoost}
-				typeOptions={typeOptions}
 			/>
 		</div>
 	);

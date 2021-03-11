@@ -47,5 +47,5 @@ export default {
 			en_US: 'Limit Search to Published Contents',
 		},
 	},
-	uiConfigurationJSON: [],
+	uiConfigurationJSON: {},
 };

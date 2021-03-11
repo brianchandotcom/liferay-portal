@@ -19,8 +19,9 @@ export default {
 				query: {
 					query: {
 						terms: {
-							assetCategoryIds: '${config.asset_category_ids}',
-							boost: '${config.boost}',
+							assetCategoryIds:
+								'${configuration.asset_category_ids}',
+							boost: '${configuration.boost}',
 						},
 					},
 				},
@@ -37,19 +38,24 @@ export default {
 			en_US: 'Boost Contents in a Category',
 		},
 	},
-	uiConfigurationJSON: [
-		{
-			defaultValue: [],
-			helpText: 'Add asset category IDs',
-			key: 'asset_category_ids',
-			label: 'Asset Categories',
-			type: 'multiselect',
-		},
-		{
-			defaultValue: 10,
-			key: 'boost',
-			label: 'Boost',
-			type: 'slider',
-		},
-	],
+	uiConfigurationJSON: {
+		fieldSets: [
+			{
+				fields: [
+					{
+						helpText: 'Add asset category IDs',
+						label: 'Asset Categories',
+						name: 'asset_category_ids',
+						type: 'multiselect',
+					},
+					{
+						defaultValue: 10,
+						label: 'Boost',
+						name: 'boost',
+						type: 'slider',
+					},
+				],
+			},
+		],
+	},
 };

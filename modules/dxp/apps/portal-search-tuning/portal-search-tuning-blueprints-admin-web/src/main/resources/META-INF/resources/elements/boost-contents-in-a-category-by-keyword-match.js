@@ -20,8 +20,8 @@ export default {
 					query: {
 						term: {
 							assetCategoryIds: {
-								boost: '${config.boost}',
-								value: '${config.asset_category_id}',
+								boost: '${configuration.boost}',
+								value: '${configuration.asset_category_id}',
 							},
 						},
 					},
@@ -34,7 +34,7 @@ export default {
 				configuration: {
 					evaluation_type: 'any_word_in',
 					parameter_name: '${keywords}',
-					value: '${config.keywords}',
+					value: '${configuration.keywords}',
 				},
 			},
 		],
@@ -48,24 +48,29 @@ export default {
 			en_US: 'Boost Contents in a Category by Keyword Match',
 		},
 	},
-	uiConfigurationJSON: [
-		{
-			helpText: 'Add asset category ID',
-			key: 'asset_category_id',
-			label: 'Asset Category',
-			type: 'number',
-		},
-		{
-			defaultValue: [],
-			key: 'keywords',
-			label: 'Keywords',
-			type: 'multiselect',
-		},
-		{
-			defaultValue: 10,
-			key: 'boost',
-			label: 'Boost',
-			type: 'slider',
-		},
-	],
+	uiConfigurationJSON: {
+		fieldSets: [
+			{
+				fields: [
+					{
+						helpText: 'Add asset category ID',
+						label: 'Asset Category',
+						name: 'asset_category_id',
+						type: 'number',
+					},
+					{
+						label: 'Keywords',
+						name: 'keywords',
+						type: 'multiselect',
+					},
+					{
+						defaultValue: 10,
+						label: 'Boost',
+						name: 'boost',
+						type: 'slider',
+					},
+				],
+			},
+		],
+	},
 };

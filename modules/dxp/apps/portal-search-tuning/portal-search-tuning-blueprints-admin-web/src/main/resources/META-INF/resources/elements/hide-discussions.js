@@ -59,5 +59,5 @@ export default {
 			en_US: 'Hide Comments',
 		},
 	},
-	uiConfigurationJSON: [],
+	uiConfigurationJSON: {},
 };

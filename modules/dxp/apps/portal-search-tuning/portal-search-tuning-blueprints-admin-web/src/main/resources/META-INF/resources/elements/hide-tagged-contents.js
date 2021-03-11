@@ -23,7 +23,7 @@ export default {
 								{
 									term: {
 										'assetTagNames.raw': {
-											value: '${config.asset_tag}',
+											value: '${configuration.asset_tag}',
 										},
 									},
 								},
@@ -44,12 +44,18 @@ export default {
 			en_US: 'Hide Tagged Contents',
 		},
 	},
-	uiConfigurationJSON: [
-		{
-			helpText: 'Add asset tag value',
-			key: 'asset_tag',
-			label: 'Asset Tag',
-			type: 'text',
-		},
-	],
+	uiConfigurationJSON: {
+		fieldSets: [
+			{
+				fields: [
+					{
+						helpText: 'Add asset tag value',
+						label: 'Asset Tag',
+						name: 'asset_tag',
+						type: 'text',
+					},
+				],
+			},
+		],
+	},
 };

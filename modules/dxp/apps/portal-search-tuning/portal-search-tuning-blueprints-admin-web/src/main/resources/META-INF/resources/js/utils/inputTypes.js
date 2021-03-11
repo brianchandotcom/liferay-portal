@@ -11,9 +11,9 @@
 
 export const INPUT_TYPES = {
 	DATE: 'date',
-	ENTITY: 'entity',
-	FIELD: 'field',
-	FIELD_LIST: 'field-list',
+	FIELD_MAPPING: 'fieldMapping',
+	FIELD_MAPPING_LIST: 'fieldMappingList',
+	ITEM_SELECTOR: 'itemSelector',
 	JSON: 'json',
 	MULTISELECT: 'multiselect',
 	NUMBER: 'number',

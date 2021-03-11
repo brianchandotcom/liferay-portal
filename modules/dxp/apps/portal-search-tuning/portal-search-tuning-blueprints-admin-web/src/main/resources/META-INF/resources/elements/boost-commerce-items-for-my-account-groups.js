@@ -19,7 +19,7 @@ export default {
 				query: {
 					query: {
 						terms: {
-							boost: '${config.boost}',
+							boost: '${configuration.boost}',
 							commerceAccountGroupIds:
 								'${commerce.commerce_account_group_ids}',
 						},
@@ -39,12 +39,18 @@ export default {
 			en_US: 'Boost Items for My Commerce Account Groups',
 		},
 	},
-	uiConfigurationJSON: [
-		{
-			defaultValue: 10,
-			key: 'boost',
-			label: 'Boost',
-			type: 'slider',
-		},
-	],
+	uiConfigurationJSON: {
+		fieldSets: [
+			{
+				fields: [
+					{
+						defaultValue: 10,
+						label: 'Boost',
+						name: 'boost',
+						type: 'slider',
+					},
+				],
+			},
+		],
+	},
 };

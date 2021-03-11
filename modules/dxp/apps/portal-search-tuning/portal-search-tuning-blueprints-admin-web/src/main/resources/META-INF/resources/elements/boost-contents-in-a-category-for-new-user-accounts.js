@@ -20,8 +20,8 @@ export default {
 					query: {
 						term: {
 							assetCategoryIds: {
-								boost: '${config.boost}',
-								value: '${config.asset_category_id}',
+								boost: '${configuration.boost}',
+								value: '${configuration.asset_category_id}',
 							},
 						},
 					},
@@ -36,7 +36,7 @@ export default {
 					evaluation_type: 'in_range',
 					parameter_name: '${user.user_create_date}',
 					value: [
-						'${time.current_date|modifier=-${config.time_range},dateFormat=yyyyMMdd}',
+						'${time.current_date|modifier=-${configuration.time_range},dateFormat=yyyyMMdd}',
 						'${time.current_date|modifier=+1d,dateFormat=yyyyMMdd}',
 					],
 				},
@@ -52,26 +52,34 @@ export default {
 			en_US: 'Boost Contents in a Category for New User Accounts',
 		},
 	},
-	uiConfigurationJSON: [
-		{
-			helpText: 'Add asset category ID',
-			key: 'asset_category_id',
-			label: 'Asset Category',
-			type: 'number',
-		},
-		{
-			defaultValue: 30,
-			key: 'time_range',
-			label: 'Time range',
-			type: 'number',
-			unit: 'days',
-			unitSuffix: 'd',
-		},
-		{
-			defaultValue: 20,
-			key: 'boost',
-			label: 'Boost',
-			type: 'slider',
-		},
-	],
+	uiConfigurationJSON: {
+		fieldSets: [
+			{
+				fields: [
+					{
+						helpText: 'Add asset category ID',
+						label: 'Asset Category',
+						name: 'asset_category_id',
+						type: 'number',
+					},
+					{
+						defaultValue: 30,
+						label: 'Time range',
+						name: 'time_range',
+						type: 'number',
+						typeOptions: {
+							unit: 'days',
+							unitSuffix: 'd',
+						},
+					},
+					{
+						defaultValue: 20,
+						label: 'Boost',
+						name: 'boost',
+						type: 'slider',
+					},
+				],
+			},
+		],
+	},
 };

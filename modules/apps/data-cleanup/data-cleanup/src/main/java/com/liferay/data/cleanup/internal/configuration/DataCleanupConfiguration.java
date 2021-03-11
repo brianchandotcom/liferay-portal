@@ -52,6 +52,12 @@ public interface DataCleanupConfiguration {
 	public boolean cleanUpDirectoryModuleData();
 
 	@Meta.AD(
+		deflt = "false", name = "clean-up-expired-journal-article-module-data",
+		required = false
+	)
+	public boolean cleanUpExpiredJournalArticleModuleData();
+
+	@Meta.AD(
 		deflt = "false", name = "clean-up-hello-world-module-data",
 		required = false
 	)

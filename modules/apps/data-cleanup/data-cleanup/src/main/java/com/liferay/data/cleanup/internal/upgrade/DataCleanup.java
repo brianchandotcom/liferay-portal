@@ -15,6 +15,7 @@
 package com.liferay.data.cleanup.internal.upgrade;
 
 import com.liferay.data.cleanup.internal.configuration.DataCleanupConfiguration;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -56,6 +57,13 @@ public class DataCleanup implements UpgradeStepRegistrator {
 			_cleanUpModuleData(
 				_dataCleanupConfiguration::cleanUpDirectoryModuleData,
 				"com.liferay.directory.web", DirectoryUpgradeProcess::new);
+
+			_cleanUpModuleData(
+				_dataCleanupConfiguration::
+					cleanUpExpiredJournalArticleModuleData,
+				"com.liferay.journal.service",
+				() -> new UpgradeExpiredJournalArticle(
+					_journalArticleLocalService));
 
 			_cleanUpModuleData(
 				_dataCleanupConfiguration::cleanUpImageEditorModuleData,
@@ -124,6 +132,9 @@ public class DataCleanup implements UpgradeStepRegistrator {
 
 	@Reference
 	private ImageLocalService _imageLocalService;
+
+	@Reference
+	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Reference
 	private MBThreadLocalService _mbThreadLocalService;

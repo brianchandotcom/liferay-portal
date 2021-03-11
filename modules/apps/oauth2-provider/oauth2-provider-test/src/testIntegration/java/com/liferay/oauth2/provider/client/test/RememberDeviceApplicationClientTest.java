@@ -19,6 +19,7 @@ import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -26,6 +27,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.util.Collections;
 import java.util.Map;
 
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.NewCookie;
@@ -51,7 +53,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testResponseCookieApplication() {
+	public void testCookieResponseApplicationCode() {
 		Response response = getCodeResponse(
 			"test@liferay.com", "test", null,
 			getCodeFunction(
@@ -62,95 +64,159 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 				).queryParam(
 					"response_type", "code"
 				),
-				_getExtraParameterForRememeberDevice()));
+				_getExtraParameterForRememberDevice(), false));
 
 		Map<String, NewCookie> cookies = response.getCookies();
 
-		Assert.assertFalse(cookies.containsKey(_COOKIE_REMEMBER_DEVICE));
+		NewCookie rememberDeviceCookie = cookies.get(_COOKIE_REMEMBER_DEVICE);
 
-		response = getCodeResponse(
+		Assert.assertNull(rememberDeviceCookie);
+	}
+
+	@Test
+	public void testCookieResponseApplicationCodePKCE() {
+		Response response = getCodeResponse(
 			"test@liferay.com", "test", null,
 			getCodeFunction(
 				webTarget -> webTarget.queryParam(
 					"client_id", "oauthTestApplicationCodePKCE"
 				).queryParam(
-					"redirect_uri", "http://redirecturi:8080"
+					"code_challenge",
+					generateCodeChallenge(RandomTestUtil.randomString())
 				).queryParam(
 					"response_type", "code"
+				).queryParam(
+					"redirect_uri", "http://redirecturi:8080"
 				),
-				_getExtraParameterForRememeberDevice()));
+				_getExtraParameterForRememberDevice(), false));
 
-		cookies = response.getCookies();
+		Map<String, NewCookie> cookies = response.getCookies();
 
-		Assert.assertFalse(cookies.containsKey(_COOKIE_REMEMBER_DEVICE));
+		NewCookie rememberDeviceCookie = cookies.get(_COOKIE_REMEMBER_DEVICE);
+
+		Assert.assertNull(rememberDeviceCookie);
 	}
 
 	@Test
-	public void testResponseCookieRememberApplication() {
+	public void testRememberApplicationCode() {
+		String applicationClientId = "oauthTestRememberApplicationCode";
+
 		Response response = getCodeResponse(
 			"test@liferay.com", "test", null,
 			getCodeFunction(
 				webTarget -> webTarget.queryParam(
-					"client_id", "oauthTestRememberApplicationCode"
+					"client_id", applicationClientId
 				).queryParam(
 					"redirect_uri", "http://redirecturi:8080"
 				).queryParam(
 					"response_type", "code"
 				),
-				_getExtraParameterForRememeberDevice()));
+				_getExtraParameterForRememberDevice(), false));
 
 		Map<String, NewCookie> cookies = response.getCookies();
 
-		Assert.assertTrue(cookies.containsKey(_COOKIE_REMEMBER_DEVICE));
+		NewCookie rememberDeviceCookie = cookies.get(_COOKIE_REMEMBER_DEVICE);
+
+		Assert.assertNotNull(rememberDeviceCookie);
+
+		String authorizationCodeString = parseAuthorizationCodeString(response);
+
+		Assert.assertNotNull(authorizationCodeString);
+
+		getToken(
+			applicationClientId, null,
+			(clientId, tokenInvocationBuilder) -> {
+				MultivaluedMap<String, String> formData =
+					new MultivaluedHashMap<>();
+
+				formData.add("client_id", applicationClientId);
+				formData.add("client_secret", "oauthTestApplicationSecret");
+				formData.add("grant_type", "authorization_code");
+				formData.add("code", authorizationCodeString);
+
+				return tokenInvocationBuilder.post(Entity.form(formData));
+			},
+			this::parseTokenString);
 
 		response = getCodeResponse(
 			"test@liferay.com", "test", null,
 			getCodeFunction(
 				webTarget -> webTarget.queryParam(
-					"client_id", "oauthTestRememberApplicationCode"
-				).queryParam(
-					"redirect_uri", "http://redirecturi:8080"
-				).queryParam(
-					"response_type", "code"
-				)));
-
-		cookies = response.getCookies();
-
-		Assert.assertFalse(cookies.containsKey(_COOKIE_REMEMBER_DEVICE));
-	}
-
-	@Test
-	public void testResponseCookieRememberApplicationPKCE() {
-		Response response = getCodeResponse(
-			"test@liferay.com", "test", null,
-			getCodeFunction(
-				webTarget -> webTarget.queryParam(
-					"client_id", "oauthTestRememberApplicationCodePKCE"
+					"client_id", applicationClientId
 				).queryParam(
 					"redirect_uri", "http://redirecturi:8080"
 				).queryParam(
 					"response_type", "code"
 				),
-				_getExtraParameterForRememeberDevice()));
+				null, true),
+			invocationBuilder -> invocationBuilder.cookie(
+				_COOKIE_REMEMBER_DEVICE, rememberDeviceCookie.getValue()));
+
+		Assert.assertNotNull(parseAuthorizationCodeString(response));
+	}
+
+	@Test
+	public void testRememberApplicationCodePKCE() {
+		String applicationClientId = "oauthTestRememberApplicationCodePKCE";
+
+		String codeVerifierString = RandomTestUtil.randomString();
+
+		Response response = getCodeResponse(
+			"test@liferay.com", "test", null,
+			getCodeFunction(
+				webTarget -> webTarget.queryParam(
+					"client_id", applicationClientId
+				).queryParam(
+					"code_challenge", generateCodeChallenge(codeVerifierString)
+				).queryParam(
+					"response_type", "code"
+				).queryParam(
+					"redirect_uri", "http://redirecturi:8080"
+				),
+				_getExtraParameterForRememberDevice(), false));
 
 		Map<String, NewCookie> cookies = response.getCookies();
 
-		Assert.assertTrue(cookies.containsKey(_COOKIE_REMEMBER_DEVICE));
+		NewCookie rememberDeviceCookie = cookies.get(_COOKIE_REMEMBER_DEVICE);
+
+		Assert.assertNotNull(rememberDeviceCookie);
+
+		String authorizationCodeString = parseAuthorizationCodeString(response);
+
+		Assert.assertNotNull(authorizationCodeString);
+
+		getToken(
+			applicationClientId, null,
+			(clientId, tokenInvocationBuilder) -> {
+				MultivaluedMap<String, String> formData =
+					new MultivaluedHashMap<>();
+
+				formData.add("client_id", clientId);
+				formData.add("code", authorizationCodeString);
+				formData.add("code_verifier", codeVerifierString);
+				formData.add("grant_type", "authorization_code");
+
+				return tokenInvocationBuilder.post(Entity.form(formData));
+			},
+			this::parseTokenString);
 
 		response = getCodeResponse(
 			"test@liferay.com", "test", null,
 			getCodeFunction(
 				webTarget -> webTarget.queryParam(
-					"client_id", "oauthTestRememberApplicationCodePKCE"
+					"client_id", applicationClientId
 				).queryParam(
-					"redirect_uri", "http://redirecturi:8080"
+					"code_challenge", codeVerifierString
 				).queryParam(
 					"response_type", "code"
-				)));
+				).queryParam(
+					"redirect_uri", "http://redirecturi:8080"
+				),
+				true),
+			invocationBuilder -> invocationBuilder.cookie(
+				_COOKIE_REMEMBER_DEVICE, rememberDeviceCookie.getValue()));
 
-		cookies = response.getCookies();
-
-		Assert.assertFalse(cookies.containsKey(_COOKIE_REMEMBER_DEVICE));
+		Assert.assertNotNull(parseAuthorizationCodeString(response));
 	}
 
 	public static class RememberApplicationClientTestPreparatorBundleActivator
@@ -169,9 +235,8 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 			createOAuth2Application(
 				defaultCompanyId, user, "oauthTestApplicationCodePKCE", null,
 				Collections.singletonList(GrantType.AUTHORIZATION_CODE_PKCE),
-				Collections.singletonList("everything"),
 				Collections.singletonList("http://redirecturi:8080"), false,
-				false);
+				Collections.singletonList("everything"), false);
 			createOAuth2Application(
 				defaultCompanyId, user, "oauthTestRememberApplicationCode",
 				Collections.singletonList(GrantType.AUTHORIZATION_CODE), true,
@@ -180,9 +245,8 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 				defaultCompanyId, user, "oauthTestRememberApplicationCodePKCE",
 				null,
 				Collections.singletonList(GrantType.AUTHORIZATION_CODE_PKCE),
-				Collections.singletonList("everything"),
 				Collections.singletonList("http://redirecturi:8080"), true,
-				false);
+				Collections.singletonList("everything"), false);
 		}
 
 	}
@@ -193,7 +257,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 	}
 
 	private MultivaluedMap<String, String>
-		_getExtraParameterForRememeberDevice() {
+		_getExtraParameterForRememberDevice() {
 
 		MultivaluedMap<String, String> extraParameters =
 			new MultivaluedHashMap<>();

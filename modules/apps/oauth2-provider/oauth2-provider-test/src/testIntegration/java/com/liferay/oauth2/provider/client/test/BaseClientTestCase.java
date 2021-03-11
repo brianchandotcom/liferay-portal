@@ -106,6 +106,17 @@ public abstract class BaseClientTestCase {
 		return invocationBuilder.header("Authorization", "Bearer " + token);
 	}
 
+	protected String generateCodeChallenge(String codeVerifier) {
+		String base64Digest = DigesterUtil.digestBase64(
+			Digester.SHA_256, codeVerifier);
+
+		String base64UrlDigest = StringUtil.replace(
+			base64Digest, new char[] {CharPool.PLUS, CharPool.SLASH},
+			new char[] {CharPool.MINUS, CharPool.UNDERLINE});
+
+		return StringUtil.removeChar(base64UrlDigest, CharPool.EQUAL);
+	}
+
 	protected Cookie getAuthenticatedCookie(
 		String login, String password, String hostname) {
 
@@ -214,17 +225,7 @@ public abstract class BaseClientTestCase {
 		return (clientId, invocationBuilder) -> {
 			String codeVerifier = RandomTestUtil.randomString();
 
-			String base64Digest = DigesterUtil.digestBase64(
-				Digester.SHA_256, codeVerifier);
-
-			String base64UrlDigest = StringUtil.replace(
-				base64Digest, new char[] {CharPool.PLUS, CharPool.SLASH},
-				new char[] {CharPool.MINUS, CharPool.UNDERLINE});
-
-			base64UrlDigest = StringUtil.removeChar(
-				base64UrlDigest, CharPool.EQUAL);
-
-			final String codeChallenge = base64UrlDigest;
+			final String codeChallenge = generateCodeChallenge(codeVerifier);
 
 			String authorizationCode = parseAuthorizationCodeString(
 				getCodeResponse(
@@ -294,13 +295,23 @@ public abstract class BaseClientTestCase {
 		getCodeFunction(
 			Function<WebTarget, WebTarget> authorizeRequestFunction) {
 
-		return getCodeFunction(authorizeRequestFunction, null);
+		return getCodeFunction(authorizeRequestFunction, null, false);
 	}
 
 	protected Function<Function<WebTarget, Invocation.Builder>, Response>
 		getCodeFunction(
 			Function<WebTarget, WebTarget> authorizeRequestFunction,
-			MultivaluedMap<String, String> extraParameters) {
+			boolean skipAuthorization) {
+
+		return getCodeFunction(
+			authorizeRequestFunction, null, skipAuthorization);
+	}
+
+	protected Function<Function<WebTarget, Invocation.Builder>, Response>
+		getCodeFunction(
+			Function<WebTarget, WebTarget> authorizeRequestFunction,
+			MultivaluedMap<String, String> extraParameters,
+			boolean skipAuthorization) {
 
 		return invocationBuilderFunction -> {
 			Invocation.Builder invocationBuilder =
@@ -319,6 +330,10 @@ public abstract class BaseClientTestCase {
 				uri.getQuery());
 
 			if (parameterMap.containsKey("error")) {
+				return response;
+			}
+
+			if (skipAuthorization) {
 				return response;
 			}
 

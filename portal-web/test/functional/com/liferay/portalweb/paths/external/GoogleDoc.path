@@ -27,7 +27,7 @@
 <!--INSERT_LINK-->
 <tr>
 	<td>INSERT_LINK_APPLY_BUTTON</td>
-	<td>//div[contains(@class,'insertlinkbubble-buttonbar')]</td>
+	<td>//div[contains(@class,'docs-link-smartlinksuggestion-title')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -47,12 +47,12 @@
 </tr>
 <tr>
 	<td>INSERT_LINK_LINK</td>
-	<td>//div[contains(@class,'urlinput-url-container')]/input[@type='text']</td>
+	<td>//div[contains(@class,'docs-smart-link-searchinput-search-container')]/input[@type='text']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>INSERT_LINK_TEXT</td>
-	<td>//div[@class="docs-link-insertlinkbubble-toppane"]/input[@type='text']</td>
+	<td>//div[@class="docs-link-insertlinkbubble-text-wrapper"]/input[@type='text']</td>
 	<td></td>
 </tr>
 </tbody>

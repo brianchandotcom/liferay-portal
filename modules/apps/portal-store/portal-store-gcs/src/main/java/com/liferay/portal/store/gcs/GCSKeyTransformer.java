@@ -14,14 +14,10 @@
 
 package com.liferay.portal.store.gcs;
 
-import com.google.common.hash.HashCode;
-import com.google.common.hash.HashFunction;
-import com.google.common.hash.Hashing;
-
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.Digester;
+import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-
-import java.nio.charset.StandardCharsets;
 
 /**
  * @author Edward C. Han
@@ -80,12 +76,8 @@ public class GCSKeyTransformer {
 				0, normalizedFileName.length() - 1);
 		}
 
-		HashFunction hashFunction = Hashing.sha1();
-
-		HashCode hashCode = hashFunction.hashString(
-			normalizedFileName, StandardCharsets.UTF_8);
-
-		return StringPool.SLASH + hashCode.toString();
+		return StringPool.SLASH +
+			DigesterUtil.digest(Digester.SHA_1, normalizedFileName);
 	}
 
 }

@@ -259,6 +259,11 @@
 	<td>xpath=(//div[contains(@class,'ddm-field')][contains(@data-field-name,'${key_fieldName}')][not(contains(@class,'container'))])[${key_index}]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>REPEATED_DATE_FIELD</td>
+	<td>xpath=(//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div[contains(@class,'date-picker')]//input[@type='text'])[${index}]</td>
+	<td></td>
+</tr>
 <!--REPEATED FIELD BY INDEX-->
 <tr>
 	<td>REPEATED_FIELD_BY_INDEX</td>

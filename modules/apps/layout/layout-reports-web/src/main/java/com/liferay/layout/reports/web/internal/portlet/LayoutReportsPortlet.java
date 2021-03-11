@@ -15,7 +15,13 @@
 package com.liferay.layout.reports.web.internal.portlet;
 
 import com.liferay.layout.reports.web.internal.constants.LayoutReportsPortletKeys;
+import com.liferay.layout.reports.web.internal.constants.LayoutReportsWebKeys;
+import com.liferay.layout.reports.web.internal.display.context.LayoutReportsDisplayContext;
+import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -74,8 +80,26 @@ public class LayoutReportsPortlet extends MVCPortlet {
 			return;
 		}
 
+		httpServletRequest.setAttribute(
+			LayoutReportsWebKeys.LAYOUT_REPORTS_DISPLAY_CONTEXT,
+			new LayoutReportsDisplayContext(
+				_groupLocalService, _layoutLocalService, _layoutSEOLinkManager,
+				_language, _portal, renderRequest));
+
 		super.doDispatch(renderRequest, renderResponse);
 	}
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Language _language;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutSEOLinkManager _layoutSEOLinkManager;
 
 	@Reference
 	private Portal _portal;

@@ -916,30 +916,30 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 		</sequential>
 	</macrodef>
 
-	<macrodef name="get-portal-license-product-name">
-		<attribute default="ci-license.xml" name="portal.license.file" />
+	<macrodef name="get-dxp-license-product-name">
+		<attribute default="ci-license.xml" name="dxp.license.file" />
 
 		<sequential>
 			<if>
 				<not>
-					<isset property="portal.license.file" />
+					<isset property="dxp.license.file" />
 				</not>
 				<then>
-					<var name="portal.license.file" value="ci-license.xml" />
+					<var name="dxp.license.file" value="ci-license.xml" />
 				</then>
 			</if>
 
-			<var name="portal.license.product.name" unset="true" />
+			<var name="dxp.license.product.name" unset="true" />
 
 			<loadfile
 				property="dxp.license.content"
-				srcfile="${liferay.home}/osgi/modules/@{portal.license.file}"
+				srcfile="${liferay.home}/osgi/modules/@{dxp.license.file}"
 			/>
 
 			<propertyregex
 				casesensitive="false"
 				input="${dxp.license.content}"
-				property="portal.license.product.name"
+				property="dxp.license.product.name"
 				regexp="&lt;product-name&gt;(.*?)&lt;/product-name&gt;"
 				select="\1"
 			/>
@@ -6043,7 +6043,7 @@ war.path=${app.server.portal.dir}/</echo>
 	<macrodef name="wait-for-license-activation">
 		<sequential>
 			<get-testcase-property property.name="commerce.license.file" />
-			<get-testcase-property property.name="portal.license.file" />
+			<get-testcase-property property.name="dxp.license.file" />
 
 			<get-commerce-license-product-name commerce.license.file="${commerce.license.file}" />
 
@@ -6051,11 +6051,11 @@ war.path=${app.server.portal.dir}/</echo>
 
 			<wait-for-app-server-log-message log.message="License registered for ${commerce.license.product.name}" />
 
-			<get-portal-license-product-name portal.license.file="${portal.license.file}" />
+			<get-dxp-license-product-name dxp.license.file="${dxp.license.file}" />
 
-			<wait-for-app-server-log-message log.message="${portal.license.product.name} license validation passed" />
+			<wait-for-app-server-log-message log.message="${dxp.license.product.name} license validation passed" />
 
-			<wait-for-app-server-log-message log.message="License registered for ${portal.license.product.name}" />
+			<wait-for-app-server-log-message log.message="License registered for ${dxp.license.product.name}" />
 		</sequential>
 	</macrodef>
 

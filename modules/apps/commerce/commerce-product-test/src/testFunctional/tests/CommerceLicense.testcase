@@ -319,7 +319,7 @@ definition {
 	test ProductionLicense {
 		property commerce.enabled = "true";
 		property commerce.license.file = "commerce-license-production-basic.xml";
-		property portal.license.file = "portal-license-production-basic.xml";
+		property dxp.license.file = "dxp-license-production.xml";
 
 		CommerceLicense.executeSmoke();
 	}

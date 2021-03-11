@@ -447,6 +447,36 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-dxp-license-product-name">
+		<sequential>
+			<get-testcase-property property.name="dxp.license.file" />
+
+			<if>
+				<not>
+					<isset property="dxp.license.file" />
+				</not>
+				<then>
+					<var name="dxp.license.file" value="ci-license.xml" />
+				</then>
+			</if>
+
+			<var name="dxp.license.product.name" unset="true" />
+
+			<loadfile
+				property="dxp.license.content"
+				srcfile="${liferay.home}/osgi/modules/${dxp.license.file}"
+			/>
+
+			<propertyregex
+				casesensitive="false"
+				input="${dxp.license.content}"
+				property="dxp.license.product.name"
+				regexp="&lt;product-name&gt;(.*?)&lt;/product-name&gt;"
+				select="\1"
+			/>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-fixpack-version">
 		<attribute name="patch.file.zip.url" />
 
@@ -913,36 +943,6 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 
 			<delete dir="${tstamp.value}-dir" />
 			<delete file="${tstamp.value}.zip" />
-		</sequential>
-	</macrodef>
-
-	<macrodef name="get-dxp-license-product-name">
-		<sequential>
-			<get-testcase-property property.name="dxp.license.file" />
-
-			<if>
-				<not>
-					<isset property="dxp.license.file" />
-				</not>
-				<then>
-					<var name="dxp.license.file" value="ci-license.xml" />
-				</then>
-			</if>
-
-			<var name="dxp.license.product.name" unset="true" />
-
-			<loadfile
-				property="dxp.license.content"
-				srcfile="${liferay.home}/osgi/modules/${dxp.license.file}"
-			/>
-
-			<propertyregex
-				casesensitive="false"
-				input="${dxp.license.content}"
-				property="dxp.license.product.name"
-				regexp="&lt;product-name&gt;(.*?)&lt;/product-name&gt;"
-				select="\1"
-			/>
 		</sequential>
 	</macrodef>
 

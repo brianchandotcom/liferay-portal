@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser.testray;
 
+import com.liferay.jenkins.results.parser.SourceFormatBuild;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.FunctionalAxisTestClassGroup;
@@ -51,6 +52,11 @@ public class TestrayCaseResultFactory {
 				return new JUnitBatchTestrayCaseResult(
 					testrayBuild, topLevelBuild, axisTestClassGroup, testClass);
 			}
+		}
+
+		if (topLevelBuild instanceof SourceFormatBuild) {
+			return new SFBatchTestrayCaseResult(
+				testrayBuild, topLevelBuild, axisTestClassGroup);
 		}
 
 		return new BatchTestrayCaseResult(

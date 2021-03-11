@@ -130,6 +130,10 @@ export default function ({context}) {
 			>
 				<StoreContextProvider
 					value={{
+						endpoints: {...state.data.endpoints},
+						languageTag: state.data.languageTag,
+						namespace: state.data.namespace,
+						page: state.data.page,
 						publishedToday: state.data.publishedToday,
 					}}
 				>
@@ -142,13 +146,9 @@ export default function ({context}) {
 							<Navigation
 								author={state.data.author}
 								canonicalURL={state.data.canonicalURL}
-								endpoints={state.data.endpoints}
-								languageTag={state.data.languageTag}
-								namespace={state.data.namespace}
 								onSelectedLanguageClick={
 									handleSelectedLanguageClick
 								}
-								page={state.data.page}
 								pagePublishDate={state.data.publishDate}
 								pageTitle={state.data.title}
 								timeSpanOptions={state.data.timeSpans}

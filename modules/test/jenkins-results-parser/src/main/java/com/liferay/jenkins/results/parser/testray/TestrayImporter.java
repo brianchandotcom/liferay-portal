@@ -1504,7 +1504,31 @@ public class TestrayImporter {
 			}
 		}
 
-		return string;
+		StringBuilder sb = new StringBuilder();
+
+		if (portalRelease == null) {
+			PortalGitWorkingDirectory portalGitWorkingDirectory =
+				_getPortalGitWorkingDirectory();
+
+			sb.append(portalGitWorkingDirectory.getMajorPortalVersion());
+
+			sb.append(".x");
+		}
+		else {
+			sb.append(portalRelease.getPortalVersion());
+
+			if (portalFixpackRelease != null) {
+				sb.append(" FP");
+				sb.append(portalFixpackRelease.getPortalFixpackVersion());
+			}
+
+			if (portalHotfixRelease != null) {
+				sb.append(" HF");
+				sb.append(portalHotfixRelease.getPortalHotfixReleaseVersion());
+			}
+		}
+
+		return string.replace("$(portal.release.name)", sb.toString());
 	}
 
 	private String _replaceEnvVarsPullRequestBuild(String string) {

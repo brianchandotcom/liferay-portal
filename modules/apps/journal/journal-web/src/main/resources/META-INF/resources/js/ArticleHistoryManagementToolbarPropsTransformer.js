@@ -12,10 +12,8 @@
  * details.
  */
 
-import {DefaultEventHandler} from 'frontend-js-web';
-
-class ArticleHistoryManagementToolbarDefaultEventHandler extends DefaultEventHandler {
-	deleteArticles(itemData) {
+export default function propsTransformer({portletNamespace, ...otherProps}) {
+	const deleteArticles = (itemData) => {
 		if (
 			confirm(
 				Liferay.Language.get(
@@ -23,11 +21,15 @@ class ArticleHistoryManagementToolbarDefaultEventHandler extends DefaultEventHan
 				)
 			)
 		) {
-			submitForm(this.one('#fm'), itemData.deleteArticlesURL);
-		}
-	}
+			const form = document.getElementById(`${portletNamespace}fm`);
 
-	expireArticles(itemData) {
+			if (form) {
+				submitForm(form, itemData.deleteArticlesURL);
+			}
+		}
+	};
+
+	const expireArticles = (itemData) => {
 		if (
 			confirm(
 				Liferay.Language.get(
@@ -35,9 +37,27 @@ class ArticleHistoryManagementToolbarDefaultEventHandler extends DefaultEventHan
 				)
 			)
 		) {
-			submitForm(this.one('#fm'), itemData.expireArticlesURL);
-		}
-	}
-}
+			const form = document.getElementById(`${portletNamespace}fm`);
 
-export default ArticleHistoryManagementToolbarDefaultEventHandler;
+			if (form) {
+				submitForm(form, itemData.expireArticlesURL);
+			}
+		}
+	};
+
+	return {
+		...otherProps,
+		onActionButtonClick(event, {item}) {
+			const data = item.data;
+
+			const action = data?.action;
+
+			if (action === 'deleteArticles') {
+				deleteArticles(data);
+			}
+			else if (action === 'expireArticles') {
+				expireArticles(data);
+			}
+		},
+	};
+}

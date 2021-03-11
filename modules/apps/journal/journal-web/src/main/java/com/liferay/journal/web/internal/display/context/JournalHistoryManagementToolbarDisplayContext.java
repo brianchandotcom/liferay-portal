@@ -165,11 +165,6 @@ public class JournalHistoryManagementToolbarDisplayContext
 	}
 
 	@Override
-	public String getDefaultEventHandler() {
-		return "journalArticleHistoryManagementToolbarDefaultEventHandler";
-	}
-
-	@Override
 	public String getSearchContainerId() {
 		return "articleVersions";
 	}

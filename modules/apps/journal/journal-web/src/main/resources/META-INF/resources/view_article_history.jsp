@@ -46,8 +46,9 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 			navigationItems="<%= journalHistoryDisplayContext.getNavigationItems() %>"
 		/>
 
-		<clay:management-toolbar-v2
-			displayContext="<%= journalHistoryManagementToolbarDisplayContext %>"
+		<clay:management-toolbar
+			managementToolbarDisplayContext="<%= journalHistoryManagementToolbarDisplayContext %>"
+			propsTransformer="js/ArticleHistoryManagementToolbarPropsTransformer"
 		/>
 
 		<%
@@ -191,10 +192,5 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 				/>
 			</liferay-ui:search-container>
 		</aui:form>
-
-		<liferay-frontend:component
-			componentId="<%= journalHistoryManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-			module="js/ArticleHistoryManagementToolbarDefaultEventHandler.es"
-		/>
 	</c:otherwise>
 </c:choose>

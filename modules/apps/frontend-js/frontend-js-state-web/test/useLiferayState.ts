@@ -15,11 +15,12 @@
 import {act, renderHook} from '@testing-library/react-hooks';
 
 import State from '../src/main/resources/META-INF/resources/State';
+import useLiferayState from '../src/main/resources/META-INF/resources/useLiferayState';
+
 import type {
 	Atom,
 	Selector,
 } from '../src/main/resources/META-INF/resources/State';
-import useLiferayState from '../src/main/resources/META-INF/resources/useLiferayState';
 
 describe('State', () => {
 	let atom: Atom<string>;

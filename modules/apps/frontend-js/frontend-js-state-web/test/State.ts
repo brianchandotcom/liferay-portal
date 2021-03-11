@@ -13,11 +13,12 @@
  */
 
 import State from '../src/main/resources/META-INF/resources/State';
+import {withEnv} from './helpers';
+
 import type {
 	Atom,
 	Selector,
 } from '../src/main/resources/META-INF/resources/State';
-import {withEnv} from './helpers';
 
 describe('State', () => {
 	beforeEach(() => {
@@ -261,19 +262,24 @@ describe('State', () => {
 				/cycle detected: "directCycle" -> "directCycle"/
 			);
 
-			let indirect: Selector<string>;
+			/* eslint-disable @typescript-eslint/no-use-before-define */
 
-			const intermediate = State.selector('intermediate', (get) => {
-				return `1:${get(indirect)}:`;
-			});
+			const intermediate: Selector<string> = State.selector(
+				'intermediate',
+				(get) => {
+					return `1:${get(indirect)}:`;
+				}
+			);
 
 			const other = State.selector('other', (get) => {
 				return `2:${get(intermediate)}:`;
 			});
 
-			indirect = State.selector('indirectCycle', (get) => {
+			const indirect = State.selector('indirectCycle', (get) => {
 				return `3:${get(other)}:`;
 			});
+
+			/* eslint-enable @typescript-eslint/no-use-before-define */
 
 			expect(() => State.readSelector(indirect)).toThrow(
 				/cycle detected: "indirectCycle" -> "other" -> "intermediate" -> "indirectCycle"/
@@ -646,11 +652,11 @@ describe('State', () => {
 
 	describe('__unsafe__', () => {
 		let atom: Atom<string>;
-		let selector: Selector<number>;
 
 		beforeEach(() => {
 			atom = State.atom('atom', 'hello');
-			selector = State.selector('selector', (get) => get(atom).length);
+
+			State.selector('selector', (get) => get(atom).length);
 
 			jest.spyOn(console, 'warn');
 		});

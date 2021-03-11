@@ -18,15 +18,15 @@ import deepFreeze from './deepFreeze';
 const ATOM = Symbol('Liferay.State.ATOM');
 const SELECTOR = Symbol('Liferay.State.SELECTOR');
 
+interface Getter {
+	<T>(atomOrSelector: Atom<T> | Selector<T>): Immutable<T>;
+}
+
 export type Atom<T> = Immutable<{
 	[ATOM]: true;
 	default: T;
 	key: string;
 }>;
-
-interface Getter {
-	<T>(atomOrSelector: Atom<T> | Selector<T>): Immutable<T>;
-}
 
 export type Selector<T> = Immutable<{
 	[SELECTOR]: true;
@@ -54,231 +54,6 @@ const warnings = {
 };
 
 const State = {
-
-	/**
-	 * Register a unit of shared state called an "atom". Atoms have a unique
-	 * string key, a type `T`, and a default value. Atoms themselves are
-	 * immutable, but are each associated with a corresponding "current" value
-	 * that can be read, updated, and observed.
-	 *
-	 * Given an atom, you can interact with the current value associated with it
-	 * in these ways:
-	 *
-	 * - Read it with `read()` or `readAtom()`.
-	 * - Update it with `write()` or `writeAtom()`.
-	 * - Subscribe to be notified of changes with `subscribe()`.
-	 * - In the context of a React component, use the `useLiferayState()` hook
-	 *   to do all of the above.
-	 */
-	atom<T>(key: string, value: T): Atom<T> {
-		if (atoms.has(key)) {
-			if (process.env.NODE_ENV === 'production') {
-
-				// Unlike in development where there may be hot-reloading,
-				// re-registering (overwriting) is not considered ok.
-
-				throw new Error(
-					`Liferay.State.atom(): key ${JSON.stringify(
-						key
-					)} already taken`
-				);
-			}
-		}
-
-		if (selectors.has(key)) {
-			throw new Error(
-				`Liferay.State.atom(): key ${JSON.stringify(
-					key
-				)} already taken by a selector`
-			);
-		}
-
-		const atom = deepFreeze({
-			[ATOM]: true,
-			default: value,
-			key,
-		} as const);
-
-		atoms.set(key, atom);
-
-		return atom;
-	},
-
-	/**
-	 * Read the current value associated with the provided atom or selector.
-	 *
-	 * This is a convenience wrapper around `readAtom()` and `readSelector()`.
-	 */
-	read<T>(atomOrSelector: Atom<T> | Selector<T>): Immutable<T> {
-		if (isAtom(atomOrSelector)) {
-			return State.readAtom(atomOrSelector);
-		}
-		else {
-			return State.readSelector(atomOrSelector);
-		}
-	},
-
-	/**
-	 * Read the current value associated with the provided atom.
-	 */
-	readAtom<T>(atom: Atom<T>): Immutable<T> {
-		if (values.has(atom)) {
-			return values.get(atom) as any;
-		}
-		else {
-			return atom.default;
-		}
-	},
-
-	/**
-	 * Read the current value associated with the provided selector.
-	 */
-	readSelector<T>(selector: Selector<T>): Immutable<T> {
-		const seen = new Set<Selector<unknown>>();
-
-		return State._readSelector(selector, seen);
-	},
-
-	/**
-	 * Register a shared unit of derived state called a "selector", identified
-	 * by a unique string key. Selectors derive their values via a "pure"
-	 * function that reads atoms and/or other selectors. Selectors form a
-	 * dependency graph, which means that when upstream atoms or selectors
-	 * change, the dependent selectors get automatically and efficiently
-	 * recomputed.
-	 *
-	 * Given a selector, you can interact with the current value associated with
-	 * it in these ways:
-	 *
-	 * - Read it with `read()` or `readSelector()`.
-	 * - Subscribe to be notified of changes with `subscribe()`.
-	 * - In the context of a React component, use the `useLiferayState()` hook
-	 *   to do both of the above.
-	 *
-	 * Note that, unlike atoms, you cannot `write()` directly to a selector;
-	 * instead, you update them by changing their upstream atoms, which causes
-	 * the affected selectors to re-derive their updated values.
-	 */
-	selector<T>(key: string, deriveValue: (get: Getter) => T) {
-		if (selectors.has(key)) {
-			if (process.env.NODE_ENV === 'production') {
-
-				// In development where there may be hot-reloading,
-				// re-registering (overwriting) is considered ok.
-
-				throw new Error(
-					`Liferay.State.selector(): key ${JSON.stringify(
-						key
-					)} already taken`
-				);
-			}
-		}
-
-		if (atoms.has(key)) {
-			throw new Error(
-				`Liferay.State.selector(): key ${JSON.stringify(
-					key
-				)} already taken by an atom`
-			);
-		}
-
-		const selector = deepFreeze({
-			[SELECTOR]: true,
-			key,
-			deriveValue,
-		} as const);
-
-		selectors.set(key, selector);
-
-		return selector;
-	},
-
-	/**
-	 * Subscribe to be notified of changes to an atom or selector.
-	 *
-	 * The supplied `callback()` function will be invoked with the new value
-	 * whenever it changes. To unsubscribe, use the `dispose()` function that is
-	 * returned.
-	 *
-	 * In the context of a React component, the `useLiferayState()` hook can be
-	 * used to observe and trigger state changes in a way that is analagous to
-	 * the built-in `useState()` hook.
-	 */
-	subscribe<T extends any>(
-		atomOrSelector: Atom<T> | Selector<T>,
-		callback: (value: Immutable<T>) => void
-	): {dispose: () => void} {
-		const dispose = subscribers.addCallback(atomOrSelector, callback);
-
-		if (!isAtom(atomOrSelector)) {
-
-			// Read once in order to pre-populate dependency graph.
-
-			State.readSelector(atomOrSelector);
-		}
-
-		return {dispose};
-	},
-
-	/**
-	 * Attempt to update the value associated with the provided atom or
-	 * selector.
-	 *
-	 * Note that this is just a convenience wrapper around `writeAtom()` that
-	 * serves principally to streamline calls (for example, from the
-	 * `useLiferayState()` hook), and in practice it is an error to attempt a
-	 * direct update to a selector (instead, the upstream atoms that it depends
-	 * on should be updated).
-	 */
-	write<T>(atomOrSelector: Atom<T> | Selector<T>, value: T): void {
-		if (isAtom(atomOrSelector)) {
-			State.writeAtom(atomOrSelector, value);
-		}
-		else {
-			throw new Error(
-				`Liferay.State.write(): expected atom but received selector with key ${JSON.stringify(
-					atomOrSelector.key
-				)}`
-			);
-		}
-	},
-
-	/**
-	 * Update the value associated with the provided atom, notifying any
-	 * downstream subscribers (of the atom itself, or selectors that depend on
-	 * it).
-	 */
-	writeAtom<T>(atom: Atom<T>, value: T): void {
-		const previous = values.get(atom);
-
-		if (Object.is(value, previous)) {
-			return;
-		}
-
-		const frozen = deepFreeze(value);
-
-		values.set(atom, frozen);
-
-		for (const callback of subscribers.getCallbacks(atom).values()) {
-			State._notify(callback, frozen);
-		}
-
-		// TODO: think about whether it makes sense to notify the
-		// invalidated subscribers in this order
-
-		const invalidatedSelectors: Array<Selector<unknown>> = [];
-
-		this._invalidateDependencies(atom, invalidatedSelectors);
-
-		for (const selector of invalidatedSelectors) {
-			for (const callback of subscribers
-				.getCallbacks(selector)
-				.values()) {
-				State._notify(callback, State.readSelector(selector));
-			}
-		}
-	},
-
 	__internal__: {
 		debug: {
 			get atoms() {
@@ -439,6 +214,7 @@ const State = {
 			);
 
 			if (process.env.NODE_ENV === 'development') {
+				/* eslint-disable-next-line no-console */
 				console.info(
 					`Callback name: ${callback.name || 'undefined'}\n` +
 						'Callback body:\n\n' +
@@ -496,6 +272,227 @@ const State = {
 		}
 
 		return values.get(selector) as any;
+	},
+
+	/**
+	 * Register a unit of shared state called an "atom". Atoms have a unique
+	 * string key, a type `T`, and a default value. Atoms themselves are
+	 * immutable, but are each associated with a corresponding "current" value
+	 * that can be read, updated, and observed.
+	 *
+	 * Given an atom, you can interact with the current value associated with it
+	 * in these ways:
+	 *
+	 * - Read it with `read()` or `readAtom()`.
+	 * - Update it with `write()` or `writeAtom()`.
+	 * - Subscribe to be notified of changes with `subscribe()`.
+	 * - In the context of a React component, use the `useLiferayState()` hook
+	 *   to do all of the above.
+	 */
+	atom<T>(key: string, value: T): Atom<T> {
+		if (atoms.has(key)) {
+			if (process.env.NODE_ENV === 'production') {
+
+				// Unlike in development where there may be hot-reloading,
+				// re-registering (overwriting) is not considered ok.
+
+				throw new Error(
+					`Liferay.State.atom(): key ${JSON.stringify(
+						key
+					)} already taken`
+				);
+			}
+		}
+
+		if (selectors.has(key)) {
+			throw new Error(
+				`Liferay.State.atom(): key ${JSON.stringify(
+					key
+				)} already taken by a selector`
+			);
+		}
+
+		const atom = deepFreeze({
+			[ATOM]: true,
+			default: value,
+			key,
+		} as const);
+
+		atoms.set(key, atom);
+
+		return atom;
+	},
+
+	/**
+	 * Read the current value associated with the provided atom or selector.
+	 *
+	 * This is a convenience wrapper around `readAtom()` and `readSelector()`.
+	 */
+	read<T>(atomOrSelector: Atom<T> | Selector<T>): Immutable<T> {
+		if (isAtom(atomOrSelector)) {
+			return State.readAtom(atomOrSelector);
+		}
+		else {
+			return State.readSelector(atomOrSelector);
+		}
+	},
+
+	/**
+	 * Read the current value associated with the provided atom.
+	 */
+	readAtom<T>(atom: Atom<T>): Immutable<T> {
+		if (values.has(atom)) {
+			return values.get(atom) as any;
+		}
+		else {
+			return atom.default;
+		}
+	},
+
+	/**
+	 * Read the current value associated with the provided selector.
+	 */
+	readSelector<T>(selector: Selector<T>): Immutable<T> {
+		const seen = new Set<Selector<unknown>>();
+
+		return State._readSelector(selector, seen);
+	},
+
+	/**
+	 * Register a shared unit of derived state called a "selector", identified
+	 * by a unique string key. Selectors derive their values via a "pure"
+	 * function that reads atoms and/or other selectors. Selectors form a
+	 * dependency graph, which means that when upstream atoms or selectors
+	 * change, the dependent selectors get automatically and efficiently
+	 * recomputed.
+	 *
+	 * Given a selector, you can interact with the current value associated with
+	 * it in these ways:
+	 *
+	 * - Read it with `read()` or `readSelector()`.
+	 * - Subscribe to be notified of changes with `subscribe()`.
+	 * - In the context of a React component, use the `useLiferayState()` hook
+	 *   to do both of the above.
+	 *
+	 * Note that, unlike atoms, you cannot `write()` directly to a selector;
+	 * instead, you update them by changing their upstream atoms, which causes
+	 * the affected selectors to re-derive their updated values.
+	 */
+	selector<T>(key: string, deriveValue: (get: Getter) => T) {
+		if (selectors.has(key)) {
+			if (process.env.NODE_ENV === 'production') {
+
+				// In development where there may be hot-reloading,
+				// re-registering (overwriting) is considered ok.
+
+				throw new Error(
+					`Liferay.State.selector(): key ${JSON.stringify(
+						key
+					)} already taken`
+				);
+			}
+		}
+
+		if (atoms.has(key)) {
+			throw new Error(
+				`Liferay.State.selector(): key ${JSON.stringify(
+					key
+				)} already taken by an atom`
+			);
+		}
+
+		const selector = deepFreeze({
+			[SELECTOR]: true,
+			deriveValue,
+			key,
+		} as const);
+
+		selectors.set(key, selector);
+
+		return selector;
+	},
+
+	/**
+	 * Subscribe to be notified of changes to an atom or selector.
+	 *
+	 * The supplied `callback()` function will be invoked with the new value
+	 * whenever it changes. To unsubscribe, use the `dispose()` function that is
+	 * returned.
+	 *
+	 * In the context of a React component, the `useLiferayState()` hook can be
+	 * used to observe and trigger state changes in a way that is analagous to
+	 * the built-in `useState()` hook.
+	 */
+	subscribe<T extends any>(
+		atomOrSelector: Atom<T> | Selector<T>,
+		callback: (value: Immutable<T>) => void
+	): {dispose: () => void} {
+		const dispose = subscribers.addCallback(atomOrSelector, callback);
+
+		if (!isAtom(atomOrSelector)) {
+
+			// Read once in order to pre-populate dependency graph.
+
+			State.readSelector(atomOrSelector);
+		}
+
+		return {dispose};
+	},
+
+	/**
+	 * Attempt to update the value associated with the provided atom or
+	 * selector.
+	 *
+	 * Note that this is just a convenience wrapper around `writeAtom()` that
+	 * serves principally to streamline calls (for example, from the
+	 * `useLiferayState()` hook), and in practice it is an error to attempt a
+	 * direct update to a selector (instead, the upstream atoms that it depends
+	 * on should be updated).
+	 */
+	write<T>(atomOrSelector: Atom<T> | Selector<T>, value: T): void {
+		if (isAtom(atomOrSelector)) {
+			State.writeAtom(atomOrSelector, value);
+		}
+		else {
+			throw new Error(
+				`Liferay.State.write(): expected atom but received selector with key ${JSON.stringify(
+					atomOrSelector.key
+				)}`
+			);
+		}
+	},
+
+	/**
+	 * Update the value associated with the provided atom, notifying any
+	 * downstream subscribers (of the atom itself, or selectors that depend on
+	 * it).
+	 */
+	writeAtom<T>(atom: Atom<T>, value: T): void {
+		const previous = values.get(atom);
+
+		if (Object.is(value, previous)) {
+			return;
+		}
+
+		const frozen = deepFreeze(value);
+
+		values.set(atom, frozen);
+
+		for (const callback of subscribers.getCallbacks(atom).values()) {
+			State._notify(callback, frozen);
+		}
+
+		const invalidatedSelectors: Array<Selector<unknown>> = [];
+
+		this._invalidateDependencies(atom, invalidatedSelectors);
+
+		for (const selector of invalidatedSelectors) {
+			for (const callback of subscribers
+				.getCallbacks(selector)
+				.values()) {
+				State._notify(callback, State.readSelector(selector));
+			}
+		}
 	},
 };
 

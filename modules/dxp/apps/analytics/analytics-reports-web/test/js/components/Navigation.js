@@ -27,6 +27,12 @@ const mockEndpoints = {
 	analyticsReportsTrafficSourcesURL: 'analyticsReportsTrafficSourcesURL',
 };
 
+const mockLanguageTag = 'en-US';
+
+const mockNamespace = 'namespace';
+
+const mockPage = {plid: 20};
+
 const mockTimeSpanOptions = [
 	{
 		key: 'last-30-days',
@@ -74,8 +80,6 @@ describe('Navigation', () => {
 			},
 			canonicalURL:
 				'http://localhost:8080/en/web/guest/-/basic-web-content',
-			languageTag: 'en-US',
-			page: {plid: 20},
 			pagePublishDate: 'Thu Aug 10 08:17:57 GMT 2020',
 			pageTitle: 'A testing page',
 			timeRange: {endDate: '2020-01-27', startDate: '2020-02-02'},
@@ -88,24 +92,32 @@ describe('Navigation', () => {
 					validAnalyticsConnection: false,
 				}}
 			>
-				<ChartStateContextProvider
-					publishDate={testProps.pagePublishDate}
-					timeRange={testProps.timeRange}
-					timeSpanKey={testProps.timeSpanKey}
+				<StoreContextProvider
+					value={{
+						endpoints: mockEndpoints,
+						languageTag: mockLanguageTag,
+						namespace: mockNamespace,
+						page: mockPage,
+					}}
 				>
-					<Navigation
-						author={testProps.author}
-						canonicalURL={testProps.canonicalURL}
-						endpoints={mockEndpoints}
-						languageTag={testProps.languageTag}
-						onSelectedLanguageClick={noop}
-						page={testProps.page}
-						pagePublishDate={testProps.pagePublishDate}
-						pageTitle={testProps.pageTitle}
-						timeSpanOptions={mockTimeSpanOptions}
-						viewURLs={mockViewURLs}
-					/>
-				</ChartStateContextProvider>
+					<ChartStateContextProvider
+						publishDate={testProps.pagePublishDate}
+						timeRange={testProps.timeRange}
+						timeSpanKey={testProps.timeSpanKey}
+					>
+						<Navigation
+							author={testProps.author}
+							canonicalURL={testProps.canonicalURL}
+							endpoints={mockEndpoints}
+							onSelectedLanguageClick={noop}
+							page={testProps.page}
+							pagePublishDate={testProps.pagePublishDate}
+							pageTitle={testProps.pageTitle}
+							timeSpanOptions={mockTimeSpanOptions}
+							viewURLs={mockViewURLs}
+						/>
+					</ChartStateContextProvider>
+				</StoreContextProvider>
 			</ConnectionContext.Provider>
 		);
 
@@ -121,8 +133,6 @@ describe('Navigation', () => {
 			},
 			canonicalURL:
 				'http://localhost:8080/en/web/guest/-/basic-web-content',
-			languageTag: 'en-US',
-			page: {plid: 20},
 			pagePublishDate: 'Thu Aug 10 08:17:57 GMT 2020',
 			pageTitle: 'A testing page',
 			timeRange: {endDate: '2020-01-27', startDate: '2020-02-02'},
@@ -130,7 +140,15 @@ describe('Navigation', () => {
 		};
 
 		const {getByText} = render(
-			<StoreContextProvider value={{warning: true}}>
+			<StoreContextProvider
+				value={{
+					endpoints: mockEndpoints,
+					languageTag: mockLanguageTag,
+					namespace: mockNamespace,
+					page: mockPage,
+					warning: true,
+				}}
+			>
 				<ChartStateContextProvider
 					publishDate={testProps.publishDate}
 					timeRange={testProps.timeRange}
@@ -140,7 +158,6 @@ describe('Navigation', () => {
 						author={testProps.author}
 						canonicalURL={testProps.canonicalURL}
 						endpoints={mockEndpoints}
-						languageTag={testProps.languageTag}
 						onSelectedLanguageClick={noop}
 						page={testProps.page}
 						pagePublishDate={testProps.pagePublishDate}
@@ -166,8 +183,6 @@ describe('Navigation', () => {
 			},
 			canonicalURL:
 				'http://localhost:8080/en/web/guest/-/basic-web-content',
-			languageTag: 'en-US',
-			page: {plid: 20},
 			pagePublishDate: 'Thu Feb 02 08:17:57 GMT 2020',
 			pageTitle: 'A testing page',
 			timeRange: {endDate: '2020-01-27', startDate: '2020-02-02'},
@@ -175,7 +190,15 @@ describe('Navigation', () => {
 		};
 
 		const {getByText} = render(
-			<StoreContextProvider value={{publishedToday: true}}>
+			<StoreContextProvider
+				value={{
+					endpoints: mockEndpoints,
+					languageTag: mockLanguageTag,
+					namespace: mockNamespace,
+					page: mockPage,
+					publishedToday: true,
+				}}
+			>
 				<ChartStateContextProvider
 					publishDate={testProps.pagePublishDate}
 					timeRange={testProps.timeRange}
@@ -185,7 +208,6 @@ describe('Navigation', () => {
 						author={testProps.author}
 						canonicalURL={testProps.canonicalURL}
 						endpoints={mockEndpoints}
-						languageTag={testProps.languageTag}
 						onSelectedLanguageClick={noop}
 						page={testProps.page}
 						pagePublishDate={testProps.pagePublishDate}

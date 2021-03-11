@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.saml.constants.SamlCommandQueryConstants;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.opensaml.integration.internal.binding.SamlBinding;
 import com.liferay.saml.opensaml.integration.internal.metadata.MetadataManager;
@@ -51,7 +52,6 @@ import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import com.liferay.saml.runtime.exception.UnsolicitedLogoutResponseException;
 import com.liferay.saml.runtime.exception.UnsupportedBindingException;
 import com.liferay.saml.runtime.servlet.profile.SingleLogoutProfile;
-import com.liferay.saml.util.JspUtil;
 import com.liferay.saml.util.SamlHttpRequestUtil;
 
 import java.io.Writer;
@@ -129,11 +129,9 @@ public class SingleLogoutProfileImpl
 		throws Exception {
 
 		if (hasSamlSloContext(httpServletRequest, null)) {
-			String redirect = StringBundler.concat(
-				portal.getPortalURL(httpServletRequest), portal.getPathMain(),
-				"/portal/saml/slo_logout");
-
-			httpServletResponse.sendRedirect(redirect);
+			httpServletResponse.sendRedirect(
+				_portal.getRelativeHomeURL(httpServletRequest) +
+					SamlCommandQueryConstants.SLO_LOGOUT);
 		}
 		else {
 			redirectToLogout(httpServletRequest, httpServletResponse);
@@ -205,9 +203,6 @@ public class SingleLogoutProfileImpl
 			HttpServletResponse httpServletResponse)
 		throws PortalException {
 
-		String requestPath = _samlHttpRequestUtil.getRequestPath(
-			httpServletRequest);
-
 		try {
 			httpServletResponse.addHeader(
 				HttpHeaders.CACHE_CONTROL,
@@ -215,43 +210,33 @@ public class SingleLogoutProfileImpl
 			httpServletResponse.addHeader(
 				HttpHeaders.PRAGMA, HttpHeaders.PRAGMA_NO_CACHE_VALUE);
 
-			if (requestPath.equals("/c/portal/saml/slo_logout")) {
-				SamlSloContext samlSloContext = getSamlSloContext(
-					httpServletRequest, null);
+			SamlSloContext samlSloContext = getSamlSloContext(
+				httpServletRequest, null);
 
-				if (samlSloContext == null) {
-					redirectToLogout(httpServletRequest, httpServletResponse);
+			if (samlSloContext == null) {
+				redirectToLogout(httpServletRequest, httpServletResponse);
 
-					return;
-				}
+				return;
+			}
 
-				String cmd = ParamUtil.getString(
-					httpServletRequest, Constants.CMD);
+			String cmd = ParamUtil.getString(httpServletRequest, Constants.CMD);
 
-				if (Validator.isNull(cmd)) {
-					httpServletRequest.setAttribute(
-						SamlWebKeys.SAML_SLO_CONTEXT,
-						samlSloContext.toJSONObject());
-
-					JspUtil.dispatch(
-						httpServletRequest, httpServletResponse,
-						JspUtil.PATH_PORTAL_SAML_SLO, "single-sign-out");
-				}
-				else if (cmd.equals("logout")) {
-					performIdpSpLogout(
-						httpServletRequest, httpServletResponse,
-						samlSloContext);
-				}
-				else if (cmd.equals("finish")) {
-					performIdpFinishLogout(
-						httpServletRequest, httpServletResponse,
-						samlSloContext);
-				}
-				else if (cmd.equals("status")) {
-					performIdpStatus(
-						httpServletRequest, httpServletResponse,
-						samlSloContext);
-				}
+			if (Validator.isNull(cmd)) {
+				httpServletRequest.setAttribute(
+					SamlWebKeys.SAML_SLO_CONTEXT,
+					samlSloContext.toJSONObject());
+			}
+			else if (cmd.equals("logout")) {
+				performIdpSpLogout(
+					httpServletRequest, httpServletResponse, samlSloContext);
+			}
+			else if (cmd.equals("finish")) {
+				performIdpFinishLogout(
+					httpServletRequest, httpServletResponse, samlSloContext);
+			}
+			else if (cmd.equals("status")) {
+				performIdpStatus(
+					httpServletRequest, httpServletResponse, samlSloContext);
 			}
 		}
 		catch (Exception exception) {
@@ -596,17 +581,9 @@ public class SingleLogoutProfileImpl
 			samlSloContext.getSamlSloRequestInfo(entityId);
 
 		if (samlSloRequestInfo == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Received logout request for service provider " + entityId +
-						" that the user is not logged into");
-			}
-
-			JspUtil.dispatch(
-				httpServletRequest, httpServletResponse,
-				JspUtil.PATH_PORTAL_SAML_ERROR, "single-sign-out", true);
-
-			return;
+			throw new Exception(
+				"Received logout request for service provider " + entityId +
+					" that the user is not logged into");
 		}
 
 		if (samlSloRequestInfo.getStatus() ==
@@ -615,11 +592,6 @@ public class SingleLogoutProfileImpl
 			httpServletRequest.setAttribute(
 				SamlWebKeys.SAML_SLO_REQUEST_INFO,
 				samlSloRequestInfo.toJSONObject());
-
-			JspUtil.dispatch(
-				httpServletRequest, httpServletResponse,
-				JspUtil.PATH_PORTAL_SAML_SLO_SP_STATUS, "single-sign-out",
-				true);
 
 			return;
 		}
@@ -652,11 +624,6 @@ public class SingleLogoutProfileImpl
 			httpServletRequest.setAttribute(
 				SamlWebKeys.SAML_SLO_REQUEST_INFO,
 				samlSloRequestInfo.toJSONObject());
-
-			JspUtil.dispatch(
-				httpServletRequest, httpServletResponse,
-				JspUtil.PATH_PORTAL_SAML_SLO_SP_STATUS, "single-sign-out",
-				true);
 		}
 		else {
 			try {
@@ -686,11 +653,6 @@ public class SingleLogoutProfileImpl
 				httpServletRequest.setAttribute(
 					SamlWebKeys.SAML_SLO_REQUEST_INFO,
 					samlSloRequestInfo.toJSONObject());
-
-				JspUtil.dispatch(
-					httpServletRequest, httpServletResponse,
-					JspUtil.PATH_PORTAL_SAML_SLO_SP_STATUS, "single-sign-out",
-					true);
 			}
 		}
 	}
@@ -820,10 +782,6 @@ public class SingleLogoutProfileImpl
 		httpServletRequest.setAttribute(
 			SamlWebKeys.SAML_SLO_REQUEST_INFO,
 			samlSloRequestInfo.toJSONObject());
-
-		JspUtil.dispatch(
-			httpServletRequest, httpServletResponse,
-			JspUtil.PATH_PORTAL_SAML_SLO_SP_STATUS, "single-sign-out", true);
 	}
 
 	protected void processSingleLogoutRequest(
@@ -1166,11 +1124,6 @@ public class SingleLogoutProfileImpl
 			httpServletRequest.setAttribute(
 				SamlWebKeys.SAML_SLO_REQUEST_INFO,
 				samlSloRequestInfo.toJSONObject());
-
-			JspUtil.dispatch(
-				httpServletRequest, httpServletResponse,
-				JspUtil.PATH_PORTAL_SAML_SLO_SP_STATUS, "single-sign-out",
-				true);
 		}
 		else {
 			sendAsyncLogoutRequest(
@@ -1553,6 +1506,9 @@ public class SingleLogoutProfileImpl
 
 	@Reference
 	private HttpClient _httpClient;
+
+	@Reference
+	private Portal _portal;
 
 	private SamlHttpRequestUtil _samlHttpRequestUtil;
 	private SamlIdpSpConnectionLocalService _samlIdpSpConnectionLocalService;

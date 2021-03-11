@@ -23,7 +23,6 @@ import {Link} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
 import useBackUrl from '../../hooks/useBackUrl.es';
-import useDataDefinition from '../../hooks/useDataDefinition.es';
 import useDeployApp from '../../hooks/useDeployApp.es';
 import {getLocalizedValue} from '../../utils/lang.es';
 import {fromNow} from '../../utils/time.es';
@@ -33,6 +32,15 @@ import {
 	DEPLOYMENT_TYPES,
 	STATUSES,
 } from './constants.es';
+
+const queryFields = [
+	'active',
+	'appDeployments',
+	'dateCreated',
+	'dateModified',
+	'id',
+	'name',
+].join(',');
 
 export const Actions = (validateMissingRequiredFieldsModal) => {
 	const {getStandaloneURL} = useContext(AppContext);
@@ -73,6 +81,7 @@ export const Actions = (validateMissingRequiredFieldsModal) => {
 };
 
 const ListApps = ({
+	defaultLanguageId,
 	editPath = [
 		`/:objectType/:dataDefinitionId(\\d+)/apps/deploy`,
 		`/:objectType/:dataDefinitionId(\\d+)/apps/:appId(\\d+)`,
@@ -85,9 +94,6 @@ const ListApps = ({
 }) => {
 	const {scope} = useContext(AppContext);
 	const withBackUrl = useBackUrl();
-	const {
-		defaultLanguageId = themeDisplay.getDefaultLanguageId(),
-	} = useDataDefinition(dataDefinitionId);
 	const newAppLink = compile(editPath[0])({dataDefinitionId, objectType});
 
 	const ADD_BUTTON = () => (
@@ -114,12 +120,12 @@ const ListApps = ({
 		title: Liferay.Language.get('there-are-no-apps-yet'),
 	};
 
-	const ENDPOINT = `/o/app-builder/v1.0/data-definitions/${dataDefinitionId}/apps?scope=${scope}`;
+	const ENDPOINT = `/o/app-builder/v1.0/data-definitions/${dataDefinitionId}/apps?scope=${scope}&fields=${queryFields}`;
 
-	const getEditAppUrl = ({dataDefinitionId, id}) => {
+	const getEditAppUrl = (appId) => {
 		return withBackUrl(
 			compile(editPath[1])({
-				appId: id,
+				appId,
 				dataDefinitionId,
 				objectType,
 			})
@@ -144,7 +150,7 @@ const ListApps = ({
 					appName,
 					dateCreated: fromNow(app.dateCreated),
 					dateModified: fromNow(app.dateModified),
-					name: <Link to={getEditAppUrl(app)}>{appName}</Link>,
+					name: <Link to={getEditAppUrl(app.id)}>{appName}</Link>,
 					status: (
 						<ClayLabel
 							displayType={app.active ? 'success' : 'secondary'}

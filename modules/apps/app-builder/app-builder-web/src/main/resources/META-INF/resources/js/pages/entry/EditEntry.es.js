@@ -44,7 +44,7 @@ export const EditEntry = ({
 		showFormView,
 		showTableView,
 	} = useContext(AppContext);
-	const {defaultLanguageId} = useDataDefinition(dataDefinitionId);
+	const {defaultLanguageId} = useDataDefinition({dataDefinitionId});
 	const [submitting, setSubmitting] = useState(false);
 
 	const isFormViewOnly = showFormView && !showTableView;

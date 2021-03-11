@@ -16,13 +16,17 @@ import {getItem} from 'data-engine-js-components-web/js/utils/client.es';
 import {getLocalizedValue} from 'data-engine-js-components-web/js/utils/lang.es';
 import {useEffect, useState} from 'react';
 
-export default function useDataDefinition(dataDefinitionId) {
-	const [dataDefinition, setDataDefinition] = useState({});
+export default function useDataDefinition({
+	dataDefinitionId,
+	defaultState = {},
+	queryFields = '',
+}) {
+	const [dataDefinition, setDataDefinition] = useState(defaultState);
 
 	useEffect(() => {
 		if (dataDefinitionId) {
 			getItem(
-				`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}`
+				`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}?fields=${queryFields}`
 			).then((dataDefinition) =>
 				setDataDefinition({
 					...dataDefinition,
@@ -33,7 +37,7 @@ export default function useDataDefinition(dataDefinitionId) {
 				})
 			);
 		}
-	}, [dataDefinitionId]);
+	}, [dataDefinitionId, queryFields]);
 
 	return dataDefinition;
 }

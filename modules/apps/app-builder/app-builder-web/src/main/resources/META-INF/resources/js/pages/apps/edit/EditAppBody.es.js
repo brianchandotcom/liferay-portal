@@ -26,6 +26,8 @@ import EditAppContext, {
 } from './EditAppContext.es';
 import EditAppStepContent from './EditAppStepContent.es';
 
+const queryFields = ['dateCreated', 'dateModified', 'id', 'name'].join(',');
+
 const EditAppBody = ({currentStep, dataDefinitionId, defaultLanguageId}) => {
 	const {workflowProcessBuilderPortletURL} = useContext(AppContext);
 	const {
@@ -50,7 +52,7 @@ const EditAppBody = ({currentStep, dataDefinitionId, defaultLanguageId}) => {
 				),
 				title: Liferay.Language.get('there-are-no-form-views-yet'),
 			},
-			endpoint: `/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-layouts`,
+			endpoint: `/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-layouts?fields=${queryFields}`,
 			itemId: dataLayoutId,
 			onSelect: dispatchSelection(UPDATE_DATA_LAYOUT_ID),
 			stepHeader: {
@@ -64,7 +66,7 @@ const EditAppBody = ({currentStep, dataDefinitionId, defaultLanguageId}) => {
 				),
 				title: Liferay.Language.get('there-are-no-table-views-yet'),
 			},
-			endpoint: `/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-list-views`,
+			endpoint: `/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-list-views?fields=${queryFields}`,
 			itemId: dataListViewId,
 			onSelect: dispatchSelection(UPDATE_DATA_LIST_VIEW_ID),
 			stepHeader: {

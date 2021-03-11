@@ -33,6 +33,8 @@ import {getValidName} from '../../utils/utils.es';
 import ListObjects from '../object/ListObjects.es';
 import CustomObjectPopover from './CustomObjectPopover.es';
 
+const queryFields = ['dateCreated', 'dateModified', 'id', 'name'].join(',');
+
 export default ({history}) => {
 	const {basePortletURL, baseResourceURL, namespace} = useContext(AppContext);
 	const [editMode, setEditMode] = useState(null);
@@ -259,7 +261,7 @@ export default ({history}) => {
 							'there-are-no-custom-objects-yet'
 						),
 					},
-					endpoint: `/o/data-engine/v2.0/data-definitions/by-content-type/app-builder`,
+					endpoint: `/o/data-engine/v2.0/data-definitions/by-content-type/app-builder?fields=${queryFields}`,
 				}}
 				objectType="custom-object"
 			/>

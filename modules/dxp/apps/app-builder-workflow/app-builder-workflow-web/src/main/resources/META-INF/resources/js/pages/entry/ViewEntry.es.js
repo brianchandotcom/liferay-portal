@@ -73,7 +73,7 @@ export default function ViewEntry({
 		);
 	};
 
-	const dataDefinition = useDataDefinition(dataDefinitionId);
+	const dataDefinition = useDataDefinition({dataDefinitionId});
 	const dataLayouts = useDataLayouts(dataLayoutIds);
 	const delay = useTimeout();
 

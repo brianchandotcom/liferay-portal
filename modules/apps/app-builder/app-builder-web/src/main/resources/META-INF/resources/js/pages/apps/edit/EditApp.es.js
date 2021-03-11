@@ -19,23 +19,20 @@ import {getItem} from 'data-engine-js-components-web/js/utils/client.es';
 import React, {useEffect, useReducer, useState} from 'react';
 
 import ControlMenu from '../../../components/control-menu/ControlMenu.es';
-import useDataDefinition from '../../../hooks/useDataDefinition.es';
 import EditAppBody from './EditAppBody.es';
 import EditAppContext, {UPDATE_APP, reducer} from './EditAppContext.es';
 import EditAppFooter from './EditAppFooter.es';
 import EditAppHeader from './EditAppHeader.es';
 
 export default ({
+	availableLanguageIds,
+	defaultLanguageId,
 	location: {search},
 	match: {
 		params: {appId, dataDefinitionId},
 	},
 	scope,
 }) => {
-	const {availableLanguageIds = [], defaultLanguageId} = useDataDefinition(
-		dataDefinitionId
-	);
-
 	const [currentStep, setCurrentStep] = useState(0);
 	const [isLoading, setLoading] = useState(false);
 	const [editingLanguageId, setEditingLanguageId] = useState('');

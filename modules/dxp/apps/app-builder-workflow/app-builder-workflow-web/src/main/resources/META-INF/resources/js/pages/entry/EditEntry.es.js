@@ -42,6 +42,8 @@ import useDataRecordApps from '../../hooks/useDataRecordApps.es';
 import ReassignEntryModal from './ReassignEntryModal.es';
 import {METRIC_INDEXES_KEY, refreshIndex} from './actions.es';
 
+const queryFields = ['availableLanguageIds', 'defaultLanguageId'].join(',');
+
 const WorkflowInfoPortal = ({children}) => {
 	const portalElementId = 'workflowInfoBar';
 	const targetElement = document.getElementById('edit-app-content');
@@ -78,9 +80,14 @@ export default function EditEntry({
 		namespace,
 	} = useContext(AppContext);
 
-	const {availableLanguageIds, defaultLanguageId} = useDataDefinition(
-		dataDefinitionId
-	);
+	const {availableLanguageIds, defaultLanguageId} = useDataDefinition({
+		dataDefinitionId,
+		defaultState: {
+			availableLanguageIds: [],
+			defaultLanguageId: '',
+		},
+		queryFields,
+	});
 
 	const dataLayouts = useDataLayouts(dataLayoutIds);
 	const dataRecordApps = useDataRecordApps(

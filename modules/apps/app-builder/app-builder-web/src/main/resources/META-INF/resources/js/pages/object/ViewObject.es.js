@@ -30,13 +30,29 @@ const URL = {
 	'native-object': '/native-objects',
 };
 
+const queryFields = ['availableLanguageIds', 'name', 'defaultLanguageId'].join(
+	','
+);
+
 export default ({
 	match: {
 		params: {dataDefinitionId, objectType},
 		path,
 	},
 }) => {
-	const {title = ''} = useDataDefinition(dataDefinitionId);
+	const {
+		availableLanguageIds,
+		defaultLanguageId,
+		title = '',
+	} = useDataDefinition({
+		dataDefinitionId,
+		defaultState: {
+			availableLanguageIds: [],
+			defaultLanguageId: '',
+			name: {},
+		},
+		queryFields,
+	});
 
 	return (
 		<Switch>
@@ -57,8 +73,14 @@ export default ({
 			/>
 
 			<Route
-				component={EditApp}
 				path={[`${path}/apps/deploy`, `${path}/apps/:appId(\\d+)`]}
+				render={(props) => (
+					<EditApp
+						{...props}
+						availableLanguageIds={availableLanguageIds}
+						defaultLanguageId={defaultLanguageId}
+					/>
+				)}
 			/>
 
 			<Route
@@ -86,16 +108,34 @@ export default ({
 
 						<Switch>
 							<Route
-								component={ListFormViews}
 								path={`${path}/form-views`}
+								render={(props) => (
+									<ListFormViews
+										{...props}
+										defaultLanguageId={defaultLanguageId}
+									/>
+								)}
 							/>
 
 							<Route
-								component={ListTableViews}
 								path={`${path}/table-views`}
+								render={(props) => (
+									<ListTableViews
+										{...props}
+										defaultLanguageId={defaultLanguageId}
+									/>
+								)}
 							/>
 
-							<Route component={ListApps} path={`${path}/apps`} />
+							<Route
+								path={`${path}/apps`}
+								render={(props) => (
+									<ListApps
+										{...props}
+										defaultLanguageId={defaultLanguageId}
+									/>
+								)}
+							/>
 						</Switch>
 					</>
 				)}

@@ -19,17 +19,18 @@ import {getLocalizedValue} from 'data-engine-js-components-web/js/utils/lang.es'
 import React, {useContext} from 'react';
 
 import {AppContext} from '../../AppContext.es';
-import useDataDefinition from '../../hooks/useDataDefinition.es';
 import {fromNow} from '../../utils/time.es';
 
+const queryFields = ['dateCreated', 'dateModified', 'id', 'name'].join(',');
+
 export default ({
+	defaultLanguageId,
 	history,
 	match: {
 		params: {dataDefinitionId},
 	},
 }) => {
 	const {basePortletURL} = useContext(AppContext);
-	const {defaultLanguageId} = useDataDefinition(dataDefinitionId);
 
 	const getItemURL = (item) =>
 		Liferay.Util.PortletURL.createRenderURL(basePortletURL, {
@@ -107,7 +108,7 @@ export default ({
 				),
 				title: Liferay.Language.get('there-are-no-form-views-yet'),
 			}}
-			endpoint={`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-layouts`}
+			endpoint={`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-layouts?fields=${queryFields}`}
 			history={history}
 		>
 			{(item) => {

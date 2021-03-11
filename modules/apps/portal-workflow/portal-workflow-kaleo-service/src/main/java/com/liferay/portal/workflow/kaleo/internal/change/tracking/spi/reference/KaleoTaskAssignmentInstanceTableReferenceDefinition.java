@@ -18,53 +18,51 @@ import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.workflow.kaleo.model.KaleoInstanceTable;
-import com.liferay.portal.workflow.kaleo.model.KaleoInstanceTokenTable;
-import com.liferay.portal.workflow.kaleo.service.persistence.KaleoInstanceTokenPersistence;
+import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstanceTable;
+import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceTokenTable;
+import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskAssignmentInstancePersistence;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Preston Crary
+ * @author Samuel Trong Tran
  */
 @Component(service = TableReferenceDefinition.class)
-public class KaleoInstanceTokenTableReferenceDefinition
-	implements TableReferenceDefinition<KaleoInstanceTokenTable> {
+public class KaleoTaskAssignmentInstanceTableReferenceDefinition
+	implements TableReferenceDefinition<KaleoTaskAssignmentInstanceTable> {
 
 	@Override
 	public void defineChildTableReferences(
-		ChildTableReferenceInfoBuilder<KaleoInstanceTokenTable>
+		ChildTableReferenceInfoBuilder<KaleoTaskAssignmentInstanceTable>
 			childTableReferenceInfoBuilder) {
 	}
 
 	@Override
 	public void defineParentTableReferences(
-		ParentTableReferenceInfoBuilder<KaleoInstanceTokenTable>
+		ParentTableReferenceInfoBuilder<KaleoTaskAssignmentInstanceTable>
 			parentTableReferenceInfoBuilder) {
 
 		parentTableReferenceInfoBuilder.groupedModel(
-			KaleoInstanceTokenTable.INSTANCE
-		).parentColumnReference(
-			KaleoInstanceTokenTable.INSTANCE.kaleoInstanceTokenId,
-			KaleoInstanceTokenTable.INSTANCE.parentKaleoInstanceTokenId
+			KaleoTaskAssignmentInstanceTable.INSTANCE
 		).singleColumnReference(
-			KaleoInstanceTokenTable.INSTANCE.kaleoInstanceId,
-			KaleoInstanceTable.INSTANCE.kaleoInstanceId
+			KaleoTaskAssignmentInstanceTable.INSTANCE.kaleoTaskInstanceTokenId,
+			KaleoTaskInstanceTokenTable.INSTANCE.kaleoTaskInstanceTokenId
 		);
 	}
 
 	@Override
 	public BasePersistence<?> getBasePersistence() {
-		return _kaleoInstanceTokenPersistence;
+		return _kaleoTaskAssignmentInstancePersistence;
 	}
 
 	@Override
-	public KaleoInstanceTokenTable getTable() {
-		return KaleoInstanceTokenTable.INSTANCE;
+	public KaleoTaskAssignmentInstanceTable getTable() {
+		return KaleoTaskAssignmentInstanceTable.INSTANCE;
 	}
 
 	@Reference
-	private KaleoInstanceTokenPersistence _kaleoInstanceTokenPersistence;
+	private KaleoTaskAssignmentInstancePersistence
+		_kaleoTaskAssignmentInstancePersistence;
 
 }

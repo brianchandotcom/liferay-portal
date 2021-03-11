@@ -18,53 +18,45 @@ import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.workflow.kaleo.model.KaleoInstanceTable;
-import com.liferay.portal.workflow.kaleo.model.KaleoInstanceTokenTable;
-import com.liferay.portal.workflow.kaleo.service.persistence.KaleoInstanceTokenPersistence;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionTable;
+import com.liferay.portal.workflow.kaleo.service.persistence.KaleoDefinitionPersistence;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Preston Crary
+ * @author Samuel Trong Tran
  */
 @Component(service = TableReferenceDefinition.class)
-public class KaleoInstanceTokenTableReferenceDefinition
-	implements TableReferenceDefinition<KaleoInstanceTokenTable> {
+public class KaleoDefinitionTableReferenceDefinition
+	implements TableReferenceDefinition<KaleoDefinitionTable> {
 
 	@Override
 	public void defineChildTableReferences(
-		ChildTableReferenceInfoBuilder<KaleoInstanceTokenTable>
+		ChildTableReferenceInfoBuilder<KaleoDefinitionTable>
 			childTableReferenceInfoBuilder) {
 	}
 
 	@Override
 	public void defineParentTableReferences(
-		ParentTableReferenceInfoBuilder<KaleoInstanceTokenTable>
+		ParentTableReferenceInfoBuilder<KaleoDefinitionTable>
 			parentTableReferenceInfoBuilder) {
 
 		parentTableReferenceInfoBuilder.groupedModel(
-			KaleoInstanceTokenTable.INSTANCE
-		).parentColumnReference(
-			KaleoInstanceTokenTable.INSTANCE.kaleoInstanceTokenId,
-			KaleoInstanceTokenTable.INSTANCE.parentKaleoInstanceTokenId
-		).singleColumnReference(
-			KaleoInstanceTokenTable.INSTANCE.kaleoInstanceId,
-			KaleoInstanceTable.INSTANCE.kaleoInstanceId
-		);
+			KaleoDefinitionTable.INSTANCE);
 	}
 
 	@Override
 	public BasePersistence<?> getBasePersistence() {
-		return _kaleoInstanceTokenPersistence;
+		return _kaleoDefinitionPersistence;
 	}
 
 	@Override
-	public KaleoInstanceTokenTable getTable() {
-		return KaleoInstanceTokenTable.INSTANCE;
+	public KaleoDefinitionTable getTable() {
+		return KaleoDefinitionTable.INSTANCE;
 	}
 
 	@Reference
-	private KaleoInstanceTokenPersistence _kaleoInstanceTokenPersistence;
+	private KaleoDefinitionPersistence _kaleoDefinitionPersistence;
 
 }

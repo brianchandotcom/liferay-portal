@@ -18,53 +18,65 @@ import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.workflow.kaleo.model.KaleoInstanceTable;
-import com.liferay.portal.workflow.kaleo.model.KaleoInstanceTokenTable;
-import com.liferay.portal.workflow.kaleo.service.persistence.KaleoInstanceTokenPersistence;
+import com.liferay.portal.workflow.kaleo.model.KaleoNodeTable;
+import com.liferay.portal.workflow.kaleo.model.KaleoTask;
+import com.liferay.portal.workflow.kaleo.model.KaleoTimerTable;
+import com.liferay.portal.workflow.kaleo.model.KaleoTransitionTable;
+import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTransitionPersistence;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Preston Crary
+ * @author Samuel Trong Tran
  */
 @Component(service = TableReferenceDefinition.class)
-public class KaleoInstanceTokenTableReferenceDefinition
-	implements TableReferenceDefinition<KaleoInstanceTokenTable> {
+public class KaleoTransitionTableReferenceDefinition
+	implements TableReferenceDefinition<KaleoTransitionTable> {
 
 	@Override
 	public void defineChildTableReferences(
-		ChildTableReferenceInfoBuilder<KaleoInstanceTokenTable>
+		ChildTableReferenceInfoBuilder<KaleoTransitionTable>
 			childTableReferenceInfoBuilder) {
+
+		childTableReferenceInfoBuilder.referenceInnerJoin(
+			fromStep -> fromStep.from(
+				KaleoTimerTable.INSTANCE
+			).innerJoinON(
+				KaleoTransitionTable.INSTANCE,
+				KaleoTransitionTable.INSTANCE.kaleoTransitionId.eq(
+					KaleoTimerTable.INSTANCE.kaleoClassPK
+				).and(
+					KaleoTimerTable.INSTANCE.kaleoClassName.eq(
+						KaleoTask.class.getName())
+				)
+			));
 	}
 
 	@Override
 	public void defineParentTableReferences(
-		ParentTableReferenceInfoBuilder<KaleoInstanceTokenTable>
+		ParentTableReferenceInfoBuilder<KaleoTransitionTable>
 			parentTableReferenceInfoBuilder) {
 
 		parentTableReferenceInfoBuilder.groupedModel(
-			KaleoInstanceTokenTable.INSTANCE
-		).parentColumnReference(
-			KaleoInstanceTokenTable.INSTANCE.kaleoInstanceTokenId,
-			KaleoInstanceTokenTable.INSTANCE.parentKaleoInstanceTokenId
+			KaleoTransitionTable.INSTANCE
 		).singleColumnReference(
-			KaleoInstanceTokenTable.INSTANCE.kaleoInstanceId,
-			KaleoInstanceTable.INSTANCE.kaleoInstanceId
+			KaleoTransitionTable.INSTANCE.kaleoNodeId,
+			KaleoNodeTable.INSTANCE.kaleoNodeId
 		);
 	}
 
 	@Override
 	public BasePersistence<?> getBasePersistence() {
-		return _kaleoInstanceTokenPersistence;
+		return _kaleoTransitionPersistence;
 	}
 
 	@Override
-	public KaleoInstanceTokenTable getTable() {
-		return KaleoInstanceTokenTable.INSTANCE;
+	public KaleoTransitionTable getTable() {
+		return KaleoTransitionTable.INSTANCE;
 	}
 
 	@Reference
-	private KaleoInstanceTokenPersistence _kaleoInstanceTokenPersistence;
+	private KaleoTransitionPersistence _kaleoTransitionPersistence;
 
 }

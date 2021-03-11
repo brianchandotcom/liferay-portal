@@ -22,10 +22,8 @@ import {useSelector} from '../../app/store/index';
 import {useId} from '../../app/utils/useId';
 import {openImageSelector} from '../../core/openImageSelector';
 
-const DEFAULT_IMAGE_TITLE = '';
-
 export function ImageSelector({
-	imageTitle = DEFAULT_IMAGE_TITLE,
+	imageTitle = '',
 	label,
 	onClearButtonPressed,
 	onImageSelected,
@@ -36,7 +34,7 @@ export function ImageSelector({
 		(state) => state.selectedViewportSize
 	);
 
-	const hasImageTitle = imageTitle && imageTitle !== DEFAULT_IMAGE_TITLE;
+	const hasImageTitle = !!imageTitle.length;
 
 	return selectedViewportSize === VIEWPORT_SIZES.desktop ? (
 		<>

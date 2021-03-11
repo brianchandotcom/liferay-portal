@@ -18,6 +18,8 @@ import com.liferay.portal.crypto.hash.CryptoHashGenerator;
 import com.liferay.portal.crypto.hash.CryptoHashResponse;
 import com.liferay.portal.crypto.hash.CryptoHashVerificationContext;
 import com.liferay.portal.crypto.hash.CryptoHashVerifier;
+import com.liferay.portal.crypto.hash.exception.CryptoHashException;
+import com.liferay.portal.crypto.hash.exception.NoSuchCryptoHashProviderFactoryNameCryptoHashException;
 import com.liferay.portal.crypto.hash.provider.bcrypt.internal.BCryptCryptoHashProviderFactory;
 import com.liferay.portal.crypto.hash.provider.message.digest.internal.MessageDigestCryptoHashProviderFactory;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -103,6 +105,19 @@ public class CryptoHashGeneratorTest {
 		Assert.assertTrue(
 			_cryptoHashVerifier.verify(
 				_INPUT, hash, cryptoHashVerificationContexts));
+	}
+
+	@Test(
+		expected = NoSuchCryptoHashProviderFactoryNameCryptoHashException.class
+	)
+	public void testNoSuchCryptoHashProviderFactoryNameCryptoHashException()
+		throws CryptoHashException {
+
+		CryptoHashProviderFactoryRegistry cryptoHashProviderFactoryRegistry =
+			new CryptoHashProviderFactoryRegistry();
+
+		cryptoHashProviderFactoryRegistry.getCryptoHashProvider(
+			"nonexistent", Collections.emptyMap());
 	}
 
 	private static byte[] _randomBytes() {

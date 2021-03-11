@@ -1,0 +1,10 @@
+apiDir: "../headless-commerce-admin-shipment-api/src/main/java"
+apiPackagePath: "com.liferay.headless.commerce.admin.shipment"
+application:
+    baseURI: "/headless-commerce-admin-shipment"
+    className: "HeadlessCommerceAdminShipmentApplication"
+    name: "Liferay.Headless.Commerce.Admin.Shipment"
+author: "Andrea Sbarra"
+clientDir: "../headless-commerce-admin-shipment-client/src/main/java"
+forcePredictableSchemaPropertyName: false
+testDir: "../headless-commerce-admin-shipment-test/src/testIntegration/java"

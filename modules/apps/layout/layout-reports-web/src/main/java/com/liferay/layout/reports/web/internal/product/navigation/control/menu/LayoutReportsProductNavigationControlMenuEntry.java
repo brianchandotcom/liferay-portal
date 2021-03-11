@@ -14,9 +14,11 @@
 
 package com.liferay.layout.reports.web.internal.product.navigation.control.menu;
 
+import com.liferay.layout.reports.web.internal.configuration.LayoutReportsConfiguration;
 import com.liferay.layout.reports.web.internal.constants.LayoutReportsPortletKeys;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -78,6 +80,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sarai Díaz
  */
 @Component(
+	configurationPid = "com.liferay.layout.reports.web.internal.configuration.LayoutReportsConfiguration",
 	immediate = true,
 	property = {
 		"product.navigation.control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.USER,
@@ -192,6 +195,10 @@ public class LayoutReportsProductNavigationControlMenuEntry
 	public boolean isShow(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
+		if (!_layoutReportsConfiguration.enabled()) {
+			return false;
+		}
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -216,6 +223,9 @@ public class LayoutReportsProductNavigationControlMenuEntry
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
+		_layoutReportsConfiguration = ConfigurableUtil.createConfigurable(
+			LayoutReportsConfiguration.class, properties);
+
 		_portletNamespace = _portal.getPortletNamespace(
 			LayoutReportsPortletKeys.LAYOUT_REPORTS);
 	}
@@ -377,6 +387,8 @@ public class LayoutReportsProductNavigationControlMenuEntry
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	private LayoutReportsConfiguration _layoutReportsConfiguration;
 
 	@Reference
 	private Portal _portal;

@@ -411,4 +411,62 @@ definition {
 			AssertTextNotPresent(value1 = "WC WebContent Title");
 		}
 	}
+
+	@description = "This is a use case for LPS-82431."
+	@priority = "5"
+	test StagingEditWebContents {
+		property portal.acceptance = "true";
+
+		task ("Create three web contents") {
+			for (var webContentTitle : list "WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3" ) {
+				WebContentNavigator.openWebContentAdmin(
+						siteURLKey = "site-name");
+
+				WebContentNavigator.gotoAddCP();
+
+				WebContent.addCP(
+						webContentContent = "WC WebContent Content",
+						webContentTitle = "${webContentTitle}");
+
+				PortletEntry.publish();
+
+				WebContentNavigator.openWebContentAdmin(
+						siteURLKey = "site-name");
+
+				WebContent.viewTitle(webContentTitle = "${webContentTitle}");
+			}
+		}
+
+		task ("Activate Staging") {
+			Staging.openStagingAdmin(siteURLKey = "site-name");
+
+			Staging.activateStagingCP(siteName = "Site Name");
+		}
+
+		task ("Edit the web contents") {
+			for (var webContentTitle : list "WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3") {
+				WebContentNavigator.openWebContentAdmin(
+						siteURLKey = "site-name-staging");
+
+				WebContentNavigator.gotoEditCP(
+						webContentTitle = "${webContentTitle}");
+
+				WebContent.editCP(
+						webContentContentEdit = "WC WebContent Content Edit",
+						webContentTitle = "${webContentTitle}",
+						webContentTitleEdit = "${webContentTitle} Edit");
+			}
+		}
+
+		task ("Assert web content has been edited") {
+			for (var webContentTitle : list "WC WebContent Title 1 Edit,WC WebContent Title 2 Edit,WC WebContent Title 3 Edit") {
+				WebContentNavigator.openWebContentAdmin(
+						siteURLKey = "site-name-staging");
+
+				WebContent.viewTitle(webContentTitle = "${webContentTitle}");
+
+			}
+		}
+
+	}
 }

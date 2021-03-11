@@ -1,0 +1,39 @@
+dependencies {
+	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.10.3"
+	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.10.3"
+	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.10.5.1"
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.test", version: "default"
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.test.integration", version: "default"
+	testIntegrationCompile group: "commons-beanutils", name: "commons-beanutils", version: "1.9.4"
+	testIntegrationCompile group: "commons-lang", name: "commons-lang", version: "2.6"
+	testIntegrationCompile group: "javax.validation", name: "validation-api", version: "2.0.1.Final"
+	testIntegrationCompile group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
+	testIntegrationCompile group: "junit", name: "junit", version: "4.13.1"
+	testIntegrationCompile project(":apps:asset:asset-test-util")
+	testIntegrationCompile project(":apps:commerce:commerce-account-api")
+	testIntegrationCompile project(":apps:commerce:commerce-account-test-util")
+	testIntegrationCompile project(":apps:commerce:commerce-api")
+	testIntegrationCompile project(":apps:commerce:commerce-currency-api")
+	testIntegrationCompile project(":apps:commerce:commerce-currency-test-util")
+	testIntegrationCompile project(":apps:commerce:commerce-discount-api")
+	testIntegrationCompile project(":apps:commerce:commerce-inventory-api")
+	testIntegrationCompile project(":apps:commerce:commerce-payment-api")
+	testIntegrationCompile project(":apps:commerce:commerce-payment-test-util")
+	testIntegrationCompile project(":apps:commerce:commerce-price-list-api")
+	testIntegrationCompile project(":apps:commerce:commerce-pricing-api")
+	testIntegrationCompile project(":apps:commerce:commerce-product-api")
+	testIntegrationCompile project(":apps:commerce:commerce-product-test-util")
+	testIntegrationCompile project(":apps:commerce:commerce-product-type-simple")
+	testIntegrationCompile project(":apps:commerce:commerce-service")
+	testIntegrationCompile project(":apps:commerce:commerce-tax-api")
+	testIntegrationCompile project(":apps:commerce:commerce-test-util")
+	testIntegrationCompile project(":apps:commerce:headless:headless-commerce:headless-commerce-admin-shipment-api")
+	testIntegrationCompile project(":apps:commerce:headless:headless-commerce:headless-commerce-admin-shipment-client")
+	testIntegrationCompile project(":apps:portal-odata:portal-odata-api")
+	testIntegrationCompile project(":apps:portal-search:portal-search-test-util")
+	testIntegrationCompile project(":apps:portal-vulcan:portal-vulcan-api")
+	testIntegrationCompile project(":core:petra:petra-function")
+	testIntegrationCompile project(":core:petra:petra-string")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+}

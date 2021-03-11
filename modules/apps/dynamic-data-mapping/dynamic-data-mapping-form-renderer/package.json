@@ -2,11 +2,11 @@
 	"dependencies": {
 		"@clayui/button": "3.6.0",
 		"@clayui/data-provider": "3.3.10",
-		"@clayui/drop-down": "3.25.0",
+		"@clayui/drop-down": "3.25.1",
 		"@clayui/icon": "3.1.0",
 		"@clayui/layout": "3.3.0",
 		"@clayui/loading-indicator": "3.2.0",
-		"@clayui/pagination": "3.25.0",
+		"@clayui/pagination": "3.25.1",
 		"@clayui/tabs": "3.3.5",
 		"@clayui/tooltip": "3.4.5",
 		"classnames": "2.2.6",

@@ -12,18 +12,5 @@
  * details.
  */
 
-import AJAX from '../AJAX/index';
-import * as Events from '../eventsDefinitions';
-import DDMFormHandler from '../forms/DDMFormHandler';
-import * as FormUtils from '../forms/index';
-import * as BaseUtils from '../index';
-
-export default {
-	AJAX,
-	BaseUtils,
-	Events,
-	FormUtils: {
-		...FormUtils,
-		DDMFormHandler,
-	},
-};
+export const CP_CONTENT_WEB_PORTLET_KEY =
+	'com_liferay_commerce_product_content_web_internal_portlet_CPContentPortlet';

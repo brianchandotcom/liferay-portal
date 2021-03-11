@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -68,7 +69,8 @@ public class JournalArticleTag extends IncludeTag {
 		try {
 			_articleDisplay = JournalArticleLocalServiceUtil.getArticleDisplay(
 				_article.getGroupId(), _article.getArticleId(),
-				_article.getVersion(), _ddmTemplateKey, Constants.VIEW,
+				_article.getVersion(), _ddmTemplateKey,
+				ParamUtil.getString(request, "p_l_mode", Constants.VIEW),
 				getLanguageId(), 1, portletRequestModel, themeDisplay);
 		}
 		catch (PortalException portalException) {

@@ -1267,6 +1267,7 @@ public class TestrayImporter {
 
 	private String _replaceEnvVars(String string) {
 		string = _replaceEnvVarsControllerBuild(string);
+		string = _replaceEnvVarsPluginsBranchInformationBuild(string);
 		string = _replaceEnvVarsPluginsTopLevelBuild(string);
 		string = _replaceEnvVarsPortalAppReleaseTopLevelBuild(string);
 		string = _replaceEnvVarsPortalBranchInformationBuild(string);
@@ -1302,6 +1303,38 @@ public class TestrayImporter {
 
 		return string.replace(
 			"$(jenkins.controller.master.hostname)", jenkinsMaster.getName());
+	}
+
+	private String _replaceEnvVarsPluginsBranchInformationBuild(String string) {
+		if (!(_topLevelBuild instanceof PluginsBranchInformationBuild)) {
+			return string;
+		}
+
+		PluginsBranchInformationBuild pluginsBranchInformationBuild =
+			(PluginsBranchInformationBuild)_topLevelBuild;
+
+		Build.BranchInformation pluginsBranchInformation =
+			pluginsBranchInformationBuild.getPluginsBranchInformation();
+
+		if (pluginsBranchInformation == null) {
+			return string;
+		}
+
+		string = string.replace(
+			"$(plugins.branch.name)",
+			pluginsBranchInformation.getUpstreamBranchName());
+		string = string.replace(
+			"$(plugins.custom.branch.name)",
+			pluginsBranchInformation.getSenderBranchName());
+		string = string.replace(
+			"$(plugins.custom.branch.username)",
+			pluginsBranchInformation.getSenderUsername());
+		string = string.replace(
+			"$(plugins.repository)",
+			pluginsBranchInformation.getRepositoryName());
+
+		return string.replace(
+			"$(plugins.sha)", pluginsBranchInformation.getSenderBranchSHA());
 	}
 
 	private String _replaceEnvVarsPluginsTopLevelBuild(String string) {

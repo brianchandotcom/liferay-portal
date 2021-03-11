@@ -2217,7 +2217,7 @@ definition {
 	@description = "Publish my app in one or more sites"
 	@priority = "5"
 	test PublishAppsInOneOrMoreSites {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		JSONLayout.addPublicLayout(
 			groupName = "App Builder Site 1",

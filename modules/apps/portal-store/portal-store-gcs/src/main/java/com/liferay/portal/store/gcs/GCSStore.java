@@ -37,6 +37,8 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Digester;
+import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.store.gcs.configuration.GCSStoreConfiguration;
@@ -83,7 +85,7 @@ public class GCSStore implements Store {
 			deleteFile(companyId, repositoryId, fileName, versionLabel);
 		}
 
-		String path = _keyTransformer.getFileVersionKey(
+		String path = _getFileVersionKey(
 			companyId, repositoryId, fileName, versionLabel);
 
 		BlobInfo blobInfo = BlobInfo.newBuilder(
@@ -104,8 +106,7 @@ public class GCSStore implements Store {
 	public void deleteDirectory(
 		long companyId, long repositoryId, String dirName) {
 
-		String path = _keyTransformer.getDirectoryKey(
-			companyId, repositoryId, dirName);
+		String path = _getDirectoryKey(companyId, repositoryId, dirName);
 
 		Page<Blob> blobPage = _gcsStore.list(
 			_gcsStoreConfiguration.bucketName(),
@@ -151,11 +152,10 @@ public class GCSStore implements Store {
 		if (Validator.isNull(dirName) ||
 			dirName.equals(StringPool.FORWARD_SLASH)) {
 
-			path = _keyTransformer.getRepositoryKey(companyId, repositoryId);
+			path = _getRepositoryKey(companyId, repositoryId);
 		}
 		else {
-			path = _keyTransformer.getDirectoryKey(
-				companyId, repositoryId, dirName);
+			path = _getDirectoryKey(companyId, repositoryId, dirName);
 		}
 
 		Bucket bucket = _gcsStore.get(_gcsStoreConfiguration.bucketName());
@@ -199,7 +199,7 @@ public class GCSStore implements Store {
 
 		return getFileNames(
 			companyId, repositoryId,
-			_keyTransformer.getFileKey(companyId, repositoryId, fileName));
+			_getFileKey(companyId, repositoryId, fileName));
 	}
 
 	@Override
@@ -207,7 +207,7 @@ public class GCSStore implements Store {
 		long companyId, long repositoryId, String fileName,
 		String versionLabel) {
 
-		String path = _keyTransformer.getFileVersionKey(
+		String path = _getFileVersionKey(
 			companyId, repositoryId, fileName, versionLabel);
 
 		Page<Blob> blobPage = _gcsStore.list(
@@ -259,17 +259,53 @@ public class GCSStore implements Store {
 		return _bucketInfo;
 	}
 
+	private String _getDirectoryKey(
+		long companyId, long repositoryId, String folderName) {
+
+		return _getFileKey(companyId, repositoryId, folderName);
+	}
+
+	private String _getFileKey(
+		long companyId, long repositoryId, String fileName) {
+
+		com.liferay.portal.kernel.util.StringBundler sb =
+			new com.liferay.portal.kernel.util.StringBundler(4);
+
+		sb.append(companyId);
+		sb.append(StringPool.SLASH);
+		sb.append(repositoryId);
+		sb.append(_getNormalizedFileName(fileName));
+
+		return sb.toString();
+	}
+
+	private String _getFileVersionKey(
+		long companyId, long repositoryId, String fileName,
+		String versionLabel) {
+
+		com.liferay.portal.kernel.util.StringBundler sb =
+			new com.liferay.portal.kernel.util.StringBundler(6);
+
+		sb.append(companyId);
+		sb.append(StringPool.SLASH);
+		sb.append(repositoryId);
+		sb.append(_getNormalizedFileName(fileName));
+		sb.append(StringPool.SLASH);
+		sb.append(versionLabel);
+
+		return sb.toString();
+	}
+
 	private String _getHeadVersionLabel(
 		long companyId, long repositoryId, String fileName,
 		String versionLabel) {
 
 		if (Validator.isNotNull(versionLabel)) {
-			return _keyTransformer.getFileVersionKey(
+			return _getFileVersionKey(
 				companyId, repositoryId, fileName, versionLabel);
 		}
 
-		String path = _keyTransformer.getFileKey(
-			companyId, repositoryId, fileName);
+		String path = _getFileKey(companyId, repositoryId, fileName);
 
 		String[] names = getFileNames(companyId, repositoryId, path);
 
@@ -281,7 +317,7 @@ public class GCSStore implements Store {
 						" using default version: ", VERSION_DEFAULT));
 			}
 
-			return _keyTransformer.getFileVersionKey(
+			return _getFileVersionKey(
 				companyId, repositoryId, fileName, VERSION_DEFAULT);
 		}
 
@@ -292,12 +328,32 @@ public class GCSStore implements Store {
 		return fileNames.get(fileNames.size() - 1);
 	}
 
+	private String _getNormalizedFileName(String fileName) {
+		String normalizedFileName = fileName;
+
+		if (fileName.startsWith(StringPool.SLASH)) {
+			normalizedFileName = normalizedFileName.substring(1);
+		}
+
+		if (fileName.endsWith(StringPool.SLASH)) {
+			normalizedFileName = normalizedFileName.substring(
+				0, normalizedFileName.length() - 1);
+		}
+
+		return StringPool.SLASH +
+			DigesterUtil.digest(Digester.SHA_1, normalizedFileName);
+	}
+
 	private ReadChannel _getReadChannel(Blob blob) {
 		if (_blobDecryptSourceOption == null) {
 			return blob.reader();
 		}
 
 		return blob.reader(_blobDecryptSourceOption);
+	}
+
+	private String _getRepositoryKey(long companyId, long repositoryId) {
+		return companyId + StringPool.SLASH + repositoryId;
 	}
 
 	private WriteChannel _getWriteChannel(BlobInfo blobInfo) {
@@ -386,6 +442,5 @@ public class GCSStore implements Store {
 	private Storage _gcsStore;
 	private GCSStoreConfiguration _gcsStoreConfiguration;
 	private GoogleCredentials _googleCredentials;
-	private final GCSKeyTransformer _keyTransformer = new GCSKeyTransformer();
 
 }

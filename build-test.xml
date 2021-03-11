@@ -14070,17 +14070,22 @@ url=${short.hostname}:8080</echo>
 	<target name="wait-for-plugins-deployment">
 		<fail message="Please set the property ${test.class}." unless="test.class" />
 
-		<if>
-			<not>
-				<equals arg1="${liferay.portal.bundle}" arg2="6.0.6" />
-			</not>
-			<then>
-				<condition property="required.plugins.includes" value="">
-					<not>
-						<isset property="required.plugins.includes" />
-					</not>
-				</condition>
+		<get-testcase-property property.name="hook.plugins.includes" />
+		<get-testcase-property property.name="layouttpl.plugins.includes" />
+		<get-testcase-property property.name="portlet.plugins.includes" />
+		<get-testcase-property property.name="theme.plugins.includes" />
+		<get-testcase-property property.name="web.plugins.includes" />
 
+		<if>
+			<or>
+				<isset property="hook.plugins.includes" />
+				<isset property="layouttpl.plugins.includes" />
+				<isset property="portlet.plugins.includes" />
+				<isset property="required.plugins.includes" />
+				<isset property="theme.plugins.includes" />
+				<isset property="web.plugins.includes" />
+			</or>
+			<then>
 				<if>
 					<not>
 						<available file="${liferay.home}/logs" type="dir" />
@@ -14098,12 +14103,6 @@ url=${short.hostname}:8080</echo>
 				</first>
 
 				<var name="log.file.path" value="${toString:first}" />
-
-				<get-testcase-property property.name="hook.plugins.includes" />
-				<get-testcase-property property.name="layouttpl.plugins.includes" />
-				<get-testcase-property property.name="portlet.plugins.includes" />
-				<get-testcase-property property.name="theme.plugins.includes" />
-				<get-testcase-property property.name="web.plugins.includes" />
 
 				<beanshell>
 					<![CDATA[

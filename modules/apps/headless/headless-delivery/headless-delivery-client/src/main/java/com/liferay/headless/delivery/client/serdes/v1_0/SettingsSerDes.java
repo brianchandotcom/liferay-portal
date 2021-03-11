@@ -105,6 +105,16 @@ public class SettingsSerDes {
 			sb.append(String.valueOf(settings.getMasterPage()));
 		}
 
+		if (settings.getStyleBook() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"styleBook\": ");
+
+			sb.append(String.valueOf(settings.getStyleBook()));
+		}
+
 		if (settings.getThemeName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -181,6 +191,13 @@ public class SettingsSerDes {
 			map.put("masterPage", String.valueOf(settings.getMasterPage()));
 		}
 
+		if (settings.getStyleBook() == null) {
+			map.put("styleBook", null);
+		}
+		else {
+			map.put("styleBook", String.valueOf(settings.getStyleBook()));
+		}
+
 		if (settings.getThemeName() == null) {
 			map.put("themeName", null);
 		}
@@ -235,6 +252,12 @@ public class SettingsSerDes {
 				if (jsonParserFieldValue != null) {
 					settings.setMasterPage(
 						MasterPageSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "styleBook")) {
+				if (jsonParserFieldValue != null) {
+					settings.setStyleBook(
+						StyleBookSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "themeName")) {

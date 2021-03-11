@@ -164,6 +164,37 @@ public class Settings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected MasterPage masterPage;
 
+	@Schema(description = "Defines the StyleBook that is applied to the Page")
+	@Valid
+	public StyleBook getStyleBook() {
+		return styleBook;
+	}
+
+	public void setStyleBook(StyleBook styleBook) {
+		this.styleBook = styleBook;
+	}
+
+	@JsonIgnore
+	public void setStyleBook(
+		UnsafeSupplier<StyleBook, Exception> styleBookUnsafeSupplier) {
+
+		try {
+			styleBook = styleBookUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(
+		description = "Defines the StyleBook that is applied to the Page"
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected StyleBook styleBook;
+
 	@Schema
 	public String getThemeName() {
 		return themeName;
@@ -298,6 +329,16 @@ public class Settings implements Serializable {
 			sb.append("\"masterPage\": ");
 
 			sb.append(String.valueOf(masterPage));
+		}
+
+		if (styleBook != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"styleBook\": ");
+
+			sb.append(String.valueOf(styleBook));
 		}
 
 		if (themeName != null) {

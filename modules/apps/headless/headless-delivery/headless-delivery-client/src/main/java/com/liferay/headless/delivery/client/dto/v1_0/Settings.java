@@ -116,6 +116,27 @@ public class Settings implements Cloneable, Serializable {
 
 	protected MasterPage masterPage;
 
+	public StyleBook getStyleBook() {
+		return styleBook;
+	}
+
+	public void setStyleBook(StyleBook styleBook) {
+		this.styleBook = styleBook;
+	}
+
+	public void setStyleBook(
+		UnsafeSupplier<StyleBook, Exception> styleBookUnsafeSupplier) {
+
+		try {
+			styleBook = styleBookUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected StyleBook styleBook;
+
 	public String getThemeName() {
 		return themeName;
 	}

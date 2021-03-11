@@ -612,6 +612,13 @@ definition {
 			item = "Unsubscribe");
 	}
 
+	macro viewDefault {
+		AssertTextEquals(
+			key_emptyInfo = "This page has no topics.",
+			locator1 = "Questions#EMPTY_STATE_MESSAGE",
+			value1 = "This page has no topics.");
+	}
+
 	macro viewFilterResults {
 		AssertTextEquals(
 			key_questionTitle = "${questionTitle}",

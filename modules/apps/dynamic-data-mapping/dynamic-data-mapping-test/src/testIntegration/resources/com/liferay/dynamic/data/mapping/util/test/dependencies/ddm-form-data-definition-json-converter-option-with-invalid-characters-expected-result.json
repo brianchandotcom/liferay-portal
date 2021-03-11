@@ -1,0 +1,46 @@
+{
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"defaultLanguageId": "en_US",
+	"definitionSchemaVersion": "2.0",
+	"fields": [
+		{
+			"dataType": "radio",
+			"fieldReference": "Radio",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Radio"
+			},
+			"localizable": true,
+			"name": "Radio",
+			"options": [
+				{
+					"label": {
+						"en_US": "option 1"
+					},
+					"reference": "value10",
+					"value": "value 1.0:$%&:;<=>?@"
+				}
+			],
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "radio"
+		}
+	],
+	"successPage": {
+		"body": {
+		},
+		"enabled": false,
+		"title": {
+		}
+	}
+}

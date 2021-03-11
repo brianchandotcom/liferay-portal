@@ -28,7 +28,6 @@ describe('BasicInformation', () => {
 			},
 			canonicalURL:
 				'http://localhost:8080/en/web/guest/-/basic-web-content',
-			languageTag: 'en-US',
 			publishDate: 'Thu Feb 17 08:17:57 GMT 2020',
 			title: 'A testing page',
 		};
@@ -37,7 +36,6 @@ describe('BasicInformation', () => {
 			<BasicInformation
 				author={testProps.author}
 				canonicalURL={testProps.canonicalURL}
-				languageTag={testProps.languageTag}
 				publishDate={testProps.publishDate}
 				title={testProps.title}
 			/>

@@ -192,7 +192,9 @@ definition {
 
 		LexiconEntry.selectEntry(key_rowEntry = "${rowEntry}");
 
-		AssertElementPresent(locator1 = "Icon#DELETE_NOT_FOCUSABLE");
+		AssertElementPresent(
+			key_text = "times-circle",
+			locator1 = "Icon#ANY_DISABLED");
 	}
 
 	macro deleteCategoryProperty2CP {

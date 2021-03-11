@@ -730,6 +730,25 @@ definition {
 		Questions.deleteQuestion();
 	}
 
+	@description = "Validate if the user can delete a topic, it also covers LPS-128699."
+	@priority = "5"
+	test DeleteTopic {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		MessageboardsCategory.deleteCP(
+			assetType = "Message Boards Category",
+			categoryName = "Questions Test Category");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.viewDefault();
+	}
+
 	@description = "Validate if the user can edit an answer to a question."
 	@priority = "5"
 	test EditAnswer {

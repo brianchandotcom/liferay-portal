@@ -56,6 +56,72 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class AuthorizationCodeGrantServiceRegistrator {
 
+	public static class LiferayAuthorizationCodeGrantService
+		extends AuthorizationCodeGrantService {
+
+		@Override
+		protected boolean canAuthorizationBeSkipped(
+			MultivaluedMap<String, String> params, Client client,
+			UserSubject userSubject, List<String> requestedScope,
+			List<OAuthPermission> permissions) {
+
+			if (MapUtil.getBoolean(
+					client.getProperties(),
+					OAuth2ProviderRESTEndpointConstants.
+						PROPERTY_KEY_CLIENT_TRUSTED_APPLICATION)) {
+
+				return true;
+			}
+
+			return super.canAuthorizationBeSkipped(
+				params, client, userSubject, requestedScope, permissions);
+		}
+
+		@Override
+		protected Response deliverOOBResponse(
+			OOBAuthorizationResponse oobAuthorizationResponse) {
+
+			_log.error(
+				"The parameter \"redirect_uri\" was not found in the request " +
+					"for client " + oobAuthorizationResponse.getClientId());
+
+			return Response.status(
+				500
+			).build();
+		}
+
+		@Override
+		protected Client getClient(
+			String clientId, MultivaluedMap<String, String> params) {
+
+			try {
+				Client client = getValidClient(clientId, params);
+
+				if (client != null) {
+					return client;
+				}
+			}
+			catch (OAuthServiceException oAuthServiceException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Unable to validate remote client",
+						oAuthServiceException);
+				}
+
+				if (oAuthServiceException.getError() != null) {
+					reportInvalidRequestError(
+						oAuthServiceException.getError(), null);
+				}
+			}
+
+			reportInvalidRequestError(
+				new OAuthError(OAuthConstants.INVALID_CLIENT), null);
+
+			return null;
+		}
+
+	}
+
 	@Activate
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
@@ -71,72 +137,7 @@ public class AuthorizationCodeGrantServiceRegistrator {
 		}
 
 		AuthorizationCodeGrantService authorizationCodeGrantService =
-			new AuthorizationCodeGrantService() {
-
-				@Override
-				protected boolean canAuthorizationBeSkipped(
-					MultivaluedMap<String, String> params, Client client,
-					UserSubject userSubject, List<String> requestedScope,
-					List<OAuthPermission> permissions) {
-
-					if (MapUtil.getBoolean(
-							client.getProperties(),
-							OAuth2ProviderRESTEndpointConstants.
-								PROPERTY_KEY_CLIENT_TRUSTED_APPLICATION)) {
-
-						return true;
-					}
-
-					return super.canAuthorizationBeSkipped(
-						params, client, userSubject, requestedScope,
-						permissions);
-				}
-
-				@Override
-				protected Response deliverOOBResponse(
-					OOBAuthorizationResponse oobAuthorizationResponse) {
-
-					_log.error(
-						"The parameter \"redirect_uri\" was not found in the " +
-							"request for client " +
-								oobAuthorizationResponse.getClientId());
-
-					return Response.status(
-						500
-					).build();
-				}
-
-				@Override
-				protected Client getClient(
-					String clientId, MultivaluedMap<String, String> params) {
-
-					try {
-						Client client = getValidClient(clientId, params);
-
-						if (client != null) {
-							return client;
-						}
-					}
-					catch (OAuthServiceException oAuthServiceException) {
-						if (_log.isDebugEnabled()) {
-							_log.debug(
-								"Unable to validate remote client",
-								oAuthServiceException);
-						}
-
-						if (oAuthServiceException.getError() != null) {
-							reportInvalidRequestError(
-								oAuthServiceException.getError(), null);
-						}
-					}
-
-					reportInvalidRequestError(
-						new OAuthError(OAuthConstants.INVALID_CLIENT), null);
-
-					return null;
-				}
-
-			};
+			new LiferayAuthorizationCodeGrantService();
 
 		authorizationCodeGrantService.setCanSupportPublicClients(
 			oAuth2ProviderConfiguration.allowAuthorizationCodePKCEGrant());

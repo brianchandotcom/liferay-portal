@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Objects;
 
@@ -224,10 +225,16 @@ public class CommerceSubscriptionEngineImpl
 
 		int paymentStatus = commercePaymentResult.getNewPaymentStatus();
 
+		String authTransactionId = commercePaymentResult.getAuthTransactionId();
+
+		if (Validator.isNull(authTransactionId)) {
+			authTransactionId = commerceOrder.getTransactionId();
+		}
+
 		commerceOrder =
 			_commerceOrderLocalService.updatePaymentStatusAndTransactionId(
 				commerceOrder.getUserId(), commerceOrderId, paymentStatus,
-				transactionId);
+				authTransactionId);
 
 		_commerceOrderPaymentLocalService.addCommerceOrderPayment(
 			commerceOrderId, paymentStatus, StringPool.BLANK);

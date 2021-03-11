@@ -11,72 +11,58 @@
 
 import {fetch} from 'frontend-js-web';
 
-function APIService({
-	endpoints: {
+export default {
+	getHistoricalReads(
 		analyticsReportsHistoricalReadsURL,
-		analyticsReportsHistoricalViewsURL,
-		analyticsReportsTotalReadsURL,
-		analyticsReportsTotalViewsURL,
-		analyticsReportsTrafficSourcesURL,
-	},
-	namespace,
-	page: {plid},
-}) {
-	function getHistoricalReads({timeSpanKey, timeSpanOffset}) {
+		{namespace, plid, timeSpanKey, timeSpanOffset}
+	) {
 		const body = {plid, timeSpanKey, timeSpanOffset};
 
 		return _fetchWithError(analyticsReportsHistoricalReadsURL, {
 			body: _getFormDataRequest(body, namespace),
 			method: 'POST',
 		});
-	}
+	},
 
-	function getHistoricalViews({timeSpanKey, timeSpanOffset}) {
+	getHistoricalViews(
+		analyticsReportsHistoricalViewsURL,
+		{namespace, plid, timeSpanKey, timeSpanOffset}
+	) {
 		const body = {plid, timeSpanKey, timeSpanOffset};
 
 		return _fetchWithError(analyticsReportsHistoricalViewsURL, {
 			body: _getFormDataRequest(body, namespace),
 			method: 'POST',
 		});
-	}
+	},
 
-	function getTotalReads() {
+	getTotalReads(analyticsReportsTotalReadsURL, {namespace, plid}) {
 		const body = {plid};
 
 		return _fetchWithError(analyticsReportsTotalReadsURL, {
 			body: _getFormDataRequest(body, namespace),
 			method: 'POST',
 		});
-	}
+	},
 
-	function getTotalViews() {
+	getTotalViews(analyticsReportsTotalViewsURL, {namespace, plid}) {
 		const body = {plid};
 
 		return _fetchWithError(analyticsReportsTotalViewsURL, {
 			body: _getFormDataRequest(body, namespace),
 			method: 'POST',
 		});
-	}
+	},
 
-	function getTrafficSources() {
+	getTrafficSources(analyticsReportsTrafficSourcesURL, {namespace, plid}) {
 		const body = {plid};
 
 		return _fetchWithError(analyticsReportsTrafficSourcesURL, {
 			body: _getFormDataRequest(body, namespace),
 			method: 'POST',
 		});
-	}
-
-	return {
-		getHistoricalReads,
-		getHistoricalViews,
-		getTotalReads,
-		getTotalViews,
-		getTrafficSources,
-	};
-}
-
-export default APIService;
+	},
+};
 
 /**
  *

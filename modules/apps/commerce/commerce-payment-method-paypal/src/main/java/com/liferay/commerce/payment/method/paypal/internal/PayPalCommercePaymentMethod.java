@@ -1122,6 +1122,15 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 			PayPalCommercePaymentMethodConstants.INITIAL_FAIL_AMOUNT_ACTION);
 		merchantPreferences.setReturnUrl(commercePaymentRequest.getReturnUrl());
 
+		BigDecimal shippingAmount = commerceOrder.getShippingAmount();
+
+		Currency initialFee = new Currency(
+			commerceCurrency.getCode(),
+			_payPalDecimalFormat.format(
+				shippingAmount.add(commerceOrder.getTaxAmount())));
+
+		merchantPreferences.setSetupFee(initialFee);
+
 		PayPalGroupServiceConfiguration payPalGroupServiceConfiguration =
 			_getPayPalGroupServiceConfiguration(commerceOrder.getGroupId());
 

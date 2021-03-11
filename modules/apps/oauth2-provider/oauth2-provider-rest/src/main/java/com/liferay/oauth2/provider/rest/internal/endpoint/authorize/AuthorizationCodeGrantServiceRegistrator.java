@@ -44,6 +44,7 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import org.apache.cxf.jaxrs.ext.MessageContext;
 import org.apache.cxf.rs.security.oauth2.common.Client;
 import org.apache.cxf.rs.security.oauth2.common.OAuthError;
 import org.apache.cxf.rs.security.oauth2.common.OAuthPermission;
@@ -90,10 +91,9 @@ public class AuthorizationCodeGrantServiceRegistrator {
 					state, client, requestedScope, approvedScope, userSubject,
 					preauthorizedToken);
 
-			String rememberDeviceCookieContent =
-				_getRememberDeviceCookieContent();
+			String rememberDeviceContent = _getRememberDeviceContent();
 
-			if (rememberDeviceCookieContent != null) {
+			if (rememberDeviceContent != null) {
 				long userId = GetterUtil.getLong(userSubject.getId());
 
 				LiferayOAuthDataProvider liferayOAuthDataProvider =
@@ -102,10 +102,10 @@ public class AuthorizationCodeGrantServiceRegistrator {
 				OAuth2Authorization oAuth2Authorization =
 					liferayOAuthDataProvider.
 						getOAuth2AuthorizationByRememberDeviceContent(
-							client, rememberDeviceCookieContent, userId);
+							client, rememberDeviceContent, userId);
 
 				if ((oAuth2Authorization != null) &&
-					rememberDeviceCookieContent.equals(
+					rememberDeviceContent.equals(
 						oAuth2Authorization.getRememberDeviceContent())) {
 
 					Cookie cookie = _getCookie();
@@ -150,7 +150,7 @@ public class AuthorizationCodeGrantServiceRegistrator {
 						PROPERTY_KEY_CLIENT_REMEMBER_DEVICE)) {
 
 				String rememberDeviceCookieContent =
-					_getRememberDeviceCookieContent();
+					_getRememberDeviceContent();
 
 				if (rememberDeviceCookieContent != null) {
 					long userId = GetterUtil.getLong(userSubject.getId());
@@ -290,9 +290,11 @@ public class AuthorizationCodeGrantServiceRegistrator {
 			return (LiferayOAuthDataProvider)getDataProvider();
 		}
 
-		private String _getRememberDeviceCookieContent() {
+		private String _getRememberDeviceContent() {
+			MessageContext messageContext = getMessageContext();
+
 			HttpServletRequest httpServletRequest =
-				getMessageContext().getHttpServletRequest();
+				messageContext.getHttpServletRequest();
 
 			return Stream.of(
 				httpServletRequest.getCookies()

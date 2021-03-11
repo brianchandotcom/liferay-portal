@@ -345,7 +345,7 @@ public class LiferayOAuthDataProvider
 					companyId, client.getClientId());
 
 			return _oAuth2AuthorizationLocalService.
-				fetchLatestOAuth2AuthorizationByRememberDeviceContent(
+				fetchOAuth2AuthorizationByRememberDeviceContent(
 					userId, oAuth2Application.getOAuth2ApplicationId(),
 					rememberDeviceContent);
 		}

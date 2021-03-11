@@ -262,6 +262,28 @@ definition {
 		Questions.deleteQuestion();
 	}
 
+	@description = "Validate if the user can delete a topic that contains non-Latin characters."
+	@priority = "5"
+	test DeleteTopicWithNonLatinCharacters {
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoTab(questionTabField = "Questions");
+
+		Questions.addRootTopic(
+			rootTopicDescription = "トピック記述",
+			rootTopicName = "質問トピック");
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		MessageboardsCategory.deleteCP(
+			assetType = "Message Boards Category",
+			categoryName = "質問トピック");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.viewDefault();
+	}
+
 	@description = "Validate if the user can add a comment to an answer with non-Latin characters."
 	@priority = "4"
 	test ReplyToAnAnswerWithNonLatinCharacters {

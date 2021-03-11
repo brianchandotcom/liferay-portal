@@ -12,18 +12,27 @@
  * details.
  */
 
-import {DefaultEventHandler} from 'frontend-js-web';
+export default function propsTransformer({portletNamespace, ...otherProps}) {
+	return {
+		...otherProps,
+		onActionButtonClick(event, {item}) {
+			if (item.data?.action === 'deleteDDMStructures') {
+				if (
+					confirm(
+						Liferay.Language.get(
+							'are-you-sure-you-want-to-delete-this'
+						)
+					)
+				) {
+					const form = document.getElementById(
+						`${portletNamespace}fm`
+					);
 
-class DDMStructuresManagementToolbarDefaultEventHandler extends DefaultEventHandler {
-	deleteDDMStructures() {
-		if (
-			confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
-			)
-		) {
-			submitForm(this.one('#fm'));
-		}
-	}
+					if (form) {
+						submitForm(form);
+					}
+				}
+			}
+		},
+	};
 }
-
-export default DDMStructuresManagementToolbarDefaultEventHandler;

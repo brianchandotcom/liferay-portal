@@ -27,8 +27,9 @@ JournalDDMStructuresManagementToolbarDisplayContext journalDDMStructuresManageme
 	navigationItems='<%= journalDisplayContext.getNavigationItems("structures") %>'
 />
 
-<clay:management-toolbar-v2
-	displayContext="<%= journalDDMStructuresManagementToolbarDisplayContext %>"
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= journalDDMStructuresManagementToolbarDisplayContext %>"
+	propsTransformer="js/DDMStructuresManagementToolbarPropsTransformer"
 />
 
 <portlet:actionURL copyCurrentRenderParameters="<%= true %>" name="/journal/delete_data_definition" var="deleteDataDefinitionURL">
@@ -122,8 +123,3 @@ JournalDDMStructuresManagementToolbarDisplayContext journalDDMStructuresManageme
 		/>
 	</liferay-ui:search-container>
 </aui:form>
-
-<liferay-frontend:component
-	componentId="<%= journalDDMStructuresManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/DDMStructuresManagementToolbarDefaultEventHandler.es"
-/>

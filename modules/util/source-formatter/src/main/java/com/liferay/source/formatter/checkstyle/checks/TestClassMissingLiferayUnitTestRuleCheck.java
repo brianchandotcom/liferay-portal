@@ -54,8 +54,6 @@ public class TestClassMissingLiferayUnitTestRuleCheck extends BaseCheck {
 				continue;
 			}
 
-			List<String> importNames = getImportNames(detailAST);
-
 			DetailAST annotationDetailAST = AnnotationUtil.getAnnotation(
 				detailAST, "RunWith");
 
@@ -78,6 +76,33 @@ public class TestClassMissingLiferayUnitTestRuleCheck extends BaseCheck {
 					}
 				}
 			}
+
+			DetailAST objBlockDetailAST = detailAST.findFirstToken(
+				TokenTypes.OBJBLOCK);
+
+			List<DetailAST> variableDefinitionDetailASTList = getAllChildTokens(
+				objBlockDetailAST, false, TokenTypes.VARIABLE_DEF);
+
+			for (DetailAST variableDefinitionDetailAST :
+					variableDefinitionDetailASTList) {
+
+				DetailAST typeDetailAST =
+					variableDefinitionDetailAST.findFirstToken(TokenTypes.TYPE);
+
+				DetailAST identDetailAST = typeDetailAST.getFirstChild();
+
+				if (identDetailAST.getType() != TokenTypes.IDENT) {
+					continue;
+				}
+
+				String variableType = identDetailAST.getText();
+
+				if (variableType.equals("LiferayUnitTestRule")) {
+					return;
+				}
+			}
+
+			List<String> importNames = getImportNames(detailAST);
 
 			if (!importNames.contains(
 					"com.liferay.portal.test.rule.LiferayUnitTestRule")) {

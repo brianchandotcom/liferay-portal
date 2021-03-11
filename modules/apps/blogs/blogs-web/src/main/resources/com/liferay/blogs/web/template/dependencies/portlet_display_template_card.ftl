@@ -36,55 +36,12 @@
 								</div>
 
 								<div class="autofit-col visible-interaction">
-									<div class="dropdown dropdown-action">
-										<@liferay_ui["icon-menu"]
-											direction="left-side"
-											icon=""
-											markupView="lexicon"
-											message="actions"
-											showWhenSingleIcon=true
-										>
-											<#if blogsEntryPermission.contains(permissionChecker, curBlogEntry, "UPDATE")>
-												<#assign editEntryPortletURL = renderResponse.createRenderURL() />
-
-												${editEntryPortletURL.setWindowState(windowStateFactory.getWindowState("MAXIMIZED"))}
-												${editEntryPortletURL.setParameter("mvcRenderCommandName", "/blogs/edit_entry")}
-												${editEntryPortletURL.setParameter("redirect", currentURL)}
-												${editEntryPortletURL.setParameter("entryId", curBlogEntry.getEntryId()?string)}
-
-												<@liferay_ui["icon"]
-													label=true
-													message="edit"
-													url=editEntryPortletURL.toString()
-												/>
-											</#if>
-											<#if blogsEntryPermission.contains(permissionChecker, curBlogEntry, "PERMISSIONS")>
-												<#assign permissionsEntryURL = permissionsURLTag.doTag(null, "com.liferay.blogs.model.BlogsEntry", blogsEntryUtil.getDisplayTitle(resourceBundle, curBlogEntry), curBlogEntry.getGroupId()?string, curBlogEntry.getEntryId()?string, windowStateFactory.getWindowState("POP_UP").toString(), null, request) />
-
-												<@liferay_ui["icon"]
-													label=true
-													message="permissions"
-													method="get"
-													url=permissionsEntryURL
-													useDialog=true
-												/>
-											</#if>
-											<#if blogsEntryPermission.contains(permissionChecker, curBlogEntry, "DELETE")>
-												<#assign deleteEntryPortletURL = renderResponse.createActionURL() />
-
-												${deleteEntryPortletURL.setParameter("javax.portlet.action", "/blogs/edit_entry")}
-												${deleteEntryPortletURL.setParameter("cmd", trashHelper.isTrashEnabled(themeDisplay.getScopeGroupId())?then("move_to_trash", "delete"))}
-												${deleteEntryPortletURL.setParameter("redirect", currentURL)}
-												${deleteEntryPortletURL.setParameter("entryId", curBlogEntry.getEntryId()?string)}
-
-												<@liferay_ui["icon-delete"]
-													label=true
-													trash=trashHelper.isTrashEnabled(themeDisplay.getScopeGroupId())
-													url=deleteEntryPortletURL.toString()
-												/>
-											</#if>
-										</@>
-									</div>
+									<@clay["dropdown-actions"]
+										additionalProps=blogsEntryActionDropdownAdditionalProps
+										dropdownItems=blogsEntryActionDropdownItemsProvider.getActionDropdownItems(curBlogEntry)
+										propsTransformer="blogs_admin/js/ElementsPropsTransformer"
+										propsTransformerServletContext=blogsEntryActionDropdownPropsTransformerServletContext
+									/>
 								</div>
 						</div>
 

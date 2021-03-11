@@ -28,9 +28,19 @@
 </c:if>
 
 <%
+BlogsEntryActionDropdownItemsProvider blogsEntryActionDropdownItemsProvider = new BlogsEntryActionDropdownItemsProvider(renderRequest, renderResponse, permissionChecker, resourceBundle, trashHelper);
 BlogsPortletInstanceSettingsHelper blogsPortletInstanceSettingsHelper = new BlogsPortletInstanceSettingsHelper(request, blogsPortletInstanceConfiguration);
 
 Map<String, Object> contextObjects = HashMapBuilder.<String, Object>put(
+	"blogsEntryActionDropdownAdditionalProps",
+	HashMapBuilder.<String, Object>put(
+		"trashEnabled", trashHelper.isTrashEnabled(themeDisplay.getScopeGroupId())
+	).build()
+).put(
+	"blogsEntryActionDropdownItemsProvider", blogsEntryActionDropdownItemsProvider
+).put(
+	"blogsEntryActionDropdownPropsTransformerServletContext", application
+).put(
 	"blogsPortletInstanceConfiguration", blogsPortletInstanceConfiguration
 ).put(
 	"blogsPortletInstanceSettingsHelper", blogsPortletInstanceSettingsHelper

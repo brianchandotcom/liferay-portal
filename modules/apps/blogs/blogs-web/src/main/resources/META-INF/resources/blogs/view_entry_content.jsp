@@ -60,9 +60,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 					</c:if>
 				</clay:content-col>
 
-				<clay:content-col
-					cssClass="visible-interaction"
-				>
+				<clay:content-col>
 
 					<%
 					BlogsEntryActionDropdownItemsProvider blogsEntryActionDropdownItemsProvider = new BlogsEntryActionDropdownItemsProvider(renderRequest, renderResponse, permissionChecker, resourceBundle, trashHelper);

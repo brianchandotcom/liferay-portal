@@ -20,7 +20,7 @@
 						</h3>
 					</div>
 
-					<div class="autofit-col visible-interaction">
+					<div class="autofit-col">
 						<@clay["dropdown-actions"]
 							additionalProps=blogsEntryActionDropdownAdditionalProps
 							dropdownItems=blogsEntryActionDropdownItemsProvider.getActionDropdownItems(curBlogEntry)

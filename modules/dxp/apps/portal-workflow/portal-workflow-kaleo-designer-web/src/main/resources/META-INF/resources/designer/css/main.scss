@@ -254,6 +254,11 @@
 	> * {
 		width: 100%;
 	}
+
+	.button-holder,
+	.sheet {
+		margin-top: 20px;
+	}
 }
 
 .portal-popup,
@@ -389,6 +394,7 @@
 .lfr-sidebar-list-group-workflow {
 	&.sidebar-list-group {
 		margin-top: 0;
+		padding-top: 0;
 	}
 
 	.list-group-item {

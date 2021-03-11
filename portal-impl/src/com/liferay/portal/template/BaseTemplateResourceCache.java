@@ -43,6 +43,10 @@ public abstract class BaseTemplateResourceCache
 		_singleVMPortalCache.removeAll();
 	}
 
+	public <T> PortalCache<TemplateResource, T> getSecondLevelPortalCache() {
+		return (PortalCache<TemplateResource, T>)_secondLevelPortalCache;
+	}
+
 	@Override
 	public TemplateResource getTemplateResource(String templateId) {
 		if (!isEnabled()) {
@@ -159,11 +163,26 @@ public abstract class BaseTemplateResourceCache
 		_singleVMPortalCache = null;
 
 		_templateResourcePortalCacheListener = null;
+
+		_singleVMPool.removePortalCache(
+			_secondLevelPortalCache.getPortalCacheName());
+
+		_secondLevelPortalCache = null;
 	}
 
 	protected void init(
 		long modificationCheckInterval, MultiVMPool multiVMPool,
 		SingleVMPool singleVMPool, String portalCacheName) {
+
+		init(
+			modificationCheckInterval, multiVMPool, singleVMPool,
+			portalCacheName, null);
+	}
+
+	protected void init(
+		long modificationCheckInterval, MultiVMPool multiVMPool,
+		SingleVMPool singleVMPool, String portalCacheName,
+		String secondLevelPortalCacheName) {
 
 		_modificationCheckInterval = modificationCheckInterval;
 		_multiVMPool = multiVMPool;
@@ -177,6 +196,12 @@ public abstract class BaseTemplateResourceCache
 			_singleVMPortalCache =
 				(PortalCache<String, TemplateResource>)
 					singleVMPool.getPortalCache(portalCacheName);
+
+			_secondLevelPortalCache =
+				(PortalCache<TemplateResource, ?>)_singleVMPool.getPortalCache(
+					secondLevelPortalCacheName);
+
+			setSecondLevelPortalCache(_secondLevelPortalCache);
 		}
 	}
 
@@ -190,6 +215,7 @@ public abstract class BaseTemplateResourceCache
 	private MultiVMPool _multiVMPool;
 	private volatile PortalCache<String, TemplateResource> _multiVMPortalCache;
 	private String _portalCacheName;
+	private PortalCache<TemplateResource, ?> _secondLevelPortalCache;
 	private SingleVMPool _singleVMPool;
 	private volatile PortalCache<String, TemplateResource> _singleVMPortalCache;
 	private volatile TemplateResourcePortalCacheListener

@@ -107,14 +107,19 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 				(List<URLMenuItem>)(List<?>)menu.getMenuItems();
 
 			for (URLMenuItem urlMenuItem : urlMenuItems) {
-				creationMenu.addDropdownItem(
-					dropdownItem -> {
-						dropdownItem.setData(urlMenuItem.getData());
-						dropdownItem.setHref(urlMenuItem.getURL());
-						dropdownItem.setIcon(urlMenuItem.getIcon());
-						dropdownItem.setLabel(urlMenuItem.getLabel());
-						dropdownItem.setSeparator(urlMenuItem.hasSeparator());
-					});
+				if (Objects.equals(
+						urlMenuItem.getKey(), DLUIItemKeys.ADD_FOLDER)) {
+
+					creationMenu.addDropdownItem(
+						dropdownItem -> {
+							dropdownItem.setData(urlMenuItem.getData());
+							dropdownItem.setHref(urlMenuItem.getURL());
+							dropdownItem.setIcon(urlMenuItem.getIcon());
+							dropdownItem.setLabel(urlMenuItem.getLabel());
+							dropdownItem.setSeparator(
+								urlMenuItem.hasSeparator());
+						});
+				}
 			}
 		}
 

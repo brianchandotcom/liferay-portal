@@ -20,6 +20,8 @@ package com.liferay.document.library.display.context;
  */
 public class DLUIItemKeys {
 
+	public static final String ADD_FOLDER = "#add-folder";
+
 	public static final String CANCEL_CHECKOUT =
 		DLUIItemKeys.class.getName() + "#cancel-checkout";
 

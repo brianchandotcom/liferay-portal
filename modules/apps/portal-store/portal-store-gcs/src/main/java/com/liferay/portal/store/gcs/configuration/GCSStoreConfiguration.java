@@ -68,13 +68,13 @@ public interface GCSStoreConfiguration {
 		deflt = "120000", description = "initial-rpc-timeout-help",
 		name = "initial-rpc-timeout", required = false
 	)
-	public int initialRpcTimeout();
+	public int initialRPCTimeout();
 
 	@Meta.AD(
 		deflt = "600000", description = "max-rpc-timeout-help",
 		name = "max-rpc-timeout", required = false
 	)
-	public int maxRpcTimeout();
+	public int maxRPCTimeout();
 
 	@Meta.AD(
 		deflt = "1.0", description = "rpc-timeout-multiplier-help",

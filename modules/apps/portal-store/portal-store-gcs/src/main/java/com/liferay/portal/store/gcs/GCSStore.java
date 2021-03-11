@@ -90,8 +90,9 @@ public class GCSStore implements Store {
 			_getBucketInfo(), path
 		).build();
 
-		try (WriteChannel writer = _getWriter(blobInfo)) {
-			StreamUtil.transfer(inputStream, Channels.newOutputStream(writer));
+		try (WriteChannel writeChannel = _getWriteChannel(blobInfo)) {
+			StreamUtil.transfer(
+				inputStream, Channels.newOutputStream(writeChannel));
 		}
 		catch (IOException ioException) {
 			throw new PortalException(
@@ -138,7 +139,7 @@ public class GCSStore implements Store {
 		Blob blob = _gcsStore.get(
 			BlobId.of(_gcsStoreConfiguration.bucketName(), pathName));
 
-		return Channels.newInputStream(_getReader(blob));
+		return Channels.newInputStream(_getReadChannel(blob));
 	}
 
 	@Override
@@ -291,7 +292,7 @@ public class GCSStore implements Store {
 		return fileNames.get(fileNames.size() - 1);
 	}
 
-	private ReadChannel _getReader(Blob blob) {
+	private ReadChannel _getReadChannel(Blob blob) {
 		if (_blobDecryptSourceOption == null) {
 			return blob.reader();
 		}
@@ -299,7 +300,7 @@ public class GCSStore implements Store {
 		return blob.reader(_blobDecryptSourceOption);
 	}
 
-	private WriteChannel _getWriter(BlobInfo blobInfo) {
+	private WriteChannel _getWriteChannel(BlobInfo blobInfo) {
 		if (_blobEncryptWriteOption == null) {
 			return _gcsStore.writer(blobInfo);
 		}
@@ -348,7 +349,7 @@ public class GCSStore implements Store {
 			).setInitialRetryDelay(
 				Duration.ofMillis(_gcsStoreConfiguration.initialRetryDelay())
 			).setInitialRpcTimeout(
-				Duration.ofMillis(_gcsStoreConfiguration.initialRpcTimeout())
+				Duration.ofMillis(_gcsStoreConfiguration.initialRPCTimeout())
 			).setJittered(
 				_gcsStoreConfiguration.retryJitter()
 			).setMaxAttempts(
@@ -356,7 +357,7 @@ public class GCSStore implements Store {
 			).setMaxRetryDelay(
 				Duration.ofMillis(_gcsStoreConfiguration.maxRetryDelay())
 			).setMaxRpcTimeout(
-				Duration.ofMillis(_gcsStoreConfiguration.maxRpcTimeout())
+				Duration.ofMillis(_gcsStoreConfiguration.maxRPCTimeout())
 			).setRetryDelayMultiplier(
 				_gcsStoreConfiguration.retryDelayMultiplier()
 			).setRpcTimeoutMultiplier(

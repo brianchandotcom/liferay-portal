@@ -382,7 +382,7 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 					<isset property="commerce.license.file" />
 				</not>
 				<then>
-					<var name="commerce.license.file" value="ci-portal-commerce-license.xml" />
+					<var name="commerce.license.file" value="portal-commerce-license.xml" />
 				</then>
 			</if>
 
@@ -456,7 +456,7 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 					<isset property="dxp.license.file" />
 				</not>
 				<then>
-					<var name="dxp.license.file" value="ci-license.xml" />
+					<var name="dxp.license.file" value="license.xml" />
 				</then>
 			</if>
 

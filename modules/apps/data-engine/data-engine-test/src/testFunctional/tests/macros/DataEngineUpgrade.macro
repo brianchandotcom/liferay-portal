@@ -115,7 +115,6 @@ definition {
 	}
 
 	macro createNewWebContentUsingAnUpgradedStructureWithFieldset {
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "My Structure with Fieldsets level 2");

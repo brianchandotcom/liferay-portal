@@ -28,14 +28,14 @@ const KEYWORD_VALUE_TYPE = [
 	{label: Liferay.Language.get('position'), name: 'position'},
 ];
 
-export default function Keywords({currentPage, languageTag}) {
+export default function Keywords({currentPage}) {
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
 	const [keywordValueType, setKeywordValueType] = useState(
 		KEYWORD_VALUE_TYPE[0]
 	);
 
-	const [{publishedToday}] = useContext(StoreContext);
+	const [{languageTag, publishedToday}] = useContext(StoreContext);
 
 	const countries = useMemo(() => {
 		const dataKeys = new Set();
@@ -231,5 +231,4 @@ export default function Keywords({currentPage, languageTag}) {
 
 Keywords.proptypes = {
 	currentPage: PropTypes.object.isRequired,
-	languageTag: PropTypes.string.isRequired,
 };

@@ -45,18 +45,14 @@ const FALLBACK_COLOR = '#e92563';
 
 const getColorByName = (name) => COLORS_MAP[name] || FALLBACK_COLOR;
 
-export default function TrafficSources({
-	dataProvider,
-	languageTag,
-	onTrafficSourceClick,
-}) {
+export default function TrafficSources({dataProvider, onTrafficSourceClick}) {
 	const [highlighted, setHighlighted] = useState(null);
 
 	const [, addWarning] = useWarning();
 
 	const {validAnalyticsConnection} = useContext(ConnectionContext);
 
-	const [{publishedToday}] = useContext(StoreContext);
+	const [{languageTag, publishedToday}] = useContext(StoreContext);
 
 	const [trafficSources, setTrafficSources] = useStateSafe([]);
 
@@ -314,6 +310,5 @@ function TrafficSourcesCustomTooltip(props) {
 
 TrafficSources.propTypes = {
 	dataProvider: PropTypes.func.isRequired,
-	languageTag: PropTypes.string.isRequired,
 	onTrafficSourceClick: PropTypes.func.isRequired,
 };

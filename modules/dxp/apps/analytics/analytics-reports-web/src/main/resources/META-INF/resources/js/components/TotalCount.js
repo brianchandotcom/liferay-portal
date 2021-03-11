@@ -22,7 +22,6 @@ function TotalCount({
 	className,
 	dataProvider,
 	label,
-	languageTag,
 	percentage = false,
 	popoverAlign,
 	popoverHeader,
@@ -35,7 +34,7 @@ function TotalCount({
 
 	const [, addWarning] = useWarning();
 
-	const [{publishedToday}] = useContext(StoreContext);
+	const [{languageTag, publishedToday}] = useContext(StoreContext);
 
 	useEffect(() => {
 		if (validAnalyticsConnection) {
@@ -82,7 +81,6 @@ function TotalCount({
 TotalCount.propTypes = {
 	dataProvider: PropTypes.func.isRequired,
 	label: PropTypes.string.isRequired,
-	languageTag: PropTypes.string,
 	percentage: PropTypes.bool,
 	popoverHeader: PropTypes.string.isRequired,
 	popoverMessage: PropTypes.string.isRequired,

@@ -22,7 +22,6 @@ export default function Main({
 	author,
 	canonicalURL,
 	chartDataProviders,
-	languageTag,
 	onSelectedLanguageClick,
 	onTrafficSourceClick,
 	pagePublishDate,
@@ -38,14 +37,12 @@ export default function Main({
 			<BasicInformation
 				author={author}
 				canonicalURL={canonicalURL}
-				languageTag={languageTag}
 				publishDate={pagePublishDate}
 				title={pageTitle}
 			/>
 
 			<div className="mt-4">
 				<Translation
-					defaultLanguage={languageTag}
 					onSelectedLanguageClick={onSelectedLanguageClick}
 					viewURLs={viewURLs}
 				/>
@@ -59,7 +56,6 @@ export default function Main({
 				className="mb-2"
 				dataProvider={totalViewsDataProvider}
 				label={Liferay.Util.sub(Liferay.Language.get('total-views'))}
-				languageTag={languageTag}
 				popoverHeader={Liferay.Language.get('total-views')}
 				popoverMessage={Liferay.Language.get(
 					'this-number-refers-to-the-total-number-of-views-since-the-content-was-published'
@@ -72,7 +68,6 @@ export default function Main({
 					label={Liferay.Util.sub(
 						Liferay.Language.get('total-reads')
 					)}
-					languageTag={languageTag}
 					popoverHeader={Liferay.Language.get('total-reads')}
 					popoverMessage={Liferay.Language.get(
 						'this-number-refers-to-the-total-number-of-reads-since-the-content-was-published'
@@ -82,14 +77,12 @@ export default function Main({
 
 			<Chart
 				dataProviders={chartDataProviders}
-				languageTag={languageTag}
 				publishDate={pagePublishDate}
 				timeSpanOptions={timeSpanOptions}
 			/>
 
 			<TrafficSources
 				dataProvider={trafficSourcesDataProvider}
-				languageTag={languageTag}
 				onTrafficSourceClick={onTrafficSourceClick}
 			/>
 		</div>
@@ -100,7 +93,6 @@ Main.proptypes = {
 	author: PropTypes.object.isRequired,
 	canonicalURL: PropTypes.string.isRequired,
 	chartDataProviders: PropTypes.arrayOf(PropTypes.func.isRequired).isRequired,
-	languageTag: PropTypes.string.isRequired,
 	onSelectedLanguageClick: PropTypes.func.isRequired,
 	onTrafficSourceClick: PropTypes.func.isRequired,
 	pagePublishDate: PropTypes.string.isRequired,

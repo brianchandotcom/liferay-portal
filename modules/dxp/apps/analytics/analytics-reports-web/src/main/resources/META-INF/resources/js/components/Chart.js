@@ -137,13 +137,12 @@ function legendFormatterGenerator(
 
 export default function Chart({
 	dataProviders = [],
-	languageTag,
 	publishDate,
 	timeSpanOptions,
 }) {
 	const {validAnalyticsConnection} = useContext(ConnectionContext);
 
-	const [{publishedToday}] = useContext(StoreContext);
+	const [{languageTag, publishedToday}] = useContext(StoreContext);
 
 	const chartState = useChartState();
 
@@ -467,7 +466,6 @@ function allSettled(promises) {
 
 Chart.propTypes = {
 	dataProviders: PropTypes.arrayOf(PropTypes.func).isRequired,
-	languageTag: PropTypes.string.isRequired,
 	publishDate: PropTypes.string.isRequired,
 	timeSpanOptions: PropTypes.arrayOf(
 		PropTypes.shape({

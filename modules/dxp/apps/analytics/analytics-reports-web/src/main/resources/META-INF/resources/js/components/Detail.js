@@ -28,7 +28,6 @@ const TRAFFIC_CHANNELS = {
 
 export default function Detail({
 	currentPage,
-	languageTag,
 	onCurrentPageChange,
 	onTrafficSourceNameChange,
 	timeSpanOptions,
@@ -59,7 +58,6 @@ export default function Detail({
 				currentPage.data.countryKeywords.length > 0 && (
 					<KeywordsDetail
 						currentPage={currentPage}
-						languageTag={languageTag}
 						trafficShareDataProvider={trafficShareDataProvider}
 						trafficVolumeDataProvider={trafficVolumeDataProvider}
 					/>
@@ -68,7 +66,6 @@ export default function Detail({
 			{currentPage.view === TRAFFIC_CHANNELS.REFERRAL && (
 				<ReferralDetail
 					currentPage={currentPage}
-					languageTag={languageTag}
 					timeSpanOptions={timeSpanOptions}
 					trafficShareDataProvider={trafficShareDataProvider}
 					trafficVolumeDataProvider={trafficVolumeDataProvider}
@@ -78,7 +75,6 @@ export default function Detail({
 			{currentPage.view === TRAFFIC_CHANNELS.SOCIAL && (
 				<SocialDetail
 					currentPage={currentPage}
-					languageTag={languageTag}
 					timeSpanOptions={timeSpanOptions}
 					trafficShareDataProvider={trafficShareDataProvider}
 					trafficVolumeDataProvider={trafficVolumeDataProvider}
@@ -90,7 +86,6 @@ export default function Detail({
 
 Detail.proptypes = {
 	currentPage: PropTypes.object.isRequired,
-	languageTag: PropTypes.string.isRequired,
 	onCurrentPageChange: PropTypes.func.isRequired,
 	onTrafficSourceNameChange: PropTypes.func.isRequired,
 	timeSpanOptions: PropTypes.arrayOf(

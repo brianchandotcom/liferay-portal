@@ -25,19 +25,22 @@ const noop = () => {};
 export default function Navigation({
 	author,
 	canonicalURL,
-	endpoints,
-	languageTag,
-	namespace,
 	onSelectedLanguageClick = noop,
-	page,
 	pagePublishDate,
 	pageTitle,
 	timeSpanOptions,
 	viewURLs,
 }) {
-	const [{historicalWarning, publishedToday, warning}] = useContext(
-		StoreContext
-	);
+	const [
+		{
+			endpoints,
+			historicalWarning,
+			namespace,
+			page,
+			publishedToday,
+			warning,
+		},
+	] = useContext(StoreContext);
 
 	const {validAnalyticsConnection} = useContext(ConnectionContext);
 
@@ -176,7 +179,6 @@ export default function Navigation({
 								? [handleHistoricalViews, handleHistoricalReads]
 								: [handleHistoricalViews]
 						}
-						languageTag={languageTag}
 						onSelectedLanguageClick={onSelectedLanguageClick}
 						onTrafficSourceClick={handleTrafficSourceClick}
 						pagePublishDate={pagePublishDate}
@@ -196,7 +198,6 @@ export default function Navigation({
 			{currentPage.view !== 'main' && (
 				<Detail
 					currentPage={currentPage}
-					languageTag={languageTag}
 					onCurrentPageChange={handleCurrentPage}
 					onTrafficSourceNameChange={handleTrafficSourceName}
 					timeSpanOptions={timeSpanOptions}
@@ -211,15 +212,7 @@ export default function Navigation({
 Navigation.proptypes = {
 	author: PropTypes.object.isRequired,
 	canonicalURL: PropTypes.string.isRequired,
-	endpoints: PropTypes.object.isRequired,
-	languageTag: PropTypes.string.isRequired,
-	namespace: PropTypes.string.isRequired,
 	onSelectedLanguageClick: PropTypes.func.isRequired,
-	page: PropTypes.objectOf(
-		PropTypes.shape({
-			plid: PropTypes.number.isRequired,
-		})
-	).isRequired,
 	pagePublishDate: PropTypes.string.isRequired,
 	pageTitle: PropTypes.string.isRequired,
 	timeSpanOptions: PropTypes.arrayOf(

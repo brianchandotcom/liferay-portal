@@ -15,7 +15,9 @@ import ClaySticker from '@clayui/sticker';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useContext} from 'react';
+
+import {StoreContext} from '../context/StoreContext';
 
 function Author({author: {authorId, name, url}}) {
 	return (
@@ -38,13 +40,9 @@ function Author({author: {authorId, name, url}}) {
 	);
 }
 
-function BasicInformation({
-	author,
-	canonicalURL,
-	languageTag,
-	publishDate,
-	title,
-}) {
+function BasicInformation({author, canonicalURL, publishDate, title}) {
+	const [{languageTag}] = useContext(StoreContext);
+
 	const formattedPublishDate = Intl.DateTimeFormat(languageTag, {
 		day: 'numeric',
 		month: 'long',
@@ -112,7 +110,6 @@ Author.propTypes = {
 BasicInformation.propTypes = {
 	author: PropTypes.object,
 	canonicalURL: PropTypes.string.isRequired,
-	languageTag: PropTypes.string.isRequired,
 	publishDate: PropTypes.string.isRequired,
 	title: PropTypes.string.isRequired,
 };

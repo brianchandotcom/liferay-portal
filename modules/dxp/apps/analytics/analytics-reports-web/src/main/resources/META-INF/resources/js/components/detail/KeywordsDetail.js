@@ -18,7 +18,6 @@ import TotalCount from '../TotalCount';
 
 export default function KeywordsDetail({
 	currentPage,
-	languageTag,
 	trafficShareDataProvider,
 	trafficVolumeDataProvider,
 }) {
@@ -28,7 +27,6 @@ export default function KeywordsDetail({
 				className="mb-2"
 				dataProvider={trafficVolumeDataProvider}
 				label={Liferay.Util.sub(Liferay.Language.get('traffic-volume'))}
-				languageTag={languageTag}
 				popoverAlign={ALIGN_POSITIONS.Bottom}
 				popoverHeader={Liferay.Language.get('traffic-volume')}
 				popoverMessage={Liferay.Language.get(
@@ -48,14 +46,13 @@ export default function KeywordsDetail({
 				)}
 			/>
 
-			<Keywords currentPage={currentPage} languageTag={languageTag} />
+			<Keywords currentPage={currentPage} />
 		</div>
 	);
 }
 
 KeywordsDetail.proptypes = {
 	currentPage: PropTypes.object.isRequired,
-	languageTag: PropTypes.string.isRequired,
 	trafficShareDataProvider: PropTypes.func.isRequired,
 	trafficVolumeDataProvider: PropTypes.func.isRequired,
 };

@@ -15,15 +15,14 @@ import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import PropTypes from 'prop-types';
-import React, {useMemo, useState} from 'react';
+import React, {useContext, useMemo, useState} from 'react';
 
 import {useChartState} from '../context/ChartStateContext';
+import {StoreContext} from '../context/StoreContext';
 
-export default function Translation({
-	defaultLanguage,
-	onSelectedLanguageClick,
-	viewURLs,
-}) {
+export default function Translation({onSelectedLanguageClick, viewURLs}) {
+	const [{languageTag: defaultLanguage}] = useContext(StoreContext);
+
 	const [active, setActive] = useState(false);
 
 	const selectedLanguage = useMemo(() => {
@@ -102,7 +101,6 @@ export default function Translation({
 }
 
 Translation.propTypes = {
-	defaultLanguage: PropTypes.string.isRequired,
 	onSelectedLanguageClick: PropTypes.func.isRequired,
 	viewURLs: PropTypes.arrayOf(
 		PropTypes.shape({

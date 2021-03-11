@@ -14,7 +14,7 @@ import ClayList from '@clayui/list';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {ALIGN_POSITIONS} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useMemo, useState} from 'react';
+import React, {useContext, useMemo, useState} from 'react';
 
 import {
 	useChangeTimeSpanKey,
@@ -24,6 +24,7 @@ import {
 	useNextTimeSpan,
 	usePreviousTimeSpan,
 } from '../../context/ChartStateContext';
+import {StoreContext} from '../../context/StoreContext';
 import {generateDateFormatters as dateFormat} from '../../utils/dateFormat';
 import {numberFormat} from '../../utils/numberFormat';
 import Hint from '../Hint';
@@ -34,12 +35,13 @@ const ITEMS_TO_SHOW = 5;
 
 export default function ReferralDetail({
 	currentPage,
-	languageTag,
 	showTimeSpanSelector = false,
 	timeSpanOptions,
 	trafficShareDataProvider,
 	trafficVolumeDataProvider,
 }) {
+	const [{languageTag}] = useContext(StoreContext);
+
 	const [isReferringPagesExpanded, setIsReferringPagesExpanded] = useState(
 		false
 	);
@@ -105,7 +107,6 @@ export default function ReferralDetail({
 				className="c-mb-2"
 				dataProvider={trafficVolumeDataProvider}
 				label={Liferay.Util.sub(Liferay.Language.get('traffic-volume'))}
-				languageTag={languageTag}
 				popoverAlign={ALIGN_POSITIONS.Bottom}
 				popoverHeader={Liferay.Language.get('traffic-volume')}
 				popoverMessage={Liferay.Language.get(
@@ -292,7 +293,6 @@ export default function ReferralDetail({
 
 ReferralDetail.propTypes = {
 	currentPage: PropTypes.object.isRequired,
-	languageTag: PropTypes.string.isRequired,
 	showTimeSpanSelector: PropTypes.bool,
 	timeSpanOptions: PropTypes.arrayOf(
 		PropTypes.shape({

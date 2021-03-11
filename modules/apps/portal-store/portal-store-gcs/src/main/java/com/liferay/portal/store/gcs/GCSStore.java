@@ -268,32 +268,18 @@ public class GCSStore implements Store {
 	private String _getFileKey(
 		long companyId, long repositoryId, String fileName) {
 
-		com.liferay.portal.kernel.util.StringBundler sb =
-			new com.liferay.portal.kernel.util.StringBundler(4);
-
-		sb.append(companyId);
-		sb.append(StringPool.SLASH);
-		sb.append(repositoryId);
-		sb.append(_getNormalizedFileName(fileName));
-
-		return sb.toString();
+		return StringBundler.concat(
+			companyId, StringPool.SLASH, repositoryId, StringPool.SLASH,
+			_getNormalizedFileName(fileName));
 	}
 
 	private String _getFileVersionKey(
 		long companyId, long repositoryId, String fileName,
 		String versionLabel) {
 
-		com.liferay.portal.kernel.util.StringBundler sb =
-			new com.liferay.portal.kernel.util.StringBundler(6);
-
-		sb.append(companyId);
-		sb.append(StringPool.SLASH);
-		sb.append(repositoryId);
-		sb.append(_getNormalizedFileName(fileName));
-		sb.append(StringPool.SLASH);
-		sb.append(versionLabel);
-
-		return sb.toString();
+		return StringBundler.concat(
+			companyId, StringPool.SLASH, repositoryId, StringPool.SLASH,
+			_getNormalizedFileName(fileName), StringPool.SLASH, versionLabel);
 	}
 
 	private String _getHeadVersionLabel(
@@ -340,8 +326,7 @@ public class GCSStore implements Store {
 				0, normalizedFileName.length() - 1);
 		}
 
-		return StringPool.SLASH +
-			DigesterUtil.digest(Digester.SHA_1, normalizedFileName);
+		return DigesterUtil.digest(Digester.SHA_1, normalizedFileName);
 	}
 
 	private ReadChannel _getReadChannel(Blob blob) {

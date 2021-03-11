@@ -17,6 +17,7 @@ package com.liferay.commerce.payment.internal.servlet;
 import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
 import com.liferay.commerce.constants.CommercePaymentConstants;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.payment.engine.CommercePaymentEngine;
 import com.liferay.commerce.payment.engine.CommerceSubscriptionEngine;
 import com.liferay.commerce.payment.result.CommercePaymentResult;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
@@ -191,6 +193,18 @@ public class CommercePaymentServlet extends HttpServlet {
 		return map;
 	}
 
+	private boolean _isDeliveryOnlySubscription(CommerceOrder commerceOrder) {
+		for (CommerceOrderItem commerceOrderItem :
+				commerceOrder.getCommerceOrderItems()) {
+
+			if (Validator.isNotNull(commerceOrderItem.getSubscriptionType())) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	private CommercePaymentResult _startPayment(
 			HttpServletRequest httpServletRequest)
 		throws Exception {
@@ -198,7 +212,9 @@ public class CommercePaymentServlet extends HttpServlet {
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			_commerceOrderId);
 
-		if (commerceOrder.isSubscriptionOrder()) {
+		if (commerceOrder.isSubscriptionOrder() &&
+			!_isDeliveryOnlySubscription(commerceOrder)) {
+
 			return _commerceSubscriptionEngine.processRecurringPayment(
 				_commerceOrderId, _nextUrl, httpServletRequest);
 		}

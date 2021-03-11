@@ -44,14 +44,10 @@ else {
 	navigationItems='<%= journalDisplayContext.getNavigationItems("web-content") %>'
 />
 
-<clay:management-toolbar-v2
-	displayContext="<%= journalManagementToolbarDisplayContext %>"
-/>
-
-<liferay-frontend:component
-	componentId="<%= journalManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	context="<%= journalManagementToolbarDisplayContext.getComponentContext() %>"
-	module="js/ManagementToolbarDefaultEventHandler.es"
+<clay:management-toolbar
+	additionalProps="<%= journalManagementToolbarDisplayContext.getAdditionalProps() %>"
+	managementToolbarDisplayContext="<%= journalManagementToolbarDisplayContext %>"
+	propsTransformer="js/ManagementToolbarPropsTransformer"
 />
 
 <div class="closed sidenav-container sidenav-right" id="<%= liferayPortletResponse.getNamespace() + "infoPanelId" %>">

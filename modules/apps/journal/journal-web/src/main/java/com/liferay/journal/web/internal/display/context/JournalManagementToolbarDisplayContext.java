@@ -132,26 +132,7 @@ public class JournalManagementToolbarDisplayContext
 		).build();
 	}
 
-	@Override
-	public String getClearResultsURL() {
-		return PortletURLBuilder.create(
-			getPortletURL()
-		).setParameter(
-			"navigation", StringPool.BLANK
-		).setParameter(
-			"ddmStructureKey", StringPool.BLANK
-		).setParameter(
-			"keywords", StringPool.BLANK
-		).setParameter(
-			"orderByCol", StringPool.BLANK
-		).setParameter(
-			"orderByType", StringPool.BLANK
-		).setParameter(
-			"status", WorkflowConstants.STATUS_ANY
-		).buildString();
-	}
-
-	public Map<String, Object> getComponentContext() throws Exception {
+	public Map<String, Object> getAdditionalProps() throws Exception {
 		return HashMapBuilder.<String, Object>put(
 			"addArticleURL",
 			PortletURLBuilder.createRenderURL(
@@ -165,9 +146,6 @@ public class JournalManagementToolbarDisplayContext
 			).setParameter(
 				"folderId", _journalDisplayContext.getFolderId()
 			).buildString()
-		).put(
-			"folderId",
-			String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID)
 		).put(
 			"moveArticlesAndFoldersURL",
 			() -> {
@@ -227,6 +205,25 @@ public class JournalManagementToolbarDisplayContext
 	}
 
 	@Override
+	public String getClearResultsURL() {
+		return PortletURLBuilder.create(
+			getPortletURL()
+		).setParameter(
+			"navigation", StringPool.BLANK
+		).setParameter(
+			"ddmStructureKey", StringPool.BLANK
+		).setParameter(
+			"keywords", StringPool.BLANK
+		).setParameter(
+			"orderByCol", StringPool.BLANK
+		).setParameter(
+			"orderByType", StringPool.BLANK
+		).setParameter(
+			"status", WorkflowConstants.STATUS_ANY
+		).buildString();
+	}
+
+	@Override
 	public String getComponentId() {
 		return "journalWebManagementToolbar";
 	}
@@ -243,11 +240,6 @@ public class JournalManagementToolbarDisplayContext
 		}
 
 		return null;
-	}
-
-	@Override
-	public String getDefaultEventHandler() {
-		return "journalManagementToolbarDefaultEventHandler";
 	}
 
 	@Override

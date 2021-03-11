@@ -5537,24 +5537,10 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 				</then>
 			</if>
 
-			<if>
-				<equals arg1="@{commerce.license.file}" arg2="commerce-license-developer-ipaddress.xml" />
-				<then>
-					<get-ip-address />
-				</then>
-			</if>
+			<get-testcase-property property.name="commerce.license.property" />
 
 			<if>
-				<equals arg1="@{commerce.license.file}" arg2="commerce-license-developer-macaddress.xml" />
-				<then>
-					<get-mac-address />
-				</then>
-			</if>
-
-			<var name="expiration.leeway" value="2" />
-
-			<if>
-				<equals arg1="@{commerce.license.file}" arg2="commerce-license-developer-custom-expiration-30-day.xml" />
+				<equals arg1="${commerce.license.property}" arg2="expiration-warning" />
 				<then>
 					<beanshell>
 						<![CDATA[
@@ -5575,56 +5561,81 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 							project.setProperty("expiration.date", dateTimeFormatter.format(expiration));
 						]]>
 					</beanshell>
+
+					<replace
+						file="${liferay.home}/deploy/@{commerce.license.file}"
+						token="${expirationdate}"
+						value="${expiration.date}"
+					/>
 				</then>
-				<else>
-					<beanshell>
-						<![CDATA[
-							import java.time.format.DateTimeFormatter;
-							import java.time.ZonedDateTime;
-							import java.time.ZoneId;
+				<elseif>
+					<equals arg1="${commerce.license.property}" arg2="expired" />
+					<then>
+						<beanshell>
+							<![CDATA[
+								import java.time.format.DateTimeFormatter;
+								import java.time.ZonedDateTime;
+								import java.time.ZoneId;
 
-							DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("EEEE, MMMM dd, yyyy hh:mm:ss a zz");
+								DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("EEEE, MMMM dd, yyyy hh:mm:ss a zz");
 
-							ZoneId GMT = ZoneId.of("GMT");
+								ZoneId GMT = ZoneId.of("GMT");
 
-							ZonedDateTime now = ZonedDateTime.now(GMT);
+								ZonedDateTime now = ZonedDateTime.now(GMT);
 
-							//License expiration leeway
-							ZonedDateTime expiration = now.minusDays(2);
+								//License expiration leeway
+								ZonedDateTime expiration = now.minusDays(2);
 
-							//License expiration delay
-							expiration = expiration.plusMinutes(5);
+								//License expiration delay
+								expiration = expiration.plusMinutes(5);
 
-							System.out.println(dateTimeFormatter.format(expiration));
-							project.setProperty("expiration.date", dateTimeFormatter.format(expiration));
-						]]>
-					</beanshell>
-				</else>
+								System.out.println(dateTimeFormatter.format(expiration));
+								project.setProperty("expiration.date", dateTimeFormatter.format(expiration));
+							]]>
+						</beanshell>
+
+						<replace
+							file="${liferay.home}/deploy/@{commerce.license.file}"
+							token="${expirationdate}"
+							value="${expiration.date}"
+						/>
+					</then>
+				</elseif>
+				<elseif>
+					<equals arg1="${commerce.license.property}" arg2="hostname" />
+					<then>
+						<replace
+							file="${liferay.home}/deploy/@{commerce.license.file}"
+							token="hostnameToReplace"
+							value="${env.HOSTNAME}"
+						/>
+					</then>
+				</elseif>
+				<elseif>
+					<equals arg1="${commerce.license.property}" arg2="ip-address" />
+					<then>
+						<get-ip-address />
+
+						<replace
+							file="${liferay.home}/deploy/@{commerce.license.file}"
+							token="ipToReplace"
+							value="${ip.address}"
+						/>
+					</then>
+				</elseif>
+				<elseif>
+					<equals arg1="${commerce.license.property}" arg2="mac-address" />
+					<then>
+						<get-mac-address />
+
+						<replace
+							file="${liferay.home}/deploy/@{commerce.license.file}"
+							token="macAddressToReplace"
+							value="${mac.address}"
+						/>
+					</then>
+				</elseif>
 			</if>
-
-			<replace
-				file="${liferay.home}/deploy/@{commerce.license.file}"
-				token="${host.name}"
-				value="${env.HOSTNAME}"
-			/>
-
-			<replace
-				file="${liferay.home}/deploy/@{commerce.license.file}"
-				token="${expirationdate}"
-				value="${expiration.date}"
-			/>
-
-			<replace
-				file="${liferay.home}/deploy/@{commerce.license.file}"
-				token="${ipaddress}"
-				value="${ip.address}"
-			/>
-
-			<replace
-				file="${liferay.home}/deploy/@{commerce.license.file}"
-				token="${macaddress}"
-				value="${mac.address}"
-			/>
 		</sequential>
 	</macrodef>
 

@@ -110,7 +110,22 @@ if (cpSku != null) {
 					<%= cpContentHelper.renderOptions(renderRequest, renderResponse) %>
 				</form>
 
-				<%@ include file="/product_detail/render/form_handlers/metal_js.jspf" %>
+				<liferay-portlet:actionURL name="/cp_content_web/check_cp_instance" portletName="com_liferay_commerce_product_content_web_internal_portlet_CPContentPortlet" var="checkCPInstanceURL">
+					<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionId) %>" />
+				</liferay-portlet:actionURL>
+
+				<liferay-frontend:component
+					context='<%=
+						HashMapBuilder.<String, Object>put(
+							"actionURL", checkCPInstanceURL
+						).put(
+							"cpDefinitionId", cpDefinitionId
+						).put(
+							"namespace", liferayPortletResponse.getNamespace()
+						).build()
+					%>'
+					module="product_detail/render/js/ProductOptionsHandler"
+				/>
 			</div>
 
 			<c:choose>

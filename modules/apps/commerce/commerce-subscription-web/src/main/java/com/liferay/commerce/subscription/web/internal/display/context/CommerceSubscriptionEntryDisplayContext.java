@@ -48,6 +48,7 @@ import java.text.DateFormat;
 import java.text.Format;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -162,13 +163,35 @@ public class CommerceSubscriptionEntryDisplayContext {
 		CommerceSubscriptionEntry commerceSubscriptionEntry =
 			getCommerceSubscriptionEntry();
 
+		Date startDate = commerceSubscriptionEntry.getStartDate();
+
+		Date deliveryStartDate =
+			commerceSubscriptionEntry.getDeliveryStartDate();
+
+		Date showDate;
+
+		if ((startDate != null) && (deliveryStartDate != null)) {
+			showDate =
+				startDate.before(deliveryStartDate) ? startDate :
+					deliveryStartDate;
+		}
+		else if ((startDate == null) && (deliveryStartDate != null)) {
+			showDate = deliveryStartDate;
+		}
+		else if ((startDate != null) && (deliveryStartDate == null)) {
+			showDate = startDate;
+		}
+		else {
+			return "";
+		}
+
 		ThemeDisplay themeDisplay = _cpRequestHelper.getThemeDisplay();
 
 		Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(
-			DateFormat.MEDIUM, DateFormat.MEDIUM, themeDisplay.getLocale(),
+			DateFormat.MEDIUM, DateFormat.SHORT, themeDisplay.getLocale(),
 			themeDisplay.getTimeZone());
 
-		return dateTimeFormat.format(commerceSubscriptionEntry.getStartDate());
+		return dateTimeFormat.format(showDate);
 	}
 
 	public CPSubscriptionType getCPSubscriptionType(String subscriptionType) {

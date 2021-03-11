@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -205,38 +204,149 @@ public class CommerceSubscriptionEntryDataSetDataProvider
 		int subscriptionStatus =
 			commerceSubscriptionEntry.getSubscriptionStatus();
 
+		int deliverySubscriptionStatus =
+			commerceSubscriptionEntry.getDeliverySubscriptionStatus();
+
 		String subscriptionStatusLabel =
 			CommerceSubscriptionEntryConstants.getSubscriptionStatusLabel(
-				subscriptionStatus);
-
-		if (Validator.isNull(subscriptionStatusLabel)) {
-			return null;
-		}
+				CommerceSubscriptionEntryConstants.
+					SUBSCRIPTION_STATUS_COMPLETED);
 
 		String label = Label.INFO;
 
 		if (Objects.equals(
 				subscriptionStatus,
 				CommerceSubscriptionEntryConstants.
+					SUBSCRIPTION_STATUS_ACTIVE) ||
+			Objects.equals(
+				deliverySubscriptionStatus,
+				CommerceSubscriptionEntryConstants.
 					SUBSCRIPTION_STATUS_ACTIVE)) {
+
+			subscriptionStatusLabel =
+				CommerceSubscriptionEntryConstants.getSubscriptionStatusLabel(
+					CommerceSubscriptionEntryConstants.
+						SUBSCRIPTION_STATUS_ACTIVE);
 
 			label = Label.SUCCESS;
 		}
 		else if (Objects.equals(
 					subscriptionStatus,
 					CommerceSubscriptionEntryConstants.
-						SUBSCRIPTION_STATUS_SUSPENDED) ||
+						SUBSCRIPTION_STATUS_INACTIVE) &&
 				 Objects.equals(
-					 subscriptionStatus,
+					 deliverySubscriptionStatus,
 					 CommerceSubscriptionEntryConstants.
 						 SUBSCRIPTION_STATUS_INACTIVE)) {
+
+			subscriptionStatusLabel =
+				CommerceSubscriptionEntryConstants.getSubscriptionStatusLabel(
+					CommerceSubscriptionEntryConstants.
+						SUBSCRIPTION_STATUS_INACTIVE);
 
 			label = Label.WARNING;
 		}
 		else if (Objects.equals(
 					subscriptionStatus,
 					CommerceSubscriptionEntryConstants.
-						SUBSCRIPTION_STATUS_CANCELLED)) {
+						SUBSCRIPTION_STATUS_SUSPENDED) &&
+				 Objects.equals(
+					 deliverySubscriptionStatus,
+					 CommerceSubscriptionEntryConstants.
+						 SUBSCRIPTION_STATUS_SUSPENDED)) {
+
+			subscriptionStatusLabel =
+				CommerceSubscriptionEntryConstants.getSubscriptionStatusLabel(
+					CommerceSubscriptionEntryConstants.
+						SUBSCRIPTION_STATUS_SUSPENDED);
+
+			label = Label.WARNING;
+		}
+		else if (Objects.equals(
+					subscriptionStatus,
+					CommerceSubscriptionEntryConstants.
+						SUBSCRIPTION_STATUS_CANCELLED) &&
+				 Objects.equals(
+					 deliverySubscriptionStatus,
+					 CommerceSubscriptionEntryConstants.
+						 SUBSCRIPTION_STATUS_CANCELLED)) {
+
+			subscriptionStatusLabel =
+				CommerceSubscriptionEntryConstants.getSubscriptionStatusLabel(
+					CommerceSubscriptionEntryConstants.
+						SUBSCRIPTION_STATUS_CANCELLED);
+
+			label = Label.DANGER;
+		}
+		else if ((Objects.equals(
+					subscriptionStatus,
+					CommerceSubscriptionEntryConstants.
+						SUBSCRIPTION_STATUS_INACTIVE) &&
+				  Objects.equals(
+					  deliverySubscriptionStatus,
+					  CommerceSubscriptionEntryConstants.
+						  SUBSCRIPTION_STATUS_SUSPENDED)) ||
+				 (Objects.equals(
+					 subscriptionStatus,
+					 CommerceSubscriptionEntryConstants.
+						 SUBSCRIPTION_STATUS_SUSPENDED) &&
+				  Objects.equals(
+					  deliverySubscriptionStatus,
+					  CommerceSubscriptionEntryConstants.
+						  SUBSCRIPTION_STATUS_INACTIVE))) {
+
+			subscriptionStatusLabel =
+				CommerceSubscriptionEntryConstants.getSubscriptionStatusLabel(
+					CommerceSubscriptionEntryConstants.
+						SUBSCRIPTION_STATUS_SUSPENDED);
+
+			label = Label.WARNING;
+		}
+		else if ((Objects.equals(
+					subscriptionStatus,
+					CommerceSubscriptionEntryConstants.
+						SUBSCRIPTION_STATUS_INACTIVE) &&
+				  Objects.equals(
+					  deliverySubscriptionStatus,
+					  CommerceSubscriptionEntryConstants.
+						  SUBSCRIPTION_STATUS_CANCELLED)) ||
+				 (Objects.equals(
+					 subscriptionStatus,
+					 CommerceSubscriptionEntryConstants.
+						 SUBSCRIPTION_STATUS_CANCELLED) &&
+				  Objects.equals(
+					  deliverySubscriptionStatus,
+					  CommerceSubscriptionEntryConstants.
+						  SUBSCRIPTION_STATUS_INACTIVE))) {
+
+			subscriptionStatusLabel =
+				CommerceSubscriptionEntryConstants.getSubscriptionStatusLabel(
+					CommerceSubscriptionEntryConstants.
+						SUBSCRIPTION_STATUS_CANCELLED);
+
+			label = Label.DANGER;
+		}
+		else if ((Objects.equals(
+					subscriptionStatus,
+					CommerceSubscriptionEntryConstants.
+						SUBSCRIPTION_STATUS_SUSPENDED) &&
+				  Objects.equals(
+					  deliverySubscriptionStatus,
+					  CommerceSubscriptionEntryConstants.
+						  SUBSCRIPTION_STATUS_CANCELLED)) ||
+				 (Objects.equals(
+					 subscriptionStatus,
+					 CommerceSubscriptionEntryConstants.
+						 SUBSCRIPTION_STATUS_CANCELLED) &&
+				  Objects.equals(
+					  deliverySubscriptionStatus,
+					  CommerceSubscriptionEntryConstants.
+						  SUBSCRIPTION_STATUS_SUSPENDED))) {
+
+			subscriptionStatusLabel =
+				CommerceSubscriptionEntryConstants.getSubscriptionStatusLabel(
+					CommerceSubscriptionEntryConstants.
+						SUBSCRIPTION_STATUS_CANCELLED);
 
 			label = Label.DANGER;
 		}

@@ -189,10 +189,7 @@ export default function Chart({
 
 		if (validAnalyticsConnection) {
 			const promises = dataProviders.map((getter) => {
-				return getter({
-					timeSpanKey: chartState.timeSpanKey,
-					timeSpanOffset: chartState.timeSpanOffset,
-				});
+				return getter();
 			});
 
 			allSettled(promises).then((data) => {

@@ -1573,6 +1573,35 @@ public class ContentPageEditorDisplayContext {
 			themeDisplay.setIsolated(isolated);
 		}
 
+		LayoutStructure layoutStructure = _getLayoutStructure();
+
+		Map<Long, LayoutStructureItem> fragmentLayoutStructureItems =
+			layoutStructure.getFragmentLayoutStructureItems();
+
+		for (long fragmentEntryLinkId : fragmentLayoutStructureItems.keySet()) {
+			if (!fragmentEntryLinksMap.containsKey(
+					String.valueOf(fragmentEntryLinkId))) {
+
+				fragmentEntryLinksMap.put(
+					String.valueOf(fragmentEntryLinkId),
+					JSONUtil.put(
+						"configuration", JSONFactoryUtil.createJSONObject()
+					).put(
+						"content", StringPool.BLANK
+					).put(
+						"defaultConfigurationValues",
+						JSONFactoryUtil.createJSONObject()
+					).put(
+						"editableValues", JSONFactoryUtil.createJSONObject()
+					).put(
+						"error", Boolean.TRUE
+					).put(
+						"fragmentEntryLinkId",
+						String.valueOf(fragmentEntryLinkId)
+					));
+			}
+		}
+
 		_fragmentEntryLinks = fragmentEntryLinksMap;
 
 		return _fragmentEntryLinks;

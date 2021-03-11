@@ -13,6 +13,7 @@ import ClayAlert from '@clayui/alert';
 import PropTypes from 'prop-types';
 import React, {useCallback, useContext, useState} from 'react';
 
+import {useChartState} from '../context/ChartStateContext';
 import ConnectionContext from '../context/ConnectionContext';
 import {StoreContext} from '../context/StoreContext';
 import APIService from '../utils/APIService';
@@ -46,29 +47,60 @@ export default function Navigation({
 
 	const [trafficSourceName, setTrafficSourceName] = useState('');
 
-	const api = APIService({
-		endpoints,
-		namespace,
-		page,
-	});
+	const chartState = useChartState();
 
-	const {getHistoricalReads, getHistoricalViews, getTrafficSources} = api;
+	const {timeSpanKey, timeSpanOffset} = chartState;
 
 	const handleCurrentPage = useCallback((currentPage) => {
 		setCurrentPage({view: currentPage.view});
 	}, []);
 
+	const handleHistoricalReads = useCallback(() => {
+		return APIService.getHistoricalReads(
+			endpoints.analyticsReportsHistoricalReadsURL,
+			{namespace, plid: page.plid, timeSpanKey, timeSpanOffset}
+		).then((response) => response);
+	}, [
+		endpoints.analyticsReportsHistoricalReadsURL,
+		namespace,
+		page.plid,
+		timeSpanKey,
+		timeSpanOffset,
+	]);
+
+	const handleHistoricalViews = useCallback(() => {
+		return APIService.getHistoricalReads(
+			endpoints.analyticsReportsHistoricalViewsURL,
+			{namespace, plid: page.plid, timeSpanKey, timeSpanOffset}
+		).then((response) => response);
+	}, [
+		endpoints.analyticsReportsHistoricalViewsURL,
+		namespace,
+		page.plid,
+		timeSpanKey,
+		timeSpanOffset,
+	]);
+
 	const handleTotalReads = useCallback(() => {
-		return api
-			.getTotalReads()
-			.then((response) => response.analyticsReportsTotalReads);
-	}, [api]);
+		return APIService.getTotalReads(
+			endpoints.analyticsReportsTotalReadsURL,
+			{namespace, plid: page.plid}
+		).then(({analyticsReportsTotalReads}) => analyticsReportsTotalReads);
+	}, [endpoints.analyticsReportsTotalReadsURL, namespace, page.plid]);
 
 	const handleTotalViews = useCallback(() => {
-		return api
-			.getTotalViews()
-			.then((response) => response.analyticsReportsTotalViews);
-	}, [api]);
+		return APIService.getTotalReads(
+			endpoints.analyticsReportsTotalViewsURL,
+			{namespace, plid: page.plid}
+		).then(({analyticsReportsTotalViews}) => analyticsReportsTotalViews);
+	}, [endpoints.analyticsReportsTotalViewsURL, namespace, page.plid]);
+
+	const handleTrafficSources = useCallback(() => {
+		return APIService.getTrafficSources(
+			endpoints.analyticsReportsTrafficSourcesURL,
+			{namespace, plid: page.plid}
+		).then(({trafficSources}) => trafficSources);
+	}, [endpoints.analyticsReportsTrafficSourcesURL, namespace, page.plid]);
 
 	const handleTrafficSourceClick = (trafficSources, trafficSourceName) => {
 		setTrafficSources(trafficSources);
@@ -141,8 +173,8 @@ export default function Navigation({
 						canonicalURL={canonicalURL}
 						chartDataProviders={
 							endpoints.analyticsReportsHistoricalReadsURL
-								? [getHistoricalViews, getHistoricalReads]
-								: [getHistoricalViews]
+								? [handleHistoricalViews, handleHistoricalReads]
+								: [handleHistoricalViews]
 						}
 						languageTag={languageTag}
 						onSelectedLanguageClick={onSelectedLanguageClick}
@@ -155,7 +187,7 @@ export default function Navigation({
 							handleTotalReads
 						}
 						totalViewsDataProvider={handleTotalViews}
-						trafficSourcesDataProvider={getTrafficSources}
+						trafficSourcesDataProvider={handleTrafficSources}
 						viewURLs={viewURLs}
 					/>
 				</div>

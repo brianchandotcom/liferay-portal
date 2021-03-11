@@ -24,6 +24,7 @@ import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.lang.SafeClosable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
@@ -31,27 +32,20 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
-import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
-import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -81,32 +75,9 @@ public class DataLayoutRendererCTTest {
 
 	@Before
 	public void setUp() throws Exception {
-		String name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+		_company = CompanyTestUtil.addCompany();
 
-		String virtualHostname =
-			name + "." + StringUtil.toLowerCase(RandomTestUtil.randomString(3));
-
-		_company = _companyLocalService.addCompany(
-			null, name, virtualHostname, virtualHostname, false, 0, true);
-
-		Group group = _groupLocalService.getGroup(
-			_company.getCompanyId(), GroupConstants.GUEST);
-
-		_user = UserTestUtil.addUser(
-			_company.getCompanyId(), TestPropsValues.getUserId(),
-			StringPool.BLANK,
-			RandomTestUtil.randomString() + StringPool.AT + _company.getMx(),
-			RandomTestUtil.randomString(
-				NumericStringRandomizerBumper.INSTANCE,
-				UniqueStringRandomizerBumper.INSTANCE),
-			LocaleUtil.getDefault(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), new long[] {group.getGroupId()},
-			ServiceContextTestUtil.getServiceContext());
-
-		Role role = _roleLocalService.getRole(
-			_company.getCompanyId(), RoleConstants.ADMINISTRATOR);
-
-		_userLocalService.addRoleUser(role.getRoleId(), _user);
+		_user = UserTestUtil.addCompanyAdminUser(_company);
 
 		_ctCollection = _ctCollectionLocalService.addCTCollection(
 			_company.getCompanyId(), _user.getUserId(),
@@ -129,23 +100,26 @@ public class DataLayoutRendererCTTest {
 				_user
 			).build();
 
-		DataDefinition dataDefinition = DataDefinition.toDTO(
-			StringUtil.read(getClass(), "dependencies/definition.json"));
-
-		dataDefinition =
+		DataDefinition dataDefinition =
 			dataDefinitionResource.postSiteDataDefinitionByContentType(
-				_group.getGroupId(), "journal", dataDefinition);
+				_group.getGroupId(), "journal",
+				DataDefinition.toDTO(
+					StreamUtil.toString(
+						DataLayoutRendererCTTest.class.getResourceAsStream(
+							"dependencies/definition.json"))));
 
 		DataLayoutRendererContext dataLayoutRendererContext =
 			new DataLayoutRendererContext();
 
-		MockHttpServletRequest httpServletRequest =
+		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
 
-		httpServletRequest.setAttribute(
+		mockHttpServletRequest.setAttribute(
 			WebKeys.CURRENT_URL, RandomTestUtil.randomString());
 
-		httpServletRequest.setAttribute(
+		mockHttpServletRequest.setAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE,
 			new MockLiferayPortletRenderResponse());
 
@@ -154,22 +128,22 @@ public class DataLayoutRendererCTTest {
 		themeDisplay.setCompany(_company);
 		themeDisplay.setLayout(_layout);
 		themeDisplay.setLayoutSet(_layout.getLayoutSet());
-		themeDisplay.setRequest(httpServletRequest);
-		themeDisplay.setResponse(new MockHttpServletResponse());
+		themeDisplay.setRequest(mockHttpServletRequest);
+		themeDisplay.setResponse(mockHttpServletResponse);
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setSiteGroupId(_group.getGroupId());
 		themeDisplay.setUser(_user);
 
-		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
 
-		dataLayoutRendererContext.setHttpServletRequest(httpServletRequest);
+		dataLayoutRendererContext.setHttpServletRequest(mockHttpServletRequest);
 
 		dataLayoutRendererContext.setHttpServletResponse(
-			new MockHttpServletResponse());
-		dataLayoutRendererContext.setPersisted(false);
+			mockHttpServletResponse);
+
 		dataLayoutRendererContext.setPortletNamespace(
 			JournalPortletKeys.JOURNAL + StringPool.UNDERLINE);
-		dataLayoutRendererContext.setReadOnly(false);
 
 		DataLayout dataLayout = dataDefinition.getDefaultDataLayout();
 

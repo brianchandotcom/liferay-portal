@@ -14,6 +14,8 @@
 
 package com.liferay.portal.crypto.hash.spi;
 
+import com.liferay.portal.crypto.hash.exception.CryptoHashException;
+
 import java.util.Map;
 
 /**
@@ -29,7 +31,7 @@ public interface CryptoHashProviderFactory {
 	 */
 	public CryptoHashProvider create(
 			Map<String, ?> cryptoHashProviderProperties)
-		throws Exception;
+		throws CryptoHashException;
 
 	public String getCryptoHashProviderFactoryName();
 

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.crypto.hash.provider.message.digest.internal;
 
+import com.liferay.portal.crypto.hash.exception.CryptoHashException;
 import com.liferay.portal.crypto.hash.spi.CryptoHashProvider;
 import com.liferay.portal.crypto.hash.spi.CryptoHashProviderFactory;
 import com.liferay.portal.crypto.hash.spi.CryptoHashProviderResponse;
@@ -35,17 +36,23 @@ public class MessageDigestCryptoHashProviderFactory
 	@Override
 	public CryptoHashProvider create(
 			Map<String, ?> cryptoHashProviderProperties)
-		throws Exception {
+		throws CryptoHashException {
 
-		if ((cryptoHashProviderProperties == null) ||
-			cryptoHashProviderProperties.isEmpty()) {
+		try {
+			if ((cryptoHashProviderProperties == null) ||
+				cryptoHashProviderProperties.isEmpty()) {
+
+				return new MessageDigestCryptoHashProvider(
+					getCryptoHashProviderFactoryName());
+			}
 
 			return new MessageDigestCryptoHashProvider(
-				getCryptoHashProviderFactoryName());
+				getCryptoHashProviderFactoryName(),
+				cryptoHashProviderProperties);
 		}
-
-		return new MessageDigestCryptoHashProvider(
-			getCryptoHashProviderFactoryName(), cryptoHashProviderProperties);
+		catch (NoSuchAlgorithmException noSuchAlgorithmException) {
+			throw new CryptoHashException(noSuchAlgorithmException);
+		}
 	}
 
 	@Override

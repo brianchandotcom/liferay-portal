@@ -42,19 +42,12 @@ public class CryptoHashVerifierImpl implements CryptoHashVerifier {
 		for (CryptoHashVerificationContext cryptoHashVerificationContext :
 				cryptoHashVerificationContexts) {
 
-			CryptoHashProvider cryptoHashProvider;
-
-			try {
-				cryptoHashProvider =
-					_cryptoHashProviderFactoryRegistry.getCryptoHashProvider(
-						cryptoHashVerificationContext.
-							getCryptoHashProviderFactoryName(),
-						cryptoHashVerificationContext.
-							getCryptoHashProviderProperties());
-			}
-			catch (Exception exception) {
-				throw new CryptoHashException(exception);
-			}
+			CryptoHashProvider cryptoHashProvider =
+				_cryptoHashProviderFactoryRegistry.getCryptoHashProvider(
+					cryptoHashVerificationContext.
+						getCryptoHashProviderFactoryName(),
+					cryptoHashVerificationContext.
+						getCryptoHashProviderProperties());
 
 			CryptoHashProviderResponse cryptoHashProviderResponse =
 				cryptoHashProvider.generate(

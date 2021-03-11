@@ -302,13 +302,15 @@ public class TestrayImporter {
 			Build.BranchInformation portalBranchInformation =
 				portalBranchInformationBuild.getPortalBranchInformation();
 
-			sb.append("Portal Branch: ");
-			sb.append(portalBranchInformation.getUpstreamBranchName());
-			sb.append(";\n");
+			if (portalBranchInformation != null) {
+				sb.append("Portal Branch: ");
+				sb.append(portalBranchInformation.getUpstreamBranchName());
+				sb.append(";\n");
 
-			sb.append("Portal SHA: ");
-			sb.append(portalBranchInformation.getSenderBranchSHA());
-			sb.append(";\n");
+				sb.append("Portal SHA: ");
+				sb.append(portalBranchInformation.getSenderBranchSHA());
+				sb.append(";\n");
+			}
 		}
 
 		if (topLevelBuild instanceof PluginsBranchInformationBuild) {
@@ -318,13 +320,15 @@ public class TestrayImporter {
 			Build.BranchInformation pluginsBranchInformation =
 				pluginsBranchInformationBuild.getPluginsBranchInformation();
 
-			sb.append("Plugins Branch: ");
-			sb.append(pluginsBranchInformation.getUpstreamBranchName());
-			sb.append(";\n");
+			if (pluginsBranchInformation != null) {
+				sb.append("Plugins Branch: ");
+				sb.append(pluginsBranchInformation.getUpstreamBranchName());
+				sb.append(";\n");
 
-			sb.append("Plugins SHA: ");
-			sb.append(pluginsBranchInformation.getSenderBranchSHA());
-			sb.append(";\n");
+				sb.append("Plugins SHA: ");
+				sb.append(pluginsBranchInformation.getSenderBranchSHA());
+				sb.append(";\n");
+			}
 		}
 
 		if (topLevelBuild instanceof QAWebsitesBranchInformationBuild) {
@@ -335,9 +339,15 @@ public class TestrayImporter {
 				qaWebsitesBranchInformationBuild.
 					getQAWebsitesBranchInformation();
 
-			sb.append("QA Websites SHA: ");
-			sb.append(qaWebsitesBranchInformation.getSenderBranchSHA());
-			sb.append(";\n");
+			if (qaWebsitesBranchInformation != null) {
+				sb.append("QA Websites Branch: ");
+				sb.append(qaWebsitesBranchInformation.getUpstreamBranchName());
+				sb.append(";\n");
+
+				sb.append("QA Websites SHA: ");
+				sb.append(qaWebsitesBranchInformation.getSenderBranchSHA());
+				sb.append(";\n");
+			}
 		}
 
 		return sb.toString();

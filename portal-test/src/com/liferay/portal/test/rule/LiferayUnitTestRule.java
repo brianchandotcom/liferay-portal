@@ -18,6 +18,8 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 
+import java.lang.reflect.Field;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,16 +69,17 @@ public class LiferayUnitTestRule extends AggregateTestRule {
 			try {
 				Class<?> clazz = classLoader.loadClass(_testRuleName);
 
-				Object testRule = ReflectionTestUtil.getFieldValue(
-					clazz, "INSTANCE");
+				Field field = clazz.getField("INSTANCE");
+
+				Object testRule = field.get(null);
 
 				return ReflectionTestUtil.invoke(
 					testRule, "apply",
 					new Class<?>[] {Statement.class, Description.class},
 					statement, description);
 			}
-			catch (ClassNotFoundException classNotFoundException) {
-				ReflectionUtil.throwException(classNotFoundException);
+			catch (Exception exception) {
+				ReflectionUtil.throwException(exception);
 			}
 
 			return null;

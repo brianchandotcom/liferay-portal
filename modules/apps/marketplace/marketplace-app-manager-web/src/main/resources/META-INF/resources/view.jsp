@@ -24,7 +24,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "app-man
 
 <portlet:renderURL var="viewURL" />
 
-<clay:management-toolbar-v2
+<clay:management-toolbar
 	clearResultsURL="<%= viewAppsManagerManagementToolbarDisplayContext.getClearResultsURL() %>"
 	filterDropdownItems="<%= viewAppsManagerManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	filterLabelItems="<%= viewAppsManagerManagementToolbarDisplayContext.getFilterLabelItems() %>"

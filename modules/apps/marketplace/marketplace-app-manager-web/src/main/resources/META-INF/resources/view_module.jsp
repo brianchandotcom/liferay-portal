@@ -63,7 +63,7 @@ else {
 	navigationItems="<%= appManagerDisplayContext.getModuleNavigationItems() %>"
 />
 
-<clay:management-toolbar-v2
+<clay:management-toolbar
 	searchActionURL="<%= viewModuleManagementToolbarDisplayContext.getSearchActionURL() %>"
 	searchContainerId="plugins"
 	searchFormName="searchFm"

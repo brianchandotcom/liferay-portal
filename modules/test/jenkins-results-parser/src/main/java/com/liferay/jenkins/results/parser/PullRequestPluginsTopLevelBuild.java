@@ -20,12 +20,30 @@ import java.util.regex.Pattern;
 /**
  * @author Michael Hashimoto
  */
-public class PullRequestPluginsTopLevelBuild extends PluginsTopLevelBuild {
+public class PullRequestPluginsTopLevelBuild
+	extends PluginsTopLevelBuild implements PullRequestBuild {
 
 	public PullRequestPluginsTopLevelBuild(
 		String url, TopLevelBuild topLevelBuild) {
 
 		super(url, topLevelBuild);
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("https://github.com/");
+		sb.append(getParameterValue("GITHUB_RECEIVER_USERNAME"));
+		sb.append("/liferay-plugins");
+
+		String branchName = getBranchName();
+
+		if (!branchName.equals("master")) {
+			sb.append("-ee");
+		}
+
+		sb.append("/pull/");
+		sb.append(getParameterValue("GITHUB_PULL_REQUEST_NUMBER"));
+
+		_pullRequest = new PullRequest(sb.toString());
 	}
 
 	@Override
@@ -59,6 +77,11 @@ public class PullRequestPluginsTopLevelBuild extends PluginsTopLevelBuild {
 	}
 
 	@Override
+	public PullRequest getPullRequest() {
+		return _pullRequest;
+	}
+
+	@Override
 	public String getTestSuiteName() {
 		String ciTestSuite = getParameterValue("CI_TEST_SUITE");
 
@@ -71,5 +94,7 @@ public class PullRequestPluginsTopLevelBuild extends PluginsTopLevelBuild {
 
 	private static final Pattern _pattern = Pattern.compile(
 		"[^/]*functional[^/]*/(?<pluginName>[^/]+)/\\d+");
+
+	private final PullRequest _pullRequest;
 
 }

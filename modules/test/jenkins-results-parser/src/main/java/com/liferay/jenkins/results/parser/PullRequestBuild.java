@@ -17,7 +17,7 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Peter Yoo
  */
-public interface PullRequestBuild {
+public interface PullRequestBuild extends Build {
 
 	public PullRequest getPullRequest();
 

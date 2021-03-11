@@ -43,10 +43,14 @@ const CreationMenu = ({
 	);
 
 	const getPlusIconLabel = () => {
+		const primaryItemsCount = primaryItems.length;
+
 		const item =
-			primaryItems?.[0] ??
-			secondaryItems?.[0].items?.[0] ??
-			secondaryItems?.[0];
+			primaryItemsCount === 1
+				? primaryItems?.[0] ??
+				  secondaryItems?.[0].items?.[0] ??
+				  secondaryItems?.[0]
+				: null;
 
 		return item?.label || Liferay.Language.get('new');
 	};

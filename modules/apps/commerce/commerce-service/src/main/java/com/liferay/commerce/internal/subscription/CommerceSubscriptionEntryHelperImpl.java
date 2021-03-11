@@ -69,18 +69,32 @@ public class CommerceSubscriptionEntryHelperImpl
 					cpInstance.getCPSubscriptionInfo();
 
 				if (cpSubscriptionInfo != null) {
+					String subscriptionType = null;
+
+					if (cpInstance.isSubscriptionEnabled()) {
+						subscriptionType =
+							cpSubscriptionInfo.getSubscriptionType();
+					}
+
+					String deliverySubscriptionType = null;
+
+					if (cpInstance.isDeliverySubscriptionEnabled()) {
+						deliverySubscriptionType =
+							cpSubscriptionInfo.getDeliverySubscriptionType();
+					}
+
 					_commerceSubscriptionEntryLocalService.
 						addCommerceSubscriptionEntry(
 							commerceAccount.getUserId(),
 							commerceOrder.getGroupId(),
 							commerceOrderItem.getCommerceOrderItemId(),
 							cpSubscriptionInfo.getSubscriptionLength(),
-							cpSubscriptionInfo.getSubscriptionType(),
+							subscriptionType,
 							cpSubscriptionInfo.getMaxSubscriptionCycles(),
 							cpSubscriptionInfo.
 								getSubscriptionTypeSettingsProperties(),
 							cpSubscriptionInfo.getDeliverySubscriptionLength(),
-							cpSubscriptionInfo.getDeliverySubscriptionType(),
+							deliverySubscriptionType,
 							cpSubscriptionInfo.
 								getDeliveryMaxSubscriptionCycles(),
 							cpSubscriptionInfo.
@@ -117,10 +131,6 @@ public class CommerceSubscriptionEntryHelperImpl
 
 		if ((commerceOrderItem != null) && now.after(nextIterationDate)) {
 			if (Objects.equals(
-					CommerceSubscriptionEntryConstants.
-						SUBSCRIPTION_STATUS_ACTIVE,
-					commerceSubscriptionEntry.getSubscriptionStatus()) &&
-				Objects.equals(
 					CommerceSubscriptionEntryConstants.
 						SUBSCRIPTION_STATUS_ACTIVE,
 					commerceSubscriptionEntry.

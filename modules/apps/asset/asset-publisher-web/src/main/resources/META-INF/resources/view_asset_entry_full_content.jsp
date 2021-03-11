@@ -87,7 +87,7 @@ Map<String, Object> fragmentsEditorData = HashMapBuilder.<String, Object>put(
 		<c:if test="<%= !print %>">
 
 			<%
-			String fullContentRedirect = currentURL;
+			String fullContentRedirect = themeDisplay.getURLCurrent();
 
 			if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(assetEntry.getCompanyId(), assetEntry.getGroupId(), assetEntry.getClassName())) {
 				fullContentRedirect = redirect;

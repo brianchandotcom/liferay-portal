@@ -203,17 +203,7 @@ public class TestrayImporter {
 
 			Job job = getJob();
 
-			List<Properties> propertiesList = new ArrayList<>();
-
-			if ((testBaseDir != null) && testBaseDir.exists()) {
-				propertiesList.add(
-					JenkinsResultsParserUtil.getProperties(
-						new File(testBaseDir, "test.properties")));
-			}
-
-			propertiesList.add(job.getJobProperties());
-
-			for (Properties properties : propertiesList) {
+			for (Properties properties : _getPropertiesList(testBaseDir)) {
 				if (testrayBuild != null) {
 					break;
 				}
@@ -452,17 +442,7 @@ public class TestrayImporter {
 
 			Job job = getJob();
 
-			List<Properties> propertiesList = new ArrayList<>();
-
-			if ((testBaseDir != null) && testBaseDir.exists()) {
-				propertiesList.add(
-					JenkinsResultsParserUtil.getProperties(
-						new File(testBaseDir, "test.properties")));
-			}
-
-			propertiesList.add(job.getJobProperties());
-
-			for (Properties properties : propertiesList) {
+			for (Properties properties : _getPropertiesList(testBaseDir)) {
 				if (testrayProductVersion != null) {
 					break;
 				}
@@ -566,17 +546,7 @@ public class TestrayImporter {
 
 			Job job = getJob();
 
-			List<Properties> propertiesList = new ArrayList<>();
-
-			if ((testBaseDir != null) && testBaseDir.exists()) {
-				propertiesList.add(
-					JenkinsResultsParserUtil.getProperties(
-						new File(testBaseDir, "test.properties")));
-			}
-
-			propertiesList.add(job.getJobProperties());
-
-			for (Properties properties : propertiesList) {
+			for (Properties properties : _getPropertiesList(testBaseDir)) {
 				if (testrayProject != null) {
 					break;
 				}
@@ -686,17 +656,7 @@ public class TestrayImporter {
 
 			Job job = getJob();
 
-			List<Properties> propertiesList = new ArrayList<>();
-
-			if ((testBaseDir != null) && testBaseDir.exists()) {
-				propertiesList.add(
-					JenkinsResultsParserUtil.getProperties(
-						new File(testBaseDir, "test.properties")));
-			}
-
-			propertiesList.add(job.getJobProperties());
-
-			for (Properties properties : propertiesList) {
+			for (Properties properties : _getPropertiesList(testBaseDir)) {
 				if (testrayRoutine != null) {
 					break;
 				}
@@ -775,17 +735,7 @@ public class TestrayImporter {
 
 			Job job = getJob();
 
-			List<Properties> propertiesList = new ArrayList<>();
-
-			if ((testBaseDir != null) && testBaseDir.exists()) {
-				propertiesList.add(
-					JenkinsResultsParserUtil.getProperties(
-						new File(testBaseDir, "test.properties")));
-			}
-
-			propertiesList.add(job.getJobProperties());
-
-			for (Properties properties : propertiesList) {
+			for (Properties properties : _getPropertiesList(testBaseDir)) {
 				if (testrayServer != null) {
 					break;
 				}
@@ -1261,6 +1211,26 @@ public class TestrayImporter {
 	private PortalGitWorkingDirectory _getPortalGitWorkingDirectory() {
 		return GitWorkingDirectoryFactory.newPortalGitWorkingDirectory(
 			_topLevelBuild.getBranchName());
+	}
+
+	private List<Properties> _getPropertiesList(File testBaseDir) {
+		List<Properties> propertiesList = new ArrayList<>();
+
+		if ((testBaseDir != null) && testBaseDir.exists()) {
+			propertiesList.add(
+				JenkinsResultsParserUtil.getProperties(
+					new File(testBaseDir, "test.properties")));
+
+			propertiesList.add(
+				JenkinsResultsParserUtil.getProperties(
+					new File(testBaseDir, "test/functional/test.properties")));
+		}
+
+		Job job = getJob();
+
+		propertiesList.add(job.getJobProperties());
+
+		return propertiesList;
 	}
 
 	private String _replaceEnvVars(String string) {

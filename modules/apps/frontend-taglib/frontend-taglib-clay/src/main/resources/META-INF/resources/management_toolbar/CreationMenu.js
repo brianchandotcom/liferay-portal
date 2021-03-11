@@ -17,6 +17,7 @@ import ClayDropDown from '@clayui/drop-down';
 import classNames from 'classnames';
 import React, {useRef, useState} from 'react';
 
+import getDataAttributes from '../get_data_attributes';
 import LinkOrButton from './LinkOrButton';
 
 const CreationMenu = ({
@@ -95,11 +96,6 @@ const CreationMenu = ({
 	);
 
 	const Item = ({item}) => {
-		const mapKeys = (obj, fn) =>
-			Object.fromEntries(
-				Object.entries(obj).map(([key, value]) => [fn(key), value])
-			);
-
 		return (
 			<ClayDropDown.Item
 				href={item.href}
@@ -107,7 +103,7 @@ const CreationMenu = ({
 					onCreationMenuItemClick(event, {item});
 				}}
 				symbolLeft={item.icon}
-				{...mapKeys(item.data, (key) => `data-${key}`)}
+				{...getDataAttributes(item.data)}
 			>
 				{item.label}
 			</ClayDropDown.Item>

@@ -110,6 +110,75 @@ definition {
 		// TODO COMMERCE-6210 CancelShipmentAndCreateNewFromPendingOrder Pending Implementation
 
 	}
+	
+	test DeactivateCurrency {
+		property portal.acceptance = "false";
+
+		var currencyName = "British Pound";
+		var currencyAbbreviation = "GBP";
+		var key_buttonAction = "Deactivate";
+		var catalogName = "Master";
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
+			portlet = "Currencies");
+
+		CommerceNavigator.gotoEntry(entryName = "British Pound");
+
+		ClickNoError(locator1 = "ToggleSwitch#ACTIVE");
+
+		Button.clickSave();
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Catalogs");
+
+		CommerceNavigator.gotoEntry(entryName = "Minium");
+
+		Click(
+			key_title = "Currency",
+			locator1 = "CommerceEntry#CATALOGS_FORM");
+
+		AssertElementNotPresent(
+			locator1 = "CommerceEntry#CATALOGS_FORM",
+			value1 = "${currencyName}");
+
+		Button.clickSave();
+
+		CommerceNavigator.gotoPortlet(
+			category = "Pricing",
+			portlet = "Price Lists");
+
+		CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
+		Click(
+			key_title = "Currency",
+			locator1 = "CommerceEntry#CATALOGS_FORM");
+
+		AssertElementNotPresent(
+			locator1 = "CommerceEntry#CATALOGS_FORM",
+			value1 = "${currencyAbbreviation}");
+
+		Button.clickPublish();
+
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
+			portlet = "Channels");
+
+		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+		Click(
+			key_title = "Currency",
+			locator1 = "CommerceEntry#CATALOGS_FORM");
+
+		AssertElementNotPresent(
+			locator1 = "CommerceEntry#CATALOGS_FORM",
+			value1 = "${currencyAbbreviation}");
+
+		Button.clickSave();
+	}
 
 	test EditOrder {
 		property portal.acceptance = "quarantine";

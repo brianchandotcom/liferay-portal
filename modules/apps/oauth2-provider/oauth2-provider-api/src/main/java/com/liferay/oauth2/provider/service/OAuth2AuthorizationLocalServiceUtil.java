@@ -317,14 +317,12 @@ public class OAuth2AuthorizationLocalServiceUtil {
 	}
 
 	public static OAuth2Authorization
-			fetchLatestOAuth2AuthorizationByRememberDeviceContent(
-				long userId, long oAuth2ApplicationId,
-				String rememberDeviceContent)
-		throws com.liferay.oauth2.provider.exception.
-			NoSuchOAuth2AuthorizationException {
+		fetchLatestOAuth2AuthorizationByRememberDeviceContent(
+			long userId, long oAuth2ApplicationId,
+			String rememberDeviceContent) {
 
 		return getService().
-			fetchLatestOAuth2AuthorizationByRememberDeviceContent(
+			fetchOAuth2AuthorizationByRememberDeviceContent(
 				userId, oAuth2ApplicationId, rememberDeviceContent);
 	}
 

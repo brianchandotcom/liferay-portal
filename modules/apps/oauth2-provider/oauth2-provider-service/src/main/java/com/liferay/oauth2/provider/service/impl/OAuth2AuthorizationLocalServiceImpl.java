@@ -19,7 +19,6 @@ import com.liferay.oauth2.provider.exception.NoSuchOAuth2AuthorizationException;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.oauth2.provider.model.OAuth2ScopeGrant;
 import com.liferay.oauth2.provider.service.base.OAuth2AuthorizationLocalServiceBaseImpl;
-import com.liferay.oauth2.provider.util.comparator.OAuth2AuthorizationDateComparator;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -128,17 +127,6 @@ public class OAuth2AuthorizationLocalServiceImpl
 		return oAuth2AuthorizationPersistence.remove(oAuth2AuthorizationId);
 	}
 
-	public OAuth2Authorization
-			fetchLatestOAuth2AuthorizationByRememberDeviceContent(
-				long userId, long oAuth2ApplicationId,
-				String rememberDeviceContent)
-		throws NoSuchOAuth2AuthorizationException {
-
-		return oAuth2AuthorizationPersistence.findByU_O_R_Last(
-			userId, oAuth2ApplicationId, rememberDeviceContent,
-			new OAuth2AuthorizationDateComparator(true));
-	}
-
 	@Override
 	public OAuth2Authorization fetchOAuth2AuthorizationByAccessTokenContent(
 		String accessTokenContent) {
@@ -174,6 +162,20 @@ public class OAuth2AuthorizationLocalServiceImpl
 
 				return oAuth2Authorization;
 			}
+		}
+
+		return null;
+	}
+
+	public OAuth2Authorization fetchOAuth2AuthorizationByRememberDeviceContent(
+		long userId, long oAuth2ApplicationId, String rememberDeviceContent) {
+
+		List<OAuth2Authorization> oAuth2Authorizations =
+			oAuth2AuthorizationPersistence.findByU_O_R(
+				userId, oAuth2ApplicationId, rememberDeviceContent);
+
+		if ((oAuth2Authorizations != null) && !oAuth2Authorizations.isEmpty()) {
+			return oAuth2Authorizations.get(0);
 		}
 
 		return null;

@@ -363,14 +363,12 @@ public class OAuth2AuthorizationLocalServiceWrapper
 
 	@Override
 	public com.liferay.oauth2.provider.model.OAuth2Authorization
-			fetchLatestOAuth2AuthorizationByRememberDeviceContent(
-				long userId, long oAuth2ApplicationId,
-				String rememberDeviceContent)
-		throws com.liferay.oauth2.provider.exception.
-			NoSuchOAuth2AuthorizationException {
+	fetchOAuth2AuthorizationByRememberDeviceContent(
+			long userId, long oAuth2ApplicationId,
+			String rememberDeviceContent) {
 
 		return _oAuth2AuthorizationLocalService.
-			fetchLatestOAuth2AuthorizationByRememberDeviceContent(
+			fetchOAuth2AuthorizationByRememberDeviceContent(
 				userId, oAuth2ApplicationId, rememberDeviceContent);
 	}
 

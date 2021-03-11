@@ -9,5 +9,4 @@ Export-Package:\
 	com.liferay.oauth2.provider.service,\
 	com.liferay.oauth2.provider.service.persistence,\
 	com.liferay.oauth2.provider.util,\
-	com.liferay.oauth2.provider.util.builder,\
-	com.liferay.oauth2.provider.util.comparator
+	com.liferay.oauth2.provider.util.builder

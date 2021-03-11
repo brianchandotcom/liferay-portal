@@ -76,7 +76,7 @@ export const ColorPickerField = ({field, onValueSelect, value}) => {
 				</ClayInput.GroupItem>
 				{color && (
 					<ClayButtonWithIcon
-						className="ml-2"
+						className="ml-2 page-editor__item-selector__content-button"
 						displayType="secondary"
 						onClick={() => {
 							setColor('');

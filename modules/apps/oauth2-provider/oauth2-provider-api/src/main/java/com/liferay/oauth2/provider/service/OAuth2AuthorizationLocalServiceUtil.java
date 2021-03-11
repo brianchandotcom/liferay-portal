@@ -316,18 +316,6 @@ public class OAuth2AuthorizationLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static OAuth2Authorization
-			fetchLatestOAuth2AuthorizationByRememberDeviceContent(
-				long userId, long oAuth2ApplicationId,
-				String rememberDeviceContent)
-		throws com.liferay.oauth2.provider.exception.
-			NoSuchOAuth2AuthorizationException {
-
-		return getService().
-			fetchLatestOAuth2AuthorizationByRememberDeviceContent(
-				userId, oAuth2ApplicationId, rememberDeviceContent);
-	}
-
 	public static OAuth2Authorization fetchOAuth2Authorization(
 		long oAuth2AuthorizationId) {
 
@@ -348,6 +336,15 @@ public class OAuth2AuthorizationLocalServiceUtil {
 
 		return getService().fetchOAuth2AuthorizationByRefreshTokenContent(
 			refreshTokenContent);
+	}
+
+	public static OAuth2Authorization
+		fetchOAuth2AuthorizationByRememberDeviceContent(
+			long userId, long oAuth2ApplicationId,
+			String rememberDeviceContent) {
+
+		return getService().fetchOAuth2AuthorizationByRememberDeviceContent(
+			userId, oAuth2ApplicationId, rememberDeviceContent);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery

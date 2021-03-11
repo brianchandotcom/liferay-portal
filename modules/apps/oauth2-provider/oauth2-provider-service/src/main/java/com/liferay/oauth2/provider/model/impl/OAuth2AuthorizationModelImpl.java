@@ -160,7 +160,7 @@ public class OAuth2AuthorizationModelImpl
 	public static final long REMEMBERDEVICECONTENT_COLUMN_BITMASK = 16L;
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
 	public static final long USERID_COLUMN_BITMASK = 32L;

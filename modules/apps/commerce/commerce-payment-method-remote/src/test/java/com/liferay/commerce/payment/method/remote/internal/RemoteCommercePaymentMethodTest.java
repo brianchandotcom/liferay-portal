@@ -22,9 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.model.CommerceAddress;
-import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.payment.method.remote.internal.configuration.RemoteCommercePaymentMethodConfiguration;
 import com.liferay.commerce.payment.request.CommercePaymentRequest;
@@ -34,6 +32,8 @@ import com.liferay.headless.commerce.admin.order.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.ShippingAddress;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import com.sun.net.httpserver.HttpContext;
@@ -346,11 +346,10 @@ public class RemoteCommercePaymentMethodTest {
 		Assert.assertEquals(
 			commerceAddress.getCity(), billingAddress.getCity());
 
-		CommerceCountry commerceCountry = commerceAddress.getCommerceCountry();
+		Country country = commerceAddress.getCountry();
 
 		Assert.assertEquals(
-			commerceCountry.getThreeLettersISOCode(),
-			billingAddress.getCountryISOCode());
+			country.getA3(), billingAddress.getCountryISOCode());
 
 		Assert.assertEquals(
 			Long.valueOf(commerceAddress.getCommerceAddressId()),
@@ -367,10 +366,10 @@ public class RemoteCommercePaymentMethodTest {
 		Assert.assertEquals(
 			commerceAddress.getPhoneNumber(), billingAddress.getPhoneNumber());
 
-		CommerceRegion commerceRegion = commerceAddress.getCommerceRegion();
+		Region region = commerceAddress.getRegion();
 
 		Assert.assertEquals(
-			String.valueOf(commerceRegion.getCode()),
+			String.valueOf(region.getRegionCode()),
 			billingAddress.getRegionISOCode());
 
 		Assert.assertEquals(
@@ -566,11 +565,10 @@ public class RemoteCommercePaymentMethodTest {
 		Assert.assertEquals(
 			commerceAddress.getCity(), shippingAddress.getCity());
 
-		CommerceCountry commerceCountry = commerceAddress.getCommerceCountry();
+		Country country = commerceAddress.getCountry();
 
 		Assert.assertEquals(
-			commerceCountry.getThreeLettersISOCode(),
-			shippingAddress.getCountryISOCode());
+			country.getA3(), shippingAddress.getCountryISOCode());
 
 		Assert.assertEquals(
 			Long.valueOf(commerceAddress.getCommerceAddressId()),
@@ -587,10 +585,10 @@ public class RemoteCommercePaymentMethodTest {
 		Assert.assertEquals(
 			commerceAddress.getPhoneNumber(), shippingAddress.getPhoneNumber());
 
-		CommerceRegion commerceRegion = commerceAddress.getCommerceRegion();
+		Region region = commerceAddress.getRegion();
 
 		Assert.assertEquals(
-			String.valueOf(commerceRegion.getCode()),
+			String.valueOf(region.getRegionCode()),
 			shippingAddress.getRegionISOCode());
 
 		Assert.assertEquals(
@@ -727,36 +725,23 @@ public class RemoteCommercePaymentMethodTest {
 			zip
 		);
 
-		CommerceCountry commerceCountry = _getCommerceCountry(
-			commerceCountryThreeLettersISOCode);
+		Country country = _getCountry(commerceCountryThreeLettersISOCode);
 
 		Mockito.when(
-			commerceAddress.getCommerceCountry()
+			commerceAddress.getCountry()
 		).thenReturn(
-			commerceCountry
+			country
 		);
 
-		CommerceRegion commerceRegion = _getCommerceRegion(commerceRegionCode);
+		Region region = _getRegion(commerceRegionCode);
 
 		Mockito.when(
-			commerceAddress.getCommerceRegion()
+			commerceAddress.getRegion()
 		).thenReturn(
-			commerceRegion
+			region
 		);
 
 		return commerceAddress;
-	}
-
-	private CommerceCountry _getCommerceCountry(String threeLettersISOCode) {
-		CommerceCountry commerceCountry = Mockito.mock(CommerceCountry.class);
-
-		Mockito.when(
-			commerceCountry.getThreeLettersISOCode()
-		).thenReturn(
-			threeLettersISOCode
-		);
-
-		return commerceCountry;
 	}
 
 	private CommerceCurrency _getCommerceCurrency() {
@@ -1068,18 +1053,6 @@ public class RemoteCommercePaymentMethodTest {
 		return _objectMapper.writeValueAsBytes(_commercePaymentResult);
 	}
 
-	private CommerceRegion _getCommerceRegion(String code) {
-		CommerceRegion commerceRegion = Mockito.mock(CommerceRegion.class);
-
-		Mockito.when(
-			commerceRegion.getCode()
-		).thenReturn(
-			code
-		);
-
-		return commerceRegion;
-	}
-
 	private CommerceShippingMethod _getCommerceShippingMethod() {
 		CommerceShippingMethod commerceShippingMethod = Mockito.mock(
 			CommerceShippingMethod.class);
@@ -1097,6 +1070,30 @@ public class RemoteCommercePaymentMethodTest {
 		);
 
 		return commerceShippingMethod;
+	}
+
+	private Country _getCountry(String a3) {
+		Country commerceCountry = Mockito.mock(Country.class);
+
+		Mockito.when(
+			commerceCountry.getA3()
+		).thenReturn(
+			a3
+		);
+
+		return commerceCountry;
+	}
+
+	private Region _getRegion(String regionCode) {
+		Region region = Mockito.mock(Region.class);
+
+		Mockito.when(
+			region.getRegionCode()
+		).thenReturn(
+			regionCode
+		);
+
+		return region;
 	}
 
 	private RemoteCommercePaymentMethodConfiguration

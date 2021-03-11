@@ -2620,14 +2620,12 @@ include-and-override=portal-liferay-online-limit.properties</echo>
 				<then>
 					<delete failonerror="false" file="${liferay.home}/deploy/portal-commerce-license.xml" verbose="true" />
 				</then>
-				<else>
-					<if>
-						<isset property="commerce.license.file" />
-						<then>
-							<swap-commerce-license commerce.license.file="${commerce.license.file}" />
-						</then>
-					</if>
-				</else>
+				<elseif>
+					<isset property="commerce.license.file" />
+					<then>
+						<swap-commerce-license commerce.license.file="${commerce.license.file}" />
+					</then>
+				</elseif>
 			</if>
 
 			<get-testcase-property property.name="deploy.lcs.token.file" />

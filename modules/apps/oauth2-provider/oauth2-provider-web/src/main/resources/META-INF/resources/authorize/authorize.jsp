@@ -105,6 +105,12 @@ if (Validator.isNotNull(replyTo) && !replyTo.startsWith(PortalUtil.getPortalURL(
 
 						</ul>
 
+						<c:if test="<%= oAuth2Application.isRememberDevice() %>">
+							<aui:field-wrapper>
+								<aui:input checked="<%= false %>" helpMessage="remember-device-help" id="rememberDevice" label="remember-device" name="rememberDevice" type="checkbox" />
+							</aui:field-wrapper>
+						</c:if>
+
 						<c:if test="<%= !Validator.isBlank(oAuth2Application.getPrivacyPolicyURL()) %>">
 							<p class="privacy-policy text-truncate">
 								<liferay-ui:message key="application" />

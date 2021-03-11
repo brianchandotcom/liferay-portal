@@ -18,6 +18,7 @@ import com.liferay.portal.crypto.hash.exception.CryptoHashException;
 import com.liferay.portal.crypto.hash.spi.CryptoHashProvider;
 import com.liferay.portal.crypto.hash.spi.CryptoHashProviderFactory;
 import com.liferay.portal.crypto.hash.spi.CryptoHashProviderResponse;
+import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 
@@ -72,6 +73,8 @@ public class MessageDigestCryptoHashProviderFactory
 			_messageDigest = MessageDigest.getInstance(
 				MapUtil.getString(
 					cryptoHashProviderProperties, "algorithm", "SHA-256"));
+			_saltSize = MapUtil.getInteger(
+				cryptoHashProviderProperties, "salt.size", 32);
 		}
 
 		@Override
@@ -82,8 +85,20 @@ public class MessageDigestCryptoHashProviderFactory
 				_messageDigest.digest(ArrayUtil.append(salt, input)));
 		}
 
+		@Override
+		public byte[] generateSalt() {
+			byte[] salt = new byte[_saltSize];
+
+			for (int i = 0; i < salt.length; ++i) {
+				salt[i] = SecureRandomUtil.nextByte();
+			}
+
+			return salt;
+		}
+
 		private final Map<String, ?> _cryptoHashProviderProperties;
 		private final MessageDigest _messageDigest;
+		private final int _saltSize;
 
 	}
 

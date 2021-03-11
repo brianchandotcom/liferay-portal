@@ -286,8 +286,7 @@ const State = {
 	 * - Read it with `read()` or `readAtom()`.
 	 * - Update it with `write()` or `writeAtom()`.
 	 * - Subscribe to be notified of changes with `subscribe()`.
-	 * - In the context of a React component, use the `useLiferayState()` hook
-	 *   to do all of the above.
+	 * - In React components, the `useLiferayState()` hook does all the above.
 	 */
 	atom<T>(key: string, value: T): Atom<T> {
 		if (atoms.has(key)) {
@@ -371,8 +370,7 @@ const State = {
 	 *
 	 * - Read it with `read()` or `readSelector()`.
 	 * - Subscribe to be notified of changes with `subscribe()`.
-	 * - In the context of a React component, use the `useLiferayState()` hook
-	 *   to do both of the above.
+	 * - In React components, the `useLiferayState()` hook does all the above.
 	 *
 	 * Note that, unlike atoms, you cannot `write()` directly to a selector;
 	 * instead, you update them by changing their upstream atoms, which causes

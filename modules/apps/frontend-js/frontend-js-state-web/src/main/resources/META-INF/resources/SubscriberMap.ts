@@ -20,12 +20,7 @@ import type {Atom, Selector} from './State';
  * type of `Map<K, V>` isn't expressive enough to capture what we want (which
  * would be something like the following -- sadly, not valid TypeScript -- where
  * "T" would be any arbitrary subtype of "unknown", and we don't care what the
- * concrete type is, only that it is the same within each key/value pair):
- *
- *      type SubscriberMap = Map<
- *          Atom<T> | Selector<T>,
- *          Map<number, (value: T) => void>
- *      >
+ * concrete type is, only that it is the same within each key/value pair).
  */
 export default class SubscriberMap {
 	_id: number;

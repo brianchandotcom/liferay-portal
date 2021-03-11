@@ -14,6 +14,9 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 /**
  * @author Michael Hashimoto
  */
@@ -79,8 +82,8 @@ public class PortalTopLevelBuild
 
 	@Override
 	public PortalFixpackRelease getPortalFixpackRelease() {
-		if (_portalFixpackRelease != null) {
-			return _portalFixpackRelease;
+		if (portalFixpackRelease != null) {
+			return portalFixpackRelease;
 		}
 
 		Build controllerBuild = getControllerBuild();
@@ -92,20 +95,35 @@ public class PortalTopLevelBuild
 		String portalFixPackVersion = controllerBuild.getParameterValue(
 			"PORTAL_FIX_PACK_VERSION");
 
-		if (portalFixPackVersion == null) {
-			return null;
+		if (portalFixPackVersion != null) {
+			portalFixpackRelease = new PortalFixpackRelease(
+				portalFixPackVersion, getPortalRelease());
+
+			return portalFixpackRelease;
 		}
 
-		_portalFixpackRelease = new PortalFixpackRelease(
-			portalFixPackVersion, getPortalRelease());
+		String portalFixPackZipURL = controllerBuild.getParameterValue(
+			"TEST_PORTAL_FIX_PACK_ZIP_URL");
 
-		return _portalFixpackRelease;
+		if (portalFixPackZipURL != null) {
+			try {
+				portalFixpackRelease = new PortalFixpackRelease(
+					new URL(portalFixPackZipURL));
+
+				return portalFixpackRelease;
+			}
+			catch (MalformedURLException malformedURLException) {
+				throw new RuntimeException(malformedURLException);
+			}
+		}
+
+		return portalFixpackRelease;
 	}
 
 	@Override
 	public PortalRelease getPortalRelease() {
-		if (_portalRelease != null) {
-			return _portalRelease;
+		if (portalRelease != null) {
+			return portalRelease;
 		}
 
 		Build controllerBuild = getControllerBuild();
@@ -117,16 +135,24 @@ public class PortalTopLevelBuild
 		String portalBundleVersion = controllerBuild.getParameterValue(
 			"PORTAL_BUNDLE_VERSION");
 
-		if (portalBundleVersion == null) {
-			return null;
+		if (portalBundleVersion != null) {
+			portalRelease = new PortalRelease(portalBundleVersion);
+
+			return portalRelease;
 		}
 
-		_portalRelease = new PortalRelease(portalBundleVersion);
+		PortalFixpackRelease portalFixpackRelease = getPortalFixpackRelease();
 
-		return _portalRelease;
+		if (portalFixpackRelease != null) {
+			portalRelease = portalFixpackRelease.getPortalRelease();
+
+			return portalRelease;
+		}
+
+		return portalRelease;
 	}
 
-	private PortalFixpackRelease _portalFixpackRelease;
-	private PortalRelease _portalRelease;
+	protected PortalFixpackRelease portalFixpackRelease;
+	protected PortalRelease portalRelease;
 
 }

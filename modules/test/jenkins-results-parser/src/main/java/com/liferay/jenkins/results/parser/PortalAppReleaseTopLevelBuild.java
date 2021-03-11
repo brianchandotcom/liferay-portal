@@ -14,6 +14,9 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 /**
  * @author Michael Hashimoto
  */
@@ -32,6 +35,56 @@ public class PortalAppReleaseTopLevelBuild extends PortalTopLevelBuild {
 
 	public String getPortalAppName() {
 		return getParameterValue("TEST_PORTAL_APP_NAME");
+	}
+
+	@Override
+	public PortalFixpackRelease getPortalFixpackRelease() {
+		if (portalFixpackRelease != null) {
+			return portalFixpackRelease;
+		}
+
+		String portalFixPackZipURL = getParameterValue(
+			"TEST_PORTAL_FIX_PACK_ZIP_URL");
+
+		if (portalFixPackZipURL != null) {
+			try {
+				portalFixpackRelease = new PortalFixpackRelease(
+					new URL(portalFixPackZipURL));
+
+				return portalFixpackRelease;
+			}
+			catch (MalformedURLException malformedURLException) {
+				throw new RuntimeException(malformedURLException);
+			}
+		}
+
+		return null;
+	}
+
+	@Override
+	public PortalRelease getPortalRelease() {
+		if (portalRelease != null) {
+			return portalRelease;
+		}
+
+		String portalBundleVersion = getParameterValue(
+			"TEST_PORTAL_BUNDLE_VERSION");
+
+		if (portalBundleVersion != null) {
+			portalRelease = new PortalRelease(portalBundleVersion);
+
+			return portalRelease;
+		}
+
+		PortalFixpackRelease portalFixpackRelease = getPortalFixpackRelease();
+
+		if (portalFixpackRelease != null) {
+			portalRelease = portalFixpackRelease.getPortalRelease();
+
+			return portalRelease;
+		}
+
+		return null;
 	}
 
 }

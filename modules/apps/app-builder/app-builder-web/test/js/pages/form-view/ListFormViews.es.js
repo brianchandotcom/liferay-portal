@@ -126,7 +126,7 @@ describe('ListFormViews', () => {
 			basePortletURL
 		);
 
-		expect(fetch.mock.calls.length).toBe(2);
+		expect(fetch.mock.calls.length).toBe(1);
 	});
 
 	it('renders with data and click on actions', async () => {

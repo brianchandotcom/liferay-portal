@@ -96,7 +96,7 @@ describe('ListTableViews', () => {
 			'#/table-views/add'
 		);
 
-		expect(fetch.mock.calls.length).toEqual(2);
+		expect(fetch.mock.calls.length).toEqual(1);
 	});
 
 	it('renders with data and click on actions', async () => {

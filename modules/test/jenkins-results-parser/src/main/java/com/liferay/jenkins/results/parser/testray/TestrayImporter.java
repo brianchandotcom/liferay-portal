@@ -995,6 +995,7 @@ public class TestrayImporter {
 		_callPrepareTCK();
 
 		_checkoutPluginsBranch();
+		_checkoutQAWebsitesBranch();
 	}
 
 	private void _addPropertyElements(
@@ -1180,6 +1181,43 @@ public class TestrayImporter {
 			portalBranchInformationBuild.getPortalBranchInformation());
 
 		portalGitWorkingDirectory.displayLog();
+	}
+
+	private void _checkoutQAWebsitesBranch() {
+		if (!(_topLevelBuild instanceof QAWebsitesBranchInformationBuild)) {
+			return;
+		}
+
+		QAWebsitesBranchInformationBuild qaWebsitesBranchInformationBuild =
+			(QAWebsitesBranchInformationBuild)_topLevelBuild;
+
+		Build.BranchInformation branchInformation =
+			qaWebsitesBranchInformationBuild.getQAWebsitesBranchInformation();
+
+		Properties buildProperties;
+
+		try {
+			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		String upstreamBranchName = branchInformation.getUpstreamBranchName();
+
+		String upstreamDirPath = JenkinsResultsParserUtil.getProperty(
+			buildProperties, "qa.websites.dir", upstreamBranchName);
+		String upstreamRepository = JenkinsResultsParserUtil.getProperty(
+			buildProperties, "qa.websites.repository", upstreamBranchName);
+
+		GitWorkingDirectory qaWebsitesGitWorkingDirectory =
+			GitWorkingDirectoryFactory.newGitWorkingDirectory(
+				upstreamBranchName, upstreamDirPath, upstreamRepository);
+
+		qaWebsitesGitWorkingDirectory.checkoutLocalGitBranch(
+			qaWebsitesBranchInformationBuild.getQAWebsitesBranchInformation());
+
+		qaWebsitesGitWorkingDirectory.displayLog();
 	}
 
 	private String _getBuildParameter(String buildParameterName) {

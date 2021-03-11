@@ -706,6 +706,10 @@ definition {
 			locator1 = "CommerceEntry#PRODUCT_IMAGE_SELECT_FILE",
 			value1 = "Select File");
 
+		SelectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
 		CommerceItemSelector.uploadSingleFile(uploadFileName = "${uploadFileName}");
 	}
 

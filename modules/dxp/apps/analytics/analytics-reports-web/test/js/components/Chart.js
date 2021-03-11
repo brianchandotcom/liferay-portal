@@ -15,6 +15,7 @@ import React from 'react';
 
 import Chart from '../../../src/main/resources/META-INF/resources/js/components/Chart';
 import {ChartStateContextProvider} from '../../../src/main/resources/META-INF/resources/js/context/ChartStateContext';
+import {StoreContextProvider} from '../../../src/main/resources/META-INF/resources/js/context/StoreContext';
 
 const mockReadsDataProvider = jest.fn(() =>
 	Promise.resolve({
@@ -122,6 +123,8 @@ const mockViewsDataProvider = jest.fn(() =>
 	})
 );
 
+const mockLanguageTag = 'en-US';
+
 const mockPublishDate = 'Thu Aug 10 08:17:57 GMT 2020';
 
 const mockTimeSpanOptions = [
@@ -153,18 +156,19 @@ describe('Chart', () => {
 		};
 
 		const {getByText} = render(
-			<ChartStateContextProvider
-				publishDate={testProps.pagePublishDate}
-				timeRange={testProps.timeRange}
-				timeSpanKey={testProps.timeSpanKey}
-			>
-				<Chart
-					dataProviders={[mockViewsDataProvider]}
-					languageTag="en-US"
-					publishDate={mockPublishDate}
-					timeSpanOptions={mockTimeSpanOptions}
-				/>
-			</ChartStateContextProvider>
+			<StoreContextProvider value={{languageTag: mockLanguageTag}}>
+				<ChartStateContextProvider
+					publishDate={testProps.pagePublishDate}
+					timeRange={testProps.timeRange}
+					timeSpanKey={testProps.timeSpanKey}
+				>
+					<Chart
+						dataProviders={[mockViewsDataProvider]}
+						publishDate={mockPublishDate}
+						timeSpanOptions={mockTimeSpanOptions}
+					/>
+				</ChartStateContextProvider>
+			</StoreContextProvider>
 		);
 
 		await wait(() =>
@@ -184,21 +188,22 @@ describe('Chart', () => {
 		};
 
 		const {getByText} = render(
-			<ChartStateContextProvider
-				publishDate={testProps.pagePublishDate}
-				timeRange={testProps.timeRange}
-				timeSpanKey={testProps.timeSpanKey}
-			>
-				<Chart
-					dataProviders={[
-						mockViewsDataProvider,
-						mockReadsDataProvider,
-					]}
-					languageTag="en-US"
-					publishDate={mockPublishDate}
-					timeSpanOptions={mockTimeSpanOptions}
-				/>
-			</ChartStateContextProvider>
+			<StoreContextProvider value={{languageTag: mockLanguageTag}}>
+				<ChartStateContextProvider
+					publishDate={testProps.pagePublishDate}
+					timeRange={testProps.timeRange}
+					timeSpanKey={testProps.timeSpanKey}
+				>
+					<Chart
+						dataProviders={[
+							mockViewsDataProvider,
+							mockReadsDataProvider,
+						]}
+						publishDate={mockPublishDate}
+						timeSpanOptions={mockTimeSpanOptions}
+					/>
+				</ChartStateContextProvider>
+			</StoreContextProvider>
 		);
 
 		await wait(() => {

@@ -16,6 +16,7 @@ package com.liferay.headless.admin.content.client.serdes.v1_0;
 
 import com.liferay.headless.admin.content.client.dto.v1_0.MasterPage;
 import com.liferay.headless.admin.content.client.dto.v1_0.Settings;
+import com.liferay.headless.admin.content.client.dto.v1_0.StyleBook;
 import com.liferay.headless.admin.content.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -106,6 +107,16 @@ public class SettingsSerDes {
 			sb.append(settings.getMasterPage());
 		}
 
+		if (settings.getStyleBook() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"styleBook\": ");
+
+			sb.append(settings.getStyleBook());
+		}
+
 		if (settings.getThemeName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -182,6 +193,13 @@ public class SettingsSerDes {
 			map.put("masterPage", String.valueOf(settings.getMasterPage()));
 		}
 
+		if (settings.getStyleBook() == null) {
+			map.put("styleBook", null);
+		}
+		else {
+			map.put("styleBook", String.valueOf(settings.getStyleBook()));
+		}
+
 		if (settings.getThemeName() == null) {
 			map.put("themeName", null);
 		}
@@ -235,6 +253,11 @@ public class SettingsSerDes {
 			else if (Objects.equals(jsonParserFieldName, "masterPage")) {
 				if (jsonParserFieldValue != null) {
 					settings.setMasterPage((MasterPage)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "styleBook")) {
+				if (jsonParserFieldValue != null) {
+					settings.setStyleBook((StyleBook)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "themeName")) {

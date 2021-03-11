@@ -66,11 +66,11 @@ public class BlogsEntryVerticalCard extends BaseVerticalCard {
 			BlogsEntryActionDropdownItemsProvider
 				blogsEntryActionDropdownItemsProvider =
 					new BlogsEntryActionDropdownItemsProvider(
-						_blogsEntry, renderRequest, _renderResponse,
-						_permissionChecker, _resourceBundle, _trashHelper);
+						renderRequest, _renderResponse, _permissionChecker,
+						_resourceBundle, _trashHelper);
 
-			return blogsEntryActionDropdownItemsProvider.
-				getActionDropdownItems();
+			return blogsEntryActionDropdownItemsProvider.getActionDropdownItems(
+				_blogsEntry);
 		}
 		catch (PortalException portalException) {
 			return ReflectionUtil.throwException(portalException);

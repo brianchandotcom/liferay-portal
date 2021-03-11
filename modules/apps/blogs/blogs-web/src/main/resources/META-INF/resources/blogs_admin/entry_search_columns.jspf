@@ -56,7 +56,7 @@
 		<liferay-ui:search-container-column-text>
 
 			<%
-			BlogsEntryActionDropdownItemsProvider blogsEntryActionDropdownItemsProvider = new BlogsEntryActionDropdownItemsProvider(entry, renderRequest, renderResponse, permissionChecker, resourceBundle, trashHelper);
+			BlogsEntryActionDropdownItemsProvider blogsEntryActionDropdownItemsProvider = new BlogsEntryActionDropdownItemsProvider(renderRequest, renderResponse, permissionChecker, resourceBundle, trashHelper);
 			%>
 
 			<clay:dropdown-actions
@@ -65,7 +65,7 @@
 						"trashEnabled", trashHelper.isTrashEnabled(themeDisplay.getScopeGroupId())
 					).build()
 				%>'
-				dropdownItems="<%= blogsEntryActionDropdownItemsProvider.getActionDropdownItems() %>"
+				dropdownItems="<%= blogsEntryActionDropdownItemsProvider.getActionDropdownItems(entry) %>"
 				propsTransformer="blogs_admin/js/ElementsPropsTransformer"
 			/>
 		</liferay-ui:search-container-column-text>
@@ -125,7 +125,7 @@
 		<liferay-ui:search-container-column-text>
 
 			<%
-			BlogsEntryActionDropdownItemsProvider blogsEntryActionDropdownItemsProvider = new BlogsEntryActionDropdownItemsProvider(entry, renderRequest, renderResponse, permissionChecker, resourceBundle, trashHelper);
+			BlogsEntryActionDropdownItemsProvider blogsEntryActionDropdownItemsProvider = new BlogsEntryActionDropdownItemsProvider(renderRequest, renderResponse, permissionChecker, resourceBundle, trashHelper);
 			%>
 
 			<clay:dropdown-actions
@@ -134,7 +134,7 @@
 						"trashEnabled", trashHelper.isTrashEnabled(themeDisplay.getScopeGroupId())
 					).build()
 				%>'
-				dropdownItems="<%= blogsEntryActionDropdownItemsProvider.getActionDropdownItems() %>"
+				dropdownItems="<%= blogsEntryActionDropdownItemsProvider.getActionDropdownItems(entry) %>"
 				propsTransformer="blogs_admin/js/ElementsPropsTransformer"
 			/>
 		</liferay-ui:search-container-column-text>

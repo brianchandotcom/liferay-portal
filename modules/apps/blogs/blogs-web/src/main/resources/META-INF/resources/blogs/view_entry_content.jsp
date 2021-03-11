@@ -65,7 +65,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 				>
 
 					<%
-					BlogsEntryActionDropdownItemsProvider blogsEntryActionDropdownItemsProvider = new BlogsEntryActionDropdownItemsProvider(entry, renderRequest, renderResponse, permissionChecker, resourceBundle, trashHelper);
+					BlogsEntryActionDropdownItemsProvider blogsEntryActionDropdownItemsProvider = new BlogsEntryActionDropdownItemsProvider(renderRequest, renderResponse, permissionChecker, resourceBundle, trashHelper);
 					%>
 
 					<clay:dropdown-actions
@@ -74,7 +74,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 								"trashEnabled", trashHelper.isTrashEnabled(themeDisplay.getScopeGroupId())
 							).build()
 						%>'
-						dropdownItems="<%= blogsEntryActionDropdownItemsProvider.getActionDropdownItems() %>"
+						dropdownItems="<%= blogsEntryActionDropdownItemsProvider.getActionDropdownItems(entry) %>"
 						propsTransformer="blogs_admin/js/ElementsPropsTransformer"
 					/>
 				</clay:content-col>

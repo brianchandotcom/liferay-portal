@@ -27,7 +27,7 @@ definition {
 
 		WaitForElementPresent(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
-		SelectFrame.selectSecondFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
+		SelectFrame.selectFrameNoLoading(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
 		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
 			locator1 = "TextInput#FILE",

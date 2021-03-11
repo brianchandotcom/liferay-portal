@@ -94,6 +94,13 @@
 		<tag-class>com.liferay.item.selector.taglib.servlet.taglib.RepositoryEntryBrowserTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>Set of menu items that will be displayed in the creation menu.</description>
+			<name>allowedCreationMenuUIItemKeys</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.util.Set</type>
+		</attribute>
+		<attribute>
 			<description>Deprecated as of 1.1.0, with no direct replacement.</description>
 			<name>desiredItemSelectorReturnTypes</name>
 			<required>false</required>

@@ -14,6 +14,7 @@
 
 package com.liferay.item.selector.taglib.internal.display.context;
 
+import com.liferay.document.library.display.context.DLUIItemKeys;
 import com.liferay.document.library.portlet.toolbar.contributor.DLPortletToolbarContributor;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -40,12 +41,15 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
@@ -102,13 +106,18 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 
 		creationMenu.setItemsIconAlignment("left");
 
+		Set<String> allowedCreationMenuUIItemKeys =
+			_getAllowedCreationMenuUIItemKeys();
+
 		for (Menu menu : menus) {
 			List<URLMenuItem> urlMenuItems =
 				(List<URLMenuItem>)(List<?>)menu.getMenuItems();
 
 			for (URLMenuItem urlMenuItem : urlMenuItems) {
 				if (Objects.equals(
-						urlMenuItem.getKey(), DLUIItemKeys.ADD_FOLDER)) {
+						urlMenuItem.getKey(), DLUIItemKeys.ADD_FOLDER) ||
+					allowedCreationMenuUIItemKeys.contains(
+						urlMenuItem.getKey())) {
 
 					creationMenu.addDropdownItem(
 						dropdownItem -> {
@@ -261,6 +270,19 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 
 	public boolean isDisabled() {
 		return false;
+	}
+
+	private Set<String> _getAllowedCreationMenuUIItemKeys() {
+		Set<String> allowedCreationMenuUIItemKeys =
+			(Set)_httpServletRequest.getAttribute(
+				"liferay-item-selector:repository-entry-browser:" +
+					"allowedCreationMenuUIItemKeys");
+
+		if (SetUtil.isEmpty(allowedCreationMenuUIItemKeys)) {
+			return Collections.emptySet();
+		}
+
+		return allowedCreationMenuUIItemKeys;
 	}
 
 	private String _getCurrentScopeLabel() {

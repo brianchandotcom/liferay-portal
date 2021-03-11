@@ -33,8 +33,9 @@ if (ddmStructure != null) {
 	navigationItems='<%= journalDisplayContext.getNavigationItems("templates") %>'
 />
 
-<clay:management-toolbar-v2
-	displayContext="<%= journalDDMTemplateManagementToolbarDisplayContext %>"
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= journalDDMTemplateManagementToolbarDisplayContext %>"
+	propsTransformer="js/DDMTemplatesManagementToolbarPropsTransformer"
 />
 
 <portlet:actionURL name="/journal/delete_ddm_template" var="deleteDDMTemplateURL">
@@ -163,11 +164,6 @@ if (ddmStructure != null) {
 		/>
 	</liferay-ui:search-container>
 </aui:form>
-
-<liferay-frontend:component
-	componentId="<%= journalDDMTemplateManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/DDMTemplatesManagementToolbarDefaultEventHandler.es"
-/>
 
 <liferay-frontend:component
 	componentId="<%= JournalWebConstants.JOURNAL_DDM_TEMPLATE_ELEMENTS_DEFAULT_EVENT_HANDLER %>"

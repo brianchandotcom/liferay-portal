@@ -156,7 +156,7 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 		else if (type.equals("ddm-link-to-page") ||
 				 type.equals("link_to_layout")) {
 
-			return _getLinkToLayoutFriendlyURL();
+			return getUrl();
 		}
 
 		return StringPool.BLANK;
@@ -419,20 +419,6 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 		}
 
 		return (String)get("data");
-	}
-
-	private String _getLinkToLayoutFriendlyURL() {
-		if (_themeDisplay == null) {
-			return getUrl();
-		}
-
-		String data = (String)get("data");
-
-		if (JSONUtil.isValid(data)) {
-			return getUrl();
-		}
-
-		return StringPool.BLANK;
 	}
 
 	private static final String _LAYOUT_TYPE_PRIVATE_GROUP = "private-group";

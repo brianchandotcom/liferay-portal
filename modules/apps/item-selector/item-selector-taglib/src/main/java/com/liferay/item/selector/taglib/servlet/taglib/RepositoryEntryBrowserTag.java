@@ -32,6 +32,7 @@ import com.liferay.taglib.util.IncludeTag;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.portlet.PortletURL;
 
@@ -46,6 +47,10 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 	public static final String[] DISPLAY_STYLES = {
 		"icon", "descriptive", "list"
 	};
+
+	public Set<String> getCreationMenuFilter() {
+		return _creationMenuFilter;
+	}
 
 	public DLMimeTypeDisplayContext getDlMimeTypeDisplayContext() {
 		return _dlMimeTypeDisplayContext;
@@ -103,6 +108,10 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 
 	public boolean isShowSearch() {
 		return _showSearch;
+	}
+
+	public void setCreationMenuFilter(Set<String> creationMenuFilter) {
+		_creationMenuFilter = creationMenuFilter;
 	}
 
 	/**
@@ -194,6 +203,7 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_creationMenuFilter = null;
 		_desiredItemSelectorReturnTypes = null;
 		_displayStyle = null;
 		_dlMimeTypeDisplayContext = null;
@@ -252,6 +262,9 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
+			"liferay-item-selector:repository-entry-browser:creationMenuFilter",
+			_creationMenuFilter);
 		httpServletRequest.setAttribute(
 			"liferay-item-selector:repository-entry-browser:displayStyle",
 			getDisplayStyle());
@@ -332,6 +345,7 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 		return _showDragAndDropZone;
 	}
 
+	private Set<String> _creationMenuFilter;
 	private List<ItemSelectorReturnType> _desiredItemSelectorReturnTypes;
 	private String _displayStyle;
 	private DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;

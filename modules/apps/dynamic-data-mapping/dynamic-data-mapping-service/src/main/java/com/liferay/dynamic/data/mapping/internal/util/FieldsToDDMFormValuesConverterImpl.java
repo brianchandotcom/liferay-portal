@@ -28,7 +28,6 @@ import com.liferay.dynamic.data.mapping.util.DDMFieldsCounter;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -317,16 +316,16 @@ public class FieldsToDDMFormValuesConverterImpl
 
 		DDMFormField ddmFormField = ddmFormFieldMap.get(fieldName);
 
-		if (Validator.isNotNull(ddmFormField.getDataType())) {
+		Field field = ddmFields.get(fieldName);
+
+		if (!ddmFormField.isTransient() && (field != null)) {
 			if (ddmFormField.isLocalizable()) {
 				setDDMFormFieldValueLocalizedValue(
-					ddmFormFieldValue, ddmFields.get(fieldName),
-					ddmFieldsCounter.get(fieldName));
+					ddmFormFieldValue, field, ddmFieldsCounter.get(fieldName));
 			}
 			else {
 				setDDMFormFieldValueUnlocalizedValue(
-					ddmFormFieldValue, ddmFields.get(fieldName),
-					ddmFieldsCounter.get(fieldName));
+					ddmFormFieldValue, field, ddmFieldsCounter.get(fieldName));
 			}
 		}
 

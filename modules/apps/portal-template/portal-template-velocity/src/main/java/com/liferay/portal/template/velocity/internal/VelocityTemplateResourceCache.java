@@ -14,13 +14,20 @@
 
 package com.liferay.portal.template.velocity.internal;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
+import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPool;
+import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.template.BaseTemplateResourceCache;
 import com.liferay.portal.template.velocity.configuration.VelocityEngineConfiguration;
 
 import java.util.Map;
+
+import org.apache.velocity.Template;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -38,6 +45,10 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class VelocityTemplateResourceCache extends BaseTemplateResourceCache {
 
+	public PortalCache<TemplateResource, Template> getSecondLevelPortalCache() {
+		return _secondLevelPortalCache;
+	}
+
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		VelocityEngineConfiguration velocityEngineConfiguration =
@@ -47,11 +58,27 @@ public class VelocityTemplateResourceCache extends BaseTemplateResourceCache {
 		init(
 			velocityEngineConfiguration.resourceModificationCheckInterval(),
 			_multiVMPool, _singleVMPool, _PORTAL_CACHE_NAME);
+
+		if (isEnabled()) {
+			_secondLevelPortalCache =
+				(PortalCache<TemplateResource, Template>)
+					_singleVMPool.getPortalCache(
+						StringBundler.concat(
+							TemplateResource.class.getName(), StringPool.POUND,
+							TemplateConstants.LANG_TYPE_VM));
+
+			setSecondLevelPortalCache(_secondLevelPortalCache);
+		}
 	}
 
 	@Deactivate
 	protected void deactivate() {
 		destroy();
+
+		if (_secondLevelPortalCache != null) {
+			_singleVMPool.removePortalCache(
+				_secondLevelPortalCache.getPortalCacheName());
+		}
 	}
 
 	private static final String _PORTAL_CACHE_NAME =
@@ -59,6 +86,8 @@ public class VelocityTemplateResourceCache extends BaseTemplateResourceCache {
 
 	@Reference
 	private MultiVMPool _multiVMPool;
+
+	private PortalCache<TemplateResource, Template> _secondLevelPortalCache;
 
 	@Reference
 	private SingleVMPool _singleVMPool;

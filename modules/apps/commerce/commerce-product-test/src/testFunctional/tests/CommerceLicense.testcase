@@ -63,6 +63,25 @@ definition {
 		CommerceLicense.viewCommerceAvailable();
 	}
 
+	@priority = "4"
+	test DeleteEnterpriseLicenseModule {
+		property commerce.enabled = "true";
+
+		var moduleID = GogoShell.getModuleID(moduleName = "Liferay Portal License Enterprise App");
+
+		GogoShell.executeCommand(
+			commandName = "uninstall",
+			moduleID = "${moduleID}");
+
+		Portlet.shutdownServer();
+
+		Portlet.startServer(keepOSGiState = "false");
+
+		User.firstLoginPG();
+
+		CommerceLicense.viewCommerceMissing();
+	}
+
 	@priority = "3"
 	test DeleteLiferayDXPLicense {
 		property commerce.enabled = "false";
@@ -82,25 +101,6 @@ definition {
 		Navigator.openURL();
 
 		Alert.viewErrorMessage(errorMessage = "This instance is not registered.");
-	}
-
-	@priority = "4"
-	test DeleteEnterpriseLicenseModule {
-		property commerce.enabled = "true";
-
-		var moduleID = GogoShell.getModuleID(moduleName = "Liferay Portal License Enterprise App");
-
-		GogoShell.executeCommand(
-			commandName = "uninstall",
-			moduleID = "${moduleID}");
-
-		Portlet.shutdownServer();
-
-		Portlet.startServer(keepOSGiState = "false");
-
-		User.firstLoginPG();
-
-		CommerceLicense.viewCommerceMissing();
 	}
 
 	@priority = "3"

@@ -119,7 +119,9 @@ definition {
 	macro answerQuestion {
 		CKEditor.addContent(content = "${contentField}");
 
-		Click(locator1 = "Questions#ASK_QUESTION_POST_YOUR_QUESTION_BUTTON");
+		Click(
+			key_text = "Post Answer",
+			locator1 = "Button#ANY");
 
 		if (isSet(answeredLabel)) {
 			AssertElementPresent(

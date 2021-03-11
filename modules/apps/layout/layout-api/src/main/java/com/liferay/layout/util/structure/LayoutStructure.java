@@ -401,6 +401,10 @@ public class LayoutStructure {
 		return null;
 	}
 
+	public Map<Long, LayoutStructureItem> getFragmentLayoutStructureItems() {
+		return _fragmentLayoutStructureItems;
+	}
+
 	public LayoutStructureItem getLayoutStructureItem(String itemId) {
 		return _layoutStructureItems.get(itemId);
 	}

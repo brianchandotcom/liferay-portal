@@ -1579,27 +1579,28 @@ public class ContentPageEditorDisplayContext {
 			layoutStructure.getFragmentLayoutStructureItems();
 
 		for (long fragmentEntryLinkId : fragmentLayoutStructureItems.keySet()) {
-			if (!fragmentEntryLinksMap.containsKey(
+			if (fragmentEntryLinksMap.containsKey(
 					String.valueOf(fragmentEntryLinkId))) {
 
-				fragmentEntryLinksMap.put(
-					String.valueOf(fragmentEntryLinkId),
-					JSONUtil.put(
-						"configuration", JSONFactoryUtil.createJSONObject()
-					).put(
-						"content", StringPool.BLANK
-					).put(
-						"defaultConfigurationValues",
-						JSONFactoryUtil.createJSONObject()
-					).put(
-						"editableValues", JSONFactoryUtil.createJSONObject()
-					).put(
-						"error", Boolean.TRUE
-					).put(
-						"fragmentEntryLinkId",
-						String.valueOf(fragmentEntryLinkId)
-					));
+				continue;
 			}
+
+			fragmentEntryLinksMap.put(
+				String.valueOf(fragmentEntryLinkId),
+				JSONUtil.put(
+					"configuration", JSONFactoryUtil.createJSONObject()
+				).put(
+					"content", StringPool.BLANK
+				).put(
+					"defaultConfigurationValues",
+					JSONFactoryUtil.createJSONObject()
+				).put(
+					"editableValues", JSONFactoryUtil.createJSONObject()
+				).put(
+					"error", Boolean.TRUE
+				).put(
+					"fragmentEntryLinkId", String.valueOf(fragmentEntryLinkId)
+				));
 		}
 
 		_fragmentEntryLinks = fragmentEntryLinksMap;

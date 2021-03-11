@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.FileComparator;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PwdGenerator;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -1245,10 +1246,12 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 	};
 
 	private static final String[] _SAFE_FILE_NAME_2 = {
-		PropsValues.DL_STORE_FILE_IMPL_SAFE_FILE_NAME_2_AMPERSAND,
-		PropsValues.DL_STORE_FILE_IMPL_SAFE_FILE_NAME_2_CLOSE_PARENTHESIS,
-		PropsValues.DL_STORE_FILE_IMPL_SAFE_FILE_NAME_2_OPEN_PARENTHESIS,
-		PropsValues.DL_STORE_FILE_IMPL_SAFE_FILE_NAME_2_SEMICOLON
+		PropsUtil.get(PropsKeys.DL_STORE_FILE_IMPL_SAFE_FILE_NAME_2_AMPERSAND),
+		PropsUtil.get(
+			PropsKeys.DL_STORE_FILE_IMPL_SAFE_FILE_NAME_2_CLOSE_PARENTHESIS),
+		PropsUtil.get(
+			PropsKeys.DL_STORE_FILE_IMPL_SAFE_FILE_NAME_2_OPEN_PARENTHESIS),
+		PropsUtil.get(PropsKeys.DL_STORE_FILE_IMPL_SAFE_FILE_NAME_2_SEMICOLON)
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(FileImpl.class);

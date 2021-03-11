@@ -108,7 +108,11 @@ public class AuthorizationCodeGrantServiceRegistrator {
 					rememberDeviceCookieContent.equals(
 						oAuth2Authorization.getRememberDeviceContent())) {
 
-					Cookie cookie = _setRememberDeviceCookie();
+					Cookie cookie = _getCookie();
+
+					CookieKeys.addCookie(
+						getMessageContext().getHttpServletRequest(),
+						getMessageContext().getHttpServletResponse(), cookie);
 
 					Map<String, String> extraProperties =
 						serverAuthorizationCodeGrant.getExtraProperties();
@@ -248,7 +252,11 @@ public class AuthorizationCodeGrantServiceRegistrator {
 				params.containsKey(
 					_OAUTH2_AUTHORIZE_PORTLET_REMEMBER_DEVICE_PARAMETER)) {
 
-				Cookie cookie = _setRememberDeviceCookie();
+				Cookie cookie = _getCookie();
+
+				CookieKeys.addCookie(
+					getMessageContext().getHttpServletRequest(),
+					getMessageContext().getHttpServletResponse(), cookie);
 
 				Map<String, String> extraProperties =
 					oAuthRedirectionState.getExtraProperties();
@@ -261,6 +269,21 @@ public class AuthorizationCodeGrantServiceRegistrator {
 			}
 
 			return oAuthRedirectionState;
+		}
+
+		private Cookie _getCookie() {
+			UUID uuid = new UUID(
+				SecureRandomUtil.nextLong(), SecureRandomUtil.nextLong());
+
+			Cookie cookie = new Cookie(
+				OAuth2ProviderRESTEndpointConstants.COOKIE_REMEMBER_DEVICE,
+				uuid.toString());
+
+			URI baseURI = _uriInfo.getBaseUri();
+
+			cookie.setPath(baseURI.getPath());
+
+			return cookie;
 		}
 
 		private LiferayOAuthDataProvider _getLiferayOAuthDataProvider() {
@@ -283,25 +306,6 @@ public class AuthorizationCodeGrantServiceRegistrator {
 			).orElse(
 				null
 			);
-		}
-
-		private Cookie _setRememberDeviceCookie() {
-			UUID uuid = new UUID(
-				SecureRandomUtil.nextLong(), SecureRandomUtil.nextLong());
-
-			Cookie cookie = new Cookie(
-				OAuth2ProviderRESTEndpointConstants.COOKIE_REMEMBER_DEVICE,
-				uuid.toString());
-
-			URI baseURI = _uriInfo.getBaseUri();
-
-			cookie.setPath(baseURI.getPath());
-
-			CookieKeys.addCookie(
-				getMessageContext().getHttpServletRequest(),
-				getMessageContext().getHttpServletResponse(), cookie);
-
-			return cookie;
 		}
 
 		private static final String

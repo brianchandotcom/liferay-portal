@@ -452,7 +452,7 @@
 		<column name="treePath" type="String" />
 		<column name="name" type="String" uad-nonanonymizable="true" />
 		<column name="description" type="String" uad-nonanonymizable="true" />
-		<column name="lastPostDate" type="Date" />
+		<column change-tracking-resolution-type="merge" name="lastPostDate" type="Date" />
 		<column name="defaultFileEntryTypeId" type="long" />
 		<column name="hidden" type="boolean" />
 		<column name="restrictionType" type="int" />

@@ -16,6 +16,7 @@ package com.liferay.portal.upload;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.tools.ToolDependencies;
 
 import java.util.ArrayList;
@@ -26,6 +27,8 @@ import org.apache.commons.fileupload.disk.DiskFileItem;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -34,6 +37,11 @@ import org.springframework.mock.web.MockHttpServletRequest;
  * @author Roberto Díaz
  */
 public class UploadServletRequestImplTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() {

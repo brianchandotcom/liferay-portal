@@ -30,11 +30,11 @@ import org.junit.Test;
 public class MaxExpansionsTest extends BaseMaxExpansionsTestCase {
 
 	@ClassRule
-	@Override
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
+	@Override
 	@Test
 	public void testPrefixWithNumberSpaceNumberSuffix() throws Exception {
 		addDocuments("AlphaPrefix# #");

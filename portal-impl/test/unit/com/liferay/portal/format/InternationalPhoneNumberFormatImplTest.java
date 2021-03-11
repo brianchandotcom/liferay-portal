@@ -15,6 +15,10 @@
 package com.liferay.portal.format;
 
 import com.liferay.portal.kernel.format.PhoneNumberFormat;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
+import org.junit.ClassRule;
+import org.junit.Rule;
 
 /**
  * @author Brian Wing Shun Chan
@@ -22,6 +26,11 @@ import com.liferay.portal.kernel.format.PhoneNumberFormat;
  */
 public class InternationalPhoneNumberFormatImplTest
 	extends BasePhoneNumberFormatImplTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Override
 	public String[] getInvalidPhoneNumbers() {

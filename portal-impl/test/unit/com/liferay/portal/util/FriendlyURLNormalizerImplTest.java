@@ -17,6 +17,7 @@ package com.liferay.portal.util;
 import com.liferay.petra.nio.CharsetEncoderUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.net.URLEncoder;
 
@@ -24,12 +25,19 @@ import java.nio.charset.CharsetEncoder;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Julio Camarero
  */
 public class FriendlyURLNormalizerImplTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@BeforeClass
 	public static void setUpClass() {

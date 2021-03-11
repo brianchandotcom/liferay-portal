@@ -17,12 +17,21 @@ package com.liferay.portal.search.elasticsearch7.internal.pagination;
 import com.liferay.portal.search.elasticsearch7.internal.LiferayElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import com.liferay.portal.search.test.util.pagination.BasePermissionFilteredPaginationTestCase;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
+import org.junit.ClassRule;
+import org.junit.Rule;
 
 /**
  * @author Eric Yan
  */
 public class ElasticsearchPermissionFilteredPaginationTest
 	extends BasePermissionFilteredPaginationTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Override
 	protected IndexingFixture createIndexingFixture() {

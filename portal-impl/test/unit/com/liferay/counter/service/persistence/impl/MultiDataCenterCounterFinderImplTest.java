@@ -14,7 +14,11 @@
 
 package com.liferay.counter.service.persistence.impl;
 
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
@@ -22,6 +26,11 @@ import org.junit.Test;
  * @author Shuyang Zhou
  */
 public class MultiDataCenterCounterFinderImplTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testIncrement2DataCenters() {

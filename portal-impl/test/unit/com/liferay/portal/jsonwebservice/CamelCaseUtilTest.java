@@ -15,14 +15,22 @@
 package com.liferay.portal.jsonwebservice;
 
 import com.liferay.portal.kernel.util.CamelCaseUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Igor Spasic
  */
 public class CamelCaseUtilTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testFromCamelCase() {

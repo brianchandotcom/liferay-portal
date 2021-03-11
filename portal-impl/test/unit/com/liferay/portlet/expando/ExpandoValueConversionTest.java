@@ -16,6 +16,7 @@ package com.liferay.portlet.expando;
 
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portlet.expando.service.impl.ExpandoValueLocalServiceImpl;
 
 import java.math.BigDecimal;
@@ -28,6 +29,8 @@ import java.util.Date;
 import jodd.typeconverter.TypeConversionException;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
@@ -35,6 +38,11 @@ import org.junit.Test;
  * @author Amadea Fejes
  */
 public class ExpandoValueConversionTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testBoolean1() {

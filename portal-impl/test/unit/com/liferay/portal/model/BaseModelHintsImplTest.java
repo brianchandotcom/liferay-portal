@@ -17,6 +17,7 @@ package com.liferay.portal.model;
 import com.liferay.portal.kernel.model.ModelHintsCallback;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Tuple;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.File;
 import java.io.InputStream;
@@ -34,6 +35,8 @@ import org.dom4j.io.SAXReader;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 import org.xml.sax.InputSource;
@@ -42,6 +45,11 @@ import org.xml.sax.InputSource;
  * @author Andrew Betts
  */
 public class BaseModelHintsImplTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {

@@ -32,11 +32,11 @@ import org.junit.rules.ExpectedException;
 public class ElasticsearchSuggestTest extends BaseSuggestTestCase {
 
 	@ClassRule
-	@Override
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
+	@Override
 	@Test
 	public void testMultipleWords() throws Exception {
 		indexSuccessfulQuery("indexed this phrase");

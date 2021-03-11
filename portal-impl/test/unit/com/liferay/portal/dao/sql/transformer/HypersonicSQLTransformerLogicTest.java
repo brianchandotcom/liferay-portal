@@ -15,8 +15,11 @@
 package com.liferay.portal.dao.sql.transformer;
 
 import com.liferay.portal.dao.db.HypersonicDB;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
@@ -25,6 +28,11 @@ import org.junit.Test;
  */
 public class HypersonicSQLTransformerLogicTest
 	extends BaseSQLTransformerLogicTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	public HypersonicSQLTransformerLogicTest() {
 		super(new HypersonicDB(1, 0));

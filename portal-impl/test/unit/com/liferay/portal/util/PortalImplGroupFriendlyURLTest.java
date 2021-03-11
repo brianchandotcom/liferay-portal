@@ -14,13 +14,22 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Sergio González
  */
 public class PortalImplGroupFriendlyURLTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testGroupFriendlyURLIndexWithConflictiveLayoutFullURL1() {

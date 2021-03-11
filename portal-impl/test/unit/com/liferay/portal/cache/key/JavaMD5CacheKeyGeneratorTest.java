@@ -15,14 +15,22 @@
 package com.liferay.portal.cache.key;
 
 import com.liferay.portal.kernel.util.Digester;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 
 /**
  * @author Shuyang Zhou
  */
 public class JavaMD5CacheKeyGeneratorTest
 	extends BaseCacheKeyGeneratorTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	@Override

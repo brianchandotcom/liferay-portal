@@ -33,11 +33,11 @@ public class AssetTagNamesFieldQueryBuilderTest
 	extends BaseAssetTagNamesFieldQueryBuilderTestCase {
 
 	@ClassRule
-	@Override
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
+	@Override
 	@Test
 	public void testBasicWordMatches() throws Exception {
 		addDocument("name tag end");

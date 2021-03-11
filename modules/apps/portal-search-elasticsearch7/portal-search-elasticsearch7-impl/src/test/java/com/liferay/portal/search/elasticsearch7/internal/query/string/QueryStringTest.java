@@ -17,11 +17,20 @@ package com.liferay.portal.search.elasticsearch7.internal.query.string;
 import com.liferay.portal.search.elasticsearch7.internal.ElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import com.liferay.portal.search.test.util.query.string.BaseQueryStringTestCase;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
+import org.junit.ClassRule;
+import org.junit.Rule;
 
 /**
  * @author Wade Cao
  */
 public class QueryStringTest extends BaseQueryStringTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Override
 	protected IndexingFixture createIndexingFixture() throws Exception {

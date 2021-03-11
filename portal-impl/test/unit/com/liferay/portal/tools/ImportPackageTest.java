@@ -14,16 +14,25 @@
 
 package com.liferay.portal.tools;
 
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Carlos Sierra Andrés
  */
 public class ImportPackageTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testContains() {

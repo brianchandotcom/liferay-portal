@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.flash;
 
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,12 +23,19 @@ import java.io.InputStream;
 import java.util.Arrays;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Tomas Polesovsky
  */
 public class FlashMagicBytesUtilTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testCheckGZIPFlash() throws IOException {

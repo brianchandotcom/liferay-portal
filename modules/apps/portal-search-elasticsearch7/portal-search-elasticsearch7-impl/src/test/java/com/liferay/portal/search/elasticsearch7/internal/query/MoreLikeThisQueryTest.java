@@ -41,12 +41,12 @@ import org.junit.rules.ExpectedException;
 public class MoreLikeThisQueryTest extends BaseMoreLikeThisQueryTestCase {
 
 	@ClassRule
-	@Ignore
-	@Override
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
+	@Ignore
+	@Override
 	@Test
 	public void testMoreLikeThisWithoutFields() throws Exception {
 	}

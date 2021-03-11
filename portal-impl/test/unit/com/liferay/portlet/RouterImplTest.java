@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.portlet.Route;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.HttpImpl;
 import com.liferay.portlet.internal.RouterImpl;
 
@@ -26,6 +27,8 @@ import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
@@ -33,6 +36,11 @@ import org.junit.Test;
  * @author Brian Wing Shun Chan
  */
 public class RouterImplTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() throws Exception {

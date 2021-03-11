@@ -14,6 +14,8 @@
 
 package com.liferay.portal.service;
 
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
 import java.io.IOException;
 
 import java.nio.file.FileVisitOption;
@@ -26,12 +28,19 @@ import java.util.Objects;
 import java.util.stream.Stream;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Preston Crary
  */
 public class ServiceXMLTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testTXRequired() throws Exception {

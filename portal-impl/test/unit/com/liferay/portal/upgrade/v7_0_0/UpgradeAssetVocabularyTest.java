@@ -14,13 +14,22 @@
 
 package com.liferay.portal.upgrade.v7_0_0;
 
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author José Manuel Navarro
  */
 public class UpgradeAssetVocabularyTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testUpgradeWithEmptySettings() {

@@ -15,15 +15,23 @@
 package com.liferay.portlet;
 
 import com.liferay.portal.kernel.portlet.PortletContainer;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portlet.internal.PortletContainerImpl;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Akos Thurzo
  */
 public class SecurityPortletContainerWrapperTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testIsValidPortletId() {

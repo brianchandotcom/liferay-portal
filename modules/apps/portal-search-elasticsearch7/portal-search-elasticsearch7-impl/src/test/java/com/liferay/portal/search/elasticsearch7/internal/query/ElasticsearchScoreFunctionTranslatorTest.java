@@ -17,15 +17,24 @@ package com.liferay.portal.search.elasticsearch7.internal.query;
 import com.liferay.portal.search.elasticsearch7.internal.query.function.score.ElasticsearchScoreFunctionTranslator;
 import com.liferay.portal.search.query.function.score.FieldValueFactorScoreFunction;
 import com.liferay.portal.search.test.util.query.BaseScoreFunctionTranslatorTestCase;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.elasticsearch.common.Strings;
 import org.elasticsearch.index.query.functionscore.ScoreFunctionBuilder;
+
+import org.junit.ClassRule;
+import org.junit.Rule;
 
 /**
  * @author André de Oliveira
  */
 public class ElasticsearchScoreFunctionTranslatorTest
 	extends BaseScoreFunctionTranslatorTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Override
 	protected String translate(

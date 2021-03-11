@@ -14,11 +14,14 @@
 
 package com.liferay.portal.upload;
 
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
 import java.io.File;
 
 import org.apache.commons.fileupload.FileItem;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -27,6 +30,11 @@ import org.junit.rules.TemporaryFolder;
  * @author Manuel de la Peña
  */
 public class LiferayFileItemFactoryTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testConstructor() throws Exception {

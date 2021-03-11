@@ -20,6 +20,8 @@
 JSONObject samlSloContextJSONObject = (JSONObject)request.getAttribute("SAML_SLO_CONTEXT");
 
 JSONArray samlSloRequestInfosJSONArray = samlSloContextJSONObject.getJSONArray("samlSloRequestInfos");
+
+String sloLogoutRenderCommand = PortalUtil.getRelativeHomeURL(request) + SamlCommandQueryConstants.SLO_LOGOUT;
 %>
 
 <style type="text/css">
@@ -63,7 +65,7 @@ JSONArray samlSloRequestInfosJSONArray = samlSloContextJSONObject.getJSONArray("
 		<liferay-ui:message arguments="<%= 5 %>" key="all-service-providers-are-processed.-continuing-sign-out-automatically-in-x-seconds" />
 	</div>
 
-	<a href="?cmd=finish" id="samlCompleteSignOutLink"><liferay-ui:message key="complete-sign-out" /></a>
+	<a href="<%= sloLogoutRenderCommand %>&cmd=finish" id="samlCompleteSignOutLink"><liferay-ui:message key="complete-sign-out" /></a>
 </div>
 
 <noscript>
@@ -77,7 +79,7 @@ JSONArray samlSloRequestInfosJSONArray = samlSloContextJSONObject.getJSONArray("
 	%>
 
 		<div class="saml-sp">
-			<a class="saml-sp-label" href="?cmd=logout&entityId=<%= samlSloRequestInfoJSONObject.getString("entityId") %>" target="_blank">
+			<a class="saml-sp-label" href="<%= sloLogoutRenderCommand %>&cmd=logout&entityId=<%= samlSloRequestInfoJSONObject.getString("entityId") %>" target="_blank">
 				<liferay-ui:message arguments='<%= samlSloRequestInfoJSONObject.getString("name") %>' key="sign-out-from-x" />
 			</a>
 		</div>
@@ -87,7 +89,7 @@ JSONArray samlSloRequestInfosJSONArray = samlSloContextJSONObject.getJSONArray("
 	%>
 
 	<div>
-		<a href="?cmd=finish">
+		<a href="<%= sloLogoutRenderCommand %>&cmd=finish">
 			<liferay-ui:message key="complete-sign-out" />
 		</a>
 	</div>
@@ -168,7 +170,7 @@ JSONArray samlSloRequestInfosJSONArray = samlSloContextJSONObject.getJSONArray("
 			'<div class="saml-sp" id="samlSp{$i}">',
 				'<span class="portlet-msg-progress-label saml-sp-label">{name}</span>',
 				'<a class="hide saml-sp-retry" data-entityId="{entityId}" href="javascript:;"><%= UnicodeLanguageUtil.get(request, "retry") %></a>',
-				'<iframe class="hide-accessible" src="?cmd=logout&entityId={entityId}"></iframe>',
+				'<iframe class="hide-accessible" src="<%= sloLogoutRenderCommand %>&cmd=logout&entityId={entityId}"></iframe>',
 			'</div>',
 		'</tpl>'
 	);
@@ -215,7 +217,7 @@ JSONArray samlSloRequestInfosJSONArray = samlSloContextJSONObject.getJSONArray("
 			var instance = this;
 
 			A.io.request(
-				'?cmd=status',
+				'<%= sloLogoutRenderCommand %>&cmd=status',
 				{
 					dataType: 'JSON',
 					on: {
@@ -253,7 +255,7 @@ JSONArray samlSloRequestInfosJSONArray = samlSloContextJSONObject.getJSONArray("
 		finishLogout: function() {
 			detachHandlers();
 
-			location.href = '?cmd=finish';
+			location.href = '<%= sloLogoutRenderCommand %>&cmd=finish';
 		},
 
 		retryLogout: function(entityId) {
@@ -273,7 +275,7 @@ JSONArray samlSloRequestInfosJSONArray = samlSloContextJSONObject.getJSONArray("
 
 				entityNode.one('.saml-sp-retry').hide();
 
-				entityNode.one('iframe').set('src', '?cmd=logout&entityId=' + entityId);
+				entityNode.one('iframe').set('src', '<%= sloLogoutRenderCommand %>&cmd=logout&entityId=' + entityId);
 
 				instance.checkStatus();
 			}

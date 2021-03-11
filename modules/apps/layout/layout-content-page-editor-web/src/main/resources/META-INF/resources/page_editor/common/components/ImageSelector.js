@@ -44,6 +44,11 @@ export function ImageSelector({
 					<ClayInput
 						className="page-editor__item-selector__content-input"
 						id={imageTitleId}
+						onClick={() =>
+							openImageSelector((image) => {
+								onImageSelected(image);
+							})
+						}
 						placeholder={Liferay.Language.get('select-image')}
 						readOnly
 						sizing="sm"

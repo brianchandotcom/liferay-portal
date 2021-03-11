@@ -25,9 +25,7 @@ import com.liferay.commerce.constants.CommercePaymentConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.exception.CommercePaymentEngineException;
 import com.liferay.commerce.model.CommerceAddress;
-import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.payment.method.CommercePaymentMethod;
 import com.liferay.commerce.payment.method.remote.internal.configuration.RemoteCommercePaymentMethodConfiguration;
@@ -44,6 +42,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
@@ -638,10 +638,9 @@ public class RemoteCommercePaymentMethod implements CommercePaymentMethod {
 
 		billingAddress.setCity(commerceAddress.getCity());
 
-		CommerceCountry commerceCountry = commerceAddress.getCommerceCountry();
+		Country country = commerceAddress.getCountry();
 
-		billingAddress.setCountryISOCode(
-			commerceCountry.getThreeLettersISOCode());
+		billingAddress.setCountryISOCode(country.getA3());
 
 		billingAddress.setExternalReferenceCode(
 			commerceAddress.getExternalReferenceCode());
@@ -651,9 +650,9 @@ public class RemoteCommercePaymentMethod implements CommercePaymentMethod {
 		billingAddress.setName(commerceAddress.getName());
 		billingAddress.setPhoneNumber(commerceAddress.getPhoneNumber());
 
-		CommerceRegion commerceRegion = commerceAddress.getCommerceRegion();
+		Region region = commerceAddress.getRegion();
 
-		billingAddress.setRegionISOCode(commerceRegion.getCode());
+		billingAddress.setRegionISOCode(region.getRegionCode());
 
 		billingAddress.setStreet1(commerceAddress.getStreet1());
 		billingAddress.setStreet2(commerceAddress.getStreet2());
@@ -786,10 +785,9 @@ public class RemoteCommercePaymentMethod implements CommercePaymentMethod {
 
 		shippingAddress.setCity(commerceAddress.getCity());
 
-		CommerceCountry commerceCountry = commerceAddress.getCommerceCountry();
+		Country country = commerceAddress.getCountry();
 
-		shippingAddress.setCountryISOCode(
-			commerceCountry.getThreeLettersISOCode());
+		shippingAddress.setCountryISOCode(country.getA3());
 
 		shippingAddress.setExternalReferenceCode(
 			commerceAddress.getExternalReferenceCode());
@@ -799,9 +797,9 @@ public class RemoteCommercePaymentMethod implements CommercePaymentMethod {
 		shippingAddress.setName(commerceAddress.getName());
 		shippingAddress.setPhoneNumber(commerceAddress.getPhoneNumber());
 
-		CommerceRegion commerceRegion = commerceAddress.getCommerceRegion();
+		Region region = commerceAddress.getRegion();
 
-		shippingAddress.setRegionISOCode(commerceRegion.getCode());
+		shippingAddress.setRegionISOCode(region.getRegionCode());
 
 		shippingAddress.setStreet1(commerceAddress.getStreet1());
 		shippingAddress.setStreet2(commerceAddress.getStreet2());

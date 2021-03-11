@@ -16,6 +16,7 @@ import React from 'react';
 
 import Detail from '../../../src/main/resources/META-INF/resources/js/components/Detail';
 import {ChartStateContextProvider} from '../../../src/main/resources/META-INF/resources/js/context/ChartStateContext';
+import {StoreContextProvider} from '../../../src/main/resources/META-INF/resources/js/context/StoreContext';
 
 const mockOnCurrentPageChange = jest.fn(() => Promise.resolve({view: 'main'}));
 
@@ -223,6 +224,8 @@ const mockCurrentPageSocial = {
 	view: 'social',
 };
 
+const mockLanguageTag = 'en-US';
+
 const mockTimeSpanOptions = [
 	{
 		key: 'last-30-days',
@@ -252,29 +255,32 @@ describe('Detail', () => {
 		};
 
 		const {getByText} = render(
-			<ChartStateContextProvider
-				publishDate={testProps.publishDate}
-				timeRange={testProps.timeRange}
-				timeSpanKey={testProps.timeSpanKey}
-			>
-				<Detail
-					currentPage={mockCurrentPageReferral}
-					languageTag="en-US"
-					onCurrentPageChange={mockOnCurrentPageChange}
-					onTrafficSourceNameChange={mockOnTrafficSourceNameChange}
-					timeSpanOptions={mockTimeSpanOptions}
-					trafficShareDataProvider={mockTrafficShareDataProvider}
-					trafficVolumeDataProvider={mockTrafficVolumeDataProvider}
-				/>
-			</ChartStateContextProvider>
+			<StoreContextProvider value={{languageTag: mockLanguageTag}}>
+				<ChartStateContextProvider
+					publishDate={testProps.publishDate}
+					timeRange={testProps.timeRange}
+					timeSpanKey={testProps.timeSpanKey}
+				>
+					<Detail
+						currentPage={mockCurrentPageReferral}
+						onCurrentPageChange={mockOnCurrentPageChange}
+						onTrafficSourceNameChange={
+							mockOnTrafficSourceNameChange
+						}
+						timeSpanOptions={mockTimeSpanOptions}
+						trafficShareDataProvider={mockTrafficShareDataProvider}
+						trafficVolumeDataProvider={
+							mockTrafficVolumeDataProvider
+						}
+					/>
+				</ChartStateContextProvider>
+			</StoreContextProvider>
 		);
 
-		await wait(() =>
-			expect(mockTrafficShareDataProvider).toHaveBeenCalled()
-		);
-		await wait(() =>
-			expect(mockTrafficVolumeDataProvider).toHaveBeenCalled()
-		);
+		await wait(() => {
+			expect(mockTrafficShareDataProvider).toHaveBeenCalled();
+			expect(mockTrafficVolumeDataProvider).toHaveBeenCalled();
+		});
 
 		const viewMoreButton = getByText('view-more');
 		userEvent.click(viewMoreButton);
@@ -293,7 +299,6 @@ describe('Detail', () => {
 			const {getByText} = render(
 				<Detail
 					currentPage={mockCurrentPageOrganic}
-					languageTag="en-US"
 					onCurrentPageChange={mockOnCurrentPageChange}
 					onTrafficSourceNameChange={mockOnTrafficSourceNameChange}
 					timeSpanOptions={mockTimeSpanOptions}
@@ -302,12 +307,10 @@ describe('Detail', () => {
 				/>
 			);
 
-			await wait(() =>
-				expect(mockTrafficShareDataProvider).toHaveBeenCalled()
-			);
-			await wait(() =>
-				expect(mockTrafficVolumeDataProvider).toHaveBeenCalled()
-			);
+			await wait(() => {
+				expect(mockTrafficShareDataProvider).toHaveBeenCalled();
+				expect(mockTrafficVolumeDataProvider).toHaveBeenCalled();
+			});
 
 			expect(getByText('Organic')).toBeInTheDocument();
 			expect(getByText('90%')).toBeInTheDocument();
@@ -321,7 +324,6 @@ describe('Detail', () => {
 			const {getByText} = render(
 				<Detail
 					currentPage={mockCurrentPageOrganic}
-					languageTag="en-US"
 					onCurrentPageChange={mockOnCurrentPageChange}
 					onTrafficSourceNameChange={mockOnTrafficSourceNameChange}
 					timeSpanOptions={mockTimeSpanOptions}
@@ -330,12 +332,10 @@ describe('Detail', () => {
 				/>
 			);
 
-			await wait(() =>
-				expect(mockTrafficShareDataProvider).toHaveBeenCalled()
-			);
-			await wait(() =>
-				expect(mockTrafficVolumeDataProvider).toHaveBeenCalled()
-			);
+			await wait(() => {
+				expect(mockTrafficShareDataProvider).toHaveBeenCalled();
+				expect(mockTrafficVolumeDataProvider).toHaveBeenCalled();
+			});
 
 			expect(getByText('United States')).toBeInTheDocument();
 			expect(getByText('Spain')).toBeInTheDocument();
@@ -362,7 +362,6 @@ describe('Detail', () => {
 			const {getByText} = render(
 				<Detail
 					currentPage={mockCurrentPageOrganic}
-					languageTag="en-US"
 					onCurrentPageChange={mockOnCurrentPageChange}
 					onTrafficSourceNameChange={mockOnTrafficSourceNameChange}
 					timeSpanOptions={mockTimeSpanOptions}
@@ -371,12 +370,10 @@ describe('Detail', () => {
 				/>
 			);
 
-			await wait(() =>
-				expect(mockTrafficShareDataProvider).toHaveBeenCalled()
-			);
-			await wait(() =>
-				expect(mockTrafficVolumeDataProvider).toHaveBeenCalled()
-			);
+			await wait(() => {
+				expect(mockTrafficShareDataProvider).toHaveBeenCalled();
+				expect(mockTrafficVolumeDataProvider).toHaveBeenCalled();
+			});
 
 			const bestKeywordLabel = getByText('best-keyword');
 			const questionCircleIcon = within(bestKeywordLabel).getByRole(
@@ -390,7 +387,6 @@ describe('Detail', () => {
 			const {getAllByText, getByText} = render(
 				<Detail
 					currentPage={mockCurrentPageOrganic}
-					languageTag="en-US"
 					onCurrentPageChange={mockOnCurrentPageChange}
 					onTrafficSourceNameChange={mockOnTrafficSourceNameChange}
 					timeSpanOptions={mockTimeSpanOptions}
@@ -399,12 +395,10 @@ describe('Detail', () => {
 				/>
 			);
 
-			await wait(() =>
-				expect(mockTrafficShareDataProvider).toHaveBeenCalled()
-			);
-			await wait(() =>
-				expect(mockTrafficVolumeDataProvider).toHaveBeenCalled()
-			);
+			await wait(() => {
+				expect(mockTrafficShareDataProvider).toHaveBeenCalled();
+				expect(mockTrafficVolumeDataProvider).toHaveBeenCalled();
+			});
 
 			const trafficDropdown = getAllByText('traffic')[0];
 			userEvent.click(trafficDropdown);
@@ -416,7 +410,6 @@ describe('Detail', () => {
 			const {getAllByText, getByText} = render(
 				<Detail
 					currentPage={mockCurrentPageOrganic}
-					languageTag="en-US"
 					onCurrentPageChange={mockOnCurrentPageChange}
 					onTrafficSourceNameChange={mockOnTrafficSourceNameChange}
 					timeSpanOptions={mockTimeSpanOptions}
@@ -425,12 +418,10 @@ describe('Detail', () => {
 				/>
 			);
 
-			await wait(() =>
-				expect(mockTrafficShareDataProvider).toHaveBeenCalled()
-			);
-			await wait(() =>
-				expect(mockTrafficVolumeDataProvider).toHaveBeenCalled()
-			);
+			await wait(() => {
+				expect(mockTrafficShareDataProvider).toHaveBeenCalled();
+				expect(mockTrafficVolumeDataProvider).toHaveBeenCalled();
+			});
 
 			const trafficDropdown = getAllByText('traffic')[0];
 			userEvent.click(trafficDropdown);
@@ -459,7 +450,6 @@ describe('Detail', () => {
 			const {getAllByText, getByText} = render(
 				<Detail
 					currentPage={mockCurrentPageOrganic}
-					languageTag="en-US"
 					onCurrentPageChange={mockOnCurrentPageChange}
 					onTrafficSourceNameChange={mockOnTrafficSourceNameChange}
 					timeSpanOptions={mockTimeSpanOptions}
@@ -468,12 +458,10 @@ describe('Detail', () => {
 				/>
 			);
 
-			await wait(() =>
-				expect(mockTrafficShareDataProvider).toHaveBeenCalled()
-			);
-			await wait(() =>
-				expect(mockTrafficVolumeDataProvider).toHaveBeenCalled()
-			);
+			await wait(() => {
+				expect(mockTrafficShareDataProvider).toHaveBeenCalled();
+				expect(mockTrafficVolumeDataProvider).toHaveBeenCalled();
+			});
 
 			const trafficDropdown = getAllByText('traffic')[0];
 			userEvent.click(trafficDropdown);
@@ -508,33 +496,34 @@ describe('Detail', () => {
 			};
 
 			const {getByText} = render(
-				<ChartStateContextProvider
-					publishDate={testProps.publishDate}
-					timeRange={testProps.timeRange}
-					timeSpanKey={testProps.timeSpanKey}
-				>
-					<Detail
-						currentPage={mockCurrentPageReferral}
-						languageTag="en-US"
-						onCurrentPageChange={mockOnCurrentPageChange}
-						onTrafficSourceNameChange={
-							mockOnTrafficSourceNameChange
-						}
-						timeSpanOptions={mockTimeSpanOptions}
-						trafficShareDataProvider={mockTrafficShareDataProvider}
-						trafficVolumeDataProvider={
-							mockTrafficVolumeDataProvider
-						}
-					/>
-				</ChartStateContextProvider>
+				<StoreContextProvider value={{languageTag: mockLanguageTag}}>
+					<ChartStateContextProvider
+						publishDate={testProps.publishDate}
+						timeRange={testProps.timeRange}
+						timeSpanKey={testProps.timeSpanKey}
+					>
+						<Detail
+							currentPage={mockCurrentPageReferral}
+							onCurrentPageChange={mockOnCurrentPageChange}
+							onTrafficSourceNameChange={
+								mockOnTrafficSourceNameChange
+							}
+							timeSpanOptions={mockTimeSpanOptions}
+							trafficShareDataProvider={
+								mockTrafficShareDataProvider
+							}
+							trafficVolumeDataProvider={
+								mockTrafficVolumeDataProvider
+							}
+						/>
+					</ChartStateContextProvider>
+				</StoreContextProvider>
 			);
 
-			await wait(() =>
-				expect(mockTrafficShareDataProvider).toHaveBeenCalled()
-			);
-			await wait(() =>
-				expect(mockTrafficVolumeDataProvider).toHaveBeenCalled()
-			);
+			await wait(() => {
+				expect(mockTrafficShareDataProvider).toHaveBeenCalled();
+				expect(mockTrafficVolumeDataProvider).toHaveBeenCalled();
+			});
 
 			expect(getByText('Referral')).toBeInTheDocument();
 			expect(getByText('90%')).toBeInTheDocument();
@@ -580,33 +569,34 @@ describe('Detail', () => {
 			};
 
 			const {getByText} = render(
-				<ChartStateContextProvider
-					publishDate={testProps.publishDate}
-					timeRange={testProps.timeRange}
-					timeSpanKey={testProps.timeSpanKey}
-				>
-					<Detail
-						currentPage={mockCurrentPageSocial}
-						languageTag="en-US"
-						onCurrentPageChange={mockOnCurrentPageChange}
-						onTrafficSourceNameChange={
-							mockOnTrafficSourceNameChange
-						}
-						timeSpanOptions={mockTimeSpanOptions}
-						trafficShareDataProvider={mockTrafficShareDataProvider}
-						trafficVolumeDataProvider={
-							mockTrafficVolumeDataProvider
-						}
-					/>
-				</ChartStateContextProvider>
+				<StoreContextProvider value={{languageTag: mockLanguageTag}}>
+					<ChartStateContextProvider
+						publishDate={testProps.publishDate}
+						timeRange={testProps.timeRange}
+						timeSpanKey={testProps.timeSpanKey}
+					>
+						<Detail
+							currentPage={mockCurrentPageSocial}
+							onCurrentPageChange={mockOnCurrentPageChange}
+							onTrafficSourceNameChange={
+								mockOnTrafficSourceNameChange
+							}
+							timeSpanOptions={mockTimeSpanOptions}
+							trafficShareDataProvider={
+								mockTrafficShareDataProvider
+							}
+							trafficVolumeDataProvider={
+								mockTrafficVolumeDataProvider
+							}
+						/>
+					</ChartStateContextProvider>
+				</StoreContextProvider>
 			);
 
-			await wait(() =>
-				expect(mockTrafficShareDataProvider).toHaveBeenCalled()
-			);
-			await wait(() =>
-				expect(mockTrafficVolumeDataProvider).toHaveBeenCalled()
-			);
+			await wait(() => {
+				expect(mockTrafficShareDataProvider).toHaveBeenCalled();
+				expect(mockTrafficVolumeDataProvider).toHaveBeenCalled();
+			});
 
 			expect(getByText('Social')).toBeInTheDocument();
 			expect(getByText('90%')).toBeInTheDocument();

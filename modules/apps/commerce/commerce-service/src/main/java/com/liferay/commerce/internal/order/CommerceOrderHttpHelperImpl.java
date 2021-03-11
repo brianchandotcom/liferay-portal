@@ -350,9 +350,11 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 			HttpServletRequest httpServletRequest, CommerceOrder commerceOrder)
 		throws PortalException {
 
-		commerceOrder = _commerceOrderLocalService.recalculatePrice(
-			commerceOrder.getCommerceOrderId(),
-			_getCommerceContext(httpServletRequest));
+		if (commerceOrder != null) {
+			commerceOrder = _commerceOrderLocalService.recalculatePrice(
+				commerceOrder.getCommerceOrderId(),
+				_getCommerceContext(httpServletRequest));
+		}
 
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -360,6 +362,8 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 		if (permissionChecker.isSignedIn()) {
 			httpServletRequest.setAttribute(
 				CommerceCheckoutWebKeys.COMMERCE_ORDER, commerceOrder);
+
+			_commerceOrderThreadLocal.set(commerceOrder);
 
 			return;
 		}
@@ -472,6 +476,8 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 
 		CommerceOrder commerceOrder = _commerceOrderThreadLocal.get();
 
+		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
+
 		if (commerceOrder != null) {
 			CommerceOrder persistenceCommerceOrder =
 				_commerceOrderLocalService.fetchCommerceOrder(
@@ -479,6 +485,13 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 
 			if (persistenceCommerceOrder == null) {
 				return commerceOrder;
+			}
+
+			if ((commerceAccount == null) ||
+				(commerceOrder.getCommerceAccountId() !=
+					commerceAccount.getCommerceAccountId())) {
+
+				return null;
 			}
 
 			_commerceOrderThreadLocal.set(persistenceCommerceOrder);
@@ -493,8 +506,6 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 		if (commerceChannel == null) {
 			return null;
 		}
-
-		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
 
 		if (commerceAccount == null) {
 			return null;

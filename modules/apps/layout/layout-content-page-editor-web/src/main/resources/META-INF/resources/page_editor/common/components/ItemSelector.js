@@ -34,7 +34,6 @@ export default function ItemSelector({
 	selectedItemTitle,
 	showAddButton = true,
 	showMappedItems = true,
-	showLabel = true,
 	transformValueCallback,
 }) {
 	const [active, setActive] = useState(false);
@@ -68,7 +67,7 @@ export default function ItemSelector({
 
 	return (
 		<ClayForm.Group small>
-			{showLabel && <label htmlFor={itemSelectorInputId}>{label}</label>}
+			<label htmlFor={itemSelectorInputId}>{label}</label>
 
 			<div className="d-flex">
 				<ClayInput

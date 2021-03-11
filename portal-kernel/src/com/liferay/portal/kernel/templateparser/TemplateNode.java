@@ -19,7 +19,6 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.util.DLUtil;
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
@@ -141,11 +140,6 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 		}
 		else if (type.equals("document_library") || type.equals("image")) {
 			return _getFileEntryData();
-		}
-		else if (type.equals("ddm-link-to-page") ||
-				 type.equals("link_to_layout")) {
-
-			return _getLinkToLayoutData();
 		}
 
 		return (String)get("data");
@@ -425,18 +419,6 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 		}
 
 		return (String)get("data");
-	}
-
-	private String _getLinkToLayoutData() {
-		String data = (String)get("data");
-
-		int pos = data.indexOf(CharPool.AT);
-
-		if (pos != -1) {
-			data = data.substring(0, pos);
-		}
-
-		return data;
 	}
 
 	private String _getLinkToLayoutFriendlyURL() {

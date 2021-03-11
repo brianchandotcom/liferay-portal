@@ -39,10 +39,9 @@ public class MessageDigestCryptoHashProviderFactory
 		throws CryptoHashException {
 
 		try {
-			if ((cryptoHashProviderProperties == null) ||
-				cryptoHashProviderProperties.isEmpty()) {
-
-				return new MessageDigestCryptoHashProvider();
+			if (cryptoHashProviderProperties == null) {
+				return new MessageDigestCryptoHashProvider(
+					Collections.emptyMap());
 			}
 
 			return new MessageDigestCryptoHashProvider(
@@ -66,18 +65,14 @@ public class MessageDigestCryptoHashProviderFactory
 
 		public static final String ALGORITHM = "algorithm";
 
-		public MessageDigestCryptoHashProvider()
-			throws NoSuchAlgorithmException {
-
-			_messageDigest = MessageDigest.getInstance(_DEFAULT_ALGORITHM);
-		}
-
 		public MessageDigestCryptoHashProvider(
 				Map<String, ?> cryptoHashProviderProperties)
 			throws NoSuchAlgorithmException {
 
 			_messageDigest = MessageDigest.getInstance(
-				MapUtil.getString(cryptoHashProviderProperties, ALGORITHM));
+				MapUtil.getString(
+					cryptoHashProviderProperties, ALGORITHM,
+					_DEFAULT_ALGORITHM));
 		}
 
 		@Override

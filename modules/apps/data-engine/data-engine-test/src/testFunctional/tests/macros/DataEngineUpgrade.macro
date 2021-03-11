@@ -116,9 +116,77 @@ definition {
 
 	macro createNewWebContentUsingAnUpgradedStructureWithFieldset {
 
-		// TODO LPS-126249 createNewWebContentUsingAnUpgradedStructureWithFieldset pending implementation
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
-		echo("empty stub");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "My Structure with Fieldsets level 2");
+
+		WebContent.addWithStructureCP(
+			webContentDate = "02/22/2021",
+			webContentDateFieldLabel = "Date",
+			webContentNumeric = "1.1",
+			webContentNumericFieldLabel = "Number",
+			webContentText = "Text - en_US",
+			webContentTextFieldLabel = "Text",
+			webContentTitle = "My Web Content based on My Structure with Fieldsets level 2");
+
+		PortletEntry.changeLocale(locale = "pt_BR");
+
+		WebContent.addWithStructureCP(
+			webContentDate = "23/02/2021",
+			webContentDateFieldLabel = "Date - pt_BR",
+			webContentNumeric = "1,2",
+			webContentNumericFieldLabel = "Number - pt_BR",
+			webContentText = "Text - pt_BR",
+			webContentTextFieldLabel = "Text - pt_BR",
+			webContentTitle = "My Web Content based on My Structure with Fieldsets level 2 - pt_BR");
+
+		PortletEntry.changeLocale(locale = "ca_ES");
+
+		WebContent.addWithStructureCP(
+			webContentDate = "24/02/2021",
+			webContentDateFieldLabel = "Date - ca_ES",
+			webContentNumeric = "1,3",
+			webContentNumericFieldLabel = "Number - ca_ES",
+			webContentText = "Text - ca_ES",
+			webContentTextFieldLabel = "Text - ca_ES",
+			webContentTitle = "My Web Content based on My Structure with Fieldsets level 2 - ca_ES");
+
+		PortletEntry.publish();
+
+		WebContent.viewWithStructureCP(
+			webContentDate = "02/22/2021",
+			webContentDateFieldLabel = "Date",
+			webContentNumeric = "1.1",
+			webContentNumericFieldLabel = "Number",
+			webContentText = "Text - en_US",
+			webContentTextFieldLabel = "Text",
+			webContentTitle = "My Web Content based on My Structure with Fieldsets level 2");
+
+		PortletEntry.publish();
+
+		WebContent.viewWithStructureCP(
+			webContentDate = "23/02/2021",
+			webContentDateFieldLabel = "Date - pt_BR",
+			webContentLocaleFieldLabel = "pt_BR",
+			webContentNumeric = "1,2",
+			webContentNumericFieldLabel = "Number - pt_BR",
+			webContentText = "Text - pt_BR",
+			webContentTextFieldLabel = "Text - pt_BR",
+			webContentTitle = "My Web Content based on My Structure with Fieldsets level 2",
+			webContentTitleTranslated = "My Web Content based on My Structure with Fieldsets level 2 - pt_BR");
+
+		PortletEntry.publish();
+
+		WebContent.viewWithStructureCP(
+			webContentDate = "24/02/2021",
+			webContentDateFieldLabel = "Date - ca_ES",
+			webContentLocaleFieldLabel = "ca_ES",
+			webContentNumeric = "1,3",
+			webContentNumericFieldLabel = "Number - ca_ES",
+			webContentText = "Text - ca_ES",
+			webContentTextFieldLabel = "Text - ca_ES",
+			webContentTitle = "My Web Content based on My Structure with Fieldsets level 2",
+			webContentTitleTranslated = "My Web Content based on My Structure with Fieldsets level 2 - ca_ES");
 	}
 
 	macro editAnUpgradedStructureWithFieldGroup {

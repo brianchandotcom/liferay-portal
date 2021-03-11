@@ -51,7 +51,7 @@ const Item = ({
 		<tr>
 			<td className="assignee-name border-0">
 				<ChildLink
-					className={'workload-by-assignee-link'}
+					className="workload-by-assignee-link"
 					query={{filters}}
 					to={`/instance/${processId}/${defaultDelta}/1`}
 				>

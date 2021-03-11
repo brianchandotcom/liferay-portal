@@ -84,7 +84,7 @@ function CompareCheckbox(props) {
 		<ClayCheckbox
 			aria-label={props.label || null}
 			checked={inCompare}
-			className={'compare-checkbox-component'}
+			className="compare-checkbox-component"
 			disabled={disabled && !inCompare}
 			label={props.label || null}
 			onChange={handleCheckboxClick}

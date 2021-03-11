@@ -59,7 +59,7 @@ class Email extends Component {
 						placeholder={Liferay.Language.get(
 							'enter-a-list-of-email-addresses'
 						)}
-						ref={'multiSelectRef'}
+						ref="multiSelectRef"
 						selectedItems={emailContent.addresses}
 						showSelectButton={false}
 						spritemap={this.props.spritemap}

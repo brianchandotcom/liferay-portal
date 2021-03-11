@@ -85,13 +85,11 @@ class ShareFormModal extends Component {
 									{Liferay.Language.get('link')}
 								</div>
 								<div class="popover-body">
-									{
-										<Link
-											ref="linkRef"
-											spritemap={spritemap}
-											url={url}
-										/>
-									}
+									<Link
+										ref="linkRef"
+										spritemap={spritemap}
+										url={url}
+									/>
 								</div>
 							</div>
 							<div class="share-form-modal-item">
@@ -99,19 +97,15 @@ class ShareFormModal extends Component {
 									{Liferay.Language.get('email')}
 								</div>
 								<div class="popover-body">
-									{
-										<Email
-											autocompleteUserURL={
-												autocompleteUserURL
-											}
-											localizedName={
-												this.props.localizedName
-											}
-											ref="emailRef"
-											spritemap={spritemap}
-											url={url}
-										/>
-									}
+									<Email
+										autocompleteUserURL={
+											autocompleteUserURL
+										}
+										localizedName={this.props.localizedName}
+										ref="emailRef"
+										spritemap={spritemap}
+										url={url}
+									/>
 								</div>
 							</div>
 						</div>
@@ -134,8 +128,8 @@ class ShareFormModal extends Component {
 							type: 'button',
 						},
 					]}
-					ref={'shareFormModalRef'}
-					size={'lg'}
+					ref="shareFormModalRef"
+					size="lg"
 					spritemap={spritemap}
 					title={Liferay.Language.get('share')}
 				/>

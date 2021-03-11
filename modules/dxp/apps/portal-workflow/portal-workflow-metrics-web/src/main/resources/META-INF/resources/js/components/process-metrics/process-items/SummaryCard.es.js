@@ -67,7 +67,7 @@ const SummaryCard = ({
 			to={`/instance/${processId}/${defaultDelta}/1`}
 		>
 			<div>
-				<div className={'header'}>
+				<div className="header">
 					{iconName && (
 						<span
 							className={`bg-${iconColor}-light mr-3 sticker sticker-circle`}

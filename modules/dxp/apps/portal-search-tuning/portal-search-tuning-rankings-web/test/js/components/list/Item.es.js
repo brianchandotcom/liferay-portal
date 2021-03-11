@@ -35,15 +35,13 @@ function renderTestItem(props) {
 	return render(
 		<Item
 			addedResult={false}
-			author={'Test Test'}
+			author="Test Test"
 			clicks={289}
-			date={'Apr 18 2018, 11:04 AM'}
+			date="Apr 18 2018, 11:04 AM"
 			deleted={false}
-			description={
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod'
-			}
+			description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod"
 			hidden={false}
-			icon={'web-content'}
+			icon="web-content"
 			id={101}
 			index={1}
 			key={101}
@@ -58,8 +56,8 @@ function renderTestItem(props) {
 			pinned={true}
 			reorder={true}
 			selected={true}
-			title={'This is a Web Content Example'}
-			type={'Web Content'}
+			title="This is a Web Content Example"
+			type="Web Content"
 			{...props}
 		/>
 	);

@@ -531,7 +531,7 @@ class Form extends Component {
 		const LayoutProviderTag = LayoutProvider;
 
 		return (
-			<div class={'ddm-form-builder'}>
+			<div class="ddm-form-builder">
 				<LayoutProviderTag {...storeProps}>
 					{this.isFormBuilderView() && (
 						<FormsRuleBuilder
@@ -644,8 +644,8 @@ class Form extends Component {
 								type: 'button',
 							},
 						]}
-						ref={'discardChangesModal'}
-						size={'sm'}
+						ref="discardChangesModal"
+						size="sm"
 						spritemap={spritemap}
 						title={Liferay.Language.get('leave-form')}
 					/>

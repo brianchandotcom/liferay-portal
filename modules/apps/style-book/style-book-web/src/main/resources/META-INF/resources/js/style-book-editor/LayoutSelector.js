@@ -45,7 +45,7 @@ export default function LayoutSelector() {
 					symbol="time"
 				>
 					{previewLayout?.layoutName}
-					<ClayIcon className="mt-0" symbol={'caret-bottom-l'} />
+					<ClayIcon className="mt-0" symbol="caret-bottom-l" />
 				</ClayButton>
 			}
 		>

@@ -25,7 +25,7 @@ const Header = ({processId}) => {
 						<span>
 							<span
 								className="workflow-tooltip"
-								data-tooltip-align={'bottom'}
+								data-tooltip-align="bottom"
 								title={Liferay.Language.get('new-sla')}
 							>
 								<ChildLink

@@ -22,18 +22,18 @@ function Wrapper() {
 	const {CartViews, isOpen, spritemap} = useContext(MiniCartContext);
 
 	return (
-		<div className={'mini-cart-wrapper'}>
+		<div className="mini-cart-wrapper">
 			<CartViews.Header />
 
-			<div className={'mini-cart-wrapper-items'}>
+			<div className="mini-cart-wrapper-items">
 				{isOpen && (
 					<DatasetDisplay
-						id={'cart-items-list-dataset-display'}
+						id="cart-items-list-dataset-display"
 						items={[]}
 						overrideEmptyResultView={true}
 						showManagementBar={false}
 						showPagination={false}
-						sidePanelId={'sidePanelDisabled'}
+						sidePanelId="sidePanelDisabled"
 						spritemap={spritemap}
 						views={[{component: CartViews[ITEMS_LIST]}]}
 					/>

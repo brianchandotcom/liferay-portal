@@ -58,7 +58,7 @@ const ShowAll = ({expand, expanded, labelsLength}) => {
 					<circle
 						cx="10"
 						cy="10"
-						fill={'#F0F5FF'}
+						fill="#F0F5FF"
 						r="9"
 						strokeWidth="3"
 					/>

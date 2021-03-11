@@ -199,7 +199,7 @@ function AssetVocabulariesCategoriesSelector({
 
 						{required && (
 							<span className="inline-item inline-item-after reference-mark">
-								<ClayIcon symbol={'asterisk'} />
+								<ClayIcon symbol="asterisk" />
 
 								<span className="hide-accessible">
 									{Liferay.Language.get('required')}

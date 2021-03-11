@@ -340,7 +340,7 @@ function GlobalSearch(props) {
 											)}
 											key={account.id}
 											label={account.name}
-											stickerShape={'circle'}
+											stickerShape="circle"
 											thumbnailUrl={account.logoURL}
 										/>
 									))}

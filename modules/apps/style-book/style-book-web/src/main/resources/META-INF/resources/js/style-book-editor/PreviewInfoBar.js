@@ -54,13 +54,10 @@ export default function PreviewInfoBar() {
 					onMouseEnter={() => setIsShowPopover(true)}
 					onMouseLeave={() => setIsShowPopover(false)}
 					ref={helpIconRef}
-					symbol={'question-circle'}
+					symbol="question-circle"
 				/>
 				{isShowPopover && (
-					<ClayPopover
-						alignPosition={'bottom-right'}
-						ref={popoverRef}
-					>
+					<ClayPopover alignPosition="bottom-right" ref={popoverRef}>
 						{Liferay.Language.get(
 							'edit-the-style-book-using-the-sidebar-form.-you-can-preview-the-changes-instantly'
 						)}

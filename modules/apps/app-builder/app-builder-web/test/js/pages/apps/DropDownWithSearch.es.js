@@ -49,7 +49,7 @@ const DropDownContainer = () => {
 				errorProps: {
 					children: (
 						<ClayButton displayType="link" onClick={doFetch}>
-							{'retry'}
+							retry
 						</ClayButton>
 					),
 					label: 'unable-to-retrieve-the-objects',
@@ -121,7 +121,7 @@ describe('DropDownWithSearch', () => {
 					errorProps: {
 						children: (
 							<ClayButton displayType="link" onClick={doFetch}>
-								{'retry'}
+								retry
 							</ClayButton>
 						),
 						label: 'unable-to-retrieve-the-objects',
@@ -157,7 +157,7 @@ describe('DropDownWithSearch', () => {
 					errorProps: {
 						children: (
 							<ClayButton displayType="link" onClick={doFetch}>
-								{'retry'}
+								retry
 							</ClayButton>
 						),
 						label: 'unable-to-retrieve-the-objects',
@@ -193,7 +193,7 @@ describe('DropDownWithSearch', () => {
 					errorProps: {
 						children: (
 							<ClayButton displayType="link" onClick={doFetch}>
-								{'retry'}
+								retry
 							</ClayButton>
 						),
 						label: 'unable-to-retrieve-the-objects',

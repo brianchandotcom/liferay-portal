@@ -107,7 +107,7 @@ const Header = ({disableFilters, prefixKey, timeRange}) => {
 					/>
 
 					<VelocityUnitFilter
-						className={'pl-3'}
+						className="pl-3"
 						disabled={disableFilters}
 						prefixKey={prefixKey}
 						timeRange={timeRange}

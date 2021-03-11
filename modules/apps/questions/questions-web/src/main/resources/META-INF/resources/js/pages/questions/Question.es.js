@@ -219,7 +219,7 @@ export default withRouter(
 										question.myRating &&
 										question.myRating.ratingValue
 									}
-									type={'Thread'}
+									type="Thread"
 								/>
 							</div>
 

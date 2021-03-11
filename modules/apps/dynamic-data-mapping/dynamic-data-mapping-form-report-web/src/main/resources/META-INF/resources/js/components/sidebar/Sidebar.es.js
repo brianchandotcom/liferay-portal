@@ -78,7 +78,7 @@ const SidebarContent = () => {
 							>
 								<ClayIcon
 									className="close-button"
-									symbol={'times-small'}
+									symbol="times-small"
 								/>
 							</ClayButton>
 						</li>

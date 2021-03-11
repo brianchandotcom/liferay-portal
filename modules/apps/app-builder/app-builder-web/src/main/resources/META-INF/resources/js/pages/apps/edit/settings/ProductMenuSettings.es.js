@@ -152,7 +152,7 @@ export default () => {
 							}
 						>
 							<ItemList>
-								<Item key={'search'}>
+								<Item key="search">
 									<SearchInput
 										onChange={(searchText) =>
 											setSearchText(searchText)

@@ -73,10 +73,7 @@ describe('CriteriaSidebarSearchBar', () => {
 
 	it('renders with the value in the search input', () => {
 		const {getByTestId} = render(
-			<CriteriaSidebarSearchBar
-				onChange={jest.fn()}
-				searchValue={'test'}
-			/>
+			<CriteriaSidebarSearchBar onChange={jest.fn()} searchValue="test" />
 		);
 
 		const searchInput = getByTestId(SEARCH_INPUT_TESTID);
@@ -86,10 +83,7 @@ describe('CriteriaSidebarSearchBar', () => {
 
 	it('renders a button with a times icon when an input is entered', () => {
 		const {getByTestId} = render(
-			<CriteriaSidebarSearchBar
-				onChange={jest.fn()}
-				searchValue={'test'}
-			/>
+			<CriteriaSidebarSearchBar onChange={jest.fn()} searchValue="test" />
 		);
 
 		const searchButton = getByTestId(SEARCH_BUTTON_TESTID);

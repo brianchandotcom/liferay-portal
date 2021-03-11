@@ -81,9 +81,7 @@ class Link extends Component {
 								<span class="publish-button-success-icon pl-2 pr-2">
 									<svg
 										aria-hidden="true"
-										class={
-											'lexicon-icon lexicon-icon-check'
-										}
+										class="lexicon-icon lexicon-icon-check"
 									>
 										<use
 											xlink:href={`${spritemap}#check`}

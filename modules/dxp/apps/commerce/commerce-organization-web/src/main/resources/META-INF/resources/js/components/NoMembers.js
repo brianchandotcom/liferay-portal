@@ -16,9 +16,9 @@ import Icon from './Icon';
 
 function NoMembers(props) {
 	return (
-		<div className={'no-members'}>
+		<div className="no-members">
 			<p>
-				<Icon spritemap={props.spritemap} symbol={'close'} />
+				<Icon spritemap={props.spritemap} symbol="close" />
 			</p>
 			<p>{getLocalizedText('no-members-found')}</p>
 		</div>

@@ -33,8 +33,8 @@ const translatedLanguageIds = {
 const TranslationManagerWrapper = (props) => (
 	<TranslationManager
 		{...props}
-		defaultLanguageId={'en_US'}
-		editingLanguageId={'en_US'}
+		defaultLanguageId="en_US"
+		editingLanguageId="en_US"
 		translatedLanguageIds={translatedLanguageIds}
 	/>
 );
@@ -42,7 +42,7 @@ const TranslationManagerWrapper = (props) => (
 const TranslationManagerLabelWrapper = (props) => (
 	<TranslationManagerLabel
 		{...props}
-		defaultLanguageId={'en_US'}
+		defaultLanguageId="en_US"
 		translatedLanguageIds={translatedLanguageIds}
 	/>
 );
@@ -138,7 +138,7 @@ describe('TranslationManager', () => {
 describe('TranslationManagerLabel', () => {
 	it('renders TranslationManagerLabel with No Translated label', () => {
 		const {getByText} = render(
-			<TranslationManagerLabelWrapper languageId={'ca-ES'} />
+			<TranslationManagerLabelWrapper languageId="ca-ES" />
 		);
 
 		expect(document.querySelector('.label.label-warning')).toBeTruthy();
@@ -147,7 +147,7 @@ describe('TranslationManagerLabel', () => {
 
 	it('renders TranslationManagerLabel with Translated label', () => {
 		const {getByText} = render(
-			<TranslationManagerLabelWrapper languageId={'pt_BR'} />
+			<TranslationManagerLabelWrapper languageId="pt_BR" />
 		);
 
 		expect(document.querySelector('.label.label-success')).toBeTruthy();
@@ -156,7 +156,7 @@ describe('TranslationManagerLabel', () => {
 
 	it('renders TranslationManagerLabel with Default label', () => {
 		const {getByText} = render(
-			<TranslationManagerLabelWrapper languageId={'en_US'} />
+			<TranslationManagerLabelWrapper languageId="en_US" />
 		);
 
 		expect(document.querySelector('.label.label-info')).toBeTruthy();

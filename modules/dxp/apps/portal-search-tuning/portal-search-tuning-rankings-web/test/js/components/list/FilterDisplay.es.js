@@ -20,7 +20,7 @@ function renderTestFilterDisplay(props) {
 	return render(
 		<FilterDisplay
 			onClear={jest.fn()}
-			searchBarTerm={'example'}
+			searchBarTerm="example"
 			totalResultsCount={250}
 			{...props}
 		/>

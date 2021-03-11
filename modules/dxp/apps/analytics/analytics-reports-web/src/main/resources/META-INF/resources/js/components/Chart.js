@@ -411,7 +411,7 @@ export default function Chart({
 									labelFormatter={
 										dateFormatters.formatLongDate
 									}
-									separator={': '}
+									separator=": "
 								/>
 							)}
 

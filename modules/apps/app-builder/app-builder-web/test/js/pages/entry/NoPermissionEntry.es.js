@@ -67,7 +67,7 @@ describe('NoPermissionEntry', () => {
 		fetch.mockResponse(JSON.stringify(DATA_DEFINITION_RESPONSES.ONE_ITEM));
 
 		const {queryByText} = render(
-			<AppContextProvider appDeploymentType={'standalone'}>
+			<AppContextProvider appDeploymentType="standalone">
 				<NoPermissionEntry />
 			</AppContextProvider>
 		);

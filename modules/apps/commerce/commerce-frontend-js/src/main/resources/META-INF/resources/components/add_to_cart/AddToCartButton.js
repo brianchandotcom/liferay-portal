@@ -146,7 +146,7 @@ function AddToCartButton({
 					'is-added': catalogItem.inCart,
 				})}
 				disabled={disabled}
-				displayType={'primary'}
+				displayType="primary"
 				onClick={() =>
 					add()
 						.then((order) => {
@@ -172,15 +172,15 @@ function AddToCartButton({
 				}
 			>
 				{!settings.iconOnly && (
-					<span className={'text-truncate-inline'}>
-						<span className={'text-truncate'}>
+					<span className="text-truncate-inline">
+						<span className="text-truncate">
 							{Liferay.Language.get('add-to-cart')}
 						</span>
 					</span>
 				)}
 
-				<span className={'cart-icon'}>
-					<ClayIcon spritemap={spritemap} symbol={'shopping-cart'} />
+				<span className="cart-icon">
+					<ClayIcon spritemap={spritemap} symbol="shopping-cart" />
 				</span>
 			</ClayButton>
 		</>

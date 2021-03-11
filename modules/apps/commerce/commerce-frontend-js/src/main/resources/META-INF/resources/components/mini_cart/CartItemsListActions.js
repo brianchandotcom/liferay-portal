@@ -54,12 +54,12 @@ function CartItemsListActions({numberOfItems}) {
 	};
 
 	return (
-		<div className={'mini-cart-header'}>
-			<div className={'mini-cart-header-block'}>
-				<div className={'mini-cart-header-resume'}>
+		<div className="mini-cart-header">
+			<div className="mini-cart-header-block">
+				<div className="mini-cart-header-resume">
 					{numberOfItems > 0 && (
 						<>
-							<span className={'items'}>{numberOfItems}</span>
+							<span className="items">{numberOfItems}</span>
 							{` ${
 								numberOfItems > 1
 									? Liferay.Language.get('products')
@@ -69,12 +69,12 @@ function CartItemsListActions({numberOfItems}) {
 					)}
 				</div>
 
-				<div className={'mini-cart-header-actions'}>
+				<div className="mini-cart-header-actions">
 					<span className={classnames('actions', isAsking && 'hide')}>
 						<ClayButton
-							className={'action'}
+							className="action"
 							disabled={!numberOfItems}
-							displayType={'link'}
+							displayType="link"
 							onClick={() => {
 								liferayNavigate(orderDetailURL);
 							}}
@@ -84,9 +84,9 @@ function CartItemsListActions({numberOfItems}) {
 						</ClayButton>
 
 						<ClayButton
-							className={'action text-danger'}
+							className="action text-danger"
 							disabled={!numberOfItems}
-							displayType={'link'}
+							displayType="link"
 							onClick={askConfirmation}
 							small
 						>
@@ -104,16 +104,16 @@ function CartItemsListActions({numberOfItems}) {
 
 						<span>
 							<button
-								className={'btn btn-outline-success btn-sm'}
+								className="btn btn-outline-success btn-sm"
 								onClick={flushCart}
-								type={'button'}
+								type="button"
 							>
 								{Liferay.Language.get('yes')}
 							</button>
 							<button
-								className={'btn btn-outline-danger btn-sm'}
+								className="btn btn-outline-danger btn-sm"
 								onClick={cancel}
-								type={'button'}
+								type="button"
 							>
 								{Liferay.Language.get('no')}
 							</button>

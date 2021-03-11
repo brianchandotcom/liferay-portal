@@ -80,10 +80,10 @@ describe('PermissionsModal', () => {
 		const {getAllByRole, queryByText} = render(
 			<PermissionsModal
 				actions={ACTIONS}
-				endpoint={'/permissions'}
+				endpoint="/permissions"
 				isOpen={true}
 				rolesFilter={() => true}
-				title={'title'}
+				title="title"
 			/>
 		);
 
@@ -104,12 +104,12 @@ describe('PermissionsModal', () => {
 		const {queryAllByRole, queryByText} = render(
 			<PermissionsModal
 				actions={ACTIONS}
-				endpoint={'/permissions'}
+				endpoint="/permissions"
 				isDisabled={() => false}
 				isOpen={false}
 				onSave={() => Promise.resolve()}
 				rolesFilter={() => true}
-				title={'title'}
+				title="title"
 			/>
 		);
 
@@ -137,13 +137,13 @@ describe('PermissionsModal', () => {
 		const {getAllByRole} = render(
 			<PermissionsModal
 				actions={ACTIONS}
-				endpoint={'/permissions'}
+				endpoint="/permissions"
 				isDisabled={() => false}
 				isOpen={true}
 				onClose={onCloseCallback}
 				onSave={onSaveCallback}
 				rolesFilter={() => true}
-				title={'title'}
+				title="title"
 			/>
 		);
 
@@ -181,12 +181,12 @@ describe('PermissionsModal', () => {
 		const {getAllByRole} = render(
 			<PermissionsModal
 				actions={ACTIONS}
-				endpoint={'/permissions'}
+				endpoint="/permissions"
 				isDisabled={() => false}
 				isOpen={true}
 				onSave={onSaveCallback}
 				rolesFilter={() => true}
-				title={'title'}
+				title="title"
 			/>
 		);
 
@@ -226,12 +226,12 @@ describe('PermissionsModal', () => {
 		const {getAllByRole} = render(
 			<PermissionsModal
 				actions={ACTIONS}
-				endpoint={'/permissions'}
+				endpoint="/permissions"
 				isDisabled={() => false}
 				isOpen={true}
 				onSave={onSaveCallback}
 				rolesFilter={() => true}
-				title={'title'}
+				title="title"
 			/>
 		);
 

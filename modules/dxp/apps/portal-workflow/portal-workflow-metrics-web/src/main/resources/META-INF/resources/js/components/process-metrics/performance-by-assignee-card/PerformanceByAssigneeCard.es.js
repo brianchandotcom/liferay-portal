@@ -46,7 +46,7 @@ const Header = ({disableFilters, prefixKey, processId}) => {
 					/>
 
 					<TimeRangeFilter
-						className={'pl-3'}
+						className="pl-3"
 						disabled={disableFilters}
 						options={{position: 'right'}}
 						prefixKey={prefixKey}

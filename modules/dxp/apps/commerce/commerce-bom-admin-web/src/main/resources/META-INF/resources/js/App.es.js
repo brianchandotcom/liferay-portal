@@ -60,10 +60,7 @@ function App(props) {
 			{state.app.error && (
 				<ErrorMessage
 					closeIcon={
-						<Icon
-							spritemap={state.app.spritemap}
-							symbol={'close'}
-						/>
+						<Icon spritemap={state.app.spritemap} symbol="close" />
 					}
 					message={state.app.error}
 					onClose={actions.dismissError}

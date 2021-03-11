@@ -259,7 +259,7 @@ describe('Detail', () => {
 			>
 				<Detail
 					currentPage={mockCurrentPageReferral}
-					languageTag={'en-US'}
+					languageTag="en-US"
 					onCurrentPageChange={mockOnCurrentPageChange}
 					onTrafficSourceNameChange={mockOnTrafficSourceNameChange}
 					timeSpanOptions={mockTimeSpanOptions}
@@ -293,7 +293,7 @@ describe('Detail', () => {
 			const {getByText} = render(
 				<Detail
 					currentPage={mockCurrentPageOrganic}
-					languageTag={'en-US'}
+					languageTag="en-US"
 					onCurrentPageChange={mockOnCurrentPageChange}
 					onTrafficSourceNameChange={mockOnTrafficSourceNameChange}
 					timeSpanOptions={mockTimeSpanOptions}
@@ -321,7 +321,7 @@ describe('Detail', () => {
 			const {getByText} = render(
 				<Detail
 					currentPage={mockCurrentPageOrganic}
-					languageTag={'en-US'}
+					languageTag="en-US"
 					onCurrentPageChange={mockOnCurrentPageChange}
 					onTrafficSourceNameChange={mockOnTrafficSourceNameChange}
 					timeSpanOptions={mockTimeSpanOptions}
@@ -362,7 +362,7 @@ describe('Detail', () => {
 			const {getByText} = render(
 				<Detail
 					currentPage={mockCurrentPageOrganic}
-					languageTag={'en-US'}
+					languageTag="en-US"
 					onCurrentPageChange={mockOnCurrentPageChange}
 					onTrafficSourceNameChange={mockOnTrafficSourceNameChange}
 					timeSpanOptions={mockTimeSpanOptions}
@@ -390,7 +390,7 @@ describe('Detail', () => {
 			const {getAllByText, getByText} = render(
 				<Detail
 					currentPage={mockCurrentPageOrganic}
-					languageTag={'en-US'}
+					languageTag="en-US"
 					onCurrentPageChange={mockOnCurrentPageChange}
 					onTrafficSourceNameChange={mockOnTrafficSourceNameChange}
 					timeSpanOptions={mockTimeSpanOptions}
@@ -416,7 +416,7 @@ describe('Detail', () => {
 			const {getAllByText, getByText} = render(
 				<Detail
 					currentPage={mockCurrentPageOrganic}
-					languageTag={'en-US'}
+					languageTag="en-US"
 					onCurrentPageChange={mockOnCurrentPageChange}
 					onTrafficSourceNameChange={mockOnTrafficSourceNameChange}
 					timeSpanOptions={mockTimeSpanOptions}
@@ -459,7 +459,7 @@ describe('Detail', () => {
 			const {getAllByText, getByText} = render(
 				<Detail
 					currentPage={mockCurrentPageOrganic}
-					languageTag={'en-US'}
+					languageTag="en-US"
 					onCurrentPageChange={mockOnCurrentPageChange}
 					onTrafficSourceNameChange={mockOnTrafficSourceNameChange}
 					timeSpanOptions={mockTimeSpanOptions}
@@ -515,7 +515,7 @@ describe('Detail', () => {
 				>
 					<Detail
 						currentPage={mockCurrentPageReferral}
-						languageTag={'en-US'}
+						languageTag="en-US"
 						onCurrentPageChange={mockOnCurrentPageChange}
 						onTrafficSourceNameChange={
 							mockOnTrafficSourceNameChange
@@ -587,7 +587,7 @@ describe('Detail', () => {
 				>
 					<Detail
 						currentPage={mockCurrentPageSocial}
-						languageTag={'en-US'}
+						languageTag="en-US"
 						onCurrentPageChange={mockOnCurrentPageChange}
 						onTrafficSourceNameChange={
 							mockOnTrafficSourceNameChange

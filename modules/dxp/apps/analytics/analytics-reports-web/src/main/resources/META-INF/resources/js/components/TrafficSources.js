@@ -221,7 +221,7 @@ export default function TrafficSources({
 								dataKey="value"
 								innerRadius={PIE_CHART_SIZES.innerRadius}
 								isAnimationActive={false}
-								nameKey={'name'}
+								nameKey="name"
 								outerRadius={PIE_CHART_SIZES.radius}
 								paddingAngle={PIE_CHART_SIZES.paddingAngle}
 							>
@@ -262,7 +262,7 @@ export default function TrafficSources({
 										iconType,
 									];
 								}}
-								separator={': '}
+								separator=": "
 							/>
 						</PieChart>
 					</div>

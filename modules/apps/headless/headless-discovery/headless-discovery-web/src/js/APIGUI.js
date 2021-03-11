@@ -144,7 +144,7 @@ const APIGUI = () => {
 								onActiveChange={setActive}
 								trigger={
 									<ClayButton displayType="unstyled">
-										{'Rest Applications'}
+										Rest Applications
 										<Icon symbol="caret-bottom-l" />
 									</ClayButton>
 								}
@@ -208,7 +208,7 @@ const APIGUI = () => {
 			<ClayLayout.ContainerFluid>
 				{showHeaders && (
 					<ClayModal observer={observer} size="lg" status="info">
-						<ClayModal.Header>{'Headers'}</ClayModal.Header>
+						<ClayModal.Header>Headers</ClayModal.Header>
 
 						<ClayModal.Body>
 							<h1>
@@ -245,7 +245,7 @@ const APIGUI = () => {
 
 									<ClayButton
 										className="btn btn-warning"
-										displayType={'secondary'}
+										displayType="secondary"
 										onClick={() => {
 											const values = [...headers];
 											values.splice(i, 1);

@@ -55,7 +55,7 @@ const ListItems = ({defaultLanguageId, itemId, items, onChange}) => {
 						</Cell>
 						<Cell>{dateCreated && fromNow(dateCreated)}</Cell>
 						<Cell>{dateModified && fromNow(dateModified)}</Cell>
-						<Cell align={'right'}>
+						<Cell align="right">
 							<ClayRadioGroup
 								inline
 								onSelectedValueChange={() =>

@@ -333,7 +333,7 @@ describe('EditTableView', () => {
 						],
 					})}
 				>
-					<Route path={'dataTableViewId/:dataListViewId'}>
+					<Route path="dataTableViewId/:dataListViewId">
 						<EditTableView />
 					</Route>
 				</Router>

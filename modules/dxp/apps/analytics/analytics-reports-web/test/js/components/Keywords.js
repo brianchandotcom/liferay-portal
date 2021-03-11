@@ -40,7 +40,7 @@ describe('Keywords', () => {
 		};
 
 		const {getByText} = render(
-			<Keywords currentPage={mockCurrentPage} languageTag={'en-US'} />
+			<Keywords currentPage={mockCurrentPage} languageTag="en-US" />
 		);
 
 		expect(getByText('there-are-no-best-keywords-yet')).toBeInTheDocument();

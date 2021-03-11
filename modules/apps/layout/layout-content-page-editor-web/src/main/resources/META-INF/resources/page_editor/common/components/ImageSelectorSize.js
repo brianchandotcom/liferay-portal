@@ -162,7 +162,7 @@ export const ImageSelectorSize = ({
 						{Liferay.Language.get('resolution')}
 					</label>
 					<ClaySelectWithOption
-						className={'form-control form-control-sm'}
+						className="form-control form-control-sm"
 						id={imageSizeSelectId}
 						name={imageSizeSelectId}
 						onChange={(event) =>

@@ -20,7 +20,7 @@ function renderTestPageToolbar(props) {
 	return render(
 		<PageToolbar
 			inactive={false}
-			onCancel={'cancel'}
+			onCancel="cancel"
 			onChangeActive={jest.fn()}
 			onPublish={jest.fn()}
 			submitDisabled={false}

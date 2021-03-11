@@ -44,18 +44,18 @@ function AddToWishList({
 	return (
 		<ClayButton
 			className={`btn-outline-borderless btn-${large ? 'lg' : 'sm'}`}
-			displayType={'secondary'}
+			displayType="secondary"
 			onClick={toggleInWishList}
 		>
 			{!iconOnly && (
-				<span className={'text-truncate-inline'}>
-					<span className={'font-weight-normal text-truncate'}>
+				<span className="text-truncate-inline">
+					<span className="font-weight-normal text-truncate">
 						{Liferay.Language.get('add-to-list')}
 					</span>
 				</span>
 			)}
 
-			<span className={'wish-list-icon'}>
+			<span className="wish-list-icon">
 				<ClayIcon
 					spritemap={spritemap}
 					symbol={`heart${isAdded ? '-full' : ''}`}

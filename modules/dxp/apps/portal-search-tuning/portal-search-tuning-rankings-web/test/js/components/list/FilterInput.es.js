@@ -20,7 +20,7 @@ function renderTestFilterInput(props) {
 			disableSearch={false}
 			onChange={jest.fn()}
 			onSubmit={jest.fn()}
-			searchBarTerm={'test'}
+			searchBarTerm="test"
 			{...props}
 		/>
 	);

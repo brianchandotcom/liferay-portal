@@ -87,7 +87,7 @@ export function CustomCursor(props) {
 				top: props.y ? props.y + 'px' : 0,
 			}}
 		>
-			<Icon spritemap={state.app.spritemap} symbol={'plus'} />
+			<Icon spritemap={state.app.spritemap} symbol="plus" />
 		</div>
 	);
 }

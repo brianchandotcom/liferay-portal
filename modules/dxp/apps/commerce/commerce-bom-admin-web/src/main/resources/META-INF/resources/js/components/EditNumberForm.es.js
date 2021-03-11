@@ -248,10 +248,7 @@ const EditNumberForm = React.memo((props) => {
 						onClick={closeEditForm}
 						type="button"
 					>
-						<Icon
-							spritemap={state.app.spritemap}
-							symbol={'times'}
-						/>
+						<Icon spritemap={state.app.spritemap} symbol="times" />
 					</button>
 					<div className="panel-body">
 						<div className="form-group">
@@ -286,10 +283,8 @@ const EditNumberForm = React.memo((props) => {
 										handleClickOnDropdownItem
 									}
 									handleResetFn={resetProducts}
-									inputClassName={
-										'edit-number-form__input-number'
-									}
-									inputId={'edit-number-form__input-number'}
+									inputClassName="edit-number-form__input-number"
+									inputId="edit-number-form__input-number"
 									inputPlaceholder={inputPlaceholder}
 									query={formData.query}
 									resetAdditionalCssClasses="edit-number-form__reset"
@@ -297,7 +292,7 @@ const EditNumberForm = React.memo((props) => {
 										props.resetIcon || (
 											<Icon
 												spritemap={state.app.spritemap}
-												symbol={'times-circle'}
+												symbol="times-circle"
 											/>
 										)
 									}
@@ -306,7 +301,7 @@ const EditNumberForm = React.memo((props) => {
 										props.searchIcon || (
 											<Icon
 												spritemap={state.app.spritemap}
-												symbol={'search'}
+												symbol="search"
 											/>
 										)
 									}

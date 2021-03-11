@@ -175,7 +175,7 @@ function MiniCart({
 					{toggleable && (
 						<>
 							<div
-								className={'mini-cart-overlay'}
+								className="mini-cart-overlay"
 								onClick={() => setIsOpen(false)}
 							/>
 

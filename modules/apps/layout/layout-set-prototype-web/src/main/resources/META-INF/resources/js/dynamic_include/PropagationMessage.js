@@ -71,41 +71,39 @@ export default function ({
 				/>
 			}
 		>
-			{
-				<div>
-					<p
-						className="message-info mt-0"
-						dangerouslySetInnerHTML={{
-							__html: Liferay.Language.get(
-								'each-page-modification-can-trigger-a-propagation-from-the-site-template-to-the-connected-sites'
-							),
-						}}
-					/>
+			<div>
+				<p
+					className="message-info mt-0"
+					dangerouslySetInnerHTML={{
+						__html: Liferay.Language.get(
+							'each-page-modification-can-trigger-a-propagation-from-the-site-template-to-the-connected-sites'
+						),
+					}}
+				/>
 
-					<ClayLink
-						button={{small: true}}
-						displayType="primary"
-						href={enableDisablePropagationURL}
-						onClick={() => {
-							openToast({
-								autoClose: 10000,
-								message: readyForPropagation
-									? Liferay.Language.get(
-											'propagation-is-disabled-connected-sites-might-not-have-been-updated-yet-propagation-is-only-triggered-when-a-site-created-from-the-template-is-visited'
-									  )
-									: Liferay.Language.get(
-											'propagation-is-enabled-connected-sites-will-be-updated-once-a-site-page-is-visited'
-									  ),
-								type: 'info',
-							});
-						}}
-					>
-						{readyForPropagation
-							? Liferay.Language.get('disable-propagation')
-							: Liferay.Language.get('ready-for-propagation')}
-					</ClayLink>
-				</div>
-			}
+				<ClayLink
+					button={{small: true}}
+					displayType="primary"
+					href={enableDisablePropagationURL}
+					onClick={() => {
+						openToast({
+							autoClose: 10000,
+							message: readyForPropagation
+								? Liferay.Language.get(
+										'propagation-is-disabled-connected-sites-might-not-have-been-updated-yet-propagation-is-only-triggered-when-a-site-created-from-the-template-is-visited'
+								  )
+								: Liferay.Language.get(
+										'propagation-is-enabled-connected-sites-will-be-updated-once-a-site-page-is-visited'
+								  ),
+							type: 'info',
+						});
+					}}
+				>
+					{readyForPropagation
+						? Liferay.Language.get('disable-propagation')
+						: Liferay.Language.get('ready-for-propagation')}
+				</ClayLink>
+			</div>
 		</ClayPopover>
 	);
 }

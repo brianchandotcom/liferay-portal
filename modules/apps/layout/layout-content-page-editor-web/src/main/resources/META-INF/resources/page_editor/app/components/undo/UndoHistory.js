@@ -122,7 +122,7 @@ const Overlay = () => {
 
 	return (
 		<div
-			className={'page-editor__undo-history__overlay'}
+			className="page-editor__undo-history__overlay"
 			onClickCapture={(event) => {
 				event.preventDefault();
 				event.stopPropagation();

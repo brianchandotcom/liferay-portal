@@ -133,10 +133,10 @@ function LayoutFinder(props) {
 	return (
 		<div className="layout-finder">
 			<button
-				className={`back-to-menu btn btn-sm btn-unstyled mb-3 pr-3`}
+				className="back-to-menu btn btn-sm btn-unstyled mb-3 pr-3"
 				onClick={handleOnClick}
 			>
-				<ClayIcon className={`icon-monospaced`} symbol="angle-left" />
+				<ClayIcon className="icon-monospaced" symbol="angle-left" />
 
 				{`${Liferay.Language.get('back-to-menu')} `}
 			</button>

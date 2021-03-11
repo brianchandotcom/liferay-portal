@@ -123,7 +123,7 @@ const Collaborators = ({
 									}
 								>
 									<ClaySticker
-										className={`sticker-use-icon user-icon-color-0`}
+										className="sticker-use-icon user-icon-color-0"
 										displayType="secondary"
 										shape="circle"
 									>

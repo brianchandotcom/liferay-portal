@@ -36,7 +36,7 @@ class PublishButton extends Component {
 						? Liferay.Language.get('unpublish-form')
 						: Liferay.Language.get('publish-form')
 				}
-				ref={'button'}
+				ref="button"
 				spritemap={spritemap}
 			/>
 		);

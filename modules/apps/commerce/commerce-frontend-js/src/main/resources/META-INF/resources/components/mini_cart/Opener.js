@@ -55,7 +55,7 @@ function Opener({openCart}) {
 			data-badge-count={numberOfItems}
 			onClick={openCart}
 		>
-			<ClayIcon spritemap={spritemap} symbol={'shopping-cart'} />
+			<ClayIcon spritemap={spritemap} symbol="shopping-cart" />
 		</button>
 	);
 }

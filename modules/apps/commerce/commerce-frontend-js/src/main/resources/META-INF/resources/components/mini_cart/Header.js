@@ -26,9 +26,9 @@ function Header() {
 	const numberOfItems = cartState?.cartItems?.length || 0;
 
 	return (
-		<div className={'mini-cart-header'}>
-			<div className={'mini-cart-header-block'}>
-				<div className={'mini-cart-header-title'}>
+		<div className="mini-cart-header">
+			<div className="mini-cart-header-block">
+				<div className="mini-cart-header-title">
 					<h3>
 						{!numberOfItems
 							? labels[ORDER_IS_EMPTY]
@@ -36,8 +36,8 @@ function Header() {
 					</h3>
 				</div>
 				{toggleable && (
-					<button className={'mini-cart-close'} onClick={closeCart}>
-						<ClayIcon spritemap={spritemap} symbol={'times'} />
+					<button className="mini-cart-close" onClick={closeCart}>
+						<ClayIcon spritemap={spritemap} symbol="times" />
 					</button>
 				)}
 			</div>

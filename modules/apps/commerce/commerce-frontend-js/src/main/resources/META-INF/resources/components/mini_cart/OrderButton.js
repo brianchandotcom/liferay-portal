@@ -34,7 +34,7 @@ function OrderButton() {
 	const workflowStatus = workflowStatusInfo?.code || WORKFLOW_STATUS_APPROVED;
 
 	return (
-		<div className={'mini-cart-submit'}>
+		<div className="mini-cart-submit">
 			<ClayButton
 				block
 				disabled={!cartItems.length}

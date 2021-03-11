@@ -122,7 +122,7 @@ class OrgChart extends Component {
 								this.zoomPercent = e;
 							}}
 						>
-							{'100%'}
+							100%
 						</span>
 						<span className="zoom-button" onClick={this.zoomIn}>
 							+

@@ -62,7 +62,7 @@ export default function Dropdown(props) {
 	}, [state]);
 
 	return (
-		<div className={`commerce-collapse panel`}>
+		<div className="commerce-collapse panel">
 			<button
 				aria-controls="collapseTwo"
 				aria-expanded={state === 'expanded'}

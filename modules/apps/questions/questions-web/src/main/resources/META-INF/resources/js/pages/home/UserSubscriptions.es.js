@@ -265,7 +265,7 @@ export default withRouter(({history}) => {
 					</div>
 				</div>
 			</div>
-			<Alert displayType={'success'} info={info} />
+			<Alert displayType="success" info={info} />
 		</section>
 	);
 });

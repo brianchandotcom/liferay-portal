@@ -36,9 +36,9 @@ describe('The Panel component should', () => {
 	test('Render components correctly', () => {
 		const {container} = render(
 			<Panel>
-				<Panel.Header>{'Header'}</Panel.Header>
-				<Panel.Body>{'Body'}</Panel.Body>
-				<Panel.Footer>{'Footer'}</Panel.Footer>
+				<Panel.Header>Header</Panel.Header>
+				<Panel.Body>Body</Panel.Body>
+				<Panel.Footer>Footer</Panel.Footer>
 			</Panel>
 		);
 
@@ -52,15 +52,13 @@ describe('The Panel component should', () => {
 
 	test('Render class passed by props', () => {
 		const {container} = render(
-			<Panel elementClasses={'custom-class'}>
-				<Panel.Header elementClasses={'custom-class-header'}>
-					{'Header'}
+			<Panel elementClasses="custom-class">
+				<Panel.Header elementClasses="custom-class-header">
+					Header
 				</Panel.Header>
-				<Panel.Body elementClasses={'custom-class-body'}>
-					{'Body'}
-				</Panel.Body>
-				<Panel.Footer elementClasses={'custom-class-footer'}>
-					{'Footer'}
+				<Panel.Body elementClasses="custom-class-body">Body</Panel.Body>
+				<Panel.Footer elementClasses="custom-class-footer">
+					Footer
 				</Panel.Footer>
 			</Panel>
 		);
@@ -76,7 +74,7 @@ describe('The Panel component should', () => {
 	test('Render header with title', () => {
 		const {container} = render(
 			<Panel>
-				<Panel.Header title={'Lorem Ipsum'}>{'Header'}</Panel.Header>
+				<Panel.Header title="Lorem Ipsum">Header</Panel.Header>
 			</Panel>
 		);
 

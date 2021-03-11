@@ -123,7 +123,7 @@ const Header = ({children, data, description, title}) => (
 					<span>
 						<span
 							className="workflow-tooltip"
-							data-tooltip-align={'right'}
+							data-tooltip-align="right"
 							title={description}
 						>
 							<ClayIcon symbol="question-circle-full" />

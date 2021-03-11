@@ -72,7 +72,7 @@ function CalculatorButtonArea({
 					}
 					title={Liferay.Language.get('left-parenthesis')}
 				>
-					{'('}
+					(
 				</ClayButton>
 
 				<ClayButton
@@ -89,7 +89,7 @@ function CalculatorButtonArea({
 					}
 					title={Liferay.Language.get('right-parenthesis')}
 				>
-					{')'}
+					)
 				</ClayButton>
 				{ONE_TO_NINE.map((value) => (
 					<ClayButton
@@ -121,7 +121,7 @@ function CalculatorButtonArea({
 						})
 					}
 				>
-					{'0'}
+					0
 				</ClayButton>
 				<ClayButton
 					aria-label={Liferay.Language.get('period')}
@@ -136,7 +136,7 @@ function CalculatorButtonArea({
 						})
 					}
 				>
-					{'.'}
+					.
 				</ClayButton>
 			</div>
 

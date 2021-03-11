@@ -117,7 +117,7 @@ export default withRouter(
 									answer.myRating &&
 									answer.myRating.ratingValue
 								}
-								type={'Message'}
+								type="Message"
 							/>
 						</div>
 

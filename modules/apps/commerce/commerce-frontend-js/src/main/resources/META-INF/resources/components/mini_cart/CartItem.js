@@ -136,7 +136,7 @@ function CartItem({item: cartItem}) {
 		>
 			{!!thumbnail && (
 				<div
-					className={'mini-cart-item-thumbnail'}
+					className="mini-cart-item-thumbnail"
 					style={{backgroundImage: `url(${thumbnail})`}}
 				/>
 			)}
@@ -155,7 +155,7 @@ function CartItem({item: cartItem}) {
 				/>
 			</div>
 
-			<div className={'mini-cart-item-quantity'}>
+			<div className="mini-cart-item-quantity">
 				<QuantitySelector
 					onUpdate={(freshQuantity) => {
 						if (freshQuantity && freshQuantity !== quantity) {
@@ -176,7 +176,7 @@ function CartItem({item: cartItem}) {
 				/>
 			</div>
 
-			<div className={'mini-cart-item-price'}>
+			<div className="mini-cart-item-price">
 				<Price
 					compact={true}
 					displayDiscountLevels={displayDiscountLevels}
@@ -184,24 +184,24 @@ function CartItem({item: cartItem}) {
 				/>
 			</div>
 
-			<div className={'mini-cart-item-delete'}>
+			<div className="mini-cart-item-delete">
 				<button
-					className={'btn btn-unstyled'}
+					className="btn btn-unstyled"
 					onClick={removeItem}
-					type={'button'}
+					type="button"
 				>
 					<ClayIcon
 						spritemap={spritemap}
-						symbol={'times-circle-full'}
+						symbol="times-circle-full"
 					/>
 				</button>
 			</div>
 
 			{errorMessages && (
-				<div className={'mini-cart-item-errors'}>
+				<div className="mini-cart-item-errors">
 					<ClayIcon
 						spritemap={spritemap}
-						symbol={'exclamation-circle'}
+						symbol="exclamation-circle"
 					/>
 
 					<span>{errorMessages}</span>
@@ -209,10 +209,10 @@ function CartItem({item: cartItem}) {
 			)}
 
 			{isShowingErrors && (
-				<div className={'mini-cart-item-errors'}>
+				<div className="mini-cart-item-errors">
 					<ClayIcon
 						spritemap={spritemap}
-						symbol={'exclamation-circle'}
+						symbol="exclamation-circle"
 					/>
 
 					<span>
@@ -231,11 +231,11 @@ function CartItem({item: cartItem}) {
 				<span>{Liferay.Language.get('the-item-has-been-removed')}</span>
 				<span>
 					<ClayButton
-						displayType={'link'}
-						href={'#'}
+						displayType="link"
+						href="#"
 						onClick={cancelRemoveItem}
 						small
-						type={'button'}
+						type="button"
 					>
 						{Liferay.Language.get('undo')}
 					</ClayButton>

@@ -92,7 +92,7 @@ function Price({
 
 			{hasPromo && (
 				<>
-					<span className={'price-label'}>
+					<span className="price-label">
 						{Liferay.Language.get('sale-price')}
 					</span>
 					<span
@@ -115,7 +115,7 @@ function Price({
 						{displayDiscountLevels ? (
 							discountLevels.map((level, index) => (
 								<span
-									className={'price-value-percentages'}
+									className="price-value-percentages"
 									key={index}
 								>
 									{level.slice(-2) === '00'
@@ -127,12 +127,12 @@ function Price({
 							<span>&ndash;{discountPercentage}%</span>
 						)}
 					</span>
-					<span className={'price-label'}>
+					<span className="price-label">
 						{Liferay.Language.get(
 							netPrice ? 'net-price' : 'gross-price'
 						)}
 					</span>
-					<span className={'price-value price-value-final'}>
+					<span className="price-value price-value-final">
 						{finalPriceFormatted}
 					</span>
 				</>

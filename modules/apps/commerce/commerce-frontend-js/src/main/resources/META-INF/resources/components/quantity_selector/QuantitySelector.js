@@ -94,7 +94,7 @@ function QuantitySelector({
 					max={optionSettings.maxQuantity}
 					min={optionSettings.minQuantity}
 					step={optionSettings.multipleQuantity}
-					type={'number'}
+					type="number"
 					{...commonProps}
 				/>
 			)}

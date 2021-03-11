@@ -118,11 +118,11 @@ export default function RatingsStackedStars({
 											>
 												<ClayIcon
 													className="ratings-stars-icon-full"
-													symbol={'star'}
+													symbol="star"
 												/>
 												<ClayIcon
 													className="ratings-stars-icon-empty"
-													symbol={'star-o'}
+													symbol="star-o"
 												/>
 												<span className="sr-only">
 													{Lang.sub(srMessage, [

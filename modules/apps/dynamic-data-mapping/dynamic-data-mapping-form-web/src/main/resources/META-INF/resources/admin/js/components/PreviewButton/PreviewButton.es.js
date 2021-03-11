@@ -44,9 +44,9 @@ class PreviewButton extends Component {
 					click: this._handleButtonClicked.bind(this),
 				}}
 				label={Liferay.Language.get('preview-form')}
-				ref={'button'}
+				ref="button"
 				spritemap={spritemap}
-				style={'link'}
+				style="link"
 			/>
 		);
 	}

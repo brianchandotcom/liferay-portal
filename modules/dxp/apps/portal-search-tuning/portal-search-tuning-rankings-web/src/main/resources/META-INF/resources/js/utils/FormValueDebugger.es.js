@@ -40,7 +40,7 @@ const FormValueDebugger = ({values}) => (
 		}}
 	>
 		<p>
-			<strong>{'Form hidden values for debugging'}</strong>
+			<strong>Form hidden values for debugging</strong>
 
 			{
 				' (Only the values from the frontend component. There are others defined in the JSP)'
@@ -50,8 +50,8 @@ const FormValueDebugger = ({values}) => (
 		<table className="table table-bordered table-striped">
 			<thead>
 				<tr>
-					<th>{'Name'}</th>
-					<th>{'Value'}</th>
+					<th>Name</th>
+					<th>Value</th>
 				</tr>
 			</thead>
 

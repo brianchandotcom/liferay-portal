@@ -36,7 +36,7 @@ export default function CustomTooltip(props) {
 			{showPublishedDateLabel && (
 				<span>
 					<span
-						className={'custom-circle mr-1'}
+						className="custom-circle mr-1"
 						style={{
 							backgroundColor: 'white',
 							border: `2px solid ${publishDateFill}`,

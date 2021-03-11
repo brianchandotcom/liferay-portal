@@ -19,7 +19,7 @@ export default function PaneOrgInfo(props) {
 	return (
 		<div className="pane-org-info">
 			<div
-				className={'org-color-identifier'}
+				className="org-color-identifier"
 				style={{backgroundColor: colorIdentifier}}
 			></div>
 			<div className="org-data">

@@ -298,7 +298,7 @@ describe('Treeview', () => {
 			];
 
 			const {getByText} = render(
-				<Treeview filter={'Sandro'} nodes={nodes} />
+				<Treeview filter="Sandro" nodes={nodes} />
 			);
 
 			expect(getByText('Sandro')).toBeInTheDocument();

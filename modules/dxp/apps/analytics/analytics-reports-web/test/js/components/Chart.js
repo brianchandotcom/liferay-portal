@@ -160,7 +160,7 @@ describe('Chart', () => {
 			>
 				<Chart
 					dataProviders={[mockViewsDataProvider]}
-					languageTag={'en-US'}
+					languageTag="en-US"
 					publishDate={mockPublishDate}
 					timeSpanOptions={mockTimeSpanOptions}
 				/>
@@ -199,7 +199,7 @@ describe('Chart', () => {
 						mockViewsDataProvider,
 						mockReadsDataProvider,
 					]}
-					languageTag={'en-US'}
+					languageTag="en-US"
 					publishDate={mockPublishDate}
 					timeSpanOptions={mockTimeSpanOptions}
 				/>

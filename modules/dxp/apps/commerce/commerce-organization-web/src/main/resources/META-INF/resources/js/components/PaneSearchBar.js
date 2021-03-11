@@ -33,7 +33,7 @@ class PaneSearchBar extends Component {
 				<form name="searchUser" onSubmit={this.onSubmit}>
 					<span>
 						<input
-							autoComplete={'off'}
+							autoComplete="off"
 							name="search-user"
 							onChange={onLookUp}
 							placeholder={`${getLocalizedText('search')}...`}
@@ -43,7 +43,7 @@ class PaneSearchBar extends Component {
 					</span>
 					<span>
 						<button tabIndex="5" type="submit">
-							<Icon spritemap={spritemap} symbol={'search'} />
+							<Icon spritemap={spritemap} symbol="search" />
 						</button>
 					</span>
 				</form>

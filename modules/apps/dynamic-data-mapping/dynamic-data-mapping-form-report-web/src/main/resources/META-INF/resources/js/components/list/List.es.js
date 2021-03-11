@@ -51,7 +51,7 @@ export default ({data, field, summary, totalEntries, type}) => {
 					))}
 
 				{data.length == 5 && totalEntries > 5 ? (
-					<li id={`${portletNamespace}-see-more`} key={'see-more'}>
+					<li id={`${portletNamespace}-see-more`} key="see-more">
 						<ClayButton
 							displayType="link"
 							onClick={() =>

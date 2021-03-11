@@ -271,7 +271,7 @@ class Sidebar extends Component {
 								role="button"
 							>
 								<span class="navbar-text-truncate">
-									{'Details'}
+									Details
 								</span>
 								<svg
 									aria-hidden="true"
@@ -1056,15 +1056,15 @@ class Sidebar extends Component {
 		return (
 			<Fragment>
 				<ClayIcon
-					elementClasses={'inline-item inline-item-before'}
+					elementClasses="inline-item inline-item-before"
 					spritemap={spritemap}
 					symbol={icon}
 				/>
 				{label}
 				<ClayIcon
-					elementClasses={'inline-item inline-item-after'}
+					elementClasses="inline-item inline-item-after"
 					spritemap={spritemap}
-					symbol={'caret-bottom'}
+					symbol="caret-bottom"
 				/>
 			</Fragment>
 		);
@@ -1212,7 +1212,7 @@ class Sidebar extends Component {
 				pages={pages}
 				paginationMode="tabbed"
 				portletNamespace={portletNamespace}
-				ref={`evaluableForm`}
+				ref="evaluableForm"
 				rules={rules}
 				spritemap={spritemap}
 			/>
@@ -1278,11 +1278,11 @@ class Sidebar extends Component {
 									}}
 									icon={focusedFieldType.icon}
 									items={this.state.dropdownFieldTypes}
-									itemsIconAlignment={'left'}
+									itemsIconAlignment="left"
 									label={this._renderFieldTypeDropdownLabel}
 									spritemap={spritemap}
-									style={'secondary'}
-									triggerClasses={'nav-link btn-sm'}
+									style="secondary"
+									triggerClasses="nav-link btn-sm"
 								/>
 							</div>
 						</li>
@@ -1295,7 +1295,7 @@ class Sidebar extends Component {
 								items={fieldActions}
 								ref="fieldSettingsActions"
 								spritemap={spritemap}
-								triggerClasses={'component-action'}
+								triggerClasses="component-action"
 							/>
 						</li>
 					</Fragment>

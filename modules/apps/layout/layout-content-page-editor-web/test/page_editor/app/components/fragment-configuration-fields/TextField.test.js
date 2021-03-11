@@ -26,7 +26,7 @@ const renderTextField = (typeOptions = {}, onValueSelect = () => {}) =>
 		<TextField
 			field={{label: INPUT_NAME, name: INPUT_NAME, typeOptions}}
 			onValueSelect={onValueSelect}
-			value={''}
+			value=""
 		/>
 	);
 

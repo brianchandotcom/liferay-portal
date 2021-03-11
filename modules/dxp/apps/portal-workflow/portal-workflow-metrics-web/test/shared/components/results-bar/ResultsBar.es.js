@@ -53,7 +53,7 @@ describe('The ResultsBar component should', () => {
 
 	test('Render with search value "test" and with 2 selected filter item', async () => {
 		const {container, getByText} = render(
-			<MockRouter query={'?search=test'}>
+			<MockRouter query="?search=test">
 				<ResultsBar>
 					<ResultsBar.TotalCount search="test" totalCount={2} />
 

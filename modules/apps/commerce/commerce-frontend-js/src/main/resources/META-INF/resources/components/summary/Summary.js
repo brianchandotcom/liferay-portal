@@ -157,7 +157,7 @@ function Summary({
 			))}
 
 			{isLoading && (
-				<div className={'summary-table-loader'}>
+				<div className="summary-table-loader">
 					<ClayLoadingIndicator />
 				</div>
 			)}

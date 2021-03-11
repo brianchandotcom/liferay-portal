@@ -52,7 +52,7 @@ function Brands(props) {
 						closedIcon={
 							<Icon
 								spritemap={state.app.spritemap}
-								symbol={'plus'}
+								symbol="plus"
 							/>
 						}
 						content={<ModelsList models={el.models} />}
@@ -63,7 +63,7 @@ function Brands(props) {
 						openIcon={
 							<Icon
 								spritemap={state.app.spritemap}
-								symbol={'minus'}
+								symbol="minus"
 							/>
 						}
 						title={el.name}

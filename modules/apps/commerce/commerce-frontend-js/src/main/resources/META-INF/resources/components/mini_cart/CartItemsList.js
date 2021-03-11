@@ -32,12 +32,12 @@ function CartItemsList() {
 	const {cartItems = [], summary = {}} = cartState;
 
 	return (
-		<div className={'mini-cart-items-list'}>
+		<div className="mini-cart-items-list">
 			<CartViews.ItemsListActions numberOfItems={cartItems.length} />
 
 			{cartItems.length > 0 ? (
 				<>
-					<div className={'mini-cart-cart-items'}>
+					<div className="mini-cart-cart-items">
 						{cartItems.map((item) => (
 							<CartViews.Item item={item} key={item.id} />
 						))}
@@ -56,7 +56,7 @@ function CartItemsList() {
 					<div className="empty-cart-icon mb-3">
 						<ClayIcon
 							spritemap={spritemap}
-							symbol={'shopping-cart'}
+							symbol="shopping-cart"
 						/>
 					</div>
 

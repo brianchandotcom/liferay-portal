@@ -240,7 +240,7 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 						})}
 					>
 						<ClayInput.GroupItem prepend shrink>
-							<ClayInput.GroupText>{'#'}</ClayInput.GroupText>
+							<ClayInput.GroupText>#</ClayInput.GroupText>
 						</ClayInput.GroupItem>
 						<ClayInput.GroupItem append>
 							<ClayTooltipProvider>

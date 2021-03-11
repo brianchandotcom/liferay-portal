@@ -161,7 +161,7 @@ public class TestrayImporter {
 		String testrayBuildSHA = getTestrayBuildSHA();
 
 		try {
-			String testrayBuildID = System.getProperty("TESTRAY_BUILD_ID");
+			String testrayBuildID = System.getenv("TESTRAY_BUILD_ID");
 
 			TestrayRoutine testrayRoutine = getTestrayRoutine(testBaseDir);
 			TestrayProductVersion testrayProductVersion =
@@ -172,7 +172,7 @@ public class TestrayImporter {
 					Integer.parseInt(testrayBuildID));
 			}
 
-			String testrayBuildName = System.getProperty("TESTRAY_BUILD_NAME");
+			String testrayBuildName = System.getenv("TESTRAY_BUILD_NAME");
 
 			if ((testrayBuild == null) &&
 				!JenkinsResultsParserUtil.isNullOrEmpty(testrayBuildName)) {
@@ -403,7 +403,7 @@ public class TestrayImporter {
 		try {
 			TestrayProject testrayProject = getTestrayProject(testBaseDir);
 
-			String testrayProductVersionID = System.getProperty(
+			String testrayProductVersionID = System.getenv(
 				"TESTRAY_PRODUCT_VERSION_ID");
 
 			if ((testrayProductVersionID != null) &&
@@ -414,7 +414,7 @@ public class TestrayImporter {
 						Integer.parseInt(testrayProductVersionID));
 			}
 
-			String testrayProductVersionName = System.getProperty(
+			String testrayProductVersionName = System.getenv(
 				"TESTRAY_PRODUCT_VERSION_NAME");
 
 			if ((testrayProductVersion == null) &&
@@ -526,7 +526,7 @@ public class TestrayImporter {
 		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		try {
-			String testrayProjectID = System.getProperty("TESTRAY_PROJECT_ID");
+			String testrayProjectID = System.getenv("TESTRAY_PROJECT_ID");
 
 			TestrayServer testrayServer = getTestrayServer(testBaseDir);
 
@@ -537,8 +537,7 @@ public class TestrayImporter {
 					Integer.parseInt(testrayProjectID));
 			}
 
-			String testrayProjectName = System.getProperty(
-				"TESTRAY_PROJECT_NAME");
+			String testrayProjectName = System.getenv("TESTRAY_PROJECT_NAME");
 
 			if ((testrayProject == null) &&
 				!JenkinsResultsParserUtil.isNullOrEmpty(testrayProjectName)) {
@@ -638,7 +637,7 @@ public class TestrayImporter {
 		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		try {
-			String testrayRoutineID = System.getProperty("TESTRAY_ROUTINE_ID");
+			String testrayRoutineID = System.getenv("TESTRAY_ROUTINE_ID");
 
 			TestrayProject testrayProject = getTestrayProject(testBaseDir);
 
@@ -649,8 +648,7 @@ public class TestrayImporter {
 					Integer.parseInt(testrayRoutineID));
 			}
 
-			String testrayRoutineName = System.getProperty(
-				"TESTRAY_ROUTINE_NAME");
+			String testrayRoutineName = System.getenv("TESTRAY_ROUTINE_NAME");
 
 			if ((testrayRoutine == null) &&
 				!JenkinsResultsParserUtil.isNullOrEmpty(testrayRoutineName)) {
@@ -759,7 +757,7 @@ public class TestrayImporter {
 		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		try {
-			String testrayServerURL = System.getProperty("TESTRAY_SERVER_URL");
+			String testrayServerURL = System.getenv("TESTRAY_SERVER_URL");
 
 			if ((testrayServerURL != null) &&
 				testrayServerURL.matches("https?://.*")) {

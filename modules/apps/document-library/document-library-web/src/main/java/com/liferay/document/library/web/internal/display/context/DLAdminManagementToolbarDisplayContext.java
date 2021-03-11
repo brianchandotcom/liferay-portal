@@ -234,7 +234,7 @@ public class DLAdminManagementToolbarDisplayContext
 	public CreationMenu getCreationMenu() {
 		String portletName = _liferayPortletRequest.getPortletName();
 
-		if (!portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
+		if (portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 			return null;
 		}
 

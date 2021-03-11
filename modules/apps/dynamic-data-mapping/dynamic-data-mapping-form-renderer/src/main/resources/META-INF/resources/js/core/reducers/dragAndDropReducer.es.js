@@ -173,7 +173,7 @@ export default (state, action, config) => {
 					generateFieldNameUsingFieldLabel,
 					indexes: targetIndexes,
 					newField: sourceField,
-					pages,
+					pages: newPages,
 					parentFieldName: targetParentFieldName,
 				})
 			);

@@ -145,6 +145,50 @@ definition {
 		CustomMetaTags.viewNoTags(customMetaTagsList = '''property="custom Tag 2 property" content="contenido de metaetiqueta personalizado"''');
 	}
 
+	@description = "This test covers LPS-125971. It ensures that the custom meta tag can be viewed in the HTML after editing and republishing the page."
+	@priority = "4"
+	test ViewTagAfterEditingPage {
+		var portalURL = PropsUtil.get("portal.url");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page Name");
+
+		Navigator.gotoNavTab(navTab = "Custom Meta Tags");
+
+		CustomMetaTags.addTag(
+			customContent = "custom meta content",
+			customProperty = "custom meta property");
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
+
+		CustomMetaTags.viewTags(customMetaTagsList = '''property="custom meta property" content="custom meta content"''');
+
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page Name");
+
+		PortletEntry.save();
+
+		Alert.viewSuccessMessage();
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
+
+		CustomMetaTags.viewTags(customMetaTagsList = '''property="custom meta property" content="custom meta content"''');
+	}
+
 	@description = "This ensures that the custom meta tag can not be generated without property or content."
 	@priority = "5"
 	test ViewTagWithoutPropertyOrContent {

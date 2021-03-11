@@ -95,6 +95,11 @@ const CreationMenu = ({
 	);
 
 	const Item = ({item}) => {
+		const mapKeys = (obj, fn) =>
+			Object.fromEntries(
+				Object.entries(obj).map(([key, value]) => [fn(key), value])
+			);
+
 		return (
 			<ClayDropDown.Item
 				href={item.href}
@@ -102,6 +107,7 @@ const CreationMenu = ({
 					onCreationMenuItemClick(event, {item});
 				}}
 				symbolLeft={item.icon}
+				{...mapKeys(item.data, (key) => `data-${key}`)}
 			>
 				{item.label}
 			</ClayDropDown.Item>

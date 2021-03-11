@@ -34,12 +34,6 @@ public interface DataCleanupConfiguration {
 	public boolean cleanUpChatModuleData();
 
 	@Meta.AD(
-		deflt = "false", name = "clean-up-image-editor-module-data",
-		required = false
-	)
-	public boolean cleanUpImageEditorModuleData();
-
-	@Meta.AD(
 		deflt = "false", name = "clean-up-dictionary-module-data",
 		required = false
 	)
@@ -56,6 +50,12 @@ public interface DataCleanupConfiguration {
 		required = false
 	)
 	public boolean cleanUpExpiredJournalArticleModuleData();
+
+	@Meta.AD(
+		deflt = "false", name = "clean-up-image-editor-module-data",
+		required = false
+	)
+	public boolean cleanUpImageEditorModuleData();
 
 	@Meta.AD(
 		deflt = "false", name = "clean-up-invitation-module-data",

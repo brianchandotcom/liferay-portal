@@ -39,8 +39,8 @@ JournalViewMoreMenuItemsDisplayContext journalViewMoreMenuItemsDisplayContext = 
 	navigationItems="<%= journalViewMoreMenuItemsDisplayContext.getNavigationItems() %>"
 />
 
-<clay:management-toolbar-v2
-	displayContext="<%= new JournalViewMoreMenuItemsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, journalViewMoreMenuItemsDisplayContext) %>"
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= new JournalViewMoreMenuItemsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, journalViewMoreMenuItemsDisplayContext) %>"
 />
 
 <aui:form cssClass="container-fluid container-fluid-max-xl" name="addMenuItemFm">

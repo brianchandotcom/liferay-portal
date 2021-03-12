@@ -42,20 +42,16 @@ public class BuildDatabaseUtil {
 	}
 
 	private static void _downloadBuildDatabaseFile(File baseDir, Build build) {
-		JenkinsMaster jenkinsMaster = build.getJenkinsMaster();
-
-		String masterName = jenkinsMaster.getName();
-
-		String jobName = build.getJobName();
-		int buildNumber = build.getBuildNumber();
-
 		if (JenkinsResultsParserUtil.isCINode()) {
 			String filePath = JenkinsResultsParserUtil.combine(
-				"/opt/java/jenkins/userContent/jobs/", jobName, "/builds/",
-				String.valueOf(buildNumber));
+				"/opt/java/jenkins/userContent/jobs/", build.getJobName(),
+				"/builds/", String.valueOf(build.getBuildNumber()));
 
 			try {
-				_downloadBuildDatabaseFile(baseDir, masterName, filePath);
+				JenkinsMaster jenkinsMaster = build.getJenkinsMaster();
+
+				_downloadBuildDatabaseFile(
+					baseDir, jenkinsMaster.getName(), filePath);
 
 				return;
 			}

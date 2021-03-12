@@ -32,6 +32,10 @@ public class ExceptionMapper extends BaseExceptionMapper<Exception> {
 	public Response toResponse(Exception exception) {
 		Throwable throwable = exception.getCause();
 
+		if (throwable == null) {
+			return super.toResponse(exception);
+		}
+
 		javax.ws.rs.ext.ExceptionMapper<Throwable> exceptionMapper =
 			_providers.getExceptionMapper(
 				(Class<Throwable>)throwable.getClass());

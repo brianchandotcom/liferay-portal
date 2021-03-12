@@ -33,6 +33,10 @@ public class CommerceShipmentLocalServiceWrapper
 		_commerceShipmentLocalService = commerceShipmentLocalService;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #addDeliverySubscriptionCommerceShipment(long, long)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.model.CommerceShipment
 			addCommerceDeliverySubscriptionShipment(
@@ -87,6 +91,17 @@ public class CommerceShipmentLocalServiceWrapper
 
 		return _commerceShipmentLocalService.addCommerceShipment(
 			commerceOrderId, serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceShipment
+			addDeliverySubscriptionCommerceShipment(
+				long userId, long commerceOrderItemId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShipmentLocalService.
+			addDeliverySubscriptionCommerceShipment(
+				userId, commerceOrderItemId);
 	}
 
 	/**

@@ -72,6 +72,16 @@ public class CommerceShipmentItemLocalServiceUtil {
 			commerceInventoryWarehouseId, quantity, serviceContext);
 	}
 
+	public static CommerceShipmentItem
+			addDeliverySubscriptionCommerceShipmentItem(
+				long groupId, long userId, long commerceShipmentId,
+				long commerceOrderItemId)
+		throws PortalException {
+
+		return getService().addDeliverySubscriptionCommerceShipmentItem(
+			groupId, userId, commerceShipmentId, commerceOrderItemId);
+	}
+
 	/**
 	 * Creates a new commerce shipment item with the primary key. Does not add the commerce shipment item to the database.
 	 *

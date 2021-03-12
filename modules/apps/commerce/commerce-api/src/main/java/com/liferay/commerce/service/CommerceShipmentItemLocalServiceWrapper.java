@@ -66,6 +66,18 @@ public class CommerceShipmentItemLocalServiceWrapper
 			commerceInventoryWarehouseId, quantity, serviceContext);
 	}
 
+	@Override
+	public com.liferay.commerce.model.CommerceShipmentItem
+			addDeliverySubscriptionCommerceShipmentItem(
+				long groupId, long userId, long commerceShipmentId,
+				long commerceOrderItemId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShipmentItemLocalService.
+			addDeliverySubscriptionCommerceShipmentItem(
+				groupId, userId, commerceShipmentId, commerceOrderItemId);
+	}
+
 	/**
 	 * Creates a new commerce shipment item with the primary key. Does not add the commerce shipment item to the database.
 	 *

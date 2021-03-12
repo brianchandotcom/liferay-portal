@@ -66,6 +66,11 @@ public interface CommerceShipmentLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.commerce.service.impl.CommerceShipmentLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the commerce shipment local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link CommerceShipmentLocalServiceUtil} if injection and service tracking are not available.
 	 */
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #addDeliverySubscriptionCommerceShipment(long, long)}
+	 */
+	@Deprecated
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceShipment addCommerceDeliverySubscriptionShipment(
 			long userId, long commerceOrderId, String name, String description,
@@ -96,6 +101,11 @@ public interface CommerceShipmentLocalService
 
 	public CommerceShipment addCommerceShipment(
 			long commerceOrderId, ServiceContext serviceContext)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceShipment addDeliverySubscriptionCommerceShipment(
+			long userId, long commerceOrderItemId)
 		throws PortalException;
 
 	/**

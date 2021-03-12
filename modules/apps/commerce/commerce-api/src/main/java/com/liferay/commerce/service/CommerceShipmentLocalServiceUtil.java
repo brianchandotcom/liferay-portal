@@ -44,6 +44,11 @@ public class CommerceShipmentLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.service.impl.CommerceShipmentLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #addDeliverySubscriptionCommerceShipment(long, long)}
+	 */
+	@Deprecated
 	public static CommerceShipment addCommerceDeliverySubscriptionShipment(
 			long userId, long commerceOrderId, String name, String description,
 			String street1, String street2, String street3, String city,
@@ -90,6 +95,14 @@ public class CommerceShipmentLocalServiceUtil {
 
 		return getService().addCommerceShipment(
 			commerceOrderId, serviceContext);
+	}
+
+	public static CommerceShipment addDeliverySubscriptionCommerceShipment(
+			long userId, long commerceOrderItemId)
+		throws PortalException {
+
+		return getService().addDeliverySubscriptionCommerceShipment(
+			userId, commerceOrderItemId);
 	}
 
 	/**

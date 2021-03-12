@@ -17,6 +17,7 @@ package com.liferay.frontend.taglib.clay.internal.data.set.filter;
 import com.liferay.frontend.taglib.clay.data.set.filter.BaseAutocompleteClayDataSetFilter;
 import com.liferay.frontend.taglib.clay.data.set.filter.ClayDataSetFilter;
 import com.liferay.frontend.taglib.clay.data.set.filter.ClayDataSetFilterContextContributor;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Collections;
@@ -41,20 +42,22 @@ public class AutocompleteClayDataSetFilterContextContributor
 
 		if (clayDataSetFilter instanceof BaseAutocompleteClayDataSetFilter) {
 			return _serialize(
-				(BaseAutocompleteClayDataSetFilter)clayDataSetFilter);
+				(BaseAutocompleteClayDataSetFilter)clayDataSetFilter, locale);
 		}
 
 		return Collections.emptyMap();
 	}
 
 	private Map<String, Object> _serialize(
-		BaseAutocompleteClayDataSetFilter baseAutocompleteClayDataSetFilter) {
+		BaseAutocompleteClayDataSetFilter baseAutocompleteClayDataSetFilter,
+		Locale locale) {
 
 		return HashMapBuilder.<String, Object>put(
 			"apiURL", baseAutocompleteClayDataSetFilter.getAPIURL()
 		).put(
 			"inputPlaceholder",
-			baseAutocompleteClayDataSetFilter.getPlaceholder()
+			LanguageUtil.get(
+				locale, baseAutocompleteClayDataSetFilter.getPlaceholder())
 		).put(
 			"itemKey", baseAutocompleteClayDataSetFilter.getItemKey()
 		).put(

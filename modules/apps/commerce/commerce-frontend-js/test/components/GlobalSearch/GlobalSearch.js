@@ -12,7 +12,7 @@
  * details.
  */
 
-import '../utils/polyfills';
+import '../../utils/polyfills';
 
 import '@testing-library/jest-dom/extend-expect';
 import {
@@ -24,11 +24,11 @@ import {
 import fetchMock from 'fetch-mock';
 import React from 'react';
 
-import ServiceProvider from '../../src/main/resources/META-INF/resources/ServiceProvider/index';
-import GlobalSearch from '../../src/main/resources/META-INF/resources/components/global_search/GlobalSearch';
-import {accountTemplate, getAccounts} from '../utils/fake_data/accounts';
-import {getOrders, orderTemplate} from '../utils/fake_data/orders';
-import {getProducts, productTemplate} from '../utils/fake_data/products';
+import ServiceProvider from '../../../src/main/resources/META-INF/resources/ServiceProvider/index';
+import GlobalSearch from '../../../src/main/resources/META-INF/resources/components/global_search/GlobalSearch';
+import {accountTemplate, getAccounts} from '../../utils/fake_data/accounts';
+import {getOrders, orderTemplate} from '../../utils/fake_data/orders';
+import {getProducts, productTemplate} from '../../utils/fake_data/products';
 
 const accountsEndpointRegexp = new RegExp(
 	ServiceProvider.AdminAccountAPI('v1').baseURL

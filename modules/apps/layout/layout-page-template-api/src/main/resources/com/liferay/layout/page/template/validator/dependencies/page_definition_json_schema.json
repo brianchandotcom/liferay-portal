@@ -3,6 +3,30 @@
 	"$schema": "http://json-schema.org/draft-07/schema#",
 	"additionalProperties": false,
 	"definitions": {
+		"ClassFieldReference": {
+			"additionalProperties": false,
+			"properties": {
+				"className": {
+					"title": "The className Schema",
+					"type": "string"
+				},
+				"fieldName": {
+					"title": "The fieldName Schema",
+					"type": "string"
+				},
+				"fieldValue": {
+					"title": "The fieldValue Schema",
+					"type": "string"
+				}
+			},
+			"required": [
+				"className",
+				"fieldName",
+				"fieldValue"
+			],
+			"title": "The ClassFieldReference Schema",
+			"type": "object"
+		},
 		"ClassNameReference": {
 			"additionalProperties": false,
 			"properties": {
@@ -405,6 +429,9 @@
 						},
 						"itemReference": {
 							"oneOf": [
+								{
+									"$ref": "#/definitions/ClassFieldReference"
+								},
 								{
 									"$ref": "#/definitions/ClassPKReference"
 								},

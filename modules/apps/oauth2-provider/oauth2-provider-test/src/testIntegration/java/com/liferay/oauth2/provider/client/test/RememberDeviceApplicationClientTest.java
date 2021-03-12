@@ -16,12 +16,16 @@ package com.liferay.oauth2.provider.client.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.oauth2.provider.constants.GrantType;
+import com.liferay.oauth2.provider.model.OAuth2Authorization;
+import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collections;
@@ -235,6 +239,128 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 		Assert.assertNotEquals(
 			rememberDeviceCookie.getValue(),
 			newRememberDeviceCookie.getValue());
+	}
+
+	@Test
+	public void testRevokeTokenInvalidateCookieRememberApplicationCode()
+		throws PortalException {
+
+		String applicationClientId = "oauthTestRememberApplicationCode";
+
+		Response response = getCodeResponse(
+			"test@liferay.com", "test", null,
+			getCodeFunction(
+				webTarget -> webTarget.queryParam(
+					"client_id", applicationClientId
+				).queryParam(
+					"redirect_uri", "http://redirecturi:8080"
+				).queryParam(
+					"response_type", "code"
+				),
+				_getExtraParameterForRememberDevice(), false));
+
+		Map<String, NewCookie> cookies = response.getCookies();
+
+		NewCookie rememberDeviceCookie = cookies.get(_COOKIE_REMEMBER_DEVICE);
+
+		String authorizationCodeString = parseAuthorizationCodeString(response);
+
+		String token = getToken(
+			applicationClientId, null,
+			(clientId, tokenInvocationBuilder) -> {
+				MultivaluedMap<String, String> formData =
+					new MultivaluedHashMap<>();
+
+				formData.add("client_id", applicationClientId);
+				formData.add("client_secret", "oauthTestApplicationSecret");
+				formData.add("grant_type", "authorization_code");
+				formData.add("code", authorizationCodeString);
+
+				return tokenInvocationBuilder.post(Entity.form(formData));
+			},
+			this::parseTokenString);
+
+		_revokeOAuth2AuthorizationByAccessToken(token);
+
+		response = getCodeResponse(
+			"test@liferay.com", "test", null,
+			getCodeFunction(
+				webTarget -> webTarget.queryParam(
+					"client_id", applicationClientId
+				).queryParam(
+					"redirect_uri", "http://redirecturi:8080"
+				).queryParam(
+					"response_type", "code"
+				),
+				true),
+			invocationBuilder -> invocationBuilder.cookie(
+				_COOKIE_REMEMBER_DEVICE, rememberDeviceCookie.getValue()));
+
+		Assert.assertNull(parseAuthorizationCodeString(response));
+	}
+
+	@Test
+	public void testRevokeTokenInvalidateCookieRememberApplicationCodePKCE()
+		throws PortalException {
+
+		String applicationClientId = "oauthTestRememberApplicationCodePKCE";
+
+		String codeVerifierString = RandomTestUtil.randomString();
+
+		Response response = getCodeResponse(
+			"test@liferay.com", "test", null,
+			getCodeFunction(
+				webTarget -> webTarget.queryParam(
+					"client_id", applicationClientId
+				).queryParam(
+					"code_challenge", generateCodeChallenge(codeVerifierString)
+				).queryParam(
+					"response_type", "code"
+				).queryParam(
+					"redirect_uri", "http://redirecturi:8080"
+				),
+				_getExtraParameterForRememberDevice(), false));
+
+		Map<String, NewCookie> cookies = response.getCookies();
+
+		NewCookie rememberDeviceCookie = cookies.get(_COOKIE_REMEMBER_DEVICE);
+
+		String authorizationCodeString = parseAuthorizationCodeString(response);
+
+		String token = getToken(
+			applicationClientId, null,
+			(clientId, tokenInvocationBuilder) -> {
+				MultivaluedMap<String, String> formData =
+					new MultivaluedHashMap<>();
+
+				formData.add("client_id", clientId);
+				formData.add("code", authorizationCodeString);
+				formData.add("code_verifier", codeVerifierString);
+				formData.add("grant_type", "authorization_code");
+
+				return tokenInvocationBuilder.post(Entity.form(formData));
+			},
+			this::parseTokenString);
+
+		_revokeOAuth2AuthorizationByAccessToken(token);
+
+		response = getCodeResponse(
+			"test@liferay.com", "test", null,
+			getCodeFunction(
+				webTarget -> webTarget.queryParam(
+					"client_id", applicationClientId
+				).queryParam(
+					"code_challenge", generateCodeChallenge(codeVerifierString)
+				).queryParam(
+					"response_type", "code"
+				).queryParam(
+					"redirect_uri", "http://redirecturi:8080"
+				),
+				true),
+			invocationBuilder -> invocationBuilder.cookie(
+				_COOKIE_REMEMBER_DEVICE, rememberDeviceCookie.getValue()));
+
+		Assert.assertNull(parseAuthorizationCodeString(response));
 	}
 
 	@Test
@@ -489,11 +615,25 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 		return extraParameters;
 	}
 
+	private void _revokeOAuth2AuthorizationByAccessToken(String token)
+		throws PortalException {
+
+		OAuth2Authorization oAuth2Authorization =
+			_oAuth2AuthorizationLocalService.
+				getOAuth2AuthorizationByAccessTokenContent(token);
+
+		_oAuth2AuthorizationLocalService.deleteOAuth2Authorization(
+			oAuth2Authorization);
+	}
+
 	private static final String _COOKIE_REMEMBER_DEVICE =
 		"OAUTH2_REMEMBER_DEVICE";
 
 	private static final String _REMEMBER_DEVICE_PARAMETER =
 		"_com_liferay_oauth2_provider_web_internal_portlet_" +
 			"OAuth2AuthorizePortlet_rememberDevice";
+
+	@Inject
+	private OAuth2AuthorizationLocalService _oAuth2AuthorizationLocalService;
 
 }

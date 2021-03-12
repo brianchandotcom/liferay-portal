@@ -123,7 +123,7 @@ public class LiferayBatchFileReader implements Reader<IndexedRecord> {
 			if (line == null) {
 			}
 
-			while ((line != null) && (++_current < _BATCH_SIZE)) {
+			while ((line != null) && ((++_current % _BATCH_SIZE) != 0)) {
 				fileWriter.write(line);
 				fileWriter.write(System.lineSeparator());
 

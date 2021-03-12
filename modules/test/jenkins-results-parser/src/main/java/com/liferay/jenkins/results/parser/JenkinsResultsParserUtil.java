@@ -971,6 +971,63 @@ public class JenkinsResultsParserUtil {
 		return Arrays.asList(propertyContent.split(","));
 	}
 
+	public static Map<String, JSONObject> getBuildResultJSONObjects(
+		List<String> buildResultJsonURLs) {
+
+		final Map<String, JSONObject> buildResultJSONObjects =
+			Collections.synchronizedMap(new HashMap<String, JSONObject>());
+
+		List<Callable<Void>> callables = new ArrayList<>();
+
+		for (final String buildResultJsonURL : buildResultJsonURLs) {
+			Callable<Void> callable = new Callable<Void>() {
+
+				@Override
+				public Void call() throws IOException {
+					buildResultJSONObjects.put(
+						buildResultJsonURL, toJSONObject(buildResultJsonURL));
+
+					return null;
+				}
+
+			};
+
+			callables.add(callable);
+		}
+
+		ThreadPoolExecutor threadPoolExecutor = getNewThreadPoolExecutor(
+			25, true);
+
+		ParallelExecutor<Void> parallelExecutor = new ParallelExecutor<>(
+			callables, threadPoolExecutor);
+
+		parallelExecutor.execute();
+
+		return buildResultJSONObjects;
+	}
+
+	public static List<String> getBuildResultJsonURLs(
+		String jobURL, int maxBuildCount) {
+
+		List<String> buildResultJsonURLs = new ArrayList<>();
+
+		int lastCompletedBuildNumber =
+			JenkinsAPIUtil.getLastCompletedBuildNumber(jobURL);
+
+		int buildNumber = lastCompletedBuildNumber;
+
+		while (buildNumber > (lastCompletedBuildNumber - maxBuildCount)) {
+			String buildURL = jobURL + buildNumber;
+
+			buildResultJsonURLs.add(
+				getBuildArtifactURL(buildURL, "build-result.json"));
+
+			buildNumber--;
+		}
+
+		return buildResultJsonURLs;
+	}
+
 	public static String getBuildURLByBuildID(String buildID) {
 		Matcher matcher = _buildIDPattern.matcher(buildID);
 

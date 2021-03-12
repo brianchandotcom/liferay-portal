@@ -13,7 +13,7 @@
  */
 
 import {RulesSupport} from 'dynamic-data-mapping-form-builder';
-import {getUid} from 'dynamic-data-mapping-form-renderer';
+import {PagesVisitor, getUid} from 'dynamic-data-mapping-form-renderer';
 import {INITIAL_STATE} from 'dynamic-data-mapping-form-renderer/js/core/config/index.es';
 
 export const BUILDER_INITIAL_STATE = {
@@ -68,6 +68,33 @@ const INITIAL_PAGES = [
 	},
 ];
 
+/**
+ * NormalizePages only fixes the row structure of a FieldGroup to make the
+ * rest of the application unaware of the state of JSONArray or any
+ * other peculiarity of the backend.
+ *
+ * NOTE: This is considered a stopgap so that the backend can better
+ * deal with the structure.
+ */
+const normalizePages = (pages) => {
+	const visitor = new PagesVisitor(pages);
+
+	return visitor.mapFields(
+		({rows, ...otherProps}) => {
+			if (!rows) {
+				return otherProps;
+			}
+
+			return {
+				...otherProps,
+				rows: rows.JSONArray,
+			};
+		},
+		true,
+		true
+	);
+};
+
 export const initState = (
 	{
 		initialSuccessPageSettings,
@@ -79,7 +106,9 @@ export const initState = (
 	},
 	{view}
 ) => {
-	const pages = initialPages.length ? initialPages : INITIAL_PAGES;
+	const pages = initialPages.length
+		? normalizePages(initialPages)
+		: INITIAL_PAGES;
 
 	// Before starting the application formats the rules there may be a broken rule with
 	// an invalid field and it is necessary to remove it from the rule.

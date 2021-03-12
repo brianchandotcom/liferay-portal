@@ -364,8 +364,6 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 				CommerceCheckoutWebKeys.COMMERCE_ORDER, commerceOrder);
 
 			_commerceOrderThreadLocal.set(commerceOrder);
-
-			return;
 		}
 
 		ThemeDisplay themeDisplay =

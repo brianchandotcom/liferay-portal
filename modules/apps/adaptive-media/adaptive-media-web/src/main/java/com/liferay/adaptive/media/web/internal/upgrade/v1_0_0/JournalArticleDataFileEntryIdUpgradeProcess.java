@@ -15,12 +15,7 @@
 package com.liferay.adaptive.media.web.internal.upgrade.v1_0_0;
 
 import com.liferay.adaptive.media.image.html.constants.AMImageHTMLConstants;
-import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
@@ -29,7 +24,11 @@ import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -39,26 +38,29 @@ import java.util.regex.Pattern;
 public class JournalArticleDataFileEntryIdUpgradeProcess
 	extends UpgradeProcess {
 
-	public JournalArticleDataFileEntryIdUpgradeProcess(
-		JournalArticleLocalService journalArticleLocalService) {
-
-		_journalArticleLocalService = journalArticleLocalService;
-	}
-
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
-			ActionableDynamicQuery actionableDynamicQuery =
-				_journalArticleLocalService.getActionableDynamicQuery();
+		try (PreparedStatement selectPreparedStatement =
+				connection.prepareStatement(
+					"select id_, content from JournalArticle");
+			PreparedStatement updatePreparedStatement =
+				connection.prepareStatement(
+					"update JournalArticle set content = ? where id_ = ?");
+			ResultSet resultSet = selectPreparedStatement.executeQuery()) {
 
-			actionableDynamicQuery.setPerformActionMethod(
-				(JournalArticle journalArticle) -> _upgradeJournalArticle(
-					journalArticle));
+			while (resultSet.next()) {
+				String content = resultSet.getString("content");
 
-			actionableDynamicQuery.performActions();
-		}
-		catch (PortalException portalException) {
-			throw new UpgradeException(portalException);
+				String upgradedContent = _upgradeContent(content);
+
+				if (!Objects.equals(content, upgradedContent)) {
+					updatePreparedStatement.setString(1, upgradedContent);
+					updatePreparedStatement.setLong(
+						2, resultSet.getLong("id_"));
+
+					updatePreparedStatement.executeUpdate();
+				}
+			}
 		}
 	}
 
@@ -96,29 +98,7 @@ public class JournalArticleDataFileEntryIdUpgradeProcess
 		return document.asXML();
 	}
 
-	private void _upgradeJournalArticle(JournalArticle journalArticle)
-		throws UpgradeException {
-
-		try {
-			String content = journalArticle.getContent();
-
-			String upgradedContent = _upgradeContent(content);
-
-			if (!content.equals(upgradedContent)) {
-				journalArticle.setContent(upgradedContent);
-
-				_journalArticleLocalService.updateJournalArticle(
-					journalArticle);
-			}
-		}
-		catch (DocumentException documentException) {
-			throw new UpgradeException(documentException);
-		}
-	}
-
 	private static final Pattern _dataFileEntryIdPattern = Pattern.compile(
 		"data-fileEntryId=", Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
-
-	private final JournalArticleLocalService _journalArticleLocalService;
 
 }

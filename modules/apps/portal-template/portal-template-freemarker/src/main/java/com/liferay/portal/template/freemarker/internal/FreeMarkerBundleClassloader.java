@@ -42,6 +42,10 @@ public class FreeMarkerBundleClassloader extends URLClassLoader {
 		Collections.addAll(_bundles, bundles);
 	}
 
+	public void addBundle(Bundle bundle) {
+		_bundles.add(bundle);
+	}
+
 	@Override
 	public URL findResource(String name) {
 		for (Bundle bundle : _bundles) {
@@ -80,6 +84,10 @@ public class FreeMarkerBundleClassloader extends URLClassLoader {
 	@Override
 	public Enumeration<URL> getResources(String name) {
 		return findResources(name);
+	}
+
+	public void removeBundle(Bundle bundle) {
+		_bundles.remove(bundle);
 	}
 
 	@Override

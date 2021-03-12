@@ -16,7 +16,6 @@ package com.liferay.commerce.internal.subscription;
 
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommerceSubscriptionEntryConstants;
-import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceSubscriptionEntry;
@@ -134,7 +133,15 @@ public class CommerceSubscriptionEntryHelperImpl
 					CommerceSubscriptionEntryConstants.
 						SUBSCRIPTION_STATUS_ACTIVE,
 					commerceSubscriptionEntry.
-						getDeliverySubscriptionStatus())) {
+						getDeliverySubscriptionStatus()) &&
+				!Objects.equals(
+					CommerceSubscriptionEntryConstants.
+						SUBSCRIPTION_STATUS_SUSPENDED,
+					commerceSubscriptionEntry.getSubscriptionStatus()) &&
+				!Objects.equals(
+					CommerceSubscriptionEntryConstants.
+						SUBSCRIPTION_STATUS_CANCELLED,
+					commerceSubscriptionEntry.getSubscriptionStatus())) {
 
 				_addShipment(commerceOrderItem);
 
@@ -209,17 +216,9 @@ public class CommerceSubscriptionEntryHelperImpl
 	private void _addShipment(CommerceOrderItem commerceOrderItem)
 		throws Exception {
 
-		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
-
-		CommerceAddress shippingAddress = commerceOrder.getShippingAddress();
-
-		_commerceShipmentLocalService.addCommerceDeliverySubscriptionShipment(
-			commerceOrder.getUserId(), commerceOrder.getCommerceOrderId(),
-			shippingAddress.getName(), shippingAddress.getDescription(),
-			shippingAddress.getStreet1(), shippingAddress.getStreet2(),
-			shippingAddress.getStreet3(), shippingAddress.getCity(),
-			shippingAddress.getZip(), shippingAddress.getRegionId(),
-			shippingAddress.getCountryId(), shippingAddress.getPhoneNumber());
+		_commerceShipmentLocalService.addDeliverySubscriptionCommerceShipment(
+			commerceOrderItem.getUserId(),
+			commerceOrderItem.getCommerceOrderItemId());
 	}
 
 	private boolean _isNewSubscription(CommerceOrderItem commerceOrderItem) {

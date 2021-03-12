@@ -61,7 +61,7 @@ public class SelectUsersDisplayContext {
 		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
 			_httpServletRequest,
 			SiteMembershipsPortletKeys.SITE_MEMBERSHIPS_ADMIN,
-			"display-style-users", "icon");
+			"display-style-select-users", "icon");
 
 		return _displayStyle;
 	}

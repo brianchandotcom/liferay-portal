@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.kaleo.runtime.internal;
 
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -39,6 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(immediate = true, service = AopService.class)
+@CTAware
 @Transactional(
 	isolation = Isolation.PORTAL, propagation = Propagation.SUPPORTS,
 	rollbackFor = Exception.class

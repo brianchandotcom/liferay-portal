@@ -17,6 +17,7 @@ package com.liferay.portal.workflow.kaleo.runtime.integration.internal;
 import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.DuplicateLockException;
@@ -95,6 +96,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true, property = "proxy.bean=false",
 	service = WorkflowTaskManager.class
 )
+@CTAware
 public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 
 	@Override

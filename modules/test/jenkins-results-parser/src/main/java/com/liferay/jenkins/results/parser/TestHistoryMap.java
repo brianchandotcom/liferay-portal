@@ -154,17 +154,6 @@ public class TestHistoryMap
 				testName, batchName, buildURL, errorSnippet, status));
 	}
 
-	public void setFlakinessAlgorithm(String type) {
-		FlakinessAlgorithm flakinessAlgorithm = FlakinessAlgorithm.get(type);
-
-		if (flakinessAlgorithm == null) {
-			throw new IllegalArgumentException(
-				"Invalid flakiness algorithm type: '" + type + "'");
-		}
-
-		_flakinessAlgorithm = flakinessAlgorithm;
-	}
-
 	public void setMinimumStatusChanges(int minimumStatusChanges) {
 		_minimumStatusChanges = minimumStatusChanges;
 	}
@@ -178,7 +167,7 @@ public class TestHistoryMap
 			new String[] {"Name", "Batch Type", "Results", "Status Changes"});
 
 		for (TestHistory testHistory : values()) {
-			if (testHistory.hasFlakiness()) {
+			if (testHistory.isFlaky()) {
 				flakyTestDataJSONArray.put(testHistory.toJSONArray());
 			}
 		}
@@ -227,12 +216,30 @@ public class TestHistoryMap
 			return statuses;
 		}
 
-		public boolean hasFlakiness() {
-			if (_flakinessAlgorithm == FlakinessAlgorithm.STATUS_CHANGE) {
-				return _hasFlakinessByStatusChangeAlgorithm();
+		public boolean isFlaky() {
+			String lastStatus = null;
+
+			for (TestHistoryEntry testHistoryEntry : _testHistoryEntries) {
+				String status = testHistoryEntry.getStatus();
+
+				if (lastStatus == null) {
+					lastStatus = status;
+
+					continue;
+				}
+
+				if (!lastStatus.equals(status)) {
+					lastStatus = status;
+
+					_statusChanges++;
+				}
 			}
 
-			return _hasFlakinessByBasicAlgorithm();
+			if (_statusChanges >= _minimumStatusChanges) {
+				return true;
+			}
+
+			return false;
 		}
 
 		public JSONArray toJSONArray() {
@@ -258,44 +265,6 @@ public class TestHistoryMap
 			jsonArray.put(_statusChanges);
 
 			return jsonArray;
-		}
-
-		private boolean _hasFlakinessByBasicAlgorithm() {
-			List<String> statuses = getStatuses();
-
-			if (Collections.frequency(statuses, statuses.get(0)) <
-					statuses.size()) {
-
-				return true;
-			}
-
-			return false;
-		}
-
-		private boolean _hasFlakinessByStatusChangeAlgorithm() {
-			String lastStatus = null;
-
-			for (TestHistoryEntry testHistoryEntry : _testHistoryEntries) {
-				String status = testHistoryEntry.getStatus();
-
-				if (lastStatus == null) {
-					lastStatus = status;
-
-					continue;
-				}
-
-				if (!lastStatus.equals(status)) {
-					lastStatus = status;
-
-					_statusChanges++;
-				}
-			}
-
-			if (_statusChanges >= _minimumStatusChanges) {
-				return true;
-			}
-
-			return false;
 		}
 
 		private final String _batchName;
@@ -380,38 +349,6 @@ public class TestHistoryMap
 	private static final Pattern _testrayLogPattern = Pattern.compile(
 		"test[0-9-]+\\/[0-9]+\\/.+?\\/[0-9]+\\/(?<jobVariant>.+?)\\/.*");
 
-	private FlakinessAlgorithm _flakinessAlgorithm =
-		FlakinessAlgorithm.STATUS_CHANGE;
 	private int _minimumStatusChanges = 3;
-
-	private enum FlakinessAlgorithm {
-
-		BASIC("basic"), STATUS_CHANGE("status_change");
-
-		public static FlakinessAlgorithm get(String type) {
-			return _flakinessAlgorithms.get(type);
-		}
-
-		public String getType() {
-			return _type;
-		}
-
-		private FlakinessAlgorithm(String type) {
-			_type = type;
-		}
-
-		private static Map<String, FlakinessAlgorithm> _flakinessAlgorithms =
-			new HashMap<>();
-
-		static {
-			for (FlakinessAlgorithm flakinessAlgorithm : values()) {
-				_flakinessAlgorithms.put(
-					flakinessAlgorithm.getType(), flakinessAlgorithm);
-			}
-		}
-
-		private final String _type;
-
-	}
 
 }

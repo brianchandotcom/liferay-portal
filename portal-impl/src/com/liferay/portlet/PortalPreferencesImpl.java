@@ -130,10 +130,7 @@ public class PortalPreferencesImpl
 
 			PortalPreferenceKey portalPreferenceKey = entry.getKey();
 
-			if (Objects.equals(namespace, portalPreferenceKey.getNamespace()) ||
-				(Validator.isNull(namespace) &&
-				 Validator.isNull(portalPreferenceKey.getNamespace()))) {
-
+			if (portalPreferenceKey.matchNamespace(namespace)) {
 				preferenceMap.put(
 					portalPreferenceKey.getKey(), entry.getValue());
 			}
@@ -256,11 +253,7 @@ public class PortalPreferencesImpl
 
 				PortalPreferenceKey portalPreferenceKey = entry.getKey();
 
-				if (Objects.equals(
-						namespace, portalPreferenceKey.getNamespace()) ||
-					(Validator.isNull(namespace) &&
-					 Validator.isNull(portalPreferenceKey.getNamespace()))) {
-
+				if (portalPreferenceKey.matchNamespace(namespace)) {
 					reset(namespace, portalPreferenceKey.getKey());
 				}
 			}

@@ -85,6 +85,16 @@ public class PortalPreferenceKey {
 		return HashUtil.hash(hash, _key);
 	}
 
+	public boolean matchNamespace(String namespace) {
+		if (Objects.equals(namespace, _namespace) ||
+			(Validator.isNull(namespace) && (_namespace == null))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(5);

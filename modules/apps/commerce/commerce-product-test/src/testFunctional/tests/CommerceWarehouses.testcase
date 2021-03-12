@@ -56,13 +56,4 @@ definition {
 		// TODO COMMERCE-5708 UpdateInventorySKUQuantity Pending Implementation
 	}
 
-	@description = "This is a test for COMMERCE-5709. As a product specialist i want to update the quantity of a product inside a warehouse	"
-	@ignore = "true"
-	@priority = "3"
-	test UpdateInventorySKUQuantity {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-5709 UpdateInventorySKUQuantity Pending Implementation
-	}
-
 }

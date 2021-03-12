@@ -91,6 +91,31 @@ public class JournalArticleExpirationTest {
 		testExpireArticle(false, _MODE_POSTPONE_EXPIRIRATION);
 	}
 
+	@Test
+	public void testSetFutureExpirationDate() throws Exception {
+		JournalArticle article = addArticle(_group.getGroupId(), true);
+
+		Date modifiedDate = article.getModifiedDate();
+
+		JournalArticle updatedArticle = updateArticle(
+			article, _MODE_POSTPONE_EXPIRIRATION);
+
+		article = JournalArticleLocalServiceUtil.getArticle(article.getId());
+
+		Assert.assertEquals(modifiedDate, article.getModifiedDate());
+
+		updatedArticle.setExpirationDate(
+			new Date(System.currentTimeMillis() - (Time.HOUR * 2)));
+
+		JournalArticleLocalServiceUtil.updateJournalArticle(updatedArticle);
+
+		JournalArticleLocalServiceUtil.checkArticles();
+
+		article = JournalArticleLocalServiceUtil.getArticle(article.getId());
+
+		Assert.assertTrue(modifiedDate.before(article.getModifiedDate()));
+	}
+
 	protected JournalArticle addArticle(long groupId, boolean approved)
 		throws Exception {
 

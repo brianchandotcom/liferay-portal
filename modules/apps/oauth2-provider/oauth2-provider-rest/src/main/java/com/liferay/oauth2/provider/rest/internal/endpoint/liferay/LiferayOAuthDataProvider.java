@@ -189,6 +189,11 @@ public class LiferayOAuthDataProvider
 			oAuth2Authorization);
 	}
 
+	public void doRevokeAuthorization(OAuth2Authorization oAuth2Authorization) {
+		_oAuth2AuthorizationLocalService.deleteOAuth2Authorization(
+			oAuth2Authorization);
+	}
+
 	@Override
 	public void doRevokeRefreshToken(RefreshToken refreshToken) {
 		OAuth2Authorization oAuth2Authorization =

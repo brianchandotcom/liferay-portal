@@ -25,6 +25,7 @@ import com.liferay.jenkins.results.parser.JenkinsMaster;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.LocalGitBranch;
+import com.liferay.jenkins.results.parser.NotificationUtil;
 import com.liferay.jenkins.results.parser.PluginsBranchInformationBuild;
 import com.liferay.jenkins.results.parser.PluginsTopLevelBuild;
 import com.liferay.jenkins.results.parser.PortalAppReleaseTopLevelBuild;
@@ -786,6 +787,24 @@ public class TestrayImporter {
 		return _topLevelBuild;
 	}
 
+	public void postSlackNotification() {
+		for (File testBaseDir : _testrayBuilds.keySet()) {
+			String slackChannels = _getSlackChannels(testBaseDir);
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(slackChannels)) {
+				continue;
+			}
+
+			for (String slackChannel : slackChannels.split(",")) {
+				NotificationUtil.sendSlackNotification(
+					_getSlackBody(testBaseDir), slackChannel,
+					_getSlackIconEmoji(testBaseDir),
+					_getSlackSubject(testBaseDir),
+					_getSlackUsername(testBaseDir));
+			}
+		}
+	}
+
 	public void recordTestrayCaseResults() {
 		Job job = getJob();
 
@@ -1220,6 +1239,14 @@ public class TestrayImporter {
 		qaWebsitesGitWorkingDirectory.displayLog();
 	}
 
+	private String _fixSlackString(String string) {
+		string = string.replace("*", "&#42;");
+		string = string.replace(">", "&gt;");
+		string = string.replace("<", "&lt;");
+
+		return string.replace("|", "&vert;");
+	}
+
 	private String _getBuildParameter(String buildParameterName) {
 		Map<String, String> buildParameters = new HashMap<>();
 
@@ -1279,6 +1306,98 @@ public class TestrayImporter {
 		propertiesList.add(job.getJobProperties());
 
 		return propertiesList;
+	}
+
+	private String _getSlackBody(File testBaseDir) {
+		Job job = getJob();
+
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		String slackBody = JenkinsResultsParserUtil.getProperty(
+			job.getJobProperties(), "testray.slack.body",
+			topLevelBuild.getTestSuiteName(), topLevelBuild.getJobName());
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(slackBody)) {
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("*Jenkins Testray Importer:* ");
+			sb.append("<$(testray.importer.build.url)|");
+			sb.append("$(testray.importer.job.name)#");
+			sb.append("$(testray.importer.build.number)>\n");
+
+			sb.append("*Testray Build:* ");
+			sb.append("<$(testray.build.url)|$(testray.build.name)>");
+
+			slackBody = sb.toString();
+		}
+
+		return _replaceSlackEnvVars(slackBody, testBaseDir);
+	}
+
+	private String _getSlackChannels(File testBaseDir) {
+		Job job = getJob();
+
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		String slackChannels = JenkinsResultsParserUtil.getProperty(
+			job.getJobProperties(), "testray.slack.channels",
+			topLevelBuild.getTestSuiteName(), topLevelBuild.getJobName());
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(slackChannels)) {
+			slackChannels = "testray-reports";
+		}
+
+		return _replaceSlackEnvVars(slackChannels, testBaseDir);
+	}
+
+	private String _getSlackIconEmoji(File testBaseDir) {
+		Job job = getJob();
+
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		String slackIconEmoji = JenkinsResultsParserUtil.getProperty(
+			job.getJobProperties(), "testray.slack.icon.emoji",
+			topLevelBuild.getTestSuiteName(), topLevelBuild.getJobName());
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(slackIconEmoji)) {
+			return _replaceSlackEnvVars(slackIconEmoji, testBaseDir);
+		}
+
+		return ":liferay-ci:";
+	}
+
+	private String _getSlackSubject(File testBaseDir) {
+		Job job = getJob();
+
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		String slackSubject = JenkinsResultsParserUtil.getProperty(
+			job.getJobProperties(), "testray.slack.subject",
+			topLevelBuild.getTestSuiteName(), topLevelBuild.getJobName());
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(slackSubject)) {
+			return _replaceSlackEnvVars(slackSubject, testBaseDir);
+		}
+
+		return JenkinsResultsParserUtil.combine(
+			topLevelBuild.getJobName(), "#",
+			String.valueOf(topLevelBuild.getBuildNumber()));
+	}
+
+	private String _getSlackUsername(File testBaseDir) {
+		Job job = getJob();
+
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		String slackUsername = JenkinsResultsParserUtil.getProperty(
+			job.getJobProperties(), "testray.slack.username",
+			topLevelBuild.getTestSuiteName(), topLevelBuild.getJobName());
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(slackUsername)) {
+			return _replaceSlackEnvVars(slackUsername, testBaseDir);
+		}
+
+		return "Liferay CI";
 	}
 
 	private String _replaceEnvVars(String string) {
@@ -1587,6 +1706,97 @@ public class TestrayImporter {
 
 		return string.replace(
 			"$(jenkins.report.url)", _topLevelBuild.getJenkinsReportURL());
+	}
+
+	private String _replaceSlackEnvVars(String string, File testBaseDir) {
+		string = _replaceEnvVars(string);
+
+		string = _replaceSlackEnvVarsTestrayInformation(string, testBaseDir);
+		string = _replaceSlackEnvVarsTestrayImporter(string);
+
+		return string;
+	}
+
+	private String _replaceSlackEnvVarsTestrayImporter(String string) {
+		String buildNumber = System.getenv("BUILD_NUMBER");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(buildNumber)) {
+			string = string.replace(
+				"$(testray.importer.build.number)", buildNumber);
+		}
+
+		String buildURL = System.getenv("BUILD_URL");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(buildURL)) {
+			string = string.replace("$(testray.importer.build.url)", buildURL);
+		}
+
+		String jobName = System.getenv("JOB_NAME");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(jobName)) {
+			string = string.replace("$(testray.importer.job.name)", jobName);
+		}
+
+		return string;
+	}
+
+	private String _replaceSlackEnvVarsTestrayInformation(
+		String string, File testBaseDir) {
+
+		TestrayServer testrayServer = getTestrayServer(testBaseDir);
+
+		if (testrayServer != null) {
+			string = string.replace(
+				"$(testray.server.url)",
+				String.valueOf(testrayServer.getURL()));
+		}
+
+		TestrayProject testrayProject = getTestrayProject(testBaseDir);
+
+		if (testrayProject != null) {
+			string = string.replace(
+				"$(testray.project.name)",
+				_fixSlackString(testrayProject.getName()));
+
+			string = string.replace(
+				"$(testray.project.url)",
+				String.valueOf(testrayProject.getURL()));
+		}
+
+		TestrayProductVersion testrayProductVersion = getTestrayProductVersion(
+			testBaseDir);
+
+		if (testrayProductVersion != null) {
+			string = string.replace(
+				"$(testray.product.version.name)",
+				_fixSlackString(testrayProductVersion.getName()));
+			string = string.replace(
+				"$(testray.product.version.url)",
+				String.valueOf(testrayProductVersion.getURL()));
+		}
+
+		TestrayRoutine testrayRoutine = getTestrayRoutine(testBaseDir);
+
+		if (testrayRoutine != null) {
+			string = string.replace(
+				"$(testray.routine.name)",
+				_fixSlackString(testrayRoutine.getName()));
+			string = string.replace(
+				"$(testray.routine.url)",
+				String.valueOf(testrayRoutine.getURL()));
+		}
+
+		TestrayBuild testrayBuild = getTestrayBuild(testBaseDir);
+
+		if (testrayBuild != null) {
+			string = string.replace(
+				"$(testray.build.name)",
+				_fixSlackString(testrayBuild.getName()));
+			string = string.replace(
+				"$(testray.build.url)", String.valueOf(testrayBuild.getURL()));
+		}
+
+		return string;
 	}
 
 	private void _setupProfileDXP() {

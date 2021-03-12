@@ -181,72 +181,17 @@ renderResponse.setTitle(title);
 			</liferay-frontend:edit-form-footer>
 		</c:when>
 		<c:otherwise>
-			<aui:script>
-				var formSheet = document.querySelector('.lfr-form-content .sheet');
-
-				formSheet.classList.add('border-0');
-
-				var dialog = Liferay.Util.getWindow(
-					'<%= assetCategoriesDisplayContext.getItemSelectorEventName() %>'
-				);
-				var footer = dialog.getToolbar('footer');
-
-				dialog.headerNode
-					.one('.modal-title')
-					.text(
-						dialog.get('initialTitle') + ' - <liferay-ui:message key="add-new" />'
-					);
-
-				var controlButtons = footer
-					.get('boundingBox')
-					.all('.add-category-toolbar-button');
-
-				if (controlButtons.size() > 0) {
-					controlButtons.show();
-				}
-				else {
-					var cancelButton = document.createElement('button');
-					cancelButton.setAttribute(
-						'class',
-						'add-category-toolbar-button btn btn-link ml-3'
-					);
-					cancelButton.setAttribute('type', 'button');
-					cancelButton.innerText = '<liferay-ui:message key="cancel" />';
-					cancelButton.addEventListener('click', () => {
-						footer.get('boundingBox').all('.add-category-toolbar-button').hide();
-						Liferay.Util.navigate('<%= HtmlUtil.escapeJS(redirect) %>');
-					});
-
-					footer.get('boundingBox').append(cancelButton);
-
-					var saveAndAddNewButton = document.createElement('button');
-					saveAndAddNewButton.setAttribute(
-						'class',
-						'add-category-toolbar-button btn btn-secondary ml-3'
-					);
-					saveAndAddNewButton.setAttribute('type', 'submit');
-					saveAndAddNewButton.innerText =
-						'<liferay-ui:message key="save-and-add-a-new-one" />';
-					saveAndAddNewButton.addEventListener('click', () => {
-						<portlet:namespace />saveAndAddNew();
-					});
-
-					footer.get('boundingBox').append(saveAndAddNewButton);
-
-					var submitButton = document.createElement('button');
-					submitButton.setAttribute(
-						'class',
-						'add-category-toolbar-button btn btn-primary ml-3'
-					);
-					submitButton.setAttribute('type', 'submit');
-					submitButton.innerText = '<liferay-ui:message key="save" />';
-					submitButton.addEventListener('click', () => {
-						submitForm(document.querySelector('#<portlet:namespace />fm'));
-					});
-
-					footer.get('boundingBox').append(submitButton);
-				}
-			</aui:script>
+			<liferay-frontend:component
+				context='<%=
+					HashMapBuilder.<String, Object>put(
+						"currentURL", currentURL
+					).put(
+						"redirect", redirect
+					).build()
+				%>'
+				module="js/DetailsItemSelector"
+				servletContext="<%= application %>"
+			/>
 		</c:otherwise>
 	</c:choose>
 </liferay-frontend:edit-form>

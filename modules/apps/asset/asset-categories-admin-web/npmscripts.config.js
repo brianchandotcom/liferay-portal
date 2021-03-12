@@ -18,6 +18,7 @@ module.exports = {
 			'<inputDir>/js/ActionsComponentPropsTransformer.js',
 			'<inputDir>/js/AssetCategoriesManagementToolbarPropsTransformer.js',
 			'<inputDir>/js/AssetCategoriesSelectorTag.es.js',
+			'<inputDir>/js/DetailsItemSelector.js',
 		],
 		mode: 'default',
 		remotes: ['asset-taglib'],

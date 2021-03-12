@@ -108,6 +108,9 @@ public class AuthorizationCodeGrantServiceRegistrator {
 					rememberDeviceContent.equals(
 						oAuth2Authorization.getRememberDeviceContent())) {
 
+					liferayOAuthDataProvider.doRevokeAuthorization(
+						oAuth2Authorization);
+
 					Cookie cookie = _getCookie();
 
 					CookieKeys.addCookie(
@@ -175,9 +178,6 @@ public class AuthorizationCodeGrantServiceRegistrator {
 							!OAuthUtils.isExpired(
 								refreshToken.getIssuedAt(),
 								refreshToken.getExpiresIn())) {
-
-							liferayOAuthDataProvider.doRevokeRefreshToken(
-								refreshToken);
 
 							return true;
 						}

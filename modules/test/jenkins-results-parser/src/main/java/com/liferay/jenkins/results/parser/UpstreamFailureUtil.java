@@ -281,18 +281,8 @@ public class UpstreamFailureUtil {
 	private static int _getLastCompletedUpstreamBuildNumber(
 		TopLevelBuild topLevelBuild) {
 
-		try {
-			JSONObject lastCompletedBuildJSONObject =
-				JenkinsResultsParserUtil.toJSONObject(
-					topLevelBuild.getAcceptanceUpstreamJobURL() +
-						"/lastCompletedBuild/api/json?tree=number",
-					false);
-
-			return lastCompletedBuildJSONObject.getInt("number");
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
+		return JenkinsAPIUtil.getLastCompletedBuildNumber(
+			topLevelBuild.getAcceptanceUpstreamJobURL());
 	}
 
 	private static int _getLastUpstreamBuildNumber(

@@ -90,4 +90,32 @@ public class JenkinsAPIUtil {
 		return buildParameters;
 	}
 
+	public static JSONObject getLastCompletedBuildJSONObject(
+		String jobURL, String tree) {
+
+		StringBuffer sb = new StringBuffer();
+
+		sb.append(JenkinsResultsParserUtil.getLocalURL(jobURL));
+		sb.append("/lastCompletedBuild/api/json");
+
+		if (tree != null) {
+			sb.append("?tree=");
+			sb.append(tree);
+		}
+
+		try {
+			return JenkinsResultsParserUtil.toJSONObject(sb.toString(), false);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException("Unable to get build JSON", ioException);
+		}
+	}
+
+	public static int getLastCompletedBuildNumber(String jobURL) {
+		JSONObject lastCompletedBuildJSONObject =
+			getLastCompletedBuildJSONObject(jobURL, "number");
+
+		return lastCompletedBuildJSONObject.getInt("number");
+	}
+
 }

@@ -64,9 +64,12 @@ public class FreeMarkerTemplateResourceCache extends BaseTemplateResourceCache {
 
 	@Modified
 	protected void modified(Map<String, Object> properties) {
-		deactivate();
+		FreeMarkerEngineConfiguration freeMarkerEngineConfiguration =
+			ConfigurableUtil.createConfigurable(
+				FreeMarkerEngineConfiguration.class, properties);
 
-		activate(properties);
+		setModificationCheckInterval(
+			freeMarkerEngineConfiguration.resourceModificationCheck());
 	}
 
 	private static final String _PORTAL_CACHE_NAME =

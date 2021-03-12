@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser.testray;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+
 import java.io.IOException;
 
 import java.net.HttpURLConnection;
@@ -74,6 +76,25 @@ public class TestrayS3Object {
 		return urlString;
 	}
 
+	public String getValue() {
+		if (_value != null) {
+			return _value;
+		}
+
+		if (!exists()) {
+			return null;
+		}
+
+		try {
+			_value = JenkinsResultsParserUtil.toString(getURLString());
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		return _value;
+	}
+
 	@Override
 	public String toString() {
 		return getURLString();
@@ -96,5 +117,6 @@ public class TestrayS3Object {
 	private final String _key;
 	private final TestrayS3Bucket _testrayS3Bucket;
 	private final URL _url;
+	private String _value;
 
 }

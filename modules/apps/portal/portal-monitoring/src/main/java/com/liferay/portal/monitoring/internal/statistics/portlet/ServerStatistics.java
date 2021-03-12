@@ -132,7 +132,7 @@ public class ServerStatistics
 
 	public void reset() {
 		_companyLocalService.forEachCompanyId(
-			this::reset,
+			companyId -> reset(companyId),
 			ArrayUtil.toLongArray(_companyStatisticsByCompanyId.keySet()));
 	}
 

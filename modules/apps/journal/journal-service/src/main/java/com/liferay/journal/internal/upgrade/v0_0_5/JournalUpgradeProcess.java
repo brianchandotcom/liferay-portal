@@ -561,7 +561,8 @@ public class JournalUpgradeProcess extends UpgradeProcess {
 
 	protected void updateJournalArticles() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			_companyLocalService.forEachCompanyId(this::updateJournalArticles);
+			_companyLocalService.forEachCompanyId(
+				companyId -> updateJournalArticles(companyId));
 		}
 	}
 

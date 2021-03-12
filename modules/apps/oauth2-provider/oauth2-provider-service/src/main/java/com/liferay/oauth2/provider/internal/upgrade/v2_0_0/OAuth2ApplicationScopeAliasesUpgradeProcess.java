@@ -53,7 +53,8 @@ public class OAuth2ApplicationScopeAliasesUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_companyLocalService.forEachCompanyId(this::upgradeCompany);
+		_companyLocalService.forEachCompanyId(
+			companyId -> upgradeCompany(companyId));
 	}
 
 	protected void upgradeCompany(long companyId) throws Exception {

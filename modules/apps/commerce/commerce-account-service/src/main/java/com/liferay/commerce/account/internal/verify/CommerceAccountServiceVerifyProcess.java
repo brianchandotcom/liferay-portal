@@ -51,8 +51,9 @@ public class CommerceAccountServiceVerifyProcess extends VerifyProcess {
 	protected void verifyAccountGroup() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			_companyLocalService.forEachCompanyId(
-				_commerceAccountGroupLocalService::
-					checkGuestCommerceAccountGroup);
+				companyId ->
+					_commerceAccountGroupLocalService.
+						checkGuestCommerceAccountGroup(companyId));
 		}
 	}
 

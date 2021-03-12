@@ -149,7 +149,7 @@ public class PortalInstancesLocalServiceImpl
 			}
 
 			_companyLocalService.forEachCompanyId(
-				PortalInstances::removeCompany,
+				companyId -> PortalInstances.removeCompany(companyId),
 				ArrayUtil.toLongArray(removeableCompanyIds));
 		}
 		catch (Exception exception) {

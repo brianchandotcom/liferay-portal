@@ -685,7 +685,8 @@ public class MainServlet extends HttpServlet {
 	}
 
 	private void _destroyCompanies() throws Exception {
-		CompanyLocalServiceUtil.forEachCompanyId(this::_destroyCompany);
+		CompanyLocalServiceUtil.forEachCompanyId(
+			companyId -> _destroyCompany(companyId));
 	}
 
 	private void _destroyCompany(long companyId) {

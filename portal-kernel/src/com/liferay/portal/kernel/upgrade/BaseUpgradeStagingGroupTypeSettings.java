@@ -48,7 +48,8 @@ public class BaseUpgradeStagingGroupTypeSettings extends UpgradeProcess {
 	}
 
 	protected void updateStagedPortletNames() throws PortalException {
-		_companyLocalService.forEachCompanyId(this::updateStagedPortletNames);
+		_companyLocalService.forEachCompanyId(
+			companyId -> updateStagedPortletNames(companyId));
 	}
 
 	protected void updateStagedPortletNames(Long companyId)

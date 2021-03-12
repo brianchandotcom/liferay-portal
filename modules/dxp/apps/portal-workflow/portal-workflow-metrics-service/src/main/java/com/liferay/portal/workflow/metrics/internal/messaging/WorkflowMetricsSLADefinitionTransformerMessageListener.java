@@ -95,7 +95,8 @@ public class WorkflowMetricsSLADefinitionTransformerMessageListener
 			return;
 		}
 
-		_companyLocalService.forEachCompanyId(this::_transform);
+		_companyLocalService.forEachCompanyId(
+			companyId -> _transform(companyId));
 	}
 
 	@Override

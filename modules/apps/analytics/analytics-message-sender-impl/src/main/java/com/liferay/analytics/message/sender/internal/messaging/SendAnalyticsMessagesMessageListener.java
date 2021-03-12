@@ -86,7 +86,7 @@ public class SendAnalyticsMessagesMessageListener extends BaseMessageListener {
 			return;
 		}
 
-		_companyLocalService.forEachCompanyId(this::_process);
+		_companyLocalService.forEachCompanyId(companyId -> _process(companyId));
 	}
 
 	@Override

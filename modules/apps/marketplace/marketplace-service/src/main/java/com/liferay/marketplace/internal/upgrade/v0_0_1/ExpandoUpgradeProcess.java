@@ -51,7 +51,8 @@ public class ExpandoUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_companyLocalService.forEachCompanyId(this::updateMPExpandoColumns);
+		_companyLocalService.forEachCompanyId(
+			companyId -> updateMPExpandoColumns(companyId));
 	}
 
 	protected void updateMPExpandoColumns(long companyId) throws Exception {

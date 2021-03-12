@@ -258,7 +258,8 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 */
 	@Override
 	public void checkSystemRoles() throws PortalException {
-		companyLocalService.forEachCompanyId(this::checkSystemRoles);
+		companyLocalService.forEachCompanyId(
+			companyId -> checkSystemRoles(companyId));
 	}
 
 	/**

@@ -130,7 +130,7 @@ public class SAPEntryScopeDescriptorFinderRegistrator {
 			oAuth2JSONWSConfiguration.sapEntryOAuth2Prefix();
 
 		_companyLocalService.forEachCompanyId(
-			this::register,
+			companyId -> register(companyId),
 			ArrayUtil.toLongArray(_scopeFinderServiceRegistrations.keySet()));
 	}
 

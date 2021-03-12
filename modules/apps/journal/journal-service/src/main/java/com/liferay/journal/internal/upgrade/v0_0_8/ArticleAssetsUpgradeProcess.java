@@ -51,7 +51,7 @@ public class ArticleAssetsUpgradeProcess extends UpgradeProcess {
 	protected void updateDefaultDraftArticleAssets() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			_companyLocalService.forEachCompanyId(
-				this::updateDefaultDraftArticleAssets);
+				companyId -> updateDefaultDraftArticleAssets(companyId));
 		}
 	}
 

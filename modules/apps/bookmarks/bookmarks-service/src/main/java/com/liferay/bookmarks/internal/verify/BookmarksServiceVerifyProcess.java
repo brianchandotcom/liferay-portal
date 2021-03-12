@@ -82,7 +82,8 @@ public class BookmarksServiceVerifyProcess extends VerifyProcess {
 	protected void verifyTree() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			_companyLocalService.forEachCompanyId(
-				_bookmarksFolderLocalService::rebuildTree);
+				companyId -> _bookmarksFolderLocalService.rebuildTree(
+					companyId));
 		}
 	}
 

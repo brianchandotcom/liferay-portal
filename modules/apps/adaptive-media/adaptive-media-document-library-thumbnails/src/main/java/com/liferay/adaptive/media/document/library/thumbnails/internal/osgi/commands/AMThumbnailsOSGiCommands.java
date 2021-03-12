@@ -80,12 +80,12 @@ public class AMThumbnailsOSGiCommands {
 
 	public void cleanUp(String... companyIds) {
 		_companyLocalService.forEachCompanyId(
-			this::_cleanUp, _getCompanyIds(companyIds));
+			companyId -> _cleanUp(companyId), _getCompanyIds(companyIds));
 	}
 
 	public void migrate(String... companyIds) throws PortalException {
 		_companyLocalService.forEachCompanyId(
-			this::_migrate, _getCompanyIds(companyIds));
+			companyId -> _migrate(companyId), _getCompanyIds(companyIds));
 	}
 
 	private void _cleanUp(long companyId) {

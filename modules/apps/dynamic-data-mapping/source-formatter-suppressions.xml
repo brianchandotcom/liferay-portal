@@ -17,5 +17,6 @@
 	</checkstyle>
 	<source-check>
 		<suppress checks="JavaForLoopCheck" files="dynamic-data-mapping-form-values-query/src/main/java/com/liferay/dynamic/data/mapping/form/values/query/internal/model/DDMFormValuesFilterImpl\.java" />
+		<suppress checks="JavaModuleServiceProxyFactoryCheck" files="dynamic-data-mapping-form-field-type/src/test/java/com/liferay/dynamic/data/mapping/form/field/type/internal/document/library/DocumentLibraryDDMFormFieldTemplateContextContributorTest\.java" />
 	</source-check>
 </suppressions>

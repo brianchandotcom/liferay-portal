@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.util.HtmlImpl;
 
 import java.util.Locale;
@@ -76,7 +77,9 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author Pedro Queiroz
  */
-@PrepareForTest(RequestBackedPortletURLFactoryUtil.class)
+@PrepareForTest(
+	{RequestBackedPortletURLFactoryUtil.class, ServiceProxyFactory.class}
+)
 @RunWith(PowerMockRunner.class)
 public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 	extends BaseDDMFormFieldTypeSettingsTestCase {
@@ -107,6 +110,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 		setUpPortal();
 		setUpPortletFileRepository();
 		setUpRequestBackedPortletURLFactoryUtil();
+		setUpServiceProxyFactory();
 		setUpUserLocalService();
 	}
 
@@ -670,6 +674,18 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 				Matchers.any(HttpServletRequest.class))
 		).thenReturn(
 			_requestBackedPortletURLFactory
+		);
+	}
+
+	protected void setUpServiceProxyFactory() {
+		PowerMockito.mockStatic(ServiceProxyFactory.class);
+
+		PowerMockito.when(
+			ServiceProxyFactory.newServiceTrackedInstance(
+				Matchers.any(), Matchers.any(), Matchers.anyString(),
+				Matchers.anyBoolean())
+		).thenReturn(
+			null
 		);
 	}
 

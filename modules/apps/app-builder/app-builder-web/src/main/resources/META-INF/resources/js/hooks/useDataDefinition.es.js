@@ -23,11 +23,12 @@ export default function useDataDefinition({
 }) {
 	const [dataDefinition, setDataDefinition] = useState(defaultState);
 
+	const baseURL = `/o/data-engine/v2.0/data-definitions/${dataDefinitionId}`;
+	const endpoint = queryFields ? `${baseURL}?fields=${queryFields}` : baseURL;
+
 	useEffect(() => {
 		if (dataDefinitionId) {
-			getItem(
-				`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}?fields=${queryFields}`
-			).then((dataDefinition) =>
+			getItem(endpoint).then((dataDefinition) =>
 				setDataDefinition({
 					...dataDefinition,
 					title: getLocalizedValue(
@@ -37,7 +38,7 @@ export default function useDataDefinition({
 				})
 			);
 		}
-	}, [dataDefinitionId, queryFields]);
+	}, [dataDefinitionId, endpoint]);
 
 	return dataDefinition;
 }

@@ -17,8 +17,21 @@ import React from 'react';
 import {HashRouter as Router, Route, Switch} from 'react-router-dom';
 
 import {AppContextProvider} from '../../AppContext.es';
+import useDataDefinition from '../../hooks/useDataDefinition.es';
 import useLazy from '../../hooks/useLazy.es';
 import ListAppsTabs from './ListAppsTabs.es';
+
+const DataDefinitionWrapper = ({children, dataDefinitionId}) => {
+	const {availableLanguageIds, defaultLanguageId} = useDataDefinition({
+		dataDefinitionId,
+		defaultState: {
+			availableLanguageIds: [],
+			defaultLanguageId: '',
+		},
+	});
+
+	return children({availableLanguageIds, defaultLanguageId});
+};
 
 export default (props) => {
 	const {appsTabs} = props;
@@ -42,7 +55,21 @@ export default (props) => {
 
 		return {
 			component: (props) => (
-				<EditPage module={editEntryPoint} props={{scope, ...props}} />
+				<DataDefinitionWrapper
+					dataDefinitionId={props.match.params.dataDefinitionId}
+				>
+					{({availableLanguageIds, defaultLanguageId}) => (
+						<EditPage
+							module={editEntryPoint}
+							props={{
+								availableLanguageIds,
+								defaultLanguageId,
+								scope,
+								...props,
+							}}
+						/>
+					)}
+				</DataDefinitionWrapper>
 			),
 			path: editPath,
 		};

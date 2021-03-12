@@ -36,6 +36,7 @@ import {
 const queryFields = [
 	'active',
 	'appDeployments',
+	'dataDefinitionId',
 	'dateCreated',
 	'dateModified',
 	'id',
@@ -122,10 +123,10 @@ const ListApps = ({
 
 	const ENDPOINT = `/o/app-builder/v1.0/data-definitions/${dataDefinitionId}/apps?scope=${scope}&fields=${queryFields}`;
 
-	const getEditAppUrl = (appId) => {
+	const getEditAppUrl = ({dataDefinitionId, id}) => {
 		return withBackUrl(
 			compile(editPath[1])({
-				appId,
+				appId: id,
 				dataDefinitionId,
 				objectType,
 			})
@@ -150,7 +151,7 @@ const ListApps = ({
 					appName,
 					dateCreated: fromNow(app.dateCreated),
 					dateModified: fromNow(app.dateModified),
-					name: <Link to={getEditAppUrl(app.id)}>{appName}</Link>,
+					name: <Link to={getEditAppUrl(app)}>{appName}</Link>,
 					status: (
 						<ClayLabel
 							displayType={app.active ? 'success' : 'secondary'}

@@ -1,0 +1,38 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
+task deployJar(type: Copy)
+task patch(type: PatchTask)
+
+dependencies {
+	compile group: "org.gagravarr", name: "vorbis-java-core", version: "0.8"
+	compile group: "org.gagravarr", name: "vorbis-java-tika", version: "0.8"
+}
+
+deploy {
+	finalizedBy deployJar
+}
+
+deployJar {
+	ext {
+		autoClean = false
+	}
+
+	from jar
+	into "../../../lib/portal"
+
+	rename {
+		"vorbis-java-tika.jar"
+	}
+}
+
+patch {
+	ext {
+		autoClean = false
+	}
+
+	fileNames "org/gagravarr/tika/OggAudioParser.java"
+
+	originalLibModuleName = "vorbis-java-tika"
+}

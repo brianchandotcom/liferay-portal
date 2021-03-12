@@ -3,7 +3,7 @@
 		{
 			"fields": [
 				{
-					"label": "Content Display",
+					"label": "Content",
 					"name": "itemSelectorName",
 					"type": "itemSelector",
 					"typeOptions": {

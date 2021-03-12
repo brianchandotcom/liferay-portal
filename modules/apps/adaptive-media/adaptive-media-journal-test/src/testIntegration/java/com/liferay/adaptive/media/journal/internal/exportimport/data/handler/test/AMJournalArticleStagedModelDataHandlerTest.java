@@ -15,7 +15,6 @@
 package com.liferay.adaptive.media.journal.internal.exportimport.data.handler.test;
 
 import com.liferay.adaptive.media.image.configuration.AMImageConfigurationHelper;
-import com.liferay.adaptive.media.image.html.AMImageHTMLTagFactory;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
@@ -385,9 +384,6 @@ public class AMJournalArticleStagedModelDataHandlerTest
 
 	@Inject
 	private AMImageConfigurationHelper _amImageConfigurationHelper;
-
-	@Inject
-	private AMImageHTMLTagFactory _amImageHTMLTagFactory;
 
 	@Inject
 	private DLAppLocalService _dlAppLocalService;

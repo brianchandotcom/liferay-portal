@@ -256,6 +256,17 @@ public class PageDefinitionValidatorTest {
 	}
 
 	@Test
+	public void testValidatePageDefinitionValidFragmentFieldTextFragmentLinkHrefFragmentMappedValueMappingItemReferenceClassFieldReference()
+		throws Exception {
+
+		PageDefinitionValidator.validatePageDefinition(
+			_read(
+				"page_definition_valid_fragment_field_text_fragment_link_href" +
+					"_fragment_mapped_value_mapping_item_reference_class_" +
+						"field_reference.json"));
+	}
+
+	@Test
 	public void testValidatePageDefinitionValidRequired() throws Exception {
 		PageDefinitionValidator.validatePageDefinition(
 			_read("page_definition_valid_required.json"));

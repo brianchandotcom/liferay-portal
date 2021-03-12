@@ -1,0 +1,42 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragment": {
+						"key": "my-key"
+					},
+					"fragmentFields": [
+						{
+							"id": "element-text",
+							"value": {
+								"fragmentLink": {
+									"href": {
+										"mapping": {
+											"itemReference": {
+												"className": "com.liferay.portal.kernel.model.Layout",
+												"fieldName": "plid",
+												"fieldValue": "12"
+											}
+										}
+									},
+									"target": "Blank"
+								},
+								"text": {
+									"value_i18n": {
+										"en_US": "Hello Liferay!",
+										"es_ES": "Hola Liferay!"
+									}
+								}
+							}
+						}
+					]
+				},
+				"pageElements": [
+				],
+				"type": "Fragment"
+			}
+		],
+		"type": "Root"
+	}
+}

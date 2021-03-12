@@ -125,6 +125,10 @@ public abstract class BaseTemplateResourceCache
 		_singleVMPortalCache.remove(templateId);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void setSecondLevelPortalCache(
 		PortalCache<TemplateResource, ?> portalCache) {
@@ -147,6 +151,11 @@ public abstract class BaseTemplateResourceCache
 			_secondLevelPortalCache.getPortalCacheName());
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *          #init(long, MultiVMPool, SingleVMPool, String, String)}
+	 */
+	@Deprecated
 	protected void init(
 		long modificationCheckInterval, MultiVMPool multiVMPool,
 		SingleVMPool singleVMPool, String portalCacheName) {

@@ -1,0 +1,32 @@
+diff --git a/org/gagravarr/tika/OggAudioParser.java b/org/gagravarr/tika/OggAudioParser.java
+index f7b08ff1e3ab..384cccd4fbd9 100644
+--- a/org/gagravarr/tika/OggAudioParser.java
++++ b/org/gagravarr/tika/OggAudioParser.java
+@@ -20,6 +20,7 @@ import java.util.List;
+ 
+ import org.apache.tika.exception.TikaException;
+ import org.apache.tika.metadata.Metadata;
++import org.apache.tika.metadata.PropertyTypeException;
+ import org.apache.tika.metadata.TikaCoreProperties;
+ import org.apache.tika.metadata.XMP;
+ import org.apache.tika.metadata.XMPDM;
+@@ -116,11 +117,17 @@ public abstract class OggAudioParser extends AbstractParser {
+         // Record the duration, if available
+         double duration = stats.getDurationSeconds();
+         if (duration > 0) {
+-            // Save as metadata to the nearest .01 seconds
+-            metadata.add(XMPDM.DURATION, DURATION_FORMAT.format(duration));
++            try {
++                // Save as metadata to the nearest .01 seconds
++                metadata.add(XMPDM.DURATION, DURATION_FORMAT.format(duration));
++            }
++            catch (PropertyTypeException pte) {
++                System.out.println("WARNING: the property type of xmpDM:duration is SIMPLE but it has multiple values.");
++            }
+ 
+             // Output as Hours / Minutes / Seconds / Parts
+             xhtml.element("p", stats.getDuration());
+         }
+     }
+ }
++/* @generated */

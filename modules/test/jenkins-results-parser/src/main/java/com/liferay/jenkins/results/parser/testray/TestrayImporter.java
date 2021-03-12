@@ -61,6 +61,8 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
@@ -905,9 +907,28 @@ public class TestrayImporter {
 					failedCount++;
 				}
 
-				_addPropertyElements(
-					testcaseElement.addElement("properties"),
-					testcasePropertiesMap);
+				Element propertiesElement = testcaseElement.addElement(
+					"properties");
+
+				_addPropertyElements(propertiesElement, testcasePropertiesMap);
+
+				String[] warnings = testrayCaseResult.getWarnings();
+
+				if ((warnings != null) && (warnings.length > 0)) {
+					Element warningsPropertyElement =
+						propertiesElement.addElement("property");
+
+					warningsPropertyElement.addAttribute(
+						"name", "testray.testcase.warnings");
+
+					for (String warning : warnings) {
+						Element warningPropertyElement =
+							warningsPropertyElement.addElement("value");
+
+						warningPropertyElement.addText(
+							StringEscapeUtils.escapeHtml(warning));
+					}
+				}
 
 				Element attachmentsElement = testcaseElement.addElement(
 					"attachments");

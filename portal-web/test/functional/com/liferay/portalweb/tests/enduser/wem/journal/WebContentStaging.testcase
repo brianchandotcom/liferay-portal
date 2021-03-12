@@ -31,7 +31,7 @@ definition {
 	@description = "Assert Web Content created From Structure is published Via SAP"
 	@priority = "4"
 	test AssertWebContentFromStructureNotBeDeletedOnLiveViaSAP {
-		task ("Create a web content") {
+		task ("Create a basic web content") {
 			JSONWebcontent.addWebContent(
 					content = "WC Content",
 					groupName = "Site Name",
@@ -176,7 +176,7 @@ definition {
 	test PublishInStagingWebContentFromStructure {
 		property portal.acceptance = "true";
 
-		task ("Create a web content") {
+		task ("Create a basic web content") {
 			JSONWebcontent.addWebContent(
 					content = "WC Content",
 					groupName = "Site Name",
@@ -264,6 +264,13 @@ definition {
 	test PublishWebContentWithImportedStructureDefaultValues {
 		property test.name.skip.portal.instance = "Staging#PublishWebContentWithImportedStructureDefaultValues";
 
+		task ("Create a basic web content") {
+			JSONWebcontent.addWebContent(
+					content = "WC Content",
+					groupName = "Site Name",
+					title = "WC 1");
+		}
+		
 		task ("Create structure") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
@@ -273,18 +280,36 @@ definition {
 					structureDescription = "WC Structure Description",
 					structureName = "WC Structure Name");
 
-			DataEngine.addField(
-					fieldFieldLabel = "Text",
-					fieldName = "Text");
+			DataEngine.addFields(fieldNameList = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page,Separator");
 
 			WebContentStructures.saveCP(structureName = "WC Structure Name");
+			
 		}
 
 		task ("Set default values for the structure") {
 			WebContentStructures.editStructureDefaultValuesCP(
 					structureName = "WC Structure Name");
 
-			WebContent.addWithStructureCP(webContentText = "(Enter Text Here)");
+			WebContent.addWithStructureCP(
+					column = "1",
+					dmNavTab = "User Personal Folder",
+					navTab = "Web Content Images",
+					row = "1",
+					structureName = "WC Structure Name",
+					webContentColor = "FF0D0D",
+					webContentDate = "10/10/2020",
+					webContentGrid = "true",
+					webContentImage = "Document_3.png",
+					webContentLinkToPage = "Staging Test Page",
+					webContentMultipleSelection = "Option 1",
+					webContentNumeric = "9",
+					webContentRichText = "This is a Rich Text field",
+					webContentSelectFromList = "Option 2",
+					webContentSingleSelection = "Option 3",
+					webContentText = "(Enter Text Here)",
+					webContentTitle = "Web Content Title",
+					webContentUpload = "Document_1.doc",
+					webContentWebContent = "WC 1");
 
 			PortletEntry.save();
 		}
@@ -297,7 +322,7 @@ definition {
 			WebContentTemplates.addCP(
 					structureName = "WC Structure Name",
 					templateDescription = "WC Template Description",
-					templateFieldNames = "Text",
+					templateFieldNames = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page",
 					templateName = "WC Template Name");
 
 		}
@@ -342,12 +367,10 @@ definition {
 			LAR.importPortlet(larFileName = "WebContent_portlet.lar");
 		}
 
-		task ("Import web content") {
+		task ("Assert web content has been imported in staging") {
 			WebContentNavigator.openWebContentAdmin(
 					siteURLKey = "site-name-b-staging");
-		}
 
-		task ("Assert web content has been imported") {
 			WebContent.viewWithStructureCP(
 					webContentText = "Web Content Text",
 					webContentTitle = "Web Content Title");
@@ -366,6 +389,16 @@ definition {
 			AssertConsoleTextNotPresent(value1 = "SystemException");
 		}
 
+		task ("Assert web content has been published") {
+			WebContentNavigator.openWebContentAdmin(
+					siteURLKey = "site-name-b");
+
+			AssertTextEquals.assertPartialText(
+					key_webContentTitle = "Web Content Title",
+					locator1 = "WC#ENTRY_LIST_TITLE_ON_LIVE",
+					value1 = "Web Content Title");
+		}
+
 		task ("Delete created site") {
 			JSONGroup.deleteGroupByName(groupName = "Site Name B");
 		}
@@ -376,14 +409,54 @@ definition {
 	test StagingDraftWebContent {
 		property portal.acceptance = "true";
 
+		task ("Create a basic web content") {
+			JSONWebcontent.addWebContent(
+					content = "WC Content",
+					groupName = "Site Name",
+					title = "WC 1");
+		}
+
+		task ("Create structure") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(
+					structureDescription = "WC Structure Description",
+					structureName = "WC Structure Name");
+
+			DataEngine.addFields(fieldNameList = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page,Separator");
+
+			WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		}
+
 		task ("Create a web content as draft") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
-			WebContentNavigator.gotoAddCP();
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
-			WebContent.addDraft(
-					webContentContent = "WC WebContent Content",
-					webContentTitle = "WC WebContent Title");
+			WebContent.addWithStructureCP(
+					column = "1",
+					dmNavTab = "User Personal Folder",
+					navTab = "Web Content Images",
+					row = "1",
+					structureName = "WC Structure Name",
+					saveAsDraft = "true",
+					webContentColor = "FF0D0D",
+					webContentDate = "10/10/2020",
+					webContentGrid = "true",
+					webContentImage = "Document_3.png",
+					webContentLinkToPage = "Staging Test Page",
+					webContentMultipleSelection = "Option 1",
+					webContentNumeric = "9",
+					webContentRichText = "This is a Rich Text field",
+					webContentSelectFromList = "Option 2",
+					webContentSingleSelection = "Option 3",
+					webContentText = "(Enter Text Here)",
+					webContentTitle = "WC WebContent Title",
+					webContentUpload = "Document_1.doc",
+					webContentWebContent = "WC 1");
 
 			VerifyElementPresent(locator1 = "Message#SUCCESS");
 		}

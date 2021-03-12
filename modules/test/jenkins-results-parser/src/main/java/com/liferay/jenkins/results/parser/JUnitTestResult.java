@@ -42,7 +42,7 @@ public class JUnitTestResult extends BaseTestResult {
 	@Override
 	public String getDisplayName() {
 		return JenkinsResultsParserUtil.combine(
-			getSimpleClassName(), ".", getTestName());
+			getClassName(), ".", getTestName());
 	}
 
 	@Override

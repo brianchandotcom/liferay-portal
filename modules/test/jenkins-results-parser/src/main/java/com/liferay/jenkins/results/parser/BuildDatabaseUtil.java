@@ -65,10 +65,10 @@ public class BuildDatabaseUtil {
 		}
 
 		try {
-			String buildDatabaseURL = JenkinsResultsParserUtil.combine(
-				"http://", masterName, "/userContent/jobs/", jobName,
-				"/builds/", String.valueOf(buildNumber), "/",
-				BuildDatabase.FILE_NAME_BUILD_DATABASE);
+			String buildDatabaseURL =
+				JenkinsResultsParserUtil.getBuildArtifactURL(
+					build.getBuildURL(),
+					BuildDatabase.FILE_NAME_BUILD_DATABASE);
 
 			JenkinsResultsParserUtil.write(
 				JenkinsResultsParserUtil.combine(

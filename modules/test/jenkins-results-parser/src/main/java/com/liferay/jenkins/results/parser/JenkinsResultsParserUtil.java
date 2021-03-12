@@ -823,6 +823,29 @@ public class JenkinsResultsParserUtil {
 		return new File(buildProperties.getProperty("base.repository.dir"));
 	}
 
+	public static String getBuildArtifactURL(
+		String buildURL, String artifactName) {
+
+		Matcher matcher = _topLevelBuildURLPattern.matcher(buildURL);
+
+		matcher.find();
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("http://test-");
+		sb.append(matcher.group("cohortNumber"));
+		sb.append("-");
+		sb.append(matcher.group("masterNumber"));
+		sb.append("/userContent/jobs/");
+		sb.append(matcher.group("jobName"));
+		sb.append("/builds/");
+		sb.append(matcher.group("buildNumber"));
+		sb.append("/");
+		sb.append(artifactName);
+
+		return sb.toString();
+	}
+
 	public static String getBuildID(String topLevelBuildURL) {
 		Matcher matcher = _topLevelBuildURLPattern.matcher(topLevelBuildURL);
 

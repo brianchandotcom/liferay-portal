@@ -3238,47 +3238,6 @@ public class JournalArticleServiceHttp {
 		}
 	}
 
-	public static com.liferay.journal.model.JournalArticle updateContent(
-			HttpPrincipal httpPrincipal, long groupId, String articleId,
-			double version, String content)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				JournalArticleServiceUtil.class, "updateContent",
-				_updateContentParameterTypes78);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, articleId, version, content);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (com.liferay.journal.model.JournalArticle)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
 	public static com.liferay.journal.model.JournalArticle updateStatus(
 			HttpPrincipal httpPrincipal, long groupId, String articleId,
 			double version, int status, String articleURL,
@@ -3288,7 +3247,7 @@ public class JournalArticleServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				JournalArticleServiceUtil.class, "updateStatus",
-				_updateStatusParameterTypes79);
+				_updateStatusParameterTypes78);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, articleId, version, status, articleURL,
@@ -3667,9 +3626,7 @@ public class JournalArticleServiceHttp {
 			String.class, String.class, String.class, java.util.Map.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateContentParameterTypes78 =
-		new Class[] {long.class, String.class, double.class, String.class};
-	private static final Class<?>[] _updateStatusParameterTypes79 =
+	private static final Class<?>[] _updateStatusParameterTypes78 =
 		new Class[] {
 			long.class, String.class, double.class, int.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class

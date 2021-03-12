@@ -2714,38 +2714,6 @@ public class JournalArticleServiceSoap {
 	}
 
 	/**
-	 * Updates the web content article matching the group, article ID, and
-	 * version, replacing its content.
-	 *
-	 * @param groupId the primary key of the web content article's group
-	 * @param articleId the primary key of the web content article
-	 * @param version the web content article's version
-	 * @param content the HTML content wrapped in XML. For more information,
-	 see the content example in the {@link #updateArticle(long, long,
-	 String, double, String, ServiceContext)} description.
-	 * @return the updated web content article
-	 * @throws PortalException if a portal exception occurred
-	 */
-	public static com.liferay.journal.model.JournalArticleSoap updateContent(
-			long groupId, String articleId, double version, String content)
-		throws RemoteException {
-
-		try {
-			com.liferay.journal.model.JournalArticle returnValue =
-				JournalArticleServiceUtil.updateContent(
-					groupId, articleId, version, content);
-
-			return com.liferay.journal.model.JournalArticleSoap.toSoapModel(
-				returnValue);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			throw new RemoteException(exception.getMessage());
-		}
-	}
-
-	/**
 	 * Updates the workflow status of the web content article matching the
 	 * group, article ID, and version.
 	 *

@@ -294,11 +294,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FRAGMENT_CONFIGURATION_PADDING_BOTTOM_IN_VIEW_MODE</td>
-	<td>//*[contains(@class,'${key_fragmentName}')]/parent::div/parent::div[contains(@class,'pb-${key_paddingBottom}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FRAGMENT_CONFIGURATION_TEXT_COLOR_IN_VIEW_MODE</td>
 	<td>//*[contains(@class,'${key_fragmentName}')]/parent::div/parent::div[contains(@style,'color: ${key_textColor}')]</td>
 	<td></td>

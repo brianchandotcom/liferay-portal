@@ -855,6 +855,15 @@ definition {
 			Pause(locator1 = "3000");
 		}
 
+		if (isSet(bottomSpacing)) {
+			Select(
+				key_fieldLabel = "Bottom Spacing",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${bottomSpacing}");
+
+			Pause(locator1 = "3000");
+		}
+
 		if (isSet(boxShadow)) {
 			Select(
 				key_fieldLabel = "Shadow",
@@ -2887,6 +2896,12 @@ definition {
 				key_borderRadius = "${borderRadius}",
 				key_fragmentName = "${fragmentName}",
 				locator1 = "Fragment#FRAGMENT_CONFIGURATION_BORDER_RADIUS");
+		}
+
+		if (isSet(bottomSpacing)) {
+			AssertElementPresent(
+				key_bottomSpacing = "${bottomSpacing}",
+				locator1 = "Fragment#BOTTOM_SPACING");
 		}
 
 		if (isSet(boxShadow)) {

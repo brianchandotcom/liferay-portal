@@ -28,6 +28,11 @@ public interface SingleLogoutProfile {
 	public SamlSpSession getSamlSpSession(
 		HttpServletRequest httpServletRequest);
 
+	public void initiateIdpSingleLogout(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws Exception;
+
 	public boolean isSingleLogoutSupported(
 		HttpServletRequest httpServletRequest);
 

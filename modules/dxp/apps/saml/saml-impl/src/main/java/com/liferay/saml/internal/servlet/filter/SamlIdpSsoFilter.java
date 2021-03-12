@@ -17,6 +17,7 @@ package com.liferay.saml.internal.servlet.filter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -110,7 +111,13 @@ public class SamlIdpSsoFilter extends BaseSamlPortalFilter {
 				httpServletRequest, SamlWebKeys.SAML_SSO_SESSION_ID);
 
 			if (Validator.isNotNull(samlSsoSessionId)) {
-				_singleLogoutProfile.processIdpLogout(
+				httpServletResponse.addHeader(
+					HttpHeaders.CACHE_CONTROL,
+					HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);
+				httpServletResponse.addHeader(
+					HttpHeaders.PRAGMA, HttpHeaders.PRAGMA_NO_CACHE_VALUE);
+
+				_singleLogoutProfile.initiateIdpSingleLogout(
 					httpServletRequest, httpServletResponse);
 			}
 			else {

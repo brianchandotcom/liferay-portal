@@ -479,86 +479,14 @@ public class JournalTransformer {
 				continue;
 			}
 
-			String data = StringPool.BLANK;
-
-			Element dynamicContentElement = dynamicElementElement.element(
-				"dynamic-content");
-
-			if (dynamicContentElement != null) {
-				data = dynamicContentElement.getText();
-			}
-
-			String type = dynamicElementElement.attributeValue(
-				"type", StringPool.BLANK);
-
-			Map<String, String> attributes = new HashMap<>();
-
-			if (type.equals(DDMFormFieldTypeConstants.IMAGE)) {
-				JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject(
-					data);
-
-				Iterator<String> iterator = dataJSONObject.keys();
-
-				while (iterator.hasNext()) {
-					String key = iterator.next();
-
-					String value = dataJSONObject.getString(key);
-
-					attributes.put(key, value);
-				}
-			}
-
-			if (dynamicContentElement != null) {
-				for (Attribute attribute : dynamicContentElement.attributes()) {
-					attributes.put(attribute.getName(), attribute.getValue());
-				}
-			}
-
-			TemplateNode templateNode = new TemplateNode(
-				themeDisplay, ddmFormField.getFieldReference(),
-				_convertToReferenceIfNeeded(
-					StringUtil.stripCDATA(data), ddmFormField),
-				type, attributes);
+			TemplateNode templateNode = _createTemplateNode(
+				ddmFormField, dynamicElementElement, locale, themeDisplay);
 
 			if (dynamicElementElement.element("dynamic-element") != null) {
 				templateNode.appendChildren(
 					getTemplateNodes(
 						themeDisplay, dynamicElementElement, ddmFormFieldsMap,
 						locale));
-			}
-			else if ((dynamicContentElement != null) &&
-					 (dynamicContentElement.element("option") != null)) {
-
-				List<Element> optionElements = dynamicContentElement.elements(
-					"option");
-
-				for (Element optionElement : optionElements) {
-					templateNode.appendOption(
-						_convertToReferenceIfNeeded(
-							StringUtil.stripCDATA(optionElement.getText()),
-							ddmFormField));
-				}
-			}
-
-			DDMFormFieldOptions ddmFormFieldOptions =
-				ddmFormField.getDDMFormFieldOptions();
-
-			Map<String, LocalizedValue> options =
-				ddmFormFieldOptions.getOptions();
-			Map<String, String> optionsReferences =
-				ddmFormFieldOptions.getOptionsReferences();
-
-			for (Map.Entry<String, LocalizedValue> entry : options.entrySet()) {
-				String optionValue = StringUtil.stripCDATA(entry.getKey());
-
-				String optionReference = optionsReferences.getOrDefault(
-					optionValue, optionValue);
-
-				LocalizedValue localizedLabel = entry.getValue();
-
-				String optionLabel = localizedLabel.getString(locale);
-
-				templateNode.appendOptionMap(optionReference, optionLabel);
 			}
 
 			TemplateNode prototypeTemplateNode = prototypeTemplateNodes.get(
@@ -725,6 +653,89 @@ public class JournalTransformer {
 		}
 
 		return data;
+	}
+
+	private TemplateNode _createTemplateNode(
+			DDMFormField ddmFormField, Element dynamicElementElement,
+			Locale locale, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		String data = StringPool.BLANK;
+
+		Element dynamicContentElement = dynamicElementElement.element(
+			"dynamic-content");
+
+		if (dynamicContentElement != null) {
+			data = dynamicContentElement.getText();
+		}
+
+		String type = dynamicElementElement.attributeValue(
+			"type", StringPool.BLANK);
+
+		Map<String, String> attributes = new HashMap<>();
+
+		if (type.equals(DDMFormFieldTypeConstants.IMAGE)) {
+			JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject(data);
+
+			Iterator<String> iterator = dataJSONObject.keys();
+
+			while (iterator.hasNext()) {
+				String key = iterator.next();
+
+				String value = dataJSONObject.getString(key);
+
+				attributes.put(key, value);
+			}
+		}
+
+		if (dynamicContentElement != null) {
+			for (Attribute attribute : dynamicContentElement.attributes()) {
+				attributes.put(attribute.getName(), attribute.getValue());
+			}
+		}
+
+		TemplateNode templateNode = new TemplateNode(
+			themeDisplay, ddmFormField.getFieldReference(),
+			_convertToReferenceIfNeeded(
+				StringUtil.stripCDATA(data), ddmFormField),
+			type, attributes);
+
+		if ((dynamicElementElement.element("dynamic-element") == null) &&
+			(dynamicContentElement != null) &&
+			(dynamicContentElement.element("option") != null)) {
+
+			List<Element> optionElements = dynamicContentElement.elements(
+				"option");
+
+			for (Element optionElement : optionElements) {
+				templateNode.appendOption(
+					_convertToReferenceIfNeeded(
+						StringUtil.stripCDATA(optionElement.getText()),
+						ddmFormField));
+			}
+		}
+
+		DDMFormFieldOptions ddmFormFieldOptions =
+			ddmFormField.getDDMFormFieldOptions();
+
+		Map<String, LocalizedValue> options = ddmFormFieldOptions.getOptions();
+		Map<String, String> optionsReferences =
+			ddmFormFieldOptions.getOptionsReferences();
+
+		for (Map.Entry<String, LocalizedValue> entry : options.entrySet()) {
+			String optionValue = StringUtil.stripCDATA(entry.getKey());
+
+			String optionReference = optionsReferences.getOrDefault(
+				optionValue, optionValue);
+
+			LocalizedValue localizedLabel = entry.getValue();
+
+			String optionLabel = localizedLabel.getString(locale);
+
+			templateNode.appendOptionMap(optionReference, optionLabel);
+		}
+
+		return templateNode;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

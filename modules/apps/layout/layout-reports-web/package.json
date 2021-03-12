@@ -1,0 +1,25 @@
+{
+	"dependencies": {
+		"@clayui/button": "3.6.0",
+		"@clayui/drop-down": "3.25.1",
+		"@clayui/icon": "3.1.0",
+		"@clayui/label": "3.4.1",
+		"@clayui/layout": "3.3.0",
+		"@clayui/tooltip": "3.4.5",
+		"@liferay/frontend-js-react-web": "*",
+		"classnames": "2.2.6",
+		"frontend-js-web": "*",
+		"prop-types": "15.7.2",
+		"react": "16.12.0",
+		"recharts": "1.8.5"
+	},
+	"name": "layout-reports-web",
+	"private": true,
+	"scripts": {
+		"build": "liferay-npm-scripts build",
+		"checkFormat": "liferay-npm-scripts check",
+		"format": "liferay-npm-scripts fix",
+		"test": "liferay-npm-scripts test"
+	},
+	"version": "1.0.0"
+}

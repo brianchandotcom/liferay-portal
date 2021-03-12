@@ -199,9 +199,9 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 
 		return JSONUtil.putAll(
 			getStyleFormatJSONObject(
-				LanguageUtil.get(resourceBundle, "small"), "p", "small", 1),
+				LanguageUtil.get(resourceBundle, "small"), "span", "small", 2),
 			getStyleFormatJSONObject(
-				LanguageUtil.get(resourceBundle, "lead"), "p", "lead", 1),
+				LanguageUtil.get(resourceBundle, "lead"), "span", "lead", 2),
 			getStyleFormatJSONObject(
 				LanguageUtil.format(resourceBundle, "heading-x", "1"), "h1",
 				null, 1),

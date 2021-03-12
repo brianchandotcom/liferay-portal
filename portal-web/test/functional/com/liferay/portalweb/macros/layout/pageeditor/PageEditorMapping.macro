@@ -3,7 +3,10 @@ definition {
 	macro assertAssetTypeUnselectable {
 		PageEditor.gotoTab(tabName = "Mapping");
 
-		Button.viewNotPresent(button = "Select");
+		AssertElementNotPresent(
+			key_fieldLabel = "Content",
+			key_text = "plus",
+			locator1 = "Icon#ANY_ITEM_SELECTOR");
 	}
 
 	macro gotoEditableFieldMapping {
@@ -62,7 +65,20 @@ definition {
 	}
 
 	macro mapEditableFieldToAsset {
-		Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_MAP_ASSET_SELECT_POPUP_BUTTON");
+		var itemSelectorContentInputValue = selenium.getElementValue("//label[normalize-space(text())='Content']/following-sibling::div//input[contains(@class,'item-selector__content-input')]");
+
+		if ("${itemSelectorContentInputValue}" == "") {
+			Click(
+				key_fieldLabel = "Content",
+				key_text = "plus",
+				locator1 = "Icon#ANY_ITEM_SELECTOR");
+		}
+		else {
+			Click(
+				key_fieldLabel = "Content",
+				key_text = "change",
+				locator1 = "Icon#ANY_ITEM_SELECTOR");
+		}
 
 		if (IsElementPresent(key_menuItem = "Select Content",locator1 = "MenuItem#ANY_MENU_ITEM")) {
 			if (isSet(contentItem)) {

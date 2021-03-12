@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.subscription.service.SubscriptionLocalService;
@@ -100,6 +101,8 @@ public class BlogsServiceUpgrade implements UpgradeStepRegistrator {
 			"2.1.0", "2.1.1",
 			new com.liferay.blogs.internal.upgrade.v2_1_1.
 				BlogsEntryUpgradeProcess());
+
+		registry.register("2.1.1", "2.1.2", new DummyUpgradeStep());
 	}
 
 	private UnsafeBiFunction<String, Connection, Boolean, Exception>

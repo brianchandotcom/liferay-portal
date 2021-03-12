@@ -72,7 +72,6 @@ SearchContainer<Role> roleSearchContainer = selectRoleManagementToolbarDisplayCo
 <clay:management-toolbar
 	clearResultsURL="<%= selectRoleManagementToolbarDisplayContext.getClearResultsURL() %>"
 	itemsTotal="<%= (step == 1) ? groups.size() : roleSearchContainer.getTotal() %>"
-	propsTransformer="js/ViewRolesManagementToolbarPropsTransformer"
 	searchActionURL="<%= selectRoleManagementToolbarDisplayContext.getSearchActionURL() %>"
 	searchFormName="searchFm"
 	selectable="<%= false %>"

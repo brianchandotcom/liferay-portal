@@ -22,6 +22,7 @@ import com.liferay.commerce.exception.CommerceShipmentShippingDateException;
 import com.liferay.commerce.exception.CommerceShipmentStatusException;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.model.CommerceShipmentItem;
 import com.liferay.commerce.service.base.CommerceShipmentLocalServiceBaseImpl;
@@ -65,6 +66,10 @@ import java.util.concurrent.Callable;
 public class CommerceShipmentLocalServiceImpl
 	extends CommerceShipmentLocalServiceBaseImpl {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #addDeliverySubscriptionCommerceShipment(long, long)}
+	 */
+	@Deprecated
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceShipment addCommerceDeliverySubscriptionShipment(
@@ -150,6 +155,51 @@ public class CommerceShipmentLocalServiceImpl
 			commerceOrder.getShippingAddressId(),
 			commerceOrder.getCommerceShippingMethodId(),
 			commerceOrder.getShippingOptionName(), serviceContext);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public CommerceShipment addDeliverySubscriptionCommerceShipment(
+			long userId, long commerceOrderItemId)
+		throws PortalException {
+
+		long commerceShipmentId = counterLocalService.increment();
+
+		CommerceShipment commerceShipment = commerceShipmentPersistence.create(
+			commerceShipmentId);
+
+		User user = userLocalService.getUser(userId);
+
+		CommerceOrderItem commerceOrderItem =
+			commerceOrderItemLocalService.getCommerceOrderItem(
+				commerceOrderItemId);
+
+		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
+
+		commerceShipment.setGroupId(commerceOrder.getGroupId());
+
+		commerceShipment.setCompanyId(user.getCompanyId());
+		commerceShipment.setUserId(user.getUserId());
+		commerceShipment.setUserName(user.getFullName());
+		commerceShipment.setCommerceAccountId(
+			commerceOrder.getCommerceAccountId());
+		commerceShipment.setCommerceAddressId(
+			commerceOrder.getShippingAddressId());
+		commerceShipment.setCommerceShippingMethodId(
+			commerceOrder.getCommerceShippingMethodId());
+		commerceShipment.setShippingOptionName(
+			commerceOrder.getShippingOptionName());
+		commerceShipment.setStatus(
+			CommerceShipmentConstants.SHIPMENT_STATUS_PROCESSING);
+
+		commerceShipment = commerceShipmentPersistence.update(commerceShipment);
+
+		commerceShipmentItemLocalService.
+			addDeliverySubscriptionCommerceShipmentItem(
+				commerceOrder.getScopeGroupId(), userId, commerceShipmentId,
+				commerceOrderItemId);
+
+		return commerceShipment;
 	}
 
 	@Indexable(type = IndexableType.DELETE)

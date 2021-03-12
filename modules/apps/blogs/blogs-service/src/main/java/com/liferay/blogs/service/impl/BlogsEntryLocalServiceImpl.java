@@ -357,6 +357,10 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			serviceContext.getAssetLinkEntryIds(),
 			serviceContext.getAssetPriority());
 
+		// Comment
+
+		_subscribeDiscussion(entry);
+
 		// Images
 
 		long coverImageFileEntryId = 0;
@@ -1222,6 +1226,10 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			serviceContext.getAssetTagNames(),
 			serviceContext.getAssetLinkEntryIds(),
 			serviceContext.getAssetPriority());
+
+		// Comment
+
+		_subscribeDiscussion(entry);
 
 		// Images
 
@@ -2261,6 +2269,19 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			entry.getCompanyId(), entry.getGroupId(), userId,
 			BlogsEntry.class.getName(), entry.getEntryId(), entry,
 			serviceContext, workflowContext);
+	}
+
+	private void _subscribeDiscussion(BlogsEntry entry) throws PortalException {
+		BlogsGroupServiceConfiguration blogsGroupServiceConfiguration =
+			_getBlogsGroupServiceConfiguration(entry.getGroupId());
+
+		if (blogsGroupServiceConfiguration.
+				subscribeBlogsEntryCreatorToComments()) {
+
+			_commentManager.subscribeDiscussion(
+				entry.getUserId(), entry.getGroupId(),
+				BlogsEntry.class.getName(), entry.getEntryId());
+		}
 	}
 
 	private void _validate(long smallImageFileEntryId) throws PortalException {

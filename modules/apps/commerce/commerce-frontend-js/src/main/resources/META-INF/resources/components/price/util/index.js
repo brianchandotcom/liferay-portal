@@ -14,7 +14,7 @@
 
 const DISCOUNT_LEVEL_PREFIX = 'discountPercentageLevel';
 
-export function adaptLegacyPriceModel(priceModel = {}) {
+export function adaptLegacyPriceModel(priceModel) {
 	if (`${DISCOUNT_LEVEL_PREFIX}1` in priceModel) {
 		return priceModel;
 	}

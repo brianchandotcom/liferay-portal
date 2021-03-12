@@ -124,7 +124,9 @@ function Price({
 								</span>
 							))
 						) : (
-							<span>&ndash;{discountPercentage}%</span>
+							<span className="price-value-percentage">
+								&ndash;{discountPercentage}%
+							</span>
 						)}
 					</span>
 					<span className="price-label">
@@ -165,7 +167,7 @@ Price.defaultProps = {
 Price.propTypes = {
 	compact: PropTypes.bool,
 	displayDiscountLevels: PropTypes.bool.isRequired,
-	namespace: PropTypes.bool,
+	namespace: PropTypes.string,
 	netPrice: PropTypes.bool,
 	price: PropTypes.shape({
 		currency: PropTypes.string.isRequired,

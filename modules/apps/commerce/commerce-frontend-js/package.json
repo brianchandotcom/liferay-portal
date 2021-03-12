@@ -31,9 +31,14 @@
 		"faker": "^5.1.0"
 	},
 	"jest": {
+		"collectCoverageFrom": [
+			"!<rootDir>/node_modules/",
+			"<rootDir>/src/**/components/**/*.js",
+			"<rootDir>/src/**/utilities/**/*.js"
+		],
 		"testPathIgnorePatterns": [
 			"<rootDir>/test/dev/",
-			"<rootDir>/test/utils"
+			"<rootDir>/test/utils/"
 		]
 	},
 	"main": "index.js",
@@ -42,6 +47,7 @@
 	"scripts": {
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",
+		"coverage": "liferay-npm-scripts test --coverage --silent --verbose",
 		"format": "liferay-npm-scripts format",
 		"test": "liferay-npm-scripts test",
 		"watch": "liferay-npm-scripts webpack --watch"

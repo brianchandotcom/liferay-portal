@@ -128,10 +128,7 @@ public class SingleLogoutProfileImpl
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		SamlSloContext samlSloContext = getSamlSloContext(
-			httpServletRequest, null);
-
-		if (samlSloContext != null) {
+		if (hasSamlSloContext(httpServletRequest, null)) {
 			String redirect = StringBundler.concat(
 				portal.getPortalURL(httpServletRequest), portal.getPathMain(),
 				"/portal/saml/slo_logout");
@@ -469,6 +466,39 @@ public class SingleLogoutProfileImpl
 		SamlSloContext samlSloContext = (SamlSloContext)session.getAttribute(
 			SamlWebKeys.SAML_SLO_CONTEXT);
 
+		if (samlSloContext != null) {
+			return samlSloContext;
+		}
+
+		String samlSsoSessionId = getSamlSsoSessionId(
+			httpServletRequest, messageContext);
+
+		if (Validator.isNull(samlSsoSessionId)) {
+			return null;
+		}
+
+		SamlIdpSsoSession samlIdpSsoSession =
+			_samlIdpSsoSessionLocalService.fetchSamlIdpSso(samlSsoSessionId);
+
+		if (samlIdpSsoSession != null) {
+			samlSloContext = new SamlSloContext(
+				samlIdpSsoSession, messageContext,
+				_samlIdpSpConnectionLocalService, _samlIdpSpSessionLocalService,
+				_samlPeerBindingLocalService, _userLocalService);
+
+			samlSloContext.setSamlSsoSessionId(samlSsoSessionId);
+			samlSloContext.setUserId(portal.getUserId(httpServletRequest));
+
+			session.setAttribute(SamlWebKeys.SAML_SLO_CONTEXT, samlSloContext);
+		}
+
+		return samlSloContext;
+	}
+
+	protected String getSamlSsoSessionId(
+		HttpServletRequest httpServletRequest,
+		MessageContext<?> messageContext) {
+
 		String samlSsoSessionId = getSamlSsoSessionId(httpServletRequest);
 
 		if (messageContext != null) {
@@ -490,27 +520,37 @@ public class SingleLogoutProfileImpl
 			}
 		}
 
-		if ((samlSloContext == null) && Validator.isNotNull(samlSsoSessionId)) {
-			SamlIdpSsoSession samlIdpSsoSession =
-				_samlIdpSsoSessionLocalService.fetchSamlIdpSso(
-					samlSsoSessionId);
+		return samlSsoSessionId;
+	}
 
-			if (samlIdpSsoSession != null) {
-				samlSloContext = new SamlSloContext(
-					samlIdpSsoSession, messageContext,
-					_samlIdpSpConnectionLocalService,
-					_samlIdpSpSessionLocalService, _samlPeerBindingLocalService,
-					_userLocalService);
+	protected boolean hasSamlSloContext(
+		HttpServletRequest httpServletRequest,
+		MessageContext<?> messageContext) {
 
-				samlSloContext.setSamlSsoSessionId(samlSsoSessionId);
-				samlSloContext.setUserId(portal.getUserId(httpServletRequest));
+		HttpSession session = httpServletRequest.getSession();
 
-				session.setAttribute(
-					SamlWebKeys.SAML_SLO_CONTEXT, samlSloContext);
-			}
+		SamlSloContext samlSloContext = (SamlSloContext)session.getAttribute(
+			SamlWebKeys.SAML_SLO_CONTEXT);
+
+		if (samlSloContext != null) {
+			return true;
 		}
 
-		return samlSloContext;
+		String samlSsoSessionId = getSamlSsoSessionId(
+			httpServletRequest, messageContext);
+
+		if (Validator.isNull(samlSsoSessionId)) {
+			return false;
+		}
+
+		SamlIdpSsoSession samlIdpSsoSession =
+			_samlIdpSsoSessionLocalService.fetchSamlIdpSso(samlSsoSessionId);
+
+		if (samlIdpSsoSession != null) {
+			return true;
+		}
+
+		return false;
 	}
 
 	protected void performIdpFinishLogout(

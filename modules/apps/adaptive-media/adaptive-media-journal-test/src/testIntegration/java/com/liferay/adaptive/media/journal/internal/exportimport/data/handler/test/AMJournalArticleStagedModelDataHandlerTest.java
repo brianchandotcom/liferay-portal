@@ -299,14 +299,26 @@ public class AMJournalArticleStagedModelDataHandlerTest
 
 		Element rootElement = document.addElement("root");
 
+		rootElement.addAttribute(
+			"available-locales",
+			LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()));
+		rootElement.addAttribute(
+			"default-locale",
+			LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()));
+		rootElement.addElement("request");
+
 		Element dynamicElementElement = rootElement.addElement(
 			"dynamic-element");
 
+		dynamicElementElement.addAttribute("index-type", "text");
 		dynamicElementElement.addAttribute("name", "content");
-		dynamicElementElement.addAttribute("type", "text_area");
+		dynamicElementElement.addAttribute("type", "rich_text");
 
 		Element element = dynamicElementElement.addElement("dynamic-content");
 
+		element.addAttribute(
+			"language-id",
+			LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()));
 		element.addCDATA(html);
 
 		return document.asXML();

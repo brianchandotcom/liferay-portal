@@ -1105,7 +1105,20 @@ definition {
 				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
 		}
 		else {
-			Click(locator1 = "PageEditor#PLUS_ICON_BUTTON");
+			var itemSelectorContentInputValue = selenium.getElementValue("//label[normalize-space(text())='Source']/following-sibling::div//input[contains(@class,'item-selector__content-input')]");
+
+			if ("${itemSelectorContentInputValue}" == "") {
+				Click(
+					key_fieldLabel = "Source",
+					key_text = "plus",
+					locator1 = "Icon#ANY_ITEM_SELECTOR");
+			}
+			else {
+				Click(
+					key_fieldLabel = "Source",
+					key_text = "change",
+					locator1 = "Icon#ANY_ITEM_SELECTOR");
+			}
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -1184,7 +1197,20 @@ definition {
 				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
 		}
 		else {
-			Click(locator1 = "PageEditor#PLUS_ICON_BUTTON");
+			var itemSelectorContentInputValue = selenium.getElementValue("//label[normalize-space(text())='Collection']/following-sibling::div//input[contains(@class,'item-selector__content-input')]");
+
+			if ("${itemSelectorContentInputValue}" == "") {
+				Click(
+					key_fieldLabel = "Collection",
+					key_text = "plus",
+					locator1 = "Icon#ANY_ITEM_SELECTOR");
+			}
+			else {
+				Click(
+					key_fieldLabel = "Collection",
+					key_text = "change",
+					locator1 = "Icon#ANY_ITEM_SELECTOR");
+			}
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -1319,7 +1345,20 @@ definition {
 				value1 = "${templateOption}");
 		}
 		else {
-			Click(locator1 = "PageEditor#PLUS_ICON_BUTTON");
+			var itemSelectorContentInputValue = selenium.getElementValue("//label[normalize-space(text())='Content']/following-sibling::div//input[contains(@class,'item-selector__content-input')]");
+
+			if ("${itemSelectorContentInputValue}" == "") {
+				Click(
+					key_fieldLabel = "Content",
+					key_text = "plus",
+					locator1 = "Icon#ANY_ITEM_SELECTOR");
+			}
+			else {
+				Click(
+					key_fieldLabel = "Content",
+					key_text = "change",
+					locator1 = "Icon#ANY_ITEM_SELECTOR");
+			}
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -1558,7 +1597,20 @@ definition {
 				value1 = "Direct");
 		}
 
-		Button.clickSelect();
+		var itemSelectorContentInputValue = selenium.getElementValue("//label[normalize-space(text())='Image']/following-sibling::div//input[contains(@class,'item-selector__content-input')]");
+
+		if ("${itemSelectorContentInputValue}" == "") {
+			Click(
+				key_fieldLabel = "Image",
+				key_text = "plus",
+				locator1 = "Icon#ANY_ITEM_SELECTOR");
+		}
+		else {
+			Click(
+				key_fieldLabel = "Image",
+				key_text = "change",
+				locator1 = "Icon#ANY_ITEM_SELECTOR");
+		}
 
 		if (isSet(imageFileName)) {
 			ItemSelector.selectDMImage(
@@ -1701,9 +1753,20 @@ definition {
 				}
 
 				if ("${backgroundImage}" == "Direct") {
-					AssertClick(
-						locator1 = "Button#SELECT",
-						value1 = "Select");
+					var itemSelectorContentInputValue = selenium.getElementValue("//label[normalize-space(text())='Background Image']/following-sibling::div//input[contains(@class,'item-selector__content-input')]");
+
+					if ("${itemSelectorContentInputValue}" == "") {
+						Click(
+							key_fieldLabel = "Background Image",
+							key_text = "plus",
+							locator1 = "Icon#ANY_ITEM_SELECTOR");
+					}
+					else {
+						Click(
+							key_fieldLabel = "Background Image",
+							key_text = "change",
+							locator1 = "Icon#ANY_ITEM_SELECTOR");
+					}
 
 					if (isSet(depotName)) {
 						ItemSelector.selectRepositoryImage(
@@ -2089,7 +2152,10 @@ definition {
 				value1 = "General");
 
 			if (isSet(siteMenus)) {
-				Click(locator1 = "PageEditor#PLUS_ICON_BUTTON");
+				Click(
+					key_fieldLabel = "Source",
+					key_text = "change",
+					locator1 = "Icon#ANY_ITEM_SELECTOR");
 
 				SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

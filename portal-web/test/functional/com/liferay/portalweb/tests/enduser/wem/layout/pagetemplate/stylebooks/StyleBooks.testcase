@@ -145,6 +145,7 @@ definition {
 	@priority = "5"
 	test ChangeConfigurationOfPageBasedOnStyleBook {
 		property portal.acceptance = "true";
+		property testray.component.names = "Frontend Token";
 
 		task ("Add a style book") {
 			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");

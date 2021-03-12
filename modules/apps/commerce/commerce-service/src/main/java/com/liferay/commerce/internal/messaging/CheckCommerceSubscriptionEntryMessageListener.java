@@ -18,6 +18,8 @@ import com.liferay.commerce.configuration.CommerceSubscriptionConfiguration;
 import com.liferay.commerce.service.CommerceSubscriptionEntryLocalService;
 import com.liferay.commerce.subscription.CommerceSubscriptionEntryHelper;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
@@ -76,19 +78,33 @@ public class CheckCommerceSubscriptionEntryMessageListener
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		_commerceSubscriptionEntryHelper.checkSubscriptionEntriesStatus(
-			_commerceSubscriptionEntryLocalService.
-				getCommerceSubscriptionEntriesToRenew());
+		try {
+			_commerceSubscriptionEntryHelper.checkSubscriptionEntriesStatus(
+				_commerceSubscriptionEntryLocalService.
+					getCommerceSubscriptionEntriesToRenew());
+		}
+		catch (Exception exception) {
+			_log.error(exception.getMessage(), exception);
+		}
 
-		_commerceSubscriptionEntryHelper.checkDeliverySubscriptionEntriesStatus(
-			_commerceSubscriptionEntryLocalService.
-				getCommerceDeliverySubscriptionEntriesToRenew());
+		try {
+			_commerceSubscriptionEntryHelper.
+				checkDeliverySubscriptionEntriesStatus(
+					_commerceSubscriptionEntryLocalService.
+						getCommerceDeliverySubscriptionEntriesToRenew());
+		}
+		catch (Exception exception) {
+			_log.error(exception.getMessage(), exception);
+		}
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CheckCommerceSubscriptionEntryMessageListener.class);
 
 	@Reference
 	private CommerceSubscriptionEntryHelper _commerceSubscriptionEntryHelper;

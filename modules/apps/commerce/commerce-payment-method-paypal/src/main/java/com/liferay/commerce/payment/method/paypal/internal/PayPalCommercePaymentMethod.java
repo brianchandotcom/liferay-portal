@@ -430,16 +430,22 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 			_commerceOrderLocalService.getCommerceOrder(
 				commercePaymentRequest.getCommerceOrderId());
 
-		Agreement agreement = Agreement.get(
-			_getAPIContext(commerceOrder.getGroupId()),
-			commercePaymentRequest.getTransactionId());
+		try {
+			Agreement agreement = Agreement.get(
+				_getAPIContext(commerceOrder.getGroupId()),
+				commercePaymentRequest.getTransactionId());
 
-		String agreementState = agreement.getState();
+			String agreementState = agreement.getState();
 
-		if (Objects.equals(
-				PayPalCommercePaymentMethodConstants.ACTIVE, agreementState)) {
+			if (Objects.equals(
+					PayPalCommercePaymentMethodConstants.ACTIVE,
+					agreementState)) {
 
-			return true;
+				return true;
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception.getMessage(), exception);
 		}
 
 		return false;

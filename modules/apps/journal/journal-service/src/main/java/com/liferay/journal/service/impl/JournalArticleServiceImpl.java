@@ -2858,35 +2858,6 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	}
 
 	/**
-	 * Updates the web content article matching the group, article ID, and
-	 * version, replacing its content.
-	 *
-	 * @param  groupId the primary key of the web content article's group
-	 * @param  articleId the primary key of the web content article
-	 * @param  version the web content article's version
-	 * @param  content the HTML content wrapped in XML. For more information,
-	 *         see the content example in the {@link #updateArticle(long, long,
-	 *         String, double, String, ServiceContext)} description.
-	 * @return the updated web content article
-	 * @throws PortalException if a portal exception occurred
-	 */
-	@Override
-	public JournalArticle updateContent(
-			long groupId, String articleId, double version, String content)
-		throws PortalException {
-
-		JournalArticle article = journalArticlePersistence.findByG_A_V(
-			groupId, articleId, version);
-
-		_journalArticleModelResourcePermission.check(
-			getPermissionChecker(), article, ActionKeys.UPDATE);
-
-		article.setContent(content);
-
-		return journalArticleLocalService.updateJournalArticle(article);
-	}
-
-	/**
 	 * Updates the workflow status of the web content article matching the
 	 * group, article ID, and version.
 	 *

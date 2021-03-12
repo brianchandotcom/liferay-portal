@@ -944,36 +944,6 @@ public class JournalArticleLocalServiceImpl
 
 	/**
 	 * Checks the web content article matching the group, article ID, and
-	 * version, replacing escaped newline and return characters with non-escaped
-	 * newline and return characters.
-	 *
-	 * @param  groupId the primary key of the web content article's group
-	 * @param  articleId the primary key of the web content article
-	 * @param  version the web content article's version
-	 * @throws PortalException if a portal exception occurred
-	 */
-	@Override
-	public void checkNewLine(long groupId, String articleId, double version)
-		throws PortalException {
-
-		JournalArticle article = journalArticlePersistence.findByG_A_V(
-			groupId, articleId, version);
-
-		String content = GetterUtil.getString(article.getContent());
-
-		if (content.contains("\\n")) {
-			content = StringUtil.replace(
-				content, new String[] {"\\n", "\\r"},
-				new String[] {"\n", "\r"});
-
-			article.setContent(content);
-
-			journalArticlePersistence.update(article);
-		}
-	}
-
-	/**
-	 * Checks the web content article matching the group, article ID, and
 	 * version for an associated structure. If no structure is associated,
 	 * return; otherwise check that the article and structure match.
 	 *
@@ -6431,36 +6401,6 @@ public class JournalArticleLocalServiceImpl
 		assetLinkLocalService.updateLinks(
 			userId, assetEntry.getEntryId(), assetLinkEntryIds,
 			AssetLinkConstants.TYPE_RELATED);
-	}
-
-	/**
-	 * Updates the web content article matching the group, article ID, and
-	 * version, replacing its content.
-	 *
-	 * @param  groupId the primary key of the web content article's group
-	 * @param  articleId the primary key of the web content article
-	 * @param  version the web content article's version
-	 * @param  content the HTML content wrapped in XML. For more information,
-	 *         see the content example in the {@link #addArticle(long, long,
-	 *         long, long, long, String, boolean, double, Map, Map, String,
-	 *         String, String, String, int, int, int, int, int, int, int, int,
-	 *         int, int, boolean, int, int, int, int, int, boolean, boolean,
-	 *         boolean, String, File, Map, String, ServiceContext)} description.
-	 * @return the updated web content article
-	 * @throws PortalException if a portal exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
-	public JournalArticle updateContent(
-			long groupId, String articleId, double version, String content)
-		throws PortalException {
-
-		JournalArticle article = journalArticlePersistence.findByG_A_V(
-			groupId, articleId, version);
-
-		article.setContent(content);
-
-		return journalArticlePersistence.update(article);
 	}
 
 	/**

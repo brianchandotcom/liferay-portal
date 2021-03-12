@@ -120,9 +120,6 @@ public class LiferayBatchFileReader implements Reader<IndexedRecord> {
 		try (FileWriter fileWriter = new FileWriter(_batchSegmentFile)) {
 			String line = _bufferedReader.readLine();
 
-			if (line == null) {
-			}
-
 			while ((line != null) && ((++_current % _BATCH_SIZE) != 0)) {
 				fileWriter.write(line);
 				fileWriter.write(System.lineSeparator());

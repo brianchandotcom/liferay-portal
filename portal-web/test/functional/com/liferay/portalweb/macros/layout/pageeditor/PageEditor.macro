@@ -1345,17 +1345,17 @@ definition {
 				value1 = "${templateOption}");
 		}
 		else {
-			var itemSelectorContentInputValue = selenium.getElementValue("//label[normalize-space(text())='Content']/following-sibling::div//input[contains(@class,'item-selector__content-input')]");
+			var itemSelectorContentInputValue = selenium.getElementValue("//label[normalize-space(text())='Content Display']/following-sibling::div//input[contains(@class,'item-selector__content-input')]");
 
 			if ("${itemSelectorContentInputValue}" == "") {
 				Click(
-					key_fieldLabel = "Content",
+					key_fieldLabel = "Content Display",
 					key_text = "plus",
 					locator1 = "Icon#ANY_ITEM_SELECTOR");
 			}
 			else {
 				Click(
-					key_fieldLabel = "Content",
+					key_fieldLabel = "Content Display",
 					key_text = "change",
 					locator1 = "Icon#ANY_ITEM_SELECTOR");
 			}

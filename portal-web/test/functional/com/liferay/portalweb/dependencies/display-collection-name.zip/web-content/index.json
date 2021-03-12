@@ -3,7 +3,7 @@
 		{
 			"fields": [
 				{
-					"label": "Web Content Title",
+					"label": "Content Display",
 					"name": "itemSelectorName",
 					"type": "itemSelector",
 					"typeOptions": {

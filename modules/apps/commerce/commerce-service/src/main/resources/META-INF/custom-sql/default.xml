@@ -222,10 +222,9 @@
 			FROM
 				CommerceSubscriptionEntry
 			WHERE
-				(CommerceSubscriptionEntry.deliveryNextIterationDate < ?) AND
 				(CommerceSubscriptionEntry.deliveryNextIterationDate IS NOT NULL) AND
-				(CommerceSubscriptionEntry.deliverySubscriptionStatus = 0) AND
-				(CommerceSubscriptionEntry.subscriptionStatus = 0)
+				(CommerceSubscriptionEntry.deliveryNextIterationDate < ?) AND
+				(CommerceSubscriptionEntry.deliverySubscriptionStatus = 0)
 		]]>
 	</sql>
 	<sql id="com.liferay.commerce.service.persistence.CommerceSubscriptionEntryFinder.findByNextIterationDate">
@@ -235,8 +234,8 @@
 			FROM
 				CommerceSubscriptionEntry
 			WHERE
-				(CommerceSubscriptionEntry.nextIterationDate < ?) AND
 				(CommerceSubscriptionEntry.nextIterationDate IS NOT NULL) AND
+				(CommerceSubscriptionEntry.nextIterationDate < ?) AND
 				(CommerceSubscriptionEntry.subscriptionStatus = 0)
 		]]>
 	</sql>

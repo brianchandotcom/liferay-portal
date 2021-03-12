@@ -139,7 +139,7 @@ public class LiferayBatchFileReader implements Reader<IndexedRecord> {
 		}
 	}
 
-	private static final int _BATCH_SIZE = 10;
+	private static final int _BATCH_SIZE = 100;
 
 	private File _batchFile;
 	private File _batchSegmentFile;

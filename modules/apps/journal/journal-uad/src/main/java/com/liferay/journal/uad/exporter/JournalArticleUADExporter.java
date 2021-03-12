@@ -15,6 +15,7 @@
 package com.liferay.journal.uad.exporter;
 
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalArticleWrapper;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.user.associated.data.exporter.UADExporter;
 
@@ -28,15 +29,16 @@ public class JournalArticleUADExporter extends BaseJournalArticleUADExporter {
 
 	@Override
 	protected String toXmlString(JournalArticle journalArticle) {
-		JournalArticle escapedJournalArticle =
-			(JournalArticle)journalArticle.clone();
+		return super.toXmlString(
+			new JournalArticleWrapper(journalArticle) {
 
-		escapedJournalArticle.setContent(
-			StringUtil.replace(
-				escapedJournalArticle.getContent(), "]]><",
-				"]]]]><![CDATA[><"));
+				@Override
+				public String getContent() {
+					return StringUtil.replace(
+						super.getContent(), "]]><", "]]]]><![CDATA[><");
+				}
 
-		return super.toXmlString(escapedJournalArticle);
+			});
 	}
 
 }

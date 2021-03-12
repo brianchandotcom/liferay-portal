@@ -53,13 +53,18 @@ public class CountryImpl extends CountryBaseImpl {
 
 	@Override
 	public String getTitle(Locale locale) {
-		String title = getTitle(LanguageUtil.getLanguageId(locale));
+		return getTitle(LanguageUtil.getLanguageId(locale));
+	}
+
+	@Override
+	public String getTitle(String languageId, boolean useDefault) {
+		String title = super.getTitle(languageId, useDefault);
 
 		if (Validator.isNotNull(title)) {
 			return title;
 		}
 
-		return getName(locale);
+		return getName(getLocale(languageId));
 	}
 
 	@Override

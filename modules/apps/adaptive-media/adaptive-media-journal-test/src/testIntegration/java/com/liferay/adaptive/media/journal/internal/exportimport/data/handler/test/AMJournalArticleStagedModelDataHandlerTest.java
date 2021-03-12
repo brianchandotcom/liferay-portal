@@ -188,7 +188,8 @@ public class AMJournalArticleStagedModelDataHandlerTest
 
 		FileEntry fileEntry = _addImageFileEntry(serviceContext);
 
-		return _addJournalArticle(_getImgTag(fileEntry), serviceContext);
+		return _addJournalArticle(
+			_getContent(_getImgTag(fileEntry)), serviceContext);
 	}
 
 	@Override
@@ -200,7 +201,8 @@ public class AMJournalArticleStagedModelDataHandlerTest
 		FileEntry fileEntry = _addImageFileEntry(serviceContext);
 
 		return Collections.singletonList(
-			_addJournalArticle(_getImgTag(fileEntry), serviceContext));
+			_addJournalArticle(
+				_getContent(_getImgTag(fileEntry)), serviceContext));
 	}
 
 	@Override

@@ -153,6 +153,15 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 				_COOKIE_REMEMBER_DEVICE, rememberDeviceCookie.getValue()));
 
 		Assert.assertNotNull(parseAuthorizationCodeString(response));
+
+		cookies = response.getCookies();
+
+		NewCookie newRememberDeviceCookie = cookies.get(
+			_COOKIE_REMEMBER_DEVICE);
+
+		Assert.assertNotEquals(
+			rememberDeviceCookie.getValue(),
+			newRememberDeviceCookie.getValue());
 	}
 
 	@Test
@@ -217,6 +226,15 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 				_COOKIE_REMEMBER_DEVICE, rememberDeviceCookie.getValue()));
 
 		Assert.assertNotNull(parseAuthorizationCodeString(response));
+
+		cookies = response.getCookies();
+
+		NewCookie newRememberDeviceCookie = cookies.get(
+			_COOKIE_REMEMBER_DEVICE);
+
+		Assert.assertNotEquals(
+			rememberDeviceCookie.getValue(),
+			newRememberDeviceCookie.getValue());
 	}
 
 	public static class RememberApplicationClientTestPreparatorBundleActivator

@@ -464,7 +464,7 @@ public class CommerceAccountLocalServiceImpl
 		throws PortalException {
 
 		return GetterUtil.getInteger(
-			accountEntryLocalService.dslQuery(
+			(Long)accountEntryLocalService.dslQuery(
 				_getGroupByStep(
 					DSLQueryFactoryUtil.countDistinct(
 						AccountEntryTable.INSTANCE.accountEntryId),

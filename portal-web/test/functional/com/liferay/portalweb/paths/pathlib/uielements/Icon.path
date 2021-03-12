@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANY_ITEM_SELECTOR</td>
+	<td>//label[normalize-space(text())='${key_fieldLabel}']/following-sibling::div//button[contains(@class,'item-selector')]//*[name()='svg'][contains(@class,'lexicon-icon-${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASTERISK</td>
 	<td>//span[*[name()='svg'][contains(@class,'icon-asterisk')]] | //span[contains(@class,'icon-asterisk')] | //label[*[name()='svg'][contains(@class,'icon-asterisk')] and not(contains(@class,'required-warning'))]</td>
 	<td></td>

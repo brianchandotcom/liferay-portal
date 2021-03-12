@@ -78,7 +78,7 @@ public class CommerceAccountOrganizationRelAdminDisplayContext
 		).setRedirect(
 			commerceAccountAdminRequestHelper.getCurrentURL()
 		).setParameter(
-			"organization", organizationId
+			"organizationId", organizationId
 		).buildString();
 	}
 

@@ -104,7 +104,7 @@ PortletURL portletURL = commerceAccountOrganizationRelAdminDisplayContext.getPor
 
 					<liferay-ui:search-container-column-text
 						cssClass="important table-cell-expand"
-						href="<%= commerceAccountOrganizationRelAdminDisplayContext.getEditOrganizationURL(accountOrganization.getUserId()) %>"
+						href="<%= commerceAccountOrganizationRelAdminDisplayContext.getEditOrganizationURL(accountOrganization.getOrganizationId()) %>"
 						name="name"
 						value="<%= HtmlUtil.escape(accountOrganization.getName()) %>"
 					/>

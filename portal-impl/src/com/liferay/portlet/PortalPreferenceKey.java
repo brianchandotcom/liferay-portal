@@ -28,7 +28,7 @@ public class PortalPreferenceKey {
 
 	public PortalPreferenceKey(String namespace, String key) {
 		if (key == null) {
-			throw new IllegalArgumentException();
+			throw new NullPointerException("Key is null");
 		}
 
 		_namespace = namespace;

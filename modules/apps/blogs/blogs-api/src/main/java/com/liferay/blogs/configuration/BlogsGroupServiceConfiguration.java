@@ -63,4 +63,12 @@ public interface BlogsGroupServiceConfiguration {
 	@Meta.AD(deflt = "300", name = "small-image-width", required = false)
 	public int smallImageWidth();
 
+	@Meta.AD(
+		deflt = "false", name = "subscribe-blogs-entry-creator-to-comments",
+		required = false
+	)
+	public default boolean subscribeBlogsEntryCreatorToComments() {
+		return false;
+	}
+
 }

@@ -87,6 +87,66 @@ public class TestrayImporter {
 		}
 	}
 
+	public String getJenkinsBuildDescription() {
+		Document document = DocumentHelper.createDocument();
+
+		Element rootElement = document.addElement("div");
+
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		Dom4JUtil.addToElement(
+			rootElement,
+			_getJenkinsBuildDescriptionElement(
+				"Jenkins Build",
+				JenkinsResultsParserUtil.combine(
+					topLevelBuild.getJobName(), "#",
+					String.valueOf(topLevelBuild.getBuildNumber())),
+				topLevelBuild.getBuildURL()),
+			_getJenkinsBuildDescriptionElement(
+				"Jenkins Report", "jenkins-report.html",
+				topLevelBuild.getJenkinsReportURL()),
+			_getJenkinsBuildDescriptionElement(
+				"Jenkins Suite", topLevelBuild.getTestSuiteName()));
+
+		Map<Integer, TestrayBuild> testrayBuildMap = new HashMap<>();
+
+		for (TestrayBuild testrayBuild : _testrayBuilds.values()) {
+			testrayBuildMap.put(testrayBuild.getID(), testrayBuild);
+		}
+
+		int i = 0;
+
+		for (Map.Entry<Integer, TestrayBuild> testrayBuildEntry :
+				testrayBuildMap.entrySet()) {
+
+			String testrayBuildTitle = "Testray Build";
+
+			if (i > 0) {
+				testrayBuildTitle = JenkinsResultsParserUtil.combine(
+					testrayBuildTitle, " (", String.valueOf(i), ")");
+			}
+
+			TestrayBuild testrayBuild = testrayBuildEntry.getValue();
+
+			Dom4JUtil.addToElement(
+				rootElement,
+				_getJenkinsBuildDescriptionElement(
+					testrayBuildTitle, testrayBuild.getName(),
+					String.valueOf(testrayBuild.getURL())));
+
+			i++;
+		}
+
+		try {
+			String buildDescription = Dom4JUtil.format(rootElement, false);
+
+			return buildDescription.replaceAll("\n", "<br />");
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
 	public Job getJob() {
 		if (_job != null) {
 			return _job;
@@ -1259,6 +1319,42 @@ public class TestrayImporter {
 		buildParameters.putAll(_topLevelBuild.getParameters());
 
 		return buildParameters.get(buildParameterName);
+	}
+
+	private Element _getJenkinsBuildDescriptionElement(
+		String title, String name) {
+
+		return _getJenkinsBuildDescriptionElement(title, name, null);
+	}
+
+	private Element _getJenkinsBuildDescriptionElement(
+		String title, String name, String url) {
+
+		Document document = DocumentHelper.createDocument();
+
+		Element element = document.addElement("div");
+
+		Element titleElement = element.addElement("strong");
+
+		titleElement.addText(title + ":");
+
+		Element spaceElement = element.addElement("span");
+
+		spaceElement.addText(" ");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(url)) {
+			Element linkElement = element.addElement("a");
+
+			linkElement.addAttribute("href", url);
+			linkElement.addText(name);
+		}
+		else {
+			element.addText(name);
+		}
+
+		element.addElement("br");
+
+		return element;
 	}
 
 	private GitWorkingDirectory _getJenkinsGitWorkingDirectory() {

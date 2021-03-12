@@ -124,6 +124,11 @@ public class AssetCategoriesDisplayContext {
 				"vocabularyId", String.valueOf(getVocabularyId()));
 		}
 
+		if (Validator.isNotNull(getItemSelectorEventName())) {
+			addCategoryURL.setParameter(
+				"itemSelectorEventName", getItemSelectorEventName());
+		}
+
 		return addCategoryURL.toString();
 	}
 

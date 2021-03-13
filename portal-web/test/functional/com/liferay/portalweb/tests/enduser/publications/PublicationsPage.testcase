@@ -187,11 +187,13 @@ definition {
 
 		Publications.gotoPublish(publicationsName = "Publication Name 1");
 
-		Publications.discardPublications(
+		// Workaround LPS-129010
+
+		/*Publications.discardPublications(
 			conflictingPublications = "true",
 			entryTitle = "Content Page Name",
 			publicationsCategory = "Page",
-			publicationsTitle = "Content Page Name");
+			publicationsTitle = "Content Page Name");*/
 
 		Publications.discardPublications(
 			conflictingPublications = "true",

@@ -15,6 +15,8 @@
 package com.liferay.jenkins.results.parser.testray;
 
 import com.liferay.jenkins.results.parser.Build;
+import com.liferay.jenkins.results.parser.Dom4JUtil;
+import com.liferay.jenkins.results.parser.JenkinsMaster;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.TestClassResult;
@@ -26,10 +28,15 @@ import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroup;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
 import org.apache.commons.lang.WordUtils;
+
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
 
 /**
  * @author Michael Hashimoto
@@ -185,6 +192,81 @@ public class FunctionalBatchTestrayCaseResult extends BatchTestrayCaseResult {
 		}
 
 		return testClassResult.getTestResult("test[" + getName() + "]");
+	}
+
+	@Override
+	public String[] getWarnings() {
+		StringBuilder sb = new StringBuilder();
+
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		Date topLevelStartDate = new Date(topLevelBuild.getStartTime());
+
+		sb.append(
+			JenkinsResultsParserUtil.toDateString(
+				topLevelStartDate, "yyyy-MM", "America/Los_Angeles"));
+
+		sb.append("/");
+
+		JenkinsMaster jenkinsMaster = topLevelBuild.getJenkinsMaster();
+
+		sb.append(jenkinsMaster.getName());
+
+		sb.append("/");
+		sb.append(topLevelBuild.getJobName());
+		sb.append("/");
+		sb.append(topLevelBuild.getBuildNumber());
+		sb.append("/");
+
+		AxisTestClassGroup axisTestClassGroup = getAxisTestClassGroup();
+
+		sb.append(axisTestClassGroup.getAxisName());
+
+		sb.append("/poshi-warnings.xml");
+
+		TestrayS3Object testrayS3Object =
+			TestrayS3ObjectFactory.newTestrayS3Object(
+				TestrayS3Bucket.getInstance(), sb.toString());
+
+		if (!testrayS3Object.exists()) {
+			return null;
+		}
+
+		String testrayS3ObjectValue = testrayS3Object.getValue();
+
+		testrayS3ObjectValue = testrayS3ObjectValue.trim();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(testrayS3ObjectValue)) {
+			return null;
+		}
+
+		try {
+			Document document = Dom4JUtil.parse(testrayS3ObjectValue);
+
+			Element rootElement = document.getRootElement();
+
+			List<String> warnings = new ArrayList<>();
+
+			for (Element valueElement : rootElement.elements()) {
+				String warning = valueElement.getText();
+
+				warning = warning.trim();
+
+				if (JenkinsResultsParserUtil.isNullOrEmpty(warning)) {
+					continue;
+				}
+
+				warnings.add(warning);
+			}
+
+			if (!warnings.isEmpty()) {
+				return warnings.toArray(new String[0]);
+			}
+		}
+		catch (DocumentException documentException) {
+		}
+
+		return null;
 	}
 
 	private List<Attachment> _getLiferayLogAttachments() {

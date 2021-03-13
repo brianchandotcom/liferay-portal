@@ -144,6 +144,11 @@ public class BatchTestrayCaseResult extends TestrayCaseResult {
 		}
 	}
 
+	@Override
+	public String[] getWarnings() {
+		return null;
+	}
+
 	protected String getAxisBuildURLPath() {
 		AxisBuild axisBuild = getAxisBuild();
 
@@ -175,6 +180,10 @@ public class BatchTestrayCaseResult extends TestrayCaseResult {
 		sb.append(axisBuild.getAxisName());
 
 		return sb.toString();
+	}
+
+	protected AxisTestClassGroup getAxisTestClassGroup() {
+		return _axisTestClassGroup;
 	}
 
 	private Attachment _getJenkinsConsoleAttachment() {

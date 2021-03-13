@@ -2618,6 +2618,15 @@ include-and-override=portal-liferay-online-limit.properties</echo>
 				</then>
 			</if>
 
+			<get-testcase-property property.name="dxp.license.file" />
+
+			<if>
+				<isset property="dxp.license.file" />
+				<then>
+					<swap-dxp-license dxp.license.file="${dxp.license.file}" />
+				</then>
+			</if>
+
 			<get-testcase-property property.name="commerce.enabled" />
 			<get-testcase-property property.name="commerce.license.file" />
 
@@ -5539,6 +5548,61 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					</then>
 				</elseif>
 			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="swap-dxp-license">
+		<attribute name="dxp.license.file" />
+
+		<sequential>
+			<delete failonerror="false" file="${liferay.home}/deploy/license.xml" verbose="true" />
+
+			<copy
+				file="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/license/@{dxp.license.file}"
+				todir="${liferay.home}/deploy"
+			/>
+
+			<var name="expiration.leeway" value="2" />
+
+			<if>
+				<equals arg1="@{dxp.license.file}" arg2="portal-dxp-license-custom-expiration-48-hours.xml" />
+				<then>
+					<beanshell>
+						<![CDATA[
+							import java.time.format.DateTimeFormatter;
+							import java.time.ZonedDateTime;
+							import java.time.ZoneId;
+
+							DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("EEEE, MMMM dd, yyyy hh:mm:ss a zz");
+
+							ZoneId GMT = ZoneId.of("GMT");
+
+							ZonedDateTime now = ZonedDateTime.now(GMT);
+
+							//License expiration leeway
+							ZonedDateTime expiration = now.minusDays(2);
+
+							//License expiration delay
+							expiration = expiration.plusMinutes(1);
+
+							System.out.println(dateTimeFormatter.format(expiration));
+							project.setProperty("expiration.date", dateTimeFormatter.format(expiration));
+						]]>
+					</beanshell>
+				</then>
+			</if>
+
+			<replace
+				file="${liferay.home}/deploy/@{dxp.license.file}"
+				token="${host.name}"
+				value="${env.HOSTNAME}"
+			/>
+
+			<replace
+				file="${liferay.home}/deploy/@{dxp.license.file}"
+				token="${expirationdate}"
+				value="${expiration.date}"
+			/>
 		</sequential>
 	</macrodef>
 

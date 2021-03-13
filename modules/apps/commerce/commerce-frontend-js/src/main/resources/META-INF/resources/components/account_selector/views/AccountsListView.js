@@ -85,7 +85,7 @@ function AccountsListView({changeAccount, currentAccount, setCurrentView}) {
 							</ClayDropDown.ItemList>
 						);
 					}}
-					placeholder="search"
+					placeholder={Liferay.Language.get('search')}
 				/>
 			</ClayDropDown.Section>
 

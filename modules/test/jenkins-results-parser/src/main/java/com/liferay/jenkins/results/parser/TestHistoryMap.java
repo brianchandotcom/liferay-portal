@@ -176,7 +176,9 @@ public class TestHistoryMap
 
 		sb.append("var flakyTestData = ");
 		sb.append(flakyTestDataJSONArray.toString());
-		sb.append(";");
+		sb.append(";\nvar flakyTestDataGeneratedDate = new Date(");
+		sb.append(JenkinsResultsParserUtil.getCurrentTimeMillis());
+		sb.append(");");
 
 		JenkinsResultsParserUtil.write(filePath, sb.toString());
 	}

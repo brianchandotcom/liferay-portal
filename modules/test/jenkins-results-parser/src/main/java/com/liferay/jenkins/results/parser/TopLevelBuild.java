@@ -230,6 +230,7 @@ public abstract class TopLevelBuild extends BaseBuild {
 		buildResultsJSONObject.put("batchResults", downstreamBuildJSONArray);
 		buildResultsJSONObject.put("buildNumber", getBuildNumber());
 		buildResultsJSONObject.put("jobURL", getJobURL());
+		buildResultsJSONObject.put("startTime", getStartTime());
 		buildResultsJSONObject.put("upstreamBranchSHA", getUpstreamBranchSHA());
 
 		return buildResultsJSONObject;

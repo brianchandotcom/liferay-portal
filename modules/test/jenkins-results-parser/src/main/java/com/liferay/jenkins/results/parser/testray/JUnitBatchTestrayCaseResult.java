@@ -17,6 +17,7 @@ package com.liferay.jenkins.results.parser.testray;
 import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.TestClassResult;
+import com.liferay.jenkins.results.parser.TestResult;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroup;
@@ -34,6 +35,31 @@ public class JUnitBatchTestrayCaseResult extends BatchTestrayCaseResult {
 		super(testrayBuild, topLevelBuild, axisTestClassGroup);
 
 		_testClass = testClass;
+	}
+
+	@Override
+	public String getErrors() {
+		TestClassResult testClassResult = getTestClassResult();
+
+		if (testClassResult == null) {
+			return super.getErrors();
+		}
+
+		if (!testClassResult.isFailing()) {
+			return null;
+		}
+
+		int errorCount = 0;
+
+		for (TestResult testResult : testClassResult.getTestResults()) {
+			if ((testResult == null) || !testResult.isFailing()) {
+				continue;
+			}
+
+			errorCount++;
+		}
+
+		return errorCount + " tests failed.";
 	}
 
 	@Override

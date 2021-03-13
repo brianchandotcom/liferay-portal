@@ -622,6 +622,23 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public String getFailureMessage() {
+		Element failureMessageElement = getFailureMessageElement();
+
+		if (failureMessageElement == null) {
+			return null;
+		}
+
+		Element codeElement = failureMessageElement.element("code");
+
+		if (codeElement == null) {
+			return null;
+		}
+
+		return codeElement.getText();
+	}
+
+	@Override
 	public Element getGitHubMessageBuildAnchorElement() {
 		getResult();
 

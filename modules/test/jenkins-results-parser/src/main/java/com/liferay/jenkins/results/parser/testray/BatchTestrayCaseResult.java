@@ -85,6 +85,22 @@ public class BatchTestrayCaseResult extends TestrayCaseResult {
 	}
 
 	@Override
+	public String getErrors() {
+		Build build = getBuild();
+
+		if (build == null) {
+			return "Failed to run on CI";
+		}
+
+		String failureMessage = build.getFailureMessage();
+
+		failureMessage = failureMessage.substring(
+			0, failureMessage.indexOf("\n"));
+
+		return failureMessage.trim();
+	}
+
+	@Override
 	public String getName() {
 		return getAxisName();
 	}

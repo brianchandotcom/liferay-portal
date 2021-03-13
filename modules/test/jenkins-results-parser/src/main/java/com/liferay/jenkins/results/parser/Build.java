@@ -88,6 +88,8 @@ public interface Build {
 
 	public long getDuration();
 
+	public String getFailureMessage();
+
 	public Element getGitHubMessageBuildAnchorElement();
 
 	public Element getGitHubMessageElement();

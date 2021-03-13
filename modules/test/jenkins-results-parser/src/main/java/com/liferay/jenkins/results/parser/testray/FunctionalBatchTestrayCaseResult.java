@@ -94,6 +94,29 @@ public class FunctionalBatchTestrayCaseResult extends BatchTestrayCaseResult {
 	}
 
 	@Override
+	public String getErrors() {
+		TestResult testResult = getTestResult();
+
+		if (testResult == null) {
+			return super.getErrors();
+		}
+
+		if (!testResult.isFailing()) {
+			return null;
+		}
+
+		String errorDetails = testResult.getErrorDetails();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(errorDetails)) {
+			return super.getErrors();
+		}
+
+		errorDetails = errorDetails.substring(0, errorDetails.indexOf("\n"));
+
+		return errorDetails.trim();
+	}
+
+	@Override
 	public String getName() {
 		return _functionalTestClass.getTestClassMethodName();
 	}

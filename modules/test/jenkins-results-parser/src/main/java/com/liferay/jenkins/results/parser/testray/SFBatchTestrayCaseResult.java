@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser.testray;
 
+import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 
@@ -30,14 +31,8 @@ public class SFBatchTestrayCaseResult extends BatchTestrayCaseResult {
 	}
 
 	@Override
-	public Status getStatus() {
-		TopLevelBuild topLevelBuild = getTopLevelBuild();
-
-		if ((topLevelBuild == null) || topLevelBuild.isFailing()) {
-			return Status.FAILED;
-		}
-
-		return Status.PASSED;
+	public Build getBuild() {
+		return getTopLevelBuild();
 	}
 
 }

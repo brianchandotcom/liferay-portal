@@ -946,6 +946,15 @@ public class TestrayImporter {
 					attachmentFileElement.addAttribute(
 						"value", attachment.getValue());
 				}
+
+				String errors = testrayCaseResult.getErrors();
+
+				if (!JenkinsResultsParserUtil.isNullOrEmpty(errors)) {
+					Element failureElement = testcaseElement.addElement(
+						"failure");
+
+					failureElement.addAttribute("message", errors);
+				}
 			}
 
 			Map<String, String> summaryMap = new HashMap<>();

@@ -127,6 +127,16 @@ definition {
 		CommerceLicense.viewCommerceMissing();
 	}
 
+	@priority = "3"
+	test DeployCommereceLicenseBinaryFile {
+		property commerce.enabled = "true";
+		property commerce.license.file = "commerce-binary-license-developer.li";
+
+		AssertConsoleTextNotPresent(value1 = "Processing portal-commerce-license.xml");
+
+		CommerceLicense.executeSmoke();
+	}
+
 	@ignore = "true"
 	@priority = "4"
 	test DeployModuleLicenseToLCSPortal {

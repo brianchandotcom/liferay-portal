@@ -5531,6 +5531,16 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 			/>
 
 			<if>
+				<equals arg1="@{commerce.license.file}" arg2="commerce-binary-license-developer.li" />
+				<then>
+					<copy
+						file="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/license/@{commerce.license.file}"
+						todir="${liferay.home}/data/license"
+					/>
+				</then>
+			</if>
+
+			<if>
 				<equals arg1="@{commerce.license.file}" arg2="commerce-dxp-license-developer-combined.xml" />
 				<then>
 					<delete failonerror="false" file="${liferay.home}/deploy/license.xml" verbose="true" />

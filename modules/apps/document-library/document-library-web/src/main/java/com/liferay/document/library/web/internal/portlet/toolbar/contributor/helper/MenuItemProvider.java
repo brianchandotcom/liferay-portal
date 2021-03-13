@@ -343,6 +343,10 @@ public class MenuItemProvider {
 		urlMenuItem.setIcon(
 			DLFileEntryTypeIconProviderUtil.getIcon(fileEntryType));
 
+		urlMenuItem.setKey(
+			DLFileEntryType.class.getSimpleName() +
+				fileEntryType.getFileEntryTypeKey());
+
 		String label = LanguageUtil.get(
 			PortalUtil.getHttpServletRequest(portletRequest),
 			fileEntryType.getUnambiguousName(

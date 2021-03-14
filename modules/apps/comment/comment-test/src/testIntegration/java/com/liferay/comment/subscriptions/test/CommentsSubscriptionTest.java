@@ -25,6 +25,8 @@ import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBDiscussionLocalServiceUtil;
 import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
 import com.liferay.message.boards.test.util.MBTestUtil;
+import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.model.Group;
@@ -44,11 +46,14 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.mail.MailServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
+
+import java.util.Dictionary;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -215,6 +220,30 @@ public class CommentsSubscriptionTest {
 	}
 
 	@Test
+	public void testSubscriptionMBDiscussionWhenSubscribeBlogsEntryCreatorToCommentsEnabled()
+		throws Exception {
+
+		_withSubscribeBlogsEntryCreatorToCommentsEnabled(
+			() -> {
+				ServiceContext serviceContext =
+					ServiceContextTestUtil.getServiceContext(
+						_group.getGroupId(), _creatorUser.getUserId());
+
+				BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
+					_creatorUser.getUserId(), RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(), serviceContext);
+
+				MBTestUtil.populateNotificationsServiceContext(
+					serviceContext, Constants.ADD);
+
+				addDiscussionMessage(
+					TestPropsValues.getUserId(), serviceContext, blogsEntry);
+
+				Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
+			});
+	}
+
+	@Test
 	public void testSubscriptionMBDiscussionWhenUpdatingMBMessage()
 		throws Exception {
 
@@ -269,6 +298,24 @@ public class CommentsSubscriptionTest {
 			thread.getThreadId(), MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
+	}
+
+	private void _withSubscribeBlogsEntryCreatorToCommentsEnabled(
+			UnsafeRunnable<Exception> unsafeRunnable)
+		throws Exception {
+
+		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
+
+		dictionary.put("subscribeBlogsEntryCreatorToComments", true);
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					"com.liferay.blogs.configuration." +
+						"BlogsGroupServiceConfiguration",
+					dictionary)) {
+
+			unsafeRunnable.run();
+		}
 	}
 
 	@Inject

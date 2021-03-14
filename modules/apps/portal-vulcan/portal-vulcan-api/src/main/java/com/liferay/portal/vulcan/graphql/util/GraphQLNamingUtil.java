@@ -41,10 +41,10 @@ public class GraphQLNamingUtil {
 
 		methodName = methodName.replaceFirst("get", "");
 
-		if (returnType.contains("Collection<") ||
-			(returnType.contains("Page<") &&
-			 (methodName.lastIndexOf("Page") != -1) &&
-			 methodName.contains("Page"))) {
+		if ((returnType.contains("Collection<") ||
+			 (returnType.contains("Page<") &&
+			  (methodName.lastIndexOf("Page") != -1))) &&
+			methodName.contains("Page")) {
 
 			methodName = methodName.substring(
 				0, methodName.lastIndexOf("Page"));

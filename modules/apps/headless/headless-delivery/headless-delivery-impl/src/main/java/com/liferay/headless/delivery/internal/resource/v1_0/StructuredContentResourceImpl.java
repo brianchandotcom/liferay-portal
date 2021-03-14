@@ -808,7 +808,7 @@ public class StructuredContentResourceImpl
 					ddmFormField.getNestedDDMFormFields(), name);
 
 				if (nestedDDMFormField != null) {
-					return null;
+					return nestedDDMFormField;
 				}
 			}
 		}

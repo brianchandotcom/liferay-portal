@@ -1119,16 +1119,7 @@ public class StructuredContentResourceImpl
 		}
 
 		for (ContentField contentField : contentFields) {
-			DDMFormField ddmFormField = _getDDMFormField(
-				ddmStructure, contentField.getName());
-
-			if (ddmFormField == null) {
-				throw new BadRequestException(
-					StringBundler.concat(
-						"Unable to get content field value for \"",
-						contentField.getName(), "\" for content structure ",
-						ddmStructure.getStructureId()));
-			}
+			_getDDMFormField(ddmStructure, contentField.getName());
 
 			_validateContentFields(
 				contentField.getNestedContentFields(), ddmStructure);

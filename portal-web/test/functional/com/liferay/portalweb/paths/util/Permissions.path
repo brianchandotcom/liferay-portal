@@ -40,8 +40,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONFIGURATION_PERMISSIONS_ADD_DOCUMENT_CHECKBOX</td>
+	<td>//input[@id='${key_roleTitle}_ACTION_ADD_DOCUMENT']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONFIGURATION_PERMISSIONS_ADD_ENTRY</td>
 	<td>//input[@id='${key_roleTitle}_ACTION_ADD_ENTRY']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURATION_PERMISSIONS_ADD_SHORTCUT_CHECKBOX</td>
+	<td>//input[@id='${key_roleTitle}_ACTION_ADD_SHORTCUT']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURATION_PERMISSIONS_ADD_SUBFOLDER_CHECKBOX</td>
+	<td>//input[@id='${key_roleTitle}_ACTION_ADD_SUBFOLDER']</td>
 	<td></td>
 </tr>
 <tr>
@@ -52,6 +67,11 @@
 <tr>
 	<td>CONFIGURATION_PERMISSIONS_CONFIGURATION_CHECKBOX</td>
 	<td>//input[@id='${key_roleTitle}_ACTION_CONFIGURATION']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURATION_PERMISSIONS_SUBSCRIBE_CHECKBOX</td>
+	<td>//input[@id='${key_roleTitle}_ACTION_SUBSCRIBE']</td>
 	<td></td>
 </tr>
 <tr>

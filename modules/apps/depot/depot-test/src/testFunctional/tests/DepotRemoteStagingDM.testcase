@@ -264,6 +264,8 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
+		Pause(locator1 = "3000");
+
 		BlogsNavigator.gotoEntryPG(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
@@ -1169,6 +1171,8 @@ definition {
 			baseURL = "http://localhost:9080",
 			pageName = "Test Page",
 			siteName = "Remote Site");
+
+		Pause(locator1 = "3000");
 
 		BlogsNavigator.gotoEntryPG(
 			entryContent = "Blogs Entry Content",

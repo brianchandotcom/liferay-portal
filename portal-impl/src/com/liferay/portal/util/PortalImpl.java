@@ -8802,11 +8802,11 @@ public class PortalImpl implements Portal {
 		new ConcurrentHashMap<>();
 	private static final Map<Long, String> _cdnHostHttpsMap =
 		new ConcurrentHashMap<>();
+	private static final Log _webServerServletLog = LogFactoryUtil.getLog(
+		WebServerServlet.class);
 	private static final MethodHandler _resetCDNHostsMethodHandler =
 		new MethodHandler(new MethodKey(PortalUtil.class, "resetCDNHosts"));
 	private static final Date _upTime = new Date();
-	private static final Log _webServerServletLog = LogFactoryUtil.getLog(
-		WebServerServlet.class);
 
 	static {
 		Locale locale = LocaleUtil.getDefault();

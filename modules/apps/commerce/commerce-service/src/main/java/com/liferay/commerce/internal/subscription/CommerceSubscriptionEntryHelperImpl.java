@@ -20,6 +20,7 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceSubscriptionEntry;
 import com.liferay.commerce.payment.engine.CommerceSubscriptionEngine;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPSubscriptionInfo;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
@@ -70,14 +71,20 @@ public class CommerceSubscriptionEntryHelperImpl
 				if (cpSubscriptionInfo != null) {
 					String subscriptionType = null;
 
-					if (cpInstance.isSubscriptionEnabled()) {
+					CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+					if (cpInstance.isSubscriptionEnabled() ||
+						cpDefinition.isSubscriptionEnabled()) {
+
 						subscriptionType =
 							cpSubscriptionInfo.getSubscriptionType();
 					}
 
 					String deliverySubscriptionType = null;
 
-					if (cpInstance.isDeliverySubscriptionEnabled()) {
+					if (cpInstance.isDeliverySubscriptionEnabled() ||
+						cpDefinition.isDeliverySubscriptionEnabled()) {
+
 						deliverySubscriptionType =
 							cpSubscriptionInfo.getDeliverySubscriptionType();
 					}

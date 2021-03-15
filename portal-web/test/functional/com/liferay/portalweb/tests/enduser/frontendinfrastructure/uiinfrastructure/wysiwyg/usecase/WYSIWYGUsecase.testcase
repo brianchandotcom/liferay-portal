@@ -309,6 +309,8 @@ definition {
 
 	@priority = "4"
 	test PreviewSourceContentEditContent {
+		property portal.upstream = "quarantine";
+
 		Open(locator1 = "http://www.standards-schmandards.com/exhibits/wysiwyg/sampledoc.htm");
 
 		SelectFieldText(locator1 = "//body");

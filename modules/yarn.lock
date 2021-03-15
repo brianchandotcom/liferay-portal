@@ -1272,7 +1272,7 @@
     "@clayui/link" "^3.2.0"
     classnames "^2.2.6"
 
-"@clayui/tooltip@3.4.5":
+"@clayui/tooltip@3.4.5", "@clayui/tooltip@^3.4.5":
   version "3.4.5"
   resolved "https://registry.yarnpkg.com/@clayui/tooltip/-/tooltip-3.4.5.tgz#6f04480891062041b2174bd84f4119e8d0e80325"
   integrity sha512-czFh8qMQXnMZwgKIxjHH1d61o9RXSPnGUB6e0kS3IsiGg1xdIX8S4rgFzZiUF8ZSk+LDfx/DoD02dBu+hNotfQ==

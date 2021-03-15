@@ -135,7 +135,8 @@ public class ViewAccountOrganizationsManagementToolbarDisplayContext
 					PortletURLBuilder.createRenderURL(
 						liferayPortletResponse
 					).setMVCPath(
-						"/account_entries_admin/select_account_organizations.jsp"
+						"/account_entries_admin" +
+							"/select_account_organizations.jsp"
 					).setParameter(
 						"accountEntryId", accountEntry.getAccountEntryId()
 					).setWindowState(

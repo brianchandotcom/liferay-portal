@@ -159,7 +159,8 @@ public class MasterLayoutActionDropdownItemsProvider {
 				PortletURLBuilder.createActionURL(
 					_renderResponse
 				).setActionName(
-					"/layout_page_template_admin/copy_layout_page_template_entry"
+					"/layout_page_template_admin" +
+						"/copy_layout_page_template_entry"
 				).setRedirect(
 					_themeDisplay.getURLCurrent()
 				).setParameter(
@@ -447,7 +448,8 @@ public class MasterLayoutActionDropdownItemsProvider {
 				PortletURLBuilder.createActionURL(
 					_renderResponse
 				).setActionName(
-					"/layout_page_template_admin/update_layout_page_template_entry"
+					"/layout_page_template_admin" +
+						"/update_layout_page_template_entry"
 				).setRedirect(
 					_themeDisplay.getURLCurrent()
 				).setParameter(

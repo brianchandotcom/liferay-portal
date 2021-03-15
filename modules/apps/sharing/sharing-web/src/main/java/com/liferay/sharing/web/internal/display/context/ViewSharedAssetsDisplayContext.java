@@ -259,7 +259,11 @@ public class ViewSharedAssetsDisplayContext {
 			() -> {
 				String orderByType = getSortingOrder();
 
-				return Objects.equals(orderByType, "asc") ? "desc" : "asc";
+				if (Objects.equals(orderByType, "asc")) {
+					return "desc";
+				}
+
+				return "asc";
 			}
 		).build();
 	}

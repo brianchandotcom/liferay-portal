@@ -86,15 +86,14 @@ public class EditCommerceAccountMVCActionCommand extends BaseMVCActionCommand {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		PortletURL portletURL = PortletURLBuilder.create(
+
+		String redirect = PortletURLBuilder.create(
 			PortletProviderUtil.getPortletURL(
 				actionRequest, CommerceAccount.class.getName(),
 				PortletProvider.Action.MANAGE)
 		).setParameters(
 			new HashMap<>()
-		).build();
-
-		String redirect = portletURL.toString();
+		).buildString();
 
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {

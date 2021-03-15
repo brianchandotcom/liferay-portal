@@ -404,7 +404,11 @@ public class WorkflowDefinitionLinkDisplayContext {
 				String orderByType = ParamUtil.getString(
 					_httpServletRequest, "orderByType", "asc");
 
-				return Objects.equals(orderByType, "asc") ? "desc" : "asc";
+				if (Objects.equals(orderByType, "asc")) {
+					return "desc";
+				}
+
+				return "asc";
 			}
 		).buildString();
 	}

@@ -292,7 +292,11 @@ public class DDMFormBrowserDisplayContext {
 				String orderByType = ParamUtil.getString(
 					_renderRequest, "orderByType");
 
-				return orderByType.equals("asc") ? "desc" : "asc";
+				if (orderByType.equals("asc")) {
+					return "desc";
+				}
+
+				return "asc";
 			}
 		).buildString();
 	}

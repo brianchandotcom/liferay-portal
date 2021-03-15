@@ -334,7 +334,11 @@ public class WorkflowInstanceViewDisplayContext
 				String orderByType = ParamUtil.getString(
 					httpServletRequest, "orderByType", "asc");
 
-				return Objects.equals(orderByType, "asc") ? "desc" : "asc";
+				if (Objects.equals(orderByType, "asc")) {
+					return "desc";
+				}
+
+				return "asc";
 			}
 		).build();
 

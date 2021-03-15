@@ -1062,7 +1062,11 @@ public class DDMFormAdminDisplayContext {
 				String orderByType = ParamUtil.getString(
 					renderRequest, "orderByType");
 
-				return orderByType.equals("asc") ? "desc" : "asc";
+				if (orderByType.equals("asc")) {
+					return "desc";
+				}
+
+				return "asc";
 			}
 		).buildString();
 	}

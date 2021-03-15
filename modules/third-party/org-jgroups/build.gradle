@@ -1,0 +1,19 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
+task patch(type: PatchTask)
+
+dependencies {
+	compileOnly group: "org.jgroups", name: "jgroups", transitive: false, version: "3.6.16.Final"
+}
+
+patch {
+	ext {
+		autoClean = false
+	}
+
+	fileNames "org/jgroups/client/StompConnection.java"
+
+	originalLibModuleName = "jgroups"
+}

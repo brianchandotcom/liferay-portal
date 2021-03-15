@@ -234,14 +234,12 @@ public class CPCompareContentHelperImpl implements CPCompareContentHelper {
 		long cpDefinitionId, RenderRequest renderRequest,
 		RenderResponse renderResponse) {
 
-		String redirect = _portal.getCurrentURL(renderRequest);
-
 		return PortletURLBuilder.createActionURL(
 			renderResponse
 		).setActionName(
 			"/cp_compare_content_mini_web/delete_compare_product"
 		).setRedirect(
-			redirect
+			_portal.getCurrentURL(renderRequest)
 		).setParameter(
 			"cpDefinitionId", cpDefinitionId
 		).buildString();

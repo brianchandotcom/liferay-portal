@@ -49,7 +49,6 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -302,25 +301,24 @@ public class TrashPortlet extends MVCPortlet {
 				TrashEntryConstants.DEFAULT_CONTAINER_ID, newName);
 		}
 		catch (RestoreEntryException restoreEntryException) {
-			String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-			PortletURL renderURL = PortletURLBuilder.createRenderURL(
-				_portal.getLiferayPortletResponse(actionResponse)
-			).setMVCPath(
-				"/restore_entry.jsp"
-			).setRedirect(
-				redirect
-			).setParameter(
-				"trashEntryId", restoreEntryException.getTrashEntryId()
-			).setParameter(
-				"duplicateEntryId", restoreEntryException.getDuplicateEntryId()
-			).setParameter(
-				"oldName", restoreEntryException.getOldName()
-			).setParameter(
-				"overridable", restoreEntryException.isOverridable()
-			).build();
-
-			actionRequest.setAttribute(WebKeys.REDIRECT, renderURL.toString());
+			actionRequest.setAttribute(
+				WebKeys.REDIRECT,
+				PortletURLBuilder.createRenderURL(
+					_portal.getLiferayPortletResponse(actionResponse)
+				).setMVCPath(
+					"/restore_entry.jsp"
+				).setRedirect(
+					ParamUtil.getString(actionRequest, "redirect")
+				).setParameter(
+					"trashEntryId", restoreEntryException.getTrashEntryId()
+				).setParameter(
+					"duplicateEntryId",
+					restoreEntryException.getDuplicateEntryId()
+				).setParameter(
+					"oldName", restoreEntryException.getOldName()
+				).setParameter(
+					"overridable", restoreEntryException.isOverridable()
+				).buildString());
 
 			hideDefaultErrorMessage(actionRequest);
 

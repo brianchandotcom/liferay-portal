@@ -1045,11 +1045,8 @@ public class UIItemsBuilder {
 	private PortletURL _getActionURL(
 		String mvcActionCommandName, String cmd, String redirect) {
 
-		LiferayPortletResponse liferayPortletResponse =
-			_getLiferayPortletResponse();
-
 		PortletURL portletURL = PortletURLBuilder.createActionURL(
-			liferayPortletResponse
+			_getLiferayPortletResponse()
 		).setActionName(
 			mvcActionCommandName
 		).build();
@@ -1195,11 +1192,8 @@ public class UIItemsBuilder {
 	private PortletURL _getRenderURL(
 		String mvcRenderCommandName, String redirect) {
 
-		LiferayPortletResponse liferayPortletResponse =
-			_getLiferayPortletResponse();
-
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
+			_getLiferayPortletResponse()
 		).setMVCRenderCommandName(
 			mvcRenderCommandName
 		).build();

@@ -42,7 +42,7 @@ public class JUnitBatchTestrayCaseResult extends BatchTestrayCaseResult {
 		TestClassResult testClassResult = getTestClassResult();
 
 		if (testClassResult == null) {
-			return super.getErrors();
+			return "Failed to run on CI";
 		}
 
 		if (!testClassResult.isFailing()) {

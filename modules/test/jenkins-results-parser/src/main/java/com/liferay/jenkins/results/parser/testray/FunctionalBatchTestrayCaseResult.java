@@ -98,7 +98,7 @@ public class FunctionalBatchTestrayCaseResult extends BatchTestrayCaseResult {
 		TestResult testResult = getTestResult();
 
 		if (testResult == null) {
-			return super.getErrors();
+			return "Failed to run on CI";
 		}
 
 		if (!testResult.isFailing()) {

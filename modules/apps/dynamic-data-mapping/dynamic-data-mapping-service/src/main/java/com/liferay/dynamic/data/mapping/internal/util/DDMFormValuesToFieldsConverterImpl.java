@@ -71,7 +71,9 @@ public class DDMFormValuesToFieldsConverterImpl
 			Locale defaultLocale)
 		throws PortalException {
 
-		if ((ddmFormField == null) || ddmFormField.isTransient()) {
+		if ((ddmFormField == null) || ddmFormField.isTransient() ||
+			(ddmFormFieldValue.getValue() == null)) {
+
 			return;
 		}
 

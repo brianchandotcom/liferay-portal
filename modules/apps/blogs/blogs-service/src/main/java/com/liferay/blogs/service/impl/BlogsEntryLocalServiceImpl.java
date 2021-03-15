@@ -1227,10 +1227,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			serviceContext.getAssetLinkEntryIds(),
 			serviceContext.getAssetPriority());
 
-		// Comment
-
-		_subscribeDiscussion(entry);
-
 		// Images
 
 		long coverImageFileEntryId = entry.getCoverImageFileEntryId();

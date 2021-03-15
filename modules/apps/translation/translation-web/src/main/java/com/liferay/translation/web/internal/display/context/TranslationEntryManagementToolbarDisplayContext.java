@@ -36,6 +36,7 @@ import com.liferay.translation.model.TranslationEntry;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -68,6 +69,16 @@ public class TranslationEntryManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.putData(
 					"action", "deleteSelectedTranslationEntries");
+
+				PortletURL portletURL =
+					liferayPortletResponse.createActionURL();
+
+				portletURL.setParameter(
+					ActionRequest.ACTION_NAME,
+					"/translation/delete_translation_entry");
+
+				dropdownItem.putData(
+					"deleteranslationEntriesURL", portletURL.toString());
 				dropdownItem.setIcon("times-circle");
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "delete"));

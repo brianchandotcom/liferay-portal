@@ -21,7 +21,8 @@ ViewDisplayContext viewDisplayContext = (ViewDisplayContext)request.getAttribute
 %>
 
 <clay:management-toolbar
-	displayContext="<%= viewDisplayContext.getTranslationEntryManagementToolbarDisplayContext() %>"
+	managementToolbarDisplayContext="<%= viewDisplayContext.getTranslationEntryManagementToolbarDisplayContext() %>"
+	propsTransformer="js/translate/TranslationManagementToolbarPropsTransformer"
 />
 
 <clay:container-fluid>

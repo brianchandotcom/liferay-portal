@@ -126,7 +126,9 @@ public class JournalArticleAnalyticsReportsInfoItem
 
 	@Override
 	public String getTitle(JournalArticle journalArticle, Locale locale) {
-		return journalArticle.getTitle(locale);
+		return _layoutDisplayPageObjectProviderAnalyticsReportsInfoItem.
+			getTitle(
+				_getLayoutDisplayPageObjectProvider(journalArticle), locale);
 	}
 
 	@Override

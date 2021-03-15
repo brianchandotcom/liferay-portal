@@ -283,7 +283,7 @@ public class LayoutDisplayPageObjectProviderAnalyticsReportsInfoItemImpl
 						TextInfoFieldType.INSTANCE);
 				}
 			).map(
-				InfoFieldValue::getValue
+				infoItemFieldValue -> infoItemFieldValue.getValue(locale)
 			).orElse(
 				StringPool.BLANK
 			);

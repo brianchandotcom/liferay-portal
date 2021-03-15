@@ -250,11 +250,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EDITABLE_FIELD_TOOLBAR_MAP_ASSET_SELECT_POPUP_BUTTON</td>
-	<td>//div[contains(@role,'tabpanel') and contains(@class,'active')]//label[contains(.,'Content')]/following-sibling::div//button</td>
-	<td></td>
-</tr>
-<tr>
 	<td>EDITABLE_FIELD_TOOLBAR_LAYOUT_BACKGROUND_IMAGE_BUTTON</td>
 	<td>//button[@data-panel-id='layout_background_image']</td>
 	<td></td>
@@ -787,11 +782,6 @@
 <tr>
 	<td>NAV_ITEM_BUTTON</td>
 	<td>//div[contains(@class,'page-structure')]//button[contains(@class,'nav-link')][normalize-space()='${key_navItem}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PLUS_ICON_BUTTON</td>
-	<td>//div[contains(@class,'item-configuration')]//button[*[name()='svg'][contains(@class,'plus')]]</td>
 	<td></td>
 </tr>
 <!--WIDGETS-->

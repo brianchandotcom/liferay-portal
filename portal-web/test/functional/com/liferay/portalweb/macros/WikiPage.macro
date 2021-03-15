@@ -359,16 +359,10 @@ definition {
 		}
 
 		if (isSet(permissionsDefinitionKey)) {
-			if (IsNotVisible(locator1 = "AssetPermissions#HIDE_OPTIONS_LINK")) {
-				AssertClick.assertPartialTextClickAt(
-					locator1 = "AssetPermissions#MORE_OPTIONS_LINK",
-					value1 = "More Options");
-			}
-
-			var key_permissionsDefinitionKey = "${permissionsDefinitionKey}";
-			var key_roleTitle = "${roleTitle}";
-
-			Check(locator1 = "AssetPermissions#PERMISSIONS_CHECKBOX");
+			PermissionsInline.addOrRemoveEntryPermissionsFromAllRoles(
+				addOrRemoveViewPermission = "${addOrRemoveViewPermission}",
+				key_roleTitle = "${roleTitle}",
+				permissionDefinitionKeyList = "${permissionDefinitionKey}");
 		}
 	}
 

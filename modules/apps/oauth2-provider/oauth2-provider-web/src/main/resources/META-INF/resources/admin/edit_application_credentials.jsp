@@ -454,10 +454,6 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 			'#<portlet:namespace />rememberDeviceSection'
 		);
 
-		var rememberApplicationCheckbox = document.querySelector(
-			'input[name^="<portlet:namespace />rememberDevice"]'
-		);
-
 		var trustedApplicationSection = A.one(
 			'#<portlet:namespace />trustedApplicationSection'
 		);
@@ -470,7 +466,6 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 			trustedApplicationSection.show();
 
 			if (trustedApplicationCheckbox.checked) {
-				rememberApplicationCheckbox.checked = false;
 				rememberApplicationSection.hide();
 			}
 			else {
@@ -478,10 +473,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 			}
 		}
 		else {
-			rememberApplicationCheckbox.checked = false;
 			rememberApplicationSection.hide();
-
-			trustedApplicationCheckbox.checked = false;
 			trustedApplicationSection.hide();
 		}
 	};

@@ -55,6 +55,7 @@ public class JournalHistoryManagementToolbarDisplayContext
 			journalHistoryDisplayContext.getArticleSearchContainer());
 
 		_article = article;
+		_journalHistoryDisplayContext = journalHistoryDisplayContext;
 	}
 
 	@Override
@@ -175,6 +176,11 @@ public class JournalHistoryManagementToolbarDisplayContext
 	}
 
 	@Override
+	protected String getDisplayStyle() {
+		return _journalHistoryDisplayContext.getDisplayStyle();
+	}
+
+	@Override
 	protected String[] getDisplayViews() {
 		return new String[] {"list", "descriptive", "icon"};
 	}
@@ -193,5 +199,6 @@ public class JournalHistoryManagementToolbarDisplayContext
 		JournalHistoryManagementToolbarDisplayContext.class);
 
 	private final JournalArticle _article;
+	private final JournalHistoryDisplayContext _journalHistoryDisplayContext;
 
 }

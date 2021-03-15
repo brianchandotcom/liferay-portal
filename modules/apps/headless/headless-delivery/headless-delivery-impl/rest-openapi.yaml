@@ -1936,6 +1936,10 @@ components:
                     description:
                         The message's media format (e.g., HTML, BBCode, etc.).
                     type: string
+                externalReferenceCode:
+                    description:
+                        The message's external reference code.
+                    type: string
                 friendlyUrlPath:
                     type: string
                 headline:
@@ -8472,6 +8476,98 @@ paths:
                     description:
                         ""
             tags: ["MessageBoardMessage"]
+    "/sites/{siteId}/message-board-messages/by-external-reference-code/{externalReferenceCode}":
+        delete:
+            # @review
+            description:
+                Deletes the site's message board message by external reference code.
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: { }
+                        application/xml: { }
+                    description:
+                        ""
+            tags: ["MessageBoardMessage"]
+        get:
+            # @review
+            description:
+                Retrieves the site's message board message by external reference code.
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/MessageBoardMessage"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/MessageBoardMessage"
+                    description:
+                        ""
+            tags: ["MessageBoardMessage"]
+        put:
+            # @review
+            description:
+                Updates the site's message board message with the given external reference code, or creates it if it not
+                exists.
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/MessageBoardMessage"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/MessageBoardMessage"
+                description:
+                    ""
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/MessageBoardMessage"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/MessageBoardMessage"
+                    description:
+                        ""
+            tags: [ "MessageBoardMessage" ]
     "/sites/{siteId}/message-board-messages/by-friendly-url-path/{friendlyUrlPath}":
         get:
             operationId: getSiteMessageBoardMessageByFriendlyUrlPath

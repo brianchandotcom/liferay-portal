@@ -17,7 +17,7 @@ import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {Cell, Pie, PieChart, Tooltip} from 'recharts';
 
 import ConnectionContext from '../context/ConnectionContext';
-import {StoreStateContext, useWarning} from '../context/StoreContext';
+import {StoreDispatchContext, StoreStateContext} from '../context/StoreContext';
 import {numberFormat} from '../utils/numberFormat';
 import EmptyPieChart from './EmptyPieChart';
 import Hint from './Hint';
@@ -48,9 +48,9 @@ const getColorByName = (name) => COLORS_MAP[name] || FALLBACK_COLOR;
 export default function TrafficSources({dataProvider, onTrafficSourceClick}) {
 	const [highlighted, setHighlighted] = useState(null);
 
-	const [, addWarning] = useWarning();
-
 	const {validAnalyticsConnection} = useContext(ConnectionContext);
+
+	const dispatch = useContext(StoreDispatchContext);
 
 	const {languageTag, publishedToday} = useContext(StoreStateContext);
 
@@ -62,10 +62,10 @@ export default function TrafficSources({dataProvider, onTrafficSourceClick}) {
 				.then((trafficSources) => setTrafficSources(trafficSources))
 				.catch(() => {
 					setTrafficSources([]);
-					addWarning();
+					dispatch({type: 'ADD_WARNING'});
 				});
 		}
-	}, [addWarning, dataProvider, setTrafficSources, validAnalyticsConnection]);
+	}, [dispatch, dataProvider, setTrafficSources, validAnalyticsConnection]);
 
 	const fullPieChart = useMemo(
 		() =>
@@ -82,9 +82,9 @@ export default function TrafficSources({dataProvider, onTrafficSourceClick}) {
 
 	useEffect(() => {
 		if (missingTrafficSourceValue) {
-			addWarning();
+			dispatch({type: 'ADD_WARNING'});
 		}
-	}, [addWarning, missingTrafficSourceValue]);
+	}, [dispatch, missingTrafficSourceValue]);
 
 	function handleLegendMouseEnter(name) {
 		setHighlighted(name);

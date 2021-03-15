@@ -36,7 +36,7 @@ import {
 	useSetLoading,
 } from '../context/ChartStateContext';
 import ConnectionContext from '../context/ConnectionContext';
-import {StoreStateContext, useHistoricalWarning} from '../context/StoreContext';
+import {StoreDispatchContext, StoreStateContext} from '../context/StoreContext';
 import {generateDateFormatters as dateFormat} from '../utils/dateFormat';
 import {numberFormat} from '../utils/numberFormat';
 import {ActiveDot as CustomActiveDot, Dot as CustomDot} from './CustomDots';
@@ -142,6 +142,8 @@ export default function Chart({
 }) {
 	const {validAnalyticsConnection} = useContext(ConnectionContext);
 
+	const dispatch = useContext(StoreDispatchContext);
+
 	const {languageTag, publishedToday} = useContext(StoreStateContext);
 
 	const chartState = useChartState();
@@ -149,8 +151,6 @@ export default function Chart({
 	const {firstDate, lastDate} = useDateTitle();
 
 	const isPreviousPeriodButtonDisabled = useIsPreviousPeriodButtonDisabled();
-
-	const [, addHistoricalWarning] = useHistoricalWarning();
 
 	const addDataSetItems = useAddDataSetItems();
 
@@ -206,7 +206,7 @@ export default function Chart({
 						};
 					}
 					else {
-						addHistoricalWarning();
+						dispatch({type: 'ADD_WARNING'});
 					}
 				}
 

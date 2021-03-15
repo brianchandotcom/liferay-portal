@@ -14,7 +14,7 @@ import PropTypes from 'prop-types';
 import React, {useContext, useEffect} from 'react';
 
 import ConnectionContext from '../context/ConnectionContext';
-import {StoreStateContext, useWarning} from '../context/StoreContext';
+import {StoreDispatchContext, StoreStateContext} from '../context/StoreContext';
 import {numberFormat} from '../utils/numberFormat';
 import Hint from './Hint';
 
@@ -32,7 +32,7 @@ function TotalCount({
 
 	const [value, setValue] = useStateSafe('-');
 
-	const [, addWarning] = useWarning();
+	const dispatch = useContext(StoreDispatchContext);
 
 	const {languageTag, publishedToday} = useContext(StoreStateContext);
 
@@ -42,10 +42,10 @@ function TotalCount({
 				.then(setValue)
 				.catch(() => {
 					setValue('-');
-					addWarning();
+					dispatch({type: 'ADD_WARNING'});
 				});
 		}
-	}, [addWarning, dataProvider, setValue, validAnalyticsConnection]);
+	}, [dispatch, dataProvider, setValue, validAnalyticsConnection]);
 
 	let displayValue = '-';
 

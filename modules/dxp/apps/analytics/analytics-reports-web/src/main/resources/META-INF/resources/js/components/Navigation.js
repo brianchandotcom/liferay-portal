@@ -31,14 +31,9 @@ export default function Navigation({
 	timeSpanOptions,
 	viewURLs,
 }) {
-	const {
-		endpoints,
-		historicalWarning,
-		namespace,
-		page,
-		publishedToday,
-		warning,
-	} = useContext(StoreStateContext);
+	const {endpoints, namespace, page, publishedToday, warning} = useContext(
+		StoreStateContext
+	);
 
 	const {validAnalyticsConnection} = useContext(ConnectionContext);
 
@@ -144,7 +139,7 @@ export default function Navigation({
 				</ClayAlert>
 			)}
 
-			{validAnalyticsConnection && (historicalWarning || warning) && (
+			{validAnalyticsConnection && warning && (
 				<ClayAlert displayType="warning" variant="stripe">
 					{Liferay.Language.get(
 						'some-data-is-temporarily-unavailable'
@@ -152,20 +147,15 @@ export default function Navigation({
 				</ClayAlert>
 			)}
 
-			{validAnalyticsConnection &&
-				publishedToday &&
-				!historicalWarning &&
-				!warning && (
-					<ClayAlert
-						displayType="info"
-						title={Liferay.Language.get('no-data-is-available-yet')}
-						variant="stripe"
-					>
-						{Liferay.Language.get(
-							'content-has-just-been-published'
-						)}
-					</ClayAlert>
-				)}
+			{validAnalyticsConnection && publishedToday && !warning && (
+				<ClayAlert
+					displayType="info"
+					title={Liferay.Language.get('no-data-is-available-yet')}
+					variant="stripe"
+				>
+					{Liferay.Language.get('content-has-just-been-published')}
+				</ClayAlert>
+			)}
 
 			{currentPage.view === 'main' && (
 				<div>

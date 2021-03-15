@@ -9,15 +9,14 @@
  * distribution rights of the Software.
  */
 
-import React, {createContext, useCallback, useContext, useReducer} from 'react';
+import React, {createContext, useReducer} from 'react';
+
+const ADD_WARNING = 'ADD_WARNING';
 
 const INITIAL_STATE = {
-	historicalWarning: false,
 	publishedToday: false,
 	warning: false,
 };
-const ADD_HISTORICAL_WARNING = 'add-historical-warning';
-const ADD_WARNING = 'add-warning';
 
 const noop = () => {};
 
@@ -25,16 +24,17 @@ export const StoreDispatchContext = React.createContext(() => {});
 export const StoreStateContext = createContext([INITIAL_STATE, noop]);
 
 function reducer(state = INITIAL_STATE, action) {
-	if (action.type === ADD_HISTORICAL_WARNING) {
-		return state.historicalWarning
-			? state
-			: {...state, historicalWarning: true};
-	}
-	else if (action.type === ADD_WARNING) {
-		return state.warning ? state : {...state, warning: true};
+	let nextState = state;
+
+	switch (action.type) {
+		case ADD_WARNING:
+			nextState = state.warning ? state : {...state, warning: true};
+			break;
+		default:
+			return state;
 	}
 
-	return state;
+	return nextState;
 }
 
 export function StoreContextProvider({children, value}) {
@@ -47,32 +47,4 @@ export function StoreContextProvider({children, value}) {
 			</StoreStateContext.Provider>
 		</StoreDispatchContext.Provider>
 	);
-}
-
-export function useHistoricalWarning() {
-	const [state, dispatch] = useContext(StoreStateContext);
-
-	const addHistoricalWarning = useCallback(() => {
-		dispatch({
-			type: ADD_HISTORICAL_WARNING,
-		});
-	}, [dispatch]);
-
-	const hasHistoricalWarning = state.historicalWarning;
-
-	return [hasHistoricalWarning, addHistoricalWarning];
-}
-
-export function useWarning() {
-	const [state, dispatch] = useContext(StoreStateContext);
-
-	const addWarning = useCallback(() => {
-		dispatch({
-			type: ADD_WARNING,
-		});
-	}, [dispatch]);
-
-	const hasWarning = state.warning;
-
-	return [hasWarning, addWarning];
 }

@@ -155,6 +155,11 @@ public class EditSiteTeamAssignmentsUsersManagementToolbarDisplayContext
 	}
 
 	@Override
+	protected String getDisplayStyle() {
+		return _editSiteTeamAssignmentsUsersDisplayContext.getDisplayStyle();
+	}
+
+	@Override
 	protected String[] getDisplayViews() {
 		return new String[] {"list", "descriptive", "icon"};
 	}

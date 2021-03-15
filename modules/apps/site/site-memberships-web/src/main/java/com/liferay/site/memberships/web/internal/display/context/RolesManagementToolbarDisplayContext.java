@@ -40,6 +40,8 @@ public class RolesManagementToolbarDisplayContext
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			rolesDisplayContext.getRoleSearchSearchContainer());
+
+		_rolesDisplayContext = rolesDisplayContext;
 	}
 
 	@Override
@@ -74,6 +76,11 @@ public class RolesManagementToolbarDisplayContext
 	}
 
 	@Override
+	protected String getDisplayStyle() {
+		return _rolesDisplayContext.getDisplayStyle();
+	}
+
+	@Override
 	protected String[] getDisplayViews() {
 		return new String[] {"list", "descriptive", "icon"};
 	}
@@ -87,5 +94,7 @@ public class RolesManagementToolbarDisplayContext
 	protected String[] getOrderByKeys() {
 		return new String[] {"title"};
 	}
+
+	private final RolesDisplayContext _rolesDisplayContext;
 
 }

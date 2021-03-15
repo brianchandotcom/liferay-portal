@@ -39,6 +39,8 @@ public class SelectOrganizationsManagementToolbarDisplayContext
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			selectOrganizationsDisplayContext.getOrganizationSearchContainer());
+
+		_selectOrganizationsDisplayContext = selectOrganizationsDisplayContext;
 	}
 
 	@Override
@@ -68,6 +70,11 @@ public class SelectOrganizationsManagementToolbarDisplayContext
 	}
 
 	@Override
+	protected String getDisplayStyle() {
+		return _selectOrganizationsDisplayContext.getDisplayStyle();
+	}
+
+	@Override
 	protected String[] getDisplayViews() {
 		return new String[] {"list", "descriptive", "icon"};
 	}
@@ -81,5 +88,8 @@ public class SelectOrganizationsManagementToolbarDisplayContext
 	protected String[] getOrderByKeys() {
 		return new String[] {"name", "type"};
 	}
+
+	private final SelectOrganizationsDisplayContext
+		_selectOrganizationsDisplayContext;
 
 }

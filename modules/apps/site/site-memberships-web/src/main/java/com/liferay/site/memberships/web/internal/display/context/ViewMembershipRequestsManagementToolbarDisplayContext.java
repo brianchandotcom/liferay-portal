@@ -37,6 +37,9 @@ public class ViewMembershipRequestsManagementToolbarDisplayContext
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			viewMembershipRequestsDisplayContext.
 				getSiteMembershipSearchContainer());
+
+		_viewMembershipRequestsDisplayContext =
+			viewMembershipRequestsDisplayContext;
 	}
 
 	@Override
@@ -55,6 +58,11 @@ public class ViewMembershipRequestsManagementToolbarDisplayContext
 	}
 
 	@Override
+	protected String getDisplayStyle() {
+		return _viewMembershipRequestsDisplayContext.getDisplayStyle();
+	}
+
+	@Override
 	protected String[] getDisplayViews() {
 		return new String[] {"list", "descriptive", "icon"};
 	}
@@ -68,5 +76,8 @@ public class ViewMembershipRequestsManagementToolbarDisplayContext
 	protected String[] getOrderByKeys() {
 		return new String[] {"date"};
 	}
+
+	private final ViewMembershipRequestsDisplayContext
+		_viewMembershipRequestsDisplayContext;
 
 }

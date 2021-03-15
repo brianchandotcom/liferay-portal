@@ -38,6 +38,8 @@ public class SelectTeamManagementToolbarDisplayContext
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			selectTeamDisplayContext.getTeamSearchContainer());
+
+		_selectTeamDisplayContext = selectTeamDisplayContext;
 	}
 
 	@Override
@@ -67,6 +69,11 @@ public class SelectTeamManagementToolbarDisplayContext
 	}
 
 	@Override
+	protected String getDisplayStyle() {
+		return _selectTeamDisplayContext.getDisplayStyle();
+	}
+
+	@Override
 	protected String[] getDisplayViews() {
 		return new String[] {"list", "descriptive"};
 	}
@@ -80,5 +87,7 @@ public class SelectTeamManagementToolbarDisplayContext
 	protected String[] getOrderByKeys() {
 		return new String[] {"name"};
 	}
+
+	private final SelectTeamDisplayContext _selectTeamDisplayContext;
 
 }

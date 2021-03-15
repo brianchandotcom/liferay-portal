@@ -21,7 +21,7 @@ dependencies {
 
 	compileOnly group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
-	compileOnly group: "com.liferay", name: "com.liferay.portal.tools.java.parser", version: "1.0.13"
+	compileOnly group: "com.liferay", name: "com.liferay.portal.tools.java.parser", version: "1.0.38"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"

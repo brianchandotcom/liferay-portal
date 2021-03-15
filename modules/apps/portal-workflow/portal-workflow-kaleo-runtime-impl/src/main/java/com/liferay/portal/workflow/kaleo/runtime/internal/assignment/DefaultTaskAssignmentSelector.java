@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Component;
 public class DefaultTaskAssignmentSelector implements TaskAssignmentSelector {
 
 	@Override
-	public Collection<KaleoTaskAssignment> calculateTaskAssignments(
+	public Collection<KaleoTaskAssignment> getTaskAssignments(
 		KaleoTaskAssignment kaleoTaskAssignment,
 		ExecutionContext executionContext) {
 

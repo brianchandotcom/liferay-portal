@@ -52,7 +52,7 @@ public class GroupAwareRoleTaskAssignmentSelector
 	implements TaskAssignmentSelector {
 
 	@Override
-	public Collection<KaleoTaskAssignment> calculateTaskAssignments(
+	public Collection<KaleoTaskAssignment> getTaskAssignments(
 			KaleoTaskAssignment kaleoTaskAssignment,
 			ExecutionContext executionContext)
 		throws PortalException {

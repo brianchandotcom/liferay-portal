@@ -274,18 +274,16 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 
 			long assignedUserId = _getAssignedUserId(workflowTaskId);
 
-			Collection<KaleoTaskAssignment> calculatedKaleoTaskAssignments =
-				_aggregateTaskAssignmentSelector.calculateTaskAssignments(
+			Collection<KaleoTaskAssignment> taskAssignments =
+				_aggregateTaskAssignmentSelector.getTaskAssignments(
 					_kaleoTaskAssignmentLocalService.getKaleoTaskAssignments(
 						kaleoTaskInstanceToken.getKaleoTaskId()),
 					_createExecutionContext(kaleoTaskInstanceToken));
 
-			for (KaleoTaskAssignment calculatedKaleoTaskAssignment :
-					calculatedKaleoTaskAssignments) {
-
+			for (KaleoTaskAssignment taskAssignment : taskAssignments) {
 				_populateAssignableUsers(
-					calculatedKaleoTaskAssignment, kaleoTaskInstanceToken,
-					assignableUsers, assignedUserId);
+					taskAssignment, kaleoTaskInstanceToken, assignableUsers,
+					assignedUserId);
 			}
 
 			return ListUtil.fromCollection(assignableUsers);
@@ -711,16 +709,16 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			for (KaleoTaskAssignment configuredKaleoTaskAssignment :
 					configuredKaleoTaskAssignments) {
 
-				Collection<KaleoTaskAssignment> calculatedKaleoTaskAssignments =
+				Collection<KaleoTaskAssignment> kaleoTaskAssignments =
 					_getKaleoTaskAssignments(
 						configuredKaleoTaskAssignment, executionContext);
 
-				for (KaleoTaskAssignment calculatedKaleoTaskAssignment :
-						calculatedKaleoTaskAssignments) {
+				for (KaleoTaskAssignment kaleoTaskAssignment :
+						kaleoTaskAssignments) {
 
 					if (_hasAssignableUsers(
-							calculatedKaleoTaskAssignment,
-							kaleoTaskInstanceToken, assignedUserId)) {
+							kaleoTaskAssignment, kaleoTaskInstanceToken,
+							assignedUserId)) {
 
 						return true;
 					}
@@ -1133,7 +1131,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			_taskAssignmentSelectorRegistry.getTaskAssignmentSelector(
 				kaleoTaskAssignment.getAssigneeClassName());
 
-		return taskAssignmentSelector.calculateTaskAssignments(
+		return taskAssignmentSelector.getTaskAssignments(
 			kaleoTaskAssignment, executionContext);
 	}
 

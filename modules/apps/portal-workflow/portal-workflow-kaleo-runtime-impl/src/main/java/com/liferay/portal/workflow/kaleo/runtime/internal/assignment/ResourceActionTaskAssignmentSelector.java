@@ -49,7 +49,7 @@ public class ResourceActionTaskAssignmentSelector
 	extends BaseTaskAssignmentSelector {
 
 	@Override
-	public Collection<KaleoTaskAssignment> calculateTaskAssignments(
+	public Collection<KaleoTaskAssignment> getTaskAssignments(
 		KaleoTaskAssignment kaleoTaskAssignment,
 		ExecutionContext executionContext) {
 

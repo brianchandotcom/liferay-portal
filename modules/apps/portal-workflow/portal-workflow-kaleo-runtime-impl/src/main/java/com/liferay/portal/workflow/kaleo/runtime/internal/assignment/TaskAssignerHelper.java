@@ -48,7 +48,7 @@ public class TaskAssignerHelper {
 		kaleoTaskInstanceToken =
 			_kaleoTaskInstanceTokenLocalService.assignKaleoTaskInstanceToken(
 				kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId(),
-				_aggregateTaskAssignmentSelector.calculateTaskAssignments(
+				_aggregateTaskAssignmentSelector.getTaskAssignments(
 					kaleoTaskAssignments, executionContext),
 				executionContext.getWorkflowContext(),
 				executionContext.getServiceContext());

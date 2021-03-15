@@ -51,7 +51,7 @@ public class MultiLanguageTaskAssignmentSelector
 	extends BaseTaskAssignmentSelector {
 
 	@Override
-	public Collection<KaleoTaskAssignment> calculateTaskAssignments(
+	public Collection<KaleoTaskAssignment> getTaskAssignments(
 			KaleoTaskAssignment kaleoTaskAssignment,
 			ExecutionContext executionContext)
 		throws PortalException {
@@ -80,7 +80,7 @@ public class MultiLanguageTaskAssignmentSelector
 		}
 
 		Collection<KaleoTaskAssignment> taskAssignments =
-			taskAssignmentSelector.calculateTaskAssignments(
+			taskAssignmentSelector.getTaskAssignments(
 				kaleoTaskAssignment, executionContext);
 
 		KaleoInstanceToken kaleoInstanceToken =

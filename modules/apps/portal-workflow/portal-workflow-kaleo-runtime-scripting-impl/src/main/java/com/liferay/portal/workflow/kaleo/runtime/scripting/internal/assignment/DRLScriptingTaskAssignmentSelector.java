@@ -47,7 +47,7 @@ public class DRLScriptingTaskAssignmentSelector
 	extends BaseTaskAssignmentSelector {
 
 	@Override
-	public Collection<KaleoTaskAssignment> calculateTaskAssignments(
+	public Collection<KaleoTaskAssignment> getTaskAssignments(
 			KaleoTaskAssignment kaleoTaskAssignment,
 			ExecutionContext executionContext)
 		throws PortalException {

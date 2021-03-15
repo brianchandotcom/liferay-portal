@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class CompositeTaskAssignmentSelector implements TaskAssignmentSelector {
 
 	@Override
-	public Collection<KaleoTaskAssignment> calculateTaskAssignments(
+	public Collection<KaleoTaskAssignment> getTaskAssignments(
 			KaleoTaskAssignment kaleoTaskAssignment,
 			ExecutionContext executionContext)
 		throws PortalException {
@@ -55,7 +55,7 @@ public class CompositeTaskAssignmentSelector implements TaskAssignmentSelector {
 					assigneeClassName);
 		}
 
-		return taskAssignmentSelector.calculateTaskAssignments(
+		return taskAssignmentSelector.getTaskAssignments(
 			kaleoTaskAssignment, executionContext);
 	}
 

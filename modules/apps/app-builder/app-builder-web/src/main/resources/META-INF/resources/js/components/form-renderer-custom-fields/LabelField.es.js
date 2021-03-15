@@ -168,7 +168,7 @@ export default function LabelField({
 		setValue(getInitialValue(selectedValue, state));
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [field.name]);
+	}, [field.name, selectedValue]);
 
 	return (
 		<FieldBase

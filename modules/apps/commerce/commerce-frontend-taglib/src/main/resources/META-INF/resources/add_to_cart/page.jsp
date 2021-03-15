@@ -66,5 +66,15 @@ else {
 		spritemap: '<%= spritemap %>',
 	};
 
+	<c:if test="<%= Validator.isNotNull(productSettingsModel) %>">
+
+		<%
+		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
+		%>
+
+		initialProps.settings.withQuantity = <%= jsonSerializer.serializeDeep(productSettingsModel) %>;
+		initialProps.settings.withQuantity.forceDropdown = true;
+	</c:if>
+
 	AddToCart.default('<%= addToCartId %>', '<%= addToCartId %>', initialProps);
 </aui:script>

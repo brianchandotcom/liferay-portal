@@ -120,13 +120,12 @@ public class AddToCartTag extends IncludeTag {
 					PortalUtil.getCompanyId(request),
 					commerceContext.getCommerceChannelGroupId(), sku);
 
-				if (!_disabled) {
-					ProductSettingsModel productSettingsModel =
-						_productHelper.getProductSettingsModel(
-							cpSku.getCPInstanceId());
+				_productSettingsModel = _productHelper.getProductSettingsModel(
+					cpSku.getCPInstanceId());
 
+				if (!_disabled) {
 					_disabled =
-						!productSettingsModel.isBackOrders() &&
+						!_productSettingsModel.isBackOrders() &&
 						(_stockQuantity <= 0);
 				}
 			}
@@ -183,6 +182,10 @@ public class AddToCartTag extends IncludeTag {
 		setNamespacedAttribute(httpServletRequest, "inCart", _inCart);
 		setNamespacedAttribute(httpServletRequest, "namespace", _namespace);
 		setNamespacedAttribute(httpServletRequest, "options", _options);
+
+		httpServletRequest.setAttribute(
+			_ATTRIBUTE_NAMESPACE + "productSettingsModel",
+			_productSettingsModel);
 
 		if (Validator.isNull(_spritemap)) {
 			ThemeDisplay themeDisplay =
@@ -253,6 +256,7 @@ public class AddToCartTag extends IncludeTag {
 		_namespace = StringPool.BLANK;
 		_options = null;
 		_productHelper = null;
+		_productSettingsModel = null;
 		_spritemap = null;
 		_stockQuantity = 0;
 	}
@@ -284,6 +288,7 @@ public class AddToCartTag extends IncludeTag {
 	private String _namespace = StringPool.BLANK;
 	private String _options;
 	private ProductHelper _productHelper;
+	private ProductSettingsModel _productSettingsModel;
 	private String _spritemap;
 	private int _stockQuantity;
 

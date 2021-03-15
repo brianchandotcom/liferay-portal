@@ -366,6 +366,36 @@ definition {
 		DMPortlet.viewDefaultPG();
 	}
 
+	@description = "This is a test for LPS-LPS-128366, it ensures that the folder permissions are removed after removing permissions during folder addition."
+	@priority = "3"
+	test AddFolderWithViewOnlyByOwnerPermissions {
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMFolder.addPG(
+			addOrRemoveViewPermission = "Remove",
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			permissionDefinitionKeyList = "ADD_SUBFOLDER,ADD_SHORTCUT,ADD_DOCUMENT,SUBSCRIBE",
+			roleTitle = "Site Member",
+			viewableBy = "Owner");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMFolder.viewFolderPermissionsPG(dmFolder = "DM Folder Name");
+
+		for (var permissionDefinitionKey : list "CONFIGURATION_PERMISSIONS_ADD_SUBFOLDER_CHECKBOX,CONFIGURATION_PERMISSIONS_ADD_SHORTCUT_CHECKBOX,CONFIGURATION_PERMISSIONS_ADD_DOCUMENT_CHECKBOX,CONFIGURATION_PERMISSIONS_SUBSCRIBE_CHECKBOX,CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" ) {
+			PermissionsInline.viewPermissionsRemoved(
+				permissionDefinitionKey = "${permissionDefinitionKey}",
+				roleTitle = "Site Member");
+		}
+
+		for (var permissionDefinitionKey : list "CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX,CONFIGURATION_PERMISSIONS_ACCESS_CHECKBOX" ) {
+			PermissionsInline.viewPermissionsRemoved(
+				permissionDefinitionKey = "${permissionDefinitionKey}",
+				roleTitle = "Guest");
+		}
+	}
+
 	@priority = "4"
 	test AddSubFolderImageAndDocument {
 		Navigator.gotoPage(pageName = "Documents and Media Page");

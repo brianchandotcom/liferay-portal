@@ -42,7 +42,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 									`${portletNamespace}allRowIds`
 								),
 							},
-							url: data.deleteTranslationEntriesURL,
+							url: data['delete-translation-entries-url'],
 						});
 					}
 				}

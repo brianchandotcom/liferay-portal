@@ -78,7 +78,7 @@ public class TranslationEntryManagementToolbarDisplayContext
 					"/translation/delete_translation_entry");
 
 				dropdownItem.putData(
-					"deleteranslationEntriesURL", portletURL.toString());
+					"delete-translation-entries-url", portletURL.toString());
 				dropdownItem.setIcon("times-circle");
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "delete"));

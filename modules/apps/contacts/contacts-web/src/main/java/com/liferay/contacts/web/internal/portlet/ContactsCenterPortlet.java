@@ -1003,9 +1003,7 @@ public class ContactsCenterPortlet extends MVCPortlet {
 			themeDisplay.getPathImage() + "/user_male_portrait?img_id=0"
 		).put(
 			"redirect", redirect
-		);
-
-		jsonObject.put(
+		).put(
 			"viewSummaryURL",
 			PortletURLBuilder.createRenderURL(
 				portal.getLiferayPortletResponse(portletResponse)
@@ -1019,7 +1017,8 @@ public class ContactsCenterPortlet extends MVCPortlet {
 				"portalUser", Boolean.FALSE.toString()
 			).setWindowState(
 				LiferayWindowState.EXCLUSIVE
-			).buildString());
+			).buildString()
+		);
 
 		return jsonObject;
 	}
@@ -1099,9 +1098,9 @@ public class ContactsCenterPortlet extends MVCPortlet {
 		JSONObject jsonObject = ContactsUtil.getUserJSONObject(
 			themeDisplay.getUserId(), user);
 
-		jsonObject.put("portraitURL", user.getPortraitURL(themeDisplay));
-
 		jsonObject.put(
+			"portraitURL", user.getPortraitURL(themeDisplay)
+		).put(
 			"viewSummaryURL",
 			PortletURLBuilder.createRenderURL(
 				portal.getLiferayPortletResponse(portletResponse)
@@ -1113,7 +1112,8 @@ public class ContactsCenterPortlet extends MVCPortlet {
 				"portalUser", Boolean.TRUE.toString()
 			).setWindowState(
 				LiferayWindowState.EXCLUSIVE
-			).buildString());
+			).buildString()
+		);
 
 		return jsonObject;
 	}

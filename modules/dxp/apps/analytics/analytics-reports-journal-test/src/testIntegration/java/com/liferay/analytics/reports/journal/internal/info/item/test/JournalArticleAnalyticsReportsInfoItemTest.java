@@ -144,8 +144,13 @@ public class JournalArticleAnalyticsReportsInfoItemTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
 
+		GroupTestUtil.updateDisplaySettings(
+			_group.getGroupId(),
+			Arrays.asList(LocaleUtil.BRAZIL, LocaleUtil.SPAIN),
+			LocaleUtil.SPAIN);
+
 		Assert.assertEquals(
-			Arrays.asList(LocaleUtil.US, LocaleUtil.SPAIN),
+			Arrays.asList(LocaleUtil.BRAZIL, LocaleUtil.SPAIN),
 			_analyticsReportsInfoItem.getAvailableLocales(journalArticle));
 	}
 
@@ -232,8 +237,13 @@ public class JournalArticleAnalyticsReportsInfoItemTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
 
+		GroupTestUtil.updateDisplaySettings(
+			_group.getGroupId(),
+			Arrays.asList(LocaleUtil.BRAZIL, LocaleUtil.SPAIN),
+			LocaleUtil.SPAIN);
+
 		Assert.assertEquals(
-			LocaleUtil.fromLanguageId(journalArticle.getDefaultLanguageId()),
+			LocaleUtil.SPAIN,
 			_analyticsReportsInfoItem.getDefaultLocale(journalArticle));
 	}
 

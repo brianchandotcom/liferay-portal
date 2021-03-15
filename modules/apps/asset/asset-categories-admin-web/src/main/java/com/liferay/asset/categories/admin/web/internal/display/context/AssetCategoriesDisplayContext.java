@@ -119,14 +119,18 @@ public class AssetCategoriesDisplayContext {
 				"parentCategoryId", String.valueOf(parentCategoryId));
 		}
 
-		if (getVocabularyId() > 0) {
+		long vocabularyId = getVocabularyId();
+
+		if (vocabularyId > 0) {
 			addCategoryURL.setParameter(
-				"vocabularyId", String.valueOf(getVocabularyId()));
+				"vocabularyId", String.valueOf(vocabularyId));
 		}
 
-		if (Validator.isNotNull(getItemSelectorEventName())) {
+		String itemSelectorEventName = getItemSelectorEventName();
+
+		if (Validator.isNotNull(itemSelectorEventName)) {
 			addCategoryURL.setParameter(
-				"itemSelectorEventName", getItemSelectorEventName());
+				"itemSelectorEventName", itemSelectorEventName);
 		}
 
 		return addCategoryURL.toString();

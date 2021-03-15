@@ -140,22 +140,22 @@ public class CommerceNotificationTemplateClayTable
 					httpServletRequest, "currentUrl",
 					_portal.getCurrentURL(httpServletRequest));
 
-				PortletURL deletePortletURL = PortletURLBuilder.create(
-					_portal.getControlPanelPortletURL(
-						httpServletRequest, CPPortletKeys.COMMERCE_CHANNELS,
-						PortletRequest.ACTION_PHASE)
-				).setActionName(
-					"/commerce_channels/edit_commerce_notification_template"
-				).setRedirect(
-					redirect
-				).setParameter(
-					Constants.CMD, Constants.DELETE
-				).setParameter(
-					"commerceNotificationTemplateId",
-					notificationTemplate.getNotificationTemplateId()
-				).build();
+				dropdownItem.setHref(
+					PortletURLBuilder.create(
+						_portal.getControlPanelPortletURL(
+							httpServletRequest, CPPortletKeys.COMMERCE_CHANNELS,
+							PortletRequest.ACTION_PHASE)
+					).setActionName(
+						"/commerce_channels/edit_commerce_notification_template"
+					).setRedirect(
+						redirect
+					).setParameter(
+						Constants.CMD, Constants.DELETE
+					).setParameter(
+						"commerceNotificationTemplateId",
+						notificationTemplate.getNotificationTemplateId()
+					).build());
 
-				dropdownItem.setHref(deletePortletURL);
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "delete"));
 			}

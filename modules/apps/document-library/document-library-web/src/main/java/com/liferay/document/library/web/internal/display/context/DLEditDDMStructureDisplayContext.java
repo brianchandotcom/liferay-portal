@@ -71,8 +71,7 @@ public class DLEditDDMStructureDisplayContext {
 				() -> PortletURLBuilder.createRenderURL(
 					_liferayPortletResponse
 				).setMVCPath(
-					"/document_library/ddm" +
-						"/basic_info_data_engine_editor.jsp"
+					"/document_library/ddm/basic_info_data_engine_editor.jsp"
 				).setParameter(
 					"ddmStructureId", getDDMStructureId()
 				).setWindowState(

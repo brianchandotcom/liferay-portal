@@ -272,8 +272,7 @@ public class SiteNavigationAdminDisplayContext {
 			() -> PortletURLBuilder.createActionURL(
 				_liferayPortletResponse
 			).setActionName(
-				"/site_navigation_admin" +
-					"/edit_site_navigation_menu_item_parent"
+				"/site_navigation_admin/edit_site_navigation_menu_item_parent"
 			).setRedirect(
 				PortalUtil.getCurrentURL(_liferayPortletRequest)
 			).buildString()

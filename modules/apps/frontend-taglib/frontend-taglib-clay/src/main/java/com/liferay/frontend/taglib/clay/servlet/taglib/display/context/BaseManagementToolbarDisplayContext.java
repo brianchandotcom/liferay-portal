@@ -281,13 +281,11 @@ public class BaseManagementToolbarDisplayContext
 				_log.warn(portletException, portletException);
 			}
 
-			PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			return PortletURLBuilder.createRenderURL(
 				liferayPortletResponse
 			).setParameters(
 				currentURLObj.getParameterMap()
 			).build();
-
-			return portletURL;
 		}
 	}
 

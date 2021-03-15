@@ -103,7 +103,7 @@ public abstract class BaseItemSelectorViewDisplayContext
 	public PortletURL getPortletURL() throws PortletException {
 		return PortletURLBuilder.create(
 			PortletURLUtil.clone(
-				this.portletURL,
+				portletURL,
 				PortalUtil.getLiferayPortletResponse(getPortletResponse()))
 		).setParameter(
 			"plid", ParamUtil.getLong(httpServletRequest, "plid")

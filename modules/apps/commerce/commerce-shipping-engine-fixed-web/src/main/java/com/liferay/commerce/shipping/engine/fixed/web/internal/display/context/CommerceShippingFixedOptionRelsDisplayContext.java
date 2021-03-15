@@ -92,8 +92,7 @@ public class CommerceShippingFixedOptionRelsDisplayContext
 				renderRequest, CommercePortletKeys.COMMERCE_SHIPPING_METHODS,
 				PortletRequest.RENDER_PHASE)
 		).setMVCRenderCommandName(
-			"/commerce_shipping_methods" +
-				"/edit_commerce_shipping_fixed_option_rel"
+			"/commerce_shipping_methods/edit_commerce_shipping_fixed_option_rel"
 		).setParameter(
 			"commerceShippingMethodId", getCommerceShippingMethodId()
 		).setWindowState(

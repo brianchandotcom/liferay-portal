@@ -399,10 +399,7 @@ public class SiteNavigationAdminDisplayContext {
 			_liferayPortletResponse
 		).setMVCPath(
 			"/add_site_navigation_menu_item.jsp"
-		).build();
-
-		addURL.setParameter(
-			"redirect",
+		).setRedirect(
 			PortletURLBuilder.createRenderURL(
 				_liferayPortletResponse
 			).setMVCPath(
@@ -419,11 +416,12 @@ public class SiteNavigationAdminDisplayContext {
 
 					return portletDisplay.getId();
 				}
-			).buildString());
-
-		addURL.setParameter(
-			"siteNavigationMenuId", String.valueOf(getSiteNavigationMenuId()));
-		addURL.setParameter("type", siteNavigationMenuItemType.getType());
+			).buildString()
+		).setParameter(
+			"siteNavigationMenuId", getSiteNavigationMenuId()
+		).setParameter(
+			"type", siteNavigationMenuItemType.getType()
+		).build();
 
 		try {
 			addURL.setWindowState(LiferayWindowState.POP_UP);

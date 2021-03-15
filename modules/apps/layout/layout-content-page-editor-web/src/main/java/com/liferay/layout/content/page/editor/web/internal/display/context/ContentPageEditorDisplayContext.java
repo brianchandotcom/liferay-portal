@@ -1029,28 +1029,23 @@ public class ContentPageEditorDisplayContext {
 			).buildString();
 		}
 
-		PortletURL deleteLayoutURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
 				httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
 				PortletRequest.ACTION_PHASE)
 		).setActionName(
 			"/layout_admin/delete_layout"
-		).build();
-
-		deleteLayoutURL.setParameter(
-			"redirect",
+		).setRedirect(
 			PortletURLBuilder.create(
 				PortalUtil.getControlPanelPortletURL(
 					httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
 					PortletRequest.RENDER_PHASE)
 			).setParameter(
 				"selPlid", publishedLayout.getPlid()
-			).buildString());
-
-		deleteLayoutURL.setParameter(
-			"selPlid", String.valueOf(themeDisplay.getPlid()));
-
-		return deleteLayoutURL.toString();
+			).buildString()
+		).setParameter(
+			"selPlid", themeDisplay.getPlid()
+		).buildString();
 	}
 
 	private List<Map<String, Object>> _getDynamicFragments() {

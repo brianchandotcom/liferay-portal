@@ -14,52 +14,94 @@
 
 package com.liferay.portal.upgrade.v7_0_0;
 
-import com.liferay.portal.kernel.upgrade.RenameUpgradePortalPreferences;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 /**
  * @author Eduardo García
  */
-public class UpgradeEmailNotificationPreferences
-	extends RenameUpgradePortalPreferences {
+public class UpgradeEmailNotificationPreferences extends UpgradeProcess {
 
-	public UpgradeEmailNotificationPreferences() {
-		_preferenceNamesMap.put(
+	@Override
+	protected void doUpgrade() throws Exception {
+		_updatePreferences(
 			PropsKeys.ADMIN_EMAIL_PASSWORD_RESET_BODY,
 			"adminEmailPasswordResetBody");
-		_preferenceNamesMap.put(
+		_updatePreferences(
 			PropsKeys.ADMIN_EMAIL_PASSWORD_RESET_SUBJECT,
 			"adminEmailPasswordResetSubject");
-		_preferenceNamesMap.put(
+		_updatePreferences(
 			PropsKeys.ADMIN_EMAIL_PASSWORD_SENT_BODY,
 			"adminEmailPasswordSentBody");
-		_preferenceNamesMap.put(
+		_updatePreferences(
 			PropsKeys.ADMIN_EMAIL_PASSWORD_SENT_SUBJECT,
 			"adminEmailPasswordSentSubject");
-		_preferenceNamesMap.put(
+		_updatePreferences(
 			PropsKeys.ADMIN_EMAIL_USER_ADDED_BODY, "adminEmailUserAddedBody");
-		_preferenceNamesMap.put(
+		_updatePreferences(
 			PropsKeys.ADMIN_EMAIL_USER_ADDED_NO_PASSWORD_BODY,
 			"adminEmailUserAddedNoPasswordBody");
-		_preferenceNamesMap.put(
+		_updatePreferences(
 			PropsKeys.ADMIN_EMAIL_USER_ADDED_SUBJECT,
 			"adminEmailUserAddedSubject");
-		_preferenceNamesMap.put(
+		_updatePreferences(
 			PropsKeys.ADMIN_EMAIL_VERIFICATION_BODY,
 			"adminEmailVerificationBody");
-		_preferenceNamesMap.put(
+		_updatePreferences(
 			PropsKeys.ADMIN_EMAIL_VERIFICATION_SUBJECT,
 			"adminEmailVerificationSubject");
 	}
 
-	@Override
-	protected Map<String, String> getPreferenceNamesMap() {
-		return _preferenceNamesMap;
+	private void _updatePreferences(String oldValue, String newValue)
+		throws Exception {
+
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			try {
+				runSQL(
+					StringBundler.concat(
+						"update PortalPreferences set preferences = ",
+						"replace(preferences, '", oldValue, "', '", newValue,
+						"') where preferences like '%", oldValue, "%'"));
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception, exception);
+				}
+
+				try (PreparedStatement ps1 = connection.prepareStatement(
+						StringBundler.concat(
+							"select portalPreferencesId, preferences from ",
+							"PortalPreferences where preferences like '%",
+							oldValue, "%'"));
+					PreparedStatement ps2 = connection.prepareStatement(
+						"update PortalPreferences set preferences = ? where " +
+							"portalPreferencesId = ?");
+					ResultSet rs = ps1.executeQuery()) {
+
+					while (rs.next()) {
+						ps2.setString(
+							1,
+							StringUtil.replace(
+								rs.getString("preferences"), oldValue,
+								newValue));
+						ps2.setLong(2, rs.getLong("portalPreferencesId"));
+
+						ps2.executeUpdate();
+					}
+				}
+			}
+		}
 	}
 
-	private final Map<String, String> _preferenceNamesMap = new HashMap<>();
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpgradeEmailNotificationPreferences.class);
 
 }

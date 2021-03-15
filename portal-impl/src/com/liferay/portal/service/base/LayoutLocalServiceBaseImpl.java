@@ -69,6 +69,7 @@ import com.liferay.portal.kernel.service.persistence.LayoutPrototypePersistence;
 import com.liferay.portal.kernel.service.persistence.LayoutSetPersistence;
 import com.liferay.portal.kernel.service.persistence.LayoutSetPrototypePersistence;
 import com.liferay.portal.kernel.service.persistence.PluginSettingPersistence;
+import com.liferay.portal.kernel.service.persistence.PortalPreferenceValuePersistence;
 import com.liferay.portal.kernel.service.persistence.PortalPreferencesPersistence;
 import com.liferay.portal.kernel.service.persistence.PortletPreferencesFinder;
 import com.liferay.portal.kernel.service.persistence.PortletPreferencesPersistence;
@@ -1274,6 +1275,53 @@ public abstract class LayoutLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the portal preference value local service.
+	 *
+	 * @return the portal preference value local service
+	 */
+	public com.liferay.portal.kernel.service.PortalPreferenceValueLocalService
+		getPortalPreferenceValueLocalService() {
+
+		return portalPreferenceValueLocalService;
+	}
+
+	/**
+	 * Sets the portal preference value local service.
+	 *
+	 * @param portalPreferenceValueLocalService the portal preference value local service
+	 */
+	public void setPortalPreferenceValueLocalService(
+		com.liferay.portal.kernel.service.PortalPreferenceValueLocalService
+			portalPreferenceValueLocalService) {
+
+		this.portalPreferenceValueLocalService =
+			portalPreferenceValueLocalService;
+	}
+
+	/**
+	 * Returns the portal preference value persistence.
+	 *
+	 * @return the portal preference value persistence
+	 */
+	public PortalPreferenceValuePersistence
+		getPortalPreferenceValuePersistence() {
+
+		return portalPreferenceValuePersistence;
+	}
+
+	/**
+	 * Sets the portal preference value persistence.
+	 *
+	 * @param portalPreferenceValuePersistence the portal preference value persistence
+	 */
+	public void setPortalPreferenceValuePersistence(
+		PortalPreferenceValuePersistence portalPreferenceValuePersistence) {
+
+		this.portalPreferenceValuePersistence =
+			portalPreferenceValuePersistence;
+	}
+
+	/**
 	 * Returns the portal preferences local service.
 	 *
 	 * @return the portal preferences local service
@@ -1850,6 +1898,16 @@ public abstract class LayoutLocalServiceBaseImpl
 
 	@BeanReference(type = PluginSettingPersistence.class)
 	protected PluginSettingPersistence pluginSettingPersistence;
+
+	@BeanReference(
+		type = com.liferay.portal.kernel.service.PortalPreferenceValueLocalService.class
+	)
+	protected
+		com.liferay.portal.kernel.service.PortalPreferenceValueLocalService
+			portalPreferenceValueLocalService;
+
+	@BeanReference(type = PortalPreferenceValuePersistence.class)
+	protected PortalPreferenceValuePersistence portalPreferenceValuePersistence;
 
 	@BeanReference(
 		type = com.liferay.portal.kernel.service.PortalPreferencesLocalService.class

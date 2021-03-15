@@ -175,6 +175,8 @@
 	<bean class="com.liferay.portal.service.impl.PortalServiceImpl" id="com.liferay.portal.kernel.service.PortalService" />
 	<bean class="com.liferay.portal.service.impl.PortalPreferencesLocalServiceImpl" id="com.liferay.portal.kernel.service.PortalPreferencesLocalService" />
 	<bean class="com.liferay.portal.service.persistence.impl.PortalPreferencesPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.PortalPreferencesPersistence" />
+	<bean class="com.liferay.portal.service.impl.PortalPreferenceValueLocalServiceImpl" id="com.liferay.portal.kernel.service.PortalPreferenceValueLocalService" />
+	<bean class="com.liferay.portal.service.persistence.impl.PortalPreferenceValuePersistenceImpl" id="com.liferay.portal.kernel.service.persistence.PortalPreferenceValuePersistence" />
 	<bean class="com.liferay.portal.service.impl.PortletLocalServiceImpl" id="com.liferay.portal.kernel.service.PortletLocalService" />
 	<bean class="com.liferay.portal.service.impl.PortletServiceImpl" id="com.liferay.portal.kernel.service.PortletService" />
 	<bean class="com.liferay.portal.service.persistence.impl.PortletPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.PortletPersistence" />

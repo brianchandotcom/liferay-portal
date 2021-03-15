@@ -16,6 +16,7 @@ package com.liferay.portlet;
 
 import com.liferay.petra.encryptor.Encryptor;
 import com.liferay.petra.encryptor.EncryptorException;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.PortalCache;
@@ -199,16 +200,30 @@ public class PortletPreferencesFactoryImpl
 	public PortalPreferencesImpl fromXML(
 		long ownerId, int ownerType, String xml) {
 
-		Map<String, String[]> preferences = new HashMap<>();
+		Map<PortalPreferenceKey, String[]> preferences = new HashMap<>();
 
 		Map<String, Preference> preferencesMap = toPreferencesMap(xml);
 
 		for (Preference preference : preferencesMap.values()) {
-			preferences.put(preference.getName(), preference.getValues());
+			String namespace = null;
+
+			String key = preference.getName();
+
+			int index = key.indexOf(CharPool.POUND);
+
+			if (index > 0) {
+				namespace = key.substring(0, index);
+
+				key = key.substring(index + 1);
+			}
+
+			preferences.put(
+				new PortalPreferenceKey(namespace, key),
+				preference.getValues());
 		}
 
 		return new PortalPreferencesImpl(
-			ownerId, ownerType, xml, preferences, false);
+			ownerId, ownerType, preferences, false);
 	}
 
 	@Override
@@ -324,30 +339,16 @@ public class PortletPreferencesFactoryImpl
 	public PortalPreferences getPortalPreferences(
 		HttpSession session, long userId, boolean signedIn) {
 
-		long ownerId = userId;
-		int ownerType = PortletKeys.PREFS_OWNER_TYPE_USER;
-
 		PortalPreferences portalPreferences = null;
 
+		PortalPreferencesWrapper portalPreferencesWrapper =
+			(PortalPreferencesWrapper)
+				PortalPreferencesLocalServiceUtil.getPreferences(
+					userId, PortletKeys.PREFS_OWNER_TYPE_USER);
+
 		if (signedIn) {
-			PortalPreferencesWrapper portalPreferencesWrapper =
-				PortalPreferencesWrapperCacheUtil.get(ownerId, ownerType);
-
-			if (portalPreferencesWrapper == null) {
-				portalPreferencesWrapper =
-					(PortalPreferencesWrapper)
-						PortalPreferencesLocalServiceUtil.getPreferences(
-							ownerId, ownerType);
-
-				portalPreferences =
-					portalPreferencesWrapper.getPortalPreferencesImpl();
-			}
-			else {
-				PortalPreferencesImpl portalPreferencesImpl =
-					portalPreferencesWrapper.getPortalPreferencesImpl();
-
-				portalPreferences = portalPreferencesImpl.clone();
-			}
+			portalPreferences =
+				portalPreferencesWrapper.getPortalPreferencesImpl();
 		}
 		else {
 			if (session != null) {
@@ -356,24 +357,8 @@ public class PortletPreferencesFactoryImpl
 			}
 
 			if (portalPreferences == null) {
-				PortalPreferencesWrapper portalPreferencesWrapper =
-					PortalPreferencesWrapperCacheUtil.get(ownerId, ownerType);
-
-				if (portalPreferencesWrapper == null) {
-					portalPreferencesWrapper =
-						(PortalPreferencesWrapper)
-							PortalPreferencesLocalServiceUtil.getPreferences(
-								ownerId, ownerType);
-
-					portalPreferences =
-						portalPreferencesWrapper.getPortalPreferencesImpl();
-				}
-				else {
-					PortalPreferencesImpl portalPreferencesImpl =
-						portalPreferencesWrapper.getPortalPreferencesImpl();
-
-					portalPreferences = portalPreferencesImpl.clone();
-				}
+				portalPreferences =
+					portalPreferencesWrapper.getPortalPreferencesImpl();
 
 				if (session != null) {
 					session.setAttribute(

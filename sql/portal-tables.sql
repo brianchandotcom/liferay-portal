@@ -965,12 +965,22 @@ create table PluginSetting (
 	active_ BOOLEAN
 );
 
+create table PortalPreferenceValue (
+	mvccVersion LONG default 0 not null,
+	portalPreferenceValueId LONG not null primary key,
+	portalPreferencesId LONG,
+	index_ INTEGER,
+	key_ VARCHAR(255) null,
+	largeValue TEXT null,
+	namespace VARCHAR(255) null,
+	smallValue VARCHAR(255) null
+);
+
 create table PortalPreferences (
 	mvccVersion LONG default 0 not null,
 	portalPreferencesId LONG not null primary key,
 	ownerId LONG,
-	ownerType INTEGER,
-	preferences TEXT null
+	ownerType INTEGER
 );
 
 create table Portlet (

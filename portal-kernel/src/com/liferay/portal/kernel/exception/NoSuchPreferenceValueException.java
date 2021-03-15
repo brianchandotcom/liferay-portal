@@ -12,26 +12,26 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_3_x;
-
-import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
+package com.liferay.portal.kernel.exception;
 
 /**
- * @author Preston Crary
+ * @author Brian Wing Shun Chan
  */
-public class UpgradeRatingsMVCCVersion extends UpgradeMVCCVersion {
+public class NoSuchPreferenceValueException extends NoSuchModelException {
 
-	@Override
-	protected String[] getExcludedTableNames() {
-		return new String[] {
-			"CountryLocalization", "PortalPreferenceValue",
-			"PortletPreferenceValue", "RegionLocalization"
-		};
+	public NoSuchPreferenceValueException() {
 	}
 
-	@Override
-	protected String[] getModuleTableNames() {
-		return new String[] {"RatingsEntry", "RatingsStats"};
+	public NoSuchPreferenceValueException(String msg) {
+		super(msg);
+	}
+
+	public NoSuchPreferenceValueException(String msg, Throwable throwable) {
+		super(msg, throwable);
+	}
+
+	public NoSuchPreferenceValueException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

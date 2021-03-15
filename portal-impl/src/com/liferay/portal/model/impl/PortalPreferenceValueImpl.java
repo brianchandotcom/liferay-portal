@@ -12,26 +12,42 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_3_x;
-
-import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
+package com.liferay.portal.model.impl;
 
 /**
  * @author Preston Crary
  */
-public class UpgradeRatingsMVCCVersion extends UpgradeMVCCVersion {
+public class PortalPreferenceValueImpl extends PortalPreferenceValueBaseImpl {
+
+	public static final int SMALL_VALUE_MAX_LENGTH = 255;
 
 	@Override
-	protected String[] getExcludedTableNames() {
-		return new String[] {
-			"CountryLocalization", "PortalPreferenceValue",
-			"PortletPreferenceValue", "RegionLocalization"
-		};
+	public String getValue() {
+		String value = getLargeValue();
+
+		if (value.isEmpty()) {
+			value = getSmallValue();
+		}
+
+		return value;
 	}
 
 	@Override
-	protected String[] getModuleTableNames() {
-		return new String[] {"RatingsEntry", "RatingsStats"};
+	public void setValue(String value) {
+		String largeValue = null;
+		String smallValue = null;
+
+		if (value != null) {
+			if (value.length() > SMALL_VALUE_MAX_LENGTH) {
+				largeValue = value;
+			}
+			else {
+				smallValue = value;
+			}
+		}
+
+		setLargeValue(largeValue);
+		setSmallValue(smallValue);
 	}
 
 }

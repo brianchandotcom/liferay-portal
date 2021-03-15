@@ -45,6 +45,12 @@ public class JsonHelperImpl implements JsonHelper {
 
 	@Override
 	public boolean equals(String jsonArrayString1, String jsonArrayString2) {
+		if ((isEmpty(jsonArrayString1) && !isEmpty(jsonArrayString2)) ||
+			(isEmpty(jsonArrayString2) && !isEmpty(jsonArrayString1))) {
+
+			return false;
+		}
+
 		JSONArray jsonArray1 = _toJSONArray(jsonArrayString1);
 		JSONArray jsonArray2 = _toJSONArray(jsonArrayString2);
 

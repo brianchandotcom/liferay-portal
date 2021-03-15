@@ -15,12 +15,12 @@
 </tr>
 <tr>
 	<td>MORE_OPTIONS_LINK</td>
-	<td>link=More Options »</td>
+	<td>//a[contains(@class,'btn')][normalize-space(text())='More Options']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>HIDE_OPTIONS_LINK</td>
-	<td>link=« Hide Options</td>
+	<td>//input[contains(@id,'inputPermissionsShowOptions') and @value='false']</td>
 	<td></td>
 </tr>
 <tr>

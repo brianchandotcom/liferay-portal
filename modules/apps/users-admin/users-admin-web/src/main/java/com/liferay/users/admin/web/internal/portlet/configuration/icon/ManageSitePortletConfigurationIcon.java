@@ -40,7 +40,6 @@ import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -77,16 +76,14 @@ public class ManageSitePortletConfigurationIcon
 
 			Group organizationGroup = organization.getGroup();
 
-			PortletURL portletURL = PortletURLBuilder.create(
+			return PortletURLBuilder.create(
 				PortletProviderUtil.getPortletURL(
 					portletRequest, organizationGroup, Group.class.getName(),
 					PortletProvider.Action.EDIT)
 			).setParameter(
 				"viewOrganizationsRedirect",
 				_portal.getCurrentURL(portletRequest)
-			).build();
-
-			return portletURL.toString();
+			).buildString();
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

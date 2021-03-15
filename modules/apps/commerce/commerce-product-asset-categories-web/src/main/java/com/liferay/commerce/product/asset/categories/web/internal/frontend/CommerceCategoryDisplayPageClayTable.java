@@ -195,7 +195,7 @@ public class CommerceCategoryDisplayPageClayTable
 			httpServletRequest, "currentUrl",
 			_portal.getCurrentURL(httpServletRequest));
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				httpServletRequest, CPPortletKeys.COMMERCE_CHANNELS,
 				PortletRequest.ACTION_PHASE)
@@ -207,9 +207,7 @@ public class CommerceCategoryDisplayPageClayTable
 			Constants.CMD, Constants.DELETE
 		).setParameter(
 			"cpDisplayLayoutId", categoryDisplayPageId
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	private String _getCategoryDisplayPageEditURL(

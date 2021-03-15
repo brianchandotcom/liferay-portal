@@ -95,13 +95,11 @@ public class KBSuggestionListManagementToolbarDisplayContext {
 	}
 
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setMVCPath(
 			"/admin/view_suggestions.jsp"
-		).build();
-
-		return clearResultsURL.toString();
+		).buildString();
 	}
 
 	public List<DropdownItem> getFilterDropdownItems() {
@@ -128,14 +126,14 @@ public class KBSuggestionListManagementToolbarDisplayContext {
 		return LabelItemListBuilder.add(
 			() -> !navigation.equals("all"),
 			labelItem -> {
-				PortletURL removeLabelURL = PortletURLBuilder.create(
-					PortletURLUtil.clone(
-						_currentURLObj, _liferayPortletResponse)
-				).setParameter(
-					"navigation", (String)null
-				).build();
-
-				labelItem.putData("removeLabelURL", removeLabelURL.toString());
+				labelItem.putData(
+					"removeLabelURL",
+					PortletURLBuilder.create(
+						PortletURLUtil.clone(
+							_currentURLObj, _liferayPortletResponse)
+					).setParameter(
+						"navigation", (String)null
+					).buildString());
 
 				labelItem.setCloseable(true);
 				labelItem.setLabel(

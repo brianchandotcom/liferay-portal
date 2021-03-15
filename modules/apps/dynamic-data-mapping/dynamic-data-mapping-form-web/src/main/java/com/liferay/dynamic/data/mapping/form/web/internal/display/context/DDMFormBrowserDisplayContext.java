@@ -65,13 +65,11 @@ public class DDMFormBrowserDisplayContext {
 	}
 
 	public String getClearResultsURL() throws PortletException {
-		PortletURL clearResultsURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletURLUtil.clone(getPortletURL(), _renderResponse)
 		).setParameter(
 			"keywords", StringPool.BLANK
-		).build();
-
-		return clearResultsURL.toString();
+		).buildString();
 	}
 
 	public DDMFormInstanceSearch getDDMFormInstanceSearch()
@@ -266,7 +264,7 @@ public class DDMFormBrowserDisplayContext {
 	}
 
 	public String getSearchActionURL() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCPath(
 			"/browser/view.jsp"
@@ -278,9 +276,7 @@ public class DDMFormBrowserDisplayContext {
 			"orderByCol", getOrderByCol()
 		).setParameter(
 			"orderByType", getOrderByType()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public String getSearchContainerId() {
@@ -288,7 +284,7 @@ public class DDMFormBrowserDisplayContext {
 	}
 
 	public String getSortingURL() throws Exception {
-		PortletURL sortingURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletURLUtil.clone(getPortletURL(), _renderResponse)
 		).setParameter(
 			"orderByType",
@@ -298,9 +294,7 @@ public class DDMFormBrowserDisplayContext {
 
 				return orderByType.equals("asc") ? "desc" : "asc";
 			}
-		).build();
-
-		return sortingURL.toString();
+		).buildString();
 	}
 
 	public int getTotalItems() {

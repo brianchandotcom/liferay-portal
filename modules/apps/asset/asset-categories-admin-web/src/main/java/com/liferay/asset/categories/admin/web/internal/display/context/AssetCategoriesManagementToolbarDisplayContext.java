@@ -90,7 +90,7 @@ public class AssetCategoriesManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
 			"navigation", "all"
@@ -98,9 +98,7 @@ public class AssetCategoriesManagementToolbarDisplayContext
 			"categoryId", "0"
 		).setParameter(
 			"keywords", StringPool.BLANK
-		).build();
-
-		return clearResultsURL.toString();
+		).buildString();
 	}
 
 	@Override
@@ -163,15 +161,16 @@ public class AssetCategoriesManagementToolbarDisplayContext
 
 		return LabelItemListBuilder.add(
 			labelItem -> {
-				PortletURL removeLabelURL = PortletURLBuilder.create(
-					PortletURLUtil.clone(currentURLObj, liferayPortletResponse)
-				).setParameter(
-					"navigation", (String)null
-				).setParameter(
-					"categoryId", "0"
-				).build();
-
-				labelItem.putData("removeLabelURL", removeLabelURL.toString());
+				labelItem.putData(
+					"removeLabelURL",
+					PortletURLBuilder.create(
+						PortletURLUtil.clone(
+							currentURLObj, liferayPortletResponse)
+					).setParameter(
+						"navigation", (String)null
+					).setParameter(
+						"categoryId", "0"
+					).buildString());
 
 				labelItem.setCloseable(true);
 
@@ -244,7 +243,7 @@ public class AssetCategoriesManagementToolbarDisplayContext
 	}
 
 	private String _getCategoriesSelectorURL() throws Exception {
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletProviderUtil.getPortletURL(
 				httpServletRequest, AssetCategory.class.getName(),
 				PortletProvider.Action.BROWSE)
@@ -257,13 +256,11 @@ public class AssetCategoriesManagementToolbarDisplayContext
 			"singleSelect", Boolean.TRUE.toString()
 		).setWindowState(
 			LiferayWindowState.POP_UP
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	private String _getViewCategoriesURL() throws PortalException {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			liferayPortletResponse
 		).setMVCPath(
 			"/view.jsp"
@@ -271,9 +268,7 @@ public class AssetCategoriesManagementToolbarDisplayContext
 			"navigation", "category"
 		).setParameter(
 			"vocabularyId", _assetCategoriesDisplayContext.getVocabularyId()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	private boolean _isNavigationAll() {

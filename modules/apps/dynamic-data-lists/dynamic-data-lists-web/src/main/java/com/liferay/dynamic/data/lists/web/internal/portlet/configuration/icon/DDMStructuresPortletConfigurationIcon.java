@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.webdav.WebDAVUtil;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -70,7 +69,7 @@ public class DDMStructuresPortletConfigurationIcon
 		Portlet portlet = _portletLocalService.getPortletById(
 			portletDisplay.getId());
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletURLFactoryUtil.create(
 				portletRequest,
 				PortletProviderUtil.getPortletId(
@@ -88,9 +87,7 @@ public class DDMStructuresPortletConfigurationIcon
 			"refererWebDAVToken", WebDAVUtil.getStorageToken(portlet)
 		).setParameter(
 			"showAncestorScopes", Boolean.TRUE.toString()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Override

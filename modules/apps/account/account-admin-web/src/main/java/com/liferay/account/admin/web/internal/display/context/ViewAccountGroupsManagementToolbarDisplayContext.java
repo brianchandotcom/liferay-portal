@@ -61,16 +61,13 @@ public class ViewAccountGroupsManagementToolbarDisplayContext
 
 				dropdownItem.putData("action", "deleteAccountGroups");
 
-				PortletURL deleteAccountGroupsURL =
+				dropdownItem.putData(
+					"deleteAccountGroupsURL",
 					PortletURLBuilder.createActionURL(
 						liferayPortletResponse
 					).setActionName(
 						"/account_admin/delete_account_groups"
-					).build();
-
-				dropdownItem.putData(
-					"deleteAccountGroupsURL",
-					deleteAccountGroupsURL.toString());
+					).buildString());
 
 				dropdownItem.setIcon("times-circle");
 				dropdownItem.setLabel(
@@ -83,13 +80,11 @@ public class ViewAccountGroupsManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
 			"keywords", StringPool.BLANK
-		).build();
-
-		return clearResultsURL.toString();
+		).buildString();
 	}
 
 	@Override

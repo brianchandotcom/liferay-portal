@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -92,16 +91,14 @@ public class EditLayoutPageTemplateCollectionMVCActionCommand
 		ActionResponse actionResponse,
 		LayoutPageTemplateCollection layoutPageTemplateCollection) {
 
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_portal.getLiferayPortletResponse(actionResponse)
 		).setParameter(
 			"tabs1", "page-templates"
 		).setParameter(
 			"layoutPageTemplateCollectionId",
 			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Reference

@@ -37,8 +37,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.List;
 import java.util.Map;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -71,19 +69,16 @@ public class DLEditDDMStructureDisplayContext {
 			).put(
 				"url",
 				() -> {
-					PortletURL editBasicInfoURL =
-						PortletURLBuilder.createRenderURL(
-							_liferayPortletResponse
-						).setMVCPath(
-							"/document_library/ddm" +
-								"/basic_info_data_engine_editor.jsp"
-						).setParameter(
-							"ddmStructureId", getDDMStructureId()
-						).setWindowState(
-							LiferayWindowState.EXCLUSIVE
-						).build();
-
-					return editBasicInfoURL.toString();
+					return PortletURLBuilder.createRenderURL(
+						_liferayPortletResponse
+					).setMVCPath(
+						"/document_library/ddm" +
+							"/basic_info_data_engine_editor.jsp"
+					).setParameter(
+						"ddmStructureId", getDDMStructureId()
+					).setWindowState(
+						LiferayWindowState.EXCLUSIVE
+					).buildString();
 				}
 			).build());
 	}

@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -65,7 +64,7 @@ public class MoveKBFolderPortletConfigurationIcon
 		KBFolder kbFolder = (KBFolder)portletRequest.getAttribute(
 			KBWebKeys.KNOWLEDGE_BASE_PARENT_KB_FOLDER);
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
 				PortletRequest.RENDER_PHASE)
@@ -81,9 +80,7 @@ public class MoveKBFolderPortletConfigurationIcon
 			"parentResourceClassNameId", kbFolder.getClassNameId()
 		).setParameter(
 			"parentResourcePrimKey", kbFolder.getParentKBFolderId()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Override

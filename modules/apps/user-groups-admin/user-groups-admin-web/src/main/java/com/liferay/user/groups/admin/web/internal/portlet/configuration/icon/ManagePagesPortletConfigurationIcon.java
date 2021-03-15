@@ -35,7 +35,6 @@ import com.liferay.user.groups.admin.web.internal.portlet.action.ActionUtil;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -67,15 +66,13 @@ public class ManagePagesPortletConfigurationIcon
 		try {
 			UserGroup userGroup = ActionUtil.getUserGroup(portletRequest);
 
-			PortletURL portletURL = PortletURLBuilder.create(
+			return PortletURLBuilder.create(
 				PortletProviderUtil.getPortletURL(
 					portletRequest, userGroup.getGroup(),
 					Layout.class.getName(), PortletProvider.Action.EDIT)
 			).setRedirect(
 				_portal.getCurrentURL(portletRequest)
-			).build();
-
-			return portletURL.toString();
+			).buildString();
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

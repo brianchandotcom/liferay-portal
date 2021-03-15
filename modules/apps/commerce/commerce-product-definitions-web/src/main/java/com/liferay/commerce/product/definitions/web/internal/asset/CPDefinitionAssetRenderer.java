@@ -163,7 +163,7 @@ public class CPDefinitionAssetRenderer
 		AssetRendererFactory<CPDefinition> assetRendererFactory =
 			getAssetRendererFactory();
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			assetRendererFactory.getURLView(liferayPortletResponse, windowState)
 		).setMVCPath(
 			"/view.jsp"
@@ -171,9 +171,7 @@ public class CPDefinitionAssetRenderer
 			"cpDefinitionId", _cpDefinition.getCPDefinitionId()
 		).setWindowState(
 			windowState
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Override

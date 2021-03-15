@@ -98,20 +98,19 @@ public class StyleBookEntryActionDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getCopyStyleBookEntryActionUnsafeConsumer() {
 
-		PortletURL copyStyleBookEntryURL = PortletURLBuilder.createActionURL(
-			_renderResponse
-		).setActionName(
-			"/style_book/copy_style_book_entry"
-		).setRedirect(
-			_themeDisplay.getURLCurrent()
-		).setParameter(
-			"styleBookEntryIds", _styleBookEntry.getStyleBookEntryId()
-		).build();
-
 		return dropdownItem -> {
 			dropdownItem.putData("action", "copyStyleBookEntry");
 			dropdownItem.putData(
-				"copyStyleBookEntryURL", copyStyleBookEntryURL.toString());
+				"copyStyleBookEntryURL",
+				PortletURLBuilder.createActionURL(
+					_renderResponse
+				).setActionName(
+					"/style_book/copy_style_book_entry"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"styleBookEntryIds", _styleBookEntry.getStyleBookEntryId()
+				).buildString());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "make-a-copy"));
 		};
@@ -120,20 +119,19 @@ public class StyleBookEntryActionDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getDeleteStyleBookEntryActionUnsafeConsumer() {
 
-		PortletURL deleteStyleBookEntryURL = PortletURLBuilder.createActionURL(
-			_renderResponse
-		).setActionName(
-			"/style_book/delete_style_book_entry"
-		).setRedirect(
-			_themeDisplay.getURLCurrent()
-		).setParameter(
-			"styleBookEntryId", _styleBookEntry.getStyleBookEntryId()
-		).build();
-
 		return dropdownItem -> {
 			dropdownItem.putData("action", "deleteStyleBookEntry");
 			dropdownItem.putData(
-				"deleteStyleBookEntryURL", deleteStyleBookEntryURL.toString());
+				"deleteStyleBookEntryURL",
+				PortletURLBuilder.createActionURL(
+					_renderResponse
+				).setActionName(
+					"/style_book/delete_style_book_entry"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"styleBookEntryId", _styleBookEntry.getStyleBookEntryId()
+				).buildString());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "delete"));
 		};
@@ -142,22 +140,19 @@ public class StyleBookEntryActionDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getDeleteStyleBookEntryPreviewActionUnsafeConsumer() {
 
-		PortletURL deleteStyleBookEntryPreviewURL =
-			PortletURLBuilder.createActionURL(
-				_renderResponse
-			).setActionName(
-				"/style_book/delete_style_book_entry_preview"
-			).setRedirect(
-				_themeDisplay.getURLCurrent()
-			).setParameter(
-				"styleBookEntryId", _styleBookEntry.getStyleBookEntryId()
-			).build();
-
 		return dropdownItem -> {
 			dropdownItem.putData("action", "deleteStyleBookEntryPreview");
 			dropdownItem.putData(
 				"deleteStyleBookEntryPreviewURL",
-				deleteStyleBookEntryPreviewURL.toString());
+				PortletURLBuilder.createActionURL(
+					_renderResponse
+				).setActionName(
+					"/style_book/delete_style_book_entry_preview"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"styleBookEntryId", _styleBookEntry.getStyleBookEntryId()
+				).buildString());
 			dropdownItem.putData(
 				"styleBookEntryId",
 				String.valueOf(_styleBookEntry.getStyleBookEntryId()));
@@ -169,22 +164,19 @@ public class StyleBookEntryActionDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getDiscardDraftStyleBookEntryActionUnsafeConsumer() {
 
-		PortletURL discardDraftStyleBookEntryURL =
-			PortletURLBuilder.createActionURL(
-				_renderResponse
-			).setActionName(
-				"/style_book/discard_draft_style_book_entry"
-			).setRedirect(
-				_themeDisplay.getURLCurrent()
-			).setParameter(
-				"styleBookEntryId", _styleBookEntry.getStyleBookEntryId()
-			).build();
-
 		return dropdownItem -> {
 			dropdownItem.putData("action", "discardDraftStyleBookEntry");
 			dropdownItem.putData(
 				"discardDraftStyleBookEntryURL",
-				discardDraftStyleBookEntryURL.toString());
+				PortletURLBuilder.createActionURL(
+					_renderResponse
+				).setActionName(
+					"/style_book/discard_draft_style_book_entry"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"styleBookEntryId", _styleBookEntry.getStyleBookEntryId()
+				).buildString());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "discard-draft"));
 		};
@@ -252,25 +244,22 @@ public class StyleBookEntryActionDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getMarkAsDefaultStyleBookEntryActionUnsafeConsumer() {
 
-		PortletURL markAsDefaultStyleBookEntryURL =
-			PortletURLBuilder.createActionURL(
-				_renderResponse
-			).setActionName(
-				"/style_book/update_style_book_entry_default"
-			).setRedirect(
-				_themeDisplay.getURLCurrent()
-			).setParameter(
-				"styleBookEntryId", _styleBookEntry.getStyleBookEntryId()
-			).setParameter(
-				"defaultStyleBookEntry",
-				!_styleBookEntry.isDefaultStyleBookEntry()
-			).build();
-
 		return dropdownItem -> {
 			dropdownItem.putData("action", "markAsDefaultStyleBookEntry");
 			dropdownItem.putData(
 				"markAsDefaultStyleBookEntryURL",
-				markAsDefaultStyleBookEntryURL.toString());
+				PortletURLBuilder.createActionURL(
+					_renderResponse
+				).setActionName(
+					"/style_book/update_style_book_entry_default"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"styleBookEntryId", _styleBookEntry.getStyleBookEntryId()
+				).setParameter(
+					"defaultStyleBookEntry",
+					!_styleBookEntry.isDefaultStyleBookEntry()
+				).buildString());
 
 			String message = StringPool.BLANK;
 
@@ -310,16 +299,6 @@ public class StyleBookEntryActionDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getRenameStyleBookEntrytActionUnsafeConsumer() {
 
-		PortletURL updateStyleBookEntryURL = PortletURLBuilder.createActionURL(
-			_renderResponse
-		).setActionName(
-			"/style_book/update_style_book_entry_name"
-		).setRedirect(
-			_themeDisplay.getURLCurrent()
-		).setParameter(
-			"styleBookEntryId", _styleBookEntry.getStyleBookEntryId()
-		).build();
-
 		return dropdownItem -> {
 			dropdownItem.putData("action", "renameStyleBookEntry");
 			dropdownItem.putData(
@@ -328,7 +307,16 @@ public class StyleBookEntryActionDropdownItemsProvider {
 			dropdownItem.putData(
 				"styleBookEntryName", _styleBookEntry.getName());
 			dropdownItem.putData(
-				"updateStyleBookEntryURL", updateStyleBookEntryURL.toString());
+				"updateStyleBookEntryURL",
+				PortletURLBuilder.createActionURL(
+					_renderResponse
+				).setActionName(
+					"/style_book/update_style_book_entry_name"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"styleBookEntryId", _styleBookEntry.getStyleBookEntryId()
+				).buildString());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "rename"));
 		};

@@ -62,13 +62,11 @@ public class SelectCollectionManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_selectLayoutCollectionDisplayContext.getPortletURL()
 		).setParameter(
 			"keywords", StringPool.BLANK
-		).build();
-
-		return clearResultsURL.toString();
+		).buildString();
 	}
 
 	@Override
@@ -124,20 +122,19 @@ public class SelectCollectionManagementToolbarDisplayContext
 		return dropdownItem -> {
 			dropdownItem.putData("action", "addAssetListEntry");
 
-			PortletURL addAssetListEntryURL = PortletURLBuilder.create(
-				PortalUtil.getControlPanelPortletURL(
-					liferayPortletRequest, AssetListPortletKeys.ASSET_LIST,
-					PortletRequest.ACTION_PHASE)
-			).setActionName(
-				"/asset_list/add_asset_list_entry"
-			).setParameter(
-				"backURL", _themeDisplay.getURLCurrent()
-			).setParameter(
-				"type", type
-			).build();
-
 			dropdownItem.putData(
-				"addAssetListEntryURL", addAssetListEntryURL.toString());
+				"addAssetListEntryURL",
+				PortletURLBuilder.create(
+					PortalUtil.getControlPanelPortletURL(
+						liferayPortletRequest, AssetListPortletKeys.ASSET_LIST,
+						PortletRequest.ACTION_PHASE)
+				).setActionName(
+					"/asset_list/add_asset_list_entry"
+				).setParameter(
+					"backURL", _themeDisplay.getURLCurrent()
+				).setParameter(
+					"type", type
+				).buildString());
 
 			dropdownItem.putData(
 				"namespace",

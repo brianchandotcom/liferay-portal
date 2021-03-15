@@ -44,7 +44,6 @@ import java.util.Dictionary;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -132,15 +131,13 @@ public class PublicRenderParameterTest extends BasePortletContainerTestCase {
 
 		LayoutLocalServiceUtil.updateLayout(layout);
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		String portletURLString = PortletURLBuilder.create(
 			PortletURLFactoryUtil.create(
 				PortletContainerTestUtil.getHttpServletRequest(group, layout),
 				TEST_PORTLET_ID, layout.getPlid(), PortletRequest.RENDER_PHASE)
 		).setParameter(
 			prpName, prpValue
-		).build();
-
-		String portletURLString = portletURL.toString();
+		).buildString();
 
 		Assert.assertTrue(
 			portletURLString,
@@ -191,15 +188,13 @@ public class PublicRenderParameterTest extends BasePortletContainerTestCase {
 
 		setUpPortlet(testPortlet, properties, TEST_PORTLET_ID);
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		String portletURLString = PortletURLBuilder.create(
 			PortletURLFactoryUtil.create(
 				PortletContainerTestUtil.getHttpServletRequest(group, layout),
 				TEST_PORTLET_ID, layout.getPlid(), PortletRequest.RENDER_PHASE)
 		).setParameter(
 			prpName, prpValue
-		).build();
-
-		String portletURLString = portletURL.toString();
+		).buildString();
 
 		Assert.assertTrue(
 			portletURLString,

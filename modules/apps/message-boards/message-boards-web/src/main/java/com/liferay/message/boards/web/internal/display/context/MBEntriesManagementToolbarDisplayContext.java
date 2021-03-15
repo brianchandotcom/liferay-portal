@@ -145,13 +145,11 @@ public class MBEntriesManagementToolbarDisplayContext {
 		).put(
 			"editEntryURL",
 			() -> {
-				PortletURL editEntryURL = PortletURLBuilder.createActionURL(
+				return PortletURLBuilder.createActionURL(
 					_liferayPortletResponse
 				).setActionName(
 					"/message_boards/edit_entry"
-				).build();
-
-				return editEntryURL.toString();
+				).buildString();
 			}
 		).put(
 			"lockCmd", Constants.LOCK
@@ -295,14 +293,14 @@ public class MBEntriesManagementToolbarDisplayContext {
 				entriesNavigation.equals("threads") ||
 				entriesNavigation.equals("categories"),
 			labelItem -> {
-				PortletURL removeLabelURL = PortletURLBuilder.create(
-					PortletURLUtil.clone(
-						_currentURLObj, _liferayPortletResponse)
-				).setParameter(
-					"entriesNavigation", (String)null
-				).build();
-
-				labelItem.putData("removeLabelURL", removeLabelURL.toString());
+				labelItem.putData(
+					"removeLabelURL",
+					PortletURLBuilder.create(
+						PortletURLUtil.clone(
+							_currentURLObj, _liferayPortletResponse)
+					).setParameter(
+						"entriesNavigation", (String)null
+					).buildString());
 
 				labelItem.setCloseable(true);
 				labelItem.setLabel(
@@ -402,7 +400,7 @@ public class MBEntriesManagementToolbarDisplayContext {
 
 		long categoryId = MBUtil.getCategoryId(_httpServletRequest, category);
 
-		PortletURL searchURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setMVCRenderCommandName(
 			"/message_boards_admin/search"
@@ -412,9 +410,7 @@ public class MBEntriesManagementToolbarDisplayContext {
 			"breadcrumbsCategoryId", categoryId
 		).setParameter(
 			"searchCategoryId", categoryId
-		).build();
-
-		return searchURL.toString();
+		).buildString();
 	}
 
 	public PortletURL getSortingURL() throws PortletException {

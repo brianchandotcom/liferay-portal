@@ -88,19 +88,17 @@ public class CommercePriceListDisplayContext
 	}
 
 	public String getAddCommercePriceListRenderURL() throws Exception {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			liferayPortletResponse
 		).setMVCRenderCommandName(
 			"/commerce_price_list/add_commerce_price_list"
 		).setWindowState(
 			LiferayWindowState.POP_UP
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public String getAddCommercePriceModifierRenderURL() throws Exception {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			liferayPortletResponse
 		).setMVCRenderCommandName(
 			"/commerce_price_list/add_commerce_price_modifier"
@@ -108,9 +106,7 @@ public class CommercePriceListDisplayContext
 			"commercePriceListId", getCommercePriceListId()
 		).setWindowState(
 			LiferayWindowState.POP_UP
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public List<CommerceCatalog> getCommerceCatalogs() throws PortalException {

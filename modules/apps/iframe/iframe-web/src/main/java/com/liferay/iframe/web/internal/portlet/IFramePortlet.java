@@ -32,7 +32,6 @@ import java.io.IOException;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -120,13 +119,11 @@ public class IFramePortlet extends MVCPortlet {
 		String authType = iFrameDisplayContext.getAuthType();
 
 		if (authType.equals("form")) {
-			PortletURL proxyURL = PortletURLBuilder.createRenderURL(
+			src = PortletURLBuilder.createRenderURL(
 				renderResponse
 			).setMVCPath(
 				"/proxy.jsp"
-			).build();
-
-			src = proxyURL.toString();
+			).buildString();
 		}
 
 		return src;

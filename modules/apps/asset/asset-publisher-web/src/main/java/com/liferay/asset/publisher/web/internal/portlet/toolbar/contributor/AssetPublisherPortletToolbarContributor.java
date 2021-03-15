@@ -152,15 +152,14 @@ public class AssetPublisherPortletToolbarContributor
 
 		urlMenuItem.setLabel(title);
 
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			_portal.getLiferayPortletResponse(portletResponse)
-		).setMVCPath(
-			"/add_asset_selector.jsp"
-		).setRedirect(
-			themeDisplay.getURLCurrent()
-		).build();
-
-		urlMenuItem.setURL(portletURL.toString());
+		urlMenuItem.setURL(
+			PortletURLBuilder.createRenderURL(
+				_portal.getLiferayPortletResponse(portletResponse)
+			).setMVCPath(
+				"/add_asset_selector.jsp"
+			).setRedirect(
+				themeDisplay.getURLCurrent()
+			).buildString());
 
 		menuItems.add(urlMenuItem);
 	}

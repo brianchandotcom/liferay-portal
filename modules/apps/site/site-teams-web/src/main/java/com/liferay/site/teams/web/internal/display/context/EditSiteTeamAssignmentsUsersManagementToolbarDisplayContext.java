@@ -73,13 +73,11 @@ public class EditSiteTeamAssignmentsUsersManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
 			"keywords", StringPool.BLANK
-		).build();
-
-		return clearResultsURL.toString();
+		).buildString();
 	}
 
 	@Override
@@ -98,7 +96,8 @@ public class EditSiteTeamAssignmentsUsersManagementToolbarDisplayContext
 						(ThemeDisplay)httpServletRequest.getAttribute(
 							WebKeys.THEME_DISPLAY);
 
-					PortletURL selectUserURL =
+					dropdownItem.putData(
+						"selectUserURL",
 						PortletURLBuilder.createRenderURL(
 							liferayPortletResponse
 						).setMVCPath(
@@ -111,10 +110,7 @@ public class EditSiteTeamAssignmentsUsersManagementToolbarDisplayContext
 								getTeamId()
 						).setWindowState(
 							LiferayWindowState.POP_UP
-						).build();
-
-					dropdownItem.putData(
-						"selectUserURL", selectUserURL.toString());
+						).buildString());
 
 					String title = LanguageUtil.format(
 						httpServletRequest, "add-new-user-to-x",

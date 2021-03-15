@@ -395,13 +395,11 @@ public class AssetCategoriesDisplayContext {
 	}
 
 	public String getDefaultRedirect() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCPath(
 			"/view.jsp"
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public String getDisplayStyle() {
@@ -534,7 +532,7 @@ public class AssetCategoriesDisplayContext {
 			return _selectCategoryURL;
 		}
 
-		PortletURL selectCategoryURL = PortletURLBuilder.create(
+		_selectCategoryURL = PortletURLBuilder.create(
 			PortletProviderUtil.getPortletURL(
 				_httpServletRequest, AssetCategory.class.getName(),
 				PortletProvider.Action.BROWSE)
@@ -562,9 +560,7 @@ public class AssetCategoriesDisplayContext {
 			}
 		).setWindowState(
 			LiferayWindowState.POP_UP
-		).build();
-
-		_selectCategoryURL = selectCategoryURL.toString();
+		).buildString();
 
 		return _selectCategoryURL;
 	}

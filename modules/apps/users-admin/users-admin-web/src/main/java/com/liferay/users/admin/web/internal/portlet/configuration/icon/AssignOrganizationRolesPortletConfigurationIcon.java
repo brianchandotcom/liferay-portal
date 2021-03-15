@@ -40,7 +40,6 @@ import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -71,7 +70,7 @@ public class AssignOrganizationRolesPortletConfigurationIcon
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		try {
-			PortletURL portletURL = PortletURLBuilder.create(
+			return PortletURLBuilder.create(
 				PortletProviderUtil.getPortletURL(
 					portletRequest, UserGroupRole.class.getName(),
 					PortletProvider.Action.EDIT)
@@ -87,9 +86,7 @@ public class AssignOrganizationRolesPortletConfigurationIcon
 				}
 			).setWindowState(
 				LiferayWindowState.POP_UP
-			).build();
-
-			return portletURL.toString();
+			).buildString();
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

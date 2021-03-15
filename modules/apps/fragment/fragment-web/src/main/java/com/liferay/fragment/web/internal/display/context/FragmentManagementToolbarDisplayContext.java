@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 
 import java.util.Map;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -49,13 +47,11 @@ public abstract class FragmentManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
 			"keywords", StringPool.BLANK
-		).build();
-
-		return clearResultsURL.toString();
+		).buildString();
 	}
 
 	public abstract Map<String, Object> getComponentContext() throws Exception;
@@ -73,14 +69,12 @@ public abstract class FragmentManagementToolbarDisplayContext
 
 	@Override
 	public String getSearchActionURL() {
-		PortletURL searchActionURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
 			"fragmentCollectionId",
 			fragmentDisplayContext.getFragmentCollectionId()
-		).build();
-
-		return searchActionURL.toString();
+		).buildString();
 	}
 
 	@Override

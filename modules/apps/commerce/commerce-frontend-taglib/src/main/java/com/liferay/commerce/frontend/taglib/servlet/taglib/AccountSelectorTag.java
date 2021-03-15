@@ -177,7 +177,7 @@ public class AccountSelectorTag extends IncludeTag {
 			CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT);
 
 		if (plid > 0) {
-			PortletURL portletURL = PortletURLBuilder.create(
+			return PortletURLBuilder.create(
 				_getPortletURL(
 					themeDisplay.getRequest(),
 					CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT)
@@ -185,9 +185,7 @@ public class AccountSelectorTag extends IncludeTag {
 				"/commerce_open_order_content/edit_commerce_order"
 			).setParameter(
 				Constants.CMD, Constants.ADD
-			).build();
-
-			return portletURL.toString();
+			).buildString();
 		}
 
 		return StringPool.BLANK;
@@ -201,7 +199,7 @@ public class AccountSelectorTag extends IncludeTag {
 			CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT);
 
 		if (plid > 0) {
-			PortletURL portletURL = PortletURLBuilder.create(
+			return PortletURLBuilder.create(
 				_getPortletURL(
 					themeDisplay.getRequest(),
 					CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT)
@@ -211,9 +209,7 @@ public class AccountSelectorTag extends IncludeTag {
 				Constants.CMD, "setCurrent"
 			).setParameter(
 				"commerceOrderId", "{id}"
-			).build();
-
-			return portletURL.toString();
+			).buildString();
 		}
 
 		return StringPool.BLANK;

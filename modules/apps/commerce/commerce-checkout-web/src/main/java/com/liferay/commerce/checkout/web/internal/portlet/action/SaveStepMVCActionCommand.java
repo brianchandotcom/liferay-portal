@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -103,16 +102,14 @@ public class SaveStepMVCActionCommand extends BaseMVCActionCommand {
 		ActionRequest actionRequest, ActionResponse actionResponse,
 		String checkoutStepName) {
 
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_portal.getLiferayPortletResponse(actionResponse)
 		).setParameter(
 			"commerceOrderUuid",
 			ParamUtil.getString(actionRequest, "commerceOrderUuid")
 		).setParameter(
 			"checkoutStepName", checkoutStepName
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Reference

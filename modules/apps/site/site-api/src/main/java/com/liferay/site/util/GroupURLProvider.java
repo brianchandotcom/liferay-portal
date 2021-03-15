@@ -171,7 +171,7 @@ public class GroupURLProvider {
 			DepotEntry depotEntry = depotEntryLocalService.getGroupDepotEntry(
 				group.getGroupId());
 
-			PortletURL portletURL = PortletURLBuilder.create(
+			return PortletURLBuilder.create(
 				_portal.getControlPanelPortletURL(
 					portletRequest, group, _DEPOT_ADMIN_PORTLET_ID, 0, 0,
 					PortletRequest.RENDER_PHASE)
@@ -179,9 +179,7 @@ public class GroupURLProvider {
 				"/depot/view_depot_dashboard"
 			).setParameter(
 				"depotEntryId", depotEntry.getDepotEntryId()
-			).build();
-
-			return portletURL.toString();
+			).buildString();
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException, portalException);

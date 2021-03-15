@@ -362,7 +362,7 @@ public class EditSegmentsEntryDisplayContext {
 	}
 
 	private String _getPreviewMembersURL() throws Exception {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCRenderCommandName(
 			"/segments/preview_segments_entry_users"
@@ -370,9 +370,7 @@ public class EditSegmentsEntryDisplayContext {
 			"segmentsEntryId", getSegmentsEntryId()
 		).setWindowState(
 			LiferayWindowState.POP_UP
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	private JSONArray _getPropertyGroupsJSONArray() throws Exception {

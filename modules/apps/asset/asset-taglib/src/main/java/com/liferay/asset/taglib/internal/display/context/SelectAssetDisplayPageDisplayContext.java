@@ -63,8 +63,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -152,7 +150,7 @@ public class SelectAssetDisplayPageDisplayContext {
 			itemSelectorCriteria.add(layoutItemSelectorCriterion);
 		}
 
-		PortletURL itemSelectorURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			itemSelector.getItemSelectorURL(
 				RequestBackedPortletURLFactoryUtil.create(
 					_liferayPortletRequest),
@@ -160,9 +158,7 @@ public class SelectAssetDisplayPageDisplayContext {
 				itemSelectorCriteria.toArray(new ItemSelectorCriterion[0]))
 		).setParameter(
 			"layoutUuid", getLayoutUuid()
-		).build();
-
-		return itemSelectorURL.toString();
+		).buildString();
 	}
 
 	public int getAssetDisplayPageType() {

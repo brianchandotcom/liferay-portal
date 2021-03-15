@@ -124,21 +124,6 @@ public class InviteMembersUserNotificationHandler
 			WindowState.NORMAL
 		).build();
 
-		PortletURL ignoreURL = PortletURLBuilder.createActionURL(
-			liferayPortletResponse, InviteMembersPortletKeys.INVITE_MEMBERS
-		).setActionName(
-			"updateMemberRequest"
-		).setParameter(
-			"memberRequestId", memberRequestId
-		).setParameter(
-			"status", MembershipRequestConstants.STATUS_DENIED
-		).setParameter(
-			"userNotificationEventId",
-			userNotificationEvent.getUserNotificationEventId()
-		).setWindowState(
-			WindowState.NORMAL
-		).build();
-
 		return StringUtil.replace(
 			getBodyTemplate(),
 			new String[] {
@@ -147,7 +132,23 @@ public class InviteMembersUserNotificationHandler
 			},
 			new String[] {
 				serviceContext.translate("confirm"), confirmURL.toString(),
-				serviceContext.translate("ignore"), ignoreURL.toString(), title
+				serviceContext.translate("ignore"),
+				PortletURLBuilder.createActionURL(
+					liferayPortletResponse,
+					InviteMembersPortletKeys.INVITE_MEMBERS
+				).setActionName(
+					"updateMemberRequest"
+				).setParameter(
+					"memberRequestId", memberRequestId
+				).setParameter(
+					"status", MembershipRequestConstants.STATUS_DENIED
+				).setParameter(
+					"userNotificationEventId",
+					userNotificationEvent.getUserNotificationEventId()
+				).setWindowState(
+					WindowState.NORMAL
+				).buildString(),
+				title
 			});
 	}
 

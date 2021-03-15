@@ -86,21 +86,18 @@ public class DepotAdminManagementToolbarDisplayContext
 		return HashMapBuilder.<String, Object>put(
 			"deleteDepotEntriesURL",
 			() -> {
-				PortletURL deleteDepotEntries =
-					PortletURLBuilder.createActionURL(
-						liferayPortletResponse
-					).setActionName(
-						"/depot/delete_depot_entry"
-					).build();
-
-				return deleteDepotEntries.toString();
+				return PortletURLBuilder.createActionURL(
+					liferayPortletResponse
+				).setActionName(
+					"/depot/delete_depot_entry"
+				).buildString();
 			}
 		).build();
 	}
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
 			"keywords", StringPool.BLANK
@@ -108,9 +105,7 @@ public class DepotAdminManagementToolbarDisplayContext
 			"orderByCol", getOrderByCol()
 		).setParameter(
 			"orderByType", getOrderByType()
-		).build();
-
-		return clearResultsURL.toString();
+		).buildString();
 	}
 
 	@Override
@@ -157,15 +152,13 @@ public class DepotAdminManagementToolbarDisplayContext
 
 	@Override
 	public String getSearchActionURL() {
-		PortletURL searchTagURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
 			"orderByCol", getOrderByCol()
 		).setParameter(
 			"orderByType", getOrderByType()
-		).build();
-
-		return searchTagURL.toString();
+		).buildString();
 	}
 
 	@Override

@@ -62,18 +62,15 @@ public class ViewAccountEntryAddressesManagementToolbarDisplayContext
 
 				dropdownItem.putData("action", "deleteAccountEntryAddresses");
 
-				PortletURL deleteAccountEntryAddressesURL =
+				dropdownItem.putData(
+					"deleteAccountEntryAddressesURL",
 					PortletURLBuilder.createActionURL(
 						liferayPortletResponse
 					).setActionName(
 						"/account_admin/delete_account_entry_addresses"
 					).setRedirect(
 						currentURLObj.toString()
-					).build();
-
-				dropdownItem.putData(
-					"deleteAccountEntryAddressesURL",
-					deleteAccountEntryAddressesURL.toString());
+					).buildString());
 
 				dropdownItem.setIcon("times-circle");
 				dropdownItem.setLabel(
@@ -86,13 +83,11 @@ public class ViewAccountEntryAddressesManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
 			"keywords", StringPool.BLANK
-		).build();
-
-		return clearResultsURL.toString();
+		).buildString();
 	}
 
 	@Override

@@ -150,20 +150,19 @@ public class GoogleLoginStrutsAction implements StrutsAction {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		PortletURL portletURL = PortletURLBuilder.create(
-			PortletURLFactoryUtil.create(
-				httpServletRequest, PortletKeys.LOGIN,
-				PortletRequest.RENDER_PHASE)
-		).setMVCRenderCommandName(
-			"/portal_security_sso_google_login_authentication" +
-				"/google_login_error"
-		).setParameter(
-			"error", error
-		).setWindowState(
-			LiferayWindowState.POP_UP
-		).build();
-
-		httpServletResponse.sendRedirect(portletURL.toString());
+		httpServletResponse.sendRedirect(
+			PortletURLBuilder.create(
+				PortletURLFactoryUtil.create(
+					httpServletRequest, PortletKeys.LOGIN,
+					PortletRequest.RENDER_PHASE)
+			).setMVCRenderCommandName(
+				"/portal_security_sso_google_login_authentication" +
+					"/google_login_error"
+			).setParameter(
+				"error", error
+			).setWindowState(
+				LiferayWindowState.POP_UP
+			).buildString());
 	}
 
 	protected void sendLoginRedirect(
@@ -171,17 +170,16 @@ public class GoogleLoginStrutsAction implements StrutsAction {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		PortletURL portletURL = PortletURLBuilder.create(
-			PortletURLFactoryUtil.create(
-				httpServletRequest, PortletKeys.LOGIN,
-				PortletRequest.RENDER_PHASE)
-		).setMVCRenderCommandName(
-			"/login/login_redirect"
-		).setWindowState(
-			LiferayWindowState.POP_UP
-		).build();
-
-		httpServletResponse.sendRedirect(portletURL.toString());
+		httpServletResponse.sendRedirect(
+			PortletURLBuilder.create(
+				PortletURLFactoryUtil.create(
+					httpServletRequest, PortletKeys.LOGIN,
+					PortletRequest.RENDER_PHASE)
+			).setMVCRenderCommandName(
+				"/login/login_redirect"
+			).setWindowState(
+				LiferayWindowState.POP_UP
+			).buildString());
 	}
 
 	protected void sendUpdateAccountRedirect(
@@ -200,23 +198,23 @@ public class GoogleLoginStrutsAction implements StrutsAction {
 			"saveLastPath", Boolean.FALSE.toString()
 		).build();
 
-		PortletURL redirectURL = PortletURLBuilder.create(
-			PortletURLFactoryUtil.create(
-				httpServletRequest, PortletKeys.LOGIN,
-				PortletRequest.RENDER_PHASE)
-		).setMVCRenderCommandName(
-			"/login/login_redirect"
-		).setParameter(
-			"emailAddress", user.getEmailAddress()
-		).setParameter(
-			"anonymousUser", Boolean.FALSE.toString()
-		).setPortletMode(
-			PortletMode.VIEW
-		).setWindowState(
-			LiferayWindowState.POP_UP
-		).build();
-
-		portletURL.setParameter("redirect", redirectURL.toString());
+		portletURL.setParameter(
+			"redirect",
+			PortletURLBuilder.create(
+				PortletURLFactoryUtil.create(
+					httpServletRequest, PortletKeys.LOGIN,
+					PortletRequest.RENDER_PHASE)
+			).setMVCRenderCommandName(
+				"/login/login_redirect"
+			).setParameter(
+				"emailAddress", user.getEmailAddress()
+			).setParameter(
+				"anonymousUser", Boolean.FALSE.toString()
+			).setPortletMode(
+				PortletMode.VIEW
+			).setWindowState(
+				LiferayWindowState.POP_UP
+			).buildString());
 
 		portletURL.setParameter("userId", String.valueOf(user.getUserId()));
 		portletURL.setParameter("emailAddress", user.getEmailAddress());

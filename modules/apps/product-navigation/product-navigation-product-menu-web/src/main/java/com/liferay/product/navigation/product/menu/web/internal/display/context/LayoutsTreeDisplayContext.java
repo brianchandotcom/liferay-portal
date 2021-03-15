@@ -89,7 +89,7 @@ public class LayoutsTreeDisplayContext {
 
 		Layout layout = _themeDisplay.getLayout();
 
-		PortletURL addLayoutURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
 				_liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
 				PortletRequest.RENDER_PHASE)
@@ -103,9 +103,7 @@ public class LayoutsTreeDisplayContext {
 			"groupId", _themeDisplay.getSiteGroupId()
 		).setParameter(
 			"privateLayout", isPrivateLayout()
-		).build();
-
-		return addLayoutURL.toString();
+		).buildString();
 	}
 
 	public String getAddLayoutURL() throws Exception {
@@ -117,7 +115,7 @@ public class LayoutsTreeDisplayContext {
 
 		Layout layout = _themeDisplay.getLayout();
 
-		PortletURL addLayoutURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
 				_liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
 				PortletRequest.RENDER_PHASE)
@@ -131,27 +129,23 @@ public class LayoutsTreeDisplayContext {
 			"groupId", _themeDisplay.getSiteGroupId()
 		).setParameter(
 			"privateLayout", isPrivateLayout()
-		).build();
-
-		return addLayoutURL.toString();
+		).buildString();
 	}
 
 	public String getAdministrationPortletURL() {
-		PortletURL administrationPortletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
 				_liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
 				PortletRequest.RENDER_PHASE)
 		).setRedirect(
 			_themeDisplay.getURLCurrent()
-		).build();
-
-		return administrationPortletURL.toString();
+		).buildString();
 	}
 
 	public String getConfigureLayoutSetURL() throws PortalException {
 		Layout layout = _themeDisplay.getLayout();
 
-		PortletURL configureLayoutSetURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
 				_liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
 				PortletRequest.RENDER_PHASE)
@@ -165,9 +159,7 @@ public class LayoutsTreeDisplayContext {
 			"groupId", _themeDisplay.getScopeGroupId()
 		).setParameter(
 			"privateLayout", isPrivateLayout()
-		).build();
-
-		return configureLayoutSetURL.toString();
+		).buildString();
 	}
 
 	public String getConfigureLayoutURL() throws PortalException {
@@ -295,7 +287,7 @@ public class LayoutsTreeDisplayContext {
 	}
 
 	public String getProductMenuPortletURL() throws WindowStateException {
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletURLFactoryUtil.create(
 				_liferayPortletRequest,
 				ProductNavigationProductMenuPortletKeys.
@@ -305,9 +297,7 @@ public class LayoutsTreeDisplayContext {
 			"/portlet/product_menu.jsp"
 		).setWindowState(
 			LiferayWindowState.EXCLUSIVE
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public String getViewCollectionItemsURL()

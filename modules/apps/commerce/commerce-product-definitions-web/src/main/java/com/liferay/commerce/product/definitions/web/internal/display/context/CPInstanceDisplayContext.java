@@ -313,7 +313,7 @@ public class CPInstanceDisplayContext extends BaseCPDefinitionsDisplayContext {
 	}
 
 	private String _getEditCPInstancePortletURL() throws Exception {
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletProviderUtil.getPortletURL(
 				httpServletRequest, CPDefinition.class.getName(),
 				PortletProvider.Action.MANAGE)
@@ -323,9 +323,7 @@ public class CPInstanceDisplayContext extends BaseCPDefinitionsDisplayContext {
 			"cpDefinitionId", getCPDefinitionId()
 		).setWindowState(
 			LiferayWindowState.POP_UP
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	private final CommerceCurrencyLocalService _commerceCurrencyLocalService;

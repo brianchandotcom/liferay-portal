@@ -39,8 +39,6 @@ import com.liferay.wiki.social.WikiActivityKeys;
 
 import java.util.ResourceBundle;
 
-import javax.portlet.PortletURL;
-
 /**
  * @author Adolfo Pérez
  */
@@ -301,7 +299,7 @@ public class WikiSocialActivityHelper {
 			return StringPool.BLANK;
 		}
 
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_wikiRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
 			"/wiki/view"
@@ -314,9 +312,7 @@ public class WikiSocialActivityHelper {
 			}
 		).setParameter(
 			"title", page.getTitle()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	protected String getPageURL(WikiPage page, double version) {
@@ -324,7 +320,7 @@ public class WikiSocialActivityHelper {
 			return null;
 		}
 
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_wikiRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
 			"/wiki/view"
@@ -339,9 +335,7 @@ public class WikiSocialActivityHelper {
 			"title", page.getTitle()
 		).setParameter(
 			"version", version
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	private FileEntry _fetchFileEntry(long fileEntryId) throws PortalException {

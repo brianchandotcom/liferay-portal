@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -60,22 +59,21 @@ public class UserActionDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getDeleteTeamUsersUnsafeConsumer() {
 
-		PortletURL deleteTeamUsersURL = PortletURLBuilder.createActionURL(
-			_renderResponse
-		).setActionName(
-			"deleteTeamUsers"
-		).setRedirect(
-			_themeDisplay.getURLCurrent()
-		).setParameter(
-			"teamId", _teamId
-		).setParameter(
-			"removeUserId", _user.getUserId()
-		).build();
-
 		return dropdownItem -> {
 			dropdownItem.putData("action", "deleteTeamUsers");
 			dropdownItem.putData(
-				"deleteTeamUsersURL", deleteTeamUsersURL.toString());
+				"deleteTeamUsersURL",
+				PortletURLBuilder.createActionURL(
+					_renderResponse
+				).setActionName(
+					"deleteTeamUsers"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"teamId", _teamId
+				).setParameter(
+					"removeUserId", _user.getUserId()
+				).buildString());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "delete"));
 		};

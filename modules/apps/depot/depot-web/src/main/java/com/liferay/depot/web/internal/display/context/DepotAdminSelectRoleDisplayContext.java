@@ -275,17 +275,17 @@ public class DepotAdminSelectRoleDisplayContext {
 		}
 
 		public String getBreadCrumbs() throws PortalException {
-			PortletURL portletURL = PortletURLBuilder.create(
-				_getPortletURL(_renderRequest, _renderResponse, _user)
-			).setParameter(
-				"step", Step1.TYPE
-			).build();
-
 			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 				_themeDisplay.getLocale(), getClass());
 
 			return StringBundler.concat(
-				"<a href=\"", portletURL.toString(), "\">",
+				"<a href=\"",
+				PortletURLBuilder.create(
+					_getPortletURL(_renderRequest, _renderResponse, _user)
+				).setParameter(
+					"step", Step1.TYPE
+				).buildString(),
+				"\">",
 				ResourceBundleUtil.getString(resourceBundle, "asset-libraries"),
 				"</a> &raquo; ",
 				HtmlUtil.escape(

@@ -139,7 +139,7 @@ public class SelectAssetVocabularyDisplayContext {
 			(PortletResponse)_httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletURLUtil.clone(
 				_portletURL,
 				PortalUtil.getLiferayPortletResponse(portletResponse))
@@ -153,9 +153,7 @@ public class SelectAssetVocabularyDisplayContext {
 		).setParameter(
 			"assetCategoryTreeNodeType",
 			AssetCategoryTreeNodeConstants.TYPE_ASSET_VOCABULARY
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	private PortletRequest _getPortletRequest() {

@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
 
 import org.osgi.service.component.annotations.Component;
@@ -62,24 +61,24 @@ public class ImportPortletConfigurationIcon
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		try {
-			PortletURL portletURL = PortletURLBuilder.create(
-				_portal.getControlPanelPortletURL(
-					portletRequest,
-					LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
-					PortletRequest.RENDER_PHASE)
-			).setMVCPath(
-				"/view_import.jsp"
-			).setWindowState(
-				LiferayWindowState.POP_UP
-			).build();
-
 			StringBundler sb = new StringBundler(6);
 
 			sb.append("Liferay.Util.openModal({onClose: function(event){");
 			sb.append("window.location.reload();}, title: '");
 			sb.append(getMessage(portletRequest));
 			sb.append("', url: '");
-			sb.append(portletURL.toString());
+			sb.append(
+				PortletURLBuilder.create(
+					_portal.getControlPanelPortletURL(
+						portletRequest,
+						LayoutPageTemplateAdminPortletKeys.
+							LAYOUT_PAGE_TEMPLATES,
+						PortletRequest.RENDER_PHASE)
+				).setMVCPath(
+					"/view_import.jsp"
+				).setWindowState(
+					LiferayWindowState.POP_UP
+				).buildString());
 			sb.append("'});");
 
 			return sb.toString();

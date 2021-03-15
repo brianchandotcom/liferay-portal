@@ -115,13 +115,11 @@ public class LayoutPageTemplateManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
 			"keywords", StringPool.BLANK
-		).build();
-
-		return clearResultsURL.toString();
+		).buildString();
 	}
 
 	@Override
@@ -190,7 +188,7 @@ public class LayoutPageTemplateManagementToolbarDisplayContext
 	}
 
 	private String _getAddLayoutPrototypeURL() {
-		PortletURL actionURL = PortletURLBuilder.createActionURL(
+		return PortletURLBuilder.createActionURL(
 			liferayPortletResponse
 		).setActionName(
 			"/layout_page_template_admin/add_layout_prototype"
@@ -200,9 +198,7 @@ public class LayoutPageTemplateManagementToolbarDisplayContext
 			"layoutPageTemplateCollectionId",
 			_layoutPageTemplateDisplayContext.
 				getLayoutPageTemplateCollectionId()
-		).build();
-
-		return actionURL.toString();
+		).buildString();
 	}
 
 	private String _getExportLayoutPageTemplateEntryURL() {
@@ -225,7 +221,7 @@ public class LayoutPageTemplateManagementToolbarDisplayContext
 	}
 
 	private String _getSelectMasterLayoutURL() {
-		PortletURL selectMasterLayoutURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			liferayPortletResponse
 		).setMVCPath(
 			"/select_layout_page_template_entry_master_layout.jsp"
@@ -235,9 +231,7 @@ public class LayoutPageTemplateManagementToolbarDisplayContext
 			"layoutPageTemplateCollectionId",
 			_layoutPageTemplateDisplayContext.
 				getLayoutPageTemplateCollectionId()
-		).build();
-
-		return selectMasterLayoutURL.toString();
+		).buildString();
 	}
 
 	private final LayoutPageTemplateDisplayContext

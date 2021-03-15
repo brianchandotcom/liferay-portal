@@ -40,7 +40,6 @@ import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -101,15 +100,13 @@ public class OptimizeImagesPortletConfigurationIcon
 			return "javascript:;";
 		}
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				portletRequest, AMPortletKeys.ADAPTIVE_MEDIA,
 				PortletRequest.ACTION_PHASE)
 		).setActionName(
 			"/adaptive_media/optimize_images"
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Override

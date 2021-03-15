@@ -242,17 +242,17 @@ public class ResourceRequestPortletContainerTest
 			testRuntimePortlet, new HashMapDictionary<String, Object>(),
 			testRuntimePortletId, false);
 
-		PortletURL portletURL = PortletURLBuilder.create(
-			PortletURLFactoryUtil.create(
-				PortletContainerTestUtil.getHttpServletRequest(group, layout),
-				TEST_PORTLET_ID, layout.getPlid(),
-				PortletRequest.RESOURCE_PHASE)
-		).setParameter(
-			"testRuntimePortletId", testRuntimePortletId
-		).build();
-
 		PortletContainerTestUtil.Response response =
-			PortletContainerTestUtil.request(portletURL.toString());
+			PortletContainerTestUtil.request(
+				PortletURLBuilder.create(
+					PortletURLFactoryUtil.create(
+						PortletContainerTestUtil.getHttpServletRequest(
+							group, layout),
+						TEST_PORTLET_ID, layout.getPlid(),
+						PortletRequest.RESOURCE_PHASE)
+				).setParameter(
+					"testRuntimePortletId", testRuntimePortletId
+				).buildString());
 
 		Assert.assertEquals(200, response.getCode());
 

@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -65,24 +64,21 @@ public class OrganizationActionDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getDeleteGroupOrganizationsActionUnsafeConsumer() {
 
-		PortletURL deleteGroupOrganizationsURL =
-			PortletURLBuilder.createActionURL(
-				_renderResponse
-			).setActionName(
-				"deleteGroupOrganizations"
-			).setRedirect(
-				_themeDisplay.getURLCurrent()
-			).setParameter(
-				"groupId", _themeDisplay.getSiteGroupIdOrLiveGroupId()
-			).setParameter(
-				"removeOrganizationId", _organization.getOrganizationId()
-			).build();
-
 		return dropdownItem -> {
 			dropdownItem.putData("action", "deleteGroupOrganizations");
 			dropdownItem.putData(
 				"deleteGroupOrganizationsURL",
-				deleteGroupOrganizationsURL.toString());
+				PortletURLBuilder.createActionURL(
+					_renderResponse
+				).setActionName(
+					"deleteGroupOrganizations"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"groupId", _themeDisplay.getSiteGroupIdOrLiveGroupId()
+				).setParameter(
+					"removeOrganizationId", _organization.getOrganizationId()
+				).buildString());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "remove-membership"));
 		};

@@ -37,7 +37,6 @@ import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletRequestDispatcher;
-import javax.portlet.PortletURL;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -108,17 +107,17 @@ public class EmbeddedPortletWhenEmbeddingPortletUsingRuntimeTagTest
 		setUpPortlet(
 			testRuntimePortlet, properties, testRuntimePortletId, false);
 
-		PortletURL portletURL = PortletURLBuilder.create(
-			PortletURLFactoryUtil.create(
-				PortletContainerTestUtil.getHttpServletRequest(group, layout),
-				TEST_PORTLET_ID, layout.getPlid(),
-				PortletRequest.RESOURCE_PHASE)
-		).setParameter(
-			"testRuntimePortletId", testRuntimePortletId
-		).build();
-
 		PortletContainerTestUtil.Response response =
-			PortletContainerTestUtil.request(portletURL.toString());
+			PortletContainerTestUtil.request(
+				PortletURLBuilder.create(
+					PortletURLFactoryUtil.create(
+						PortletContainerTestUtil.getHttpServletRequest(
+							group, layout),
+						TEST_PORTLET_ID, layout.getPlid(),
+						PortletRequest.RESOURCE_PHASE)
+				).setParameter(
+					"testRuntimePortletId", testRuntimePortletId
+				).buildString());
 
 		Assert.assertEquals(200, response.getCode());
 

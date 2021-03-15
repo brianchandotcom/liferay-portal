@@ -71,7 +71,7 @@ public class CommerceOrderClayTableUtil {
 		HttpServletRequest originalHttpServletRequest =
 			PortalUtil.getOriginalServletRequest(httpServletRequest);
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletURLFactoryUtil.create(
 				originalHttpServletRequest, portletDisplay.getId(),
 				themeDisplay.getPlid(), PortletRequest.ACTION_PHASE)
@@ -85,9 +85,7 @@ public class CommerceOrderClayTableUtil {
 			Constants.CMD, "setCurrent"
 		).setParameter(
 			"commerceOrderId", commerceOrderId
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public static List<Order> getOrders(

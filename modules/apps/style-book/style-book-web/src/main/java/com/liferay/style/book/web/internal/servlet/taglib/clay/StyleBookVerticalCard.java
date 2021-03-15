@@ -35,7 +35,6 @@ import com.liferay.style.book.web.internal.servlet.taglib.util.StyleBookEntryAct
 import java.util.Collections;
 import java.util.List;
 
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -94,7 +93,7 @@ public class StyleBookVerticalCard
 			return null;
 		}
 
-		PortletURL editStyleBookEntryURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCRenderCommandName(
 			"/style_book/edit_style_book_entry"
@@ -102,9 +101,7 @@ public class StyleBookVerticalCard
 			_themeDisplay.getURLCurrent()
 		).setParameter(
 			"styleBookEntryId", _styleBookEntry.getStyleBookEntryId()
-		).build();
-
-		return editStyleBookEntryURL.toString();
+		).buildString();
 	}
 
 	@Override

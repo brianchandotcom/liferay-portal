@@ -133,16 +133,16 @@ public class UIItemsBuilder {
 			return;
 		}
 
-		PortletURL portletURL = PortletURLBuilder.create(
-			_getActionURL(
-				"/document_library/edit_file_entry", Constants.CANCEL_CHECKOUT)
-		).setParameter(
-			"fileEntryId", _fileEntry.getFileEntryId()
-		).build();
-
 		_addURLUIItem(
 			new URLMenuItem(), menuItems, DLUIItemKeys.CANCEL_CHECKOUT,
-			"cancel-checkout[document]", portletURL.toString());
+			"cancel-checkout[document]",
+			PortletURLBuilder.create(
+				_getActionURL(
+					"/document_library/edit_file_entry",
+					Constants.CANCEL_CHECKOUT)
+			).setParameter(
+				"fileEntryId", _fileEntry.getFileEntryId()
+			).buildString());
 	}
 
 	public void addCancelCheckoutToolbarItem(List<ToolbarItem> toolbarItems)
@@ -180,19 +180,20 @@ public class UIItemsBuilder {
 			return;
 		}
 
-		PortletURL portletURL = PortletURLBuilder.create(
-			_getActionURL(
-				"/document_library/edit_file_entry", Constants.CHECKIN)
-		).setParameter(
-			"fileEntryId", _fileEntry.getFileEntryId()
-		).build();
-
 		JavaScriptToolbarItem javaScriptToolbarItem = _addJavaScriptUIItem(
 			new JavaScriptToolbarItem(), toolbarItems, DLUIItemKeys.CHECKIN,
 			LanguageUtil.get(_resourceBundle, "checkin"),
 			StringBundler.concat(
 				getNamespace(), "showVersionDetailsDialog('",
-				HtmlUtil.escapeJS(portletURL.toString()), "');"));
+				HtmlUtil.escapeJS(
+					PortletURLBuilder.create(
+						_getActionURL(
+							"/document_library/edit_file_entry",
+							Constants.CHECKIN)
+					).setParameter(
+						"fileEntryId", _fileEntry.getFileEntryId()
+					).buildString()),
+				"');"));
 
 		String javaScript =
 			"/com/liferay/document/library/web/display/context/dependencies" +
@@ -225,16 +226,15 @@ public class UIItemsBuilder {
 			return;
 		}
 
-		PortletURL portletURL = PortletURLBuilder.create(
-			_getActionURL(
-				"/document_library/edit_file_entry", Constants.CHECKOUT)
-		).setParameter(
-			"fileEntryId", _fileEntry.getFileEntryId()
-		).build();
-
 		_addURLUIItem(
 			new URLMenuItem(), menuItems, DLUIItemKeys.CHECKOUT,
-			"checkout[document]", portletURL.toString());
+			"checkout[document]",
+			PortletURLBuilder.create(
+				_getActionURL(
+					"/document_library/edit_file_entry", Constants.CHECKOUT)
+			).setParameter(
+				"fileEntryId", _fileEntry.getFileEntryId()
+			).buildString());
 	}
 
 	public void addCheckoutToolbarItem(List<ToolbarItem> toolbarItems)
@@ -281,12 +281,6 @@ public class UIItemsBuilder {
 			"uri", selectFileVersionURL
 		).build();
 
-		PortletURL compareVersionURL = PortletURLBuilder.create(
-			_getRenderURL("/document_library/compare_versions", null)
-		).setParameter(
-			"backURL", _getCurrentURL()
-		).build();
-
 		String jsNamespace = getNamespace() + _fileVersion.getFileVersionId();
 
 		StringBundler sb = new StringBundler(4);
@@ -314,7 +308,13 @@ public class UIItemsBuilder {
 		Template template = TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_FTL, urlTemplateResource, false);
 
-		template.put("compareVersionURL", compareVersionURL.toString());
+		template.put(
+			"compareVersionURL",
+			PortletURLBuilder.create(
+				_getRenderURL("/document_library/compare_versions", null)
+			).setParameter(
+				"backURL", _getCurrentURL()
+			).buildString());
 		template.put(
 			"dialogTitle",
 			UnicodeLanguageUtil.get(_httpServletRequest, "compare-versions"));
@@ -443,17 +443,16 @@ public class UIItemsBuilder {
 		deleteMenuItem.setKey(DLUIItemKeys.DELETE_VERSION);
 		deleteMenuItem.setLabel("delete-version");
 
-		PortletURL portletURL = PortletURLBuilder.create(
-			_getActionURL(
-				"/document_library/edit_file_entry", Constants.DELETE,
-				viewFileEntryURL.toString())
-		).setParameter(
-			"fileEntryId", _fileEntry.getFileEntryId()
-		).setParameter(
-			"version", _fileVersion.getVersion()
-		).build();
-
-		deleteMenuItem.setURL(portletURL.toString());
+		deleteMenuItem.setURL(
+			PortletURLBuilder.create(
+				_getActionURL(
+					"/document_library/edit_file_entry", Constants.DELETE,
+					viewFileEntryURL.toString())
+			).setParameter(
+				"fileEntryId", _fileEntry.getFileEntryId()
+			).setParameter(
+				"version", _fileVersion.getVersion()
+			).buildString());
 
 		menuItems.add(deleteMenuItem);
 	}
@@ -808,19 +807,17 @@ public class UIItemsBuilder {
 		PortletURL viewFileEntryURL = _getRenderURL(
 			"/document_library/view_file_entry", _getRedirect());
 
-		PortletURL portletURL = PortletURLBuilder.create(
-			_getActionURL(
-				"/document_library/edit_file_entry", Constants.REVERT,
-				viewFileEntryURL.toString())
-		).setParameter(
-			"fileEntryId", _fileEntry.getFileEntryId()
-		).setParameter(
-			"version", _fileVersion.getVersion()
-		).build();
-
 		_addURLUIItem(
 			new URLMenuItem(), menuItems, DLUIItemKeys.REVERT, "revert",
-			portletURL.toString());
+			PortletURLBuilder.create(
+				_getActionURL(
+					"/document_library/edit_file_entry", Constants.REVERT,
+					viewFileEntryURL.toString())
+			).setParameter(
+				"fileEntryId", _fileEntry.getFileEntryId()
+			).setParameter(
+				"version", _fileVersion.getVersion()
+			).buildString());
 	}
 
 	public void addViewOriginalFileMenuItem(List<MenuItem> menuItems) {
@@ -828,15 +825,14 @@ public class UIItemsBuilder {
 			return;
 		}
 
-		PortletURL portletURL = PortletURLBuilder.create(
-			_getRenderURL("/document_library/view_file_entry")
-		).setParameter(
-			"fileEntryId", _fileShortcut.getToFileEntryId()
-		).build();
-
 		_addURLUIItem(
 			new URLMenuItem(), menuItems, DLUIItemKeys.VIEW_ORIGINAL_FILE,
-			"view-original-file", portletURL.toString());
+			"view-original-file",
+			PortletURLBuilder.create(
+				_getRenderURL("/document_library/view_file_entry")
+			).setParameter(
+				"fileEntryId", _fileShortcut.getToFileEntryId()
+			).buildString());
 	}
 
 	public void addViewVersionMenuItem(List<MenuItem> menuItems) {
@@ -844,15 +840,15 @@ public class UIItemsBuilder {
 			return;
 		}
 
-		PortletURL portletURL = PortletURLBuilder.create(
-			_getRenderURL("/document_library/view_file_entry", _getRedirect())
-		).setParameter(
-			"version", _fileVersion.getVersion()
-		).build();
-
 		_addURLUIItem(
 			new URLMenuItem(), menuItems, DLUIItemKeys.VIEW_VERSION,
-			"view[action]", portletURL.toString());
+			"view[action]",
+			PortletURLBuilder.create(
+				_getRenderURL(
+					"/document_library/view_file_entry", _getRedirect())
+			).setParameter(
+				"version", _fileVersion.getVersion()
+			).buildString());
 	}
 
 	public MenuItem getCheckinMenuItem() throws PortalException {

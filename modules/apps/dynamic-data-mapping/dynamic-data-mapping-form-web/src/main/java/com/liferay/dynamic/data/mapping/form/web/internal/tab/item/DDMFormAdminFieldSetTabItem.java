@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 
-import javax.portlet.PortletURL;
-
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -49,13 +47,11 @@ public class DDMFormAdminFieldSetTabItem extends DDMFormAdminTabItem {
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL(liferayPortletRequest, liferayPortletResponse)
 		).setParameter(
 			"currentTab", "element-set"
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 }

@@ -49,7 +49,6 @@ import java.util.List;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -91,23 +90,22 @@ public class WikiPortletToolbarContributor
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		PortletURL portletURL = PortletURLBuilder.create(
-			PortletURLFactoryUtil.create(
-				portletRequest, portletDisplay.getId(),
-				PortletRequest.RENDER_PHASE)
-		).setMVCRenderCommandName(
-			"/wiki/edit_page"
-		).setRedirect(
-			_portal.getCurrentURL(portletRequest)
-		).setParameter(
-			"nodeId", node.getNodeId()
-		).setParameter(
-			"title", StringPool.BLANK
-		).setParameter(
-			"editTitle", "1"
-		).build();
-
-		urlMenuItem.setURL(portletURL.toString());
+		urlMenuItem.setURL(
+			PortletURLBuilder.create(
+				PortletURLFactoryUtil.create(
+					portletRequest, portletDisplay.getId(),
+					PortletRequest.RENDER_PHASE)
+			).setMVCRenderCommandName(
+				"/wiki/edit_page"
+			).setRedirect(
+				_portal.getCurrentURL(portletRequest)
+			).setParameter(
+				"nodeId", node.getNodeId()
+			).setParameter(
+				"title", StringPool.BLANK
+			).setParameter(
+				"editTitle", "1"
+			).buildString());
 
 		menuItems.add(urlMenuItem);
 	}

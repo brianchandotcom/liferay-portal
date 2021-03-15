@@ -99,16 +99,13 @@ public class UsersManagementToolbarDisplayContext
 							dropdownItem -> {
 								dropdownItem.putData("action", "selectRole");
 
-								PortletURL editUsersRolesURL =
+								dropdownItem.putData(
+									"editUsersRolesURL",
 									PortletURLBuilder.createActionURL(
 										liferayPortletResponse
 									).setActionName(
 										"editUsersRoles"
-									).build();
-
-								dropdownItem.putData(
-									"editUsersRolesURL",
-									editUsersRolesURL.toString());
+									).buildString());
 
 								dropdownItem.putData(
 									"selectRoleURL",
@@ -141,17 +138,14 @@ public class UsersManagementToolbarDisplayContext
 											role.getTitle(
 												themeDisplay.getLocale())));
 
-									PortletURL removeUserRoleURL =
+									dropdownItem.putData(
+										"removeUserRoleURL",
 										PortletURLBuilder.create(
 											liferayPortletResponse.
 												createActionURL()
 										).setActionName(
 											"removeUserRole"
-										).build();
-
-									dropdownItem.putData(
-										"removeUserRoleURL",
-										removeUserRoleURL.toString());
+										).buildString());
 
 									dropdownItem.setIcon("remove-role");
 									dropdownItem.setLabel(label);
@@ -201,7 +195,7 @@ public class UsersManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
 			"navigation", "all"
@@ -209,9 +203,7 @@ public class UsersManagementToolbarDisplayContext
 			"keywords", StringPool.BLANK
 		).setParameter(
 			"roleId", "0"
-		).build();
-
-		return clearResultsURL.toString();
+		).buildString();
 	}
 
 	@Override
@@ -222,14 +214,6 @@ public class UsersManagementToolbarDisplayContext
 	@Override
 	public CreationMenu getCreationMenu() {
 		try {
-			PortletURL selectUsersURL = PortletURLBuilder.createRenderURL(
-				liferayPortletResponse
-			).setMVCPath(
-				"/select_users.jsp"
-			).setWindowState(
-				LiferayWindowState.POP_UP
-			).build();
-
 			return CreationMenuBuilder.addDropdownItem(
 				dropdownItem -> {
 					dropdownItem.putData("action", "selectUsers");
@@ -245,7 +229,14 @@ public class UsersManagementToolbarDisplayContext
 							themeDisplay.getLocale()));
 
 					dropdownItem.putData(
-						"selectUsersURL", selectUsersURL.toString());
+						"selectUsersURL",
+						PortletURLBuilder.createRenderURL(
+							liferayPortletResponse
+						).setMVCPath(
+							"/select_users.jsp"
+						).setWindowState(
+							LiferayWindowState.POP_UP
+						).buildString());
 					dropdownItem.setLabel(
 						LanguageUtil.get(httpServletRequest, "add"));
 				}
@@ -271,13 +262,14 @@ public class UsersManagementToolbarDisplayContext
 		return LabelItemListBuilder.add(
 			() -> role != null,
 			labelItem -> {
-				PortletURL removeLabelURL = PortletURLBuilder.create(
-					PortletURLUtil.clone(currentURLObj, liferayPortletResponse)
-				).setParameter(
-					"roleId", "0"
-				).build();
-
-				labelItem.putData("removeLabelURL", removeLabelURL.toString());
+				labelItem.putData(
+					"removeLabelURL",
+					PortletURLBuilder.create(
+						PortletURLUtil.clone(
+							currentURLObj, liferayPortletResponse)
+					).setParameter(
+						"roleId", "0"
+					).buildString());
 
 				labelItem.setCloseable(true);
 
@@ -362,21 +354,21 @@ public class UsersManagementToolbarDisplayContext
 					(ThemeDisplay)httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
-				PortletURL viewRoleURL = PortletURLBuilder.createRenderURL(
-					liferayPortletResponse
-				).setMVCPath(
-					"/view.jsp"
-				).setRedirect(
-					themeDisplay.getURLCurrent()
-				).setParameter(
-					"tabs1", "users"
-				).setParameter(
-					"navigation", "roles"
-				).setParameter(
-					"groupId", _usersDisplayContext.getGroupId()
-				).build();
-
-				dropdownItem.putData("viewRoleURL", viewRoleURL.toString());
+				dropdownItem.putData(
+					"viewRoleURL",
+					PortletURLBuilder.createRenderURL(
+						liferayPortletResponse
+					).setMVCPath(
+						"/view.jsp"
+					).setRedirect(
+						themeDisplay.getURLCurrent()
+					).setParameter(
+						"tabs1", "users"
+					).setParameter(
+						"navigation", "roles"
+					).setParameter(
+						"groupId", _usersDisplayContext.getGroupId()
+					).buildString());
 
 				dropdownItem.setActive(
 					Objects.equals(getNavigation(), "roles"));

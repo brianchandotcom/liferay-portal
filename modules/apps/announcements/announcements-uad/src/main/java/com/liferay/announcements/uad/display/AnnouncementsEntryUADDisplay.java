@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.user.associated.data.display.UADDisplay;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -46,7 +45,7 @@ public class AnnouncementsEntryUADDisplay
 		String portletId = PortletProviderUtil.getPortletId(
 			AnnouncementsEntry.class.getName(), PortletProvider.Action.VIEW);
 
-		PortletURL portletURL = PortletURLBuilder.createLiferayPortletURL(
+		return PortletURLBuilder.createLiferayPortletURL(
 			liferayPortletResponse,
 			portal.getControlPanelPlid(liferayPortletRequest), portletId,
 			PortletRequest.RENDER_PHASE
@@ -56,9 +55,7 @@ public class AnnouncementsEntryUADDisplay
 			portal.getCurrentURL(liferayPortletRequest)
 		).setParameter(
 			"entryId", announcementsEntry.getEntryId()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Reference

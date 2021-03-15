@@ -241,7 +241,7 @@ public class CommerceTaxRateClayTable
 			httpServletRequest, "currentUrl",
 			_portal.getCurrentURL(httpServletRequest));
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				httpServletRequest, CommercePortletKeys.COMMERCE_TAX_METHODS,
 				PortletRequest.ACTION_PHASE)
@@ -253,9 +253,7 @@ public class CommerceTaxRateClayTable
 			Constants.CMD, Constants.DELETE
 		).setParameter(
 			"commerceTaxFixedRateId", taxRateId
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	private String _getTaxRateEditURL(

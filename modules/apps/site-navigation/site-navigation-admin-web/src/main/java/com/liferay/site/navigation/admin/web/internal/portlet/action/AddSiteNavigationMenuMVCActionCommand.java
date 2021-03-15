@@ -36,7 +36,6 @@ import com.liferay.site.navigation.service.SiteNavigationMenuService;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -100,7 +99,7 @@ public class AddSiteNavigationMenuMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletURL redirectURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletURLFactoryUtil.create(
 				actionRequest,
 				SiteNavigationAdminPortletKeys.SITE_NAVIGATION_ADMIN,
@@ -111,9 +110,7 @@ public class AddSiteNavigationMenuMVCActionCommand
 			ParamUtil.getString(actionRequest, "redirect")
 		).setParameter(
 			"siteNavigationMenuId", siteNavigationMenuId
-		).build();
-
-		return redirectURL.toString();
+		).buildString();
 	}
 
 	@Reference

@@ -120,7 +120,7 @@ public class DepotAdminDisplayContext {
 	public String getViewDepotURL(DepotEntry depotEntry)
 		throws PortalException {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
 				_liferayPortletRequest, depotEntry.getGroup(),
 				DepotPortletKeys.DEPOT_ADMIN, 0, 0, PortletRequest.RENDER_PHASE)
@@ -128,9 +128,7 @@ public class DepotAdminDisplayContext {
 			"/depot/view_depot_dashboard"
 		).setParameter(
 			"depotEntryId", depotEntry.getDepotEntryId()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public boolean isDisplayStyleDescriptive() {

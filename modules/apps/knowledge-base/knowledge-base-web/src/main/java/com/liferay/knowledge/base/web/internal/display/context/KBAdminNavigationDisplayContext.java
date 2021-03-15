@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -93,13 +91,12 @@ public class KBAdminNavigationDisplayContext {
 
 			kbObjectsNavigationItem.setActive(active);
 
-			PortletURL viewKBObjectsURL = PortletURLBuilder.createRenderURL(
-				_liferayPortletResponse
-			).setMVCPath(
-				"/admin/view.jsp"
-			).build();
-
-			kbObjectsNavigationItem.setHref(viewKBObjectsURL.toString());
+			kbObjectsNavigationItem.setHref(
+				PortletURLBuilder.createRenderURL(
+					_liferayPortletResponse
+				).setMVCPath(
+					"/admin/view.jsp"
+				).buildString());
 
 			kbObjectsNavigationItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "articles"));
@@ -122,13 +119,12 @@ public class KBAdminNavigationDisplayContext {
 
 			kbTemplatesNavigationItem.setActive(active);
 
-			PortletURL viewKBTemplatesURL = PortletURLBuilder.createRenderURL(
-				_liferayPortletResponse
-			).setMVCPath(
-				"/admin/view_templates.jsp"
-			).build();
-
-			kbTemplatesNavigationItem.setHref(viewKBTemplatesURL.toString());
+			kbTemplatesNavigationItem.setHref(
+				PortletURLBuilder.createRenderURL(
+					_liferayPortletResponse
+				).setMVCPath(
+					"/admin/view_templates.jsp"
+				).buildString());
 
 			kbTemplatesNavigationItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "templates"));
@@ -151,13 +147,12 @@ public class KBAdminNavigationDisplayContext {
 
 			kbSuggestionsNavigationItem.setActive(active);
 
-			PortletURL viewKBTemplatesURL = PortletURLBuilder.createRenderURL(
-				_liferayPortletResponse
-			).setMVCPath(
-				"/admin/view_suggestions.jsp"
-			).build();
-
-			kbSuggestionsNavigationItem.setHref(viewKBTemplatesURL.toString());
+			kbSuggestionsNavigationItem.setHref(
+				PortletURLBuilder.createRenderURL(
+					_liferayPortletResponse
+				).setMVCPath(
+					"/admin/view_suggestions.jsp"
+				).buildString());
 
 			kbSuggestionsNavigationItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "suggestions"));

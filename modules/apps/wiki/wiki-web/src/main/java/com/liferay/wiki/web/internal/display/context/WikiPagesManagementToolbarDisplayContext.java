@@ -121,13 +121,11 @@ public class WikiPagesManagementToolbarDisplayContext {
 		).put(
 			"deletePagesURL",
 			() -> {
-				PortletURL deletePagesURL = PortletURLBuilder.createActionURL(
+				return PortletURLBuilder.createActionURL(
 					_liferayPortletResponse
 				).setActionName(
 					"/wiki/edit_page"
-				).build();
-
-				return deletePagesURL.toString();
+				).buildString();
 			}
 		).put(
 			"trashEnabled", _isTrashEnabled()
@@ -229,14 +227,14 @@ public class WikiPagesManagementToolbarDisplayContext {
 		return LabelItemListBuilder.add(
 			() -> !navigation.equals("all-pages"),
 			labelItem -> {
-				PortletURL removeLabelURL = PortletURLBuilder.create(
-					PortletURLUtil.clone(
-						_getPortletURL(), _liferayPortletResponse)
-				).setParameter(
-					"navigation", (String)null
-				).build();
-
-				labelItem.putData("removeLabelURL", removeLabelURL.toString());
+				labelItem.putData(
+					"removeLabelURL",
+					PortletURLBuilder.create(
+						PortletURLUtil.clone(
+							_getPortletURL(), _liferayPortletResponse)
+					).setParameter(
+						"navigation", (String)null
+					).buildString());
 
 				labelItem.setCloseable(true);
 

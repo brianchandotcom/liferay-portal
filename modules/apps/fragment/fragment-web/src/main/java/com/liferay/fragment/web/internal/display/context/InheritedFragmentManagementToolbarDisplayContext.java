@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.List;
 import java.util.Map;
 
-import javax.portlet.PortletURL;
 import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -93,16 +92,13 @@ public class InheritedFragmentManagementToolbarDisplayContext
 					(ThemeDisplay)httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
-				PortletURL copyFragmentEntryURL =
-					PortletURLBuilder.createActionURL(
-						liferayPortletResponse
-					).setActionName(
-						"/fragment/copy_fragment_entry"
-					).setRedirect(
-						themeDisplay.getURLCurrent()
-					).build();
-
-				return copyFragmentEntryURL.toString();
+				return PortletURLBuilder.createActionURL(
+					liferayPortletResponse
+				).setActionName(
+					"/fragment/copy_fragment_entry"
+				).setRedirect(
+					themeDisplay.getURLCurrent()
+				).buildString();
 			}
 		).put(
 			"exportFragmentEntriesURL",
@@ -122,16 +118,13 @@ public class InheritedFragmentManagementToolbarDisplayContext
 		).put(
 			"selectFragmentCollectionURL",
 			() -> {
-				PortletURL selectFragmentCollectionURL =
-					PortletURLBuilder.createActionURL(
-						liferayPortletResponse
-					).setMVCRenderCommandName(
-						"/fragment/select_fragment_collection"
-					).setWindowState(
-						LiferayWindowState.POP_UP
-					).build();
-
-				return selectFragmentCollectionURL.toString();
+				return PortletURLBuilder.createActionURL(
+					liferayPortletResponse
+				).setMVCRenderCommandName(
+					"/fragment/select_fragment_collection"
+				).setWindowState(
+					LiferayWindowState.POP_UP
+				).buildString();
 			}
 		).build();
 	}

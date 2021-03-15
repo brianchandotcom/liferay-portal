@@ -387,7 +387,7 @@ public class UADHierarchyDisplay {
 			return null;
 		}
 
-		PortletURL renderURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			liferayPortletResponse
 		).setMVCRenderCommandName(
 			"/user_associated_data/view_uad_hierarchy"
@@ -401,9 +401,7 @@ public class UADHierarchyDisplay {
 			"parentContainerId", uadDisplay.getPrimaryKey(unwrappedObject)
 		).setParameter(
 			"scope", ParamUtil.getString(liferayPortletRequest, "scope")
-		).build();
-
-		return renderURL.toString();
+		).buildString();
 	}
 
 	public <T> boolean isInTrash(T object)

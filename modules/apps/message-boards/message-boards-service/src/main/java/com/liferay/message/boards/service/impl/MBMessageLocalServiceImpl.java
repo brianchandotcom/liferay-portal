@@ -140,7 +140,6 @@ import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -1927,7 +1926,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		portletId = PortletProviderUtil.getPortletId(
 			MBMessage.class.getName(), PortletProvider.Action.MANAGE);
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				httpServletRequest, group, portletId, 0, 0,
 				PortletRequest.RENDER_PHASE)
@@ -1935,9 +1934,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			"/message_boards/view_message"
 		).setParameter(
 			"messageId", message.getMessageId()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	protected String getSubject(String subject, String body) {

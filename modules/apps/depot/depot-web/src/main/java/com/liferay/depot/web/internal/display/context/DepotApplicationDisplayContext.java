@@ -97,7 +97,7 @@ public class DepotApplicationDisplayContext {
 	}
 
 	private String _getViewGroupSelectorURL() throws PortletException {
-		PortletURL viewGroupSelectorURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletURLUtil.clone(
 				getPortletURL(),
 				_portal.getLiferayPortletResponse(_portletResponse))
@@ -105,9 +105,7 @@ public class DepotApplicationDisplayContext {
 			"groupType", "site"
 		).setParameter(
 			"showGroupSelector", Boolean.TRUE.toString()
-		).build();
-
-		return viewGroupSelectorURL.toString();
+		).buildString();
 	}
 
 	private final Portal _portal;

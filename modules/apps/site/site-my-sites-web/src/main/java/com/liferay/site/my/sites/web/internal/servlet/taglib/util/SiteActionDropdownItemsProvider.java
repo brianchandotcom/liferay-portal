@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.List;
 import java.util.Objects;
 
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -111,21 +110,21 @@ public class SiteActionDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getJoinSiteActionUnsafeConsumer() {
 
-		PortletURL joinSiteURL = PortletURLBuilder.createActionURL(
-			_renderResponse
-		).setActionName(
-			"updateGroupUsers"
-		).setRedirect(
-			_themeDisplay.getURLCurrent()
-		).setParameter(
-			"groupId", _group.getGroupId()
-		).setParameter(
-			"addUserIds", _themeDisplay.getUserId()
-		).build();
-
 		return dropdownItem -> {
 			dropdownItem.putData("action", "joinSite");
-			dropdownItem.putData("joinSiteURL", joinSiteURL.toString());
+			dropdownItem.putData(
+				"joinSiteURL",
+				PortletURLBuilder.createActionURL(
+					_renderResponse
+				).setActionName(
+					"updateGroupUsers"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"groupId", _group.getGroupId()
+				).setParameter(
+					"addUserIds", _themeDisplay.getUserId()
+				).buildString());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "join"));
 		};
@@ -134,21 +133,21 @@ public class SiteActionDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getLeaveSiteActionUnsafeConsumer() {
 
-		PortletURL leaveSiteURL = PortletURLBuilder.createActionURL(
-			_renderResponse
-		).setActionName(
-			"updateGroupUsers"
-		).setRedirect(
-			_themeDisplay.getURLCurrent()
-		).setParameter(
-			"groupId", _group.getGroupId()
-		).setParameter(
-			"removeUserIds", _themeDisplay.getUserId()
-		).build();
-
 		return dropdownItem -> {
 			dropdownItem.putData("action", "leaveSite");
-			dropdownItem.putData("leaveSiteURL", leaveSiteURL.toString());
+			dropdownItem.putData(
+				"leaveSiteURL",
+				PortletURLBuilder.createActionURL(
+					_renderResponse
+				).setActionName(
+					"updateGroupUsers"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"groupId", _group.getGroupId()
+				).setParameter(
+					"removeUserIds", _themeDisplay.getUserId()
+				).buildString());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "leave"));
 		};

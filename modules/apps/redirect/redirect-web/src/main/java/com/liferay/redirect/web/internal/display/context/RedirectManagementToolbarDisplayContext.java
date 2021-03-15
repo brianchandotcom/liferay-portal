@@ -81,14 +81,11 @@ public class RedirectManagementToolbarDisplayContext
 		return HashMapBuilder.<String, Object>put(
 			"deleteRedirectEntriesURL",
 			() -> {
-				PortletURL deleteRedirectEntriesURL =
-					PortletURLBuilder.createActionURL(
-						liferayPortletResponse
-					).setActionName(
-						"/redirect/delete_redirect_entry"
-					).build();
-
-				return deleteRedirectEntriesURL.toString();
+				return PortletURLBuilder.createActionURL(
+					liferayPortletResponse
+				).setActionName(
+					"/redirect/delete_redirect_entry"
+				).buildString();
 			}
 		).build();
 	}
@@ -108,7 +105,7 @@ public class RedirectManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
 			"keywords", StringPool.BLANK
@@ -116,9 +113,7 @@ public class RedirectManagementToolbarDisplayContext
 			"orderByCol", getOrderByCol()
 		).setParameter(
 			"orderByType", getOrderByType()
-		).build();
-
-		return clearResultsURL.toString();
+		).buildString();
 	}
 
 	@Override
@@ -173,15 +168,13 @@ public class RedirectManagementToolbarDisplayContext
 
 	@Override
 	public String getSearchActionURL() {
-		PortletURL searchActionURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
 			"orderByCol", getOrderByCol()
 		).setParameter(
 			"orderByType", getOrderByType()
-		).build();
-
-		return searchActionURL.toString();
+		).buildString();
 	}
 
 	@Override

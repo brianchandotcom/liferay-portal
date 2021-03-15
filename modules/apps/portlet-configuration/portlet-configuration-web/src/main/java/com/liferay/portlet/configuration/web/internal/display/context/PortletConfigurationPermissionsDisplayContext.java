@@ -172,13 +172,11 @@ public class PortletConfigurationPermissionsDisplayContext {
 	}
 
 	public String getClearResultsURL() throws Exception {
-		PortletURL clearResultsURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getIteratorURL()
 		).setParameter(
 			"keywords", StringPool.BLANK
-		).build();
-
-		return clearResultsURL.toString();
+		).buildString();
 	}
 
 	public PortletURL getDefinePermissionsURL() throws Exception {

@@ -231,24 +231,23 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 
 				setCurrentCommerceOrder(actionRequest, commerceOrderId);
 
-				PortletURL openOrdersPortletURL = PortletURLBuilder.create(
-					PortletProviderUtil.getPortletURL(
-						actionRequest, CommerceOrder.class.getName(),
-						PortletProvider.Action.EDIT)
-				).setMVCRenderCommandName(
-					"/commerce_open_order_content/edit_commerce_order"
-				).setParameter(
-					PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backURL",
-					ParamUtil.getString(actionRequest, "redirect")
-				).setParameter(
-					"commerceOrderId", commerceOrderId
-				).build();
-
 				hideDefaultSuccessMessage(actionRequest);
 
 				sendRedirect(
 					actionRequest, actionResponse,
-					openOrdersPortletURL.toString());
+					PortletURLBuilder.create(
+						PortletProviderUtil.getPortletURL(
+							actionRequest, CommerceOrder.class.getName(),
+							PortletProvider.Action.EDIT)
+					).setMVCRenderCommandName(
+						"/commerce_open_order_content/edit_commerce_order"
+					).setParameter(
+						PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE +
+							"backURL",
+						ParamUtil.getString(actionRequest, "redirect")
+					).setParameter(
+						"commerceOrderId", commerceOrderId
+					).buildString());
 			}
 			else if (cmd.equals("transition")) {
 				executeTransition(actionRequest);

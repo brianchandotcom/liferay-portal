@@ -79,18 +79,17 @@ public class InheritedFragmentEntryActionDropdownItemsProvider {
 				LiferayWindowState.POP_UP
 			).build();
 
-		PortletURL copyFragmentEntryURL = PortletURLBuilder.createActionURL(
-			_renderResponse
-		).setActionName(
-			"/fragment/copy_fragment_entry"
-		).setRedirect(
-			_themeDisplay.getURLCurrent()
-		).build();
-
 		return dropdownItem -> {
 			dropdownItem.putData("action", "copyToFragmentEntry");
 			dropdownItem.putData(
-				"copyFragmentEntryURL", copyFragmentEntryURL.toString());
+				"copyFragmentEntryURL",
+				PortletURLBuilder.createActionURL(
+					_renderResponse
+				).setActionName(
+					"/fragment/copy_fragment_entry"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).buildString());
 			dropdownItem.putData(
 				"fragmentEntryId",
 				String.valueOf(_fragmentEntry.getFragmentEntryId()));

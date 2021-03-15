@@ -202,7 +202,7 @@ public class BookmarksManagementToolbarDisplayContext {
 	}
 
 	public String getSearchActionURL() {
-		PortletURL searchActionURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setMVCRenderCommandName(
 			"/bookmarks/view"
@@ -210,9 +210,7 @@ public class BookmarksManagementToolbarDisplayContext {
 			PortalUtil.getCurrentURL(_httpServletRequest)
 		).setParameter(
 			"folderId", _folderId
-		).build();
-
-		return searchActionURL.toString();
+		).buildString();
 	}
 
 	public String getSearchContainerId() {
@@ -370,14 +368,11 @@ public class BookmarksManagementToolbarDisplayContext {
 	private String _removeNavigartionParameter(PortletURL portletURL)
 		throws PortletException {
 
-		PortletURL removeNavigationParameterPortletURL =
-			PortletURLBuilder.create(
-				PortletURLUtil.clone(portletURL, _liferayPortletResponse)
-			).setParameter(
-				"navigation", (String)null
-			).build();
-
-		return removeNavigationParameterPortletURL.toString();
+		return PortletURLBuilder.create(
+			PortletURLUtil.clone(portletURL, _liferayPortletResponse)
+		).setParameter(
+			"navigation", (String)null
+		).buildString();
 	}
 
 	private final BookmarksGroupServiceOverriddenConfiguration

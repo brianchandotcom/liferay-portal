@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -64,7 +63,7 @@ public class CommerceShippingFixedOptionsDisplayContext
 	}
 
 	public String getAddShippingFixedOptionURL() throws Exception {
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				renderRequest, CommercePortletKeys.COMMERCE_SHIPPING_METHODS,
 				PortletRequest.RENDER_PHASE)
@@ -74,9 +73,7 @@ public class CommerceShippingFixedOptionsDisplayContext
 			"commerceShippingMethodId", getCommerceShippingMethodId()
 		).setWindowState(
 			LiferayWindowState.POP_UP
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public CommerceShippingFixedOption getCommerceShippingFixedOption()

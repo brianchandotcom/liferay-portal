@@ -110,19 +110,19 @@ public class SiteActionDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getActivateSiteActionUnsafeConsumer() {
 
-		PortletURL activateSiteURL = PortletURLBuilder.createActionURL(
-			_liferayPortletResponse
-		).setActionName(
-			"/site_admin/activate_group"
-		).setRedirect(
-			_getRedirect()
-		).setParameter(
-			"groupId", _group.getGroupId()
-		).build();
-
 		return dropdownItem -> {
 			dropdownItem.putData("action", "activateSite");
-			dropdownItem.putData("activateSiteURL", activateSiteURL.toString());
+			dropdownItem.putData(
+				"activateSiteURL",
+				PortletURLBuilder.createActionURL(
+					_liferayPortletResponse
+				).setActionName(
+					"/site_admin/activate_group"
+				).setRedirect(
+					_getRedirect()
+				).setParameter(
+					"groupId", _group.getGroupId()
+				).buildString());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "activate"));
 		};
@@ -145,20 +145,19 @@ public class SiteActionDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getDeactivateSiteActionUnsafeConsumer() {
 
-		PortletURL deactivateSiteURL = PortletURLBuilder.createActionURL(
-			_liferayPortletResponse
-		).setActionName(
-			"/site_admin/deactivate_group"
-		).setRedirect(
-			_getRedirect()
-		).setParameter(
-			"groupId", _group.getGroupId()
-		).build();
-
 		return dropdownItem -> {
 			dropdownItem.putData("action", "deactivateSite");
 			dropdownItem.putData(
-				"deactivateSiteURL", deactivateSiteURL.toString());
+				"deactivateSiteURL",
+				PortletURLBuilder.createActionURL(
+					_liferayPortletResponse
+				).setActionName(
+					"/site_admin/deactivate_group"
+				).setRedirect(
+					_getRedirect()
+				).setParameter(
+					"groupId", _group.getGroupId()
+				).buildString());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "deactivate"));
 		};
@@ -167,19 +166,19 @@ public class SiteActionDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getDeleteSiteActionUnsafeConsumer() {
 
-		PortletURL deleteSiteURL = PortletURLBuilder.createActionURL(
-			_liferayPortletResponse
-		).setActionName(
-			"/site_admin/delete_groups"
-		).setRedirect(
-			_getRedirect()
-		).setParameter(
-			"groupId", _group.getGroupId()
-		).build();
-
 		return dropdownItem -> {
 			dropdownItem.putData("action", "deleteSite");
-			dropdownItem.putData("deleteSiteURL", deleteSiteURL.toString());
+			dropdownItem.putData(
+				"deleteSiteURL",
+				PortletURLBuilder.createActionURL(
+					_liferayPortletResponse
+				).setActionName(
+					"/site_admin/delete_groups"
+				).setRedirect(
+					_getRedirect()
+				).setParameter(
+					"groupId", _group.getGroupId()
+				).buildString());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "delete"));
 		};
@@ -188,21 +187,21 @@ public class SiteActionDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getLeaveSiteActionUnsafeConsumer() {
 
-		PortletURL leaveSiteURL = PortletURLBuilder.createActionURL(
-			_liferayPortletResponse
-		).setActionName(
-			"/site_admin/edit_group_assignments"
-		).setRedirect(
-			_getRedirect()
-		).setParameter(
-			"groupId", _group.getGroupId()
-		).setParameter(
-			"removeUserIds", _themeDisplay.getUserId()
-		).build();
-
 		return dropdownItem -> {
 			dropdownItem.putData("action", "leaveSite");
-			dropdownItem.putData("leaveSiteURL", leaveSiteURL.toString());
+			dropdownItem.putData(
+				"leaveSiteURL",
+				PortletURLBuilder.createActionURL(
+					_liferayPortletResponse
+				).setActionName(
+					"/site_admin/edit_group_assignments"
+				).setRedirect(
+					_getRedirect()
+				).setParameter(
+					"groupId", _group.getGroupId()
+				).setParameter(
+					"removeUserIds", _themeDisplay.getUserId()
+				).buildString());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "leave"));
 		};

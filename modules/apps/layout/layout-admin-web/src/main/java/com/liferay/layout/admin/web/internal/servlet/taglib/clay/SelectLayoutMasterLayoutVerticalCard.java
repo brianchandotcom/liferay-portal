@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -63,34 +62,34 @@ public class SelectLayoutMasterLayoutVerticalCard implements VerticalCard {
 		Map<String, String> data = new HashMap<>();
 
 		try {
-			PortletURL addLayoutURL = PortletURLBuilder.createRenderURL(
-				_renderResponse
-			).setMVCRenderCommandName(
-				"/layout_admin/add_layout"
-			).setRedirect(
-				ParamUtil.getString(_httpServletRequest, "redirect")
-			).setParameter(
-				"groupId", ParamUtil.getLong(_httpServletRequest, "groupId")
-			).setParameter(
-				"selPlid", ParamUtil.getLong(_httpServletRequest, "selPlid")
-			).setParameter(
-				"privateLayout",
-				ParamUtil.getBoolean(_httpServletRequest, "privateLayout")
-			).setParameter(
-				"type", LayoutConstants.TYPE_COLLECTION
-			).setParameter(
-				"collectionPK",
-				ParamUtil.getString(_httpServletRequest, "collectionPK")
-			).setParameter(
-				"collectionType",
-				ParamUtil.getString(_httpServletRequest, "collectionType")
-			).setParameter(
-				"masterLayoutPlid", _layoutPageTemplateEntry.getPlid()
-			).setWindowState(
-				LiferayWindowState.POP_UP
-			).build();
-
-			data.put("data-add-layout-url", addLayoutURL.toString());
+			data.put(
+				"data-add-layout-url",
+				PortletURLBuilder.createRenderURL(
+					_renderResponse
+				).setMVCRenderCommandName(
+					"/layout_admin/add_layout"
+				).setRedirect(
+					ParamUtil.getString(_httpServletRequest, "redirect")
+				).setParameter(
+					"groupId", ParamUtil.getLong(_httpServletRequest, "groupId")
+				).setParameter(
+					"selPlid", ParamUtil.getLong(_httpServletRequest, "selPlid")
+				).setParameter(
+					"privateLayout",
+					ParamUtil.getBoolean(_httpServletRequest, "privateLayout")
+				).setParameter(
+					"type", LayoutConstants.TYPE_COLLECTION
+				).setParameter(
+					"collectionPK",
+					ParamUtil.getString(_httpServletRequest, "collectionPK")
+				).setParameter(
+					"collectionType",
+					ParamUtil.getString(_httpServletRequest, "collectionType")
+				).setParameter(
+					"masterLayoutPlid", _layoutPageTemplateEntry.getPlid()
+				).setWindowState(
+					LiferayWindowState.POP_UP
+				).buildString());
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

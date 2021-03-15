@@ -300,13 +300,12 @@ public class SelectLayoutCollectionDisplayContext {
 			navigationItem.setActive(true);
 		}
 
-		PortletURL collectionsPortletURL = PortletURLBuilder.create(
-			getPortletURL()
-		).setParameter(
-			"selectedTab", tabName
-		).build();
-
-		navigationItem.setHref(collectionsPortletURL.toString());
+		navigationItem.setHref(
+			PortletURLBuilder.create(
+				getPortletURL()
+			).setParameter(
+				"selectedTab", tabName
+			).buildString());
 
 		navigationItem.setLabel(LanguageUtil.get(_httpServletRequest, label));
 

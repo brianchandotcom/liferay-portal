@@ -61,13 +61,11 @@ public class ExportTemplatesToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getRenderURL()
 		).setMVCPath(
 			"/export/export_templates/view_export_configurations.jsp"
-		).build();
-
-		return clearResultsURL.toString();
+		).buildString();
 	}
 
 	@Override
@@ -98,13 +96,11 @@ public class ExportTemplatesToolbarDisplayContext
 
 	@Override
 	public String getSearchActionURL() {
-		PortletURL searchActionURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getRenderURL()
 		).setMVCRenderCommandName(
 			"/export_import/view_export_configurations"
-		).build();
-
-		return searchActionURL.toString();
+		).buildString();
 	}
 
 	public SearchContainer<ExportImportConfiguration> getSearchContainer() {

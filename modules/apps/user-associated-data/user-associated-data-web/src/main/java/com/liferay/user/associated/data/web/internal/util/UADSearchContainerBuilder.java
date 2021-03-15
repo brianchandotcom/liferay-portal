@@ -267,15 +267,15 @@ public class UADSearchContainerBuilder {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletURL viewURL = PortletURLBuilder.create(
-			PortletURLUtil.clone(currentURL, liferayPortletResponse)
-		).setParameter(
-			"applicationKey", uadApplicationSummaryDisplay.getApplicationKey()
-		).build();
-
 		UADEntity<T> uadEntity = new UADEntity(
 			null, uadApplicationSummaryDisplay.getApplicationKey(), null, false,
-			null, true, viewURL.toString());
+			null, true,
+			PortletURLBuilder.create(
+				PortletURLUtil.clone(currentURL, liferayPortletResponse)
+			).setParameter(
+				"applicationKey",
+				uadApplicationSummaryDisplay.getApplicationKey()
+			).buildString());
 
 		uadEntity.addColumnEntry(
 			"name",

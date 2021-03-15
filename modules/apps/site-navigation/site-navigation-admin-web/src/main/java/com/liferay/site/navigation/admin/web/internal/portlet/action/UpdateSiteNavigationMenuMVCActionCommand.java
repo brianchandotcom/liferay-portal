@@ -31,7 +31,6 @@ import com.liferay.site.navigation.service.SiteNavigationMenuService;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -82,13 +81,11 @@ public class UpdateSiteNavigationMenuMVCActionCommand
 	}
 
 	protected String getRedirectURL(ActionResponse actionResponse) {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_portal.getLiferayPortletResponse(actionResponse)
 		).setMVCPath(
 			"/view.jsp"
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Reference

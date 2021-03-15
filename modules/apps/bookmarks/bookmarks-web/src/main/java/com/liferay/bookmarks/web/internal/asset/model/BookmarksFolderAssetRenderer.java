@@ -165,7 +165,7 @@ public class BookmarksFolderAssetRenderer
 		AssetRendererFactory<BookmarksFolder> assetRendererFactory =
 			getAssetRendererFactory();
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			assetRendererFactory.getURLView(liferayPortletResponse, windowState)
 		).setMVCRenderCommandName(
 			"/bookmarks/view_folder"
@@ -173,9 +173,7 @@ public class BookmarksFolderAssetRenderer
 			"folderId", _folder.getFolderId()
 		).setWindowState(
 			windowState
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Override

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -46,7 +45,7 @@ public class SelectDisplayPageMasterLayoutVerticalCard implements VerticalCard {
 	}
 
 	public String getAddDisplayPageURL() {
-		PortletURL addDisplayPageURL = PortletURLBuilder.createActionURL(
+		return PortletURLBuilder.createActionURL(
 			_renderResponse
 		).setActionName(
 			"/layout_page_template_admin/add_display_page"
@@ -56,9 +55,7 @@ public class SelectDisplayPageMasterLayoutVerticalCard implements VerticalCard {
 			"type", LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE
 		).setParameter(
 			"masterLayoutPlid", _layoutPageTemplateEntry.getPlid()
-		).build();
-
-		return addDisplayPageURL.toString();
+		).buildString();
 	}
 
 	@Override

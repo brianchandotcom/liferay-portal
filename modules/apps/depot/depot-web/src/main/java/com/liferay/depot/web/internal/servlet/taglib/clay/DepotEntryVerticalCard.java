@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 /**
  * @author Alejandro Tardín
@@ -84,7 +83,7 @@ public class DepotEntryVerticalCard
 	@Override
 	public String getHref() {
 		try {
-			PortletURL portletURL = PortletURLBuilder.create(
+			return PortletURLBuilder.create(
 				PortalUtil.getControlPanelPortletURL(
 					_liferayPortletRequest, _depotEntry.getGroup(),
 					DepotPortletKeys.DEPOT_ADMIN, 0, 0,
@@ -93,9 +92,7 @@ public class DepotEntryVerticalCard
 				"/depot/view_depot_dashboard"
 			).setParameter(
 				"depotEntryId", _depotEntry.getDepotEntryId()
-			).build();
-
-			return portletURL.toString();
+			).buildString();
 		}
 		catch (PortalException portalException) {
 			return ReflectionUtil.throwException(portalException);

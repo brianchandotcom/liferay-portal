@@ -319,7 +319,7 @@ public class LayoutClassedModelUsagesDisplayContext {
 				String.valueOf(AssetRendererFactory.TYPE_LATEST));
 		}
 		else {
-			PortletURL portletURL = PortletURLBuilder.create(
+			layoutURL = PortletURLBuilder.create(
 				PortletURLFactoryUtil.create(
 					_renderRequest, layoutClassedModelUsage.getContainerKey(),
 					layoutClassedModelUsage.getPlid(),
@@ -330,9 +330,7 @@ public class LayoutClassedModelUsagesDisplayContext {
 				"previewClassPK", layoutClassedModelUsage.getClassPK()
 			).setParameter(
 				"previewType", AssetRendererFactory.TYPE_LATEST
-			).build();
-
-			layoutURL = portletURL.toString();
+			).buildString();
 		}
 
 		String portletURLString = HttpUtil.addParameter(

@@ -91,13 +91,11 @@ public class SiteNavigationAdminManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
 			"keywords", StringPool.BLANK
-		).build();
-
-		return clearResultsURL.toString();
+		).buildString();
 	}
 
 	@Override
@@ -106,22 +104,20 @@ public class SiteNavigationAdminManagementToolbarDisplayContext
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		PortletURL addSiteNavigationMenuURL = PortletURLBuilder.createActionURL(
-			liferayPortletResponse
-		).setMVCPath(
-			"/edit_site_navigation_menu.jsp"
-		).setActionName(
-			"/site_navigation_admin/add_site_navigation_menu"
-		).setRedirect(
-			themeDisplay.getURLCurrent()
-		).build();
-
 		return CreationMenuBuilder.addDropdownItem(
 			dropdownItem -> {
 				dropdownItem.putData("action", "addSiteNavigationMenu");
 				dropdownItem.putData(
 					"addSiteNavigationMenuURL",
-					addSiteNavigationMenuURL.toString());
+					PortletURLBuilder.createActionURL(
+						liferayPortletResponse
+					).setMVCPath(
+						"/edit_site_navigation_menu.jsp"
+					).setActionName(
+						"/site_navigation_admin/add_site_navigation_menu"
+					).setRedirect(
+						themeDisplay.getURLCurrent()
+					).buildString());
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "add"));
 			}

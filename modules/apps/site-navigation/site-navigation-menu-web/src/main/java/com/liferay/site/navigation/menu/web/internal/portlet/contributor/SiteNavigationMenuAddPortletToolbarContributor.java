@@ -41,7 +41,6 @@ import java.util.List;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -126,23 +125,22 @@ public class SiteNavigationMenuAddPortletToolbarContributor
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		PortletURL portletURL = PortletURLBuilder.create(
-			PortletProviderUtil.getPortletURL(
-				portletRequest, Layout.class.getName(),
-				PortletProvider.Action.EDIT)
-		).setMVCPath(
-			"/select_layout_page_template_entry.jsp"
-		).setRedirect(
-			_portal.getLayoutFullURL(themeDisplay)
-		).setParameter(
-			"groupId", themeDisplay.getScopeGroupId()
-		).setParameter(
-			"privateLayout", layout.isPrivateLayout()
-		).setParameter(
-			"portletResource", portletDisplay.getPortletName()
-		).build();
-
-		urlMenuItem.setURL(portletURL.toString());
+		urlMenuItem.setURL(
+			PortletURLBuilder.create(
+				PortletProviderUtil.getPortletURL(
+					portletRequest, Layout.class.getName(),
+					PortletProvider.Action.EDIT)
+			).setMVCPath(
+				"/select_layout_page_template_entry.jsp"
+			).setRedirect(
+				_portal.getLayoutFullURL(themeDisplay)
+			).setParameter(
+				"groupId", themeDisplay.getScopeGroupId()
+			).setParameter(
+				"privateLayout", layout.isPrivateLayout()
+			).setParameter(
+				"portletResource", portletDisplay.getPortletName()
+			).buildString());
 
 		return urlMenuItem;
 	}

@@ -46,7 +46,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.portlet.PortletException;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -98,13 +97,11 @@ public class ViewManageCollaboratorsMVCRenderCommand
 	}
 
 	private String _getActionURL(RenderResponse renderResponse) {
-		PortletURL editCollaboratorsURL = PortletURLBuilder.createActionURL(
+		return PortletURLBuilder.createActionURL(
 			renderResponse
 		).setActionName(
 			"/sharing/edit_collaborators"
-		).build();
-
-		return editCollaboratorsURL.toString();
+		).buildString();
 	}
 
 	private JSONArray _getCollaboratorsJSONArray(

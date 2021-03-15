@@ -48,7 +48,6 @@ import java.util.Collections;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -142,15 +141,14 @@ public class SplitThreadMVCActionCommand extends BaseMVCActionCommand {
 		LiferayActionResponse liferayActionResponse =
 			(LiferayActionResponse)actionResponse;
 
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			liferayActionResponse
-		).setMVCRenderCommandName(
-			"/message_boards/view_message"
-		).setParameter(
-			"messageId", newThread.getRootMessageId()
-		).build();
-
-		actionResponse.sendRedirect(portletURL.toString());
+		actionResponse.sendRedirect(
+			PortletURLBuilder.createRenderURL(
+				liferayActionResponse
+			).setMVCRenderCommandName(
+				"/message_boards/view_message"
+			).setParameter(
+				"messageId", newThread.getRootMessageId()
+			).buildString());
 	}
 
 	@Reference

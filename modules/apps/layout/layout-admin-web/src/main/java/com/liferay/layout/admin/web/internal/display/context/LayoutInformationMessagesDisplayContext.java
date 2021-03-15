@@ -33,7 +33,6 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -93,7 +92,7 @@ public class LayoutInformationMessagesDisplayContext {
 		).put(
 			"resetPrototypeURL",
 			() -> {
-				PortletURL resetPrototypeURL = PortletURLBuilder.create(
+				return PortletURLBuilder.create(
 					PortletURLFactoryUtil.create(
 						_httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
 						PortletRequest.ACTION_PHASE)
@@ -103,9 +102,7 @@ public class LayoutInformationMessagesDisplayContext {
 					PortalUtil.getLayoutURL(themeDisplay)
 				).setParameter(
 					"groupId", themeDisplay.getSiteGroupId()
-				).build();
-
-				return resetPrototypeURL.toString();
+				).buildString();
 			}
 		).put(
 			"showLinkedLayoutMessage", showLinkedLayoutMessage

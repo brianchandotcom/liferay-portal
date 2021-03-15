@@ -60,17 +60,15 @@ public class DLBreadcrumbUtil {
 
 		FileEntry unescapedFileEntry = fileEntry.toUnescapedModel();
 
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			renderResponse
-		).setMVCRenderCommandName(
-			"/document_library/view_file_entry"
-		).setParameter(
-			"fileEntryId", fileEntry.getFileEntryId()
-		).build();
-
 		PortalUtil.addPortletBreadcrumbEntry(
 			httpServletRequest, unescapedFileEntry.getTitle(),
-			portletURL.toString());
+			PortletURLBuilder.createRenderURL(
+				renderResponse
+			).setMVCRenderCommandName(
+				"/document_library/view_file_entry"
+			).setParameter(
+				"fileEntryId", fileEntry.getFileEntryId()
+			).buildString());
 	}
 
 	public static void addPortletBreadcrumbEntries(
@@ -89,17 +87,15 @@ public class DLBreadcrumbUtil {
 
 		FileShortcut unescapedDLFileShortcut = fileShortcut.toUnescapedModel();
 
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			renderResponse
-		).setMVCRenderCommandName(
-			"/document_library/view_file_entry"
-		).setParameter(
-			"fileEntryId", fileShortcut.getToFileEntryId()
-		).build();
-
 		PortalUtil.addPortletBreadcrumbEntry(
 			httpServletRequest, unescapedDLFileShortcut.getToTitle(),
-			portletURL.toString());
+			PortletURLBuilder.createRenderURL(
+				renderResponse
+			).setMVCRenderCommandName(
+				"/document_library/view_file_entry"
+			).setParameter(
+				"fileEntryId", fileShortcut.getToFileEntryId()
+			).buildString());
 	}
 
 	public static void addPortletBreadcrumbEntries(

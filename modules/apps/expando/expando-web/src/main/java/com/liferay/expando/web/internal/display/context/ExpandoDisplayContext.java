@@ -38,7 +38,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -71,14 +70,11 @@ public class ExpandoDisplayContext {
 					(PortletResponse)_httpServletRequest.getAttribute(
 						JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-				PortletURL deleteExpandosURL =
-					PortletURLBuilder.createActionURL(
-						PortalUtil.getLiferayPortletResponse(portletResponse)
-					).setActionName(
-						"deleteExpandos"
-					).build();
-
-				return deleteExpandosURL.toString();
+				return PortletURLBuilder.createActionURL(
+					PortalUtil.getLiferayPortletResponse(portletResponse)
+				).setActionName(
+					"deleteExpandos"
+				).buildString();
 			}
 		).build();
 	}

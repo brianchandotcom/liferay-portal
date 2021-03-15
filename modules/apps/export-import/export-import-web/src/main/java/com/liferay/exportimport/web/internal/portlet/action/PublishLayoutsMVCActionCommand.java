@@ -39,7 +39,6 @@ import com.liferay.taglib.ui.util.SessionTreeJSClicks;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -182,15 +181,15 @@ public class PublishLayoutsMVCActionCommand extends BaseMVCActionCommand {
 		ActionRequest actionRequest, ActionResponse actionResponse,
 		long backgroundTaskId) {
 
-		PortletURL renderURL = PortletURLBuilder.createRenderURL(
-			_portal.getLiferayPortletResponse(actionResponse)
-		).setMVCPath(
-			"/view_export_import.jsp"
-		).setParameter(
-			"backgroundTaskId", backgroundTaskId
-		).build();
-
-		actionRequest.setAttribute(WebKeys.REDIRECT, renderURL.toString());
+		actionRequest.setAttribute(
+			WebKeys.REDIRECT,
+			PortletURLBuilder.createRenderURL(
+				_portal.getLiferayPortletResponse(actionResponse)
+			).setMVCPath(
+				"/view_export_import.jsp"
+			).setParameter(
+				"backgroundTaskId", backgroundTaskId
+			).buildString());
 	}
 
 	@Reference

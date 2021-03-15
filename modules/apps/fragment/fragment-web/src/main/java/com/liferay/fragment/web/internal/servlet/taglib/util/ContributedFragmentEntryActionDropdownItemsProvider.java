@@ -76,20 +76,17 @@ public class ContributedFragmentEntryActionDropdownItemsProvider {
 				LiferayWindowState.POP_UP
 			).build();
 
-		PortletURL copyContributedFragmentEntryURL =
-			PortletURLBuilder.createActionURL(
-				_renderResponse
-			).setActionName(
-				"/fragment/copy_contributed_fragment_entry"
-			).setRedirect(
-				_themeDisplay.getURLCurrent()
-			).build();
-
 		return dropdownItem -> {
 			dropdownItem.putData("action", "copyToContributedFragmentEntry");
 			dropdownItem.putData(
 				"copyContributedFragmentEntryURL",
-				copyContributedFragmentEntryURL.toString());
+				PortletURLBuilder.createActionURL(
+					_renderResponse
+				).setActionName(
+					"/fragment/copy_contributed_fragment_entry"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).buildString());
 			dropdownItem.putData(
 				"fragmentEntryKey",
 				String.valueOf(_fragmentEntry.getFragmentEntryKey()));

@@ -61,16 +61,16 @@ public class AssetTagsManagementToolbarDisplayContext
 		return DropdownItemListBuilder.add(
 			_assetTagsDisplayContext::isShowTagsActions,
 			dropdownItem -> {
-				PortletURL mergeTagsURL = PortletURLBuilder.createRenderURL(
-					liferayPortletResponse
-				).setMVCPath(
-					"/merge_tag.jsp"
-				).setParameter(
-					"mergeTagIds", "[$MERGE_TAGS_IDS$]"
-				).build();
-
 				dropdownItem.putData("action", "mergeTags");
-				dropdownItem.putData("mergeTagsURL", mergeTagsURL.toString());
+				dropdownItem.putData(
+					"mergeTagsURL",
+					PortletURLBuilder.createRenderURL(
+						liferayPortletResponse
+					).setMVCPath(
+						"/merge_tag.jsp"
+					).setParameter(
+						"mergeTagIds", "[$MERGE_TAGS_IDS$]"
+					).buildString());
 				dropdownItem.setIcon("merge");
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "merge"));

@@ -53,8 +53,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -164,7 +162,7 @@ public class CommerceSubscriptionShipmentsDataSetDataProvider
 			long commerceOrderId, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletProviderUtil.getPortletURL(
 				httpServletRequest, CommerceOrder.class.getName(),
 				PortletProvider.Action.MANAGE)
@@ -174,16 +172,14 @@ public class CommerceSubscriptionShipmentsDataSetDataProvider
 			_portal.getCurrentURL(httpServletRequest)
 		).setParameter(
 			"commerceOrderId", commerceOrderId
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	private String _getEditShipmentURL(
 			long commerceShipmentId, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletProviderUtil.getPortletURL(
 				httpServletRequest, CommerceShipment.class.getName(),
 				PortletProvider.Action.MANAGE)
@@ -193,9 +189,7 @@ public class CommerceSubscriptionShipmentsDataSetDataProvider
 			_portal.getCurrentURL(httpServletRequest)
 		).setParameter(
 			"commerceShipmentId", commerceShipmentId
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	private Label _getShipmentStatus(CommerceShipment commerceShipment) {

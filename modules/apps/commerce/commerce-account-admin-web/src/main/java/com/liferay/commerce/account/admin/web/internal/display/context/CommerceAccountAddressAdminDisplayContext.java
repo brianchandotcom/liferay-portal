@@ -129,7 +129,7 @@ public class CommerceAccountAddressAdminDisplayContext
 	}
 
 	public String getDeleteCommerceAddressURL(long commerceAddressId) {
-		PortletURL portletURL = PortletURLBuilder.createActionURL(
+		return PortletURLBuilder.createActionURL(
 			commerceAccountAdminRequestHelper.getLiferayPortletResponse()
 		).setActionName(
 			"/commerce_account_admin/edit_commerce_address"
@@ -139,15 +139,13 @@ public class CommerceAccountAddressAdminDisplayContext
 			Constants.CMD, Constants.DELETE
 		).setParameter(
 			"commerceAddressId", commerceAddressId
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public String getEditCommerceAddressURL(long commerceAddressId)
 		throws PortalException {
 
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			commerceAccountAdminRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
 			"/commerce_account_admin/edit_commerce_address"
@@ -157,9 +155,7 @@ public class CommerceAccountAddressAdminDisplayContext
 			"commerceAccountId", getCommerceAccountId()
 		).setParameter(
 			"commerceAddressId", commerceAddressId
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Override

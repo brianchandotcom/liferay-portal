@@ -82,18 +82,15 @@ public class FragmentCollectionResourcesManagementToolbarDisplayContext
 				dropdownItem.putData(
 					"action", "deleteSelectedFragmentCollectionResources");
 
-				PortletURL deleteFragmentCollectionResourcesURL =
+				dropdownItem.putData(
+					"deleteFragmentCollectionResourcesURL",
 					PortletURLBuilder.createActionURL(
 						liferayPortletResponse
 					).setActionName(
 						"/fragment/delete_fragment_collection_resources"
 					).setRedirect(
 						_themeDisplay.getURLCurrent()
-					).build();
-
-				dropdownItem.putData(
-					"deleteFragmentCollectionResourcesURL",
-					deleteFragmentCollectionResourcesURL.toString());
+					).buildString());
 
 				dropdownItem.setIcon("times-circle");
 				dropdownItem.setLabel(

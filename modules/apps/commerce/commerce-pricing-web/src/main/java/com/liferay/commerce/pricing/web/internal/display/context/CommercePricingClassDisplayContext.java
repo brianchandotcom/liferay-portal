@@ -64,15 +64,13 @@ public class CommercePricingClassDisplayContext
 	}
 
 	public String getAddCommercePricingClassRenderURL() throws Exception {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			commercePricingRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
 			"/commerce_pricing_classes/add_commerce_pricing_class"
 		).setWindowState(
 			LiferayWindowState.POP_UP
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public CommercePricingClass getCommercePricingClass()
@@ -125,7 +123,7 @@ public class CommercePricingClassDisplayContext
 			return StringPool.BLANK;
 		}
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				commercePricingRequestHelper.getRequest(),
 				CommercePricingPortletKeys.COMMERCE_PRICING_CLASSES,
@@ -139,9 +137,7 @@ public class CommercePricingClassDisplayContext
 			commercePricingClass.getCommercePricingClassId()
 		).setWindowState(
 			LiferayWindowState.POP_UP
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public PortletURL getEditCommercePricingClassRenderURL() {

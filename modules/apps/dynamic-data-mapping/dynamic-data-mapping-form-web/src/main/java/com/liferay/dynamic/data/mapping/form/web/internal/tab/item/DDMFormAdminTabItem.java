@@ -53,13 +53,11 @@ public class DDMFormAdminTabItem implements DDMDisplayTabItem {
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL(liferayPortletRequest, liferayPortletResponse)
 		).setParameter(
 			"currentTab", "forms"
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	protected PortletURL getPortletURL(

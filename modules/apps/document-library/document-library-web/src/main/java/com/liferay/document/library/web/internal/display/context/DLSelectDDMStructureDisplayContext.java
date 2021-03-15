@@ -174,14 +174,12 @@ public class DLSelectDDMStructureDisplayContext {
 	}
 
 	public String getSortingURL() {
-		PortletURL sortingURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_getPortletURL()
 		).setParameter(
 			"orderByType",
 			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc"
-		).build();
-
-		return sortingURL.toString();
+		).buildString();
 	}
 
 	public boolean isSearch() {

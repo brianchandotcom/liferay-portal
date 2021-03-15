@@ -108,7 +108,7 @@ public class CommerceTaxRateSettingDataSetActionProvider
 			httpServletRequest, "currentUrl",
 			_portal.getCurrentURL(httpServletRequest));
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				httpServletRequest, CommercePortletKeys.COMMERCE_TAX_METHODS,
 				PortletRequest.ACTION_PHASE)
@@ -120,9 +120,7 @@ public class CommerceTaxRateSettingDataSetActionProvider
 			Constants.CMD, Constants.DELETE
 		).setParameter(
 			"commerceTaxFixedRateAddressRelId", taxRateSettingId
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	private String _getTaxRateSettingEditURL(

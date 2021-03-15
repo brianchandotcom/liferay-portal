@@ -74,18 +74,15 @@ public class ViewAccountOrganizationsManagementToolbarDisplayContext
 
 				dropdownItem.putData("action", "removeOrganizations");
 
-				PortletURL removeOrganizationsURL =
+				dropdownItem.putData(
+					"removeOrganizationsURL",
 					PortletURLBuilder.createActionURL(
 						liferayPortletResponse
 					).setActionName(
 						"/account_admin/remove_account_organizations"
 					).setRedirect(
 						currentURLObj.toString()
-					).build();
-
-				dropdownItem.putData(
-					"removeOrganizationsURL",
-					removeOrganizationsURL.toString());
+					).buildString());
 
 				dropdownItem.setIcon("times-circle");
 				dropdownItem.setLabel(
@@ -98,13 +95,11 @@ public class ViewAccountOrganizationsManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
 			"keywords", StringPool.BLANK
-		).build();
-
-		return clearResultsURL.toString();
+		).buildString();
 	}
 
 	@Override
@@ -135,7 +130,8 @@ public class ViewAccountOrganizationsManagementToolbarDisplayContext
 					"assignAccountOrganizationsURL",
 					assignAccountOrganizationsURL.toString());
 
-				PortletURL selectAccountOrganizationsURL =
+				dropdownItem.putData(
+					"selectAccountOrganizationsURL",
 					PortletURLBuilder.createRenderURL(
 						liferayPortletResponse
 					).setMVCPath(
@@ -144,11 +140,7 @@ public class ViewAccountOrganizationsManagementToolbarDisplayContext
 						"accountEntryId", accountEntry.getAccountEntryId()
 					).setWindowState(
 						LiferayWindowState.POP_UP
-					).build();
-
-				dropdownItem.putData(
-					"selectAccountOrganizationsURL",
-					selectAccountOrganizationsURL.toString());
+					).buildString());
 
 				dropdownItem.setLabel(
 					LanguageUtil.get(

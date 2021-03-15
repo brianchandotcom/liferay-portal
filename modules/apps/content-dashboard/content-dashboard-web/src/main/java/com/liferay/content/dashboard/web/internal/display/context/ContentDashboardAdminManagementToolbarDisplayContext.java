@@ -207,13 +207,14 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		labelItemListWrapper.add(
 			() -> scopeId > 0,
 			labelItem -> {
-				PortletURL removeLabelURL = PortletURLBuilder.create(
-					PortletURLUtil.clone(currentURLObj, liferayPortletResponse)
-				).setParameter(
-					"scopeId", (String)null
-				).build();
-
-				labelItem.putData("removeLabelURL", removeLabelURL.toString());
+				labelItem.putData(
+					"removeLabelURL",
+					PortletURLBuilder.create(
+						PortletURLUtil.clone(
+							currentURLObj, liferayPortletResponse)
+					).setParameter(
+						"scopeId", (String)null
+					).buildString());
 
 				labelItem.setCloseable(true);
 				labelItem.setLabel(
@@ -326,13 +327,14 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		labelItemListWrapper.add(
 			() -> status != WorkflowConstants.STATUS_ANY,
 			labelItem -> {
-				PortletURL removeLabelURL = PortletURLBuilder.create(
-					PortletURLUtil.clone(currentURLObj, liferayPortletResponse)
-				).setParameter(
-					"status", (String)null
-				).build();
-
-				labelItem.putData("removeLabelURL", removeLabelURL.toString());
+				labelItem.putData(
+					"removeLabelURL",
+					PortletURLBuilder.create(
+						PortletURLUtil.clone(
+							currentURLObj, liferayPortletResponse)
+					).setParameter(
+						"status", (String)null
+					).buildString());
 
 				labelItem.setCloseable(true);
 				labelItem.setLabel(

@@ -1016,7 +1016,7 @@ public class ContentPageEditorDisplayContext {
 		if (!Objects.equals(
 				publishedLayout.getType(), LayoutConstants.TYPE_PORTLET)) {
 
-			PortletURL discardDraftURL = PortletURLBuilder.create(
+			return PortletURLBuilder.create(
 				PortletURLFactoryUtil.create(
 					httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
 					PortletRequest.ACTION_PHASE)
@@ -1026,9 +1026,7 @@ public class ContentPageEditorDisplayContext {
 				themeDisplay.getURLCurrent()
 			).setParameter(
 				"selPlid", themeDisplay.getPlid()
-			).build();
-
-			return discardDraftURL.toString();
+			).buildString();
 		}
 
 		PortletURL deleteLayoutURL = PortletURLBuilder.create(
@@ -1039,15 +1037,15 @@ public class ContentPageEditorDisplayContext {
 			"/layout_admin/delete_layout"
 		).build();
 
-		PortletURL redirectURL = PortletURLBuilder.create(
-			PortalUtil.getControlPanelPortletURL(
-				httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
-				PortletRequest.RENDER_PHASE)
-		).setParameter(
-			"selPlid", publishedLayout.getPlid()
-		).build();
-
-		deleteLayoutURL.setParameter("redirect", redirectURL.toString());
+		deleteLayoutURL.setParameter(
+			"redirect",
+			PortletURLBuilder.create(
+				PortalUtil.getControlPanelPortletURL(
+					httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+					PortletRequest.RENDER_PHASE)
+			).setParameter(
+				"selPlid", publishedLayout.getPlid()
+			).buildString());
 
 		deleteLayoutURL.setParameter(
 			"selPlid", String.valueOf(themeDisplay.getPlid()));
@@ -1770,7 +1768,7 @@ public class ContentPageEditorDisplayContext {
 
 		Layout layout = themeDisplay.getLayout();
 
-		PortletURL lookAndFeelURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
 				httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
 				PortletRequest.RENDER_PHASE)
@@ -1788,9 +1786,7 @@ public class ContentPageEditorDisplayContext {
 			"selPlid", layout.getPlid()
 		).setParameter(
 			"privateLayout", layout.isPrivateLayout()
-		).build();
-
-		return lookAndFeelURL.toString();
+		).buildString();
 	}
 
 	private Set<Map<String, Object>> _getMappedInfoItems() throws Exception {

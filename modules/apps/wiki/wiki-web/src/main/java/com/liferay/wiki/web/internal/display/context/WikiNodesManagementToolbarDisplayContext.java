@@ -111,13 +111,11 @@ public class WikiNodesManagementToolbarDisplayContext {
 		).put(
 			"deleteNodesURL",
 			() -> {
-				PortletURL deleteNodesURL = PortletURLBuilder.createActionURL(
+				return PortletURLBuilder.createActionURL(
 					_liferayPortletResponse
 				).setActionName(
 					"/wiki/edit_node"
-				).build();
-
-				return deleteNodesURL.toString();
+				).buildString();
 			}
 		).put(
 			"trashEnabled", _isTrashEnabled()

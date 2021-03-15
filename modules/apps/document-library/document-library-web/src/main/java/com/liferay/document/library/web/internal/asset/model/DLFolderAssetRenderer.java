@@ -151,7 +151,7 @@ public class DLFolderAssetRenderer
 		AssetRendererFactory<Folder> assetRendererFactory =
 			getAssetRendererFactory();
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			assetRendererFactory.getURLView(liferayPortletResponse, windowState)
 		).setMVCRenderCommandName(
 			"/document_library/view_folder"
@@ -159,9 +159,7 @@ public class DLFolderAssetRenderer
 			"folderId", _folder.getFolderId()
 		).setWindowState(
 			windowState
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Override

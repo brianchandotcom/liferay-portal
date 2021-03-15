@@ -23,7 +23,6 @@ import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiPage;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -40,7 +39,7 @@ public class WikiPageUADDisplay extends BaseWikiPageUADDisplay {
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
-		PortletURL portletURL = PortletURLBuilder.createLiferayPortletURL(
+		return PortletURLBuilder.createLiferayPortletURL(
 			liferayPortletResponse,
 			portal.getControlPanelPlid(liferayPortletRequest),
 			WikiPortletKeys.WIKI, PortletRequest.RENDER_PHASE
@@ -52,9 +51,7 @@ public class WikiPageUADDisplay extends BaseWikiPageUADDisplay {
 			"nodeId", wikiPage.getNodeId()
 		).setParameter(
 			"title", wikiPage.getTitle()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Reference

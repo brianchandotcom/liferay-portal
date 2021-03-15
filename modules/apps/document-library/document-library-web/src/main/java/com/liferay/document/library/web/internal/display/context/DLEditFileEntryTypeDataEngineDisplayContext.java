@@ -29,8 +29,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -68,20 +66,17 @@ public class DLEditFileEntryTypeDataEngineDisplayContext {
 			).put(
 				"url",
 				() -> {
-					PortletURL editBasicInfoURL =
-						PortletURLBuilder.createRenderURL(
-							_liferayPortletResponse
-						).setMVCPath(
-							"/document_library/ddm/details.jsp"
-						).setParameter(
-							"fileEntryTypeId",
-							ParamUtil.getLong(
-								_liferayPortletRequest, "fileEntryTypeId")
-						).setWindowState(
-							LiferayWindowState.EXCLUSIVE
-						).build();
-
-					return editBasicInfoURL.toString();
+					return PortletURLBuilder.createRenderURL(
+						_liferayPortletResponse
+					).setMVCPath(
+						"/document_library/ddm/details.jsp"
+					).setParameter(
+						"fileEntryTypeId",
+						ParamUtil.getLong(
+							_liferayPortletRequest, "fileEntryTypeId")
+					).setWindowState(
+						LiferayWindowState.EXCLUSIVE
+					).buildString();
 				}
 			).build());
 
@@ -101,20 +96,17 @@ public class DLEditFileEntryTypeDataEngineDisplayContext {
 			).put(
 				"url",
 				() -> {
-					PortletURL editAdditionalMetadataFieldsURL =
-						PortletURLBuilder.createRenderURL(
-							_liferayPortletResponse
-						).setMVCPath(
-							"/document_library/ddm/additional_metadata_fields.jsp"
-						).setParameter(
-							"fileEntryTypeId",
-							ParamUtil.getLong(
-								_liferayPortletRequest, "fileEntryTypeId")
-						).setWindowState(
-							LiferayWindowState.EXCLUSIVE
-						).build();
-
-					return editAdditionalMetadataFieldsURL.toString();
+					return PortletURLBuilder.createRenderURL(
+						_liferayPortletResponse
+					).setMVCPath(
+						"/document_library/ddm/additional_metadata_fields.jsp"
+					).setParameter(
+						"fileEntryTypeId",
+						ParamUtil.getLong(
+							_liferayPortletRequest, "fileEntryTypeId")
+					).setWindowState(
+						LiferayWindowState.EXCLUSIVE
+					).buildString();
 				}
 			).build());
 
@@ -138,16 +130,13 @@ public class DLEditFileEntryTypeDataEngineDisplayContext {
 				).put(
 					"url",
 					() -> {
-						PortletURL editPermissionsURL =
-							PortletURLBuilder.createRenderURL(
-								_liferayPortletResponse
-							).setMVCPath(
-								"/document_library/ddm/permissions.jsp"
-							).setWindowState(
-								LiferayWindowState.EXCLUSIVE
-							).build();
-
-						return editPermissionsURL.toString();
+						return PortletURLBuilder.createRenderURL(
+							_liferayPortletResponse
+						).setMVCPath(
+							"/document_library/ddm/permissions.jsp"
+						).setWindowState(
+							LiferayWindowState.EXCLUSIVE
+						).buildString();
 					}
 				).build());
 		}

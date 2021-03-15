@@ -567,17 +567,16 @@ public class AssetBrowserDisplayContext {
 		breadcrumbEntry.setTitle(
 			LanguageUtil.get(_httpServletRequest, "sites-and-libraries"));
 
-		PortletURL portletURL = PortletURLBuilder.create(
-			PortletURLUtil.clone(
-				_portletURL,
-				PortalUtil.getLiferayPortletResponse(_renderResponse))
-		).setParameter(
-			"groupType", "site"
-		).setParameter(
-			"showGroupSelector", Boolean.TRUE.toString()
-		).build();
-
-		breadcrumbEntry.setURL(portletURL.toString());
+		breadcrumbEntry.setURL(
+			PortletURLBuilder.create(
+				PortletURLUtil.clone(
+					_portletURL,
+					PortalUtil.getLiferayPortletResponse(_renderResponse))
+			).setParameter(
+				"groupType", "site"
+			).setParameter(
+				"showGroupSelector", Boolean.TRUE.toString()
+			).buildString());
 
 		return breadcrumbEntry;
 	}

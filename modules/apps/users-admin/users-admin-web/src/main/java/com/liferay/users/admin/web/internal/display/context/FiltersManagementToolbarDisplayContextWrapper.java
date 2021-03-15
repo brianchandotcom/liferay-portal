@@ -32,8 +32,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -116,14 +114,13 @@ public class FiltersManagementToolbarDisplayContextWrapper
 
 				filterLabelItems.add(
 					labelItem -> {
-						PortletURL removeLabelURL = PortletURLBuilder.create(
-							getPortletURL()
-						).setParameter(
-							filterContributor.getParameter(), (String)null
-						).build();
-
 						labelItem.putData(
-							"removeLabelURL", removeLabelURL.toString());
+							"removeLabelURL",
+							PortletURLBuilder.create(
+								getPortletURL()
+							).setParameter(
+								filterContributor.getParameter(), (String)null
+							).buildString());
 
 						labelItem.setCloseable(true);
 

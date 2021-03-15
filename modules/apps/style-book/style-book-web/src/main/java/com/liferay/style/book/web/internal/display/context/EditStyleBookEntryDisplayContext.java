@@ -42,7 +42,6 @@ import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 
 import java.util.Map;
 
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceURL;
@@ -109,13 +108,11 @@ public class EditStyleBookEntryDisplayContext {
 	}
 
 	private String _getActionURL(String actionName) {
-		PortletURL actionURL = PortletURLBuilder.createActionURL(
+		return PortletURLBuilder.createActionURL(
 			_renderResponse
 		).setActionName(
 			actionName
-		).build();
-
-		return actionURL.toString();
+		).buildString();
 	}
 
 	private JSONObject _getFrontendTokenDefinitionJSONObject()
@@ -172,13 +169,11 @@ public class EditStyleBookEntryDisplayContext {
 			return redirect;
 		}
 
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCRenderCommandName(
 			"/style_book/view"
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	private StyleBookEntry _getStyleBookEntry() {

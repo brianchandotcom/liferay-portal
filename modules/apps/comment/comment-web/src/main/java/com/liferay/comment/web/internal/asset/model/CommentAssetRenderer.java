@@ -173,7 +173,7 @@ public class CommentAssetRenderer
 		AssetRendererFactory<WorkflowableComment> assetRendererFactory =
 			getAssetRendererFactory();
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			assetRendererFactory.getURLView(liferayPortletResponse, windowState)
 		).setMVCPath(
 			"/view_comment.jsp"
@@ -181,9 +181,7 @@ public class CommentAssetRenderer
 			"commentId", _workflowableComment.getCommentId()
 		).setWindowState(
 			windowState
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Override

@@ -302,17 +302,15 @@ public class LayoutsTreeTag extends IncludeTag {
 		for (Map.Entry<String, PortletURL> entry : portletURLs.entrySet()) {
 			JSONObject jsonObject = JSONUtil.put("name", entry.getKey());
 
-			PortletURL portletURL = PortletURLBuilder.create(
-				entry.getValue()
-			).setParameter(
-				"selPlid", "{selPlid}"
-			).build();
-
 			jsonObject.put(
 				"value",
 				StringUtil.replace(
-					portletURL.toString(), HttpUtil.encodePath("{selPlid}"),
-					"{selPlid}"));
+					PortletURLBuilder.create(
+						entry.getValue()
+					).setParameter(
+						"selPlid", "{selPlid}"
+					).buildString(),
+					HttpUtil.encodePath("{selPlid}"), "{selPlid}"));
 
 			jsonArray.put(jsonObject);
 		}

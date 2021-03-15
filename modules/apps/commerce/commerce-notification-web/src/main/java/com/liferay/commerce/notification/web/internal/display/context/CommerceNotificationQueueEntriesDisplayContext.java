@@ -49,7 +49,7 @@ public class CommerceNotificationQueueEntriesDisplayContext {
 	}
 
 	public String getAddNotificationTemplateURL() throws Exception {
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletProviderUtil.getPortletURL(
 				_commerceNotificationsRequestHelper.getRequest(),
 				CommerceChannel.class.getName(), PortletProvider.Action.MANAGE)
@@ -59,9 +59,7 @@ public class CommerceNotificationQueueEntriesDisplayContext {
 			"commerceChannelId", getCommerceChannelId()
 		).setWindowState(
 			LiferayWindowState.POP_UP
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public CommerceChannel getCommerceChannel() throws PortalException {

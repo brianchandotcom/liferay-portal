@@ -57,15 +57,13 @@ public class ViewAppsManagerManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL removeLabelURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
 			"category", (String)null
 		).setParameter(
 			"state", (String)null
-		).build();
-
-		return removeLabelURL.toString();
+		).buildString();
 	}
 
 	@Override
@@ -99,13 +97,13 @@ public class ViewAppsManagerManagementToolbarDisplayContext
 		return LabelItemListBuilder.add(
 			() -> !category.equals("all-categories"),
 			labelItem -> {
-				PortletURL removeLabelURL = PortletURLBuilder.create(
-					getPortletURL()
-				).setParameter(
-					"category", (String)null
-				).build();
-
-				labelItem.putData("removeLabelURL", removeLabelURL.toString());
+				labelItem.putData(
+					"removeLabelURL",
+					PortletURLBuilder.create(
+						getPortletURL()
+					).setParameter(
+						"category", (String)null
+					).buildString());
 
 				labelItem.setCloseable(true);
 
@@ -118,13 +116,13 @@ public class ViewAppsManagerManagementToolbarDisplayContext
 		).add(
 			() -> !state.equals("all-statuses"),
 			labelItem -> {
-				PortletURL removeLabelURL = PortletURLBuilder.create(
-					getPortletURL()
-				).setParameter(
-					"state", (String)null
-				).build();
-
-				labelItem.putData("removeLabelURL", removeLabelURL.toString());
+				labelItem.putData(
+					"removeLabelURL",
+					PortletURLBuilder.create(
+						getPortletURL()
+					).setParameter(
+						"state", (String)null
+					).buildString());
 
 				labelItem.setCloseable(true);
 

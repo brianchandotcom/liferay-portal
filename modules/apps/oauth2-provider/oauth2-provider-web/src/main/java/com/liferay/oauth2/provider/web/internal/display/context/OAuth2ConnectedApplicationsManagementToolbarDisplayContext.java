@@ -62,14 +62,11 @@ public class OAuth2ConnectedApplicationsManagementToolbarDisplayContext
 		return HashMapBuilder.<String, Object>put(
 			"revokeOauthAuthorizationsURL",
 			() -> {
-				PortletURL revokeOauthAuthorizationsURL =
-					PortletURLBuilder.createActionURL(
-						liferayPortletResponse
-					).setActionName(
-						"/connected_applications/revoke_oauth2_authorizations"
-					).build();
-
-				return revokeOauthAuthorizationsURL.toString();
+				return PortletURLBuilder.createActionURL(
+					liferayPortletResponse
+				).setActionName(
+					"/connected_applications/revoke_oauth2_authorizations"
+				).buildString();
 			}
 		).build();
 	}

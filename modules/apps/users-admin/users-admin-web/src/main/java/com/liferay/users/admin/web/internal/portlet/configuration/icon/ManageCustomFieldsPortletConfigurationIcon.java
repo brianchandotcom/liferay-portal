@@ -39,7 +39,6 @@ import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -70,7 +69,7 @@ public class ManageCustomFieldsPortletConfigurationIcon
 			WebKeys.THEME_DISPLAY);
 
 		try {
-			PortletURL portletURL = PortletURLBuilder.create(
+			return PortletURLBuilder.create(
 				PortletProviderUtil.getPortletURL(
 					portletRequest, ExpandoColumn.class.getName(),
 					PortletProvider.Action.MANAGE)
@@ -78,9 +77,7 @@ public class ManageCustomFieldsPortletConfigurationIcon
 				themeDisplay.getURLCurrent()
 			).setParameter(
 				"modelResource", User.class.getName()
-			).build();
-
-			return portletURL.toString();
+			).buildString();
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

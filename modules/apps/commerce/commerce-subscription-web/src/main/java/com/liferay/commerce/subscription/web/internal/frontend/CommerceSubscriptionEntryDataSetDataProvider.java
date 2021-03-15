@@ -45,8 +45,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -159,7 +157,7 @@ public class CommerceSubscriptionEntryDataSetDataProvider
 			httpServletRequest, "currentUrl",
 			_portal.getCurrentURL(httpServletRequest));
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletProviderUtil.getPortletURL(
 				httpServletRequest, themeDisplay.getScopeGroup(),
 				CommerceAccount.class.getName(), PortletProvider.Action.EDIT)
@@ -169,9 +167,7 @@ public class CommerceSubscriptionEntryDataSetDataProvider
 			redirect
 		).setParameter(
 			"commerceAccountId", commerceAccountId
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	private String _getEditCommerceOrderURL(
@@ -187,7 +183,7 @@ public class CommerceSubscriptionEntryDataSetDataProvider
 			httpServletRequest, "currentUrl",
 			_portal.getCurrentURL(httpServletRequest));
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletProviderUtil.getPortletURL(
 				httpServletRequest, themeDisplay.getScopeGroup(),
 				CommerceOrder.class.getName(), PortletProvider.Action.MANAGE)
@@ -197,9 +193,7 @@ public class CommerceSubscriptionEntryDataSetDataProvider
 			redirect
 		).setParameter(
 			"commerceOrderId", commerceOrderId
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	private Label _getSubscriptionStatus(

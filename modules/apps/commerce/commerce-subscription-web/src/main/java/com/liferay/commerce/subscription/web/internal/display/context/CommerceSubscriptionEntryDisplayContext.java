@@ -192,7 +192,7 @@ public class CommerceSubscriptionEntryDisplayContext {
 
 		ThemeDisplay themeDisplay = _cpRequestHelper.getThemeDisplay();
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletProviderUtil.getPortletURL(
 				_httpServletRequest, themeDisplay.getScopeGroup(),
 				CommerceOrder.class.getName(), PortletProvider.Action.MANAGE)
@@ -214,9 +214,7 @@ public class CommerceSubscriptionEntryDisplayContext {
 
 				return orderId;
 			}
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public List<HeaderActionModel> getHeaderActionModels() {
@@ -234,16 +232,15 @@ public class CommerceSubscriptionEntryDisplayContext {
 			new HeaderActionModel(
 				null, null, cancelURL.toString(), null, "cancel"));
 
-		PortletURL portletURL = PortletURLBuilder.create(
-			getTransitionOrderPortletURL()
-		).setParameter(
-			"transitionName", "save"
-		).build();
-
 		headerActionModels.add(
 			new HeaderActionModel(
 				"btn-primary", renderResponse.getNamespace() + "fm",
-				portletURL.toString(), null, "save"));
+				PortletURLBuilder.create(
+					getTransitionOrderPortletURL()
+				).setParameter(
+					"transitionName", "save"
+				).buildString(),
+				null, "save"));
 
 		return headerActionModels;
 	}

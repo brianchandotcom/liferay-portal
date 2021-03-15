@@ -104,13 +104,11 @@ public abstract class BaseAppManagerManagementToolbarDisplayContext
 
 	@Override
 	public String getSearchActionURL() {
-		PortletURL searchActionURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			liferayPortletResponse
 		).setMVCPath(
 			"/view_search_results.jsp"
-		).build();
-
-		return searchActionURL.toString();
+		).buildString();
 	}
 
 	public abstract SearchContainer<Object> getSearchContainer()

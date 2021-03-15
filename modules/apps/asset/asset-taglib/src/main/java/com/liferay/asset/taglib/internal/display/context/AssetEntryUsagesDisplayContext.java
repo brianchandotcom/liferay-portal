@@ -304,7 +304,7 @@ public class AssetEntryUsagesDisplayContext {
 				String.valueOf(AssetRendererFactory.TYPE_LATEST));
 		}
 		else {
-			PortletURL portletURL = PortletURLBuilder.create(
+			layoutURL = PortletURLBuilder.create(
 				PortletURLFactoryUtil.create(
 					_renderRequest, assetEntryUsage.getContainerKey(),
 					assetEntryUsage.getPlid(), PortletRequest.RENDER_PHASE)
@@ -312,9 +312,7 @@ public class AssetEntryUsagesDisplayContext {
 				"previewAssetEntryId", assetEntryUsage.getAssetEntryId()
 			).setParameter(
 				"previewAssetEntryType", AssetRendererFactory.TYPE_LATEST
-			).build();
-
-			layoutURL = portletURL.toString();
+			).buildString();
 		}
 
 		String portletURLString = HttpUtil.addParameter(

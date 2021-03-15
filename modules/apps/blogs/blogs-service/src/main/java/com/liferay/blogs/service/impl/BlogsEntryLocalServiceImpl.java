@@ -124,7 +124,6 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -1737,16 +1736,14 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			return StringPool.BLANK;
 		}
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				httpServletRequest, portletId, PortletRequest.RENDER_PHASE)
 		).setMVCRenderCommandName(
 			"/blogs/view_entry"
 		).setParameter(
 			"entryId", entry.getEntryId()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	private String _getGroupDescriptiveName(Group group, Locale locale) {

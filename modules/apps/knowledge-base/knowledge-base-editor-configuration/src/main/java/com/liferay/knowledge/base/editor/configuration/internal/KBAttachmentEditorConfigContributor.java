@@ -153,15 +153,6 @@ public class KBAttachmentEditorConfigContributor
 		long resourcePrimKey, ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		PortletURL portletURL = PortletURLBuilder.create(
-			requestBackedPortletURLFactory.createActionURL(
-				KBPortletKeys.KNOWLEDGE_BASE_ADMIN)
-		).setActionName(
-			"uploadKBArticleAttachments"
-		).setParameter(
-			"resourcePrimKey", resourcePrimKey
-		).build();
-
 		ResourceBundleLoader resourceBundleLoader =
 			ResourceBundleLoaderUtil.
 				getResourceBundleLoaderByBundleSymbolicName(
@@ -169,7 +160,15 @@ public class KBAttachmentEditorConfigContributor
 
 		ItemSelectorCriterion itemSelectorCriterion =
 			new UploadItemSelectorCriterion(
-				null, portletURL.toString(),
+				null,
+				PortletURLBuilder.create(
+					requestBackedPortletURLFactory.createActionURL(
+						KBPortletKeys.KNOWLEDGE_BASE_ADMIN)
+				).setActionName(
+					"uploadKBArticleAttachments"
+				).setParameter(
+					"resourcePrimKey", resourcePrimKey
+				).buildString(),
 				ResourceBundleUtil.getString(
 					resourceBundleLoader.loadResourceBundle(
 						themeDisplay.getLocale()),

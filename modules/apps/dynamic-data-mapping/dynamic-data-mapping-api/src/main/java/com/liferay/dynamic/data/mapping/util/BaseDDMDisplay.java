@@ -50,7 +50,6 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -316,14 +315,12 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 		String portletId = PortletProviderUtil.getPortletId(
 			DDMStructure.class.getName(), PortletProvider.Action.VIEW);
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
 				liferayPortletRequest, portletId, PortletRequest.RENDER_PHASE)
 		).setMVCPath(
 			"/view.jsp"
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Override
@@ -478,7 +475,7 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 		String portletId = PortletProviderUtil.getPortletId(
 			DDMStructure.class.getName(), PortletProvider.Action.VIEW);
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
 				liferayPortletRequest, portletId, PortletRequest.RENDER_PHASE)
 		).setMVCPath(
@@ -489,9 +486,7 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 			"classPK", classPK
 		).setParameter(
 			"resourceClassNameId", resourceClassNameId
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	private static final Set<String> _templateLanguageTypes = SetUtil.fromArray(

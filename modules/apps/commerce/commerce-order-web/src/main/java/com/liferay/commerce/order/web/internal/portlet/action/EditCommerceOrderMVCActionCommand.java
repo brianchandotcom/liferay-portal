@@ -50,7 +50,6 @@ import java.util.Calendar;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -322,20 +321,19 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			ActionResponse actionResponse)
 		throws Exception {
 
-		PortletURL shipmentPortletURL = PortletURLBuilder.create(
-			_portal.getControlPanelPortletURL(
-				actionRequest, CommercePortletKeys.COMMERCE_SHIPMENT,
-				PortletRequest.RENDER_PHASE)
-		).setMVCRenderCommandName(
-			"/commerce_shipment/edit_commerce_shipment"
-		).setRedirect(
-			ParamUtil.getString(actionRequest, "redirect")
-		).setParameter(
-			"commerceShipmentId", commerceShipmentId
-		).build();
-
 		sendRedirect(
-			actionRequest, actionResponse, shipmentPortletURL.toString());
+			actionRequest, actionResponse,
+			PortletURLBuilder.create(
+				_portal.getControlPanelPortletURL(
+					actionRequest, CommercePortletKeys.COMMERCE_SHIPMENT,
+					PortletRequest.RENDER_PHASE)
+			).setMVCRenderCommandName(
+				"/commerce_shipment/edit_commerce_shipment"
+			).setRedirect(
+				ParamUtil.getString(actionRequest, "redirect")
+			).setParameter(
+				"commerceShipmentId", commerceShipmentId
+			).buildString());
 	}
 
 	protected void selectBillingAddress(ActionRequest actionRequest)

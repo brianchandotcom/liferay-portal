@@ -330,46 +330,37 @@ public class FragmentDisplayContext {
 		).put(
 			"viewDeleteFragmentCollectionsURL",
 			() -> {
-				PortletURL viewDeleteFragmentCollectionsURL =
-					PortletURLBuilder.createRenderURL(
-						_renderResponse
-					).setMVCRenderCommandName(
-						"/fragment/view_fragment_collections"
-					).setWindowState(
-						LiferayWindowState.POP_UP
-					).build();
-
-				return viewDeleteFragmentCollectionsURL.toString();
+				return PortletURLBuilder.createRenderURL(
+					_renderResponse
+				).setMVCRenderCommandName(
+					"/fragment/view_fragment_collections"
+				).setWindowState(
+					LiferayWindowState.POP_UP
+				).buildString();
 			}
 		).put(
 			"viewExportFragmentCollectionsURL",
 			() -> {
-				PortletURL viewExportFragmentCollectionsURL =
-					PortletURLBuilder.createRenderURL(
-						_renderResponse
-					).setMVCRenderCommandName(
-						"/fragment/view_fragment_collections"
-					).setParameter(
-						"includeGlobalFragmentCollections",
-						Boolean.TRUE.toString()
-					).setWindowState(
-						LiferayWindowState.POP_UP
-					).build();
-
-				return viewExportFragmentCollectionsURL.toString();
+				return PortletURLBuilder.createRenderURL(
+					_renderResponse
+				).setMVCRenderCommandName(
+					"/fragment/view_fragment_collections"
+				).setParameter(
+					"includeGlobalFragmentCollections", Boolean.TRUE.toString()
+				).setWindowState(
+					LiferayWindowState.POP_UP
+				).buildString();
 			}
 		).put(
 			"viewImportURL",
 			() -> {
-				PortletURL viewImportURL = PortletURLBuilder.createRenderURL(
+				return PortletURLBuilder.createRenderURL(
 					_renderResponse
 				).setMVCRenderCommandName(
 					"/fragment/view_import"
 				).setWindowState(
 					LiferayWindowState.POP_UP
-				).build();
-
-				return viewImportURL.toString();
+				).buildString();
 			}
 		).build();
 	}

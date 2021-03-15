@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.util.PortletKeys;
 
 import java.util.Map;
 
-import javax.portlet.PortletURL;
-
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -50,30 +48,29 @@ public class MBEditorOptionsContributor implements EditorOptionsContributor {
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		PortletURL portletURL = PortletURLBuilder.create(
-			requestBackedPortletURLFactory.createActionURL(
-				PortletKeys.MESSAGE_BOARDS)
-		).setActionName(
-			"/message_boards/upload_temp_image"
-		).setParameter(
-			"categoryId",
-			() -> {
-				Map<String, String> fileBrowserParamsMap =
-					(Map<String, String>)inputEditorTaglibAttributes.get(
-						"liferay-ui:input-editor:fileBrowserParams");
+		editorOptions.setUploadURL(
+			PortletURLBuilder.create(
+				requestBackedPortletURLFactory.createActionURL(
+					PortletKeys.MESSAGE_BOARDS)
+			).setActionName(
+				"/message_boards/upload_temp_image"
+			).setParameter(
+				"categoryId",
+				() -> {
+					Map<String, String> fileBrowserParamsMap =
+						(Map<String, String>)inputEditorTaglibAttributes.get(
+							"liferay-ui:input-editor:fileBrowserParams");
 
-				long categoryId = 0;
+					long categoryId = 0;
 
-				if (fileBrowserParamsMap != null) {
-					categoryId = GetterUtil.getLong(
-						fileBrowserParamsMap.get("categoryId"));
+					if (fileBrowserParamsMap != null) {
+						categoryId = GetterUtil.getLong(
+							fileBrowserParamsMap.get("categoryId"));
+					}
+
+					return categoryId;
 				}
-
-				return categoryId;
-			}
-		).build();
-
-		editorOptions.setUploadURL(portletURL.toString());
+			).buildString());
 	}
 
 }

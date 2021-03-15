@@ -81,7 +81,8 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 
 				dropdownItem.putData("action", "deactivateAccountEntries");
 
-				PortletURL deactivateAccountEntriesURL =
+				dropdownItem.putData(
+					"deactivateAccountEntriesURL",
 					PortletURLBuilder.createActionURL(
 						liferayPortletResponse
 					).setActionName(
@@ -90,11 +91,7 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 						Constants.CMD, Constants.DEACTIVATE
 					).setParameter(
 						"navigation", getNavigation()
-					).build();
-
-				dropdownItem.putData(
-					"deactivateAccountEntriesURL",
-					deactivateAccountEntriesURL.toString());
+					).buildString());
 
 				dropdownItem.setIcon("hidden");
 				dropdownItem.setLabel(
@@ -112,7 +109,8 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 
 				dropdownItem.putData("action", "activateAccountEntries");
 
-				PortletURL activateAccountEntriesURL =
+				dropdownItem.putData(
+					"activateAccountEntriesURL",
 					PortletURLBuilder.createActionURL(
 						liferayPortletResponse
 					).setActionName(
@@ -121,11 +119,7 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 						Constants.CMD, Constants.RESTORE
 					).setParameter(
 						"navigation", getNavigation()
-					).build();
-
-				dropdownItem.putData(
-					"activateAccountEntriesURL",
-					activateAccountEntriesURL.toString());
+					).buildString());
 
 				dropdownItem.setIcon("undo");
 				dropdownItem.setLabel(
@@ -139,18 +133,15 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 
 				dropdownItem.putData("action", "deleteAccountEntries");
 
-				PortletURL deleteAccountEntriesURL =
+				dropdownItem.putData(
+					"deleteAccountEntriesURL",
 					PortletURLBuilder.createActionURL(
 						liferayPortletResponse
 					).setActionName(
 						"/account_admin/delete_account_entry"
 					).setParameter(
 						"navigation", getNavigation()
-					).build();
-
-				dropdownItem.putData(
-					"deleteAccountEntriesURL",
-					deleteAccountEntriesURL.toString());
+					).buildString());
 
 				dropdownItem.setIcon("times-circle");
 				dropdownItem.setLabel(
@@ -192,7 +183,7 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
 			"keywords", StringPool.BLANK
@@ -200,9 +191,7 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 			"navigation", (String)null
 		).setParameter(
 			"type", (String)null
-		).build();
-
-		return clearResultsURL.toString();
+		).buildString();
 	}
 
 	@Override
@@ -238,13 +227,13 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 		return LabelItemListBuilder.add(
 			() -> !Objects.equals(getNavigation(), "active"),
 			labelItem -> {
-				PortletURL removeLabelURL = PortletURLBuilder.create(
-					getPortletURL()
-				).setParameter(
-					"navigation", (String)null
-				).build();
-
-				labelItem.putData("removeLabelURL", removeLabelURL.toString());
+				labelItem.putData(
+					"removeLabelURL",
+					PortletURLBuilder.create(
+						getPortletURL()
+					).setParameter(
+						"navigation", (String)null
+					).buildString());
 
 				labelItem.setCloseable(true);
 
@@ -257,13 +246,13 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 		).add(
 			() -> !Objects.equals(getType(), "all"),
 			labelItem -> {
-				PortletURL removeLabelURL = PortletURLBuilder.create(
-					getPortletURL()
-				).setParameter(
-					"type", (String)null
-				).build();
-
-				labelItem.putData("removeLabelURL", removeLabelURL.toString());
+				labelItem.putData(
+					"removeLabelURL",
+					PortletURLBuilder.create(
+						getPortletURL()
+					).setParameter(
+						"type", (String)null
+					).buildString());
 
 				labelItem.setCloseable(true);
 

@@ -81,7 +81,7 @@ public class OrderConfirmationCheckoutStepDisplayContext {
 	}
 
 	public String getRetryPaymentURL() throws PortalException {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_commerceCheckoutRequestHelper.getLiferayPortletResponse()
 		).setParameter(
 			"checkoutStepName", PaymentProcessCommerceCheckoutStep.NAME
@@ -92,9 +92,7 @@ public class OrderConfirmationCheckoutStepDisplayContext {
 
 				return commerceOrder.getUuid();
 			}
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	protected long getCommerceOrderId() throws PortalException {

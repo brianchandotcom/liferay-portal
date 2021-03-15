@@ -148,13 +148,11 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 	}
 
 	public String getClearResultsURL() throws PortletException {
-		PortletURL clearResultsURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletURLUtil.clone(getPortletURL(), _renderResponse)
 		).setParameter(
 			"keywords", StringPool.BLANK
-		).build();
-
-		return clearResultsURL.toString();
+		).buildString();
 	}
 
 	public String getColumnName(DDMFormField ddmFormField) {
@@ -422,7 +420,7 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 	}
 
 	public String getSortingURL() throws Exception {
-		PortletURL sortingURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletURLUtil.clone(getPortletURL(), _renderResponse)
 		).setParameter(
 			"orderByType",
@@ -432,9 +430,7 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 
 				return orderByType.equals("asc") ? "desc" : "asc";
 			}
-		).build();
-
-		return sortingURL.toString();
+		).buildString();
 	}
 
 	public int getTotalItems() {

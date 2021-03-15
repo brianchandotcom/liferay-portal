@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.MimeResponse;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -56,15 +55,13 @@ public class SimpleAppDisplay extends BaseAppDisplay {
 
 	@Override
 	public String getDisplayURL(MimeResponse mimeResponse) {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			mimeResponse
 		).setMVCPath(
 			"/view_modules.jsp"
 		).setParameter(
 			"app", _title
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Override

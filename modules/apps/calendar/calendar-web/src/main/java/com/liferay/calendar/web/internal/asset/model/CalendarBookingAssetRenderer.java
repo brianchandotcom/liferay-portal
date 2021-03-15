@@ -166,7 +166,7 @@ public class CalendarBookingAssetRenderer
 		String noSuchEntryRedirect) {
 
 		try {
-			PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			return PortletURLBuilder.createRenderURL(
 				liferayPortletResponse, CalendarPortletKeys.CALENDAR
 			).setMVCPath(
 				"/view_calendar_booking.jsp"
@@ -177,9 +177,7 @@ public class CalendarBookingAssetRenderer
 				"calendarBookingId", _calendarBooking.getCalendarBookingId()
 			).setWindowState(
 				WindowState.MAXIMIZED
-			).build();
-
-			return portletURL.toString();
+			).buildString();
 		}
 		catch (Exception exception) {
 			_log.error("Unable to get view in context URL", exception);

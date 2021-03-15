@@ -56,8 +56,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -252,7 +250,7 @@ public class DLViewEntriesDisplayContext {
 	}
 
 	public String getViewFileEntryURL(FileEntry fileEntry) {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setMVCRenderCommandName(
 			"/document_library/view_file_entry"
@@ -262,9 +260,7 @@ public class DLViewEntriesDisplayContext {
 				_liferayPortletResponse.getNamespace() + "ajax")
 		).setParameter(
 			"fileEntryId", fileEntry.getFileEntryId()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public boolean isDescriptiveDisplayStyle() {

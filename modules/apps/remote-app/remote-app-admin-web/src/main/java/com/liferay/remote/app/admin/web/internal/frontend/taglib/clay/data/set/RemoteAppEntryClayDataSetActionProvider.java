@@ -73,15 +73,15 @@ public class RemoteAppEntryClayDataSetActionProvider
 		DropdownItem dropdownItem, HttpServletRequest httpServletRequest,
 		RemoteAppClayDataSetEntry remoteAppClayDataSetEntry) {
 
-		PortletURL deleteRemoteAppEntryURL = PortletURLBuilder.create(
-			_getActionURL(httpServletRequest)
-		).setActionName(
-			"/remote_app_admin/delete_remote_app_entry"
-		).setParameter(
-			"remoteAppEntryId", remoteAppClayDataSetEntry.getRemoteAppEntryId()
-		).build();
-
-		dropdownItem.setHref(deleteRemoteAppEntryURL.toString());
+		dropdownItem.setHref(
+			PortletURLBuilder.create(
+				_getActionURL(httpServletRequest)
+			).setActionName(
+				"/remote_app_admin/delete_remote_app_entry"
+			).setParameter(
+				"remoteAppEntryId",
+				remoteAppClayDataSetEntry.getRemoteAppEntryId()
+			).buildString());
 
 		dropdownItem.setIcon("times-circle");
 		dropdownItem.setLabel(_getMessage(httpServletRequest, "delete"));

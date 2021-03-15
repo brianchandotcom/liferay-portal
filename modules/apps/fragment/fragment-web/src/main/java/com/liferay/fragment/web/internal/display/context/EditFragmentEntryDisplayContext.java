@@ -269,7 +269,7 @@ public class EditFragmentEntryDisplayContext {
 
 		FragmentEntry fragmentEntry = getFragmentEntry();
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletURLFactoryUtil.create(
 				_httpServletRequest, FragmentPortletKeys.FRAGMENT,
 				PortletRequest.RENDER_PHASE)
@@ -281,9 +281,7 @@ public class EditFragmentEntryDisplayContext {
 			"fragmentEntryKey", fragmentEntry.getFragmentEntryKey()
 		).setWindowState(
 			LiferayWindowState.POP_UP
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	private String _getHtmlContent() {
@@ -455,14 +453,11 @@ public class EditFragmentEntryDisplayContext {
 			).put(
 				"edit",
 				() -> {
-					PortletURL editActionURL =
-						PortletURLBuilder.createActionURL(
-							_renderResponse
-						).setActionName(
-							"/fragment/edit_fragment_entry"
-						).build();
-
-					return editActionURL.toString();
+					return PortletURLBuilder.createActionURL(
+						_renderResponse
+					).setActionName(
+						"/fragment/edit_fragment_entry"
+					).buildString();
 				}
 			).put(
 				"preview",
@@ -479,7 +474,7 @@ public class EditFragmentEntryDisplayContext {
 	}
 
 	private String _getPublishFragmentEntryActionURL() {
-		PortletURL publishFragmentEntryURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletURLFactoryUtil.create(
 				_httpServletRequest, FragmentPortletKeys.FRAGMENT,
 				PortletRequest.ACTION_PHASE)
@@ -487,9 +482,7 @@ public class EditFragmentEntryDisplayContext {
 			"/fragment/publish_fragment_entry"
 		).setParameter(
 			"fragmentEntryId", getFragmentEntryId()
-		).build();
-
-		return publishFragmentEntryURL.toString();
+		).buildString();
 	}
 
 	private boolean _isReadOnlyFragmentEntry() {

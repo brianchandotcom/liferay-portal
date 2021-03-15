@@ -122,13 +122,11 @@ public class RedirectNotFoundEntriesManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			liferayPortletResponse
 		).setParameter(
 			"navigation", "404-urls"
-		).build();
-
-		return clearResultsURL.toString();
+		).buildString();
 	}
 
 	@Override
@@ -177,13 +175,13 @@ public class RedirectNotFoundEntriesManagementToolbarDisplayContext
 		return LabelItemListBuilder.add(
 			() -> !StringUtil.equals(getNavigation(), "active-urls"),
 			labelItem -> {
-				PortletURL removeLabelURL = PortletURLBuilder.create(
-					getPortletURL()
-				).setParameter(
-					getNavigationParam(), (String)null
-				).build();
-
-				labelItem.putData("removeLabelURL", removeLabelURL.toString());
+				labelItem.putData(
+					"removeLabelURL",
+					PortletURLBuilder.create(
+						getPortletURL()
+					).setParameter(
+						getNavigationParam(), (String)null
+					).buildString());
 
 				labelItem.setCloseable(true);
 
@@ -196,13 +194,13 @@ public class RedirectNotFoundEntriesManagementToolbarDisplayContext
 		).add(
 			() -> _getFilterDate() != 0,
 			labelItem -> {
-				PortletURL removeLabelURL = PortletURLBuilder.create(
-					getPortletURL()
-				).setParameter(
-					"filterDate", (String)null
-				).build();
-
-				labelItem.putData("removeLabelURL", removeLabelURL.toString());
+				labelItem.putData(
+					"removeLabelURL",
+					PortletURLBuilder.create(
+						getPortletURL()
+					).setParameter(
+						"filterDate", (String)null
+					).buildString());
 
 				labelItem.setCloseable(true);
 
@@ -217,15 +215,13 @@ public class RedirectNotFoundEntriesManagementToolbarDisplayContext
 
 	@Override
 	public String getSearchActionURL() {
-		PortletURL searchActionURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
 			"orderByCol", getOrderByCol()
 		).setParameter(
 			"orderByType", getOrderByType()
-		).build();
-
-		return searchActionURL.toString();
+		).buildString();
 	}
 
 	@Override

@@ -67,7 +67,6 @@ import java.util.Objects;
 import java.util.Set;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -254,22 +253,22 @@ public class ContentUtil {
 			}
 		}
 
-		PortletURL viewUsagesURL = PortletURLBuilder.create(
-			PortletURLFactoryUtil.create(
-				httpServletRequest,
-				ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
-				PortletRequest.RENDER_PHASE)
-		).setMVCPath(
-			"/view_layout_classed_model_usages.jsp"
-		).setParameter(
-			"className", layoutClassedModelUsage.getClassName()
-		).setParameter(
-			"classPK", layoutClassedModelUsage.getClassPK()
-		).setWindowState(
-			LiferayWindowState.POP_UP
-		).build();
-
-		return jsonObject.put("viewUsagesURL", viewUsagesURL.toString());
+		return jsonObject.put(
+			"viewUsagesURL",
+			PortletURLBuilder.create(
+				PortletURLFactoryUtil.create(
+					httpServletRequest,
+					ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
+					PortletRequest.RENDER_PHASE)
+			).setMVCPath(
+				"/view_layout_classed_model_usages.jsp"
+			).setParameter(
+				"className", layoutClassedModelUsage.getClassName()
+			).setParameter(
+				"classPK", layoutClassedModelUsage.getClassPK()
+			).setWindowState(
+				LiferayWindowState.POP_UP
+			).buildString());
 	}
 
 	private static Set<LayoutDisplayPageObjectProvider<?>>

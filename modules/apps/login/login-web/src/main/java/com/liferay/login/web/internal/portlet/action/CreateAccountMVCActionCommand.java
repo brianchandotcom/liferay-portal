@@ -84,7 +84,6 @@ import com.liferay.portal.util.PropsValues;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -387,14 +386,12 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 				false, null);
 		}
 		else {
-			PortletURL loginURL = PortletURLBuilder.create(
+			redirect = PortletURLBuilder.create(
 				LoginUtil.getLoginURL(
 					httpServletRequest, themeDisplay.getPlid())
 			).setParameter(
 				"login", login
-			).build();
-
-			redirect = loginURL.toString();
+			).buildString();
 		}
 
 		actionResponse.sendRedirect(redirect);

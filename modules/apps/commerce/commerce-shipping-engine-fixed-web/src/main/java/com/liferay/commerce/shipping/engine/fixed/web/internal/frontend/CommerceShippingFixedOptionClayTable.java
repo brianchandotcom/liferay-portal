@@ -196,7 +196,7 @@ public class CommerceShippingFixedOptionClayTable
 			httpServletRequest, "currentUrl",
 			_portal.getCurrentURL(httpServletRequest));
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				httpServletRequest,
 				CommercePortletKeys.COMMERCE_SHIPPING_METHODS,
@@ -209,9 +209,7 @@ public class CommerceShippingFixedOptionClayTable
 			Constants.CMD, Constants.DELETE
 		).setParameter(
 			"commerceShippingFixedOptionId", shippingFixedOptionId
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	private String _getShippingFixedOptionEditURL(

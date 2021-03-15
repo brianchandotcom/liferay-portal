@@ -114,13 +114,11 @@ public class BlogEntriesManagementToolbarDisplayContext
 		).put(
 			"deleteEntriesURL",
 			() -> {
-				PortletURL deleteEntriesURL = PortletURLBuilder.createActionURL(
+				return PortletURLBuilder.createActionURL(
 					liferayPortletResponse
 				).setActionName(
 					"/blogs/edit_entry"
-				).build();
-
-				return deleteEntriesURL.toString();
+				).buildString();
 			}
 		).put(
 			"trashEnabled", _isTrashEnabled()
@@ -161,13 +159,13 @@ public class BlogEntriesManagementToolbarDisplayContext
 
 		return LabelItemListBuilder.add(
 			labelItem -> {
-				PortletURL removeLabelURL = PortletURLBuilder.create(
-					getPortletURL()
-				).setParameter(
-					"entriesNavigation", (String)null
-				).build();
-
-				labelItem.putData("removeLabelURL", removeLabelURL.toString());
+				labelItem.putData(
+					"removeLabelURL",
+					PortletURLBuilder.create(
+						getPortletURL()
+					).setParameter(
+						"entriesNavigation", (String)null
+					).buildString());
 
 				labelItem.setCloseable(true);
 
@@ -187,7 +185,7 @@ public class BlogEntriesManagementToolbarDisplayContext
 		String navigation = ParamUtil.getString(
 			httpServletRequest, "navigation", "entries");
 
-		PortletURL searchURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			liferayPortletResponse
 		).setMVCRenderCommandName(
 			"/blogs/view"
@@ -197,9 +195,7 @@ public class BlogEntriesManagementToolbarDisplayContext
 			"orderByCol", getOrderByCol()
 		).setParameter(
 			"orderByType", getOrderByType()
-		).build();
-
-		return searchURL.toString();
+		).buildString();
 	}
 
 	@Override

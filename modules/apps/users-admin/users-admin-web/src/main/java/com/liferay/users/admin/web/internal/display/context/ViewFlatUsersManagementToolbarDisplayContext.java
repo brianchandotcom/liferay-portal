@@ -113,15 +113,13 @@ public class ViewFlatUsersManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
 			"keywords", StringPool.BLANK
 		).setParameter(
 			"navigation", (String)null
-		).build();
-
-		return clearResultsURL.toString();
+		).buildString();
 	}
 
 	@Override
@@ -142,13 +140,13 @@ public class ViewFlatUsersManagementToolbarDisplayContext
 		return LabelItemListBuilder.add(
 			() -> !_navigation.equals("active"),
 			labelItem -> {
-				PortletURL removeLabelURL = PortletURLBuilder.create(
-					getPortletURL()
-				).setParameter(
-					"navigation", (String)null
-				).build();
-
-				labelItem.putData("removeLabelURL", removeLabelURL.toString());
+				labelItem.putData(
+					"removeLabelURL",
+					PortletURLBuilder.create(
+						getPortletURL()
+					).setParameter(
+						"navigation", (String)null
+					).buildString());
 
 				labelItem.setCloseable(true);
 

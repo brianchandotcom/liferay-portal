@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.List;
 
-import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
@@ -61,7 +60,7 @@ public class AppManagerDisplayContext {
 	}
 
 	private String _getViewModuleURL(String pluginType) {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCPath(
 			"/view_module.jsp"
@@ -77,9 +76,7 @@ public class AppManagerDisplayContext {
 			"version", ParamUtil.getString(_httpServletRequest, "version")
 		).setParameter(
 			"pluginType", pluginType
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	private final HttpServletRequest _httpServletRequest;

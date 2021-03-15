@@ -111,13 +111,11 @@ public class WorkflowInstanceViewDisplayContext
 	}
 
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getViewPortletURL()
 		).setParameter(
 			"keywords", StringPool.BLANK
-		).build();
-
-		return clearResultsURL.toString();
+		).buildString();
 	}
 
 	public String getDefinition(WorkflowInstance workflowInstance)
@@ -318,13 +316,11 @@ public class WorkflowInstanceViewDisplayContext
 		ThemeDisplay themeDisplay =
 			workflowInstanceRequestHelper.getThemeDisplay();
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getViewPortletURL()
 		).setParameter(
 			"groupId", themeDisplay.getScopeGroupId()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public String getSortingURL(HttpServletRequest httpServletRequest)

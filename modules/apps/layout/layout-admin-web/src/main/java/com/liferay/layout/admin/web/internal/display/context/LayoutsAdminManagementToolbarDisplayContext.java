@@ -39,8 +39,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.List;
 import java.util.Objects;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -83,16 +81,15 @@ public class LayoutsAdminManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.putData("action", "convertSelectedPages");
 
-				PortletURL convertLayoutURL = PortletURLBuilder.createActionURL(
-					liferayPortletResponse
-				).setActionName(
-					"/layout_admin/convert_layout"
-				).setRedirect(
-					_themeDisplay.getURLCurrent()
-				).build();
-
 				dropdownItem.putData(
-					"convertLayoutURL", convertLayoutURL.toString());
+					"convertLayoutURL",
+					PortletURLBuilder.createActionURL(
+						liferayPortletResponse
+					).setActionName(
+						"/layout_admin/convert_layout"
+					).setRedirect(
+						_themeDisplay.getURLCurrent()
+					).buildString());
 
 				dropdownItem.setIcon("change");
 				dropdownItem.setLabel(
@@ -104,16 +101,15 @@ public class LayoutsAdminManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.putData("action", "deleteSelectedPages");
 
-				PortletURL deleteLayoutURL = PortletURLBuilder.createActionURL(
-					liferayPortletResponse
-				).setActionName(
-					"/layout_admin/delete_layout"
-				).setRedirect(
-					_themeDisplay.getURLCurrent()
-				).build();
-
 				dropdownItem.putData(
-					"deleteLayoutURL", deleteLayoutURL.toString());
+					"deleteLayoutURL",
+					PortletURLBuilder.createActionURL(
+						liferayPortletResponse
+					).setActionName(
+						"/layout_admin/delete_layout"
+					).setRedirect(
+						_themeDisplay.getURLCurrent()
+					).buildString());
 
 				dropdownItem.setIcon("times-circle");
 				dropdownItem.setLabel(
@@ -125,13 +121,11 @@ public class LayoutsAdminManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
 			"keywords", StringPool.BLANK
-		).build();
-
-		return clearResultsURL.toString();
+		).buildString();
 	}
 
 	@Override
@@ -210,13 +204,11 @@ public class LayoutsAdminManagementToolbarDisplayContext
 
 	@Override
 	public String getSearchActionURL() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			liferayPortletResponse
 		).setParameter(
 			"privateLayout", _layoutsAdminDisplayContext.isPrivateLayout()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Override

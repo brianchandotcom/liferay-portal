@@ -222,7 +222,7 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
 			"navigation", (String)null
@@ -232,9 +232,7 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 			"accountEntryIds", StringPool.BLANK
 		).setParameter(
 			"keywords", StringPool.BLANK
-		).build();
-
-		return clearResultsURL.toString();
+		).buildString();
 	}
 
 	@Override
@@ -258,17 +256,15 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 					"accountEntrySelectorURL",
 					accountEntrySelectorURL.toString());
 
-				PortletURL addAccountUserURL =
+				dropdownItem.putData(
+					"addAccountUserURL",
 					PortletURLBuilder.createRenderURL(
 						liferayPortletResponse
 					).setMVCRenderCommandName(
 						"/account_admin/add_account_user"
 					).setParameter(
 						"backURL", liferayPortletResponse.createRenderURL()
-					).build();
-
-				dropdownItem.putData(
-					"addAccountUserURL", addAccountUserURL.toString());
+					).buildString());
 
 				dropdownItem.putData(
 					"dialogTitle",
@@ -357,15 +353,13 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 
 					add(
 						labelItem -> {
-							PortletURL removeLabelURL =
+							labelItem.putData(
+								"removeLabelURL",
 								PortletURLBuilder.create(
 									getPortletURL()
 								).setParameter(
 									"accountEntriesNavigation", (String)null
-								).build();
-
-							labelItem.putData(
-								"removeLabelURL", removeLabelURL.toString());
+								).buildString());
 
 							labelItem.setCloseable(true);
 
@@ -378,15 +372,13 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 				if (!Objects.equals(getNavigation(), "active")) {
 					add(
 						labelItem -> {
-							PortletURL removeLabelURL =
+							labelItem.putData(
+								"removeLabelURL",
 								PortletURLBuilder.create(
 									getPortletURL()
 								).setParameter(
 									"navigation", (String)null
-								).build();
-
-							labelItem.putData(
-								"removeLabelURL", removeLabelURL.toString());
+								).buildString());
 
 							labelItem.setCloseable(true);
 
@@ -487,7 +479,8 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 
 				dropdownItem.putData("action", "selectAccountEntries");
 
-				PortletURL accountEntriesSelectorURL =
+				dropdownItem.putData(
+					"accountEntriesSelectorURL",
 					PortletURLBuilder.createRenderURL(
 						liferayPortletResponse
 					).setMVCPath(
@@ -496,11 +489,7 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 						"accountEntriesNavigation", "accounts"
 					).setWindowState(
 						LiferayWindowState.POP_UP
-					).build();
-
-				dropdownItem.putData(
-					"accountEntriesSelectorURL",
-					accountEntriesSelectorURL.toString());
+					).buildString());
 
 				dropdownItem.putData(
 					"dialogTitle",

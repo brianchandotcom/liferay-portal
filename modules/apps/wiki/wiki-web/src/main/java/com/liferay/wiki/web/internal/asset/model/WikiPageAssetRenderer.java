@@ -242,7 +242,7 @@ public class WikiPageAssetRenderer
 		AssetRendererFactory<WikiPage> assetRendererFactory =
 			getAssetRendererFactory();
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			assetRendererFactory.getURLView(liferayPortletResponse, windowState)
 		).setMVCRenderCommandName(
 			"/wiki/view"
@@ -252,9 +252,7 @@ public class WikiPageAssetRenderer
 			"title", _page.getTitle()
 		).setWindowState(
 			windowState
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Override

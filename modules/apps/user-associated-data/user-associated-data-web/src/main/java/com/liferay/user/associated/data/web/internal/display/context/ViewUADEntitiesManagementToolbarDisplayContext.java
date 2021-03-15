@@ -82,13 +82,11 @@ public class ViewUADEntitiesManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
 			"keywords", (String)null
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Override

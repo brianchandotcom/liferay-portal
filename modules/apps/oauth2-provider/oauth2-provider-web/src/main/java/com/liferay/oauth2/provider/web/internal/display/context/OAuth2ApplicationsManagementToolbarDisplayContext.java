@@ -75,14 +75,11 @@ public class OAuth2ApplicationsManagementToolbarDisplayContext
 		return HashMapBuilder.<String, Object>put(
 			"deleteOAuth2ApplicationsURL",
 			() -> {
-				PortletURL deleteOAuth2ApplicationsURL =
-					PortletURLBuilder.createActionURL(
-						liferayPortletResponse
-					).setActionName(
-						"/oauth2_provider/delete_oauth2_applications"
-					).build();
-
-				return deleteOAuth2ApplicationsURL.toString();
+				return PortletURLBuilder.createActionURL(
+					liferayPortletResponse
+				).setActionName(
+					"/oauth2_provider/delete_oauth2_applications"
+				).buildString();
 			}
 		).build();
 	}

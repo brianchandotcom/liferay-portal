@@ -267,7 +267,7 @@ public class SelectAssetCategoryTreeNodeDisplayContext {
 			(PortletResponse)_httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletURLUtil.clone(
 				_portletURL,
 				PortalUtil.getLiferayPortletResponse(portletResponse))
@@ -280,9 +280,7 @@ public class SelectAssetCategoryTreeNodeDisplayContext {
 			"assetCategoryTreeNodeId", assetCategoryTreeNodeId
 		).setParameter(
 			"assetCategoryTreeNodeType", assetCategoryTreeNodeType
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	private BreadcrumbEntry _getAssetVocabulariesBreadcrumbEntry() {

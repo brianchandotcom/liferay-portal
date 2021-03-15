@@ -50,8 +50,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -109,26 +107,27 @@ public class CommerceShippingMethodClayTable
 
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
-				PortletURL portletURL = PortletURLBuilder.create(
-					PortletProviderUtil.getPortletURL(
-						httpServletRequest,
-						CommerceShippingMethod.class.getName(),
-						PortletProvider.Action.EDIT)
-				).setParameter(
-					"commerceChannelId",
-					ParamUtil.getLong(httpServletRequest, "commerceChannelId")
-				).setParameter(
-					"commerceShippingMethodEngineKey",
-					() -> {
-						ShippingMethod shippingMethod = (ShippingMethod)model;
+				dropdownItem.setHref(
+					PortletURLBuilder.create(
+						PortletProviderUtil.getPortletURL(
+							httpServletRequest,
+							CommerceShippingMethod.class.getName(),
+							PortletProvider.Action.EDIT)
+					).setParameter(
+						"commerceChannelId",
+						ParamUtil.getLong(
+							httpServletRequest, "commerceChannelId")
+					).setParameter(
+						"commerceShippingMethodEngineKey",
+						() -> {
+							ShippingMethod shippingMethod =
+								(ShippingMethod)model;
 
-						return shippingMethod.getKey();
-					}
-				).setWindowState(
-					LiferayWindowState.POP_UP
-				).build();
-
-				dropdownItem.setHref(portletURL.toString());
+							return shippingMethod.getKey();
+						}
+					).setWindowState(
+						LiferayWindowState.POP_UP
+					).buildString());
 
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "edit"));

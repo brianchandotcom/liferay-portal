@@ -52,7 +52,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -251,15 +250,13 @@ public class DLViewFileEntryDisplayContext {
 			mvcRenderCommandName = "/document_library/view_folder";
 		}
 
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		_redirect = PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCRenderCommandName(
 			mvcRenderCommandName
 		).setParameter(
 			"folderId", parentFolderId
-		).build();
-
-		_redirect = portletURL.toString();
+		).buildString();
 
 		return _redirect;
 	}

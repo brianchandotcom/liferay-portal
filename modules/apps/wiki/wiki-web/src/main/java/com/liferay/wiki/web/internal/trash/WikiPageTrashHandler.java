@@ -174,7 +174,7 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 		WikiPage page = _wikiPageLocalService.getLatestPage(
 			classPK, WorkflowConstants.STATUS_ANY, false);
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getRestoreURL(portletRequest, classPK, false)
 		).setParameter(
 			"nodeName",
@@ -185,9 +185,7 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 			}
 		).setParameter(
 			"title", HtmlUtil.unescape(page.getTitle())
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Override
@@ -198,7 +196,7 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 		WikiPage page = _wikiPageLocalService.getLatestPage(
 			classPK, WorkflowConstants.STATUS_ANY, false);
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getRestoreURL(portletRequest, classPK, true)
 		).setParameter(
 			"nodeId",
@@ -207,9 +205,7 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 
 				return node.getNodeId();
 			}
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Override

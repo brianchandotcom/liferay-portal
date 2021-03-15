@@ -27,8 +27,6 @@ import com.liferay.wiki.constants.WikiPortletKeys;
 
 import java.util.Map;
 
-import javax.portlet.PortletURL;
-
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -74,17 +72,17 @@ public class WikiAttachmentEditorOptionsContributor
 			return;
 		}
 
-		PortletURL portletURL = PortletURLBuilder.create(
-			requestBackedPortletURLFactory.createActionURL(WikiPortletKeys.WIKI)
-		).setActionName(
-			"/wiki/upload_page_attachment"
-		).setParameter(
-			"resourcePrimKey", wikiPageResourcePrimKey
-		).setParameter(
-			"mimeTypes", PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES
-		).build();
-
-		editorOptions.setUploadURL(portletURL.toString());
+		editorOptions.setUploadURL(
+			PortletURLBuilder.create(
+				requestBackedPortletURLFactory.createActionURL(
+					WikiPortletKeys.WIKI)
+			).setActionName(
+				"/wiki/upload_page_attachment"
+			).setParameter(
+				"resourcePrimKey", wikiPageResourcePrimKey
+			).setParameter(
+				"mimeTypes", PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES
+			).buildString());
 	}
 
 }

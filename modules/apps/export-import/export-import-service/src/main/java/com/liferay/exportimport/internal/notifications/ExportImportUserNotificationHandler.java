@@ -46,7 +46,6 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -152,7 +151,7 @@ public class ExportImportUserNotificationHandler
 			return StringPool.BLANK;
 		}
 
-		PortletURL renderURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletURLFactoryUtil.create(
 				serviceContext.getRequest(),
 				ExportImportPortletKeys.EXPORT_IMPORT,
@@ -163,9 +162,7 @@ public class ExportImportUserNotificationHandler
 			"backgroundTaskId", backgroundTaskId
 		).setParameter(
 			"backURL", serviceContext.getCurrentURL()
-		).build();
-
-		return renderURL.toString();
+		).buildString();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

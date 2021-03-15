@@ -263,53 +263,45 @@ public class SiteNavigationAdminDisplayContext {
 		).put(
 			"deleteSiteNavigationMenuItemURL",
 			() -> {
-				PortletURL actionURL = PortletURLBuilder.createActionURL(
+				return PortletURLBuilder.createActionURL(
 					_liferayPortletResponse
 				).setActionName(
 					"/site_navigation_admin/delete_site_navigation_menu_item"
-				).build();
-
-				return actionURL.toString();
+				).buildString();
 			}
 		).put(
 			"editSiteNavigationMenuItemParentURL",
 			() -> {
-				PortletURL actionURL = PortletURLBuilder.createActionURL(
+				return PortletURLBuilder.createActionURL(
 					_liferayPortletResponse
 				).setActionName(
 					"/site_navigation_admin" +
 						"/edit_site_navigation_menu_item_parent"
 				).setRedirect(
 					PortalUtil.getCurrentURL(_liferayPortletRequest)
-				).build();
-
-				return actionURL.toString();
+				).buildString();
 			}
 		).put(
 			"editSiteNavigationMenuItemURL",
 			() -> {
-				PortletURL renderURL = PortletURLBuilder.createRenderURL(
+				return PortletURLBuilder.createRenderURL(
 					_liferayPortletResponse
 				).setMVCPath(
 					"/edit_site_navigation_menu_item.jsp"
 				).setWindowState(
 					LiferayWindowState.EXCLUSIVE
-				).build();
-
-				return renderURL.toString();
+				).buildString();
 			}
 		).put(
 			"editSiteNavigationMenuSettingsURL",
 			() -> {
-				PortletURL renderURL = PortletURLBuilder.createRenderURL(
+				return PortletURLBuilder.createRenderURL(
 					_liferayPortletResponse
 				).setMVCPath(
 					"/site_navigation_menu_settings.jsp"
 				).setWindowState(
 					LiferayWindowState.EXCLUSIVE
-				).build();
-
-				return renderURL.toString();
+				).buildString();
 			}
 		).put(
 			"id", _liferayPortletResponse.getNamespace() + "sidebar"
@@ -417,7 +409,8 @@ public class SiteNavigationAdminDisplayContext {
 			"/add_site_navigation_menu_item.jsp"
 		).build();
 
-		PortletURL addSiteNavigationMenuItemRedirectURL =
+		addURL.setParameter(
+			"redirect",
 			PortletURLBuilder.createRenderURL(
 				_liferayPortletResponse
 			).setMVCPath(
@@ -434,10 +427,7 @@ public class SiteNavigationAdminDisplayContext {
 
 					return portletDisplay.getId();
 				}
-			).build();
-
-		addURL.setParameter(
-			"redirect", addSiteNavigationMenuItemRedirectURL.toString());
+			).buildString());
 
 		addURL.setParameter(
 			"siteNavigationMenuId", String.valueOf(getSiteNavigationMenuId()));

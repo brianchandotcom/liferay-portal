@@ -195,7 +195,7 @@ public class CommerceOrderContentDisplayContext {
 	}
 
 	public String getCommerceOrderItemsDetailURL(long commerceOrderId) {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_cpRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
 			"viewCommerceOrderItems"
@@ -203,9 +203,7 @@ public class CommerceOrderContentDisplayContext {
 			_cpRequestHelper.getCurrentURL()
 		).setParameter(
 			"commerceOrderId", commerceOrderId
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public CommerceOrderNote getCommerceOrderNote() throws PortalException {

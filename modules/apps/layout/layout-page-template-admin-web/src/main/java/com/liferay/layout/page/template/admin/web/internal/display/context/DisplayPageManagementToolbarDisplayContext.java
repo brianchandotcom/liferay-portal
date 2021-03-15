@@ -109,13 +109,11 @@ public class DisplayPageManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
 			"keywords", StringPool.BLANK
-		).build();
-
-		return clearResultsURL.toString();
+		).buildString();
 	}
 
 	@Override
@@ -127,16 +125,14 @@ public class DisplayPageManagementToolbarDisplayContext
 	public CreationMenu getCreationMenu() {
 		return CreationMenuBuilder.addDropdownItem(
 			dropdownItem -> {
-				PortletURL selectMasterLayoutURL =
+				dropdownItem.setHref(
 					PortletURLBuilder.createRenderURL(
 						liferayPortletResponse
 					).setMVCPath(
 						"/select_display_page_master_layout.jsp"
 					).setRedirect(
 						_themeDisplay.getURLCurrent()
-					).build();
-
-				dropdownItem.setHref(selectMasterLayoutURL.toString());
+					).buildString());
 
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "add"));

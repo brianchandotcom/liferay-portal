@@ -59,7 +59,6 @@ import java.util.Objects;
 
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -271,31 +270,30 @@ public class FacebookConnectStrutsAction implements StrutsAction {
 			HttpServletResponse httpServletResponse, User user)
 		throws Exception {
 
-		PortletURL portletURL = PortletURLBuilder.create(
-			PortletURLFactoryUtil.create(
-				httpServletRequest, PortletKeys.LOGIN,
-				PortletRequest.RENDER_PHASE)
-		).setMVCRenderCommandName(
-			"/login_authentication_facebook_connect/associate_facebook_user"
-		).setRedirect(
-			ParamUtil.getString(httpServletRequest, "redirect")
-		).setParameter(
-			"saveLastPath", Boolean.FALSE.toString()
-		).setParameter(
-			"userId", user.getUserId()
-		).setParameter(
-			"emailAddress", user.getEmailAddress()
-		).setParameter(
-			"firstName", user.getFirstName()
-		).setParameter(
-			"lastName", user.getLastName()
-		).setPortletMode(
-			PortletMode.VIEW
-		).setWindowState(
-			LiferayWindowState.POP_UP
-		).build();
-
-		httpServletResponse.sendRedirect(portletURL.toString());
+		httpServletResponse.sendRedirect(
+			PortletURLBuilder.create(
+				PortletURLFactoryUtil.create(
+					httpServletRequest, PortletKeys.LOGIN,
+					PortletRequest.RENDER_PHASE)
+			).setMVCRenderCommandName(
+				"/login_authentication_facebook_connect/associate_facebook_user"
+			).setRedirect(
+				ParamUtil.getString(httpServletRequest, "redirect")
+			).setParameter(
+				"saveLastPath", Boolean.FALSE.toString()
+			).setParameter(
+				"userId", user.getUserId()
+			).setParameter(
+				"emailAddress", user.getEmailAddress()
+			).setParameter(
+				"firstName", user.getFirstName()
+			).setParameter(
+				"lastName", user.getLastName()
+			).setPortletMode(
+				PortletMode.VIEW
+			).setWindowState(
+				LiferayWindowState.POP_UP
+			).buildString());
 	}
 
 	protected void sendError(

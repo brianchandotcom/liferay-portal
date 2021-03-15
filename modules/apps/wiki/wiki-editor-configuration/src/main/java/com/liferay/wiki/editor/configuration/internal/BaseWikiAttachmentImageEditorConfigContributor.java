@@ -40,8 +40,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.portlet.PortletURL;
-
 /**
  * @author Sergio González
  * @author Roberto Díaz
@@ -134,19 +132,19 @@ public abstract class BaseWikiAttachmentImageEditorConfigContributor
 		long wikiPageResourcePrimKey, ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		PortletURL uploadURL = PortletURLBuilder.create(
-			requestBackedPortletURLFactory.createActionURL(WikiPortletKeys.WIKI)
-		).setActionName(
-			"/wiki/upload_page_attachment"
-		).setParameter(
-			"mimeTypes", _getMimeTypes()
-		).setParameter(
-			"resourcePrimKey", wikiPageResourcePrimKey
-		).build();
-
 		ItemSelectorCriterion itemSelectorCriterion =
 			new UploadItemSelectorCriterion(
-				WikiPortletKeys.WIKI, uploadURL.toString(),
+				WikiPortletKeys.WIKI,
+				PortletURLBuilder.create(
+					requestBackedPortletURLFactory.createActionURL(
+						WikiPortletKeys.WIKI)
+				).setActionName(
+					"/wiki/upload_page_attachment"
+				).setParameter(
+					"mimeTypes", _getMimeTypes()
+				).setParameter(
+					"resourcePrimKey", wikiPageResourcePrimKey
+				).buildString(),
 				LanguageUtil.get(themeDisplay.getLocale(), "page-attachments"));
 
 		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(

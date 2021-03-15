@@ -374,7 +374,7 @@ public class DDMFormAdminFieldSetDisplayContext
 
 	@Override
 	public String getSearchActionURL() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			renderResponse
 		).setMVCPath(
 			"/admin/view.jsp"
@@ -382,9 +382,7 @@ public class DDMFormAdminFieldSetDisplayContext
 			"groupId", getScopeGroupId()
 		).setParameter(
 			"currentTab", "element-set"
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Override

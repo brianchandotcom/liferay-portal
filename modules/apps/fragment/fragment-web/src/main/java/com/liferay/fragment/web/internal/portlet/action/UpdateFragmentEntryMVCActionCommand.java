@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -87,15 +86,13 @@ public class UpdateFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 	protected String getRedirectURL(
 		ActionResponse actionResponse, FragmentEntry fragmentEntry) {
 
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_portal.getLiferayPortletResponse(actionResponse)
 		).setMVCRenderCommandName(
 			"/fragment/view_fragment_entries"
 		).setParameter(
 			"fragmentCollectionId", fragmentEntry.getFragmentCollectionId()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Reference

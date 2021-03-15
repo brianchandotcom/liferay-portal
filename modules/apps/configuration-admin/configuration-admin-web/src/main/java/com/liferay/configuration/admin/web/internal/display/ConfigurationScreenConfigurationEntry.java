@@ -21,7 +21,6 @@ import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import java.util.Locale;
 import java.util.Objects;
 
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -69,15 +68,13 @@ public class ConfigurationScreenConfigurationEntry
 	public String getEditURL(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			renderResponse
 		).setMVCRenderCommandName(
 			"/configuration_admin/view_configuration_screen"
 		).setParameter(
 			"configurationScreenKey", _configurationScreen.getKey()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Override

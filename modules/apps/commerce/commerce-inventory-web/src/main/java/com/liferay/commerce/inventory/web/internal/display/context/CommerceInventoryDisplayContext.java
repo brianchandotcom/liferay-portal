@@ -77,7 +77,7 @@ public class CommerceInventoryDisplayContext {
 	}
 
 	public String getAddQuantityActionURL() throws Exception {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_cpRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
 			"/commerce_inventory/edit_commerce_inventory_warehouse"
@@ -85,9 +85,7 @@ public class CommerceInventoryDisplayContext {
 			"sku", _sku
 		).setWindowState(
 			LiferayWindowState.POP_UP
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public CommerceInventoryReplenishmentItem
@@ -158,19 +156,17 @@ public class CommerceInventoryDisplayContext {
 	}
 
 	public String getCreateInventoryItemActionURL() throws Exception {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_cpRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
 			"/commerce_inventory/add_commerce_inventory_item"
 		).setWindowState(
 			LiferayWindowState.POP_UP
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public String getCreateReplenishmentActionURL() throws Exception {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_cpRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
 			"/commerce_inventory/edit_commerce_inventory_replenishment_item"
@@ -178,9 +174,7 @@ public class CommerceInventoryDisplayContext {
 			"sku", _sku
 		).setWindowState(
 			LiferayWindowState.POP_UP
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public List<HeaderActionModel> getHeaderActionModels()
@@ -266,7 +260,7 @@ public class CommerceInventoryDisplayContext {
 	}
 
 	public String getTransferQuantitiesActionURL() throws Exception {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_cpRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
 			"/commerce_inventory/transfer_quantities"
@@ -274,9 +268,7 @@ public class CommerceInventoryDisplayContext {
 			"sku", _sku
 		).setWindowState(
 			LiferayWindowState.POP_UP
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public PortletURL getTransitionInventoryPortletURL() {

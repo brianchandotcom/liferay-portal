@@ -36,7 +36,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.TimeZone;
 
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -77,7 +76,7 @@ public class ReschedulePublicationDisplayContext {
 		).put(
 			"rescheduleURL",
 			() -> {
-				PortletURL scheduleURL = PortletURLBuilder.createActionURL(
+				return PortletURLBuilder.createActionURL(
 					_renderResponse
 				).setActionName(
 					"/change_tracking/reschedule_publication"
@@ -85,9 +84,7 @@ public class ReschedulePublicationDisplayContext {
 					getRedirect()
 				).setParameter(
 					"ctCollectionId", _ctCollection.getCtCollectionId()
-				).build();
-
-				return scheduleURL.toString();
+				).buildString();
 			}
 		).put(
 			"scheduledDate",
@@ -122,7 +119,7 @@ public class ReschedulePublicationDisplayContext {
 		).put(
 			"unscheduleURL",
 			() -> {
-				PortletURL scheduleURL = PortletURLBuilder.createActionURL(
+				return PortletURLBuilder.createActionURL(
 					_renderResponse
 				).setActionName(
 					"/change_tracking/unschedule_publication"
@@ -130,9 +127,7 @@ public class ReschedulePublicationDisplayContext {
 					getRedirect()
 				).setParameter(
 					"ctCollectionId", _ctCollection.getCtCollectionId()
-				).build();
-
-				return scheduleURL.toString();
+				).buildString();
 			}
 		).build();
 	}
@@ -144,13 +139,11 @@ public class ReschedulePublicationDisplayContext {
 			return redirect;
 		}
 
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCRenderCommandName(
 			"/change_tracking/view_scheduled"
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public String getTitle() {

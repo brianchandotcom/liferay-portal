@@ -37,8 +37,6 @@ import com.liferay.site.admin.web.internal.servlet.taglib.util.SiteActionDropdow
 
 import java.util.List;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -94,15 +92,13 @@ public class SiteVerticalCard extends BaseBaseClayCard implements VerticalCard {
 			return null;
 		}
 
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setParameter(
 			"backURL", _themeDisplay.getURLCurrent()
 		).setParameter(
 			"groupId", _group.getGroupId()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Override

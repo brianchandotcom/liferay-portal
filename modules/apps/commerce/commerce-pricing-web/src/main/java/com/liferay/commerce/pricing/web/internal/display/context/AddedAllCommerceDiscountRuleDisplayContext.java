@@ -37,8 +37,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -107,7 +105,7 @@ public class AddedAllCommerceDiscountRuleDisplayContext {
 		String checkedCPDefinitionIds = StringUtil.merge(
 			getCheckedCPDefinitionIds());
 
-		PortletURL itemSelectorURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_itemSelector.getItemSelectorURL(
 				requestBackedPortletURLFactory, "productDefinitionsSelectItem",
 				cpDefinitionItemSelectorCriterion)
@@ -115,9 +113,7 @@ public class AddedAllCommerceDiscountRuleDisplayContext {
 			"checkedCPDefinitionIds", checkedCPDefinitionIds
 		).setParameter(
 			"disabledCPDefinitionIds", checkedCPDefinitionIds
-		).build();
-
-		return itemSelectorURL.toString();
+		).buildString();
 	}
 
 	public String getTypeSettings() throws PortalException {

@@ -20,8 +20,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -48,18 +46,16 @@ public class DLSelectDDMStructureManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
 			"keywords", StringPool.BLANK
-		).build();
-
-		return clearResultsURL.toString();
+		).buildString();
 	}
 
 	@Override
 	public String getSearchActionURL() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			liferayPortletResponse
 		).setMVCPath(
 			"/document_library/ddm/select_ddm_structure.jsp"
@@ -68,9 +64,7 @@ public class DLSelectDDMStructureManagementToolbarDisplayContext
 			_dlSelectDDMStructureDisplayContext.getDDMStructureId()
 		).setParameter(
 			"eventName", _dlSelectDDMStructureDisplayContext.getEventName()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Override

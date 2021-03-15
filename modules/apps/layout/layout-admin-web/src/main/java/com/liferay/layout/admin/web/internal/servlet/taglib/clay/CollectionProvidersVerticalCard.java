@@ -32,7 +32,6 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -67,7 +66,8 @@ public class CollectionProvidersVerticalCard extends BaseVerticalCard {
 		Map<String, String> data = new HashMap<>();
 
 		try {
-			PortletURL selectLayoutMasterLayoutURL =
+			data.put(
+				"data-select-layout-master-layout-url",
 				PortletURLBuilder.createRenderURL(
 					_renderResponse
 				).setMVCPath(
@@ -88,11 +88,7 @@ public class CollectionProvidersVerticalCard extends BaseVerticalCard {
 				).setParameter(
 					"collectionType",
 					InfoListProviderItemSelectorReturnType.class.getName()
-				).build();
-
-			data.put(
-				"data-select-layout-master-layout-url",
-				selectLayoutMasterLayoutURL.toString());
+				).buildString());
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

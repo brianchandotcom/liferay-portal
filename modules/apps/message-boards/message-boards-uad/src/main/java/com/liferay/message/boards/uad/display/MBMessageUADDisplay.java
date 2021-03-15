@@ -33,7 +33,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -75,7 +74,7 @@ public class MBMessageUADDisplay extends BaseMBMessageUADDisplay {
 			return StringPool.BLANK;
 		}
 
-		PortletURL portletURL = PortletURLBuilder.createLiferayPortletURL(
+		return PortletURLBuilder.createLiferayPortletURL(
 			liferayPortletResponse,
 			portal.getControlPanelPlid(liferayPortletRequest),
 			MBPortletKeys.MESSAGE_BOARDS_ADMIN, PortletRequest.RENDER_PHASE
@@ -85,9 +84,7 @@ public class MBMessageUADDisplay extends BaseMBMessageUADDisplay {
 			portal.getCurrentURL(liferayPortletRequest)
 		).setParameter(
 			"messageId", mbMessage.getMessageId()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Override

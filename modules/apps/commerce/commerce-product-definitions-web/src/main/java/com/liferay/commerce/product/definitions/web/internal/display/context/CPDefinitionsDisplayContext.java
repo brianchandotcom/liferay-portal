@@ -106,7 +106,7 @@ public class CPDefinitionsDisplayContext
 				Collections.<ItemSelectorReturnType>singletonList(
 					new UUIDItemSelectorReturnType()));
 
-		PortletURL itemSelectorURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_itemSelector.getItemSelectorURL(
 				requestBackedPortletURLFactory, "accountGroupSelectItem",
 				commerceAccountGroupItemSelectorCriterion)
@@ -114,9 +114,7 @@ public class CPDefinitionsDisplayContext
 			"checkedCommerceAccountGroupIds",
 			StringUtil.merge(
 				getCommerceAccountGroupRelCommerceAccountGroupIds())
-		).build();
-
-		return itemSelectorURL.toString();
+		).buildString();
 	}
 
 	public CreationMenu getAccountGroupsCreationMenu() throws PortalException {
@@ -155,16 +153,14 @@ public class CPDefinitionsDisplayContext
 			Collections.<ItemSelectorReturnType>singletonList(
 				new UUIDItemSelectorReturnType()));
 
-		PortletURL itemSelectorURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_itemSelector.getItemSelectorURL(
 				requestBackedPortletURLFactory, "channelSelectItem",
 				commerceChannelItemSelectorCriterion)
 		).setParameter(
 			"checkedCommerceChannelIds",
 			StringUtil.merge(getCommerceChannelRelCommerceChannelIds())
-		).build();
-
-		return itemSelectorURL.toString();
+		).buildString();
 	}
 
 	public CreationMenu getChannelsCreationMenu() throws PortalException {

@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -58,7 +57,7 @@ public class AssignMembersPortletConfigurationIcon
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portletURLFactory.create(
 				portletRequest,
 				PasswordPoliciesAdminPortletKeys.PASSWORD_POLICIES_ADMIN,
@@ -69,9 +68,7 @@ public class AssignMembersPortletConfigurationIcon
 			"passwordPolicyId", _getPasswordPolicyId(portletRequest)
 		).setParameter(
 			"tabs1", "assignees"
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Override

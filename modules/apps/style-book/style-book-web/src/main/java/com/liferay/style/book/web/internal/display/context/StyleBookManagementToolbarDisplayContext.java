@@ -104,16 +104,13 @@ public class StyleBookManagementToolbarDisplayContext
 		return HashMapBuilder.<String, Object>put(
 			"copyStyleBookEntryURL",
 			() -> {
-				PortletURL copyStyleBookEntryURL =
-					PortletURLBuilder.createActionURL(
-						liferayPortletResponse
-					).setActionName(
-						"/style_book/copy_style_book_entry"
-					).setRedirect(
-						_themeDisplay.getURLCurrent()
-					).build();
-
-				return copyStyleBookEntryURL.toString();
+				return PortletURLBuilder.createActionURL(
+					liferayPortletResponse
+				).setActionName(
+					"/style_book/copy_style_book_entry"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).buildString();
 			}
 		).put(
 			"exportStyleBookEntriesURL",
@@ -131,13 +128,11 @@ public class StyleBookManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
 			"keywords", StringPool.BLANK
-		).build();
-
-		return clearResultsURL.toString();
+		).buildString();
 	}
 
 	@Override
@@ -151,15 +146,13 @@ public class StyleBookManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.putData("action", "addStyleBookEntry");
 
-				PortletURL addStyleBookEntryURL =
+				dropdownItem.putData(
+					"addStyleBookEntryURL",
 					PortletURLBuilder.createActionURL(
 						liferayPortletResponse
 					).setActionName(
 						"/style_book/add_style_book_entry"
-					).build();
-
-				dropdownItem.putData(
-					"addStyleBookEntryURL", addStyleBookEntryURL.toString());
+					).buildString());
 
 				dropdownItem.putData(
 					"title",

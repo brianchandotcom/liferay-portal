@@ -337,21 +337,20 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 			));
 
 		if (ctCollection != null) {
-			PortletURL reviewURL = PortletURLBuilder.create(
-				_portal.getControlPanelPortletURL(
-					httpServletRequest, themeDisplay.getScopeGroup(),
-					CTPortletKeys.PUBLICATIONS, 0, 0,
-					PortletRequest.RENDER_PHASE)
-			).setMVCRenderCommandName(
-				"/change_tracking/view_changes"
-			).setParameter(
-				"ctCollectionId", ctCollectionId
-			).build();
-
 			data.put(
 				"reviewDropdownItem",
 				JSONUtil.put(
-					"href", reviewURL.toString()
+					"href",
+					PortletURLBuilder.create(
+						_portal.getControlPanelPortletURL(
+							httpServletRequest, themeDisplay.getScopeGroup(),
+							CTPortletKeys.PUBLICATIONS, 0, 0,
+							PortletRequest.RENDER_PHASE)
+					).setMVCRenderCommandName(
+						"/change_tracking/view_changes"
+					).setParameter(
+						"ctCollectionId", ctCollectionId
+					).buildString()
 				).put(
 					"label", _language.get(resourceBundle, "review-changes")
 				).put(

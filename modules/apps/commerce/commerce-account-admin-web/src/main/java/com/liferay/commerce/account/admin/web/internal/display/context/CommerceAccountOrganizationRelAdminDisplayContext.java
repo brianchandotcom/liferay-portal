@@ -69,7 +69,7 @@ public class CommerceAccountOrganizationRelAdminDisplayContext
 	public String getEditOrganizationURL(long organizationId)
 		throws PortalException {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletProviderUtil.getPortletURL(
 				commerceAccountAdminRequestHelper.getRequest(),
 				User.class.getName(), PortletProvider.Action.EDIT)
@@ -79,9 +79,7 @@ public class CommerceAccountOrganizationRelAdminDisplayContext
 			commerceAccountAdminRequestHelper.getCurrentURL()
 		).setParameter(
 			"organization", organizationId
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public String getItemSelectorUrl() throws PortalException {
@@ -96,16 +94,14 @@ public class CommerceAccountOrganizationRelAdminDisplayContext
 			Collections.<ItemSelectorReturnType>singletonList(
 				new UUIDItemSelectorReturnType()));
 
-		PortletURL itemSelectorURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_itemSelector.getItemSelectorURL(
 				requestBackedPortletURLFactory, "organizationsSelectItem",
 				organizationItemSelectorCriterion)
 		).setParameter(
 			"checkedOrganizationIds",
 			StringUtil.merge(getCheckedOrganizationIds())
-		).build();
-
-		return itemSelectorURL.toString();
+		).buildString();
 	}
 
 	@Override

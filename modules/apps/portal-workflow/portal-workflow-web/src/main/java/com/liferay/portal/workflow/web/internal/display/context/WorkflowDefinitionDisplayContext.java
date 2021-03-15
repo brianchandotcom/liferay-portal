@@ -107,13 +107,11 @@ public class WorkflowDefinitionDisplayContext {
 	}
 
 	public String getClearResultsURL(HttpServletRequest httpServletRequest) {
-		PortletURL clearResultsURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_getPortletURL(httpServletRequest)
 		).setParameter(
 			"keywords", StringPool.BLANK
-		).build();
-
-		return clearResultsURL.toString();
+		).buildString();
 	}
 
 	public Date getCreatedDate(WorkflowDefinition workflowDefinition)
@@ -403,7 +401,7 @@ public class WorkflowDefinitionDisplayContext {
 	}
 
 	public String getSearchURL(HttpServletRequest httpServletRequest) {
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_getPortletURL(null)
 		).setMVCPath(
 			"/view.jsp"
@@ -417,9 +415,7 @@ public class WorkflowDefinitionDisplayContext {
 			}
 		).setParameter(
 			"tab", WorkflowWebKeys.WORKFLOW_TAB_DEFINITION
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public String getSortingURL(HttpServletRequest httpServletRequest)

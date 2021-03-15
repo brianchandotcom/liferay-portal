@@ -25,7 +25,6 @@ import com.liferay.sharing.web.internal.constants.SharingWebKeys;
 import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplayAction;
 import com.liferay.sharing.web.internal.helper.SharingHelper;
 
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceURL;
@@ -95,13 +94,11 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	private String _getShareActionURL(RenderResponse renderResponse) {
-		PortletURL shareActionURL = PortletURLBuilder.createActionURL(
+		return PortletURLBuilder.createActionURL(
 			renderResponse
 		).setActionName(
 			"/sharing/share_entry"
-		).build();
-
-		return shareActionURL.toString();
+		).buildString();
 	}
 
 	private String _getSharingVerifyEmailAddressURL(

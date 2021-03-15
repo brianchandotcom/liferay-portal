@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Date;
 
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -56,7 +55,7 @@ public class ViewMembershipRequestsUserCard extends BaseUserCard {
 
 	@Override
 	public String getHref() {
-		PortletURL previewURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCPath(
 			"/preview_membership_request.jsp"
@@ -64,9 +63,7 @@ public class ViewMembershipRequestsUserCard extends BaseUserCard {
 			themeDisplay.getURLCurrent()
 		).setParameter(
 			"membershipRequestId", _membershipRequest.getMembershipRequestId()
-		).build();
-
-		return previewURL.toString();
+		).buildString();
 	}
 
 	@Override

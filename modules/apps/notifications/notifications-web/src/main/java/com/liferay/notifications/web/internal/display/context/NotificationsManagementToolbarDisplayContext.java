@@ -113,13 +113,11 @@ public class NotificationsManagementToolbarDisplayContext {
 	}
 
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setParameter(
 			"actionRequired", _isActionRequired()
-		).build();
-
-		return clearResultsURL.toString();
+		).buildString();
 	}
 
 	public List<DropdownItem> getFilterDropdownItems() {
@@ -147,14 +145,14 @@ public class NotificationsManagementToolbarDisplayContext {
 		return LabelItemListBuilder.add(
 			() -> navigation.equals("read") || navigation.equals("unread"),
 			labelItem -> {
-				PortletURL removeLabelURL = PortletURLBuilder.create(
-					PortletURLUtil.clone(
-						_currentURLObj, _liferayPortletResponse)
-				).setParameter(
-					"navigation", (String)null
-				).build();
-
-				labelItem.putData("removeLabelURL", removeLabelURL.toString());
+				labelItem.putData(
+					"removeLabelURL",
+					PortletURLBuilder.create(
+						PortletURLUtil.clone(
+							_currentURLObj, _liferayPortletResponse)
+					).setParameter(
+						"navigation", (String)null
+					).buildString());
 
 				labelItem.setCloseable(true);
 				labelItem.setLabel(

@@ -62,17 +62,15 @@ public class ViewAccountRolesManagementToolbarDisplayContext
 
 				dropdownItem.putData("action", "deleteAccountRoles");
 
-				PortletURL deleteAccountRolesURL =
+				dropdownItem.putData(
+					"deleteAccountRolesURL",
 					PortletURLBuilder.createActionURL(
 						liferayPortletResponse
 					).setActionName(
 						"/account_admin/delete_account_roles"
 					).setRedirect(
 						currentURLObj.toString()
-					).build();
-
-				dropdownItem.putData(
-					"deleteAccountRolesURL", deleteAccountRolesURL.toString());
+					).buildString());
 
 				dropdownItem.setIcon("times-circle");
 				dropdownItem.setLabel(
@@ -85,13 +83,11 @@ public class ViewAccountRolesManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
 			"keywords", StringPool.BLANK
-		).build();
-
-		return clearResultsURL.toString();
+		).buildString();
 	}
 
 	@Override

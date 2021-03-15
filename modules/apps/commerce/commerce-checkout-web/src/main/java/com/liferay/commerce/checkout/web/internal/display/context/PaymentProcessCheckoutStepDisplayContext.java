@@ -31,8 +31,6 @@ import com.liferay.portal.kernel.util.URLCodec;
 
 import java.security.Key;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -90,7 +88,7 @@ public class PaymentProcessCheckoutStepDisplayContext {
 	}
 
 	private String _getOrderConfirmationCheckoutStepUrl() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_commerceCheckoutRequestHelper.getLiferayPortletResponse()
 		).setParameter(
 			"commerceOrderUuid", _commerceOrder.getUuid()
@@ -104,9 +102,7 @@ public class PaymentProcessCheckoutStepDisplayContext {
 
 				return commerceCheckoutStep.getName();
 			}
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	private String _getPathModule() {

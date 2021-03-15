@@ -40,7 +40,6 @@ import java.util.Locale;
 import java.util.function.BiFunction;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -100,7 +99,7 @@ public class OrganizationScreenNavigationEntry
 		String backURL = ParamUtil.getString(httpServletRequest, "backURL");
 
 		if (Validator.isNull(backURL)) {
-			PortletURL viewOrganizationsURL = PortletURLBuilder.create(
+			backURL = PortletURLBuilder.create(
 				PortletURLFactoryUtil.create(
 					httpServletRequest, UsersAdminPortletKeys.USERS_ADMIN,
 					PortletRequest.RENDER_PHASE)
@@ -108,9 +107,7 @@ public class OrganizationScreenNavigationEntry
 				"toolbarItem", "view-all-organizations"
 			).setParameter(
 				"usersListView", UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS
-			).build();
-
-			backURL = viewOrganizationsURL.toString();
+			).buildString();
 		}
 
 		organizationScreenNavigationDisplayContext.setBackURL(backURL);
@@ -118,7 +115,7 @@ public class OrganizationScreenNavigationEntry
 		String redirect = ParamUtil.getString(httpServletRequest, "redirect");
 
 		if (Validator.isNull(redirect)) {
-			PortletURL editOrganizationURL = PortletURLBuilder.create(
+			redirect = PortletURLBuilder.create(
 				PortletURLFactoryUtil.create(
 					httpServletRequest, UsersAdminPortletKeys.USERS_ADMIN,
 					PortletRequest.RENDER_PHASE)
@@ -129,9 +126,7 @@ public class OrganizationScreenNavigationEntry
 			).setParameter(
 				"organizationId",
 				ParamUtil.getString(httpServletRequest, "organizationId")
-			).build();
-
-			redirect = editOrganizationURL.toString();
+			).buildString();
 		}
 
 		organizationScreenNavigationDisplayContext.setRedirect(redirect);

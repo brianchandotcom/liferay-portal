@@ -228,18 +228,16 @@ public class ItemSelectorRepositoryEntryBrowserUtil {
 			PortletURL portletURL)
 		throws Exception {
 
-		PortletURL viewGroupSelectorURL = PortletURLBuilder.create(
-			PortletURLUtil.clone(portletURL, liferayPortletResponse)
-		).setParameter(
-			"groupType", "site"
-		).setParameter(
-			"showGroupSelector", Boolean.TRUE.toString()
-		).build();
-
 		PortalUtil.addPortletBreadcrumbEntry(
 			httpServletRequest,
 			LanguageUtil.get(httpServletRequest, "sites-and-libraries"),
-			viewGroupSelectorURL.toString());
+			PortletURLBuilder.create(
+				PortletURLUtil.clone(portletURL, liferayPortletResponse)
+			).setParameter(
+				"groupType", "site"
+			).setParameter(
+				"showGroupSelector", Boolean.TRUE.toString()
+			).buildString());
 	}
 
 	private static void _addPortletBreadcrumbEntry(

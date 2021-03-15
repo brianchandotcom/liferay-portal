@@ -102,13 +102,11 @@ public class AnnouncementsAdminViewManagementToolbarDisplayContext {
 	}
 
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setParameter(
 			"navigation", _getNavigation()
-		).build();
-
-		return clearResultsURL.toString();
+		).buildString();
 	}
 
 	public CreationMenu getCreationMenu() {
@@ -161,14 +159,14 @@ public class AnnouncementsAdminViewManagementToolbarDisplayContext {
 		return LabelItemListBuilder.add(
 			() -> Validator.isNotNull(_getDistributionScope()),
 			labelItem -> {
-				PortletURL removeLabelURL = PortletURLBuilder.create(
-					PortletURLUtil.clone(
-						_currentURLObj, _liferayPortletResponse)
-				).setParameter(
-					"distributionScope", (String)null
-				).build();
-
-				labelItem.putData("removeLabelURL", removeLabelURL.toString());
+				labelItem.putData(
+					"removeLabelURL",
+					PortletURLBuilder.create(
+						PortletURLUtil.clone(
+							_currentURLObj, _liferayPortletResponse)
+					).setParameter(
+						"distributionScope", (String)null
+					).buildString());
 
 				labelItem.setCloseable(true);
 

@@ -102,7 +102,7 @@ public class CommerceInventoryWarehouseClayDataSetActionProvider
 			httpServletRequest, "currentUrl",
 			_portal.getCurrentURL(httpServletRequest));
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				_portal.getOriginalServletRequest(httpServletRequest),
 				CPPortletKeys.COMMERCE_INVENTORY, PortletRequest.ACTION_PHASE)
@@ -114,9 +114,7 @@ public class CommerceInventoryWarehouseClayDataSetActionProvider
 			Constants.CMD, Constants.DELETE
 		).setParameter(
 			"commerceInventoryWarehouseItemId", commerceInventoryWarehouseItemId
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	private String _getWarehouseEditURL(

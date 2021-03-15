@@ -37,8 +37,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -79,13 +77,11 @@ public class MBBannedUsersManagementToolbarDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"banUsersURL",
 			() -> {
-				PortletURL banUsersURL = PortletURLBuilder.createActionURL(
+				return PortletURLBuilder.createActionURL(
 					_liferayPortletResponse
 				).setActionName(
 					"/message_boards/ban_user"
-				).build();
-
-				return banUsersURL.toString();
+				).buildString();
 			}
 		).build();
 	}

@@ -126,13 +126,11 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 	}
 
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
 			"keywords", StringPool.BLANK
-		).build();
-
-		return clearResultsURL.toString();
+		).buildString();
 	}
 
 	public CreationMenu getCreationMenu() {
@@ -144,28 +142,27 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 			dropdownItem -> {
 				dropdownItem.putData("action", "addSegmentEntry");
 
-				PortletURL addSegmentEntryURL = PortletURLBuilder.create(
-					PortletProviderUtil.getPortletURL(
-						_renderRequest, SegmentsEntry.class.getName(),
-						PortletProvider.Action.EDIT)
-				).setRedirect(
-					ParamUtil.getString(_httpServletRequest, "redirect")
-				).setParameter(
-					"backURL",
-					ParamUtil.getString(_httpServletRequest, "backURL")
-				).setParameter(
-					"groupId",
-					() -> {
-						ThemeDisplay themeDisplay =
-							(ThemeDisplay)_httpServletRequest.getAttribute(
-								WebKeys.THEME_DISPLAY);
-
-						return themeDisplay.getCompanyGroupId();
-					}
-				).build();
-
 				dropdownItem.putData(
-					"addSegmentEntryURL", addSegmentEntryURL.toString());
+					"addSegmentEntryURL",
+					PortletURLBuilder.create(
+						PortletProviderUtil.getPortletURL(
+							_renderRequest, SegmentsEntry.class.getName(),
+							PortletProvider.Action.EDIT)
+					).setRedirect(
+						ParamUtil.getString(_httpServletRequest, "redirect")
+					).setParameter(
+						"backURL",
+						ParamUtil.getString(_httpServletRequest, "backURL")
+					).setParameter(
+						"groupId",
+						() -> {
+							ThemeDisplay themeDisplay =
+								(ThemeDisplay)_httpServletRequest.getAttribute(
+									WebKeys.THEME_DISPLAY);
+
+							return themeDisplay.getCompanyGroupId();
+						}
+					).buildString());
 
 				dropdownItem.putData(
 					"sessionKey", RolesAdminWebKeys.MODAL_SEGMENT_STATE);
@@ -411,7 +408,7 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 	}
 
 	public String getSearchActionURL() {
-		PortletURL searchActionURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL()
 		).setRedirect(
 			() -> {
@@ -420,9 +417,7 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 
 				return currentURL.toString();
 			}
-		).build();
-
-		return searchActionURL.toString();
+		).buildString();
 	}
 
 	public SearchContainer<?> getSearchContainer() throws Exception {
@@ -451,14 +446,12 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 	}
 
 	public String getSortingURL() {
-		PortletURL sortingURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
 			"orderByType",
 			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc"
-		).build();
-
-		return sortingURL.toString();
+		).buildString();
 	}
 
 	public String getTabs2() {

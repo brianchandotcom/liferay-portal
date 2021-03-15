@@ -149,7 +149,6 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
@@ -1211,7 +1210,7 @@ public class CalendarPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletURL redirectURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletURLFactoryUtil.create(
 				actionRequest, themeDisplay.getPpid(), themeDisplay.getPlid(),
 				PortletRequest.RENDER_PHASE)
@@ -1223,9 +1222,7 @@ public class CalendarPortlet extends MVCPortlet {
 			"instanceIndex", "0"
 		).setWindowState(
 			LiferayWindowState.POP_UP
-		).build();
-
-		return redirectURL.toString();
+		).buildString();
 	}
 
 	@Override

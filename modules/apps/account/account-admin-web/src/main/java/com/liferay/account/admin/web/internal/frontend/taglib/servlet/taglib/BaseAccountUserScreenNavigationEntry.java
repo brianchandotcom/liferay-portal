@@ -38,7 +38,6 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -101,21 +100,20 @@ public abstract class BaseAccountUserScreenNavigationEntry
 		httpServletRequest.setAttribute(
 			AccountWebKeys.SHOW_TITLE, isShowTitle());
 
-		PortletURL redirectURL = PortletURLBuilder.create(
-			portal.getControlPanelPortletURL(
-				httpServletRequest, AccountPortletKeys.ACCOUNT_USERS_ADMIN,
-				PortletRequest.RENDER_PHASE)
-		).setMVCPath(
-			"/account_users_admin/edit_account_user.jsp"
-		).setParameter(
-			"p_u_i_d", ParamUtil.getString(httpServletRequest, "p_u_i_d")
-		).build();
-
 		DynamicServletRequest dynamicServletRequest = new DynamicServletRequest(
 			httpServletRequest);
 
 		dynamicServletRequest.appendParameter(
-			"redirect", redirectURL.toString());
+			"redirect",
+			PortletURLBuilder.create(
+				portal.getControlPanelPortletURL(
+					httpServletRequest, AccountPortletKeys.ACCOUNT_USERS_ADMIN,
+					PortletRequest.RENDER_PHASE)
+			).setMVCPath(
+				"/account_users_admin/edit_account_user.jsp"
+			).setParameter(
+				"p_u_i_d", ParamUtil.getString(httpServletRequest, "p_u_i_d")
+			).buildString());
 
 		jspRenderer.renderJSP(
 			servletContext, dynamicServletRequest, httpServletResponse,

@@ -31,7 +31,6 @@ import com.liferay.social.kernel.model.SocialActivitySet;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javax.portlet.PortletURL;
 import javax.portlet.ResourceURL;
 
 /**
@@ -55,7 +54,7 @@ public class DefaultSocialActivitiesDisplayContext
 
 	@Override
 	public String getPaginationURL() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_socialActivitiesRequestHelper.getLiferayPortletResponse()
 		).setParameter(
 			"tabs1", getSelectedTabName()
@@ -63,9 +62,7 @@ public class DefaultSocialActivitiesDisplayContext
 			"end",
 			_socialActivitiesRequestHelper.getEnd() +
 				_socialActivitiesRequestHelper.getMax()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Override
@@ -138,13 +135,11 @@ public class DefaultSocialActivitiesDisplayContext
 
 	@Override
 	public String getTabsURL() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_socialActivitiesRequestHelper.getLiferayPortletResponse()
 		).setParameter(
 			"tabs1", getSelectedTabName()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Override

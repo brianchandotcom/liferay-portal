@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 
 /**
@@ -64,7 +63,7 @@ public class CommerceTaxFixedRatesDisplayContext
 	}
 
 	public String getAddTaxRateURL() throws Exception {
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
 				commerceTaxFixedRateRequestHelper.getRequest(),
 				CommercePortletKeys.COMMERCE_TAX_METHODS,
@@ -75,9 +74,7 @@ public class CommerceTaxFixedRatesDisplayContext
 			"commerceTaxMethodId", getCommerceTaxMethodId()
 		).setWindowState(
 			LiferayWindowState.POP_UP
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public CommerceTaxFixedRate getCommerceTaxFixedRate()

@@ -103,13 +103,11 @@ public class AssetListManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
 			"keywords", StringPool.BLANK
-		).build();
-
-		return clearResultsURL.toString();
+		).buildString();
 	}
 
 	@Override
@@ -121,19 +119,16 @@ public class AssetListManagementToolbarDisplayContext
 	public CreationMenu getCreationMenu() {
 		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
-				PortletURL addManualAssetListEntryURL =
+				dropdownItem.putData("action", "addAssetListEntry");
+				dropdownItem.putData(
+					"addAssetListEntryURL",
 					PortletURLBuilder.createActionURL(
 						liferayPortletResponse
 					).setActionName(
 						"/asset_list/add_asset_list_entry"
 					).setParameter(
 						"type", AssetListEntryTypeConstants.TYPE_MANUAL
-					).build();
-
-				dropdownItem.putData("action", "addAssetListEntry");
-				dropdownItem.putData(
-					"addAssetListEntryURL",
-					addManualAssetListEntryURL.toString());
+					).buildString());
 				dropdownItem.putData(
 					"title",
 					LanguageUtil.format(
@@ -145,19 +140,16 @@ public class AssetListManagementToolbarDisplayContext
 			}
 		).addPrimaryDropdownItem(
 			dropdownItem -> {
-				PortletURL addDynamicAssetListEntryURL =
+				dropdownItem.putData("action", "addAssetListEntry");
+				dropdownItem.putData(
+					"addAssetListEntryURL",
 					PortletURLBuilder.createActionURL(
 						liferayPortletResponse
 					).setActionName(
 						"/asset_list/add_asset_list_entry"
 					).setParameter(
 						"type", AssetListEntryTypeConstants.TYPE_DYNAMIC
-					).build();
-
-				dropdownItem.putData("action", "addAssetListEntry");
-				dropdownItem.putData(
-					"addAssetListEntryURL",
-					addDynamicAssetListEntryURL.toString());
+					).buildString());
 				dropdownItem.putData(
 					"title",
 					LanguageUtil.format(

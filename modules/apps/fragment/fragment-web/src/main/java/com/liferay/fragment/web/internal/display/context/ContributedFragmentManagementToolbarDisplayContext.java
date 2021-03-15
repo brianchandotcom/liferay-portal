@@ -92,30 +92,24 @@ public class ContributedFragmentManagementToolbarDisplayContext
 					(ThemeDisplay)httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
-				PortletURL copyContributedFragmentEntryURL =
-					PortletURLBuilder.createActionURL(
-						liferayPortletResponse
-					).setActionName(
-						"/fragment/copy_contributed_fragment_entry"
-					).setRedirect(
-						themeDisplay.getURLCurrent()
-					).build();
-
-				return copyContributedFragmentEntryURL.toString();
+				return PortletURLBuilder.createActionURL(
+					liferayPortletResponse
+				).setActionName(
+					"/fragment/copy_contributed_fragment_entry"
+				).setRedirect(
+					themeDisplay.getURLCurrent()
+				).buildString();
 			}
 		).put(
 			"selectFragmentCollectionURL",
 			() -> {
-				PortletURL selectFragmentCollectionURL =
-					PortletURLBuilder.createActionURL(
-						liferayPortletResponse
-					).setMVCRenderCommandName(
-						"/fragment/select_fragment_collection"
-					).setWindowState(
-						LiferayWindowState.POP_UP
-					).build();
-
-				return selectFragmentCollectionURL.toString();
+				return PortletURLBuilder.createActionURL(
+					liferayPortletResponse
+				).setMVCRenderCommandName(
+					"/fragment/select_fragment_collection"
+				).setWindowState(
+					LiferayWindowState.POP_UP
+				).buildString();
 			}
 		).build();
 	}

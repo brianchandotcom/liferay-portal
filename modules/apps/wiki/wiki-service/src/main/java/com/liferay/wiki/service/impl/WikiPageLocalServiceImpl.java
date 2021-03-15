@@ -2383,7 +2383,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				URLCodec.encodeURL(WikiEscapeUtil.escapeName(page.getTitle())));
 		}
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				httpServletRequest, WikiPortletKeys.WIKI_ADMIN,
 				PortletRequest.RENDER_PHASE)
@@ -2393,9 +2393,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			"nodeId", page.getNodeId()
 		).setParameter(
 			"title", page.getTitle()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	private List<ObjectValuePair<Long, Integer>> _getPageVersionStatuses(

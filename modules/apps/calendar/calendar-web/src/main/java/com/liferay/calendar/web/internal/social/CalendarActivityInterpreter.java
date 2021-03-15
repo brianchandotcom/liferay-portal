@@ -35,7 +35,6 @@ import com.liferay.social.kernel.model.SocialActivityConstants;
 import com.liferay.social.kernel.model.SocialActivityInterpreter;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
 import org.osgi.service.component.annotations.Component;
@@ -74,7 +73,7 @@ public class CalendarActivityInterpreter extends BaseSocialActivityInterpreter {
 		long plid = _portal.getPlidFromPortletId(
 			calendarBooking.getGroupId(), CalendarPortletKeys.CALENDAR);
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletURLFactoryUtil.create(
 				serviceContext.getRequest(), CalendarPortletKeys.CALENDAR, plid,
 				PortletRequest.RENDER_PHASE)
@@ -86,9 +85,7 @@ public class CalendarActivityInterpreter extends BaseSocialActivityInterpreter {
 			"calendarBookingId", activity.getClassPK()
 		).setWindowState(
 			WindowState.MAXIMIZED
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Override

@@ -34,7 +34,6 @@ import java.io.InputStream;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -77,7 +76,7 @@ public class DLFileEntryCTDisplayRenderer
 			group = themeDisplay.getScopeGroup();
 		}
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				httpServletRequest, group, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
 				0, 0, PortletRequest.RENDER_PHASE)
@@ -87,9 +86,7 @@ public class DLFileEntryCTDisplayRenderer
 			_portal.getCurrentURL(httpServletRequest)
 		).setParameter(
 			"fileEntryId", dlFileEntry.getFileEntryId()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Override

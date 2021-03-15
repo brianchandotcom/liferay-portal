@@ -111,13 +111,11 @@ public class MasterLayoutManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
 			"keywords", StringPool.BLANK
-		).build();
-
-		return clearResultsURL.toString();
+		).buildString();
 	}
 
 	@Override
@@ -127,23 +125,24 @@ public class MasterLayoutManagementToolbarDisplayContext
 
 	@Override
 	public CreationMenu getCreationMenu() {
-		PortletURL addMasterLayoutURL = PortletURLBuilder.createActionURL(
-			liferayPortletResponse
-		).setActionName(
-			"/layout_page_template_admin/add_master_layout"
-		).setParameter(
-			"backURL", _themeDisplay.getURLCurrent()
-		).setParameter(
-			"type", LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT
-		).build();
-
 		return CreationMenuBuilder.addDropdownItem(
 			dropdownItem -> {
 				dropdownItem.setData(
 					HashMapBuilder.<String, Object>put(
 						"action", "addMasterLayout"
 					).put(
-						"addMasterLayoutURL", addMasterLayoutURL.toString()
+						"addMasterLayoutURL",
+						PortletURLBuilder.createActionURL(
+							liferayPortletResponse
+						).setActionName(
+							"/layout_page_template_admin/add_master_layout"
+						).setParameter(
+							"backURL", _themeDisplay.getURLCurrent()
+						).setParameter(
+							"type",
+							LayoutPageTemplateEntryTypeConstants.
+								TYPE_MASTER_LAYOUT
+						).buildString()
 					).build());
 
 				dropdownItem.setLabel(

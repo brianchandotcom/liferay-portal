@@ -63,7 +63,6 @@ import javax.portlet.PortletContext;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
 import javax.servlet.ServletContext;
@@ -251,18 +250,17 @@ public class AddCollectionItemProductNavigationControlMenuEntry
 		LiferayPortletResponse liferayPortletResponse, String currentURL,
 		long assetListEntryId) {
 
-		PortletURL portletURL = PortletURLBuilder.createActionURL(
-			liferayPortletResponse
-		).setActionName(
-			"/control_menu/add_collection_item"
-		).setRedirect(
-			currentURL
-		).setParameter(
-			"assetListEntryId", assetListEntryId
-		).build();
-
 		return _http.addParameter(
-			portletURL.toString(), "portletResource",
+			PortletURLBuilder.createActionURL(
+				liferayPortletResponse
+			).setActionName(
+				"/control_menu/add_collection_item"
+			).setRedirect(
+				currentURL
+			).setParameter(
+				"assetListEntryId", assetListEntryId
+			).buildString(),
+			"portletResource",
 			ProductNavigationControlMenuPortletKeys.
 				PRODUCT_NAVIGATION_CONTROL_MENU);
 	}

@@ -26,7 +26,6 @@ import com.liferay.portal.security.wedeploy.auth.web.internal.constants.WeDeploy
 
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -60,22 +59,21 @@ public class WeDeployAuthorizeStrutsAction implements StrutsAction {
 			return null;
 		}
 
-		PortletURL portletURL = PortletURLBuilder.create(
-			PortletURLFactoryUtil.create(
-				httpServletRequest, WeDeployAuthPortletKeys.WEDEPLOY_AUTH,
-				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE)
-		).setParameter(
-			"redirectURI",
-			ParamUtil.getString(httpServletRequest, "redirect_uri")
-		).setParameter(
-			"clientId", ParamUtil.getString(httpServletRequest, "client_id")
-		).setParameter(
-			"saveLastPath", Boolean.FALSE.toString()
-		).setPortletMode(
-			PortletMode.VIEW
-		).build();
-
-		httpServletResponse.sendRedirect(portletURL.toString());
+		httpServletResponse.sendRedirect(
+			PortletURLBuilder.create(
+				PortletURLFactoryUtil.create(
+					httpServletRequest, WeDeployAuthPortletKeys.WEDEPLOY_AUTH,
+					themeDisplay.getPlid(), PortletRequest.RENDER_PHASE)
+			).setParameter(
+				"redirectURI",
+				ParamUtil.getString(httpServletRequest, "redirect_uri")
+			).setParameter(
+				"clientId", ParamUtil.getString(httpServletRequest, "client_id")
+			).setParameter(
+				"saveLastPath", Boolean.FALSE.toString()
+			).setPortletMode(
+				PortletMode.VIEW
+			).buildString());
 
 		return null;
 	}
@@ -85,21 +83,20 @@ public class WeDeployAuthorizeStrutsAction implements StrutsAction {
 			HttpServletResponse httpServletResponse, long plid)
 		throws Exception {
 
-		PortletURL portletURL = PortletURLBuilder.create(
-			PortletURLFactoryUtil.create(
-				httpServletRequest, PortletKeys.LOGIN, plid,
-				PortletRequest.RENDER_PHASE)
-		).setMVCRenderCommandName(
-			"/login/login"
-		).setParameter(
-			"saveLastPath", Boolean.FALSE.toString()
-		).setPortletMode(
-			PortletMode.VIEW
-		).setWindowState(
-			LiferayWindowState.MAXIMIZED
-		).build();
-
-		httpServletResponse.sendRedirect(portletURL.toString());
+		httpServletResponse.sendRedirect(
+			PortletURLBuilder.create(
+				PortletURLFactoryUtil.create(
+					httpServletRequest, PortletKeys.LOGIN, plid,
+					PortletRequest.RENDER_PHASE)
+			).setMVCRenderCommandName(
+				"/login/login"
+			).setParameter(
+				"saveLastPath", Boolean.FALSE.toString()
+			).setPortletMode(
+				PortletMode.VIEW
+			).setWindowState(
+				LiferayWindowState.MAXIMIZED
+			).buildString());
 	}
 
 }

@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.user.associated.data.display.UADDisplay;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -54,7 +53,7 @@ public class BlogsEntryUADDisplay extends BaseBlogsEntryUADDisplay {
 		String portletId = PortletProviderUtil.getPortletId(
 			BlogsEntry.class.getName(), PortletProvider.Action.VIEW);
 
-		PortletURL portletURL = PortletURLBuilder.createLiferayPortletURL(
+		return PortletURLBuilder.createLiferayPortletURL(
 			liferayPortletResponse,
 			portal.getControlPanelPlid(liferayPortletRequest), portletId,
 			PortletRequest.RENDER_PHASE
@@ -64,9 +63,7 @@ public class BlogsEntryUADDisplay extends BaseBlogsEntryUADDisplay {
 			portal.getCurrentURL(liferayPortletRequest)
 		).setParameter(
 			"entryId", blogsEntry.getEntryId()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Reference

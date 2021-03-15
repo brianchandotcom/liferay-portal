@@ -212,13 +212,11 @@ public class WorkflowTaskDisplayContext {
 	}
 
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_getPortletURL()
 		).setParameter(
 			"keywords", StringPool.BLANK
-		).build();
-
-		return clearResultsURL.toString();
+		).buildString();
 	}
 
 	public String getCreateDate(WorkflowLog workflowLog) {
@@ -371,7 +369,7 @@ public class WorkflowTaskDisplayContext {
 	}
 
 	public String getSearchURL() {
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_getPortletURL()
 		).setParameter(
 			"groupId",
@@ -381,13 +379,11 @@ public class WorkflowTaskDisplayContext {
 
 				return themeDisplay.getScopeGroupId();
 			}
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public String getSortingURL() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_workflowTaskRequestHelper.getLiferayPortletResponse()
 		).setParameter(
 			"navigation", _getNavigation()
@@ -398,9 +394,7 @@ public class WorkflowTaskDisplayContext {
 		).setParameter(
 			"orderByType",
 			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc"
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public String getState(WorkflowTask workflowTask) throws PortalException {
@@ -422,7 +416,7 @@ public class WorkflowTaskDisplayContext {
 		ThemeDisplay themeDisplay =
 			_workflowTaskRequestHelper.getThemeDisplay();
 
-		PortletURL editPortletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_getEditPortletURL(workflowTask)
 		).setRedirect(
 			themeDisplay.getURLCurrent()
@@ -438,9 +432,7 @@ public class WorkflowTaskDisplayContext {
 			PortletMode.VIEW
 		).setWindowState(
 			LiferayWindowState.NORMAL
-		).build();
-
-		return editPortletURL.toString();
+		).buildString();
 	}
 
 	public String getTaglibViewDiffsURL(WorkflowTask workflowTask)
@@ -459,19 +451,19 @@ public class WorkflowTaskDisplayContext {
 
 		sb.append("', uri:'");
 
-		PortletURL viewDiffsPortletURL = PortletURLBuilder.create(
-			_getViewDiffsPortletURL(workflowTask)
-		).setRedirect(
-			getCurrentURL()
-		).setParameter(
-			"hideControls", Boolean.TRUE.toString()
-		).setPortletMode(
-			PortletMode.VIEW
-		).setWindowState(
-			LiferayWindowState.POP_UP
-		).build();
-
-		sb.append(HtmlUtil.escapeJS(viewDiffsPortletURL.toString()));
+		sb.append(
+			HtmlUtil.escapeJS(
+				PortletURLBuilder.create(
+					_getViewDiffsPortletURL(workflowTask)
+				).setRedirect(
+					getCurrentURL()
+				).setParameter(
+					"hideControls", Boolean.TRUE.toString()
+				).setPortletMode(
+					PortletMode.VIEW
+				).setWindowState(
+					LiferayWindowState.POP_UP
+				).buildString()));
 
 		sb.append("'});");
 

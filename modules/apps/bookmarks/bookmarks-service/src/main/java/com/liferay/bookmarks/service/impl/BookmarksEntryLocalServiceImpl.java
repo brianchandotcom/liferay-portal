@@ -81,7 +81,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -731,7 +730,7 @@ public class BookmarksEntryLocalServiceImpl
 
 		Group group = groupLocalService.fetchGroup(entry.getGroupId());
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				httpServletRequest, group, BookmarksPortletKeys.BOOKMARKS_ADMIN,
 				0, 0, PortletRequest.RENDER_PHASE)
@@ -739,9 +738,7 @@ public class BookmarksEntryLocalServiceImpl
 			"/bookmarks/view"
 		).setParameter(
 			"folderId", entry.getFolderId()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	private void _notifySubscribers(

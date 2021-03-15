@@ -274,7 +274,7 @@ public class UploadPortletTest extends BasePortletContainerTestCase {
 		MockMultipartHttpServletRequest mockServletRequest =
 			(MockMultipartHttpServletRequest)servletRequest;
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		String url = PortletURLBuilder.create(
 			PortletURLFactoryUtil.create(
 				mockServletRequest, TestUploadPortlet.PORTLET_NAME,
 				layout.getPlid(), PortletRequest.ACTION_PHASE)
@@ -282,9 +282,7 @@ public class UploadPortletTest extends BasePortletContainerTestCase {
 			TestUploadPortlet.MVC_COMMAND_NAME
 		).setParameter(
 			"randomId", RandomTestUtil.randomString()
-		).build();
-
-		String url = portletURL.toString();
+		).buildString();
 
 		mockServletRequest.addParameter("Cookie", new String[] {"test"});
 

@@ -35,7 +35,6 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -126,7 +125,7 @@ public class EditRuleGroupMVCActionCommand extends BaseMVCActionCommand {
 		ActionRequest actionRequest, ActionResponse actionResponse,
 		MDRRuleGroup ruleGroup) {
 
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_portal.getLiferayPortletResponse(actionResponse)
 		).setMVCRenderCommandName(
 			"/mobile_device_rules/edit_rule_group"
@@ -134,9 +133,7 @@ public class EditRuleGroupMVCActionCommand extends BaseMVCActionCommand {
 			ParamUtil.getString(actionRequest, "redirect")
 		).setParameter(
 			"ruleGroupId", ruleGroup.getRuleGroupId()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Reference(unbind = "-")

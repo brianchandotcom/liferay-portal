@@ -94,15 +94,15 @@ public class DeleteNodePortletConfigurationIcon
 				portletURL.setParameter(Constants.CMD, Constants.DELETE);
 			}
 
-			PortletURL viewNodesURL = PortletURLBuilder.create(
-				_portal.getControlPanelPortletURL(
-					portletRequest, WikiPortletKeys.WIKI_ADMIN,
-					PortletRequest.RENDER_PHASE)
-			).setMVCRenderCommandName(
-				"/wiki_admin/view"
-			).build();
-
-			portletURL.setParameter("redirect", viewNodesURL.toString());
+			portletURL.setParameter(
+				"redirect",
+				PortletURLBuilder.create(
+					_portal.getControlPanelPortletURL(
+						portletRequest, WikiPortletKeys.WIKI_ADMIN,
+						PortletRequest.RENDER_PHASE)
+				).setMVCRenderCommandName(
+					"/wiki_admin/view"
+				).buildString());
 
 			portletURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 

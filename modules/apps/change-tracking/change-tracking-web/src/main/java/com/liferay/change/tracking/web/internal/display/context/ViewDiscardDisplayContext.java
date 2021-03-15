@@ -37,7 +37,6 @@ import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionURL;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceURL;
@@ -145,15 +144,13 @@ public class ViewDiscardDisplayContext {
 			return redirect;
 		}
 
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCRenderCommandName(
 			"/change_tracking/view_changes"
 		).setParameter(
 			"ctCollectionId", _ctCollectionId
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public String getSubmitURL() {

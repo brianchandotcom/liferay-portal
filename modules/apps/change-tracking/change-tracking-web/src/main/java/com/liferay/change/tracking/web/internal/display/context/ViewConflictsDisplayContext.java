@@ -46,7 +46,6 @@ import java.util.TimeZone;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionURL;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.RenderURL;
@@ -112,7 +111,7 @@ public class ViewConflictsDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"publishURL",
 			() -> {
-				PortletURL publishURL = PortletURLBuilder.createActionURL(
+				return PortletURLBuilder.createActionURL(
 					_renderResponse
 				).setActionName(
 					"/change_tracking/publish_ct_collection"
@@ -120,9 +119,7 @@ public class ViewConflictsDisplayContext {
 					"ctCollectionId", _ctCollection.getCtCollectionId()
 				).setParameter(
 					"name", _ctCollection.getName()
-				).build();
-
-				return publishURL.toString();
+				).buildString();
 			}
 		).put(
 			"redirect", getRedirect()
@@ -133,7 +130,7 @@ public class ViewConflictsDisplayContext {
 		).put(
 			"scheduleURL",
 			() -> {
-				PortletURL scheduleURL = PortletURLBuilder.createActionURL(
+				return PortletURLBuilder.createActionURL(
 					_renderResponse
 				).setActionName(
 					"/change_tracking/schedule_publication"
@@ -141,9 +138,7 @@ public class ViewConflictsDisplayContext {
 					getRedirect()
 				).setParameter(
 					"ctCollectionId", _ctCollection.getCtCollectionId()
-				).build();
-
-				return scheduleURL.toString();
+				).buildString();
 			}
 		).put(
 			"spritemap", _themeDisplay.getPathThemeImages() + "/clay/icons.svg"
@@ -173,15 +168,13 @@ public class ViewConflictsDisplayContext {
 			return redirect;
 		}
 
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCRenderCommandName(
 			"/change_tracking/view_changes"
 		).setParameter(
 			"ctCollectionId", _ctCollection.getCtCollectionId()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	private <T extends BaseModel<T>> JSONObject _getConflictJSONObject(

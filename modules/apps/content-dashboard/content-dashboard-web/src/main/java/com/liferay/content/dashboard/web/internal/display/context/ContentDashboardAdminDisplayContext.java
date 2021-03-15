@@ -190,7 +190,7 @@ public class ContentDashboardAdminDisplayContext {
 		userItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			Collections.singletonList(new UUIDItemSelectorReturnType()));
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_itemSelector.getItemSelectorURL(
 				requestBackedPortletURLFactory,
 				_liferayPortletResponse.getNamespace() + "selectedAuthorItem",
@@ -199,9 +199,7 @@ public class ContentDashboardAdminDisplayContext {
 			"checkedUserIds", StringUtil.merge(getAuthorIds())
 		).setParameter(
 			"checkedUserIdsEnabled", Boolean.TRUE
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public String getContentDashboardItemTypeItemSelectorURL() {
@@ -325,15 +323,15 @@ public class ContentDashboardAdminDisplayContext {
 			ResourceBundleUtil.getString(_resourceBundle, "configuration"));
 		sb.append("', url: '");
 
-		PortletURL renderURL = PortletURLBuilder.createRenderURL(
-			_liferayPortletResponse
-		).setMVCRenderCommandName(
-			"/content_dashboard/edit_content_dashboard_configuration"
-		).setWindowState(
-			LiferayWindowState.POP_UP
-		).build();
-
-		sb.append(HtmlUtil.escapeJS(renderURL.toString()));
+		sb.append(
+			HtmlUtil.escapeJS(
+				PortletURLBuilder.createRenderURL(
+					_liferayPortletResponse
+				).setMVCRenderCommandName(
+					"/content_dashboard/edit_content_dashboard_configuration"
+				).setWindowState(
+					LiferayWindowState.POP_UP
+				).buildString()));
 
 		sb.append("'}); return false;");
 

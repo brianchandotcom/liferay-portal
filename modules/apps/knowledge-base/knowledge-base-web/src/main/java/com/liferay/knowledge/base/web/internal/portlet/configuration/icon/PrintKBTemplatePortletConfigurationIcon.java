@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -65,28 +64,27 @@ public class PrintKBTemplatePortletConfigurationIcon
 
 			sb.append("window.open('");
 
-			PortletURL portletURL = PortletURLBuilder.create(
-				_portal.getControlPanelPortletURL(
-					portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-					PortletRequest.RENDER_PHASE)
-			).setMVCPath(
-				"/admin/print_template.jsp"
-			).setParameter(
-				"kbTemplateId",
-				() -> {
-					KBTemplate kbTemplate =
-						(KBTemplate)portletRequest.getAttribute(
-							KBWebKeys.KNOWLEDGE_BASE_KB_TEMPLATE);
+			sb.append(
+				PortletURLBuilder.create(
+					_portal.getControlPanelPortletURL(
+						portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
+						PortletRequest.RENDER_PHASE)
+				).setMVCPath(
+					"/admin/print_template.jsp"
+				).setParameter(
+					"kbTemplateId",
+					() -> {
+						KBTemplate kbTemplate =
+							(KBTemplate)portletRequest.getAttribute(
+								KBWebKeys.KNOWLEDGE_BASE_KB_TEMPLATE);
 
-					return kbTemplate.getKbTemplateId();
-				}
-			).setParameter(
-				"viewMode", Constants.PRINT
-			).setWindowState(
-				LiferayWindowState.POP_UP
-			).build();
-
-			sb.append(portletURL.toString());
+						return kbTemplate.getKbTemplateId();
+					}
+				).setParameter(
+					"viewMode", Constants.PRINT
+				).setWindowState(
+					LiferayWindowState.POP_UP
+				).buildString());
 
 			sb.append("', '', 'directories=no,height=640,location=no,");
 			sb.append("menubar=no,resizable=yes,scrollbars=yes,status=0,");

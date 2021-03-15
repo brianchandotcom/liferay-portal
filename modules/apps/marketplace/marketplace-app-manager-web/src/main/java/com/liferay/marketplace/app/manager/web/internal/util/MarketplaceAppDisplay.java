@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -55,15 +54,13 @@ public class MarketplaceAppDisplay extends BaseAppDisplay {
 
 	@Override
 	public String getDisplayURL(MimeResponse mimeResponse) {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			mimeResponse
 		).setMVCPath(
 			"/view_modules.jsp"
 		).setParameter(
 			"app", _app.getAppId()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Override
@@ -78,7 +75,7 @@ public class MarketplaceAppDisplay extends BaseAppDisplay {
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			PortletURL portletURL = PortletURLBuilder.create(
+			return PortletURLBuilder.create(
 				PortletURLFactoryUtil.create(
 					httpServletRequest,
 					MarketplaceStorePortletKeys.MARKETPLACE_STORE,
@@ -87,9 +84,7 @@ public class MarketplaceAppDisplay extends BaseAppDisplay {
 				"appEntryId", _app.getRemoteAppId()
 			).setWindowState(
 				LiferayWindowState.MAXIMIZED
-			).build();
-
-			return portletURL.toString();
+			).buildString();
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

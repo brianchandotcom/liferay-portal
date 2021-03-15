@@ -32,7 +32,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -69,24 +68,24 @@ public class SelectBasicTemplatesNavigationCard implements NavigationCard {
 		String redirect = ParamUtil.getString(_httpServletRequest, "redirect");
 
 		try {
-			PortletURL addLayoutURL = PortletURLBuilder.createRenderURL(
-				_renderResponse
-			).setMVCRenderCommandName(
-				"/layout_admin/add_layout"
-			).setParameter(
-				"backURL", redirect
-			).setParameter(
-				"selPlid", ParamUtil.getLong(_httpServletRequest, "selPlid")
-			).setParameter(
-				"privateLayout",
-				ParamUtil.getBoolean(_httpServletRequest, "privateLayout")
-			).setParameter(
-				"type", _type
-			).setWindowState(
-				LiferayWindowState.POP_UP
-			).build();
-
-			data.put("data-add-layout-url", addLayoutURL.toString());
+			data.put(
+				"data-add-layout-url",
+				PortletURLBuilder.createRenderURL(
+					_renderResponse
+				).setMVCRenderCommandName(
+					"/layout_admin/add_layout"
+				).setParameter(
+					"backURL", redirect
+				).setParameter(
+					"selPlid", ParamUtil.getLong(_httpServletRequest, "selPlid")
+				).setParameter(
+					"privateLayout",
+					ParamUtil.getBoolean(_httpServletRequest, "privateLayout")
+				).setParameter(
+					"type", _type
+				).setWindowState(
+					LiferayWindowState.POP_UP
+				).buildString());
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

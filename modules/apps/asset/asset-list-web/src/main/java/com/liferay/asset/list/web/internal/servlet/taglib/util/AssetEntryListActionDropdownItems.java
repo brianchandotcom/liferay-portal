@@ -37,8 +37,6 @@ import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.util.List;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -99,20 +97,19 @@ public class AssetEntryListActionDropdownItems {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getDeleteAssetListEntryActionUnsafeConsumer() {
 
-		PortletURL deleteAssetListEntryURL = PortletURLBuilder.createActionURL(
-			_liferayPortletResponse
-		).setActionName(
-			"/asset_list/delete_asset_list_entries"
-		).setRedirect(
-			_themeDisplay.getURLCurrent()
-		).setParameter(
-			"assetListEntryId", _assetListEntry.getAssetListEntryId()
-		).build();
-
 		return dropdownItem -> {
 			dropdownItem.putData("action", "deleteAssetListEntry");
 			dropdownItem.putData(
-				"deleteAssetListEntryURL", deleteAssetListEntryURL.toString());
+				"deleteAssetListEntryURL",
+				PortletURLBuilder.createActionURL(
+					_liferayPortletResponse
+				).setActionName(
+					"/asset_list/delete_asset_list_entries"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"assetListEntryId", _assetListEntry.getAssetListEntryId()
+				).buildString());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "delete"));
 		};
@@ -154,14 +151,6 @@ public class AssetEntryListActionDropdownItems {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getRenameAssetListEntryActionUnsafeConsumer() {
 
-		PortletURL renameAssetListEntryURL = PortletURLBuilder.createActionURL(
-			_liferayPortletResponse
-		).setActionName(
-			"/asset_list/update_asset_list_entry"
-		).setParameter(
-			"assetListEntryId", _assetListEntry.getAssetListEntryId()
-		).build();
-
 		return dropdownItem -> {
 			dropdownItem.putData("action", "renameAssetListEntry");
 			dropdownItem.putData(
@@ -170,7 +159,14 @@ public class AssetEntryListActionDropdownItems {
 			dropdownItem.putData(
 				"assetListEntryTitle", _assetListEntry.getTitle());
 			dropdownItem.putData(
-				"renameAssetListEntryURL", renameAssetListEntryURL.toString());
+				"renameAssetListEntryURL",
+				PortletURLBuilder.createActionURL(
+					_liferayPortletResponse
+				).setActionName(
+					"/asset_list/update_asset_list_entry"
+				).setParameter(
+					"assetListEntryId", _assetListEntry.getAssetListEntryId()
+				).buildString());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "rename"));
 		};

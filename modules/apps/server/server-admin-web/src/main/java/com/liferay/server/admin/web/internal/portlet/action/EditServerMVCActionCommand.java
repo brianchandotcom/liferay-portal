@@ -115,7 +115,6 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletSession;
-import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
 import org.apache.log4j.Level;
@@ -463,15 +462,13 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 			LiferayActionResponse liferayActionResponse =
 				(LiferayActionResponse)actionResponse;
 
-			PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			return PortletURLBuilder.createRenderURL(
 				liferayActionResponse
 			).setMVCRenderCommandName(
 				path
 			).setWindowState(
 				WindowState.MAXIMIZED
-			).build();
-
-			return portletURL.toString();
+			).buildString();
 		}
 
 		PortletSession portletSession = actionRequest.getPortletSession();

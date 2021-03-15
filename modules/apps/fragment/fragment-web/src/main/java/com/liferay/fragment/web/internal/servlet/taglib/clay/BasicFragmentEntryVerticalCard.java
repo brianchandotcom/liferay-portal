@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.util.Date;
 import java.util.List;
 
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -93,7 +92,7 @@ public class BasicFragmentEntryVerticalCard extends FragmentEntryVerticalCard {
 			return null;
 		}
 
-		PortletURL editFragmentEntryURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCRenderCommandName(
 			"/fragment/edit_fragment_entry"
@@ -103,9 +102,7 @@ public class BasicFragmentEntryVerticalCard extends FragmentEntryVerticalCard {
 			"fragmentCollectionId", fragmentEntry.getFragmentCollectionId()
 		).setParameter(
 			"fragmentEntryId", fragmentEntry.getFragmentEntryId()
-		).build();
-
-		return editFragmentEntryURL.toString();
+		).buildString();
 	}
 
 	@Override

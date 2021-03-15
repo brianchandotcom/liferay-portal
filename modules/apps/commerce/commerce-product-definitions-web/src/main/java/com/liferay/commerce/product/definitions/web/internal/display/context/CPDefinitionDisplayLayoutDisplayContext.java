@@ -76,7 +76,7 @@ public class CPDefinitionDisplayLayoutDisplayContext
 	}
 
 	public String getAddProductDisplayPageURL() throws Exception {
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletProviderUtil.getPortletURL(
 				httpServletRequest, CommerceChannel.class.getName(),
 				PortletProvider.Action.MANAGE)
@@ -86,9 +86,7 @@ public class CPDefinitionDisplayLayoutDisplayContext
 			"commerceChannelId", getCommerceChannelId()
 		).setWindowState(
 			LiferayWindowState.POP_UP
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public CommerceChannel getCommerceChannel() {
@@ -209,15 +207,13 @@ public class CPDefinitionDisplayLayoutDisplayContext
 			Collections.<ItemSelectorReturnType>singletonList(
 				new UUIDItemSelectorReturnType()));
 
-		PortletURL itemSelectorURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_itemSelector.getItemSelectorURL(
 				requestBackedPortletURLFactory, "productDefinitionsSelectItem",
 				cpDefinitionItemSelectorCriterion)
 		).setParameter(
 			"singleSelection", Boolean.toString(true)
-		).build();
-
-		return itemSelectorURL.toString();
+		).buildString();
 	}
 
 	private final CommerceChannelLocalService _commerceChannelLocalService;

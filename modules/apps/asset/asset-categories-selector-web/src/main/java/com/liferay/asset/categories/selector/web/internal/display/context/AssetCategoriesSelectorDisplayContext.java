@@ -52,7 +52,6 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -95,7 +94,7 @@ public class AssetCategoriesSelectorDisplayContext {
 			return null;
 		}
 
-		PortletURL addCategoryURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletURLFactoryUtil.create(
 				_renderRequest,
 				AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN,
@@ -112,9 +111,7 @@ public class AssetCategoriesSelectorDisplayContext {
 			"itemSelectorEventName", getEventName()
 		).setWindowState(
 			LiferayWindowState.POP_UP
-		).build();
-
-		return addCategoryURL.toString();
+		).buildString();
 	}
 
 	public JSONArray getCategoriesJSONArray() throws Exception {

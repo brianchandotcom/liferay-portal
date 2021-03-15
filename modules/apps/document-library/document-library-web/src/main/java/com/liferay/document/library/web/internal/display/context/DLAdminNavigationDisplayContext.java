@@ -85,15 +85,14 @@ public class DLAdminNavigationDisplayContext {
 			navigationItem.setActive(true);
 		}
 
-		PortletURL viewDocumentLibraryURL = PortletURLBuilder.createRenderURL(
-			_liferayPortletResponse
-		).setMVCRenderCommandName(
-			"/document_library/view"
-		).setRedirect(
-			_currentURLObj.toString()
-		).build();
-
-		navigationItem.setHref(viewDocumentLibraryURL.toString());
+		navigationItem.setHref(
+			PortletURLBuilder.createRenderURL(
+				_liferayPortletResponse
+			).setMVCRenderCommandName(
+				"/document_library/view"
+			).setRedirect(
+				_currentURLObj.toString()
+			).buildString());
 
 		navigationItem.setLabel(
 			LanguageUtil.get(
@@ -106,15 +105,14 @@ public class DLAdminNavigationDisplayContext {
 
 		navigationItem.setActive(navigation.equals("file_entry_types"));
 
-		PortletURL viewFileEntryTypesURL = PortletURLBuilder.createRenderURL(
-			_liferayPortletResponse
-		).setRedirect(
-			_currentURLObj.toString()
-		).setParameter(
-			"navigation", "file_entry_types"
-		).build();
-
-		navigationItem.setHref(viewFileEntryTypesURL.toString());
+		navigationItem.setHref(
+			PortletURLBuilder.createRenderURL(
+				_liferayPortletResponse
+			).setRedirect(
+				_currentURLObj.toString()
+			).setParameter(
+				"navigation", "file_entry_types"
+			).buildString());
 
 		navigationItem.setLabel(
 			LanguageUtil.get(
@@ -129,19 +127,18 @@ public class DLAdminNavigationDisplayContext {
 			navigationItem.setActive(true);
 		}
 
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			_liferayPortletResponse
-		).setRedirect(
-			_currentURLObj.toString()
-		).setParameter(
-			"navigation", "file_entry_metadata_sets"
-		).setParameter(
-			"backURL", _themeDisplay.getURLCurrent()
-		).setParameter(
-			"groupId", _themeDisplay.getScopeGroupId()
-		).build();
-
-		navigationItem.setHref(portletURL.toString());
+		navigationItem.setHref(
+			PortletURLBuilder.createRenderURL(
+				_liferayPortletResponse
+			).setRedirect(
+				_currentURLObj.toString()
+			).setParameter(
+				"navigation", "file_entry_metadata_sets"
+			).setParameter(
+				"backURL", _themeDisplay.getURLCurrent()
+			).setParameter(
+				"groupId", _themeDisplay.getScopeGroupId()
+			).buildString());
 
 		navigationItem.setLabel(
 			LanguageUtil.get(

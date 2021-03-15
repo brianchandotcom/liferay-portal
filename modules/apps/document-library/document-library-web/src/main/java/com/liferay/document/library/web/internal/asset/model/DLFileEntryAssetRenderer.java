@@ -284,7 +284,7 @@ public class DLFileEntryAssetRenderer
 		AssetRendererFactory<FileEntry> assetRendererFactory =
 			getAssetRendererFactory();
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			assetRendererFactory.getURLView(liferayPortletResponse, windowState)
 		).setMVCRenderCommandName(
 			"/document_library/view_file_entry"
@@ -292,9 +292,7 @@ public class DLFileEntryAssetRenderer
 			"fileEntryId", _fileEntry.getFileEntryId()
 		).setWindowState(
 			windowState
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Override

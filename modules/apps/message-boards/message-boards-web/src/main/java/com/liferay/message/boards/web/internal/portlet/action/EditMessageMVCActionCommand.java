@@ -93,7 +93,6 @@ import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
 import org.osgi.service.component.annotations.Component;
@@ -295,15 +294,13 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 		LiferayActionResponse liferayActionResponse =
 			(LiferayActionResponse)actionResponse;
 
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			liferayActionResponse
 		).setMVCRenderCommandName(
 			"/message_boards/view_message"
 		).setParameter(
 			"messageId", message.getMessageId()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	protected String getSaveAndContinueRedirect(
@@ -313,7 +310,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 		LiferayActionResponse liferayActionResponse =
 			(LiferayActionResponse)actionResponse;
 
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			liferayActionResponse
 		).setMVCRenderCommandName(
 			"/message_boards/edit_message"
@@ -326,9 +323,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 			"messageId", message.getMessageId()
 		).setParameter(
 			"preview", ParamUtil.getBoolean(actionRequest, "preview")
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	protected void lockThreads(ActionRequest actionRequest) throws Exception {

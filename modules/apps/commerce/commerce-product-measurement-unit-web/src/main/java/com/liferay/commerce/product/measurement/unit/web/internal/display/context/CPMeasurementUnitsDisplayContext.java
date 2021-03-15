@@ -232,7 +232,7 @@ public class CPMeasurementUnitsDisplayContext {
 	}
 
 	protected String getNavigationItemURL(String toolbarItem, int type) {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCPath(
 			"/view.jsp"
@@ -240,9 +240,7 @@ public class CPMeasurementUnitsDisplayContext {
 			"toolbarItem", toolbarItem
 		).setParameter(
 			"type", type
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	protected RowChecker getRowChecker() {

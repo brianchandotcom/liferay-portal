@@ -89,30 +89,26 @@ public class LayoutSetPrototypeDisplayContext {
 	}
 
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
 			"orderByCol", getOrderByCol()
 		).setParameter(
 			"orderByType", getOrderByType()
-		).build();
-
-		return clearResultsURL.toString();
+		).buildString();
 	}
 
 	public CreationMenu getCreationMenu() throws PortalException {
-		PortletURL addLayoutSetPrototypeRenderURL =
-			PortletURLBuilder.createRenderURL(
-				_renderResponse
-			).setMVCPath(
-				"/edit_layout_set_prototype.jsp"
-			).setRedirect(
-				PortalUtil.getCurrentURL(_httpServletRequest)
-			).build();
-
 		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
-				dropdownItem.setHref(addLayoutSetPrototypeRenderURL.toString());
+				dropdownItem.setHref(
+					PortletURLBuilder.createRenderURL(
+						_renderResponse
+					).setMVCPath(
+						"/edit_layout_set_prototype.jsp"
+					).setRedirect(
+						PortalUtil.getCurrentURL(_httpServletRequest)
+					).buildString());
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "add"));
 			}
@@ -179,15 +175,13 @@ public class LayoutSetPrototypeDisplayContext {
 	}
 
 	public String getSearchActionURL() {
-		PortletURL searchURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
 			"orderByCol", getOrderByCol()
 		).setParameter(
 			"orderByType", getOrderByType()
-		).build();
-
-		return searchURL.toString();
+		).buildString();
 	}
 
 	public SearchContainer<LayoutSetPrototype> getSearchContainer() {
@@ -231,7 +225,7 @@ public class LayoutSetPrototypeDisplayContext {
 	}
 
 	public String getSortingURL() {
-		PortletURL sortingURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
 			"keywords", _getKeywords()
@@ -240,9 +234,7 @@ public class LayoutSetPrototypeDisplayContext {
 		).setParameter(
 			"orderByType",
 			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc"
-		).build();
-
-		return sortingURL.toString();
+		).buildString();
 	}
 
 	public int getTotalItems() throws PortalException {

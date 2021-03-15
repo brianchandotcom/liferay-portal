@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -65,22 +64,19 @@ public class FragmentCollectionResourceActionDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getDeleteFragmentCollectionResourceActionUnsafeConsumer() {
 
-		PortletURL deleteFragmentCollectionResourceURL =
-			PortletURLBuilder.createActionURL(
-				_renderResponse
-			).setActionName(
-				"/fragment/delete_fragment_collection_resources"
-			).setRedirect(
-				_themeDisplay.getURLCurrent()
-			).setParameter(
-				"fileEntryId", _fileEntry.getFileEntryId()
-			).build();
-
 		return dropdownItem -> {
 			dropdownItem.putData("action", "deleteFragmentCollectionResource");
 			dropdownItem.putData(
 				"deleteFragmentCollectionResourceURL",
-				deleteFragmentCollectionResourceURL.toString());
+				PortletURLBuilder.createActionURL(
+					_renderResponse
+				).setActionName(
+					"/fragment/delete_fragment_collection_resources"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"fileEntryId", _fileEntry.getFileEntryId()
+				).buildString());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "delete"));
 		};

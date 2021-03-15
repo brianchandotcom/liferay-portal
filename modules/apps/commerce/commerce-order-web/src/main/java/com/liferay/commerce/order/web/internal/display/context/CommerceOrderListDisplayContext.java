@@ -63,19 +63,19 @@ public class CommerceOrderListDisplayContext {
 		List<ClayDataSetActionDropdownItem> clayDataSetActionDropdownItems =
 			new ArrayList<>();
 
-		PortletURL portletURL = PortletURLBuilder.create(
-			PortletProviderUtil.getPortletURL(
-				_commerceOrderRequestHelper.getRequest(),
-				CommerceOrder.class.getName(), PortletProvider.Action.MANAGE)
-		).setMVCRenderCommandName(
-			"/commerce_order/edit_commerce_order"
-		).setParameter(
-			"commerceOrderId", "{id}"
-		).build();
-
 		clayDataSetActionDropdownItems.add(
 			new ClayDataSetActionDropdownItem(
-				portletURL.toString(), "view", "view",
+				PortletURLBuilder.create(
+					PortletProviderUtil.getPortletURL(
+						_commerceOrderRequestHelper.getRequest(),
+						CommerceOrder.class.getName(),
+						PortletProvider.Action.MANAGE)
+				).setMVCRenderCommandName(
+					"/commerce_order/edit_commerce_order"
+				).setParameter(
+					"commerceOrderId", "{id}"
+				).buildString(),
+				"view", "view",
 				LanguageUtil.get(
 					_commerceOrderRequestHelper.getRequest(), "view"),
 				"get", null, null));

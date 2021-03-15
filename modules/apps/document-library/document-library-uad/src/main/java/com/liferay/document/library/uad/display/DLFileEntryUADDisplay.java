@@ -34,7 +34,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -61,7 +60,7 @@ public class DLFileEntryUADDisplay extends BaseDLFileEntryUADDisplay {
 			return StringPool.BLANK;
 		}
 
-		PortletURL portletURL = PortletURLBuilder.createLiferayPortletURL(
+		return PortletURLBuilder.createLiferayPortletURL(
 			liferayPortletResponse,
 			portal.getControlPanelPlid(liferayPortletRequest),
 			DLPortletKeys.DOCUMENT_LIBRARY_ADMIN, PortletRequest.RENDER_PHASE
@@ -71,9 +70,7 @@ public class DLFileEntryUADDisplay extends BaseDLFileEntryUADDisplay {
 			portal.getCurrentURL(liferayPortletRequest)
 		).setParameter(
 			"fileEntryId", dlFileEntry.getFileEntryId()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Override

@@ -27,7 +27,6 @@ import com.liferay.site.admin.web.internal.util.SiteInitializerItem;
 import java.util.Map;
 import java.util.Objects;
 
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -58,7 +57,7 @@ public class SelectSiteInitializerVerticalCard implements VerticalCard {
 		return HashMapBuilder.put(
 			"data-add-site-url",
 			() -> {
-				PortletURL addSiteURL = PortletURLBuilder.createActionURL(
+				return PortletURLBuilder.createActionURL(
 					_renderResponse
 				).setMVCPath(
 					"/select_layout_set_prototype_entry.jsp"
@@ -72,9 +71,7 @@ public class SelectSiteInitializerVerticalCard implements VerticalCard {
 				).setParameter(
 					"siteInitializerKey",
 					_siteInitializerItem.getSiteInitializerKey()
-				).build();
-
-				return addSiteURL.toString();
+				).buildString();
 			}
 		).put(
 			"data-checkbox-field-name",

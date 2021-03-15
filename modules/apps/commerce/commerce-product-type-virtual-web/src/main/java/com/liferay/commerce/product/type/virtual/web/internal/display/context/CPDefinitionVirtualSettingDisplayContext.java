@@ -249,7 +249,7 @@ public class CPDefinitionVirtualSettingDisplayContext
 	}
 
 	public String getTermsOfUseJournalArticleBrowserURL() throws Exception {
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletProviderUtil.getPortletURL(
 				httpServletRequest, JournalArticle.class.getName(),
 				PortletProvider.Action.BROWSE)
@@ -269,9 +269,7 @@ public class CPDefinitionVirtualSettingDisplayContext
 			PortletMode.VIEW
 		).setWindowState(
 			LiferayWindowState.POP_UP
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	protected long[] getSelectedGroupIds() {

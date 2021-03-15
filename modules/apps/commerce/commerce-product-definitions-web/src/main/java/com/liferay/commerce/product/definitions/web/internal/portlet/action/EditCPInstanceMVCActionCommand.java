@@ -63,7 +63,6 @@ import java.util.concurrent.Callable;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -177,7 +176,7 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletProviderUtil.getPortletURL(
 				actionRequest, themeDisplay.getScopeGroup(),
 				CPDefinition.class.getName(), PortletProvider.Action.EDIT)
@@ -189,9 +188,7 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 			"cpInstanceId", cpInstance.getCPInstanceId()
 		).setWindowState(
 			LiferayWindowState.POP_UP
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	protected CPInstance updateCPInstance(ActionRequest actionRequest)

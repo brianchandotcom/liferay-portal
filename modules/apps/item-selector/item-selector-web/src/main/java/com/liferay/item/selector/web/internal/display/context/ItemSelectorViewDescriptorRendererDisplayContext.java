@@ -160,19 +160,18 @@ public class ItemSelectorViewDescriptorRendererDisplayContext {
 			PortletURL currentURL)
 		throws PortletException {
 
-		PortletURL viewGroupSelectorURL = PortletURLBuilder.create(
-			PortletURLUtil.clone(currentURL, _liferayPortletResponse)
-		).setParameter(
-			"groupType", "site"
-		).setParameter(
-			"showGroupSelector", Boolean.TRUE.toString()
-		).build();
-
 		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
 		breadcrumbEntry.setTitle(
 			LanguageUtil.get(_httpServletRequest, "sites-and-libraries"));
-		breadcrumbEntry.setURL(viewGroupSelectorURL.toString());
+		breadcrumbEntry.setURL(
+			PortletURLBuilder.create(
+				PortletURLUtil.clone(currentURL, _liferayPortletResponse)
+			).setParameter(
+				"groupType", "site"
+			).setParameter(
+				"showGroupSelector", Boolean.TRUE.toString()
+			).buildString());
 
 		return breadcrumbEntry;
 	}

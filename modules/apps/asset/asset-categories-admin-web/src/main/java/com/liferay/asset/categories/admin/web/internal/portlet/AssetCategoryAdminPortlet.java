@@ -73,7 +73,6 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -474,15 +473,13 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 	private String _getRedirectURL(
 		ActionResponse actionResponse, AssetVocabulary vocabulary) {
 
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_portal.getLiferayPortletResponse(actionResponse)
 		).setMVCPath(
 			"/view.jsp"
 		).setParameter(
 			"vocabularyId", vocabulary.getVocabularyId()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	private AssetCategoriesAdminWebConfiguration

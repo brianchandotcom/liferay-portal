@@ -48,7 +48,6 @@ import java.util.Objects;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -196,7 +195,7 @@ public class PortletPermissionsPortletConfigurationIcon
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletProviderUtil.getPortletURL(
 				portletRequest,
 				PortletConfigurationApplicationType.PortletConfiguration.
@@ -217,9 +216,7 @@ public class PortletPermissionsPortletConfigurationIcon
 				themeDisplay.getPlid(), portletDisplay.getId())
 		).setWindowState(
 			LiferayWindowState.POP_UP
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	private static final boolean _STAGING_LIVE_GROUP_LOCKING_ENABLED =

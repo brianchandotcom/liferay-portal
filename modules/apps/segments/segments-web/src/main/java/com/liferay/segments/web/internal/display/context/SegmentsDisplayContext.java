@@ -102,13 +102,11 @@ public class SegmentsDisplayContext {
 	}
 
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_getPortletURL()
 		).setParameter(
 			"keywords", StringPool.BLANK
-		).build();
-
-		return clearResultsURL.toString();
+		).buildString();
 	}
 
 	public CreationMenu getCreationMenu() {
@@ -242,7 +240,7 @@ public class SegmentsDisplayContext {
 				segmentsEntry.getSegmentsEntryKey();
 		}
 
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCRenderCommandName(
 			"/segments/edit_segments_entry"
@@ -252,9 +250,7 @@ public class SegmentsDisplayContext {
 			"segmentsEntryId", segmentsEntry.getSegmentsEntryId()
 		).setParameter(
 			"showInEditMode", Boolean.FALSE.toString()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public String getSegmentsEntryURLTarget(SegmentsEntry segmentsEntry) {
@@ -269,14 +265,12 @@ public class SegmentsDisplayContext {
 	}
 
 	public String getSortingURL() {
-		PortletURL sortingURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_getPortletURL()
 		).setParameter(
 			"orderByType",
 			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc"
-		).build();
-
-		return sortingURL.toString();
+		).buildString();
 	}
 
 	public int getTotalItems() throws PortalException {

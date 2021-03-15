@@ -98,15 +98,14 @@ public class PasswordPolicyDisplayContext {
 			navigationItem -> {
 				navigationItem.setActive(tabs1.equals("details"));
 
-				PortletURL detailsURL = PortletURLBuilder.create(
-					PortletURLUtil.clone(portletURL, _renderResponse)
-				).setMVCPath(
-					"/edit_password_policy.jsp"
-				).setParameter(
-					"tabs1", "details"
-				).build();
-
-				navigationItem.setHref(detailsURL.toString());
+				navigationItem.setHref(
+					PortletURLBuilder.create(
+						PortletURLUtil.clone(portletURL, _renderResponse)
+					).setMVCPath(
+						"/edit_password_policy.jsp"
+					).setParameter(
+						"tabs1", "details"
+					).buildString());
 
 				navigationItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "details"));
@@ -116,15 +115,14 @@ public class PasswordPolicyDisplayContext {
 			navigationItem -> {
 				navigationItem.setActive(tabs1.equals("assignees"));
 
-				PortletURL assigneesURL = PortletURLBuilder.create(
-					PortletURLUtil.clone(portletURL, _renderResponse)
-				).setMVCPath(
-					"/edit_password_policy_assignments.jsp"
-				).setParameter(
-					"tabs1", "assignees"
-				).build();
-
-				navigationItem.setHref(assigneesURL.toString());
+				navigationItem.setHref(
+					PortletURLBuilder.create(
+						PortletURLUtil.clone(portletURL, _renderResponse)
+					).setMVCPath(
+						"/edit_password_policy_assignments.jsp"
+					).setParameter(
+						"tabs1", "assignees"
+					).buildString());
 
 				navigationItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "assignees"));

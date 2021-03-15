@@ -43,7 +43,6 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -224,15 +223,15 @@ public class EditPublishConfigurationMVCActionCommand
 		ActionRequest actionRequest, ActionResponse actionResponse,
 		long backgroundTaskId) {
 
-		PortletURL renderURL = PortletURLBuilder.createRenderURL(
-			portal.getLiferayPortletResponse(actionResponse)
-		).setMVCPath(
-			"/view_export_import.jsp"
-		).setParameter(
-			"backgroundTaskId", backgroundTaskId
-		).build();
-
-		actionRequest.setAttribute(WebKeys.REDIRECT, renderURL.toString());
+		actionRequest.setAttribute(
+			WebKeys.REDIRECT,
+			PortletURLBuilder.createRenderURL(
+				portal.getLiferayPortletResponse(actionResponse)
+			).setMVCPath(
+				"/view_export_import.jsp"
+			).setParameter(
+				"backgroundTaskId", backgroundTaskId
+			).buildString());
 	}
 
 	protected ExportImportConfiguration updatePublishConfiguration(

@@ -111,7 +111,6 @@ import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
@@ -1006,21 +1005,21 @@ public class ContactsCenterPortlet extends MVCPortlet {
 			"redirect", redirect
 		);
 
-		PortletURL viewSummaryURL = PortletURLBuilder.createRenderURL(
-			portal.getLiferayPortletResponse(portletResponse)
-		).setMVCPath(
-			"/contacts_center/view_resources.jsp"
-		).setRedirect(
-			redirect
-		).setParameter(
-			"entryId", entry.getEntryId()
-		).setParameter(
-			"portalUser", Boolean.FALSE.toString()
-		).setWindowState(
-			LiferayWindowState.EXCLUSIVE
-		).build();
-
-		jsonObject.put("viewSummaryURL", viewSummaryURL.toString());
+		jsonObject.put(
+			"viewSummaryURL",
+			PortletURLBuilder.createRenderURL(
+				portal.getLiferayPortletResponse(portletResponse)
+			).setMVCPath(
+				"/contacts_center/view_resources.jsp"
+			).setRedirect(
+				redirect
+			).setParameter(
+				"entryId", entry.getEntryId()
+			).setParameter(
+				"portalUser", Boolean.FALSE.toString()
+			).setWindowState(
+				LiferayWindowState.EXCLUSIVE
+			).buildString());
 
 		return jsonObject;
 	}
@@ -1102,19 +1101,19 @@ public class ContactsCenterPortlet extends MVCPortlet {
 
 		jsonObject.put("portraitURL", user.getPortraitURL(themeDisplay));
 
-		PortletURL viewSummaryURL = PortletURLBuilder.createRenderURL(
-			portal.getLiferayPortletResponse(portletResponse)
-		).setMVCPath(
-			"/contacts_center/view_resources.jsp"
-		).setParameter(
-			"userId", user.getUserId()
-		).setParameter(
-			"portalUser", Boolean.TRUE.toString()
-		).setWindowState(
-			LiferayWindowState.EXCLUSIVE
-		).build();
-
-		jsonObject.put("viewSummaryURL", viewSummaryURL.toString());
+		jsonObject.put(
+			"viewSummaryURL",
+			PortletURLBuilder.createRenderURL(
+				portal.getLiferayPortletResponse(portletResponse)
+			).setMVCPath(
+				"/contacts_center/view_resources.jsp"
+			).setParameter(
+				"userId", user.getUserId()
+			).setParameter(
+				"portalUser", Boolean.TRUE.toString()
+			).setWindowState(
+				LiferayWindowState.EXCLUSIVE
+			).buildString());
 
 		return jsonObject;
 	}

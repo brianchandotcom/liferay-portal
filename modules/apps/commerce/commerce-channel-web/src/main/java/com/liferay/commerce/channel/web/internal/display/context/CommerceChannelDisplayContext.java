@@ -153,7 +153,7 @@ public class CommerceChannelDisplayContext
 	}
 
 	public String getAddChannelURL() throws Exception {
-		PortletURL editCommerceChannelPortletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				httpServletRequest, CPPortletKeys.COMMERCE_CHANNELS,
 				PortletRequest.RENDER_PHASE)
@@ -167,15 +167,13 @@ public class CommerceChannelDisplayContext
 			}
 		).setWindowState(
 			LiferayWindowState.POP_UP
-		).build();
-
-		return editCommerceChannelPortletURL.toString();
+		).buildString();
 	}
 
 	public String getAddPaymentMethodURL(String commercePaymentMethodEngineKey)
 		throws Exception {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletProviderUtil.getPortletURL(
 				httpServletRequest,
 				CommercePaymentMethodGroupRel.class.getName(),
@@ -188,9 +186,7 @@ public class CommerceChannelDisplayContext
 			"commercePaymentMethodEngineKey", commercePaymentMethodEngineKey
 		).setWindowState(
 			LiferayWindowState.POP_UP
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public String getChannelURL(CommerceChannel commerceChannel)

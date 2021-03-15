@@ -102,7 +102,7 @@ public class CommerceInventoryReplenishmentClayDataSetActionProvider
 			httpServletRequest, "currentUrl",
 			_portal.getCurrentURL(httpServletRequest));
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				_portal.getOriginalServletRequest(httpServletRequest),
 				CPPortletKeys.COMMERCE_INVENTORY, PortletRequest.ACTION_PHASE)
@@ -115,9 +115,7 @@ public class CommerceInventoryReplenishmentClayDataSetActionProvider
 		).setParameter(
 			"commerceInventoryReplenishmentItemId",
 			commerceInventoryReplenishmentItemId
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	private String _getReplenishmentEditURL(

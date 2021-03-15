@@ -50,7 +50,6 @@ import java.util.List;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -94,28 +93,27 @@ public class BookmarksPortletToolbarContributor
 			LanguageUtil.get(
 				_portal.getHttpServletRequest(portletRequest), "bookmark"));
 
-		PortletURL portletURL = PortletURLBuilder.create(
-			_portal.getControlPanelPortletURL(
-				portletRequest, themeDisplay.getScopeGroup(),
-				BookmarksPortletKeys.BOOKMARKS_ADMIN, 0, 0,
-				PortletRequest.RENDER_PHASE)
-		).setMVCRenderCommandName(
-			"/bookmarks/edit_entry"
-		).setRedirect(
-			_portal.getCurrentURL(portletRequest)
-		).setParameter(
-			"portletResource",
-			() -> {
-				PortletDisplay portletDisplay =
-					themeDisplay.getPortletDisplay();
+		urlMenuItem.setURL(
+			PortletURLBuilder.create(
+				_portal.getControlPanelPortletURL(
+					portletRequest, themeDisplay.getScopeGroup(),
+					BookmarksPortletKeys.BOOKMARKS_ADMIN, 0, 0,
+					PortletRequest.RENDER_PHASE)
+			).setMVCRenderCommandName(
+				"/bookmarks/edit_entry"
+			).setRedirect(
+				_portal.getCurrentURL(portletRequest)
+			).setParameter(
+				"portletResource",
+				() -> {
+					PortletDisplay portletDisplay =
+						themeDisplay.getPortletDisplay();
 
-				return portletDisplay.getId();
-			}
-		).setParameter(
-			"folderId", folderId
-		).build();
-
-		urlMenuItem.setURL(portletURL.toString());
+					return portletDisplay.getId();
+				}
+			).setParameter(
+				"folderId", folderId
+			).buildString());
 
 		menuItems.add(urlMenuItem);
 	}
@@ -141,28 +139,27 @@ public class BookmarksPortletToolbarContributor
 			LanguageUtil.get(
 				_portal.getHttpServletRequest(portletRequest), "folder"));
 
-		PortletURL portletURL = PortletURLBuilder.create(
-			_portal.getControlPanelPortletURL(
-				portletRequest, themeDisplay.getScopeGroup(),
-				BookmarksPortletKeys.BOOKMARKS_ADMIN, 0, 0,
-				PortletRequest.RENDER_PHASE)
-		).setMVCRenderCommandName(
-			"/bookmarks/edit_folder"
-		).setRedirect(
-			_portal.getCurrentURL(portletRequest)
-		).setParameter(
-			"portletResource",
-			() -> {
-				PortletDisplay portletDisplay =
-					themeDisplay.getPortletDisplay();
+		urlMenuItem.setURL(
+			PortletURLBuilder.create(
+				_portal.getControlPanelPortletURL(
+					portletRequest, themeDisplay.getScopeGroup(),
+					BookmarksPortletKeys.BOOKMARKS_ADMIN, 0, 0,
+					PortletRequest.RENDER_PHASE)
+			).setMVCRenderCommandName(
+				"/bookmarks/edit_folder"
+			).setRedirect(
+				_portal.getCurrentURL(portletRequest)
+			).setParameter(
+				"portletResource",
+				() -> {
+					PortletDisplay portletDisplay =
+						themeDisplay.getPortletDisplay();
 
-				return portletDisplay.getId();
-			}
-		).setParameter(
-			"parentFolderId", folderId
-		).build();
-
-		urlMenuItem.setURL(portletURL.toString());
+					return portletDisplay.getId();
+				}
+			).setParameter(
+				"parentFolderId", folderId
+			).buildString());
 
 		menuItems.add(urlMenuItem);
 	}

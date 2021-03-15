@@ -101,19 +101,18 @@ public class UserActionDropdownItemsProvider {
 
 		assignRolesURL.setWindowState(LiferayWindowState.POP_UP);
 
-		PortletURL editUserGroupRoleURL = PortletURLBuilder.createActionURL(
-			_renderResponse
-		).setActionName(
-			"editUserGroupRole"
-		).setParameter(
-			"p_u_i_d", _user.getUserId()
-		).build();
-
 		return dropdownItem -> {
 			dropdownItem.putData("action", "assignRoles");
 			dropdownItem.putData("assignRolesURL", assignRolesURL.toString());
 			dropdownItem.putData(
-				"editUserGroupRoleURL", editUserGroupRoleURL.toString());
+				"editUserGroupRoleURL",
+				PortletURLBuilder.createActionURL(
+					_renderResponse
+				).setActionName(
+					"editUserGroupRole"
+				).setParameter(
+					"p_u_i_d", _user.getUserId()
+				).buildString());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "assign-roles"));
 		};
@@ -122,22 +121,21 @@ public class UserActionDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getDeleteGroupUsersActionUnsafeConsumer() {
 
-		PortletURL deleteGroupUsersURL = PortletURLBuilder.createActionURL(
-			_renderResponse
-		).setActionName(
-			"deleteGroupUsers"
-		).setRedirect(
-			_themeDisplay.getURLCurrent()
-		).setParameter(
-			"groupId", _themeDisplay.getSiteGroupIdOrLiveGroupId()
-		).setParameter(
-			"removeUserId", _user.getUserId()
-		).build();
-
 		return dropdownItem -> {
 			dropdownItem.putData("action", "deleteGroupUsers");
 			dropdownItem.putData(
-				"deleteGroupUsersURL", deleteGroupUsersURL.toString());
+				"deleteGroupUsersURL",
+				PortletURLBuilder.createActionURL(
+					_renderResponse
+				).setActionName(
+					"deleteGroupUsers"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"groupId", _themeDisplay.getSiteGroupIdOrLiveGroupId()
+				).setParameter(
+					"removeUserId", _user.getUserId()
+				).buildString());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "remove-membership"));
 		};

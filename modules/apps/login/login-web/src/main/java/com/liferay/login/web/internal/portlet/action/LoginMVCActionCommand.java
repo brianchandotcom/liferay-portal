@@ -103,14 +103,13 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, "doActionAfterLogin");
 
 			if (doActionAfterLogin) {
-				PortletURL renderURL = PortletURLBuilder.createRenderURL(
-					_portal.getLiferayPortletResponse(actionResponse)
-				).setMVCRenderCommandName(
-					"/login/login_redirect"
-				).build();
-
 				actionRequest.setAttribute(
-					WebKeys.REDIRECT, renderURL.toString());
+					WebKeys.REDIRECT,
+					PortletURLBuilder.createRenderURL(
+						_portal.getLiferayPortletResponse(actionResponse)
+					).setMVCRenderCommandName(
+						"/login/login_redirect"
+					).buildString());
 			}
 		}
 		catch (Exception exception) {

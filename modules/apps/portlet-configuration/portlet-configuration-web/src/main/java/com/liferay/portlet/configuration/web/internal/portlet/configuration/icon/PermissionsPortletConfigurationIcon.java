@@ -42,7 +42,6 @@ import com.liferay.portlet.configuration.kernel.util.PortletConfigurationApplica
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -71,7 +70,7 @@ public class PermissionsPortletConfigurationIcon
 
 			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-			PortletURL portletURL = PortletURLBuilder.create(
+			return PortletURLBuilder.create(
 				PortletProviderUtil.getPortletURL(
 					portletRequest,
 					PortletConfigurationApplicationType.PortletConfiguration.
@@ -92,9 +91,7 @@ public class PermissionsPortletConfigurationIcon
 					themeDisplay.getPlid(), portletDisplay.getId())
 			).setWindowState(
 				LiferayWindowState.POP_UP
-			).build();
-
-			return portletURL.toString();
+			).buildString();
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

@@ -28,7 +28,6 @@ import com.liferay.portal.search.web.internal.result.display.context.SearchResul
 
 import java.util.Locale;
 
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -102,16 +101,14 @@ public class SearchResultContentDisplayBuilder {
 
 				searchResultContentDisplayContext.setIconEditTarget(title);
 
-				PortletURL editPortletURL = PortletURLBuilder.create(
-					assetRenderer.getURLEdit(
-						_portal.getLiferayPortletRequest(_renderRequest),
-						_portal.getLiferayPortletResponse(_renderResponse))
-				).setRedirect(
-					themeDisplay.getURLCurrent()
-				).build();
-
 				searchResultContentDisplayContext.setIconURLString(
-					editPortletURL.toString());
+					PortletURLBuilder.create(
+						assetRenderer.getURLEdit(
+							_portal.getLiferayPortletRequest(_renderRequest),
+							_portal.getLiferayPortletResponse(_renderResponse))
+					).setRedirect(
+						themeDisplay.getURLCurrent()
+					).buildString());
 			}
 		}
 

@@ -32,7 +32,6 @@ import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -60,16 +59,14 @@ public class ViewMembershipRequestsPortletConfigurationIcon
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				portletRequest,
 				SiteMembershipsPortletKeys.SITE_MEMBERSHIPS_ADMIN,
 				PortletRequest.RENDER_PHASE)
 		).setMVCPath(
 			"/view_membership_requests.jsp"
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Override

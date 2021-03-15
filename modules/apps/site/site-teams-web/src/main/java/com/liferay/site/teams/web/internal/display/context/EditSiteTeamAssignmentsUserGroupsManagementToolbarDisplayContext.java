@@ -73,13 +73,11 @@ public class EditSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
 			"keywords", StringPool.BLANK
-		).build();
-
-		return clearResultsURL.toString();
+		).buildString();
 	}
 
 	@Override
@@ -98,7 +96,8 @@ public class EditSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext
 						(ThemeDisplay)httpServletRequest.getAttribute(
 							WebKeys.THEME_DISPLAY);
 
-					PortletURL selectUserGroupURL =
+					dropdownItem.putData(
+						"selectUserGroupURL",
 						PortletURLBuilder.createRenderURL(
 							liferayPortletResponse
 						).setMVCPath(
@@ -111,10 +110,7 @@ public class EditSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext
 								getTeamId()
 						).setWindowState(
 							LiferayWindowState.POP_UP
-						).build();
-
-					dropdownItem.putData(
-						"selectUserGroupURL", selectUserGroupURL.toString());
+						).buildString());
 
 					String title = LanguageUtil.format(
 						httpServletRequest, "add-new-user-group-to-x",

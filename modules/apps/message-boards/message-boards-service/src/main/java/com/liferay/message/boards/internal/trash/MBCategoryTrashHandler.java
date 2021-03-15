@@ -156,13 +156,11 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 
 		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getRestoreURL(portletRequest, classPK)
 		).setParameter(
 			"mbCategoryId", category.getCategoryId()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Override
@@ -172,13 +170,11 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 
 		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getRestoreURL(portletRequest, classPK)
 		).setParameter(
 			"mbCategoryId", category.getParentCategoryId()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Override

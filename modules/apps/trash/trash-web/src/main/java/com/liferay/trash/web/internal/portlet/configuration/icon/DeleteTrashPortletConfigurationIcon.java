@@ -29,7 +29,6 @@ import com.liferay.trash.web.internal.display.context.TrashDisplayContext;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -63,7 +62,7 @@ public class DeleteTrashPortletConfigurationIcon
 				_portal.getLiferayPortletRequest(portletRequest),
 				_portal.getLiferayPortletResponse(portletResponse));
 
-			PortletURL deleteURL = PortletURLBuilder.create(
+			return PortletURLBuilder.create(
 				_portal.getControlPanelPortletURL(
 					portletRequest, TrashPortletKeys.TRASH,
 					PortletRequest.ACTION_PHASE)
@@ -75,9 +74,7 @@ public class DeleteTrashPortletConfigurationIcon
 				"className", trashDisplayContext.getClassName()
 			).setParameter(
 				"classPK", trashDisplayContext.getClassPK()
-			).build();
-
-			return deleteURL.toString();
+			).buildString();
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

@@ -102,15 +102,13 @@ public class CommerceCatalogDisplayContext {
 	}
 
 	public String getAddCommerceCatalogRenderURL() throws Exception {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			cpRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
 			"/commerce_catalogs/add_commerce_catalog"
 		).setWindowState(
 			LiferayWindowState.POP_UP
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public CommercePriceList getBaseCommercePriceList(String type)
@@ -204,7 +202,7 @@ public class CommerceCatalogDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				cpRequestHelper.getRequest(), CPPortletKeys.COMMERCE_CATALOGS,
 				PortletRequest.ACTION_PHASE)
@@ -216,9 +214,7 @@ public class CommerceCatalogDisplayContext {
 			"commerceCatalogId", commerceCatalog.getCommerceCatalogId()
 		).setWindowState(
 			LiferayWindowState.POP_UP
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public PortletURL getEditCommerceCatalogRenderURL() {

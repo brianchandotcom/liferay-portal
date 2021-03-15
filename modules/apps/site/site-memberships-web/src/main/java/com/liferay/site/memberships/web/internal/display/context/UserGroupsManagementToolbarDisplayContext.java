@@ -108,18 +108,15 @@ public class UserGroupsManagementToolbarDisplayContext
 							dropdownItem -> {
 								dropdownItem.putData("action", "selectRole");
 
-								PortletURL editUserGroupsRolesURL =
+								dropdownItem.putData(
+									"editUserGroupsRolesURL",
 									PortletURLBuilder.createActionURL(
 										liferayPortletResponse
 									).setActionName(
 										"editUserGroupsRoles"
 									).setParameter(
 										"tabs1", "user-groups"
-									).build();
-
-								dropdownItem.putData(
-									"editUserGroupsRolesURL",
-									editUserGroupsRolesURL.toString());
+									).buildString());
 
 								dropdownItem.putData(
 									"selectRoleURL",
@@ -152,17 +149,14 @@ public class UserGroupsManagementToolbarDisplayContext
 											role.getTitle(
 												themeDisplay.getLocale())));
 
-									PortletURL removeUserGroupRoleURL =
+									dropdownItem.putData(
+										"removeUserGroupRoleURL",
 										PortletURLBuilder.create(
 											liferayPortletResponse.
 												createActionURL()
 										).setActionName(
 											"removeUserGroupRole"
-										).build();
-
-									dropdownItem.putData(
-										"removeUserGroupRoleURL",
-										removeUserGroupRoleURL.toString());
+										).buildString());
 
 									dropdownItem.setIcon("remove-role");
 									dropdownItem.setLabel(label);
@@ -182,7 +176,7 @@ public class UserGroupsManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
 			"navigation", "all"
@@ -190,9 +184,7 @@ public class UserGroupsManagementToolbarDisplayContext
 			"keywords", StringPool.BLANK
 		).setParameter(
 			"roleId", "0"
-		).build();
-
-		return clearResultsURL.toString();
+		).buildString();
 	}
 
 	@Override
@@ -203,14 +195,6 @@ public class UserGroupsManagementToolbarDisplayContext
 	@Override
 	public CreationMenu getCreationMenu() {
 		try {
-			PortletURL selectUserGroupsURL = PortletURLBuilder.createRenderURL(
-				liferayPortletResponse
-			).setMVCPath(
-				"/select_user_groups.jsp"
-			).setWindowState(
-				LiferayWindowState.POP_UP
-			).build();
-
 			return CreationMenuBuilder.addDropdownItem(
 				dropdownItem -> {
 					dropdownItem.putData("action", "selectUserGroups");
@@ -226,7 +210,14 @@ public class UserGroupsManagementToolbarDisplayContext
 							themeDisplay.getLocale()));
 
 					dropdownItem.putData(
-						"selectUserGroupsURL", selectUserGroupsURL.toString());
+						"selectUserGroupsURL",
+						PortletURLBuilder.createRenderURL(
+							liferayPortletResponse
+						).setMVCPath(
+							"/select_user_groups.jsp"
+						).setWindowState(
+							LiferayWindowState.POP_UP
+						).buildString());
 					dropdownItem.setLabel(
 						LanguageUtil.get(httpServletRequest, "add"));
 				}
@@ -252,13 +243,14 @@ public class UserGroupsManagementToolbarDisplayContext
 		return LabelItemListBuilder.add(
 			() -> role != null,
 			labelItem -> {
-				PortletURL removeLabelURL = PortletURLBuilder.create(
-					PortletURLUtil.clone(currentURLObj, liferayPortletResponse)
-				).setParameter(
-					"roleId", "0"
-				).build();
-
-				labelItem.putData("removeLabelURL", removeLabelURL.toString());
+				labelItem.putData(
+					"removeLabelURL",
+					PortletURLBuilder.create(
+						PortletURLUtil.clone(
+							currentURLObj, liferayPortletResponse)
+					).setParameter(
+						"roleId", "0"
+					).buildString());
 
 				labelItem.setCloseable(true);
 
@@ -330,21 +322,21 @@ public class UserGroupsManagementToolbarDisplayContext
 					(ThemeDisplay)httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
-				PortletURL viewRoleURL = PortletURLBuilder.createRenderURL(
-					liferayPortletResponse
-				).setMVCPath(
-					"/view.jsp"
-				).setRedirect(
-					themeDisplay.getURLCurrent()
-				).setParameter(
-					"tabs1", "user-groups"
-				).setParameter(
-					"navigation", "roles"
-				).setParameter(
-					"groupId", _userGroupsDisplayContext.getGroupId()
-				).build();
-
-				dropdownItem.putData("viewRoleURL", viewRoleURL.toString());
+				dropdownItem.putData(
+					"viewRoleURL",
+					PortletURLBuilder.createRenderURL(
+						liferayPortletResponse
+					).setMVCPath(
+						"/view.jsp"
+					).setRedirect(
+						themeDisplay.getURLCurrent()
+					).setParameter(
+						"tabs1", "user-groups"
+					).setParameter(
+						"navigation", "roles"
+					).setParameter(
+						"groupId", _userGroupsDisplayContext.getGroupId()
+					).buildString());
 
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "roles"));

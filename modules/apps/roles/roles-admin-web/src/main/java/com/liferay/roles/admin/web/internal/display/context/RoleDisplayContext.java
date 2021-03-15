@@ -226,7 +226,7 @@ public class RoleDisplayContext {
 		return HashMapBuilder.put(
 			"assignees",
 			() -> {
-				PortletURL assignMembersURL = PortletURLBuilder.createRenderURL(
+				return PortletURLBuilder.createRenderURL(
 					_renderResponse
 				).setMVCPath(
 					"/edit_role_assignments.jsp"
@@ -238,36 +238,31 @@ public class RoleDisplayContext {
 					"backURL", backURL
 				).setParameter(
 					"roleId", role.getRoleId()
-				).build();
-
-				return assignMembersURL.toString();
+				).buildString();
 			}
 		).put(
 			"define-permissions",
 			() -> {
-				PortletURL definePermissionsURL =
-					PortletURLBuilder.createRenderURL(
-						_renderResponse
-					).setMVCPath(
-						"/edit_role_permissions.jsp"
-					).setRedirect(
-						redirect
-					).setParameter(
-						"tabs1", "define-permissions"
-					).setParameter(
-						"backURL", backURL
-					).setParameter(
-						Constants.CMD, Constants.VIEW
-					).setParameter(
-						"roleId", role.getRoleId()
-					).build();
-
-				return definePermissionsURL.toString();
+				return PortletURLBuilder.createRenderURL(
+					_renderResponse
+				).setMVCPath(
+					"/edit_role_permissions.jsp"
+				).setRedirect(
+					redirect
+				).setParameter(
+					"tabs1", "define-permissions"
+				).setParameter(
+					"backURL", backURL
+				).setParameter(
+					Constants.CMD, Constants.VIEW
+				).setParameter(
+					"roleId", role.getRoleId()
+				).buildString();
 			}
 		).put(
 			"details",
 			() -> {
-				PortletURL editRoleURL = PortletURLBuilder.createRenderURL(
+				return PortletURLBuilder.createRenderURL(
 					_renderResponse
 				).setMVCPath(
 					"/edit_role.jsp"
@@ -279,9 +274,7 @@ public class RoleDisplayContext {
 					"backURL", backURL
 				).setParameter(
 					"roleId", role.getRoleId()
-				).build();
-
-				return editRoleURL.toString();
+				).buildString();
 			}
 		).build();
 	}

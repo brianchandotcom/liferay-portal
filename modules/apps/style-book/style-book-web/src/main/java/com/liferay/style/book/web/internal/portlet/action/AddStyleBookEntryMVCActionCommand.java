@@ -34,7 +34,6 @@ import com.liferay.style.book.web.internal.handler.StyleBookEntryExceptionReques
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -85,15 +84,13 @@ public class AddStyleBookEntryMVCActionCommand extends BaseMVCActionCommand {
 	protected String getRedirectURL(
 		ActionResponse actionResponse, StyleBookEntry styleBookEntry) {
 
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_portal.getLiferayPortletResponse(actionResponse)
 		).setMVCRenderCommandName(
 			"/style_book/edit_style_book_entry"
 		).setParameter(
 			"styleBookEntryId", styleBookEntry.getStyleBookEntryId()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	private StyleBookEntry _addStyleBookEntry(ActionRequest actionRequest)

@@ -46,13 +46,11 @@ public class RoleItemSelectorViewDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
 			"keywords", (String)null
-		).build();
-
-		return clearResultsURL.toString();
+		).buildString();
 	}
 
 	public String getItemSelectedEventName() {

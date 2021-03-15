@@ -85,7 +85,7 @@ public class CommerceAddressDisplayContext {
 	}
 
 	public String getAddCommerceAddressURL() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setMVCRenderCommandName(
 			"/commerce_address_content/edit_commerce_address"
@@ -97,9 +97,7 @@ public class CommerceAddressDisplayContext {
 
 				return themeDisplay.getURLCurrent();
 			}
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public CommerceAccount getCommerceAccount() throws PortalException {
@@ -150,7 +148,7 @@ public class CommerceAddressDisplayContext {
 	}
 
 	public String getDeleteCommerceAddressURL(long commerceAddressId) {
-		PortletURL portletURL = PortletURLBuilder.createActionURL(
+		return PortletURLBuilder.createActionURL(
 			_liferayPortletResponse
 		).setActionName(
 			"/commerce_address_content/edit_commerce_address"
@@ -166,9 +164,7 @@ public class CommerceAddressDisplayContext {
 			Constants.CMD, Constants.DELETE
 		).setParameter(
 			"commerceAddressId", commerceAddressId
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public String getDisplayStyle() {
@@ -197,7 +193,7 @@ public class CommerceAddressDisplayContext {
 	}
 
 	public String getEditCommerceAddressURL(long commerceAddressId) {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setMVCRenderCommandName(
 			"/commerce_address_content/edit_commerce_address"
@@ -205,9 +201,7 @@ public class CommerceAddressDisplayContext {
 			String.valueOf(_liferayPortletResponse.createRenderURL())
 		).setParameter(
 			"commerceAddressId", commerceAddressId
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public PortletURL getPortletURL() throws PortalException {

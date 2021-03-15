@@ -129,13 +129,11 @@ public class DDLViewRecordsDisplayContext {
 	}
 
 	public String getClearResultsURL() throws PortletException {
-		PortletURL clearResultsURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletURLUtil.clone(getPortletURL(), _liferayPortletResponse)
 		).setParameter(
 			"keywords", StringPool.BLANK
-		).build();
-
-		return clearResultsURL.toString();
+		).buildString();
 	}
 
 	public CreationMenu getCreationMenu() throws PortalException {
@@ -375,7 +373,7 @@ public class DDLViewRecordsDisplayContext {
 	}
 
 	public String getSearchActionURL() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setMVCPath(
 			getMVCPath()
@@ -383,9 +381,7 @@ public class DDLViewRecordsDisplayContext {
 			PortalUtil.getCurrentURL(_liferayPortletRequest)
 		).setParameter(
 			"recordSetId", _ddlRecordSet.getRecordSetId()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public String getSearchContainerId() {
@@ -393,7 +389,7 @@ public class DDLViewRecordsDisplayContext {
 	}
 
 	public String getSortingURL() throws Exception {
-		PortletURL sortingURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletURLUtil.clone(getPortletURL(), _liferayPortletResponse)
 		).setParameter(
 			"orderByType",
@@ -403,9 +399,7 @@ public class DDLViewRecordsDisplayContext {
 
 				return orderByType.equals("asc") ? "desc" : "asc";
 			}
-		).build();
-
-		return sortingURL.toString();
+		).buildString();
 	}
 
 	public int getTotalItems() throws PortalException {

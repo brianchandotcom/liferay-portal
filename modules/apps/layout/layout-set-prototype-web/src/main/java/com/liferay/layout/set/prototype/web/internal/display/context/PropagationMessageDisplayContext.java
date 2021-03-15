@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -68,24 +67,21 @@ public class PropagationMessageDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"enableDisablePropagationURL",
 			() -> {
-				PortletURL enableDisableLayoutSetPrototypePropagationURL =
-					PortletURLBuilder.create(
-						PortletURLFactoryUtil.create(
-							_httpServletRequest,
-							LayoutSetPrototypePortletKeys.LAYOUT_SET_PROTOTYPE,
-							PortletRequest.ACTION_PHASE)
-					).setActionName(
-						"updateLayoutSetPrototypeAction"
-					).setRedirect(
-						PortalUtil.getLayoutURL(themeDisplay)
-					).setParameter(
-						"layoutSetPrototypeId",
-						layoutSetPrototype.getLayoutSetPrototypeId()
-					).setParameter(
-						"readyForPropagation", !readyForPropagation
-					).build();
-
-				return enableDisableLayoutSetPrototypePropagationURL.toString();
+				return PortletURLBuilder.create(
+					PortletURLFactoryUtil.create(
+						_httpServletRequest,
+						LayoutSetPrototypePortletKeys.LAYOUT_SET_PROTOTYPE,
+						PortletRequest.ACTION_PHASE)
+				).setActionName(
+					"updateLayoutSetPrototypeAction"
+				).setRedirect(
+					PortalUtil.getLayoutURL(themeDisplay)
+				).setParameter(
+					"layoutSetPrototypeId",
+					layoutSetPrototype.getLayoutSetPrototypeId()
+				).setParameter(
+					"readyForPropagation", !readyForPropagation
+				).buildString();
 			}
 		).put(
 			"portletNamespace",

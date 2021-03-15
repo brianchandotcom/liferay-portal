@@ -32,8 +32,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.CustomAttributesUtil;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -121,7 +119,7 @@ public class CPDefinitionOptionValueRelDisplayContext
 	}
 
 	public String getRemoveSkuUrl(String redirect) throws PortalException {
-		PortletURL portletURL = PortletURLBuilder.createActionURL(
+		return PortletURLBuilder.createActionURL(
 			liferayPortletResponse
 		).setActionName(
 			"/cp_definitions/edit_cp_definition_option_value_rel"
@@ -131,9 +129,7 @@ public class CPDefinitionOptionValueRelDisplayContext
 			Constants.CMD, "deleteSku"
 		).setParameter(
 			"cpDefinitionOptionValueRelId", getCPDefinitionOptionValueRelId()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Override

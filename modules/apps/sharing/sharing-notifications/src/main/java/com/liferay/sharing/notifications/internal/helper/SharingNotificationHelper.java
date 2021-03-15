@@ -43,7 +43,6 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -108,7 +107,7 @@ public class SharingNotificationHelper {
 		throws PortalException {
 
 		if (portletRequest != null) {
-			PortletURL portletURL = PortletURLBuilder.create(
+			return PortletURLBuilder.create(
 				PortletProviderUtil.getPortletURL(
 					portletRequest, SharingEntry.class.getName(),
 					PortletProvider.Action.PREVIEW)
@@ -118,9 +117,7 @@ public class SharingNotificationHelper {
 				"classNameId", sharingEntry.getClassNameId()
 			).setParameter(
 				"classPK", sharingEntry.getClassPK()
-			).build();
-
-			return portletURL.toString();
+			).buildString();
 		}
 
 		return null;

@@ -179,7 +179,7 @@ public class MBMessageAssetRenderer
 		AssetRendererFactory<MBMessage> assetRendererFactory =
 			getAssetRendererFactory();
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			assetRendererFactory.getURLView(liferayPortletResponse, windowState)
 		).setMVCRenderCommandName(
 			"/message_boards/view_message"
@@ -187,9 +187,7 @@ public class MBMessageAssetRenderer
 			"messageId", _message.getMessageId()
 		).setWindowState(
 			windowState
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Override

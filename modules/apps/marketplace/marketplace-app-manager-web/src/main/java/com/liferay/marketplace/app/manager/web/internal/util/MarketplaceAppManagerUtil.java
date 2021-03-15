@@ -77,16 +77,14 @@ public class MarketplaceAppManagerUtil {
 		AppDisplay appDisplay, HttpServletRequest httpServletRequest,
 		RenderResponse renderResponse) {
 
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			renderResponse
-		).setMVCPath(
-			"/view.jsp"
-		).build();
-
 		PortalUtil.addPortletBreadcrumbEntry(
 			httpServletRequest,
 			LanguageUtil.get(httpServletRequest, "app-manager"),
-			portletURL.toString());
+			PortletURLBuilder.createRenderURL(
+				renderResponse
+			).setMVCPath(
+				"/view.jsp"
+			).buildString());
 
 		PortalUtil.addPortletBreadcrumbEntry(
 			httpServletRequest, appDisplay.getDisplayTitle(), null);

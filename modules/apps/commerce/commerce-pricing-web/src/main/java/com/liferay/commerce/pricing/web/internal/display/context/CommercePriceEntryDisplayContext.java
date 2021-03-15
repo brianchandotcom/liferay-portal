@@ -63,7 +63,7 @@ public class CommercePriceEntryDisplayContext
 	}
 
 	public String getAddCommerceTierPriceEntryRenderURL() throws Exception {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			liferayPortletResponse
 		).setMVCRenderCommandName(
 			"/commerce_price_list/add_commerce_tier_price_entry"
@@ -73,9 +73,7 @@ public class CommercePriceEntryDisplayContext
 			"commercePriceListId", getCommercePriceListId()
 		).setWindowState(
 			LiferayWindowState.POP_UP
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public String getBasePrice() throws PortalException {

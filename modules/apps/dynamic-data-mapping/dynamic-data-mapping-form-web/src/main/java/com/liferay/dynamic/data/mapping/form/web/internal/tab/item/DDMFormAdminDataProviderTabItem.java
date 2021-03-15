@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -60,7 +59,7 @@ public class DDMFormAdminDataProviderTabItem implements DDMDisplayTabItem {
 			(ThemeDisplay)liferayPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletURLFactoryUtil.create(
 				liferayPortletRequest,
 				PortletProviderUtil.getPortletId(
@@ -75,9 +74,7 @@ public class DDMFormAdminDataProviderTabItem implements DDMDisplayTabItem {
 			"refererPortletName", DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN
 		).setParameter(
 			"groupId", themeDisplay.getScopeGroupId()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 }

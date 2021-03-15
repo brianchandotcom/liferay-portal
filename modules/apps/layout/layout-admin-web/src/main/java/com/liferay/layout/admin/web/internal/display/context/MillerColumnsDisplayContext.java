@@ -75,13 +75,11 @@ public class MillerColumnsDisplayContext {
 	}
 
 	public String getLayoutChildrenURL() {
-		PortletURL itemChildrenURL = PortletURLBuilder.createActionURL(
+		return PortletURLBuilder.createActionURL(
 			_liferayPortletResponse
 		).setActionName(
 			"/layout_admin/get_layout_children"
-		).build();
-
-		return itemChildrenURL.toString();
+		).buildString();
 	}
 
 	public JSONArray getLayoutColumnsJSONArray() throws Exception {
@@ -424,15 +422,15 @@ public class MillerColumnsDisplayContext {
 			"title", _layoutsAdminDisplayContext.getTitle(privatePages)
 		);
 
-		PortletURL pagesURL = PortletURLBuilder.create(
-			_layoutsAdminDisplayContext.getPortletURL()
-		).setParameter(
-			"selPlid", LayoutConstants.DEFAULT_PLID
-		).setParameter(
-			"privateLayout", privatePages
-		).build();
-
-		pagesJSONObject.put("url", pagesURL.toString());
+		pagesJSONObject.put(
+			"url",
+			PortletURLBuilder.create(
+				_layoutsAdminDisplayContext.getPortletURL()
+			).setParameter(
+				"selPlid", LayoutConstants.DEFAULT_PLID
+			).setParameter(
+				"privateLayout", privatePages
+			).buildString());
 
 		return pagesJSONObject;
 	}
@@ -693,15 +691,15 @@ public class MillerColumnsDisplayContext {
 				LanguageUtil.get(_httpServletRequest, layoutSetBranch.getName())
 			);
 
-			PortletURL portletURL = PortletURLBuilder.create(
-				_layoutsAdminDisplayContext.getPortletURL()
-			).setParameter(
-				"layoutSetBranchId", layoutSetBranch.getLayoutSetBranchId()
-			).setParameter(
-				"privateLayout", layoutSetBranch.isPrivateLayout()
-			).build();
-
-			jsonObject.put("url", portletURL.toString());
+			jsonObject.put(
+				"url",
+				PortletURLBuilder.create(
+					_layoutsAdminDisplayContext.getPortletURL()
+				).setParameter(
+					"layoutSetBranchId", layoutSetBranch.getLayoutSetBranchId()
+				).setParameter(
+					"privateLayout", layoutSetBranch.isPrivateLayout()
+				).buildString());
 
 			jsonArray.put(jsonObject);
 		}

@@ -175,7 +175,7 @@ public class DLViewDisplayContext {
 	public String getSelectCategoriesURL()
 		throws PortalException, WindowStateException {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletProviderUtil.getPortletURL(
 				_httpServletRequest, AssetCategory.class.getName(),
 				PortletProvider.Action.BROWSE)
@@ -189,9 +189,7 @@ public class DLViewDisplayContext {
 			"vocabularyIds", "{vocabularyIds}"
 		).setWindowState(
 			LiferayWindowState.POP_UP
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public String getSelectFileEntryTypeURL() throws WindowStateException {
@@ -250,15 +248,13 @@ public class DLViewDisplayContext {
 	}
 
 	public String getViewFileEntryTypeURL() throws PortletException {
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletURLUtil.clone(_getCurrentPortletURL(), _renderResponse)
 		).setParameter(
 			"browseBy", "file-entry-type"
 		).setParameter(
 			"fileEntryTypeId", (String)null
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public String getViewFileEntryURL() {

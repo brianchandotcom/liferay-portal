@@ -32,8 +32,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -172,15 +170,13 @@ public class AssetDisplayPageUsagesManagementToolbarDisplayContext
 	}
 
 	private String _getPortletURL(String actionName) {
-		PortletURL portletURL = PortletURLBuilder.createActionURL(
+		return PortletURLBuilder.createActionURL(
 			liferayPortletResponse
 		).setActionName(
 			actionName
 		).setRedirect(
 			_themeDisplay.getURLCurrent()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	private Long _classNameId;

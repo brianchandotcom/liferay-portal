@@ -159,15 +159,13 @@ public class CommerceAccountGroupAdminDisplayContext {
 				Collections.<ItemSelectorReturnType>singletonList(
 					new UUIDItemSelectorReturnType()));
 
-		PortletURL itemSelectorURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_itemSelector.getItemSelectorURL(
 				requestBackedPortletURLFactory, "commerceAccountsSelectItem",
 				commerceAccountGroupAccountItemSelectorCriterion)
 		).setParameter(
 			"commerceAccountGroupId", getCommerceAccountGroupId()
-		).build();
-
-		return itemSelectorURL.toString();
+		).buildString();
 	}
 
 	public PortletURL getPortletURL() {

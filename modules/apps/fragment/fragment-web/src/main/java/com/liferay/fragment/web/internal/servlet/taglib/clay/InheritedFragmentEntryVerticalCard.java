@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.List;
 
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -76,7 +75,7 @@ public class InheritedFragmentEntryVerticalCard
 			return null;
 		}
 
-		PortletURL editFragmentEntryURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCRenderCommandName(
 			"/fragment/edit_fragment_entry"
@@ -86,9 +85,7 @@ public class InheritedFragmentEntryVerticalCard
 			"fragmentCollectionId", fragmentEntry.getFragmentCollectionId()
 		).setParameter(
 			"fragmentEntryId", fragmentEntry.getFragmentEntryId()
-		).build();
-
-		return editFragmentEntryURL.toString();
+		).buildString();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

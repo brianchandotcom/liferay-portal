@@ -138,16 +138,15 @@ public class MBBreadcrumbUtil {
 		addPortletBreadcrumbEntries(
 			category, httpServletRequest, renderResponse);
 
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			renderResponse
-		).setMVCRenderCommandName(
-			"/message_boards/view_message"
-		).setParameter(
-			"messageId", message.getMessageId()
-		).build();
-
 		PortalUtil.addPortletBreadcrumbEntry(
-			httpServletRequest, message.getSubject(), portletURL.toString());
+			httpServletRequest, message.getSubject(),
+			PortletURLBuilder.createRenderURL(
+				renderResponse
+			).setMVCRenderCommandName(
+				"/message_boards/view_message"
+			).setParameter(
+				"messageId", message.getMessageId()
+			).buildString());
 	}
 
 }

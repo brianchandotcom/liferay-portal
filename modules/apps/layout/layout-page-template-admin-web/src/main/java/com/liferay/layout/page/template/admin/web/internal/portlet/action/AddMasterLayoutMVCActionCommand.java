@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -115,17 +114,16 @@ public class AddMasterLayoutMVCActionCommand extends BaseMVCActionCommand {
 		String layoutFullURL = _portal.getLayoutFullURL(
 			draftLayout, themeDisplay);
 
-		PortletURL portletURL = PortletURLBuilder.create(
-			PortletURLFactoryUtil.create(
-				actionRequest,
-				LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
-				PortletRequest.RENDER_PHASE)
-		).setParameter(
-			"tabs1", "master-layouts"
-		).build();
-
 		layoutFullURL = _http.setParameter(
-			layoutFullURL, "p_l_back_url", portletURL.toString());
+			layoutFullURL, "p_l_back_url",
+			PortletURLBuilder.create(
+				PortletURLFactoryUtil.create(
+					actionRequest,
+					LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
+					PortletRequest.RENDER_PHASE)
+			).setParameter(
+				"tabs1", "master-layouts"
+			).buildString());
 
 		return _http.setParameter(layoutFullURL, "p_l_mode", Constants.EDIT);
 	}

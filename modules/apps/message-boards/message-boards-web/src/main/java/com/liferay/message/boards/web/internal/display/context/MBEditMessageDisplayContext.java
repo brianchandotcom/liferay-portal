@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Map;
 
-import javax.portlet.PortletURL;
 import javax.portlet.ResourceURL;
 
 /**
@@ -78,7 +77,8 @@ public class MBEditMessageDisplayContext {
 			taglibContext.put(
 				"getAttachmentsURL", getAttachmentsURL.toString());
 
-			PortletURL viewTrashAttachmentsURL =
+			taglibContext.put(
+				"viewTrashAttachmentsURL",
 				PortletURLBuilder.createRenderURL(
 					_liferayPortletResponse
 				).setMVCRenderCommandName(
@@ -91,10 +91,7 @@ public class MBEditMessageDisplayContext {
 					"messageId", _message.getMessageId()
 				).setWindowState(
 					LiferayWindowState.POP_UP
-				).build();
-
-			taglibContext.put(
-				"viewTrashAttachmentsURL", viewTrashAttachmentsURL.toString());
+				).buildString());
 		}
 
 		return taglibContext;

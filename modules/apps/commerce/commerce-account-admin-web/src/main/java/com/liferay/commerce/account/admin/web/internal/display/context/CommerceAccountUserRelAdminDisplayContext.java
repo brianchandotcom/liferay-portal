@@ -65,7 +65,7 @@ public class CommerceAccountUserRelAdminDisplayContext
 	}
 
 	public String getEditUserURL(long userId) throws PortalException {
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletProviderUtil.getPortletURL(
 				commerceAccountAdminRequestHelper.getRequest(),
 				User.class.getName(), PortletProvider.Action.EDIT)
@@ -75,9 +75,7 @@ public class CommerceAccountUserRelAdminDisplayContext
 			commerceAccountAdminRequestHelper.getCurrentURL()
 		).setParameter(
 			"p_u_i_d", userId
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public String getItemSelectorUrl() throws PortalException {
@@ -92,15 +90,13 @@ public class CommerceAccountUserRelAdminDisplayContext
 			Collections.<ItemSelectorReturnType>singletonList(
 				new UUIDItemSelectorReturnType()));
 
-		PortletURL itemSelectorURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_itemSelector.getItemSelectorURL(
 				requestBackedPortletURLFactory, "usersSelectItem",
 				userItemSelectorCriterion)
 		).setParameter(
 			"checkedUserIds", StringUtil.merge(getCheckedUserIds())
-		).build();
-
-		return itemSelectorURL.toString();
+		).buildString();
 	}
 
 	@Override

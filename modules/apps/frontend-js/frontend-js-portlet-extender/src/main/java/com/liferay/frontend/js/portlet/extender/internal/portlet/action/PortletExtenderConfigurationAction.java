@@ -60,7 +60,6 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -251,7 +250,7 @@ public class PortletExtenderConfigurationAction
 			PortletDisplay portletDisplay)
 		throws Exception {
 
-		PortletURL actionURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletURLFactoryUtil.create(
 				httpServletRequest, portletDisplay.getPortletName(),
 				PortletRequest.ACTION_PHASE)
@@ -275,9 +274,7 @@ public class PortletExtenderConfigurationAction
 			"settingsScope", "portletInstance"
 		).setWindowState(
 			LiferayWindowState.POP_UP
-		).build();
-
-		return actionURL.toString();
+		).buildString();
 	}
 
 	private void _populateFieldNames() {

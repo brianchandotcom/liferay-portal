@@ -50,7 +50,6 @@ import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.ActionRequest;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -114,15 +113,13 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 	}
 
 	public String getReviewChangesURL(long ctCollectionId) {
-		PortletURL reviewURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCRenderCommandName(
 			"/change_tracking/view_changes"
 		).setParameter(
 			"ctCollectionId", ctCollectionId
-		).build();
-
-		return reviewURL.toString();
+		).buildString();
 	}
 
 	public SearchContainer<CTCollection> getSearchContainer() {

@@ -56,7 +56,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -237,7 +236,7 @@ public class CPCompareContentHelperImpl implements CPCompareContentHelper {
 
 		String redirect = _portal.getCurrentURL(renderRequest);
 
-		PortletURL portletURL = PortletURLBuilder.createActionURL(
+		return PortletURLBuilder.createActionURL(
 			renderResponse
 		).setActionName(
 			"/cp_compare_content_mini_web/delete_compare_product"
@@ -245,9 +244,7 @@ public class CPCompareContentHelperImpl implements CPCompareContentHelper {
 			redirect
 		).setParameter(
 			"cpDefinitionId", cpDefinitionId
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Override

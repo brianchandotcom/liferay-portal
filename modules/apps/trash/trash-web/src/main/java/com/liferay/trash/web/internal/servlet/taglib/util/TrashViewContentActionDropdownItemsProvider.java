@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
-import javax.portlet.PortletURL;
-
 /**
  * @author Eudaldo Alonso
  */
@@ -66,19 +64,19 @@ public class TrashViewContentActionDropdownItemsProvider {
 			{
 				putData("action", "deleteEntry");
 
-				PortletURL deleteEntryURL = PortletURLBuilder.createActionURL(
-					_liferayPortletResponse
-				).setActionName(
-					"deleteEntries"
-				).setRedirect(
-					_themeDisplay.getURLCurrent()
-				).setParameter(
-					"className", _className
-				).setParameter(
-					"classPK", _classPK
-				).build();
-
-				putData("deleteEntryURL", deleteEntryURL.toString());
+				putData(
+					"deleteEntryURL",
+					PortletURLBuilder.createActionURL(
+						_liferayPortletResponse
+					).setActionName(
+						"deleteEntries"
+					).setRedirect(
+						_themeDisplay.getURLCurrent()
+					).setParameter(
+						"className", _className
+					).setParameter(
+						"classPK", _classPK
+					).buildString());
 
 				setLabel(LanguageUtil.get(_themeDisplay.getLocale(), "delete"));
 			}
@@ -90,23 +88,23 @@ public class TrashViewContentActionDropdownItemsProvider {
 			{
 				putData("action", "moveEntry");
 
-				PortletURL moveEntryURL = PortletURLBuilder.createRenderURL(
-					_liferayPortletResponse
-				).setMVCPath(
-					"/view_container_model.jsp"
-				).setParameter(
-					"classNameId", PortalUtil.getClassNameId(_className)
-				).setParameter(
-					"classPK", _classPK
-				).setParameter(
-					"containerModelClassNameId",
-					PortalUtil.getClassNameId(
-						_trashHandler.getContainerModelClassName(_classPK))
-				).setWindowState(
-					LiferayWindowState.POP_UP
-				).build();
-
-				putData("moveEntryURL", moveEntryURL.toString());
+				putData(
+					"moveEntryURL",
+					PortletURLBuilder.createRenderURL(
+						_liferayPortletResponse
+					).setMVCPath(
+						"/view_container_model.jsp"
+					).setParameter(
+						"classNameId", PortalUtil.getClassNameId(_className)
+					).setParameter(
+						"classPK", _classPK
+					).setParameter(
+						"containerModelClassNameId",
+						PortalUtil.getClassNameId(
+							_trashHandler.getContainerModelClassName(_classPK))
+					).setWindowState(
+						LiferayWindowState.POP_UP
+					).buildString());
 
 				setLabel(
 					LanguageUtil.get(_themeDisplay.getLocale(), "restore"));

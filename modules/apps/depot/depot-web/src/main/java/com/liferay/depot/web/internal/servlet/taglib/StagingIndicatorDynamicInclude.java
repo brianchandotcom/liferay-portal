@@ -60,7 +60,6 @@ import java.util.Map;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -136,7 +135,7 @@ public class StagingIndicatorDynamicInclude extends BaseDynamicInclude {
 		DepotEntry depotEntry = _depotEntryLocalService.getGroupDepotEntry(
 			group.getGroupId());
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				httpServletRequest, group, DepotPortletKeys.DEPOT_ADMIN, 0, 0,
 				PortletRequest.RENDER_PHASE)
@@ -144,9 +143,7 @@ public class StagingIndicatorDynamicInclude extends BaseDynamicInclude {
 			"/depot/view_depot_dashboard"
 		).setParameter(
 			"depotEntryId", depotEntry.getDepotEntryId()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	private JSONObject _getLiveGroupItemJSONObject(

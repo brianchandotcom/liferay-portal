@@ -29,7 +29,6 @@ import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -57,7 +56,7 @@ public class ExportTemplatesConfigurationIcon
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				portletRequest, ExportImportPortletKeys.EXPORT,
 				PortletRequest.RENDER_PHASE)
@@ -71,9 +70,7 @@ public class ExportTemplatesConfigurationIcon
 
 				return themeDisplay.getURLCurrent();
 			}
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Override

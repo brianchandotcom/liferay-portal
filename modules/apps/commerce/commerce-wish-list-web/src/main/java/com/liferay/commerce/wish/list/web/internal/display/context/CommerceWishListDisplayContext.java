@@ -293,13 +293,11 @@ public class CommerceWishListDisplayContext {
 	}
 
 	public String getRowURL(long commerceWishListId) {
-		PortletURL rowURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_commerceWishListRequestHelper.getLiferayPortletResponse()
 		).setParameter(
 			"commerceWishListId", commerceWishListId
-		).build();
-
-		return rowURL.toString();
+		).buildString();
 	}
 
 	public SearchContainer<CommerceWishList> getSearchContainer()

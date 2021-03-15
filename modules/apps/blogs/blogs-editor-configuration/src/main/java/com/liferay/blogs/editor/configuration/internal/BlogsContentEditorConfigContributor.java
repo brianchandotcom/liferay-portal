@@ -89,14 +89,14 @@ public class BlogsContentEditorConfigContributor
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		if (Validator.isNotNull(portletDisplay.getId())) {
-			PortletURL portletURL = PortletURLBuilder.create(
-				requestBackedPortletURLFactory.createActionURL(
-					portletDisplay.getId())
-			).setActionName(
-				"/blogs/upload_temp_image"
-			).build();
-
-			jsonObject.put("uploadUrl", portletURL.toString());
+			jsonObject.put(
+				"uploadUrl",
+				PortletURLBuilder.create(
+					requestBackedPortletURLFactory.createActionURL(
+						portletDisplay.getId())
+				).setActionName(
+					"/blogs/upload_temp_image"
+				).buildString());
 		}
 	}
 

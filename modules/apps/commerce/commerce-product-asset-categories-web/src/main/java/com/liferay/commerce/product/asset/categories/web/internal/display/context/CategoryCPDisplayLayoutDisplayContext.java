@@ -83,7 +83,7 @@ public class CategoryCPDisplayLayoutDisplayContext
 	}
 
 	public String getAddCategoryDisplayPageURL() throws Exception {
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletProviderUtil.getPortletURL(
 				httpServletRequest, CommerceChannel.class.getName(),
 				PortletProvider.Action.MANAGE)
@@ -93,9 +93,7 @@ public class CategoryCPDisplayLayoutDisplayContext
 			"commerceChannelId", getCommerceChannelId()
 		).setWindowState(
 			LiferayWindowState.POP_UP
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public AssetCategory getAssetCategory(long assetCategoryId)

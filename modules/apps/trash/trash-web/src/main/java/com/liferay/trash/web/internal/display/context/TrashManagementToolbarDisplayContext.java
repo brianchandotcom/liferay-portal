@@ -88,16 +88,15 @@ public class TrashManagementToolbarDisplayContext
 	}
 
 	public Map<String, Object> getAdditionalProps() {
-		PortletURL restoreEntriesURL = PortletURLBuilder.createActionURL(
-			liferayPortletResponse, TrashPortletKeys.TRASH
-		).setActionName(
-			"restoreEntries"
-		).setRedirect(
-			_themeDisplay.getURLCurrent()
-		).build();
-
 		return HashMapBuilder.<String, Object>put(
-			"restoreEntriesURL", restoreEntriesURL.toString()
+			"restoreEntriesURL",
+			PortletURLBuilder.createActionURL(
+				liferayPortletResponse, TrashPortletKeys.TRASH
+			).setActionName(
+				"restoreEntries"
+			).setRedirect(
+				_themeDisplay.getURLCurrent()
+			).buildString()
 		).build();
 	}
 
@@ -113,15 +112,13 @@ public class TrashManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
 			"navigation", StringPool.BLANK
 		).setParameter(
 			"keywords", StringPool.BLANK
-		).build();
-
-		return clearResultsURL.toString();
+		).buildString();
 	}
 
 	@Override
@@ -136,13 +133,14 @@ public class TrashManagementToolbarDisplayContext
 				Validator.isNotNull(getNavigation()) &&
 				!Objects.equals(getNavigation(), "all"),
 			labelItem -> {
-				PortletURL removeLabelURL = PortletURLBuilder.create(
-					PortletURLUtil.clone(currentURLObj, liferayPortletResponse)
-				).setParameter(
-					"navigation", (String)null
-				).build();
-
-				labelItem.putData("removeLabelURL", removeLabelURL.toString());
+				labelItem.putData(
+					"removeLabelURL",
+					PortletURLBuilder.create(
+						PortletURLUtil.clone(
+							currentURLObj, liferayPortletResponse)
+					).setParameter(
+						"navigation", (String)null
+					).buildString());
 
 				labelItem.setCloseable(true);
 

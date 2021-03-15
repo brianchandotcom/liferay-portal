@@ -32,7 +32,6 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -88,24 +87,23 @@ public class OrganizationSegmentsFieldCustomizer
 	@Override
 	public Field.SelectEntity getSelectEntity(PortletRequest portletRequest) {
 		try {
-			PortletURL portletURL = PortletURLBuilder.create(
-				_portal.getControlPanelPortletURL(
-					portletRequest, SegmentsPortletKeys.SEGMENTS,
-					PortletRequest.RENDER_PHASE)
-			).setMVCRenderCommandName(
-				"/segments/select_organizations"
-			).setParameter(
-				"eventName", "selectEntity"
-			).setWindowState(
-				LiferayWindowState.POP_UP
-			).build();
-
 			return new Field.SelectEntity(
 				"selectEntity",
 				getSelectEntityTitle(
 					_portal.getLocale(portletRequest),
 					Organization.class.getName()),
-				portletURL.toString(), true);
+				PortletURLBuilder.create(
+					_portal.getControlPanelPortletURL(
+						portletRequest, SegmentsPortletKeys.SEGMENTS,
+						PortletRequest.RENDER_PHASE)
+				).setMVCRenderCommandName(
+					"/segments/select_organizations"
+				).setParameter(
+					"eventName", "selectEntity"
+				).setWindowState(
+					LiferayWindowState.POP_UP
+				).buildString(),
+				true);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

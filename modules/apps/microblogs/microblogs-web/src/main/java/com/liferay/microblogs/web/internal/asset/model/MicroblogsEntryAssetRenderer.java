@@ -37,7 +37,6 @@ import java.util.Locale;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -127,7 +126,7 @@ public class MicroblogsEntryAssetRenderer
 			long portletPlid = PortalUtil.getPlidFromPortletId(
 				user.getGroupId(), MicroblogsPortletKeys.MICROBLOGS);
 
-			PortletURL portletURL = PortletURLBuilder.create(
+			return PortletURLBuilder.create(
 				PortletURLFactoryUtil.create(
 					liferayPortletRequest, MicroblogsPortletKeys.MICROBLOGS,
 					portletPlid, PortletRequest.RENDER_PHASE)
@@ -144,9 +143,7 @@ public class MicroblogsEntryAssetRenderer
 
 					return microblogsEntryId;
 				}
-			).build();
-
-			return portletURL.toString();
+			).buildString();
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

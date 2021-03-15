@@ -41,7 +41,6 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -140,7 +139,7 @@ public class AccountRoleDefinePermissionsScreenNavigationCategory
 	}
 
 	private String _getBackURL(HttpServletRequest httpServletRequest) {
-		PortletURL backURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				httpServletRequest, AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
 				PortletRequest.RENDER_PHASE)
@@ -152,13 +151,11 @@ public class AccountRoleDefinePermissionsScreenNavigationCategory
 		).setParameter(
 			"accountEntryId",
 			ParamUtil.getString(httpServletRequest, "accountEntryId")
-		).build();
-
-		return backURL.toString();
+		).buildString();
 	}
 
 	private String _getRedirect(HttpServletRequest httpServletRequest) {
-		PortletURL redirectURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				httpServletRequest, AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
 				PortletRequest.RENDER_PHASE)
@@ -174,9 +171,7 @@ public class AccountRoleDefinePermissionsScreenNavigationCategory
 		).setParameter(
 			"accountRoleId",
 			ParamUtil.getString(httpServletRequest, "accountRoleId")
-		).build();
-
-		return redirectURL.toString();
+		).buildString();
 	}
 
 	@Reference

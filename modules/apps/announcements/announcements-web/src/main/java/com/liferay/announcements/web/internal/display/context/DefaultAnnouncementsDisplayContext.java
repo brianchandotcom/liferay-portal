@@ -54,7 +54,6 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.portlet.PortletPreferences;
-import javax.portlet.PortletURL;
 
 /**
  * @author Adolfo Pérez
@@ -240,15 +239,13 @@ public class DefaultAnnouncementsDisplayContext
 
 	@Override
 	public String getTabs1PortletURL() {
-		PortletURL tabs1URL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_announcementsRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
 			"/announcements/view"
 		).setParameter(
 			"tabs1", _announcementsRequestHelper.getTabs1()
-		).build();
-
-		return tabs1URL.toString();
+		).buildString();
 	}
 
 	@Override

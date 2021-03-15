@@ -101,16 +101,14 @@ public class DLURLHelperImpl implements DLURLHelper {
 		String portletId = PortletProviderUtil.getPortletId(
 			FileEntry.class.getName(), PortletProvider.Action.MANAGE);
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				portletRequest, portletId, PortletRequest.RENDER_PHASE)
 		).setMVCRenderCommandName(
 			"/document_library/view_file_entry"
 		).setParameter(
 			"fileEntryId", fileEntryId
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Override

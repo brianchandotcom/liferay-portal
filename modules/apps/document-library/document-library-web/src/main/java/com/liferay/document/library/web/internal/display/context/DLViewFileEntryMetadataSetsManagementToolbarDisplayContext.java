@@ -35,8 +35,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -78,13 +76,11 @@ public class DLViewFileEntryMetadataSetsManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
 			"keywords", StringPool.BLANK
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Override
@@ -115,15 +111,13 @@ public class DLViewFileEntryMetadataSetsManagementToolbarDisplayContext
 
 	@Override
 	public String getSearchActionURL() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			liferayPortletResponse
 		).setParameter(
 			"navigation", "file_entry_metadata_sets"
 		).setParameter(
 			"groupId", _dlRequestHelper.getScopeGroupId()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Override

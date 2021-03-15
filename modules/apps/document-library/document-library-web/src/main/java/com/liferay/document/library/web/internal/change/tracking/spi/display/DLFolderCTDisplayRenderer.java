@@ -37,7 +37,6 @@ import com.liferay.trash.kernel.util.TrashUtil;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -65,7 +64,7 @@ public class DLFolderCTDisplayRenderer extends BaseCTDisplayRenderer<DLFolder> {
 			group = themeDisplay.getScopeGroup();
 		}
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				httpServletRequest, group, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
 				0, 0, PortletRequest.RENDER_PHASE)
@@ -75,9 +74,7 @@ public class DLFolderCTDisplayRenderer extends BaseCTDisplayRenderer<DLFolder> {
 			_portal.getCurrentURL(httpServletRequest)
 		).setParameter(
 			"folderId", dlFolder.getFolderId()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Override

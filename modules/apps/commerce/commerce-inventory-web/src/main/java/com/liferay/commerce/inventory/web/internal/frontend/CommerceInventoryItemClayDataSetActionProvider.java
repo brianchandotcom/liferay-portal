@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -97,7 +96,7 @@ public class CommerceInventoryItemClayDataSetActionProvider
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletURLFactoryUtil.create(
 				themeDisplay.getRequest(), portletDisplay.getId(),
 				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE)
@@ -105,9 +104,7 @@ public class CommerceInventoryItemClayDataSetActionProvider
 			"/commerce_inventory/edit_commerce_inventory_item"
 		).setParameter(
 			"sku", sku
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	private String _getInventoryItemDeleteURL(
@@ -117,7 +114,7 @@ public class CommerceInventoryItemClayDataSetActionProvider
 			httpServletRequest, "currentUrl",
 			_portal.getCurrentURL(httpServletRequest));
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				_portal.getOriginalServletRequest(httpServletRequest),
 				CPPortletKeys.COMMERCE_INVENTORY, PortletRequest.ACTION_PHASE)
@@ -129,9 +126,7 @@ public class CommerceInventoryItemClayDataSetActionProvider
 			Constants.CMD, Constants.DELETE
 		).setParameter(
 			"sku", sku
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	private boolean _hasPermission() throws PrincipalException {

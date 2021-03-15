@@ -36,7 +36,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -55,7 +54,7 @@ public class MBCategoryUADDisplay extends BaseMBCategoryUADDisplay {
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
-		PortletURL portletURL = PortletURLBuilder.createLiferayPortletURL(
+		return PortletURLBuilder.createLiferayPortletURL(
 			liferayPortletResponse,
 			portal.getControlPanelPlid(liferayPortletRequest),
 			MBPortletKeys.MESSAGE_BOARDS_ADMIN, PortletRequest.RENDER_PHASE
@@ -65,9 +64,7 @@ public class MBCategoryUADDisplay extends BaseMBCategoryUADDisplay {
 			portal.getCurrentURL(liferayPortletRequest)
 		).setParameter(
 			"mbCategoryId", mbCategory.getCategoryId()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Override

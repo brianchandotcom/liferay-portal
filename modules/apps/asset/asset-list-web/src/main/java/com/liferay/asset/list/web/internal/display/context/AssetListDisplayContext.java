@@ -406,15 +406,13 @@ public class AssetListDisplayContext {
 	}
 
 	private String _getAddAssetListEntryURL(int type) {
-		PortletURL addAssetListEntryURL = PortletURLBuilder.createActionURL(
+		return PortletURLBuilder.createActionURL(
 			_renderResponse
 		).setActionName(
 			"/asset_list/add_asset_list_entry"
 		).setParameter(
 			"type", type
-		).build();
-
-		return addAssetListEntryURL.toString();
+		).buildString();
 	}
 
 	private String _getAddAssetListTitle(String title) {

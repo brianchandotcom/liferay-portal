@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.Portal;
 
 import java.util.List;
 
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -69,7 +68,7 @@ public class CommerceInventoryWarehouseItemsDisplayContext {
 		String lifecycle = (String)renderRequest.getAttribute(
 			LiferayPortletRequest.LIFECYCLE_PHASE);
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				renderRequest, CPPortletKeys.CP_DEFINITIONS, lifecycle)
 		).setMVCRenderCommandName(
@@ -84,9 +83,7 @@ public class CommerceInventoryWarehouseItemsDisplayContext {
 		).setParameter(
 			"screenNavigationCategoryKey",
 			CPDefinitionScreenNavigationConstants.CATEGORY_KEY_SKUS
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public CommerceInventoryWarehouseItem getCommerceInventoryWarehouseItem(

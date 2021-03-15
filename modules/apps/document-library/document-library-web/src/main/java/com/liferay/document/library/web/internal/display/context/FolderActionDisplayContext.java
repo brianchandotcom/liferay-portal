@@ -80,7 +80,7 @@ public class FolderActionDisplayContext {
 	public String getAddFileShortcutURL() {
 		ThemeDisplay themeDisplay = _dlRequestHelper.getThemeDisplay();
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
 				_httpServletRequest, themeDisplay.getScopeGroup(),
 				DLPortletKeys.DOCUMENT_LIBRARY_ADMIN, 0, 0,
@@ -93,15 +93,13 @@ public class FolderActionDisplayContext {
 			"repositoryId", _getRepositoryId()
 		).setParameter(
 			"folderId", _getFolderId()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public String getAddFolderURL() {
 		ThemeDisplay themeDisplay = _dlRequestHelper.getThemeDisplay();
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
 				_httpServletRequest, themeDisplay.getScopeGroup(),
 				DLPortletKeys.DOCUMENT_LIBRARY_ADMIN, 0, 0,
@@ -116,13 +114,11 @@ public class FolderActionDisplayContext {
 			"parentFolderId", _getFolderId()
 		).setParameter(
 			"ignoreRootFolder", Boolean.TRUE.toString()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public String getAddMediaURL() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_dlRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
 			"/document_library/edit_file_entry"
@@ -132,13 +128,11 @@ public class FolderActionDisplayContext {
 			"repositoryId", _getRepositoryId()
 		).setParameter(
 			"folderId", _getFolderId()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public String getAddMultipleMediaURL() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_dlRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
 			"/document_library/upload_multiple_file_entries"
@@ -150,15 +144,13 @@ public class FolderActionDisplayContext {
 			"repositoryId", _getRepositoryId()
 		).setParameter(
 			"folderId", _getFolderId()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public String getAddRepositoryURL() {
 		ThemeDisplay themeDisplay = _dlRequestHelper.getThemeDisplay();
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
 				_httpServletRequest, themeDisplay.getScopeGroup(),
 				DLPortletKeys.DOCUMENT_LIBRARY_ADMIN, 0, 0,
@@ -169,13 +161,11 @@ public class FolderActionDisplayContext {
 			_dlRequestHelper.getCurrentURL()
 		).setParameter(
 			"folderId", _getFolderId()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public String getDeleteExpiredTemporaryFileEntriesURL() {
-		PortletURL portletURL = PortletURLBuilder.createActionURL(
+		return PortletURLBuilder.createActionURL(
 			_dlRequestHelper.getLiferayPortletResponse()
 		).setActionName(
 			"/document_library/edit_folder"
@@ -185,9 +175,7 @@ public class FolderActionDisplayContext {
 			Constants.CMD, "deleteExpiredTemporaryFileEntries"
 		).setParameter(
 			"repositoryId", _getRepositoryId()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public String getDeleteFolderURL() throws PortalException {
@@ -303,7 +291,7 @@ public class FolderActionDisplayContext {
 	}
 
 	public String getPublishFolderURL() {
-		PortletURL portletURL = PortletURLBuilder.createActionURL(
+		return PortletURLBuilder.createActionURL(
 			_dlRequestHelper.getLiferayPortletResponse()
 		).setActionName(
 			"/document_library/publish_folder"
@@ -311,9 +299,7 @@ public class FolderActionDisplayContext {
 			"backURL", _dlRequestHelper.getCurrentURL()
 		).setParameter(
 			"folderId", _getFolderId()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public String getRandomNamespace() {
@@ -364,7 +350,7 @@ public class FolderActionDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setMVCRenderCommandName(
 			"/document_library/view_folder"
@@ -381,13 +367,11 @@ public class FolderActionDisplayContext {
 			}
 		).setParameter(
 			"folderId", folder.getFolderId()
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public String getViewSlideShowURL() throws WindowStateException {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_dlRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
 			"/image_gallery_display/view_slide_show"
@@ -395,9 +379,7 @@ public class FolderActionDisplayContext {
 			"folderId", _getFolderId()
 		).setWindowState(
 			LiferayWindowState.POP_UP
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public boolean isAccessFromDesktopActionVisible() throws PortalException {

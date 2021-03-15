@@ -43,7 +43,6 @@ import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 
@@ -103,7 +102,7 @@ public class AppBuilderAppWorkflowHandler
 		}
 
 		try {
-			PortletURL portletURL = PortletURLBuilder.create(
+			return PortletURLBuilder.create(
 				PortletURLFactoryUtil.create(
 					serviceContext.getRequest(),
 					GetterUtil.getString(
@@ -116,9 +115,7 @@ public class AppBuilderAppWorkflowHandler
 				"dataRecordId", ddlRecordId
 			).setWindowState(
 				WindowState.MAXIMIZED
-			).build();
-
-			return portletURL.toString();
+			).buildString();
 		}
 		catch (WindowStateException windowStateException) {
 			throw new PortalException(windowStateException);

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
@@ -60,13 +59,11 @@ public class PublicationsConfigurationDisplayContext {
 	}
 
 	public String getActionURL() {
-		PortletURL actionURL = PortletURLBuilder.createActionURL(
+		return PortletURLBuilder.createActionURL(
 			_renderResponse
 		).setActionName(
 			"/change_tracking/update_global_publications_configuration"
-		).build();
-
-		return actionURL.toString();
+		).buildString();
 	}
 
 	public String getNavigation() {

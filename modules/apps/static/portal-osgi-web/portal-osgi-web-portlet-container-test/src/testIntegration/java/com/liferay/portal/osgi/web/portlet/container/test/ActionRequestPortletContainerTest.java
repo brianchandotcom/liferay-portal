@@ -255,16 +255,17 @@ public class ActionRequestPortletContainerTest
 			testPortlet, new HashMapDictionary<String, Object>(),
 			TEST_PORTLET_ID);
 
-		PortletURL portletURL = PortletURLBuilder.create(
-			PortletURLFactoryUtil.create(
-				PortletContainerTestUtil.getHttpServletRequest(group, layout),
-				TEST_PORTLET_ID, layout.getPlid(), PortletRequest.ACTION_PHASE)
-		).setParameter(
-			"p_auth_secret", _SHARED_SECRET
-		).build();
-
 		PortletContainerTestUtil.Response response =
-			PortletContainerTestUtil.request(portletURL.toString());
+			PortletContainerTestUtil.request(
+				PortletURLBuilder.create(
+					PortletURLFactoryUtil.create(
+						PortletContainerTestUtil.getHttpServletRequest(
+							group, layout),
+						TEST_PORTLET_ID, layout.getPlid(),
+						PortletRequest.ACTION_PHASE)
+				).setParameter(
+					"p_auth_secret", _SHARED_SECRET
+				).buildString());
 
 		Assert.assertEquals(200, response.getCode());
 
@@ -280,16 +281,17 @@ public class ActionRequestPortletContainerTest
 
 		setUpPortlet(testPortlet, properties, TEST_PORTLET_ID);
 
-		PortletURL portletURL = PortletURLBuilder.create(
-			PortletURLFactoryUtil.create(
-				PortletContainerTestUtil.getHttpServletRequest(group, layout),
-				TEST_PORTLET_ID, layout.getPlid(), PortletRequest.ACTION_PHASE)
-		).setParameter(
-			"struts_action", "/test/portlet/1"
-		).build();
-
 		PortletContainerTestUtil.Response response =
-			PortletContainerTestUtil.request(portletURL.toString());
+			PortletContainerTestUtil.request(
+				PortletURLBuilder.create(
+					PortletURLFactoryUtil.create(
+						PortletContainerTestUtil.getHttpServletRequest(
+							group, layout),
+						TEST_PORTLET_ID, layout.getPlid(),
+						PortletRequest.ACTION_PHASE)
+				).setParameter(
+					"struts_action", "/test/portlet/1"
+				).buildString());
 
 		Assert.assertEquals(200, response.getCode());
 

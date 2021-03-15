@@ -618,15 +618,13 @@ public class EditAssetListDisplayContext {
 		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new GroupItemSelectorReturnType());
 
-		PortletURL itemSelectorURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_itemSelector.getItemSelectorURL(
 				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
 				getSelectGroupEventName(), itemSelectorCriterion)
 		).setParameter(
 			"portletResource", AssetListPortletKeys.ASSET_LIST
-		).build();
-
-		return itemSelectorURL.toString();
+		).buildString();
 	}
 
 	public Map<String, Map<String, Object>> getManualAddIconDataMap()
@@ -908,7 +906,7 @@ public class EditAssetListDisplayContext {
 			return _selectSegmentsEntryURL;
 		}
 
-		PortletURL selectCategoryURL = PortletURLBuilder.create(
+		_selectSegmentsEntryURL = PortletURLBuilder.create(
 			PortletProviderUtil.getPortletURL(
 				_httpServletRequest, SegmentsEntry.class.getName(),
 				PortletProvider.Action.BROWSE)
@@ -919,9 +917,7 @@ public class EditAssetListDisplayContext {
 			StringUtil.merge(getSelectedSegmentsEntryIds())
 		).setWindowState(
 			LiferayWindowState.POP_UP
-		).build();
-
-		_selectSegmentsEntryURL = selectCategoryURL.toString();
+		).buildString();
 
 		return _selectSegmentsEntryURL;
 	}

@@ -128,13 +128,11 @@ public class WorkflowDefinitionLinkDisplayContext {
 	}
 
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
 			"keywords", StringPool.BLANK
-		).build();
-
-		return clearResultsURL.toString();
+		).buildString();
 	}
 
 	public String getDefaultWorkflowDefinitionLabel(String className)
@@ -380,7 +378,7 @@ public class WorkflowDefinitionLinkDisplayContext {
 	}
 
 	public String getSearchURL() {
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
 			"groupId",
@@ -390,13 +388,11 @@ public class WorkflowDefinitionLinkDisplayContext {
 
 				return themeDisplay.getScopeGroupId();
 			}
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public String getSortingURL() throws PortletException {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_workflowDefinitionLinkRequestHelper.getLiferayPortletResponse()
 		).setParameter(
 			"tab", WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK
@@ -410,9 +406,7 @@ public class WorkflowDefinitionLinkDisplayContext {
 
 				return Objects.equals(orderByType, "asc") ? "desc" : "asc";
 			}
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public int getTotalItems() throws PortalException {

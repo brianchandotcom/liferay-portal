@@ -90,15 +90,13 @@ public class FlagsTagUtil {
 	}
 
 	public static String getURI(HttpServletRequest httpServletRequest) {
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletURLFactoryUtil.create(
 				httpServletRequest, PortletKeys.FLAGS,
 				PortletRequest.ACTION_PHASE)
 		).setActionName(
 			"/flags/edit_entry"
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	public static boolean isFlagsEnabled(ThemeDisplay themeDisplay)

@@ -33,8 +33,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -105,19 +103,19 @@ public class CommercePriceListQualifiersDisplayContext
 			getPriceListAccountClayDataSetActionDropdownItems()
 		throws PortalException {
 
-		PortletURL portletURL = PortletURLBuilder.create(
-			PortletProviderUtil.getPortletURL(
-				httpServletRequest, CommerceAccount.class.getName(),
-				PortletProvider.Action.EDIT)
-		).setMVCRenderCommandName(
-			"/commerce_account_admin/edit_commerce_account"
-		).setRedirect(
-			commercePricingRequestHelper.getCurrentURL()
-		).setParameter(
-			"commerceAccountId", "{account.id}"
-		).build();
-
-		return getClayDataSetActionDropdownItems(portletURL.toString(), false);
+		return getClayDataSetActionDropdownItems(
+			PortletURLBuilder.create(
+				PortletProviderUtil.getPortletURL(
+					httpServletRequest, CommerceAccount.class.getName(),
+					PortletProvider.Action.EDIT)
+			).setMVCRenderCommandName(
+				"/commerce_account_admin/edit_commerce_account"
+			).setRedirect(
+				commercePricingRequestHelper.getCurrentURL()
+			).setParameter(
+				"commerceAccountId", "{account.id}"
+			).buildString(),
+			false);
 	}
 
 	public List<ClayDataSetActionDropdownItem>
@@ -147,19 +145,19 @@ public class CommercePriceListQualifiersDisplayContext
 			getPriceListChannelClayDataSetActionDropdownItems()
 		throws PortalException {
 
-		PortletURL portletURL = PortletURLBuilder.create(
-			PortletProviderUtil.getPortletURL(
-				httpServletRequest, CommerceChannel.class.getName(),
-				PortletProvider.Action.MANAGE)
-		).setMVCRenderCommandName(
-			"/commerce_channels/edit_commerce_channel"
-		).setRedirect(
-			commercePricingRequestHelper.getCurrentURL()
-		).setParameter(
-			"commerceChannelId", "{channel.id}"
-		).build();
-
-		return getClayDataSetActionDropdownItems(portletURL.toString(), false);
+		return getClayDataSetActionDropdownItems(
+			PortletURLBuilder.create(
+				PortletProviderUtil.getPortletURL(
+					httpServletRequest, CommerceChannel.class.getName(),
+					PortletProvider.Action.MANAGE)
+			).setMVCRenderCommandName(
+				"/commerce_channels/edit_commerce_channel"
+			).setRedirect(
+				commercePricingRequestHelper.getCurrentURL()
+			).setParameter(
+				"commerceChannelId", "{channel.id}"
+			).buildString(),
+			false);
 	}
 
 	public String getPriceListChannelsApiURL() throws PortalException {

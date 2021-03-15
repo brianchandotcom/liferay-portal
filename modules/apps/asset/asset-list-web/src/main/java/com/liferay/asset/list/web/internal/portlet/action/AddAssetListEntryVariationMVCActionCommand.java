@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -91,7 +90,7 @@ public class AddAssetListEntryVariationMVCActionCommand
 		ActionResponse actionResponse, long assetListEntryId,
 		long segmentsEntryId) {
 
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_portal.getLiferayPortletResponse(actionResponse)
 		).setMVCPath(
 			"/edit_asset_list_entry.jsp"
@@ -99,9 +98,7 @@ public class AddAssetListEntryVariationMVCActionCommand
 			"assetListEntryId", assetListEntryId
 		).setParameter(
 			"segmentsEntryId", segmentsEntryId
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 	@Reference

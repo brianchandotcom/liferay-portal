@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Map;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -104,7 +102,7 @@ public class CheckboxDDMFormFieldTemplateContextContributor
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 			RequestBackedPortletURLFactoryUtil.create(httpServletRequest);
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			requestBackedPortletURLFactory.createActionURL(
 				ConfigurationAdminPortletKeys.SYSTEM_SETTINGS)
 		).setMVCRenderCommandName(
@@ -113,9 +111,7 @@ public class CheckboxDDMFormFieldTemplateContextContributor
 			"factoryPid",
 			"com.liferay.dynamic.data.mapping.form.web.internal." +
 				"configuration.DDMFormWebConfiguration"
-		).build();
-
-		return portletURL.toString();
+		).buildString();
 	}
 
 }

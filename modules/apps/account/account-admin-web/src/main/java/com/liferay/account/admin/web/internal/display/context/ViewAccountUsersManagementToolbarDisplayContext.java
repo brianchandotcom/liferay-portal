@@ -75,16 +75,15 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 
 				dropdownItem.putData("action", "removeUsers");
 
-				PortletURL removeUsersURL = PortletURLBuilder.createActionURL(
-					liferayPortletResponse
-				).setActionName(
-					"/account_admin/remove_account_users"
-				).setRedirect(
-					currentURLObj.toString()
-				).build();
-
 				dropdownItem.putData(
-					"removeUsersURL", removeUsersURL.toString());
+					"removeUsersURL",
+					PortletURLBuilder.createActionURL(
+						liferayPortletResponse
+					).setActionName(
+						"/account_admin/remove_account_users"
+					).setRedirect(
+						currentURLObj.toString()
+					).buildString());
 
 				dropdownItem.setIcon("times-circle");
 				dropdownItem.setLabel(
@@ -97,15 +96,13 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
 			"navigation", (String)null
 		).setParameter(
 			"keywords", StringPool.BLANK
-		).build();
-
-		return clearResultsURL.toString();
+		).buildString();
 	}
 
 	@Override
@@ -124,13 +121,13 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 		return LabelItemListBuilder.add(
 			() -> !Objects.equals(getNavigation(), "active"),
 			labelItem -> {
-				PortletURL removeLabelURL = PortletURLBuilder.create(
-					getPortletURL()
-				).setParameter(
-					"navigation", (String)null
-				).build();
-
-				labelItem.putData("removeLabelURL", removeLabelURL.toString());
+				labelItem.putData(
+					"removeLabelURL",
+					PortletURLBuilder.create(
+						getPortletURL()
+					).setParameter(
+						"navigation", (String)null
+					).buildString());
 
 				labelItem.setCloseable(true);
 

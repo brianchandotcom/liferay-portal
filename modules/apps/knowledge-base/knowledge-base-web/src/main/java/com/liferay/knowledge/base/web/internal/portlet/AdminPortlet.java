@@ -72,7 +72,6 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.PortletSession;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
@@ -414,7 +413,7 @@ public class AdminPortlet extends BaseKBPortlet {
 		throws PortalException {
 
 		try {
-			PortletURL portletURL = PortletURLBuilder.create(
+			return PortletURLBuilder.create(
 				PortletURLFactoryUtil.create(
 					actionRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
 					PortletRequest.RENDER_PHASE)
@@ -426,9 +425,7 @@ public class AdminPortlet extends BaseKBPortlet {
 				"resourcePrimKey", kbArticle.getResourcePrimKey()
 			).setWindowState(
 				actionRequest.getWindowState()
-			).build();
-
-			return portletURL.toString();
+			).buildString();
 		}
 		catch (WindowStateException windowStateException) {
 			throw new PortalException(windowStateException);

@@ -21,6 +21,31 @@ definition {
 			value1 = "Your request completed successfully.");
 	}
 
+	macro addOrRemoveEntryPermissionsFromAllRoles {
+		if (IsNotVisible(locator1 = "AssetPermissions#HIDE_OPTIONS_LINK")) {
+			AssertClick.assertPartialTextClickAt(
+				locator1 = "AssetPermissions#MORE_OPTIONS_LINK",
+				value1 = "More Options");
+		}
+
+		if ("${addOrRemoveViewPermission}" == "Remove") {
+			for (var permissionDefinitionKey : list "${permissionDefinitionKeyList}" ) {
+				var key_permissionDefinitionKey = "${permissionDefinitionKey}";
+				var key_roleTitle = "${roleTitle}";
+
+				Uncheck(locator1 = "AssetPermissions#PERMISSIONS_CHECKBOX");
+			}
+		}
+		else {
+			for (var permissionDefinitionKey : list "${permissionDefinitionKeyList}" ) {
+				var key_permissionDefinitionKey = "${permissionDefinitionKey}";
+				var key_roleTitle = "${roleTitle}";
+
+				Check(locator1 = "AssetPermissions#PERMISSIONS_CHECKBOX");
+			}
+		}
+	}
+
 	macro addOrRemoveViewPermissionFromAllRoles {
 		for (var roleTitle : list "${roleList}") {
 			var roleTitle = "${roleTitle}";

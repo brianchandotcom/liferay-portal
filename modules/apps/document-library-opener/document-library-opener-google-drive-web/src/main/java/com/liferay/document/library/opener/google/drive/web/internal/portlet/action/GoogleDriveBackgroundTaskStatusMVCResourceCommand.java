@@ -122,8 +122,6 @@ public class GoogleDriveBackgroundTaskStatusMVCResourceCommand
 
 			PortletURL portletURL = PortletURLBuilder.createRenderURL(
 				liferayPortletResponse, _portal.getPortletId(resourceRequest)
-			).setWindowState(
-				LiferayWindowState.EXCLUSIVE
 			).setMVCRenderCommandName(
 				"/document_library/open_google_docs"
 			).setParameter(
@@ -133,6 +131,8 @@ public class GoogleDriveBackgroundTaskStatusMVCResourceCommand
 			).setParameter(
 				"googleDocsRedirect",
 				ParamUtil.getString(resourceRequest, "googleDocsRedirect")
+			).setWindowState(
+				LiferayWindowState.EXCLUSIVE
 			).build();
 
 			jsonObject.put("googleDocsEditURL", portletURL.toString());

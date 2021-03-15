@@ -64,10 +64,10 @@ public class ArchivedSettingsActionDropdownItemsProvider {
 
 		PortletURL deleteArchivedSetupsURL = PortletURLBuilder.createActionURL(
 			_renderResponse
-		).setActionName(
-			"deleteArchivedSetups"
 		).setMVCPath(
 			"/edit_configuration_templates.jsp"
+		).setActionName(
+			"deleteArchivedSetups"
 		).setRedirect(
 			_themeDisplay.getURLCurrent()
 		).setParameter(
@@ -103,10 +103,10 @@ public class ArchivedSettingsActionDropdownItemsProvider {
 
 		PortletURL restoreArchivedSetupURL = PortletURLBuilder.createActionURL(
 			_renderResponse
-		).setActionName(
-			"restoreArchivedSetup"
 		).setMVCPath(
 			"/edit_configuration_templates.jsp"
+		).setActionName(
+			"restoreArchivedSetup"
 		).setRedirect(
 			_themeDisplay.getURLCurrent()
 		).setParameter(

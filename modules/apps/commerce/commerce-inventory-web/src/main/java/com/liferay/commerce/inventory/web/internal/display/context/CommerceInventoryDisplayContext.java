@@ -299,12 +299,12 @@ public class CommerceInventoryDisplayContext {
 			liferayPortletResponse
 		).setActionName(
 			"/commerce_inventory/edit_commerce_inventory_item"
+		).setRedirect(
+			_cpRequestHelper.getCurrentURL()
 		).setParameter(
 			Constants.CMD, "transition"
 		).setParameter(
 			"sku", _sku
-		).setRedirect(
-			_cpRequestHelper.getCurrentURL()
 		).build();
 
 		return portletURL;

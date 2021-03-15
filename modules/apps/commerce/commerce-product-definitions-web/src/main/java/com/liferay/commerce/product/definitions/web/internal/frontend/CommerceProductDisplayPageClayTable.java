@@ -215,10 +215,10 @@ public class CommerceProductDisplayPageClayTable
 				PortletRequest.ACTION_PHASE)
 		).setActionName(
 			"/commerce_channels/edit_cp_definition_cp_display_layout"
-		).setParameter(
-			Constants.CMD, Constants.DELETE
 		).setRedirect(
 			redirect
+		).setParameter(
+			Constants.CMD, Constants.DELETE
 		).setParameter(
 			"cpDisplayLayoutId", String.valueOf(productDisplayPageId)
 		).build();

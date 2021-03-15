@@ -186,10 +186,10 @@ public class OrganizationsDisplayContext {
 			_renderResponse
 		).setMVCPath(
 			"/view.jsp"
-		).setParameter(
-			"tabs1", "organizations"
 		).setRedirect(
 			themeDisplay.getURLCurrent()
+		).setParameter(
+			"tabs1", "organizations"
 		).setParameter(
 			"groupId", String.valueOf(getGroupId())
 		).build();

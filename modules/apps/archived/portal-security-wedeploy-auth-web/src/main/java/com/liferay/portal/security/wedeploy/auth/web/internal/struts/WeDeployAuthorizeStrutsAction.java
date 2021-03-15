@@ -92,10 +92,10 @@ public class WeDeployAuthorizeStrutsAction implements StrutsAction {
 			PortletURLFactoryUtil.create(
 				httpServletRequest, PortletKeys.LOGIN, plid,
 				PortletRequest.RENDER_PHASE)
-		).setParameter(
-			"saveLastPath", Boolean.FALSE.toString()
 		).setMVCRenderCommandName(
 			"/login/login"
+		).setParameter(
+			"saveLastPath", Boolean.FALSE.toString()
 		).setPortletMode(
 			PortletMode.VIEW
 		).setWindowState(

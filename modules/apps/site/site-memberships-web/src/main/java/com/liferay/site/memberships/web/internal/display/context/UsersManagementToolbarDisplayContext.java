@@ -366,12 +366,12 @@ public class UsersManagementToolbarDisplayContext
 					liferayPortletResponse
 				).setMVCPath(
 					"/view.jsp"
+				).setRedirect(
+					themeDisplay.getURLCurrent()
 				).setParameter(
 					"tabs1", "users"
 				).setParameter(
 					"navigation", "roles"
-				).setRedirect(
-					themeDisplay.getURLCurrent()
 				).setParameter(
 					"groupId", String.valueOf(_usersDisplayContext.getGroupId())
 				).build();

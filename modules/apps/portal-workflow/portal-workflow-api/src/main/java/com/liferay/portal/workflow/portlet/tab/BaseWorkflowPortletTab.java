@@ -48,10 +48,10 @@ public abstract class BaseWorkflowPortletTab
 
 		PortletURL searchURL = PortletURLBuilder.createRenderURL(
 			renderResponse
-		).setParameter(
-			"groupId", String.valueOf(themeDisplay.getScopeGroupId())
 		).setMVCPath(
 			"/view.jsp"
+		).setParameter(
+			"groupId", String.valueOf(themeDisplay.getScopeGroupId())
 		).setParameter(
 			"tab", getName()
 		).build();

@@ -97,10 +97,10 @@ public class CommerceProductChannelDataSetActionProvider
 				PortletRequest.ACTION_PHASE)
 		).setActionName(
 			"/cp_definitions/edit_cp_definition"
-		).setParameter(
-			Constants.CMD, "deleteChannel"
 		).setRedirect(
 			redirect
+		).setParameter(
+			Constants.CMD, "deleteChannel"
 		).setParameter(
 			"commerceChannelRelId",
 			String.valueOf(commerceChannelRel.getCommerceChannelRelId())

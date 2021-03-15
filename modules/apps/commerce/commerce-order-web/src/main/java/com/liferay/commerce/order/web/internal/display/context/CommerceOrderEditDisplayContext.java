@@ -614,13 +614,13 @@ public class CommerceOrderEditDisplayContext {
 			liferayPortletResponse
 		).setActionName(
 			"/commerce_order/edit_commerce_order"
+		).setRedirect(
+			_commerceOrderRequestHelper.getCurrentURL()
 		).setParameter(
 			Constants.CMD, "transition"
 		).setParameter(
 			"commerceOrderId",
 			String.valueOf(_commerceOrder.getCommerceOrderId())
-		).setRedirect(
-			_commerceOrderRequestHelper.getCurrentURL()
 		).build();
 
 		return portletURL;

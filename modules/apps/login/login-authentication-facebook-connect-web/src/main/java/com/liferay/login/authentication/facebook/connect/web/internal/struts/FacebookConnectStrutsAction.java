@@ -275,12 +275,12 @@ public class FacebookConnectStrutsAction implements StrutsAction {
 			PortletURLFactoryUtil.create(
 				httpServletRequest, PortletKeys.LOGIN,
 				PortletRequest.RENDER_PHASE)
-		).setParameter(
-			"saveLastPath", Boolean.FALSE.toString()
 		).setMVCRenderCommandName(
 			"/login_authentication_facebook_connect/associate_facebook_user"
 		).setRedirect(
 			ParamUtil.getString(httpServletRequest, "redirect")
+		).setParameter(
+			"saveLastPath", Boolean.FALSE.toString()
 		).setParameter(
 			"userId", String.valueOf(user.getUserId())
 		).setParameter(

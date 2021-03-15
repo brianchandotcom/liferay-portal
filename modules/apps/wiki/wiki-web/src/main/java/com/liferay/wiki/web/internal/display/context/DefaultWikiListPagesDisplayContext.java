@@ -544,10 +544,10 @@ public class DefaultWikiListPagesDisplayContext
 				liferayPortletResponse
 			).setActionName(
 				"/wiki/edit_page"
-			).setParameter(
-				Constants.CMD, cmd
 			).setRedirect(
 				_wikiRequestHelper.getCurrentURL()
+			).setParameter(
+				Constants.CMD, cmd
 			).setParameter(
 				"nodeId", String.valueOf(wikiPage.getNodeId())
 			).setParameter(
@@ -576,10 +576,10 @@ public class DefaultWikiListPagesDisplayContext
 				liferayPortletResponse
 			).setActionName(
 				"/wiki/edit_page"
-			).setParameter(
-				Constants.CMD, Constants.DELETE
 			).setRedirect(
 				_wikiRequestHelper.getCurrentURL()
+			).setParameter(
+				Constants.CMD, Constants.DELETE
 			).setParameter(
 				"nodeId", String.valueOf(wikiPage.getNodeId())
 			).setParameter(
@@ -789,10 +789,10 @@ public class DefaultWikiListPagesDisplayContext
 				liferayPortletResponse
 			).setActionName(
 				"/wiki/edit_page"
-			).setParameter(
-				Constants.CMD, Constants.UNSUBSCRIBE
 			).setRedirect(
 				_wikiRequestHelper.getCurrentURL()
+			).setParameter(
+				Constants.CMD, Constants.UNSUBSCRIBE
 			).setParameter(
 				"nodeId", String.valueOf(wikiPage.getNodeId())
 			).setParameter(
@@ -816,10 +816,10 @@ public class DefaultWikiListPagesDisplayContext
 				liferayPortletResponse
 			).setActionName(
 				"/wiki/edit_page"
-			).setParameter(
-				Constants.CMD, Constants.SUBSCRIBE
 			).setRedirect(
 				_wikiRequestHelper.getCurrentURL()
+			).setParameter(
+				Constants.CMD, Constants.SUBSCRIBE
 			).setParameter(
 				"nodeId", String.valueOf(wikiPage.getNodeId())
 			).setParameter(

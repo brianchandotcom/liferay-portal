@@ -255,10 +255,10 @@ public class PortletExtenderConfigurationAction
 			PortletURLFactoryUtil.create(
 				httpServletRequest, portletDisplay.getPortletName(),
 				PortletRequest.ACTION_PHASE)
-		).setActionName(
-			"editConfiguration"
 		).setMVCPath(
 			"/edit_configuration.jsp"
+		).setActionName(
+			"editConfiguration"
 		).setParameter(
 			"p_auth", AuthTokenUtil.getToken(httpServletRequest)
 		).setParameter(

@@ -108,10 +108,10 @@ public class DLAdminNavigationDisplayContext {
 
 		PortletURL viewFileEntryTypesURL = PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
-		).setParameter(
-			"navigation", "file_entry_types"
 		).setRedirect(
 			_currentURLObj.toString()
+		).setParameter(
+			"navigation", "file_entry_types"
 		).build();
 
 		navigationItem.setHref(viewFileEntryTypesURL.toString());
@@ -131,10 +131,10 @@ public class DLAdminNavigationDisplayContext {
 
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
-		).setParameter(
-			"navigation", "file_entry_metadata_sets"
 		).setRedirect(
 			_currentURLObj.toString()
+		).setParameter(
+			"navigation", "file_entry_metadata_sets"
 		).setParameter(
 			"backURL", _themeDisplay.getURLCurrent()
 		).setParameter(

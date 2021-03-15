@@ -134,10 +134,10 @@ public class CommerceProductOptionValueDataSetActionProvider
 				CPPortletKeys.CP_DEFINITIONS, PortletRequest.ACTION_PHASE)
 		).setActionName(
 			"/cp_definitions/edit_cp_definition_option_value_rel"
-		).setParameter(
-			Constants.CMD, Constants.DELETE
 		).setRedirect(
 			redirect
+		).setParameter(
+			Constants.CMD, Constants.DELETE
 		).setParameter(
 			"cpDefinitionOptionValueRelId",
 			String.valueOf(cpDefinitionOptionValueRelId)
@@ -196,10 +196,10 @@ public class CommerceProductOptionValueDataSetActionProvider
 				CPPortletKeys.CP_DEFINITIONS, PortletRequest.ACTION_PHASE)
 		).setActionName(
 			"/cp_definitions/edit_cp_definition_option_value_rel"
-		).setParameter(
-			Constants.CMD, "updatePreselected"
 		).setRedirect(
 			redirect
+		).setParameter(
+			Constants.CMD, "updatePreselected"
 		).setParameter(
 			"cpDefinitionOptionValueRelId",
 			String.valueOf(cpDefinitionOptionValueRelId)

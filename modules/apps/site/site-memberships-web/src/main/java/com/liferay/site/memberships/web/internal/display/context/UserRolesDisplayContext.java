@@ -156,10 +156,10 @@ public class UserRolesDisplayContext {
 	private PortletURL _getPortletURL() throws PortalException {
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
 			_renderResponse
-		).setParameter(
-			"p_u_i_d", String.valueOf(_getUserId())
 		).setMVCPath(
 			"/users_roles.jsp"
+		).setParameter(
+			"p_u_i_d", String.valueOf(_getUserId())
 		).build();
 
 		String displayStyle = getDisplayStyle();

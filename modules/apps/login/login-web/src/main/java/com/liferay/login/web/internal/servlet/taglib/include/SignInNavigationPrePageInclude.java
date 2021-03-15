@@ -82,10 +82,10 @@ public class SignInNavigationPrePageInclude implements PageInclude {
 				PortletURLFactoryUtil.create(
 					httpServletRequest, PortletKeys.FAST_LOGIN,
 					PortletRequest.RENDER_PHASE)
-			).setParameter(
-				"saveLastPath", Boolean.FALSE.toString()
 			).setMVCRenderCommandName(
 				"/login/login"
+			).setParameter(
+				"saveLastPath", Boolean.FALSE.toString()
 			).build();
 
 			try {

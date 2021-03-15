@@ -148,10 +148,10 @@ public class UADExportProcessDisplayContext {
 			PortletURLUtil.getCurrent(
 				PortalUtil.getLiferayPortletRequest(portletRequest),
 				PortalUtil.getLiferayPortletResponse(portletResponse))
-		).setParameter(
-			"p_u_i_d", String.valueOf(selectedUser.getUserId())
 		).setMVCRenderCommandName(
 			"/user_associated_data/view_uad_export_processes"
+		).setParameter(
+			"p_u_i_d", String.valueOf(selectedUser.getUserId())
 		).setParameter(
 			"navigation", getNavigation()
 		).setParameter(

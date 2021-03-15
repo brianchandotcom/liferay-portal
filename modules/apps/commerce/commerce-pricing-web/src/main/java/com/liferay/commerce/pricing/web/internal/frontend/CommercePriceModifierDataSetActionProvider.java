@@ -114,10 +114,10 @@ public class CommercePriceModifierDataSetActionProvider
 				PortletRequest.ACTION_PHASE)
 		).setActionName(
 			"/commerce_price_list/edit_commerce_price_modifier"
-		).setParameter(
-			Constants.CMD, Constants.DELETE
 		).setRedirect(
 			redirect
+		).setParameter(
+			Constants.CMD, Constants.DELETE
 		).setParameter(
 			"commercePriceModifierId",
 			String.valueOf(commercePriceModifier.getCommercePriceModifierId())

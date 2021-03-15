@@ -143,10 +143,10 @@ public class UsersDisplayContext {
 			_renderResponse
 		).setMVCPath(
 			"/view.jsp"
-		).setParameter(
-			"tabs1", "users"
 		).setRedirect(
 			themeDisplay.getURLCurrent()
+		).setParameter(
+			"tabs1", "users"
 		).setParameter(
 			"groupId", String.valueOf(getGroupId())
 		).build();

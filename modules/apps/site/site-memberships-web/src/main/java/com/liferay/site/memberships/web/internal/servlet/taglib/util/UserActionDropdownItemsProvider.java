@@ -84,10 +84,10 @@ public class UserActionDropdownItemsProvider {
 
 		PortletURL assignRolesURL = PortletURLBuilder.createRenderURL(
 			_renderResponse
-		).setParameter(
-			"p_u_i_d", String.valueOf(_user.getUserId())
 		).setMVCPath(
 			"/users_roles.jsp"
+		).setParameter(
+			"p_u_i_d", String.valueOf(_user.getUserId())
 		).setParameter(
 			"groupId",
 			String.valueOf(_themeDisplay.getSiteGroupIdOrLiveGroupId())

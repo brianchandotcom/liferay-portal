@@ -76,14 +76,14 @@ public class UnsubscribeMVCActionCommand extends BaseMVCActionCommand {
 			PortletURLFactoryUtil.create(
 				actionRequest, SubscriptionPortletKeys.UNSUBSCRIBE,
 				PortletRequest.RENDER_PHASE)
-		).setWindowState(
-			WindowState.MAXIMIZED
 		).setMVCPath(
 			"/unsubscribe/unsubscribed.jsp"
 		).setParameter(
 			"key", key
 		).setParameter(
 			"userId", String.valueOf(userId)
+		).setWindowState(
+			WindowState.MAXIMIZED
 		).build();
 
 		try {

@@ -166,10 +166,10 @@ public class DisplayPageDisplayContext {
 			_renderResponse
 		).setMVCPath(
 			"/view_display_pages.jsp"
-		).setParameter(
-			"tabs1", "display-page-templates"
 		).setRedirect(
 			_themeDisplay.getURLCurrent()
+		).setParameter(
+			"tabs1", "display-page-templates"
 		).build();
 
 		String keywords = getKeywords();

@@ -66,10 +66,10 @@ public class DeleteKBTemplatePortletConfigurationIcon
 			_portal.getControlPanelPortletURL(
 				portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
 				PortletRequest.ACTION_PHASE)
-		).setActionName(
-			"deleteKBTemplate"
 		).setMVCPath(
 			"/admin/view_template.jsp"
+		).setActionName(
+			"deleteKBTemplate"
 		).build();
 
 		KBTemplate kbTemplate = (KBTemplate)portletRequest.getAttribute(

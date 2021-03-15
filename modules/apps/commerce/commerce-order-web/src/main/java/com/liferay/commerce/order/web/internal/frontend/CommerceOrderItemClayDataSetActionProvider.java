@@ -110,10 +110,10 @@ public class CommerceOrderItemClayDataSetActionProvider
 				CommercePortletKeys.COMMERCE_ORDER, PortletRequest.ACTION_PHASE)
 		).setActionName(
 			"/commerce_order/edit_commerce_order_item"
-		).setParameter(
-			Constants.CMD, Constants.DELETE
 		).setRedirect(
 			redirect
+		).setParameter(
+			Constants.CMD, Constants.DELETE
 		).setParameter(
 			"commerceOrderItemId", String.valueOf(commerceOrderItemId)
 		).build();

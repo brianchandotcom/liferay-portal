@@ -424,10 +424,10 @@ public class WorkflowTaskDisplayContext {
 
 		PortletURL editPortletURL = PortletURLBuilder.create(
 			_getEditPortletURL(workflowTask)
-		).setParameter(
-			"hideDefaultSuccessMessage", Boolean.TRUE.toString()
 		).setRedirect(
 			themeDisplay.getURLCurrent()
+		).setParameter(
+			"hideDefaultSuccessMessage", Boolean.TRUE.toString()
 		).setParameter(
 			"portletResource", getPortletResource()
 		).setParameter(
@@ -465,10 +465,10 @@ public class WorkflowTaskDisplayContext {
 			getCurrentURL()
 		).setParameter(
 			"hideControls", Boolean.TRUE.toString()
-		).setWindowState(
-			LiferayWindowState.POP_UP
 		).setPortletMode(
 			PortletMode.VIEW
+		).setWindowState(
+			LiferayWindowState.POP_UP
 		).build();
 
 		sb.append(HtmlUtil.escapeJS(viewDiffsPortletURL.toString()));

@@ -154,12 +154,12 @@ public class CommerceAddressDisplayContext {
 
 		PortletURL portletURL = PortletURLBuilder.createActionURL(
 			_liferayPortletResponse
-		).setParameter(
-			Constants.CMD, Constants.DELETE
 		).setActionName(
 			"/commerce_address_content/edit_commerce_address"
 		).setRedirect(
 			themeDisplay.getURLCurrent()
+		).setParameter(
+			Constants.CMD, Constants.DELETE
 		).setParameter(
 			"commerceAddressId", String.valueOf(commerceAddressId)
 		).build();

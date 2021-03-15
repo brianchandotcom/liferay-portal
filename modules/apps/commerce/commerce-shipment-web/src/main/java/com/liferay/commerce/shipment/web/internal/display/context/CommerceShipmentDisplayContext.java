@@ -241,10 +241,10 @@ public class CommerceShipmentDisplayContext
 						PortletRequest.ACTION_PHASE)
 				).setActionName(
 					"/commerce_shipment/edit_commerce_shipment"
-				).setParameter(
-					Constants.CMD, "transition"
 				).setRedirect(
 					PortalUtil.getCurrentURL(httpServletRequest)
+				).setParameter(
+					Constants.CMD, "transition"
 				).setParameter(
 					"commerceShipmentId",
 					String.valueOf(getCommerceShipmentId())
@@ -323,13 +323,13 @@ public class CommerceShipmentDisplayContext
 
 			PortletURL portletURL = PortletURLBuilder.create(
 				getPortletURL()
+			).setMVCRenderCommandName(
+				"/commerce_shipment/add_commerce_shipment_items"
 			).setRedirect(
 				PortalUtil.getCurrentURL(httpServletRequest)
 			).setParameter(
 				"commerceShipmentId",
 				String.valueOf(commerceShipment.getCommerceShipmentId())
-			).setMVCRenderCommandName(
-				"/commerce_shipment/add_commerce_shipment_items"
 			).setWindowState(
 				LiferayWindowState.POP_UP
 			).build();

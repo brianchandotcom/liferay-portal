@@ -116,10 +116,10 @@ public class UserAssetRenderer extends BaseJSPAssetRenderer<User> {
 		PortletURL portletURL = PortletURLBuilder.createLiferayPortletURL(
 			liferayPortletResponse, getControlPanelPlid(liferayPortletRequest),
 			portletId, PortletRequest.RENDER_PHASE
-		).setParameter(
-			"p_u_i_d", String.valueOf(_user.getUserId())
 		).setMVCRenderCommandName(
 			"/users_admin/edit_user"
+		).setParameter(
+			"p_u_i_d", String.valueOf(_user.getUserId())
 		).build();
 
 		return portletURL;

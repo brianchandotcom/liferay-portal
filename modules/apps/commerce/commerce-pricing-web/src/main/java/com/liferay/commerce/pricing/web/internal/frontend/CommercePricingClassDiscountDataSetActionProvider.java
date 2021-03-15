@@ -88,10 +88,10 @@ public class CommercePricingClassDiscountDataSetActionProvider
 				PortletRequest.RENDER_PHASE)
 		).setMVCRenderCommandName(
 			"/commerce_discount/edit_commerce_discount"
-		).setParameter(
-			"commerceDiscountId", String.valueOf(commerceDiscountId)
 		).setRedirect(
 			redirect
+		).setParameter(
+			"commerceDiscountId", String.valueOf(commerceDiscountId)
 		).build();
 
 		return portletURL;

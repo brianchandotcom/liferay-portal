@@ -238,11 +238,11 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 					PortletProviderUtil.getPortletURL(
 						actionRequest, CommerceOrder.class.getName(),
 						PortletProvider.Action.EDIT)
+				).setMVCRenderCommandName(
+					"/commerce_open_order_content/edit_commerce_order"
 				).setParameter(
 					PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backURL",
 					redirect
-				).setMVCRenderCommandName(
-					"/commerce_open_order_content/edit_commerce_order"
 				).setParameter(
 					"commerceOrderId", String.valueOf(commerceOrderId)
 				).build();

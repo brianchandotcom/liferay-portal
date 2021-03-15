@@ -72,10 +72,10 @@ public class DeleteRolePortletConfigurationIcon
 				PortletURLFactoryUtil.create(
 					portletRequest, RolesAdminPortletKeys.ROLES_ADMIN,
 					PortletRequest.ACTION_PHASE)
-			).setActionName(
-				"deleteRole"
 			).setMVCPath(
 				"/view.jsp"
+			).setActionName(
+				"deleteRole"
 			).setParameter(
 				"roleId", String.valueOf(_getRoleId(portletRequest))
 			).build();

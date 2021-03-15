@@ -74,10 +74,10 @@ public class ManageCustomFieldsPortletConfigurationIcon
 				PortletProviderUtil.getPortletURL(
 					portletRequest, ExpandoColumn.class.getName(),
 					PortletProvider.Action.MANAGE)
-			).setParameter(
-				"modelResource", User.class.getName()
 			).setRedirect(
 				themeDisplay.getURLCurrent()
+			).setParameter(
+				"modelResource", User.class.getName()
 			).build();
 
 			return portletURL.toString();

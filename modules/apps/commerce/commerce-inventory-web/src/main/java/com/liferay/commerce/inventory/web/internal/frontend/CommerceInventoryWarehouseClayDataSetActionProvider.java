@@ -108,10 +108,10 @@ public class CommerceInventoryWarehouseClayDataSetActionProvider
 				CPPortletKeys.COMMERCE_INVENTORY, PortletRequest.ACTION_PHASE)
 		).setActionName(
 			"/commerce_inventory/edit_commerce_inventory_warehouse_item"
-		).setParameter(
-			Constants.CMD, Constants.DELETE
 		).setRedirect(
 			redirect
+		).setParameter(
+			Constants.CMD, Constants.DELETE
 		).setParameter(
 			"commerceInventoryWarehouseItemId",
 			String.valueOf(commerceInventoryWarehouseItemId)

@@ -254,10 +254,10 @@ public class FragmentEntryLinkDisplayContext {
 			_renderResponse
 		).setMVCRenderCommandName(
 			"/fragment/view_fragment_entry_usages"
-		).setParameter(
-			"navigation", getNavigation()
 		).setRedirect(
 			getRedirect()
+		).setParameter(
+			"navigation", getNavigation()
 		).setParameter(
 			"fragmentCollectionId", String.valueOf(getFragmentCollectionId())
 		).setParameter(

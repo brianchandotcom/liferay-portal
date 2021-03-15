@@ -135,12 +135,12 @@ public class CommerceAccountAddressAdminDisplayContext
 
 		PortletURL portletURL = PortletURLBuilder.createActionURL(
 			liferayPortletResponse
-		).setParameter(
-			Constants.CMD, Constants.DELETE
 		).setActionName(
 			"/commerce_account_admin/edit_commerce_address"
 		).setRedirect(
 			commerceAccountAdminRequestHelper.getCurrentURL()
+		).setParameter(
+			Constants.CMD, Constants.DELETE
 		).setParameter(
 			"commerceAddressId", String.valueOf(commerceAddressId)
 		).build();

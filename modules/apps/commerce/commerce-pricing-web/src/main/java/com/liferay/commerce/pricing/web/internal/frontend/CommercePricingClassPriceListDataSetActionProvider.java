@@ -89,10 +89,10 @@ public class CommercePricingClassPriceListDataSetActionProvider
 				PortletRequest.RENDER_PHASE)
 		).setMVCRenderCommandName(
 			"/commerce_price_list/edit_commerce_price_list"
-		).setParameter(
-			"commercePriceListId", String.valueOf(commercePriceListId)
 		).setRedirect(
 			redirect
+		).setParameter(
+			"commercePriceListId", String.valueOf(commercePriceListId)
 		).build();
 
 		return portletURL;

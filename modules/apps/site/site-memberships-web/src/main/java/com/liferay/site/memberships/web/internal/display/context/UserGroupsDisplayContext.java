@@ -139,10 +139,10 @@ public class UserGroupsDisplayContext {
 			_renderResponse
 		).setMVCPath(
 			"/view.jsp"
-		).setParameter(
-			"tabs1", "user-groups"
 		).setRedirect(
 			themeDisplay.getURLCurrent()
+		).setParameter(
+			"tabs1", "user-groups"
 		).setParameter(
 			"groupId", String.valueOf(getGroupId())
 		).build();

@@ -59,10 +59,10 @@ public class UserCTDisplayRenderer extends BaseCTDisplayRenderer<User> {
 			_portal.getControlPanelPortletURL(
 				httpServletRequest, UsersAdminPortletKeys.USERS_ADMIN,
 				PortletRequest.RENDER_PHASE)
-		).setParameter(
-			"p_u_i_d", String.valueOf(user.getUserId())
 		).setMVCRenderCommandName(
 			"/users_admin/edit_user"
+		).setParameter(
+			"p_u_i_d", String.valueOf(user.getUserId())
 		).build();
 
 		String currentURL = _portal.getCurrentURL(httpServletRequest);

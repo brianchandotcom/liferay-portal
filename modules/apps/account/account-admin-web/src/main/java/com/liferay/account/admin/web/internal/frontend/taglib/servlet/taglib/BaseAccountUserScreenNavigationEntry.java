@@ -105,10 +105,10 @@ public abstract class BaseAccountUserScreenNavigationEntry
 			portal.getControlPanelPortletURL(
 				httpServletRequest, AccountPortletKeys.ACCOUNT_USERS_ADMIN,
 				PortletRequest.RENDER_PHASE)
-		).setParameter(
-			"p_u_i_d", ParamUtil.getString(httpServletRequest, "p_u_i_d")
 		).setMVCPath(
 			"/account_users_admin/edit_account_user.jsp"
+		).setParameter(
+			"p_u_i_d", ParamUtil.getString(httpServletRequest, "p_u_i_d")
 		).build();
 
 		DynamicServletRequest dynamicServletRequest = new DynamicServletRequest(

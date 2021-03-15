@@ -181,10 +181,10 @@ public class MasterLayoutDisplayContext {
 			_renderResponse
 		).setMVCPath(
 			"/view_master_layouts.jsp"
-		).setParameter(
-			"tabs1", "master-layouts"
 		).setRedirect(
 			_themeDisplay.getURLCurrent()
+		).setParameter(
+			"tabs1", "master-layouts"
 		).build();
 
 		String keywords = getKeywords();

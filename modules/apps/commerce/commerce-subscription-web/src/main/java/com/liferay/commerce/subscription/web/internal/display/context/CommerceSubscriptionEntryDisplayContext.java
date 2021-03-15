@@ -353,14 +353,14 @@ public class CommerceSubscriptionEntryDisplayContext {
 			liferayPortletResponse
 		).setActionName(
 			"/commerce_open_order_content/edit_commerce_order"
+		).setRedirect(
+			_cpRequestHelper.getCurrentURL()
 		).setParameter(
 			Constants.CMD, ActionKeys.UPDATE
 		).setParameter(
 			"commerceSubscriptionEntryId",
 			String.valueOf(
 				_commerceSubscriptionEntry.getCommerceSubscriptionEntryId())
-		).setRedirect(
-			_cpRequestHelper.getCurrentURL()
 		).build();
 
 		return portletURL;

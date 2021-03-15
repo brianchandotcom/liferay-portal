@@ -161,10 +161,10 @@ public class CommerceChannelDisplayContext
 				PortletRequest.RENDER_PHASE)
 		).setMVCRenderCommandName(
 			"/commerce_channels/add_commerce_channel"
-		).setWindowState(
-			LiferayWindowState.POP_UP
 		).setRedirect(
 			portletURL.toString()
+		).setWindowState(
+			LiferayWindowState.POP_UP
 		).build();
 
 		return editCommerceChannelPortletURL.toString();

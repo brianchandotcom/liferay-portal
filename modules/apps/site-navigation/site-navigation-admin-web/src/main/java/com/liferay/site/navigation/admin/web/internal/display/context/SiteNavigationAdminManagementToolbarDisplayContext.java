@@ -108,10 +108,10 @@ public class SiteNavigationAdminManagementToolbarDisplayContext
 
 		PortletURL addSiteNavigationMenuURL = PortletURLBuilder.createActionURL(
 			liferayPortletResponse
-		).setActionName(
-			"/site_navigation_admin/add_site_navigation_menu"
 		).setMVCPath(
 			"/edit_site_navigation_menu.jsp"
+		).setActionName(
+			"/site_navigation_admin/add_site_navigation_menu"
 		).setRedirect(
 			themeDisplay.getURLCurrent()
 		).build();

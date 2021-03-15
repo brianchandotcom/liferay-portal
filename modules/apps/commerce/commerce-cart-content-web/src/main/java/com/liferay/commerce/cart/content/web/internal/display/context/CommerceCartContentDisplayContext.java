@@ -183,10 +183,10 @@ public class CommerceCartContentDisplayContext {
 			liferayPortletResponse
 		).setActionName(
 			"/commerce_cart_content/edit_commerce_order_item"
-		).setParameter(
-			Constants.CMD, Constants.DELETE
 		).setRedirect(
 			commerceCartContentRequestHelper.getCurrentURL()
+		).setParameter(
+			Constants.CMD, Constants.DELETE
 		).setParameter(
 			"commerceOrderItemId",
 			String.valueOf(commerceOrderItem.getCommerceOrderItemId())

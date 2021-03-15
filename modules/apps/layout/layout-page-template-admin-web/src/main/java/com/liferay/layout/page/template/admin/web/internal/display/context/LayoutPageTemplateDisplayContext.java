@@ -277,10 +277,10 @@ public class LayoutPageTemplateDisplayContext {
 	public PortletURL getPortletURL() {
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
 			_renderResponse
-		).setParameter(
-			"tabs1", "page-templates"
 		).setRedirect(
 			_themeDisplay.getURLCurrent()
+		).setParameter(
+			"tabs1", "page-templates"
 		).build();
 
 		long layoutPageTemplateCollectionId =

@@ -328,10 +328,10 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			_portal.getControlPanelPortletURL(
 				actionRequest, CommercePortletKeys.COMMERCE_SHIPMENT,
 				PortletRequest.RENDER_PHASE)
-		).setRedirect(
-			redirect
 		).setMVCRenderCommandName(
 			"/commerce_shipment/edit_commerce_shipment"
+		).setRedirect(
+			redirect
 		).setParameter(
 			"commerceShipmentId", String.valueOf(commerceShipmentId)
 		).build();

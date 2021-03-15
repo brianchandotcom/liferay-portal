@@ -64,10 +64,10 @@ public class FragmentCollectionResourcesDisplayContext {
 			_renderResponse
 		).setMVCRenderCommandName(
 			"/fragment/view"
-		).setParameter(
-			"tabs1", "resources"
 		).setRedirect(
 			_fragmentDisplayContext.getRedirect()
+		).setParameter(
+			"tabs1", "resources"
 		).setParameter(
 			"fragmentCollectionId",
 			String.valueOf(_fragmentDisplayContext.getFragmentCollectionId())

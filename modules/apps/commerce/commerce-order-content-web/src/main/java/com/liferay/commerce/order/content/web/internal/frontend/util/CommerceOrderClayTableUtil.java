@@ -81,12 +81,12 @@ public class CommerceOrderClayTableUtil {
 				themeDisplay.getPlid(), PortletRequest.ACTION_PHASE)
 		).setActionName(
 			"/commerce_open_order_content/edit_commerce_order"
+		).setRedirect(
+			redirect
 		).setParameter(
 			Constants.CMD, "setCurrent"
 		).setParameter(
 			"commerceOrderId", String.valueOf(commerceOrderId)
-		).setRedirect(
-			redirect
 		).build();
 
 		return portletURL.toString();

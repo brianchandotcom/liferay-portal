@@ -123,15 +123,15 @@ public class CPDefinitionOptionValueRelDisplayContext
 	public String getRemoveSkuUrl(String redirect) throws PortalException {
 		PortletURL portletURL = PortletURLBuilder.createActionURL(
 			liferayPortletResponse
-		).setParameter(
-			Constants.CMD, "deleteSku"
 		).setActionName(
 			"/cp_definitions/edit_cp_definition_option_value_rel"
+		).setRedirect(
+			redirect
+		).setParameter(
+			Constants.CMD, "deleteSku"
 		).setParameter(
 			"cpDefinitionOptionValueRelId",
 			String.valueOf(getCPDefinitionOptionValueRelId())
-		).setRedirect(
-			redirect
 		).build();
 
 		return portletURL.toString();

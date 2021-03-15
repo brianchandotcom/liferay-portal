@@ -201,10 +201,10 @@ public class CommerceCategoryDisplayPageClayTable
 				PortletRequest.ACTION_PHASE)
 		).setActionName(
 			"/commerce_channels/edit_asset_category_cp_display_layout"
-		).setParameter(
-			Constants.CMD, Constants.DELETE
 		).setRedirect(
 			redirect
+		).setParameter(
+			Constants.CMD, Constants.DELETE
 		).setParameter(
 			"cpDisplayLayoutId", String.valueOf(categoryDisplayPageId)
 		).build();

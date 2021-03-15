@@ -206,10 +206,10 @@ public class CPDefinitionOptionRelDisplayContext
 	public PortletURL getPortletURL() throws PortalException {
 		PortletURL portletURL = PortletURLBuilder.create(
 			super.getPortletURL()
-		).setParameter(
-			"cpDefinitionId", String.valueOf(getCPDefinitionId())
 		).setMVCRenderCommandName(
 			"/cp_definitions/edit_cp_definition"
+		).setParameter(
+			"cpDefinitionId", String.valueOf(getCPDefinitionId())
 		).setParameter(
 			"screenNavigationCategoryKey", getScreenNavigationCategoryKey()
 		).build();

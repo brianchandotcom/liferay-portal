@@ -68,10 +68,10 @@ public class CPDefinitionPricingClassDisplayContext
 	public PortletURL getPortletURL() throws PortalException {
 		PortletURL portletURL = PortletURLBuilder.create(
 			super.getPortletURL()
-		).setParameter(
-			"cpDefinitionId", String.valueOf(getCPDefinitionId())
 		).setMVCRenderCommandName(
 			"/cp_definitions/edit_cp_definition_pricing_class"
+		).setParameter(
+			"cpDefinitionId", String.valueOf(getCPDefinitionId())
 		).setParameter(
 			"screenNavigationCategoryKey", getScreenNavigationCategoryKey()
 		).build();

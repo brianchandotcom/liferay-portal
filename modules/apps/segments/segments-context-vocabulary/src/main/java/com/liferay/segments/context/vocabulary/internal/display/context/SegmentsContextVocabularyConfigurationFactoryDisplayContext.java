@@ -69,12 +69,12 @@ public class SegmentsContextVocabularyConfigurationFactoryDisplayContext {
 			_renderResponse
 		).setActionName(
 			"/delete_segments_context_vocabulary_configuration"
+		).setRedirect(
+			String.valueOf(_getRedirect())
 		).setParameter(
 			"factoryPid", configuration.getFactoryPid()
 		).setParameter(
 			"pid", configuration.getPid()
-		).setRedirect(
-			String.valueOf(_getRedirect())
 		).build();
 
 		return portletURL;

@@ -240,7 +240,7 @@ describe('LabelField', () => {
 
 		fireEvent.click(options[0]);
 
-		expect(input.value).toBe('Name');
+		expect(input.value).toBe('Username');
 
 		// View Level option
 

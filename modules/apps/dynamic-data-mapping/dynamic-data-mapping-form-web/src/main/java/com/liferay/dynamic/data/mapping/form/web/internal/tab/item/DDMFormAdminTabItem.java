@@ -70,7 +70,7 @@ public class DDMFormAdminTabItem implements DDMDisplayTabItem {
 			(ThemeDisplay)liferayPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletURLFactoryUtil.create(
 				liferayPortletRequest,
 				DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
@@ -82,8 +82,6 @@ public class DDMFormAdminTabItem implements DDMDisplayTabItem {
 		).setParameter(
 			"groupId", themeDisplay.getScopeGroupId()
 		).build();
-
-		return portletURL;
 	}
 
 }

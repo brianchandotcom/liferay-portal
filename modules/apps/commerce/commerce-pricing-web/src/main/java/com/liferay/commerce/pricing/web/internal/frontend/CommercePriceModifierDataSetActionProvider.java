@@ -107,7 +107,7 @@ public class CommercePriceModifierDataSetActionProvider
 			httpServletRequest, "currentUrl",
 			_portal.getCurrentURL(httpServletRequest));
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				httpServletRequest,
 				CommercePricingPortletKeys.COMMERCE_PRICE_LIST,
@@ -125,8 +125,6 @@ public class CommercePriceModifierDataSetActionProvider
 			"commercePriceListId",
 			commercePriceModifier.getCommercePriceListId()
 		).build();
-
-		return portletURL;
 	}
 
 	private PortletURL _getPriceModifierEditURL(

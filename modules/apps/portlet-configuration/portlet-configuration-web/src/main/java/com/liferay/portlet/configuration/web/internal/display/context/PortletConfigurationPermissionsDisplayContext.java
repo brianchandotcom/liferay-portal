@@ -240,7 +240,7 @@ public class PortletConfigurationPermissionsDisplayContext {
 	}
 
 	public PortletURL getIteratorURL() throws Exception {
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletURLFactoryUtil.create(
 				_httpServletRequest,
 				PortletConfigurationPortletKeys.PORTLET_CONFIGURATION,
@@ -264,8 +264,6 @@ public class PortletConfigurationPermissionsDisplayContext {
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).build();
-
-		return portletURL;
 	}
 
 	public String getModelResource() {
@@ -635,7 +633,7 @@ public class PortletConfigurationPermissionsDisplayContext {
 	public PortletURL getUpdateRolePermissionsURL()
 		throws ResourcePrimKeyException, WindowStateException {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletURLFactoryUtil.create(
 				_httpServletRequest,
 				PortletConfigurationPortletKeys.PORTLET_CONFIGURATION,
@@ -671,8 +669,6 @@ public class PortletConfigurationPermissionsDisplayContext {
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).build();
-
-		return portletURL;
 	}
 
 	private int[] _getGroupRoleTypes(Group group, int[] defaultRoleTypes) {

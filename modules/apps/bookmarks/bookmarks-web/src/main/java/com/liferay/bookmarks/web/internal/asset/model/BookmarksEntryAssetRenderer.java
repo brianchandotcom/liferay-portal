@@ -139,7 +139,7 @@ public class BookmarksEntryAssetRenderer
 			group = themeDisplay.getScopeGroup();
 		}
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
 				liferayPortletRequest, group,
 				BookmarksPortletKeys.BOOKMARKS_ADMIN, 0, 0,
@@ -153,8 +153,6 @@ public class BookmarksEntryAssetRenderer
 		).setParameter(
 			"showFolderSelector", Boolean.TRUE.toString()
 		).build();
-
-		return portletURL;
 	}
 
 	@Override

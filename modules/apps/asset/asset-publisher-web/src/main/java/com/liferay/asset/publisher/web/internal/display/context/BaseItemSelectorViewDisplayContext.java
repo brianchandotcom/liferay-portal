@@ -101,7 +101,7 @@ public abstract class BaseItemSelectorViewDisplayContext
 
 	@Override
 	public PortletURL getPortletURL() throws PortletException {
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletURLUtil.clone(
 				this.portletURL,
 				PortalUtil.getLiferayPortletResponse(getPortletResponse()))
@@ -116,8 +116,6 @@ public abstract class BaseItemSelectorViewDisplayContext
 			"portletResource",
 			ParamUtil.getString(httpServletRequest, "portletResource")
 		).build();
-
-		return portletURL;
 	}
 
 	@Override

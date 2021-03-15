@@ -46,13 +46,11 @@ public class RolesAdminManagePortletProvider
 	public PortletURL getPortletURL(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			super.getPortletURL(httpServletRequest)
 		).setMVCPath(
 			"/edit_role_permissions.jsp"
 		).build();
-
-		return portletURL;
 	}
 
 }

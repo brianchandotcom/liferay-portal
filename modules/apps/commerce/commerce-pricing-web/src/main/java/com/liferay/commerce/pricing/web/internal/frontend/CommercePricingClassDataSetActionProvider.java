@@ -146,7 +146,7 @@ public class CommercePricingClassDataSetActionProvider
 	private PortletURL _getPricingClassEditURL(
 		long pricingClassId, HttpServletRequest httpServletRequest) {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				httpServletRequest,
 				CommercePricingPortletKeys.COMMERCE_PRICING_CLASSES,
@@ -159,8 +159,6 @@ public class CommercePricingClassDataSetActionProvider
 			"screenNavigationCategoryKey",
 			CommercePricingClassScreenNavigationConstants.CATEGORY_KEY_DETAILS
 		).build();
-
-		return portletURL;
 	}
 
 	@Reference(

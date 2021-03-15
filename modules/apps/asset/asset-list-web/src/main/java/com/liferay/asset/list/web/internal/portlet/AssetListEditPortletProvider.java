@@ -46,13 +46,11 @@ public class AssetListEditPortletProvider
 	public PortletURL getPortletURL(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			super.getPortletURL(httpServletRequest)
 		).setMVCPath(
 			"/edit_asset_list_entry.jsp"
 		).build();
-
-		return portletURL;
 	}
 
 }

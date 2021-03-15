@@ -150,24 +150,20 @@ public class KBTemplatesManagementToolbarDisplayContext {
 	}
 
 	public PortletURL getSearchURL() {
-		PortletURL searchURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setMVCPath(
 			"/admin/view_templates.jsp"
 		).build();
-
-		return searchURL;
 	}
 
 	public PortletURL getSortingURL() throws PortletException {
-		PortletURL sortingURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_getCurrentSortingURL()
 		).setParameter(
 			"orderByType",
 			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc"
 		).build();
-
-		return sortingURL;
 	}
 
 	public int getTotal() {
@@ -214,13 +210,11 @@ public class KBTemplatesManagementToolbarDisplayContext {
 	}
 
 	private PortletURL _getCurrentSortingURL() throws PortletException {
-		PortletURL sortingURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletURLUtil.clone(_currentURLObj, _liferayPortletResponse)
 		).setMVCPath(
 			"/admin/view_templates.jsp"
 		).build();
-
-		return sortingURL;
 	}
 
 	private String _getKeywords() {

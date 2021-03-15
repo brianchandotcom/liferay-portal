@@ -248,13 +248,11 @@ public class StagingProcessesWebToolbarDisplayContext {
 	}
 
 	private PortletURL _getNavigationURL(String navigation) {
-		PortletURL url = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_getStagingRenderURL()
 		).setParameter(
 			"navigation", navigation
 		).build();
-
-		return url;
 	}
 
 	private List<DropdownItem> _getOrderByDropDownItems() {
@@ -280,17 +278,15 @@ public class StagingProcessesWebToolbarDisplayContext {
 	}
 
 	private PortletURL _getOrderByURL(String orderByColumnName) {
-		PortletURL url = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_getStagingRenderURL()
 		).setParameter(
 			"orderByCol", orderByColumnName
 		).build();
-
-		return url;
 	}
 
 	private PortletURL _getStagingRenderURL() {
-		PortletURL renderURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setParameter(
 			"navigation",
@@ -311,8 +307,6 @@ public class StagingProcessesWebToolbarDisplayContext {
 			"searchContainerId",
 			ParamUtil.getString(_httpServletRequest, "searchContainerId")
 		).build();
-
-		return renderURL;
 	}
 
 	private final HttpServletRequest _httpServletRequest;

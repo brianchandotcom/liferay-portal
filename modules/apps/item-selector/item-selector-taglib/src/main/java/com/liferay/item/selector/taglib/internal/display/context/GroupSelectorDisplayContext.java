@@ -75,7 +75,7 @@ public class GroupSelectorDisplayContext {
 	}
 
 	public PortletURL getGroupItemSelectorURL(String groupType) {
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_getItemSelectorURL()
 		).setParameter(
 			"groupType", groupType
@@ -85,8 +85,6 @@ public class GroupSelectorDisplayContext {
 		).setParameter(
 			"showGroupSelector", Boolean.TRUE.toString()
 		).build();
-
-		return portletURL;
 	}
 
 	public Set<String> getGroupTypes() {
@@ -184,7 +182,7 @@ public class GroupSelectorDisplayContext {
 	}
 
 	private PortletURL _getIteratorURL() {
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_getItemSelectorURL()
 		).setParameter(
 			"groupType", _getGroupType()
@@ -194,8 +192,6 @@ public class GroupSelectorDisplayContext {
 		).setParameter(
 			"showGroupSelector", Boolean.TRUE.toString()
 		).build();
-
-		return portletURL;
 	}
 
 	private String _groupType;

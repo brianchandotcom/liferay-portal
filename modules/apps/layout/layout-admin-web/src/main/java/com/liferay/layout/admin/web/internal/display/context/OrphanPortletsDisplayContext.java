@@ -196,7 +196,7 @@ public class OrphanPortletsDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setMVCPath(
 			"/orphan_portlets.jsp"
@@ -205,8 +205,6 @@ public class OrphanPortletsDisplayContext {
 		).setParameter(
 			"displayStyle", getDisplayStyle()
 		).build();
-
-		return portletURL;
 	}
 
 	public Layout getSelLayout() {

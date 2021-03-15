@@ -153,7 +153,7 @@ public class CommentAssetRenderer
 			group = themeDisplay.getScopeGroup();
 		}
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
 				liferayPortletRequest, group, CommentPortletKeys.COMMENT, 0, 0,
 				PortletRequest.RENDER_PHASE)
@@ -162,8 +162,6 @@ public class CommentAssetRenderer
 		).setParameter(
 			"commentId", _workflowableComment.getCommentId()
 		).build();
-
-		return portletURL;
 	}
 
 	@Override

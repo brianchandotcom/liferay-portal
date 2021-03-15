@@ -151,15 +151,13 @@ public class ViewOrganizationsManagementToolbarDisplayContext {
 
 	public PortletURL getPortletURL() {
 		try {
-			PortletURL portletURL = PortletURLBuilder.create(
+			return PortletURLBuilder.create(
 				PortletURLUtil.clone(_currentURL, _renderResponse)
 			).setParameter(
 				"orderByCol", getOrderByCol()
 			).setParameter(
 				"orderByType", getOrderByType()
 			).build();
-
-			return portletURL;
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

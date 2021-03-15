@@ -56,15 +56,13 @@ public class CPInstanceItemSelectorViewDisplayContext
 
 	@Override
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			super.getPortletURL()
 		).setParameter(
 			"checkedCPInstanceIds", getCheckedCPInstanceIds()
 		).setParameter(
 			"commerceCatalogGroupId", getGroupId()
 		).build();
-
-		return portletURL;
 	}
 
 	@Override

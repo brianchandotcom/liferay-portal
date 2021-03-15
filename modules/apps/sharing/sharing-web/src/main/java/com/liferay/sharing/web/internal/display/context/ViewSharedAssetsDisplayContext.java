@@ -252,7 +252,7 @@ public class ViewSharedAssetsDisplayContext {
 	}
 
 	public PortletURL getSortingURL() throws PortletException {
-		PortletURL sortingURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_getCurrentSortingURL()
 		).setParameter(
 			"orderByType",
@@ -262,8 +262,6 @@ public class ViewSharedAssetsDisplayContext {
 				return Objects.equals(orderByType, "asc") ? "desc" : "asc";
 			}
 		).build();
-
-		return sortingURL;
 	}
 
 	public String getTitle(SharingEntry sharingEntry) {

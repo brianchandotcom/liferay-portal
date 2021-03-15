@@ -81,7 +81,7 @@ public class AssetTagsSelectorDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCPath(
 			_getMvcPath()
@@ -92,8 +92,6 @@ public class AssetTagsSelectorDisplayContext {
 		).setParameter(
 			"selectedTagNames", StringUtil.merge(getSelectedTagNames())
 		).build();
-
-		return portletURL;
 	}
 
 	public String[] getSelectedTagNames() {

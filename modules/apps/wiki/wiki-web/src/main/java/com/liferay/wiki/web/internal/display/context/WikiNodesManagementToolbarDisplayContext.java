@@ -181,7 +181,7 @@ public class WikiNodesManagementToolbarDisplayContext {
 	}
 
 	public PortletURL getSortingURL() throws PortletException {
-		PortletURL sortingURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_getPortletURL()
 		).setParameter(
 			"orderByCol", _getOrderByCol()
@@ -189,8 +189,6 @@ public class WikiNodesManagementToolbarDisplayContext {
 			"orderByType",
 			Objects.equals(_getOrderByType(), "asc") ? "desc" : "asc"
 		).build();
-
-		return sortingURL;
 	}
 
 	public int getTotalItems() {
@@ -257,13 +255,11 @@ public class WikiNodesManagementToolbarDisplayContext {
 	}
 
 	private PortletURL _getPortletURL() throws PortletException {
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletURLUtil.clone(_currentURLObj, _liferayPortletResponse)
 		).setMVCRenderCommandName(
 			"/wiki_admin/view"
 		).build();
-
-		return portletURL;
 	}
 
 	private boolean _isTrashEnabled() {

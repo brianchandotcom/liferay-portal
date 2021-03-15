@@ -124,15 +124,13 @@ public class ChannelDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCRenderCommandName(
 			"/configuration_admin/view_configuration_screen"
 		).setParameter(
 			"configurationScreenKey", "1-synced-sites"
 		).build();
-
-		return portletURL;
 	}
 
 	private long _getCompanyId() {

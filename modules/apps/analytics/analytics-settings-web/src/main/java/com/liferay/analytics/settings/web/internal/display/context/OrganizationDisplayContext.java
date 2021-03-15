@@ -96,13 +96,11 @@ public class OrganizationDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCRenderCommandName(
 			"/analytics_settings/edit_synced_contacts_organizations"
 		).build();
-
-		return portletURL;
 	}
 
 	private long _getCompanyId() {

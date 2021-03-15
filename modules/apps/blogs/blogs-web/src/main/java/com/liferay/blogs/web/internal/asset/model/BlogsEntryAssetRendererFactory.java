@@ -124,15 +124,13 @@ public class BlogsEntryAssetRendererFactory
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse, long classTypeId) {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				liferayPortletRequest, getGroup(liferayPortletRequest),
 				BlogsPortletKeys.BLOGS, 0, 0, PortletRequest.RENDER_PHASE)
 		).setMVCRenderCommandName(
 			"/blogs/edit_entry"
 		).build();
-
-		return portletURL;
 	}
 
 	@Override

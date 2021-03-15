@@ -97,7 +97,7 @@ public class EntryURLUtil {
 			refererGroupId = themeDisplay.getScopeGroupId();
 		}
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			itemSelector.getItemSelectorURL(
 				RequestBackedPortletURLFactoryUtil.create(
 					liferayPortletRequest),
@@ -107,8 +107,6 @@ public class EntryURLUtil {
 			"selectedTab",
 			ParamUtil.getString(liferayPortletRequest, "selectedTab")
 		).build();
-
-		return portletURL;
 	}
 
 }

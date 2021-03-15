@@ -93,7 +93,7 @@ public class CommerceProductAccountGroupDataSetActionProvider
 			httpServletRequest, "currentUrl",
 			_portal.getCurrentURL(httpServletRequest));
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				httpServletRequest, CPPortletKeys.CP_DEFINITIONS,
 				PortletRequest.ACTION_PHASE)
@@ -109,8 +109,6 @@ public class CommerceProductAccountGroupDataSetActionProvider
 		).setParameter(
 			"cpDefinitionId", commerceAccountGroupRel.getClassPK()
 		).build();
-
-		return portletURL;
 	}
 
 	@Reference

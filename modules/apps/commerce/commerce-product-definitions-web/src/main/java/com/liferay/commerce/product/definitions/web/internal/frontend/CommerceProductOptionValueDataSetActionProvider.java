@@ -128,7 +128,7 @@ public class CommerceProductOptionValueDataSetActionProvider
 			httpServletRequest, "currentUrl",
 			_portal.getCurrentURL(httpServletRequest));
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				_portal.getOriginalServletRequest(httpServletRequest),
 				CPPortletKeys.CP_DEFINITIONS, PortletRequest.ACTION_PHASE)
@@ -141,8 +141,6 @@ public class CommerceProductOptionValueDataSetActionProvider
 		).setParameter(
 			"cpDefinitionOptionValueRelId", cpDefinitionOptionValueRelId
 		).build();
-
-		return portletURL;
 	}
 
 	private PortletURL _getProductOptionValueEditURL(
@@ -187,7 +185,7 @@ public class CommerceProductOptionValueDataSetActionProvider
 			httpServletRequest, "currentUrl",
 			_portal.getCurrentURL(httpServletRequest));
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				_portal.getOriginalServletRequest(httpServletRequest),
 				CPPortletKeys.CP_DEFINITIONS, PortletRequest.ACTION_PHASE)
@@ -200,8 +198,6 @@ public class CommerceProductOptionValueDataSetActionProvider
 		).setParameter(
 			"cpDefinitionOptionValueRelId", cpDefinitionOptionValueRelId
 		).build();
-
-		return portletURL;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -128,13 +128,11 @@ public class LayoutSiteNavigationMenuItemType
 	public PortletURL getAddURL(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		PortletURL addURL = PortletURLBuilder.createActionURL(
+		return PortletURLBuilder.createActionURL(
 			renderResponse
 		).setActionName(
 			"/navigation_menu/add_layout_site_navigation_menu_item"
 		).build();
-
-		return addURL;
 	}
 
 	@Override

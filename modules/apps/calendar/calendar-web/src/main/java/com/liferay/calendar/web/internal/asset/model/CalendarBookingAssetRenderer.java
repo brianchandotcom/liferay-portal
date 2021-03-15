@@ -148,7 +148,7 @@ public class CalendarBookingAssetRenderer
 			group = themeDisplay.getScopeGroup();
 		}
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
 				liferayPortletRequest, group, CalendarPortletKeys.CALENDAR, 0,
 				0, PortletRequest.RENDER_PHASE)
@@ -157,8 +157,6 @@ public class CalendarBookingAssetRenderer
 		).setParameter(
 			"calendarBookingId", _calendarBooking.getCalendarBookingId()
 		).build();
-
-		return portletURL;
 	}
 
 	@Override

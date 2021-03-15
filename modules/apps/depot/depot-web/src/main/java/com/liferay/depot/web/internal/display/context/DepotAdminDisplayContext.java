@@ -186,13 +186,11 @@ public class DepotAdminDisplayContext {
 	}
 
 	private PortletURL _getPortletURL() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setParameter(
 			"displayStyle", getDisplayStyle()
 		).build();
-
-		return portletURL;
 	}
 
 	private final DepotAdminGroupSearchProvider _depotAdminGroupSearchProvider;

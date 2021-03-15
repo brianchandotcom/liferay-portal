@@ -46,13 +46,11 @@ public class SegmentsEntryBrowsePortletProvider
 	public PortletURL getPortletURL(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			super.getPortletURL(httpServletRequest)
 		).setMVCRenderCommandName(
 			"/segments/select_segments_entry"
 		).build();
-
-		return portletURL;
 	}
 
 }

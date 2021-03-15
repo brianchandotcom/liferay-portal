@@ -58,7 +58,7 @@ public class WikiURLHelper {
 	}
 
 	public PortletURL getBackToViewPagesURL(WikiNode node) {
-		PortletURL viewPagesURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setMVCRenderCommandName(
 			"/wiki/view_pages"
@@ -67,12 +67,10 @@ public class WikiURLHelper {
 		).setParameter(
 			"nodeId", node.getNodeId()
 		).build();
-
-		return viewPagesURL;
 	}
 
 	public PortletURL getFrontPageURL(WikiNode wikiNode) {
-		PortletURL frontPageURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getWikiNodeBaseURL(wikiNode)
 		).setMVCRenderCommandName(
 			"/wiki/view"
@@ -81,40 +79,32 @@ public class WikiURLHelper {
 		).setParameter(
 			"tag", StringPool.BLANK
 		).build();
-
-		return frontPageURL;
 	}
 
 	public PortletURL getSearchURL() {
-		PortletURL searchURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setMVCRenderCommandName(
 			"/wiki/search"
 		).build();
-
-		return searchURL;
 	}
 
 	public PortletURL getUndoTrashURL() {
-		PortletURL undoTrashURL = PortletURLBuilder.createActionURL(
+		return PortletURLBuilder.createActionURL(
 			_liferayPortletResponse
 		).setActionName(
 			"/wiki/edit_page"
 		).setParameter(
 			Constants.CMD, Constants.RESTORE
 		).build();
-
-		return undoTrashURL;
 	}
 
 	public PortletURL getViewDraftPagesURL(WikiNode wikiNode) {
-		PortletURL viewDraftPagesURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getWikiNodeBaseURL(wikiNode)
 		).setMVCRenderCommandName(
 			"/wiki/view_draft_pages"
 		).build();
-
-		return viewDraftPagesURL;
 	}
 
 	public PortletURL getViewFrontPagePageURL(WikiNode wikiNode) {
@@ -123,27 +113,23 @@ public class WikiURLHelper {
 	}
 
 	public PortletURL getViewOrphanPagesURL(WikiNode wikiNode) {
-		PortletURL viewOrphanPagesURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getWikiNodeBaseURL(wikiNode)
 		).setMVCRenderCommandName(
 			"/wiki/view_orphan_pages"
 		).build();
-
-		return viewOrphanPagesURL;
 	}
 
 	public PortletURL getViewPagesURL(WikiNode wikiNode) {
-		PortletURL viewPagesURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getWikiNodeBaseURL(wikiNode)
 		).setMVCRenderCommandName(
 			"/wiki/view_pages"
 		).build();
-
-		return viewPagesURL;
 	}
 
 	public PortletURL getViewPageURL(WikiNode wikiNode, String title) {
-		PortletURL viewPageURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setMVCRenderCommandName(
 			"/wiki/view"
@@ -152,18 +138,14 @@ public class WikiURLHelper {
 		).setParameter(
 			"title", title
 		).build();
-
-		return viewPageURL;
 	}
 
 	public PortletURL getViewRecentChangesURL(WikiNode wikiNode) {
-		PortletURL viewRecentChangesURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getWikiNodeBaseURL(wikiNode)
 		).setMVCRenderCommandName(
 			"/wiki/view_recent_changes"
 		).build();
-
-		return viewRecentChangesURL;
 	}
 
 	protected PortletURL getWikiNodeBaseURL(WikiNode node) {

@@ -54,13 +54,11 @@ public class CommerceCountryItemSelectorViewDisplayContext
 
 	@Override
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			super.getPortletURL()
 		).setParameter(
 			"checkedCountryIds", StringUtil.merge(getCheckedCountryIds())
 		).build();
-
-		return portletURL;
 	}
 
 	@Override

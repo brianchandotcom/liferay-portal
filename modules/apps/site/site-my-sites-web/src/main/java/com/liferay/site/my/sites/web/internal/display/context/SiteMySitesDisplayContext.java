@@ -211,15 +211,13 @@ public class SiteMySitesDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setParameter(
 			"tabs1", getTabs1()
 		).setParameter(
 			"displayStyle", getDisplayStyle()
 		).build();
-
-		return portletURL;
 	}
 
 	public String getTabs1() {

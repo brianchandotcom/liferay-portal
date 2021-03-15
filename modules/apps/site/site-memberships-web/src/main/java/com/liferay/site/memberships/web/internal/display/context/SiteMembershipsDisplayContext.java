@@ -88,7 +88,7 @@ public class SiteMembershipsDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setMVCPath(
 			"/view.jsp"
@@ -97,8 +97,6 @@ public class SiteMembershipsDisplayContext {
 		).setParameter(
 			"groupId", getGroupId()
 		).build();
-
-		return portletURL;
 	}
 
 	public String getRedirect() {

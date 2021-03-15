@@ -46,13 +46,11 @@ public class ExpandoManagePortletProvider
 	public PortletURL getPortletURL(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			super.getPortletURL(httpServletRequest)
 		).setMVCPath(
 			"/view_attributes.jsp"
 		).build();
-
-		return portletURL;
 	}
 
 }

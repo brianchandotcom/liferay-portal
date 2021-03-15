@@ -81,7 +81,7 @@ public class CommercePricingClassDiscountDataSetActionProvider
 			httpServletRequest, "currentUrl",
 			_portal.getCurrentURL(httpServletRequest));
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				httpServletRequest,
 				CommercePricingPortletKeys.COMMERCE_DISCOUNT,
@@ -93,8 +93,6 @@ public class CommercePricingClassDiscountDataSetActionProvider
 		).setParameter(
 			"commerceDiscountId", commerceDiscountId
 		).build();
-
-		return portletURL;
 	}
 
 	@Reference(

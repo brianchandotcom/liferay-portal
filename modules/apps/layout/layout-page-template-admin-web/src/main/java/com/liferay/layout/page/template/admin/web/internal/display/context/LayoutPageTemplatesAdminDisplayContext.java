@@ -103,13 +103,11 @@ public class LayoutPageTemplatesAdminDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setParameter(
 			"tabs1", getTabs1()
 		).build();
-
-		return portletURL;
 	}
 
 	public String getTabs1() {

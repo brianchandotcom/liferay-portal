@@ -59,24 +59,20 @@ public abstract class BaseOAuth2ManagementToolbarDisplayContext {
 	}
 
 	public PortletURL getSortingURL() throws PortletException {
-		PortletURL currentSortingURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getCurrentSortingURL()
 		).setParameter(
 			"orderByType",
 			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc"
 		).build();
-
-		return currentSortingURL;
 	}
 
 	protected PortletURL getCurrentSortingURL() throws PortletException {
-		PortletURL sortingURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletURLUtil.clone(currentURLObj, liferayPortletResponse)
 		).setParameter(
 			SearchContainer.DEFAULT_CUR_PARAM, "0"
 		).build();
-
-		return sortingURL;
 	}
 
 	protected List<DropdownItem> getOrderByDropdownItems(

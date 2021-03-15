@@ -142,15 +142,13 @@ public abstract class BaseCPDefinitionsDisplayContext {
 	}
 
 	public PortletURL getEditProductDefinitionURL() throws PortalException {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			liferayPortletResponse
 		).setMVCRenderCommandName(
 			"/cp_definitions/edit_cp_definition"
 		).setParameter(
 			"cpDefinitionId", getCPDefinitionId()
 		).build();
-
-		return portletURL;
 	}
 
 	public PortletURL getPortletURL() throws PortalException {

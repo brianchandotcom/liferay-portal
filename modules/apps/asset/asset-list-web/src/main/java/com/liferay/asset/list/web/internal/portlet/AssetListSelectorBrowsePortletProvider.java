@@ -46,13 +46,11 @@ public class AssetListSelectorBrowsePortletProvider
 	public PortletURL getPortletURL(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			super.getPortletURL(httpServletRequest)
 		).setMVCRenderCommandName(
 			"/asset_list/view_list_items"
 		).build();
-
-		return portletURL;
 	}
 
 }

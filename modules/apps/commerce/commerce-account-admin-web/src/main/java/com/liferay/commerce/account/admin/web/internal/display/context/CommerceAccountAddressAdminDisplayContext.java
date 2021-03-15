@@ -164,13 +164,11 @@ public class CommerceAccountAddressAdminDisplayContext
 
 	@Override
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			super.getPortletURL()
 		).setMVCRenderCommandName(
 			"/commerce_account_admin/edit_commerce_account"
 		).build();
-
-		return portletURL;
 	}
 
 	public long getRegionId() throws PortalException {

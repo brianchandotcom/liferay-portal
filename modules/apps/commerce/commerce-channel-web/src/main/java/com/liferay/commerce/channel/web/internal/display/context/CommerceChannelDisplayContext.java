@@ -273,15 +273,13 @@ public class CommerceChannelDisplayContext
 	}
 
 	public PortletURL getEditCommerceChannelRenderURL() {
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				cpRequestHelper.getRequest(), CPPortletKeys.COMMERCE_CHANNELS,
 				PortletRequest.RENDER_PHASE)
 		).setMVCRenderCommandName(
 			"/commerce_channels/edit_commerce_channel"
 		).build();
-
-		return portletURL;
 	}
 
 	public List<HeaderActionModel> getHeaderActionModels() {

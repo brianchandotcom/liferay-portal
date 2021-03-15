@@ -107,13 +107,11 @@ public class AMManagementToolbarDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setParameter(
 			"entriesNavigation", (String)null
 		).build();
-
-		return portletURL;
 	}
 
 	public List<AMImageConfigurationEntry> getSelectedConfigurationEntries() {

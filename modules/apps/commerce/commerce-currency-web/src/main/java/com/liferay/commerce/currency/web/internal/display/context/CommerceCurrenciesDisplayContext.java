@@ -153,7 +153,7 @@ public class CommerceCurrenciesDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setParameter(
 			"navigation", getNavigation()
@@ -162,8 +162,6 @@ public class CommerceCurrenciesDisplayContext {
 		).setParameter(
 			"orderByType", getOrderByType()
 		).build();
-
-		return portletURL;
 	}
 
 	public CommerceCurrency getPrimaryCommerceCurrency()

@@ -123,7 +123,7 @@ public class MBCategoryAssetRenderer extends BaseJSPAssetRenderer<MBCategory> {
 			group = themeDisplay.getScopeGroup();
 		}
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
 				liferayPortletRequest, group, MBPortletKeys.MESSAGE_BOARDS, 0,
 				0, PortletRequest.RENDER_PHASE)
@@ -132,8 +132,6 @@ public class MBCategoryAssetRenderer extends BaseJSPAssetRenderer<MBCategory> {
 		).setParameter(
 			"mbCategoryId", _category.getCategoryId()
 		).build();
-
-		return portletURL;
 	}
 
 	@Override

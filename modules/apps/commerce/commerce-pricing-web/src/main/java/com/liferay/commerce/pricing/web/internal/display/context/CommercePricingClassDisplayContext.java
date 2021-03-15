@@ -145,7 +145,7 @@ public class CommercePricingClassDisplayContext
 	}
 
 	public PortletURL getEditCommercePricingClassRenderURL() {
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				commercePricingRequestHelper.getRequest(),
 				CommercePricingPortletKeys.COMMERCE_PRICING_CLASSES,
@@ -153,8 +153,6 @@ public class CommercePricingClassDisplayContext
 		).setMVCRenderCommandName(
 			"/commerce_pricing_classes/edit_commerce_pricing_class"
 		).build();
-
-		return portletURL;
 	}
 
 	public List<HeaderActionModel> getHeaderActionModels() throws Exception {

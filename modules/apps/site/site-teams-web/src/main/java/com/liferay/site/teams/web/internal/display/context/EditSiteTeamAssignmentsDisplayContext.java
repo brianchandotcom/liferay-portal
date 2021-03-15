@@ -46,7 +46,7 @@ public class EditSiteTeamAssignmentsDisplayContext {
 	}
 
 	public PortletURL getEditTeamAssignmentsURL() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			renderResponse
 		).setMVCPath(
 			"/edit_team_assignments.jsp"
@@ -55,8 +55,6 @@ public class EditSiteTeamAssignmentsDisplayContext {
 		).setParameter(
 			"teamId", getTeamId()
 		).build();
-
-		return portletURL;
 	}
 
 	public List<NavigationItem> getNavigationItems() {

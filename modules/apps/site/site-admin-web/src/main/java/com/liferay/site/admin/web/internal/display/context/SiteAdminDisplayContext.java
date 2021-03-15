@@ -230,15 +230,13 @@ public class SiteAdminDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setParameter(
 			"groupId", getGroupId()
 		).setParameter(
 			"displayStyle", getDisplayStyle()
 		).build();
-
-		return portletURL;
 	}
 
 	public int getUserGroupsCount(Group group) {

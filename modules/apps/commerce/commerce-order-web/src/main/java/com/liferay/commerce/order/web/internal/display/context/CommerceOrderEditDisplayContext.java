@@ -595,7 +595,7 @@ public class CommerceOrderEditDisplayContext {
 	}
 
 	public PortletURL getTransitionOrderPortletURL() {
-		PortletURL portletURL = PortletURLBuilder.createActionURL(
+		return PortletURLBuilder.createActionURL(
 			_commerceOrderRequestHelper.getLiferayPortletResponse()
 		).setActionName(
 			"/commerce_order/edit_commerce_order"
@@ -606,8 +606,6 @@ public class CommerceOrderEditDisplayContext {
 		).setParameter(
 			"commerceOrderId", _commerceOrder.getCommerceOrderId()
 		).build();
-
-		return portletURL;
 	}
 
 	private List<StepModel> _getWorkflowSteps() {

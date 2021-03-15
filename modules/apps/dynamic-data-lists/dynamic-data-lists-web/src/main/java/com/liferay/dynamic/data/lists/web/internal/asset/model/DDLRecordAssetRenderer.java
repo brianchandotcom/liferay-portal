@@ -162,7 +162,7 @@ public class DDLRecordAssetRenderer extends BaseJSPAssetRenderer<DDLRecord> {
 			group = themeDisplay.getScopeGroup();
 		}
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
 				liferayPortletRequest, group, DDLPortletKeys.DYNAMIC_DATA_LISTS,
 				0, 0, PortletRequest.RENDER_PHASE)
@@ -173,8 +173,6 @@ public class DDLRecordAssetRenderer extends BaseJSPAssetRenderer<DDLRecord> {
 		).setParameter(
 			"version", _recordVersion.getVersion()
 		).build();
-
-		return portletURL;
 	}
 
 	@Override

@@ -349,7 +349,7 @@ public class CommerceSubscriptionEntryDisplayContext {
 	}
 
 	public PortletURL getTransitionOrderPortletURL() {
-		PortletURL portletURL = PortletURLBuilder.createActionURL(
+		return PortletURLBuilder.createActionURL(
 			_cpRequestHelper.getLiferayPortletResponse()
 		).setActionName(
 			"/commerce_open_order_content/edit_commerce_order"
@@ -361,8 +361,6 @@ public class CommerceSubscriptionEntryDisplayContext {
 			"commerceSubscriptionEntryId",
 			_commerceSubscriptionEntry.getCommerceSubscriptionEntryId()
 		).build();
-
-		return portletURL;
 	}
 
 	public boolean hasManageCommerceSubscriptionEntryPermission() {

@@ -130,7 +130,7 @@ public class DLFolderAssetRenderer
 			group = themeDisplay.getScopeGroup();
 		}
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
 				liferayPortletRequest, group,
 				DLPortletKeys.DOCUMENT_LIBRARY_ADMIN, 0, 0,
@@ -140,8 +140,6 @@ public class DLFolderAssetRenderer
 		).setParameter(
 			"folderId", _folder.getFolderId()
 		).build();
-
-		return portletURL;
 	}
 
 	@Override

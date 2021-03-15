@@ -46,13 +46,11 @@ public class SiteMembershipsEditPortletProvider
 	public PortletURL getPortletURL(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			super.getPortletURL(httpServletRequest)
 		).setMVCPath(
 			"/edit_site_assignments.jsp"
 		).build();
-
-		return portletURL;
 	}
 
 }

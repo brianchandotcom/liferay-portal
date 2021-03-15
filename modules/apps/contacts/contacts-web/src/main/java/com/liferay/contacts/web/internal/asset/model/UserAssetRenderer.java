@@ -113,7 +113,7 @@ public class UserAssetRenderer extends BaseJSPAssetRenderer<User> {
 		String portletId = PortletProviderUtil.getPortletId(
 			User.class.getName(), PortletProvider.Action.VIEW);
 
-		PortletURL portletURL = PortletURLBuilder.createLiferayPortletURL(
+		return PortletURLBuilder.createLiferayPortletURL(
 			liferayPortletResponse, getControlPanelPlid(liferayPortletRequest),
 			portletId, PortletRequest.RENDER_PHASE
 		).setMVCRenderCommandName(
@@ -121,8 +121,6 @@ public class UserAssetRenderer extends BaseJSPAssetRenderer<User> {
 		).setParameter(
 			"p_u_i_d", _user.getUserId()
 		).build();
-
-		return portletURL;
 	}
 
 	@Override

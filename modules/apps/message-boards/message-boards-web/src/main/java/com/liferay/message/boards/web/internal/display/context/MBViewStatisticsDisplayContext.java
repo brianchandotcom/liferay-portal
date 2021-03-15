@@ -51,15 +51,13 @@ public class MBViewStatisticsDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCRenderCommandName(
 			"/message_boards/view_statistics"
 		).setParameter(
 			"mbCategoryId", _getCategoryId()
 		).build();
-
-		return portletURL;
 	}
 
 	public boolean isMBAdmin() {

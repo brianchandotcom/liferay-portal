@@ -91,7 +91,7 @@ public class CommerceProductChannelDataSetActionProvider
 			httpServletRequest, "currentUrl",
 			_portal.getCurrentURL(httpServletRequest));
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				httpServletRequest, CPPortletKeys.CP_DEFINITIONS,
 				PortletRequest.ACTION_PHASE)
@@ -106,8 +106,6 @@ public class CommerceProductChannelDataSetActionProvider
 		).setParameter(
 			"cpDefinitionId", commerceChannelRel.getClassPK()
 		).build();
-
-		return portletURL;
 	}
 
 	@Reference

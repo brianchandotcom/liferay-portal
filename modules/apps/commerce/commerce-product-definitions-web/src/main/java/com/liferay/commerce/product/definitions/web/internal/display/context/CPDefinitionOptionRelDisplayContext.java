@@ -204,7 +204,7 @@ public class CPDefinitionOptionRelDisplayContext
 
 	@Override
 	public PortletURL getPortletURL() throws PortalException {
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			super.getPortletURL()
 		).setMVCRenderCommandName(
 			"/cp_definitions/edit_cp_definition"
@@ -213,8 +213,6 @@ public class CPDefinitionOptionRelDisplayContext
 		).setParameter(
 			"screenNavigationCategoryKey", getScreenNavigationCategoryKey()
 		).build();
-
-		return portletURL;
 	}
 
 	@Override

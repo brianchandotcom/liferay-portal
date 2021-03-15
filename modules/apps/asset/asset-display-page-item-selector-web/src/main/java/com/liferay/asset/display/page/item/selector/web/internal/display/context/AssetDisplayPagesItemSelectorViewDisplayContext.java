@@ -205,7 +205,7 @@ public class AssetDisplayPagesItemSelectorViewDisplayContext {
 	}
 
 	private PortletURL _getPortletURL() throws PortletException {
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletURLUtil.clone(
 				_portletURL,
 				PortalUtil.getLiferayPortletResponse(_portletResponse))
@@ -214,8 +214,6 @@ public class AssetDisplayPagesItemSelectorViewDisplayContext {
 		).setParameter(
 			"orderByType", getOrderByType()
 		).build();
-
-		return portletURL;
 	}
 
 	private SearchContainer<LayoutPageTemplateEntry>

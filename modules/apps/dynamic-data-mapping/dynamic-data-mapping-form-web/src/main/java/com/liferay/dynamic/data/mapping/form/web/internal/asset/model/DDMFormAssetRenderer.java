@@ -169,7 +169,7 @@ public class DDMFormAssetRenderer
 
 		String portletNamespace = DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM;
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				httpServletRequest, portletNamespace,
 				PortletRequest.RENDER_PHASE)
@@ -183,8 +183,6 @@ public class DDMFormAssetRenderer
 		).setParameter(
 			"formInstanceId", _ddmFormInstanceRecord.getFormInstanceId()
 		).build();
-
-		return portletURL;
 	}
 
 	@Override

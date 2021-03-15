@@ -280,7 +280,7 @@ public class CommerceInventoryDisplayContext {
 	}
 
 	public PortletURL getTransitionInventoryPortletURL() {
-		PortletURL portletURL = PortletURLBuilder.createActionURL(
+		return PortletURLBuilder.createActionURL(
 			_cpRequestHelper.getLiferayPortletResponse()
 		).setActionName(
 			"/commerce_inventory/edit_commerce_inventory_item"
@@ -291,8 +291,6 @@ public class CommerceInventoryDisplayContext {
 		).setParameter(
 			"sku", _sku
 		).build();
-
-		return portletURL;
 	}
 
 	public CreationMenu getWarehousesCreationMenu() throws Exception {

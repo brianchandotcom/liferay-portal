@@ -237,15 +237,13 @@ public class DLFileEntryAssetRenderer
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_getPortletURL(liferayPortletRequest)
 		).setMVCRenderCommandName(
 			"/document_library/edit_file_entry"
 		).setParameter(
 			"fileEntryId", _fileEntry.getFileEntryId()
 		).build();
-
-		return portletURL;
 	}
 
 	@Override
@@ -253,7 +251,7 @@ public class DLFileEntryAssetRenderer
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_getPortletURL(liferayPortletRequest)
 		).setActionName(
 			"/document_library/get_file"
@@ -264,8 +262,6 @@ public class DLFileEntryAssetRenderer
 		).setParameter(
 			"title", _fileEntry.getTitle()
 		).build();
-
-		return portletURL;
 	}
 
 	@Override

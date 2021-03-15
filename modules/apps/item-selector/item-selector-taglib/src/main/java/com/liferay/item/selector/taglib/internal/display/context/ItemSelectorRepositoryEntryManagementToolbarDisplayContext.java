@@ -235,26 +235,22 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 	}
 
 	public PortletURL getSearchURL() throws PortletException {
-		PortletURL searchURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletURLUtil.clone(_currentURLObj, _liferayPortletResponse)
 		).setParameter(
 			"keywords", (String)null
 		).setParameter(
 			"resetCur", Boolean.TRUE.toString()
 		).build();
-
-		return searchURL;
 	}
 
 	public PortletURL getSortingURL() throws PortletException {
-		PortletURL sortingURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getCurrentSortingURL()
 		).setParameter(
 			"orderByType",
 			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc"
 		).build();
-
-		return sortingURL;
 	}
 
 	public ViewTypeItemList getViewTypes() throws PortletException {

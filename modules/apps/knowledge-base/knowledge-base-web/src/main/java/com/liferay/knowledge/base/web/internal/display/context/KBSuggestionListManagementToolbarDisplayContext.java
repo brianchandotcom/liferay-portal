@@ -153,14 +153,12 @@ public class KBSuggestionListManagementToolbarDisplayContext {
 	}
 
 	public PortletURL getSortingURL() throws PortletException {
-		PortletURL sortingURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_getCurrentSortingURL()
 		).setParameter(
 			"orderByType",
 			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc"
 		).build();
-
-		return sortingURL;
 	}
 
 	public int getTotal() {
@@ -178,13 +176,11 @@ public class KBSuggestionListManagementToolbarDisplayContext {
 	}
 
 	private PortletURL _getCurrentSortingURL() throws PortletException {
-		PortletURL sortingURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletURLUtil.clone(_currentURLObj, _liferayPortletResponse)
 		).setParameter(
 			"storeOrderByPreference", Boolean.TRUE.toString()
 		).build();
-
-		return sortingURL;
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems()

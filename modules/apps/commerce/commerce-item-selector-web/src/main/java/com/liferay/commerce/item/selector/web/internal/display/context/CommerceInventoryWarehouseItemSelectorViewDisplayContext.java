@@ -93,13 +93,11 @@ public class CommerceInventoryWarehouseItemSelectorViewDisplayContext
 
 	@Override
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			super.getPortletURL()
 		).setParameter(
 			"countryId", getCountryId()
 		).build();
-
-		return portletURL;
 	}
 
 	@Override

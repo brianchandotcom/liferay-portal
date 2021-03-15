@@ -84,15 +84,13 @@ public class CommerceAvailabilityEstimateDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setParameter(
 			"orderByCol", getOrderByCol()
 		).setParameter(
 			"orderByType", getOrderByType()
 		).build();
-
-		return portletURL;
 	}
 
 	public SearchContainer<CommerceAvailabilityEstimate> getSearchContainer()

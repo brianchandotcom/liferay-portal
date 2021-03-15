@@ -81,14 +81,12 @@ public class TrashViewPortletProvider
 			return null;
 		}
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				httpServletRequest, portletId, PortletRequest.RENDER_PHASE)
 		).setRedirect(
 			themeDisplay.getURLCurrent()
 		).build();
-
-		return portletURL;
 	}
 
 	@Reference

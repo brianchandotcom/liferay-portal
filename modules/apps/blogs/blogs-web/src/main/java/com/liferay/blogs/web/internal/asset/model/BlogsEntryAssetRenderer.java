@@ -175,7 +175,7 @@ public class BlogsEntryAssetRenderer
 			group = themeDisplay.getScopeGroup();
 		}
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
 				httpServletRequest, group, BlogsPortletKeys.BLOGS, 0, 0,
 				PortletRequest.RENDER_PHASE)
@@ -184,8 +184,6 @@ public class BlogsEntryAssetRenderer
 		).setParameter(
 			"entryId", _entry.getEntryId()
 		).build();
-
-		return portletURL;
 	}
 
 	@Override

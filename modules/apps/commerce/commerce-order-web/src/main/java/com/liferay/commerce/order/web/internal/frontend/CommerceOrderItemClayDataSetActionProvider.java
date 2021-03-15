@@ -104,7 +104,7 @@ public class CommerceOrderItemClayDataSetActionProvider
 			httpServletRequest, "currentUrl",
 			_portal.getCurrentURL(httpServletRequest));
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				_portal.getOriginalServletRequest(httpServletRequest),
 				CommercePortletKeys.COMMERCE_ORDER, PortletRequest.ACTION_PHASE)
@@ -117,8 +117,6 @@ public class CommerceOrderItemClayDataSetActionProvider
 		).setParameter(
 			"commerceOrderItemId", commerceOrderItemId
 		).build();
-
-		return portletURL;
 	}
 
 	private String _getOrderItemEditURL(

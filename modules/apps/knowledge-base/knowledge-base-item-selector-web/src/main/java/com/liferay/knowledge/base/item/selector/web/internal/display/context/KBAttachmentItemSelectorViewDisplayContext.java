@@ -106,13 +106,11 @@ public class KBAttachmentItemSelectorViewDisplayContext {
 			LiferayPortletResponse liferayPortletResponse)
 		throws PortletException {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletURLUtil.clone(_portletURL, liferayPortletResponse)
 		).setParameter(
 			"selectedTab", getTitle(httpServletRequest.getLocale())
 		).build();
-
-		return portletURL;
 	}
 
 	public String getTitle(Locale locale) {
@@ -122,7 +120,7 @@ public class KBAttachmentItemSelectorViewDisplayContext {
 	public PortletURL getUploadURL(
 		LiferayPortletResponse liferayPortletResponse) {
 
-		PortletURL portletURL = PortletURLBuilder.createActionURL(
+		return PortletURLBuilder.createActionURL(
 			liferayPortletResponse, KBPortletKeys.KNOWLEDGE_BASE_ADMIN
 		).setActionName(
 			"uploadKBArticleAttachments"
@@ -130,8 +128,6 @@ public class KBAttachmentItemSelectorViewDisplayContext {
 			"resourcePrimKey",
 			_kbAttachmentItemSelectorCriterion.getResourcePrimKey()
 		).build();
-
-		return portletURL;
 	}
 
 	public boolean isSearch() {

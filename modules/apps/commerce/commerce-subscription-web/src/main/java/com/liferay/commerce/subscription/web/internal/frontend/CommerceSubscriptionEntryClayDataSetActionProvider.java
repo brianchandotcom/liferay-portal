@@ -116,7 +116,7 @@ public class CommerceSubscriptionEntryClayDataSetActionProvider
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletProviderUtil.getPortletURL(
 				httpServletRequest, CommerceSubscriptionEntry.class.getName(),
 				PortletProvider.Action.MANAGE)
@@ -127,8 +127,6 @@ public class CommerceSubscriptionEntryClayDataSetActionProvider
 		).setParameter(
 			"commerceSubscriptionEntryId", commerceSubscriptionEntryId
 		).build();
-
-		return portletURL;
 	}
 
 	@Reference

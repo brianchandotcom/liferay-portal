@@ -61,7 +61,7 @@ public class CPInstanceSubscriptionInfoDisplayContext
 
 	@Override
 	public PortletURL getPortletURL() throws PortalException {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			liferayPortletResponse
 		).setMVCRenderCommandName(
 			"/cp_definitions/edit_cp_instance"
@@ -78,8 +78,6 @@ public class CPInstanceSubscriptionInfoDisplayContext
 			CPInstanceScreenNavigationConstants.
 				CATEGORY_KEY_SUBSCRIPTION_OVERRIDE
 		).build();
-
-		return portletURL;
 	}
 
 }

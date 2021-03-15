@@ -66,7 +66,7 @@ public class CPDefinitionPricingClassDisplayContext
 
 	@Override
 	public PortletURL getPortletURL() throws PortalException {
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			super.getPortletURL()
 		).setMVCRenderCommandName(
 			"/cp_definitions/edit_cp_definition_pricing_class"
@@ -75,8 +75,6 @@ public class CPDefinitionPricingClassDisplayContext
 		).setParameter(
 			"screenNavigationCategoryKey", getScreenNavigationCategoryKey()
 		).build();
-
-		return portletURL;
 	}
 
 	@Override

@@ -144,7 +144,7 @@ public class AssetListEntryUsagesDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCPath(
 			"/view_asset_list_entry_usages.jsp"
@@ -153,8 +153,6 @@ public class AssetListEntryUsagesDisplayContext {
 		).setParameter(
 			"assetListEntryId", getAssetListEntryId()
 		).build();
-
-		return portletURL;
 	}
 
 	public String getRedirect() {

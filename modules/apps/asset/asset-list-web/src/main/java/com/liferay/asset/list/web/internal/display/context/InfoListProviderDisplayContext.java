@@ -128,13 +128,11 @@ public class InfoListProviderDisplayContext {
 				_log.debug(portletException, portletException);
 			}
 
-			PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			return PortletURLBuilder.createRenderURL(
 				_renderResponse
 			).setParameters(
 				currentURLObj.getParameterMap()
 			).build();
-
-			return portletURL;
 		}
 	}
 

@@ -196,15 +196,13 @@ public class DepotAdminSelectRoleDisplayContext {
 		}
 
 		public PortletURL getSelectRolePortletURL() {
-			PortletURL portletURL = PortletURLBuilder.create(
+			return PortletURLBuilder.create(
 				_getPortletURL(_renderRequest, _renderResponse, _user)
 			).setParameter(
 				"resetCur", Boolean.TRUE.toString()
 			).setParameter(
 				"step", Step2.TYPE
 			).build();
-
-			return portletURL;
 		}
 
 		public int getType() {

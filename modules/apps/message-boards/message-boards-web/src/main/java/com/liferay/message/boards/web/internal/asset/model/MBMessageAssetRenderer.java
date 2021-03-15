@@ -159,7 +159,7 @@ public class MBMessageAssetRenderer
 			group = themeDisplay.getScopeGroup();
 		}
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
 				liferayPortletRequest, group, MBPortletKeys.MESSAGE_BOARDS, 0,
 				0, PortletRequest.RENDER_PHASE)
@@ -168,8 +168,6 @@ public class MBMessageAssetRenderer
 		).setParameter(
 			"messageId", _message.getMessageId()
 		).build();
-
-		return portletURL;
 	}
 
 	@Override

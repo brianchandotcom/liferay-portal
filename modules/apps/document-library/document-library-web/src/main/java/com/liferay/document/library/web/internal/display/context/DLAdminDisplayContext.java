@@ -293,7 +293,7 @@ public class DLAdminDisplayContext {
 	}
 
 	public PortletURL getSearchSearchContainerURL() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setMVCRenderCommandName(
 			"/document_library/search"
@@ -305,8 +305,6 @@ public class DLAdminDisplayContext {
 		).setParameter(
 			"keywords", ParamUtil.getString(_httpServletRequest, "keywords")
 		).build();
-
-		return portletURL;
 	}
 
 	public boolean isDefaultFolderView() {

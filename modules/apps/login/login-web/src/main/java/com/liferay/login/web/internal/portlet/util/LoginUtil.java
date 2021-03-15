@@ -177,7 +177,7 @@ public class LoginUtil {
 			HttpServletRequest httpServletRequest, long plid)
 		throws PortletModeException, WindowStateException {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletURLFactoryUtil.create(
 				httpServletRequest, LoginPortletKeys.LOGIN, plid,
 				PortletRequest.RENDER_PHASE)
@@ -190,8 +190,6 @@ public class LoginUtil {
 		).setWindowState(
 			WindowState.MAXIMIZED
 		).build();
-
-		return portletURL;
 	}
 
 	public static void sendPassword(

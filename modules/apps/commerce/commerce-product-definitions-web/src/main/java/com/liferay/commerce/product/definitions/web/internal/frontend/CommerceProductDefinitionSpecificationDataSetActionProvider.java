@@ -118,7 +118,7 @@ public class CommerceProductDefinitionSpecificationDataSetActionProvider
 			httpServletRequest, "currentUrl",
 			_portal.getCurrentURL(httpServletRequest));
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				_portal.getOriginalServletRequest(httpServletRequest),
 				CPPortletKeys.CP_DEFINITIONS, PortletRequest.ACTION_PHASE)
@@ -132,8 +132,6 @@ public class CommerceProductDefinitionSpecificationDataSetActionProvider
 			"cpDefinitionSpecificationOptionValueId",
 			cpDefinitionSpecificationOptionValueId
 		).build();
-
-		return portletURL;
 	}
 
 	private PortletURL _getProductSpecificationEditURL(

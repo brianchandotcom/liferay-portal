@@ -178,7 +178,7 @@ public class DLFileEntryAssetRendererFactory
 
 		Group group = getGroup(liferayPortletRequest);
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				liferayPortletRequest, group, DLPortletKeys.DOCUMENT_LIBRARY, 0,
 				0, PortletRequest.RENDER_PHASE)
@@ -207,8 +207,6 @@ public class DLFileEntryAssetRendererFactory
 		).setParameter(
 			"showSelectFolder", Boolean.TRUE.toString()
 		).build();
-
-		return portletURL;
 	}
 
 	@Override

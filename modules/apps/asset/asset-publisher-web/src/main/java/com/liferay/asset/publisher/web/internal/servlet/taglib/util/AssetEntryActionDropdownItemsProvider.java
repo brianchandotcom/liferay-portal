@@ -148,7 +148,7 @@ public class AssetEntryActionDropdownItemsProvider {
 				redirect = _fullContentRedirect;
 			}
 
-			PortletURL portletURL = PortletURLBuilder.create(
+			return PortletURLBuilder.create(
 				_assetRenderer.getURLEdit(
 					_liferayPortletRequest, _liferayPortletResponse,
 					LiferayWindowState.NORMAL, redirect)
@@ -161,8 +161,6 @@ public class AssetEntryActionDropdownItemsProvider {
 					return portletDisplay.getPortletName();
 				}
 			).build();
-
-			return portletURL;
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

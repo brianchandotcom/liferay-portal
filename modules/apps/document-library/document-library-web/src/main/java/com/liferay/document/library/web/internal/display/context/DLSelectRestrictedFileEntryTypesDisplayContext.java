@@ -41,15 +41,13 @@ public class DLSelectRestrictedFileEntryTypesDisplayContext
 
 	@Override
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			renderResponse
 		).setMVCPath(
 			"/document_library/select_restricted_file_entry_type.jsp"
 		).setParameter(
 			"includeBasicFileEntryType", Boolean.TRUE.toString()
 		).build();
-
-		return portletURL;
 	}
 
 }

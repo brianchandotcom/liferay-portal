@@ -238,7 +238,7 @@ public class TranslateDisplayContext {
 	}
 
 	public PortletURL getUpdateTranslationPortletURL() {
-		PortletURL portletURL = PortletURLBuilder.createActionURL(
+		return PortletURLBuilder.createActionURL(
 			_liferayPortletResponse
 		).setActionName(
 			"/translation/update_translation"
@@ -249,8 +249,6 @@ public class TranslateDisplayContext {
 		).setParameter(
 			"classPK", _classPK
 		).build();
-
-		return portletURL;
 	}
 
 	public boolean hasTranslationPermission() {

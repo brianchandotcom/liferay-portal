@@ -194,7 +194,7 @@ public class TrashContainerModelDisplayContext {
 	}
 
 	public PortletURL getContainerURL() {
-		PortletURL containerURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setMVCPath(
 			"/view_container_model.jsp"
@@ -208,8 +208,6 @@ public class TrashContainerModelDisplayContext {
 		).setParameter(
 			"classPK", getClassPK()
 		).build();
-
-		return containerURL;
 	}
 
 	public String getEventName() {

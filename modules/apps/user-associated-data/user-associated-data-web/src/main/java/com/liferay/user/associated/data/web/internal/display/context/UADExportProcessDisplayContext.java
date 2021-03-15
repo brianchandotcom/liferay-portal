@@ -142,7 +142,7 @@ public class UADExportProcessDisplayContext {
 			(PortletResponse)_httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletURLUtil.getCurrent(
 				PortalUtil.getLiferayPortletRequest(portletRequest),
 				PortalUtil.getLiferayPortletResponse(portletResponse))
@@ -163,8 +163,6 @@ public class UADExportProcessDisplayContext {
 		).setParameter(
 			"orderByType", getOrderByType()
 		).build();
-
-		return portletURL;
 	}
 
 	public SearchContainer<BackgroundTask> getSearchContainer()

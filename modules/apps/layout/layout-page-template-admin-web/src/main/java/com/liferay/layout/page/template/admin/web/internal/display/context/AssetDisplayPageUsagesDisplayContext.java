@@ -121,7 +121,7 @@ public class AssetDisplayPageUsagesDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCRenderCommandName(
 			"/layout_page_template_admin/view_asset_display_page_usages"
@@ -130,8 +130,6 @@ public class AssetDisplayPageUsagesDisplayContext {
 		).setParameter(
 			"layoutPageTemplateEntryId", getLayoutPageTemplateEntryId()
 		).build();
-
-		return portletURL;
 	}
 
 	public String getRedirect() {

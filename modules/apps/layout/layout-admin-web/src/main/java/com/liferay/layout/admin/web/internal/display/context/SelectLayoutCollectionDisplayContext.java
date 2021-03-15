@@ -174,13 +174,11 @@ public class SelectLayoutCollectionDisplayContext {
 				_log.debug(portletException, portletException);
 			}
 
-			PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			return PortletURLBuilder.createRenderURL(
 				_liferayPortletResponse
 			).setParameters(
 				currentURLObj.getParameterMap()
 			).build();
-
-			return portletURL;
 		}
 	}
 

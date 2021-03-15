@@ -83,13 +83,11 @@ public class CommerceShipmentItemDisplayContext
 
 	@Override
 	public PortletURL getPortletURL() throws PortalException {
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			super.getPortletURL()
 		).setMVCRenderCommandName(
 			"/commerce_shipment/edit_commerce_shipment"
 		).build();
-
-		return portletURL;
 	}
 
 	public int getToSendQuantity() throws PortalException {

@@ -107,7 +107,7 @@ public class DepotAdminRolesDisplayContext {
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 			RequestBackedPortletURLFactoryUtil.create(_liferayPortletRequest);
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			requestBackedPortletURLFactory.createRenderURL(
 				DepotPortletKeys.DEPOT_ADMIN)
 		).setMVCRenderCommandName(
@@ -128,8 +128,6 @@ public class DepotAdminRolesDisplayContext {
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).build();
-
-		return portletURL;
 	}
 
 	public List<UserGroupRole> getUserGroupRoles(int start, int end)

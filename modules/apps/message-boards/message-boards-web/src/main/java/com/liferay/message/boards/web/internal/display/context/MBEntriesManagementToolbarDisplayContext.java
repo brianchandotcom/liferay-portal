@@ -418,14 +418,12 @@ public class MBEntriesManagementToolbarDisplayContext {
 	}
 
 	public PortletURL getSortingURL() throws PortletException {
-		PortletURL sortingURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_getCurrentSortingURL()
 		).setParameter(
 			"orderByType",
 			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc"
 		).build();
-
-		return sortingURL;
 	}
 
 	public void populateOrder(SearchContainer searchContainer) {

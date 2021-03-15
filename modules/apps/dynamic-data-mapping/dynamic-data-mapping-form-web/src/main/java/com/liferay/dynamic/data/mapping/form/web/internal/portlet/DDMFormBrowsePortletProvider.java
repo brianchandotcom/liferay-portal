@@ -51,13 +51,11 @@ public class DDMFormBrowsePortletProvider
 	public PortletURL getPortletURL(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			super.getPortletURL(httpServletRequest)
 		).setMVCPath(
 			"/browser/view.jsp"
 		).build();
-
-		return portletURL;
 	}
 
 	@Reference(

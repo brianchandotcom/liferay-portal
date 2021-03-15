@@ -104,15 +104,13 @@ public class SelectSiteInitializerDisplayContext {
 	}
 
 	private PortletURL _getPortletURL() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCRenderCommandName(
 			"/site_admin/select_site_initializer"
 		).setRedirect(
 			getBackURL()
 		).build();
-
-		return portletURL;
 	}
 
 	private List<SiteInitializerItem> _getSiteInitializerItems()

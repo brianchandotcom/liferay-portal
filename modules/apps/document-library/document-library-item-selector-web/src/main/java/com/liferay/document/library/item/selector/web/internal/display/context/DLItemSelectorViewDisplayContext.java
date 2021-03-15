@@ -145,15 +145,13 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 			LiferayPortletResponse liferayPortletResponse)
 		throws PortletException {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletURLUtil.clone(_portletURL, liferayPortletResponse)
 		).setParameter(
 			"folderId", _getFolderId()
 		).setParameter(
 			"selectedTab", getTitle()
 		).build();
-
-		return portletURL;
 	}
 
 	public List<Object> getRepositoryEntries() throws Exception {
@@ -294,15 +292,13 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 			}
 		}
 
-		PortletURL portletURL = PortletURLBuilder.createActionURL(
+		return PortletURLBuilder.createActionURL(
 			liferayPortletResponse, PortletKeys.DOCUMENT_LIBRARY
 		).setActionName(
 			"/document_library/upload_file_entry"
 		).setParameter(
 			"folderId", _getFolderId()
 		).build();
-
-		return portletURL;
 	}
 
 	public boolean isShowDragAndDropZone() throws PortalException {

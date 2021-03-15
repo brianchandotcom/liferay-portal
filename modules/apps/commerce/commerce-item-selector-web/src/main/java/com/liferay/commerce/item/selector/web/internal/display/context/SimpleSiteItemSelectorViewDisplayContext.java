@@ -81,13 +81,11 @@ public class SimpleSiteItemSelectorViewDisplayContext
 
 	@Override
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			super.getPortletURL()
 		).setParameter(
 			"siteGroupId", getGroupId()
 		).build();
-
-		return portletURL;
 	}
 
 	@Override

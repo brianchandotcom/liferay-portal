@@ -129,7 +129,7 @@ public class GetAttachmentsMVCResourceCommand extends BaseMVCResourceCommand {
 			ResourceResponse resourceResponse, FileEntry fileEntry)
 		throws Exception {
 
-		PortletURL deleteURL = PortletURLBuilder.createActionURL(
+		return PortletURLBuilder.createActionURL(
 			resourceResponse
 		).setActionName(
 			"/message_boards/edit_message_attachments"
@@ -140,8 +140,6 @@ public class GetAttachmentsMVCResourceCommand extends BaseMVCResourceCommand {
 		).setParameter(
 			"messageId", message.getMessageId()
 		).build();
-
-		return deleteURL;
 	}
 
 	@Reference

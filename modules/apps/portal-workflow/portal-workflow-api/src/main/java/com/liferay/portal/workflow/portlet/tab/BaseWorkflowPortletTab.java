@@ -43,7 +43,7 @@ public abstract class BaseWorkflowPortletTab
 	public PortletURL getSearchURL(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		PortletURL searchURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			renderResponse
 		).setMVCPath(
 			"/view.jsp"
@@ -59,8 +59,6 @@ public abstract class BaseWorkflowPortletTab
 		).setParameter(
 			"tab", getName()
 		).build();
-
-		return searchURL;
 	}
 
 	@Override

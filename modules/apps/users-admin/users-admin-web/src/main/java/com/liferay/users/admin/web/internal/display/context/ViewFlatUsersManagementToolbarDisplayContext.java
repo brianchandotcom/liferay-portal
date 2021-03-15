@@ -221,15 +221,13 @@ public class ViewFlatUsersManagementToolbarDisplayContext
 
 	@Override
 	protected PortletURL getPortletURL() {
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			super.getPortletURL()
 		).setParameter(
 			"orderByCol", getOrderByCol()
 		).setParameter(
 			"orderByType", getOrderByType()
 		).build();
-
-		return portletURL;
 	}
 
 	private final String _navigation;

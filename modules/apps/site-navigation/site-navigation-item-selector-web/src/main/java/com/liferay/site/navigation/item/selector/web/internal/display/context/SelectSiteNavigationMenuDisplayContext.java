@@ -321,7 +321,7 @@ public class SelectSiteNavigationMenuDisplayContext {
 			(PortletResponse)_httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletURLUtil.clone(
 				_portletURL,
 				PortalUtil.getLiferayPortletResponse(portletResponse))
@@ -333,8 +333,6 @@ public class SelectSiteNavigationMenuDisplayContext {
 		).setParameter(
 			"siteNavigationMenuId", siteNavigationMenuId
 		).build();
-
-		return portletURL;
 	}
 
 	private List<BreadcrumbEntry> _getLayoutBreadcrumbEntries()

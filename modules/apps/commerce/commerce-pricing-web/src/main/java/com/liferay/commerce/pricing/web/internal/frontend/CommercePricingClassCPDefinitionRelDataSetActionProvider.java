@@ -103,7 +103,7 @@ public class CommercePricingClassCPDefinitionRelDataSetActionProvider
 			long cpDefinitionId, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletProviderUtil.getPortletURL(
 				httpServletRequest, CPDefinition.class.getName(),
 				PortletProvider.Action.MANAGE)
@@ -114,8 +114,6 @@ public class CommercePricingClassCPDefinitionRelDataSetActionProvider
 		).setParameter(
 			"screenNavigationCategoryKey", "details"
 		).build();
-
-		return portletURL;
 	}
 
 	private String _getPricingClassCPDefinitionRelDeleteURL(

@@ -743,7 +743,7 @@ public class EditAssetListDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletURLFactoryUtil.create(
 				_portletRequest, AssetListPortletKeys.ASSET_LIST,
 				PortletRequest.RENDER_PHASE)
@@ -754,8 +754,6 @@ public class EditAssetListDisplayContext {
 		).setParameter(
 			"segmentsEntryId", getSegmentsEntryId()
 		).build();
-
-		return portletURL;
 	}
 
 	public String getRedirectURL() {

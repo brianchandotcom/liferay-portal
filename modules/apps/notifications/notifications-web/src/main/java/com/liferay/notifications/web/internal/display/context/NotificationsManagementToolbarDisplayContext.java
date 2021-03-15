@@ -168,7 +168,7 @@ public class NotificationsManagementToolbarDisplayContext {
 	}
 
 	public PortletURL getSortingURL() throws PortletException {
-		PortletURL sortingURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletURLUtil.clone(_currentURLObj, _liferayPortletResponse)
 		).setParameter(
 			SearchContainer.DEFAULT_CUR_PARAM, "0"
@@ -178,8 +178,6 @@ public class NotificationsManagementToolbarDisplayContext {
 			"orderByType",
 			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc"
 		).build();
-
-		return sortingURL;
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {

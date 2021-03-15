@@ -52,7 +52,7 @@ public class SegmentsContextVocabularyConfigurationFactoryDisplayContext {
 	}
 
 	public PortletURL getAddConfigurationURL() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCRenderCommandName(
 			"/edit_segments_context_vocabulary_configuration"
@@ -60,12 +60,10 @@ public class SegmentsContextVocabularyConfigurationFactoryDisplayContext {
 			"factoryPid",
 			SegmentsContextVocabularyConfiguration.class.getCanonicalName()
 		).build();
-
-		return portletURL;
 	}
 
 	public PortletURL getDeleteConfigurationURL(Configuration configuration) {
-		PortletURL portletURL = PortletURLBuilder.createActionURL(
+		return PortletURLBuilder.createActionURL(
 			_renderResponse
 		).setActionName(
 			"/delete_segments_context_vocabulary_configuration"
@@ -76,12 +74,10 @@ public class SegmentsContextVocabularyConfigurationFactoryDisplayContext {
 		).setParameter(
 			"pid", configuration.getPid()
 		).build();
-
-		return portletURL;
 	}
 
 	public PortletURL getEditConfigurationURL(Configuration configuration) {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCRenderCommandName(
 			"/edit_segments_context_vocabulary_configuration"
@@ -90,8 +86,6 @@ public class SegmentsContextVocabularyConfigurationFactoryDisplayContext {
 		).setParameter(
 			"pid", configuration.getPid()
 		).build();
-
-		return portletURL;
 	}
 
 	public String getEmptyResultMessage() {
@@ -105,7 +99,7 @@ public class SegmentsContextVocabularyConfigurationFactoryDisplayContext {
 	}
 
 	public PortletURL getIteratorURL() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCRenderCommandName(
 			"/view_configuration_screen"
@@ -113,8 +107,6 @@ public class SegmentsContextVocabularyConfigurationFactoryDisplayContext {
 			"configurationScreenKey",
 			"segments-context-vocabulary-configuration-name"
 		).build();
-
-		return portletURL;
 	}
 
 	public List<Configuration> getResults(int start, int end) {
@@ -135,7 +127,7 @@ public class SegmentsContextVocabularyConfigurationFactoryDisplayContext {
 	}
 
 	private PortletURL _getRedirect() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCRenderCommandName(
 			"/view_configuration_screen"
@@ -143,8 +135,6 @@ public class SegmentsContextVocabularyConfigurationFactoryDisplayContext {
 			"configurationScreenKey",
 			"segments-context-vocabulary-configuration-name"
 		).build();
-
-		return portletURL;
 	}
 
 	private final List<Configuration> _configurations;

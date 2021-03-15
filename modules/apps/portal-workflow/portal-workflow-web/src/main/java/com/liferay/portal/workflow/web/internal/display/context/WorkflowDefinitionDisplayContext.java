@@ -592,7 +592,7 @@ public class WorkflowDefinitionDisplayContext {
 	}
 
 	protected PortletURL getWorkflowDefinitionLinkPortletURL() {
-		PortletURL portletURL = PortletURLBuilder.createLiferayPortletURL(
+		return PortletURLBuilder.createLiferayPortletURL(
 			_workflowDefinitionRequestHelper.getLiferayPortletResponse(),
 			WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW,
 			PortletRequest.RENDER_PHASE
@@ -601,8 +601,6 @@ public class WorkflowDefinitionDisplayContext {
 		).setParameter(
 			"tab", WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK
 		).build();
-
-		return portletURL;
 	}
 
 	protected OrderByComparator<WorkflowDefinition>
@@ -619,15 +617,13 @@ public class WorkflowDefinitionDisplayContext {
 	}
 
 	protected PortletURL getWorkflowInstancesPortletURL() {
-		PortletURL portletURL = PortletURLBuilder.createLiferayPortletURL(
+		return PortletURLBuilder.createLiferayPortletURL(
 			_workflowDefinitionRequestHelper.getLiferayPortletResponse(),
 			WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW_INSTANCE,
 			PortletRequest.RENDER_PHASE
 		).setMVCPath(
 			"/view.jsp"
 		).build();
-
-		return portletURL;
 	}
 
 	private String _buildErrorLink(String messageKey, PortletURL portletURL) {

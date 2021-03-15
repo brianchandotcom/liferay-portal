@@ -121,7 +121,7 @@ public class KBArticleAssetRendererFactory
 			LiferayPortletResponse liferayPortletResponse, long classTypeId)
 		throws PortalException {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				liferayPortletRequest, getGroup(liferayPortletRequest),
 				KBPortletKeys.KNOWLEDGE_BASE_ADMIN, 0, 0,
@@ -129,8 +129,6 @@ public class KBArticleAssetRendererFactory
 		).setMVCPath(
 			"/admin/edit_article.jsp"
 		).build();
-
-		return portletURL;
 	}
 
 	@Override

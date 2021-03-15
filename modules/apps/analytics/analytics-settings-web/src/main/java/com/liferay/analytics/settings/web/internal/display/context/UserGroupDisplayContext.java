@@ -65,13 +65,11 @@ public class UserGroupDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCRenderCommandName(
 			"/analytics_settings/edit_synced_contacts_groups"
 		).build();
-
-		return portletURL;
 	}
 
 	public UserGroupSearch getUserGroupSearch() {

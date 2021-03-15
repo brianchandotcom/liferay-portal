@@ -46,13 +46,11 @@ public class UsersAdminBrowsePortletProvider
 	public PortletURL getPortletURL(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			super.getPortletURL(httpServletRequest)
 		).setMVCPath(
 			"/select_organization.jsp"
 		).build();
-
-		return portletURL;
 	}
 
 }

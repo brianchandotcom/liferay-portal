@@ -127,7 +127,7 @@ public class KBArticleAssetRenderer extends BaseJSPAssetRenderer<KBArticle> {
 			group = themeDisplay.getScopeGroup();
 		}
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
 				liferayPortletRequest, group,
 				KBPortletKeys.KNOWLEDGE_BASE_ADMIN, 0, 0,
@@ -137,8 +137,6 @@ public class KBArticleAssetRenderer extends BaseJSPAssetRenderer<KBArticle> {
 		).setParameter(
 			"resourcePrimKey", _kbArticle.getResourcePrimKey()
 		).build();
-
-		return portletURL;
 	}
 
 	@Override

@@ -138,7 +138,7 @@ public class DDMUserPersonalFolderItemSelectorViewDisplayContext {
 	public PortletURL getUploadURL(
 		LiferayPortletResponse liferayPortletResponse) {
 
-		PortletURL portletURL = PortletURLBuilder.createActionURL(
+		return PortletURLBuilder.createActionURL(
 			liferayPortletResponse, DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM
 		).setActionName(
 			"/dynamic_data_mapping_form/upload_ddm_user_personal_folder"
@@ -146,8 +146,6 @@ public class DDMUserPersonalFolderItemSelectorViewDisplayContext {
 			"folderId",
 			_ddmUserPersonalFolderItemSelectorCriterion.getFolderId()
 		).build();
-
-		return portletURL;
 	}
 
 	public boolean isSearch() {

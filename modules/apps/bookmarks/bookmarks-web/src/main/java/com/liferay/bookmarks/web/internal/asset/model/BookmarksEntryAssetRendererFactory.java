@@ -104,7 +104,7 @@ public class BookmarksEntryAssetRendererFactory
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse, long classTypeId) {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				liferayPortletRequest, getGroup(liferayPortletRequest),
 				BookmarksPortletKeys.BOOKMARKS, 0, 0,
@@ -116,8 +116,6 @@ public class BookmarksEntryAssetRendererFactory
 		).setParameter(
 			"showFolderSelector", Boolean.TRUE.toString()
 		).build();
-
-		return portletURL;
 	}
 
 	@Override

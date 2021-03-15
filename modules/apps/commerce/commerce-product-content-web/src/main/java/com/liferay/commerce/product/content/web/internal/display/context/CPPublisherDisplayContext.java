@@ -135,13 +135,11 @@ public class CPPublisherDisplayContext extends BaseCPPublisherDisplayContext {
 			cpContentRequestHelper.getRequest(), "delta",
 			String.valueOf(getPaginationDelta()));
 
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			liferayPortletResponse
 		).setParameter(
 			"delta", delta
 		).build();
-
-		return portletURL;
 	}
 
 	public SearchContainer<CPCatalogEntry> getSearchContainer()

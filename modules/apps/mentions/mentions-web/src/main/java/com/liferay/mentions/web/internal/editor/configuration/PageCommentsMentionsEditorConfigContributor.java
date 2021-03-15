@@ -44,7 +44,7 @@ public class PageCommentsMentionsEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			super.getPortletURL(themeDisplay, requestBackedPortletURLFactory)
 		).setParameter(
 			"strategy",
@@ -54,8 +54,6 @@ public class PageCommentsMentionsEditorConfigContributor
 				"strategy", "pageEditorCommentStrategy"
 			).toJSONString()
 		).build();
-
-		return portletURL;
 	}
 
 }

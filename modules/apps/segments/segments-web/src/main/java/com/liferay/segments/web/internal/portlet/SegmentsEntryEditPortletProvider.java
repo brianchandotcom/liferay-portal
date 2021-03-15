@@ -62,13 +62,11 @@ public class SegmentsEntryEditPortletProvider
 			return null;
 		}
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			super.getPortletURL(httpServletRequest)
 		).setMVCRenderCommandName(
 			"/segments/edit_segments_entry"
 		).build();
-
-		return portletURL;
 	}
 
 }

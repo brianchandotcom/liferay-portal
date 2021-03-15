@@ -192,7 +192,7 @@ public class SegmentsContextVocabularyConfigurationDisplayContext {
 	}
 
 	public PortletURL getRedirect() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCRenderCommandName(
 			"/view_configuration_screen"
@@ -200,8 +200,6 @@ public class SegmentsContextVocabularyConfigurationDisplayContext {
 			"configurationScreenKey",
 			"segments-context-vocabulary-configuration-name"
 		).build();
-
-		return portletURL;
 	}
 
 	public String getTitle() throws IOException {

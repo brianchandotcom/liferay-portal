@@ -456,7 +456,7 @@ public class CommerceDiscountDisplayContext extends BasePricingDisplayContext {
 	}
 
 	public PortletURL getEditCommerceDiscountRenderURL() {
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				commercePricingRequestHelper.getRequest(),
 				CommercePricingPortletKeys.COMMERCE_DISCOUNT,
@@ -464,8 +464,6 @@ public class CommerceDiscountDisplayContext extends BasePricingDisplayContext {
 		).setMVCRenderCommandName(
 			"/commerce_discount/edit_commerce_discount"
 		).build();
-
-		return portletURL;
 	}
 
 	public List<HeaderActionModel> getHeaderActionModels() throws Exception {

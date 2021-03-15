@@ -88,13 +88,11 @@ public class KBArticleURLHelper {
 	public PortletURL createViewWithCommentsURL(KBArticle kbArticle)
 		throws PortalException {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			createViewURL(kbArticle)
 		).setParameter(
 			"expanded", Boolean.TRUE.toString()
 		).build();
-
-		return portletURL;
 	}
 
 	public PortletURL createViewWithRedirectURL(

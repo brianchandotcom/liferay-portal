@@ -90,15 +90,13 @@ public class CommerceProductInstanceItemSelectorViewDisplayContext
 
 	@Override
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			super.getPortletURL()
 		).setParameter(
 			"commerceCatalogGroupId", getGroupId()
 		).setParameter(
 			"commercePriceListId", getCommercePriceListId()
 		).build();
-
-		return portletURL;
 	}
 
 	@Override

@@ -202,7 +202,7 @@ public class WikiPageAssetRenderer
 			group = themeDisplay.getScopeGroup();
 		}
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
 				liferayPortletRequest, group, WikiPortletKeys.WIKI, 0, 0,
 				PortletRequest.RENDER_PHASE)
@@ -213,8 +213,6 @@ public class WikiPageAssetRenderer
 		).setParameter(
 			"title", _page.getTitle()
 		).build();
-
-		return portletURL;
 	}
 
 	@Override
@@ -222,7 +220,7 @@ public class WikiPageAssetRenderer
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
 				liferayPortletRequest, WikiPortletKeys.WIKI,
 				PortletRequest.RENDER_PHASE)
@@ -233,8 +231,6 @@ public class WikiPageAssetRenderer
 		).setParameter(
 			"title", _page.getTitle()
 		).build();
-
-		return portletURL;
 	}
 
 	@Override
@@ -274,7 +270,7 @@ public class WikiPageAssetRenderer
 			return null;
 		}
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
 				liferayPortletRequest, WikiPortletKeys.WIKI,
 				PortletRequest.RENDER_PHASE)
@@ -291,8 +287,6 @@ public class WikiPageAssetRenderer
 		).setParameter(
 			"targetVersion", _page.getVersion()
 		).build();
-
-		return portletURL;
 	}
 
 	@Override

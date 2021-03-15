@@ -85,13 +85,11 @@ public class SiteTeamsDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setParameter(
 			"displayStyle", getDisplayStyle()
 		).build();
-
-		return portletURL;
 	}
 
 	public SearchContainer<Team> getSearchContainer() {

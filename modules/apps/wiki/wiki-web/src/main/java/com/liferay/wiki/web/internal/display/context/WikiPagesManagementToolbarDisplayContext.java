@@ -150,7 +150,7 @@ public class WikiPagesManagementToolbarDisplayContext {
 	}
 
 	public PortletURL getClearResultsURL() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setMVCRenderCommandName(
 			"/wiki/view_pages"
@@ -165,8 +165,6 @@ public class WikiPagesManagementToolbarDisplayContext {
 				return node.getNodeId();
 			}
 		).build();
-
-		return portletURL;
 	}
 
 	public CreationMenu getCreationMenu() {
@@ -249,7 +247,7 @@ public class WikiPagesManagementToolbarDisplayContext {
 	}
 
 	public PortletURL getSearchActionURL() {
-		PortletURL searchActionURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_wikiURLHelper.getSearchURL()
 		).setRedirect(
 			_currentURLObj.toString()
@@ -262,8 +260,6 @@ public class WikiPagesManagementToolbarDisplayContext {
 				return node.getNodeId();
 			}
 		).build();
-
-		return searchActionURL;
 	}
 
 	public String getSortingOrder() {
@@ -271,7 +267,7 @@ public class WikiPagesManagementToolbarDisplayContext {
 	}
 
 	public PortletURL getSortingURL() throws PortletException {
-		PortletURL sortingURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_getPortletURL()
 		).setParameter(
 			"orderByCol", _getOrderByCol()
@@ -279,8 +275,6 @@ public class WikiPagesManagementToolbarDisplayContext {
 			"orderByType",
 			Objects.equals(_getOrderByType(), "asc") ? "desc" : "asc"
 		).build();
-
-		return sortingURL;
 	}
 
 	public int getTotalItems() {
@@ -420,15 +414,13 @@ public class WikiPagesManagementToolbarDisplayContext {
 	}
 
 	private PortletURL _getPortletURL() throws PortletException {
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletURLUtil.clone(_currentURLObj, _liferayPortletResponse)
 		).setMVCRenderCommandName(
 			"/wiki/view_pages"
 		).setRedirect(
 			_currentURLObj.toString()
 		).build();
-
-		return portletURL;
 	}
 
 	private boolean _isTrashEnabled() {

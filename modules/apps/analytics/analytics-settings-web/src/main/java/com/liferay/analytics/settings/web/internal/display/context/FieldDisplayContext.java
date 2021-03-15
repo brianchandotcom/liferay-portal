@@ -211,13 +211,11 @@ public class FieldDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCRenderCommandName(
 			_mvcRenderCommandName
 		).build();
-
-		return portletURL;
 	}
 
 	private String _getDataType(int type) {

@@ -34,7 +34,7 @@ public class TranslationURLProviderImpl implements TranslationURLProvider {
 		long classNameId, long classPK,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			requestBackedPortletURLFactory.createRenderURL(
 				TranslationPortletKeys.TRANSLATION)
 		).setMVCRenderCommandName(
@@ -44,8 +44,6 @@ public class TranslationURLProviderImpl implements TranslationURLProvider {
 		).setParameter(
 			"classPK", classPK
 		).build();
-
-		return portletURL;
 	}
 
 }

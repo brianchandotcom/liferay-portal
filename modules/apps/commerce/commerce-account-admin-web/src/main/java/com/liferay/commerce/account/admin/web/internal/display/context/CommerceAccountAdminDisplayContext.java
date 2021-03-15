@@ -70,15 +70,13 @@ public class CommerceAccountAdminDisplayContext
 
 	@Override
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			super.getPortletURL()
 		).setParameter(
 			"activeNavigation", getNavigation("active")
 		).setParameter(
 			"typeNavigation", getNavigation("type")
 		).build();
-
-		return portletURL;
 	}
 
 	@Override

@@ -49,13 +49,11 @@ public class SegmentsSimulationDisplayContext {
 	}
 
 	public PortletURL getDeactivateSimulationURL() {
-		PortletURL portletURL = PortletURLBuilder.createActionURL(
+		return PortletURLBuilder.createActionURL(
 			_liferayPortletResponse, SegmentsPortletKeys.SEGMENTS_SIMULATION
 		).setActionName(
 			"/segments_simulation/deactivate_simulation"
 		).build();
-
-		return portletURL;
 	}
 
 	public String getPortletNamespace() {
@@ -75,13 +73,11 @@ public class SegmentsSimulationDisplayContext {
 	}
 
 	public PortletURL getSimulateSegmentsEntriesURL() {
-		PortletURL portletURL = PortletURLBuilder.createActionURL(
+		return PortletURLBuilder.createActionURL(
 			_liferayPortletResponse, SegmentsPortletKeys.SEGMENTS_SIMULATION
 		).setActionName(
 			"/segments_simulation/simulate_segments_entries"
 		).build();
-
-		return portletURL;
 	}
 
 	public boolean isShowEmptyMessage() {

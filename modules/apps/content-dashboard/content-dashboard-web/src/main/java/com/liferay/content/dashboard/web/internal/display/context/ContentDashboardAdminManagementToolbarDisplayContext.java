@@ -487,7 +487,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 	private PortletURL _getAssetCategorySelectorURL()
 		throws PortalException, WindowStateException {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletProviderUtil.getPortletURL(
 				_liferayPortletRequest, AssetCategory.class.getName(),
 				PortletProvider.Action.BROWSE)
@@ -535,14 +535,12 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).build();
-
-		return portletURL;
 	}
 
 	private PortletURL _getAssetTagSelectorURL()
 		throws PortalException, WindowStateException {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletProviderUtil.getPortletURL(
 				_liferayPortletRequest, AssetTag.class.getName(),
 				PortletProvider.Action.BROWSE)
@@ -581,8 +579,6 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).build();
-
-		return portletURL;
 	}
 
 	private List<DropdownItem> _getFilterAuthorDropdownItems() {

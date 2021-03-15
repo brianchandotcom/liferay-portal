@@ -851,15 +851,13 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public PortletURL getRedirectURL() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setRedirect(
 			getRedirect()
 		).setParameter(
 			"groupId", getSelGroupId()
 		).build();
-
-		return portletURL;
 	}
 
 	public List<BreadcrumbEntry> getRelativeBreadcrumbEntries(Layout layout)
@@ -932,7 +930,7 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public PortletURL getScreenNavigationPortletURL() {
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL()
 		).setMVCRenderCommandName(
 			"/layout_admin/edit_layout"
@@ -942,8 +940,6 @@ public class LayoutsAdminDisplayContext {
 		).setParameter(
 			"selPlid", getSelPlid()
 		).build();
-
-		return portletURL;
 	}
 
 	public String getSelectLayoutCollectionURL(

@@ -114,7 +114,7 @@ public class CalendarBookingAssetRendererFactory
 			return null;
 		}
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				liferayPortletRequest, getGroup(liferayPortletRequest),
 				CalendarPortletKeys.CALENDAR, 0, 0, PortletRequest.RENDER_PHASE)
@@ -128,8 +128,6 @@ public class CalendarBookingAssetRendererFactory
 				return calendar.getCalendarId();
 			}
 		).build();
-
-		return portletURL;
 	}
 
 	@Override

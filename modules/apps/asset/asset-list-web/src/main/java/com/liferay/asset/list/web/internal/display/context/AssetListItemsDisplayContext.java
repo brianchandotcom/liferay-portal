@@ -131,7 +131,7 @@ public class AssetListItemsDisplayContext {
 	}
 
 	private PortletURL _getAssetListContentURL() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCPath(
 			"/view_asset_list_items.jsp"
@@ -142,8 +142,6 @@ public class AssetListItemsDisplayContext {
 		).setParameter(
 			"segmentsEntryId", getSegmentsEntryId()
 		).build();
-
-		return portletURL;
 	}
 
 	private String _getRedirect() {

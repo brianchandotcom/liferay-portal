@@ -444,13 +444,11 @@ public class AssetCategoriesDisplayContext {
 	}
 
 	public PortletURL getEditVocabularyURL() {
-		PortletURL editVocabularyURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCPath(
 			"/edit_vocabulary.jsp"
 		).build();
-
-		return editVocabularyURL;
 	}
 
 	public String getEventName() {

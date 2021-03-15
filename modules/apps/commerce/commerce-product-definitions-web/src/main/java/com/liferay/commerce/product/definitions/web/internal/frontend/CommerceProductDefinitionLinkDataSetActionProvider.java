@@ -106,7 +106,7 @@ public class CommerceProductDefinitionLinkDataSetActionProvider
 			httpServletRequest, "currentUrl",
 			_portal.getCurrentURL(httpServletRequest));
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				_portal.getOriginalServletRequest(httpServletRequest),
 				CPPortletKeys.CP_DEFINITIONS, PortletRequest.ACTION_PHASE)
@@ -121,8 +121,6 @@ public class CommerceProductDefinitionLinkDataSetActionProvider
 		).setParameter(
 			"cpDefinitionLinkId", cpDefinitionLink.getCPDefinitionLinkId()
 		).build();
-
-		return portletURL;
 	}
 
 	private PortletURL _getProductLinkEditURL(

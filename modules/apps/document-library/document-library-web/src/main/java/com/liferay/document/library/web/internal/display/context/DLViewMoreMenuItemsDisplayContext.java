@@ -115,7 +115,7 @@ public class DLViewMoreMenuItemsDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCPath(
 			"/document_library/view_more_menu_items.jsp"
@@ -124,8 +124,6 @@ public class DLViewMoreMenuItemsDisplayContext {
 		).setParameter(
 			"eventName", getEventName()
 		).build();
-
-		return portletURL;
 	}
 
 	public String getSearchActionURL() {

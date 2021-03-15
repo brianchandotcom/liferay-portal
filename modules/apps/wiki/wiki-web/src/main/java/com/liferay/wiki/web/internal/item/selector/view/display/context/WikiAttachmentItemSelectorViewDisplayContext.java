@@ -109,13 +109,11 @@ public class WikiAttachmentItemSelectorViewDisplayContext {
 			LiferayPortletResponse liferayPortletResponse)
 		throws PortletException {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletURLUtil.clone(_portletURL, liferayPortletResponse)
 		).setParameter(
 			"selectedTab", getTitle(httpServletRequest.getLocale())
 		).build();
-
-		return portletURL;
 	}
 
 	public String getTitle(Locale locale) {
@@ -125,7 +123,7 @@ public class WikiAttachmentItemSelectorViewDisplayContext {
 	public PortletURL getUploadURL(
 		LiferayPortletResponse liferayPortletResponse) {
 
-		PortletURL portletURL = PortletURLBuilder.createActionURL(
+		return PortletURLBuilder.createActionURL(
 			liferayPortletResponse, WikiPortletKeys.WIKI
 		).setActionName(
 			"/wiki/upload_page_attachment"
@@ -135,8 +133,6 @@ public class WikiAttachmentItemSelectorViewDisplayContext {
 			"resourcePrimKey",
 			_wikiAttachmentItemSelectorCriterion.getWikiPageResourceId()
 		).build();
-
-		return portletURL;
 	}
 
 	public WikiAttachmentItemSelectorCriterion

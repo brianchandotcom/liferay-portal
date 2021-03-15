@@ -250,7 +250,7 @@ public class FragmentEntryLinkDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCRenderCommandName(
 			"/fragment/view_fragment_entry_usages"
@@ -263,8 +263,6 @@ public class FragmentEntryLinkDisplayContext {
 		).setParameter(
 			"fragmentEntryId", getFragmentEntryId()
 		).build();
-
-		return portletURL;
 	}
 
 	public String getRedirect() {

@@ -222,15 +222,13 @@ public class CommerceCatalogDisplayContext {
 	}
 
 	public PortletURL getEditCommerceCatalogRenderURL() {
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				cpRequestHelper.getRequest(), CPPortletKeys.COMMERCE_CATALOGS,
 				PortletRequest.RENDER_PHASE)
 		).setMVCRenderCommandName(
 			"/commerce_catalogs/edit_commerce_catalog"
 		).build();
-
-		return portletURL;
 	}
 
 	public List<HeaderActionModel> getHeaderActionModels() throws Exception {

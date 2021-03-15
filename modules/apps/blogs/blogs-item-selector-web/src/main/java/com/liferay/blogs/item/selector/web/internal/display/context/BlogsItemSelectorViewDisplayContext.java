@@ -107,13 +107,11 @@ public class BlogsItemSelectorViewDisplayContext {
 			LiferayPortletResponse liferayPortletResponse)
 		throws PortletException {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletURLUtil.clone(_portletURL, liferayPortletResponse)
 		).setParameter(
 			"selectedTab", getTitle(httpServletRequest.getLocale())
 		).build();
-
-		return portletURL;
 	}
 
 	public String getTitle(Locale locale) {
@@ -123,13 +121,11 @@ public class BlogsItemSelectorViewDisplayContext {
 	public PortletURL getUploadURL(
 		LiferayPortletResponse liferayPortletResponse) {
 
-		PortletURL portletURL = PortletURLBuilder.createActionURL(
+		return PortletURLBuilder.createActionURL(
 			liferayPortletResponse, PortletKeys.BLOGS
 		).setActionName(
 			"/blogs/upload_image"
 		).build();
-
-		return portletURL;
 	}
 
 	public boolean isSearch() {

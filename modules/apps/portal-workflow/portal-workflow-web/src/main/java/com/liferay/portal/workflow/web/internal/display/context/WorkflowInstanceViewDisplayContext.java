@@ -374,15 +374,13 @@ public class WorkflowInstanceViewDisplayContext
 	}
 
 	public PortletURL getViewPortletURL() {
-		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			liferayPortletResponse
 		).setParameter(
 			"tab", WorkflowWebKeys.WORKFLOW_TAB_INSTANCE
 		).setParameter(
 			"orderByType", getOrderByType()
 		).build();
-
-		return portletURL;
 	}
 
 	public ViewTypeItemList getViewTypes() {

@@ -63,13 +63,11 @@ public class AssetPublisherAddPortletProvider
 	public PortletURL getPortletURL(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		PortletURL assetPublisherURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			super.getPortletURL(httpServletRequest)
 		).setMVCPath(
 			"/view_content.jsp"
 		).build();
-
-		return assetPublisherURL;
 	}
 
 	@Override

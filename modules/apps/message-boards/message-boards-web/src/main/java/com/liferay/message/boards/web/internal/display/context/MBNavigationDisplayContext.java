@@ -135,65 +135,53 @@ public class MBNavigationDisplayContext {
 	}
 
 	private PortletURL _getViewBannedUsersPortletURL() {
-		PortletURL bannedUsersURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCRenderCommandName(
 			"/message_boards_admin/view_banned_users"
 		).build();
-
-		return bannedUsersURL;
 	}
 
 	private PortletURL _getViewCategoriesPortletURL() {
-		PortletURL messageBoardsHomeURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCRenderCommandName(
 			"/message_boards/view"
 		).setParameter(
 			"tag", StringPool.BLANK
 		).build();
-
-		return messageBoardsHomeURL;
 	}
 
 	private PortletURL _getViewMyPostsPortletURL() {
-		PortletURL viewMyPostsURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCRenderCommandName(
 			"/message_boards/view_my_posts"
 		).build();
-
-		return viewMyPostsURL;
 	}
 
 	private PortletURL _getViewMySubscriptionsPortletURL() {
-		PortletURL viewMySubscriptionsURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCRenderCommandName(
 			"/message_boards/view_my_subscriptions"
 		).build();
-
-		return viewMySubscriptionsURL;
 	}
 
 	private PortletURL _getViewRecentPostsPortletURL() {
-		PortletURL viewRecentPostsURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCRenderCommandName(
 			"/message_boards/view_recent_posts"
 		).build();
-
-		return viewRecentPostsURL;
 	}
 
 	private PortletURL _getViewStatisticsPortletURL() {
-		PortletURL viewStatisticsURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCRenderCommandName(
 			"/message_boards/view_statistics"
 		).build();
-
-		return viewStatisticsURL;
 	}
 
 	private boolean _isMBPortlet() {

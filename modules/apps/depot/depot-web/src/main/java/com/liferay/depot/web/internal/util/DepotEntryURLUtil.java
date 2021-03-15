@@ -96,7 +96,7 @@ public class DepotEntryURLUtil {
 		DepotEntry depotEntry, String redirect,
 		LiferayPortletRequest liferayPortletRequest) {
 
-		PortletURL editDepotEntryURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
 				liferayPortletRequest, DepotPortletKeys.DEPOT_ADMIN,
 				PortletRequest.RENDER_PHASE)
@@ -107,8 +107,6 @@ public class DepotEntryURLUtil {
 		).setParameter(
 			"depotEntryId", depotEntry.getDepotEntryId()
 		).build();
-
-		return editDepotEntryURL;
 	}
 
 	public static ActionURL getUpdateDDMStructuresAvailableActionURL(

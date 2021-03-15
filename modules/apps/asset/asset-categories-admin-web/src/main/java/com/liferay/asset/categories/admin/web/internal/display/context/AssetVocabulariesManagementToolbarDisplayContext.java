@@ -40,6 +40,8 @@ public class AssetVocabulariesManagementToolbarDisplayContext
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			assetCategoriesDisplayContext.getVocabulariesSearchContainer());
+
+		_assetCategoriesDisplayContext = assetCategoriesDisplayContext;
 	}
 
 	@Override
@@ -64,6 +66,11 @@ public class AssetVocabulariesManagementToolbarDisplayContext
 	}
 
 	@Override
+	protected String getDisplayStyle() {
+		return _assetCategoriesDisplayContext.getDisplayStyle();
+	}
+
+	@Override
 	protected String[] getDisplayViews() {
 		return new String[] {"list", "descriptive"};
 	}
@@ -77,5 +84,7 @@ public class AssetVocabulariesManagementToolbarDisplayContext
 	protected String[] getOrderByKeys() {
 		return new String[] {"create-date"};
 	}
+
+	private final AssetCategoriesDisplayContext _assetCategoriesDisplayContext;
 
 }

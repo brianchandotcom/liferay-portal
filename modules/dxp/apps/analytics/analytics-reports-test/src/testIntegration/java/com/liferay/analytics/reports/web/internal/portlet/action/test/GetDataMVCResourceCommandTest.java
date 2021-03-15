@@ -218,7 +218,7 @@ public class GetDataMVCResourceCommandTest {
 				Locale locale = LocaleUtil.getDefault();
 
 				Assert.assertEquals(
-					LocaleUtil.toBCP47LanguageId(locale),
+					LocaleUtil.toW3cLanguageId(locale),
 					viewURLJSONObject.getString("languageId"));
 				Assert.assertEquals(
 					StringBundler.concat(

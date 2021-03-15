@@ -19,7 +19,7 @@ const ACTIONS = {
 		);
 
 		if (confirm(message)) {
-			submitForm(document.hrefFm, itemData.deleteURL);
+			submitForm(document.hrefFm, itemData['delete-url']);
 		}
 	},
 };

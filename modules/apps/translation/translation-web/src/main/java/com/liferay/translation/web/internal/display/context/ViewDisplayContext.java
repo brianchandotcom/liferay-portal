@@ -116,7 +116,7 @@ public class ViewDisplayContext {
 					String.valueOf(translationEntry.getTranslationEntryId()));
 
 				dropdownItem.putData(
-					"deleteURL", deleteTranslationEntryURL.toString());
+					"delete-url", deleteTranslationEntryURL.toString());
 
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "delete"));

@@ -850,7 +850,21 @@ public class TestrayImporter {
 	}
 
 	public void postSlackNotification() {
-		for (File testBaseDir : _testrayBuilds.keySet()) {
+		List<Integer> testrayBuildIDs = new ArrayList<>();
+
+		for (Map.Entry<File, TestrayBuild> testrayBuildEntry :
+				_testrayBuilds.entrySet()) {
+
+			File testBaseDir = testrayBuildEntry.getKey();
+
+			TestrayBuild testrayBuild = testrayBuildEntry.getValue();
+
+			if (testrayBuildIDs.contains(testrayBuild.getID())) {
+				continue;
+			}
+
+			testrayBuildIDs.add(testrayBuild.getID());
+
 			String slackChannels = _getSlackChannels(testBaseDir);
 
 			if (JenkinsResultsParserUtil.isNullOrEmpty(slackChannels)) {

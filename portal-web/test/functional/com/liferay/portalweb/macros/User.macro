@@ -2057,7 +2057,7 @@ definition {
 			locator1 = "Link#FACEBOOK",
 			value1 = "Facebook");
 
-		SelectWindow(locator1 = "title=Log in to Facebook | Facebook");
+		SelectWindow(locator1 = "title=Log into Facebook | Facebook");
 
 		Type(
 			locator1 = "FacebookLogin#LOGIN_EMAIL_FIELD",

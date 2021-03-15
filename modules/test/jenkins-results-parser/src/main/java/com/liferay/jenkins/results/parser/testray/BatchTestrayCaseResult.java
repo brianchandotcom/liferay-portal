@@ -92,12 +92,28 @@ public class BatchTestrayCaseResult extends TestrayCaseResult {
 			return "Failed to run on CI";
 		}
 
-		String failureMessage = build.getFailureMessage();
+		if (!build.isFailing()) {
+			return null;
+		}
 
-		failureMessage = failureMessage.substring(
-			0, failureMessage.indexOf("\n"));
+		String errorMessage = build.getFailureMessage();
 
-		return failureMessage.trim();
+		if (JenkinsResultsParserUtil.isNullOrEmpty(errorMessage)) {
+			return "Failed for unknown reason";
+		}
+
+		if (errorMessage.contains("\n")) {
+			errorMessage = errorMessage.substring(
+				0, errorMessage.indexOf("\n"));
+		}
+
+		errorMessage = errorMessage.trim();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(errorMessage)) {
+			return "Failed for unknown reason";
+		}
+
+		return errorMessage;
 	}
 
 	@Override

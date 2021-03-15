@@ -105,15 +105,24 @@ public class FunctionalBatchTestrayCaseResult extends BatchTestrayCaseResult {
 			return null;
 		}
 
-		String errorDetails = testResult.getErrorDetails();
+		String errorMessage = testResult.getErrorDetails();
 
-		if (JenkinsResultsParserUtil.isNullOrEmpty(errorDetails)) {
-			return super.getErrors();
+		if (JenkinsResultsParserUtil.isNullOrEmpty(errorMessage)) {
+			return "Failed for unknown reason";
 		}
 
-		errorDetails = errorDetails.substring(0, errorDetails.indexOf("\n"));
+		if (errorMessage.contains("\n")) {
+			errorMessage = errorMessage.substring(
+				0, errorMessage.indexOf("\n"));
+		}
 
-		return errorDetails.trim();
+		errorMessage = errorMessage.trim();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(errorMessage)) {
+			return "Failed for unknown reason";
+		}
+
+		return errorMessage;
 	}
 
 	@Override

@@ -23,7 +23,9 @@ import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroup;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Michael Hashimoto
@@ -52,38 +54,47 @@ public class JUnitBatchTestrayCaseResult extends BatchTestrayCaseResult {
 			return null;
 		}
 
-		List<String> errorMessages = new ArrayList<>();
+		Map<String, String> errorMessages = new HashMap<>();
 
 		for (TestResult testResult : testClassResult.getTestResults()) {
 			if ((testResult == null) || !testResult.isFailing()) {
 				continue;
 			}
 
-			StringBuilder sb = new StringBuilder();
+			String errorMessage = testResult.getErrorDetails();
 
-			sb.append(testResult.getTestName());
-			sb.append(": ");
-
-			String errorDetails = testResult.getErrorDetails();
-
-			if (!JenkinsResultsParserUtil.isNullOrEmpty(errorDetails)) {
-				errorDetails = errorDetails.substring(
-					0, errorDetails.indexOf("\n"));
-
-				sb.append(errorDetails.trim());
-			}
-			else {
-				sb.append("Failed for unknown reason");
+			if (JenkinsResultsParserUtil.isNullOrEmpty(errorMessage)) {
+				errorMessage = "Failed for unknown reason";
 			}
 
-			errorMessages.add(sb.toString());
+			if (errorMessage.contains("\n")) {
+				errorMessage = errorMessage.substring(
+					0, errorMessage.indexOf("\n"));
+			}
+
+			errorMessage = errorMessage.trim();
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(errorMessage)) {
+				errorMessage = "Failed for unknown reason";
+			}
+
+			String testName = testResult.getDisplayName();
+
+			errorMessages.put(
+				testName,
+				JenkinsResultsParserUtil.combine(testName, ": ", errorMessage));
 		}
 
 		if (errorMessages.size() > 1) {
-			return errorMessages.size() + " tests failed.";
+			return JenkinsResultsParserUtil.combine(
+				"Failed tests: ",
+				JenkinsResultsParserUtil.join(
+					", ", new ArrayList<>(errorMessages.keySet())));
 		}
 		else if (errorMessages.size() == 1) {
-			return errorMessages.get(0);
+			List<String> values = new ArrayList<>(errorMessages.values());
+
+			return values.get(0);
 		}
 
 		return "Failed for unknown reason";

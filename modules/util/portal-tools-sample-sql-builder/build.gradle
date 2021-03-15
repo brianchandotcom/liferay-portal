@@ -44,6 +44,8 @@ dependencies {
 	compileInclude project(":apps:commerce:commerce-product-api")
 	compileInclude project(":apps:commerce:commerce-product-service")
 	compileInclude project(":apps:commerce:commerce-service")
+	compileInclude project(":apps:commerce:commerce-shipping-engine-fixed-api")
+	compileInclude project(":apps:commerce:commerce-shipping-engine-fixed-service")
 	compileInclude project(":apps:commerce:commerce-wish-list-api")
 	compileInclude project(":apps:document-library:document-library-api")
 	compileInclude project(":apps:dynamic-data-lists:dynamic-data-lists-api")

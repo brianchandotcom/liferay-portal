@@ -35,6 +35,7 @@ import com.liferay.blogs.model.impl.BlogsEntryModelImpl;
 import com.liferay.blogs.model.impl.BlogsStatsUserModelImpl;
 import com.liferay.blogs.social.BlogsActivityKeys;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
+import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.currency.model.CommerceCurrencyModel;
 import com.liferay.commerce.currency.model.impl.CommerceCurrencyModelImpl;
@@ -43,11 +44,17 @@ import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItemModel;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseModel;
 import com.liferay.commerce.inventory.model.impl.CommerceInventoryWarehouseItemModelImpl;
 import com.liferay.commerce.inventory.model.impl.CommerceInventoryWarehouseModelImpl;
+import com.liferay.commerce.model.CommerceAddress;
+import com.liferay.commerce.model.CommerceAddressModel;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItemModel;
 import com.liferay.commerce.model.CommerceOrderModel;
+import com.liferay.commerce.model.CommerceShippingMethod;
+import com.liferay.commerce.model.CommerceShippingMethodModel;
+import com.liferay.commerce.model.impl.CommerceAddressModelImpl;
 import com.liferay.commerce.model.impl.CommerceOrderItemModelImpl;
 import com.liferay.commerce.model.impl.CommerceOrderModelImpl;
+import com.liferay.commerce.model.impl.CommerceShippingMethodModelImpl;
 import com.liferay.commerce.price.list.model.CommercePriceEntryModel;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommercePriceListModel;
@@ -88,6 +95,9 @@ import com.liferay.commerce.product.model.impl.CProductModelImpl;
 import com.liferay.commerce.product.model.impl.CommerceCatalogModelImpl;
 import com.liferay.commerce.product.model.impl.CommerceChannelModelImpl;
 import com.liferay.commerce.product.model.impl.CommerceChannelRelModelImpl;
+import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
+import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionModel;
+import com.liferay.commerce.shipping.engine.fixed.model.impl.CommerceShippingFixedOptionModelImpl;
 import com.liferay.counter.kernel.model.Counter;
 import com.liferay.counter.kernel.model.CounterModel;
 import com.liferay.counter.model.impl.CounterModelImpl;
@@ -216,6 +226,8 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyModel;
 import com.liferay.portal.kernel.model.ContactConstants;
 import com.liferay.portal.kernel.model.ContactModel;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.CountryModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.GroupModel;
@@ -269,6 +281,7 @@ import com.liferay.portal.model.impl.AccountModelImpl;
 import com.liferay.portal.model.impl.ClassNameModelImpl;
 import com.liferay.portal.model.impl.CompanyModelImpl;
 import com.liferay.portal.model.impl.ContactModelImpl;
+import com.liferay.portal.model.impl.CountryModelImpl;
 import com.liferay.portal.model.impl.GroupModelImpl;
 import com.liferay.portal.model.impl.LayoutFriendlyURLModelImpl;
 import com.liferay.portal.model.impl.LayoutModelImpl;
@@ -773,6 +786,7 @@ public class DataFactory {
 		// Audit fields
 
 		accountEntryModel.setCompanyId(_companyId);
+		accountEntryModel.setUserId(_sampleUserId);
 		accountEntryModel.setUserName(_SAMPLE_USER_NAME);
 		accountEntryModel.setCreateDate(new Date());
 		accountEntryModel.setModifiedDate(new Date());
@@ -782,7 +796,12 @@ public class DataFactory {
 		accountEntryModel.setDefaultBillingAddressId(0);
 		accountEntryModel.setDefaultShippingAddressId(0);
 		accountEntryModel.setParentAccountEntryId(0);
+		accountEntryModel.setDescription(null);
+		accountEntryModel.setDomains(null);
+		accountEntryModel.setEmailAddress(null);
 		accountEntryModel.setName("Account Entry" + index);
+		accountEntryModel.setTaxExemptionCode(null);
+		accountEntryModel.setTaxIdNumber(null);
 		accountEntryModel.setLogoId(0);
 		accountEntryModel.setType("business");
 		accountEntryModel.setStatus(0);
@@ -1196,7 +1215,7 @@ public class DataFactory {
 		return newGroupModel(
 			_counter.get(), getClassNameId(AccountEntry.class),
 			accountEntryModel.getAccountEntryId(), accountEntryModel.getName(),
-			false);
+			GroupConstants.TYPE_SITE_PRIVATE, false);
 	}
 
 	public List<AccountEntryModel> newCommerceAccountEntryModels() {
@@ -1210,6 +1229,44 @@ public class DataFactory {
 		}
 
 		return accountEntryModels;
+	}
+
+	public CommerceAddressModel newCommerceAddressModel(
+		long accountEntryId, long countryId) {
+
+		CommerceAddressModel commerceAddressModel =
+			new CommerceAddressModelImpl();
+
+		// PK fields
+
+		commerceAddressModel.setCommerceAddressId(_counter.get());
+
+		// Group instance
+
+		commerceAddressModel.setGroupId(0);
+
+		// Audit fields
+
+		commerceAddressModel.setCompanyId(_companyId);
+		commerceAddressModel.setUserId(_sampleUserId);
+		commerceAddressModel.setUserName(_SAMPLE_USER_NAME);
+		commerceAddressModel.setCreateDate(new Date());
+		commerceAddressModel.setModifiedDate(new Date());
+
+		// Other fields
+
+		commerceAddressModel.setClassNameId(
+			getClassNameId(CommerceAccount.class));
+		commerceAddressModel.setClassPK(accountEntryId);
+		commerceAddressModel.setName("Sample Address");
+		commerceAddressModel.setDescription(null);
+		commerceAddressModel.setStreet1("123 Sample Street");
+		commerceAddressModel.setCity("Los Angeles");
+		commerceAddressModel.setZip("1234");
+		commerceAddressModel.setCountryId(countryId);
+		commerceAddressModel.setType(2);
+
+		return commerceAddressModel;
 	}
 
 	public PortletPreferencesModel
@@ -1251,6 +1308,7 @@ public class DataFactory {
 		// Audit fields
 
 		commerceCatalogModel.setCompanyId(_companyId);
+		commerceCatalogModel.setUserId(_sampleUserId);
 		commerceCatalogModel.setUserName(_SAMPLE_USER_NAME);
 		commerceCatalogModel.setCreateDate(new Date());
 		commerceCatalogModel.setModifiedDate(new Date());
@@ -1478,6 +1536,7 @@ public class DataFactory {
 		// Audit fields
 
 		commerceInventoryWarehouseItemModel.setCompanyId(_companyId);
+		commerceInventoryWarehouseItemModel.setUserId(_sampleUserId);
 		commerceInventoryWarehouseItemModel.setUserName(_SAMPLE_USER_NAME);
 		commerceInventoryWarehouseItemModel.setCreateDate(new Date());
 		commerceInventoryWarehouseItemModel.setModifiedDate(new Date());
@@ -1487,7 +1546,8 @@ public class DataFactory {
 		commerceInventoryWarehouseItemModel.setCommerceInventoryWarehouseId(
 			commerceInventoryWarehouseModel.getCommerceInventoryWarehouseId());
 		commerceInventoryWarehouseItemModel.setSku(cpInstanceModel.getSku());
-		commerceInventoryWarehouseItemModel.setQuantity(1);
+		commerceInventoryWarehouseItemModel.setQuantity(
+			BenchmarksPropsValues.MAX_COMMERCE_ORDER_STATUS_OPEN_COUNT);
 		commerceInventoryWarehouseItemModel.setReservedQuantity(0);
 
 		return commerceInventoryWarehouseItemModel;
@@ -1509,6 +1569,7 @@ public class DataFactory {
 		// Audit fields
 
 		commerceInventoryWarehouseModel.setCompanyId(_companyId);
+		commerceInventoryWarehouseModel.setUserId(_sampleUserId);
 		commerceInventoryWarehouseModel.setUserName(_SAMPLE_USER_NAME);
 		commerceInventoryWarehouseModel.setCreateDate(new Date());
 		commerceInventoryWarehouseModel.setModifiedDate(new Date());
@@ -1666,12 +1727,14 @@ public class DataFactory {
 		// Audit fields
 
 		commerceOrderItemModel.setCompanyId(_companyId);
+		commerceOrderItemModel.setUserId(_sampleUserId);
 		commerceOrderItemModel.setUserName(_SAMPLE_USER_NAME);
 		commerceOrderItemModel.setCreateDate(new Date());
 		commerceOrderItemModel.setModifiedDate(new Date());
 
 		// Other fields
 
+		commerceOrderItemModel.setBookedQuantityId(0);
 		commerceOrderItemModel.setCommerceOrderId(
 			commerceOrderModel.getCommerceOrderId());
 		commerceOrderItemModel.setCommercePriceListId(commercePriceListId);
@@ -1679,9 +1742,11 @@ public class DataFactory {
 		commerceOrderItemModel.setCPInstanceId(
 			cpInstanceModel.getCPInstanceId());
 		commerceOrderItemModel.setParentCommerceOrderItemId(0);
-		commerceOrderItemModel.setQuantity(1);
-		commerceOrderItemModel.setShippedQuantity(1);
 		commerceOrderItemModel.setName("Commerce Order Item Name");
+		commerceOrderItemModel.setQuantity(1);
+		commerceOrderItemModel.setShippedQuantity(0);
+		commerceOrderItemModel.setShipSeparately(true);
+		commerceOrderItemModel.setShippable(true);
 		commerceOrderItemModel.setDiscountAmount(BigDecimal.valueOf(0));
 		commerceOrderItemModel.setDiscountPercentageLevel1(
 			BigDecimal.valueOf(0));
@@ -1714,7 +1779,6 @@ public class DataFactory {
 		commerceOrderItemModel.setShippingAddressId(0);
 		commerceOrderItemModel.setPrintedNote(null);
 		commerceOrderItemModel.setRequestedDeliveryDate(null);
-		commerceOrderItemModel.setBookedQuantityId(0);
 		commerceOrderItemModel.setManuallyAdjusted(false);
 
 		return commerceOrderItemModel;
@@ -1722,7 +1786,9 @@ public class DataFactory {
 
 	public CommerceOrderModel newCommerceOrderModel(
 		long groupId, long commerceAccountId, long commerceCurrencyId,
-		long billingAddressId, long shippingAddressId, int orderStatus) {
+		long billingAddressId, long shippingAddressId,
+		long commerceShippingMethodId, String shippingOptionName,
+		int orderStatus) {
 
 		CommerceOrderModel commerceOrderModel = new CommerceOrderModelImpl();
 
@@ -1741,6 +1807,7 @@ public class DataFactory {
 		// Audit fields
 
 		commerceOrderModel.setCompanyId(_companyId);
+		commerceOrderModel.setUserId(_sampleUserId);
 		commerceOrderModel.setUserName(_SAMPLE_USER_NAME);
 		commerceOrderModel.setCreateDate(new Date());
 		commerceOrderModel.setModifiedDate(new Date());
@@ -1750,6 +1817,10 @@ public class DataFactory {
 		commerceOrderModel.setCommerceAccountId(commerceAccountId);
 		commerceOrderModel.setCommerceCurrencyId(commerceCurrencyId);
 		commerceOrderModel.setBillingAddressId(billingAddressId);
+		commerceOrderModel.setShippingAddressId(shippingAddressId);
+		commerceOrderModel.setCommerceShippingMethodId(
+			commerceShippingMethodId);
+		commerceOrderModel.setShippingOptionName(shippingOptionName);
 		commerceOrderModel.setShippingAddressId(shippingAddressId);
 		commerceOrderModel.setSubtotal(BigDecimal.valueOf(0));
 		commerceOrderModel.setShippingAmount(BigDecimal.valueOf(0));
@@ -1771,8 +1842,9 @@ public class DataFactory {
 	}
 
 	public List<CommerceOrderModel> newCommerceOrderModels(
-		List<GroupModel> groupModels, long commerceAccountId,
-		long commerceCurrencyId, long billingAddressId, long shippingAddressId,
+		long groupId, long commerceAccountId, long commerceCurrencyId,
+		long billingAddressId, long shippingAddressId,
+		long commerceShippingMethodId, String commerceShippingOptionName,
 		int orderStatus) {
 
 		int maxCommerceOrderCount = 0;
@@ -1780,23 +1852,38 @@ public class DataFactory {
 		if (orderStatus == CommerceOrderConstants.ORDER_STATUS_CANCELLED) {
 			maxCommerceOrderCount =
 				BenchmarksPropsValues.MAX_COMMERCE_ORDER_STATUS_CANCELLED_COUNT;
+
+			if (BenchmarksPropsValues.MAX_COMMERCE_GROUP_COUNT > 1) {
+				maxCommerceOrderCount =
+					maxCommerceOrderCount /
+						BenchmarksPropsValues.MAX_COMMERCE_GROUP_COUNT;
+			}
 		}
 		else if (orderStatus == CommerceOrderConstants.ORDER_STATUS_PENDING) {
 			maxCommerceOrderCount =
 				BenchmarksPropsValues.MAX_COMMERCE_ORDER_STATUS_PENDING_COUNT;
+
+			if (BenchmarksPropsValues.MAX_COMMERCE_GROUP_COUNT > 1) {
+				maxCommerceOrderCount =
+					maxCommerceOrderCount /
+						BenchmarksPropsValues.MAX_COMMERCE_GROUP_COUNT;
+			}
+		}
+		else if (orderStatus == CommerceOrderConstants.ORDER_STATUS_OPEN) {
+			maxCommerceOrderCount =
+				BenchmarksPropsValues.MAX_COMMERCE_ORDER_STATUS_OPEN_COUNT;
 		}
 
 		List<CommerceOrderModel> commerceOrderModels = new ArrayList<>(
 			maxCommerceOrderCount);
 
-		for (GroupModel groupModel : groupModels) {
-			for (int i = 1; i <= maxCommerceOrderCount; i++) {
-				commerceOrderModels.add(
-					newCommerceOrderModel(
-						groupModel.getGroupId(), commerceAccountId,
-						commerceCurrencyId, billingAddressId, shippingAddressId,
-						orderStatus));
-			}
+		for (int i = 1; i <= maxCommerceOrderCount; i++) {
+			commerceOrderModels.add(
+				newCommerceOrderModel(
+					groupId, commerceAccountId, commerceCurrencyId,
+					billingAddressId, shippingAddressId,
+					commerceShippingMethodId, commerceShippingOptionName,
+					orderStatus));
 		}
 
 		return commerceOrderModels;
@@ -1853,6 +1940,7 @@ public class DataFactory {
 		// Audit fields
 
 		commercePriceEntryModel.setCompanyId(_companyId);
+		commercePriceEntryModel.setUserId(_sampleUserId);
 		commercePriceEntryModel.setUserName(_SAMPLE_USER_NAME);
 		commercePriceEntryModel.setCreateDate(new Date());
 		commercePriceEntryModel.setModifiedDate(new Date());
@@ -1881,6 +1969,10 @@ public class DataFactory {
 		CommercePriceListModel commercePriceListModel =
 			new CommercePriceListModelImpl();
 
+		// UUID
+
+		commercePriceListModel.setUuid(SequentialUUID.generate());
+
 		// PK fields
 
 		commercePriceListModel.setCommercePriceListId(_counter.get());
@@ -1892,6 +1984,7 @@ public class DataFactory {
 		// Audit fields
 
 		commercePriceListModel.setCompanyId(_companyId);
+		commercePriceListModel.setUserId(_sampleUserId);
 		commercePriceListModel.setUserName(_SAMPLE_USER_NAME);
 		commercePriceListModel.setCreateDate(new Date());
 		commercePriceListModel.setModifiedDate(new Date());
@@ -1906,7 +1999,7 @@ public class DataFactory {
 		commercePriceListModel.setName("Price List");
 		commercePriceListModel.setPriority(0);
 		commercePriceListModel.setDisplayDate(new Date());
-		commercePriceListModel.setExpirationDate(new Date());
+		commercePriceListModel.setExpirationDate(null);
 		commercePriceListModel.setLastPublishDate(new Date());
 		commercePriceListModel.setStatus(0);
 		commercePriceListModel.setStatusByUserId(_sampleUserId);
@@ -1914,6 +2007,88 @@ public class DataFactory {
 		commercePriceListModel.setStatusDate(new Date());
 
 		return commercePriceListModel;
+	}
+
+	public CommerceShippingFixedOptionModel newCommerceShippingFixedOptionModel(
+		long groupId, long commerceShippingMethodId) {
+
+		CommerceShippingFixedOptionModel commerceShippingFixedOptionModel =
+			new CommerceShippingFixedOptionModelImpl();
+
+		// PK fields
+
+		commerceShippingFixedOptionModel.setCommerceShippingFixedOptionId(
+			_counter.get());
+
+		// Group instance
+
+		commerceShippingFixedOptionModel.setGroupId(groupId);
+
+		// Audit fields
+
+		commerceShippingFixedOptionModel.setCompanyId(_companyId);
+		commerceShippingFixedOptionModel.setUserId(_sampleUserId);
+		commerceShippingFixedOptionModel.setUserName(_SAMPLE_USER_NAME);
+		commerceShippingFixedOptionModel.setCreateDate(new Date());
+		commerceShippingFixedOptionModel.setModifiedDate(new Date());
+
+		// Other fields
+
+		commerceShippingFixedOptionModel.setCommerceShippingMethodId(
+			commerceShippingMethodId);
+		commerceShippingFixedOptionModel.setName(
+			StringBundler.concat(
+				"<?xml version=\"1.0\" encoding=\"UTF-8\"?><root ",
+				"available-locales=\"en_US\" default-locale=\"en_US\"><Name ",
+				"language-id=\"en_US\">Standard Delivery</Name></root>"));
+		commerceShippingFixedOptionModel.setDescription(null);
+		commerceShippingFixedOptionModel.setAmount(BigDecimal.valueOf(15));
+		commerceShippingFixedOptionModel.setPriority(0);
+
+		return commerceShippingFixedOptionModel;
+	}
+
+	public CommerceShippingMethodModel newCommerceShippingMethodModel(
+		long groupId) {
+
+		CommerceShippingMethodModel commerceShippingMethodModel =
+			new CommerceShippingMethodModelImpl();
+
+		// PK fields
+
+		commerceShippingMethodModel.setCommerceShippingMethodId(_counter.get());
+
+		// Group instance
+
+		commerceShippingMethodModel.setGroupId(groupId);
+
+		// Audit fields
+
+		commerceShippingMethodModel.setCompanyId(_companyId);
+		commerceShippingMethodModel.setUserId(_sampleUserId);
+		commerceShippingMethodModel.setUserName(_SAMPLE_USER_NAME);
+		commerceShippingMethodModel.setCreateDate(new Date());
+		commerceShippingMethodModel.setModifiedDate(new Date());
+
+		// Other fields
+
+		commerceShippingMethodModel.setName(
+			StringBundler.concat(
+				"<?xml version=\"1.0\" encoding=\"UTF-8\"?><root ",
+				"available-locales=\"en_US\" default-locale=\"en_US\"><Name ",
+				"language-id=\"en_US\">Flat Rate</Name></root>"));
+		commerceShippingMethodModel.setDescription(
+			StringBundler.concat(
+				"<?xml version=\"1.0\" encoding=\"UTF-8\"?><root ",
+				"available-locales=\"en_US\" default-locale=\"en_US\">",
+				"<Description language-id=\"en_US\">Ship for a fixed price",
+				"</Description></root>"));
+		commerceShippingMethodModel.setImageId(0);
+		commerceShippingMethodModel.setEngineKey("fixed");
+		commerceShippingMethodModel.setPriority(0);
+		commerceShippingMethodModel.setActive(true);
+
+		return commerceShippingMethodModel;
 	}
 
 	public List<DDMTemplateModel>
@@ -2130,6 +2305,39 @@ public class DataFactory {
 			_newCounterModel(SocialActivity.class.getName()));
 	}
 
+	public CountryModel newCountryModel() {
+		CountryModel countryModel = new CountryModelImpl();
+
+		// UUID
+
+		countryModel.setUuid(SequentialUUID.generate());
+
+		// PK fields
+
+		countryModel.setCountryId(_counter.get());
+
+		// Audit fields
+
+		countryModel.setCompanyId(_companyId);
+		countryModel.setUserId(_sampleUserId);
+		countryModel.setUserName(_SAMPLE_USER_NAME);
+		countryModel.setCreateDate(new Date());
+		countryModel.setModifiedDate(new Date());
+
+		// Other fields
+
+		countryModel.setA2("SP");
+		countryModel.setA3("SAM");
+		countryModel.setActive(true);
+		countryModel.setBillingAllowed(true);
+		countryModel.setIdd("0");
+		countryModel.setName("sample-country");
+		countryModel.setNumber("0");
+		countryModel.setShippingAllowed(true);
+
+		return countryModel;
+	}
+
 	public CPAttachmentFileEntryModel newCPAttachmentFileEntryModel(
 		long groupId, long cpDefinitionId, int index, int type) {
 
@@ -2151,6 +2359,7 @@ public class DataFactory {
 		// Audit fields
 
 		cpAttachmentFileEntryModel.setCompanyId(_companyId);
+		cpAttachmentFileEntryModel.setUserId(_sampleUserId);
 		cpAttachmentFileEntryModel.setUserName(_SAMPLE_USER_NAME);
 		cpAttachmentFileEntryModel.setCreateDate(new Date());
 		cpAttachmentFileEntryModel.setModifiedDate(new Date());
@@ -2329,6 +2538,7 @@ public class DataFactory {
 		// Audit fields
 
 		cpDefinitionSpecificationOptionValueModel.setCompanyId(_companyId);
+		cpDefinitionSpecificationOptionValueModel.setUserId(_sampleUserId);
 		cpDefinitionSpecificationOptionValueModel.setUserName(
 			_SAMPLE_USER_NAME);
 		cpDefinitionSpecificationOptionValueModel.setCreateDate(new Date());
@@ -2473,6 +2683,7 @@ public class DataFactory {
 		// Audit fields
 
 		cpOptionCategoryModel.setCompanyId(_companyId);
+		cpOptionCategoryModel.setUserId(_sampleUserId);
 		cpOptionCategoryModel.setUserName(_SAMPLE_USER_NAME);
 		cpOptionCategoryModel.setCreateDate(new Date());
 		cpOptionCategoryModel.setModifiedDate(new Date());
@@ -2521,6 +2732,7 @@ public class DataFactory {
 		// Audit fields
 
 		cpOptionModel.setCompanyId(_companyId);
+		cpOptionModel.setUserId(_sampleUserId);
 		cpOptionModel.setUserName(_SAMPLE_USER_NAME);
 		cpOptionModel.setCreateDate(new Date());
 		cpOptionModel.setModifiedDate(new Date());
@@ -2559,6 +2771,7 @@ public class DataFactory {
 		// Audit fields
 
 		cpOptionValueModel.setCompanyId(_companyId);
+		cpOptionValueModel.setUserId(_sampleUserId);
 		cpOptionValueModel.setUserName(_SAMPLE_USER_NAME);
 		cpOptionValueModel.setCreateDate(new Date());
 		cpOptionValueModel.setModifiedDate(new Date());
@@ -2569,8 +2782,8 @@ public class DataFactory {
 		cpOptionValueModel.setName(
 			StringBundler.concat(
 				"<?xml version=\"1.0\" encoding=\"UTF-8\"?><root available-",
-				"locales=\"en_US\" default-locale=\"en_US\"><Title language-id",
-				"=\"en_US\">Option Value Name ", index, "</Title></root>"));
+				"locales=\"en_US\" default-locale=\"en_US\"><Name language-id",
+				"=\"en_US\">Option Value Name ", index, "</Name></root>"));
 		cpOptionValueModel.setPriority(index - 1);
 		cpOptionValueModel.setKey("key" + index);
 
@@ -2645,6 +2858,7 @@ public class DataFactory {
 		// Audit fields
 
 		cpSpecificationOptionModel.setCompanyId(_companyId);
+		cpSpecificationOptionModel.setUserId(_sampleUserId);
 		cpSpecificationOptionModel.setUserName(_SAMPLE_USER_NAME);
 		cpSpecificationOptionModel.setCreateDate(new Date());
 		cpSpecificationOptionModel.setModifiedDate(new Date());
@@ -2883,10 +3097,10 @@ public class DataFactory {
 		StringBundler sb = new StringBundler(5);
 
 		sb.append("<?xml version=\"1.0\"?><root available-locales=\"en_US\" ");
-		sb.append("default-locale=\"en_US\"><name language-id=\"en_US\">");
+		sb.append("default-locale=\"en_US\"><Name language-id=\"en_US\">");
 		sb.append("Test DDL Record Set ");
 		sb.append(currentIndex);
-		sb.append("</name></root>");
+		sb.append("</Name></root>");
 
 		ddlRecordSetModel.setName(sb.toString());
 
@@ -4752,6 +4966,15 @@ public class DataFactory {
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
+		CommerceAddressModel commerceAddressModel) {
+
+		return newResourcePermissionModels(
+			CommerceAddress.class.getName(),
+			String.valueOf(commerceAddressModel.getCommerceAddressId()),
+			_sampleUserId);
+	}
+
+	public List<ResourcePermissionModel> newResourcePermissionModels(
 		CommerceInventoryWarehouseModel commerceInventoryWarehouseModel) {
 
 		return newResourcePermissionModels(
@@ -4778,6 +5001,35 @@ public class DataFactory {
 			CommercePriceList.class.getName(),
 			String.valueOf(commercePriceListModel.getCommercePriceListId()),
 			_sampleUserId);
+	}
+
+	public List<ResourcePermissionModel> newResourcePermissionModels(
+		CommerceShippingFixedOptionModel commerceShippingFixedOptionModel) {
+
+		return newResourcePermissionModels(
+			CommerceShippingFixedOption.class.getName(),
+			String.valueOf(
+				commerceShippingFixedOptionModel.
+					getCommerceShippingFixedOptionId()),
+			_sampleUserId);
+	}
+
+	public List<ResourcePermissionModel> newResourcePermissionModels(
+		CommerceShippingMethodModel commerceShippingMethodModel) {
+
+		return newResourcePermissionModels(
+			CommerceShippingMethod.class.getName(),
+			String.valueOf(
+				commerceShippingMethodModel.getCommerceShippingMethodId()),
+			_sampleUserId);
+	}
+
+	public List<ResourcePermissionModel> newResourcePermissionModels(
+		CountryModel countryModel) {
+
+		return newResourcePermissionModels(
+			Country.class.getName(),
+			String.valueOf(countryModel.getCountryId()), _sampleUserId);
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
@@ -5951,6 +6203,13 @@ public class DataFactory {
 		long groupId, long classNameId, long classPK, String name,
 		boolean site) {
 
+		return newGroupModel(groupId, classNameId, classPK, name, 0, site);
+	}
+
+	protected GroupModel newGroupModel(
+		long groupId, long classNameId, long classPK, String name, int type,
+		boolean site) {
+
 		GroupModel groupModel = new GroupModelImpl();
 
 		// UUID
@@ -5974,6 +6233,7 @@ public class DataFactory {
 			StringPool.SLASH + groupModel.getGroupId() + StringPool.SLASH);
 		groupModel.setGroupKey(name);
 		groupModel.setName(name);
+		groupModel.setType(type);
 		groupModel.setManualMembership(true);
 		groupModel.setMembershipRestriction(
 			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION);
@@ -6559,18 +6819,6 @@ public class DataFactory {
 				}
 				else if (name.equals("DiscountPctLevel4WithTaxAmount")) {
 					name = "DiscountPercentageLevel4WithTaxAmount";
-				}
-				else if (name.equals("CIWarehouseId")) {
-					name = "CommerceInventoryWarehouseId";
-				}
-				else if (name.equals("CIWarehouseId")) {
-					name = "CommerceInventoryWarehouseId";
-				}
-				else if (name.equals("CIWarehouseId")) {
-					name = "CommerceInventoryWarehouseId";
-				}
-				else if (name.equals("CIWarehouseId")) {
-					name = "CommerceInventoryWarehouseId";
 				}
 				else if (name.equals("CIWarehouseId")) {
 					name = "CommerceInventoryWarehouseId";

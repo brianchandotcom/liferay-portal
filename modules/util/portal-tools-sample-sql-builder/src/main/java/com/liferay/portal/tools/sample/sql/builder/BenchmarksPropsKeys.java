@@ -60,6 +60,9 @@ public interface BenchmarksPropsKeys {
 	public static final String MAX_COMMERCE_ORDER_STATUS_CANCELLED_COUNT =
 		"sample.sql.max.commerce.order.status.cancelled.count";
 
+	public static final String MAX_COMMERCE_ORDER_STATUS_OPEN_COUNT =
+		"sample.sql.max.commerce.order.status.open.count";
+
 	public static final String MAX_COMMERCE_ORDER_STATUS_PENDING_COUNT =
 		"sample.sql.max.commerce.order.status.pending.count";
 

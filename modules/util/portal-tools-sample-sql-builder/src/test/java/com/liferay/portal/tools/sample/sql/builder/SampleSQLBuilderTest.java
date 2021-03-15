@@ -145,6 +145,8 @@ public class SampleSQLBuilderTest {
 		properties.put(
 			BenchmarksPropsKeys.MAX_COMMERCE_ORDER_STATUS_CANCELLED_COUNT, "1");
 		properties.put(
+			BenchmarksPropsKeys.MAX_COMMERCE_ORDER_STATUS_OPEN_COUNT, "1");
+		properties.put(
 			BenchmarksPropsKeys.MAX_COMMERCE_ORDER_STATUS_PENDING_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_COMMERCE_PRICE_LIST_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_COMMERCE_PRODUCT_COUNT, "1");
@@ -194,10 +196,10 @@ public class SampleSQLBuilderTest {
 		properties.put(
 			BenchmarksPropsKeys.OUTPUT_CSV_FILE_NAMES,
 			StringBundler.concat(
-				"assetPublisher,blog,company,commerceGroup,commerceOrder,",
-				"cpDefinitionLocalization,cpFriendlyURLEntry,cpInstance,",
-				"documentLibrary,dynamicDataList,fragment,layout,",
-				"mbCategory,mbThread,repository,wiki"));
+				"assetPublisher,blog,company,commerceInventoryWarehouseItem,",
+				"commerceOrder,commerceProduct,cpDefinition,documentLibrary,",
+				"dynamicDataList,fragment,layout,mbCategory,mbThread,",
+				"repository,wiki"));
 		properties.put(BenchmarksPropsKeys.OUTPUT_DIR, outputDir);
 		properties.put(BenchmarksPropsKeys.OUTPUT_MERGE, "true");
 		properties.put(

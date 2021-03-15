@@ -96,6 +96,11 @@ public class BenchmarksPropsValues {
 			PropertiesHolder._get(
 				BenchmarksPropsKeys.MAX_COMMERCE_ORDER_STATUS_CANCELLED_COUNT));
 
+	public static final int MAX_COMMERCE_ORDER_STATUS_OPEN_COUNT =
+		GetterUtil.getInteger(
+			PropertiesHolder._get(
+				BenchmarksPropsKeys.MAX_COMMERCE_ORDER_STATUS_OPEN_COUNT));
+
 	public static final int MAX_COMMERCE_ORDER_STATUS_PENDING_COUNT =
 		GetterUtil.getInteger(
 			PropertiesHolder._get(

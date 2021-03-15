@@ -35,6 +35,8 @@ public class SelectThemeManagementToolbarDisplayContext
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			selectThemeDisplayContext.getThemesSearchContainer());
+
+		_selectThemeDisplayContext = selectThemeDisplayContext;
 	}
 
 	@Override
@@ -45,6 +47,11 @@ public class SelectThemeManagementToolbarDisplayContext
 	@Override
 	public Boolean isSelectable() {
 		return false;
+	}
+
+	@Override
+	protected String getDisplayStyle() {
+		return _selectThemeDisplayContext.getDisplayStyle();
 	}
 
 	@Override
@@ -61,5 +68,7 @@ public class SelectThemeManagementToolbarDisplayContext
 	protected String[] getOrderByKeys() {
 		return new String[] {"name"};
 	}
+
+	private final SelectThemeDisplayContext _selectThemeDisplayContext;
 
 }

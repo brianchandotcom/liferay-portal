@@ -40,6 +40,8 @@ public class OrphanPortletsManagementToolbarDisplayContext
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			orphanPortletsDisplayContext.getOrphanPortletsSearchContainer());
+
+		_orphanPortletsDisplayContext = orphanPortletsDisplayContext;
 	}
 
 	@Override
@@ -61,6 +63,11 @@ public class OrphanPortletsManagementToolbarDisplayContext
 	}
 
 	@Override
+	protected String getDisplayStyle() {
+		return _orphanPortletsDisplayContext.getDisplayStyle();
+	}
+
+	@Override
 	protected String[] getDisplayViews() {
 		return new String[] {"list", "descriptive"};
 	}
@@ -74,5 +81,7 @@ public class OrphanPortletsManagementToolbarDisplayContext
 	protected String[] getOrderByKeys() {
 		return new String[] {"name"};
 	}
+
+	private final OrphanPortletsDisplayContext _orphanPortletsDisplayContext;
 
 }

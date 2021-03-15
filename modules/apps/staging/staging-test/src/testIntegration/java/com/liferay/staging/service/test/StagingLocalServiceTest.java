@@ -16,15 +16,32 @@ package com.liferay.staging.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.service.StagingLocalServiceUtil;
+import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutRevision;
+import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutRevisionLocalServiceUtil;
+import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -241,6 +258,74 @@ public class StagingLocalServiceTest {
 			GroupLocalServiceUtil.deleteGroup(parentGroup.getGroupId());
 		}
 	}
+
+	@Test
+	public void testPageVersioningPortletRemoval() throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		Layout layout = LayoutTestUtil.addLayout(group);
+
+		UnicodeProperties unicodeProperties =
+			layout.getTypeSettingsProperties();
+
+		String column1Value = unicodeProperties.getProperty("column-1");
+
+		String portletId = PortletIdCodec.encode(
+			JournalPortletKeys.JOURNAL, PortletIdCodec.generateInstanceId());
+
+		PortletPreferencesFactoryUtil.getLayoutPortletSetup(layout, portletId);
+
+		if (Validator.isNotNull(column1Value)) {
+			column1Value += StringPool.COMMA;
+		}
+
+		column1Value += portletId;
+
+		unicodeProperties.setProperty("column-1", column1Value);
+
+		layout.setTypeSettingsProperties(unicodeProperties);
+
+		_layoutLocalService.updateLayout(layout);
+
+		try {
+			StagingLocalServiceUtil.enableLocalStaging(
+				_user.getUserId(), group, true, true, new ServiceContext());
+
+			Group stagingGroup = group.getStagingGroup();
+
+			List<Layout> stagingLayouts = _layoutLocalService.getLayouts(
+				stagingGroup.getGroupId(), false);
+
+			Layout stagingLayout = stagingLayouts.get(0);
+
+			List<LayoutRevision> layoutRevisions =
+				LayoutRevisionLocalServiceUtil.getLayoutRevisions(
+					stagingLayout.getPlid());
+
+			LayoutRevision layoutRevision = layoutRevisions.get(0);
+
+			_portletLocalService.deletePortlet(
+				stagingGroup.getCompanyId(), portletId,
+				layoutRevision.getPlid());
+
+			List<PortletPreferences> portletPreferences =
+				PortletPreferencesLocalServiceUtil.getPortletPreferences(
+					layoutRevision.getPlid(), portletId);
+
+			Boolean hasPortletPreferences = !portletPreferences.isEmpty();
+
+			Assert.assertTrue(hasPortletPreferences);
+		}
+		finally {
+			GroupLocalServiceUtil.deleteGroup(group.getGroupId());
+		}
+	}
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private PortletLocalService _portletLocalService;
 
 	private User _user;
 

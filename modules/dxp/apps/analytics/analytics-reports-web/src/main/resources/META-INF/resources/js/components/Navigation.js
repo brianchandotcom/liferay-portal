@@ -15,7 +15,7 @@ import React, {useCallback, useContext, useState} from 'react';
 
 import {useChartState} from '../context/ChartStateContext';
 import ConnectionContext from '../context/ConnectionContext';
-import {StoreContext} from '../context/StoreContext';
+import {StoreStateContext} from '../context/StoreContext';
 import APIService from '../utils/APIService';
 import Detail from './Detail';
 import Main from './Main';
@@ -31,16 +31,14 @@ export default function Navigation({
 	timeSpanOptions,
 	viewURLs,
 }) {
-	const [
-		{
-			endpoints,
-			historicalWarning,
-			namespace,
-			page,
-			publishedToday,
-			warning,
-		},
-	] = useContext(StoreContext);
+	const {
+		endpoints,
+		historicalWarning,
+		namespace,
+		page,
+		publishedToday,
+		warning,
+	} = useContext(StoreStateContext);
 
 	const {validAnalyticsConnection} = useContext(ConnectionContext);
 

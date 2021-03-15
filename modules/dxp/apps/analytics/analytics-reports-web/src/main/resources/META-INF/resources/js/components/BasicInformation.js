@@ -16,7 +16,7 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
-import {StoreContext} from '../context/StoreContext';
+import {StoreStateContext} from '../context/StoreContext';
 
 function Author({author: {authorId, name, url}}) {
 	return (
@@ -40,7 +40,7 @@ function Author({author: {authorId, name, url}}) {
 }
 
 function BasicInformation({author, canonicalURL, publishDate, title}) {
-	const [{languageTag}] = useContext(StoreContext);
+	const {languageTag} = useContext(StoreStateContext);
 
 	const formattedPublishDate = Intl.DateTimeFormat(languageTag, {
 		day: 'numeric',

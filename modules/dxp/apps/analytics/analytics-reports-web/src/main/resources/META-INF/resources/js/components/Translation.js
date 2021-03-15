@@ -18,10 +18,10 @@ import PropTypes from 'prop-types';
 import React, {useContext, useMemo, useState} from 'react';
 
 import {useChartState} from '../context/ChartStateContext';
-import {StoreContext} from '../context/StoreContext';
+import {StoreStateContext} from '../context/StoreContext';
 
 export default function Translation({onSelectedLanguageClick, viewURLs}) {
-	const [{languageTag: defaultLanguage}] = useContext(StoreContext);
+	const {languageTag: defaultLanguage} = useContext(StoreStateContext);
 
 	const [active, setActive] = useState(false);
 

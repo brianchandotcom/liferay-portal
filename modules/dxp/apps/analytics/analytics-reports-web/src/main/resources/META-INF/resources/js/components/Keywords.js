@@ -17,7 +17,7 @@ import ClayList from '@clayui/list';
 import PropTypes from 'prop-types';
 import React, {useContext, useMemo, useState} from 'react';
 
-import {StoreContext} from '../context/StoreContext';
+import {StoreStateContext} from '../context/StoreContext';
 import {numberFormat} from '../utils/numberFormat';
 import Hint from './Hint';
 
@@ -34,7 +34,7 @@ export default function Keywords({currentPage}) {
 		KEYWORD_VALUE_TYPE[0]
 	);
 
-	const [{languageTag, publishedToday}] = useContext(StoreContext);
+	const {languageTag, publishedToday} = useContext(StoreStateContext);
 
 	const countries = useMemo(() => {
 		const dataKeys = new Set();

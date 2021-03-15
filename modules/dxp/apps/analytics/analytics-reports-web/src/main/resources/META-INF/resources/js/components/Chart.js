@@ -36,7 +36,7 @@ import {
 	useSetLoading,
 } from '../context/ChartStateContext';
 import ConnectionContext from '../context/ConnectionContext';
-import {StoreContext, useHistoricalWarning} from '../context/StoreContext';
+import {StoreStateContext, useHistoricalWarning} from '../context/StoreContext';
 import {generateDateFormatters as dateFormat} from '../utils/dateFormat';
 import {numberFormat} from '../utils/numberFormat';
 import {ActiveDot as CustomActiveDot, Dot as CustomDot} from './CustomDots';
@@ -142,7 +142,7 @@ export default function Chart({
 }) {
 	const {validAnalyticsConnection} = useContext(ConnectionContext);
 
-	const [{languageTag, publishedToday}] = useContext(StoreContext);
+	const {languageTag, publishedToday} = useContext(StoreStateContext);
 
 	const chartState = useChartState();
 

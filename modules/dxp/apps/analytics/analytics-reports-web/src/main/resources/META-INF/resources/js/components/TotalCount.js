@@ -14,7 +14,7 @@ import PropTypes from 'prop-types';
 import React, {useContext, useEffect} from 'react';
 
 import ConnectionContext from '../context/ConnectionContext';
-import {StoreContext, useWarning} from '../context/StoreContext';
+import {StoreStateContext, useWarning} from '../context/StoreContext';
 import {numberFormat} from '../utils/numberFormat';
 import Hint from './Hint';
 
@@ -34,7 +34,7 @@ function TotalCount({
 
 	const [, addWarning] = useWarning();
 
-	const [{languageTag, publishedToday}] = useContext(StoreContext);
+	const {languageTag, publishedToday} = useContext(StoreStateContext);
 
 	useEffect(() => {
 		if (validAnalyticsConnection) {

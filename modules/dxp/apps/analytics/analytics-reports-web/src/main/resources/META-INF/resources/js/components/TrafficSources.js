@@ -17,7 +17,7 @@ import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {Cell, Pie, PieChart, Tooltip} from 'recharts';
 
 import ConnectionContext from '../context/ConnectionContext';
-import {StoreContext, useWarning} from '../context/StoreContext';
+import {StoreStateContext, useWarning} from '../context/StoreContext';
 import {numberFormat} from '../utils/numberFormat';
 import EmptyPieChart from './EmptyPieChart';
 import Hint from './Hint';
@@ -52,7 +52,7 @@ export default function TrafficSources({dataProvider, onTrafficSourceClick}) {
 
 	const {validAnalyticsConnection} = useContext(ConnectionContext);
 
-	const [{languageTag, publishedToday}] = useContext(StoreContext);
+	const {languageTag, publishedToday} = useContext(StoreStateContext);
 
 	const [trafficSources, setTrafficSources] = useStateSafe([]);
 

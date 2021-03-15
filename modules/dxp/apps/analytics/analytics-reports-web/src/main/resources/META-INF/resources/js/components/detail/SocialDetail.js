@@ -23,7 +23,7 @@ import {
 	useNextTimeSpan,
 	usePreviousTimeSpan,
 } from '../../context/ChartStateContext';
-import {StoreContext} from '../../context/StoreContext';
+import {StoreStateContext} from '../../context/StoreContext';
 import {generateDateFormatters as dateFormat} from '../../utils/dateFormat';
 import {numberFormat} from '../../utils/numberFormat';
 import TimeSpanSelector from '../TimeSpanSelector';
@@ -48,7 +48,7 @@ export default function SocialDetail({
 	trafficShareDataProvider,
 	trafficVolumeDataProvider,
 }) {
-	const [{languageTag}] = useContext(StoreContext);
+	const {languageTag} = useContext(StoreStateContext);
 
 	const {referringSocialMedia} = currentPage.data;
 

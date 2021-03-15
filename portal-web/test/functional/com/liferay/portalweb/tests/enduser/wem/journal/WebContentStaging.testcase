@@ -478,8 +478,14 @@ definition {
 					siteName = "Site Name");
 		}
 
-		task ("Check web content draft is not present in life") {
+		task ("Check web content draft is not present in staging") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			AssertTextNotPresent(value1 = "WC WebContent Title");
+		}
+
+		task ("Check web content draft is not present in life") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-life");
 
 			AssertTextNotPresent(value1 = "WC WebContent Title");
 		}

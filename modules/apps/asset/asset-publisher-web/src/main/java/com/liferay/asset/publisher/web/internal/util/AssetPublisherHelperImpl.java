@@ -548,7 +548,6 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 		AssetRenderer<?> assetRenderer, AssetEntry assetEntry,
 		boolean viewInContext) {
 
-		int cur = ParamUtil.getInteger(liferayPortletRequest, "cur");
 		int delta = ParamUtil.getInteger(liferayPortletRequest, "delta");
 		boolean resetCur = ParamUtil.getBoolean(
 			liferayPortletRequest, "resetCur");
@@ -556,7 +555,7 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 		PortletURL redirectURL = PortletURLBuilder.createRenderURL(
 			liferayPortletResponse
 		).setParameter(
-			"cur", cur
+			"cur", ParamUtil.getInteger(liferayPortletRequest, "cur")
 		).build();
 
 		if (delta > 0) {
@@ -613,9 +612,6 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 		LiferayPortletResponse liferayPortletResponse,
 		AssetRenderer<?> assetRenderer, AssetEntry assetEntry) {
 
-		AssetRendererFactory<?> assetRendererFactory =
-			assetRenderer.getAssetRendererFactory();
-
 		PortletURL baseAssetViewURL = PortletURLBuilder.createRenderURL(
 			liferayPortletResponse
 		).setMVCPath(
@@ -623,7 +619,13 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 		).setParameter(
 			"assetEntryId", assetEntry.getEntryId()
 		).setParameter(
-			"type", assetRendererFactory.getType()
+			"type",
+			() -> {
+				AssetRendererFactory<?> assetRendererFactory =
+					assetRenderer.getAssetRendererFactory();
+
+				return assetRendererFactory.getType();
+			}
 		).build();
 
 		String urlTitle = assetRenderer.getUrlTitle(

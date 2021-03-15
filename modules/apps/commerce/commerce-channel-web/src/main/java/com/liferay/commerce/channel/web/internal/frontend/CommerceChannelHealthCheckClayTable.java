@@ -93,8 +93,6 @@ public class CommerceChannelHealthCheckClayTable
 
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
-				HealthCheck healthCheck = (HealthCheck)model;
-
 				String redirect = ParamUtil.getString(
 					httpServletRequest, "currentUrl",
 					_portal.getCurrentURL(httpServletRequest));
@@ -108,7 +106,12 @@ public class CommerceChannelHealthCheckClayTable
 				).setRedirect(
 					redirect
 				).setParameter(
-					"commerceChannelHealthStatusKey", healthCheck.getKey()
+					"commerceChannelHealthStatusKey",
+					() -> {
+						HealthCheck healthCheck = (HealthCheck)model;
+
+						return healthCheck.getKey();
+					}
 				).build();
 
 				long commerceChannelId = ParamUtil.getLong(

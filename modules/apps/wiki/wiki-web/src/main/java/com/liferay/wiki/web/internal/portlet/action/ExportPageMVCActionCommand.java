@@ -83,7 +83,6 @@ public class ExportPageMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
-			String nodeName = ParamUtil.getString(actionRequest, "nodeName");
 			String title = ParamUtil.getString(actionRequest, "title");
 			double version = ParamUtil.getDouble(actionRequest, "version");
 
@@ -100,7 +99,7 @@ public class ExportPageMVCActionCommand extends BaseMVCActionCommand {
 			).setMVCRenderCommandName(
 				"/wiki/view"
 			).setParameter(
-				"nodeName", nodeName
+				"nodeName", ParamUtil.getString(actionRequest, "nodeName")
 			).setParameter(
 				"title", title
 			).setPortletMode(

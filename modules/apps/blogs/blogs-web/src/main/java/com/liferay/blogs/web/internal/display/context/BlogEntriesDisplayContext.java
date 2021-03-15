@@ -139,15 +139,13 @@ public class BlogEntriesDisplayContext {
 	public SearchContainer<BlogsEntry> getSearchContainer()
 		throws PortalException, PortletException {
 
-		String entriesNavigation = ParamUtil.getString(
-			_httpServletRequest, "entriesNavigation");
-
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setMVCRenderCommandName(
 			"/blogs/view"
 		).setParameter(
-			"entriesNavigation", entriesNavigation
+			"entriesNavigation",
+			ParamUtil.getString(_httpServletRequest, "entriesNavigation")
 		).build();
 
 		SearchContainer<BlogsEntry> entriesSearchContainer =

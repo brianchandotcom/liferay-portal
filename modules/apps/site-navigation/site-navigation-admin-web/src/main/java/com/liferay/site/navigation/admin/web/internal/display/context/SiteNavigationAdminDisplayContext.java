@@ -411,12 +411,6 @@ public class SiteNavigationAdminDisplayContext {
 	private String _getAddURL(
 		SiteNavigationMenuItemType siteNavigationMenuItemType) {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		PortletURL addURL = PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setMVCPath(
@@ -429,7 +423,17 @@ public class SiteNavigationAdminDisplayContext {
 			).setMVCPath(
 				"/add_site_navigation_menu_item_redirect.jsp"
 			).setParameter(
-				"portletResource", portletDisplay.getId()
+				"portletResource",
+				() -> {
+					ThemeDisplay themeDisplay =
+						(ThemeDisplay)_httpServletRequest.getAttribute(
+							WebKeys.THEME_DISPLAY);
+
+					PortletDisplay portletDisplay =
+						themeDisplay.getPortletDisplay();
+
+					return portletDisplay.getId();
+				}
 			).build();
 
 		addURL.setParameter(

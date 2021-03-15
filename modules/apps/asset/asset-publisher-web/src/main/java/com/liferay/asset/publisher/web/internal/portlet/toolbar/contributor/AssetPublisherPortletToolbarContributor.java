@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.BasePortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -153,11 +152,8 @@ public class AssetPublisherPortletToolbarContributor
 
 		urlMenuItem.setLabel(title);
 
-		LiferayPortletResponse liferayPortletResponse =
-			_portal.getLiferayPortletResponse(portletResponse);
-
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
+			_portal.getLiferayPortletResponse(portletResponse)
 		).setMVCPath(
 			"/add_asset_selector.jsp"
 		).setRedirect(

@@ -293,11 +293,8 @@ public class CommerceWishListDisplayContext {
 	}
 
 	public String getRowURL(long commerceWishListId) {
-		LiferayPortletResponse liferayPortletResponse =
-			_commerceWishListRequestHelper.getLiferayPortletResponse();
-
 		PortletURL rowURL = PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
+			_commerceWishListRequestHelper.getLiferayPortletResponse()
 		).setParameter(
 			"commerceWishListId", commerceWishListId
 		).build();

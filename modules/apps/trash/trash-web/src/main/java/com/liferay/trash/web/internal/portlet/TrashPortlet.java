@@ -18,7 +18,6 @@ import com.liferay.petra.model.adapter.util.ModelAdapterUtil;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.TrashPermissionException;
 import com.liferay.portal.kernel.model.Release;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -305,11 +304,8 @@ public class TrashPortlet extends MVCPortlet {
 		catch (RestoreEntryException restoreEntryException) {
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
-			LiferayPortletResponse liferayPortletResponse =
-				_portal.getLiferayPortletResponse(actionResponse);
-
 			PortletURL renderURL = PortletURLBuilder.createRenderURL(
-				liferayPortletResponse
+				_portal.getLiferayPortletResponse(actionResponse)
 			).setMVCPath(
 				"/restore_entry.jsp"
 			).setRedirect(

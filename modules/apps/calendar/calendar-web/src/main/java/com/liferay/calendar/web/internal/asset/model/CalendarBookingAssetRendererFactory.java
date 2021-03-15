@@ -114,8 +114,6 @@ public class CalendarBookingAssetRendererFactory
 			return null;
 		}
 
-		Calendar calendar = calendarResource.getDefaultCalendar();
-
 		PortletURL portletURL = PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				liferayPortletRequest, getGroup(liferayPortletRequest),
@@ -123,7 +121,12 @@ public class CalendarBookingAssetRendererFactory
 		).setMVCPath(
 			"/edit_calendar_booking.jsp"
 		).setParameter(
-			"calendarId", calendar.getCalendarId()
+			"calendarId",
+			() -> {
+				Calendar calendar = calendarResource.getDefaultCalendar();
+
+				return calendar.getCalendarId();
+			}
 		).build();
 
 		return portletURL;

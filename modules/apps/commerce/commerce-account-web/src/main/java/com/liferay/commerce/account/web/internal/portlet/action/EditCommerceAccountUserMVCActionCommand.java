@@ -192,37 +192,40 @@ public class EditCommerceAccountUserMVCActionCommand
 	protected String getSaveAndContinueRedirect(ActionRequest actionRequest)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long commerceAccountId = ParamUtil.getLong(
-			actionRequest, "commerceAccountId");
-
-		PortletURL backPortletURL = PortletProviderUtil.getPortletURL(
-			actionRequest, CommerceAccount.class.getName(),
-			PortletProvider.Action.MANAGE);
-
-		if (_commerceAccountPermission.contains(
-				themeDisplay.getPermissionChecker(), commerceAccountId,
-				CommerceAccountActionKeys.MANAGE_MEMBERS)) {
-
-			backPortletURL.setParameter(
-				"mvcRenderCommandName",
-				"/commerce_account/view_commerce_account");
-
-			backPortletURL.setParameter(
-				"screenNavigationCategoryKey",
-				CommerceAccountScreenNavigationConstants.
-					ENTRY_KEY_ACCOUNT_MEMBERS);
-		}
-
 		PortletURL portletURL = PortletURLBuilder.create(
 			PortletProviderUtil.getPortletURL(
 				actionRequest, CommerceAccount.class.getName(),
 				PortletProvider.Action.VIEW)
 		).setParameter(
 			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backURL",
-			backPortletURL.toString()
+			() -> {
+				long commerceAccountId = ParamUtil.getLong(
+					actionRequest, "commerceAccountId");
+
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)actionRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				PortletURL backPortletURL = PortletProviderUtil.getPortletURL(
+					actionRequest, CommerceAccount.class.getName(),
+					PortletProvider.Action.MANAGE);
+
+				if (_commerceAccountPermission.contains(
+						themeDisplay.getPermissionChecker(), commerceAccountId,
+						CommerceAccountActionKeys.MANAGE_MEMBERS)) {
+
+					backPortletURL.setParameter(
+						"mvcRenderCommandName",
+						"/commerce_account/view_commerce_account");
+
+					backPortletURL.setParameter(
+						"screenNavigationCategoryKey",
+						CommerceAccountScreenNavigationConstants.
+							ENTRY_KEY_ACCOUNT_MEMBERS);
+				}
+
+				return backPortletURL.toString();
+			}
 		).build();
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);

@@ -94,8 +94,6 @@ public class BookmarksPortletToolbarContributor
 			LanguageUtil.get(
 				_portal.getHttpServletRequest(portletRequest), "bookmark"));
 
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		PortletURL portletURL = PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				portletRequest, themeDisplay.getScopeGroup(),
@@ -106,7 +104,13 @@ public class BookmarksPortletToolbarContributor
 		).setRedirect(
 			_portal.getCurrentURL(portletRequest)
 		).setParameter(
-			"portletResource", portletDisplay.getId()
+			"portletResource",
+			() -> {
+				PortletDisplay portletDisplay =
+					themeDisplay.getPortletDisplay();
+
+				return portletDisplay.getId();
+			}
 		).setParameter(
 			"folderId", folderId
 		).build();
@@ -137,8 +141,6 @@ public class BookmarksPortletToolbarContributor
 			LanguageUtil.get(
 				_portal.getHttpServletRequest(portletRequest), "folder"));
 
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		PortletURL portletURL = PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				portletRequest, themeDisplay.getScopeGroup(),
@@ -149,7 +151,13 @@ public class BookmarksPortletToolbarContributor
 		).setRedirect(
 			_portal.getCurrentURL(portletRequest)
 		).setParameter(
-			"portletResource", portletDisplay.getId()
+			"portletResource",
+			() -> {
+				PortletDisplay portletDisplay =
+					themeDisplay.getPortletDisplay();
+
+				return portletDisplay.getId();
+			}
 		).setParameter(
 			"parentFolderId", folderId
 		).build();

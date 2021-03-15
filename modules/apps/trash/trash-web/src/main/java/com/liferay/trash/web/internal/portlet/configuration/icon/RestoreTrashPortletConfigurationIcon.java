@@ -65,8 +65,6 @@ public class RestoreTrashPortletConfigurationIcon
 				_portal.getLiferayPortletRequest(portletRequest),
 				_portal.getLiferayPortletResponse(portletResponse));
 
-			TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
-
 			long classPK = trashDisplayContext.getClassPK();
 
 			PortletURL moveURL = PortletURLBuilder.create(
@@ -83,8 +81,13 @@ public class RestoreTrashPortletConfigurationIcon
 				"classPK", classPK
 			).setParameter(
 				"containerModelClassNameId",
-				_portal.getClassNameId(
-					trashHandler.getContainerModelClassName(classPK))
+				() -> {
+					TrashHandler trashHandler =
+						trashDisplayContext.getTrashHandler();
+
+					return _portal.getClassNameId(
+						trashHandler.getContainerModelClassName(classPK));
+				}
 			).setWindowState(
 				LiferayWindowState.POP_UP
 			).build();

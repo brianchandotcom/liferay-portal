@@ -453,9 +453,6 @@ public class DLAdminManagementToolbarDisplayContext
 			return null;
 		}
 
-		String navigation = ParamUtil.getString(
-			_httpServletRequest, "navigation", "home");
-
 		int curEntry = ParamUtil.getInteger(_httpServletRequest, "curEntry");
 		int deltaEntry = ParamUtil.getInteger(
 			_httpServletRequest, "deltaEntry");
@@ -482,7 +479,13 @@ public class DLAdminManagementToolbarDisplayContext
 		).setMVCRenderCommandName(
 			mvcRenderCommandName
 		).setParameter(
-			"navigation", HtmlUtil.escapeJS(navigation)
+			"navigation",
+			() -> {
+				String navigation = ParamUtil.getString(
+					_httpServletRequest, "navigation", "home");
+
+				return HtmlUtil.escapeJS(navigation);
+			}
 		).build();
 
 		if (curEntry > 0) {

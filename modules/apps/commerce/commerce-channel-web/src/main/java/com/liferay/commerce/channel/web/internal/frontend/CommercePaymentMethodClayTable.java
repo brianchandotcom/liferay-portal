@@ -109,20 +109,21 @@ public class CommercePaymentMethodClayTable
 
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
-				PaymentMethod paymentMethod = (PaymentMethod)model;
-
-				long commerceChannelId = ParamUtil.getLong(
-					httpServletRequest, "commerceChannelId");
-
 				PortletURL portletURL = PortletURLBuilder.create(
 					PortletProviderUtil.getPortletURL(
 						httpServletRequest,
 						CommercePaymentMethodGroupRel.class.getName(),
 						PortletProvider.Action.EDIT)
 				).setParameter(
-					"commerceChannelId", commerceChannelId
+					"commerceChannelId",
+					ParamUtil.getLong(httpServletRequest, "commerceChannelId")
 				).setParameter(
-					"commercePaymentMethodEngineKey", paymentMethod.getKey()
+					"commercePaymentMethodEngineKey",
+					() -> {
+						PaymentMethod paymentMethod = (PaymentMethod)model;
+
+						return paymentMethod.getKey();
+					}
 				).setWindowState(
 					LiferayWindowState.POP_UP
 				).build();

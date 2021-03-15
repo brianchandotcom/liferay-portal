@@ -322,8 +322,6 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			ActionResponse actionResponse)
 		throws Exception {
 
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
 		PortletURL shipmentPortletURL = PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				actionRequest, CommercePortletKeys.COMMERCE_SHIPMENT,
@@ -331,7 +329,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		).setMVCRenderCommandName(
 			"/commerce_shipment/edit_commerce_shipment"
 		).setRedirect(
-			redirect
+			ParamUtil.getString(actionRequest, "redirect")
 		).setParameter(
 			"commerceShipmentId", commerceShipmentId
 		).build();

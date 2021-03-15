@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.UserGroup;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
@@ -241,11 +240,8 @@ public class DefaultAnnouncementsDisplayContext
 
 	@Override
 	public String getTabs1PortletURL() {
-		LiferayPortletResponse liferayPortletResponse =
-			_announcementsRequestHelper.getLiferayPortletResponse();
-
 		PortletURL tabs1URL = PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
+			_announcementsRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
 			"/announcements/view"
 		).setParameter(

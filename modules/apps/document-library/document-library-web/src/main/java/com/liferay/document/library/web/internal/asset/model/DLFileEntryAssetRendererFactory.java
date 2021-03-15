@@ -178,13 +178,6 @@ public class DLFileEntryAssetRendererFactory
 
 		Group group = getGroup(liferayPortletRequest);
 
-		long fileEntryTypeId =
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT;
-
-		if (classTypeId >= 0) {
-			fileEntryTypeId = classTypeId;
-		}
-
 		PortletURL portletURL = PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				liferayPortletRequest, group, DLPortletKeys.DOCUMENT_LIBRARY, 0,
@@ -198,7 +191,17 @@ public class DLFileEntryAssetRendererFactory
 		).setParameter(
 			"folderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID
 		).setParameter(
-			"fileEntryTypeId", fileEntryTypeId
+			"fileEntryTypeId",
+			() -> {
+				long fileEntryTypeId =
+					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT;
+
+				if (classTypeId >= 0) {
+					fileEntryTypeId = classTypeId;
+				}
+
+				return fileEntryTypeId;
+			}
 		).setParameter(
 			"showMountFolder", Boolean.FALSE.toString()
 		).setParameter(

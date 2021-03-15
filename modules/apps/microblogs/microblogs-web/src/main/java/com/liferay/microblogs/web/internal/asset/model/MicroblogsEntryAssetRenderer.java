@@ -127,12 +127,6 @@ public class MicroblogsEntryAssetRenderer
 			long portletPlid = PortalUtil.getPlidFromPortletId(
 				user.getGroupId(), MicroblogsPortletKeys.MICROBLOGS);
 
-			long microblogsEntryId = _entry.getMicroblogsEntryId();
-
-			if (_entry.getParentMicroblogsEntryId() > 0) {
-				microblogsEntryId = _entry.getParentMicroblogsEntryId();
-			}
-
 			PortletURL portletURL = PortletURLBuilder.create(
 				PortletURLFactoryUtil.create(
 					liferayPortletRequest, MicroblogsPortletKeys.MICROBLOGS,
@@ -140,7 +134,16 @@ public class MicroblogsEntryAssetRenderer
 			).setMVCPath(
 				"/microblogs/view.jsp"
 			).setParameter(
-				"parentMicroblogsEntryId", microblogsEntryId
+				"parentMicroblogsEntryId",
+				() -> {
+					long microblogsEntryId = _entry.getMicroblogsEntryId();
+
+					if (_entry.getParentMicroblogsEntryId() > 0) {
+						microblogsEntryId = _entry.getParentMicroblogsEntryId();
+					}
+
+					return microblogsEntryId;
+				}
 			).build();
 
 			return portletURL.toString();

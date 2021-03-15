@@ -231,9 +231,6 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 
 				setCurrentCommerceOrder(actionRequest, commerceOrderId);
 
-				String redirect = ParamUtil.getString(
-					actionRequest, "redirect");
-
 				PortletURL openOrdersPortletURL = PortletURLBuilder.create(
 					PortletProviderUtil.getPortletURL(
 						actionRequest, CommerceOrder.class.getName(),
@@ -242,7 +239,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 					"/commerce_open_order_content/edit_commerce_order"
 				).setParameter(
 					PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backURL",
-					redirect
+					ParamUtil.getString(actionRequest, "redirect")
 				).setParameter(
 					"commerceOrderId", commerceOrderId
 				).build();

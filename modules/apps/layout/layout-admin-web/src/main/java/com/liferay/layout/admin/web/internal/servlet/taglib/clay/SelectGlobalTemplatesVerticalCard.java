@@ -55,23 +55,17 @@ public class SelectGlobalTemplatesVerticalCard implements VerticalCard {
 		Map<String, String> data = new HashMap<>();
 
 		try {
-			String redirect = ParamUtil.getString(_renderRequest, "redirect");
-
-			long selPlid = ParamUtil.getLong(_renderRequest, "selPlid");
-
-			boolean privateLayout = ParamUtil.getBoolean(
-				_renderRequest, "privateLayout");
-
 			PortletURL addLayoutURL = PortletURLBuilder.createRenderURL(
 				_renderResponse
 			).setMVCRenderCommandName(
 				"/layout_admin/add_layout"
 			).setParameter(
-				"backURL", redirect
+				"backURL", ParamUtil.getString(_renderRequest, "redirect")
 			).setParameter(
-				"selPlid", selPlid
+				"selPlid", ParamUtil.getLong(_renderRequest, "selPlid")
 			).setParameter(
-				"privateLayout", privateLayout
+				"privateLayout",
+				ParamUtil.getBoolean(_renderRequest, "privateLayout")
 			).setParameter(
 				"layoutPageTemplateEntryId",
 				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()

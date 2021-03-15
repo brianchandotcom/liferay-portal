@@ -99,17 +99,15 @@ public class UADHierarchyDisplay {
 			RenderResponse renderResponse, Locale locale)
 		throws Exception {
 
-		String puid = ParamUtil.getString(httpServletRequest, "p_u_i_d");
-		String applicationKey = ParamUtil.getString(
-			httpServletRequest, "applicationKey");
 		String scope = ParamUtil.getString(httpServletRequest, "scope");
 
 		PortletURL baseURL = PortletURLBuilder.createRenderURL(
 			renderResponse
 		).setParameter(
-			"p_u_i_d", puid
+			"p_u_i_d", ParamUtil.getString(httpServletRequest, "p_u_i_d")
 		).setParameter(
-			"applicationKey", applicationKey
+			"applicationKey",
+			ParamUtil.getString(httpServletRequest, "applicationKey")
 		).build();
 
 		if (Validator.isNotNull(scope)) {
@@ -301,9 +299,6 @@ public class UADHierarchyDisplay {
 			return null;
 		}
 
-		String puid = ParamUtil.getString(actionRequest, "p_u_i_d");
-		String applicationKey = ParamUtil.getString(
-			actionRequest, "applicationKey");
 		String primaryKey = ParamUtil.getString(
 			actionRequest, "parentContainerId");
 		String scope = ParamUtil.getString(actionRequest, "scope");
@@ -311,9 +306,10 @@ public class UADHierarchyDisplay {
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
 			liferayPortletResponse
 		).setParameter(
-			"p_u_i_d", puid
+			"p_u_i_d", ParamUtil.getString(actionRequest, "p_u_i_d")
 		).setParameter(
-			"applicationKey", applicationKey
+			"applicationKey",
+			ParamUtil.getString(actionRequest, "applicationKey")
 		).build();
 
 		if (Validator.isNotNull(scope)) {
@@ -391,8 +387,6 @@ public class UADHierarchyDisplay {
 			return null;
 		}
 
-		String scope = ParamUtil.getString(liferayPortletRequest, "scope");
-
 		PortletURL renderURL = PortletURLBuilder.createRenderURL(
 			liferayPortletResponse
 		).setMVCRenderCommandName(
@@ -406,7 +400,7 @@ public class UADHierarchyDisplay {
 		).setParameter(
 			"parentContainerId", uadDisplay.getPrimaryKey(unwrappedObject)
 		).setParameter(
-			"scope", scope
+			"scope", ParamUtil.getString(liferayPortletRequest, "scope")
 		).build();
 
 		return renderURL.toString();

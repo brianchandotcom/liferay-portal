@@ -65,9 +65,6 @@ public class PermissionsPortletConfigurationIcon
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		try {
-			String returnToFullPageURL = ParamUtil.getString(
-				portletRequest, "returnToFullPageURL");
-
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)portletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
@@ -83,7 +80,8 @@ public class PermissionsPortletConfigurationIcon
 			).setMVCPath(
 				"/edit_permissions.jsp"
 			).setParameter(
-				"returnToFullPageURL", returnToFullPageURL
+				"returnToFullPageURL",
+				ParamUtil.getString(portletRequest, "returnToFullPageURL")
 			).setParameter(
 				"portletConfiguration", Boolean.TRUE.toString()
 			).setParameter(

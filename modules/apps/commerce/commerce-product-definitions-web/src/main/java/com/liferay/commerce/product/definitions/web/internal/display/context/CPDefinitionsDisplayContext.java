@@ -106,15 +106,14 @@ public class CPDefinitionsDisplayContext
 				Collections.<ItemSelectorReturnType>singletonList(
 					new UUIDItemSelectorReturnType()));
 
-		String checkedCommerceAccountGroupIds = StringUtil.merge(
-			getCommerceAccountGroupRelCommerceAccountGroupIds());
-
 		PortletURL itemSelectorURL = PortletURLBuilder.create(
 			_itemSelector.getItemSelectorURL(
 				requestBackedPortletURLFactory, "accountGroupSelectItem",
 				commerceAccountGroupItemSelectorCriterion)
 		).setParameter(
-			"checkedCommerceAccountGroupIds", checkedCommerceAccountGroupIds
+			"checkedCommerceAccountGroupIds",
+			StringUtil.merge(
+				getCommerceAccountGroupRelCommerceAccountGroupIds())
 		).build();
 
 		return itemSelectorURL.toString();
@@ -156,15 +155,13 @@ public class CPDefinitionsDisplayContext
 			Collections.<ItemSelectorReturnType>singletonList(
 				new UUIDItemSelectorReturnType()));
 
-		String checkedCommerceChannelIds = StringUtil.merge(
-			getCommerceChannelRelCommerceChannelIds());
-
 		PortletURL itemSelectorURL = PortletURLBuilder.create(
 			_itemSelector.getItemSelectorURL(
 				requestBackedPortletURLFactory, "channelSelectItem",
 				commerceChannelItemSelectorCriterion)
 		).setParameter(
-			"checkedCommerceChannelIds", checkedCommerceChannelIds
+			"checkedCommerceChannelIds",
+			StringUtil.merge(getCommerceChannelRelCommerceChannelIds())
 		).build();
 
 		return itemSelectorURL.toString();

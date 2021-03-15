@@ -63,9 +63,6 @@ public class PublishTemplatesConfigurationIcon
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		PortletURL portletURL = PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				portletRequest, StagingProcessesPortletKeys.STAGING_PROCESSES,
@@ -73,7 +70,13 @@ public class PublishTemplatesConfigurationIcon
 		).setMVCPath(
 			"/publish_templates/view_publish_configurations.jsp"
 		).setRedirect(
-			themeDisplay.getURLCurrent()
+			() -> {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)portletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				return themeDisplay.getURLCurrent();
+			}
 		).build();
 
 		return portletURL.toString();

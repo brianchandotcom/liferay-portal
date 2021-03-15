@@ -67,29 +67,22 @@ public class CollectionProvidersVerticalCard extends BaseVerticalCard {
 		Map<String, String> data = new HashMap<>();
 
 		try {
-			String redirect = ParamUtil.getString(
-				_httpServletRequest, "redirect");
-
-			long selPlid = ParamUtil.getLong(_httpServletRequest, "selPlid");
-
-			boolean privateLayout = ParamUtil.getBoolean(
-				_httpServletRequest, "privateLayout");
-
 			PortletURL selectLayoutMasterLayoutURL =
 				PortletURLBuilder.createRenderURL(
 					_renderResponse
 				).setMVCPath(
 					"/select_layout_master_layout.jsp"
 				).setRedirect(
-					redirect
+					ParamUtil.getString(_httpServletRequest, "redirect")
 				).setParameter(
 					"backURL", themeDisplay.getURLCurrent()
 				).setParameter(
 					"groupId", _groupId
 				).setParameter(
-					"selPlid", selPlid
+					"selPlid", ParamUtil.getLong(_httpServletRequest, "selPlid")
 				).setParameter(
-					"privateLayout", privateLayout
+					"privateLayout",
+					ParamUtil.getBoolean(_httpServletRequest, "privateLayout")
 				).setParameter(
 					"collectionPK", _infoListProvider.getKey()
 				).setParameter(

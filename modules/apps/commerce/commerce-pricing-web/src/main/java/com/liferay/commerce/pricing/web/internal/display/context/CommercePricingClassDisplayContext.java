@@ -24,7 +24,6 @@ import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -65,11 +64,8 @@ public class CommercePricingClassDisplayContext
 	}
 
 	public String getAddCommercePricingClassRenderURL() throws Exception {
-		LiferayPortletResponse liferayPortletResponse =
-			commercePricingRequestHelper.getLiferayPortletResponse();
-
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
+			commercePricingRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
 			"/commerce_pricing_classes/add_commerce_pricing_class"
 		).setWindowState(

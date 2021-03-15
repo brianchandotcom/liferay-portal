@@ -92,8 +92,6 @@ public class EditSiteNavigationMenuItemParentMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
 		PortletURL redirectURL = PortletURLBuilder.create(
 			PortletURLFactoryUtil.create(
 				actionRequest,
@@ -102,7 +100,7 @@ public class EditSiteNavigationMenuItemParentMVCActionCommand
 		).setMVCPath(
 			"/edit_site_navigation_menu.jsp"
 		).setRedirect(
-			redirect
+			ParamUtil.getString(actionRequest, "redirect")
 		).setParameter(
 			"siteNavigationMenuId",
 			siteNavigationMenuItem.getSiteNavigationMenuId()

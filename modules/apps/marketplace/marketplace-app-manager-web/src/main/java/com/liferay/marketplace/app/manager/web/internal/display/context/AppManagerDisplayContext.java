@@ -61,25 +61,20 @@ public class AppManagerDisplayContext {
 	}
 
 	private String _getViewModuleURL(String pluginType) {
-		String app = ParamUtil.getString(_httpServletRequest, "app");
-		String moduleGroup = ParamUtil.getString(
-			_httpServletRequest, "moduleGroup");
-		String symbolicName = ParamUtil.getString(
-			_httpServletRequest, "symbolicName");
-		String version = ParamUtil.getString(_httpServletRequest, "version");
-
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCPath(
 			"/view_module.jsp"
 		).setParameter(
-			"app", app
+			"app", ParamUtil.getString(_httpServletRequest, "app")
 		).setParameter(
-			"moduleGroup", moduleGroup
+			"moduleGroup",
+			ParamUtil.getString(_httpServletRequest, "moduleGroup")
 		).setParameter(
-			"symbolicName", symbolicName
+			"symbolicName",
+			ParamUtil.getString(_httpServletRequest, "symbolicName")
 		).setParameter(
-			"version", version
+			"version", ParamUtil.getString(_httpServletRequest, "version")
 		).setParameter(
 			"pluginType", pluginType
 		).build();

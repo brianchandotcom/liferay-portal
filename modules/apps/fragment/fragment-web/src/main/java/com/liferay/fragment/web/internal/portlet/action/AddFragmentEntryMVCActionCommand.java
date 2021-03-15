@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -110,11 +109,8 @@ public class AddFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 	protected String getRedirectURL(
 		ActionResponse actionResponse, FragmentEntry fragmentEntry) {
 
-		LiferayPortletResponse liferayPortletResponse =
-			_portal.getLiferayPortletResponse(actionResponse);
-
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
+			_portal.getLiferayPortletResponse(actionResponse)
 		).setMVCRenderCommandName(
 			"/fragment/edit_fragment_entry"
 		).setParameter(

@@ -65,9 +65,6 @@ public class StagingConfigurationPortletConfigurationIcon
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		PortletURL portletURL = PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				portletRequest, StagingProcessesPortletKeys.STAGING_PROCESSES,
@@ -75,7 +72,13 @@ public class StagingConfigurationPortletConfigurationIcon
 		).setMVCPath(
 			"/view.jsp"
 		).setRedirect(
-			themeDisplay.getURLCurrent()
+			() -> {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)portletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				return themeDisplay.getURLCurrent();
+			}
 		).setParameter(
 			"showStagingConfiguration", Boolean.TRUE.toString()
 		).build();

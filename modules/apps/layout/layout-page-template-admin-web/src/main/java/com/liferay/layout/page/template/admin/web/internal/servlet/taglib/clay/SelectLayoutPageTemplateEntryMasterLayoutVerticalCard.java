@@ -47,9 +47,6 @@ public class SelectLayoutPageTemplateEntryMasterLayoutVerticalCard
 	}
 
 	public String getAddLayoutPageTemplateEntryURL() {
-		long layoutPageTemplateCollectionId = ParamUtil.getLong(
-			_httpServletRequest, "layoutPageTemplateCollectionId");
-
 		PortletURL addLayoutPageTemplateEntryURL =
 			PortletURLBuilder.createActionURL(
 				_renderResponse
@@ -58,7 +55,9 @@ public class SelectLayoutPageTemplateEntryMasterLayoutVerticalCard
 			).setRedirect(
 				_themeDisplay.getURLCurrent()
 			).setParameter(
-				"layoutPageTemplateCollectionId", layoutPageTemplateCollectionId
+				"layoutPageTemplateCollectionId",
+				ParamUtil.getLong(
+					_httpServletRequest, "layoutPageTemplateCollectionId")
 			).setParameter(
 				"masterLayoutPlid", _layoutPageTemplateEntry.getPlid()
 			).build();

@@ -195,11 +195,8 @@ public class CommerceOrderContentDisplayContext {
 	}
 
 	public String getCommerceOrderItemsDetailURL(long commerceOrderId) {
-		LiferayPortletResponse liferayPortletResponse =
-			_cpRequestHelper.getLiferayPortletResponse();
-
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
+			_cpRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
 			"viewCommerceOrderItems"
 		).setRedirect(

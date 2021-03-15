@@ -128,10 +128,6 @@ public class ViewMembershipRequestsDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCPath(
@@ -139,7 +135,14 @@ public class ViewMembershipRequestsDisplayContext {
 		).setParameter(
 			"tabs1", getTabs1()
 		).setParameter(
-			"groupId", themeDisplay.getSiteGroupIdOrLiveGroupId()
+			"groupId",
+			() -> {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)_httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				return themeDisplay.getSiteGroupIdOrLiveGroupId();
+			}
 		).build();
 
 		String displayStyle = getDisplayStyle();

@@ -191,9 +191,6 @@ public class PortletPermissionsPortletConfigurationIcon
 	private String _generatePermissionURL(PortletRequest portletRequest)
 		throws PortalException, WindowStateException {
 
-		String returnToFullPageURL = ParamUtil.getString(
-			portletRequest, "returnToFullPageURL");
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -208,7 +205,8 @@ public class PortletPermissionsPortletConfigurationIcon
 		).setMVCPath(
 			"/edit_permissions.jsp"
 		).setParameter(
-			"returnToFullPageURL", returnToFullPageURL
+			"returnToFullPageURL",
+			ParamUtil.getString(portletRequest, "returnToFullPageURL")
 		).setParameter(
 			"portletConfiguration", Boolean.TRUE.toString()
 		).setParameter(

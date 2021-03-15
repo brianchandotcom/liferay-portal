@@ -55,19 +55,14 @@ public class DefaultSocialActivitiesDisplayContext
 
 	@Override
 	public String getPaginationURL() {
-		LiferayPortletResponse liferayPortletResponse =
-			_socialActivitiesRequestHelper.getLiferayPortletResponse();
-
-		int end =
-			_socialActivitiesRequestHelper.getEnd() +
-				_socialActivitiesRequestHelper.getMax();
-
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
+			_socialActivitiesRequestHelper.getLiferayPortletResponse()
 		).setParameter(
 			"tabs1", getSelectedTabName()
 		).setParameter(
-			"end", end
+			"end",
+			_socialActivitiesRequestHelper.getEnd() +
+				_socialActivitiesRequestHelper.getMax()
 		).build();
 
 		return portletURL.toString();
@@ -143,11 +138,8 @@ public class DefaultSocialActivitiesDisplayContext
 
 	@Override
 	public String getTabsURL() {
-		LiferayPortletResponse liferayPortletResponse =
-			_socialActivitiesRequestHelper.getLiferayPortletResponse();
-
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
+			_socialActivitiesRequestHelper.getLiferayPortletResponse()
 		).setParameter(
 			"tabs1", getSelectedTabName()
 		).build();

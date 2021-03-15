@@ -321,12 +321,10 @@ public class DDLViewRecordsDisplayContext {
 	}
 
 	public SearchContainer<?> getSearch() throws PortalException {
-		String displayStyle = getDisplayStyle();
-
 		PortletURL portletURL = PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
-			"displayStyle", displayStyle
+			"displayStyle", getDisplayStyle()
 		).build();
 
 		List<String> headerNames = new ArrayList<>();
@@ -395,13 +393,16 @@ public class DDLViewRecordsDisplayContext {
 	}
 
 	public String getSortingURL() throws Exception {
-		String orderByType = ParamUtil.getString(
-			_liferayPortletRequest, "orderByType");
-
 		PortletURL sortingURL = PortletURLBuilder.create(
 			PortletURLUtil.clone(getPortletURL(), _liferayPortletResponse)
 		).setParameter(
-			"orderByType", orderByType.equals("asc") ? "desc" : "asc"
+			"orderByType",
+			() -> {
+				String orderByType = ParamUtil.getString(
+					_liferayPortletRequest, "orderByType");
+
+				return orderByType.equals("asc") ? "desc" : "asc";
+			}
 		).build();
 
 		return sortingURL.toString();

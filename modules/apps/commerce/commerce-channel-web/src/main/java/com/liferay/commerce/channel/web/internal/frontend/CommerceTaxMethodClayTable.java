@@ -107,19 +107,20 @@ public class CommerceTaxMethodClayTable
 
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
-				long commerceChannelId = ParamUtil.getLong(
-					httpServletRequest, "commerceChannelId");
-
-				TaxMethod taxMethod = (TaxMethod)model;
-
 				PortletURL portletURL = PortletURLBuilder.create(
 					PortletProviderUtil.getPortletURL(
 						httpServletRequest, CommerceTaxMethod.class.getName(),
 						PortletProvider.Action.EDIT)
 				).setParameter(
-					"commerceChannelId", commerceChannelId
+					"commerceChannelId",
+					ParamUtil.getLong(httpServletRequest, "commerceChannelId")
 				).setParameter(
-					"commerceTaxMethodEngineKey", taxMethod.getKey()
+					"commerceTaxMethodEngineKey",
+					() -> {
+						TaxMethod taxMethod = (TaxMethod)model;
+
+						return taxMethod.getKey();
+					}
 				).setWindowState(
 					LiferayWindowState.POP_UP
 				).build();

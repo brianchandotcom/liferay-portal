@@ -60,9 +60,6 @@ public class MarkAllNotificationsAsReadPortletConfigurationIcon
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		PortletURL portletURL = PortletURLBuilder.create(
 			PortletURLFactoryUtil.create(
 				portletRequest, NotificationsPortletKeys.NOTIFICATIONS,
@@ -70,7 +67,13 @@ public class MarkAllNotificationsAsReadPortletConfigurationIcon
 		).setActionName(
 			"markAllNotificationsAsRead"
 		).setRedirect(
-			themeDisplay.getURLCurrent()
+			() -> {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)portletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				return themeDisplay.getURLCurrent();
+			}
 		).build();
 
 		return portletURL.toString();

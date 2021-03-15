@@ -380,33 +380,36 @@ public class WorkflowDefinitionLinkDisplayContext {
 	}
 
 	public String getSearchURL() {
-		ThemeDisplay themeDisplay =
-			_workflowDefinitionLinkRequestHelper.getThemeDisplay();
-
 		PortletURL portletURL = PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
-			"groupId", themeDisplay.getScopeGroupId()
+			"groupId",
+			() -> {
+				ThemeDisplay themeDisplay =
+					_workflowDefinitionLinkRequestHelper.getThemeDisplay();
+
+				return themeDisplay.getScopeGroupId();
+			}
 		).build();
 
 		return portletURL.toString();
 	}
 
 	public String getSortingURL() throws PortletException {
-		LiferayPortletResponse liferayPortletResponse =
-			_workflowDefinitionLinkRequestHelper.getLiferayPortletResponse();
-
-		String orderByType = ParamUtil.getString(
-			_httpServletRequest, "orderByType", "asc");
-
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
+			_workflowDefinitionLinkRequestHelper.getLiferayPortletResponse()
 		).setParameter(
 			"tab", WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK
 		).setParameter(
 			"orderByCol", getOrderByCol()
 		).setParameter(
-			"orderByType", Objects.equals(orderByType, "asc") ? "desc" : "asc"
+			"orderByType",
+			() -> {
+				String orderByType = ParamUtil.getString(
+					_httpServletRequest, "orderByType", "asc");
+
+				return Objects.equals(orderByType, "asc") ? "desc" : "asc";
+			}
 		).build();
 
 		return portletURL.toString();

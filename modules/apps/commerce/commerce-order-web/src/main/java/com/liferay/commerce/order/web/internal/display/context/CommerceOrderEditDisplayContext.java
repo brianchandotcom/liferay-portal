@@ -192,11 +192,8 @@ public class CommerceOrderEditDisplayContext {
 	}
 
 	public PortletURL getCommerceNotificationQueueEntriesPortletURL() {
-		LiferayPortletResponse liferayPortletResponse =
-			_commerceOrderRequestHelper.getLiferayPortletResponse();
-
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
+			_commerceOrderRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
 			"/commerce_order/edit_commerce_order"
 		).setParameter(
@@ -270,11 +267,8 @@ public class CommerceOrderEditDisplayContext {
 	}
 
 	public PortletURL getCommerceOrderItemsPortletURL() {
-		LiferayPortletResponse liferayPortletResponse =
-			_commerceOrderRequestHelper.getLiferayPortletResponse();
-
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
+			_commerceOrderRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
 			"/commerce_order/edit_commerce_order"
 		).setParameter(
@@ -339,11 +333,8 @@ public class CommerceOrderEditDisplayContext {
 	}
 
 	public PortletURL getCommerceOrderPaymentsPortletURL() {
-		LiferayPortletResponse liferayPortletResponse =
-			_commerceOrderRequestHelper.getLiferayPortletResponse();
-
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
+			_commerceOrderRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
 			"/commerce_order/edit_commerce_order"
 		).setParameter(
@@ -390,11 +381,8 @@ public class CommerceOrderEditDisplayContext {
 	}
 
 	public PortletURL getCommerceShipmentsPortletURL() {
-		LiferayPortletResponse liferayPortletResponse =
-			_commerceOrderRequestHelper.getLiferayPortletResponse();
-
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
+			_commerceOrderRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
 			"/commerce_order/edit_commerce_order"
 		).setParameter(
@@ -607,11 +595,8 @@ public class CommerceOrderEditDisplayContext {
 	}
 
 	public PortletURL getTransitionOrderPortletURL() {
-		LiferayPortletResponse liferayPortletResponse =
-			_commerceOrderRequestHelper.getLiferayPortletResponse();
-
 		PortletURL portletURL = PortletURLBuilder.createActionURL(
-			liferayPortletResponse
+			_commerceOrderRequestHelper.getLiferayPortletResponse()
 		).setActionName(
 			"/commerce_order/edit_commerce_order"
 		).setRedirect(

@@ -122,11 +122,8 @@ public class FolderActionDisplayContext {
 	}
 
 	public String getAddMediaURL() {
-		LiferayPortletResponse liferayPortletResponse =
-			_dlRequestHelper.getLiferayPortletResponse();
-
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
+			_dlRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
 			"/document_library/edit_file_entry"
 		).setRedirect(
@@ -141,11 +138,8 @@ public class FolderActionDisplayContext {
 	}
 
 	public String getAddMultipleMediaURL() {
-		LiferayPortletResponse liferayPortletResponse =
-			_dlRequestHelper.getLiferayPortletResponse();
-
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
+			_dlRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
 			"/document_library/upload_multiple_file_entries"
 		).setRedirect(
@@ -181,11 +175,8 @@ public class FolderActionDisplayContext {
 	}
 
 	public String getDeleteExpiredTemporaryFileEntriesURL() {
-		LiferayPortletResponse liferayPortletResponse =
-			_dlRequestHelper.getLiferayPortletResponse();
-
 		PortletURL portletURL = PortletURLBuilder.createActionURL(
-			liferayPortletResponse
+			_dlRequestHelper.getLiferayPortletResponse()
 		).setActionName(
 			"/document_library/edit_folder"
 		).setRedirect(
@@ -312,11 +303,8 @@ public class FolderActionDisplayContext {
 	}
 
 	public String getPublishFolderURL() {
-		LiferayPortletResponse liferayPortletResponse =
-			_dlRequestHelper.getLiferayPortletResponse();
-
 		PortletURL portletURL = PortletURLBuilder.createActionURL(
-			liferayPortletResponse
+			_dlRequestHelper.getLiferayPortletResponse()
 		).setActionName(
 			"/document_library/publish_folder"
 		).setParameter(
@@ -376,18 +364,21 @@ public class FolderActionDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		String redirect = ParamUtil.getString(_httpServletRequest, "redirect");
-
-		if (Validator.isNull(redirect)) {
-			redirect = themeDisplay.getURLCurrent();
-		}
-
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setMVCRenderCommandName(
 			"/document_library/view_folder"
 		).setRedirect(
-			redirect
+			() -> {
+				String redirect = ParamUtil.getString(
+					_httpServletRequest, "redirect");
+
+				if (Validator.isNull(redirect)) {
+					redirect = themeDisplay.getURLCurrent();
+				}
+
+				return redirect;
+			}
 		).setParameter(
 			"folderId", folder.getFolderId()
 		).build();
@@ -396,11 +387,8 @@ public class FolderActionDisplayContext {
 	}
 
 	public String getViewSlideShowURL() throws WindowStateException {
-		LiferayPortletResponse liferayPortletResponse =
-			_dlRequestHelper.getLiferayPortletResponse();
-
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
+			_dlRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
 			"/image_gallery_display/view_slide_show"
 		).setParameter(
@@ -781,11 +769,8 @@ public class FolderActionDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		LiferayPortletResponse liferayPortletResponse =
-			_dlRequestHelper.getLiferayPortletResponse();
-
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
+			_dlRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
 			mvcRenderCommandName
 		).build();

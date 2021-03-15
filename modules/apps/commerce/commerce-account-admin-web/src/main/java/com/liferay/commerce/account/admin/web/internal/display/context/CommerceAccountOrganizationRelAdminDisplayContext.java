@@ -96,15 +96,13 @@ public class CommerceAccountOrganizationRelAdminDisplayContext
 			Collections.<ItemSelectorReturnType>singletonList(
 				new UUIDItemSelectorReturnType()));
 
-		String checkedOrganizationIds = StringUtil.merge(
-			getCheckedOrganizationIds());
-
 		PortletURL itemSelectorURL = PortletURLBuilder.create(
 			_itemSelector.getItemSelectorURL(
 				requestBackedPortletURLFactory, "organizationsSelectItem",
 				organizationItemSelectorCriterion)
 		).setParameter(
-			"checkedOrganizationIds", checkedOrganizationIds
+			"checkedOrganizationIds",
+			StringUtil.merge(getCheckedOrganizationIds())
 		).build();
 
 		return itemSelectorURL.toString();

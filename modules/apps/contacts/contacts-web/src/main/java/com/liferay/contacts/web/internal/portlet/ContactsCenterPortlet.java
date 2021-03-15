@@ -61,7 +61,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
@@ -1007,11 +1006,8 @@ public class ContactsCenterPortlet extends MVCPortlet {
 			"redirect", redirect
 		);
 
-		LiferayPortletResponse liferayPortletResponse =
-			portal.getLiferayPortletResponse(portletResponse);
-
 		PortletURL viewSummaryURL = PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
+			portal.getLiferayPortletResponse(portletResponse)
 		).setMVCPath(
 			"/contacts_center/view_resources.jsp"
 		).setRedirect(
@@ -1106,11 +1102,8 @@ public class ContactsCenterPortlet extends MVCPortlet {
 
 		jsonObject.put("portraitURL", user.getPortraitURL(themeDisplay));
 
-		LiferayPortletResponse liferayPortletResponse =
-			portal.getLiferayPortletResponse(portletResponse);
-
 		PortletURL viewSummaryURL = PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
+			portal.getLiferayPortletResponse(portletResponse)
 		).setMVCPath(
 			"/contacts_center/view_resources.jsp"
 		).setParameter(

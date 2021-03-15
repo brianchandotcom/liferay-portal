@@ -104,12 +104,6 @@ public class ProductMenuProductNavigationControlMenuEntry
 		else {
 			values.put("cssClass", StringPool.BLANK);
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 			PortletURL portletURL = PortletURLBuilder.create(
 				PortletURLFactoryUtil.create(
 					httpServletRequest,
@@ -119,7 +113,17 @@ public class ProductMenuProductNavigationControlMenuEntry
 			).setMVCPath(
 				"/portlet/product_menu.jsp"
 			).setParameter(
-				"selPpid", portletDisplay.getId()
+				"selPpid",
+				() -> {
+					ThemeDisplay themeDisplay =
+						(ThemeDisplay)httpServletRequest.getAttribute(
+							WebKeys.THEME_DISPLAY);
+
+					PortletDisplay portletDisplay =
+						themeDisplay.getPortletDisplay();
+
+					return portletDisplay.getId();
+				}
 			).build();
 
 			try {

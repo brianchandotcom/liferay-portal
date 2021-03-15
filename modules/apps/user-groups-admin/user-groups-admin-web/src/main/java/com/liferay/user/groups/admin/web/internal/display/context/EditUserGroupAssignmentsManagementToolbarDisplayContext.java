@@ -197,14 +197,12 @@ public class EditUserGroupAssignmentsManagementToolbarDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		String redirect = ParamUtil.getString(_httpServletRequest, "redirect");
-
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCPath(
 			_mvcPath
 		).setRedirect(
-			redirect
+			ParamUtil.getString(_httpServletRequest, "redirect")
 		).setParameter(
 			"userGroupId", _userGroup.getUserGroupId()
 		).setParameter(

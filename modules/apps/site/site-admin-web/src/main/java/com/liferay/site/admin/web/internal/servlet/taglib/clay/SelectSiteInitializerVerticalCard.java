@@ -58,9 +58,6 @@ public class SelectSiteInitializerVerticalCard implements VerticalCard {
 		return HashMapBuilder.put(
 			"data-add-site-url",
 			() -> {
-				long parentGroupId = ParamUtil.getLong(
-					_httpServletRequest, "parentGroupId");
-
 				PortletURL addSiteURL = PortletURLBuilder.createActionURL(
 					_renderResponse
 				).setMVCPath(
@@ -68,7 +65,8 @@ public class SelectSiteInitializerVerticalCard implements VerticalCard {
 				).setActionName(
 					"/site_admin/add_group"
 				).setParameter(
-					"parentGroupId", parentGroupId
+					"parentGroupId",
+					ParamUtil.getLong(_httpServletRequest, "parentGroupId")
 				).setParameter(
 					"creationType", _siteInitializerItem.getType()
 				).setParameter(

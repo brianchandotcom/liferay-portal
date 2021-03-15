@@ -148,14 +148,18 @@ public class AssetEntryActionDropdownItemsProvider {
 				redirect = _fullContentRedirect;
 			}
 
-			PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
-
 			PortletURL portletURL = PortletURLBuilder.create(
 				_assetRenderer.getURLEdit(
 					_liferayPortletRequest, _liferayPortletResponse,
 					LiferayWindowState.NORMAL, redirect)
 			).setParameter(
-				"portletResource", portletDisplay.getPortletName()
+				"portletResource",
+				() -> {
+					PortletDisplay portletDisplay =
+						_themeDisplay.getPortletDisplay();
+
+					return portletDisplay.getPortletName();
+				}
 			).build();
 
 			return portletURL;

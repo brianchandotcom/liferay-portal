@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Repository;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
@@ -74,60 +73,63 @@ public class CopyContributedFragmentEntryMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long fragmentCollectionId = ParamUtil.getLong(
-			actionRequest, "fragmentCollectionId");
-
-		String[] fragmentEntryKeys = StringUtil.split(
-			ParamUtil.getString(actionRequest, "fragmentEntryKeys"));
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
-
-		for (String fragmentEntryKey : fragmentEntryKeys) {
-			FragmentEntry fragmentEntry =
-				_fragmentCollectionContributorTracker.getFragmentEntry(
-					fragmentEntryKey);
-
-			StringBundler sb = new StringBundler(5);
-
-			sb.append(fragmentEntry.getName());
-			sb.append(StringPool.SPACE);
-			sb.append(StringPool.OPEN_PARENTHESIS);
-			sb.append(
-				LanguageUtil.get(LocaleUtil.getMostRelevantLocale(), "copy"));
-			sb.append(StringPool.CLOSE_PARENTHESIS);
-
-			long previewFileEntryId = 0;
-
-			String imagePreviewURL = fragmentEntry.getImagePreviewURL(
-				themeDisplay);
-
-			if (Validator.isNotNull(imagePreviewURL)) {
-				previewFileEntryId = _getPreviewFileEntryId(
-					themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
-					fragmentCollectionId,
-					themeDisplay.getPortalURL() + imagePreviewURL);
-			}
-
-			_fragmentEntryService.addFragmentEntry(
-				themeDisplay.getScopeGroupId(), fragmentCollectionId,
-				StringPool.BLANK, sb.toString(), fragmentEntry.getCss(),
-				fragmentEntry.getHtml(), fragmentEntry.getJs(),
-				fragmentEntry.getConfiguration(), previewFileEntryId,
-				fragmentEntry.getType(), WorkflowConstants.STATUS_APPROVED,
-				serviceContext);
-		}
-
-		LiferayPortletResponse liferayPortletResponse =
-			_portal.getLiferayPortletResponse(actionResponse);
-
 		PortletURL redirectURL = PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
+			_portal.getLiferayPortletResponse(actionResponse)
 		).setParameter(
-			"fragmentCollectionId", fragmentCollectionId
+			"fragmentCollectionId",
+			() -> {
+				ServiceContext serviceContext =
+					ServiceContextFactory.getInstance(actionRequest);
+
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)actionRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				String[] fragmentEntryKeys = StringUtil.split(
+					ParamUtil.getString(actionRequest, "fragmentEntryKeys"));
+
+				long fragmentCollectionId = ParamUtil.getLong(
+					actionRequest, "fragmentCollectionId");
+
+				for (String fragmentEntryKey : fragmentEntryKeys) {
+					FragmentEntry fragmentEntry =
+						_fragmentCollectionContributorTracker.getFragmentEntry(
+							fragmentEntryKey);
+
+					StringBundler sb = new StringBundler(5);
+
+					sb.append(fragmentEntry.getName());
+					sb.append(StringPool.SPACE);
+					sb.append(StringPool.OPEN_PARENTHESIS);
+					sb.append(
+						LanguageUtil.get(
+							LocaleUtil.getMostRelevantLocale(), "copy"));
+					sb.append(StringPool.CLOSE_PARENTHESIS);
+
+					long previewFileEntryId = 0;
+
+					String imagePreviewURL = fragmentEntry.getImagePreviewURL(
+						themeDisplay);
+
+					if (Validator.isNotNull(imagePreviewURL)) {
+						previewFileEntryId = _getPreviewFileEntryId(
+							themeDisplay.getUserId(),
+							themeDisplay.getScopeGroupId(),
+							fragmentCollectionId,
+							themeDisplay.getPortalURL() + imagePreviewURL);
+					}
+
+					_fragmentEntryService.addFragmentEntry(
+						themeDisplay.getScopeGroupId(), fragmentCollectionId,
+						StringPool.BLANK, sb.toString(), fragmentEntry.getCss(),
+						fragmentEntry.getHtml(), fragmentEntry.getJs(),
+						fragmentEntry.getConfiguration(), previewFileEntryId,
+						fragmentEntry.getType(),
+						WorkflowConstants.STATUS_APPROVED, serviceContext);
+				}
+
+				return fragmentCollectionId;
+			}
 		).build();
 
 		sendRedirect(actionRequest, actionResponse, redirectURL.toString());

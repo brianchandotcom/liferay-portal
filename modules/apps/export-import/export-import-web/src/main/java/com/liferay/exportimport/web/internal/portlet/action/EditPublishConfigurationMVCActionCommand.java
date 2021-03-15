@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -225,11 +224,8 @@ public class EditPublishConfigurationMVCActionCommand
 		ActionRequest actionRequest, ActionResponse actionResponse,
 		long backgroundTaskId) {
 
-		LiferayPortletResponse liferayPortletResponse =
-			portal.getLiferayPortletResponse(actionResponse);
-
 		PortletURL renderURL = PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
+			portal.getLiferayPortletResponse(actionResponse)
 		).setMVCPath(
 			"/view_export_import.jsp"
 		).setParameter(

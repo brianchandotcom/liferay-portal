@@ -30,7 +30,6 @@ import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -168,11 +167,8 @@ public class BaseCommerceTaxFixedRateDisplayContext {
 	}
 
 	public PortletURL getPortletURL() throws PortalException {
-		LiferayPortletResponse liferayPortletResponse =
-			commerceTaxFixedRateRequestHelper.getLiferayPortletResponse();
-
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
+			commerceTaxFixedRateRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
 			"/commerce_tax_methods/edit_commerce_tax_method"
 		).setParameter(

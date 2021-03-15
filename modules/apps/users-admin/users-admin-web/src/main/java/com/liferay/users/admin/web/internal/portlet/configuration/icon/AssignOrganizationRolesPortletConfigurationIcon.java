@@ -71,11 +71,6 @@ public class AssignOrganizationRolesPortletConfigurationIcon
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		try {
-			Organization organization = ActionUtil.getOrganization(
-				portletRequest);
-
-			long organizationGroupId = organization.getGroupId();
-
 			PortletURL portletURL = PortletURLBuilder.create(
 				PortletProviderUtil.getPortletURL(
 					portletRequest, UserGroupRole.class.getName(),
@@ -83,7 +78,13 @@ public class AssignOrganizationRolesPortletConfigurationIcon
 			).setParameter(
 				"className", User.class.getName()
 			).setParameter(
-				"groupId", organizationGroupId
+				"groupId",
+				() -> {
+					Organization organization = ActionUtil.getOrganization(
+						portletRequest);
+
+					return organization.getGroupId();
+				}
 			).setWindowState(
 				LiferayWindowState.POP_UP
 			).build();

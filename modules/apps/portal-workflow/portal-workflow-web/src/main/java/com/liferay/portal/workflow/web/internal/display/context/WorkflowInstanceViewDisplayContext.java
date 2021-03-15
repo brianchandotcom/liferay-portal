@@ -330,16 +330,16 @@ public class WorkflowInstanceViewDisplayContext
 	public String getSortingURL(HttpServletRequest httpServletRequest)
 		throws PortletException {
 
-		String orderByType = ParamUtil.getString(
-			httpServletRequest, "orderByType", "asc");
-
-		LiferayPortletResponse liferayPortletResponse =
-			workflowInstanceRequestHelper.getLiferayPortletResponse();
-
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
+			workflowInstanceRequestHelper.getLiferayPortletResponse()
 		).setParameter(
-			"orderByType", Objects.equals(orderByType, "asc") ? "desc" : "asc"
+			"orderByType",
+			() -> {
+				String orderByType = ParamUtil.getString(
+					httpServletRequest, "orderByType", "asc");
+
+				return Objects.equals(orderByType, "asc") ? "desc" : "asc";
+			}
 		).build();
 
 		String instanceNavigation = ParamUtil.getString(

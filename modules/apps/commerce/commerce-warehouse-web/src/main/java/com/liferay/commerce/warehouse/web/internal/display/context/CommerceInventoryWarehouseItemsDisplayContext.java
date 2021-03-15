@@ -69,15 +69,18 @@ public class CommerceInventoryWarehouseItemsDisplayContext {
 		String lifecycle = (String)renderRequest.getAttribute(
 			LiferayPortletRequest.LIFECYCLE_PHASE);
 
-		CPInstance cpInstance = getCPInstance();
-
 		PortletURL portletURL = PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				renderRequest, CPPortletKeys.CP_DEFINITIONS, lifecycle)
 		).setMVCRenderCommandName(
 			"/cp_definitions/edit_cp_definition"
 		).setParameter(
-			"cpDefinitionId", cpInstance.getCPDefinitionId()
+			"cpDefinitionId",
+			() -> {
+				CPInstance cpInstance = getCPInstance();
+
+				return cpInstance.getCPDefinitionId();
+			}
 		).setParameter(
 			"screenNavigationCategoryKey",
 			CPDefinitionScreenNavigationConstants.CATEGORY_KEY_SKUS

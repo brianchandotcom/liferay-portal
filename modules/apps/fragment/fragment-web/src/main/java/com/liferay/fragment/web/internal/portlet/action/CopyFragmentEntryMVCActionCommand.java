@@ -17,7 +17,6 @@ package com.liferay.fragment.web.internal.portlet.action;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.service.FragmentEntryService;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -53,31 +52,32 @@ public class CopyFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long fragmentCollectionId = ParamUtil.getLong(
-			actionRequest, "fragmentCollectionId");
-
-		long[] fragmentEntryIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "fragmentEntryIds"), 0L);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
-
-		for (long fragmentEntryId : fragmentEntryIds) {
-			_fragmentEntryService.copyFragmentEntry(
-				themeDisplay.getScopeGroupId(), fragmentEntryId,
-				fragmentCollectionId, serviceContext);
-		}
-
-		LiferayPortletResponse liferayPortletResponse =
-			_portal.getLiferayPortletResponse(actionResponse);
-
 		PortletURL redirectURL = PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
+			_portal.getLiferayPortletResponse(actionResponse)
 		).setParameter(
-			"fragmentCollectionId", fragmentCollectionId
+			"fragmentCollectionId",
+			() -> {
+				ServiceContext serviceContext =
+					ServiceContextFactory.getInstance(actionRequest);
+
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)actionRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				long[] fragmentEntryIds = StringUtil.split(
+					ParamUtil.getString(actionRequest, "fragmentEntryIds"), 0L);
+
+				long fragmentCollectionId = ParamUtil.getLong(
+					actionRequest, "fragmentCollectionId");
+
+				for (long fragmentEntryId : fragmentEntryIds) {
+					_fragmentEntryService.copyFragmentEntry(
+						themeDisplay.getScopeGroupId(), fragmentEntryId,
+						fragmentCollectionId, serviceContext);
+				}
+
+				return fragmentCollectionId;
+			}
 		).build();
 
 		sendRedirect(actionRequest, actionResponse, redirectURL.toString());

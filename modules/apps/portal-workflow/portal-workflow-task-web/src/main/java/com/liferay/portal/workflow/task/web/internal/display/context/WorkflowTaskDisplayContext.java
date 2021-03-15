@@ -371,24 +371,24 @@ public class WorkflowTaskDisplayContext {
 	}
 
 	public String getSearchURL() {
-		ThemeDisplay themeDisplay =
-			_workflowTaskRequestHelper.getThemeDisplay();
-
 		PortletURL portletURL = PortletURLBuilder.create(
 			_getPortletURL()
 		).setParameter(
-			"groupId", themeDisplay.getScopeGroupId()
+			"groupId",
+			() -> {
+				ThemeDisplay themeDisplay =
+					_workflowTaskRequestHelper.getThemeDisplay();
+
+				return themeDisplay.getScopeGroupId();
+			}
 		).build();
 
 		return portletURL.toString();
 	}
 
 	public String getSortingURL() {
-		LiferayPortletResponse liferayPortletResponse =
-			_workflowTaskRequestHelper.getLiferayPortletResponse();
-
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
+			_workflowTaskRequestHelper.getLiferayPortletResponse()
 		).setParameter(
 			"navigation", _getNavigation()
 		).setParameter(

@@ -310,10 +310,6 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 		ActionRequest actionRequest, ActionResponse actionResponse,
 		MBMessage message) {
 
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		boolean preview = ParamUtil.getBoolean(actionRequest, "preview");
-
 		LiferayActionResponse liferayActionResponse =
 			(LiferayActionResponse)actionResponse;
 
@@ -322,14 +318,14 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 		).setMVCRenderCommandName(
 			"/message_boards/edit_message"
 		).setRedirect(
-			redirect
+			ParamUtil.getString(actionRequest, "redirect")
 		).setParameter(
 			"portletResource",
 			ParamUtil.getString(actionRequest, "portletResource")
 		).setParameter(
 			"messageId", message.getMessageId()
 		).setParameter(
-			"preview", preview
+			"preview", ParamUtil.getBoolean(actionRequest, "preview")
 		).build();
 
 		return portletURL.toString();

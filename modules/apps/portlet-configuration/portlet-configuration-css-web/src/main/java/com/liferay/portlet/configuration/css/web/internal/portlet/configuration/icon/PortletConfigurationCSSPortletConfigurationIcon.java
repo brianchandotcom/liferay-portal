@@ -57,12 +57,6 @@ public class PortletConfigurationCSSPortletConfigurationIcon
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		try {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)portletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 			PortletURL renderURL = PortletURLBuilder.create(
 				PortletURLFactoryUtil.create(
 					portletRequest,
@@ -72,7 +66,17 @@ public class PortletConfigurationCSSPortletConfigurationIcon
 			).setMVCPath(
 				"/view.jsp"
 			).setParameter(
-				"portletResource", portletDisplay.getId()
+				"portletResource",
+				() -> {
+					ThemeDisplay themeDisplay =
+						(ThemeDisplay)portletRequest.getAttribute(
+							WebKeys.THEME_DISPLAY);
+
+					PortletDisplay portletDisplay =
+						themeDisplay.getPortletDisplay();
+
+					return portletDisplay.getId();
+				}
 			).setWindowState(
 				LiferayWindowState.POP_UP
 			).build();

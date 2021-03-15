@@ -403,15 +403,18 @@ public class WorkflowDefinitionDisplayContext {
 	}
 
 	public String getSearchURL(HttpServletRequest httpServletRequest) {
-		ThemeDisplay themeDisplay =
-			_workflowDefinitionRequestHelper.getThemeDisplay();
-
 		PortletURL portletURL = PortletURLBuilder.create(
 			_getPortletURL(null)
 		).setMVCPath(
 			"/view.jsp"
 		).setParameter(
-			"groupId", themeDisplay.getScopeGroupId()
+			"groupId",
+			() -> {
+				ThemeDisplay themeDisplay =
+					_workflowDefinitionRequestHelper.getThemeDisplay();
+
+				return themeDisplay.getScopeGroupId();
+			}
 		).setParameter(
 			"tab", WorkflowWebKeys.WORKFLOW_TAB_DEFINITION
 		).build();
@@ -422,16 +425,16 @@ public class WorkflowDefinitionDisplayContext {
 	public String getSortingURL(HttpServletRequest httpServletRequest)
 		throws PortletException {
 
-		String orderByType = ParamUtil.getString(
-			httpServletRequest, "orderByType", "asc");
-
-		LiferayPortletResponse liferayPortletResponse =
-			_workflowDefinitionRequestHelper.getLiferayPortletResponse();
-
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
+			_workflowDefinitionRequestHelper.getLiferayPortletResponse()
 		).setParameter(
-			"orderByType", Objects.equals(orderByType, "asc") ? "desc" : "asc"
+			"orderByType",
+			() -> {
+				String orderByType = ParamUtil.getString(
+					httpServletRequest, "orderByType", "asc");
+
+				return Objects.equals(orderByType, "asc") ? "desc" : "asc";
+			}
 		).build();
 
 		String definitionsNavigation = ParamUtil.getString(
@@ -589,11 +592,9 @@ public class WorkflowDefinitionDisplayContext {
 	}
 
 	protected PortletURL getWorkflowDefinitionLinkPortletURL() {
-		LiferayPortletResponse liferayPortletResponse =
-			_workflowDefinitionRequestHelper.getLiferayPortletResponse();
-
 		PortletURL portletURL = PortletURLBuilder.createLiferayPortletURL(
-			liferayPortletResponse, WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW,
+			_workflowDefinitionRequestHelper.getLiferayPortletResponse(),
+			WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW,
 			PortletRequest.RENDER_PHASE
 		).setMVCPath(
 			"/view.jsp"
@@ -618,11 +619,8 @@ public class WorkflowDefinitionDisplayContext {
 	}
 
 	protected PortletURL getWorkflowInstancesPortletURL() {
-		LiferayPortletResponse liferayPortletResponse =
-			_workflowDefinitionRequestHelper.getLiferayPortletResponse();
-
 		PortletURL portletURL = PortletURLBuilder.createLiferayPortletURL(
-			liferayPortletResponse,
+			_workflowDefinitionRequestHelper.getLiferayPortletResponse(),
 			WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW_INSTANCE,
 			PortletRequest.RENDER_PHASE
 		).setMVCPath(

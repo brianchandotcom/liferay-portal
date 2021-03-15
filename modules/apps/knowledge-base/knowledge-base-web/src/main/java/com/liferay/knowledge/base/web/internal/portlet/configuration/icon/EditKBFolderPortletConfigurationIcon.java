@@ -62,9 +62,6 @@ public class EditKBFolderPortletConfigurationIcon
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		KBFolder kbFolder = (KBFolder)portletRequest.getAttribute(
-			KBWebKeys.KNOWLEDGE_BASE_PARENT_KB_FOLDER);
-
 		PortletURL portletURL = PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
@@ -74,7 +71,13 @@ public class EditKBFolderPortletConfigurationIcon
 		).setRedirect(
 			_portal.getCurrentURL(portletRequest)
 		).setParameter(
-			"kbFolderId", kbFolder.getKbFolderId()
+			"kbFolderId",
+			() -> {
+				KBFolder kbFolder = (KBFolder)portletRequest.getAttribute(
+					KBWebKeys.KNOWLEDGE_BASE_PARENT_KB_FOLDER);
+
+				return kbFolder.getKbFolderId();
+			}
 		).build();
 
 		return portletURL.toString();

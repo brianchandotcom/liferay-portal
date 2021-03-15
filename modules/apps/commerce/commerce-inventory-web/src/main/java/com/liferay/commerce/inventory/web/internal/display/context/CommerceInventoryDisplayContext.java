@@ -77,11 +77,8 @@ public class CommerceInventoryDisplayContext {
 	}
 
 	public String getAddQuantityActionURL() throws Exception {
-		LiferayPortletResponse liferayPortletResponse =
-			_cpRequestHelper.getLiferayPortletResponse();
-
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
+			_cpRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
 			"/commerce_inventory/edit_commerce_inventory_warehouse"
 		).setParameter(
@@ -161,11 +158,8 @@ public class CommerceInventoryDisplayContext {
 	}
 
 	public String getCreateInventoryItemActionURL() throws Exception {
-		LiferayPortletResponse liferayPortletResponse =
-			_cpRequestHelper.getLiferayPortletResponse();
-
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
+			_cpRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
 			"/commerce_inventory/add_commerce_inventory_item"
 		).setWindowState(
@@ -176,11 +170,8 @@ public class CommerceInventoryDisplayContext {
 	}
 
 	public String getCreateReplenishmentActionURL() throws Exception {
-		LiferayPortletResponse liferayPortletResponse =
-			_cpRequestHelper.getLiferayPortletResponse();
-
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
+			_cpRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
 			"/commerce_inventory/edit_commerce_inventory_replenishment_item"
 		).setParameter(
@@ -275,11 +266,8 @@ public class CommerceInventoryDisplayContext {
 	}
 
 	public String getTransferQuantitiesActionURL() throws Exception {
-		LiferayPortletResponse liferayPortletResponse =
-			_cpRequestHelper.getLiferayPortletResponse();
-
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
+			_cpRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
 			"/commerce_inventory/transfer_quantities"
 		).setParameter(
@@ -292,11 +280,8 @@ public class CommerceInventoryDisplayContext {
 	}
 
 	public PortletURL getTransitionInventoryPortletURL() {
-		LiferayPortletResponse liferayPortletResponse =
-			_cpRequestHelper.getLiferayPortletResponse();
-
 		PortletURL portletURL = PortletURLBuilder.createActionURL(
-			liferayPortletResponse
+			_cpRequestHelper.getLiferayPortletResponse()
 		).setActionName(
 			"/commerce_inventory/edit_commerce_inventory_item"
 		).setRedirect(

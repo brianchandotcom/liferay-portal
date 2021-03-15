@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.CountryService;
@@ -130,11 +129,8 @@ public class CommerceAccountAddressAdminDisplayContext
 	}
 
 	public String getDeleteCommerceAddressURL(long commerceAddressId) {
-		LiferayPortletResponse liferayPortletResponse =
-			commerceAccountAdminRequestHelper.getLiferayPortletResponse();
-
 		PortletURL portletURL = PortletURLBuilder.createActionURL(
-			liferayPortletResponse
+			commerceAccountAdminRequestHelper.getLiferayPortletResponse()
 		).setActionName(
 			"/commerce_account_admin/edit_commerce_address"
 		).setRedirect(
@@ -151,11 +147,8 @@ public class CommerceAccountAddressAdminDisplayContext
 	public String getEditCommerceAddressURL(long commerceAddressId)
 		throws PortalException {
 
-		LiferayPortletResponse liferayPortletResponse =
-			commerceAccountAdminRequestHelper.getLiferayPortletResponse();
-
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
+			commerceAccountAdminRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
 			"/commerce_account_admin/edit_commerce_address"
 		).setRedirect(

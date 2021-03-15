@@ -929,12 +929,10 @@ public class DDMFormAdminDisplayContext {
 	}
 
 	public SearchContainer<?> getSearch() {
-		String displayStyle = getDisplayStyle();
-
 		PortletURL portletURL = PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
-			"displayStyle", displayStyle
+			"displayStyle", getDisplayStyle()
 		).build();
 
 		DDMFormInstanceSearch ddmFormInstanceSearch = new DDMFormInstanceSearch(
@@ -1060,12 +1058,16 @@ public class DDMFormAdminDisplayContext {
 	}
 
 	public String getSortingURL() throws Exception {
-		String orderByType = ParamUtil.getString(renderRequest, "orderByType");
-
 		PortletURL sortingURL = PortletURLBuilder.create(
 			PortletURLUtil.clone(getPortletURL(), renderResponse)
 		).setParameter(
-			"orderByType", orderByType.equals("asc") ? "desc" : "asc"
+			"orderByType",
+			() -> {
+				String orderByType = ParamUtil.getString(
+					renderRequest, "orderByType");
+
+				return orderByType.equals("asc") ? "desc" : "asc";
+			}
 		).build();
 
 		return sortingURL.toString();

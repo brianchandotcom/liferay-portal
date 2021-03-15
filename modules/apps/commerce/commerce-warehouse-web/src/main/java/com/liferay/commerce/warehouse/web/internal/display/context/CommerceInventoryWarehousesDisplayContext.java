@@ -44,7 +44,6 @@ import java.util.stream.Stream;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
-import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -171,10 +170,8 @@ public class CommerceInventoryWarehousesDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		RenderResponse renderResponse = _cpRequestHelper.getRenderResponse();
-
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			renderResponse
+			_cpRequestHelper.getRenderResponse()
 		).setParameter(
 			"countryTwoLettersISOCode", getCountryTwoLettersIsoCode()
 		).build();

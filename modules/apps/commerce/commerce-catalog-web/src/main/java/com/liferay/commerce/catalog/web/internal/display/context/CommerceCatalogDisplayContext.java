@@ -102,11 +102,8 @@ public class CommerceCatalogDisplayContext {
 	}
 
 	public String getAddCommerceCatalogRenderURL() throws Exception {
-		LiferayPortletResponse liferayPortletResponse =
-			cpRequestHelper.getLiferayPortletResponse();
-
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
+			cpRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
 			"/commerce_catalogs/add_commerce_catalog"
 		).setWindowState(

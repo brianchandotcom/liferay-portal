@@ -75,15 +75,6 @@ public class DeleteThreadPortletConfigurationIcon
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		String cmd = Constants.DELETE;
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		if (isTrashEnabled(themeDisplay.getScopeGroupId())) {
-			cmd = Constants.MOVE_TO_TRASH;
-		}
-
 		PortletURL deleteURL = PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				portletRequest, MBPortletKeys.MESSAGE_BOARDS_ADMIN,
@@ -91,7 +82,20 @@ public class DeleteThreadPortletConfigurationIcon
 		).setActionName(
 			"/message_boards/delete_thread"
 		).setParameter(
-			Constants.CMD, cmd
+			Constants.CMD,
+			() -> {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)portletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				String cmd = Constants.DELETE;
+
+				if (isTrashEnabled(themeDisplay.getScopeGroupId())) {
+					cmd = Constants.MOVE_TO_TRASH;
+				}
+
+				return cmd;
+			}
 		).build();
 
 		try {

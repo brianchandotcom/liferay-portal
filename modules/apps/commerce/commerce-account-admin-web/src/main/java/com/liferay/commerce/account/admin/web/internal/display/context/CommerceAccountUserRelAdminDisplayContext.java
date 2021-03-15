@@ -92,14 +92,12 @@ public class CommerceAccountUserRelAdminDisplayContext
 			Collections.<ItemSelectorReturnType>singletonList(
 				new UUIDItemSelectorReturnType()));
 
-		String checkedUserIds = StringUtil.merge(getCheckedUserIds());
-
 		PortletURL itemSelectorURL = PortletURLBuilder.create(
 			_itemSelector.getItemSelectorURL(
 				requestBackedPortletURLFactory, "usersSelectItem",
 				userItemSelectorCriterion)
 		).setParameter(
-			"checkedUserIds", checkedUserIds
+			"checkedUserIds", StringUtil.merge(getCheckedUserIds())
 		).build();
 
 		return itemSelectorURL.toString();

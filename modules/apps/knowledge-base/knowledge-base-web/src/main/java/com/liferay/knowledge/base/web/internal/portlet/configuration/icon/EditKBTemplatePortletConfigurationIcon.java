@@ -62,9 +62,6 @@ public class EditKBTemplatePortletConfigurationIcon
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		KBTemplate kbTemplate = (KBTemplate)portletRequest.getAttribute(
-			KBWebKeys.KNOWLEDGE_BASE_KB_TEMPLATE);
-
 		PortletURL portletURL = PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
@@ -74,7 +71,13 @@ public class EditKBTemplatePortletConfigurationIcon
 		).setRedirect(
 			_portal.getCurrentURL(portletRequest)
 		).setParameter(
-			"kbTemplateId", kbTemplate.getKbTemplateId()
+			"kbTemplateId",
+			() -> {
+				KBTemplate kbTemplate = (KBTemplate)portletRequest.getAttribute(
+					KBWebKeys.KNOWLEDGE_BASE_KB_TEMPLATE);
+
+				return kbTemplate.getKbTemplateId();
+			}
 		).build();
 
 		return portletURL.toString();

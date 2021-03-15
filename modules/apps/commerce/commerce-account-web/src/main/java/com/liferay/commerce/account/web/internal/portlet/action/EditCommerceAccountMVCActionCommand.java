@@ -142,10 +142,6 @@ public class EditCommerceAccountMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, CommerceAccount commerceAccount)
 		throws PortalException {
 
-		PortletURL managePortletURL = PortletProviderUtil.getPortletURL(
-			actionRequest, CommerceAccount.class.getName(),
-			PortletProvider.Action.MANAGE);
-
 		PortletURL portletURL = PortletURLBuilder.create(
 			PortletProviderUtil.getPortletURL(
 				actionRequest, CommerceAccount.class.getName(),
@@ -154,7 +150,13 @@ public class EditCommerceAccountMVCActionCommand extends BaseMVCActionCommand {
 			"commerceAccountId", commerceAccount.getCommerceAccountId()
 		).setParameter(
 			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backURL",
-			managePortletURL.toString()
+			() -> {
+				PortletURL managePortletURL = PortletProviderUtil.getPortletURL(
+					actionRequest, CommerceAccount.class.getName(),
+					PortletProvider.Action.MANAGE);
+
+				return managePortletURL.toString();
+			}
 		).build();
 
 		return portletURL.toString();

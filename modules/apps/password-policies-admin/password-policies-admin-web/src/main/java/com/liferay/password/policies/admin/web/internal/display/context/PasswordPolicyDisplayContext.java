@@ -84,12 +84,11 @@ public class PasswordPolicyDisplayContext {
 
 		String tabs1 = ParamUtil.getString(
 			_httpServletRequest, "tabs1", "details");
-		String redirect = ParamUtil.getString(_httpServletRequest, "redirect");
 
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setRedirect(
-			redirect
+			ParamUtil.getString(_httpServletRequest, "redirect")
 		).setParameter(
 			"passwordPolicyId", _passwordPolicyId
 		).build();

@@ -105,8 +105,6 @@ public class CommerceNotificationEntryClayTable
 			HttpServletRequest httpServletRequest, long groupId, Object model)
 		throws PortalException {
 
-		NotificationEntry notificationEntry = (NotificationEntry)model;
-
 		String redirect = ParamUtil.getString(
 			httpServletRequest, "currentUrl",
 			_portal.getCurrentURL(httpServletRequest));
@@ -123,7 +121,11 @@ public class CommerceNotificationEntryClayTable
 			Constants.CMD, "resend"
 		).setParameter(
 			"commerceNotificationQueueEntryId",
-			notificationEntry.getNotificationEntryId()
+			() -> {
+				NotificationEntry notificationEntry = (NotificationEntry)model;
+
+				return notificationEntry.getNotificationEntryId();
+			}
 		).build();
 
 		return DropdownItemListBuilder.add(

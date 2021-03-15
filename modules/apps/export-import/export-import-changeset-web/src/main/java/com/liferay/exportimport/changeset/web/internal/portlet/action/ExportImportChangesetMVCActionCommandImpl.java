@@ -35,7 +35,6 @@ import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
@@ -137,11 +136,9 @@ public class ExportImportChangesetMVCActionCommandImpl
 			long backgroundTaskId)
 		throws IOException {
 
-		LiferayPortletResponse liferayPortletResponse =
-			_portal.getLiferayPortletResponse(actionResponse);
-
 		PortletURL renderURL = PortletURLBuilder.createRenderURL(
-			liferayPortletResponse, ExportImportPortletKeys.EXPORT_IMPORT
+			_portal.getLiferayPortletResponse(actionResponse),
+			ExportImportPortletKeys.EXPORT_IMPORT
 		).setMVCPath(
 			"/view_export_import.jsp"
 		).setParameter(

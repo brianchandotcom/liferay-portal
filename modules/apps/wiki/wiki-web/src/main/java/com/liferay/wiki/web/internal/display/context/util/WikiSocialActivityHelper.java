@@ -301,17 +301,17 @@ public class WikiSocialActivityHelper {
 			return StringPool.BLANK;
 		}
 
-		WikiNode node = page.getNode();
-
-		LiferayPortletResponse liferayPortletResponse =
-			_wikiRequestHelper.getLiferayPortletResponse();
-
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
+			_wikiRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
 			"/wiki/view"
 		).setParameter(
-			"nodeName", node.getName()
+			"nodeName",
+			() -> {
+				WikiNode node = page.getNode();
+
+				return node.getName();
+			}
 		).setParameter(
 			"title", page.getTitle()
 		).build();
@@ -324,17 +324,17 @@ public class WikiSocialActivityHelper {
 			return null;
 		}
 
-		WikiNode node = page.getNode();
-
-		LiferayPortletResponse liferayPortletResponse =
-			_wikiRequestHelper.getLiferayPortletResponse();
-
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
+			_wikiRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
 			"/wiki/view"
 		).setParameter(
-			"nodeName", node.getName()
+			"nodeName",
+			() -> {
+				WikiNode node = page.getNode();
+
+				return node.getName();
+			}
 		).setParameter(
 			"title", page.getTitle()
 		).setParameter(

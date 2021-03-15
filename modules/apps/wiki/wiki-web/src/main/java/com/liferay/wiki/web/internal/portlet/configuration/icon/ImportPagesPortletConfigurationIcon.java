@@ -65,8 +65,6 @@ public class ImportPagesPortletConfigurationIcon
 			WebKeys.THEME_DISPLAY);
 
 		try {
-			WikiNode node = ActionUtil.getNode(portletRequest);
-
 			PortletURL portletURL = PortletURLBuilder.create(
 				_portal.getControlPanelPortletURL(
 					portletRequest, WikiPortletKeys.WIKI_ADMIN,
@@ -76,7 +74,12 @@ public class ImportPagesPortletConfigurationIcon
 			).setRedirect(
 				themeDisplay.getURLCurrent()
 			).setParameter(
-				"nodeId", node.getNodeId()
+				"nodeId",
+				() -> {
+					WikiNode node = ActionUtil.getNode(portletRequest);
+
+					return node.getNodeId();
+				}
 			).build();
 
 			return portletURL.toString();

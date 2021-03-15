@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
@@ -451,11 +450,8 @@ public class DefaultWikiListPagesDisplayContext
 		urlMenuItem.setKey(WikiUIItemKeys.ADD_CHILD_PAGE);
 		urlMenuItem.setLabel("add-child-page");
 
-		LiferayPortletResponse liferayPortletResponse =
-			_wikiRequestHelper.getLiferayPortletResponse();
-
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
+			_wikiRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
 			"/wiki/edit_page"
 		).setRedirect(
@@ -487,11 +483,8 @@ public class DefaultWikiListPagesDisplayContext
 		urlMenuItem.setKey(WikiUIItemKeys.COPY);
 		urlMenuItem.setLabel("copy");
 
-		LiferayPortletResponse liferayPortletResponse =
-			_wikiRequestHelper.getLiferayPortletResponse();
-
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
+			_wikiRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
 			"/wiki/edit_page"
 		).setRedirect(
@@ -529,25 +522,25 @@ public class DefaultWikiListPagesDisplayContext
 				_trashHelper.isTrashEnabled(
 					_wikiRequestHelper.getScopeGroupId()));
 
-			LiferayPortletResponse liferayPortletResponse =
-				_wikiRequestHelper.getLiferayPortletResponse();
-
-			String cmd = Constants.DELETE;
-
-			if (_trashHelper.isTrashEnabled(
-					_wikiRequestHelper.getScopeGroupId())) {
-
-				cmd = Constants.MOVE_TO_TRASH;
-			}
-
 			PortletURL portletURL = PortletURLBuilder.createActionURL(
-				liferayPortletResponse
+				_wikiRequestHelper.getLiferayPortletResponse()
 			).setActionName(
 				"/wiki/edit_page"
 			).setRedirect(
 				_wikiRequestHelper.getCurrentURL()
 			).setParameter(
-				Constants.CMD, cmd
+				Constants.CMD,
+				() -> {
+					String cmd = Constants.DELETE;
+
+					if (_trashHelper.isTrashEnabled(
+							_wikiRequestHelper.getScopeGroupId())) {
+
+						cmd = Constants.MOVE_TO_TRASH;
+					}
+
+					return cmd;
+				}
 			).setParameter(
 				"nodeId", wikiPage.getNodeId()
 			).setParameter(
@@ -569,11 +562,8 @@ public class DefaultWikiListPagesDisplayContext
 			urlMenuItem.setKey(WikiUIItemKeys.DELETE);
 			urlMenuItem.setLabel("discard-draft");
 
-			LiferayPortletResponse liferayPortletResponse =
-				_wikiRequestHelper.getLiferayPortletResponse();
-
 			PortletURL portletURL = PortletURLBuilder.createActionURL(
-				liferayPortletResponse
+				_wikiRequestHelper.getLiferayPortletResponse()
 			).setActionName(
 				"/wiki/edit_page"
 			).setRedirect(
@@ -609,11 +599,8 @@ public class DefaultWikiListPagesDisplayContext
 		urlMenuItem.setKey(WikiUIItemKeys.EDIT);
 		urlMenuItem.setLabel("edit");
 
-		LiferayPortletResponse liferayPortletResponse =
-			_wikiRequestHelper.getLiferayPortletResponse();
-
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
+			_wikiRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
 			"/wiki/edit_page"
 		).setParameter(
@@ -639,11 +626,8 @@ public class DefaultWikiListPagesDisplayContext
 		urlMenuItem.setKey(WikiUIItemKeys.MOVE);
 		urlMenuItem.setLabel("move");
 
-		LiferayPortletResponse liferayPortletResponse =
-			_wikiRequestHelper.getLiferayPortletResponse();
-
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
+			_wikiRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
 			"/wiki/move_page"
 		).setRedirect(
@@ -710,17 +694,17 @@ public class DefaultWikiListPagesDisplayContext
 
 			sb.append("window.open('");
 
-			LiferayPortletResponse liferayPortletResponse =
-				_wikiRequestHelper.getLiferayPortletResponse();
-
-			WikiNode wikiNode = wikiPage.getNode();
-
 			PortletURL portletURL = PortletURLBuilder.createRenderURL(
-				liferayPortletResponse
+				_wikiRequestHelper.getLiferayPortletResponse()
 			).setMVCRenderCommandName(
 				"/wiki/view"
 			).setParameter(
-				"nodeName", wikiNode.getName()
+				"nodeName",
+				() -> {
+					WikiNode wikiNode = wikiPage.getNode();
+
+					return wikiNode.getName();
+				}
 			).setParameter(
 				"title", wikiPage.getTitle()
 			).setParameter(
@@ -782,11 +766,8 @@ public class DefaultWikiListPagesDisplayContext
 			urlMenuItem.setKey(WikiUIItemKeys.UNSUBSCRIBE);
 			urlMenuItem.setLabel("unsubscribe");
 
-			LiferayPortletResponse liferayPortletResponse =
-				_wikiRequestHelper.getLiferayPortletResponse();
-
 			PortletURL portletURL = PortletURLBuilder.createActionURL(
-				liferayPortletResponse
+				_wikiRequestHelper.getLiferayPortletResponse()
 			).setActionName(
 				"/wiki/edit_page"
 			).setRedirect(
@@ -809,11 +790,8 @@ public class DefaultWikiListPagesDisplayContext
 			urlMenuItem.setKey(WikiUIItemKeys.SUBSCRIBE);
 			urlMenuItem.setLabel("subscribe");
 
-			LiferayPortletResponse liferayPortletResponse =
-				_wikiRequestHelper.getLiferayPortletResponse();
-
 			PortletURL portletURL = PortletURLBuilder.createActionURL(
-				liferayPortletResponse
+				_wikiRequestHelper.getLiferayPortletResponse()
 			).setActionName(
 				"/wiki/edit_page"
 			).setRedirect(

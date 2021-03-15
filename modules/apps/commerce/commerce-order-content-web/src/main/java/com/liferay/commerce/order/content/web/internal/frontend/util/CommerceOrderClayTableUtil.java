@@ -71,10 +71,6 @@ public class CommerceOrderClayTableUtil {
 		HttpServletRequest originalHttpServletRequest =
 			PortalUtil.getOriginalServletRequest(httpServletRequest);
 
-		String redirect = ParamUtil.getString(
-			httpServletRequest, "currentUrl",
-			PortalUtil.getCurrentURL(httpServletRequest));
-
 		PortletURL portletURL = PortletURLBuilder.create(
 			PortletURLFactoryUtil.create(
 				originalHttpServletRequest, portletDisplay.getId(),
@@ -82,7 +78,9 @@ public class CommerceOrderClayTableUtil {
 		).setActionName(
 			"/commerce_open_order_content/edit_commerce_order"
 		).setRedirect(
-			redirect
+			ParamUtil.getString(
+				httpServletRequest, "currentUrl",
+				PortalUtil.getCurrentURL(httpServletRequest))
 		).setParameter(
 			Constants.CMD, "setCurrent"
 		).setParameter(
@@ -158,18 +156,13 @@ public class CommerceOrderClayTableUtil {
 			themeDisplay.getRequest(), portletDisplay.getId(),
 			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
-		String pageSize = ParamUtil.getString(
-			themeDisplay.getRequest(), "pageSize");
-
-		String pageNumber = ParamUtil.getString(
-			themeDisplay.getRequest(), "page");
-
 		PortletURL backURL = PortletURLBuilder.create(
 			portletURL
 		).setParameter(
-			"itemsPerPage", pageSize
+			"itemsPerPage",
+			ParamUtil.getString(themeDisplay.getRequest(), "pageSize")
 		).setParameter(
-			"pageNumber", pageNumber
+			"pageNumber", ParamUtil.getString(themeDisplay.getRequest(), "page")
 		).setParameter(
 			"tableName",
 			CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PLACED_ORDERS

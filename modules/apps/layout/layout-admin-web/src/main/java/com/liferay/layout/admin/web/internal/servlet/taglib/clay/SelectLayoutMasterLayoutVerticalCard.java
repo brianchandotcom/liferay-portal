@@ -63,40 +63,27 @@ public class SelectLayoutMasterLayoutVerticalCard implements VerticalCard {
 		Map<String, String> data = new HashMap<>();
 
 		try {
-			String redirect = ParamUtil.getString(
-				_httpServletRequest, "redirect");
-
-			long groupId = ParamUtil.getLong(_httpServletRequest, "groupId");
-
-			long selPlid = ParamUtil.getLong(_httpServletRequest, "selPlid");
-
-			boolean privateLayout = ParamUtil.getBoolean(
-				_httpServletRequest, "privateLayout");
-
-			String collectionPK = ParamUtil.getString(
-				_httpServletRequest, "collectionPK");
-
-			String collectionType = ParamUtil.getString(
-				_httpServletRequest, "collectionType");
-
 			PortletURL addLayoutURL = PortletURLBuilder.createRenderURL(
 				_renderResponse
 			).setMVCRenderCommandName(
 				"/layout_admin/add_layout"
 			).setRedirect(
-				redirect
+				ParamUtil.getString(_httpServletRequest, "redirect")
 			).setParameter(
-				"groupId", groupId
+				"groupId", ParamUtil.getLong(_httpServletRequest, "groupId")
 			).setParameter(
-				"selPlid", selPlid
+				"selPlid", ParamUtil.getLong(_httpServletRequest, "selPlid")
 			).setParameter(
-				"privateLayout", privateLayout
+				"privateLayout",
+				ParamUtil.getBoolean(_httpServletRequest, "privateLayout")
 			).setParameter(
 				"type", LayoutConstants.TYPE_COLLECTION
 			).setParameter(
-				"collectionPK", collectionPK
+				"collectionPK",
+				ParamUtil.getString(_httpServletRequest, "collectionPK")
 			).setParameter(
-				"collectionType", collectionType
+				"collectionType",
+				ParamUtil.getString(_httpServletRequest, "collectionType")
 			).setParameter(
 				"masterLayoutPlid", _layoutPageTemplateEntry.getPlid()
 			).setWindowState(

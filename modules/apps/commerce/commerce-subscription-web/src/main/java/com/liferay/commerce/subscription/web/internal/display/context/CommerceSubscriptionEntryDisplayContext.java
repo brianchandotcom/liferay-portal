@@ -190,15 +190,6 @@ public class CommerceSubscriptionEntryDisplayContext {
 	public String getEditCommerceOrderURL(long commerceOrderId)
 		throws PortalException {
 
-		String orderId;
-
-		if (commerceOrderId > 0) {
-			orderId = String.valueOf(commerceOrderId);
-		}
-		else {
-			orderId = String.valueOf(getCommerceOrderId());
-		}
-
 		ThemeDisplay themeDisplay = _cpRequestHelper.getThemeDisplay();
 
 		PortletURL portletURL = PortletURLBuilder.create(
@@ -210,7 +201,19 @@ public class CommerceSubscriptionEntryDisplayContext {
 		).setRedirect(
 			themeDisplay.getURLCurrent()
 		).setParameter(
-			"commerceOrderId", orderId
+			"commerceOrderId",
+			() -> {
+				String orderId;
+
+				if (commerceOrderId > 0) {
+					orderId = String.valueOf(commerceOrderId);
+				}
+				else {
+					orderId = String.valueOf(getCommerceOrderId());
+				}
+
+				return orderId;
+			}
 		).build();
 
 		return portletURL.toString();
@@ -346,11 +349,8 @@ public class CommerceSubscriptionEntryDisplayContext {
 	}
 
 	public PortletURL getTransitionOrderPortletURL() {
-		LiferayPortletResponse liferayPortletResponse =
-			_cpRequestHelper.getLiferayPortletResponse();
-
 		PortletURL portletURL = PortletURLBuilder.createActionURL(
-			liferayPortletResponse
+			_cpRequestHelper.getLiferayPortletResponse()
 		).setActionName(
 			"/commerce_open_order_content/edit_commerce_order"
 		).setRedirect(

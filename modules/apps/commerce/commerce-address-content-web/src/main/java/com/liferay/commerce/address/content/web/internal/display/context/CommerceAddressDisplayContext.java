@@ -85,16 +85,18 @@ public class CommerceAddressDisplayContext {
 	}
 
 	public String getAddCommerceAddressURL() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setMVCRenderCommandName(
 			"/commerce_address_content/edit_commerce_address"
 		).setRedirect(
-			themeDisplay.getURLCurrent()
+			() -> {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)_httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				return themeDisplay.getURLCurrent();
+			}
 		).build();
 
 		return portletURL.toString();
@@ -148,16 +150,18 @@ public class CommerceAddressDisplayContext {
 	}
 
 	public String getDeleteCommerceAddressURL(long commerceAddressId) {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		PortletURL portletURL = PortletURLBuilder.createActionURL(
 			_liferayPortletResponse
 		).setActionName(
 			"/commerce_address_content/edit_commerce_address"
 		).setRedirect(
-			themeDisplay.getURLCurrent()
+			() -> {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)_httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				return themeDisplay.getURLCurrent();
+			}
 		).setParameter(
 			Constants.CMD, Constants.DELETE
 		).setParameter(

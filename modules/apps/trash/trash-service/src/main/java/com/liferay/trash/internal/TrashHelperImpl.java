@@ -147,10 +147,6 @@ public class TrashHelperImpl implements TrashHelper {
 			return null;
 		}
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		PortletURL portletURL = PortletURLBuilder.create(
 			PortletProviderUtil.getPortletURL(
 				httpServletRequest, TrashEntry.class.getName(),
@@ -158,7 +154,13 @@ public class TrashHelperImpl implements TrashHelper {
 		).setMVCPath(
 			"/view_content.jsp"
 		).setRedirect(
-			themeDisplay.getURLCurrent()
+			() -> {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				return themeDisplay.getURLCurrent();
+			}
 		).build();
 
 		TrashEntry trashEntry = _trashEntryLocalService.getEntry(

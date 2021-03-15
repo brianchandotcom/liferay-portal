@@ -71,12 +71,9 @@ public class ExpandoDisplayContext {
 					(PortletResponse)_httpServletRequest.getAttribute(
 						JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-				LiferayPortletResponse liferayPortletResponse =
-					PortalUtil.getLiferayPortletResponse(portletResponse);
-
 				PortletURL deleteExpandosURL =
 					PortletURLBuilder.createActionURL(
-						liferayPortletResponse
+						PortalUtil.getLiferayPortletResponse(portletResponse)
 					).setActionName(
 						"deleteExpandos"
 					).build();

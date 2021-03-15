@@ -102,18 +102,21 @@ public class TrashDisplayContext {
 
 		breadcrumbEntries.add(breadcrumbEntry);
 
-		TrashHandler trashHandler = getTrashHandler();
-
-		String trashHandlerContainerModelClassName =
-			trashHandler.getContainerModelClassName(getClassPK());
-
 		PortletURL containerModelURL = PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setMVCPath(
 			"/view_content.jsp"
 		).setParameter(
 			"classNameId",
-			PortalUtil.getClassNameId(trashHandlerContainerModelClassName)
+			() -> {
+				TrashHandler trashHandler = getTrashHandler();
+
+				String trashHandlerContainerModelClassName =
+					trashHandler.getContainerModelClassName(getClassPK());
+
+				return PortalUtil.getClassNameId(
+					trashHandlerContainerModelClassName);
+			}
 		).build();
 
 		breadcrumbEntries.addAll(

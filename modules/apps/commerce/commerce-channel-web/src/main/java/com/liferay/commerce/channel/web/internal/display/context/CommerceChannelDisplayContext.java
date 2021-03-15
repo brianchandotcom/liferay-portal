@@ -153,8 +153,6 @@ public class CommerceChannelDisplayContext
 	}
 
 	public String getAddChannelURL() throws Exception {
-		PortletURL portletURL = getPortletURL();
-
 		PortletURL editCommerceChannelPortletURL = PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				httpServletRequest, CPPortletKeys.COMMERCE_CHANNELS,
@@ -162,7 +160,11 @@ public class CommerceChannelDisplayContext
 		).setMVCRenderCommandName(
 			"/commerce_channels/add_commerce_channel"
 		).setRedirect(
-			portletURL.toString()
+			() -> {
+				PortletURL portletURL = getPortletURL();
+
+				return portletURL.toString();
+			}
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).build();

@@ -109,20 +109,21 @@ public class CommerceShippingMethodClayTable
 
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
-				ShippingMethod shippingMethod = (ShippingMethod)model;
-
-				long commerceChannelId = ParamUtil.getLong(
-					httpServletRequest, "commerceChannelId");
-
 				PortletURL portletURL = PortletURLBuilder.create(
 					PortletProviderUtil.getPortletURL(
 						httpServletRequest,
 						CommerceShippingMethod.class.getName(),
 						PortletProvider.Action.EDIT)
 				).setParameter(
-					"commerceChannelId", commerceChannelId
+					"commerceChannelId",
+					ParamUtil.getLong(httpServletRequest, "commerceChannelId")
 				).setParameter(
-					"commerceShippingMethodEngineKey", shippingMethod.getKey()
+					"commerceShippingMethodEngineKey",
+					() -> {
+						ShippingMethod shippingMethod = (ShippingMethod)model;
+
+						return shippingMethod.getKey();
+					}
 				).setWindowState(
 					LiferayWindowState.POP_UP
 				).build();

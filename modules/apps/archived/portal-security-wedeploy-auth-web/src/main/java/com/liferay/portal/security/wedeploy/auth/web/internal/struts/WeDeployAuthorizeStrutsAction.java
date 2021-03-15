@@ -60,18 +60,15 @@ public class WeDeployAuthorizeStrutsAction implements StrutsAction {
 			return null;
 		}
 
-		String redirectURI = ParamUtil.getString(
-			httpServletRequest, "redirect_uri");
-		String clientId = ParamUtil.getString(httpServletRequest, "client_id");
-
 		PortletURL portletURL = PortletURLBuilder.create(
 			PortletURLFactoryUtil.create(
 				httpServletRequest, WeDeployAuthPortletKeys.WEDEPLOY_AUTH,
 				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE)
 		).setParameter(
-			"redirectURI", redirectURI
+			"redirectURI",
+			ParamUtil.getString(httpServletRequest, "redirect_uri")
 		).setParameter(
-			"clientId", clientId
+			"clientId", ParamUtil.getString(httpServletRequest, "client_id")
 		).setParameter(
 			"saveLastPath", Boolean.FALSE.toString()
 		).setPortletMode(

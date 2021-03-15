@@ -18,7 +18,6 @@ import com.liferay.dispatch.scheduler.SchedulerResponseManager;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.TriggerState;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
@@ -78,11 +77,8 @@ public class SchedulerResponseDisplayContext extends BaseDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		LiferayPortletResponse liferayPortletResponse =
-			dispatchRequestHelper.getLiferayPortletResponse();
-
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
+			dispatchRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
 			"/dispatch/edit_scheduler_response"
 		).setParameter(

@@ -2397,7 +2397,20 @@ definition {
 			locator1 = "PageEditor#NAV_ITEM_BUTTON",
 			value1 = "General");
 
-		Click(locator1 = "PageEditor#PLUS_ICON_BUTTON");
+		var itemSelectorContentInputValue = selenium.getElementValue("//label[normalize-space(text())='Content']/following-sibling::div//input[contains(@class,'item-selector__content-input')]");
+
+		if ("${itemSelectorContentInputValue}" == "") {
+			Click(
+				key_fieldLabel = "Content",
+				key_text = "plus",
+				locator1 = "Icon#ANY_ITEM_SELECTOR");
+		}
+		else {
+			Click(
+				key_fieldLabel = "Content",
+				key_text = "change",
+				locator1 = "Icon#ANY_ITEM_SELECTOR");
+		}
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}

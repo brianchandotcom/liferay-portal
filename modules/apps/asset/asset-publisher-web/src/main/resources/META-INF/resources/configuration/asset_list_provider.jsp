@@ -22,17 +22,17 @@ List<InfoListProvider<?>> infoListProviders = assetPublisherDisplayContext.getAs
 
 <c:choose>
 	<c:when test="<%= ListUtil.isNotEmpty(infoListProviders) %>">
-		<aui:select label="" name="preferences--infoListProviderClassName--">
+		<aui:select label="" name="preferences--infoListProviderKey--">
 			<aui:option label="none" value="" />
 
 			<%
-			String infoListProviderClassName = PrefsParamUtil.getString(portletPreferences, request, "infoListProviderClassName", StringPool.BLANK);
+			String infoListProviderKey = PrefsParamUtil.getString(portletPreferences, request, "infoListProviderKey", StringPool.BLANK);
 
 			for (InfoListProvider<?> infoListProvider : infoListProviders) {
-				Class<?> clazz = infoListProvider.getClass();
+				String key = infoListProvider.getKey();
 			%>
 
-				<aui:option label="<%= infoListProvider.getLabel(themeDisplay.getLocale()) %>" selected="<%= infoListProviderClassName.equals(clazz.getName()) %>" value="<%= clazz.getName() %>" />
+				<aui:option label="<%= infoListProvider.getLabel(themeDisplay.getLocale()) %>" selected="<%= infoListProviderKey.equals(key) %>" value="<%= key %>" />
 
 			<%
 			}

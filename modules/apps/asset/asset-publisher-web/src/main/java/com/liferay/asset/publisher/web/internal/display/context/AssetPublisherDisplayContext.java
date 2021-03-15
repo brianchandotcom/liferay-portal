@@ -327,18 +327,17 @@ public class AssetPublisherDisplayContext {
 					_getSegmentsAnonymousUserId());
 			}
 			else if (isSelectionStyleAssetListProvider()) {
-				String infoListProviderClassName = GetterUtil.getString(
-					_portletPreferences.getValue(
-						"infoListProviderClassName", null));
+				String infoListProviderKey = GetterUtil.getString(
+					_portletPreferences.getValue("infoListProviderKey", null));
 
-				if (Validator.isNull(infoListProviderClassName)) {
+				if (Validator.isNull(infoListProviderKey)) {
 					return Collections.emptyList();
 				}
 
 				InfoListProvider<AssetEntry> infoListProvider =
 					(InfoListProvider<AssetEntry>)
 						_infoListProviderTracker.getInfoListProvider(
-							infoListProviderClassName);
+							infoListProviderKey);
 
 				if (infoListProvider == null) {
 					return Collections.emptyList();

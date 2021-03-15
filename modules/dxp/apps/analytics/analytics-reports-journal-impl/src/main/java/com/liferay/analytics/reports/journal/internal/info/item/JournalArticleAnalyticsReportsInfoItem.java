@@ -31,7 +31,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Arrays;
@@ -39,8 +38,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -100,13 +97,9 @@ public class JournalArticleAnalyticsReportsInfoItem
 
 	@Override
 	public List<Locale> getAvailableLocales(JournalArticle journalArticle) {
-		return Stream.of(
-			journalArticle.getAvailableLanguageIds()
-		).map(
-			LocaleUtil::fromLanguageId
-		).collect(
-			Collectors.toList()
-		);
+		return _layoutDisplayPageObjectProviderAnalyticsReportsInfoItem.
+			getAvailableLocales(
+				_getLayoutDisplayPageObjectProvider(journalArticle));
 	}
 
 	@Override
@@ -120,7 +113,9 @@ public class JournalArticleAnalyticsReportsInfoItem
 
 	@Override
 	public Locale getDefaultLocale(JournalArticle journalArticle) {
-		return LocaleUtil.fromLanguageId(journalArticle.getDefaultLanguageId());
+		return _layoutDisplayPageObjectProviderAnalyticsReportsInfoItem.
+			getDefaultLocale(
+				_getLayoutDisplayPageObjectProvider(journalArticle));
 	}
 
 	@Override

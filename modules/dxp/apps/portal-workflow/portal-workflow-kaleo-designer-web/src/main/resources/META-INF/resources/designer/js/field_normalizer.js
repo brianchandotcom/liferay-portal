@@ -280,6 +280,10 @@ AUI.add(
 								);
 							}
 							else if (index2 === 'reassignments') {
+								if (item2[0]?.taskAssignees === '') {
+									item2[0].taskAssignees = null;
+								}
+
 								item2 = FieldNormalizer.normalizeToAssignments(
 									item2
 								);

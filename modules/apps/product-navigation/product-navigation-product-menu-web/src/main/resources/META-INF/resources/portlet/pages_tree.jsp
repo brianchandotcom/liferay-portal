@@ -44,13 +44,15 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 			containerElement="span"
 		>
 			<a class="{cssClass}" data-regular-url="{regularURL}" data-url="{url}" data-uuid="{uuid}" href="{url}" id="{id}" title="{title}">
-				<span class="mr-1 list-icon {type}-layout">
-					<aui:icon image="list" markupView="lexicon" />
+				<span class="c-inner" tabindex="-1">
+					<span class="mr-1 list-icon {type}-layout">
+						<aui:icon image="list" markupView="lexicon" />
+					</span>
+					<span class="mr-1 page-icon {type}-layout">
+						<aui:icon image="page" markupView="lexicon" />
+					</span>
+					{label}
 				</span>
-				<span class="mr-1 page-icon {type}-layout">
-					<aui:icon image="page" markupView="lexicon" />
-				</span>
-				{label}
 			</a>
 
 			<span class="d-sm-block dropdown pages-tree-dropdown text-right">
@@ -155,7 +157,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 		groupId="<%= layoutsTreeDisplayContext.getGroupId() %>"
 		linkTemplate="<%= linkTemplate %>"
 		privateLayout="<%= layoutsTreeDisplayContext.isPrivateLayout() %>"
-		rootLinkTemplate='<a tabindex="-1" class="{cssClass}mb-1 ml-1" href="javascript:void(0);" id="{id}" title="{title}">{label}</a>'
+		rootLinkTemplate='<a tabindex="-1" class="{cssClass}ml-1" href="javascript:void(0);" id="{id}" title="{title}">{label}</a>'
 		rootNodeName="<%= siteGroup.getLayoutRootNodeName(layoutsTreeDisplayContext.isPrivateLayout(), locale) %>"
 		selPlid="<%= plid %>"
 		treeId="pagesTree"

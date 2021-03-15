@@ -470,6 +470,30 @@ definition {
 			value1 = "${categoryNameEdit}");
 	}
 
+	macro enableRedirectToLogin {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Message Boards",
+			configurationName = "Questions",
+			configurationScope = "Widget Scope");
+
+		if (IsNotChecked.isNotCheckedNotVisible(locator1 = "FormFields#CHECKBOX", key_fieldName = "enableRedirectToLogin")) {
+			Check.checkNotVisible(
+				key_fieldName = "enableRedirectToLogin",
+				locator1 = "FormFields#CHECKBOX");
+		}
+
+		FormFields.viewCheckboxChecked(fieldName = "enableRedirectToLogin");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro fillName {
 		Click(locator1 = "Questions#CREATE_QUESTIONS_NAME_FIELD");
 

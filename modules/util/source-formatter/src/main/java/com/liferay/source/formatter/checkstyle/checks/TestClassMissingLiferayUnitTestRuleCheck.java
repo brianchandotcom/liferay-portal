@@ -15,10 +15,12 @@
 package com.liferay.source.formatter.checkstyle.checks;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
+import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.AnnotationUtil;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Alan Huang
@@ -99,6 +101,22 @@ public class TestClassMissingLiferayUnitTestRuleCheck extends BaseCheck {
 
 				if (variableType.equals("LiferayUnitTestRule")) {
 					return;
+				}
+
+				List<DetailAST> dotDetailASTList = getAllChildTokens(
+					variableDefinitionDetailAST, true, TokenTypes.DOT);
+
+				FullIdent fullIdent = null;
+
+				for (DetailAST dotDetailAST : dotDetailASTList) {
+					fullIdent = FullIdent.createFullIdent(dotDetailAST);
+
+					if (Objects.equals(
+							fullIdent.getText(),
+							"LiferayUnitTestRule.INSTANCE")) {
+
+						return;
+					}
 				}
 			}
 

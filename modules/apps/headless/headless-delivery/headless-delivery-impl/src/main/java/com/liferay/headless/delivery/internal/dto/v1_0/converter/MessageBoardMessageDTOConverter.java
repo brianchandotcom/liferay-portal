@@ -85,6 +85,7 @@ public class MessageBoardMessageDTOConverter
 				dateCreated = mbMessage.getCreateDate();
 				dateModified = mbMessage.getModifiedDate();
 				encodingFormat = mbMessage.getFormat();
+				externalReferenceCode = mbMessage.getExternalReferenceCode();
 				friendlyUrlPath = mbMessage.getUrlSubject();
 				headline = mbMessage.getSubject();
 				id = mbMessage.getMessageId();

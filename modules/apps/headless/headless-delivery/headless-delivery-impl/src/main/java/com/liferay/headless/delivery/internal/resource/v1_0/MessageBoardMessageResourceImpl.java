@@ -34,6 +34,7 @@ import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.exception.NoSuchMessageException;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
+import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBMessageService;
 import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -100,6 +101,17 @@ public class MessageBoardMessageResourceImpl
 		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
 
 		spiRatingResource.deleteRating(messageBoardMessageId);
+	}
+
+	@Override
+	public void deleteSiteMessageBoardMessageByExternalReferenceCode(
+			String externalReferenceCode, Long siteId)
+		throws Exception {
+
+		MBMessage mbMessage = _getMbMessageByExternalReferenceCode(
+			externalReferenceCode, siteId);
+
+		_mbMessageService.deleteMessage(mbMessage.getMessageId());
 	}
 
 	@Override
@@ -192,6 +204,18 @@ public class MessageBoardMessageResourceImpl
 	}
 
 	@Override
+	public MessageBoardMessage
+			getSiteMessageBoardMessageByExternalReferenceCode(
+				String externalReferenceCode, Long siteId)
+		throws Exception {
+
+		MBMessage mbMessage = _getMbMessageByExternalReferenceCode(
+			externalReferenceCode, siteId);
+
+		return _toMessageBoardMessage(mbMessage);
+	}
+
+	@Override
 	public MessageBoardMessage getSiteMessageBoardMessageByFriendlyUrlPath(
 			Long siteId, String friendlyUrlPath)
 		throws Exception {
@@ -231,7 +255,7 @@ public class MessageBoardMessageResourceImpl
 			MessageBoardMessage messageBoardMessage)
 		throws Exception {
 
-		return _addMessageBoardThread(
+		return _addMessageBoardMessage(
 			parentMessageBoardMessageId, messageBoardMessage);
 	}
 
@@ -254,7 +278,7 @@ public class MessageBoardMessageResourceImpl
 		MBThread mbThread = _mbThreadLocalService.getMBThread(
 			messageBoardThreadId);
 
-		return _addMessageBoardThread(
+		return _addMessageBoardMessage(
 			mbThread.getRootMessageId(), messageBoardMessage);
 	}
 
@@ -263,38 +287,8 @@ public class MessageBoardMessageResourceImpl
 			Long messageBoardMessageId, MessageBoardMessage messageBoardMessage)
 		throws Exception {
 
-		if ((messageBoardMessage.getArticleBody() == null) &&
-			(messageBoardMessage.getHeadline() == null)) {
-
-			throw new BadRequestException(
-				"Headline and article body are both null");
-		}
-
-		MBMessage mbMessage = _mbMessageService.getMessage(
-			messageBoardMessageId);
-
-		String headline = messageBoardMessage.getHeadline();
-
-		if (headline == null) {
-			MBMessage parentMBMessage = _mbMessageService.getMessage(
-				mbMessage.getParentMessageId());
-
-			headline =
-				MBMessageConstants.MESSAGE_SUBJECT_PREFIX_RE +
-					parentMBMessage.getSubject();
-		}
-
-		mbMessage = _mbMessageService.updateDiscussionMessage(
-			mbMessage.getClassName(), mbMessage.getClassPK(),
-			messageBoardMessageId, headline,
-			messageBoardMessage.getArticleBody(),
-			_getServiceContext(messageBoardMessage, mbMessage.getGroupId()));
-
-		if (messageBoardMessage.getShowAsAnswer() != mbMessage.isAnswer()) {
-			_updateAnswer(mbMessage, messageBoardMessage);
-		}
-
-		return _toMessageBoardMessage(mbMessage);
+		return _updateMessageBoardMessage(
+			messageBoardMessageId, messageBoardMessage);
 	}
 
 	@Override
@@ -322,7 +316,34 @@ public class MessageBoardMessageResourceImpl
 		_mbMessageService.unsubscribeMessage(messageBoardMessageId);
 	}
 
-	private MessageBoardMessage _addMessageBoardThread(
+	@Override
+	public MessageBoardMessage
+			putSiteMessageBoardMessageByExternalReferenceCode(
+				String externalReferenceCode, Long siteId,
+				MessageBoardMessage messageBoardMessage)
+		throws Exception {
+
+		if (messageBoardMessage.getParentMessageBoardMessageId() == null) {
+			throw new BadRequestException("Parent message board ID is null");
+		}
+
+		MBMessage mbMessage =
+			_mbMessageLocalService.fetchMBMessageByReferenceCode(
+				siteId, externalReferenceCode);
+
+		if (mbMessage == null) {
+			messageBoardMessage.setExternalReferenceCode(externalReferenceCode);
+
+			return _addMessageBoardMessage(
+				messageBoardMessage.getParentMessageBoardMessageId(),
+				messageBoardMessage);
+		}
+
+		return _updateMessageBoardMessage(
+			mbMessage.getMessageId(), messageBoardMessage);
+	}
+
+	private MessageBoardMessage _addMessageBoardMessage(
 			Long messageBoardMessageId, MessageBoardMessage messageBoardMessage)
 		throws Exception {
 
@@ -344,6 +365,7 @@ public class MessageBoardMessageResourceImpl
 		}
 
 		MBMessage mbMessage = _mbMessageService.addMessage(
+			messageBoardMessage.getExternalReferenceCode(),
 			messageBoardMessageId, headline,
 			messageBoardMessage.getArticleBody(), encodingFormat,
 			Collections.emptyList(),
@@ -364,6 +386,23 @@ public class MessageBoardMessageResourceImpl
 			MBMessage.class.getName(), contextCompany.getCompanyId(),
 			messageBoardMessage.getCustomFields(),
 			contextAcceptLanguage.getPreferredLocale());
+	}
+
+	private MBMessage _getMbMessageByExternalReferenceCode(
+			String externalReferenceCode, Long siteId)
+		throws Exception {
+
+		MBMessage mbMessage =
+			_mbMessageLocalService.fetchMBMessageByReferenceCode(
+				siteId, externalReferenceCode);
+
+		if (mbMessage == null) {
+			throw new NoSuchMessageException(
+				"No message exists with external reference code " +
+					externalReferenceCode);
+		}
+
+		return mbMessage;
 	}
 
 	private Page<MessageBoardMessage> _getMessageBoardMessagesPage(
@@ -565,6 +604,44 @@ public class MessageBoardMessageResourceImpl
 		}
 	}
 
+	private MessageBoardMessage _updateMessageBoardMessage(
+			Long messageBoardMessageId, MessageBoardMessage messageBoardMessage)
+		throws Exception {
+
+		if ((messageBoardMessage.getArticleBody() == null) &&
+			(messageBoardMessage.getHeadline() == null)) {
+
+			throw new BadRequestException(
+				"Article body and headline are both null");
+		}
+
+		MBMessage mbMessage = _mbMessageService.getMessage(
+			messageBoardMessageId);
+
+		String headline = messageBoardMessage.getHeadline();
+
+		if (headline == null) {
+			MBMessage parentMBMessage = _mbMessageService.getMessage(
+				mbMessage.getParentMessageId());
+
+			headline =
+				MBMessageConstants.MESSAGE_SUBJECT_PREFIX_RE +
+					parentMBMessage.getSubject();
+		}
+
+		mbMessage = _mbMessageService.updateDiscussionMessage(
+			mbMessage.getClassName(), mbMessage.getClassPK(),
+			messageBoardMessageId, headline,
+			messageBoardMessage.getArticleBody(),
+			_getServiceContext(messageBoardMessage, mbMessage.getGroupId()));
+
+		if (messageBoardMessage.getShowAsAnswer() != mbMessage.isAnswer()) {
+			_updateAnswer(mbMessage, messageBoardMessage);
+		}
+
+		return _toMessageBoardMessage(mbMessage);
+	}
+
 	@Reference
 	private Aggregations _aggregations;
 
@@ -579,6 +656,9 @@ public class MessageBoardMessageResourceImpl
 
 	@Reference
 	private ExpandoTableLocalService _expandoTableLocalService;
+
+	@Reference
+	private MBMessageLocalService _mbMessageLocalService;
 
 	@Reference
 	private MBMessageService _mbMessageService;

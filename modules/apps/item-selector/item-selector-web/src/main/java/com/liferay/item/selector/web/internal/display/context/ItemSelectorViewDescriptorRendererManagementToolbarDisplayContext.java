@@ -32,7 +32,8 @@ public class ItemSelectorViewDescriptorRendererManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public ItemSelectorViewDescriptorRendererManagementToolbarDisplayContext(
-		ItemSelectorViewDescriptor<Object> itemSelectorViewDescriptor,
+		ItemSelectorViewDescriptorRendererDisplayContext
+			itemSelectorViewDescriptorRendererDisplayContext,
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
@@ -42,7 +43,12 @@ public class ItemSelectorViewDescriptorRendererManagementToolbarDisplayContext
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			searchContainer);
 
-		_itemSelectorViewDescriptor = itemSelectorViewDescriptor;
+		_itemSelectorViewDescriptorRendererDisplayContext =
+			itemSelectorViewDescriptorRendererDisplayContext;
+
+		_itemSelectorViewDescriptor =
+			itemSelectorViewDescriptorRendererDisplayContext.
+				getItemSelectorViewDescriptor();
 	}
 
 	@Override
@@ -80,11 +86,19 @@ public class ItemSelectorViewDescriptorRendererManagementToolbarDisplayContext
 	}
 
 	@Override
+	protected String getDisplayStyle() {
+		return _itemSelectorViewDescriptorRendererDisplayContext.
+			getDisplayStyle();
+	}
+
+	@Override
 	protected String[] getDisplayViews() {
 		return new String[] {"descriptive", "icon", "list"};
 	}
 
 	private final ItemSelectorViewDescriptor<Object>
 		_itemSelectorViewDescriptor;
+	private final ItemSelectorViewDescriptorRendererDisplayContext
+		_itemSelectorViewDescriptorRendererDisplayContext;
 
 }

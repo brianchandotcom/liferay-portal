@@ -94,7 +94,7 @@ public class TaskNodeExecutor extends BaseNodeExecutor {
 		return _kaleoTaskInstanceTokenLocalService.addKaleoTaskInstanceToken(
 			kaleoInstanceToken.getKaleoInstanceTokenId(),
 			kaleoTask.getKaleoTaskId(), kaleoTask.getName(),
-			_aggregateTaskAssignmentSelector.calculateTaskAssignments(
+			_aggregateTaskAssignmentSelector.getTaskAssignments(
 				kaleoTask.getKaleoTaskAssignments(), executionContext),
 			dueDate, workflowContext, serviceContext);
 	}

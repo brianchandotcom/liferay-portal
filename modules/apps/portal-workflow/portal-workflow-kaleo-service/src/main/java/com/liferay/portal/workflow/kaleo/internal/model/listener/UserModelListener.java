@@ -115,7 +115,7 @@ public class UserModelListener extends BaseModelListener<User> {
 			_kaleoTaskInstanceTokenLocalService.addKaleoTaskInstanceToken(
 				kaleoInstanceToken.getKaleoInstanceTokenId(),
 				kaleoTask.getKaleoTaskId(), kaleoTask.getName(),
-				_aggregateTaskAssignmentSelector.calculateTaskAssignments(
+				_aggregateTaskAssignmentSelector.getTaskAssignments(
 					kaleoTask.getKaleoTaskAssignments(), executionContext),
 				kaleoTaskInstanceToken.getDueDate(),
 				executionContext.getWorkflowContext(),

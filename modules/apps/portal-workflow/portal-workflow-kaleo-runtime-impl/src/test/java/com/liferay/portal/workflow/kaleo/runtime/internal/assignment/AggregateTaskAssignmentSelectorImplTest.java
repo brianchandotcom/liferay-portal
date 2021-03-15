@@ -64,7 +64,7 @@ public class AggregateTaskAssignmentSelectorImplTest {
 			assigneeClassNames.get(0), RandomTestUtil.randomLong());
 
 		Collection<KaleoTaskAssignment> kaleoTaskAssignments1 =
-			_aggregateTaskAssignmentSelector.calculateTaskAssignments(
+			_aggregateTaskAssignmentSelector.getTaskAssignments(
 				Arrays.asList(kaleoTaskAssignment1),
 				Mockito.mock(ExecutionContext.class));
 
@@ -75,7 +75,7 @@ public class AggregateTaskAssignmentSelectorImplTest {
 			assigneeClassNames.get(1), RandomTestUtil.randomLong());
 
 		Collection<KaleoTaskAssignment> kaleoTaskAssignments2 =
-			_aggregateTaskAssignmentSelector.calculateTaskAssignments(
+			_aggregateTaskAssignmentSelector.getTaskAssignments(
 				Arrays.asList(kaleoTaskAssignment2),
 				Mockito.mock(ExecutionContext.class));
 
@@ -83,7 +83,7 @@ public class AggregateTaskAssignmentSelectorImplTest {
 			kaleoTaskAssignments2.toString(), 2, kaleoTaskAssignments2.size());
 
 		Collection<KaleoTaskAssignment> kaleoTaskAssignments3 =
-			_aggregateTaskAssignmentSelector.calculateTaskAssignments(
+			_aggregateTaskAssignmentSelector.getTaskAssignments(
 				Arrays.asList(kaleoTaskAssignment1, kaleoTaskAssignment2),
 				Mockito.mock(ExecutionContext.class));
 

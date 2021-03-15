@@ -26,7 +26,7 @@ import java.util.List;
  */
 public interface AggregateTaskAssignmentSelector {
 
-	public Collection<KaleoTaskAssignment> calculateTaskAssignments(
+	public Collection<KaleoTaskAssignment> getTaskAssignments(
 			List<KaleoTaskAssignment> kaleoTaskAssignments,
 			ExecutionContext executionContext)
 		throws PortalException;

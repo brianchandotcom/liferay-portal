@@ -275,7 +275,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			long assignedUserId = _getAssignedUserId(workflowTaskId);
 
 			Collection<KaleoTaskAssignment> calculatedKaleoTaskAssignments =
-				_aggregateTaskAssignmentSelector.calculateTaskAssignments(
+				_aggregateTaskAssignmentSelector.getTaskAssignments(
 					_kaleoTaskAssignmentLocalService.getKaleoTaskAssignments(
 						kaleoTaskInstanceToken.getKaleoTaskId()),
 					_createExecutionContext(kaleoTaskInstanceToken));

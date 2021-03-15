@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -56,7 +55,6 @@ import com.liferay.translation.service.TranslationEntryLocalService;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.ActionRequest;
@@ -146,26 +144,6 @@ public class ViewDisplayContext {
 		return StringPool.BLANK;
 	}
 
-	public Map<String, Object> getComponentContext() {
-		return HashMapBuilder.<String, Object>put(
-			"deleteTranslationEntriesURL",
-			() -> {
-				PortletURL portletURL =
-					_liferayPortletResponse.createActionURL();
-
-				portletURL.setParameter(
-					ActionRequest.ACTION_NAME,
-					"/translation/delete_translation_entry");
-
-				return portletURL.toString();
-			}
-		).build();
-	}
-
-	public String getElementsDefaultEventHandler() {
-		return "translationEntryDefaultEventHandler";
-	}
-
 	public String getLanguageIcon(TranslationEntry translationEntry) {
 		return StringUtil.lowerCase(getLanguageLabel(translationEntry));
 	}
@@ -174,10 +152,6 @@ public class ViewDisplayContext {
 		return StringUtil.replace(
 			translationEntry.getLanguageId(), CharPool.UNDERLINE,
 			CharPool.DASH);
-	}
-
-	public String getManagementToolbarDefaultEventHandler() {
-		return "translationManagementToolbarDefaultEventHandler";
 	}
 
 	public SearchContainer<TranslationEntry> getSearchContainer()
@@ -284,9 +258,8 @@ public class ViewDisplayContext {
 		throws PortalException {
 
 		return new TranslationEntryManagementToolbarDisplayContext(
-			getManagementToolbarDefaultEventHandler(), _httpServletRequest,
-			_liferayPortletRequest, _liferayPortletResponse,
-			getSearchContainer());
+			_httpServletRequest, _liferayPortletRequest,
+			_liferayPortletResponse, getSearchContainer());
 	}
 
 	private BooleanClause[] _getBooleanClauses() {

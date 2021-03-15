@@ -87,9 +87,3 @@ ViewDisplayContext viewDisplayContext = (ViewDisplayContext)request.getAttribute
 		</liferay-ui:search-container>
 	</aui:form>
 </clay:container-fluid>
-
-<liferay-frontend:component
-	componentId="<%= viewDisplayContext.getManagementToolbarDefaultEventHandler() %>"
-	context="<%= viewDisplayContext.getComponentContext() %>"
-	module="js/translate/TranslationManagementToolbarDefaultEventHandler.es"
-/>

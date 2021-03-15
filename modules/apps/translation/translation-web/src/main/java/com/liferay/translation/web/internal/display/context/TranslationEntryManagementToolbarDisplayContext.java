@@ -48,7 +48,7 @@ public class TranslationEntryManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public TranslationEntryManagementToolbarDisplayContext(
-		String defaultEventHandler, HttpServletRequest httpServletRequest,
+		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		SearchContainer<?> searchContainer) {
@@ -56,8 +56,6 @@ public class TranslationEntryManagementToolbarDisplayContext
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			searchContainer);
-
-		_defaultEventHandler = defaultEventHandler;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -79,6 +77,7 @@ public class TranslationEntryManagementToolbarDisplayContext
 
 				dropdownItem.putData(
 					"delete-translation-entries-url", portletURL.toString());
+
 				dropdownItem.setIcon("times-circle");
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "delete"));
@@ -96,11 +95,6 @@ public class TranslationEntryManagementToolbarDisplayContext
 		portletURL.setParameter("orderByType", getOrderByType());
 
 		return portletURL.toString();
-	}
-
-	@Override
-	public String getDefaultEventHandler() {
-		return _defaultEventHandler;
 	}
 
 	@Override
@@ -209,7 +203,6 @@ public class TranslationEntryManagementToolbarDisplayContext
 		return statuses;
 	}
 
-	private final String _defaultEventHandler;
 	private Integer _status;
 	private final ThemeDisplay _themeDisplay;
 

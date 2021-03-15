@@ -88,9 +88,8 @@ public abstract class BaseAccountResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/accountGroups/by-externalReferenceCode/{externalReferenceCode}/accounts' -d $'{"accountAddresses": ___, "accountMembers": ___, "accountOrganizations": ___, "customFields": ___, "defaultBillingAccountAddressId": ___, "defaultShippingAccountAddressId": ___, "emailAddresses": ___, "externalReferenceCode": ___, "id": ___, "logoId": ___, "logoURL": ___, "name": ___, "root": ___, "taxId": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
@@ -99,11 +98,13 @@ public abstract class BaseAccountResourceImpl
 	@Path(
 		"/accountGroups/by-externalReferenceCode/{externalReferenceCode}/accounts"
 	)
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Account")})
 	public Response postAccountGroupByExternalReferenceCodeAccount(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode,
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode,
 			Account account)
 		throws Exception {
 
@@ -117,8 +118,8 @@ public abstract class BaseAccountResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/accountGroups/by-externalReferenceCode/{externalReferenceCode}/accounts/{accountExternalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(
@@ -134,10 +135,11 @@ public abstract class BaseAccountResourceImpl
 	@Tags(value = {@Tag(name = "Account")})
 	public Response deleteAccountGroupByExternalReferenceCodeAccount(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("accountExternalReferenceCode") String
-				accountExternalReferenceCode,
+			@PathParam("accountExternalReferenceCode")
+				String accountExternalReferenceCode,
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode)
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode)
 		throws Exception {
 
 		Response.ResponseBuilder responseBuilder = Response.ok();
@@ -150,8 +152,8 @@ public abstract class BaseAccountResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/accounts'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.QUERY, name = "search"),
@@ -178,10 +180,10 @@ public abstract class BaseAccountResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/accounts' -d $'{"accountAddresses": ___, "accountMembers": ___, "accountOrganizations": ___, "customFields": ___, "defaultBillingAccountAddressId": ___, "defaultShippingAccountAddressId": ___, "emailAddresses": ___, "externalReferenceCode": ___, "id": ___, "logoId": ___, "logoURL": ___, "name": ___, "root": ___, "taxId": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Path("/accounts")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Account")})
 	public Account postAccount(Account account) throws Exception {
@@ -193,18 +195,18 @@ public abstract class BaseAccountResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/accounts/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
 	@Path("/accounts/batch")
+	@POST
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Account")})
 	public Response postAccountBatch(
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -229,8 +231,8 @@ public abstract class BaseAccountResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/accounts/by-externalReferenceCode/{externalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
@@ -241,7 +243,8 @@ public abstract class BaseAccountResourceImpl
 	@Tags(value = {@Tag(name = "Account")})
 	public Response deleteAccountByExternalReferenceCode(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode)
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode)
 		throws Exception {
 
 		Response.ResponseBuilder responseBuilder = Response.ok();
@@ -254,8 +257,8 @@ public abstract class BaseAccountResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/accounts/by-externalReferenceCode/{externalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
@@ -266,7 +269,8 @@ public abstract class BaseAccountResourceImpl
 	@Tags(value = {@Tag(name = "Account")})
 	public Account getAccountByExternalReferenceCode(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode)
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode)
 		throws Exception {
 
 		return new Account();
@@ -277,20 +281,21 @@ public abstract class BaseAccountResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/accounts/by-externalReferenceCode/{externalReferenceCode}' -d $'{"accountAddresses": ___, "accountMembers": ___, "accountOrganizations": ___, "customFields": ___, "defaultBillingAccountAddressId": ___, "defaultShippingAccountAddressId": ___, "emailAddresses": ___, "externalReferenceCode": ___, "id": ___, "logoId": ___, "logoURL": ___, "name": ___, "root": ___, "taxId": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PATCH
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
 		}
 	)
+	@PATCH
 	@Path("/accounts/by-externalReferenceCode/{externalReferenceCode}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Account")})
 	public Response patchAccountByExternalReferenceCode(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode,
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode,
 			Account account)
 		throws Exception {
 
@@ -304,20 +309,21 @@ public abstract class BaseAccountResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/accounts/by-externalReferenceCode/{externalReferenceCode}/logo'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("multipart/form-data")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
 		}
 	)
 	@Path("/accounts/by-externalReferenceCode/{externalReferenceCode}/logo")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Account")})
 	public Response postAccountByExternalReferenceCodeLogo(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode,
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode,
 			MultipartBody multipartBody)
 		throws Exception {
 
@@ -331,8 +337,8 @@ public abstract class BaseAccountResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/accounts/{id}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/accounts/{id}")
 	@Produces({"application/json", "application/xml"})
@@ -351,9 +357,9 @@ public abstract class BaseAccountResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/accounts/{id}/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
 	@DELETE
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "id"),
@@ -365,8 +371,8 @@ public abstract class BaseAccountResourceImpl
 	@Tags(value = {@Tag(name = "Account")})
 	public Response deleteAccountBatch(
 			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -391,8 +397,8 @@ public abstract class BaseAccountResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/accounts/{id}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/accounts/{id}")
 	@Produces({"application/json", "application/xml"})
@@ -409,10 +415,10 @@ public abstract class BaseAccountResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/accounts/{id}' -d $'{"accountAddresses": ___, "accountMembers": ___, "accountOrganizations": ___, "customFields": ___, "defaultBillingAccountAddressId": ___, "defaultShippingAccountAddressId": ___, "emailAddresses": ___, "externalReferenceCode": ___, "id": ___, "logoId": ___, "logoURL": ___, "name": ___, "root": ___, "taxId": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PATCH
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
+	@PATCH
 	@Path("/accounts/{id}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Account")})
@@ -431,11 +437,11 @@ public abstract class BaseAccountResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/accounts/{id}/logo'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("multipart/form-data")
-	@POST
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/accounts/{id}/logo")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Account")})
 	public Response postAccountLogo(

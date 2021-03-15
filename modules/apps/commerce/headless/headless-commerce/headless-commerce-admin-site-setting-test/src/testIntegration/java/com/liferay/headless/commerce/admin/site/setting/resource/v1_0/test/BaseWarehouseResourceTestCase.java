@@ -220,7 +220,7 @@ public abstract class BaseWarehouseResourceTestCase {
 		Long irrelevantGroupId =
 			testGetCommerceAdminSiteSettingGroupWarehousePage_getIrrelevantGroupId();
 
-		if ((irrelevantGroupId != null)) {
+		if (irrelevantGroupId != null) {
 			Warehouse irrelevantWarehouse =
 				testGetCommerceAdminSiteSettingGroupWarehousePage_addWarehouse(
 					irrelevantGroupId, randomIrrelevantWarehouse());

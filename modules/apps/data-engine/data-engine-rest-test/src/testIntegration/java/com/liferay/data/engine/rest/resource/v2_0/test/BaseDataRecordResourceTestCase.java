@@ -208,7 +208,7 @@ public abstract class BaseDataRecordResourceTestCase {
 		Long irrelevantDataDefinitionId =
 			testGetDataDefinitionDataRecordsPage_getIrrelevantDataDefinitionId();
 
-		if ((irrelevantDataDefinitionId != null)) {
+		if (irrelevantDataDefinitionId != null) {
 			DataRecord irrelevantDataRecord =
 				testGetDataDefinitionDataRecordsPage_addDataRecord(
 					irrelevantDataDefinitionId, randomIrrelevantDataRecord());
@@ -477,7 +477,7 @@ public abstract class BaseDataRecordResourceTestCase {
 		Long irrelevantDataRecordCollectionId =
 			testGetDataRecordCollectionDataRecordsPage_getIrrelevantDataRecordCollectionId();
 
-		if ((irrelevantDataRecordCollectionId != null)) {
+		if (irrelevantDataRecordCollectionId != null) {
 			DataRecord irrelevantDataRecord =
 				testGetDataRecordCollectionDataRecordsPage_addDataRecord(
 					irrelevantDataRecordCollectionId,

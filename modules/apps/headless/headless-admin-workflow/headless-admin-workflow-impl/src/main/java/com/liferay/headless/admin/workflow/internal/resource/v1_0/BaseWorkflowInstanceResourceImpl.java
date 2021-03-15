@@ -73,8 +73,8 @@ public abstract class BaseWorkflowInstanceResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-instances'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.QUERY, name = "assetClassName"),
@@ -88,12 +88,12 @@ public abstract class BaseWorkflowInstanceResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "WorkflowInstance")})
 	public Page<WorkflowInstance> getWorkflowInstancesPage(
-			@Parameter(hidden = true) @QueryParam("assetClassName") String
-				assetClassName,
-			@Parameter(hidden = true) @QueryParam("assetPrimaryKey") Long
-				assetPrimaryKey,
-			@Parameter(hidden = true) @QueryParam("completed") Boolean
-				completed,
+			@Parameter(hidden = true) @QueryParam("assetClassName")
+				String assetClassName,
+			@Parameter(hidden = true) @QueryParam("assetPrimaryKey")
+				Long assetPrimaryKey,
+			@Parameter(hidden = true) @QueryParam("completed")
+				Boolean completed,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -105,10 +105,10 @@ public abstract class BaseWorkflowInstanceResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-instances/submit' -d $'{"context": ___, "siteId": ___, "transitionName": ___, "workflowDefinitionName": ___, "workflowDefinitionVersion": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Path("/workflow-instances/submit")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "WorkflowInstance")})
 	public WorkflowInstance postWorkflowInstanceSubmit(
@@ -123,8 +123,8 @@ public abstract class BaseWorkflowInstanceResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-instances/{workflowInstanceId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "workflowInstanceId")}
 	)
@@ -142,8 +142,8 @@ public abstract class BaseWorkflowInstanceResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-instances/{workflowInstanceId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "workflowInstanceId")}
 	)
@@ -163,13 +163,13 @@ public abstract class BaseWorkflowInstanceResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-instances/{workflowInstanceId}/change-transition' -d $'{"comment": ___, "transitionName": ___, "workflowTaskId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "workflowInstanceId")}
 	)
 	@Path("/workflow-instances/{workflowInstanceId}/change-transition")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "WorkflowInstance")})
 	public WorkflowInstance postWorkflowInstanceChangeTransition(

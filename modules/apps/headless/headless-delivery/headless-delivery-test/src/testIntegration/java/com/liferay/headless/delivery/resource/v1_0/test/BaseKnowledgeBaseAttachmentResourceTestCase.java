@@ -225,7 +225,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 		Long irrelevantKnowledgeBaseArticleId =
 			testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_getIrrelevantKnowledgeBaseArticleId();
 
-		if ((irrelevantKnowledgeBaseArticleId != null)) {
+		if (irrelevantKnowledgeBaseArticleId != null) {
 			KnowledgeBaseAttachment irrelevantKnowledgeBaseAttachment =
 				testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_addKnowledgeBaseAttachment(
 					irrelevantKnowledgeBaseArticleId,

@@ -67,11 +67,11 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/bulk/v1.0/sites/{siteId}/taxonomy-vocabularies/common' -d $'{"documentIds": ___, "selectionScope": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "siteId")})
 	@Path("/sites/{siteId}/taxonomy-vocabularies/common")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
 	public Page<TaxonomyVocabulary> postSiteTaxonomyVocabulariesCommonPage(

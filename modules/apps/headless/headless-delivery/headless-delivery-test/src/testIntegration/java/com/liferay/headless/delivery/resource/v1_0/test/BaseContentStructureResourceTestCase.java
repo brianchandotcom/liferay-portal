@@ -233,7 +233,7 @@ public abstract class BaseContentStructureResourceTestCase {
 		Long irrelevantAssetLibraryId =
 			testGetAssetLibraryContentStructuresPage_getIrrelevantAssetLibraryId();
 
-		if ((irrelevantAssetLibraryId != null)) {
+		if (irrelevantAssetLibraryId != null) {
 			ContentStructure irrelevantContentStructure =
 				testGetAssetLibraryContentStructuresPage_addContentStructure(
 					irrelevantAssetLibraryId,
@@ -626,7 +626,7 @@ public abstract class BaseContentStructureResourceTestCase {
 		Long irrelevantSiteId =
 			testGetSiteContentStructuresPage_getIrrelevantSiteId();
 
-		if ((irrelevantSiteId != null)) {
+		if (irrelevantSiteId != null) {
 			ContentStructure irrelevantContentStructure =
 				testGetSiteContentStructuresPage_addContentStructure(
 					irrelevantSiteId, randomIrrelevantContentStructure());

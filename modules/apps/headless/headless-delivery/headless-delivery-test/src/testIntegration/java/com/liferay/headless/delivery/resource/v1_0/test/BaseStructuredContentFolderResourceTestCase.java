@@ -246,7 +246,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 		Long irrelevantAssetLibraryId =
 			testGetAssetLibraryStructuredContentFoldersPage_getIrrelevantAssetLibraryId();
 
-		if ((irrelevantAssetLibraryId != null)) {
+		if (irrelevantAssetLibraryId != null) {
 			StructuredContentFolder irrelevantStructuredContentFolder =
 				testGetAssetLibraryStructuredContentFoldersPage_addStructuredContentFolder(
 					irrelevantAssetLibraryId,
@@ -632,7 +632,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 		Long irrelevantSiteId =
 			testGetSiteStructuredContentFoldersPage_getIrrelevantSiteId();
 
-		if ((irrelevantSiteId != null)) {
+		if (irrelevantSiteId != null) {
 			StructuredContentFolder irrelevantStructuredContentFolder =
 				testGetSiteStructuredContentFoldersPage_addStructuredContentFolder(
 					irrelevantSiteId,
@@ -1064,7 +1064,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 		Long irrelevantParentStructuredContentFolderId =
 			testGetStructuredContentFolderStructuredContentFoldersPage_getIrrelevantParentStructuredContentFolderId();
 
-		if ((irrelevantParentStructuredContentFolderId != null)) {
+		if (irrelevantParentStructuredContentFolderId != null) {
 			StructuredContentFolder irrelevantStructuredContentFolder =
 				testGetStructuredContentFolderStructuredContentFoldersPage_addStructuredContentFolder(
 					irrelevantParentStructuredContentFolderId,

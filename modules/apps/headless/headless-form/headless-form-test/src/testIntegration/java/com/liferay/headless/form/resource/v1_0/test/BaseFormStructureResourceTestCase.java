@@ -271,7 +271,7 @@ public abstract class BaseFormStructureResourceTestCase {
 		Long irrelevantSiteId =
 			testGetSiteFormStructuresPage_getIrrelevantSiteId();
 
-		if ((irrelevantSiteId != null)) {
+		if (irrelevantSiteId != null) {
 			FormStructure irrelevantFormStructure =
 				testGetSiteFormStructuresPage_addFormStructure(
 					irrelevantSiteId, randomIrrelevantFormStructure());

@@ -74,7 +74,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseExperimentResourceImpl
-	implements ExperimentResource, EntityModelResource,
+	implements EntityModelResource, ExperimentResource,
 			   VulcanBatchEngineTaskItemDelegate<Experiment> {
 
 	/**
@@ -82,8 +82,8 @@ public abstract class BaseExperimentResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/segments-asah/v1.0/experiments/{experimentId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "experimentId")}
 	)
@@ -91,8 +91,8 @@ public abstract class BaseExperimentResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Experiment")})
 	public void deleteExperiment(
-			@NotNull @Parameter(hidden = true) @PathParam("experimentId") String
-				experimentId)
+			@NotNull @Parameter(hidden = true) @PathParam("experimentId")
+				String experimentId)
 		throws Exception {
 	}
 
@@ -101,9 +101,9 @@ public abstract class BaseExperimentResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/segments-asah/v1.0/experiments/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
 	@DELETE
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
@@ -111,8 +111,8 @@ public abstract class BaseExperimentResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Experiment")})
 	public Response deleteExperimentBatch(
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -137,8 +137,8 @@ public abstract class BaseExperimentResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/segments-asah/v1.0/experiments/{experimentId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "experimentId")}
 	)
@@ -146,8 +146,8 @@ public abstract class BaseExperimentResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Experiment")})
 	public Experiment getExperiment(
-			@NotNull @Parameter(hidden = true) @PathParam("experimentId") String
-				experimentId)
+			@NotNull @Parameter(hidden = true) @PathParam("experimentId")
+				String experimentId)
 		throws Exception {
 
 		return new Experiment();

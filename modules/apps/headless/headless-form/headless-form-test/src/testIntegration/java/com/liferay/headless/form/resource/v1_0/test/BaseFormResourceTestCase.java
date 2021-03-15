@@ -264,7 +264,7 @@ public abstract class BaseFormResourceTestCase {
 		Long siteId = testGetSiteFormsPage_getSiteId();
 		Long irrelevantSiteId = testGetSiteFormsPage_getIrrelevantSiteId();
 
-		if ((irrelevantSiteId != null)) {
+		if (irrelevantSiteId != null) {
 			Form irrelevantForm = testGetSiteFormsPage_addForm(
 				irrelevantSiteId, randomIrrelevantForm());
 

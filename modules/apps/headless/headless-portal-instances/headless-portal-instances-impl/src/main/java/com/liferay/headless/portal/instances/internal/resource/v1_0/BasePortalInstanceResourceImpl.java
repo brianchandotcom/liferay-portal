@@ -72,9 +72,9 @@ public abstract class BasePortalInstanceResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-portal-instances/v1.0/portal-instances'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrieves the portal instances")
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "skipDefault")}
 	)
@@ -82,8 +82,8 @@ public abstract class BasePortalInstanceResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "PortalInstance")})
 	public Page<PortalInstance> getPortalInstancesPage(
-			@Parameter(hidden = true) @QueryParam("skipDefault") Boolean
-				skipDefault)
+			@Parameter(hidden = true) @QueryParam("skipDefault")
+				Boolean skipDefault)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -94,19 +94,19 @@ public abstract class BasePortalInstanceResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-portal-instances/v1.0/portal-instances' -d $'{"companyId": ___, "domain": ___, "portalInstanceId": ___, "virtualHost": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(description = "Adds a new portal instance")
-	@POST
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "initializerKey")}
 	)
 	@Path("/portal-instances")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "PortalInstance")})
 	public PortalInstance postPortalInstance(
-			@Parameter(hidden = true) @QueryParam("initializerKey") String
-				initializerKey,
+			@Parameter(hidden = true) @QueryParam("initializerKey")
+				String initializerKey,
 			PortalInstance portalInstance)
 		throws Exception {
 
@@ -118,9 +118,9 @@ public abstract class BasePortalInstanceResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-portal-instances/v1.0/portal-instances/{portalInstanceId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
 	@Operation(description = "Removes the portal instance")
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "portalInstanceId")}
 	)
@@ -138,9 +138,9 @@ public abstract class BasePortalInstanceResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-portal-instances/v1.0/portal-instances/{portalInstanceId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrieves the portal instance")
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "portalInstanceId")}
 	)
@@ -160,15 +160,15 @@ public abstract class BasePortalInstanceResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-portal-instances/v1.0/portal-instances/{portalInstanceId}' -d $'{"companyId": ___, "domain": ___, "portalInstanceId": ___, "virtualHost": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
 		description = "Updates the portal instance with information sent in the request body. Only the provided fields are updated."
 	)
-	@PATCH
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "portalInstanceId")}
 	)
+	@PATCH
 	@Path("/portal-instances/{portalInstanceId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "PortalInstance")})
@@ -186,14 +186,14 @@ public abstract class BasePortalInstanceResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-portal-instances/v1.0/portal-instances/{portalInstanceId}/activate'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Operation(description = "Activates the portal instance")
-	@PUT
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "portalInstanceId")}
 	)
 	@Path("/portal-instances/{portalInstanceId}/activate")
 	@Produces({"application/json", "application/xml"})
+	@PUT
 	@Tags(value = {@Tag(name = "PortalInstance")})
 	public void putPortalInstanceActivate(
 			@NotNull @Parameter(hidden = true) @PathParam("portalInstanceId")
@@ -206,16 +206,16 @@ public abstract class BasePortalInstanceResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-portal-instances/v1.0/portal-instances/{portalInstanceId}/deactivate'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Operation(
 		description = "Deactivates the portal instance. When a portal instance is deactivated, its virtual host will not longer respond requests."
 	)
-	@PUT
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "portalInstanceId")}
 	)
 	@Path("/portal-instances/{portalInstanceId}/deactivate")
 	@Produces({"application/json", "application/xml"})
+	@PUT
 	@Tags(value = {@Tag(name = "PortalInstance")})
 	public void putPortalInstanceDeactivate(
 			@NotNull @Parameter(hidden = true) @PathParam("portalInstanceId")

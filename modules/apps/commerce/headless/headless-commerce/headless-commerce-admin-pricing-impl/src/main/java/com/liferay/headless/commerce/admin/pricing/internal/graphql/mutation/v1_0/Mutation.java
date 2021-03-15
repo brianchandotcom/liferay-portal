@@ -247,10 +247,10 @@ public class Mutation {
 	@GraphQLField
 	public DiscountAccountGroup
 			createDiscountByExternalReferenceCodeDiscountAccountGroup(
-				@GraphQLName("externalReferenceCode") String
-					externalReferenceCode,
-				@GraphQLName("discountAccountGroup") DiscountAccountGroup
-					discountAccountGroup)
+				@GraphQLName("externalReferenceCode")
+					String externalReferenceCode,
+				@GraphQLName("discountAccountGroup")
+					DiscountAccountGroup discountAccountGroup)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -265,8 +265,8 @@ public class Mutation {
 	@GraphQLField
 	public DiscountAccountGroup createDiscountIdDiscountAccountGroup(
 			@GraphQLName("id") Long id,
-			@GraphQLName("discountAccountGroup") DiscountAccountGroup
-				discountAccountGroup)
+			@GraphQLName("discountAccountGroup")
+				DiscountAccountGroup discountAccountGroup)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -322,10 +322,10 @@ public class Mutation {
 	@GraphQLField
 	public DiscountCategory
 			createDiscountByExternalReferenceCodeDiscountCategory(
-				@GraphQLName("externalReferenceCode") String
-					externalReferenceCode,
-				@GraphQLName("discountCategory") DiscountCategory
-					discountCategory)
+				@GraphQLName("externalReferenceCode")
+					String externalReferenceCode,
+				@GraphQLName("discountCategory")
+					DiscountCategory discountCategory)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -743,10 +743,10 @@ public class Mutation {
 	@GraphQLField
 	public PriceListAccountGroup
 			createPriceListByExternalReferenceCodePriceListAccountGroup(
-				@GraphQLName("externalReferenceCode") String
-					externalReferenceCode,
-				@GraphQLName("priceListAccountGroup") PriceListAccountGroup
-					priceListAccountGroup)
+				@GraphQLName("externalReferenceCode")
+					String externalReferenceCode,
+				@GraphQLName("priceListAccountGroup")
+					PriceListAccountGroup priceListAccountGroup)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -761,8 +761,8 @@ public class Mutation {
 	@GraphQLField
 	public PriceListAccountGroup createPriceListIdPriceListAccountGroup(
 			@GraphQLName("id") Long id,
-			@GraphQLName("priceListAccountGroup") PriceListAccountGroup
-				priceListAccountGroup)
+			@GraphQLName("priceListAccountGroup")
+				PriceListAccountGroup priceListAccountGroup)
 		throws Exception {
 
 		return _applyComponentServiceObjects(

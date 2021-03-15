@@ -509,7 +509,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		Long irrelevantParentMessageBoardMessageId =
 			testGetMessageBoardMessageMessageBoardMessagesPage_getIrrelevantParentMessageBoardMessageId();
 
-		if ((irrelevantParentMessageBoardMessageId != null)) {
+		if (irrelevantParentMessageBoardMessageId != null) {
 			MessageBoardMessage irrelevantMessageBoardMessage =
 				testGetMessageBoardMessageMessageBoardMessagesPage_addMessageBoardMessage(
 					irrelevantParentMessageBoardMessageId,
@@ -893,7 +893,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		Long irrelevantMessageBoardThreadId =
 			testGetMessageBoardThreadMessageBoardMessagesPage_getIrrelevantMessageBoardThreadId();
 
-		if ((irrelevantMessageBoardThreadId != null)) {
+		if (irrelevantMessageBoardThreadId != null) {
 			MessageBoardMessage irrelevantMessageBoardMessage =
 				testGetMessageBoardThreadMessageBoardMessagesPage_addMessageBoardMessage(
 					irrelevantMessageBoardThreadId,
@@ -1273,7 +1273,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		Long irrelevantSiteId =
 			testGetSiteMessageBoardMessagesPage_getIrrelevantSiteId();
 
-		if ((irrelevantSiteId != null)) {
+		if (irrelevantSiteId != null) {
 			MessageBoardMessage irrelevantMessageBoardMessage =
 				testGetSiteMessageBoardMessagesPage_addMessageBoardMessage(
 					irrelevantSiteId, randomIrrelevantMessageBoardMessage());

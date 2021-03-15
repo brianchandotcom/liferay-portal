@@ -78,7 +78,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseOrderNoteResourceImpl
-	implements OrderNoteResource, EntityModelResource,
+	implements EntityModelResource, OrderNoteResource,
 			   VulcanBatchEngineTaskItemDelegate<OrderNote> {
 
 	/**
@@ -86,8 +86,8 @@ public abstract class BaseOrderNoteResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orderNotes/by-externalReferenceCode/{externalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
@@ -98,7 +98,8 @@ public abstract class BaseOrderNoteResourceImpl
 	@Tags(value = {@Tag(name = "OrderNote")})
 	public Response deleteOrderNoteByExternalReferenceCode(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode)
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode)
 		throws Exception {
 
 		Response.ResponseBuilder responseBuilder = Response.ok();
@@ -111,8 +112,8 @@ public abstract class BaseOrderNoteResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orderNotes/by-externalReferenceCode/{externalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
@@ -123,7 +124,8 @@ public abstract class BaseOrderNoteResourceImpl
 	@Tags(value = {@Tag(name = "OrderNote")})
 	public OrderNote getOrderNoteByExternalReferenceCode(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode)
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode)
 		throws Exception {
 
 		return new OrderNote();
@@ -134,20 +136,21 @@ public abstract class BaseOrderNoteResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orderNotes/by-externalReferenceCode/{externalReferenceCode}' -d $'{"author": ___, "content": ___, "externalReferenceCode": ___, "id": ___, "orderExternalReferenceCode": ___, "orderId": ___, "restricted": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PATCH
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
 		}
 	)
+	@PATCH
 	@Path("/orderNotes/by-externalReferenceCode/{externalReferenceCode}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "OrderNote")})
 	public Response patchOrderNoteByExternalReferenceCode(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode,
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode,
 			OrderNote orderNote)
 		throws Exception {
 
@@ -161,8 +164,8 @@ public abstract class BaseOrderNoteResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orderNotes/{id}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/orderNotes/{id}")
 	@Produces({"application/json", "application/xml"})
@@ -181,9 +184,9 @@ public abstract class BaseOrderNoteResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orderNotes/{id}/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
 	@DELETE
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "id"),
@@ -195,8 +198,8 @@ public abstract class BaseOrderNoteResourceImpl
 	@Tags(value = {@Tag(name = "OrderNote")})
 	public Response deleteOrderNoteBatch(
 			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -221,8 +224,8 @@ public abstract class BaseOrderNoteResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orderNotes/{id}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/orderNotes/{id}")
 	@Produces({"application/json", "application/xml"})
@@ -239,10 +242,10 @@ public abstract class BaseOrderNoteResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orderNotes/{id}' -d $'{"author": ___, "content": ___, "externalReferenceCode": ___, "id": ___, "orderExternalReferenceCode": ___, "orderId": ___, "restricted": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PATCH
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
+	@PATCH
 	@Path("/orderNotes/{id}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "OrderNote")})
@@ -261,8 +264,8 @@ public abstract class BaseOrderNoteResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/by-externalReferenceCode/{externalReferenceCode}/orderNotes'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode"),
@@ -275,7 +278,8 @@ public abstract class BaseOrderNoteResourceImpl
 	@Tags(value = {@Tag(name = "OrderNote")})
 	public Page<OrderNote> getOrderByExternalReferenceCodeOrderNotesPage(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode,
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -287,20 +291,21 @@ public abstract class BaseOrderNoteResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/by-externalReferenceCode/{externalReferenceCode}/orderNotes' -d $'{"author": ___, "content": ___, "externalReferenceCode": ___, "id": ___, "orderExternalReferenceCode": ___, "orderId": ___, "restricted": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
 		}
 	)
 	@Path("/orders/by-externalReferenceCode/{externalReferenceCode}/orderNotes")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "OrderNote")})
 	public OrderNote postOrderByExternalReferenceCodeOrderNote(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode,
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode,
 			OrderNote orderNote)
 		throws Exception {
 
@@ -312,8 +317,8 @@ public abstract class BaseOrderNoteResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/{id}/orderNotes'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "id"),
@@ -337,11 +342,11 @@ public abstract class BaseOrderNoteResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/{id}/orderNotes' -d $'{"author": ___, "content": ___, "externalReferenceCode": ___, "id": ___, "orderExternalReferenceCode": ___, "orderId": ___, "restricted": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/orders/{id}/orderNotes")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "OrderNote")})
 	public OrderNote postOrderIdOrderNote(
@@ -357,9 +362,8 @@ public abstract class BaseOrderNoteResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/{id}/orderNotes/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "id"),
@@ -367,12 +371,13 @@ public abstract class BaseOrderNoteResourceImpl
 		}
 	)
 	@Path("/orders/{id}/orderNotes/batch")
+	@POST
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "OrderNote")})
 	public Response postOrderIdOrderNoteBatch(
 			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 

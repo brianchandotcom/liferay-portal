@@ -54,8 +54,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @GraphQLName("MessageBoardThread")
 @JsonFilter("Liferay.Vulcan")
 @Schema(
-	requiredProperties = {"headline"},
-	description = "Represents a discussion thread in a message board."
+	description = "Represents a discussion thread in a message board.",
+	requiredProperties = {"headline"}
 )
 @XmlRootElement(name = "MessageBoardThread")
 public class MessageBoardThread implements Serializable {

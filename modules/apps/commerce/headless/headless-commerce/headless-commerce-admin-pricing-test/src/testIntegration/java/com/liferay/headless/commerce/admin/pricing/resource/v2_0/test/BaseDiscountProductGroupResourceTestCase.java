@@ -234,7 +234,7 @@ public abstract class BaseDiscountProductGroupResourceTestCase {
 		String irrelevantExternalReferenceCode =
 			testGetDiscountByExternalReferenceCodeDiscountProductGroupsPage_getIrrelevantExternalReferenceCode();
 
-		if ((irrelevantExternalReferenceCode != null)) {
+		if (irrelevantExternalReferenceCode != null) {
 			DiscountProductGroup irrelevantDiscountProductGroup =
 				testGetDiscountByExternalReferenceCodeDiscountProductGroupsPage_addDiscountProductGroup(
 					irrelevantExternalReferenceCode,
@@ -393,7 +393,7 @@ public abstract class BaseDiscountProductGroupResourceTestCase {
 		Long irrelevantId =
 			testGetDiscountIdDiscountProductGroupsPage_getIrrelevantId();
 
-		if ((irrelevantId != null)) {
+		if (irrelevantId != null) {
 			DiscountProductGroup irrelevantDiscountProductGroup =
 				testGetDiscountIdDiscountProductGroupsPage_addDiscountProductGroup(
 					irrelevantId, randomIrrelevantDiscountProductGroup());

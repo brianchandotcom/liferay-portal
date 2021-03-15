@@ -73,7 +73,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseProductConfigurationResourceImpl
-	implements ProductConfigurationResource, EntityModelResource,
+	implements EntityModelResource, ProductConfigurationResource,
 			   VulcanBatchEngineTaskItemDelegate<ProductConfiguration> {
 
 	/**
@@ -81,8 +81,8 @@ public abstract class BaseProductConfigurationResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/configuration'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
@@ -95,7 +95,8 @@ public abstract class BaseProductConfigurationResourceImpl
 	@Tags(value = {@Tag(name = "ProductConfiguration")})
 	public ProductConfiguration getProductByExternalReferenceCodeConfiguration(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode)
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode)
 		throws Exception {
 
 		return new ProductConfiguration();
@@ -106,14 +107,14 @@ public abstract class BaseProductConfigurationResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/configuration' -d $'{"allowBackOrder": ___, "allowedOrderQuantities": ___, "displayAvailability": ___, "displayStockQuantity": ___, "inventoryEngine": ___, "lowStockAction": ___, "maxOrderQuantity": ___, "minOrderQuantity": ___, "minStockQuantity": ___, "multipleOrderQuantity": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PATCH
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
 		}
 	)
+	@PATCH
 	@Path(
 		"/products/by-externalReferenceCode/{externalReferenceCode}/configuration"
 	)
@@ -121,7 +122,8 @@ public abstract class BaseProductConfigurationResourceImpl
 	@Tags(value = {@Tag(name = "ProductConfiguration")})
 	public Response patchProductByExternalReferenceCodeConfiguration(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode,
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode,
 			ProductConfiguration productConfiguration)
 		throws Exception {
 
@@ -135,8 +137,8 @@ public abstract class BaseProductConfigurationResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}/configuration'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/products/{id}/configuration")
 	@Produces({"application/json", "application/xml"})
@@ -153,10 +155,10 @@ public abstract class BaseProductConfigurationResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}/configuration' -d $'{"allowBackOrder": ___, "allowedOrderQuantities": ___, "displayAvailability": ___, "displayStockQuantity": ___, "inventoryEngine": ___, "lowStockAction": ___, "maxOrderQuantity": ___, "minOrderQuantity": ___, "minStockQuantity": ___, "multipleOrderQuantity": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PATCH
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
+	@PATCH
 	@Path("/products/{id}/configuration")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ProductConfiguration")})

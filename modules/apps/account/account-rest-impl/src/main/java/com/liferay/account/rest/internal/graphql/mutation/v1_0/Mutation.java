@@ -211,11 +211,11 @@ public class Mutation {
 
 	@GraphQLField(description = "Unassigns account users to the account role")
 	public boolean deleteAccountRoleUserAssociationByExternalReferenceCode(
-			@GraphQLName("accountExternalReferenceCode") String
-				accountExternalReferenceCode,
+			@GraphQLName("accountExternalReferenceCode")
+				String accountExternalReferenceCode,
 			@GraphQLName("accountRoleId") Long accountRoleId,
-			@GraphQLName("accountUserExternalReferenceCode") String
-				accountUserExternalReferenceCode)
+			@GraphQLName("accountUserExternalReferenceCode")
+				String accountUserExternalReferenceCode)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -232,11 +232,11 @@ public class Mutation {
 
 	@GraphQLField(description = "Assigns account users to the account role")
 	public boolean createAccountRoleUserAssociationByExternalReferenceCode(
-			@GraphQLName("accountExternalReferenceCode") String
-				accountExternalReferenceCode,
+			@GraphQLName("accountExternalReferenceCode")
+				String accountExternalReferenceCode,
 			@GraphQLName("accountRoleId") Long accountRoleId,
-			@GraphQLName("accountUserExternalReferenceCode") String
-				accountUserExternalReferenceCode)
+			@GraphQLName("accountUserExternalReferenceCode")
+				String accountUserExternalReferenceCode)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(

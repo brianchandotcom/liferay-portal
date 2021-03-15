@@ -119,8 +119,8 @@ public class Mutation {
 
 	@GraphQLField
 	public Response deleteAccountGroupByExternalReferenceCodeAccount(
-			@GraphQLName("accountExternalReferenceCode") String
-				accountExternalReferenceCode,
+			@GraphQLName("accountExternalReferenceCode")
+				String accountExternalReferenceCode,
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
 
@@ -185,8 +185,8 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLName(
-		value = "postAccountByExternalReferenceCodeLogoExternalReferenceCodeMultipartBody",
-		description = "null"
+		description = "null",
+		value = "postAccountByExternalReferenceCodeLogoExternalReferenceCodeMultipartBody"
 	)
 	public Response createAccountByExternalReferenceCodeLogo(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
@@ -235,7 +235,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	@GraphQLName(value = "postAccountLogoIdMultipartBody", description = "null")
+	@GraphQLName(description = "null", value = "postAccountLogoIdMultipartBody")
 	public Response createAccountLogo(
 			@GraphQLName("id") Long id,
 			@GraphQLName("multipartBody") MultipartBody multipartBody)
@@ -583,10 +583,10 @@ public class Mutation {
 	@GraphQLField
 	public AccountOrganization
 			createAccountByExternalReferenceCodeAccountOrganization(
-				@GraphQLName("externalReferenceCode") String
-					externalReferenceCode,
-				@GraphQLName("accountOrganization") AccountOrganization
-					accountOrganization)
+				@GraphQLName("externalReferenceCode")
+					String externalReferenceCode,
+				@GraphQLName("accountOrganization")
+					AccountOrganization accountOrganization)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -616,8 +616,8 @@ public class Mutation {
 	@GraphQLField
 	public AccountOrganization createAccountIdAccountOrganization(
 			@GraphQLName("id") Long id,
-			@GraphQLName("accountOrganization") AccountOrganization
-				accountOrganization)
+			@GraphQLName("accountOrganization")
+				AccountOrganization accountOrganization)
 		throws Exception {
 
 		return _applyComponentServiceObjects(

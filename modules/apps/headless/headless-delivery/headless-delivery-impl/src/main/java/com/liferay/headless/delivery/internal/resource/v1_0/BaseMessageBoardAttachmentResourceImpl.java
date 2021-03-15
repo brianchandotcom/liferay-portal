@@ -78,7 +78,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseMessageBoardAttachmentResourceImpl
-	implements MessageBoardAttachmentResource, EntityModelResource,
+	implements EntityModelResource, MessageBoardAttachmentResource,
 			   VulcanBatchEngineTaskItemDelegate<MessageBoardAttachment> {
 
 	/**
@@ -86,11 +86,11 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-attachments/{messageBoardAttachmentId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
 	@Operation(
 		description = "Deletes the message board attachment and returns a 204 if the operation succeeds."
 	)
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "messageBoardAttachmentId")
@@ -101,8 +101,8 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 	@Tags(value = {@Tag(name = "MessageBoardAttachment")})
 	public void deleteMessageBoardAttachment(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("messageBoardAttachmentId") Long
-				messageBoardAttachmentId)
+			@PathParam("messageBoardAttachmentId")
+				Long messageBoardAttachmentId)
 		throws Exception {
 	}
 
@@ -111,9 +111,9 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-attachments/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
 	@DELETE
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
@@ -121,8 +121,8 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "MessageBoardAttachment")})
 	public Response deleteMessageBoardAttachmentBatch(
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -147,9 +147,9 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-attachments/{messageBoardAttachmentId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrieves the message board attachment.")
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "messageBoardAttachmentId")
@@ -160,8 +160,8 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 	@Tags(value = {@Tag(name = "MessageBoardAttachment")})
 	public MessageBoardAttachment getMessageBoardAttachment(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("messageBoardAttachmentId") Long
-				messageBoardAttachmentId)
+			@PathParam("messageBoardAttachmentId")
+				Long messageBoardAttachmentId)
 		throws Exception {
 
 		return new MessageBoardAttachment();
@@ -172,11 +172,11 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-messages/{messageBoardMessageId}/message-board-attachments'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(
 		description = "Retrieves the message board message's attachments."
 	)
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "messageBoardMessageId")
@@ -190,7 +190,8 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 	public Page<MessageBoardAttachment>
 			getMessageBoardMessageMessageBoardAttachmentsPage(
 				@NotNull @Parameter(hidden = true)
-				@PathParam("messageBoardMessageId") Long messageBoardMessageId)
+				@PathParam("messageBoardMessageId")
+					Long messageBoardMessageId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -201,12 +202,11 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-messages/{messageBoardMessageId}/message-board-attachments'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("multipart/form-data")
 	@Operation(
 		description = "Creates an attachment for the message board message. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`MessageBoardAttachment`) with the metadata."
 	)
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "messageBoardMessageId")
@@ -215,11 +215,13 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 	@Path(
 		"/message-board-messages/{messageBoardMessageId}/message-board-attachments"
 	)
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MessageBoardAttachment")})
 	public MessageBoardAttachment postMessageBoardMessageMessageBoardAttachment(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("messageBoardMessageId") Long messageBoardMessageId,
+			@PathParam("messageBoardMessageId")
+				Long messageBoardMessageId,
 			MultipartBody multipartBody)
 		throws Exception {
 
@@ -231,9 +233,8 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-messages/{messageBoardMessageId}/message-board-attachments/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "messageBoardMessageId"),
@@ -243,14 +244,16 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 	@Path(
 		"/message-board-messages/{messageBoardMessageId}/message-board-attachments/batch"
 	)
+	@POST
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "MessageBoardAttachment")})
 	public Response postMessageBoardMessageMessageBoardAttachmentBatch(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("messageBoardMessageId") Long messageBoardMessageId,
+			@PathParam("messageBoardMessageId")
+				Long messageBoardMessageId,
 			MultipartBody multipartBody,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -276,11 +279,11 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}/message-board-attachments'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(
 		description = "Retrieves the message board thread's attachments."
 	)
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "messageBoardThreadId")
@@ -294,7 +297,8 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 	public Page<MessageBoardAttachment>
 			getMessageBoardThreadMessageBoardAttachmentsPage(
 				@NotNull @Parameter(hidden = true)
-				@PathParam("messageBoardThreadId") Long messageBoardThreadId)
+				@PathParam("messageBoardThreadId")
+					Long messageBoardThreadId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -305,12 +309,11 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}/message-board-attachments'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("multipart/form-data")
 	@Operation(
 		description = "Creates a new attachment for the message board thread. The request body should be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`knowledgeBaseAttachment`) with the metadata."
 	)
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "messageBoardThreadId")
@@ -319,11 +322,13 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 	@Path(
 		"/message-board-threads/{messageBoardThreadId}/message-board-attachments"
 	)
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MessageBoardAttachment")})
 	public MessageBoardAttachment postMessageBoardThreadMessageBoardAttachment(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("messageBoardThreadId") Long messageBoardThreadId,
+			@PathParam("messageBoardThreadId")
+				Long messageBoardThreadId,
 			MultipartBody multipartBody)
 		throws Exception {
 
@@ -335,9 +340,8 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}/message-board-attachments/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "messageBoardThreadId"),
@@ -347,14 +351,16 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 	@Path(
 		"/message-board-threads/{messageBoardThreadId}/message-board-attachments/batch"
 	)
+	@POST
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "MessageBoardAttachment")})
 	public Response postMessageBoardThreadMessageBoardAttachmentBatch(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("messageBoardThreadId") Long messageBoardThreadId,
+			@PathParam("messageBoardThreadId")
+				Long messageBoardThreadId,
 			MultipartBody multipartBody,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 

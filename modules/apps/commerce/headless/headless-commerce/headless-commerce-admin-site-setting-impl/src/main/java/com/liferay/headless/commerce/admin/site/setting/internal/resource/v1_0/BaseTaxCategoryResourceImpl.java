@@ -78,7 +78,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseTaxCategoryResourceImpl
-	implements TaxCategoryResource, EntityModelResource,
+	implements EntityModelResource, TaxCategoryResource,
 			   VulcanBatchEngineTaskItemDelegate<TaxCategory> {
 
 	/**
@@ -86,8 +86,8 @@ public abstract class BaseTaxCategoryResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/commerceAdminSiteSetting/{groupId}/taxCategory'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "groupId"),
@@ -99,8 +99,8 @@ public abstract class BaseTaxCategoryResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "TaxCategory")})
 	public Page<TaxCategory> getCommerceAdminSiteSettingGroupTaxCategoryPage(
-			@NotNull @Parameter(hidden = true) @PathParam("groupId") Long
-				groupId,
+			@NotNull @Parameter(hidden = true) @PathParam("groupId")
+				Long groupId,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -112,16 +112,16 @@ public abstract class BaseTaxCategoryResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/commerceAdminSiteSetting/{groupId}/taxCategory' -d $'{"description": ___, "id": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "groupId")})
 	@Path("/commerceAdminSiteSetting/{groupId}/taxCategory")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "TaxCategory")})
 	public TaxCategory postCommerceAdminSiteSettingGroupTaxCategory(
-			@NotNull @Parameter(hidden = true) @PathParam("groupId") Long
-				groupId,
+			@NotNull @Parameter(hidden = true) @PathParam("groupId")
+				Long groupId,
 			TaxCategory taxCategory)
 		throws Exception {
 
@@ -133,8 +133,8 @@ public abstract class BaseTaxCategoryResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/taxCategory/{id}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/taxCategory/{id}")
 	@Produces({"application/json", "application/xml"})
@@ -153,9 +153,9 @@ public abstract class BaseTaxCategoryResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/taxCategory/{id}/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
 	@DELETE
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "id"),
@@ -167,8 +167,8 @@ public abstract class BaseTaxCategoryResourceImpl
 	@Tags(value = {@Tag(name = "TaxCategory")})
 	public Response deleteTaxCategoryBatch(
 			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -193,8 +193,8 @@ public abstract class BaseTaxCategoryResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/taxCategory/{id}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/taxCategory/{id}")
 	@Produces({"application/json", "application/xml"})
@@ -211,12 +211,12 @@ public abstract class BaseTaxCategoryResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/taxCategory/{id}' -d $'{"description": ___, "id": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PUT
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/taxCategory/{id}")
 	@Produces({"application/json", "application/xml"})
+	@PUT
 	@Tags(value = {@Tag(name = "TaxCategory")})
 	public Response putTaxCategory(
 			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
@@ -233,9 +233,8 @@ public abstract class BaseTaxCategoryResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/taxCategory/{id}/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@PUT
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "id"),
@@ -244,11 +243,12 @@ public abstract class BaseTaxCategoryResourceImpl
 	)
 	@Path("/taxCategory/{id}/batch")
 	@Produces("application/json")
+	@PUT
 	@Tags(value = {@Tag(name = "TaxCategory")})
 	public Response putTaxCategoryBatch(
 			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -342,7 +342,7 @@ public abstract class BaseTaxCategoryResourceImpl
 		for (TaxCategory taxCategory : taxCategories) {
 			putTaxCategory(
 				taxCategory.getId() != null ? taxCategory.getId() :
-				(Long)parameters.get("taxCategoryId"),
+					(Long)parameters.get("taxCategoryId"),
 				taxCategory);
 		}
 	}

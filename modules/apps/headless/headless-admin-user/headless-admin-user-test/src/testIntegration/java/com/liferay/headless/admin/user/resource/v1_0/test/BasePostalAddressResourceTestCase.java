@@ -217,7 +217,7 @@ public abstract class BasePostalAddressResourceTestCase {
 		String irrelevantOrganizationId =
 			testGetOrganizationPostalAddressesPage_getIrrelevantOrganizationId();
 
-		if ((irrelevantOrganizationId != null)) {
+		if (irrelevantOrganizationId != null) {
 			PostalAddress irrelevantPostalAddress =
 				testGetOrganizationPostalAddressesPage_addPostalAddress(
 					irrelevantOrganizationId, randomIrrelevantPostalAddress());
@@ -353,7 +353,7 @@ public abstract class BasePostalAddressResourceTestCase {
 		Long irrelevantUserAccountId =
 			testGetUserAccountPostalAddressesPage_getIrrelevantUserAccountId();
 
-		if ((irrelevantUserAccountId != null)) {
+		if (irrelevantUserAccountId != null) {
 			PostalAddress irrelevantPostalAddress =
 				testGetUserAccountPostalAddressesPage_addPostalAddress(
 					irrelevantUserAccountId, randomIrrelevantPostalAddress());

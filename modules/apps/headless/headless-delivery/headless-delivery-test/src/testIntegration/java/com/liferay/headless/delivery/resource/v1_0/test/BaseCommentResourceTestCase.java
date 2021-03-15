@@ -212,7 +212,7 @@ public abstract class BaseCommentResourceTestCase {
 		Long irrelevantBlogPostingId =
 			testGetBlogPostingCommentsPage_getIrrelevantBlogPostingId();
 
-		if ((irrelevantBlogPostingId != null)) {
+		if (irrelevantBlogPostingId != null) {
 			Comment irrelevantComment =
 				testGetBlogPostingCommentsPage_addComment(
 					irrelevantBlogPostingId, randomIrrelevantComment());
@@ -655,7 +655,7 @@ public abstract class BaseCommentResourceTestCase {
 		Long irrelevantParentCommentId =
 			testGetCommentCommentsPage_getIrrelevantParentCommentId();
 
-		if ((irrelevantParentCommentId != null)) {
+		if (irrelevantParentCommentId != null) {
 			Comment irrelevantComment = testGetCommentCommentsPage_addComment(
 				irrelevantParentCommentId, randomIrrelevantComment());
 
@@ -958,7 +958,7 @@ public abstract class BaseCommentResourceTestCase {
 		Long irrelevantDocumentId =
 			testGetDocumentCommentsPage_getIrrelevantDocumentId();
 
-		if ((irrelevantDocumentId != null)) {
+		if (irrelevantDocumentId != null) {
 			Comment irrelevantComment = testGetDocumentCommentsPage_addComment(
 				irrelevantDocumentId, randomIrrelevantComment());
 
@@ -1259,7 +1259,7 @@ public abstract class BaseCommentResourceTestCase {
 		Long irrelevantStructuredContentId =
 			testGetStructuredContentCommentsPage_getIrrelevantStructuredContentId();
 
-		if ((irrelevantStructuredContentId != null)) {
+		if (irrelevantStructuredContentId != null) {
 			Comment irrelevantComment =
 				testGetStructuredContentCommentsPage_addComment(
 					irrelevantStructuredContentId, randomIrrelevantComment());

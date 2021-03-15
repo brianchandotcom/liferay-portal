@@ -80,7 +80,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseKnowledgeBaseFolderResourceImpl
-	implements KnowledgeBaseFolderResource, EntityModelResource,
+	implements EntityModelResource, KnowledgeBaseFolderResource,
 			   VulcanBatchEngineTaskItemDelegate<KnowledgeBaseFolder> {
 
 	/**
@@ -88,11 +88,11 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-folders/{knowledgeBaseFolderId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
 	@Operation(
 		description = "Deletes the knowledge base folder and returns a 204 if the operation succeeds."
 	)
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "knowledgeBaseFolderId")
@@ -103,7 +103,8 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 	@Tags(value = {@Tag(name = "KnowledgeBaseFolder")})
 	public void deleteKnowledgeBaseFolder(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("knowledgeBaseFolderId") Long knowledgeBaseFolderId)
+			@PathParam("knowledgeBaseFolderId")
+				Long knowledgeBaseFolderId)
 		throws Exception {
 	}
 
@@ -112,9 +113,9 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-folders/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
 	@DELETE
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
@@ -122,8 +123,8 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "KnowledgeBaseFolder")})
 	public Response deleteKnowledgeBaseFolderBatch(
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -148,9 +149,9 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-folders/{knowledgeBaseFolderId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrieves the knowledge base folder.")
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "knowledgeBaseFolderId")
@@ -161,7 +162,8 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 	@Tags(value = {@Tag(name = "KnowledgeBaseFolder")})
 	public KnowledgeBaseFolder getKnowledgeBaseFolder(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("knowledgeBaseFolderId") Long knowledgeBaseFolderId)
+			@PathParam("knowledgeBaseFolderId")
+				Long knowledgeBaseFolderId)
 		throws Exception {
 
 		return new KnowledgeBaseFolder();
@@ -172,23 +174,24 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-folders/{knowledgeBaseFolderId}' -d $'{"customFields": ___, "description": ___, "name": ___, "parentKnowledgeBaseFolderId": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
 		description = "Updates only the fields received in the request body, leaving any other fields untouched."
 	)
-	@PATCH
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "knowledgeBaseFolderId")
 		}
 	)
+	@PATCH
 	@Path("/knowledge-base-folders/{knowledgeBaseFolderId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "KnowledgeBaseFolder")})
 	public KnowledgeBaseFolder patchKnowledgeBaseFolder(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("knowledgeBaseFolderId") Long knowledgeBaseFolderId,
+			@PathParam("knowledgeBaseFolderId")
+				Long knowledgeBaseFolderId,
 			KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 
@@ -255,12 +258,11 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-folders/{knowledgeBaseFolderId}' -d $'{"customFields": ___, "description": ___, "name": ___, "parentKnowledgeBaseFolderId": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
 		description = "Replaces the knowledge base folder with the information sent in the request body. Any missing fields are deleted, unless they are required."
 	)
-	@PUT
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "knowledgeBaseFolderId")
@@ -268,10 +270,12 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 	)
 	@Path("/knowledge-base-folders/{knowledgeBaseFolderId}")
 	@Produces({"application/json", "application/xml"})
+	@PUT
 	@Tags(value = {@Tag(name = "KnowledgeBaseFolder")})
 	public KnowledgeBaseFolder putKnowledgeBaseFolder(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("knowledgeBaseFolderId") Long knowledgeBaseFolderId,
+			@PathParam("knowledgeBaseFolderId")
+				Long knowledgeBaseFolderId,
 			KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 
@@ -283,18 +287,18 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-folders/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@PUT
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
 	@Path("/knowledge-base-folders/batch")
 	@Produces("application/json")
+	@PUT
 	@Tags(value = {@Tag(name = "KnowledgeBaseFolder")})
 	public Response putKnowledgeBaseFolderBatch(
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -319,11 +323,11 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-folders/{parentKnowledgeBaseFolderId}/knowledge-base-folders'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(
 		description = "Retrieves the knowledge base folder's subfolders."
 	)
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(
@@ -341,8 +345,8 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 	public Page<KnowledgeBaseFolder>
 			getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
 				@NotNull @Parameter(hidden = true)
-				@PathParam("parentKnowledgeBaseFolderId") Long
-					parentKnowledgeBaseFolderId,
+				@PathParam("parentKnowledgeBaseFolderId")
+					Long parentKnowledgeBaseFolderId,
 				@Context Pagination pagination)
 		throws Exception {
 
@@ -354,12 +358,11 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-folders/{parentKnowledgeBaseFolderId}/knowledge-base-folders' -d $'{"customFields": ___, "description": ___, "name": ___, "parentKnowledgeBaseFolderId": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
 		description = "Creates a knowledge base folder inside the parent folder."
 	)
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(
@@ -370,12 +373,13 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 	@Path(
 		"/knowledge-base-folders/{parentKnowledgeBaseFolderId}/knowledge-base-folders"
 	)
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "KnowledgeBaseFolder")})
 	public KnowledgeBaseFolder postKnowledgeBaseFolderKnowledgeBaseFolder(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("parentKnowledgeBaseFolderId") Long
-				parentKnowledgeBaseFolderId,
+			@PathParam("parentKnowledgeBaseFolderId")
+				Long parentKnowledgeBaseFolderId,
 			KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 
@@ -387,11 +391,11 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-folders'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(
 		description = "Retrieves the site's knowledge base folders. Results can be paginated."
 	)
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
@@ -415,12 +419,12 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-folders' -d $'{"customFields": ___, "description": ___, "name": ___, "parentKnowledgeBaseFolderId": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(description = "Creates a new knowledge base folder.")
-	@POST
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "siteId")})
 	@Path("/sites/{siteId}/knowledge-base-folders")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "KnowledgeBaseFolder")})
 	public KnowledgeBaseFolder postSiteKnowledgeBaseFolder(
@@ -436,9 +440,8 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-folders/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
@@ -446,12 +449,13 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 		}
 	)
 	@Path("/sites/{siteId}/knowledge-base-folders/batch")
+	@POST
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "KnowledgeBaseFolder")})
 	public Response postSiteKnowledgeBaseFolderBatch(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -552,8 +556,8 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 		for (KnowledgeBaseFolder knowledgeBaseFolder : knowledgeBaseFolders) {
 			putKnowledgeBaseFolder(
 				knowledgeBaseFolder.getId() != null ?
-				knowledgeBaseFolder.getId() :
-				(Long)parameters.get("knowledgeBaseFolderId"),
+					knowledgeBaseFolder.getId() :
+						(Long)parameters.get("knowledgeBaseFolderId"),
 				knowledgeBaseFolder);
 		}
 	}

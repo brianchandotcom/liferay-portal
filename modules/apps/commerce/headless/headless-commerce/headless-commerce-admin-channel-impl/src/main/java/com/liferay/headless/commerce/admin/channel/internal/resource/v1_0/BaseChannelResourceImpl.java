@@ -88,9 +88,9 @@ public abstract class BaseChannelResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-channel/v1.0/channels'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrieves channels.")
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.QUERY, name = "search"),
@@ -117,10 +117,10 @@ public abstract class BaseChannelResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-channel/v1.0/channels' -d $'{"currencyCode": ___, "externalReferenceCode": ___, "id": ___, "name": ___, "siteGroupId": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Path("/channels")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Channel")})
 	public Channel postChannel(Channel channel) throws Exception {
@@ -132,18 +132,18 @@ public abstract class BaseChannelResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-channel/v1.0/channels/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
 	@Path("/channels/batch")
+	@POST
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Channel")})
 	public Response postChannelBatch(
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -168,15 +168,15 @@ public abstract class BaseChannelResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-channel/v1.0/channels/{channelId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "channelId")})
 	@Path("/channels/{channelId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Channel")})
 	public void deleteChannel(
-			@NotNull @Parameter(hidden = true) @PathParam("channelId") Long
-				channelId)
+			@NotNull @Parameter(hidden = true) @PathParam("channelId")
+				Long channelId)
 		throws Exception {
 	}
 
@@ -185,9 +185,9 @@ public abstract class BaseChannelResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-channel/v1.0/channels/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
 	@DELETE
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
@@ -195,8 +195,8 @@ public abstract class BaseChannelResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Channel")})
 	public Response deleteChannelBatch(
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -221,16 +221,16 @@ public abstract class BaseChannelResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-channel/v1.0/channels/{channelId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrive information of the given Channel.")
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "channelId")})
 	@Path("/channels/{channelId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Channel")})
 	public Channel getChannel(
-			@NotNull @Parameter(hidden = true) @PathParam("channelId") Long
-				channelId)
+			@NotNull @Parameter(hidden = true) @PathParam("channelId")
+				Long channelId)
 		throws Exception {
 
 		return new Channel();
@@ -241,16 +241,16 @@ public abstract class BaseChannelResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-channel/v1.0/channels/{channelId}' -d $'{"currencyCode": ___, "externalReferenceCode": ___, "id": ___, "name": ___, "siteGroupId": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PATCH
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "channelId")})
+	@PATCH
 	@Path("/channels/{channelId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Channel")})
 	public Channel patchChannel(
-			@NotNull @Parameter(hidden = true) @PathParam("channelId") Long
-				channelId,
+			@NotNull @Parameter(hidden = true) @PathParam("channelId")
+				Long channelId,
 			Channel channel)
 		throws Exception {
 
@@ -287,16 +287,16 @@ public abstract class BaseChannelResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-commerce-admin-channel/v1.0/channels/{channelId}' -d $'{"currencyCode": ___, "externalReferenceCode": ___, "id": ___, "name": ___, "siteGroupId": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PUT
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "channelId")})
 	@Path("/channels/{channelId}")
 	@Produces({"application/json", "application/xml"})
+	@PUT
 	@Tags(value = {@Tag(name = "Channel")})
 	public Channel putChannel(
-			@NotNull @Parameter(hidden = true) @PathParam("channelId") Long
-				channelId,
+			@NotNull @Parameter(hidden = true) @PathParam("channelId")
+				Long channelId,
 			Channel channel)
 		throws Exception {
 
@@ -308,18 +308,18 @@ public abstract class BaseChannelResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-commerce-admin-channel/v1.0/channels/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@PUT
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
 	@Path("/channels/batch")
 	@Produces("application/json")
+	@PUT
 	@Tags(value = {@Tag(name = "Channel")})
 	public Response putChannelBatch(
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -417,7 +417,7 @@ public abstract class BaseChannelResourceImpl
 		for (Channel channel : channels) {
 			putChannel(
 				channel.getId() != null ? channel.getId() :
-				(Long)parameters.get("channelId"),
+					(Long)parameters.get("channelId"),
 				channel);
 		}
 	}

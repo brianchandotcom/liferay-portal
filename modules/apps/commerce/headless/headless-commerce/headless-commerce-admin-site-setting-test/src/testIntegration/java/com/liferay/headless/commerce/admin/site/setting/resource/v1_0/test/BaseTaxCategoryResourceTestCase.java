@@ -203,7 +203,7 @@ public abstract class BaseTaxCategoryResourceTestCase {
 		Long irrelevantGroupId =
 			testGetCommerceAdminSiteSettingGroupTaxCategoryPage_getIrrelevantGroupId();
 
-		if ((irrelevantGroupId != null)) {
+		if (irrelevantGroupId != null) {
 			TaxCategory irrelevantTaxCategory =
 				testGetCommerceAdminSiteSettingGroupTaxCategoryPage_addTaxCategory(
 					irrelevantGroupId, randomIrrelevantTaxCategory());

@@ -215,7 +215,7 @@ public abstract class BaseProductOptionValueResourceTestCase {
 		Long irrelevantId =
 			testGetProductOptionIdProductOptionValuesPage_getIrrelevantId();
 
-		if ((irrelevantId != null)) {
+		if (irrelevantId != null) {
 			ProductOptionValue irrelevantProductOptionValue =
 				testGetProductOptionIdProductOptionValuesPage_addProductOptionValue(
 					irrelevantId, randomIrrelevantProductOptionValue());

@@ -230,7 +230,7 @@ public abstract class BasePriceListChannelResourceTestCase {
 		String irrelevantExternalReferenceCode =
 			testGetPriceListByExternalReferenceCodePriceListChannelsPage_getIrrelevantExternalReferenceCode();
 
-		if ((irrelevantExternalReferenceCode != null)) {
+		if (irrelevantExternalReferenceCode != null) {
 			PriceListChannel irrelevantPriceListChannel =
 				testGetPriceListByExternalReferenceCodePriceListChannelsPage_addPriceListChannel(
 					irrelevantExternalReferenceCode,
@@ -384,7 +384,7 @@ public abstract class BasePriceListChannelResourceTestCase {
 		Long irrelevantId =
 			testGetPriceListIdPriceListChannelsPage_getIrrelevantId();
 
-		if ((irrelevantId != null)) {
+		if (irrelevantId != null) {
 			PriceListChannel irrelevantPriceListChannel =
 				testGetPriceListIdPriceListChannelsPage_addPriceListChannel(
 					irrelevantId, randomIrrelevantPriceListChannel());

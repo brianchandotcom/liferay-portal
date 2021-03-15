@@ -207,7 +207,7 @@ public abstract class BaseTransitionResourceTestCase {
 		Long irrelevantWorkflowInstanceId =
 			testGetWorkflowInstanceNextTransitionsPage_getIrrelevantWorkflowInstanceId();
 
-		if ((irrelevantWorkflowInstanceId != null)) {
+		if (irrelevantWorkflowInstanceId != null) {
 			Transition irrelevantTransition =
 				testGetWorkflowInstanceNextTransitionsPage_addTransition(
 					irrelevantWorkflowInstanceId, randomIrrelevantTransition());
@@ -326,7 +326,7 @@ public abstract class BaseTransitionResourceTestCase {
 		Long irrelevantWorkflowTaskId =
 			testGetWorkflowTaskNextTransitionsPage_getIrrelevantWorkflowTaskId();
 
-		if ((irrelevantWorkflowTaskId != null)) {
+		if (irrelevantWorkflowTaskId != null) {
 			Transition irrelevantTransition =
 				testGetWorkflowTaskNextTransitionsPage_addTransition(
 					irrelevantWorkflowTaskId, randomIrrelevantTransition());

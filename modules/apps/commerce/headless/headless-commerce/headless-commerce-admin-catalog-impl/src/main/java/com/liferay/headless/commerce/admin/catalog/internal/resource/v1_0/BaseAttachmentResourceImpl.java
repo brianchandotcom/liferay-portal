@@ -86,8 +86,8 @@ public abstract class BaseAttachmentResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/attachments'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode"),
@@ -102,7 +102,8 @@ public abstract class BaseAttachmentResourceImpl
 	@Tags(value = {@Tag(name = "Attachment")})
 	public Page<Attachment> getProductByExternalReferenceCodeAttachmentsPage(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode,
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -114,9 +115,8 @@ public abstract class BaseAttachmentResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/attachments' -d $'{"attachment": ___, "displayDate": ___, "expirationDate": ___, "externalReferenceCode": ___, "neverExpire": ___, "options": ___, "priority": ___, "src": ___, "title": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
@@ -125,11 +125,13 @@ public abstract class BaseAttachmentResourceImpl
 	@Path(
 		"/products/by-externalReferenceCode/{externalReferenceCode}/attachments"
 	)
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Attachment")})
 	public Attachment postProductByExternalReferenceCodeAttachment(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode,
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode,
 			Attachment attachment)
 		throws Exception {
 
@@ -141,9 +143,8 @@ public abstract class BaseAttachmentResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/attachments/by-base64' -d $'{"attachment": ___, "displayDate": ___, "expirationDate": ___, "externalReferenceCode": ___, "neverExpire": ___, "options": ___, "priority": ___, "src": ___, "title": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
@@ -152,11 +153,13 @@ public abstract class BaseAttachmentResourceImpl
 	@Path(
 		"/products/by-externalReferenceCode/{externalReferenceCode}/attachments/by-base64"
 	)
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Attachment")})
 	public Attachment postProductByExternalReferenceCodeAttachmentByBase64(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode,
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode,
 			AttachmentBase64 attachmentBase64)
 		throws Exception {
 
@@ -168,9 +171,8 @@ public abstract class BaseAttachmentResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/attachments/by-url' -d $'{"displayDate": ___, "expirationDate": ___, "externalReferenceCode": ___, "neverExpire": ___, "options": ___, "priority": ___, "src": ___, "title": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
@@ -179,11 +181,13 @@ public abstract class BaseAttachmentResourceImpl
 	@Path(
 		"/products/by-externalReferenceCode/{externalReferenceCode}/attachments/by-url"
 	)
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Attachment")})
 	public Attachment postProductByExternalReferenceCodeAttachmentByUrl(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode,
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode,
 			AttachmentUrl attachmentUrl)
 		throws Exception {
 
@@ -195,8 +199,8 @@ public abstract class BaseAttachmentResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/images'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode"),
@@ -209,7 +213,8 @@ public abstract class BaseAttachmentResourceImpl
 	@Tags(value = {@Tag(name = "Attachment")})
 	public Page<Attachment> getProductByExternalReferenceCodeImagesPage(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode,
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -221,20 +226,21 @@ public abstract class BaseAttachmentResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/images' -d $'{"attachment": ___, "displayDate": ___, "expirationDate": ___, "externalReferenceCode": ___, "neverExpire": ___, "options": ___, "priority": ___, "src": ___, "title": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
 		}
 	)
 	@Path("/products/by-externalReferenceCode/{externalReferenceCode}/images")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Attachment")})
 	public Attachment postProductByExternalReferenceCodeImage(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode,
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode,
 			Attachment attachment)
 		throws Exception {
 
@@ -246,9 +252,8 @@ public abstract class BaseAttachmentResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/images/by-base64' -d $'{"attachment": ___, "displayDate": ___, "expirationDate": ___, "externalReferenceCode": ___, "neverExpire": ___, "options": ___, "priority": ___, "src": ___, "title": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
@@ -257,11 +262,13 @@ public abstract class BaseAttachmentResourceImpl
 	@Path(
 		"/products/by-externalReferenceCode/{externalReferenceCode}/images/by-base64"
 	)
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Attachment")})
 	public Attachment postProductByExternalReferenceCodeImageByBase64(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode,
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode,
 			AttachmentBase64 attachmentBase64)
 		throws Exception {
 
@@ -273,9 +280,8 @@ public abstract class BaseAttachmentResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/images/by-url' -d $'{"displayDate": ___, "expirationDate": ___, "externalReferenceCode": ___, "neverExpire": ___, "options": ___, "priority": ___, "src": ___, "title": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
@@ -284,11 +290,13 @@ public abstract class BaseAttachmentResourceImpl
 	@Path(
 		"/products/by-externalReferenceCode/{externalReferenceCode}/images/by-url"
 	)
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Attachment")})
 	public Attachment postProductByExternalReferenceCodeImageByUrl(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode,
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode,
 			AttachmentUrl attachmentUrl)
 		throws Exception {
 
@@ -300,8 +308,8 @@ public abstract class BaseAttachmentResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}/attachments'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "id"),
@@ -325,11 +333,11 @@ public abstract class BaseAttachmentResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}/attachments' -d $'{"attachment": ___, "displayDate": ___, "expirationDate": ___, "externalReferenceCode": ___, "neverExpire": ___, "options": ___, "priority": ___, "src": ___, "title": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/products/{id}/attachments")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Attachment")})
 	public Attachment postProductIdAttachment(
@@ -345,9 +353,8 @@ public abstract class BaseAttachmentResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}/attachments/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "id"),
@@ -355,12 +362,13 @@ public abstract class BaseAttachmentResourceImpl
 		}
 	)
 	@Path("/products/{id}/attachments/batch")
+	@POST
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Attachment")})
 	public Response postProductIdAttachmentBatch(
 			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -385,11 +393,11 @@ public abstract class BaseAttachmentResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}/attachments/by-base64' -d $'{"attachment": ___, "displayDate": ___, "expirationDate": ___, "externalReferenceCode": ___, "neverExpire": ___, "options": ___, "priority": ___, "src": ___, "title": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/products/{id}/attachments/by-base64")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Attachment")})
 	public Attachment postProductIdAttachmentByBase64(
@@ -405,11 +413,11 @@ public abstract class BaseAttachmentResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}/attachments/by-url' -d $'{"displayDate": ___, "expirationDate": ___, "externalReferenceCode": ___, "neverExpire": ___, "options": ___, "priority": ___, "src": ___, "title": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/products/{id}/attachments/by-url")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Attachment")})
 	public Attachment postProductIdAttachmentByUrl(
@@ -425,8 +433,8 @@ public abstract class BaseAttachmentResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}/images'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "id"),
@@ -450,11 +458,11 @@ public abstract class BaseAttachmentResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}/images' -d $'{"attachment": ___, "displayDate": ___, "expirationDate": ___, "externalReferenceCode": ___, "neverExpire": ___, "options": ___, "priority": ___, "src": ___, "title": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/products/{id}/images")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Attachment")})
 	public Attachment postProductIdImage(
@@ -470,11 +478,11 @@ public abstract class BaseAttachmentResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}/images/by-base64' -d $'{"attachment": ___, "displayDate": ___, "expirationDate": ___, "externalReferenceCode": ___, "neverExpire": ___, "options": ___, "priority": ___, "src": ___, "title": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/products/{id}/images/by-base64")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Attachment")})
 	public Attachment postProductIdImageByBase64(
@@ -490,11 +498,11 @@ public abstract class BaseAttachmentResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}/images/by-url' -d $'{"displayDate": ___, "expirationDate": ___, "externalReferenceCode": ___, "neverExpire": ___, "options": ___, "priority": ___, "src": ___, "title": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/products/{id}/images/by-url")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Attachment")})
 	public Attachment postProductIdImageByUrl(

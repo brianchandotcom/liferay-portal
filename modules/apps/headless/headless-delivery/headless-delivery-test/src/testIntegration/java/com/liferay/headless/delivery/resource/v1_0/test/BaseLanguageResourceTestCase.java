@@ -222,7 +222,7 @@ public abstract class BaseLanguageResourceTestCase {
 		Long irrelevantAssetLibraryId =
 			testGetAssetLibraryLanguagesPage_getIrrelevantAssetLibraryId();
 
-		if ((irrelevantAssetLibraryId != null)) {
+		if (irrelevantAssetLibraryId != null) {
 			Language irrelevantLanguage =
 				testGetAssetLibraryLanguagesPage_addLanguage(
 					irrelevantAssetLibraryId, randomIrrelevantLanguage());
@@ -285,7 +285,7 @@ public abstract class BaseLanguageResourceTestCase {
 		Long siteId = testGetSiteLanguagesPage_getSiteId();
 		Long irrelevantSiteId = testGetSiteLanguagesPage_getIrrelevantSiteId();
 
-		if ((irrelevantSiteId != null)) {
+		if (irrelevantSiteId != null) {
 			Language irrelevantLanguage = testGetSiteLanguagesPage_addLanguage(
 				irrelevantSiteId, randomIrrelevantLanguage());
 

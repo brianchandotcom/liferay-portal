@@ -226,7 +226,7 @@ public abstract class BasePriceListDiscountResourceTestCase {
 		String irrelevantExternalReferenceCode =
 			testGetPriceListByExternalReferenceCodePriceListDiscountsPage_getIrrelevantExternalReferenceCode();
 
-		if ((irrelevantExternalReferenceCode != null)) {
+		if (irrelevantExternalReferenceCode != null) {
 			PriceListDiscount irrelevantPriceListDiscount =
 				testGetPriceListByExternalReferenceCodePriceListDiscountsPage_addPriceListDiscount(
 					irrelevantExternalReferenceCode,
@@ -381,7 +381,7 @@ public abstract class BasePriceListDiscountResourceTestCase {
 		Long irrelevantId =
 			testGetPriceListIdPriceListDiscountsPage_getIrrelevantId();
 
-		if ((irrelevantId != null)) {
+		if (irrelevantId != null) {
 			PriceListDiscount irrelevantPriceListDiscount =
 				testGetPriceListIdPriceListDiscountsPage_addPriceListDiscount(
 					irrelevantId, randomIrrelevantPriceListDiscount());

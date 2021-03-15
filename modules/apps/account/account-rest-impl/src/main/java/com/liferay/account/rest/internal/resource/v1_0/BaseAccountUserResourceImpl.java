@@ -84,9 +84,9 @@ public abstract class BaseAccountUserResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/account-rest/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/account-users'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Gets the users assigned to an account")
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode"),
@@ -104,7 +104,8 @@ public abstract class BaseAccountUserResourceImpl
 	@Tags(value = {@Tag(name = "AccountUser")})
 	public Page<AccountUser> getAccountUsersByExternalReferenceCodePage(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode,
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode,
 			@Parameter(hidden = true) @QueryParam("search") String search,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)
@@ -118,10 +119,9 @@ public abstract class BaseAccountUserResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/account-rest/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/account-users' -d $'{"emailAddress": ___, "externalReferenceCode": ___, "firstName": ___, "lastName": ___, "middleName": ___, "prefix": ___, "screenName": ___, "suffix": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(description = "Creates a user and assigns them to the account")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
@@ -130,11 +130,13 @@ public abstract class BaseAccountUserResourceImpl
 	@Path(
 		"/accounts/by-external-reference-code/{externalReferenceCode}/account-users"
 	)
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AccountUser")})
 	public AccountUser postAccountUserByExternalReferenceCode(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode,
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode,
 			AccountUser accountUser)
 		throws Exception {
 
@@ -146,9 +148,9 @@ public abstract class BaseAccountUserResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/account-rest/v1.0/accounts/{accountId}/account-users'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Gets the users assigned to an account")
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "accountId"),
@@ -163,8 +165,8 @@ public abstract class BaseAccountUserResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AccountUser")})
 	public Page<AccountUser> getAccountUsersPage(
-			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
-				accountId,
+			@NotNull @Parameter(hidden = true) @PathParam("accountId")
+				Long accountId,
 			@Parameter(hidden = true) @QueryParam("search") String search,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)
@@ -178,17 +180,17 @@ public abstract class BaseAccountUserResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/account-rest/v1.0/accounts/{accountId}/account-users' -d $'{"emailAddress": ___, "externalReferenceCode": ___, "firstName": ___, "lastName": ___, "middleName": ___, "prefix": ___, "screenName": ___, "suffix": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(description = "Creates a user and assigns them to the account")
-	@POST
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "accountId")})
 	@Path("/accounts/{accountId}/account-users")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AccountUser")})
 	public AccountUser postAccountUser(
-			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
-				accountId,
+			@NotNull @Parameter(hidden = true) @PathParam("accountId")
+				Long accountId,
 			AccountUser accountUser)
 		throws Exception {
 

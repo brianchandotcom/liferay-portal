@@ -81,7 +81,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseKnowledgeBaseArticleResourceImpl
-	implements KnowledgeBaseArticleResource, EntityModelResource,
+	implements EntityModelResource, KnowledgeBaseArticleResource,
 			   VulcanBatchEngineTaskItemDelegate<KnowledgeBaseArticle> {
 
 	/**
@@ -89,11 +89,11 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-articles/{knowledgeBaseArticleId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
 	@Operation(
 		description = "Deletes the knowledge base article and returns a 204 if the operation succeeds."
 	)
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "knowledgeBaseArticleId")
@@ -104,7 +104,8 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public void deleteKnowledgeBaseArticle(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("knowledgeBaseArticleId") Long knowledgeBaseArticleId)
+			@PathParam("knowledgeBaseArticleId")
+				Long knowledgeBaseArticleId)
 		throws Exception {
 	}
 
@@ -113,9 +114,9 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-articles/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
 	@DELETE
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
@@ -123,8 +124,8 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public Response deleteKnowledgeBaseArticleBatch(
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -149,9 +150,9 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-articles/{knowledgeBaseArticleId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrieves the knowledge base article.")
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "knowledgeBaseArticleId")
@@ -162,7 +163,8 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public KnowledgeBaseArticle getKnowledgeBaseArticle(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("knowledgeBaseArticleId") Long knowledgeBaseArticleId)
+			@PathParam("knowledgeBaseArticleId")
+				Long knowledgeBaseArticleId)
 		throws Exception {
 
 		return new KnowledgeBaseArticle();
@@ -173,23 +175,24 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-articles/{knowledgeBaseArticleId}' -d $'{"articleBody": ___, "customFields": ___, "description": ___, "friendlyUrlPath": ___, "keywords": ___, "parentKnowledgeBaseFolderId": ___, "taxonomyCategoryIds": ___, "title": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
 		description = "Updates only the fields received in the request body, leaving any other fields untouched."
 	)
-	@PATCH
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "knowledgeBaseArticleId")
 		}
 	)
+	@PATCH
 	@Path("/knowledge-base-articles/{knowledgeBaseArticleId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public KnowledgeBaseArticle patchKnowledgeBaseArticle(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("knowledgeBaseArticleId") Long knowledgeBaseArticleId,
+			@PathParam("knowledgeBaseArticleId")
+				Long knowledgeBaseArticleId,
 			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
@@ -287,12 +290,11 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-articles/{knowledgeBaseArticleId}' -d $'{"articleBody": ___, "customFields": ___, "description": ___, "friendlyUrlPath": ___, "keywords": ___, "parentKnowledgeBaseFolderId": ___, "taxonomyCategoryIds": ___, "title": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
 		description = "Replaces the knowledge base article with the information sent in the request body. Any missing fields are deleted, unless they are required."
 	)
-	@PUT
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "knowledgeBaseArticleId")
@@ -300,10 +302,12 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	)
 	@Path("/knowledge-base-articles/{knowledgeBaseArticleId}")
 	@Produces({"application/json", "application/xml"})
+	@PUT
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public KnowledgeBaseArticle putKnowledgeBaseArticle(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("knowledgeBaseArticleId") Long knowledgeBaseArticleId,
+			@PathParam("knowledgeBaseArticleId")
+				Long knowledgeBaseArticleId,
 			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
@@ -315,18 +319,18 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-articles/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@PUT
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
 	@Path("/knowledge-base-articles/batch")
 	@Produces("application/json")
+	@PUT
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public Response putKnowledgeBaseArticleBatch(
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -351,11 +355,11 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-articles/{knowledgeBaseArticleId}/my-rating'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
 	@Operation(
 		description = "Deletes the knowledge base article's rating and returns a 204 if the operation succeeds."
 	)
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "knowledgeBaseArticleId")
@@ -366,7 +370,8 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public void deleteKnowledgeBaseArticleMyRating(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("knowledgeBaseArticleId") Long knowledgeBaseArticleId)
+			@PathParam("knowledgeBaseArticleId")
+				Long knowledgeBaseArticleId)
 		throws Exception {
 	}
 
@@ -375,9 +380,9 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-articles/{knowledgeBaseArticleId}/my-rating'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrieves the knowledge base article's rating.")
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "knowledgeBaseArticleId")
@@ -388,7 +393,8 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public Rating getKnowledgeBaseArticleMyRating(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("knowledgeBaseArticleId") Long knowledgeBaseArticleId)
+			@PathParam("knowledgeBaseArticleId")
+				Long knowledgeBaseArticleId)
 		throws Exception {
 
 		return new Rating();
@@ -399,21 +405,22 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-articles/{knowledgeBaseArticleId}/my-rating' -d $'{"ratingValue": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(description = "Creates a rating for the knowledge base article.")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "knowledgeBaseArticleId")
 		}
 	)
 	@Path("/knowledge-base-articles/{knowledgeBaseArticleId}/my-rating")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public Rating postKnowledgeBaseArticleMyRating(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("knowledgeBaseArticleId") Long knowledgeBaseArticleId,
+			@PathParam("knowledgeBaseArticleId")
+				Long knowledgeBaseArticleId,
 			Rating rating)
 		throws Exception {
 
@@ -425,12 +432,11 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-articles/{knowledgeBaseArticleId}/my-rating' -d $'{"ratingValue": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
 		description = "Replaces the rating with the information sent in the request body. Any missing fields are deleted, unless they are required."
 	)
-	@PUT
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "knowledgeBaseArticleId")
@@ -438,10 +444,12 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	)
 	@Path("/knowledge-base-articles/{knowledgeBaseArticleId}/my-rating")
 	@Produces({"application/json", "application/xml"})
+	@PUT
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public Rating putKnowledgeBaseArticleMyRating(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("knowledgeBaseArticleId") Long knowledgeBaseArticleId,
+			@PathParam("knowledgeBaseArticleId")
+				Long knowledgeBaseArticleId,
 			Rating rating)
 		throws Exception {
 
@@ -454,7 +462,6 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-articles/{knowledgeBaseArticleId}/subscribe'  -u 'test@liferay.com:test'
 	 */
 	@Override
-	@PUT
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "knowledgeBaseArticleId")
@@ -462,10 +469,12 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	)
 	@Path("/knowledge-base-articles/{knowledgeBaseArticleId}/subscribe")
 	@Produces({"application/json", "application/xml"})
+	@PUT
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public void putKnowledgeBaseArticleSubscribe(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("knowledgeBaseArticleId") Long knowledgeBaseArticleId)
+			@PathParam("knowledgeBaseArticleId")
+				Long knowledgeBaseArticleId)
 		throws Exception {
 	}
 
@@ -475,7 +484,6 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-articles/{knowledgeBaseArticleId}/unsubscribe'  -u 'test@liferay.com:test'
 	 */
 	@Override
-	@PUT
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "knowledgeBaseArticleId")
@@ -483,10 +491,12 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	)
 	@Path("/knowledge-base-articles/{knowledgeBaseArticleId}/unsubscribe")
 	@Produces({"application/json", "application/xml"})
+	@PUT
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public void putKnowledgeBaseArticleUnsubscribe(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("knowledgeBaseArticleId") Long knowledgeBaseArticleId)
+			@PathParam("knowledgeBaseArticleId")
+				Long knowledgeBaseArticleId)
 		throws Exception {
 	}
 
@@ -495,11 +505,11 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-articles/{parentKnowledgeBaseArticleId}/knowledge-base-articles'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(
 		description = "Retrieves the parent knowledge base article's child knowledge base articles. Results can be paginated, filtered, searched, and sorted."
 	)
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(
@@ -521,12 +531,13 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	public Page<KnowledgeBaseArticle>
 			getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
 				@NotNull @Parameter(hidden = true)
-				@PathParam("parentKnowledgeBaseArticleId") Long
-					parentKnowledgeBaseArticleId,
-				@Parameter(hidden = true) @QueryParam("flatten") Boolean
-					flatten,
+				@PathParam("parentKnowledgeBaseArticleId")
+					Long parentKnowledgeBaseArticleId,
+				@Parameter(hidden = true) @QueryParam("flatten")
+					Boolean flatten,
 				@Parameter(hidden = true) @QueryParam("search") String search,
-				@Context com.liferay.portal.vulcan.aggregation.Aggregation
+				@Context
+					com.liferay.portal.vulcan.aggregation.Aggregation
 					aggregation,
 				@Context Filter filter, @Context Pagination pagination,
 				@Context Sort[] sorts)
@@ -540,12 +551,11 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-articles/{parentKnowledgeBaseArticleId}/knowledge-base-articles' -d $'{"articleBody": ___, "customFields": ___, "description": ___, "friendlyUrlPath": ___, "keywords": ___, "parentKnowledgeBaseFolderId": ___, "taxonomyCategoryIds": ___, "title": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
 		description = "Creates a child knowledge base article of the knowledge base article identified by `parentKnowledgeBaseArticleId`."
 	)
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(
@@ -556,12 +566,13 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	@Path(
 		"/knowledge-base-articles/{parentKnowledgeBaseArticleId}/knowledge-base-articles"
 	)
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public KnowledgeBaseArticle postKnowledgeBaseArticleKnowledgeBaseArticle(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("parentKnowledgeBaseArticleId") Long
-				parentKnowledgeBaseArticleId,
+			@PathParam("parentKnowledgeBaseArticleId")
+				Long parentKnowledgeBaseArticleId,
 			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
@@ -573,11 +584,11 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-folders/{knowledgeBaseFolderId}/knowledge-base-articles'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(
 		description = "Retrieves the folder's knowledge base articles. Results can be paginated, filtered, searched, flattened, and sorted."
 	)
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "knowledgeBaseFolderId"),
@@ -597,11 +608,13 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	public Page<KnowledgeBaseArticle>
 			getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
 				@NotNull @Parameter(hidden = true)
-				@PathParam("knowledgeBaseFolderId") Long knowledgeBaseFolderId,
-				@Parameter(hidden = true) @QueryParam("flatten") Boolean
-					flatten,
+				@PathParam("knowledgeBaseFolderId")
+					Long knowledgeBaseFolderId,
+				@Parameter(hidden = true) @QueryParam("flatten")
+					Boolean flatten,
 				@Parameter(hidden = true) @QueryParam("search") String search,
-				@Context com.liferay.portal.vulcan.aggregation.Aggregation
+				@Context
+					com.liferay.portal.vulcan.aggregation.Aggregation
 					aggregation,
 				@Context Filter filter, @Context Pagination pagination,
 				@Context Sort[] sorts)
@@ -615,12 +628,11 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-folders/{knowledgeBaseFolderId}/knowledge-base-articles' -d $'{"articleBody": ___, "customFields": ___, "description": ___, "friendlyUrlPath": ___, "keywords": ___, "parentKnowledgeBaseFolderId": ___, "taxonomyCategoryIds": ___, "title": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
 		description = "Creates a new knowledge base article in the folder."
 	)
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "knowledgeBaseFolderId")
@@ -629,11 +641,13 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	@Path(
 		"/knowledge-base-folders/{knowledgeBaseFolderId}/knowledge-base-articles"
 	)
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public KnowledgeBaseArticle postKnowledgeBaseFolderKnowledgeBaseArticle(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("knowledgeBaseFolderId") Long knowledgeBaseFolderId,
+			@PathParam("knowledgeBaseFolderId")
+				Long knowledgeBaseFolderId,
 			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
@@ -645,9 +659,8 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-folders/{knowledgeBaseFolderId}/knowledge-base-articles/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "knowledgeBaseFolderId"),
@@ -657,13 +670,15 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	@Path(
 		"/knowledge-base-folders/{knowledgeBaseFolderId}/knowledge-base-articles/batch"
 	)
+	@POST
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public Response postKnowledgeBaseFolderKnowledgeBaseArticleBatch(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("knowledgeBaseFolderId") Long knowledgeBaseFolderId,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@PathParam("knowledgeBaseFolderId")
+				Long knowledgeBaseFolderId,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -688,11 +703,11 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-articles'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(
 		description = "Retrieves the site's knowledge base articles. Results can be paginated, filtered, searched, flattened, and sorted."
 	)
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
@@ -711,8 +726,8 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			@Parameter(hidden = true) @QueryParam("flatten") Boolean flatten,
 			@Parameter(hidden = true) @QueryParam("search") String search,
-			@Context com.liferay.portal.vulcan.aggregation.Aggregation
-				aggregation,
+			@Context
+				com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)
 		throws Exception {
@@ -725,12 +740,12 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-articles' -d $'{"articleBody": ___, "customFields": ___, "description": ___, "friendlyUrlPath": ___, "keywords": ___, "parentKnowledgeBaseFolderId": ___, "taxonomyCategoryIds": ___, "title": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(description = "Creates a new knowledge base article.")
-	@POST
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "siteId")})
 	@Path("/sites/{siteId}/knowledge-base-articles")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public KnowledgeBaseArticle postSiteKnowledgeBaseArticle(
@@ -746,9 +761,8 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-articles/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
@@ -756,12 +770,13 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 		}
 	)
 	@Path("/sites/{siteId}/knowledge-base-articles/batch")
+	@POST
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public Response postSiteKnowledgeBaseArticleBatch(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -787,10 +802,10 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-articles/subscribe'  -u 'test@liferay.com:test'
 	 */
 	@Override
-	@PUT
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "siteId")})
 	@Path("/sites/{siteId}/knowledge-base-articles/subscribe")
 	@Produces({"application/json", "application/xml"})
+	@PUT
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public void putSiteKnowledgeBaseArticleSubscribe(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId)
@@ -803,10 +818,10 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-articles/unsubscribe'  -u 'test@liferay.com:test'
 	 */
 	@Override
-	@PUT
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "siteId")})
 	@Path("/sites/{siteId}/knowledge-base-articles/unsubscribe")
 	@Produces({"application/json", "application/xml"})
+	@PUT
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public void putSiteKnowledgeBaseArticleUnsubscribe(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId)
@@ -901,8 +916,8 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 
 			putKnowledgeBaseArticle(
 				knowledgeBaseArticle.getId() != null ?
-				knowledgeBaseArticle.getId() :
-				(Long)parameters.get("knowledgeBaseArticleId"),
+					knowledgeBaseArticle.getId() :
+						(Long)parameters.get("knowledgeBaseArticleId"),
 				knowledgeBaseArticle);
 		}
 	}

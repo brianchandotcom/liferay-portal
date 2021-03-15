@@ -438,7 +438,7 @@ public abstract class BaseOrderNoteResourceTestCase {
 		String irrelevantExternalReferenceCode =
 			testGetOrderByExternalReferenceCodeOrderNotesPage_getIrrelevantExternalReferenceCode();
 
-		if ((irrelevantExternalReferenceCode != null)) {
+		if (irrelevantExternalReferenceCode != null) {
 			OrderNote irrelevantOrderNote =
 				testGetOrderByExternalReferenceCodeOrderNotesPage_addOrderNote(
 					irrelevantExternalReferenceCode,
@@ -597,7 +597,7 @@ public abstract class BaseOrderNoteResourceTestCase {
 		Long id = testGetOrderIdOrderNotesPage_getId();
 		Long irrelevantId = testGetOrderIdOrderNotesPage_getIrrelevantId();
 
-		if ((irrelevantId != null)) {
+		if (irrelevantId != null) {
 			OrderNote irrelevantOrderNote =
 				testGetOrderIdOrderNotesPage_addOrderNote(
 					irrelevantId, randomIrrelevantOrderNote());

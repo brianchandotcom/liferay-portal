@@ -73,7 +73,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseProductShippingConfigurationResourceImpl
-	implements ProductShippingConfigurationResource, EntityModelResource,
+	implements EntityModelResource, ProductShippingConfigurationResource,
 			   VulcanBatchEngineTaskItemDelegate<ProductShippingConfiguration> {
 
 	/**
@@ -81,8 +81,8 @@ public abstract class BaseProductShippingConfigurationResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/shippingConfiguration'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
@@ -96,8 +96,8 @@ public abstract class BaseProductShippingConfigurationResourceImpl
 	public ProductShippingConfiguration
 			getProductByExternalReferenceCodeShippingConfiguration(
 				@NotNull @Parameter(hidden = true)
-				@PathParam("externalReferenceCode") String
-					externalReferenceCode)
+				@PathParam("externalReferenceCode")
+					String externalReferenceCode)
 		throws Exception {
 
 		return new ProductShippingConfiguration();
@@ -108,14 +108,14 @@ public abstract class BaseProductShippingConfigurationResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/shippingConfiguration' -d $'{"depth": ___, "freeShipping": ___, "height": ___, "shippable": ___, "shippingExtraPrice": ___, "shippingSeparately": ___, "weight": ___, "width": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PATCH
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
 		}
 	)
+	@PATCH
 	@Path(
 		"/products/by-externalReferenceCode/{externalReferenceCode}/shippingConfiguration"
 	)
@@ -123,7 +123,8 @@ public abstract class BaseProductShippingConfigurationResourceImpl
 	@Tags(value = {@Tag(name = "ProductShippingConfiguration")})
 	public Response patchProductByExternalReferenceCodeShippingConfiguration(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode,
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode,
 			ProductShippingConfiguration productShippingConfiguration)
 		throws Exception {
 
@@ -137,8 +138,8 @@ public abstract class BaseProductShippingConfigurationResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}/shippingConfiguration'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/products/{id}/shippingConfiguration")
 	@Produces({"application/json", "application/xml"})
@@ -155,10 +156,10 @@ public abstract class BaseProductShippingConfigurationResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}/shippingConfiguration' -d $'{"depth": ___, "freeShipping": ___, "height": ___, "shippable": ___, "shippingExtraPrice": ___, "shippingSeparately": ___, "weight": ___, "width": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PATCH
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
+	@PATCH
 	@Path("/products/{id}/shippingConfiguration")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ProductShippingConfiguration")})

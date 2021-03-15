@@ -66,9 +66,8 @@ public abstract class BaseExportTaskResourceImpl implements ExportTaskResource {
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-batch-engine/v1.0/export-task/{className}/{contentType}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Operation(description = "Submits a request for exporting items to a file.")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "className"),
@@ -79,19 +78,20 @@ public abstract class BaseExportTaskResourceImpl implements ExportTaskResource {
 		}
 	)
 	@Path("/export-task/{className}/{contentType}")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ExportTask")})
 	public ExportTask postExportTask(
-			@NotNull @Parameter(hidden = true) @PathParam("className") String
-				className,
-			@NotNull @Parameter(hidden = true) @PathParam("contentType") String
-				contentType,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
-			@Parameter(hidden = true) @QueryParam("fieldNames") String
-				fieldNames,
-			@Parameter(hidden = true) @QueryParam("taskItemDelegateName") String
-				taskItemDelegateName)
+			@NotNull @Parameter(hidden = true) @PathParam("className")
+				String className,
+			@NotNull @Parameter(hidden = true) @PathParam("contentType")
+				String contentType,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
+			@Parameter(hidden = true) @QueryParam("fieldNames")
+				String fieldNames,
+			@Parameter(hidden = true) @QueryParam("taskItemDelegateName")
+				String taskItemDelegateName)
 		throws Exception {
 
 		return new ExportTask();
@@ -102,9 +102,9 @@ public abstract class BaseExportTaskResourceImpl implements ExportTaskResource {
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-batch-engine/v1.0/export-task/{exportTaskId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrieves the export task.")
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "exportTaskId")}
 	)
@@ -112,8 +112,8 @@ public abstract class BaseExportTaskResourceImpl implements ExportTaskResource {
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ExportTask")})
 	public ExportTask getExportTask(
-			@NotNull @Parameter(hidden = true) @PathParam("exportTaskId") Long
-				exportTaskId)
+			@NotNull @Parameter(hidden = true) @PathParam("exportTaskId")
+				Long exportTaskId)
 		throws Exception {
 
 		return new ExportTask();
@@ -124,9 +124,9 @@ public abstract class BaseExportTaskResourceImpl implements ExportTaskResource {
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-batch-engine/v1.0/export-task/{exportTaskId}/content'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrieves the exported content.")
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "exportTaskId")}
 	)
@@ -134,8 +134,8 @@ public abstract class BaseExportTaskResourceImpl implements ExportTaskResource {
 	@Produces("application/octet-stream")
 	@Tags(value = {@Tag(name = "ExportTask")})
 	public Response getExportTaskContent(
-			@NotNull @Parameter(hidden = true) @PathParam("exportTaskId") Long
-				exportTaskId)
+			@NotNull @Parameter(hidden = true) @PathParam("exportTaskId")
+				Long exportTaskId)
 		throws Exception {
 
 		Response.ResponseBuilder responseBuilder = Response.ok();

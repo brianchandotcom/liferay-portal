@@ -229,7 +229,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		Long irrelevantMessageBoardSectionId =
 			testGetMessageBoardSectionMessageBoardThreadsPage_getIrrelevantMessageBoardSectionId();
 
-		if ((irrelevantMessageBoardSectionId != null)) {
+		if (irrelevantMessageBoardSectionId != null) {
 			MessageBoardThread irrelevantMessageBoardThread =
 				testGetMessageBoardSectionMessageBoardThreadsPage_addMessageBoardThread(
 					irrelevantMessageBoardSectionId,
@@ -1110,7 +1110,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		Long irrelevantSiteId =
 			testGetSiteMessageBoardThreadsPage_getIrrelevantSiteId();
 
-		if ((irrelevantSiteId != null)) {
+		if (irrelevantSiteId != null) {
 			MessageBoardThread irrelevantMessageBoardThread =
 				testGetSiteMessageBoardThreadsPage_addMessageBoardThread(
 					irrelevantSiteId, randomIrrelevantMessageBoardThread());

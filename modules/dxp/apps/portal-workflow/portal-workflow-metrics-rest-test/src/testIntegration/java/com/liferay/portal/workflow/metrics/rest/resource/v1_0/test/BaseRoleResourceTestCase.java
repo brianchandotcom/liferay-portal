@@ -201,7 +201,7 @@ public abstract class BaseRoleResourceTestCase {
 		Long irrelevantProcessId =
 			testGetProcessRolesPage_getIrrelevantProcessId();
 
-		if ((irrelevantProcessId != null)) {
+		if (irrelevantProcessId != null) {
 			Role irrelevantRole = testGetProcessRolesPage_addRole(
 				irrelevantProcessId, randomIrrelevantRole());
 

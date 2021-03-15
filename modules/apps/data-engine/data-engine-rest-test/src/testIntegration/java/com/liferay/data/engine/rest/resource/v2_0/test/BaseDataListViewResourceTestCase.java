@@ -232,7 +232,7 @@ public abstract class BaseDataListViewResourceTestCase {
 		Long irrelevantDataDefinitionId =
 			testGetDataDefinitionDataListViewsPage_getIrrelevantDataDefinitionId();
 
-		if ((irrelevantDataDefinitionId != null)) {
+		if (irrelevantDataDefinitionId != null) {
 			DataListView irrelevantDataListView =
 				testGetDataDefinitionDataListViewsPage_addDataListView(
 					irrelevantDataDefinitionId, randomIrrelevantDataListView());

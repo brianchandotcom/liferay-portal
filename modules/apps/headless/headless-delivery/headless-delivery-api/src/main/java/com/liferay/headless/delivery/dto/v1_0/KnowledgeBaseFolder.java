@@ -54,8 +54,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @GraphQLName("KnowledgeBaseFolder")
 @JsonFilter("Liferay.Vulcan")
 @Schema(
-	requiredProperties = {"name"},
-	description = "Represents a folder for organizing Knowledge Base articles."
+	description = "Represents a folder for organizing Knowledge Base articles.",
+	requiredProperties = {"name"}
 )
 @XmlRootElement(name = "KnowledgeBaseFolder")
 public class KnowledgeBaseFolder implements Serializable {

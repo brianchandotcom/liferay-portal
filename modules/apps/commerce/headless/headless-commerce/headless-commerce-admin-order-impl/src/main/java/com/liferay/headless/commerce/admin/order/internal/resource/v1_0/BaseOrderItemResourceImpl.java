@@ -78,7 +78,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseOrderItemResourceImpl
-	implements OrderItemResource, EntityModelResource,
+	implements EntityModelResource, OrderItemResource,
 			   VulcanBatchEngineTaskItemDelegate<OrderItem> {
 
 	/**
@@ -86,8 +86,8 @@ public abstract class BaseOrderItemResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orderItems/by-externalReferenceCode/{externalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
@@ -98,7 +98,8 @@ public abstract class BaseOrderItemResourceImpl
 	@Tags(value = {@Tag(name = "OrderItem")})
 	public Response deleteOrderItemByExternalReferenceCode(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode)
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode)
 		throws Exception {
 
 		Response.ResponseBuilder responseBuilder = Response.ok();
@@ -111,8 +112,8 @@ public abstract class BaseOrderItemResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orderItems/by-externalReferenceCode/{externalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
@@ -123,7 +124,8 @@ public abstract class BaseOrderItemResourceImpl
 	@Tags(value = {@Tag(name = "OrderItem")})
 	public OrderItem getOrderItemByExternalReferenceCode(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode)
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode)
 		throws Exception {
 
 		return new OrderItem();
@@ -134,20 +136,21 @@ public abstract class BaseOrderItemResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orderItems/by-externalReferenceCode/{externalReferenceCode}' -d $'{"bookedQuantityId": ___, "customFields": ___, "deliveryGroup": ___, "discountAmount": ___, "discountPercentageLevel1": ___, "discountPercentageLevel1WithTaxAmount": ___, "discountPercentageLevel2": ___, "discountPercentageLevel2WithTaxAmount": ___, "discountPercentageLevel3": ___, "discountPercentageLevel3WithTaxAmount": ___, "discountPercentageLevel4": ___, "discountPercentageLevel4WithTaxAmount": ___, "discountWithTaxAmount": ___, "externalReferenceCode": ___, "finalPrice": ___, "finalPriceWithTaxAmount": ___, "id": ___, "name": ___, "orderExternalReferenceCode": ___, "orderId": ___, "printedNote": ___, "promoPrice": ___, "promoPriceWithTaxAmount": ___, "quantity": ___, "requestedDeliveryDate": ___, "shippedQuantity": ___, "shippingAddress": ___, "shippingAddressId": ___, "sku": ___, "skuExternalReferenceCode": ___, "skuId": ___, "subscription": ___, "unitPrice": ___, "unitPriceWithTaxAmount": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PATCH
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
 		}
 	)
+	@PATCH
 	@Path("/orderItems/by-externalReferenceCode/{externalReferenceCode}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "OrderItem")})
 	public Response patchOrderItemByExternalReferenceCode(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode,
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode,
 			OrderItem orderItem)
 		throws Exception {
 
@@ -161,8 +164,8 @@ public abstract class BaseOrderItemResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orderItems/{id}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/orderItems/{id}")
 	@Produces({"application/json", "application/xml"})
@@ -181,9 +184,9 @@ public abstract class BaseOrderItemResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orderItems/{id}/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
 	@DELETE
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "id"),
@@ -195,8 +198,8 @@ public abstract class BaseOrderItemResourceImpl
 	@Tags(value = {@Tag(name = "OrderItem")})
 	public Response deleteOrderItemBatch(
 			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -221,8 +224,8 @@ public abstract class BaseOrderItemResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orderItems/{id}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/orderItems/{id}")
 	@Produces({"application/json", "application/xml"})
@@ -239,10 +242,10 @@ public abstract class BaseOrderItemResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orderItems/{id}' -d $'{"bookedQuantityId": ___, "customFields": ___, "deliveryGroup": ___, "discountAmount": ___, "discountPercentageLevel1": ___, "discountPercentageLevel1WithTaxAmount": ___, "discountPercentageLevel2": ___, "discountPercentageLevel2WithTaxAmount": ___, "discountPercentageLevel3": ___, "discountPercentageLevel3WithTaxAmount": ___, "discountPercentageLevel4": ___, "discountPercentageLevel4WithTaxAmount": ___, "discountWithTaxAmount": ___, "externalReferenceCode": ___, "finalPrice": ___, "finalPriceWithTaxAmount": ___, "id": ___, "name": ___, "orderExternalReferenceCode": ___, "orderId": ___, "printedNote": ___, "promoPrice": ___, "promoPriceWithTaxAmount": ___, "quantity": ___, "requestedDeliveryDate": ___, "shippedQuantity": ___, "shippingAddress": ___, "shippingAddressId": ___, "sku": ___, "skuExternalReferenceCode": ___, "skuId": ___, "subscription": ___, "unitPrice": ___, "unitPriceWithTaxAmount": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PATCH
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
+	@PATCH
 	@Path("/orderItems/{id}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "OrderItem")})
@@ -261,8 +264,8 @@ public abstract class BaseOrderItemResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/by-externalReferenceCode/{externalReferenceCode}/orderItems'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode"),
@@ -275,7 +278,8 @@ public abstract class BaseOrderItemResourceImpl
 	@Tags(value = {@Tag(name = "OrderItem")})
 	public Page<OrderItem> getOrderByExternalReferenceCodeOrderItemsPage(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode,
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -287,20 +291,21 @@ public abstract class BaseOrderItemResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/by-externalReferenceCode/{externalReferenceCode}/orderItems' -d $'{"bookedQuantityId": ___, "customFields": ___, "deliveryGroup": ___, "discountAmount": ___, "discountPercentageLevel1": ___, "discountPercentageLevel1WithTaxAmount": ___, "discountPercentageLevel2": ___, "discountPercentageLevel2WithTaxAmount": ___, "discountPercentageLevel3": ___, "discountPercentageLevel3WithTaxAmount": ___, "discountPercentageLevel4": ___, "discountPercentageLevel4WithTaxAmount": ___, "discountWithTaxAmount": ___, "externalReferenceCode": ___, "finalPrice": ___, "finalPriceWithTaxAmount": ___, "id": ___, "name": ___, "orderExternalReferenceCode": ___, "orderId": ___, "printedNote": ___, "promoPrice": ___, "promoPriceWithTaxAmount": ___, "quantity": ___, "requestedDeliveryDate": ___, "shippedQuantity": ___, "shippingAddress": ___, "shippingAddressId": ___, "sku": ___, "skuExternalReferenceCode": ___, "skuId": ___, "subscription": ___, "unitPrice": ___, "unitPriceWithTaxAmount": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
 		}
 	)
 	@Path("/orders/by-externalReferenceCode/{externalReferenceCode}/orderItems")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "OrderItem")})
 	public OrderItem postOrderByExternalReferenceCodeOrderItem(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode,
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode,
 			OrderItem orderItem)
 		throws Exception {
 
@@ -312,8 +317,8 @@ public abstract class BaseOrderItemResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/{id}/orderItems'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "id"),
@@ -337,11 +342,11 @@ public abstract class BaseOrderItemResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/{id}/orderItems' -d $'{"bookedQuantityId": ___, "customFields": ___, "deliveryGroup": ___, "discountAmount": ___, "discountPercentageLevel1": ___, "discountPercentageLevel1WithTaxAmount": ___, "discountPercentageLevel2": ___, "discountPercentageLevel2WithTaxAmount": ___, "discountPercentageLevel3": ___, "discountPercentageLevel3WithTaxAmount": ___, "discountPercentageLevel4": ___, "discountPercentageLevel4WithTaxAmount": ___, "discountWithTaxAmount": ___, "externalReferenceCode": ___, "finalPrice": ___, "finalPriceWithTaxAmount": ___, "id": ___, "name": ___, "orderExternalReferenceCode": ___, "orderId": ___, "printedNote": ___, "promoPrice": ___, "promoPriceWithTaxAmount": ___, "quantity": ___, "requestedDeliveryDate": ___, "shippedQuantity": ___, "shippingAddress": ___, "shippingAddressId": ___, "sku": ___, "skuExternalReferenceCode": ___, "skuId": ___, "subscription": ___, "unitPrice": ___, "unitPriceWithTaxAmount": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/orders/{id}/orderItems")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "OrderItem")})
 	public OrderItem postOrderIdOrderItem(
@@ -357,9 +362,8 @@ public abstract class BaseOrderItemResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/{id}/orderItems/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "id"),
@@ -367,12 +371,13 @@ public abstract class BaseOrderItemResourceImpl
 		}
 	)
 	@Path("/orders/{id}/orderItems/batch")
+	@POST
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "OrderItem")})
 	public Response postOrderIdOrderItemBatch(
 			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 

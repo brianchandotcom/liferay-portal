@@ -218,7 +218,7 @@ public abstract class BaseWikiPageResourceTestCase {
 		Long irrelevantWikiNodeId =
 			testGetWikiNodeWikiPagesPage_getIrrelevantWikiNodeId();
 
-		if ((irrelevantWikiNodeId != null)) {
+		if (irrelevantWikiNodeId != null) {
 			WikiPage irrelevantWikiPage =
 				testGetWikiNodeWikiPagesPage_addWikiPage(
 					irrelevantWikiNodeId, randomIrrelevantWikiPage());
@@ -525,7 +525,7 @@ public abstract class BaseWikiPageResourceTestCase {
 		Long irrelevantParentWikiPageId =
 			testGetWikiPageWikiPagesPage_getIrrelevantParentWikiPageId();
 
-		if ((irrelevantParentWikiPageId != null)) {
+		if (irrelevantParentWikiPageId != null) {
 			WikiPage irrelevantWikiPage =
 				testGetWikiPageWikiPagesPage_addWikiPage(
 					irrelevantParentWikiPageId, randomIrrelevantWikiPage());

@@ -70,7 +70,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/1.0")
 public abstract class BaseFolderResourceImpl
-	implements FolderResource, EntityModelResource,
+	implements EntityModelResource, FolderResource,
 			   VulcanBatchEngineTaskItemDelegate<Folder> {
 
 	/**
@@ -78,8 +78,8 @@ public abstract class BaseFolderResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/commerce-bom/1.0/folders/{id}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/folders/{id}")
 	@Produces({"application/json", "application/xml"})

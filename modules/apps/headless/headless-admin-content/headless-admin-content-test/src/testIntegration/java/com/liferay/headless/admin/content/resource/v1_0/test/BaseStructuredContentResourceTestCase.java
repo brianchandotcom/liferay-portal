@@ -210,7 +210,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		Long irrelevantSiteId =
 			testGetSiteStructuredContentsPage_getIrrelevantSiteId();
 
-		if ((irrelevantSiteId != null)) {
+		if (irrelevantSiteId != null) {
 			StructuredContent irrelevantStructuredContent =
 				testGetSiteStructuredContentsPage_addStructuredContent(
 					irrelevantSiteId, randomIrrelevantStructuredContent());
@@ -534,7 +534,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		Long irrelevantStructuredContentId =
 			testGetStructuredContentsVersionsPage_getIrrelevantStructuredContentId();
 
-		if ((irrelevantStructuredContentId != null)) {
+		if (irrelevantStructuredContentId != null) {
 			StructuredContent irrelevantStructuredContent =
 				testGetStructuredContentsVersionsPage_addStructuredContent(
 					irrelevantStructuredContentId,

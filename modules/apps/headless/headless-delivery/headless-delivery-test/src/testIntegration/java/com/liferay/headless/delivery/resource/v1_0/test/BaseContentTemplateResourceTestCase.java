@@ -239,7 +239,7 @@ public abstract class BaseContentTemplateResourceTestCase {
 		Long irrelevantAssetLibraryId =
 			testGetAssetLibraryContentTemplatesPage_getIrrelevantAssetLibraryId();
 
-		if ((irrelevantAssetLibraryId != null)) {
+		if (irrelevantAssetLibraryId != null) {
 			ContentTemplate irrelevantContentTemplate =
 				testGetAssetLibraryContentTemplatesPage_addContentTemplate(
 					irrelevantAssetLibraryId,
@@ -564,7 +564,7 @@ public abstract class BaseContentTemplateResourceTestCase {
 		Long irrelevantSiteId =
 			testGetSiteContentTemplatesPage_getIrrelevantSiteId();
 
-		if ((irrelevantSiteId != null)) {
+		if (irrelevantSiteId != null) {
 			ContentTemplate irrelevantContentTemplate =
 				testGetSiteContentTemplatesPage_addContentTemplate(
 					irrelevantSiteId, randomIrrelevantContentTemplate());

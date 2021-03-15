@@ -54,8 +54,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @GraphQLName("DocumentFolder")
 @JsonFilter("Liferay.Vulcan")
 @Schema(
-	requiredProperties = {"name"},
-	description = "Represents a document folder that can contain documents and other folders."
+	description = "Represents a document folder that can contain documents and other folders.",
+	requiredProperties = {"name"}
 )
 @XmlRootElement(name = "DocumentFolder")
 public class DocumentFolder implements Serializable {

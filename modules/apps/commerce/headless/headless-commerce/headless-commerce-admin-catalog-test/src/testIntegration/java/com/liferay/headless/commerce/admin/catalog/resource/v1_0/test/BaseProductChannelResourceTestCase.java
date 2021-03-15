@@ -339,7 +339,7 @@ public abstract class BaseProductChannelResourceTestCase {
 		String irrelevantExternalReferenceCode =
 			testGetProductByExternalReferenceCodeProductChannelsPage_getIrrelevantExternalReferenceCode();
 
-		if ((irrelevantExternalReferenceCode != null)) {
+		if (irrelevantExternalReferenceCode != null) {
 			ProductChannel irrelevantProductChannel =
 				testGetProductByExternalReferenceCodeProductChannelsPage_addProductChannel(
 					irrelevantExternalReferenceCode,
@@ -473,7 +473,7 @@ public abstract class BaseProductChannelResourceTestCase {
 		Long irrelevantId =
 			testGetProductIdProductChannelsPage_getIrrelevantId();
 
-		if ((irrelevantId != null)) {
+		if (irrelevantId != null) {
 			ProductChannel irrelevantProductChannel =
 				testGetProductIdProductChannelsPage_addProductChannel(
 					irrelevantId, randomIrrelevantProductChannel());

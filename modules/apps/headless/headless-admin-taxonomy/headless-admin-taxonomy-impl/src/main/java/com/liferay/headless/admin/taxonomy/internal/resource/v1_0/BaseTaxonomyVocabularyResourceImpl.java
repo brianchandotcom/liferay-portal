@@ -80,7 +80,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseTaxonomyVocabularyResourceImpl
-	implements TaxonomyVocabularyResource, EntityModelResource,
+	implements EntityModelResource, TaxonomyVocabularyResource,
 			   VulcanBatchEngineTaskItemDelegate<TaxonomyVocabulary> {
 
 	/**
@@ -88,8 +88,8 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-taxonomy/v1.0/asset-libraries/{assetLibraryId}/taxonomy-vocabularies'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "assetLibraryId"),
@@ -104,8 +104,8 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
 	public Page<TaxonomyVocabulary> getAssetLibraryTaxonomyVocabulariesPage(
-			@NotNull @Parameter(hidden = true) @PathParam("assetLibraryId") Long
-				assetLibraryId,
+			@NotNull @Parameter(hidden = true) @PathParam("assetLibraryId")
+				Long assetLibraryId,
 			@Parameter(hidden = true) @QueryParam("search") String search,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)
@@ -119,18 +119,18 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-taxonomy/v1.0/asset-libraries/{assetLibraryId}/taxonomy-vocabularies' -d $'{"assetTypes": ___, "description": ___, "description_i18n": ___, "name": ___, "name_i18n": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "assetLibraryId")}
 	)
 	@Path("/asset-libraries/{assetLibraryId}/taxonomy-vocabularies")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
 	public TaxonomyVocabulary postAssetLibraryTaxonomyVocabulary(
-			@NotNull @Parameter(hidden = true) @PathParam("assetLibraryId") Long
-				assetLibraryId,
+			@NotNull @Parameter(hidden = true) @PathParam("assetLibraryId")
+				Long assetLibraryId,
 			TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception {
 
@@ -142,9 +142,8 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-taxonomy/v1.0/asset-libraries/{assetLibraryId}/taxonomy-vocabularies/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "assetLibraryId"),
@@ -152,13 +151,14 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 		}
 	)
 	@Path("/asset-libraries/{assetLibraryId}/taxonomy-vocabularies/batch")
+	@POST
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
 	public Response postAssetLibraryTaxonomyVocabularyBatch(
-			@NotNull @Parameter(hidden = true) @PathParam("assetLibraryId") Long
-				assetLibraryId,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@NotNull @Parameter(hidden = true) @PathParam("assetLibraryId")
+				Long assetLibraryId,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -183,11 +183,11 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-taxonomy/v1.0/sites/{siteId}/taxonomy-vocabularies'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(
 		description = "Retrieves a Site's taxonomy vocabularies. Results can be paginated, filtered, searched, and sorted."
 	)
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
@@ -216,12 +216,12 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-taxonomy/v1.0/sites/{siteId}/taxonomy-vocabularies' -d $'{"assetTypes": ___, "description": ___, "description_i18n": ___, "name": ___, "name_i18n": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(description = "Inserts a new taxonomy vocabulary in a Site.")
-	@POST
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "siteId")})
 	@Path("/sites/{siteId}/taxonomy-vocabularies")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
 	public TaxonomyVocabulary postSiteTaxonomyVocabulary(
@@ -237,9 +237,8 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-taxonomy/v1.0/sites/{siteId}/taxonomy-vocabularies/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
@@ -247,12 +246,13 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 		}
 	)
 	@Path("/sites/{siteId}/taxonomy-vocabularies/batch")
+	@POST
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
 	public Response postSiteTaxonomyVocabularyBatch(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -277,11 +277,11 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/{taxonomyVocabularyId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
 	@Operation(
 		description = "Deletes the taxonomy vocabulary and returns a 204 if the operation succeeds."
 	)
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "taxonomyVocabularyId")
@@ -292,7 +292,8 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
 	public void deleteTaxonomyVocabulary(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("taxonomyVocabularyId") Long taxonomyVocabularyId)
+			@PathParam("taxonomyVocabularyId")
+				Long taxonomyVocabularyId)
 		throws Exception {
 	}
 
@@ -301,9 +302,9 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
 	@DELETE
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
@@ -311,8 +312,8 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
 	public Response deleteTaxonomyVocabularyBatch(
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -337,9 +338,9 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/{taxonomyVocabularyId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrieves a taxonomy vocabulary.")
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "taxonomyVocabularyId")
@@ -350,7 +351,8 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
 	public TaxonomyVocabulary getTaxonomyVocabulary(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("taxonomyVocabularyId") Long taxonomyVocabularyId)
+			@PathParam("taxonomyVocabularyId")
+				Long taxonomyVocabularyId)
 		throws Exception {
 
 		return new TaxonomyVocabulary();
@@ -361,23 +363,24 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/{taxonomyVocabularyId}' -d $'{"assetTypes": ___, "description": ___, "description_i18n": ___, "name": ___, "name_i18n": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
 		description = "Updates only the fields received in the request body. Any other fields are left untouched."
 	)
-	@PATCH
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "taxonomyVocabularyId")
 		}
 	)
+	@PATCH
 	@Path("/taxonomy-vocabularies/{taxonomyVocabularyId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
 	public TaxonomyVocabulary patchTaxonomyVocabulary(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("taxonomyVocabularyId") Long taxonomyVocabularyId,
+			@PathParam("taxonomyVocabularyId")
+				Long taxonomyVocabularyId,
 			TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception {
 
@@ -454,12 +457,11 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/{taxonomyVocabularyId}' -d $'{"assetTypes": ___, "description": ___, "description_i18n": ___, "name": ___, "name_i18n": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
 		description = "Replaces the taxonomy vocabulary with the information sent in the request body. Any missing fields are deleted unless they are required."
 	)
-	@PUT
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "taxonomyVocabularyId")
@@ -467,10 +469,12 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	)
 	@Path("/taxonomy-vocabularies/{taxonomyVocabularyId}")
 	@Produces({"application/json", "application/xml"})
+	@PUT
 	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
 	public TaxonomyVocabulary putTaxonomyVocabulary(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("taxonomyVocabularyId") Long taxonomyVocabularyId,
+			@PathParam("taxonomyVocabularyId")
+				Long taxonomyVocabularyId,
 			TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception {
 
@@ -482,18 +486,18 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@PUT
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
 	@Path("/taxonomy-vocabularies/batch")
 	@Produces("application/json")
+	@PUT
 	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
 	public Response putTaxonomyVocabularyBatch(
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -593,8 +597,8 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 		for (TaxonomyVocabulary taxonomyVocabulary : taxonomyVocabularies) {
 			putTaxonomyVocabulary(
 				taxonomyVocabulary.getId() != null ?
-				taxonomyVocabulary.getId() :
-				(Long)parameters.get("taxonomyVocabularyId"),
+					taxonomyVocabulary.getId() :
+						(Long)parameters.get("taxonomyVocabularyId"),
 				taxonomyVocabulary);
 		}
 	}

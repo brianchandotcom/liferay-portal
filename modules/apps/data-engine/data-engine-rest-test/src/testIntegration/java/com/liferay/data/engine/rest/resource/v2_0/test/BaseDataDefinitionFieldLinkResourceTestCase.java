@@ -210,7 +210,7 @@ public abstract class BaseDataDefinitionFieldLinkResourceTestCase {
 		Long irrelevantDataDefinitionId =
 			testGetDataDefinitionDataDefinitionFieldLinkPage_getIrrelevantDataDefinitionId();
 
-		if ((irrelevantDataDefinitionId != null)) {
+		if (irrelevantDataDefinitionId != null) {
 			DataDefinitionFieldLink irrelevantDataDefinitionFieldLink =
 				testGetDataDefinitionDataDefinitionFieldLinkPage_addDataDefinitionFieldLink(
 					irrelevantDataDefinitionId,

@@ -59,10 +59,10 @@ public abstract class BaseWorkflowTaskAssignableUsersResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-tasks/assignable-users' -d $'{"workflowTaskIds": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Path("/workflow-tasks/assignable-users")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "WorkflowTaskAssignableUsers")})
 	public WorkflowTaskAssignableUsers postWorkflowTaskAssignableUser(

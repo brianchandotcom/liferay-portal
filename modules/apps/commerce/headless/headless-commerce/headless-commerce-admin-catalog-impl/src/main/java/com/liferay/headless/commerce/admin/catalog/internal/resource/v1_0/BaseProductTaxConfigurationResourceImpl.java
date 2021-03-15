@@ -73,7 +73,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseProductTaxConfigurationResourceImpl
-	implements ProductTaxConfigurationResource, EntityModelResource,
+	implements EntityModelResource, ProductTaxConfigurationResource,
 			   VulcanBatchEngineTaskItemDelegate<ProductTaxConfiguration> {
 
 	/**
@@ -81,8 +81,8 @@ public abstract class BaseProductTaxConfigurationResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/taxConfiguration'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
@@ -96,8 +96,8 @@ public abstract class BaseProductTaxConfigurationResourceImpl
 	public ProductTaxConfiguration
 			getProductByExternalReferenceCodeTaxConfiguration(
 				@NotNull @Parameter(hidden = true)
-				@PathParam("externalReferenceCode") String
-					externalReferenceCode)
+				@PathParam("externalReferenceCode")
+					String externalReferenceCode)
 		throws Exception {
 
 		return new ProductTaxConfiguration();
@@ -108,14 +108,14 @@ public abstract class BaseProductTaxConfigurationResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/taxConfiguration' -d $'{"id": ___, "taxCategory": ___, "taxable": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PATCH
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
 		}
 	)
+	@PATCH
 	@Path(
 		"/products/by-externalReferenceCode/{externalReferenceCode}/taxConfiguration"
 	)
@@ -123,7 +123,8 @@ public abstract class BaseProductTaxConfigurationResourceImpl
 	@Tags(value = {@Tag(name = "ProductTaxConfiguration")})
 	public Response patchProductByExternalReferenceCodeTaxConfiguration(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode,
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode,
 			ProductTaxConfiguration productTaxConfiguration)
 		throws Exception {
 
@@ -137,8 +138,8 @@ public abstract class BaseProductTaxConfigurationResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}/taxConfiguration'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/products/{id}/taxConfiguration")
 	@Produces({"application/json", "application/xml"})
@@ -155,10 +156,10 @@ public abstract class BaseProductTaxConfigurationResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}/taxConfiguration' -d $'{"id": ___, "taxCategory": ___, "taxable": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PATCH
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
+	@PATCH
 	@Path("/products/{id}/taxConfiguration")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ProductTaxConfiguration")})

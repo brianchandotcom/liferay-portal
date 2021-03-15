@@ -211,7 +211,7 @@ public abstract class BaseInstanceResourceTestCase {
 		Long irrelevantProcessId =
 			testGetProcessInstancesPage_getIrrelevantProcessId();
 
-		if ((irrelevantProcessId != null)) {
+		if (irrelevantProcessId != null) {
 			Instance irrelevantInstance =
 				testGetProcessInstancesPage_addInstance(
 					irrelevantProcessId, randomIrrelevantInstance());

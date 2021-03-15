@@ -427,7 +427,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 		Long irrelevantSiteId =
 			testGetSiteBlogPostingsPage_getIrrelevantSiteId();
 
-		if ((irrelevantSiteId != null)) {
+		if (irrelevantSiteId != null) {
 			BlogPosting irrelevantBlogPosting =
 				testGetSiteBlogPostingsPage_addBlogPosting(
 					irrelevantSiteId, randomIrrelevantBlogPosting());

@@ -72,7 +72,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BasePhoneResourceImpl
-	implements PhoneResource, EntityModelResource,
+	implements EntityModelResource, PhoneResource,
 			   VulcanBatchEngineTaskItemDelegate<Phone> {
 
 	/**
@@ -80,9 +80,9 @@ public abstract class BasePhoneResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/organizations/{organizationId}/phones'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrieves the organization's phone numbers.")
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "organizationId")}
 	)
@@ -102,16 +102,16 @@ public abstract class BasePhoneResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/phones/{phoneId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrieves the phone number.")
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "phoneId")})
 	@Path("/phones/{phoneId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Phone")})
 	public Phone getPhone(
-			@NotNull @Parameter(hidden = true) @PathParam("phoneId") Long
-				phoneId)
+			@NotNull @Parameter(hidden = true) @PathParam("phoneId")
+				Long phoneId)
 		throws Exception {
 
 		return new Phone();
@@ -122,9 +122,9 @@ public abstract class BasePhoneResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/user-accounts/{userAccountId}/phones'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrieves the user's phone numbers.")
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "userAccountId")}
 	)
@@ -132,8 +132,8 @@ public abstract class BasePhoneResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Phone")})
 	public Page<Phone> getUserAccountPhonesPage(
-			@NotNull @Parameter(hidden = true) @PathParam("userAccountId") Long
-				userAccountId)
+			@NotNull @Parameter(hidden = true) @PathParam("userAccountId")
+				Long userAccountId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

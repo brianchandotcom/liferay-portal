@@ -443,7 +443,7 @@ public abstract class BaseOrderItemResourceTestCase {
 		String irrelevantExternalReferenceCode =
 			testGetOrderByExternalReferenceCodeOrderItemsPage_getIrrelevantExternalReferenceCode();
 
-		if ((irrelevantExternalReferenceCode != null)) {
+		if (irrelevantExternalReferenceCode != null) {
 			OrderItem irrelevantOrderItem =
 				testGetOrderByExternalReferenceCodeOrderItemsPage_addOrderItem(
 					irrelevantExternalReferenceCode,
@@ -602,7 +602,7 @@ public abstract class BaseOrderItemResourceTestCase {
 		Long id = testGetOrderIdOrderItemsPage_getId();
 		Long irrelevantId = testGetOrderIdOrderItemsPage_getIrrelevantId();
 
-		if ((irrelevantId != null)) {
+		if (irrelevantId != null) {
 			OrderItem irrelevantOrderItem =
 				testGetOrderIdOrderItemsPage_addOrderItem(
 					irrelevantId, randomIrrelevantOrderItem());

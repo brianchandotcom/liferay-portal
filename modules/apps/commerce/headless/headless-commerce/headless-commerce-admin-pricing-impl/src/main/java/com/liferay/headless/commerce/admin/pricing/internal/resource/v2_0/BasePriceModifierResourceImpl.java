@@ -78,7 +78,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v2.0")
 public abstract class BasePriceModifierResourceImpl
-	implements PriceModifierResource, EntityModelResource,
+	implements EntityModelResource, PriceModifierResource,
 			   VulcanBatchEngineTaskItemDelegate<PriceModifier> {
 
 	/**
@@ -86,8 +86,8 @@ public abstract class BasePriceModifierResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-lists/by-externalReferenceCode/{externalReferenceCode}/price-modifiers'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode"),
@@ -103,8 +103,8 @@ public abstract class BasePriceModifierResourceImpl
 	public Page<PriceModifier>
 			getPriceListByExternalReferenceCodePriceModifiersPage(
 				@NotNull @Parameter(hidden = true)
-				@PathParam("externalReferenceCode") String
-					externalReferenceCode,
+				@PathParam("externalReferenceCode")
+					String externalReferenceCode,
 				@Context Pagination pagination)
 		throws Exception {
 
@@ -116,9 +116,8 @@ public abstract class BasePriceModifierResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-lists/by-externalReferenceCode/{externalReferenceCode}/price-modifiers' -d $'{"active": ___, "displayDate": ___, "expirationDate": ___, "externalReferenceCode": ___, "id": ___, "modifierAmount": ___, "modifierType": ___, "neverExpire": ___, "priceListExternalReferenceCode": ___, "priceListId": ___, "priceModifierCategories": ___, "priceModifierProductGroups": ___, "priceModifierProducts": ___, "priority": ___, "target": ___, "title": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
@@ -127,11 +126,13 @@ public abstract class BasePriceModifierResourceImpl
 	@Path(
 		"/price-lists/by-externalReferenceCode/{externalReferenceCode}/price-modifiers"
 	)
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "PriceModifier")})
 	public PriceModifier postPriceListByExternalReferenceCodePriceModifier(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode,
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode,
 			PriceModifier priceModifier)
 		throws Exception {
 
@@ -143,8 +144,8 @@ public abstract class BasePriceModifierResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-lists/{id}/price-modifiers'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "id"),
@@ -173,11 +174,11 @@ public abstract class BasePriceModifierResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-lists/{id}/price-modifiers' -d $'{"active": ___, "displayDate": ___, "expirationDate": ___, "externalReferenceCode": ___, "id": ___, "modifierAmount": ___, "modifierType": ___, "neverExpire": ___, "priceListExternalReferenceCode": ___, "priceListId": ___, "priceModifierCategories": ___, "priceModifierProductGroups": ___, "priceModifierProducts": ___, "priority": ___, "target": ___, "title": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/price-lists/{id}/price-modifiers")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "PriceModifier")})
 	public PriceModifier postPriceListIdPriceModifier(
@@ -193,9 +194,8 @@ public abstract class BasePriceModifierResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-lists/price-modifiers/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "id"),
@@ -203,12 +203,13 @@ public abstract class BasePriceModifierResourceImpl
 		}
 	)
 	@Path("/price-lists/price-modifiers/batch")
+	@POST
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "PriceModifier")})
 	public Response postPriceListIdPriceModifierBatch(
 			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -233,8 +234,8 @@ public abstract class BasePriceModifierResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-modifiers/by-externalReferenceCode/{externalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
@@ -245,7 +246,8 @@ public abstract class BasePriceModifierResourceImpl
 	@Tags(value = {@Tag(name = "PriceModifier")})
 	public void deletePriceModifierByExternalReferenceCode(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode)
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode)
 		throws Exception {
 	}
 
@@ -254,8 +256,8 @@ public abstract class BasePriceModifierResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-modifiers/by-externalReferenceCode/{externalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
@@ -266,7 +268,8 @@ public abstract class BasePriceModifierResourceImpl
 	@Tags(value = {@Tag(name = "PriceModifier")})
 	public PriceModifier getPriceModifierByExternalReferenceCode(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode)
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode)
 		throws Exception {
 
 		return new PriceModifier();
@@ -277,20 +280,21 @@ public abstract class BasePriceModifierResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-modifiers/by-externalReferenceCode/{externalReferenceCode}' -d $'{"active": ___, "displayDate": ___, "expirationDate": ___, "externalReferenceCode": ___, "id": ___, "modifierAmount": ___, "modifierType": ___, "neverExpire": ___, "priceListExternalReferenceCode": ___, "priceListId": ___, "priceModifierCategories": ___, "priceModifierProductGroups": ___, "priceModifierProducts": ___, "priority": ___, "target": ___, "title": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PATCH
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
 		}
 	)
+	@PATCH
 	@Path("/price-modifiers/by-externalReferenceCode/{externalReferenceCode}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "PriceModifier")})
 	public Response patchPriceModifierByExternalReferenceCode(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode,
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode,
 			PriceModifier priceModifier)
 		throws Exception {
 
@@ -304,8 +308,8 @@ public abstract class BasePriceModifierResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-modifiers/{id}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/price-modifiers/{id}")
 	@Produces({"application/json", "application/xml"})
@@ -320,9 +324,9 @@ public abstract class BasePriceModifierResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-modifiers/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
 	@DELETE
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "id"),
@@ -334,8 +338,8 @@ public abstract class BasePriceModifierResourceImpl
 	@Tags(value = {@Tag(name = "PriceModifier")})
 	public Response deletePriceModifierBatch(
 			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -360,8 +364,8 @@ public abstract class BasePriceModifierResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-modifiers/{id}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/price-modifiers/{id}")
 	@Produces({"application/json", "application/xml"})
@@ -378,10 +382,10 @@ public abstract class BasePriceModifierResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-modifiers/{id}' -d $'{"active": ___, "displayDate": ___, "expirationDate": ___, "externalReferenceCode": ___, "id": ___, "modifierAmount": ___, "modifierType": ___, "neverExpire": ___, "priceListExternalReferenceCode": ___, "priceListId": ___, "priceModifierCategories": ___, "priceModifierProductGroups": ___, "priceModifierProducts": ___, "priority": ___, "target": ___, "title": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PATCH
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
+	@PATCH
 	@Path("/price-modifiers/{id}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "PriceModifier")})

@@ -354,7 +354,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		Long irrelevantSiteId =
 			testGetSiteBlogPostingImagesPage_getIrrelevantSiteId();
 
-		if ((irrelevantSiteId != null)) {
+		if (irrelevantSiteId != null) {
 			BlogPostingImage irrelevantBlogPostingImage =
 				testGetSiteBlogPostingImagesPage_addBlogPostingImage(
 					irrelevantSiteId, randomIrrelevantBlogPostingImage());

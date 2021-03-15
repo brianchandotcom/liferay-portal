@@ -266,7 +266,7 @@ public abstract class BaseEmailAddressResourceTestCase {
 		String irrelevantOrganizationId =
 			testGetOrganizationEmailAddressesPage_getIrrelevantOrganizationId();
 
-		if ((irrelevantOrganizationId != null)) {
+		if (irrelevantOrganizationId != null) {
 			EmailAddress irrelevantEmailAddress =
 				testGetOrganizationEmailAddressesPage_addEmailAddress(
 					irrelevantOrganizationId, randomIrrelevantEmailAddress());
@@ -337,7 +337,7 @@ public abstract class BaseEmailAddressResourceTestCase {
 		Long irrelevantUserAccountId =
 			testGetUserAccountEmailAddressesPage_getIrrelevantUserAccountId();
 
-		if ((irrelevantUserAccountId != null)) {
+		if (irrelevantUserAccountId != null) {
 			EmailAddress irrelevantEmailAddress =
 				testGetUserAccountEmailAddressesPage_addEmailAddress(
 					irrelevantUserAccountId, randomIrrelevantEmailAddress());

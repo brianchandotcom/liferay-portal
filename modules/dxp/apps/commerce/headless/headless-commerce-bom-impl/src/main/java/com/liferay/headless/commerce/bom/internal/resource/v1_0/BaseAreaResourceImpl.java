@@ -78,8 +78,8 @@ public abstract class BaseAreaResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/commerce-bom/1.0/areas/{id}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/areas/{id}")
 	@Produces({"application/json", "application/xml"})

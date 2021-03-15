@@ -541,7 +541,7 @@ public abstract class BaseContentSetElementResourceTestCase {
 		Long irrelevantContentSetId =
 			testGetContentSetContentSetElementsPage_getIrrelevantContentSetId();
 
-		if ((irrelevantContentSetId != null)) {
+		if (irrelevantContentSetId != null) {
 			ContentSetElement irrelevantContentSetElement =
 				testGetContentSetContentSetElementsPage_addContentSetElement(
 					irrelevantContentSetId,

@@ -76,7 +76,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseProductSpecificationResourceImpl
-	implements ProductSpecificationResource, EntityModelResource,
+	implements EntityModelResource, ProductSpecificationResource,
 			   VulcanBatchEngineTaskItemDelegate<ProductSpecification> {
 
 	/**
@@ -84,8 +84,8 @@ public abstract class BaseProductSpecificationResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}/productSpecifications'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "id"),
@@ -109,11 +109,11 @@ public abstract class BaseProductSpecificationResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}/productSpecifications' -d $'{"id": ___, "optionCategoryId": ___, "priority": ___, "productId": ___, "specificationId": ___, "specificationKey": ___, "value": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/products/{id}/productSpecifications")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ProductSpecification")})
 	public ProductSpecification postProductIdProductSpecification(
@@ -129,9 +129,8 @@ public abstract class BaseProductSpecificationResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}/productSpecifications/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "id"),
@@ -139,12 +138,13 @@ public abstract class BaseProductSpecificationResourceImpl
 		}
 	)
 	@Path("/products/{id}/productSpecifications/batch")
+	@POST
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "ProductSpecification")})
 	public Response postProductIdProductSpecificationBatch(
 			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 

@@ -211,7 +211,7 @@ public abstract class BaseDiscountRuleResourceTestCase {
 		String irrelevantExternalReferenceCode =
 			testGetDiscountByExternalReferenceCodeDiscountRulesPage_getIrrelevantExternalReferenceCode();
 
-		if ((irrelevantExternalReferenceCode != null)) {
+		if (irrelevantExternalReferenceCode != null) {
 			DiscountRule irrelevantDiscountRule =
 				testGetDiscountByExternalReferenceCodeDiscountRulesPage_addDiscountRule(
 					irrelevantExternalReferenceCode,
@@ -491,7 +491,7 @@ public abstract class BaseDiscountRuleResourceTestCase {
 		Long irrelevantId =
 			testGetDiscountIdDiscountRulesPage_getIrrelevantId();
 
-		if ((irrelevantId != null)) {
+		if (irrelevantId != null) {
 			DiscountRule irrelevantDiscountRule =
 				testGetDiscountIdDiscountRulesPage_addDiscountRule(
 					irrelevantId, randomIrrelevantDiscountRule());

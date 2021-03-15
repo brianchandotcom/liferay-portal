@@ -78,7 +78,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseSLAResourceImpl
-	implements SLAResource, EntityModelResource,
+	implements EntityModelResource, SLAResource,
 			   VulcanBatchEngineTaskItemDelegate<SLA> {
 
 	/**
@@ -86,8 +86,8 @@ public abstract class BaseSLAResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/slas'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "processId"),
@@ -100,8 +100,8 @@ public abstract class BaseSLAResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "SLA")})
 	public Page<SLA> getProcessSLAsPage(
-			@NotNull @Parameter(hidden = true) @PathParam("processId") Long
-				processId,
+			@NotNull @Parameter(hidden = true) @PathParam("processId")
+				Long processId,
 			@Parameter(hidden = true) @QueryParam("status") Integer status,
 			@Context Pagination pagination)
 		throws Exception {
@@ -114,16 +114,16 @@ public abstract class BaseSLAResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/slas' -d $'{"calendarKey": ___, "dateModified": ___, "description": ___, "duration": ___, "id": ___, "name": ___, "pauseNodeKeys": ___, "processId": ___, "startNodeKeys": ___, "status": ___, "stopNodeKeys": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "processId")})
 	@Path("/processes/{processId}/slas")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "SLA")})
 	public SLA postProcessSLA(
-			@NotNull @Parameter(hidden = true) @PathParam("processId") Long
-				processId,
+			@NotNull @Parameter(hidden = true) @PathParam("processId")
+				Long processId,
 			SLA sla)
 		throws Exception {
 
@@ -135,9 +135,8 @@ public abstract class BaseSLAResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/slas/batch' -d $'{"calendarKey": ___, "dateModified": ___, "description": ___, "duration": ___, "id": ___, "name": ___, "pauseNodeKeys": ___, "processId": ___, "startNodeKeys": ___, "status": ___, "stopNodeKeys": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "processId"),
@@ -145,14 +144,15 @@ public abstract class BaseSLAResourceImpl
 		}
 	)
 	@Path("/processes/{processId}/slas/batch")
+	@POST
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "SLA")})
 	public Response postProcessSLABatch(
-			@NotNull @Parameter(hidden = true) @PathParam("processId") Long
-				processId,
+			@NotNull @Parameter(hidden = true) @PathParam("processId")
+				Long processId,
 			SLA sla,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -177,8 +177,8 @@ public abstract class BaseSLAResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/slas/{slaId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "slaId")})
 	@Path("/slas/{slaId}")
 	@Produces({"application/json", "application/xml"})
@@ -193,9 +193,9 @@ public abstract class BaseSLAResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/slas/{slaId}/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
 	@DELETE
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "slaId"),
@@ -207,8 +207,8 @@ public abstract class BaseSLAResourceImpl
 	@Tags(value = {@Tag(name = "SLA")})
 	public Response deleteSLABatch(
 			@NotNull @Parameter(hidden = true) @PathParam("slaId") Long slaId,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -233,8 +233,8 @@ public abstract class BaseSLAResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/slas/{slaId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "slaId")})
 	@Path("/slas/{slaId}")
 	@Produces({"application/json", "application/xml"})
@@ -251,12 +251,12 @@ public abstract class BaseSLAResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/slas/{slaId}' -d $'{"calendarKey": ___, "dateModified": ___, "description": ___, "duration": ___, "id": ___, "name": ___, "pauseNodeKeys": ___, "processId": ___, "startNodeKeys": ___, "status": ___, "stopNodeKeys": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PUT
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "slaId")})
 	@Path("/slas/{slaId}")
 	@Produces({"application/json", "application/xml"})
+	@PUT
 	@Tags(value = {@Tag(name = "SLA")})
 	public SLA putSLA(
 			@NotNull @Parameter(hidden = true) @PathParam("slaId") Long slaId,
@@ -271,9 +271,8 @@ public abstract class BaseSLAResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/slas/{slaId}/batch' -d $'{"calendarKey": ___, "dateModified": ___, "description": ___, "duration": ___, "id": ___, "name": ___, "pauseNodeKeys": ___, "processId": ___, "startNodeKeys": ___, "status": ___, "stopNodeKeys": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@PUT
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "slaId"),
@@ -282,12 +281,13 @@ public abstract class BaseSLAResourceImpl
 	)
 	@Path("/slas/{slaId}/batch")
 	@Produces("application/json")
+	@PUT
 	@Tags(value = {@Tag(name = "SLA")})
 	public Response putSLABatch(
 			@NotNull @Parameter(hidden = true) @PathParam("slaId") Long slaId,
 			SLA sla,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -388,7 +388,7 @@ public abstract class BaseSLAResourceImpl
 		for (SLA sla : slas) {
 			putSLA(
 				sla.getId() != null ? sla.getId() :
-				(Long)parameters.get("slaId"),
+					(Long)parameters.get("slaId"),
 				sla);
 		}
 	}

@@ -228,7 +228,7 @@ public abstract class BaseAccountUserResourceTestCase {
 		String irrelevantExternalReferenceCode =
 			testGetAccountUsersByExternalReferenceCodePage_getIrrelevantExternalReferenceCode();
 
-		if ((irrelevantExternalReferenceCode != null)) {
+		if (irrelevantExternalReferenceCode != null) {
 			AccountUser irrelevantAccountUser =
 				testGetAccountUsersByExternalReferenceCodePage_addAccountUser(
 					irrelevantExternalReferenceCode,
@@ -567,7 +567,7 @@ public abstract class BaseAccountUserResourceTestCase {
 		Long irrelevantAccountId =
 			testGetAccountUsersPage_getIrrelevantAccountId();
 
-		if ((irrelevantAccountId != null)) {
+		if (irrelevantAccountId != null) {
 			AccountUser irrelevantAccountUser =
 				testGetAccountUsersPage_addAccountUser(
 					irrelevantAccountId, randomIrrelevantAccountUser());

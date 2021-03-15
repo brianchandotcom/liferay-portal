@@ -256,7 +256,7 @@ public abstract class BaseProductGroupProductResourceTestCase {
 		String irrelevantExternalReferenceCode =
 			testGetProductGroupByExternalReferenceCodeProductGroupProductsPage_getIrrelevantExternalReferenceCode();
 
-		if ((irrelevantExternalReferenceCode != null)) {
+		if (irrelevantExternalReferenceCode != null) {
 			ProductGroupProduct irrelevantProductGroupProduct =
 				testGetProductGroupByExternalReferenceCodeProductGroupProductsPage_addProductGroupProduct(
 					irrelevantExternalReferenceCode,
@@ -422,7 +422,7 @@ public abstract class BaseProductGroupProductResourceTestCase {
 		Long irrelevantId =
 			testGetProductGroupIdProductGroupProductsPage_getIrrelevantId();
 
-		if ((irrelevantId != null)) {
+		if (irrelevantId != null) {
 			ProductGroupProduct irrelevantProductGroupProduct =
 				testGetProductGroupIdProductGroupProductsPage_addProductGroupProduct(
 					irrelevantId, randomIrrelevantProductGroupProduct());

@@ -73,7 +73,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseTaxCategoryResourceImpl
-	implements TaxCategoryResource, EntityModelResource,
+	implements EntityModelResource, TaxCategoryResource,
 			   VulcanBatchEngineTaskItemDelegate<TaxCategory> {
 
 	/**
@@ -81,8 +81,8 @@ public abstract class BaseTaxCategoryResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-channel/v1.0/tax-categories'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.QUERY, name = "search"),
@@ -106,8 +106,8 @@ public abstract class BaseTaxCategoryResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-channel/v1.0/tax-categories/{id}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/tax-categories/{id}")
 	@Produces({"application/json", "application/xml"})

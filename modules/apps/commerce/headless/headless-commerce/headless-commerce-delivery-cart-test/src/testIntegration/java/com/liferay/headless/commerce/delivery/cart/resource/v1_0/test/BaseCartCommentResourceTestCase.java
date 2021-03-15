@@ -373,7 +373,7 @@ public abstract class BaseCartCommentResourceTestCase {
 		Long cartId = testGetCartCommentsPage_getCartId();
 		Long irrelevantCartId = testGetCartCommentsPage_getIrrelevantCartId();
 
-		if ((irrelevantCartId != null)) {
+		if (irrelevantCartId != null) {
 			CartComment irrelevantCartComment =
 				testGetCartCommentsPage_addCartComment(
 					irrelevantCartId, randomIrrelevantCartComment());

@@ -67,17 +67,17 @@ public abstract class BaseAppWorkflowDataRecordLinkResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/app-builder-workflow/v1.0/apps/{appId}/app-workflows/data-record-links' -d $'{"dataRecordIds": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "appId")})
 	@Path("/apps/{appId}/app-workflows/data-record-links")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AppWorkflowDataRecordLink")})
 	public Page<AppWorkflowDataRecordLink>
 			postAppAppWorkflowDataRecordLinksPage(
-				@NotNull @Parameter(hidden = true) @PathParam("appId") Long
-					appId,
+				@NotNull @Parameter(hidden = true) @PathParam("appId")
+					Long appId,
 				DataRecordIds dataRecordIds)
 		throws Exception {
 

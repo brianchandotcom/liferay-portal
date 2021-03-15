@@ -130,8 +130,8 @@ public class Mutation {
 	@GraphQLField
 	public java.util.Collection<Assignee> createProcessAssigneesPage(
 			@GraphQLName("processId") Long processId,
-			@GraphQLName("assigneeBulkSelection") AssigneeBulkSelection
-				assigneeBulkSelection)
+			@GraphQLName("assigneeBulkSelection")
+				AssigneeBulkSelection assigneeBulkSelection)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -530,8 +530,8 @@ public class Mutation {
 	public java.util.Collection<Task> createProcessTasksPage(
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page,
-			@GraphQLName("taskBulkSelection") TaskBulkSelection
-				taskBulkSelection)
+			@GraphQLName("taskBulkSelection")
+				TaskBulkSelection taskBulkSelection)
 		throws Exception {
 
 		return _applyComponentServiceObjects(

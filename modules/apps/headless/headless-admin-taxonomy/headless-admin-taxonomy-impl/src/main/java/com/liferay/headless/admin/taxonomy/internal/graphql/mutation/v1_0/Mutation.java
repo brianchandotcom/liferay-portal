@@ -184,8 +184,8 @@ public class Mutation {
 
 	@GraphQLField(description = "Inserts a new child taxonomy category.")
 	public TaxonomyCategory createTaxonomyCategoryTaxonomyCategory(
-			@GraphQLName("parentTaxonomyCategoryId") String
-				parentTaxonomyCategoryId,
+			@GraphQLName("parentTaxonomyCategoryId")
+				String parentTaxonomyCategoryId,
 			@GraphQLName("taxonomyCategory") TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
@@ -309,8 +309,8 @@ public class Mutation {
 	@GraphQLField
 	public TaxonomyVocabulary createAssetLibraryTaxonomyVocabulary(
 			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
-			@GraphQLName("taxonomyVocabulary") TaxonomyVocabulary
-				taxonomyVocabulary)
+			@GraphQLName("taxonomyVocabulary")
+				TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -340,8 +340,8 @@ public class Mutation {
 	@GraphQLField(description = "Inserts a new taxonomy vocabulary in a Site.")
 	public TaxonomyVocabulary createSiteTaxonomyVocabulary(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("taxonomyVocabulary") TaxonomyVocabulary
-				taxonomyVocabulary)
+			@GraphQLName("taxonomyVocabulary")
+				TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -403,8 +403,8 @@ public class Mutation {
 	)
 	public TaxonomyVocabulary patchTaxonomyVocabulary(
 			@GraphQLName("taxonomyVocabularyId") Long taxonomyVocabularyId,
-			@GraphQLName("taxonomyVocabulary") TaxonomyVocabulary
-				taxonomyVocabulary)
+			@GraphQLName("taxonomyVocabulary")
+				TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -420,8 +420,8 @@ public class Mutation {
 	)
 	public TaxonomyVocabulary updateTaxonomyVocabulary(
 			@GraphQLName("taxonomyVocabularyId") Long taxonomyVocabularyId,
-			@GraphQLName("taxonomyVocabulary") TaxonomyVocabulary
-				taxonomyVocabulary)
+			@GraphQLName("taxonomyVocabulary")
+				TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception {
 
 		return _applyComponentServiceObjects(

@@ -206,7 +206,7 @@ public abstract class BaseNodeMetricResourceTestCase {
 		Long irrelevantProcessId =
 			testGetProcessNodeMetricsPage_getIrrelevantProcessId();
 
-		if ((irrelevantProcessId != null)) {
+		if (irrelevantProcessId != null) {
 			NodeMetric irrelevantNodeMetric =
 				testGetProcessNodeMetricsPage_addNodeMetric(
 					irrelevantProcessId, randomIrrelevantNodeMetric());

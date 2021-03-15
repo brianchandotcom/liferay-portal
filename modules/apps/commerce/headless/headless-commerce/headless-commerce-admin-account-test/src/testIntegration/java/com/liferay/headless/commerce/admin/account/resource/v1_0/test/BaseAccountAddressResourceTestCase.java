@@ -533,7 +533,7 @@ public abstract class BaseAccountAddressResourceTestCase {
 		String irrelevantExternalReferenceCode =
 			testGetAccountByExternalReferenceCodeAccountAddressesPage_getIrrelevantExternalReferenceCode();
 
-		if ((irrelevantExternalReferenceCode != null)) {
+		if (irrelevantExternalReferenceCode != null) {
 			AccountAddress irrelevantAccountAddress =
 				testGetAccountByExternalReferenceCodeAccountAddressesPage_addAccountAddress(
 					irrelevantExternalReferenceCode,
@@ -707,7 +707,7 @@ public abstract class BaseAccountAddressResourceTestCase {
 		Long irrelevantId =
 			testGetAccountIdAccountAddressesPage_getIrrelevantId();
 
-		if ((irrelevantId != null)) {
+		if (irrelevantId != null) {
 			AccountAddress irrelevantAccountAddress =
 				testGetAccountIdAccountAddressesPage_addAccountAddress(
 					irrelevantId, randomIrrelevantAccountAddress());

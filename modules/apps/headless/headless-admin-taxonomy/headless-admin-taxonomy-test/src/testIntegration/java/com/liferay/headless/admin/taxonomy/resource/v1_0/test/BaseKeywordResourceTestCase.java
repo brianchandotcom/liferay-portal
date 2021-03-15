@@ -230,7 +230,7 @@ public abstract class BaseKeywordResourceTestCase {
 		Long irrelevantAssetLibraryId =
 			testGetAssetLibraryKeywordsPage_getIrrelevantAssetLibraryId();
 
-		if ((irrelevantAssetLibraryId != null)) {
+		if (irrelevantAssetLibraryId != null) {
 			Keyword irrelevantKeyword =
 				testGetAssetLibraryKeywordsPage_addKeyword(
 					irrelevantAssetLibraryId, randomIrrelevantKeyword());
@@ -744,7 +744,7 @@ public abstract class BaseKeywordResourceTestCase {
 		Long siteId = testGetSiteKeywordsPage_getSiteId();
 		Long irrelevantSiteId = testGetSiteKeywordsPage_getIrrelevantSiteId();
 
-		if ((irrelevantSiteId != null)) {
+		if (irrelevantSiteId != null) {
 			Keyword irrelevantKeyword = testGetSiteKeywordsPage_addKeyword(
 				irrelevantSiteId, randomIrrelevantKeyword());
 

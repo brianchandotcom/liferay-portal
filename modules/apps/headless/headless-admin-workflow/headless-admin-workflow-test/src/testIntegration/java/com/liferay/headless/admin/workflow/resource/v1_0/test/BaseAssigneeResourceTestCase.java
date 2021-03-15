@@ -205,7 +205,7 @@ public abstract class BaseAssigneeResourceTestCase {
 		Long irrelevantWorkflowTaskId =
 			testGetWorkflowTaskAssignableUsersPage_getIrrelevantWorkflowTaskId();
 
-		if ((irrelevantWorkflowTaskId != null)) {
+		if (irrelevantWorkflowTaskId != null) {
 			Assignee irrelevantAssignee =
 				testGetWorkflowTaskAssignableUsersPage_addAssignee(
 					irrelevantWorkflowTaskId, randomIrrelevantAssignee());

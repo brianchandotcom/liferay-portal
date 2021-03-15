@@ -211,7 +211,7 @@ public abstract class BaseCategoryResourceTestCase {
 		String irrelevantExternalReferenceCode =
 			testGetProductByExternalReferenceCodeCategoriesPage_getIrrelevantExternalReferenceCode();
 
-		if ((irrelevantExternalReferenceCode != null)) {
+		if (irrelevantExternalReferenceCode != null) {
 			Category irrelevantCategory =
 				testGetProductByExternalReferenceCodeCategoriesPage_addCategory(
 					irrelevantExternalReferenceCode,
@@ -336,7 +336,7 @@ public abstract class BaseCategoryResourceTestCase {
 		Long id = testGetProductIdCategoriesPage_getId();
 		Long irrelevantId = testGetProductIdCategoriesPage_getIrrelevantId();
 
-		if ((irrelevantId != null)) {
+		if (irrelevantId != null) {
 			Category irrelevantCategory =
 				testGetProductIdCategoriesPage_addCategory(
 					irrelevantId, randomIrrelevantCategory());

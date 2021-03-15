@@ -73,7 +73,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseSegmentResourceImpl
-	implements SegmentResource, EntityModelResource,
+	implements EntityModelResource, SegmentResource,
 			   VulcanBatchEngineTaskItemDelegate<Segment> {
 
 	/**
@@ -81,9 +81,9 @@ public abstract class BaseSegmentResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/sites/{siteId}/segments'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Gets a site's segments.")
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
@@ -107,11 +107,11 @@ public abstract class BaseSegmentResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/sites/{siteId}/user-accounts/{userAccountId}/segments'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(
 		description = "Gets a user's segments. The set of available headers are: Accept-Language (string), Host (string), User-Agent (string), X-Browser (string), X-Cookies (collection string), X-Device-Brand (string), X-Device-Model (string), X-Device-Screen-Resolution-Height (double), X-Device-Screen-Resolution-Width (double), X-Last-Sign-In-Date-Time (date time) and X-Signed-In (boolean). Local date will be always present in the request."
 	)
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
@@ -123,8 +123,8 @@ public abstract class BaseSegmentResourceImpl
 	@Tags(value = {@Tag(name = "Segment")})
 	public Page<Segment> getSiteUserAccountSegmentsPage(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
-			@NotNull @Parameter(hidden = true) @PathParam("userAccountId") Long
-				userAccountId)
+			@NotNull @Parameter(hidden = true) @PathParam("userAccountId")
+				Long userAccountId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

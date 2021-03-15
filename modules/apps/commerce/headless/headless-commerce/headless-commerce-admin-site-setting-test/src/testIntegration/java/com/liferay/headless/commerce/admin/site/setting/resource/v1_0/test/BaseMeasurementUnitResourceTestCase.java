@@ -210,7 +210,7 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 		Long irrelevantGroupId =
 			testGetCommerceAdminSiteSettingGroupMeasurementUnitPage_getIrrelevantGroupId();
 
-		if ((irrelevantGroupId != null)) {
+		if (irrelevantGroupId != null) {
 			MeasurementUnit irrelevantMeasurementUnit =
 				testGetCommerceAdminSiteSettingGroupMeasurementUnitPage_addMeasurementUnit(
 					irrelevantGroupId, randomIrrelevantMeasurementUnit());

@@ -54,8 +54,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @GraphQLName("TaxonomyVocabulary")
 @JsonFilter("Liferay.Vulcan")
 @Schema(
-	requiredProperties = {"name"},
-	description = "Represents a vocabulary, which is a grouping of categories for a specific purpose (e.g., classification, sorting, etc.)."
+	description = "Represents a vocabulary, which is a grouping of categories for a specific purpose (e.g., classification, sorting, etc.).",
+	requiredProperties = {"name"}
 )
 @XmlRootElement(name = "TaxonomyVocabulary")
 public class TaxonomyVocabulary implements Serializable {

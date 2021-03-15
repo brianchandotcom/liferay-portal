@@ -72,17 +72,17 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseWebUrlResourceImpl
-	implements WebUrlResource, EntityModelResource,
-			   VulcanBatchEngineTaskItemDelegate<WebUrl> {
+	implements EntityModelResource, VulcanBatchEngineTaskItemDelegate<WebUrl>,
+			   WebUrlResource {
 
 	/**
 	 * Invoke this method with the command line:
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/organizations/{organizationId}/web-urls'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrieves the organization's URLs.")
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "organizationId")}
 	)
@@ -102,9 +102,9 @@ public abstract class BaseWebUrlResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/user-accounts/{userAccountId}/web-urls'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrieves the user's URLs.")
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "userAccountId")}
 	)
@@ -112,8 +112,8 @@ public abstract class BaseWebUrlResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "WebUrl")})
 	public Page<WebUrl> getUserAccountWebUrlsPage(
-			@NotNull @Parameter(hidden = true) @PathParam("userAccountId") Long
-				userAccountId)
+			@NotNull @Parameter(hidden = true) @PathParam("userAccountId")
+				Long userAccountId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -124,16 +124,16 @@ public abstract class BaseWebUrlResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/web-urls/{webUrlId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrieves the web URL.")
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "webUrlId")})
 	@Path("/web-urls/{webUrlId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "WebUrl")})
 	public WebUrl getWebUrl(
-			@NotNull @Parameter(hidden = true) @PathParam("webUrlId") Long
-				webUrlId)
+			@NotNull @Parameter(hidden = true) @PathParam("webUrlId")
+				Long webUrlId)
 		throws Exception {
 
 		return new WebUrl();

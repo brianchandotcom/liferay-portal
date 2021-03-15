@@ -367,7 +367,7 @@ public abstract class BaseCartItemResourceTestCase {
 		Long cartId = testGetCartItemsPage_getCartId();
 		Long irrelevantCartId = testGetCartItemsPage_getIrrelevantCartId();
 
-		if ((irrelevantCartId != null)) {
+		if (irrelevantCartId != null) {
 			CartItem irrelevantCartItem = testGetCartItemsPage_addCartItem(
 				irrelevantCartId, randomIrrelevantCartItem());
 

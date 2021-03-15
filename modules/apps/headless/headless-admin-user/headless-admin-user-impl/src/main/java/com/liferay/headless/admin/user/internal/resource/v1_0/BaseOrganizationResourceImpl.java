@@ -80,7 +80,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseOrganizationResourceImpl
-	implements OrganizationResource, EntityModelResource,
+	implements EntityModelResource, OrganizationResource,
 			   VulcanBatchEngineTaskItemDelegate<Organization> {
 
 	/**
@@ -88,11 +88,11 @@ public abstract class BaseOrganizationResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/organizations'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(
 		description = "Retrieves the organizations. Results can be paginated, filtered, searched, and sorted."
 	)
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.QUERY, name = "flatten"),
@@ -121,11 +121,11 @@ public abstract class BaseOrganizationResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/organizations' -d $'{"comment": ___, "customFields": ___, "id": ___, "location": ___, "name": ___, "organizationContactInformation": ___, "parentOrganization": ___, "services": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(description = "Creates a new organization")
-	@POST
+	@Override
 	@Path("/organizations")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Organization")})
 	public Organization postOrganization(Organization organization)
@@ -139,18 +139,18 @@ public abstract class BaseOrganizationResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/organizations/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
 	@Path("/organizations/batch")
+	@POST
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Organization")})
 	public Response postOrganizationBatch(
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -175,9 +175,9 @@ public abstract class BaseOrganizationResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-user/v1.0/organizations/{organizationId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
 	@Operation(description = "Deletes an organization.")
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "organizationId")}
 	)
@@ -195,9 +195,9 @@ public abstract class BaseOrganizationResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-user/v1.0/organizations/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
 	@DELETE
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
@@ -205,8 +205,8 @@ public abstract class BaseOrganizationResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Organization")})
 	public Response deleteOrganizationBatch(
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -231,9 +231,9 @@ public abstract class BaseOrganizationResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/organizations/{organizationId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrieves the organization.")
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "organizationId")}
 	)
@@ -253,15 +253,15 @@ public abstract class BaseOrganizationResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-user/v1.0/organizations/{organizationId}' -d $'{"comment": ___, "customFields": ___, "id": ___, "location": ___, "name": ___, "organizationContactInformation": ___, "parentOrganization": ___, "services": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
 		description = "Updates the organization with the information sent in the request body. Fields not present in the request body are left unchanged."
 	)
-	@PATCH
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "organizationId")}
 	)
+	@PATCH
 	@Path("/organizations/{organizationId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Organization")})
@@ -322,17 +322,17 @@ public abstract class BaseOrganizationResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-user/v1.0/organizations/{organizationId}' -d $'{"comment": ___, "customFields": ___, "id": ___, "location": ___, "name": ___, "organizationContactInformation": ___, "parentOrganization": ___, "services": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
 		description = "Replaces the organization with information sent in the request body. Any missing fields are deleted unless they are required."
 	)
-	@PUT
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "organizationId")}
 	)
 	@Path("/organizations/{organizationId}")
 	@Produces({"application/json", "application/xml"})
+	@PUT
 	@Tags(value = {@Tag(name = "Organization")})
 	public Organization putOrganization(
 			@NotNull @Parameter(hidden = true) @PathParam("organizationId")
@@ -348,18 +348,18 @@ public abstract class BaseOrganizationResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-user/v1.0/organizations/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@PUT
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
 	@Path("/organizations/batch")
 	@Produces("application/json")
+	@PUT
 	@Tags(value = {@Tag(name = "Organization")})
 	public Response putOrganizationBatch(
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -384,11 +384,11 @@ public abstract class BaseOrganizationResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/organizations/{parentOrganizationId}/organizations'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(
 		description = "Retrieves the parent organization's child organizations. Results can be paginated, filtered, searched, and sorted."
 	)
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "parentOrganizationId"),
@@ -405,7 +405,8 @@ public abstract class BaseOrganizationResourceImpl
 	@Tags(value = {@Tag(name = "Organization")})
 	public Page<Organization> getOrganizationOrganizationsPage(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("parentOrganizationId") String parentOrganizationId,
+			@PathParam("parentOrganizationId")
+				String parentOrganizationId,
 			@Parameter(hidden = true) @QueryParam("flatten") Boolean flatten,
 			@Parameter(hidden = true) @QueryParam("search") String search,
 			@Context Filter filter, @Context Pagination pagination,
@@ -495,7 +496,7 @@ public abstract class BaseOrganizationResourceImpl
 		for (Organization organization : organizations) {
 			putOrganization(
 				organization.getId() != null ? organization.getId() :
-				(String)parameters.get("organizationId"),
+					(String)parameters.get("organizationId"),
 				organization);
 		}
 	}

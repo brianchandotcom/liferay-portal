@@ -54,8 +54,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @GraphQLName("WikiPage")
 @JsonFilter("Liferay.Vulcan")
 @Schema(
-	requiredProperties = {"encodingFormat", "headline"},
-	description = "Represents a wiki page."
+	description = "Represents a wiki page.",
+	requiredProperties = {"encodingFormat", "headline"}
 )
 @XmlRootElement(name = "WikiPage")
 public class WikiPage implements Serializable {

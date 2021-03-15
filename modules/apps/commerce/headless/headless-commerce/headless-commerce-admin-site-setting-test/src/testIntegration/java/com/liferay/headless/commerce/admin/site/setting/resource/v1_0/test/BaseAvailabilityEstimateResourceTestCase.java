@@ -339,7 +339,7 @@ public abstract class BaseAvailabilityEstimateResourceTestCase {
 		Long irrelevantGroupId =
 			testGetCommerceAdminSiteSettingGroupAvailabilityEstimatePage_getIrrelevantGroupId();
 
-		if ((irrelevantGroupId != null)) {
+		if (irrelevantGroupId != null) {
 			AvailabilityEstimate irrelevantAvailabilityEstimate =
 				testGetCommerceAdminSiteSettingGroupAvailabilityEstimatePage_addAvailabilityEstimate(
 					irrelevantGroupId, randomIrrelevantAvailabilityEstimate());

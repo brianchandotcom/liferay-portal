@@ -69,9 +69,9 @@ public abstract class BaseDisplayPageTemplateResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-content/v1.0/sites/{siteId}/display-page-templates'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrieves the display page templates of a site")
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
@@ -96,9 +96,9 @@ public abstract class BaseDisplayPageTemplateResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-content/v1.0/sites/{siteId}/display-page-templates/{displayPageTemplateKey}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrieves a display page template of a site")
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
@@ -111,7 +111,8 @@ public abstract class BaseDisplayPageTemplateResourceImpl
 	public DisplayPageTemplate getSiteDisplayPageTemplate(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			@NotNull @Parameter(hidden = true)
-			@PathParam("displayPageTemplateKey") String displayPageTemplateKey)
+			@PathParam("displayPageTemplateKey")
+				String displayPageTemplateKey)
 		throws Exception {
 
 		return new DisplayPageTemplate();

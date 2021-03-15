@@ -72,7 +72,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseProductSpecificationResourceImpl
-	implements ProductSpecificationResource, EntityModelResource,
+	implements EntityModelResource, ProductSpecificationResource,
 			   VulcanBatchEngineTaskItemDelegate<ProductSpecification> {
 
 	/**
@@ -80,8 +80,8 @@ public abstract class BaseProductSpecificationResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-catalog/v1.0/channels/{channelId}/products/{productId}/product-specifications'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "channelId"),
@@ -95,10 +95,10 @@ public abstract class BaseProductSpecificationResourceImpl
 	@Tags(value = {@Tag(name = "ProductSpecification")})
 	public Page<ProductSpecification>
 			getChannelProductProductSpecificationsPage(
-				@NotNull @Parameter(hidden = true) @PathParam("channelId") Long
-					channelId,
-				@NotNull @Parameter(hidden = true) @PathParam("productId") Long
-					productId,
+				@NotNull @Parameter(hidden = true) @PathParam("channelId")
+					Long channelId,
+				@NotNull @Parameter(hidden = true) @PathParam("productId")
+					Long productId,
 				@Context Pagination pagination)
 		throws Exception {
 

@@ -73,7 +73,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseFormStructureResourceImpl
-	implements FormStructureResource, EntityModelResource,
+	implements EntityModelResource, FormStructureResource,
 			   VulcanBatchEngineTaskItemDelegate<FormStructure> {
 
 	/**
@@ -81,10 +81,10 @@ public abstract class BaseFormStructureResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-form/v1.0/form-structures/{formStructureId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Deprecated
 	@GET
 	@Operation(deprecated = true)
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "formStructureId")}
 	)
@@ -104,10 +104,10 @@ public abstract class BaseFormStructureResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-form/v1.0/sites/{siteId}/form-structures'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Deprecated
 	@GET
 	@Operation(deprecated = true)
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),

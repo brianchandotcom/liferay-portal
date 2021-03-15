@@ -289,7 +289,7 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		Long irrelevantDataDefinitionId =
 			testGetDataDefinitionDataRecordCollectionsPage_getIrrelevantDataDefinitionId();
 
-		if ((irrelevantDataDefinitionId != null)) {
+		if (irrelevantDataDefinitionId != null) {
 			DataRecordCollection irrelevantDataRecordCollection =
 				testGetDataDefinitionDataRecordCollectionsPage_addDataRecordCollection(
 					irrelevantDataDefinitionId,

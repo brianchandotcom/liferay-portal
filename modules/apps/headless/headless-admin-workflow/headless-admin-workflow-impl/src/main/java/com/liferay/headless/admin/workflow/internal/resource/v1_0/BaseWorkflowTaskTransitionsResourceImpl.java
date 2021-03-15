@@ -59,10 +59,10 @@ public abstract class BaseWorkflowTaskTransitionsResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-tasks/next-transitions' -d $'{"workflowTaskIds": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Path("/workflow-tasks/next-transitions")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "WorkflowTaskTransitions")})
 	public WorkflowTaskTransitions postWorkflowTaskTransition(

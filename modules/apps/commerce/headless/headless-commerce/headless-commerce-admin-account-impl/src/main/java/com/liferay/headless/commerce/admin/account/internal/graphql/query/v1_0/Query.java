@@ -369,8 +369,8 @@ public class Query {
 	@GraphQLField
 	public AccountOrganizationPage
 			accountByExternalReferenceCodeAccountOrganizations(
-				@GraphQLName("externalReferenceCode") String
-					externalReferenceCode,
+				@GraphQLName("externalReferenceCode")
+					String externalReferenceCode,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page)
 		throws Exception {
@@ -392,8 +392,8 @@ public class Query {
 	@GraphQLField
 	public AccountOrganization
 			accountByExternalReferenceCodeAccountOrganization(
-				@GraphQLName("externalReferenceCode") String
-					externalReferenceCode,
+				@GraphQLName("externalReferenceCode")
+					String externalReferenceCode,
 				@GraphQLName("organizationId") Long organizationId)
 		throws Exception {
 

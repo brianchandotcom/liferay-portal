@@ -73,7 +73,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseShippingAddressResourceImpl
-	implements ShippingAddressResource, EntityModelResource,
+	implements EntityModelResource, ShippingAddressResource,
 			   VulcanBatchEngineTaskItemDelegate<ShippingAddress> {
 
 	/**
@@ -81,8 +81,8 @@ public abstract class BaseShippingAddressResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orderItems/{id}/shippingAddress'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/orderItems/{id}/shippingAddress")
 	@Produces({"application/json", "application/xml"})
@@ -99,8 +99,8 @@ public abstract class BaseShippingAddressResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/by-externalReferenceCode/{externalReferenceCode}/shippingAddress'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
@@ -113,7 +113,8 @@ public abstract class BaseShippingAddressResourceImpl
 	@Tags(value = {@Tag(name = "ShippingAddress")})
 	public ShippingAddress getOrderByExternalReferenceCodeShippingAddress(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode)
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode)
 		throws Exception {
 
 		return new ShippingAddress();
@@ -124,14 +125,14 @@ public abstract class BaseShippingAddressResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/by-externalReferenceCode/{externalReferenceCode}/shippingAddress' -d $'{"city": ___, "countryISOCode": ___, "description": ___, "id": ___, "latitude": ___, "longitude": ___, "name": ___, "phoneNumber": ___, "regionISOCode": ___, "street1": ___, "street2": ___, "street3": ___, "zip": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PATCH
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
 		}
 	)
+	@PATCH
 	@Path(
 		"/orders/by-externalReferenceCode/{externalReferenceCode}/shippingAddress"
 	)
@@ -139,7 +140,8 @@ public abstract class BaseShippingAddressResourceImpl
 	@Tags(value = {@Tag(name = "ShippingAddress")})
 	public Response patchOrderByExternalReferenceCodeShippingAddress(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode") String externalReferenceCode,
+			@PathParam("externalReferenceCode")
+				String externalReferenceCode,
 			ShippingAddress shippingAddress)
 		throws Exception {
 
@@ -153,8 +155,8 @@ public abstract class BaseShippingAddressResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/{id}/shippingAddress'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/orders/{id}/shippingAddress")
 	@Produces({"application/json", "application/xml"})
@@ -171,10 +173,10 @@ public abstract class BaseShippingAddressResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/{id}/shippingAddress' -d $'{"city": ___, "countryISOCode": ___, "description": ___, "id": ___, "latitude": ___, "longitude": ___, "name": ___, "phoneNumber": ___, "regionISOCode": ___, "street1": ___, "street2": ___, "street3": ___, "zip": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PATCH
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
+	@PATCH
 	@Path("/orders/{id}/shippingAddress")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ShippingAddress")})

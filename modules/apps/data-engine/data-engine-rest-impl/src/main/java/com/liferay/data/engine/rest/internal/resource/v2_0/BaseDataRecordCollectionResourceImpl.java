@@ -94,8 +94,8 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/data-record-collection'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "dataDefinitionId")}
 	)
@@ -115,8 +115,8 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/data-record-collections'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "dataDefinitionId"),
@@ -131,9 +131,10 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	public Page<DataRecordCollection>
 			getDataDefinitionDataRecordCollectionsPage(
 				@NotNull @Parameter(hidden = true)
-				@PathParam("dataDefinitionId") Long dataDefinitionId,
-				@Parameter(hidden = true) @QueryParam("keywords") String
-					keywords,
+				@PathParam("dataDefinitionId")
+					Long dataDefinitionId,
+				@Parameter(hidden = true) @QueryParam("keywords")
+					String keywords,
 				@Context Pagination pagination)
 		throws Exception {
 
@@ -145,13 +146,13 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/data-record-collections' -d $'{"dataDefinitionId": ___, "dataRecordCollectionKey": ___, "description": ___, "id": ___, "name": ___, "siteId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "dataDefinitionId")}
 	)
 	@Path("/data-definitions/{dataDefinitionId}/data-record-collections")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DataRecordCollection")})
 	public DataRecordCollection postDataDefinitionDataRecordCollection(
@@ -168,9 +169,8 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/data-record-collections/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "dataDefinitionId"),
@@ -178,13 +178,14 @@ public abstract class BaseDataRecordCollectionResourceImpl
 		}
 	)
 	@Path("/data-definitions/{dataDefinitionId}/data-record-collections/batch")
+	@POST
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataRecordCollection")})
 	public Response postDataDefinitionDataRecordCollectionBatch(
 			@NotNull @Parameter(hidden = true) @PathParam("dataDefinitionId")
 				Long dataDefinitionId,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -209,8 +210,8 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/data-engine/v2.0/data-record-collections/{dataRecordCollectionId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "dataRecordCollectionId")
@@ -221,7 +222,8 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	@Tags(value = {@Tag(name = "DataRecordCollection")})
 	public void deleteDataRecordCollection(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("dataRecordCollectionId") Long dataRecordCollectionId)
+			@PathParam("dataRecordCollectionId")
+				Long dataRecordCollectionId)
 		throws Exception {
 	}
 
@@ -230,9 +232,9 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/data-engine/v2.0/data-record-collections/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
 	@DELETE
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
@@ -240,8 +242,8 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataRecordCollection")})
 	public Response deleteDataRecordCollectionBatch(
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -266,8 +268,8 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/data-engine/v2.0/data-record-collections/{dataRecordCollectionId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "dataRecordCollectionId")
@@ -278,7 +280,8 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	@Tags(value = {@Tag(name = "DataRecordCollection")})
 	public DataRecordCollection getDataRecordCollection(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("dataRecordCollectionId") Long dataRecordCollectionId)
+			@PathParam("dataRecordCollectionId")
+				Long dataRecordCollectionId)
 		throws Exception {
 
 		return new DataRecordCollection();
@@ -289,9 +292,8 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/data-engine/v2.0/data-record-collections/{dataRecordCollectionId}' -d $'{"dataDefinitionId": ___, "dataRecordCollectionKey": ___, "description": ___, "id": ___, "name": ___, "siteId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PUT
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "dataRecordCollectionId")
@@ -299,10 +301,12 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	)
 	@Path("/data-record-collections/{dataRecordCollectionId}")
 	@Produces({"application/json", "application/xml"})
+	@PUT
 	@Tags(value = {@Tag(name = "DataRecordCollection")})
 	public DataRecordCollection putDataRecordCollection(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("dataRecordCollectionId") Long dataRecordCollectionId,
+			@PathParam("dataRecordCollectionId")
+				Long dataRecordCollectionId,
 			DataRecordCollection dataRecordCollection)
 		throws Exception {
 
@@ -314,18 +318,18 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/data-engine/v2.0/data-record-collections/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@PUT
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
 	@Path("/data-record-collections/batch")
 	@Produces("application/json")
+	@PUT
 	@Tags(value = {@Tag(name = "DataRecordCollection")})
 	public Response putDataRecordCollectionBatch(
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
+			@Parameter(hidden = true) @QueryParam("callbackURL")
+				String callbackURL,
 			Object object)
 		throws Exception {
 
@@ -350,8 +354,8 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/data-engine/v2.0/data-record-collections/{dataRecordCollectionId}/permissions'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "dataRecordCollectionId"),
@@ -364,10 +368,10 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	public Page<com.liferay.portal.vulcan.permission.Permission>
 			getDataRecordCollectionPermissionsPage(
 				@NotNull @Parameter(hidden = true)
-				@PathParam("dataRecordCollectionId") Long
-					dataRecordCollectionId,
-				@Parameter(hidden = true) @QueryParam("roleNames") String
-					roleNames)
+				@PathParam("dataRecordCollectionId")
+					Long dataRecordCollectionId,
+				@Parameter(hidden = true) @QueryParam("roleNames")
+					String roleNames)
 		throws Exception {
 
 		String resourceName = getPermissionCheckerResourceName(
@@ -388,7 +392,6 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	 * curl -X 'PUT' 'http://localhost:8080/o/data-engine/v2.0/data-record-collections/{dataRecordCollectionId}/permissions'  -u 'test@liferay.com:test'
 	 */
 	@Override
-	@PUT
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "dataRecordCollectionId")
@@ -396,10 +399,12 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	)
 	@Path("/data-record-collections/{dataRecordCollectionId}/permissions")
 	@Produces({"application/json", "application/xml"})
+	@PUT
 	@Tags(value = {@Tag(name = "DataRecordCollection")})
 	public void putDataRecordCollectionPermission(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("dataRecordCollectionId") Long dataRecordCollectionId,
+			@PathParam("dataRecordCollectionId")
+				Long dataRecordCollectionId,
 			com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception {
 
@@ -426,8 +431,8 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/data-engine/v2.0/data-record-collections/{dataRecordCollectionId}/permissions/by-current-user'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "dataRecordCollectionId")
@@ -440,7 +445,8 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	@Tags(value = {@Tag(name = "DataRecordCollection")})
 	public String getDataRecordCollectionPermissionByCurrentUser(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("dataRecordCollectionId") Long dataRecordCollectionId)
+			@PathParam("dataRecordCollectionId")
+				Long dataRecordCollectionId)
 		throws Exception {
 
 		return StringPool.BLANK;
@@ -451,8 +457,8 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/data-engine/v2.0/sites/{siteId}/data-record-collections/by-data-record-collection-key/{dataRecordCollectionKey}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
@@ -466,11 +472,11 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	@Tags(value = {@Tag(name = "DataRecordCollection")})
 	public DataRecordCollection
 			getSiteDataRecordCollectionByDataRecordCollectionKey(
-				@NotNull @Parameter(hidden = true) @PathParam("siteId") Long
-					siteId,
+				@NotNull @Parameter(hidden = true) @PathParam("siteId")
+					Long siteId,
 				@NotNull @Parameter(hidden = true)
-				@PathParam("dataRecordCollectionKey") String
-					dataRecordCollectionKey)
+				@PathParam("dataRecordCollectionKey")
+					String dataRecordCollectionKey)
 		throws Exception {
 
 		return new DataRecordCollection();
@@ -564,8 +570,8 @@ public abstract class BaseDataRecordCollectionResourceImpl
 
 			putDataRecordCollection(
 				dataRecordCollection.getId() != null ?
-				dataRecordCollection.getId() :
-				(Long)parameters.get("dataRecordCollectionId"),
+					dataRecordCollection.getId() :
+						(Long)parameters.get("dataRecordCollectionId"),
 				dataRecordCollection);
 		}
 	}

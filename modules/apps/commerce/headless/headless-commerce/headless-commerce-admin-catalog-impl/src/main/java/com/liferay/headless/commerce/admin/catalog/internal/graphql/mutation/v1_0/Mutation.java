@@ -846,8 +846,8 @@ public class Mutation {
 	@GraphQLField
 	public Product createProductByExternalReferenceCodeClone(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
-			@GraphQLName("catalogExternalReferenceCode") String
-				catalogExternalReferenceCode)
+			@GraphQLName("catalogExternalReferenceCode")
+				String catalogExternalReferenceCode)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -934,8 +934,8 @@ public class Mutation {
 	@GraphQLField
 	public Response patchProductByExternalReferenceCodeConfiguration(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
-			@GraphQLName("productConfiguration") ProductConfiguration
-				productConfiguration)
+			@GraphQLName("productConfiguration")
+				ProductConfiguration productConfiguration)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -950,8 +950,8 @@ public class Mutation {
 	@GraphQLField
 	public Response patchProductIdConfiguration(
 			@GraphQLName("id") Long id,
-			@GraphQLName("productConfiguration") ProductConfiguration
-				productConfiguration)
+			@GraphQLName("productConfiguration")
+				ProductConfiguration productConfiguration)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1088,10 +1088,10 @@ public class Mutation {
 	@GraphQLField
 	public ProductGroupProduct
 			createProductGroupByExternalReferenceCodeProductGroupProduct(
-				@GraphQLName("externalReferenceCode") String
-					externalReferenceCode,
-				@GraphQLName("productGroupProduct") ProductGroupProduct
-					productGroupProduct)
+				@GraphQLName("externalReferenceCode")
+					String externalReferenceCode,
+				@GraphQLName("productGroupProduct")
+					ProductGroupProduct productGroupProduct)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1106,8 +1106,8 @@ public class Mutation {
 	@GraphQLField
 	public ProductGroupProduct createProductGroupIdProductGroupProduct(
 			@GraphQLName("id") Long id,
-			@GraphQLName("productGroupProduct") ProductGroupProduct
-				productGroupProduct)
+			@GraphQLName("productGroupProduct")
+				ProductGroupProduct productGroupProduct)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1177,8 +1177,8 @@ public class Mutation {
 	@GraphQLField
 	public java.util.Collection<ProductOption>
 			createProductByExternalReferenceCodeProductOptionsPage(
-				@GraphQLName("externalReferenceCode") String
-					externalReferenceCode,
+				@GraphQLName("externalReferenceCode")
+					String externalReferenceCode,
 				@GraphQLName("productOptions") ProductOption[] productOptions)
 		throws Exception {
 
@@ -1217,8 +1217,8 @@ public class Mutation {
 	@GraphQLField
 	public ProductOptionValue createProductOptionIdProductOptionValue(
 			@GraphQLName("id") Long id,
-			@GraphQLName("productOptionValue") ProductOptionValue
-				productOptionValue)
+			@GraphQLName("productOptionValue")
+				ProductOptionValue productOptionValue)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1281,8 +1281,8 @@ public class Mutation {
 	@GraphQLField
 	public ProductSpecification createProductIdProductSpecification(
 			@GraphQLName("id") Long id,
-			@GraphQLName("productSpecification") ProductSpecification
-				productSpecification)
+			@GraphQLName("productSpecification")
+				ProductSpecification productSpecification)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1312,11 +1312,11 @@ public class Mutation {
 	@GraphQLField
 	public Response
 			patchProductByExternalReferenceCodeSubscriptionConfiguration(
-				@GraphQLName("externalReferenceCode") String
-					externalReferenceCode,
+				@GraphQLName("externalReferenceCode")
+					String externalReferenceCode,
 				@GraphQLName("productSubscriptionConfiguration")
 					ProductSubscriptionConfiguration
-						productSubscriptionConfiguration)
+					productSubscriptionConfiguration)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1334,7 +1334,7 @@ public class Mutation {
 			@GraphQLName("id") Long id,
 			@GraphQLName("productSubscriptionConfiguration")
 				ProductSubscriptionConfiguration
-					productSubscriptionConfiguration)
+				productSubscriptionConfiguration)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1349,8 +1349,8 @@ public class Mutation {
 	@GraphQLField
 	public Response patchProductByExternalReferenceCodeTaxConfiguration(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
-			@GraphQLName("productTaxConfiguration") ProductTaxConfiguration
-				productTaxConfiguration)
+			@GraphQLName("productTaxConfiguration")
+				ProductTaxConfiguration productTaxConfiguration)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1365,8 +1365,8 @@ public class Mutation {
 	@GraphQLField
 	public Response patchProductIdTaxConfiguration(
 			@GraphQLName("id") Long id,
-			@GraphQLName("productTaxConfiguration") ProductTaxConfiguration
-				productTaxConfiguration)
+			@GraphQLName("productTaxConfiguration")
+				ProductTaxConfiguration productTaxConfiguration)
 		throws Exception {
 
 		return _applyComponentServiceObjects(

@@ -231,7 +231,7 @@ public abstract class BaseContentElementResourceTestCase {
 		Long irrelevantAssetLibraryId =
 			testGetAssetLibraryContentElementsPage_getIrrelevantAssetLibraryId();
 
-		if ((irrelevantAssetLibraryId != null)) {
+		if (irrelevantAssetLibraryId != null) {
 			ContentElement irrelevantContentElement =
 				testGetAssetLibraryContentElementsPage_addContentElement(
 					irrelevantAssetLibraryId, randomIrrelevantContentElement());
@@ -555,7 +555,7 @@ public abstract class BaseContentElementResourceTestCase {
 		Long irrelevantSiteId =
 			testGetSiteContentElementsPage_getIrrelevantSiteId();
 
-		if ((irrelevantSiteId != null)) {
+		if (irrelevantSiteId != null) {
 			ContentElement irrelevantContentElement =
 				testGetSiteContentElementsPage_addContentElement(
 					irrelevantSiteId, randomIrrelevantContentElement());

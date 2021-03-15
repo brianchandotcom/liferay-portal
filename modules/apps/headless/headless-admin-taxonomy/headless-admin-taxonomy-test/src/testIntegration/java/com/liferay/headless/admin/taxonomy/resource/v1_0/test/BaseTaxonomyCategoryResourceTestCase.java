@@ -312,7 +312,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		String irrelevantParentTaxonomyCategoryId =
 			testGetTaxonomyCategoryTaxonomyCategoriesPage_getIrrelevantParentTaxonomyCategoryId();
 
-		if ((irrelevantParentTaxonomyCategoryId != null)) {
+		if (irrelevantParentTaxonomyCategoryId != null) {
 			TaxonomyCategory irrelevantTaxonomyCategory =
 				testGetTaxonomyCategoryTaxonomyCategoriesPage_addTaxonomyCategory(
 					irrelevantParentTaxonomyCategoryId,
@@ -879,7 +879,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		Long irrelevantTaxonomyVocabularyId =
 			testGetTaxonomyVocabularyTaxonomyCategoriesPage_getIrrelevantTaxonomyVocabularyId();
 
-		if ((irrelevantTaxonomyVocabularyId != null)) {
+		if (irrelevantTaxonomyVocabularyId != null) {
 			TaxonomyCategory irrelevantTaxonomyCategory =
 				testGetTaxonomyVocabularyTaxonomyCategoriesPage_addTaxonomyCategory(
 					irrelevantTaxonomyVocabularyId,

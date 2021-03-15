@@ -71,7 +71,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseSiteResourceImpl
-	implements SiteResource, EntityModelResource,
+	implements EntityModelResource, SiteResource,
 			   VulcanBatchEngineTaskItemDelegate<Site> {
 
 	/**
@@ -79,8 +79,8 @@ public abstract class BaseSiteResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/my-user-account/sites'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
@@ -101,8 +101,8 @@ public abstract class BaseSiteResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/sites/by-friendly-url-path/{friendlyUrlPath}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "friendlyUrlPath")}
 	)
@@ -122,8 +122,8 @@ public abstract class BaseSiteResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/sites/{siteId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "siteId")})
 	@Path("/sites/{siteId}")
 	@Produces({"application/json", "application/xml"})

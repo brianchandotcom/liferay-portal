@@ -361,7 +361,7 @@ public abstract class BaseNavigationMenuResourceTestCase {
 		Long irrelevantSiteId =
 			testGetSiteNavigationMenusPage_getIrrelevantSiteId();
 
-		if ((irrelevantSiteId != null)) {
+		if (irrelevantSiteId != null) {
 			NavigationMenu irrelevantNavigationMenu =
 				testGetSiteNavigationMenusPage_addNavigationMenu(
 					irrelevantSiteId, randomIrrelevantNavigationMenu());

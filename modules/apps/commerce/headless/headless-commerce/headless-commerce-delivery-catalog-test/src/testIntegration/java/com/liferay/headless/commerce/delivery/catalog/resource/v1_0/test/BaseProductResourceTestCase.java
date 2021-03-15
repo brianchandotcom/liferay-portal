@@ -226,7 +226,7 @@ public abstract class BaseProductResourceTestCase {
 		Long irrelevantChannelId =
 			testGetChannelProductsPage_getIrrelevantChannelId();
 
-		if ((irrelevantChannelId != null)) {
+		if (irrelevantChannelId != null) {
 			Product irrelevantProduct = testGetChannelProductsPage_addProduct(
 				irrelevantChannelId, randomIrrelevantProduct());
 

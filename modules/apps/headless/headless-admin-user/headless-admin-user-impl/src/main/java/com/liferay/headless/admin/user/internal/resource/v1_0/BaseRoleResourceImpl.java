@@ -75,7 +75,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseRoleResourceImpl
-	implements RoleResource, EntityModelResource,
+	implements EntityModelResource, RoleResource,
 			   VulcanBatchEngineTaskItemDelegate<Role> {
 
 	/**
@@ -83,11 +83,11 @@ public abstract class BaseRoleResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/roles'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(
 		description = "Retrieves the portal instance's roles. Results can be paginated."
 	)
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
@@ -108,9 +108,9 @@ public abstract class BaseRoleResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/roles/{roleId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrieves the role.")
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "roleId")})
 	@Path("/roles/{roleId}")
 	@Produces({"application/json", "application/xml"})
@@ -127,9 +127,9 @@ public abstract class BaseRoleResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-user/v1.0/roles/{roleId}/association/user-account/{userAccountId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
 	@Operation(description = "Unassociates a role with a user account")
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "roleId"),
@@ -141,8 +141,8 @@ public abstract class BaseRoleResourceImpl
 	@Tags(value = {@Tag(name = "Role")})
 	public void deleteRoleUserAccountAssociation(
 			@NotNull @Parameter(hidden = true) @PathParam("roleId") Long roleId,
-			@NotNull @Parameter(hidden = true) @PathParam("userAccountId") Long
-				userAccountId)
+			@NotNull @Parameter(hidden = true) @PathParam("userAccountId")
+				Long userAccountId)
 		throws Exception {
 	}
 
@@ -151,9 +151,8 @@ public abstract class BaseRoleResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/roles/{roleId}/association/user-account/{userAccountId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Operation(description = "Associates a role with a user account")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "roleId"),
@@ -161,12 +160,13 @@ public abstract class BaseRoleResourceImpl
 		}
 	)
 	@Path("/roles/{roleId}/association/user-account/{userAccountId}")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Role")})
 	public void postRoleUserAccountAssociation(
 			@NotNull @Parameter(hidden = true) @PathParam("roleId") Long roleId,
-			@NotNull @Parameter(hidden = true) @PathParam("userAccountId") Long
-				userAccountId)
+			@NotNull @Parameter(hidden = true) @PathParam("userAccountId")
+				Long userAccountId)
 		throws Exception {
 	}
 
@@ -175,11 +175,11 @@ public abstract class BaseRoleResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-user/v1.0/roles/{roleId}/association/user-account/{userAccountId}/organization/{organizationId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
 	@Operation(
 		description = "Unassociates an organization role with a user account"
 	)
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "roleId"),
@@ -194,10 +194,10 @@ public abstract class BaseRoleResourceImpl
 	@Tags(value = {@Tag(name = "Role")})
 	public void deleteOrganizationRoleUserAccountAssociation(
 			@NotNull @Parameter(hidden = true) @PathParam("roleId") Long roleId,
-			@NotNull @Parameter(hidden = true) @PathParam("userAccountId") Long
-				userAccountId,
-			@NotNull @Parameter(hidden = true) @PathParam("organizationId") Long
-				organizationId)
+			@NotNull @Parameter(hidden = true) @PathParam("userAccountId")
+				Long userAccountId,
+			@NotNull @Parameter(hidden = true) @PathParam("organizationId")
+				Long organizationId)
 		throws Exception {
 	}
 
@@ -206,11 +206,10 @@ public abstract class BaseRoleResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/roles/{roleId}/association/user-account/{userAccountId}/organization/{organizationId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Operation(
 		description = "Associates a organization role with a user account"
 	)
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "roleId"),
@@ -221,14 +220,15 @@ public abstract class BaseRoleResourceImpl
 	@Path(
 		"/roles/{roleId}/association/user-account/{userAccountId}/organization/{organizationId}"
 	)
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Role")})
 	public void postOrganizationRoleUserAccountAssociation(
 			@NotNull @Parameter(hidden = true) @PathParam("roleId") Long roleId,
-			@NotNull @Parameter(hidden = true) @PathParam("userAccountId") Long
-				userAccountId,
-			@NotNull @Parameter(hidden = true) @PathParam("organizationId") Long
-				organizationId)
+			@NotNull @Parameter(hidden = true) @PathParam("userAccountId")
+				Long userAccountId,
+			@NotNull @Parameter(hidden = true) @PathParam("organizationId")
+				Long organizationId)
 		throws Exception {
 	}
 
@@ -237,9 +237,9 @@ public abstract class BaseRoleResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-user/v1.0/roles/{roleId}/association/user-account/{userAccountId}/site/{siteId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
 	@Operation(description = "Unassociates a site role with a user account")
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "roleId"),
@@ -254,8 +254,8 @@ public abstract class BaseRoleResourceImpl
 	@Tags(value = {@Tag(name = "Role")})
 	public void deleteSiteRoleUserAccountAssociation(
 			@NotNull @Parameter(hidden = true) @PathParam("roleId") Long roleId,
-			@NotNull @Parameter(hidden = true) @PathParam("userAccountId") Long
-				userAccountId,
+			@NotNull @Parameter(hidden = true) @PathParam("userAccountId")
+				Long userAccountId,
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId)
 		throws Exception {
 	}
@@ -265,9 +265,8 @@ public abstract class BaseRoleResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/roles/{roleId}/association/user-account/{userAccountId}/site/{siteId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Operation(description = "Associates a site role with a user account")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "roleId"),
@@ -278,12 +277,13 @@ public abstract class BaseRoleResourceImpl
 	@Path(
 		"/roles/{roleId}/association/user-account/{userAccountId}/site/{siteId}"
 	)
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Role")})
 	public void postSiteRoleUserAccountAssociation(
 			@NotNull @Parameter(hidden = true) @PathParam("roleId") Long roleId,
-			@NotNull @Parameter(hidden = true) @PathParam("userAccountId") Long
-				userAccountId,
+			@NotNull @Parameter(hidden = true) @PathParam("userAccountId")
+				Long userAccountId,
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId)
 		throws Exception {
 	}

@@ -52,8 +52,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @GraphQLName("Keyword")
 @JsonFilter("Liferay.Vulcan")
 @Schema(
-	requiredProperties = {"name"},
-	description = "Represents a keyword that describes content. Properties follow the [keywords](https://schema.org/keywords) specification."
+	description = "Represents a keyword that describes content. Properties follow the [keywords](https://schema.org/keywords) specification.",
+	requiredProperties = {"name"}
 )
 @XmlRootElement(name = "Keyword")
 public class Keyword implements Serializable {

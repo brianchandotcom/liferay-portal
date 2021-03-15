@@ -208,7 +208,7 @@ public abstract class BaseSLAResourceTestCase {
 		Long irrelevantProcessId =
 			testGetProcessSLAsPage_getIrrelevantProcessId();
 
-		if ((irrelevantProcessId != null)) {
+		if (irrelevantProcessId != null) {
 			SLA irrelevantSLA = testGetProcessSLAsPage_addSLA(
 				irrelevantProcessId, randomIrrelevantSLA());
 

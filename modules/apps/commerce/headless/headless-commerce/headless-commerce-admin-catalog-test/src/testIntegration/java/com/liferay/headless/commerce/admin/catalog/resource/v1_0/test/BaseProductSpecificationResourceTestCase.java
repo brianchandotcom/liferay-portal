@@ -209,7 +209,7 @@ public abstract class BaseProductSpecificationResourceTestCase {
 		Long irrelevantId =
 			testGetProductIdProductSpecificationsPage_getIrrelevantId();
 
-		if ((irrelevantId != null)) {
+		if (irrelevantId != null) {
 			ProductSpecification irrelevantProductSpecification =
 				testGetProductIdProductSpecificationsPage_addProductSpecification(
 					irrelevantId, randomIrrelevantProductSpecification());

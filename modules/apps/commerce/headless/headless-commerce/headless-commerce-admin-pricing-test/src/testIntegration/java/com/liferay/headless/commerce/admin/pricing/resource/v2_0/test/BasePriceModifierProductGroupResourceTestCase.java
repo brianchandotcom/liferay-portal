@@ -241,7 +241,7 @@ public abstract class BasePriceModifierProductGroupResourceTestCase {
 		String irrelevantExternalReferenceCode =
 			testGetPriceModifierByExternalReferenceCodePriceModifierProductGroupsPage_getIrrelevantExternalReferenceCode();
 
-		if ((irrelevantExternalReferenceCode != null)) {
+		if (irrelevantExternalReferenceCode != null) {
 			PriceModifierProductGroup irrelevantPriceModifierProductGroup =
 				testGetPriceModifierByExternalReferenceCodePriceModifierProductGroupsPage_addPriceModifierProductGroup(
 					irrelevantExternalReferenceCode,
@@ -406,7 +406,7 @@ public abstract class BasePriceModifierProductGroupResourceTestCase {
 		Long irrelevantId =
 			testGetPriceModifierIdPriceModifierProductGroupsPage_getIrrelevantId();
 
-		if ((irrelevantId != null)) {
+		if (irrelevantId != null) {
 			PriceModifierProductGroup irrelevantPriceModifierProductGroup =
 				testGetPriceModifierIdPriceModifierProductGroupsPage_addPriceModifierProductGroup(
 					irrelevantId, randomIrrelevantPriceModifierProductGroup());

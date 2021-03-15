@@ -250,7 +250,7 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 		String irrelevantExternalReferenceCode =
 			testGetDiscountByExternalReferenceCodeDiscountCategoriesPage_getIrrelevantExternalReferenceCode();
 
-		if ((irrelevantExternalReferenceCode != null)) {
+		if (irrelevantExternalReferenceCode != null) {
 			DiscountCategory irrelevantDiscountCategory =
 				testGetDiscountByExternalReferenceCodeDiscountCategoriesPage_addDiscountCategory(
 					irrelevantExternalReferenceCode,
@@ -410,7 +410,7 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 		Long irrelevantId =
 			testGetDiscountIdDiscountCategoriesPage_getIrrelevantId();
 
-		if ((irrelevantId != null)) {
+		if (irrelevantId != null) {
 			DiscountCategory irrelevantDiscountCategory =
 				testGetDiscountIdDiscountCategoriesPage_addDiscountCategory(
 					irrelevantId, randomIrrelevantDiscountCategory());

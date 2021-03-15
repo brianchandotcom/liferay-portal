@@ -80,7 +80,7 @@ describe('QuantitySelector Util -> generateQuantityOptions', () => {
 				multipleQuantity: 2,
 			})
 		).toEqual(
-			[2, 4, 6, 8].map((value) => ({
+			[2, 4].map((value) => ({
 				label: value.toString(),
 				value,
 			}))

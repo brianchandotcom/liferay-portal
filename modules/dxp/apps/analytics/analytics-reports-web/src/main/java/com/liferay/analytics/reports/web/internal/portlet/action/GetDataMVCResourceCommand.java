@@ -26,6 +26,7 @@ import com.liferay.analytics.reports.web.internal.model.TimeSpan;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -48,6 +49,7 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -315,7 +317,7 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 		).put(
 			"viewURLs",
 			_getViewURLsJSONArray(
-				analyticsReportsInfoItem, infoItemReference, object,
+				analyticsReportsInfoItem, infoItemReference, locale, object,
 				resourceResponse, urlLocale)
 		);
 	}
@@ -428,7 +430,7 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 
 	private JSONArray _getViewURLsJSONArray(
 		AnalyticsReportsInfoItem<Object> analyticsReportsInfoItem,
-		InfoItemReference infoItemReference, Object object,
+		InfoItemReference infoItemReference, Locale locale, Object object,
 		ResourceResponse resourceResponse, Locale urlLocale) {
 
 		List<Locale> locales = analyticsReportsInfoItem.getAvailableLocales(
@@ -455,25 +457,35 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 						return 1;
 					}
 
-					String languageId1 = LocaleUtil.toBCP47LanguageId(locale1);
-					String languageId2 = LocaleUtil.toBCP47LanguageId(locale2);
+					String displayLanguage1 = locale1.getDisplayLanguage(
+						locale);
+					String displayLanguage2 = locale2.getDisplayLanguage(
+						locale);
 
-					return languageId1.compareToIgnoreCase(languageId2);
+					return displayLanguage1.compareToIgnoreCase(
+						displayLanguage2);
 				}
 			).map(
-				locale -> JSONUtil.put(
+				currentLocale -> JSONUtil.put(
 					"default",
 					Objects.equals(
-						locale,
+						currentLocale,
 						analyticsReportsInfoItem.getDefaultLocale(object))
 				).put(
-					"languageId", LocaleUtil.toBCP47LanguageId(locale)
+					"languageId", LocaleUtil.toBCP47LanguageId(currentLocale)
 				).put(
-					"selected", Objects.equals(locale, urlLocale)
+					"languageLabel",
+					StringBundler.concat(
+						currentLocale.getDisplayLanguage(locale),
+						StringPool.SPACE, StringPool.OPEN_PARENTHESIS,
+						currentLocale.getDisplayCountry(locale),
+						StringPool.CLOSE_PARENTHESIS)
+				).put(
+					"selected", Objects.equals(currentLocale, urlLocale)
 				).put(
 					"viewURL",
 					_getResourceURL(
-						infoItemReference, locale, resourceResponse,
+						infoItemReference, currentLocale, resourceResponse,
 						"/analytics_reports/get_data")
 				)
 			).toArray());

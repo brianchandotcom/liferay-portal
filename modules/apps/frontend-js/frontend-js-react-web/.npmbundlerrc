@@ -1,0 +1,9 @@
+{
+	"config": {
+		"imports": {
+			"@liferay/frontend-js-state-web": {
+				"/": ">= 1.0.0"
+			}
+		}
+	}
+}

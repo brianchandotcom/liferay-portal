@@ -12,11 +12,15 @@
  * details.
  */
 
+/// <reference path="../../../../../../../../frontend-js-state-web/src/main/resources/META-INF/resources/State/types.d.ts"/>
+
+import State from '@liferay/frontend-js-state-web/src/main/resources/META-INF/resources/State';
 import {useCallback, useEffect, useState} from 'react';
 
-import State from './State';
-
-import type {Atom, Selector} from './State';
+import type {
+	Atom,
+	Selector,
+} from '@liferay/frontend-js-state-web/src/main/resources/META-INF/resources/State';
 
 /**
  * Hook-based abstraction over `State.read()`, `State.write()`, and

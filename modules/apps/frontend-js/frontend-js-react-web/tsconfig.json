@@ -1,0 +1,25 @@
+{
+	"compilerOptions": {
+		"allowSyntheticDefaultImports": true,
+		"baseUrl": ".",
+		"module": "es6",
+		"moduleResolution": "node",
+		"outDir": "./build/node/packageRunBuild/dist/",
+		"paths": {
+			"@liferay/frontend-js-state-web": [
+				"../frontend-js-state-web/*"
+			]
+		},
+		"sourceMap": true,
+		"strict": true,
+		"target": "es6",
+		"typeRoots": [
+			"../../../node_modules/@types",
+			"./node_modules/@types"
+		]
+	},
+	"include": [
+		"src/**/*",
+		"test/**/*"
+	]
+}

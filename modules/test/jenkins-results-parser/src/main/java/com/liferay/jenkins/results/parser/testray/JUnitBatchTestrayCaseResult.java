@@ -22,6 +22,9 @@ import com.liferay.jenkins.results.parser.TopLevelBuild;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroup;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Michael Hashimoto
  */
@@ -49,17 +52,41 @@ public class JUnitBatchTestrayCaseResult extends BatchTestrayCaseResult {
 			return null;
 		}
 
-		int errorCount = 0;
+		List<String> errorMessages = new ArrayList<>();
 
 		for (TestResult testResult : testClassResult.getTestResults()) {
 			if ((testResult == null) || !testResult.isFailing()) {
 				continue;
 			}
 
-			errorCount++;
+			StringBuilder sb = new StringBuilder();
+
+			sb.append(testResult.getTestName());
+			sb.append(": ");
+
+			String errorDetails = testResult.getErrorDetails();
+
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(errorDetails)) {
+				errorDetails = errorDetails.substring(
+					0, errorDetails.indexOf("\n"));
+
+				sb.append(errorDetails.trim());
+			}
+			else {
+				sb.append("Failed for unknown reason");
+			}
+
+			errorMessages.add(sb.toString());
 		}
 
-		return errorCount + " tests failed.";
+		if (errorMessages.size() > 1) {
+			return errorMessages.size() + " tests failed.";
+		}
+		else if (errorMessages.size() == 1) {
+			return errorMessages.get(0);
+		}
+
+		return "Failed for unknown reason";
 	}
 
 	@Override

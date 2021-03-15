@@ -330,9 +330,6 @@ public class BlogsEntryLocalServiceTest {
 					_creatorUser.getUserId(), RandomTestUtil.randomString(),
 					RandomTestUtil.randomString(), serviceContext);
 
-				MBTestUtil.populateNotificationsServiceContext(
-					serviceContext, Constants.ADD);
-
 				_addDiscussionMessage(
 					TestPropsValues.getUserId(), serviceContext, blogsEntry);
 

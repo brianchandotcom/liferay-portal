@@ -65,8 +65,7 @@ public class DLSelectDDMStructureManagementToolbarDisplayContext
 			"/document_library/ddm/select_ddm_structure.jsp"
 		).setParameter(
 			"ddmStructureId",
-			String.valueOf(
-				_dlSelectDDMStructureDisplayContext.getDDMStructureId())
+			_dlSelectDDMStructureDisplayContext.getDDMStructureId()
 		).setParameter(
 			"eventName", _dlSelectDDMStructureDisplayContext.getEventName()
 		).build();

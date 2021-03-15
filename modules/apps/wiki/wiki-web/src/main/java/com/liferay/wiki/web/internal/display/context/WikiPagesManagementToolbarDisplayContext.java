@@ -160,7 +160,7 @@ public class WikiPagesManagementToolbarDisplayContext {
 		).setRedirect(
 			_currentURLObj.toString()
 		).setParameter(
-			"nodeId", String.valueOf(node.getNodeId())
+			"nodeId", node.getNodeId()
 		).build();
 
 		return portletURL;
@@ -254,7 +254,7 @@ public class WikiPagesManagementToolbarDisplayContext {
 		).setRedirect(
 			_currentURLObj.toString()
 		).setParameter(
-			"nodeId", String.valueOf(node.getNodeId())
+			"nodeId", node.getNodeId()
 		).build();
 
 		return searchActionURL;

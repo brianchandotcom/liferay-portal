@@ -112,8 +112,7 @@ public class BookmarksEntryAssetRendererFactory
 		).setMVCRenderCommandName(
 			"/bookmarks/edit_entry"
 		).setParameter(
-			"folderId",
-			String.valueOf(BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID)
+			"folderId", BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID
 		).setParameter(
 			"showFolderSelector", Boolean.TRUE.toString()
 		).build();

@@ -117,7 +117,7 @@ public class SiteActionDropdownItemsProvider {
 		).setRedirect(
 			_getRedirect()
 		).setParameter(
-			"groupId", String.valueOf(_group.getGroupId())
+			"groupId", _group.getGroupId()
 		).build();
 
 		return dropdownItem -> {
@@ -152,7 +152,7 @@ public class SiteActionDropdownItemsProvider {
 		).setRedirect(
 			_getRedirect()
 		).setParameter(
-			"groupId", String.valueOf(_group.getGroupId())
+			"groupId", _group.getGroupId()
 		).build();
 
 		return dropdownItem -> {
@@ -174,7 +174,7 @@ public class SiteActionDropdownItemsProvider {
 		).setRedirect(
 			_getRedirect()
 		).setParameter(
-			"groupId", String.valueOf(_group.getGroupId())
+			"groupId", _group.getGroupId()
 		).build();
 
 		return dropdownItem -> {
@@ -195,9 +195,9 @@ public class SiteActionDropdownItemsProvider {
 		).setRedirect(
 			_getRedirect()
 		).setParameter(
-			"groupId", String.valueOf(_group.getGroupId())
+			"groupId", _group.getGroupId()
 		).setParameter(
-			"removeUserIds", String.valueOf(_themeDisplay.getUserId())
+			"removeUserIds", _themeDisplay.getUserId()
 		).build();
 
 		return dropdownItem -> {

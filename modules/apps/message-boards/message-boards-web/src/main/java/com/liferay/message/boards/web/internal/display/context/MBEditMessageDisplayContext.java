@@ -88,7 +88,7 @@ public class MBEditMessageDisplayContext {
 						PortletURLUtil.getCurrent(
 							_liferayPortletRequest, _liferayPortletResponse))
 				).setParameter(
-					"messageId", String.valueOf(_message.getMessageId())
+					"messageId", _message.getMessageId()
 				).setWindowState(
 					LiferayWindowState.POP_UP
 				).build();

@@ -92,7 +92,7 @@ public class CommercePricingClassPriceListDataSetActionProvider
 		).setRedirect(
 			redirect
 		).setParameter(
-			"commercePriceListId", String.valueOf(commercePriceListId)
+			"commercePriceListId", commercePriceListId
 		).build();
 
 		return portletURL;

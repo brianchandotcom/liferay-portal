@@ -155,8 +155,7 @@ public class CalendarBookingAssetRenderer
 		).setMVCPath(
 			"/edit_calendar_booking.jsp"
 		).setParameter(
-			"calendarBookingId",
-			String.valueOf(_calendarBooking.getCalendarBookingId())
+			"calendarBookingId", _calendarBooking.getCalendarBookingId()
 		).build();
 
 		return portletURL;
@@ -177,8 +176,7 @@ public class CalendarBookingAssetRenderer
 				"returnToFullPageURL",
 				PortalUtil.getCurrentURL(liferayPortletRequest)
 			).setParameter(
-				"calendarBookingId",
-				String.valueOf(_calendarBooking.getCalendarBookingId())
+				"calendarBookingId", _calendarBooking.getCalendarBookingId()
 			).setWindowState(
 				WindowState.MAXIMIZED
 			).build();

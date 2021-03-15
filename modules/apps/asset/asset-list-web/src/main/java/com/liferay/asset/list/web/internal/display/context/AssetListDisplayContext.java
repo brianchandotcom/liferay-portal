@@ -411,7 +411,7 @@ public class AssetListDisplayContext {
 		).setActionName(
 			"/asset_list/add_asset_list_entry"
 		).setParameter(
-			"type", String.valueOf(type)
+			"type", type
 		).build();
 
 		return addAssetListEntryURL.toString();

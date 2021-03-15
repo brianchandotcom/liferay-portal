@@ -147,9 +147,9 @@ public class BookmarksEntryAssetRenderer
 		).setMVCRenderCommandName(
 			"/bookmarks/edit_entry"
 		).setParameter(
-			"folderId", String.valueOf(_entry.getFolderId())
+			"folderId", _entry.getFolderId()
 		).setParameter(
-			"entryId", String.valueOf(_entry.getEntryId())
+			"entryId", _entry.getEntryId()
 		).setParameter(
 			"showFolderSelector", Boolean.TRUE.toString()
 		).build();

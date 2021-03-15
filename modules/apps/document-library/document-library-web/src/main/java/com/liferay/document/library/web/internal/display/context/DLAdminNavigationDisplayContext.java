@@ -138,7 +138,7 @@ public class DLAdminNavigationDisplayContext {
 		).setParameter(
 			"backURL", _themeDisplay.getURLCurrent()
 		).setParameter(
-			"groupId", String.valueOf(_themeDisplay.getScopeGroupId())
+			"groupId", _themeDisplay.getScopeGroupId()
 		).build();
 
 		navigationItem.setHref(portletURL.toString());

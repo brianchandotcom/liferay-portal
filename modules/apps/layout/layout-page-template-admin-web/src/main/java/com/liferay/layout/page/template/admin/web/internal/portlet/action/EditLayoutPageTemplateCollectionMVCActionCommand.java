@@ -102,9 +102,7 @@ public class EditLayoutPageTemplateCollectionMVCActionCommand
 			"tabs1", "page-templates"
 		).setParameter(
 			"layoutPageTemplateCollectionId",
-			String.valueOf(
-				layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId())
+			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId()
 		).build();
 
 		return portletURL.toString();

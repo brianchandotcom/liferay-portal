@@ -120,7 +120,7 @@ public class DLViewFileEntryMetadataSetsManagementToolbarDisplayContext
 		).setParameter(
 			"navigation", "file_entry_metadata_sets"
 		).setParameter(
-			"groupId", String.valueOf(_dlRequestHelper.getScopeGroupId())
+			"groupId", _dlRequestHelper.getScopeGroupId()
 		).build();
 
 		return portletURL.toString();

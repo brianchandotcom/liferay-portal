@@ -89,14 +89,13 @@ public class CollectionsVerticalCard extends BaseVerticalCard {
 				).setParameter(
 					"backURL", themeDisplay.getURLCurrent()
 				).setParameter(
-					"groupId", String.valueOf(_groupId)
+					"groupId", _groupId
 				).setParameter(
-					"selPlid", String.valueOf(selPlid)
+					"selPlid", selPlid
 				).setParameter(
-					"privateLayout", String.valueOf(privateLayout)
+					"privateLayout", privateLayout
 				).setParameter(
-					"collectionPK",
-					String.valueOf(_assetListEntry.getAssetListEntryId())
+					"collectionPK", _assetListEntry.getAssetListEntryId()
 				).setParameter(
 					"collectionType",
 					InfoListItemSelectorReturnType.class.getName()

@@ -123,7 +123,7 @@ public class CommerceNotificationEntryClayTable
 			Constants.CMD, "resend"
 		).setParameter(
 			"commerceNotificationQueueEntryId",
-			String.valueOf(notificationEntry.getNotificationEntryId())
+			notificationEntry.getNotificationEntryId()
 		).build();
 
 		return DropdownItemListBuilder.add(

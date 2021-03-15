@@ -206,7 +206,7 @@ public class EditUserGroupAssignmentsManagementToolbarDisplayContext {
 		).setRedirect(
 			redirect
 		).setParameter(
-			"userGroupId", String.valueOf(_userGroup.getUserGroupId())
+			"userGroupId", _userGroup.getUserGroupId()
 		).setParameter(
 			"displayStyle", _displayStyle
 		).build();

@@ -117,11 +117,9 @@ public class CommerceProductDefinitionLinkDataSetActionProvider
 		).setParameter(
 			Constants.CMD, Constants.DELETE
 		).setParameter(
-			"cpDefinitionId",
-			String.valueOf(cpDefinitionLink.getCPDefinitionId())
+			"cpDefinitionId", cpDefinitionLink.getCPDefinitionId()
 		).setParameter(
-			"cpDefinitionLinkId",
-			String.valueOf(cpDefinitionLink.getCPDefinitionLinkId())
+			"cpDefinitionLinkId", cpDefinitionLink.getCPDefinitionLinkId()
 		).build();
 
 		return portletURL;
@@ -139,11 +137,9 @@ public class CommerceProductDefinitionLinkDataSetActionProvider
 		).setMVCRenderCommandName(
 			"/cp_definitions/edit_cp_definition_link"
 		).setParameter(
-			"cpDefinitionId",
-			String.valueOf(cpDefinitionLink.getCPDefinitionId())
+			"cpDefinitionId", cpDefinitionLink.getCPDefinitionId()
 		).setParameter(
-			"cpDefinitionLinkId",
-			String.valueOf(cpDefinitionLink.getCPDefinitionLinkId())
+			"cpDefinitionLinkId", cpDefinitionLink.getCPDefinitionLinkId()
 		).build();
 
 		try {

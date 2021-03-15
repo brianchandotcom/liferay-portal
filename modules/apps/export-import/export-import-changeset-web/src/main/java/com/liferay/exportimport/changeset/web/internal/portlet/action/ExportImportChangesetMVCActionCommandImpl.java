@@ -147,7 +147,7 @@ public class ExportImportChangesetMVCActionCommandImpl
 		).setParameter(
 			"backURL", actionRequest.getParameter("backURL")
 		).setParameter(
-			"backgroundTaskId", String.valueOf(backgroundTaskId)
+			"backgroundTaskId", backgroundTaskId
 		).build();
 
 		actionRequest.setAttribute(WebKeys.REDIRECT, renderURL.toString());

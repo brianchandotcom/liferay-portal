@@ -111,7 +111,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		).setParameter(
 			"scopeId", (String)null
 		).setParameter(
-			"status", String.valueOf(WorkflowConstants.STATUS_ANY)
+			"status", WorkflowConstants.STATUS_ANY
 		).build();
 
 		return String.valueOf(clearResultsURL);

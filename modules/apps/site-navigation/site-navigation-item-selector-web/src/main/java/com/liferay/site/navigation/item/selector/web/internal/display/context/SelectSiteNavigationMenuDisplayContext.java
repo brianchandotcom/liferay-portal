@@ -331,7 +331,7 @@ public class SelectSiteNavigationMenuDisplayContext {
 				_httpServletRequest, "backURL",
 				PortalUtil.getCurrentURL(_httpServletRequest))
 		).setParameter(
-			"siteNavigationMenuId", String.valueOf(siteNavigationMenuId)
+			"siteNavigationMenuId", siteNavigationMenuId
 		).build();
 
 		return portletURL;

@@ -129,8 +129,7 @@ public class EditCommercePaymentMethodGroupRelMVCActionCommand
 		).setMVCRenderCommandName(
 			mvcRenderCommandName
 		).setParameter(
-			"commercePaymentMethodGroupRelId",
-			String.valueOf(commercePaymentMethodGroupRelId)
+			"commercePaymentMethodGroupRelId", commercePaymentMethodGroupRelId
 		).build();
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");

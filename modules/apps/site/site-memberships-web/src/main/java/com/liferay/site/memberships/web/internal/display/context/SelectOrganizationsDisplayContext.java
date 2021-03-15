@@ -216,7 +216,7 @@ public class SelectOrganizationsDisplayContext {
 		).setMVCPath(
 			"/select_organizations.jsp"
 		).setParameter(
-			"groupId", String.valueOf(getGroupId())
+			"groupId", getGroupId()
 		).setParameter(
 			"eventName", getEventName()
 		).build();

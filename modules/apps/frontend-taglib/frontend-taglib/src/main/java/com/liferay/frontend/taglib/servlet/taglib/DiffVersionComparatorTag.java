@@ -235,13 +235,13 @@ public class DiffVersionComparatorTag extends IncludeTag {
 			PortletURL sourceURL = PortletURLBuilder.create(
 				PortletURLUtil.clone(_portletURL, renderResponse)
 			).setParameter(
-				"targetVersion", String.valueOf(_targetVersion)
+				"targetVersion", _targetVersion
 			).build();
 
 			PortletURL targetURL = PortletURLBuilder.create(
 				PortletURLUtil.clone(_portletURL, renderResponse)
 			).setParameter(
-				"sourceVersion", String.valueOf(_sourceVersion)
+				"sourceVersion", _sourceVersion
 			).build();
 
 			JSONArray diffVersionsJSONArray = JSONFactoryUtil.createJSONArray();

@@ -92,7 +92,7 @@ public class DepotEntryVerticalCard
 			).setMVCRenderCommandName(
 				"/depot/view_depot_dashboard"
 			).setParameter(
-				"depotEntryId", String.valueOf(_depotEntry.getDepotEntryId())
+				"depotEntryId", _depotEntry.getDepotEntryId()
 			).build();
 
 			return portletURL.toString();

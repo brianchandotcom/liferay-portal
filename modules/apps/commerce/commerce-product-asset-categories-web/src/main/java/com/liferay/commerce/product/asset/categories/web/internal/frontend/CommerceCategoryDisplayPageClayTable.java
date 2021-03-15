@@ -206,7 +206,7 @@ public class CommerceCategoryDisplayPageClayTable
 		).setParameter(
 			Constants.CMD, Constants.DELETE
 		).setParameter(
-			"cpDisplayLayoutId", String.valueOf(categoryDisplayPageId)
+			"cpDisplayLayoutId", categoryDisplayPageId
 		).build();
 
 		return portletURL.toString();

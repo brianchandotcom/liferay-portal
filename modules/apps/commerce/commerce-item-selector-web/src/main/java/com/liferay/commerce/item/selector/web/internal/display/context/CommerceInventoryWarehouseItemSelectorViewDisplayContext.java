@@ -96,7 +96,7 @@ public class CommerceInventoryWarehouseItemSelectorViewDisplayContext
 		PortletURL portletURL = PortletURLBuilder.create(
 			super.getPortletURL()
 		).setParameter(
-			"countryId", String.valueOf(getCountryId())
+			"countryId", getCountryId()
 		).build();
 
 		return portletURL;
@@ -221,7 +221,7 @@ public class CommerceInventoryWarehouseItemSelectorViewDisplayContext
 			PortletURLUtil.clone(
 				getPortletURL(), cpRequestHelper.getRenderResponse())
 		).setParameter(
-			"countryId", String.valueOf(countryId)
+			"countryId", countryId
 		).build();
 
 		return new ManagementBarFilterItem(

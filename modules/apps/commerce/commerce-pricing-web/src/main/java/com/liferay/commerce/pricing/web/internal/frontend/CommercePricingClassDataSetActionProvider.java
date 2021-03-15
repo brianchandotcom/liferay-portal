@@ -125,7 +125,7 @@ public class CommercePricingClassDataSetActionProvider
 		).setParameter(
 			"modelResourceDescription", pricingClass.getTitle()
 		).setParameter(
-			"resourcePrimKey", String.valueOf(pricingClass.getPricingClassId())
+			"resourcePrimKey", pricingClass.getPricingClassId()
 		).build();
 
 		try {
@@ -154,7 +154,7 @@ public class CommercePricingClassDataSetActionProvider
 		).setMVCRenderCommandName(
 			"/commerce_pricing_classes/edit_commerce_pricing_class"
 		).setParameter(
-			"commercePricingClassId", String.valueOf(pricingClassId)
+			"commercePricingClassId", pricingClassId
 		).setParameter(
 			"screenNavigationCategoryKey",
 			CommercePricingClassScreenNavigationConstants.CATEGORY_KEY_DETAILS

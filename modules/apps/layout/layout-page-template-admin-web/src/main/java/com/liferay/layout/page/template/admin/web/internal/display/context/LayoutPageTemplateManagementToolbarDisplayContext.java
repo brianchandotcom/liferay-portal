@@ -198,9 +198,8 @@ public class LayoutPageTemplateManagementToolbarDisplayContext
 			"backURL", _themeDisplay.getURLCurrent()
 		).setParameter(
 			"layoutPageTemplateCollectionId",
-			String.valueOf(
-				_layoutPageTemplateDisplayContext.
-					getLayoutPageTemplateCollectionId())
+			_layoutPageTemplateDisplayContext.
+				getLayoutPageTemplateCollectionId()
 		).build();
 
 		return actionURL.toString();
@@ -234,9 +233,8 @@ public class LayoutPageTemplateManagementToolbarDisplayContext
 			_themeDisplay.getURLCurrent()
 		).setParameter(
 			"layoutPageTemplateCollectionId",
-			String.valueOf(
-				_layoutPageTemplateDisplayContext.
-					getLayoutPageTemplateCollectionId())
+			_layoutPageTemplateDisplayContext.
+				getLayoutPageTemplateCollectionId()
 		).build();
 
 		return selectMasterLayoutURL.toString();

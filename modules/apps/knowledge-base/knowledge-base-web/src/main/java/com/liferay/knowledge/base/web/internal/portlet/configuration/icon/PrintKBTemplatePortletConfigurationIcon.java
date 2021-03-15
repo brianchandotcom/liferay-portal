@@ -75,7 +75,7 @@ public class PrintKBTemplatePortletConfigurationIcon
 			).setMVCPath(
 				"/admin/print_template.jsp"
 			).setParameter(
-				"kbTemplateId", String.valueOf(kbTemplate.getKbTemplateId())
+				"kbTemplateId", kbTemplate.getKbTemplateId()
 			).setParameter(
 				"viewMode", Constants.PRINT
 			).setWindowState(

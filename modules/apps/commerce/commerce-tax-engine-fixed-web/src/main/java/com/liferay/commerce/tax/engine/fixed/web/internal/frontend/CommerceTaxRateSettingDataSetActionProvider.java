@@ -119,7 +119,7 @@ public class CommerceTaxRateSettingDataSetActionProvider
 		).setParameter(
 			Constants.CMD, Constants.DELETE
 		).setParameter(
-			"commerceTaxFixedRateAddressRelId", String.valueOf(taxRateSettingId)
+			"commerceTaxFixedRateAddressRelId", taxRateSettingId
 		).build();
 
 		return portletURL.toString();

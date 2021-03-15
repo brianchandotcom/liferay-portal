@@ -74,7 +74,7 @@ public class DeleteAssetListEntryVariationMVCActionCommand
 		).setMVCPath(
 			"/edit_asset_list_entry.jsp"
 		).setParameter(
-			"assetListEntryId", String.valueOf(assetListEntryId)
+			"assetListEntryId", assetListEntryId
 		).build();
 
 		return portletURL.toString();

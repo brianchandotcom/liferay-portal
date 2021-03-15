@@ -185,12 +185,10 @@ public class KBAdminManagementToolbarDisplayContext {
 						PortalUtil.getCurrentURL(_httpServletRequest)
 					).setParameter(
 						"parentResourceClassNameId",
-						String.valueOf(
-							PortalUtil.getClassNameId(
-								KBFolderConstants.getClassName()))
+						PortalUtil.getClassNameId(
+							KBFolderConstants.getClassName())
 					).setParameter(
-						"parentResourcePrimKey",
-						String.valueOf(parentResourcePrimKey)
+						"parentResourcePrimKey", parentResourcePrimKey
 					).build();
 
 					dropdownItem.setHref(addFolderURL);
@@ -218,10 +216,9 @@ public class KBAdminManagementToolbarDisplayContext {
 							PortalUtil.getCurrentURL(_httpServletRequest)
 						).setParameter(
 							"parentResourceClassNameId",
-							String.valueOf(parentResourceClassNameId)
+							parentResourceClassNameId
 						).setParameter(
-							"parentResourcePrimKey",
-							String.valueOf(parentResourcePrimKey)
+							"parentResourcePrimKey", parentResourcePrimKey
 						).build();
 
 					dropdownItem.setHref(addBasicKBArticleURL);
@@ -253,13 +250,12 @@ public class KBAdminManagementToolbarDisplayContext {
 										_httpServletRequest)
 								).setParameter(
 									"parentResourceClassNameId",
-									String.valueOf(parentResourceClassNameId)
+									parentResourceClassNameId
 								).setParameter(
 									"parentResourcePrimKey",
-									String.valueOf(parentResourcePrimKey)
+									parentResourcePrimKey
 								).setParameter(
-									"kbTemplateId",
-									String.valueOf(kbTemplate.getKbTemplateId())
+									"kbTemplateId", kbTemplate.getKbTemplateId()
 								).build();
 
 							dropdownItem.setHref(addKBArticleURL);
@@ -291,8 +287,7 @@ public class KBAdminManagementToolbarDisplayContext {
 					).setRedirect(
 						PortalUtil.getCurrentURL(_httpServletRequest)
 					).setParameter(
-						"parentKBFolderId",
-						String.valueOf(parentResourcePrimKey)
+						"parentKBFolderId", parentResourcePrimKey
 					).build();
 
 					dropdownItem.setHref(importURL);

@@ -77,13 +77,13 @@ public class CopyPagePortletConfigurationIcon
 			).setRedirect(
 				themeDisplay.getURLCurrent()
 			).setParameter(
-				"nodeId", String.valueOf(page.getNodeId())
+				"nodeId", page.getNodeId()
 			).setParameter(
 				"title", StringPool.BLANK
 			).setParameter(
 				"editTitle", "1"
 			).setParameter(
-				"templateNodeId", String.valueOf(page.getNodeId())
+				"templateNodeId", page.getNodeId()
 			).setParameter(
 				"templateTitle", HtmlUtil.unescape(page.getTitle())
 			).build();

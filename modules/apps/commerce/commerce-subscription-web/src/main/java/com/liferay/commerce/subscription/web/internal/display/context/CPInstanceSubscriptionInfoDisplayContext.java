@@ -66,9 +66,9 @@ public class CPInstanceSubscriptionInfoDisplayContext
 		).setMVCRenderCommandName(
 			"/cp_definitions/edit_cp_instance"
 		).setParameter(
-			"cpDefinitionId", String.valueOf(getCPDefinitionId())
+			"cpDefinitionId", getCPDefinitionId()
 		).setParameter(
-			"cpInstanceId", String.valueOf(getCPInstanceId())
+			"cpInstanceId", getCPInstanceId()
 		).setParameter(
 			"screenNavigationCategoryKey",
 			CPInstanceScreenNavigationConstants.

@@ -111,7 +111,7 @@ public class WikiNodeTrashHandler extends BaseWikiTrashHandler {
 		PortletURL portletURL = PortletURLBuilder.create(
 			getRestoreURL(portletRequest, classPK, false)
 		).setParameter(
-			"nodeId", String.valueOf(node.getNodeId())
+			"nodeId", node.getNodeId()
 		).build();
 
 		return portletURL.toString();

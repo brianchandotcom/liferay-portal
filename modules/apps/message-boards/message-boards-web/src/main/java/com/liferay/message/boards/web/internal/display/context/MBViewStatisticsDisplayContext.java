@@ -56,7 +56,7 @@ public class MBViewStatisticsDisplayContext {
 		).setMVCRenderCommandName(
 			"/message_boards/view_statistics"
 		).setParameter(
-			"mbCategoryId", String.valueOf(_getCategoryId())
+			"mbCategoryId", _getCategoryId()
 		).build();
 
 		return portletURL;

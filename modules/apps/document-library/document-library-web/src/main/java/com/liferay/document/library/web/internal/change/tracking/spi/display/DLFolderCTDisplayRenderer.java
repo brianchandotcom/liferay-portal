@@ -74,7 +74,7 @@ public class DLFolderCTDisplayRenderer extends BaseCTDisplayRenderer<DLFolder> {
 		).setRedirect(
 			_portal.getCurrentURL(httpServletRequest)
 		).setParameter(
-			"folderId", String.valueOf(dlFolder.getFolderId())
+			"folderId", dlFolder.getFolderId()
 		).build();
 
 		return portletURL.toString();

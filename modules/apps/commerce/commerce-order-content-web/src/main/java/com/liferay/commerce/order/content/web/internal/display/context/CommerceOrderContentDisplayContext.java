@@ -205,7 +205,7 @@ public class CommerceOrderContentDisplayContext {
 		).setRedirect(
 			_cpRequestHelper.getCurrentURL()
 		).setParameter(
-			"commerceOrderId", String.valueOf(commerceOrderId)
+			"commerceOrderId", commerceOrderId
 		).build();
 
 		return portletURL.toString();

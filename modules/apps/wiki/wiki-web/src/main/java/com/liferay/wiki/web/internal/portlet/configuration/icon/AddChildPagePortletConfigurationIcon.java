@@ -77,7 +77,7 @@ public class AddChildPagePortletConfigurationIcon
 			).setRedirect(
 				themeDisplay.getURLCurrent()
 			).setParameter(
-				"nodeId", String.valueOf(page.getNodeId())
+				"nodeId", page.getNodeId()
 			).setParameter(
 				"title", StringPool.BLANK
 			).setParameter(

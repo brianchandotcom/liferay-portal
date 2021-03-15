@@ -179,10 +179,9 @@ public class DDMFormAssetRenderer
 			_portal.getCurrentURL(httpServletRequest)
 		).setParameter(
 			"formInstanceRecordId",
-			String.valueOf(_ddmFormInstanceRecord.getFormInstanceRecordId())
+			_ddmFormInstanceRecord.getFormInstanceRecordId()
 		).setParameter(
-			"formInstanceId",
-			String.valueOf(_ddmFormInstanceRecord.getFormInstanceId())
+			"formInstanceId", _ddmFormInstanceRecord.getFormInstanceId()
 		).build();
 
 		return portletURL;

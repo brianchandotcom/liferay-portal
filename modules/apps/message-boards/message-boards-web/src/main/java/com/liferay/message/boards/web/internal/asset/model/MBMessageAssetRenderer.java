@@ -166,7 +166,7 @@ public class MBMessageAssetRenderer
 		).setMVCRenderCommandName(
 			"/message_boards/edit_message"
 		).setParameter(
-			"messageId", String.valueOf(_message.getMessageId())
+			"messageId", _message.getMessageId()
 		).build();
 
 		return portletURL;
@@ -186,7 +186,7 @@ public class MBMessageAssetRenderer
 		).setMVCRenderCommandName(
 			"/message_boards/view_message"
 		).setParameter(
-			"messageId", String.valueOf(_message.getMessageId())
+			"messageId", _message.getMessageId()
 		).setWindowState(
 			windowState
 		).build();

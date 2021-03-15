@@ -279,7 +279,7 @@ public abstract class BaseCPDefinitionsSearchContainerDisplayContext<T>
 		PortletURL portletURL = PortletURLBuilder.create(
 			PortletURLUtil.clone(getPortletURL(), liferayPortletResponse)
 		).setParameter(
-			"status", String.valueOf(status)
+			"status", status
 		).build();
 
 		return new ManagementBarFilterItem(

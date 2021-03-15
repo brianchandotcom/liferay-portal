@@ -159,7 +159,7 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 		PortletURL portletURL = PortletURLBuilder.create(
 			getRestoreURL(portletRequest, classPK)
 		).setParameter(
-			"mbCategoryId", String.valueOf(category.getCategoryId())
+			"mbCategoryId", category.getCategoryId()
 		).build();
 
 		return portletURL.toString();
@@ -175,7 +175,7 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 		PortletURL portletURL = PortletURLBuilder.create(
 			getRestoreURL(portletRequest, classPK)
 		).setParameter(
-			"mbCategoryId", String.valueOf(category.getParentCategoryId())
+			"mbCategoryId", category.getParentCategoryId()
 		).build();
 
 		return portletURL.toString();

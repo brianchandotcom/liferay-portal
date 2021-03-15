@@ -276,11 +276,9 @@ public class EditFragmentEntryDisplayContext {
 		).setMVCRenderCommandName(
 			mvcRenderCommandName
 		).setParameter(
-			"fragmentEntryId",
-			String.valueOf(fragmentEntry.getFragmentEntryId())
+			"fragmentEntryId", fragmentEntry.getFragmentEntryId()
 		).setParameter(
-			"fragmentEntryKey",
-			String.valueOf(fragmentEntry.getFragmentEntryKey())
+			"fragmentEntryKey", fragmentEntry.getFragmentEntryKey()
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).build();
@@ -488,7 +486,7 @@ public class EditFragmentEntryDisplayContext {
 		).setActionName(
 			"/fragment/publish_fragment_entry"
 		).setParameter(
-			"fragmentEntryId", String.valueOf(getFragmentEntryId())
+			"fragmentEntryId", getFragmentEntryId()
 		).build();
 
 		return publishFragmentEntryURL.toString();

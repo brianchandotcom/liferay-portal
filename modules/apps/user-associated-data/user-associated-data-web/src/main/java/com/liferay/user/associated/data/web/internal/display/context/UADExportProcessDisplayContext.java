@@ -151,7 +151,7 @@ public class UADExportProcessDisplayContext {
 		).setMVCRenderCommandName(
 			"/user_associated_data/view_uad_export_processes"
 		).setParameter(
-			"p_u_i_d", String.valueOf(selectedUser.getUserId())
+			"p_u_i_d", selectedUser.getUserId()
 		).setParameter(
 			"navigation", getNavigation()
 		).setParameter(

@@ -141,8 +141,7 @@ public class ViewAccountOrganizationsManagementToolbarDisplayContext
 					).setMVCPath(
 						"/account_entries_admin/select_account_organizations.jsp"
 					).setParameter(
-						"accountEntryId",
-						String.valueOf(accountEntry.getAccountEntryId())
+						"accountEntryId", accountEntry.getAccountEntryId()
 					).setWindowState(
 						LiferayWindowState.POP_UP
 					).build();

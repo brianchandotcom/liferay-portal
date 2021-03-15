@@ -142,12 +142,12 @@ public class CommerceProductMediaDataSetActionProvider
 		).setMVCRenderCommandName(
 			"/cp_definitions/edit_cp_attachment_file_entry"
 		).setParameter(
-			"cpDefinitionId", String.valueOf(cpAttachmentFileEntry.getClassPK())
+			"cpDefinitionId", cpAttachmentFileEntry.getClassPK()
 		).setParameter(
 			"cpAttachmentFileEntryId",
-			String.valueOf(cpAttachmentFileEntry.getCPAttachmentFileEntryId())
+			cpAttachmentFileEntry.getCPAttachmentFileEntryId()
 		).setParameter(
-			"type", String.valueOf(cpAttachmentFileEntry.getType())
+			"type", cpAttachmentFileEntry.getType()
 		).build();
 
 		try {

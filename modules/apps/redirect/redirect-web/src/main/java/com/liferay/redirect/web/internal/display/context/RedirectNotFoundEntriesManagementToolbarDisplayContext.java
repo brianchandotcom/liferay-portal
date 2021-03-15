@@ -292,7 +292,7 @@ public class RedirectNotFoundEntriesManagementToolbarDisplayContext
 			PortletURL portletURL = PortletURLBuilder.create(
 				getPortletURL()
 			).setParameter(
-				"filterDate", String.valueOf(days)
+				"filterDate", days
 			).build();
 
 			dropdownItem.setHref(portletURL);

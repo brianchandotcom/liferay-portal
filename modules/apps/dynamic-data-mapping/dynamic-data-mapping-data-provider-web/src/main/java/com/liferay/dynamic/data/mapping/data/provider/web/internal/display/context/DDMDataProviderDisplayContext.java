@@ -371,8 +371,7 @@ public class DDMDataProviderDisplayContext {
 		).setMVCPath(
 			"/view.jsp"
 		).setParameter(
-			"groupId",
-			String.valueOf(_ddmDataProviderRequestHelper.getScopeGroupId())
+			"groupId", _ddmDataProviderRequestHelper.getScopeGroupId()
 		).build();
 
 		String delta = ParamUtil.getString(_renderRequest, "delta");

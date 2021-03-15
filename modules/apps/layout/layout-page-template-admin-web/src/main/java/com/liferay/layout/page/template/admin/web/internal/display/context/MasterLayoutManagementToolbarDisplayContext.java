@@ -134,9 +134,7 @@ public class MasterLayoutManagementToolbarDisplayContext
 		).setParameter(
 			"backURL", _themeDisplay.getURLCurrent()
 		).setParameter(
-			"type",
-			String.valueOf(
-				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT)
+			"type", LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT
 		).build();
 
 		return CreationMenuBuilder.addDropdownItem(

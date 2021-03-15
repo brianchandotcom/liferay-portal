@@ -261,7 +261,7 @@ public class DLViewEntriesDisplayContext {
 				_dlRequestHelper.getCurrentURL(),
 				_liferayPortletResponse.getNamespace() + "ajax")
 		).setParameter(
-			"fileEntryId", String.valueOf(fileEntry.getFileEntryId())
+			"fileEntryId", fileEntry.getFileEntryId()
 		).build();
 
 		return portletURL.toString();

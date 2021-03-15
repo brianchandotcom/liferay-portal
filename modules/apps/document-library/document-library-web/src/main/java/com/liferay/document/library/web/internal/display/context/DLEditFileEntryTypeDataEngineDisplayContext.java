@@ -75,9 +75,8 @@ public class DLEditFileEntryTypeDataEngineDisplayContext {
 							"/document_library/ddm/details.jsp"
 						).setParameter(
 							"fileEntryTypeId",
-							String.valueOf(
-								ParamUtil.getLong(
-									_liferayPortletRequest, "fileEntryTypeId"))
+							ParamUtil.getLong(
+								_liferayPortletRequest, "fileEntryTypeId")
 						).setWindowState(
 							LiferayWindowState.EXCLUSIVE
 						).build();
@@ -109,9 +108,8 @@ public class DLEditFileEntryTypeDataEngineDisplayContext {
 							"/document_library/ddm/additional_metadata_fields.jsp"
 						).setParameter(
 							"fileEntryTypeId",
-							String.valueOf(
-								ParamUtil.getLong(
-									_liferayPortletRequest, "fileEntryTypeId"))
+							ParamUtil.getLong(
+								_liferayPortletRequest, "fileEntryTypeId")
 						).setWindowState(
 							LiferayWindowState.EXCLUSIVE
 						).build();

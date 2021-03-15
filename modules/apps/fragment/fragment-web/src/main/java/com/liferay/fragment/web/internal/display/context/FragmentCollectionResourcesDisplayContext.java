@@ -70,7 +70,7 @@ public class FragmentCollectionResourcesDisplayContext {
 			"tabs1", "resources"
 		).setParameter(
 			"fragmentCollectionId",
-			String.valueOf(_fragmentDisplayContext.getFragmentCollectionId())
+			_fragmentDisplayContext.getFragmentCollectionId()
 		).build();
 
 		SearchContainer<FileEntry> searchContainer = new SearchContainer(

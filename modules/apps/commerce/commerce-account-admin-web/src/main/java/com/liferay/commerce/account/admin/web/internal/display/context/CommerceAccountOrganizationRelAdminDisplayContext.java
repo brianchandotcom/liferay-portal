@@ -78,7 +78,7 @@ public class CommerceAccountOrganizationRelAdminDisplayContext
 		).setRedirect(
 			commerceAccountAdminRequestHelper.getCurrentURL()
 		).setParameter(
-			"organization", String.valueOf(organizationId)
+			"organization", organizationId
 		).build();
 
 		return portletURL.toString();

@@ -244,7 +244,7 @@ public class CPCompareContentHelperImpl implements CPCompareContentHelper {
 		).setRedirect(
 			redirect
 		).setParameter(
-			"cpDefinitionId", String.valueOf(cpDefinitionId)
+			"cpDefinitionId", cpDefinitionId
 		).build();
 
 		return portletURL.toString();

@@ -171,7 +171,7 @@ public class CommerceCatalogDataSetActionProvider
 		).setParameter(
 			"modelResourceDescription", catalog.getName()
 		).setParameter(
-			"resourcePrimKey", String.valueOf(catalog.getCatalogId())
+			"resourcePrimKey", catalog.getCatalogId()
 		).build();
 
 		try {

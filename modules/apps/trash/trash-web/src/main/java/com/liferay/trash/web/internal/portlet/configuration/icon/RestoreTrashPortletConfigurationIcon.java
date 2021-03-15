@@ -78,15 +78,13 @@ public class RestoreTrashPortletConfigurationIcon
 			).setRedirect(
 				trashDisplayContext.getViewContentRedirectURL()
 			).setParameter(
-				"classNameId",
-				String.valueOf(trashDisplayContext.getClassNameId())
+				"classNameId", trashDisplayContext.getClassNameId()
 			).setParameter(
-				"classPK", String.valueOf(classPK)
+				"classPK", classPK
 			).setParameter(
 				"containerModelClassNameId",
-				String.valueOf(
-					_portal.getClassNameId(
-						trashHandler.getContainerModelClassName(classPK)))
+				_portal.getClassNameId(
+					trashHandler.getContainerModelClassName(classPK))
 			).setWindowState(
 				LiferayWindowState.POP_UP
 			).build();

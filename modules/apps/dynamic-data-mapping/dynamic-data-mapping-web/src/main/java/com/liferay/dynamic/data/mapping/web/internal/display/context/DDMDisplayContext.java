@@ -336,7 +336,7 @@ public class DDMDisplayContext {
 				).setMVCPath(
 					"/select_structure.jsp"
 				).setParameter(
-					"classPK", String.valueOf(getClassPK())
+					"classPK", getClassPK()
 				).setParameter(
 					"eventName",
 					ParamUtil.getString(
@@ -360,8 +360,7 @@ public class DDMDisplayContext {
 		).setMVCPath(
 			"/select_structure.jsp"
 		).setParameter(
-			"classPK",
-			String.valueOf(ParamUtil.getLong(_renderRequest, "classPK"))
+			"classPK", ParamUtil.getLong(_renderRequest, "classPK")
 		).setParameter(
 			"eventName",
 			ParamUtil.getString(_renderRequest, "eventName", "selectStructure")
@@ -376,15 +375,13 @@ public class DDMDisplayContext {
 		).setMVCPath(
 			"/select_template.jsp"
 		).setParameter(
-			"templateId",
-			String.valueOf(ParamUtil.getLong(_renderRequest, "templateId"))
+			"templateId", ParamUtil.getLong(_renderRequest, "templateId")
 		).setParameter(
-			"classNameId", String.valueOf(getClassNameId())
+			"classNameId", getClassNameId()
 		).setParameter(
-			"classPK",
-			String.valueOf(ParamUtil.getLong(_renderRequest, "classPK"))
+			"classPK", ParamUtil.getLong(_renderRequest, "classPK")
 		).setParameter(
-			"resourceClassNameId", String.valueOf(getResourceClassNameId())
+			"resourceClassNameId", getResourceClassNameId()
 		).setParameter(
 			"eventName",
 			ParamUtil.getString(_renderRequest, "eventName", "selectTemplate")
@@ -419,7 +416,7 @@ public class DDMDisplayContext {
 		).setMVCPath(
 			"/view.jsp"
 		).setParameter(
-			"groupId", String.valueOf(_ddmWebRequestHelper.getScopeGroupId())
+			"groupId", _ddmWebRequestHelper.getScopeGroupId()
 		).build();
 
 		PortletURL addTemplateURL = PortletURLBuilder.createRenderURL(
@@ -429,7 +426,7 @@ public class DDMDisplayContext {
 		).setRedirect(
 			redirectURL.toString()
 		).setParameter(
-			"groupId", String.valueOf(_ddmWebRequestHelper.getScopeGroupId())
+			"groupId", _ddmWebRequestHelper.getScopeGroupId()
 		).build();
 
 		return CreationMenuBuilder.addPrimaryDropdownItem(
@@ -479,7 +476,7 @@ public class DDMDisplayContext {
 		).setParameter(
 			"tabs1", ParamUtil.getString(_renderRequest, "tabs1", "structures")
 		).setParameter(
-			"groupId", String.valueOf(_ddmWebRequestHelper.getScopeGroupId())
+			"groupId", _ddmWebRequestHelper.getScopeGroupId()
 		).build();
 
 		return portletURL.toString();
@@ -505,16 +502,13 @@ public class DDMDisplayContext {
 						).setMVCPath(
 							"/edit_template.jsp"
 						).setParameter(
-							"groupId",
-							String.valueOf(
-								_ddmWebRequestHelper.getScopeGroupId())
+							"groupId", _ddmWebRequestHelper.getScopeGroupId()
 						).setParameter(
-							"classNameId", String.valueOf(getClassNameId())
+							"classNameId", getClassNameId()
 						).setParameter(
-							"classPK", String.valueOf(getClassPK())
+							"classPK", getClassPK()
 						).setParameter(
-							"resourceClassNameId",
-							String.valueOf(getResourceClassNameId())
+							"resourceClassNameId", getResourceClassNameId()
 						).setParameter(
 							"mode", getTemplateMode()
 						).build();
@@ -565,8 +559,7 @@ public class DDMDisplayContext {
 								"/edit_template.jsp"
 							).setParameter(
 								"groupId",
-								String.valueOf(
-									_ddmWebRequestHelper.getScopeGroupId())
+								_ddmWebRequestHelper.getScopeGroupId()
 							).setParameter(
 								"type",
 								DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY
@@ -634,16 +627,15 @@ public class DDMDisplayContext {
 		).setParameter(
 			"tabs1", ParamUtil.getString(_renderRequest, "tabs1", "templates")
 		).setParameter(
-			"templateId",
-			String.valueOf(ParamUtil.getLong(_renderRequest, "templateId"))
+			"templateId", ParamUtil.getLong(_renderRequest, "templateId")
 		).setParameter(
-			"groupId", String.valueOf(_ddmWebRequestHelper.getScopeGroupId())
+			"groupId", _ddmWebRequestHelper.getScopeGroupId()
 		).setParameter(
-			"classNameId", String.valueOf(getClassNameId())
+			"classNameId", getClassNameId()
 		).setParameter(
-			"classPK", String.valueOf(getClassPK())
+			"classPK", getClassPK()
 		).setParameter(
-			"resourceClassNameId", String.valueOf(getResourceClassNameId())
+			"resourceClassNameId", getResourceClassNameId()
 		).setParameter(
 			"eventName",
 			ParamUtil.getString(_renderRequest, "eventName", "selectTemplate")

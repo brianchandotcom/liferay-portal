@@ -1017,7 +1017,7 @@ public class ContactsCenterPortlet extends MVCPortlet {
 		).setRedirect(
 			redirect
 		).setParameter(
-			"entryId", String.valueOf(entry.getEntryId())
+			"entryId", entry.getEntryId()
 		).setParameter(
 			"portalUser", Boolean.FALSE.toString()
 		).setWindowState(
@@ -1114,7 +1114,7 @@ public class ContactsCenterPortlet extends MVCPortlet {
 		).setMVCPath(
 			"/contacts_center/view_resources.jsp"
 		).setParameter(
-			"userId", String.valueOf(user.getUserId())
+			"userId", user.getUserId()
 		).setParameter(
 			"portalUser", Boolean.TRUE.toString()
 		).setWindowState(

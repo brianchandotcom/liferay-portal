@@ -113,7 +113,7 @@ public class AppBuilderAppWorkflowHandler
 			).setMVCPath(
 				"/edit_app_entry.jsp"
 			).setParameter(
-				"dataRecordId", String.valueOf(ddlRecordId)
+				"dataRecordId", ddlRecordId
 			).setWindowState(
 				WindowState.MAXIMIZED
 			).build();

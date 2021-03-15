@@ -259,9 +259,9 @@ public class FragmentEntryLinkDisplayContext {
 		).setParameter(
 			"navigation", getNavigation()
 		).setParameter(
-			"fragmentCollectionId", String.valueOf(getFragmentCollectionId())
+			"fragmentCollectionId", getFragmentCollectionId()
 		).setParameter(
-			"fragmentEntryId", String.valueOf(getFragmentEntryId())
+			"fragmentEntryId", getFragmentEntryId()
 		).build();
 
 		return portletURL;

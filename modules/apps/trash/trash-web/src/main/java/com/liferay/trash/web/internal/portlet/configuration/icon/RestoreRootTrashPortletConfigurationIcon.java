@@ -72,8 +72,7 @@ public class RestoreRootTrashPortletConfigurationIcon
 			).setRedirect(
 				trashDisplayContext.getViewContentRedirectURL()
 			).setParameter(
-				"trashEntryId",
-				String.valueOf(trashDisplayContext.getTrashEntryId())
+				"trashEntryId", trashDisplayContext.getTrashEntryId()
 			).build();
 
 			return restoreURL.toString();

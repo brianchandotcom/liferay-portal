@@ -74,7 +74,7 @@ public class DDMFormAdminDataProviderTabItem implements DDMDisplayTabItem {
 		).setParameter(
 			"refererPortletName", DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN
 		).setParameter(
-			"groupId", String.valueOf(themeDisplay.getScopeGroupId())
+			"groupId", themeDisplay.getScopeGroupId()
 		).build();
 
 		return portletURL.toString();

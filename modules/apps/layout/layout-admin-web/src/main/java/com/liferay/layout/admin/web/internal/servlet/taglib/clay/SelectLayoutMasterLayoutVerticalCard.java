@@ -86,11 +86,11 @@ public class SelectLayoutMasterLayoutVerticalCard implements VerticalCard {
 			).setRedirect(
 				redirect
 			).setParameter(
-				"groupId", String.valueOf(groupId)
+				"groupId", groupId
 			).setParameter(
-				"selPlid", String.valueOf(selPlid)
+				"selPlid", selPlid
 			).setParameter(
-				"privateLayout", String.valueOf(privateLayout)
+				"privateLayout", privateLayout
 			).setParameter(
 				"type", LayoutConstants.TYPE_COLLECTION
 			).setParameter(
@@ -98,8 +98,7 @@ public class SelectLayoutMasterLayoutVerticalCard implements VerticalCard {
 			).setParameter(
 				"collectionType", collectionType
 			).setParameter(
-				"masterLayoutPlid",
-				String.valueOf(_layoutPageTemplateEntry.getPlid())
+				"masterLayoutPlid", _layoutPageTemplateEntry.getPlid()
 			).setWindowState(
 				LiferayWindowState.POP_UP
 			).build();

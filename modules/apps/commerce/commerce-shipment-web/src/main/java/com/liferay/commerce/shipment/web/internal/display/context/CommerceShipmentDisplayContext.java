@@ -246,10 +246,9 @@ public class CommerceShipmentDisplayContext
 				).setParameter(
 					Constants.CMD, "transition"
 				).setParameter(
-					"commerceShipmentId",
-					String.valueOf(getCommerceShipmentId())
+					"commerceShipmentId", getCommerceShipmentId()
 				).setParameter(
-					"transitionName", String.valueOf(shipmentStatus)
+					"transitionName", shipmentStatus
 				).build();
 
 				String buttonClass = "btn-primary";
@@ -328,8 +327,7 @@ public class CommerceShipmentDisplayContext
 			).setRedirect(
 				PortalUtil.getCurrentURL(httpServletRequest)
 			).setParameter(
-				"commerceShipmentId",
-				String.valueOf(commerceShipment.getCommerceShipmentId())
+				"commerceShipmentId", commerceShipment.getCommerceShipmentId()
 			).setWindowState(
 				LiferayWindowState.POP_UP
 			).build();

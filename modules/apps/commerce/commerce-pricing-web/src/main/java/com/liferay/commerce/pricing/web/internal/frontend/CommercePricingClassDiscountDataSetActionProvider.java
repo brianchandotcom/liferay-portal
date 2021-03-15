@@ -91,7 +91,7 @@ public class CommercePricingClassDiscountDataSetActionProvider
 		).setRedirect(
 			redirect
 		).setParameter(
-			"commerceDiscountId", String.valueOf(commerceDiscountId)
+			"commerceDiscountId", commerceDiscountId
 		).build();
 
 		return portletURL;

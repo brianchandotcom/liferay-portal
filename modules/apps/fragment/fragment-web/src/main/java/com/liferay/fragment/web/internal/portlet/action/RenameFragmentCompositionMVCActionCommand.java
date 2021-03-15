@@ -100,7 +100,7 @@ public class RenameFragmentCompositionMVCActionCommand
 			"/fragment/view_fragment_entries"
 		).setParameter(
 			"fragmentCollectionId",
-			String.valueOf(fragmentComposition.getFragmentCollectionId())
+			fragmentComposition.getFragmentCollectionId()
 		).build();
 
 		return portletURL.toString();

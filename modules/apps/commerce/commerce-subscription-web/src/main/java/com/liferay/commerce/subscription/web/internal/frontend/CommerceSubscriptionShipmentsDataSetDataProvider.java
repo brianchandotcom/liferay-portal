@@ -173,7 +173,7 @@ public class CommerceSubscriptionShipmentsDataSetDataProvider
 		).setRedirect(
 			_portal.getCurrentURL(httpServletRequest)
 		).setParameter(
-			"commerceOrderId", String.valueOf(commerceOrderId)
+			"commerceOrderId", commerceOrderId
 		).build();
 
 		return portletURL.toString();
@@ -192,7 +192,7 @@ public class CommerceSubscriptionShipmentsDataSetDataProvider
 		).setRedirect(
 			_portal.getCurrentURL(httpServletRequest)
 		).setParameter(
-			"commerceShipmentId", String.valueOf(commerceShipmentId)
+			"commerceShipmentId", commerceShipmentId
 		).build();
 
 		return portletURL.toString();

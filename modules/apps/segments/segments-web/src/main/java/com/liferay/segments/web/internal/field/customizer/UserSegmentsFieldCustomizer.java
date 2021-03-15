@@ -101,7 +101,7 @@ public class UserSegmentsFieldCustomizer extends BaseSegmentsFieldCustomizer {
 					RequestBackedPortletURLFactoryUtil.create(portletRequest),
 					"selectEntity", userItemSelectorCriterion)
 			).setParameter(
-				"checkedUserIdsEnabled", String.valueOf(Boolean.TRUE)
+				"checkedUserIdsEnabled", Boolean.TRUE
 			).build();
 
 			return new Field.SelectEntity(

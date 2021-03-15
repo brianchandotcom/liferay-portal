@@ -186,15 +186,15 @@ public class LayoutsAdminDisplayContext {
 		).setParameter(
 			"portletResource", getPortletResource()
 		).setParameter(
-			"groupId", String.valueOf(getGroupId())
+			"groupId", getGroupId()
 		).setParameter(
-			"liveGroupId", String.valueOf(getLiveGroupId())
+			"liveGroupId", getLiveGroupId()
 		).setParameter(
-			"stagingGroupId", String.valueOf(getStagingGroupId())
+			"stagingGroupId", getStagingGroupId()
 		).setParameter(
-			"privateLayout", String.valueOf(isPrivateLayout())
+			"privateLayout", isPrivateLayout()
 		).setParameter(
-			"parentLayoutId", String.valueOf(getParentLayoutId())
+			"parentLayoutId", getParentLayoutId()
 		).setParameter(
 			"explicitCreation", Boolean.TRUE.toString()
 		).build();
@@ -281,11 +281,11 @@ public class LayoutsAdminDisplayContext {
 		).setParameter(
 			"portletResource", portletDisplay.getId()
 		).setParameter(
-			"groupId", String.valueOf(layout.getGroupId())
+			"groupId", layout.getGroupId()
 		).setParameter(
-			"selPlid", String.valueOf(layout.getPlid())
+			"selPlid", layout.getPlid()
 		).setParameter(
-			"privateLayout", String.valueOf(layout.isPrivateLayout())
+			"privateLayout", layout.isPrivateLayout()
 		).build();
 
 		return configureLayoutURL.toString();
@@ -299,7 +299,7 @@ public class LayoutsAdminDisplayContext {
 		).setRedirect(
 			themeDisplay.getURLCurrent()
 		).setParameter(
-			"selPlid", String.valueOf(layout.getPlid())
+			"selPlid", layout.getPlid()
 		).build();
 
 		return convertLayoutURL.toString();
@@ -311,9 +311,9 @@ public class LayoutsAdminDisplayContext {
 		).setMVCRenderCommandName(
 			"/layout_admin/add_layout"
 		).setParameter(
-			"sourcePlid", String.valueOf(layout.getPlid())
+			"sourcePlid", layout.getPlid()
 		).setParameter(
-			"privateLayout", String.valueOf(isPrivateLayout())
+			"privateLayout", isPrivateLayout()
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).build();
@@ -327,17 +327,17 @@ public class LayoutsAdminDisplayContext {
 		).setActionName(
 			"/layout_admin/copy_layout"
 		).setParameter(
-			"sourcePlid", String.valueOf(sourcePlid)
+			"sourcePlid", sourcePlid
 		).setParameter(
-			"groupId", String.valueOf(getGroupId())
+			"groupId", getGroupId()
 		).setParameter(
-			"liveGroupId", String.valueOf(getLiveGroupId())
+			"liveGroupId", getLiveGroupId()
 		).setParameter(
-			"stagingGroupId", String.valueOf(getStagingGroupId())
+			"stagingGroupId", getStagingGroupId()
 		).setParameter(
-			"privateLayout", String.valueOf(isPrivateLayout())
+			"privateLayout", isPrivateLayout()
 		).setParameter(
-			"explicitCreation", String.valueOf(Boolean.TRUE)
+			"explicitCreation", Boolean.TRUE
 		).build();
 
 		return copyLayoutURL.toString();
@@ -353,9 +353,9 @@ public class LayoutsAdminDisplayContext {
 		PortletURL redirectURL = PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setParameter(
-			"selPlid", String.valueOf(layout.getParentPlid())
+			"selPlid", layout.getParentPlid()
 		).setParameter(
-			"layoutSetBranchId", String.valueOf(getActiveLayoutSetBranchId())
+			"layoutSetBranchId", getActiveLayoutSetBranchId()
 		).build();
 
 		deleteLayoutURL.setParameter("redirect", redirectURL.toString());
@@ -378,7 +378,7 @@ public class LayoutsAdminDisplayContext {
 		).setRedirect(
 			themeDisplay.getURLCurrent()
 		).setParameter(
-			"selPlid", String.valueOf(draftLayout.getPlid())
+			"selPlid", draftLayout.getPlid()
 		).build();
 
 		return discardDraftURL.toString();
@@ -422,9 +422,9 @@ public class LayoutsAdminDisplayContext {
 		).setParameter(
 			"backURL", themeDisplay.getURLCurrent()
 		).setParameter(
-			"groupId", String.valueOf(themeDisplay.getScopeGroupId())
+			"groupId", themeDisplay.getScopeGroupId()
 		).setParameter(
-			"privateLayout", String.valueOf(privatePages)
+			"privateLayout", privatePages
 		).build();
 
 		return editLayoutSetURL.toString();
@@ -557,7 +557,7 @@ public class LayoutsAdminDisplayContext {
 			).setRedirect(
 				themeDisplay.getURLCurrent()
 			).setParameter(
-				"selPlid", String.valueOf(layout.getPlid())
+				"selPlid", layout.getPlid()
 			).build();
 
 		return layoutConversionPreviewURL.toString();
@@ -699,7 +699,7 @@ public class LayoutsAdminDisplayContext {
 		).setParameter(
 			"backURL", themeDisplay.getURLCurrent()
 		).setParameter(
-			"selPlid", String.valueOf(layout.getPlid())
+			"selPlid", layout.getPlid()
 		).build();
 
 		return orphanPortletsURL.toString();
@@ -752,7 +752,7 @@ public class LayoutsAdminDisplayContext {
 		).setParameter(
 			"tabs1", getTabs1()
 		).setParameter(
-			"selPlid", String.valueOf(LayoutConstants.DEFAULT_PLID)
+			"selPlid", LayoutConstants.DEFAULT_PLID
 		).build();
 
 		String displayStyle = getDisplayStyle();
@@ -820,7 +820,7 @@ public class LayoutsAdminDisplayContext {
 		).setParameter(
 			"tabs1", getTabs1()
 		).setParameter(
-			"privateLayout", String.valueOf(isPrivateLayout())
+			"privateLayout", isPrivateLayout()
 		).build();
 
 		String displayStyle = getDisplayStyle();
@@ -849,7 +849,7 @@ public class LayoutsAdminDisplayContext {
 		).setRedirect(
 			getRedirect()
 		).setParameter(
-			"groupId", String.valueOf(getSelGroupId())
+			"groupId", getSelGroupId()
 		).build();
 
 		return portletURL;
@@ -933,7 +933,7 @@ public class LayoutsAdminDisplayContext {
 			"portletResource",
 			ParamUtil.getString(httpServletRequest, "portletResource")
 		).setParameter(
-			"selPlid", String.valueOf(getSelPlid())
+			"selPlid", getSelPlid()
 		).build();
 
 		return portletURL;
@@ -952,11 +952,11 @@ public class LayoutsAdminDisplayContext {
 			).setParameter(
 				"backURL", themeDisplay.getURLCurrent()
 			).setParameter(
-				"groupId", String.valueOf(getSelGroupId())
+				"groupId", getSelGroupId()
 			).setParameter(
-				"selPlid", String.valueOf(selPlid)
+				"selPlid", selPlid
 			).setParameter(
-				"privateLayout", String.valueOf(privateLayout)
+				"privateLayout", privateLayout
 			).build();
 
 		if (Validator.isNotNull(selectedTab)) {
@@ -1004,11 +1004,11 @@ public class LayoutsAdminDisplayContext {
 			).setParameter(
 				"backURL", themeDisplay.getURLCurrent()
 			).setParameter(
-				"groupId", String.valueOf(getSelGroupId())
+				"groupId", getSelGroupId()
 			).setParameter(
-				"selPlid", String.valueOf(selPlid)
+				"selPlid", selPlid
 			).setParameter(
-				"privateLayout", String.valueOf(privateLayout)
+				"privateLayout", privateLayout
 			).build();
 
 		if (layoutPageTemplateCollectionId > 0) {
@@ -1115,7 +1115,7 @@ public class LayoutsAdminDisplayContext {
 		).setParameter(
 			"backURL", _backURL
 		).setParameter(
-			"groupId", String.valueOf(themeDisplay.getScopeGroupId())
+			"groupId", themeDisplay.getScopeGroupId()
 		).setParameter(
 			"privateLayout", Boolean.FALSE.toString()
 		).setWindowState(
@@ -1753,9 +1753,9 @@ public class LayoutsAdminDisplayContext {
 		PortletURL portletURL = PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
-			"selPlid", String.valueOf(plid)
+			"selPlid", plid
 		).setParameter(
-			"privateLayout", String.valueOf(privateLayout)
+			"privateLayout", privateLayout
 		).build();
 
 		breadcrumbEntry.setURL(portletURL.toString());

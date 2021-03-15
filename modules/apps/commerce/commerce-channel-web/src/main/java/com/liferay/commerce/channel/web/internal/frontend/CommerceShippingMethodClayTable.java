@@ -120,10 +120,9 @@ public class CommerceShippingMethodClayTable
 						CommerceShippingMethod.class.getName(),
 						PortletProvider.Action.EDIT)
 				).setParameter(
-					"commerceChannelId", String.valueOf(commerceChannelId)
+					"commerceChannelId", commerceChannelId
 				).setParameter(
-					"commerceShippingMethodEngineKey",
-					String.valueOf(shippingMethod.getKey())
+					"commerceShippingMethodEngineKey", shippingMethod.getKey()
 				).setWindowState(
 					LiferayWindowState.POP_UP
 				).build();

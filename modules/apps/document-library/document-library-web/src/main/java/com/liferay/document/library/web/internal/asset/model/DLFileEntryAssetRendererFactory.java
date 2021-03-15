@@ -194,12 +194,11 @@ public class DLFileEntryAssetRendererFactory
 		).setParameter(
 			Constants.CMD, Constants.ADD
 		).setParameter(
-			"groupId", String.valueOf(group.getGroupId())
+			"groupId", group.getGroupId()
 		).setParameter(
-			"folderId",
-			String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)
+			"folderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID
 		).setParameter(
-			"fileEntryTypeId", String.valueOf(fileEntryTypeId)
+			"fileEntryTypeId", fileEntryTypeId
 		).setParameter(
 			"showMountFolder", Boolean.FALSE.toString()
 		).setParameter(

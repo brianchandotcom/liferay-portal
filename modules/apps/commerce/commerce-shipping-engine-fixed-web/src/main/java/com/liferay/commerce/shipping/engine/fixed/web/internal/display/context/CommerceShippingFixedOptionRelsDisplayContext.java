@@ -96,8 +96,7 @@ public class CommerceShippingFixedOptionRelsDisplayContext
 			"/commerce_shipping_methods" +
 				"/edit_commerce_shipping_fixed_option_rel"
 		).setParameter(
-			"commerceShippingMethodId",
-			String.valueOf(getCommerceShippingMethodId())
+			"commerceShippingMethodId", getCommerceShippingMethodId()
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).build();

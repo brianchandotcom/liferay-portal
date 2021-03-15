@@ -232,12 +232,10 @@ public class CommerceVirtualOrderItemContentDisplayContext {
 				"/view_commerce_virtual_order_item_terms_of_use"
 		).setParameter(
 			"commerceVirtualOrderItemId",
-			String.valueOf(
-				commerceVirtualOrderItem.getCommerceVirtualOrderItemId())
+			commerceVirtualOrderItem.getCommerceVirtualOrderItemId()
 		).setParameter(
 			"groupId",
-			String.valueOf(
-				_commerceVirtualOrderItemContentRequestHelper.getScopeGroupId())
+			_commerceVirtualOrderItemContentRequestHelper.getScopeGroupId()
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).build();

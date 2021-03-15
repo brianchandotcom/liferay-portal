@@ -112,8 +112,7 @@ public class WikiAttachmentItemSelectorViewDisplayContext {
 		PortletURL portletURL = PortletURLBuilder.create(
 			PortletURLUtil.clone(_portletURL, liferayPortletResponse)
 		).setParameter(
-			"selectedTab",
-			String.valueOf(getTitle(httpServletRequest.getLocale()))
+			"selectedTab", getTitle(httpServletRequest.getLocale())
 		).build();
 
 		return portletURL;
@@ -134,8 +133,7 @@ public class WikiAttachmentItemSelectorViewDisplayContext {
 			"mimeTypes", _wikiAttachmentItemSelectorCriterion.getMimeTypes()
 		).setParameter(
 			"resourcePrimKey",
-			String.valueOf(
-				_wikiAttachmentItemSelectorCriterion.getWikiPageResourceId())
+			_wikiAttachmentItemSelectorCriterion.getWikiPageResourceId()
 		).build();
 
 		return portletURL;

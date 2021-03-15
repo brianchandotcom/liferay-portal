@@ -184,9 +184,9 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 		).setMVCRenderCommandName(
 			"/cp_definitions/edit_cp_instance"
 		).setParameter(
-			"cpDefinitionId", String.valueOf(cpInstance.getCPDefinitionId())
+			"cpDefinitionId", cpInstance.getCPDefinitionId()
 		).setParameter(
-			"cpInstanceId", String.valueOf(cpInstance.getCPInstanceId())
+			"cpInstanceId", cpInstance.getCPInstanceId()
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).build();

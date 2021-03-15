@@ -123,7 +123,7 @@ public class CalendarBookingAssetRendererFactory
 		).setMVCPath(
 			"/edit_calendar_booking.jsp"
 		).setParameter(
-			"calendarId", String.valueOf(calendar.getCalendarId())
+			"calendarId", calendar.getCalendarId()
 		).build();
 
 		return portletURL;

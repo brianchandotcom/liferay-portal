@@ -114,12 +114,12 @@ public class InviteMembersUserNotificationHandler
 		).setActionName(
 			"updateMemberRequest"
 		).setParameter(
-			"memberRequestId", String.valueOf(memberRequestId)
+			"memberRequestId", memberRequestId
 		).setParameter(
-			"status", String.valueOf(MembershipRequestConstants.STATUS_APPROVED)
+			"status", MembershipRequestConstants.STATUS_APPROVED
 		).setParameter(
 			"userNotificationEventId",
-			String.valueOf(userNotificationEvent.getUserNotificationEventId())
+			userNotificationEvent.getUserNotificationEventId()
 		).setWindowState(
 			WindowState.NORMAL
 		).build();
@@ -129,12 +129,12 @@ public class InviteMembersUserNotificationHandler
 		).setActionName(
 			"updateMemberRequest"
 		).setParameter(
-			"memberRequestId", String.valueOf(memberRequestId)
+			"memberRequestId", memberRequestId
 		).setParameter(
-			"status", String.valueOf(MembershipRequestConstants.STATUS_DENIED)
+			"status", MembershipRequestConstants.STATUS_DENIED
 		).setParameter(
 			"userNotificationEventId",
-			String.valueOf(userNotificationEvent.getUserNotificationEventId())
+			userNotificationEvent.getUserNotificationEventId()
 		).setWindowState(
 			WindowState.NORMAL
 		).build();

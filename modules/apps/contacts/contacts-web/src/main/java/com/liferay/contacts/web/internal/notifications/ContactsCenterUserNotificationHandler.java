@@ -126,12 +126,12 @@ public class ContactsCenterUserNotificationHandler
 		).setRedirect(
 			serviceContext.getLayoutFullURL()
 		).setParameter(
-			"socialRequestId", String.valueOf(socialRequestId)
+			"socialRequestId", socialRequestId
 		).setParameter(
-			"status", String.valueOf(SocialRequestConstants.STATUS_CONFIRM)
+			"status", SocialRequestConstants.STATUS_CONFIRM
 		).setParameter(
 			"userNotificationEventId",
-			String.valueOf(userNotificationEvent.getUserNotificationEventId())
+			userNotificationEvent.getUserNotificationEventId()
 		).setWindowState(
 			WindowState.NORMAL
 		).build();
@@ -143,12 +143,12 @@ public class ContactsCenterUserNotificationHandler
 		).setRedirect(
 			serviceContext.getLayoutFullURL()
 		).setParameter(
-			"socialRequestId", String.valueOf(socialRequestId)
+			"socialRequestId", socialRequestId
 		).setParameter(
-			"status", String.valueOf(SocialRequestConstants.STATUS_IGNORE)
+			"status", SocialRequestConstants.STATUS_IGNORE
 		).setParameter(
 			"userNotificationEventId",
-			String.valueOf(userNotificationEvent.getUserNotificationEventId())
+			userNotificationEvent.getUserNotificationEventId()
 		).setWindowState(
 			WindowState.NORMAL
 		).build();

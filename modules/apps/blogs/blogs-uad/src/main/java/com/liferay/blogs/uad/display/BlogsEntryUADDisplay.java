@@ -63,7 +63,7 @@ public class BlogsEntryUADDisplay extends BaseBlogsEntryUADDisplay {
 		).setRedirect(
 			portal.getCurrentURL(liferayPortletRequest)
 		).setParameter(
-			"entryId", String.valueOf(blogsEntry.getEntryId())
+			"entryId", blogsEntry.getEntryId()
 		).build();
 
 		return portletURL.toString();

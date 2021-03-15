@@ -108,7 +108,7 @@ public class BookmarksPortletToolbarContributor
 		).setParameter(
 			"portletResource", portletDisplay.getId()
 		).setParameter(
-			"folderId", String.valueOf(folderId)
+			"folderId", folderId
 		).build();
 
 		urlMenuItem.setURL(portletURL.toString());
@@ -151,7 +151,7 @@ public class BookmarksPortletToolbarContributor
 		).setParameter(
 			"portletResource", portletDisplay.getId()
 		).setParameter(
-			"parentFolderId", String.valueOf(folderId)
+			"parentFolderId", folderId
 		).build();
 
 		urlMenuItem.setURL(portletURL.toString());

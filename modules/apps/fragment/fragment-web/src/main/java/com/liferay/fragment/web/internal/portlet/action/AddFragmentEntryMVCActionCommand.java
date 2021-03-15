@@ -118,11 +118,9 @@ public class AddFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 		).setMVCRenderCommandName(
 			"/fragment/edit_fragment_entry"
 		).setParameter(
-			"fragmentCollectionId",
-			String.valueOf(fragmentEntry.getFragmentCollectionId())
+			"fragmentCollectionId", fragmentEntry.getFragmentCollectionId()
 		).setParameter(
-			"fragmentEntryId",
-			String.valueOf(fragmentEntry.getFragmentEntryId())
+			"fragmentEntryId", fragmentEntry.getFragmentEntryId()
 		).build();
 
 		return portletURL.toString();

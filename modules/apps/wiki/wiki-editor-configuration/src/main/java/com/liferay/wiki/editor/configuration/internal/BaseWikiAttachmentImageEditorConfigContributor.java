@@ -141,7 +141,7 @@ public abstract class BaseWikiAttachmentImageEditorConfigContributor
 		).setParameter(
 			"mimeTypes", _getMimeTypes()
 		).setParameter(
-			"resourcePrimKey", String.valueOf(wikiPageResourcePrimKey)
+			"resourcePrimKey", wikiPageResourcePrimKey
 		).build();
 
 		ItemSelectorCriterion itemSelectorCriterion =

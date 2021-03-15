@@ -161,7 +161,7 @@ public class CommerceAddressDisplayContext {
 		).setParameter(
 			Constants.CMD, Constants.DELETE
 		).setParameter(
-			"commerceAddressId", String.valueOf(commerceAddressId)
+			"commerceAddressId", commerceAddressId
 		).build();
 
 		return portletURL.toString();
@@ -200,7 +200,7 @@ public class CommerceAddressDisplayContext {
 		).setRedirect(
 			String.valueOf(_liferayPortletResponse.createRenderURL())
 		).setParameter(
-			"commerceAddressId", String.valueOf(commerceAddressId)
+			"commerceAddressId", commerceAddressId
 		).build();
 
 		return portletURL.toString();

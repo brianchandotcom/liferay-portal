@@ -65,7 +65,7 @@ public class WikiURLHelper {
 		).setParameter(
 			"navigation", "all-pages"
 		).setParameter(
-			"nodeId", String.valueOf(node.getNodeId())
+			"nodeId", node.getNodeId()
 		).build();
 
 		return viewPagesURL;

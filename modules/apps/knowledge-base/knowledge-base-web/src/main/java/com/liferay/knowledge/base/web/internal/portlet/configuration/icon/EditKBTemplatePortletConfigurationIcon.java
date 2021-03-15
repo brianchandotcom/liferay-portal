@@ -74,7 +74,7 @@ public class EditKBTemplatePortletConfigurationIcon
 		).setRedirect(
 			_portal.getCurrentURL(portletRequest)
 		).setParameter(
-			"kbTemplateId", String.valueOf(kbTemplate.getKbTemplateId())
+			"kbTemplateId", kbTemplate.getKbTemplateId()
 		).build();
 
 		return portletURL.toString();

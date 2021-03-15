@@ -56,7 +56,7 @@ public class CommerceNotificationQueueEntriesDisplayContext {
 		).setMVCRenderCommandName(
 			"/commerce_channels/edit_commerce_notification_template"
 		).setParameter(
-			"commerceChannelId", String.valueOf(getCommerceChannelId())
+			"commerceChannelId", getCommerceChannelId()
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).build();

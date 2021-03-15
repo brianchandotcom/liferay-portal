@@ -92,7 +92,7 @@ public class WikiPageURLItemSelectorReturnTypeResolver
 		).setMVCRenderCommandName(
 			"/wiki/view"
 		).setParameter(
-			"nodeId", String.valueOf(page.getNodeId())
+			"nodeId", page.getNodeId()
 		).setParameter(
 			"title", page.getTitle()
 		).build();

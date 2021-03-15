@@ -148,7 +148,7 @@ public class KBArticleAssetEntriesUtil {
 			).setMVCRenderCommandName(
 				"/blogs/view_entry"
 			).setParameter(
-				"entryId", String.valueOf(classPK)
+				"entryId", classPK
 			).build();
 		}
 		else if (className.equals(JournalArticle.class.getName())) {
@@ -161,7 +161,7 @@ public class KBArticleAssetEntriesUtil {
 			).setParameter(
 				"struts_action", "/journal_content/view"
 			).setParameter(
-				"groupId", String.valueOf(journalArticle.getGroupId())
+				"groupId", journalArticle.getGroupId()
 			).setParameter(
 				"articleId", journalArticle.getArticleId()
 			).build();
@@ -175,7 +175,7 @@ public class KBArticleAssetEntriesUtil {
 			).setMVCPath(
 				"/article/view_article.jsp"
 			).setParameter(
-				"resourcePrimKey", String.valueOf(classPK)
+				"resourcePrimKey", classPK
 			).build();
 		}
 		else if (className.equals(MBMessage.class.getName())) {
@@ -185,7 +185,7 @@ public class KBArticleAssetEntriesUtil {
 			).setParameter(
 				"struts_action", "/message_boards/view_message"
 			).setParameter(
-				"messageId", String.valueOf(classPK)
+				"messageId", classPK
 			).build();
 		}
 		else if (className.equals(WikiPage.class.getName())) {
@@ -197,7 +197,7 @@ public class KBArticleAssetEntriesUtil {
 			).setParameter(
 				"struts_action", "/wiki/view"
 			).setParameter(
-				"nodeId", String.valueOf(wikiPage.getNodeId())
+				"nodeId", wikiPage.getNodeId()
 			).setParameter(
 				"title", wikiPage.getTitle()
 			).build();

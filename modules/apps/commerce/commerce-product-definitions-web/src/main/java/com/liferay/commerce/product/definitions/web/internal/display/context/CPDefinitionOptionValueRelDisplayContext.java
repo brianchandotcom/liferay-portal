@@ -130,8 +130,7 @@ public class CPDefinitionOptionValueRelDisplayContext
 		).setParameter(
 			Constants.CMD, "deleteSku"
 		).setParameter(
-			"cpDefinitionOptionValueRelId",
-			String.valueOf(getCPDefinitionOptionValueRelId())
+			"cpDefinitionOptionValueRelId", getCPDefinitionOptionValueRelId()
 		).build();
 
 		return portletURL.toString();

@@ -135,9 +135,9 @@ public class SiteNavigationMenuAddPortletToolbarContributor
 		).setRedirect(
 			_portal.getLayoutFullURL(themeDisplay)
 		).setParameter(
-			"groupId", String.valueOf(themeDisplay.getScopeGroupId())
+			"groupId", themeDisplay.getScopeGroupId()
 		).setParameter(
-			"privateLayout", String.valueOf(layout.isPrivateLayout())
+			"privateLayout", layout.isPrivateLayout()
 		).setParameter(
 			"portletResource", portletDisplay.getPortletName()
 		).build();

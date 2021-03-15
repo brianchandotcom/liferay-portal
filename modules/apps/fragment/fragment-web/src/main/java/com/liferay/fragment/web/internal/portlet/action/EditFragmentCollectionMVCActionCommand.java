@@ -97,8 +97,7 @@ public class EditFragmentCollectionMVCActionCommand
 		).setMVCRenderCommandName(
 			"/fragment/view"
 		).setParameter(
-			"fragmentCollectionId",
-			String.valueOf(fragmentCollection.getFragmentCollectionId())
+			"fragmentCollectionId", fragmentCollection.getFragmentCollectionId()
 		).build();
 
 		return portletURL.toString();

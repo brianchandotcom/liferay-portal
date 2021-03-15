@@ -249,8 +249,7 @@ public class SegmentsDisplayContext {
 		).setRedirect(
 			PortalUtil.getCurrentURL(_renderRequest)
 		).setParameter(
-			"segmentsEntryId",
-			String.valueOf(segmentsEntry.getSegmentsEntryId())
+			"segmentsEntryId", segmentsEntry.getSegmentsEntryId()
 		).setParameter(
 			"showInEditMode", Boolean.FALSE.toString()
 		).build();

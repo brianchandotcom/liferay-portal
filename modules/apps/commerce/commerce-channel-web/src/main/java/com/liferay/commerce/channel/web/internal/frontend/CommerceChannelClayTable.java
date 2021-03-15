@@ -223,7 +223,7 @@ public class CommerceChannelClayTable
 		).setParameter(
 			"modelResourceDescription", channel.getName()
 		).setParameter(
-			"resourcePrimKey", String.valueOf(channel.getChannelId())
+			"resourcePrimKey", channel.getChannelId()
 		).build();
 
 		try {

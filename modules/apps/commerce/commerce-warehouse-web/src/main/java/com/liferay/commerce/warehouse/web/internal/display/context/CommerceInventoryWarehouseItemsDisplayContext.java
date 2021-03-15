@@ -77,7 +77,7 @@ public class CommerceInventoryWarehouseItemsDisplayContext {
 		).setMVCRenderCommandName(
 			"/cp_definitions/edit_cp_definition"
 		).setParameter(
-			"cpDefinitionId", String.valueOf(cpInstance.getCPDefinitionId())
+			"cpDefinitionId", cpInstance.getCPDefinitionId()
 		).setParameter(
 			"screenNavigationCategoryKey",
 			CPDefinitionScreenNavigationConstants.CATEGORY_KEY_SKUS

@@ -51,7 +51,7 @@ public abstract class BaseWorkflowPortletTab
 		).setMVCPath(
 			"/view.jsp"
 		).setParameter(
-			"groupId", String.valueOf(themeDisplay.getScopeGroupId())
+			"groupId", themeDisplay.getScopeGroupId()
 		).setParameter(
 			"tab", getName()
 		).build();

@@ -101,7 +101,7 @@ public class CommerceShipmentDataSetActionProvider
 		).setRedirect(
 			_portal.getCurrentURL(httpServletRequest)
 		).setParameter(
-			"commerceShipmentId", String.valueOf(commerceShipmentId)
+			"commerceShipmentId", commerceShipmentId
 		).build();
 
 		try {

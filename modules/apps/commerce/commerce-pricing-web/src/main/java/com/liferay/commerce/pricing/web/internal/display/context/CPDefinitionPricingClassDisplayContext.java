@@ -71,7 +71,7 @@ public class CPDefinitionPricingClassDisplayContext
 		).setMVCRenderCommandName(
 			"/cp_definitions/edit_cp_definition_pricing_class"
 		).setParameter(
-			"cpDefinitionId", String.valueOf(getCPDefinitionId())
+			"cpDefinitionId", getCPDefinitionId()
 		).setParameter(
 			"screenNavigationCategoryKey", getScreenNavigationCategoryKey()
 		).build();

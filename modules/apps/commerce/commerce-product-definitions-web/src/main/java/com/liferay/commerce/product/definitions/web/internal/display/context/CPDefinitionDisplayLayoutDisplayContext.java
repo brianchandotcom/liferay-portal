@@ -83,7 +83,7 @@ public class CPDefinitionDisplayLayoutDisplayContext
 		).setMVCRenderCommandName(
 			"/commerce_channels/edit_cp_definition_cp_display_layout"
 		).setParameter(
-			"commerceChannelId", String.valueOf(getCommerceChannelId())
+			"commerceChannelId", getCommerceChannelId()
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).build();

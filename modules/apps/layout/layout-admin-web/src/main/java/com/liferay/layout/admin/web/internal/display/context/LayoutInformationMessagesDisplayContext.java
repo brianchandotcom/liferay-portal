@@ -102,7 +102,7 @@ public class LayoutInformationMessagesDisplayContext {
 				).setRedirect(
 					PortalUtil.getLayoutURL(themeDisplay)
 				).setParameter(
-					"groupId", String.valueOf(themeDisplay.getSiteGroupId())
+					"groupId", themeDisplay.getSiteGroupId()
 				).build();
 
 				return resetPrototypeURL.toString();

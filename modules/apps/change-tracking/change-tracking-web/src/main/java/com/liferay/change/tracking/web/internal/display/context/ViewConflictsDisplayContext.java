@@ -117,8 +117,7 @@ public class ViewConflictsDisplayContext {
 				).setActionName(
 					"/change_tracking/publish_ct_collection"
 				).setParameter(
-					"ctCollectionId",
-					String.valueOf(_ctCollection.getCtCollectionId())
+					"ctCollectionId", _ctCollection.getCtCollectionId()
 				).setParameter(
 					"name", _ctCollection.getName()
 				).build();
@@ -141,8 +140,7 @@ public class ViewConflictsDisplayContext {
 				).setRedirect(
 					getRedirect()
 				).setParameter(
-					"ctCollectionId",
-					String.valueOf(_ctCollection.getCtCollectionId())
+					"ctCollectionId", _ctCollection.getCtCollectionId()
 				).build();
 
 				return scheduleURL.toString();
@@ -180,7 +178,7 @@ public class ViewConflictsDisplayContext {
 		).setMVCRenderCommandName(
 			"/change_tracking/view_changes"
 		).setParameter(
-			"ctCollectionId", String.valueOf(_ctCollection.getCtCollectionId())
+			"ctCollectionId", _ctCollection.getCtCollectionId()
 		).build();
 
 		return portletURL.toString();

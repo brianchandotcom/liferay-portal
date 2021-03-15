@@ -144,8 +144,7 @@ public class DDMUserPersonalFolderItemSelectorViewDisplayContext {
 			"/dynamic_data_mapping_form/upload_ddm_user_personal_folder"
 		).setParameter(
 			"folderId",
-			String.valueOf(
-				_ddmUserPersonalFolderItemSelectorCriterion.getFolderId())
+			_ddmUserPersonalFolderItemSelectorCriterion.getFolderId()
 		).build();
 
 		return portletURL;

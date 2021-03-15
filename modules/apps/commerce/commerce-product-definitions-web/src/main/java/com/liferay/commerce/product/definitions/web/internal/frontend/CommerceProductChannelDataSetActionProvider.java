@@ -102,10 +102,9 @@ public class CommerceProductChannelDataSetActionProvider
 		).setParameter(
 			Constants.CMD, "deleteChannel"
 		).setParameter(
-			"commerceChannelRelId",
-			String.valueOf(commerceChannelRel.getCommerceChannelRelId())
+			"commerceChannelRelId", commerceChannelRel.getCommerceChannelRelId()
 		).setParameter(
-			"cpDefinitionId", String.valueOf(commerceChannelRel.getClassPK())
+			"cpDefinitionId", commerceChannelRel.getClassPK()
 		).build();
 
 		return portletURL;

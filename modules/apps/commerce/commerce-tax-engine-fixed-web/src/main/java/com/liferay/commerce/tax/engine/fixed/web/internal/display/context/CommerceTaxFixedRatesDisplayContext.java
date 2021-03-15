@@ -72,7 +72,7 @@ public class CommerceTaxFixedRatesDisplayContext
 		).setMVCRenderCommandName(
 			"/commerce_tax_methods/edit_commerce_tax_fixed_rate"
 		).setParameter(
-			"commerceTaxMethodId", String.valueOf(getCommerceTaxMethodId())
+			"commerceTaxMethodId", getCommerceTaxMethodId()
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).build();

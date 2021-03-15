@@ -100,7 +100,7 @@ public class WikiPortletToolbarContributor
 		).setRedirect(
 			_portal.getCurrentURL(portletRequest)
 		).setParameter(
-			"nodeId", String.valueOf(node.getNodeId())
+			"nodeId", node.getNodeId()
 		).setParameter(
 			"title", StringPool.BLANK
 		).setParameter(

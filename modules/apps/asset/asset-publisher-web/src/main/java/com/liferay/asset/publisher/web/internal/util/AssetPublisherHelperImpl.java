@@ -556,7 +556,7 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 		PortletURL redirectURL = PortletURLBuilder.createRenderURL(
 			liferayPortletResponse
 		).setParameter(
-			"cur", String.valueOf(cur)
+			"cur", cur
 		).build();
 
 		if (delta > 0) {
@@ -621,7 +621,7 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 		).setMVCPath(
 			"/view_content.jsp"
 		).setParameter(
-			"assetEntryId", String.valueOf(assetEntry.getEntryId())
+			"assetEntryId", assetEntry.getEntryId()
 		).setParameter(
 			"type", assetRendererFactory.getType()
 		).build();

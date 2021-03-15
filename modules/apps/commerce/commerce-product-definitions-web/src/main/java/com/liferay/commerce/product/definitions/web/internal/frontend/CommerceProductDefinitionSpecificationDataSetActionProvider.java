@@ -130,7 +130,7 @@ public class CommerceProductDefinitionSpecificationDataSetActionProvider
 			Constants.CMD, Constants.DELETE
 		).setParameter(
 			"cpDefinitionSpecificationOptionValueId",
-			String.valueOf(cpDefinitionSpecificationOptionValueId)
+			cpDefinitionSpecificationOptionValueId
 		).build();
 
 		return portletURL;
@@ -150,13 +150,11 @@ public class CommerceProductDefinitionSpecificationDataSetActionProvider
 			"/cp_definitions/edit_cp_definition_specification_option_value"
 		).setParameter(
 			"cpDefinitionId",
-			String.valueOf(
-				cpDefinitionSpecificationOptionValue.getCPDefinitionId())
+			cpDefinitionSpecificationOptionValue.getCPDefinitionId()
 		).setParameter(
 			"cpDefinitionSpecificationOptionValueId",
-			String.valueOf(
-				cpDefinitionSpecificationOptionValue.
-					getCPDefinitionSpecificationOptionValueId())
+			cpDefinitionSpecificationOptionValue.
+				getCPDefinitionSpecificationOptionValueId()
 		).build();
 
 		try {

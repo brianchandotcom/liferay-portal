@@ -135,7 +135,7 @@ public class KBArticleAssetRenderer extends BaseJSPAssetRenderer<KBArticle> {
 		).setMVCPath(
 			"/admin/edit_article.jsp"
 		).setParameter(
-			"resourcePrimKey", String.valueOf(_kbArticle.getResourcePrimKey())
+			"resourcePrimKey", _kbArticle.getResourcePrimKey()
 		).build();
 
 		return portletURL;

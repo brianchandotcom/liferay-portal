@@ -95,7 +95,7 @@ public class SiteMembershipsDisplayContext {
 		).setParameter(
 			"tabs1", getTabs1()
 		).setParameter(
-			"groupId", String.valueOf(getGroupId())
+			"groupId", getGroupId()
 		).build();
 
 		return portletURL;

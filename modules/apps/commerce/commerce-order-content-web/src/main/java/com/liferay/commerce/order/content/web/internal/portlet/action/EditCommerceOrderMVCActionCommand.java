@@ -128,7 +128,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			_commerceOrderHttpHelper.getCommerceCheckoutPortletURL(
 				_portal.getHttpServletRequest(actionRequest))
 		).setParameter(
-			"commerceOrderId", String.valueOf(commerceOrderId)
+			"commerceOrderId", commerceOrderId
 		).build();
 
 		actionRequest.setAttribute(WebKeys.REDIRECT, portletURL.toString());
@@ -244,7 +244,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 					PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backURL",
 					redirect
 				).setParameter(
-					"commerceOrderId", String.valueOf(commerceOrderId)
+					"commerceOrderId", commerceOrderId
 				).build();
 
 				hideDefaultSuccessMessage(actionRequest);

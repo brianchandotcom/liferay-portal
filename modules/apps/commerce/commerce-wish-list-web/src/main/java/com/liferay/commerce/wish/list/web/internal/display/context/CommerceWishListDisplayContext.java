@@ -299,7 +299,7 @@ public class CommerceWishListDisplayContext {
 		PortletURL rowURL = PortletURLBuilder.createRenderURL(
 			liferayPortletResponse
 		).setParameter(
-			"commerceWishListId", String.valueOf(commerceWishListId)
+			"commerceWishListId", commerceWishListId
 		).build();
 
 		return rowURL.toString();

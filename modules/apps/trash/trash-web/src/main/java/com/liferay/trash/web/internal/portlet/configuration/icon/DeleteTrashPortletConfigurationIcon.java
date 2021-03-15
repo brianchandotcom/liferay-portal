@@ -74,7 +74,7 @@ public class DeleteTrashPortletConfigurationIcon
 			).setParameter(
 				"className", trashDisplayContext.getClassName()
 			).setParameter(
-				"classPK", String.valueOf(trashDisplayContext.getClassPK())
+				"classPK", trashDisplayContext.getClassPK()
 			).build();
 
 			return deleteURL.toString();

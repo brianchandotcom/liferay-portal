@@ -126,7 +126,7 @@ public class CommerceDiscountDisplayContext extends BasePricingDisplayContext {
 		).setMVCRenderCommandName(
 			"/commerce_discount/add_commerce_discount_rule"
 		).setParameter(
-			"commerceDiscountId", String.valueOf(getCommerceDiscountId())
+			"commerceDiscountId", getCommerceDiscountId()
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).build();
@@ -454,8 +454,7 @@ public class CommerceDiscountDisplayContext extends BasePricingDisplayContext {
 		).setParameter(
 			Constants.CMD, Constants.UPDATE
 		).setParameter(
-			"commerceDiscountId",
-			String.valueOf(commerceDiscount.getCommerceDiscountId())
+			"commerceDiscountId", commerceDiscount.getCommerceDiscountId()
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).build();

@@ -150,7 +150,7 @@ public class CPDefinitionAssetRenderer
 		).setMVCRenderCommandName(
 			"/cp_definitions/edit_cp_definition"
 		).setParameter(
-			"cpDefinitionId", String.valueOf(_cpDefinition.getCPDefinitionId())
+			"cpDefinitionId", _cpDefinition.getCPDefinitionId()
 		).build();
 
 		return portletURL;
@@ -170,7 +170,7 @@ public class CPDefinitionAssetRenderer
 		).setMVCPath(
 			"/view.jsp"
 		).setParameter(
-			"cpDefinitionId", String.valueOf(_cpDefinition.getCPDefinitionId())
+			"cpDefinitionId", _cpDefinition.getCPDefinitionId()
 		).setWindowState(
 			windowState
 		).build();

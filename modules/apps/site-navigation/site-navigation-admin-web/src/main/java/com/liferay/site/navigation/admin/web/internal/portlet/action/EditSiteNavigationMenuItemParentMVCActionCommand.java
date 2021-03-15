@@ -105,10 +105,10 @@ public class EditSiteNavigationMenuItemParentMVCActionCommand
 			redirect
 		).setParameter(
 			"siteNavigationMenuId",
-			String.valueOf(siteNavigationMenuItem.getSiteNavigationMenuId())
+			siteNavigationMenuItem.getSiteNavigationMenuId()
 		).setParameter(
 			"selectedSiteNavigationMenuItemId",
-			String.valueOf(siteNavigationMenuItem.getSiteNavigationMenuItemId())
+			siteNavigationMenuItem.getSiteNavigationMenuItemId()
 		).build();
 
 		return redirectURL.toString();

@@ -53,12 +53,9 @@ public class SelectDisplayPageMasterLayoutVerticalCard implements VerticalCard {
 		).setRedirect(
 			_themeDisplay.getURLCurrent()
 		).setParameter(
-			"type",
-			String.valueOf(
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE)
+			"type", LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE
 		).setParameter(
-			"masterLayoutPlid",
-			String.valueOf(_layoutPageTemplateEntry.getPlid())
+			"masterLayoutPlid", _layoutPageTemplateEntry.getPlid()
 		).build();
 
 		return addDisplayPageURL.toString();

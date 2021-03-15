@@ -59,9 +59,9 @@ public class CPInstanceItemSelectorViewDisplayContext
 		PortletURL portletURL = PortletURLBuilder.create(
 			super.getPortletURL()
 		).setParameter(
-			"checkedCPInstanceIds", String.valueOf(getCheckedCPInstanceIds())
+			"checkedCPInstanceIds", getCheckedCPInstanceIds()
 		).setParameter(
-			"commerceCatalogGroupId", String.valueOf(getGroupId())
+			"commerceCatalogGroupId", getGroupId()
 		).build();
 
 		return portletURL;

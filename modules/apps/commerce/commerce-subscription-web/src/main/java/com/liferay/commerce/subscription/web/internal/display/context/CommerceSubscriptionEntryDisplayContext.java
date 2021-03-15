@@ -359,8 +359,7 @@ public class CommerceSubscriptionEntryDisplayContext {
 			Constants.CMD, ActionKeys.UPDATE
 		).setParameter(
 			"commerceSubscriptionEntryId",
-			String.valueOf(
-				_commerceSubscriptionEntry.getCommerceSubscriptionEntryId())
+			_commerceSubscriptionEntry.getCommerceSubscriptionEntryId()
 		).build();
 
 		return portletURL;

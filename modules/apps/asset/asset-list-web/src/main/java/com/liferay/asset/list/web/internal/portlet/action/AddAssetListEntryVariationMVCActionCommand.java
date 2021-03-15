@@ -100,9 +100,9 @@ public class AddAssetListEntryVariationMVCActionCommand
 		).setMVCPath(
 			"/edit_asset_list_entry.jsp"
 		).setParameter(
-			"assetListEntryId", String.valueOf(assetListEntryId)
+			"assetListEntryId", assetListEntryId
 		).setParameter(
-			"segmentsEntryId", String.valueOf(segmentsEntryId)
+			"segmentsEntryId", segmentsEntryId
 		).build();
 
 		return portletURL.toString();

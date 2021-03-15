@@ -62,10 +62,9 @@ public class KBSelectParentDisplayContext {
 		PortletURL currentURL = PortletURLBuilder.create(
 			PortletURLUtil.clone(portletURL, _liferayPortletResponse)
 		).setParameter(
-			"parentResourceClassNameId",
-			String.valueOf(parentResourceClassNameId)
+			"parentResourceClassNameId", parentResourceClassNameId
 		).setParameter(
-			"parentResourcePrimKey", String.valueOf(parentResourcePrimKey)
+			"parentResourcePrimKey", parentResourcePrimKey
 		).build();
 
 		long kbFolderClassNameId = PortalUtil.getClassNameId(

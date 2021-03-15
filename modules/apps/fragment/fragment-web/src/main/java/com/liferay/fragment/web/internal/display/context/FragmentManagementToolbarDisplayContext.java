@@ -77,7 +77,7 @@ public abstract class FragmentManagementToolbarDisplayContext
 			getPortletURL()
 		).setParameter(
 			"fragmentCollectionId",
-			String.valueOf(fragmentDisplayContext.getFragmentCollectionId())
+			fragmentDisplayContext.getFragmentCollectionId()
 		).build();
 
 		return searchActionURL.toString();

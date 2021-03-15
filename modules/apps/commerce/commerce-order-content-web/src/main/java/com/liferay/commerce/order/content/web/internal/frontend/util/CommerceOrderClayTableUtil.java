@@ -86,7 +86,7 @@ public class CommerceOrderClayTableUtil {
 		).setParameter(
 			Constants.CMD, "setCurrent"
 		).setParameter(
-			"commerceOrderId", String.valueOf(commerceOrderId)
+			"commerceOrderId", commerceOrderId
 		).build();
 
 		return portletURL.toString();
@@ -200,7 +200,7 @@ public class CommerceOrderClayTableUtil {
 		).setMVCRenderCommandName(
 			"/commerce_order_content/view_commerce_order_shipments"
 		).setParameter(
-			"commerceOrderItemId", String.valueOf(commerceOrderItemId)
+			"commerceOrderItemId", commerceOrderItemId
 		).build();
 
 		try {

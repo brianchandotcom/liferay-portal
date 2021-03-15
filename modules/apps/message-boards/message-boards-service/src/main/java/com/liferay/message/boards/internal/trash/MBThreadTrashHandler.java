@@ -132,9 +132,9 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 		PortletURL portletURL = PortletURLBuilder.create(
 			getRestoreURL(portletRequest, classPK, false)
 		).setParameter(
-			"mbCategoryId", String.valueOf(thread.getCategoryId())
+			"mbCategoryId", thread.getCategoryId()
 		).setParameter(
-			"messageId", String.valueOf(thread.getRootMessageId())
+			"messageId", thread.getRootMessageId()
 		).build();
 
 		return portletURL.toString();
@@ -150,7 +150,7 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 		PortletURL portletURL = PortletURLBuilder.create(
 			getRestoreURL(portletRequest, classPK, true)
 		).setParameter(
-			"mbCategoryId", String.valueOf(thread.getCategoryId())
+			"mbCategoryId", thread.getCategoryId()
 		).build();
 
 		return portletURL.toString();

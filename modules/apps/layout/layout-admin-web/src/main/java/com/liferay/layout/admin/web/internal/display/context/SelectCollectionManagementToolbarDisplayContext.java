@@ -133,7 +133,7 @@ public class SelectCollectionManagementToolbarDisplayContext
 			).setParameter(
 				"backURL", _themeDisplay.getURLCurrent()
 			).setParameter(
-				"type", String.valueOf(type)
+				"type", type
 			).build();
 
 			dropdownItem.putData(

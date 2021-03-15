@@ -119,7 +119,7 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 		).setMVCRenderCommandName(
 			"/change_tracking/view_changes"
 		).setParameter(
-			"ctCollectionId", String.valueOf(ctCollectionId)
+			"ctCollectionId", ctCollectionId
 		).build();
 
 		return reviewURL.toString();

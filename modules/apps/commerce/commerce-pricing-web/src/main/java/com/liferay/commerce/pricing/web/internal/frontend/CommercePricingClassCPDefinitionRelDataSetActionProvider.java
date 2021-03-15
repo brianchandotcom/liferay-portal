@@ -110,7 +110,7 @@ public class CommercePricingClassCPDefinitionRelDataSetActionProvider
 		).setMVCRenderCommandName(
 			"/cp_definitions/edit_cp_definition"
 		).setParameter(
-			"cpDefinitionId", String.valueOf(cpDefinitionId)
+			"cpDefinitionId", cpDefinitionId
 		).setParameter(
 			"screenNavigationCategoryKey", "details"
 		).build();

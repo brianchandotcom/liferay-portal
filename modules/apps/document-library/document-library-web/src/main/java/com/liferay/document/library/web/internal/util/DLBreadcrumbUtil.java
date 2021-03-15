@@ -65,7 +65,7 @@ public class DLBreadcrumbUtil {
 		).setMVCRenderCommandName(
 			"/document_library/view_file_entry"
 		).setParameter(
-			"fileEntryId", String.valueOf(fileEntry.getFileEntryId())
+			"fileEntryId", fileEntry.getFileEntryId()
 		).build();
 
 		PortalUtil.addPortletBreadcrumbEntry(
@@ -94,7 +94,7 @@ public class DLBreadcrumbUtil {
 		).setMVCRenderCommandName(
 			"/document_library/view_file_entry"
 		).setParameter(
-			"fileEntryId", String.valueOf(fileShortcut.getToFileEntryId())
+			"fileEntryId", fileShortcut.getToFileEntryId()
 		).build();
 
 		PortalUtil.addPortletBreadcrumbEntry(

@@ -84,8 +84,7 @@ public class ReschedulePublicationDisplayContext {
 				).setRedirect(
 					getRedirect()
 				).setParameter(
-					"ctCollectionId",
-					String.valueOf(_ctCollection.getCtCollectionId())
+					"ctCollectionId", _ctCollection.getCtCollectionId()
 				).build();
 
 				return scheduleURL.toString();
@@ -130,8 +129,7 @@ public class ReschedulePublicationDisplayContext {
 				).setRedirect(
 					getRedirect()
 				).setParameter(
-					"ctCollectionId",
-					String.valueOf(_ctCollection.getCtCollectionId())
+					"ctCollectionId", _ctCollection.getCtCollectionId()
 				).build();
 
 				return scheduleURL.toString();

@@ -40,9 +40,9 @@ public class TranslationURLProviderImpl implements TranslationURLProvider {
 		).setMVCRenderCommandName(
 			"/translation/translate"
 		).setParameter(
-			"classNameId", String.valueOf(classNameId)
+			"classNameId", classNameId
 		).setParameter(
-			"classPK", String.valueOf(classPK)
+			"classPK", classPK
 		).build();
 
 		return portletURL;

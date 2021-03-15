@@ -213,8 +213,7 @@ public class LayoutsAdminManagementToolbarDisplayContext
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
 			liferayPortletResponse
 		).setParameter(
-			"privateLayout",
-			String.valueOf(_layoutsAdminDisplayContext.isPrivateLayout())
+			"privateLayout", _layoutsAdminDisplayContext.isPrivateLayout()
 		).build();
 
 		return portletURL.toString();

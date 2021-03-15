@@ -320,7 +320,7 @@ public class CPInstanceDisplayContext extends BaseCPDefinitionsDisplayContext {
 		).setMVCRenderCommandName(
 			"/cp_definitions/edit_cp_instance"
 		).setParameter(
-			"cpDefinitionId", String.valueOf(getCPDefinitionId())
+			"cpDefinitionId", getCPDefinitionId()
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).build();

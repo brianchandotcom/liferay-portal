@@ -105,7 +105,7 @@ public class CommerceProductPricingClassDataSetActionProvider
 		).setMVCRenderCommandName(
 			"/cp_definitions/edit_cp_definition_pricing_class"
 		).setParameter(
-			"commercePricingClassId", String.valueOf(pricingClassId)
+			"commercePricingClassId", pricingClassId
 		).build();
 
 		try {

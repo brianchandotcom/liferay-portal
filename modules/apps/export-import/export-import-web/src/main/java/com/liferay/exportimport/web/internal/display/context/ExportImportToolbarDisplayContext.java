@@ -203,12 +203,10 @@ public class ExportImportToolbarDisplayContext {
 		PortletURL sortingURL = PortletURLBuilder.create(
 			getRenderURL()
 		).setParameter(
-			"groupId",
-			String.valueOf(ParamUtil.getLong(_httpServletRequest, "groupId"))
+			"groupId", ParamUtil.getLong(_httpServletRequest, "groupId")
 		).setParameter(
 			"privateLayout",
-			String.valueOf(
-				ParamUtil.getBoolean(_httpServletRequest, "privateLayout"))
+			ParamUtil.getBoolean(_httpServletRequest, "privateLayout")
 		).setParameter(
 			"displayStyle",
 			ParamUtil.getString(

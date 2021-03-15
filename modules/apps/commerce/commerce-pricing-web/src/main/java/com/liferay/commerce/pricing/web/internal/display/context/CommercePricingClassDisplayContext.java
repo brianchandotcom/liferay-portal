@@ -140,7 +140,7 @@ public class CommercePricingClassDisplayContext
 			Constants.CMD, Constants.UPDATE
 		).setParameter(
 			"commercePricingClassId",
-			String.valueOf(commercePricingClass.getCommercePricingClassId())
+			commercePricingClass.getCommercePricingClassId()
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).build();

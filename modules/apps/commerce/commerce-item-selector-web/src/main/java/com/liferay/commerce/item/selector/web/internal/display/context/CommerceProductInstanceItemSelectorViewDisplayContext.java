@@ -93,9 +93,9 @@ public class CommerceProductInstanceItemSelectorViewDisplayContext
 		PortletURL portletURL = PortletURLBuilder.create(
 			super.getPortletURL()
 		).setParameter(
-			"commerceCatalogGroupId", String.valueOf(getGroupId())
+			"commerceCatalogGroupId", getGroupId()
 		).setParameter(
-			"commercePriceListId", String.valueOf(getCommercePriceListId())
+			"commercePriceListId", getCommercePriceListId()
 		).build();
 
 		return portletURL;

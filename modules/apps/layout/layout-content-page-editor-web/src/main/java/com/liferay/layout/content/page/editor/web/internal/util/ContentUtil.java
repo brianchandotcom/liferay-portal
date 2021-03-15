@@ -264,7 +264,7 @@ public class ContentUtil {
 		).setParameter(
 			"className", layoutClassedModelUsage.getClassName()
 		).setParameter(
-			"classPK", String.valueOf(layoutClassedModelUsage.getClassPK())
+			"classPK", layoutClassedModelUsage.getClassPK()
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).build();

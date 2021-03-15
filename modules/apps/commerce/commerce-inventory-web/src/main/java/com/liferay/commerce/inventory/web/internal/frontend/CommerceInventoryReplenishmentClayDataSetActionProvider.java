@@ -114,7 +114,7 @@ public class CommerceInventoryReplenishmentClayDataSetActionProvider
 			Constants.CMD, Constants.DELETE
 		).setParameter(
 			"commerceInventoryReplenishmentItemId",
-			String.valueOf(commerceInventoryReplenishmentItemId)
+			commerceInventoryReplenishmentItemId
 		).build();
 
 		return portletURL.toString();
@@ -140,7 +140,7 @@ public class CommerceInventoryReplenishmentClayDataSetActionProvider
 			themeDisplay.getURLCurrent()
 		).setParameter(
 			"commerceInventoryReplenishmentItemId",
-			String.valueOf(commerceInventoryReplenishmentItemId)
+			commerceInventoryReplenishmentItemId
 		).build();
 
 		try {

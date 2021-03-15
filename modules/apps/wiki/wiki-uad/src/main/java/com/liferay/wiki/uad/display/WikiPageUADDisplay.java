@@ -49,9 +49,9 @@ public class WikiPageUADDisplay extends BaseWikiPageUADDisplay {
 		).setRedirect(
 			portal.getCurrentURL(liferayPortletRequest)
 		).setParameter(
-			"nodeId", String.valueOf(wikiPage.getNodeId())
+			"nodeId", wikiPage.getNodeId()
 		).setParameter(
-			"title", String.valueOf(wikiPage.getTitle())
+			"title", wikiPage.getTitle()
 		).build();
 
 		return portletURL.toString();

@@ -138,9 +138,9 @@ public class RolesDisplayContext {
 		).setMVCPath(
 			"/site_roles.jsp"
 		).setParameter(
-			"groupId", String.valueOf(getGroupId())
+			"groupId", getGroupId()
 		).setParameter(
-			"roleType", String.valueOf(getRoleType())
+			"roleType", getRoleType()
 		).setParameter(
 			"eventName", getEventName()
 		).build();

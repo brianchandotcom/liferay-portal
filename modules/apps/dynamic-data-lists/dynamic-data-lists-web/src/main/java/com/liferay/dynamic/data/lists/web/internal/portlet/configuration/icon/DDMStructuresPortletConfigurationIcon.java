@@ -81,7 +81,7 @@ public class DDMStructuresPortletConfigurationIcon
 		).setParameter(
 			"backURL", themeDisplay.getURLCurrent()
 		).setParameter(
-			"groupId", String.valueOf(themeDisplay.getScopeGroupId())
+			"groupId", themeDisplay.getScopeGroupId()
 		).setParameter(
 			"refererPortletName", DDLPortletKeys.DYNAMIC_DATA_LISTS
 		).setParameter(

@@ -157,7 +157,7 @@ public class DepotBreadcrumbEntryContributorImpl
 		).setMVCRenderCommandName(
 			"/depot/view_depot_dashboard"
 		).setParameter(
-			"depotEntryId", String.valueOf(depotEntry.getDepotEntryId())
+			"depotEntryId", depotEntry.getDepotEntryId()
 		).build();
 
 		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();

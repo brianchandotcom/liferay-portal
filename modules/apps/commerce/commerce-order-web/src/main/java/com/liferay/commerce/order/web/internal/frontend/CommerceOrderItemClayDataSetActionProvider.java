@@ -115,7 +115,7 @@ public class CommerceOrderItemClayDataSetActionProvider
 		).setParameter(
 			Constants.CMD, Constants.DELETE
 		).setParameter(
-			"commerceOrderItemId", String.valueOf(commerceOrderItemId)
+			"commerceOrderItemId", commerceOrderItemId
 		).build();
 
 		return portletURL;

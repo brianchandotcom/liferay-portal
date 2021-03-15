@@ -88,7 +88,7 @@ public class ShippedCommerceShipmentItemDataSetActionProvider
 		).setRedirect(
 			_portal.getCurrentURL(httpServletRequest)
 		).setParameter(
-			"commerceShipmentItemId", String.valueOf(commerceShipmentItemId)
+			"commerceShipmentItemId", commerceShipmentItemId
 		).build();
 
 		try {

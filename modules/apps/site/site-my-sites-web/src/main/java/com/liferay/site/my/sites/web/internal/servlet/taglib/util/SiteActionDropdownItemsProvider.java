@@ -118,9 +118,9 @@ public class SiteActionDropdownItemsProvider {
 		).setRedirect(
 			_themeDisplay.getURLCurrent()
 		).setParameter(
-			"groupId", String.valueOf(_group.getGroupId())
+			"groupId", _group.getGroupId()
 		).setParameter(
-			"addUserIds", String.valueOf(_themeDisplay.getUserId())
+			"addUserIds", _themeDisplay.getUserId()
 		).build();
 
 		return dropdownItem -> {
@@ -141,9 +141,9 @@ public class SiteActionDropdownItemsProvider {
 		).setRedirect(
 			_themeDisplay.getURLCurrent()
 		).setParameter(
-			"groupId", String.valueOf(_group.getGroupId())
+			"groupId", _group.getGroupId()
 		).setParameter(
-			"removeUserIds", String.valueOf(_themeDisplay.getUserId())
+			"removeUserIds", _themeDisplay.getUserId()
 		).build();
 
 		return dropdownItem -> {

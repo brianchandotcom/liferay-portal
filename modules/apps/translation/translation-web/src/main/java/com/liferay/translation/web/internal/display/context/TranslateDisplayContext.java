@@ -243,11 +243,11 @@ public class TranslateDisplayContext {
 		).setActionName(
 			"/translation/update_translation"
 		).setParameter(
-			"groupId", String.valueOf(_getGroupId())
+			"groupId", _getGroupId()
 		).setParameter(
-			"classNameId", String.valueOf(PortalUtil.getClassNameId(_className))
+			"classNameId", PortalUtil.getClassNameId(_className)
 		).setParameter(
-			"classPK", String.valueOf(_classPK)
+			"classPK", _classPK
 		).build();
 
 		return portletURL;

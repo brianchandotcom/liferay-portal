@@ -168,7 +168,7 @@ public class CommerceSubscriptionEntryDataSetDataProvider
 		).setRedirect(
 			redirect
 		).setParameter(
-			"commerceAccountId", String.valueOf(commerceAccountId)
+			"commerceAccountId", commerceAccountId
 		).build();
 
 		return portletURL.toString();
@@ -196,7 +196,7 @@ public class CommerceSubscriptionEntryDataSetDataProvider
 		).setRedirect(
 			redirect
 		).setParameter(
-			"commerceOrderId", String.valueOf(commerceOrderId)
+			"commerceOrderId", commerceOrderId
 		).build();
 
 		return portletURL.toString();

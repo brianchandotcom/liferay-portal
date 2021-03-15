@@ -249,8 +249,7 @@ public class CommerceShippingFixedOptionSettingClayTable
 		).setParameter(
 			Constants.CMD, Constants.DELETE
 		).setParameter(
-			"commerceShippingFixedOptionRelId",
-			String.valueOf(shippingFixedOptionSettingId)
+			"commerceShippingFixedOptionRelId", shippingFixedOptionSettingId
 		).build();
 
 		return portletURL.toString();

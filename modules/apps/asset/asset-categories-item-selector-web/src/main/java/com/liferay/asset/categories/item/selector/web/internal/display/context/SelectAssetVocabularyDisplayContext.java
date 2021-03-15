@@ -149,7 +149,7 @@ public class SelectAssetVocabularyDisplayContext {
 				_httpServletRequest, "backURL",
 				PortalUtil.getCurrentURL(_httpServletRequest))
 		).setParameter(
-			"assetCategoryTreeNodeId", String.valueOf(assetVocabularyId)
+			"assetCategoryTreeNodeId", assetVocabularyId
 		).setParameter(
 			"assetCategoryTreeNodeType",
 			AssetCategoryTreeNodeConstants.TYPE_ASSET_VOCABULARY

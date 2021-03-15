@@ -120,10 +120,10 @@ public class CommercePriceModifierDataSetActionProvider
 			Constants.CMD, Constants.DELETE
 		).setParameter(
 			"commercePriceModifierId",
-			String.valueOf(commercePriceModifier.getCommercePriceModifierId())
+			commercePriceModifier.getCommercePriceModifierId()
 		).setParameter(
 			"commercePriceListId",
-			String.valueOf(commercePriceModifier.getCommercePriceListId())
+			commercePriceModifier.getCommercePriceListId()
 		).build();
 
 		return portletURL;
@@ -144,10 +144,10 @@ public class CommercePriceModifierDataSetActionProvider
 			_portal.getCurrentURL(httpServletRequest)
 		).setParameter(
 			"commercePriceModifierId",
-			String.valueOf(commercePriceModifier.getCommercePriceModifierId())
+			commercePriceModifier.getCommercePriceModifierId()
 		).setParameter(
 			"commercePriceListId",
-			String.valueOf(commercePriceModifier.getCommercePriceListId())
+			commercePriceModifier.getCommercePriceListId()
 		).build();
 
 		try {

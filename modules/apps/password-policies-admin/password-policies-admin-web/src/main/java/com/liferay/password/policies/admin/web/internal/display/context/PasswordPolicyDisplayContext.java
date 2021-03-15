@@ -91,7 +91,7 @@ public class PasswordPolicyDisplayContext {
 		).setRedirect(
 			redirect
 		).setParameter(
-			"passwordPolicyId", String.valueOf(_passwordPolicyId)
+			"passwordPolicyId", _passwordPolicyId
 		).build();
 
 		List<NavigationItem> navigationItems = NavigationItemListBuilder.add(

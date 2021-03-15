@@ -252,7 +252,7 @@ public class CommerceTaxRateClayTable
 		).setParameter(
 			Constants.CMD, Constants.DELETE
 		).setParameter(
-			"commerceTaxFixedRateId", String.valueOf(taxRateId)
+			"commerceTaxFixedRateId", taxRateId
 		).build();
 
 		return portletURL.toString();

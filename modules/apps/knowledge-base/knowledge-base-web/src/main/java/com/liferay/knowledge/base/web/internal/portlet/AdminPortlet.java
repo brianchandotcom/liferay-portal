@@ -423,8 +423,7 @@ public class AdminPortlet extends BaseKBPortlet {
 			).setRedirect(
 				getRedirect(actionRequest, actionResponse)
 			).setParameter(
-				"resourcePrimKey",
-				String.valueOf(kbArticle.getResourcePrimKey())
+				"resourcePrimKey", kbArticle.getResourcePrimKey()
 			).setWindowState(
 				actionRequest.getWindowState()
 			).build();

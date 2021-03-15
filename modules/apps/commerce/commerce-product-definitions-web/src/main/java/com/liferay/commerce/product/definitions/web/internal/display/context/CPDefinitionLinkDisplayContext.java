@@ -157,7 +157,7 @@ public class CPDefinitionLinkDisplayContext
 		).setMVCRenderCommandName(
 			"/cp_definitions/edit_cp_definition"
 		).setParameter(
-			"cpDefinitionId", String.valueOf(getCPDefinitionId())
+			"cpDefinitionId", getCPDefinitionId()
 		).setParameter(
 			"screenNavigationCategoryKey", getScreenNavigationCategoryKey()
 		).build();

@@ -209,7 +209,7 @@ public class BookmarksManagementToolbarDisplayContext {
 		).setRedirect(
 			PortalUtil.getCurrentURL(_httpServletRequest)
 		).setParameter(
-			"folderId", String.valueOf(_folderId)
+			"folderId", _folderId
 		).build();
 
 		return searchActionURL.toString();
@@ -319,8 +319,7 @@ public class BookmarksManagementToolbarDisplayContext {
 					_getPortletURL()
 				).setParameter(
 					"folderId",
-					String.valueOf(
-						BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID)
+					BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID
 				).build();
 
 				for (String navigationKey : navigationKeys) {

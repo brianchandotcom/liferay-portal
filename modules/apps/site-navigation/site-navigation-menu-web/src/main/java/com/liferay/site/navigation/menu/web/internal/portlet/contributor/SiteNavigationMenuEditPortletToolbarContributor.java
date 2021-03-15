@@ -139,7 +139,7 @@ public class SiteNavigationMenuEditPortletToolbarContributor
 		).setRedirect(
 			themeDisplay.getURLCurrent()
 		).setParameter(
-			"siteNavigationMenuId", String.valueOf(siteNavigationMenuId)
+			"siteNavigationMenuId", siteNavigationMenuId
 		).build();
 
 		urlMenuItem.setURL(portletURL.toString());

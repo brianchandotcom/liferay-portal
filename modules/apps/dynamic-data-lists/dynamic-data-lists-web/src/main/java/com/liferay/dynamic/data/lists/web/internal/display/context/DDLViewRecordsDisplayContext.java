@@ -284,7 +284,7 @@ public class DDLViewRecordsDisplayContext {
 		).setRedirect(
 			ParamUtil.getString(_liferayPortletRequest, "redirect")
 		).setParameter(
-			"recordSetId", String.valueOf(_ddlRecordSet.getRecordSetId())
+			"recordSetId", _ddlRecordSet.getRecordSetId()
 		).build();
 
 		String delta = ParamUtil.getString(_liferayPortletRequest, "delta");
@@ -384,7 +384,7 @@ public class DDLViewRecordsDisplayContext {
 		).setRedirect(
 			PortalUtil.getCurrentURL(_liferayPortletRequest)
 		).setParameter(
-			"recordSetId", String.valueOf(_ddlRecordSet.getRecordSetId())
+			"recordSetId", _ddlRecordSet.getRecordSetId()
 		).build();
 
 		return portletURL.toString();

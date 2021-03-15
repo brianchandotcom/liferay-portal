@@ -151,7 +151,7 @@ public class AssetListEntryUsagesDisplayContext {
 		).setRedirect(
 			getRedirect()
 		).setParameter(
-			"assetListEntryId", String.valueOf(getAssetListEntryId())
+			"assetListEntryId", getAssetListEntryId()
 		).build();
 
 		return portletURL;

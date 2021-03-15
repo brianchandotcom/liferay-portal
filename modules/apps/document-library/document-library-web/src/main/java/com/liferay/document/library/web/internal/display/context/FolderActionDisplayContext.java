@@ -90,9 +90,9 @@ public class FolderActionDisplayContext {
 		).setRedirect(
 			_dlRequestHelper.getCurrentURL()
 		).setParameter(
-			"repositoryId", String.valueOf(_getRepositoryId())
+			"repositoryId", _getRepositoryId()
 		).setParameter(
-			"folderId", String.valueOf(_getFolderId())
+			"folderId", _getFolderId()
 		).build();
 
 		return portletURL.toString();
@@ -111,9 +111,9 @@ public class FolderActionDisplayContext {
 		).setRedirect(
 			_dlRequestHelper.getCurrentURL()
 		).setParameter(
-			"repositoryId", String.valueOf(_getRepositoryId())
+			"repositoryId", _getRepositoryId()
 		).setParameter(
-			"parentFolderId", String.valueOf(_getFolderId())
+			"parentFolderId", _getFolderId()
 		).setParameter(
 			"ignoreRootFolder", Boolean.TRUE.toString()
 		).build();
@@ -132,9 +132,9 @@ public class FolderActionDisplayContext {
 		).setRedirect(
 			_dlRequestHelper.getCurrentURL()
 		).setParameter(
-			"repositoryId", String.valueOf(_getRepositoryId())
+			"repositoryId", _getRepositoryId()
 		).setParameter(
-			"folderId", String.valueOf(_getFolderId())
+			"folderId", _getFolderId()
 		).build();
 
 		return portletURL.toString();
@@ -153,9 +153,9 @@ public class FolderActionDisplayContext {
 		).setParameter(
 			"backURL", _dlRequestHelper.getCurrentURL()
 		).setParameter(
-			"repositoryId", String.valueOf(_getRepositoryId())
+			"repositoryId", _getRepositoryId()
 		).setParameter(
-			"folderId", String.valueOf(_getFolderId())
+			"folderId", _getFolderId()
 		).build();
 
 		return portletURL.toString();
@@ -174,7 +174,7 @@ public class FolderActionDisplayContext {
 		).setRedirect(
 			_dlRequestHelper.getCurrentURL()
 		).setParameter(
-			"folderId", String.valueOf(_getFolderId())
+			"folderId", _getFolderId()
 		).build();
 
 		return portletURL.toString();
@@ -193,7 +193,7 @@ public class FolderActionDisplayContext {
 		).setParameter(
 			Constants.CMD, "deleteExpiredTemporaryFileEntries"
 		).setParameter(
-			"repositoryId", String.valueOf(_getRepositoryId())
+			"repositoryId", _getRepositoryId()
 		).build();
 
 		return portletURL.toString();
@@ -322,7 +322,7 @@ public class FolderActionDisplayContext {
 		).setParameter(
 			"backURL", _dlRequestHelper.getCurrentURL()
 		).setParameter(
-			"folderId", String.valueOf(_getFolderId())
+			"folderId", _getFolderId()
 		).build();
 
 		return portletURL.toString();
@@ -389,7 +389,7 @@ public class FolderActionDisplayContext {
 		).setRedirect(
 			redirect
 		).setParameter(
-			"folderId", String.valueOf(folder.getFolderId())
+			"folderId", folder.getFolderId()
 		).build();
 
 		return portletURL.toString();
@@ -404,7 +404,7 @@ public class FolderActionDisplayContext {
 		).setMVCRenderCommandName(
 			"/image_gallery_display/view_slide_show"
 		).setParameter(
-			"folderId", String.valueOf(_getFolderId())
+			"folderId", _getFolderId()
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).build();

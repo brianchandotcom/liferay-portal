@@ -296,12 +296,10 @@ public class StagingProcessesWebToolbarDisplayContext {
 			"navigation",
 			ParamUtil.getString(_httpServletRequest, "navigation", "all")
 		).setParameter(
-			"groupId",
-			String.valueOf(ParamUtil.getLong(_httpServletRequest, "groupId"))
+			"groupId", ParamUtil.getLong(_httpServletRequest, "groupId")
 		).setParameter(
 			"privateLayout",
-			String.valueOf(
-				ParamUtil.getBoolean(_httpServletRequest, "privateLayout"))
+			ParamUtil.getBoolean(_httpServletRequest, "privateLayout")
 		).setParameter(
 			"displayStyle", getDisplayStyle()
 		).setParameter(

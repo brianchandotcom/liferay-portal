@@ -209,7 +209,7 @@ public class WikiPageAssetRenderer
 		).setMVCRenderCommandName(
 			"/wiki/edit_page"
 		).setParameter(
-			"nodeId", String.valueOf(_page.getNodeId())
+			"nodeId", _page.getNodeId()
 		).setParameter(
 			"title", _page.getTitle()
 		).build();
@@ -229,7 +229,7 @@ public class WikiPageAssetRenderer
 		).setMVCRenderCommandName(
 			"/wiki/export_page"
 		).setParameter(
-			"nodeId", String.valueOf(_page.getNodeId())
+			"nodeId", _page.getNodeId()
 		).setParameter(
 			"title", _page.getTitle()
 		).build();
@@ -251,7 +251,7 @@ public class WikiPageAssetRenderer
 		).setMVCRenderCommandName(
 			"/wiki/view"
 		).setParameter(
-			"nodeId", String.valueOf(_page.getNodeId())
+			"nodeId", _page.getNodeId()
 		).setParameter(
 			"title", _page.getTitle()
 		).setWindowState(
@@ -281,15 +281,15 @@ public class WikiPageAssetRenderer
 		).setMVCRenderCommandName(
 			"/wiki/compare_versions"
 		).setParameter(
-			"groupId", String.valueOf(_page.getGroupId())
+			"groupId", _page.getGroupId()
 		).setParameter(
-			"nodeId", String.valueOf(_page.getNodeId())
+			"nodeId", _page.getNodeId()
 		).setParameter(
 			"title", _page.getTitle()
 		).setParameter(
-			"sourceVersion", String.valueOf(previousVersionPage.getVersion())
+			"sourceVersion", previousVersionPage.getVersion()
 		).setParameter(
-			"targetVersion", String.valueOf(_page.getVersion())
+			"targetVersion", _page.getVersion()
 		).build();
 
 		return portletURL;

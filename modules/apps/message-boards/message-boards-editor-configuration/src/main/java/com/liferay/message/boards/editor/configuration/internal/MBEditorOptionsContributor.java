@@ -67,7 +67,7 @@ public class MBEditorOptionsContributor implements EditorOptionsContributor {
 		).setActionName(
 			"/message_boards/upload_temp_image"
 		).setParameter(
-			"categoryId", String.valueOf(categoryId)
+			"categoryId", categoryId
 		).build();
 
 		editorOptions.setUploadURL(portletURL.toString());

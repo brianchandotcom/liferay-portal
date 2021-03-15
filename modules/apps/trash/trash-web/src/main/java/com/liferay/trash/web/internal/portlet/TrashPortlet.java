@@ -315,16 +315,13 @@ public class TrashPortlet extends MVCPortlet {
 			).setRedirect(
 				redirect
 			).setParameter(
-				"trashEntryId",
-				String.valueOf(restoreEntryException.getTrashEntryId())
+				"trashEntryId", restoreEntryException.getTrashEntryId()
 			).setParameter(
-				"duplicateEntryId",
-				String.valueOf(restoreEntryException.getDuplicateEntryId())
+				"duplicateEntryId", restoreEntryException.getDuplicateEntryId()
 			).setParameter(
 				"oldName", restoreEntryException.getOldName()
 			).setParameter(
-				"overridable",
-				String.valueOf(restoreEntryException.isOverridable())
+				"overridable", restoreEntryException.isOverridable()
 			).build();
 
 			actionRequest.setAttribute(WebKeys.REDIRECT, renderURL.toString());

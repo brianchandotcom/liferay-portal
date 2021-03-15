@@ -181,7 +181,7 @@ public class CommerceChannelDisplayContext
 		).setMVCRenderCommandName(
 			"/commerce_payment_methods/edit_commerce_payment_method_group_rel"
 		).setParameter(
-			"commerceChannelId", String.valueOf(getCommerceChannelId())
+			"commerceChannelId", getCommerceChannelId()
 		).setParameter(
 			"commercePaymentMethodEngineKey", commercePaymentMethodEngineKey
 		).setWindowState(

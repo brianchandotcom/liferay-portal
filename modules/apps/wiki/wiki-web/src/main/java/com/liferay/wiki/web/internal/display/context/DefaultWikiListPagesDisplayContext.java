@@ -461,7 +461,7 @@ public class DefaultWikiListPagesDisplayContext
 		).setRedirect(
 			_wikiRequestHelper.getCurrentURL()
 		).setParameter(
-			"nodeId", String.valueOf(wikiPage.getNodeId())
+			"nodeId", wikiPage.getNodeId()
 		).setParameter(
 			"title", StringPool.BLANK
 		).setParameter(
@@ -497,13 +497,13 @@ public class DefaultWikiListPagesDisplayContext
 		).setRedirect(
 			_wikiRequestHelper.getCurrentURL()
 		).setParameter(
-			"nodeId", String.valueOf(wikiPage.getNodeId())
+			"nodeId", wikiPage.getNodeId()
 		).setParameter(
 			"title", StringPool.BLANK
 		).setParameter(
 			"editTitle", "1"
 		).setParameter(
-			"templateNodeId", String.valueOf(wikiPage.getNodeId())
+			"templateNodeId", wikiPage.getNodeId()
 		).setParameter(
 			"templateTitle", HtmlUtil.unescape(wikiPage.getTitle())
 		).build();
@@ -549,7 +549,7 @@ public class DefaultWikiListPagesDisplayContext
 			).setParameter(
 				Constants.CMD, cmd
 			).setParameter(
-				"nodeId", String.valueOf(wikiPage.getNodeId())
+				"nodeId", wikiPage.getNodeId()
 			).setParameter(
 				"title", HtmlUtil.unescape(wikiPage.getTitle())
 			).build();
@@ -581,11 +581,11 @@ public class DefaultWikiListPagesDisplayContext
 			).setParameter(
 				Constants.CMD, Constants.DELETE
 			).setParameter(
-				"nodeId", String.valueOf(wikiPage.getNodeId())
+				"nodeId", wikiPage.getNodeId()
 			).setParameter(
 				"title", HtmlUtil.unescape(wikiPage.getTitle())
 			).setParameter(
-				"version", String.valueOf(wikiPage.getVersion())
+				"version", wikiPage.getVersion()
 			).build();
 
 			urlMenuItem.setURL(portletURL.toString());
@@ -617,7 +617,7 @@ public class DefaultWikiListPagesDisplayContext
 		).setMVCRenderCommandName(
 			"/wiki/edit_page"
 		).setParameter(
-			"nodeId", String.valueOf(wikiPage.getNodeId())
+			"nodeId", wikiPage.getNodeId()
 		).setParameter(
 			"title", HtmlUtil.unescape(wikiPage.getTitle())
 		).build();
@@ -649,7 +649,7 @@ public class DefaultWikiListPagesDisplayContext
 		).setRedirect(
 			_wikiRequestHelper.getCurrentURL()
 		).setParameter(
-			"nodeId", String.valueOf(wikiPage.getNodeId())
+			"nodeId", wikiPage.getNodeId()
 		).setParameter(
 			"title", HtmlUtil.unescape(wikiPage.getTitle())
 		).build();
@@ -794,7 +794,7 @@ public class DefaultWikiListPagesDisplayContext
 			).setParameter(
 				Constants.CMD, Constants.UNSUBSCRIBE
 			).setParameter(
-				"nodeId", String.valueOf(wikiPage.getNodeId())
+				"nodeId", wikiPage.getNodeId()
 			).setParameter(
 				"title", HtmlUtil.unescape(wikiPage.getTitle())
 			).build();
@@ -821,7 +821,7 @@ public class DefaultWikiListPagesDisplayContext
 			).setParameter(
 				Constants.CMD, Constants.SUBSCRIBE
 			).setParameter(
-				"nodeId", String.valueOf(wikiPage.getNodeId())
+				"nodeId", wikiPage.getNodeId()
 			).setParameter(
 				"title", HtmlUtil.unescape(wikiPage.getTitle())
 			).build();

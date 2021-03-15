@@ -164,8 +164,7 @@ public class CommerceAccountGroupAdminDisplayContext {
 				requestBackedPortletURLFactory, "commerceAccountsSelectItem",
 				commerceAccountGroupAccountItemSelectorCriterion)
 		).setParameter(
-			"commerceAccountGroupId",
-			String.valueOf(getCommerceAccountGroupId())
+			"commerceAccountGroupId", getCommerceAccountGroupId()
 		).build();
 
 		return itemSelectorURL.toString();

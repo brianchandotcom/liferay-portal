@@ -207,10 +207,9 @@ public class BasicFragmentManagementToolbarDisplayContext
 						"/fragment/add_fragment_entry"
 					).setParameter(
 						"fragmentCollectionId",
-						String.valueOf(
-							fragmentDisplayContext.getFragmentCollectionId())
+						fragmentDisplayContext.getFragmentCollectionId()
 					).setParameter(
-						"type", String.valueOf(FragmentConstants.TYPE_COMPONENT)
+						"type", FragmentConstants.TYPE_COMPONENT
 					).build();
 
 				dropdownItem.putData(

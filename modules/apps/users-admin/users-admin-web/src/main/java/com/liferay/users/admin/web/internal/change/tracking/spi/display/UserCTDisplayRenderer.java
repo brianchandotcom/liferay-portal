@@ -62,7 +62,7 @@ public class UserCTDisplayRenderer extends BaseCTDisplayRenderer<User> {
 		).setMVCRenderCommandName(
 			"/users_admin/edit_user"
 		).setParameter(
-			"p_u_i_d", String.valueOf(user.getUserId())
+			"p_u_i_d", user.getUserId()
 		).build();
 
 		String currentURL = _portal.getCurrentURL(httpServletRequest);

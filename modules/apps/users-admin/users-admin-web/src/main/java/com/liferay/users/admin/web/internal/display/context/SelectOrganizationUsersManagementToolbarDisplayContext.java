@@ -119,7 +119,7 @@ public class SelectOrganizationUsersManagementToolbarDisplayContext {
 		).setMVCPath(
 			"/select_organization_users.jsp"
 		).setParameter(
-			"organizationId", String.valueOf(_organization.getOrganizationId())
+			"organizationId", _organization.getOrganizationId()
 		).setParameter(
 			"displayStyle", _displayStyle
 		).build();

@@ -333,7 +333,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		).setRedirect(
 			redirect
 		).setParameter(
-			"commerceShipmentId", String.valueOf(commerceShipmentId)
+			"commerceShipmentId", commerceShipmentId
 		).build();
 
 		sendRedirect(

@@ -113,8 +113,7 @@ public class CommerceInventoryWarehouseClayDataSetActionProvider
 		).setParameter(
 			Constants.CMD, Constants.DELETE
 		).setParameter(
-			"commerceInventoryWarehouseItemId",
-			String.valueOf(commerceInventoryWarehouseItemId)
+			"commerceInventoryWarehouseItemId", commerceInventoryWarehouseItemId
 		).build();
 
 		return portletURL.toString();
@@ -139,8 +138,7 @@ public class CommerceInventoryWarehouseClayDataSetActionProvider
 		).setRedirect(
 			themeDisplay.getURLCurrent()
 		).setParameter(
-			"commerceInventoryWarehouseItemId",
-			String.valueOf(commerceInventoryWarehouseItemId)
+			"commerceInventoryWarehouseItemId", commerceInventoryWarehouseItemId
 		).build();
 
 		try {

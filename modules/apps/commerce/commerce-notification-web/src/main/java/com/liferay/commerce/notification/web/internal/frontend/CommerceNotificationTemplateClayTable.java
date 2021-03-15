@@ -152,8 +152,7 @@ public class CommerceNotificationTemplateClayTable
 					Constants.CMD, Constants.DELETE
 				).setParameter(
 					"commerceNotificationTemplateId",
-					String.valueOf(
-						notificationTemplate.getNotificationTemplateId())
+					notificationTemplate.getNotificationTemplateId()
 				).build();
 
 				dropdownItem.setHref(deletePortletURL);

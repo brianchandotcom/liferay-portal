@@ -117,10 +117,9 @@ public class CommerceTaxMethodClayTable
 						httpServletRequest, CommerceTaxMethod.class.getName(),
 						PortletProvider.Action.EDIT)
 				).setParameter(
-					"commerceChannelId", String.valueOf(commerceChannelId)
+					"commerceChannelId", commerceChannelId
 				).setParameter(
-					"commerceTaxMethodEngineKey",
-					String.valueOf(taxMethod.getKey())
+					"commerceTaxMethodEngineKey", taxMethod.getKey()
 				).setWindowState(
 					LiferayWindowState.POP_UP
 				).build();

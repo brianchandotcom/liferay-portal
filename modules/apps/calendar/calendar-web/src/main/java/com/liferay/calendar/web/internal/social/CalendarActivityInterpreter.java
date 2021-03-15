@@ -83,7 +83,7 @@ public class CalendarActivityInterpreter extends BaseSocialActivityInterpreter {
 		).setParameter(
 			"backURL", serviceContext.getCurrentURL()
 		).setParameter(
-			"calendarBookingId", String.valueOf(activity.getClassPK())
+			"calendarBookingId", activity.getClassPK()
 		).setWindowState(
 			WindowState.MAXIMIZED
 		).build();

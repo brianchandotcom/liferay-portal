@@ -242,7 +242,7 @@ public class DLFileEntryAssetRenderer
 		).setMVCRenderCommandName(
 			"/document_library/edit_file_entry"
 		).setParameter(
-			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId())
+			"fileEntryId", _fileEntry.getFileEntryId()
 		).build();
 
 		return portletURL;
@@ -258,11 +258,11 @@ public class DLFileEntryAssetRenderer
 		).setActionName(
 			"/document_library/get_file"
 		).setParameter(
-			"groupId", String.valueOf(_fileEntry.getRepositoryId())
+			"groupId", _fileEntry.getRepositoryId()
 		).setParameter(
-			"folderId", String.valueOf(_fileEntry.getFolderId())
+			"folderId", _fileEntry.getFolderId()
 		).setParameter(
-			"title", String.valueOf(_fileEntry.getTitle())
+			"title", _fileEntry.getTitle()
 		).build();
 
 		return portletURL;
@@ -293,7 +293,7 @@ public class DLFileEntryAssetRenderer
 		).setMVCRenderCommandName(
 			"/document_library/view_file_entry"
 		).setParameter(
-			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId())
+			"fileEntryId", _fileEntry.getFileEntryId()
 		).setWindowState(
 			windowState
 		).build();

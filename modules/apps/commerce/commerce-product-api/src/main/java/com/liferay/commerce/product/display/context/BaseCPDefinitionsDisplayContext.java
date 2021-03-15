@@ -147,7 +147,7 @@ public abstract class BaseCPDefinitionsDisplayContext {
 		).setMVCRenderCommandName(
 			"/cp_definitions/edit_cp_definition"
 		).setParameter(
-			"cpDefinitionId", String.valueOf(getCPDefinitionId())
+			"cpDefinitionId", getCPDefinitionId()
 		).build();
 
 		return portletURL;

@@ -208,8 +208,7 @@ public class CommerceShippingFixedOptionClayTable
 		).setParameter(
 			Constants.CMD, Constants.DELETE
 		).setParameter(
-			"commerceShippingFixedOptionId",
-			String.valueOf(shippingFixedOptionId)
+			"commerceShippingFixedOptionId", shippingFixedOptionId
 		).build();
 
 		return portletURL.toString();
@@ -226,8 +225,7 @@ public class CommerceShippingFixedOptionClayTable
 		).setMVCRenderCommandName(
 			"/commerce_shipping_methods/edit_commerce_shipping_fixed_option"
 		).setParameter(
-			"commerceShippingFixedOptionId",
-			String.valueOf(shippingFixedOptionId)
+			"commerceShippingFixedOptionId", shippingFixedOptionId
 		).build();
 
 		long commerceShippingMethodId = ParamUtil.getLong(

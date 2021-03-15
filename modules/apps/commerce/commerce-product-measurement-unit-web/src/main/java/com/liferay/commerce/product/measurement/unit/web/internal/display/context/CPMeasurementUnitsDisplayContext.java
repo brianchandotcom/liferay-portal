@@ -239,7 +239,7 @@ public class CPMeasurementUnitsDisplayContext {
 		).setParameter(
 			"toolbarItem", toolbarItem
 		).setParameter(
-			"type", String.valueOf(type)
+			"type", type
 		).build();
 
 		return portletURL.toString();

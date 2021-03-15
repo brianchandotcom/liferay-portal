@@ -386,7 +386,7 @@ public class WorkflowDefinitionLinkDisplayContext {
 		PortletURL portletURL = PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
-			"groupId", String.valueOf(themeDisplay.getScopeGroupId())
+			"groupId", themeDisplay.getScopeGroupId()
 		).build();
 
 		return portletURL.toString();

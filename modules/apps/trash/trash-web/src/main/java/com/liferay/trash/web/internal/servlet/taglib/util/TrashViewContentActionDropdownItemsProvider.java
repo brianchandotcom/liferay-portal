@@ -75,7 +75,7 @@ public class TrashViewContentActionDropdownItemsProvider {
 				).setParameter(
 					"className", _className
 				).setParameter(
-					"classPK", String.valueOf(_classPK)
+					"classPK", _classPK
 				).build();
 
 				putData("deleteEntryURL", deleteEntryURL.toString());
@@ -95,15 +95,13 @@ public class TrashViewContentActionDropdownItemsProvider {
 				).setMVCPath(
 					"/view_container_model.jsp"
 				).setParameter(
-					"classNameId",
-					String.valueOf(PortalUtil.getClassNameId(_className))
+					"classNameId", PortalUtil.getClassNameId(_className)
 				).setParameter(
-					"classPK", String.valueOf(_classPK)
+					"classPK", _classPK
 				).setParameter(
 					"containerModelClassNameId",
-					String.valueOf(
-						PortalUtil.getClassNameId(
-							_trashHandler.getContainerModelClassName(_classPK)))
+					PortalUtil.getClassNameId(
+						_trashHandler.getContainerModelClassName(_classPK))
 				).setWindowState(
 					LiferayWindowState.POP_UP
 				).build();

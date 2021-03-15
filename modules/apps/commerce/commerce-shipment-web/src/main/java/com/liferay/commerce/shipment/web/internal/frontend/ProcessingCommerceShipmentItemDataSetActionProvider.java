@@ -122,7 +122,7 @@ public class ProcessingCommerceShipmentItemDataSetActionProvider
 		).setRedirect(
 			_portal.getCurrentURL(httpServletRequest)
 		).setParameter(
-			"commerceShipmentItemId", String.valueOf(commerceShipmentItemId)
+			"commerceShipmentItemId", commerceShipmentItemId
 		).build();
 
 		try {
@@ -148,11 +148,10 @@ public class ProcessingCommerceShipmentItemDataSetActionProvider
 		).setRedirect(
 			_portal.getCurrentURL(httpServletRequest)
 		).setParameter(
-			"commerceShipmentId",
-			String.valueOf(commerceShipmentItem.getCommerceShipmentId())
+			"commerceShipmentId", commerceShipmentItem.getCommerceShipmentId()
 		).setParameter(
 			"commerceShipmentItemId",
-			String.valueOf(commerceShipmentItem.getCommerceShipmentItemId())
+			commerceShipmentItem.getCommerceShipmentItemId()
 		).build();
 
 		try {

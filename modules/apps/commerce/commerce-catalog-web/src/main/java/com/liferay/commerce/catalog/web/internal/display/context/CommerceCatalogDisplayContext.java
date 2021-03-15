@@ -216,8 +216,7 @@ public class CommerceCatalogDisplayContext {
 		).setParameter(
 			Constants.CMD, Constants.UPDATE
 		).setParameter(
-			"commerceCatalogId",
-			String.valueOf(commerceCatalog.getCommerceCatalogId())
+			"commerceCatalogId", commerceCatalog.getCommerceCatalogId()
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).build();

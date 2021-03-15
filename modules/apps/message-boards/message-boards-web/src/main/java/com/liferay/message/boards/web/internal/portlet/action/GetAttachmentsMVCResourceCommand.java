@@ -138,7 +138,7 @@ public class GetAttachmentsMVCResourceCommand extends BaseMVCResourceCommand {
 		).setParameter(
 			"fileName", HtmlUtil.unescape(fileEntry.getTitle())
 		).setParameter(
-			"messageId", String.valueOf(message.getMessageId())
+			"messageId", message.getMessageId()
 		).build();
 
 		return deleteURL;

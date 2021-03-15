@@ -152,7 +152,7 @@ public class BookmarksFolderAssetRenderer
 		).setMVCRenderCommandName(
 			"/bookmarks/edit_folder"
 		).setParameter(
-			"folderId", String.valueOf(_folder.getFolderId())
+			"folderId", _folder.getFolderId()
 		).build();
 
 		return portletURL;
@@ -172,7 +172,7 @@ public class BookmarksFolderAssetRenderer
 		).setMVCRenderCommandName(
 			"/bookmarks/view_folder"
 		).setParameter(
-			"folderId", String.valueOf(_folder.getFolderId())
+			"folderId", _folder.getFolderId()
 		).setWindowState(
 			windowState
 		).build();

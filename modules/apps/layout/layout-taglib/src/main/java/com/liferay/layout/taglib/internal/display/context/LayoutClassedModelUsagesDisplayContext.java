@@ -325,13 +325,11 @@ public class LayoutClassedModelUsagesDisplayContext {
 					layoutClassedModelUsage.getPlid(),
 					PortletRequest.RENDER_PHASE)
 			).setParameter(
-				"previewClassNameId",
-				String.valueOf(layoutClassedModelUsage.getClassNameId())
+				"previewClassNameId", layoutClassedModelUsage.getClassNameId()
 			).setParameter(
-				"previewClassPK",
-				String.valueOf(layoutClassedModelUsage.getClassPK())
+				"previewClassPK", layoutClassedModelUsage.getClassPK()
 			).setParameter(
-				"previewType", String.valueOf(AssetRendererFactory.TYPE_LATEST)
+				"previewType", AssetRendererFactory.TYPE_LATEST
 			).build();
 
 			layoutURL = portletURL.toString();

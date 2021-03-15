@@ -123,7 +123,7 @@ public class CommerceVirtualOrderItemEditDisplayContext {
 		).setMVCRenderCommandName(
 			"/commerce_open_order_content/edit_commerce_order"
 		).setParameter(
-			"commerceOrderId", String.valueOf(getCommerceOrderId())
+			"commerceOrderId", getCommerceOrderId()
 		).setParameter(
 			"screenNavigationCategoryKey", "items"
 		).build();

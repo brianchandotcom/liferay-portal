@@ -144,7 +144,7 @@ public class UserGroupsDisplayContext {
 		).setParameter(
 			"tabs1", "user-groups"
 		).setParameter(
-			"groupId", String.valueOf(getGroupId())
+			"groupId", getGroupId()
 		).build();
 
 		Role role = getRole();

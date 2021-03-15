@@ -338,7 +338,7 @@ public class WikiSocialActivityHelper {
 		).setParameter(
 			"title", page.getTitle()
 		).setParameter(
-			"version", String.valueOf(version)
+			"version", version
 		).build();
 
 		return portletURL.toString();

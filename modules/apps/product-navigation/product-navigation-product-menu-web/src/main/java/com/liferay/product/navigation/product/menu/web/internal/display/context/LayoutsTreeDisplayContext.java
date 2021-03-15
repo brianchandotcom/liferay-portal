@@ -100,9 +100,9 @@ public class LayoutsTreeDisplayContext {
 		).setParameter(
 			"backURL", PortalUtil.getLayoutFullURL(layout, _themeDisplay)
 		).setParameter(
-			"groupId", String.valueOf(_themeDisplay.getSiteGroupId())
+			"groupId", _themeDisplay.getSiteGroupId()
 		).setParameter(
-			"privateLayout", String.valueOf(isPrivateLayout())
+			"privateLayout", isPrivateLayout()
 		).build();
 
 		return addLayoutURL.toString();
@@ -128,9 +128,9 @@ public class LayoutsTreeDisplayContext {
 		).setParameter(
 			"backURL", PortalUtil.getLayoutFullURL(layout, _themeDisplay)
 		).setParameter(
-			"groupId", String.valueOf(_themeDisplay.getSiteGroupId())
+			"groupId", _themeDisplay.getSiteGroupId()
 		).setParameter(
-			"privateLayout", String.valueOf(isPrivateLayout())
+			"privateLayout", isPrivateLayout()
 		).build();
 
 		return addLayoutURL.toString();
@@ -162,9 +162,9 @@ public class LayoutsTreeDisplayContext {
 		).setParameter(
 			"backURL", PortalUtil.getLayoutFullURL(layout, _themeDisplay)
 		).setParameter(
-			"groupId", String.valueOf(_themeDisplay.getScopeGroupId())
+			"groupId", _themeDisplay.getScopeGroupId()
 		).setParameter(
-			"privateLayout", String.valueOf(isPrivateLayout())
+			"privateLayout", isPrivateLayout()
 		).build();
 
 		return configureLayoutSetURL.toString();

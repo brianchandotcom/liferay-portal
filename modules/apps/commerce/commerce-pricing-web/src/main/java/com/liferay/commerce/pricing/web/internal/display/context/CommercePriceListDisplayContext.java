@@ -105,7 +105,7 @@ public class CommercePriceListDisplayContext
 		).setMVCRenderCommandName(
 			"/commerce_price_list/add_commerce_price_modifier"
 		).setParameter(
-			"commercePriceListId", String.valueOf(getCommercePriceListId())
+			"commercePriceListId", getCommercePriceListId()
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).build();

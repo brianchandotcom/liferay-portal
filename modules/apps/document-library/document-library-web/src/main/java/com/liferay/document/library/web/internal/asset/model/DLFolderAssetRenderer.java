@@ -138,7 +138,7 @@ public class DLFolderAssetRenderer
 		).setMVCRenderCommandName(
 			"/document_library/edit_folder"
 		).setParameter(
-			"folderId", String.valueOf(_folder.getFolderId())
+			"folderId", _folder.getFolderId()
 		).build();
 
 		return portletURL;
@@ -158,7 +158,7 @@ public class DLFolderAssetRenderer
 		).setMVCRenderCommandName(
 			"/document_library/view_folder"
 		).setParameter(
-			"folderId", String.valueOf(_folder.getFolderId())
+			"folderId", _folder.getFolderId()
 		).setWindowState(
 			windowState
 		).build();

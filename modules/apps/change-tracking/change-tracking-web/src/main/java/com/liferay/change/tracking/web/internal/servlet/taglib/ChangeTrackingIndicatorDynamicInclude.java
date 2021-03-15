@@ -345,7 +345,7 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 			).setMVCRenderCommandName(
 				"/change_tracking/view_changes"
 			).setParameter(
-				"ctCollectionId", String.valueOf(ctCollectionId)
+				"ctCollectionId", ctCollectionId
 			).build();
 
 			data.put(
@@ -374,8 +374,7 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 				).setMVCRenderCommandName(
 					"/change_tracking/view_conflicts"
 				).setParameter(
-					"ctCollectionId",
-					String.valueOf(ctCollection.getCtCollectionId())
+					"ctCollectionId", ctCollection.getCtCollectionId()
 				).build();
 
 				data.put(

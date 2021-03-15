@@ -74,7 +74,7 @@ public class CommerceAccountUserRelAdminDisplayContext
 		).setRedirect(
 			commerceAccountAdminRequestHelper.getCurrentURL()
 		).setParameter(
-			"p_u_i_d", String.valueOf(userId)
+			"p_u_i_d", userId
 		).build();
 
 		return portletURL.toString();

@@ -256,7 +256,7 @@ public class DLViewFileEntryDisplayContext {
 		).setMVCRenderCommandName(
 			mvcRenderCommandName
 		).setParameter(
-			"folderId", String.valueOf(parentFolderId)
+			"folderId", parentFolderId
 		).build();
 
 		_redirect = portletURL.toString();

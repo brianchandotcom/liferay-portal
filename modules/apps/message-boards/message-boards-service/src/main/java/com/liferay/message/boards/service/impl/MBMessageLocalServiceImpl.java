@@ -1934,7 +1934,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		).setMVCRenderCommandName(
 			"/message_boards/view_message"
 		).setParameter(
-			"messageId", String.valueOf(message.getMessageId())
+			"messageId", message.getMessageId()
 		).build();
 
 		return portletURL.toString();

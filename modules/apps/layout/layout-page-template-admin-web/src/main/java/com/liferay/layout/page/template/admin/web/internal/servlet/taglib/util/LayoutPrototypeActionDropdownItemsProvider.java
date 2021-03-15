@@ -118,8 +118,7 @@ public class LayoutPrototypeActionDropdownItemsProvider {
 		).setRedirect(
 			_themeDisplay.getURLCurrent()
 		).setParameter(
-			"layoutPrototypeId",
-			String.valueOf(_layoutPrototype.getLayoutPrototypeId())
+			"layoutPrototypeId", _layoutPrototype.getLayoutPrototypeId()
 		).build();
 
 		return dropdownItem -> {
@@ -159,7 +158,7 @@ public class LayoutPrototypeActionDropdownItemsProvider {
 		).setParameter(
 			Constants.CMD, Constants.EXPORT
 		).setParameter(
-			"groupId", String.valueOf(_layoutPrototype.getGroupId())
+			"groupId", _layoutPrototype.getGroupId()
 		).setParameter(
 			"privateLayout", Boolean.TRUE.toString()
 		).setParameter(
@@ -193,7 +192,7 @@ public class LayoutPrototypeActionDropdownItemsProvider {
 		).setParameter(
 			Constants.CMD, Constants.IMPORT
 		).setParameter(
-			"groupId", String.valueOf(_layoutPrototype.getGroupId())
+			"groupId", _layoutPrototype.getGroupId()
 		).setParameter(
 			"privateLayout", Boolean.TRUE.toString()
 		).setParameter(

@@ -73,7 +73,7 @@ public class FragmentCollectionResourceActionDropdownItemsProvider {
 			).setRedirect(
 				_themeDisplay.getURLCurrent()
 			).setParameter(
-				"fileEntryId", String.valueOf(_fileEntry.getFileEntryId())
+				"fileEntryId", _fileEntry.getFileEntryId()
 			).build();
 
 		return dropdownItem -> {

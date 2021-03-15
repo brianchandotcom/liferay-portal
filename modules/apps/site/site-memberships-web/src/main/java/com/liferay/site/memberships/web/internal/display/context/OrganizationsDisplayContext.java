@@ -191,7 +191,7 @@ public class OrganizationsDisplayContext {
 		).setParameter(
 			"tabs1", "organizations"
 		).setParameter(
-			"groupId", String.valueOf(getGroupId())
+			"groupId", getGroupId()
 		).build();
 
 		String displayStyle = getDisplayStyle();

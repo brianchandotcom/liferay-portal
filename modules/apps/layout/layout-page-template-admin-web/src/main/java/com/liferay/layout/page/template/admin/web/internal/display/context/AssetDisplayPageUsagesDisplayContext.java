@@ -128,8 +128,7 @@ public class AssetDisplayPageUsagesDisplayContext {
 		).setRedirect(
 			getRedirect()
 		).setParameter(
-			"layoutPageTemplateEntryId",
-			String.valueOf(getLayoutPageTemplateEntryId())
+			"layoutPageTemplateEntryId", getLayoutPageTemplateEntryId()
 		).build();
 
 		return portletURL;

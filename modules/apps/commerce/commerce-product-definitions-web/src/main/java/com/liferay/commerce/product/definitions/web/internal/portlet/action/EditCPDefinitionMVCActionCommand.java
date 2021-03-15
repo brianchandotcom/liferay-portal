@@ -249,7 +249,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		).setMVCRenderCommandName(
 			"/cp_definitions/edit_cp_definition"
 		).setParameter(
-			"cpDefinitionId", String.valueOf(cpDefinition.getCPDefinitionId())
+			"cpDefinitionId", cpDefinition.getCPDefinitionId()
 		).setParameter(
 			"screenNavigationCategoryKey", screenNavigationCategoryKey
 		).build();

@@ -77,7 +77,7 @@ public class DeleteRolePortletConfigurationIcon
 			).setActionName(
 				"deleteRole"
 			).setParameter(
-				"roleId", String.valueOf(_getRoleId(portletRequest))
+				"roleId", _getRoleId(portletRequest)
 			).build();
 
 			return portletURL.toString();

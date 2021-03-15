@@ -300,7 +300,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 		).setMVCRenderCommandName(
 			"/message_boards/view_message"
 		).setParameter(
-			"messageId", String.valueOf(message.getMessageId())
+			"messageId", message.getMessageId()
 		).build();
 
 		return portletURL.toString();
@@ -327,9 +327,9 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 			"portletResource",
 			ParamUtil.getString(actionRequest, "portletResource")
 		).setParameter(
-			"messageId", String.valueOf(message.getMessageId())
+			"messageId", message.getMessageId()
 		).setParameter(
-			"preview", String.valueOf(preview)
+			"preview", preview
 		).build();
 
 		return portletURL.toString();

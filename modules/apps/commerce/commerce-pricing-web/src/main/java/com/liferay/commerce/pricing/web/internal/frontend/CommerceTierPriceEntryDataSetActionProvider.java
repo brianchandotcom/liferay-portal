@@ -126,13 +126,11 @@ public class CommerceTierPriceEntryDataSetActionProvider
 			Constants.CMD, Constants.DELETE
 		).setParameter(
 			"commerceTierPriceEntryId",
-			String.valueOf(commerceTierPriceEntry.getCommerceTierPriceEntryId())
+			commerceTierPriceEntry.getCommerceTierPriceEntryId()
 		).setParameter(
-			"commercePriceEntryId",
-			String.valueOf(commercePriceEntry.getCommercePriceEntryId())
+			"commercePriceEntryId", commercePriceEntry.getCommercePriceEntryId()
 		).setParameter(
-			"commercePriceListId",
-			String.valueOf(commercePriceEntry.getCommercePriceListId())
+			"commercePriceListId", commercePriceEntry.getCommercePriceListId()
 		).build();
 
 		try {
@@ -163,13 +161,11 @@ public class CommerceTierPriceEntryDataSetActionProvider
 			_portal.getCurrentURL(httpServletRequest)
 		).setParameter(
 			"commerceTierPriceEntryId",
-			String.valueOf(commerceTierPriceEntry.getCommerceTierPriceEntryId())
+			commerceTierPriceEntry.getCommerceTierPriceEntryId()
 		).setParameter(
-			"commercePriceEntryId",
-			String.valueOf(commercePriceEntry.getCommercePriceEntryId())
+			"commercePriceEntryId", commercePriceEntry.getCommercePriceEntryId()
 		).setParameter(
-			"commercePriceListId",
-			String.valueOf(commercePriceEntry.getCommercePriceListId())
+			"commercePriceListId", commercePriceEntry.getCommercePriceListId()
 		).build();
 
 		try {

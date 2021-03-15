@@ -200,7 +200,7 @@ public class CommerceOrderEditDisplayContext {
 		).setMVCRenderCommandName(
 			"/commerce_order/edit_commerce_order"
 		).setParameter(
-			"commerceOrderId", String.valueOf(getCommerceOrderId())
+			"commerceOrderId", getCommerceOrderId()
 		).setParameter(
 			"screenNavigationCategoryKey",
 			CommerceOrderScreenNavigationConstants.
@@ -278,7 +278,7 @@ public class CommerceOrderEditDisplayContext {
 		).setMVCRenderCommandName(
 			"/commerce_order/edit_commerce_order"
 		).setParameter(
-			"commerceOrderId", String.valueOf(getCommerceOrderId())
+			"commerceOrderId", getCommerceOrderId()
 		).setParameter(
 			"screenNavigationCategoryKey",
 			CommerceOrderScreenNavigationConstants.
@@ -347,7 +347,7 @@ public class CommerceOrderEditDisplayContext {
 		).setMVCRenderCommandName(
 			"/commerce_order/edit_commerce_order"
 		).setParameter(
-			"commerceOrderId", String.valueOf(getCommerceOrderId())
+			"commerceOrderId", getCommerceOrderId()
 		).setParameter(
 			"screenNavigationCategoryKey",
 			CommerceOrderScreenNavigationConstants.
@@ -398,7 +398,7 @@ public class CommerceOrderEditDisplayContext {
 		).setMVCRenderCommandName(
 			"/commerce_order/edit_commerce_order"
 		).setParameter(
-			"commerceOrderId", String.valueOf(getCommerceOrderId())
+			"commerceOrderId", getCommerceOrderId()
 		).setParameter(
 			"screenNavigationCategoryKey",
 			CommerceOrderScreenNavigationConstants.
@@ -619,8 +619,7 @@ public class CommerceOrderEditDisplayContext {
 		).setParameter(
 			Constants.CMD, "transition"
 		).setParameter(
-			"commerceOrderId",
-			String.valueOf(_commerceOrder.getCommerceOrderId())
+			"commerceOrderId", _commerceOrder.getCommerceOrderId()
 		).build();
 
 		return portletURL;

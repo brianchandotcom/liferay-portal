@@ -158,7 +158,7 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 					"backURL",
 					ParamUtil.getString(_httpServletRequest, "backURL")
 				).setParameter(
-					"groupId", String.valueOf(themeDisplay.getCompanyGroupId())
+					"groupId", themeDisplay.getCompanyGroupId()
 				).build();
 
 				dropdownItem.putData(

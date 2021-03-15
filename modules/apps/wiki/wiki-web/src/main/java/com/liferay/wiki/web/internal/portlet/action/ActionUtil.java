@@ -257,7 +257,7 @@ public class ActionUtil {
 		).setMVCRenderCommandName(
 			"wiki/edit_page"
 		).setParameter(
-			"nodeId", String.valueOf(nodeId)
+			"nodeId", nodeId
 		).setParameter(
 			"title", title
 		).build();

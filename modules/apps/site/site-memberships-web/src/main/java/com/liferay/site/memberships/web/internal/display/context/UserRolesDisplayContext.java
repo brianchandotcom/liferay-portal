@@ -159,7 +159,7 @@ public class UserRolesDisplayContext {
 		).setMVCPath(
 			"/users_roles.jsp"
 		).setParameter(
-			"p_u_i_d", String.valueOf(_getUserId())
+			"p_u_i_d", _getUserId()
 		).build();
 
 		String displayStyle = getDisplayStyle();

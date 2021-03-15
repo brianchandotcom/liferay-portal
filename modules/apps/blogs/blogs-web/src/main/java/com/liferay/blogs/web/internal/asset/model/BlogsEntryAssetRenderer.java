@@ -182,7 +182,7 @@ public class BlogsEntryAssetRenderer
 		).setMVCRenderCommandName(
 			"/blogs/edit_entry"
 		).setParameter(
-			"entryId", String.valueOf(_entry.getEntryId())
+			"entryId", _entry.getEntryId()
 		).build();
 
 		return portletURL;
@@ -216,7 +216,7 @@ public class BlogsEntryAssetRenderer
 		).setMVCRenderCommandName(
 			"/blogs/view_entry"
 		).setParameter(
-			"entryId", String.valueOf(_entry.getEntryId())
+			"entryId", _entry.getEntryId()
 		).setWindowState(
 			windowState
 		).build();

@@ -167,7 +167,7 @@ public class DisplayPortlet extends BaseKBPortlet {
 				actionRequest, KBPortletKeys.KNOWLEDGE_BASE_DISPLAY,
 				PortletRequest.RENDER_PHASE)
 		).setParameter(
-			"kbFolderId", String.valueOf(kbFolderId)
+			"kbFolderId", kbFolderId
 		).setParameter(
 			"kbFolderUrlTitle", kbFolderURLTitle
 		).build();

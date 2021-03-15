@@ -106,8 +106,7 @@ public class AssetEntryListActionDropdownItems {
 		).setRedirect(
 			_themeDisplay.getURLCurrent()
 		).setParameter(
-			"assetListEntryId",
-			String.valueOf(_assetListEntry.getAssetListEntryId())
+			"assetListEntryId", _assetListEntry.getAssetListEntryId()
 		).build();
 
 		return dropdownItem -> {
@@ -160,8 +159,7 @@ public class AssetEntryListActionDropdownItems {
 		).setActionName(
 			"/asset_list/update_asset_list_entry"
 		).setParameter(
-			"assetListEntryId",
-			String.valueOf(_assetListEntry.getAssetListEntryId())
+			"assetListEntryId", _assetListEntry.getAssetListEntryId()
 		).build();
 
 		return dropdownItem -> {

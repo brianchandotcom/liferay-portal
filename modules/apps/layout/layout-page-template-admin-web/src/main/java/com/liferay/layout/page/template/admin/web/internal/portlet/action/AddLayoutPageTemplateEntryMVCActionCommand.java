@@ -136,8 +136,7 @@ public class AddLayoutPageTemplateEntryMVCActionCommand
 			"tabs1", "page-templates"
 		).setParameter(
 			"layoutPageTemplateCollectionId",
-			String.valueOf(
-				layoutPageTemplateEntry.getLayoutPageTemplateCollectionId())
+			layoutPageTemplateEntry.getLayoutPageTemplateCollectionId()
 		).build();
 
 		layoutFullURL = _http.setParameter(

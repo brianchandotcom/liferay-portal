@@ -81,7 +81,7 @@ public class UnsubscribeMVCActionCommand extends BaseMVCActionCommand {
 		).setParameter(
 			"key", key
 		).setParameter(
-			"userId", String.valueOf(userId)
+			"userId", userId
 		).setWindowState(
 			WindowState.MAXIMIZED
 		).build();

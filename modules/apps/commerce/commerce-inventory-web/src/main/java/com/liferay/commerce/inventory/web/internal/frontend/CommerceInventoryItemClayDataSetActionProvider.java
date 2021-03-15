@@ -104,7 +104,7 @@ public class CommerceInventoryItemClayDataSetActionProvider
 		).setMVCRenderCommandName(
 			"/commerce_inventory/edit_commerce_inventory_item"
 		).setParameter(
-			"sku", String.valueOf(sku)
+			"sku", sku
 		).build();
 
 		return portletURL.toString();
@@ -128,7 +128,7 @@ public class CommerceInventoryItemClayDataSetActionProvider
 		).setParameter(
 			Constants.CMD, Constants.DELETE
 		).setParameter(
-			"sku", String.valueOf(sku)
+			"sku", sku
 		).build();
 
 		return portletURL.toString();

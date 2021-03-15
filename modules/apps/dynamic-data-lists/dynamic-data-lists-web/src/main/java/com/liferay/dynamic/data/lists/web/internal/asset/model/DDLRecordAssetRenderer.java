@@ -169,7 +169,7 @@ public class DDLRecordAssetRenderer extends BaseJSPAssetRenderer<DDLRecord> {
 		).setMVCPath(
 			"/edit_record.jsp"
 		).setParameter(
-			"recordId", String.valueOf(_record.getRecordId())
+			"recordId", _record.getRecordId()
 		).setParameter(
 			"version", _recordVersion.getVersion()
 		).build();

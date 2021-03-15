@@ -53,7 +53,7 @@ public class EditSiteTeamAssignmentsDisplayContext {
 		).setParameter(
 			"tabs1", getTabs1()
 		).setParameter(
-			"teamId", String.valueOf(getTeamId())
+			"teamId", getTeamId()
 		).build();
 
 		return portletURL;

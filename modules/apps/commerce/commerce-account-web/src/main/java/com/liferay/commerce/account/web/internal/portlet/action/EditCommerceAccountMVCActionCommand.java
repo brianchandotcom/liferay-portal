@@ -151,8 +151,7 @@ public class EditCommerceAccountMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, CommerceAccount.class.getName(),
 				PortletProvider.Action.VIEW)
 		).setParameter(
-			"commerceAccountId",
-			String.valueOf(commerceAccount.getCommerceAccountId())
+			"commerceAccountId", commerceAccount.getCommerceAccountId()
 		).setParameter(
 			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backURL",
 			managePortletURL.toString()

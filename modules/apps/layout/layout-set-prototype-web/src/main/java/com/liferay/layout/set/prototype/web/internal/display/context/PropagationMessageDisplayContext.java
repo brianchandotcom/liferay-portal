@@ -80,11 +80,9 @@ public class PropagationMessageDisplayContext {
 						PortalUtil.getLayoutURL(themeDisplay)
 					).setParameter(
 						"layoutSetPrototypeId",
-						String.valueOf(
-							layoutSetPrototype.getLayoutSetPrototypeId())
+						layoutSetPrototype.getLayoutSetPrototypeId()
 					).setParameter(
-						"readyForPropagation",
-						String.valueOf(!readyForPropagation)
+						"readyForPropagation", !readyForPropagation
 					).build();
 
 				return enableDisableLayoutSetPrototypePropagationURL.toString();

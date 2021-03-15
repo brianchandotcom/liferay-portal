@@ -106,7 +106,7 @@ public class DeletePagePortletConfigurationIcon
 			).setParameter(
 				"navigation", "all-pages"
 			).setParameter(
-				"nodeId", String.valueOf(page.getNodeId())
+				"nodeId", page.getNodeId()
 			).build();
 
 			portletURL.setParameter("redirect", redirectURL.toString());

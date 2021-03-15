@@ -112,11 +112,10 @@ public class CommerceProductOptionDataSetActionProvider
 		).setMVCRenderCommandName(
 			"/cp_definitions/edit_cp_definition_option_rel"
 		).setParameter(
-			"cpDefinitionId",
-			String.valueOf(cpDefinitionOptionRel.getCPDefinitionId())
+			"cpDefinitionId", cpDefinitionOptionRel.getCPDefinitionId()
 		).setParameter(
 			"cpDefinitionOptionRelId",
-			String.valueOf(cpDefinitionOptionRel.getCPDefinitionOptionRelId())
+			cpDefinitionOptionRel.getCPDefinitionOptionRelId()
 		).build();
 
 		try {

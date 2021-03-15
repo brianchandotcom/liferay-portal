@@ -321,7 +321,7 @@ public class WorkflowInstanceViewDisplayContext
 		PortletURL portletURL = PortletURLBuilder.create(
 			getViewPortletURL()
 		).setParameter(
-			"groupId", String.valueOf(themeDisplay.getScopeGroupId())
+			"groupId", themeDisplay.getScopeGroupId()
 		).build();
 
 		return portletURL.toString();

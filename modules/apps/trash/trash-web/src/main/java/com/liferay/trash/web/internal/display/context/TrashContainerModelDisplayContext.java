@@ -206,9 +206,9 @@ public class TrashContainerModelDisplayContext {
 		).setParameter(
 			"backURL", currentURL
 		).setParameter(
-			"classNameId", String.valueOf(getClassNameId())
+			"classNameId", getClassNameId()
 		).setParameter(
-			"classPK", String.valueOf(getClassPK())
+			"classPK", getClassPK()
 		).build();
 
 		return containerURL;
@@ -272,7 +272,7 @@ public class TrashContainerModelDisplayContext {
 		PortletURL containerURL = PortletURLBuilder.create(
 			getContainerURL()
 		).setParameter(
-			"containerModelId", String.valueOf(getContainerModelId())
+			"containerModelId", getContainerModelId()
 		).build();
 
 		_searchContainer = new SearchContainer(

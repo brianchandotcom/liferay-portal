@@ -277,7 +277,7 @@ public class SelectAssetCategoryTreeNodeDisplayContext {
 				_httpServletRequest, "backURL",
 				PortalUtil.getCurrentURL(_httpServletRequest))
 		).setParameter(
-			"assetCategoryTreeNodeId", String.valueOf(assetCategoryTreeNodeId)
+			"assetCategoryTreeNodeId", assetCategoryTreeNodeId
 		).setParameter(
 			"assetCategoryTreeNodeType", assetCategoryTreeNodeType
 		).build();

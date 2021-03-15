@@ -309,11 +309,9 @@ public class AssetEntryUsagesDisplayContext {
 					_renderRequest, assetEntryUsage.getContainerKey(),
 					assetEntryUsage.getPlid(), PortletRequest.RENDER_PHASE)
 			).setParameter(
-				"previewAssetEntryId",
-				String.valueOf(assetEntryUsage.getAssetEntryId())
+				"previewAssetEntryId", assetEntryUsage.getAssetEntryId()
 			).setParameter(
-				"previewAssetEntryType",
-				String.valueOf(AssetRendererFactory.TYPE_LATEST)
+				"previewAssetEntryType", AssetRendererFactory.TYPE_LATEST
 			).build();
 
 			layoutURL = portletURL.toString();

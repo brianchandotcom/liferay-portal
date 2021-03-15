@@ -201,7 +201,7 @@ public class DepotAdminSelectRoleDisplayContext {
 			).setParameter(
 				"resetCur", Boolean.TRUE.toString()
 			).setParameter(
-				"step", String.valueOf(Step2.TYPE)
+				"step", Step2.TYPE
 			).build();
 
 			return portletURL;
@@ -280,7 +280,7 @@ public class DepotAdminSelectRoleDisplayContext {
 			PortletURL portletURL = PortletURLBuilder.create(
 				_getPortletURL(_renderRequest, _renderResponse, _user)
 			).setParameter(
-				"step", String.valueOf(Step1.TYPE)
+				"step", Step1.TYPE
 			).build();
 
 			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(

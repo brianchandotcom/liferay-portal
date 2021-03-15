@@ -77,7 +77,7 @@ public class CopyFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 		PortletURL redirectURL = PortletURLBuilder.createRenderURL(
 			liferayPortletResponse
 		).setParameter(
-			"fragmentCollectionId", String.valueOf(fragmentCollectionId)
+			"fragmentCollectionId", fragmentCollectionId
 		).build();
 
 		sendRedirect(actionRequest, actionResponse, redirectURL.toString());

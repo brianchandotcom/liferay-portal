@@ -81,9 +81,9 @@ public class SelectBasicTemplatesNavigationCard implements NavigationCard {
 			).setParameter(
 				"backURL", redirect
 			).setParameter(
-				"selPlid", String.valueOf(selPlid)
+				"selPlid", selPlid
 			).setParameter(
-				"privateLayout", String.valueOf(privateLayout)
+				"privateLayout", privateLayout
 			).setParameter(
 				"type", _type
 			).setWindowState(

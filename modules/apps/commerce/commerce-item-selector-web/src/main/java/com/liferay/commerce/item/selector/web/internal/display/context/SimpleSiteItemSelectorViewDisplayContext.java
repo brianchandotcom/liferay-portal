@@ -84,7 +84,7 @@ public class SimpleSiteItemSelectorViewDisplayContext
 		PortletURL portletURL = PortletURLBuilder.create(
 			super.getPortletURL()
 		).setParameter(
-			"siteGroupId", String.valueOf(getGroupId())
+			"siteGroupId", getGroupId()
 		).build();
 
 		return portletURL;
@@ -181,7 +181,7 @@ public class SimpleSiteItemSelectorViewDisplayContext
 			PortletURLUtil.clone(
 				getPortletURL(), cpRequestHelper.getRenderResponse())
 		).setParameter(
-			"siteGroupId", String.valueOf(siteGroupId)
+			"siteGroupId", siteGroupId
 		).build();
 
 		return new ManagementBarFilterItem(

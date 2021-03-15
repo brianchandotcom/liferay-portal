@@ -113,11 +113,11 @@ public abstract class BaseItemSelectorViewDisplayContext
 				this.portletURL,
 				PortalUtil.getLiferayPortletResponse(getPortletResponse()))
 		).setParameter(
-			"plid", String.valueOf(plid)
+			"plid", plid
 		).setParameter(
-			"groupId", String.valueOf(groupId)
+			"groupId", groupId
 		).setParameter(
-			"privateLayout", String.valueOf(privateLayout)
+			"privateLayout", privateLayout
 		).setParameter(
 			"portletResource", portletResource
 		).build();

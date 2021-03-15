@@ -373,7 +373,7 @@ public class UsersManagementToolbarDisplayContext
 				).setParameter(
 					"navigation", "roles"
 				).setParameter(
-					"groupId", String.valueOf(_usersDisplayContext.getGroupId())
+					"groupId", _usersDisplayContext.getGroupId()
 				).build();
 
 				dropdownItem.putData("viewRoleURL", viewRoleURL.toString());
@@ -397,7 +397,7 @@ public class UsersManagementToolbarDisplayContext
 		).setMVCPath(
 			mvcPath
 		).setParameter(
-			"groupId", String.valueOf(_usersDisplayContext.getGroupId())
+			"groupId", _usersDisplayContext.getGroupId()
 		).build();
 
 		ThemeDisplay themeDisplay =

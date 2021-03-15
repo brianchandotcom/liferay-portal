@@ -116,7 +116,7 @@ public class NotificationsManagementToolbarDisplayContext {
 		PortletURL clearResultsURL = PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setParameter(
-			"actionRequired", String.valueOf(_isActionRequired())
+			"actionRequired", _isActionRequired()
 		).build();
 
 		return clearResultsURL.toString();

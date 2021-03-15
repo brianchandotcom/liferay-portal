@@ -67,7 +67,7 @@ public class DefaultSocialActivitiesDisplayContext
 		).setParameter(
 			"tabs1", getSelectedTabName()
 		).setParameter(
-			"end", String.valueOf(end)
+			"end", end
 		).build();
 
 		return portletURL.toString();

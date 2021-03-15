@@ -106,7 +106,7 @@ public class ViewModuleManagementToolbarDisplayContext
 		).setParameter(
 			"symbolicName", bundle.getSymbolicName()
 		).setParameter(
-			"version", String.valueOf(bundle.getVersion())
+			"version", bundle.getVersion()
 		).setParameter(
 			"pluginType", getPluginType()
 		).setParameter(

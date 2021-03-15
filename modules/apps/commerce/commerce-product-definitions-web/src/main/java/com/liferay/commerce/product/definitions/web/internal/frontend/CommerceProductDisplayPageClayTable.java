@@ -220,7 +220,7 @@ public class CommerceProductDisplayPageClayTable
 		).setParameter(
 			Constants.CMD, Constants.DELETE
 		).setParameter(
-			"cpDisplayLayoutId", String.valueOf(productDisplayPageId)
+			"cpDisplayLayoutId", productDisplayPageId
 		).build();
 
 		return portletURL.toString();

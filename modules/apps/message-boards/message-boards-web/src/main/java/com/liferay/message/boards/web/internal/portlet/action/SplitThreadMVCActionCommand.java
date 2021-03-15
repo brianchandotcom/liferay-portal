@@ -147,7 +147,7 @@ public class SplitThreadMVCActionCommand extends BaseMVCActionCommand {
 		).setMVCRenderCommandName(
 			"/message_boards/view_message"
 		).setParameter(
-			"messageId", String.valueOf(newThread.getRootMessageId())
+			"messageId", newThread.getRootMessageId()
 		).build();
 
 		actionResponse.sendRedirect(portletURL.toString());

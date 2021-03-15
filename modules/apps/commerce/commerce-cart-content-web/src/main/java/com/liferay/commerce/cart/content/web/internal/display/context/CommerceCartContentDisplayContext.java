@@ -188,8 +188,7 @@ public class CommerceCartContentDisplayContext {
 		).setParameter(
 			Constants.CMD, Constants.DELETE
 		).setParameter(
-			"commerceOrderItemId",
-			String.valueOf(commerceOrderItem.getCommerceOrderItemId())
+			"commerceOrderItemId", commerceOrderItem.getCommerceOrderItemId()
 		).build();
 
 		return portletURL.toString();

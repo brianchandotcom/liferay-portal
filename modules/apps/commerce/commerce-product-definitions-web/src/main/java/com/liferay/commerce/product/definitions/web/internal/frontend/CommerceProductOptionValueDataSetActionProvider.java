@@ -139,8 +139,7 @@ public class CommerceProductOptionValueDataSetActionProvider
 		).setParameter(
 			Constants.CMD, Constants.DELETE
 		).setParameter(
-			"cpDefinitionOptionValueRelId",
-			String.valueOf(cpDefinitionOptionValueRelId)
+			"cpDefinitionOptionValueRelId", cpDefinitionOptionValueRelId
 		).build();
 
 		return portletURL;
@@ -161,15 +160,13 @@ public class CommerceProductOptionValueDataSetActionProvider
 		).setMVCRenderCommandName(
 			"/cp_definitions/edit_cp_definition_option_value_rel"
 		).setParameter(
-			"cpDefinitionId",
-			String.valueOf(cpDefinitionOptionRel.getCPDefinitionId())
+			"cpDefinitionId", cpDefinitionOptionRel.getCPDefinitionId()
 		).setParameter(
 			"cpDefinitionOptionRelId",
-			String.valueOf(cpDefinitionOptionRel.getCPDefinitionOptionRelId())
+			cpDefinitionOptionRel.getCPDefinitionOptionRelId()
 		).setParameter(
 			"cpDefinitionOptionValueRelId",
-			String.valueOf(
-				cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId())
+			cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId()
 		).build();
 
 		try {
@@ -201,8 +198,7 @@ public class CommerceProductOptionValueDataSetActionProvider
 		).setParameter(
 			Constants.CMD, "updatePreselected"
 		).setParameter(
-			"cpDefinitionOptionValueRelId",
-			String.valueOf(cpDefinitionOptionValueRelId)
+			"cpDefinitionOptionValueRelId", cpDefinitionOptionValueRelId
 		).build();
 
 		return portletURL;

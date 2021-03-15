@@ -120,10 +120,9 @@ public class CommercePaymentMethodClayTable
 						CommercePaymentMethodGroupRel.class.getName(),
 						PortletProvider.Action.EDIT)
 				).setParameter(
-					"commerceChannelId", String.valueOf(commerceChannelId)
+					"commerceChannelId", commerceChannelId
 				).setParameter(
-					"commercePaymentMethodEngineKey",
-					String.valueOf(paymentMethod.getKey())
+					"commercePaymentMethodEngineKey", paymentMethod.getKey()
 				).setWindowState(
 					LiferayWindowState.POP_UP
 				).build();

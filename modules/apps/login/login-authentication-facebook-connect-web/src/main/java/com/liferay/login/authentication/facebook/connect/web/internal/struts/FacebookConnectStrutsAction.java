@@ -282,7 +282,7 @@ public class FacebookConnectStrutsAction implements StrutsAction {
 		).setParameter(
 			"saveLastPath", Boolean.FALSE.toString()
 		).setParameter(
-			"userId", String.valueOf(user.getUserId())
+			"userId", user.getUserId()
 		).setParameter(
 			"emailAddress", user.getEmailAddress()
 		).setParameter(

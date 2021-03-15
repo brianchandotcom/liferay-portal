@@ -237,7 +237,7 @@ public class RoleDisplayContext {
 				).setParameter(
 					"backURL", backURL
 				).setParameter(
-					"roleId", String.valueOf(role.getRoleId())
+					"roleId", role.getRoleId()
 				).build();
 
 				return assignMembersURL.toString();
@@ -259,7 +259,7 @@ public class RoleDisplayContext {
 					).setParameter(
 						Constants.CMD, Constants.VIEW
 					).setParameter(
-						"roleId", String.valueOf(role.getRoleId())
+						"roleId", role.getRoleId()
 					).build();
 
 				return definePermissionsURL.toString();
@@ -278,7 +278,7 @@ public class RoleDisplayContext {
 				).setParameter(
 					"backURL", backURL
 				).setParameter(
-					"roleId", String.valueOf(role.getRoleId())
+					"roleId", role.getRoleId()
 				).build();
 
 				return editRoleURL.toString();

@@ -105,11 +105,9 @@ public class CommerceProductAccountGroupDataSetActionProvider
 			Constants.CMD, "deleteAccountGroup"
 		).setParameter(
 			"commerceAccountGroupRelId",
-			String.valueOf(
-				commerceAccountGroupRel.getCommerceAccountGroupRelId())
+			commerceAccountGroupRel.getCommerceAccountGroupRelId()
 		).setParameter(
-			"cpDefinitionId",
-			String.valueOf(commerceAccountGroupRel.getClassPK())
+			"cpDefinitionId", commerceAccountGroupRel.getClassPK()
 		).build();
 
 		return portletURL;

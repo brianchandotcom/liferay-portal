@@ -119,7 +119,7 @@ public class UserAssetRenderer extends BaseJSPAssetRenderer<User> {
 		).setMVCRenderCommandName(
 			"/users_admin/edit_user"
 		).setParameter(
-			"p_u_i_d", String.valueOf(_user.getUserId())
+			"p_u_i_d", _user.getUserId()
 		).build();
 
 		return portletURL;

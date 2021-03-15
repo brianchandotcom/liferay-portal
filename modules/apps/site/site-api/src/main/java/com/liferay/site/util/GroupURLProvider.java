@@ -178,7 +178,7 @@ public class GroupURLProvider {
 			).setMVCRenderCommandName(
 				"/depot/view_depot_dashboard"
 			).setParameter(
-				"depotEntryId", String.valueOf(depotEntry.getDepotEntryId())
+				"depotEntryId", depotEntry.getDepotEntryId()
 			).build();
 
 			return portletURL.toString();

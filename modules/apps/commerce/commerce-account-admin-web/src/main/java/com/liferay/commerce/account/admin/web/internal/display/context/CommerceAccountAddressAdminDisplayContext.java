@@ -142,7 +142,7 @@ public class CommerceAccountAddressAdminDisplayContext
 		).setParameter(
 			Constants.CMD, Constants.DELETE
 		).setParameter(
-			"commerceAddressId", String.valueOf(commerceAddressId)
+			"commerceAddressId", commerceAddressId
 		).build();
 
 		return portletURL.toString();
@@ -161,9 +161,9 @@ public class CommerceAccountAddressAdminDisplayContext
 		).setRedirect(
 			commerceAccountAdminRequestHelper.getCurrentURL()
 		).setParameter(
-			"commerceAccountId", String.valueOf(getCommerceAccountId())
+			"commerceAccountId", getCommerceAccountId()
 		).setParameter(
-			"commerceAddressId", String.valueOf(commerceAddressId)
+			"commerceAddressId", commerceAddressId
 		).build();
 
 		return portletURL.toString();

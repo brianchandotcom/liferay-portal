@@ -150,7 +150,7 @@ public class ViewDiscardDisplayContext {
 		).setMVCRenderCommandName(
 			"/change_tracking/view_changes"
 		).setParameter(
-			"ctCollectionId", String.valueOf(_ctCollectionId)
+			"ctCollectionId", _ctCollectionId
 		).build();
 
 		return portletURL.toString();

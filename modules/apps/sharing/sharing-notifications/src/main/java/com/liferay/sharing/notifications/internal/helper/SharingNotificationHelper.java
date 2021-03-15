@@ -113,12 +113,11 @@ public class SharingNotificationHelper {
 					portletRequest, SharingEntry.class.getName(),
 					PortletProvider.Action.PREVIEW)
 			).setParameter(
-				"sharingEntryId",
-				String.valueOf(sharingEntry.getSharingEntryId())
+				"sharingEntryId", sharingEntry.getSharingEntryId()
 			).setParameter(
-				"classNameId", String.valueOf(sharingEntry.getClassNameId())
+				"classNameId", sharingEntry.getClassNameId()
 			).setParameter(
-				"classPK", String.valueOf(sharingEntry.getClassPK())
+				"classPK", sharingEntry.getClassPK()
 			).build();
 
 			return portletURL.toString();

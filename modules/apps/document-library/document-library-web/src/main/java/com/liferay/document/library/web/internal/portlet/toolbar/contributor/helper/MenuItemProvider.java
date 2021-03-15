@@ -121,13 +121,11 @@ public class MenuItemProvider {
 		).setParameter(
 			"portletResource", portletDisplay.getId()
 		).setParameter(
-			"repositoryId",
-			String.valueOf(_getRepositoryId(folder, themeDisplay))
+			"repositoryId", _getRepositoryId(folder, themeDisplay)
 		).setParameter(
-			"folderId", String.valueOf(folderId)
+			"folderId", folderId
 		).setParameter(
-			"fileEntryTypeId",
-			String.valueOf(_getDefaultFileEntryTypeId(folderId))
+			"fileEntryTypeId", _getDefaultFileEntryTypeId(folderId)
 		).build();
 
 		urlMenuItem.setURL(portletURL.toString());
@@ -168,10 +166,9 @@ public class MenuItemProvider {
 		).setParameter(
 			"portletResource", portletDisplay.getId()
 		).setParameter(
-			"repositoryId",
-			String.valueOf(_getRepositoryId(folder, themeDisplay))
+			"repositoryId", _getRepositoryId(folder, themeDisplay)
 		).setParameter(
-			"parentFolderId", String.valueOf(folderId)
+			"parentFolderId", folderId
 		).setParameter(
 			"ignoreRootFolder", Boolean.TRUE.toString()
 		).build();
@@ -220,10 +217,9 @@ public class MenuItemProvider {
 		).setParameter(
 			"portletResource", portletDisplay.getId()
 		).setParameter(
-			"repositoryId",
-			String.valueOf(_getRepositoryId(folder, themeDisplay))
+			"repositoryId", _getRepositoryId(folder, themeDisplay)
 		).setParameter(
-			"folderId", String.valueOf(folderId)
+			"folderId", folderId
 		).build();
 
 		urlMenuItem.setURL(portletURL.toString());
@@ -301,10 +297,9 @@ public class MenuItemProvider {
 		).setRedirect(
 			PortalUtil.getCurrentURL(portletRequest)
 		).setParameter(
-			"repositoryId",
-			String.valueOf(_getRepositoryId(folder, themeDisplay))
+			"repositoryId", _getRepositoryId(folder, themeDisplay)
 		).setParameter(
-			"folderId", String.valueOf(folderId)
+			"folderId", folderId
 		).build();
 
 		urlMenuItem.setURL(portletURL.toString());
@@ -375,13 +370,11 @@ public class MenuItemProvider {
 		).setParameter(
 			"portletResource", portletDisplay.getId()
 		).setParameter(
-			"repositoryId",
-			String.valueOf(_getRepositoryId(folder, themeDisplay))
+			"repositoryId", _getRepositoryId(folder, themeDisplay)
 		).setParameter(
-			"folderId", String.valueOf(_getFolderId(folder))
+			"folderId", _getFolderId(folder)
 		).setParameter(
-			"fileEntryTypeId",
-			String.valueOf(fileEntryType.getFileEntryTypeId())
+			"fileEntryTypeId", fileEntryType.getFileEntryTypeId()
 		).build();
 
 		urlMenuItem.setURL(portletURL.toString());

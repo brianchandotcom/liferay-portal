@@ -69,9 +69,15 @@
 				min-height: 15.25rem;
 			}
 
-			.orders-table tr {
-				font-size: 0.8rem;
-				height: auto !important;
+			.orders-table {
+				a {
+					text-decoration: none;
+				}
+
+				tr {
+					font-size: 0.8rem;
+					height: auto !important;
+				}
 			}
 		}
 	}

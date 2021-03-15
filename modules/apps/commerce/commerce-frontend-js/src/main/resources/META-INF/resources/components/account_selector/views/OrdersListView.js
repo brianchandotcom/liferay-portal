@@ -29,6 +29,7 @@ const {baseURL: ORDERS_RESOURCE_ENDPOINT} = ServiceProvider.AdminOrderAPI('v1');
 function OrdersListView({
 	createOrderURL,
 	currentAccount,
+	disabled,
 	selectOrderURL,
 	setCurrentView,
 }) {
@@ -60,9 +61,7 @@ function OrdersListView({
 						if (!items || !items.length) {
 							return (
 								<EmptyListView
-									caption={Liferay.Language.get(
-										'no-orders-were-found'
-									)}
+									caption="no-orders-were-found"
 									loading={loading}
 								/>
 							);
@@ -75,6 +74,7 @@ function OrdersListView({
 							/>
 						);
 					}}
+					disabled={disabled}
 					placeholder={Liferay.Language.get('search-order')}
 				/>
 			</ClayDropDown.Section>

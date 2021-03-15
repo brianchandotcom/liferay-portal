@@ -26,7 +26,12 @@ const {baseURL: ACCOUNTS_RESOURCE_ENDPOINT} = ServiceProvider.AdminAccountAPI(
 	'v1'
 );
 
-function AccountsListView({changeAccount, currentAccount, setCurrentView}) {
+function AccountsListView({
+	changeAccount,
+	currentAccount,
+	disabled,
+	setCurrentView,
+}) {
 	const accountsListRef = useRef();
 
 	return (
@@ -85,6 +90,7 @@ function AccountsListView({changeAccount, currentAccount, setCurrentView}) {
 							</ClayDropDown.ItemList>
 						);
 					}}
+					disabled={disabled}
 					placeholder={Liferay.Language.get('search')}
 				/>
 			</ClayDropDown.Section>

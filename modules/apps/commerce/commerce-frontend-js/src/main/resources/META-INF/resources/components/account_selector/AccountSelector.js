@@ -102,6 +102,7 @@ function AccountSelector({
 					<AccountsListView
 						changeAccount={changeAccount}
 						currentAccount={currentAccount}
+						disabled={!active}
 						setCurrentView={setCurrentView}
 					/>
 				)}
@@ -110,6 +111,7 @@ function AccountSelector({
 					<OrdersListView
 						createOrderURL={createNewOrderURL}
 						currentAccount={currentAccount}
+						disabled={!active}
 						selectOrderURL={selectOrderURL}
 						setCurrentView={setCurrentView}
 					/>

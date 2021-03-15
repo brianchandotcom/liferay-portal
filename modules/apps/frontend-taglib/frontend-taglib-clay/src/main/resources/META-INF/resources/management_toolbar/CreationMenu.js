@@ -44,10 +44,8 @@ const CreationMenu = ({
 	);
 
 	const getPlusIconLabel = () => {
-		const primaryItemsCount = primaryItems.length;
-
 		const item =
-			primaryItemsCount === 1
+			totalItemsCountRef.count === 1
 				? primaryItems?.[0] ??
 				  secondaryItems?.[0].items?.[0] ??
 				  secondaryItems?.[0]
